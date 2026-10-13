@@ -276,6 +276,69 @@ func (e AnalyticsDimension) Valid() bool {
 	}
 }
 
+// Defines values for AnalyticsExportStatus.
+const (
+	AnalyticsExportDone    AnalyticsExportStatus = "done"
+	AnalyticsExportFailed  AnalyticsExportStatus = "failed"
+	AnalyticsExportQueued  AnalyticsExportStatus = "queued"
+	AnalyticsExportRunning AnalyticsExportStatus = "running"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsExportStatus enum.
+func (e AnalyticsExportStatus) Valid() bool {
+	switch e {
+	case AnalyticsExportDone:
+		return true
+	case AnalyticsExportFailed:
+		return true
+	case AnalyticsExportQueued:
+		return true
+	case AnalyticsExportRunning:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsExportFormat.
+const (
+	AnalyticsExportCSV    AnalyticsExportFormat = "csv"
+	AnalyticsExportNDJSON AnalyticsExportFormat = "ndjson"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsExportFormat enum.
+func (e AnalyticsExportFormat) Valid() bool {
+	switch e {
+	case AnalyticsExportCSV:
+		return true
+	case AnalyticsExportNDJSON:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsExportKind.
+const (
+	AnalyticsExportDaily AnalyticsExportKind = "daily"
+	AnalyticsExportRaw   AnalyticsExportKind = "raw"
+	AnalyticsExportView  AnalyticsExportKind = "view"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsExportKind enum.
+func (e AnalyticsExportKind) Valid() bool {
+	switch e {
+	case AnalyticsExportDaily:
+		return true
+	case AnalyticsExportRaw:
+		return true
+	case AnalyticsExportView:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsFilterOp.
 const (
 	AnalyticsFilterContains    AnalyticsFilterOp = "contains"
@@ -570,6 +633,30 @@ func (e AnalyticsRangePeriod) Valid() bool {
 	}
 }
 
+// Defines values for AnalyticsRawEventType.
+const (
+	AnalyticsRawEventTypeEngagement AnalyticsRawEventType = "engagement"
+	AnalyticsRawEventTypeEvent      AnalyticsRawEventType = "event"
+	AnalyticsRawEventTypePageview   AnalyticsRawEventType = "pageview"
+	AnalyticsRawEventTypeScreen     AnalyticsRawEventType = "screen"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsRawEventType enum.
+func (e AnalyticsRawEventType) Valid() bool {
+	switch e {
+	case AnalyticsRawEventTypeEngagement:
+		return true
+	case AnalyticsRawEventTypeEvent:
+		return true
+	case AnalyticsRawEventTypePageview:
+		return true
+	case AnalyticsRawEventTypeScreen:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsResultMetaServedFrom.
 const (
 	AnalyticsServedMixed   AnalyticsResultMetaServedFrom = "mixed"
@@ -585,6 +672,42 @@ func (e AnalyticsResultMetaServedFrom) Valid() bool {
 	case AnalyticsServedRaw:
 		return true
 	case AnalyticsServedRollups:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsShareView.
+const (
+	AnalyticsShareDevices   AnalyticsShareView = "devices"
+	AnalyticsShareEvents    AnalyticsShareView = "events"
+	AnalyticsShareGoals     AnalyticsShareView = "goals"
+	AnalyticsShareLocations AnalyticsShareView = "locations"
+	AnalyticsShareOverview  AnalyticsShareView = "overview"
+	AnalyticsSharePages     AnalyticsShareView = "pages"
+	AnalyticsShareRealtime  AnalyticsShareView = "realtime"
+	AnalyticsShareSources   AnalyticsShareView = "sources"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsShareView enum.
+func (e AnalyticsShareView) Valid() bool {
+	switch e {
+	case AnalyticsShareDevices:
+		return true
+	case AnalyticsShareEvents:
+		return true
+	case AnalyticsShareGoals:
+		return true
+	case AnalyticsShareLocations:
+		return true
+	case AnalyticsShareOverview:
+		return true
+	case AnalyticsSharePages:
+		return true
+	case AnalyticsShareRealtime:
+		return true
+	case AnalyticsShareSources:
 		return true
 	default:
 		return false
@@ -4503,6 +4626,10 @@ type AnalyticsDropCounts struct {
 	Rate int64 `json:"rate"`
 }
 
+// AnalyticsEmbedOrigin A site whose pages may frame the link: `https://` (or `http://`) and a host with an
+// optional port, nothing after it; `https://*.example.com` allows every subdomain.
+type AnalyticsEmbedOrigin = string
+
 // AnalyticsEvent One event. Keys the server does not know are ignored, so newer scripts keep working with
 // older servers.
 type AnalyticsEvent struct {
@@ -4641,6 +4768,83 @@ type AnalyticsEventsResult struct {
 //
 // Examples: 203.0.113.7, 198.51.100.0/24
 type AnalyticsExcludedAddress = string
+
+// AnalyticsExport defines model for AnalyticsExport.
+type AnalyticsExport struct {
+	CreatedAt time.Time `json:"created_at"`
+
+	// CreatedBy The member who asked for it; absent for API keys and removed members.
+	CreatedBy *uuid.UUID `json:"created_by,omitempty"`
+
+	// Error Why a `failed` export failed: `too_large`, `needs_raw_window`, `invalid_query` (with the
+	// reason after a colon) or `internal`.
+	Error *string `json:"error,omitempty"`
+
+	// ExpiresAt When the export and its file are deleted, seven days after it was made or finished.
+	ExpiresAt time.Time `json:"expires_at"`
+
+	// FileName The file's name, when it is `done`.
+	FileName   *string               `json:"file_name,omitempty"`
+	FinishedAt *time.Time            `json:"finished_at,omitempty"`
+	Format     AnalyticsExportFormat `json:"format"`
+	From       openapi_types.Date    `json:"from"`
+	Id         uuid.UUID             `json:"id"`
+	Kind       AnalyticsExportKind   `json:"kind"`
+
+	// Progress Percent of the work done.
+	Progress   int       `json:"progress"`
+	PropertyId uuid.UUID `json:"property_id"`
+
+	// Rows Rows written so far.
+	Rows      int64                 `json:"rows"`
+	SizeBytes int64                 `json:"size_bytes"`
+	Status    AnalyticsExportStatus `json:"status"`
+	To        openapi_types.Date    `json:"to"`
+}
+
+// AnalyticsExportStatus defines model for AnalyticsExport.Status.
+type AnalyticsExportStatus string
+
+// AnalyticsExportCreate `view` takes `query` (its own range; `compare`, `limit` and `cursor` are ignored); `daily`
+// and `raw` take `range`, `daily` also an optional `dimension` other than `event` and `prop`.
+// `format` is `csv` by default, and must be `ndjson` for `raw`.
+type AnalyticsExportCreate struct {
+	// Dimension A value of a visit or page. `page` is a path that was viewed (pages are counted by path;
+	// `hostname` tells sites apart), `entry_page` and `exit_page` the first and last of a visit.
+	// `channel` is one of `direct`, `organic_search`, `paid_search`, `social`, `paid_social`,
+	// `email`, `referral`, `ai_assistants`, `internal`; `source` the UTM source, or the named site
+	// (Google, ChatGPT) or host a visit came from; `device` is `desktop`, `mobile` or `tablet`;
+	// `screen_size` is `phone`, `tablet`, `laptop` or `desktop`; `country` an ISO 3166-1 alpha-2
+	// code. `platform` is `web`, `ios`, `android` or `server` (a visit a server event started);
+	// `app_version` the version an app sent, empty on the web. In an app, a page is a screen:
+	// its `hostname` is the app id and `page`, `entry_page` and `exit_page` are screen paths, so
+	// an app property's "Screens" are a `page` breakdown filtered by `platform`. Unknown values are empty strings. `event` is the name of a custom or built-in event
+	// and `prop` the value of the event prop the filter's `prop` (or the query's `prop`) names, empty
+	// for events without it: as
+	// a filter of visits they keep the visits with such an event; in an `event` or `prop`
+	// breakdown they keep the matching events.
+	Dimension *AnalyticsFilterDimension `json:"dimension,omitempty"`
+	Format    *AnalyticsExportFormat    `json:"format,omitempty"`
+	Kind      AnalyticsExportKind       `json:"kind"`
+	Query     *AnalyticsQuery           `json:"query,omitempty"`
+
+	// Range Days of the property's time zone: a `period` ending today (`today`, `yesterday`, `7d`,
+	// `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
+	// `year` are the current calendar month and year to date; `last_month` the one before), or
+	// `from` and `to` (inclusive, at most 400 days apart).
+	Range *AnalyticsRange `json:"range,omitempty"`
+}
+
+// AnalyticsExportFormat defines model for AnalyticsExportFormat.
+type AnalyticsExportFormat string
+
+// AnalyticsExportKind defines model for AnalyticsExportKind.
+type AnalyticsExportKind string
+
+// AnalyticsExportList defines model for AnalyticsExportList.
+type AnalyticsExportList struct {
+	Items []AnalyticsExport `json:"items"`
+}
 
 // AnalyticsFilter `is` and `is_not` compare whole values, `contains` and `not_contains` parts of them (case
 // does not matter), `matches` patterns: on paths `*` is one segment and `**` any number of
@@ -5150,6 +5354,50 @@ type AnalyticsRangeProblem struct {
 	Type string `json:"type"`
 }
 
+// AnalyticsRawEvent One line of a `raw` export. `visit` counts up from 1 within the file and joins a visit's
+// events; it is not the stored visit and says nothing about the visitor. `type` is
+// `pageview`, `screen`, `event` or `engagement`. Places, devices and sources describe the
+// visit as its first event did.
+type AnalyticsRawEvent struct {
+	AppVersion     *string                 `json:"app_version,omitempty"`
+	Browser        *string                 `json:"browser,omitempty"`
+	BrowserVersion *string                 `json:"browser_version,omitempty"`
+	Channel        string                  `json:"channel"`
+	City           *string                 `json:"city,omitempty"`
+	Country        *string                 `json:"country,omitempty"`
+	Currency       *string                 `json:"currency,omitempty"`
+	Day            openapi_types.Date      `json:"day"`
+	Device         *string                 `json:"device,omitempty"`
+	EngagedMs      *int                    `json:"engaged_ms,omitempty"`
+	Hostname       string                  `json:"hostname"`
+	Language       *string                 `json:"language,omitempty"`
+	Name           *string                 `json:"name,omitempty"`
+	Os             *string                 `json:"os,omitempty"`
+	OsVersion      *string                 `json:"os_version,omitempty"`
+	Path           string                  `json:"path"`
+	Platform       string                  `json:"platform"`
+	Props          *map[string]interface{} `json:"props,omitempty"`
+	Referrer       *string                 `json:"referrer,omitempty"`
+	Region         *string                 `json:"region,omitempty"`
+
+	// RevenueMinor Revenue the event carried, in the currency's minor units.
+	RevenueMinor *int64                `json:"revenue_minor,omitempty"`
+	ScreenSize   *string               `json:"screen_size,omitempty"`
+	Scroll       *int                  `json:"scroll,omitempty"`
+	Source       *string               `json:"source,omitempty"`
+	Time         time.Time             `json:"time"`
+	Type         AnalyticsRawEventType `json:"type"`
+	UtmCampaign  *string               `json:"utm_campaign,omitempty"`
+	UtmContent   *string               `json:"utm_content,omitempty"`
+	UtmMedium    *string               `json:"utm_medium,omitempty"`
+	UtmSource    *string               `json:"utm_source,omitempty"`
+	UtmTerm      *string               `json:"utm_term,omitempty"`
+	Visit        int64                 `json:"visit"`
+}
+
+// AnalyticsRawEventType defines model for AnalyticsRawEvent.Type.
+type AnalyticsRawEventType string
+
 // AnalyticsRealtime defines model for AnalyticsRealtime.
 type AnalyticsRealtime struct {
 	Countries []AnalyticsTopValue `json:"countries"`
@@ -5341,6 +5589,116 @@ type AnalyticsServerEvent_Props_AdditionalProperties struct {
 // AnalyticsServerEvents defines model for AnalyticsServerEvents.
 type AnalyticsServerEvents struct {
 	Events []AnalyticsServerEvent `json:"events"`
+}
+
+// AnalyticsShare defines model for AnalyticsShare.
+type AnalyticsShare struct {
+	// Active Neither revoked nor expired.
+	Active    bool      `json:"active"`
+	CreatedAt time.Time `json:"created_at"`
+
+	// CreatedBy The member who made it; absent for API keys and removed members.
+	CreatedBy    *uuid.UUID             `json:"created_by,omitempty"`
+	EmbedOrigins []AnalyticsEmbedOrigin `json:"embed_origins"`
+	ExpiresAt    *time.Time             `json:"expires_at,omitempty"`
+	HasPassword  bool                   `json:"has_password"`
+	Id           uuid.UUID              `json:"id"`
+
+	// LastViewedAt The last time the link's page settings were read, to the minute.
+	LastViewedAt *time.Time `json:"last_viewed_at,omitempty"`
+
+	// Name What the link is for, shown to members only.
+	Name       string     `json:"name"`
+	PropertyId uuid.UUID  `json:"property_id"`
+	RevokedAt  *time.Time `json:"revoked_at,omitempty"`
+
+	// TokenPrefix The first characters of the token, to tell links apart.
+	TokenPrefix string               `json:"token_prefix"`
+	UpdatedAt   time.Time            `json:"updated_at"`
+	Views       []AnalyticsShareView `json:"views"`
+}
+
+// AnalyticsShareAccess defines model for AnalyticsShareAccess.
+type AnalyticsShareAccess struct {
+	// AccessToken `yuva_sa_…`, sent as `Authorization: Bearer` to the link's other endpoints.
+	AccessToken string    `json:"access_token"`
+	ExpiresAt   time.Time `json:"expires_at"`
+}
+
+// AnalyticsShareCreate defines model for AnalyticsShareCreate.
+type AnalyticsShareCreate struct {
+	EmbedOrigins *[]AnalyticsEmbedOrigin `json:"embed_origins,omitempty"`
+
+	// ExpiresAt When the link stops working; in the future.
+	ExpiresAt *time.Time           `json:"expires_at,omitempty"`
+	Name      string               `json:"name"`
+	Password  *string              `json:"password,omitempty"`
+	Views     []AnalyticsShareView `json:"views"`
+}
+
+// AnalyticsShareCreated defines model for AnalyticsShareCreated.
+type AnalyticsShareCreated struct {
+	Share AnalyticsShare `json:"share"`
+
+	// Token The link's token, `yuva_sh_…`; shown only in this answer.
+	Token string `json:"token"`
+
+	// Url The share page, `<public URL>/share/<token>`.
+	Url string `json:"url"`
+}
+
+// AnalyticsShareList defines model for AnalyticsShareList.
+type AnalyticsShareList struct {
+	Items []AnalyticsShare `json:"items"`
+}
+
+// AnalyticsShareUnlock defines model for AnalyticsShareUnlock.
+type AnalyticsShareUnlock struct {
+	Password string `json:"password"`
+}
+
+// AnalyticsShareUpdate defines model for AnalyticsShareUpdate.
+type AnalyticsShareUpdate struct {
+	EmbedOrigins *[]AnalyticsEmbedOrigin `json:"embed_origins,omitempty"`
+
+	// ExpiresAt `null` keeps the link until it is revoked.
+	ExpiresAt nullable.Nullable[time.Time] `json:"expires_at,omitempty"`
+	Name      *string                      `json:"name,omitempty"`
+
+	// Password A new password; `null` removes it.
+	Password nullable.Nullable[string] `json:"password,omitempty"`
+	Views    *[]AnalyticsShareView     `json:"views,omitempty"`
+}
+
+// AnalyticsShareView A part of the property's report a share link shows: `overview` (totals and the chart),
+// `realtime`, `pages`, `sources`, `locations`, `devices`, `events`, `goals`.
+type AnalyticsShareView string
+
+// AnalyticsSharedPage With `password_required` and no valid access token only that field is present; otherwise
+// everything the page shows.
+type AnalyticsSharedPage struct {
+	ExpiresAt *time.Time      `json:"expires_at,omitempty"`
+	Geoip     *AnalyticsGeoIP `json:"geoip,omitempty"`
+
+	// Goals With the `goals` view, the property's goals.
+	Goals *[]AnalyticsGoal `json:"goals,omitempty"`
+
+	// Name The link's name.
+	Name             *string                  `json:"name,omitempty"`
+	PasswordRequired bool                     `json:"password_required"`
+	Property         *AnalyticsSharedProperty `json:"property,omitempty"`
+
+	// RawWindowFrom The first day queries that need raw rows can serve.
+	RawWindowFrom *openapi_types.Date   `json:"raw_window_from,omitempty"`
+	Views         *[]AnalyticsShareView `json:"views,omitempty"`
+}
+
+// AnalyticsSharedProperty defines model for AnalyticsSharedProperty.
+type AnalyticsSharedProperty struct {
+	Currency  string              `json:"currency"`
+	Name      string              `json:"name"`
+	Platforms []AnalyticsPlatform `json:"platforms"`
+	Timezone  string              `json:"timezone"`
 }
 
 // AnalyticsTopValue defines model for AnalyticsTopValue.
@@ -12740,6 +13098,9 @@ type WorkspaceUpdate struct {
 // AnalyticsAnnotationId defines model for AnalyticsAnnotationId.
 type AnalyticsAnnotationId = uuid.UUID
 
+// AnalyticsExportId defines model for AnalyticsExportId.
+type AnalyticsExportId = uuid.UUID
+
 // AnalyticsFunnelId defines model for AnalyticsFunnelId.
 type AnalyticsFunnelId = uuid.UUID
 
@@ -12751,6 +13112,12 @@ type AnalyticsPropertyId = uuid.UUID
 
 // AnalyticsSegmentId defines model for AnalyticsSegmentId.
 type AnalyticsSegmentId = uuid.UUID
+
+// AnalyticsShareId defines model for AnalyticsShareId.
+type AnalyticsShareId = uuid.UUID
+
+// AnalyticsShareToken defines model for AnalyticsShareToken.
+type AnalyticsShareToken = string
 
 // ApiKeyId defines model for ApiKeyId.
 type ApiKeyId = uuid.UUID
@@ -13067,6 +13434,42 @@ type DeleteAnalyticsDataParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListAnalyticsExportsParams defines parameters for ListAnalyticsExports.
+type ListAnalyticsExportsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateAnalyticsExportParams defines parameters for CreateAnalyticsExport.
+type CreateAnalyticsExportParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteAnalyticsExportParams defines parameters for DeleteAnalyticsExport.
+type DeleteAnalyticsExportParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetAnalyticsExportParams defines parameters for GetAnalyticsExport.
+type GetAnalyticsExportParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DownloadAnalyticsExportParams defines parameters for DownloadAnalyticsExport.
+type DownloadAnalyticsExportParams struct {
+	// WorkspaceId The workspace to act on, for links that cannot send `Yuva-Workspace`.
+	WorkspaceId *uuid.UUID `form:"workspace_id,omitempty" json:"workspace_id,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // ListAnalyticsFunnelsParams defines parameters for ListAnalyticsFunnels.
 type ListAnalyticsFunnelsParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
@@ -13194,6 +13597,39 @@ type DeleteAnalyticsSegmentParams struct {
 
 // UpdateAnalyticsSegmentParams defines parameters for UpdateAnalyticsSegment.
 type UpdateAnalyticsSegmentParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListAnalyticsSharesParams defines parameters for ListAnalyticsShares.
+type ListAnalyticsSharesParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateAnalyticsShareParams defines parameters for CreateAnalyticsShare.
+type CreateAnalyticsShareParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteAnalyticsShareParams defines parameters for DeleteAnalyticsShare.
+type DeleteAnalyticsShareParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateAnalyticsShareParams defines parameters for UpdateAnalyticsShare.
+type UpdateAnalyticsShareParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// RevokeAnalyticsShareParams defines parameters for RevokeAnalyticsShare.
+type RevokeAnalyticsShareParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -15096,6 +15532,12 @@ type WebhookSubscriptionUpdatedParams struct {
 	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
 }
 
+// UnlockSharedAnalyticsJSONRequestBody defines body for UnlockSharedAnalytics for application/json ContentType.
+type UnlockSharedAnalyticsJSONRequestBody = AnalyticsShareUnlock
+
+// QuerySharedAnalyticsJSONRequestBody defines body for QuerySharedAnalytics for application/json ContentType.
+type QuerySharedAnalyticsJSONRequestBody = AnalyticsQuery
+
 // CollectAnalyticsJSONRequestBody defines body for CollectAnalytics for application/json ContentType.
 type CollectAnalyticsJSONRequestBody = AnalyticsBatch
 
@@ -15186,6 +15628,9 @@ type DeleteAnalyticsDataJSONRequestBody = AnalyticsDataDeletion
 // SendAnalyticsEventsJSONRequestBody defines body for SendAnalyticsEvents for application/json ContentType.
 type SendAnalyticsEventsJSONRequestBody = AnalyticsServerEvents
 
+// CreateAnalyticsExportJSONRequestBody defines body for CreateAnalyticsExport for application/json ContentType.
+type CreateAnalyticsExportJSONRequestBody = AnalyticsExportCreate
+
 // CreateAnalyticsFunnelJSONRequestBody defines body for CreateAnalyticsFunnel for application/json ContentType.
 type CreateAnalyticsFunnelJSONRequestBody = AnalyticsFunnelCreate
 
@@ -15206,6 +15651,12 @@ type CreateAnalyticsSegmentJSONRequestBody = AnalyticsSegmentCreate
 
 // UpdateAnalyticsSegmentJSONRequestBody defines body for UpdateAnalyticsSegment for application/json ContentType.
 type UpdateAnalyticsSegmentJSONRequestBody = AnalyticsSegmentUpdate
+
+// CreateAnalyticsShareJSONRequestBody defines body for CreateAnalyticsShare for application/json ContentType.
+type CreateAnalyticsShareJSONRequestBody = AnalyticsShareCreate
+
+// UpdateAnalyticsShareJSONRequestBody defines body for UpdateAnalyticsShare for application/json ContentType.
+type UpdateAnalyticsShareJSONRequestBody = AnalyticsShareUpdate
 
 // CreateApiKeyJSONRequestBody defines body for CreateApiKey for application/json ContentType.
 type CreateApiKeyJSONRequestBody = ApiKeyCreate
@@ -18598,6 +19049,95 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 // The interface specification for the client above.
 type ClientInterface interface {
 
+	// GetSharedAnalytics A share link's page settings
+	//
+	// What the public share page (`<public URL>/share/<token>`, served by the panel) needs first.
+	// A link with a password answers only `password_required: true` until the request carries
+	// an access token from `unlockSharedAnalytics` as `Authorization: Bearer yuva_sa_…`; then,
+	// like a link without a password, it answers the views it may show, the property's name,
+	// time zone and currency, the raw window, its goals (with the `goals` view) and the GeoIP
+	// attribution to show next to locations.
+	//
+	// The share page itself is served with `Content-Security-Policy: frame-ancestors` set to the
+	// link's `embed_origins` (`'none'` without them, an unknown, revoked or expired link included),
+	// so only those sites can show it in an iframe; it carries no analytics script.
+	//
+	// An unknown, revoked or expired token answers `404`. Every share endpoint is limited per IP
+	// address (`429 rate_limited` with `Retry-After`).
+	//
+	// Corresponds with GET /client/v1/analytics-shares/{token} (the `GetSharedAnalytics` operationId).
+	GetSharedAnalytics(ctx context.Context, token AnalyticsShareToken, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UnlockSharedAnalyticsWithBody Unlock a share link with its password
+	//
+	// Answers an access token for the link's other endpoints, valid for 12 hours or until the
+	// link expires, is revoked or gets another password. A wrong password answers
+	// `401 wrong_password`; an IP address may try 10 times a minute per link and 30 times a minute
+	// in all (`429 rate_limited`). A link without a password answers `409 no_password`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /client/v1/analytics-shares/{token}/access (the `UnlockSharedAnalytics` operationId).
+	UnlockSharedAnalyticsWithBody(ctx context.Context, token AnalyticsShareToken, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UnlockSharedAnalytics Unlock a share link with its password
+	//
+	// Answers an access token for the link's other endpoints, valid for 12 hours or until the
+	// link expires, is revoked or gets another password. A wrong password answers
+	// `401 wrong_password`; an IP address may try 10 times a minute per link and 30 times a minute
+	// in all (`429 rate_limited`). A link without a password answers `409 no_password`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /client/v1/analytics-shares/{token}/access (the `UnlockSharedAnalytics` operationId).
+	UnlockSharedAnalytics(ctx context.Context, token AnalyticsShareToken, body UnlockSharedAnalyticsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// QuerySharedAnalyticsWithBody Query a shared property's numbers
+	//
+	// `queryAnalytics` for a share link, with the same body and answer, limited to the link's
+	// views: totals and time grains with any view; `page`, `entry_page`, `exit_page` and
+	// `hostname` with `pages`; `channel`, `source`, `referrer` and the UTM dimensions with
+	// `sources`; `country`, `region` and `city` with `locations`; `device`, `browser`,
+	// `browser_version`, `os`, `os_version`, `screen_size`, `language`, `platform` and
+	// `app_version` with `devices`; `event`, `prop` and the `events` metric with `events`; a
+	// `goal_id` of the property and the goal metrics with `goals`. Dimensions and filters outside
+	// them answer `403 view_not_shared`; `segment_id` is refused (`400`).
+	//
+	// A link with a password needs its access token (`401 share_password_required`). Answers are
+	// cached like `queryAnalytics` and count towards the workspace's four concurrent queries.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /client/v1/analytics-shares/{token}/query (the `QuerySharedAnalytics` operationId).
+	QuerySharedAnalyticsWithBody(ctx context.Context, token AnalyticsShareToken, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// QuerySharedAnalytics Query a shared property's numbers
+	//
+	// `queryAnalytics` for a share link, with the same body and answer, limited to the link's
+	// views: totals and time grains with any view; `page`, `entry_page`, `exit_page` and
+	// `hostname` with `pages`; `channel`, `source`, `referrer` and the UTM dimensions with
+	// `sources`; `country`, `region` and `city` with `locations`; `device`, `browser`,
+	// `browser_version`, `os`, `os_version`, `screen_size`, `language`, `platform` and
+	// `app_version` with `devices`; `event`, `prop` and the `events` metric with `events`; a
+	// `goal_id` of the property and the goal metrics with `goals`. Dimensions and filters outside
+	// them answer `403 view_not_shared`; `segment_id` is refused (`400`).
+	//
+	// A link with a password needs its access token (`401 share_password_required`). Answers are
+	// cached like `queryAnalytics` and count towards the workspace's four concurrent queries.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /client/v1/analytics-shares/{token}/query (the `QuerySharedAnalytics` operationId).
+	QuerySharedAnalytics(ctx context.Context, token AnalyticsShareToken, body QuerySharedAnalyticsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetSharedAnalyticsRealtime A shared property's last 30 minutes
+	//
+	// `getAnalyticsRealtime` for a share link with the `realtime` view (`403 view_not_shared`
+	// otherwise). A link with a password needs its access token (`401 share_password_required`).
+	//
+	// Corresponds with GET /client/v1/analytics-shares/{token}/realtime (the `GetSharedAnalyticsRealtime` operationId).
+	GetSharedAnalyticsRealtime(ctx context.Context, token AnalyticsShareToken, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// CollectAnalyticsWithBody Send analytics events
 	//
 	// Called by `/yuva-analytics.js` and `useyuva/analytics` with an analytics property's public
@@ -19862,6 +20402,103 @@ type ClientInterface interface {
 	// Corresponds with POST /v1/analytics/properties/{propertyId}/events (the `SendAnalyticsEvents` operationId).
 	SendAnalyticsEvents(ctx context.Context, propertyId AnalyticsPropertyId, body SendAnalyticsEventsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListAnalyticsExports List a property's exports
+	//
+	// Newest first, until each expires. `raw` exports are listed only for callers who may make
+	// them.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/exports (the `ListAnalyticsExports` operationId).
+	ListAnalyticsExports(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsExportsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateAnalyticsExportWithBody Export a property's numbers or raw events
+	//
+	// A background job writes the file to the server's storage; poll `getAnalyticsExport` until
+	// `status` is `done`, then download it with `downloadAnalyticsExport`. Files are kept seven
+	// days (`expires_at`) and then deleted.
+	//
+	// - `view`: the rows of one `query` (as `queryAnalytics` answers it, every row, no
+	//   comparison), CSV or NDJSON.
+	// - `daily`: one row per day of `range` (at most 400 days) with visitors, visits, page views,
+	//   views per visit, bounce rate, visit duration, time on page and scroll depth, broken down
+	//   by `dimension` when given, CSV or NDJSON.
+	// - `raw`: every stored event of `range` (at most 31 days, inside the raw window of
+	//   `YUVA_ANALYTICS_RAW_DAYS`, else `422 needs_raw_window`) with its visit's description, as
+	//   NDJSON only (`AnalyticsRawEvent`). It carries no visitor hash, salt, address, contact or
+	//   stored visit id: a visit is a number that counts up within the file. Bots are left out.
+	//   Raw rows are pseudonymous personal data, so raw exports need `analytics:manage` and an
+	//   owner, an admin or an API key without an inbox limit (`403`).
+	//
+	// CSV cells that start with `=`, `+`, `-`, `@`, a tab or a carriage return get a leading `'`
+	// so spreadsheets do not run them as formulas. A file larger than 1 GiB fails with
+	// `error` `too_large`. A workspace runs at most three exports at a time (`429 rate_limited`).
+	//
+	// Scope: `analytics:read`; `analytics:manage` for `raw`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/exports (the `CreateAnalyticsExport` operationId).
+	CreateAnalyticsExportWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsExportParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateAnalyticsExport Export a property's numbers or raw events
+	//
+	// A background job writes the file to the server's storage; poll `getAnalyticsExport` until
+	// `status` is `done`, then download it with `downloadAnalyticsExport`. Files are kept seven
+	// days (`expires_at`) and then deleted.
+	//
+	// - `view`: the rows of one `query` (as `queryAnalytics` answers it, every row, no
+	//   comparison), CSV or NDJSON.
+	// - `daily`: one row per day of `range` (at most 400 days) with visitors, visits, page views,
+	//   views per visit, bounce rate, visit duration, time on page and scroll depth, broken down
+	//   by `dimension` when given, CSV or NDJSON.
+	// - `raw`: every stored event of `range` (at most 31 days, inside the raw window of
+	//   `YUVA_ANALYTICS_RAW_DAYS`, else `422 needs_raw_window`) with its visit's description, as
+	//   NDJSON only (`AnalyticsRawEvent`). It carries no visitor hash, salt, address, contact or
+	//   stored visit id: a visit is a number that counts up within the file. Bots are left out.
+	//   Raw rows are pseudonymous personal data, so raw exports need `analytics:manage` and an
+	//   owner, an admin or an API key without an inbox limit (`403`).
+	//
+	// CSV cells that start with `=`, `+`, `-`, `@`, a tab or a carriage return get a leading `'`
+	// so spreadsheets do not run them as formulas. A file larger than 1 GiB fails with
+	// `error` `too_large`. A workspace runs at most three exports at a time (`429 rate_limited`).
+	//
+	// Scope: `analytics:read`; `analytics:manage` for `raw`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/exports (the `CreateAnalyticsExport` operationId).
+	CreateAnalyticsExport(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsExportParams, body CreateAnalyticsExportJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteAnalyticsExport Delete an export
+	//
+	// Deletes the export and its file before it expires; one still running stops at its next
+	// step.
+	//
+	// Scope: `analytics:read`; `analytics:manage` for `raw`.
+	//
+	// Corresponds with DELETE /v1/analytics/properties/{propertyId}/exports/{exportId} (the `DeleteAnalyticsExport` operationId).
+	DeleteAnalyticsExport(ctx context.Context, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params *DeleteAnalyticsExportParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetAnalyticsExport An export and its progress
+	//
+	// Scope: `analytics:read`; `analytics:manage` for `raw`.
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/exports/{exportId} (the `GetAnalyticsExport` operationId).
+	GetAnalyticsExport(ctx context.Context, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params *GetAnalyticsExportParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DownloadAnalyticsExport Download an export's file
+	//
+	// `text/csv` or `application/x-ndjson`, always as a download (`Content-Disposition:
+	// attachment`). An export that is not `done` answers `409 export_not_ready`; an expired or
+	// deleted one `404`. Links cannot carry headers, so the workspace can also be named with the
+	// `workspace_id` query parameter instead of `Yuva-Workspace`.
+	//
+	// Scope: `analytics:read`; `analytics:manage` for `raw`.
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/exports/{exportId}/download (the `DownloadAnalyticsExport` operationId).
+	DownloadAnalyticsExport(ctx context.Context, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params *DownloadAnalyticsExportParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListAnalyticsFunnels List a property's funnels
 	//
 	// Oldest first. Scope: `analytics:read`.
@@ -20168,6 +20805,98 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/segments/{segmentId} (the `UpdateAnalyticsSegment` operationId).
 	UpdateAnalyticsSegment(ctx context.Context, propertyId AnalyticsPropertyId, segmentId AnalyticsSegmentId, params *UpdateAnalyticsSegmentParams, body UpdateAnalyticsSegmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListAnalyticsShares List a property's share links
+	//
+	// Newest first, revoked and expired links included (`active` tells them apart). A link's
+	// token is shown only once, when it is made; the list carries its first characters as
+	// `token_prefix`.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/shares (the `ListAnalyticsShares` operationId).
+	ListAnalyticsShares(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsSharesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateAnalyticsShareWithBody Make a read-only share link
+	//
+	// A link anyone holding it can open at `<public URL>/share/<token>` without signing in. It
+	// shows only the `views` it lists, of this property only, read-only. With a `password` the
+	// viewer unlocks it first (`POST /client/v1/analytics-shares/{token}/access`); the password
+	// is stored as an argon2id hash and the token as a SHA-256 hash, so neither can be shown
+	// again: the answer carries the `token` and the `url` once. `expires_at` ends the link;
+	// `embed_origins` lists the sites whose pages may show it in an iframe (the share page's
+	// `frame-ancestors`); without them no other site can frame it. A property has at most 50
+	// links (`403 share_limit`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/shares (the `CreateAnalyticsShare` operationId).
+	CreateAnalyticsShareWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsShareParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateAnalyticsShare Make a read-only share link
+	//
+	// A link anyone holding it can open at `<public URL>/share/<token>` without signing in. It
+	// shows only the `views` it lists, of this property only, read-only. With a `password` the
+	// viewer unlocks it first (`POST /client/v1/analytics-shares/{token}/access`); the password
+	// is stored as an argon2id hash and the token as a SHA-256 hash, so neither can be shown
+	// again: the answer carries the `token` and the `url` once. `expires_at` ends the link;
+	// `embed_origins` lists the sites whose pages may show it in an iframe (the share page's
+	// `frame-ancestors`); without them no other site can frame it. A property has at most 50
+	// links (`403 share_limit`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/shares (the `CreateAnalyticsShare` operationId).
+	CreateAnalyticsShare(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsShareParams, body CreateAnalyticsShareJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteAnalyticsShare Delete a share link
+	//
+	// The link stops working at once and leaves the list.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Corresponds with DELETE /v1/analytics/properties/{propertyId}/shares/{shareId} (the `DeleteAnalyticsShare` operationId).
+	DeleteAnalyticsShare(ctx context.Context, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *DeleteAnalyticsShareParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateAnalyticsShareWithBody Change a share link
+	//
+	// Changes the given fields; the token stays. A new `password` (or `password: null`, which
+	// removes it) ends every viewer's unlocked access at once. `expires_at: null` keeps the link
+	// until it is revoked. A revoked link cannot be changed (`409 share_revoked`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/shares/{shareId} (the `UpdateAnalyticsShare` operationId).
+	UpdateAnalyticsShareWithBody(ctx context.Context, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *UpdateAnalyticsShareParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateAnalyticsShare Change a share link
+	//
+	// Changes the given fields; the token stays. A new `password` (or `password: null`, which
+	// removes it) ends every viewer's unlocked access at once. `expires_at: null` keeps the link
+	// until it is revoked. A revoked link cannot be changed (`409 share_revoked`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/shares/{shareId} (the `UpdateAnalyticsShare` operationId).
+	UpdateAnalyticsShare(ctx context.Context, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *UpdateAnalyticsShareParams, body UpdateAnalyticsShareJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RevokeAnalyticsShare Revoke a share link
+	//
+	// The link stops working at once and stays in the list with `revoked_at`. Revoking a revoked
+	// link changes nothing.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/shares/{shareId}/revoke (the `RevokeAnalyticsShare` operationId).
+	RevokeAnalyticsShare(ctx context.Context, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *RevokeAnalyticsShareParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListApiKeys List API keys
 	//
@@ -23929,6 +24658,155 @@ type ClientInterface interface {
 	CreateWorkspace(ctx context.Context, body CreateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
+// GetSharedAnalytics A share link's page settings
+//
+// What the public share page (`<public URL>/share/<token>`, served by the panel) needs first.
+// A link with a password answers only `password_required: true` until the request carries
+// an access token from `unlockSharedAnalytics` as `Authorization: Bearer yuva_sa_…`; then,
+// like a link without a password, it answers the views it may show, the property's name,
+// time zone and currency, the raw window, its goals (with the `goals` view) and the GeoIP
+// attribution to show next to locations.
+//
+// The share page itself is served with `Content-Security-Policy: frame-ancestors` set to the
+// link's `embed_origins` (`'none'` without them, an unknown, revoked or expired link included),
+// so only those sites can show it in an iframe; it carries no analytics script.
+//
+// An unknown, revoked or expired token answers `404`. Every share endpoint is limited per IP
+// address (`429 rate_limited` with `Retry-After`).
+//
+// Corresponds with GET /client/v1/analytics-shares/{token} (the `GetSharedAnalytics` operationId).
+func (c *Client) GetSharedAnalytics(ctx context.Context, token AnalyticsShareToken, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetSharedAnalyticsRequest(c.Server, token)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UnlockSharedAnalyticsWithBody Unlock a share link with its password
+//
+// Answers an access token for the link's other endpoints, valid for 12 hours or until the
+// link expires, is revoked or gets another password. A wrong password answers
+// `401 wrong_password`; an IP address may try 10 times a minute per link and 30 times a minute
+// in all (`429 rate_limited`). A link without a password answers `409 no_password`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /client/v1/analytics-shares/{token}/access (the `UnlockSharedAnalytics` operationId).
+func (c *Client) UnlockSharedAnalyticsWithBody(ctx context.Context, token AnalyticsShareToken, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUnlockSharedAnalyticsRequestWithBody(c.Server, token, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UnlockSharedAnalytics Unlock a share link with its password
+//
+// Answers an access token for the link's other endpoints, valid for 12 hours or until the
+// link expires, is revoked or gets another password. A wrong password answers
+// `401 wrong_password`; an IP address may try 10 times a minute per link and 30 times a minute
+// in all (`429 rate_limited`). A link without a password answers `409 no_password`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /client/v1/analytics-shares/{token}/access (the `UnlockSharedAnalytics` operationId).
+func (c *Client) UnlockSharedAnalytics(ctx context.Context, token AnalyticsShareToken, body UnlockSharedAnalyticsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUnlockSharedAnalyticsRequest(c.Server, token, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// QuerySharedAnalyticsWithBody Query a shared property's numbers
+//
+// `queryAnalytics` for a share link, with the same body and answer, limited to the link's
+// views: totals and time grains with any view; `page`, `entry_page`, `exit_page` and
+// `hostname` with `pages`; `channel`, `source`, `referrer` and the UTM dimensions with
+// `sources`; `country`, `region` and `city` with `locations`; `device`, `browser`,
+// `browser_version`, `os`, `os_version`, `screen_size`, `language`, `platform` and
+// `app_version` with `devices`; `event`, `prop` and the `events` metric with `events`; a
+// `goal_id` of the property and the goal metrics with `goals`. Dimensions and filters outside
+// them answer `403 view_not_shared`; `segment_id` is refused (`400`).
+//
+// A link with a password needs its access token (`401 share_password_required`). Answers are
+// cached like `queryAnalytics` and count towards the workspace's four concurrent queries.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /client/v1/analytics-shares/{token}/query (the `QuerySharedAnalytics` operationId).
+func (c *Client) QuerySharedAnalyticsWithBody(ctx context.Context, token AnalyticsShareToken, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewQuerySharedAnalyticsRequestWithBody(c.Server, token, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// QuerySharedAnalytics Query a shared property's numbers
+//
+// `queryAnalytics` for a share link, with the same body and answer, limited to the link's
+// views: totals and time grains with any view; `page`, `entry_page`, `exit_page` and
+// `hostname` with `pages`; `channel`, `source`, `referrer` and the UTM dimensions with
+// `sources`; `country`, `region` and `city` with `locations`; `device`, `browser`,
+// `browser_version`, `os`, `os_version`, `screen_size`, `language`, `platform` and
+// `app_version` with `devices`; `event`, `prop` and the `events` metric with `events`; a
+// `goal_id` of the property and the goal metrics with `goals`. Dimensions and filters outside
+// them answer `403 view_not_shared`; `segment_id` is refused (`400`).
+//
+// A link with a password needs its access token (`401 share_password_required`). Answers are
+// cached like `queryAnalytics` and count towards the workspace's four concurrent queries.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /client/v1/analytics-shares/{token}/query (the `QuerySharedAnalytics` operationId).
+func (c *Client) QuerySharedAnalytics(ctx context.Context, token AnalyticsShareToken, body QuerySharedAnalyticsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewQuerySharedAnalyticsRequest(c.Server, token, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetSharedAnalyticsRealtime A shared property's last 30 minutes
+//
+// `getAnalyticsRealtime` for a share link with the `realtime` view (`403 view_not_shared`
+// otherwise). A link with a password needs its access token (`401 share_password_required`).
+//
+// Corresponds with GET /client/v1/analytics-shares/{token}/realtime (the `GetSharedAnalyticsRealtime` operationId).
+func (c *Client) GetSharedAnalyticsRealtime(ctx context.Context, token AnalyticsShareToken, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetSharedAnalyticsRealtimeRequest(c.Server, token)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // CollectAnalyticsWithBody Send analytics events
 //
 // Called by `/yuva-analytics.js` and `useyuva/analytics` with an analytics property's public
@@ -26023,6 +26901,163 @@ func (c *Client) SendAnalyticsEvents(ctx context.Context, propertyId AnalyticsPr
 	return c.Client.Do(req)
 }
 
+// ListAnalyticsExports List a property's exports
+//
+// Newest first, until each expires. `raw` exports are listed only for callers who may make
+// them.
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/exports (the `ListAnalyticsExports` operationId).
+func (c *Client) ListAnalyticsExports(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsExportsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListAnalyticsExportsRequest(c.Server, propertyId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateAnalyticsExportWithBody Export a property's numbers or raw events
+//
+// A background job writes the file to the server's storage; poll `getAnalyticsExport` until
+// `status` is `done`, then download it with `downloadAnalyticsExport`. Files are kept seven
+// days (`expires_at`) and then deleted.
+//
+//   - `view`: the rows of one `query` (as `queryAnalytics` answers it, every row, no
+//     comparison), CSV or NDJSON.
+//   - `daily`: one row per day of `range` (at most 400 days) with visitors, visits, page views,
+//     views per visit, bounce rate, visit duration, time on page and scroll depth, broken down
+//     by `dimension` when given, CSV or NDJSON.
+//   - `raw`: every stored event of `range` (at most 31 days, inside the raw window of
+//     `YUVA_ANALYTICS_RAW_DAYS`, else `422 needs_raw_window`) with its visit's description, as
+//     NDJSON only (`AnalyticsRawEvent`). It carries no visitor hash, salt, address, contact or
+//     stored visit id: a visit is a number that counts up within the file. Bots are left out.
+//     Raw rows are pseudonymous personal data, so raw exports need `analytics:manage` and an
+//     owner, an admin or an API key without an inbox limit (`403`).
+//
+// CSV cells that start with `=`, `+`, `-`, `@`, a tab or a carriage return get a leading `'`
+// so spreadsheets do not run them as formulas. A file larger than 1 GiB fails with
+// `error` `too_large`. A workspace runs at most three exports at a time (`429 rate_limited`).
+//
+// Scope: `analytics:read`; `analytics:manage` for `raw`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/exports (the `CreateAnalyticsExport` operationId).
+func (c *Client) CreateAnalyticsExportWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsExportParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAnalyticsExportRequestWithBody(c.Server, propertyId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateAnalyticsExport Export a property's numbers or raw events
+//
+// A background job writes the file to the server's storage; poll `getAnalyticsExport` until
+// `status` is `done`, then download it with `downloadAnalyticsExport`. Files are kept seven
+// days (`expires_at`) and then deleted.
+//
+//   - `view`: the rows of one `query` (as `queryAnalytics` answers it, every row, no
+//     comparison), CSV or NDJSON.
+//   - `daily`: one row per day of `range` (at most 400 days) with visitors, visits, page views,
+//     views per visit, bounce rate, visit duration, time on page and scroll depth, broken down
+//     by `dimension` when given, CSV or NDJSON.
+//   - `raw`: every stored event of `range` (at most 31 days, inside the raw window of
+//     `YUVA_ANALYTICS_RAW_DAYS`, else `422 needs_raw_window`) with its visit's description, as
+//     NDJSON only (`AnalyticsRawEvent`). It carries no visitor hash, salt, address, contact or
+//     stored visit id: a visit is a number that counts up within the file. Bots are left out.
+//     Raw rows are pseudonymous personal data, so raw exports need `analytics:manage` and an
+//     owner, an admin or an API key without an inbox limit (`403`).
+//
+// CSV cells that start with `=`, `+`, `-`, `@`, a tab or a carriage return get a leading `'`
+// so spreadsheets do not run them as formulas. A file larger than 1 GiB fails with
+// `error` `too_large`. A workspace runs at most three exports at a time (`429 rate_limited`).
+//
+// Scope: `analytics:read`; `analytics:manage` for `raw`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/exports (the `CreateAnalyticsExport` operationId).
+func (c *Client) CreateAnalyticsExport(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsExportParams, body CreateAnalyticsExportJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAnalyticsExportRequest(c.Server, propertyId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteAnalyticsExport Delete an export
+//
+// Deletes the export and its file before it expires; one still running stops at its next
+// step.
+//
+// Scope: `analytics:read`; `analytics:manage` for `raw`.
+//
+// Corresponds with DELETE /v1/analytics/properties/{propertyId}/exports/{exportId} (the `DeleteAnalyticsExport` operationId).
+func (c *Client) DeleteAnalyticsExport(ctx context.Context, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params *DeleteAnalyticsExportParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteAnalyticsExportRequest(c.Server, propertyId, exportId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetAnalyticsExport An export and its progress
+//
+// Scope: `analytics:read`; `analytics:manage` for `raw`.
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/exports/{exportId} (the `GetAnalyticsExport` operationId).
+func (c *Client) GetAnalyticsExport(ctx context.Context, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params *GetAnalyticsExportParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetAnalyticsExportRequest(c.Server, propertyId, exportId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DownloadAnalyticsExport Download an export's file
+//
+// `text/csv` or `application/x-ndjson`, always as a download (`Content-Disposition:
+// attachment`). An export that is not `done` answers `409 export_not_ready`; an expired or
+// deleted one `404`. Links cannot carry headers, so the workspace can also be named with the
+// `workspace_id` query parameter instead of `Yuva-Workspace`.
+//
+// Scope: `analytics:read`; `analytics:manage` for `raw`.
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/exports/{exportId}/download (the `DownloadAnalyticsExport` operationId).
+func (c *Client) DownloadAnalyticsExport(ctx context.Context, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params *DownloadAnalyticsExportParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDownloadAnalyticsExportRequest(c.Server, propertyId, exportId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // ListAnalyticsFunnels List a property's funnels
 //
 // Oldest first. Scope: `analytics:read`.
@@ -26560,6 +27595,168 @@ func (c *Client) UpdateAnalyticsSegmentWithBody(ctx context.Context, propertyId 
 // Corresponds with PATCH /v1/analytics/properties/{propertyId}/segments/{segmentId} (the `UpdateAnalyticsSegment` operationId).
 func (c *Client) UpdateAnalyticsSegment(ctx context.Context, propertyId AnalyticsPropertyId, segmentId AnalyticsSegmentId, params *UpdateAnalyticsSegmentParams, body UpdateAnalyticsSegmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateAnalyticsSegmentRequest(c.Server, propertyId, segmentId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListAnalyticsShares List a property's share links
+//
+// Newest first, revoked and expired links included (`active` tells them apart). A link's
+// token is shown only once, when it is made; the list carries its first characters as
+// `token_prefix`.
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/shares (the `ListAnalyticsShares` operationId).
+func (c *Client) ListAnalyticsShares(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsSharesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListAnalyticsSharesRequest(c.Server, propertyId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateAnalyticsShareWithBody Make a read-only share link
+//
+// A link anyone holding it can open at `<public URL>/share/<token>` without signing in. It
+// shows only the `views` it lists, of this property only, read-only. With a `password` the
+// viewer unlocks it first (`POST /client/v1/analytics-shares/{token}/access`); the password
+// is stored as an argon2id hash and the token as a SHA-256 hash, so neither can be shown
+// again: the answer carries the `token` and the `url` once. `expires_at` ends the link;
+// `embed_origins` lists the sites whose pages may show it in an iframe (the share page's
+// `frame-ancestors`); without them no other site can frame it. A property has at most 50
+// links (`403 share_limit`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/shares (the `CreateAnalyticsShare` operationId).
+func (c *Client) CreateAnalyticsShareWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsShareParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAnalyticsShareRequestWithBody(c.Server, propertyId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateAnalyticsShare Make a read-only share link
+//
+// A link anyone holding it can open at `<public URL>/share/<token>` without signing in. It
+// shows only the `views` it lists, of this property only, read-only. With a `password` the
+// viewer unlocks it first (`POST /client/v1/analytics-shares/{token}/access`); the password
+// is stored as an argon2id hash and the token as a SHA-256 hash, so neither can be shown
+// again: the answer carries the `token` and the `url` once. `expires_at` ends the link;
+// `embed_origins` lists the sites whose pages may show it in an iframe (the share page's
+// `frame-ancestors`); without them no other site can frame it. A property has at most 50
+// links (`403 share_limit`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/shares (the `CreateAnalyticsShare` operationId).
+func (c *Client) CreateAnalyticsShare(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsShareParams, body CreateAnalyticsShareJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAnalyticsShareRequest(c.Server, propertyId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteAnalyticsShare Delete a share link
+//
+// The link stops working at once and leaves the list.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Corresponds with DELETE /v1/analytics/properties/{propertyId}/shares/{shareId} (the `DeleteAnalyticsShare` operationId).
+func (c *Client) DeleteAnalyticsShare(ctx context.Context, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *DeleteAnalyticsShareParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteAnalyticsShareRequest(c.Server, propertyId, shareId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateAnalyticsShareWithBody Change a share link
+//
+// Changes the given fields; the token stays. A new `password` (or `password: null`, which
+// removes it) ends every viewer's unlocked access at once. `expires_at: null` keeps the link
+// until it is revoked. A revoked link cannot be changed (`409 share_revoked`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/shares/{shareId} (the `UpdateAnalyticsShare` operationId).
+func (c *Client) UpdateAnalyticsShareWithBody(ctx context.Context, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *UpdateAnalyticsShareParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateAnalyticsShareRequestWithBody(c.Server, propertyId, shareId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateAnalyticsShare Change a share link
+//
+// Changes the given fields; the token stays. A new `password` (or `password: null`, which
+// removes it) ends every viewer's unlocked access at once. `expires_at: null` keeps the link
+// until it is revoked. A revoked link cannot be changed (`409 share_revoked`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/shares/{shareId} (the `UpdateAnalyticsShare` operationId).
+func (c *Client) UpdateAnalyticsShare(ctx context.Context, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *UpdateAnalyticsShareParams, body UpdateAnalyticsShareJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateAnalyticsShareRequest(c.Server, propertyId, shareId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RevokeAnalyticsShare Revoke a share link
+//
+// The link stops working at once and stays in the list with `revoked_at`. Revoking a revoked
+// link changes nothing.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/shares/{shareId}/revoke (the `RevokeAnalyticsShare` operationId).
+func (c *Client) RevokeAnalyticsShare(ctx context.Context, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *RevokeAnalyticsShareParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRevokeAnalyticsShareRequest(c.Server, propertyId, shareId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -33189,6 +34386,168 @@ func (c *Client) CreateWorkspace(ctx context.Context, body CreateWorkspaceJSONRe
 	return c.Client.Do(req)
 }
 
+// NewGetSharedAnalyticsRequest constructs an http.Request for the GetSharedAnalytics method
+func NewGetSharedAnalyticsRequest(server string, token AnalyticsShareToken) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "token", token, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/analytics-shares/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUnlockSharedAnalyticsRequest calls the generic UnlockSharedAnalytics builder with application/json body
+func NewUnlockSharedAnalyticsRequest(server string, token AnalyticsShareToken, body UnlockSharedAnalyticsJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUnlockSharedAnalyticsRequestWithBody(server, token, "application/json", bodyReader)
+}
+
+// NewUnlockSharedAnalyticsRequestWithBody constructs an http.Request for the UnlockSharedAnalytics method, with any body, and a specified content type
+func NewUnlockSharedAnalyticsRequestWithBody(server string, token AnalyticsShareToken, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "token", token, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/analytics-shares/%s/access", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewQuerySharedAnalyticsRequest calls the generic QuerySharedAnalytics builder with application/json body
+func NewQuerySharedAnalyticsRequest(server string, token AnalyticsShareToken, body QuerySharedAnalyticsJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewQuerySharedAnalyticsRequestWithBody(server, token, "application/json", bodyReader)
+}
+
+// NewQuerySharedAnalyticsRequestWithBody constructs an http.Request for the QuerySharedAnalytics method, with any body, and a specified content type
+func NewQuerySharedAnalyticsRequestWithBody(server string, token AnalyticsShareToken, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "token", token, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/analytics-shares/%s/query", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetSharedAnalyticsRealtimeRequest constructs an http.Request for the GetSharedAnalyticsRealtime method
+func NewGetSharedAnalyticsRealtimeRequest(server string, token AnalyticsShareToken) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "token", token, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/analytics-shares/%s/realtime", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewCollectAnalyticsRequest calls the generic CollectAnalytics builder with application/json body
 func NewCollectAnalyticsRequest(server string, key string, body CollectAnalyticsJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -35936,6 +37295,323 @@ func NewSendAnalyticsEventsRequestWithBody(server string, propertyId AnalyticsPr
 	return req, nil
 }
 
+// NewListAnalyticsExportsRequest constructs an http.Request for the ListAnalyticsExports method
+func NewListAnalyticsExportsRequest(server string, propertyId AnalyticsPropertyId, params *ListAnalyticsExportsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/exports", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateAnalyticsExportRequest calls the generic CreateAnalyticsExport builder with application/json body
+func NewCreateAnalyticsExportRequest(server string, propertyId AnalyticsPropertyId, params *CreateAnalyticsExportParams, body CreateAnalyticsExportJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateAnalyticsExportRequestWithBody(server, propertyId, params, "application/json", bodyReader)
+}
+
+// NewCreateAnalyticsExportRequestWithBody constructs an http.Request for the CreateAnalyticsExport method, with any body, and a specified content type
+func NewCreateAnalyticsExportRequestWithBody(server string, propertyId AnalyticsPropertyId, params *CreateAnalyticsExportParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/exports", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteAnalyticsExportRequest constructs an http.Request for the DeleteAnalyticsExport method
+func NewDeleteAnalyticsExportRequest(server string, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params *DeleteAnalyticsExportParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "exportId", exportId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/exports/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetAnalyticsExportRequest constructs an http.Request for the GetAnalyticsExport method
+func NewGetAnalyticsExportRequest(server string, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params *GetAnalyticsExportParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "exportId", exportId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/exports/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDownloadAnalyticsExportRequest constructs an http.Request for the DownloadAnalyticsExport method
+func NewDownloadAnalyticsExportRequest(server string, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params *DownloadAnalyticsExportParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "exportId", exportId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/exports/%s/download", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.WorkspaceId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "workspace_id", *params.WorkspaceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewListAnalyticsFunnelsRequest constructs an http.Request for the ListAnalyticsFunnels method
 func NewListAnalyticsFunnelsRequest(server string, propertyId AnalyticsPropertyId, params *ListAnalyticsFunnelsParams) (*http.Request, error) {
 	var err error
@@ -37039,6 +38715,309 @@ func NewUpdateAnalyticsSegmentRequestWithBody(server string, propertyId Analytic
 	}
 
 	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListAnalyticsSharesRequest constructs an http.Request for the ListAnalyticsShares method
+func NewListAnalyticsSharesRequest(server string, propertyId AnalyticsPropertyId, params *ListAnalyticsSharesParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/shares", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateAnalyticsShareRequest calls the generic CreateAnalyticsShare builder with application/json body
+func NewCreateAnalyticsShareRequest(server string, propertyId AnalyticsPropertyId, params *CreateAnalyticsShareParams, body CreateAnalyticsShareJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateAnalyticsShareRequestWithBody(server, propertyId, params, "application/json", bodyReader)
+}
+
+// NewCreateAnalyticsShareRequestWithBody constructs an http.Request for the CreateAnalyticsShare method, with any body, and a specified content type
+func NewCreateAnalyticsShareRequestWithBody(server string, propertyId AnalyticsPropertyId, params *CreateAnalyticsShareParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/shares", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteAnalyticsShareRequest constructs an http.Request for the DeleteAnalyticsShare method
+func NewDeleteAnalyticsShareRequest(server string, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *DeleteAnalyticsShareParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "shareId", shareId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/shares/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateAnalyticsShareRequest calls the generic UpdateAnalyticsShare builder with application/json body
+func NewUpdateAnalyticsShareRequest(server string, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *UpdateAnalyticsShareParams, body UpdateAnalyticsShareJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateAnalyticsShareRequestWithBody(server, propertyId, shareId, params, "application/json", bodyReader)
+}
+
+// NewUpdateAnalyticsShareRequestWithBody constructs an http.Request for the UpdateAnalyticsShare method, with any body, and a specified content type
+func NewUpdateAnalyticsShareRequestWithBody(server string, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *UpdateAnalyticsShareParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "shareId", shareId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/shares/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewRevokeAnalyticsShareRequest constructs an http.Request for the RevokeAnalyticsShare method
+func NewRevokeAnalyticsShareRequest(server string, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *RevokeAnalyticsShareParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "shareId", shareId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/shares/%s/revoke", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
 
 	if params != nil {
 
@@ -50431,6 +52410,99 @@ func WithBaseURL(baseURL string) ClientOption {
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
 
+	// GetSharedAnalyticsWithResponse A share link's page settings
+	//
+	// What the public share page (`<public URL>/share/<token>`, served by the panel) needs first.
+	// A link with a password answers only `password_required: true` until the request carries
+	// an access token from `unlockSharedAnalytics` as `Authorization: Bearer yuva_sa_…`; then,
+	// like a link without a password, it answers the views it may show, the property's name,
+	// time zone and currency, the raw window, its goals (with the `goals` view) and the GeoIP
+	// attribution to show next to locations.
+	//
+	// The share page itself is served with `Content-Security-Policy: frame-ancestors` set to the
+	// link's `embed_origins` (`'none'` without them, an unknown, revoked or expired link included),
+	// so only those sites can show it in an iframe; it carries no analytics script.
+	//
+	// An unknown, revoked or expired token answers `404`. Every share endpoint is limited per IP
+	// address (`429 rate_limited` with `Retry-After`).
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /client/v1/analytics-shares/{token} (the `GetSharedAnalytics` operationId).
+	GetSharedAnalyticsWithResponse(ctx context.Context, token AnalyticsShareToken, reqEditors ...RequestEditorFn) (*GetSharedAnalyticsResponse, error)
+
+	// UnlockSharedAnalyticsWithBodyWithResponse Unlock a share link with its password
+	//
+	// Answers an access token for the link's other endpoints, valid for 12 hours or until the
+	// link expires, is revoked or gets another password. A wrong password answers
+	// `401 wrong_password`; an IP address may try 10 times a minute per link and 30 times a minute
+	// in all (`429 rate_limited`). A link without a password answers `409 no_password`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /client/v1/analytics-shares/{token}/access (the `UnlockSharedAnalytics` operationId).
+	UnlockSharedAnalyticsWithBodyWithResponse(ctx context.Context, token AnalyticsShareToken, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UnlockSharedAnalyticsResponse, error)
+
+	// UnlockSharedAnalyticsWithResponse Unlock a share link with its password
+	//
+	// Answers an access token for the link's other endpoints, valid for 12 hours or until the
+	// link expires, is revoked or gets another password. A wrong password answers
+	// `401 wrong_password`; an IP address may try 10 times a minute per link and 30 times a minute
+	// in all (`429 rate_limited`). A link without a password answers `409 no_password`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /client/v1/analytics-shares/{token}/access (the `UnlockSharedAnalytics` operationId).
+	UnlockSharedAnalyticsWithResponse(ctx context.Context, token AnalyticsShareToken, body UnlockSharedAnalyticsJSONRequestBody, reqEditors ...RequestEditorFn) (*UnlockSharedAnalyticsResponse, error)
+
+	// QuerySharedAnalyticsWithBodyWithResponse Query a shared property's numbers
+	//
+	// `queryAnalytics` for a share link, with the same body and answer, limited to the link's
+	// views: totals and time grains with any view; `page`, `entry_page`, `exit_page` and
+	// `hostname` with `pages`; `channel`, `source`, `referrer` and the UTM dimensions with
+	// `sources`; `country`, `region` and `city` with `locations`; `device`, `browser`,
+	// `browser_version`, `os`, `os_version`, `screen_size`, `language`, `platform` and
+	// `app_version` with `devices`; `event`, `prop` and the `events` metric with `events`; a
+	// `goal_id` of the property and the goal metrics with `goals`. Dimensions and filters outside
+	// them answer `403 view_not_shared`; `segment_id` is refused (`400`).
+	//
+	// A link with a password needs its access token (`401 share_password_required`). Answers are
+	// cached like `queryAnalytics` and count towards the workspace's four concurrent queries.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /client/v1/analytics-shares/{token}/query (the `QuerySharedAnalytics` operationId).
+	QuerySharedAnalyticsWithBodyWithResponse(ctx context.Context, token AnalyticsShareToken, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*QuerySharedAnalyticsResponse, error)
+
+	// QuerySharedAnalyticsWithResponse Query a shared property's numbers
+	//
+	// `queryAnalytics` for a share link, with the same body and answer, limited to the link's
+	// views: totals and time grains with any view; `page`, `entry_page`, `exit_page` and
+	// `hostname` with `pages`; `channel`, `source`, `referrer` and the UTM dimensions with
+	// `sources`; `country`, `region` and `city` with `locations`; `device`, `browser`,
+	// `browser_version`, `os`, `os_version`, `screen_size`, `language`, `platform` and
+	// `app_version` with `devices`; `event`, `prop` and the `events` metric with `events`; a
+	// `goal_id` of the property and the goal metrics with `goals`. Dimensions and filters outside
+	// them answer `403 view_not_shared`; `segment_id` is refused (`400`).
+	//
+	// A link with a password needs its access token (`401 share_password_required`). Answers are
+	// cached like `queryAnalytics` and count towards the workspace's four concurrent queries.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /client/v1/analytics-shares/{token}/query (the `QuerySharedAnalytics` operationId).
+	QuerySharedAnalyticsWithResponse(ctx context.Context, token AnalyticsShareToken, body QuerySharedAnalyticsJSONRequestBody, reqEditors ...RequestEditorFn) (*QuerySharedAnalyticsResponse, error)
+
+	// GetSharedAnalyticsRealtimeWithResponse A shared property's last 30 minutes
+	//
+	// `getAnalyticsRealtime` for a share link with the `realtime` view (`403 view_not_shared`
+	// otherwise). A link with a password needs its access token (`401 share_password_required`).
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /client/v1/analytics-shares/{token}/realtime (the `GetSharedAnalyticsRealtime` operationId).
+	GetSharedAnalyticsRealtimeWithResponse(ctx context.Context, token AnalyticsShareToken, reqEditors ...RequestEditorFn) (*GetSharedAnalyticsRealtimeResponse, error)
+
 	// CollectAnalyticsWithBodyWithResponse Send analytics events
 	//
 	// Called by `/yuva-analytics.js` and `useyuva/analytics` with an analytics property's public
@@ -51755,6 +53827,111 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /v1/analytics/properties/{propertyId}/events (the `SendAnalyticsEvents` operationId).
 	SendAnalyticsEventsWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, body SendAnalyticsEventsJSONRequestBody, reqEditors ...RequestEditorFn) (*SendAnalyticsEventsResponse, error)
 
+	// ListAnalyticsExportsWithResponse List a property's exports
+	//
+	// Newest first, until each expires. `raw` exports are listed only for callers who may make
+	// them.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/exports (the `ListAnalyticsExports` operationId).
+	ListAnalyticsExportsWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsExportsParams, reqEditors ...RequestEditorFn) (*ListAnalyticsExportsResponse, error)
+
+	// CreateAnalyticsExportWithBodyWithResponse Export a property's numbers or raw events
+	//
+	// A background job writes the file to the server's storage; poll `getAnalyticsExport` until
+	// `status` is `done`, then download it with `downloadAnalyticsExport`. Files are kept seven
+	// days (`expires_at`) and then deleted.
+	//
+	// - `view`: the rows of one `query` (as `queryAnalytics` answers it, every row, no
+	//   comparison), CSV or NDJSON.
+	// - `daily`: one row per day of `range` (at most 400 days) with visitors, visits, page views,
+	//   views per visit, bounce rate, visit duration, time on page and scroll depth, broken down
+	//   by `dimension` when given, CSV or NDJSON.
+	// - `raw`: every stored event of `range` (at most 31 days, inside the raw window of
+	//   `YUVA_ANALYTICS_RAW_DAYS`, else `422 needs_raw_window`) with its visit's description, as
+	//   NDJSON only (`AnalyticsRawEvent`). It carries no visitor hash, salt, address, contact or
+	//   stored visit id: a visit is a number that counts up within the file. Bots are left out.
+	//   Raw rows are pseudonymous personal data, so raw exports need `analytics:manage` and an
+	//   owner, an admin or an API key without an inbox limit (`403`).
+	//
+	// CSV cells that start with `=`, `+`, `-`, `@`, a tab or a carriage return get a leading `'`
+	// so spreadsheets do not run them as formulas. A file larger than 1 GiB fails with
+	// `error` `too_large`. A workspace runs at most three exports at a time (`429 rate_limited`).
+	//
+	// Scope: `analytics:read`; `analytics:manage` for `raw`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/exports (the `CreateAnalyticsExport` operationId).
+	CreateAnalyticsExportWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsExportParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAnalyticsExportResponse, error)
+
+	// CreateAnalyticsExportWithResponse Export a property's numbers or raw events
+	//
+	// A background job writes the file to the server's storage; poll `getAnalyticsExport` until
+	// `status` is `done`, then download it with `downloadAnalyticsExport`. Files are kept seven
+	// days (`expires_at`) and then deleted.
+	//
+	// - `view`: the rows of one `query` (as `queryAnalytics` answers it, every row, no
+	//   comparison), CSV or NDJSON.
+	// - `daily`: one row per day of `range` (at most 400 days) with visitors, visits, page views,
+	//   views per visit, bounce rate, visit duration, time on page and scroll depth, broken down
+	//   by `dimension` when given, CSV or NDJSON.
+	// - `raw`: every stored event of `range` (at most 31 days, inside the raw window of
+	//   `YUVA_ANALYTICS_RAW_DAYS`, else `422 needs_raw_window`) with its visit's description, as
+	//   NDJSON only (`AnalyticsRawEvent`). It carries no visitor hash, salt, address, contact or
+	//   stored visit id: a visit is a number that counts up within the file. Bots are left out.
+	//   Raw rows are pseudonymous personal data, so raw exports need `analytics:manage` and an
+	//   owner, an admin or an API key without an inbox limit (`403`).
+	//
+	// CSV cells that start with `=`, `+`, `-`, `@`, a tab or a carriage return get a leading `'`
+	// so spreadsheets do not run them as formulas. A file larger than 1 GiB fails with
+	// `error` `too_large`. A workspace runs at most three exports at a time (`429 rate_limited`).
+	//
+	// Scope: `analytics:read`; `analytics:manage` for `raw`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/exports (the `CreateAnalyticsExport` operationId).
+	CreateAnalyticsExportWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsExportParams, body CreateAnalyticsExportJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAnalyticsExportResponse, error)
+
+	// DeleteAnalyticsExportWithResponse Delete an export
+	//
+	// Deletes the export and its file before it expires; one still running stops at its next
+	// step.
+	//
+	// Scope: `analytics:read`; `analytics:manage` for `raw`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/analytics/properties/{propertyId}/exports/{exportId} (the `DeleteAnalyticsExport` operationId).
+	DeleteAnalyticsExportWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params *DeleteAnalyticsExportParams, reqEditors ...RequestEditorFn) (*DeleteAnalyticsExportResponse, error)
+
+	// GetAnalyticsExportWithResponse An export and its progress
+	//
+	// Scope: `analytics:read`; `analytics:manage` for `raw`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/exports/{exportId} (the `GetAnalyticsExport` operationId).
+	GetAnalyticsExportWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params *GetAnalyticsExportParams, reqEditors ...RequestEditorFn) (*GetAnalyticsExportResponse, error)
+
+	// DownloadAnalyticsExportWithResponse Download an export's file
+	//
+	// `text/csv` or `application/x-ndjson`, always as a download (`Content-Disposition:
+	// attachment`). An export that is not `done` answers `409 export_not_ready`; an expired or
+	// deleted one `404`. Links cannot carry headers, so the workspace can also be named with the
+	// `workspace_id` query parameter instead of `Yuva-Workspace`.
+	//
+	// Scope: `analytics:read`; `analytics:manage` for `raw`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/exports/{exportId}/download (the `DownloadAnalyticsExport` operationId).
+	DownloadAnalyticsExportWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params *DownloadAnalyticsExportParams, reqEditors ...RequestEditorFn) (*DownloadAnalyticsExportResponse, error)
+
 	// ListAnalyticsFunnelsWithResponse List a property's funnels
 	//
 	// Oldest first. Scope: `analytics:read`.
@@ -52081,6 +54258,104 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/segments/{segmentId} (the `UpdateAnalyticsSegment` operationId).
 	UpdateAnalyticsSegmentWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, segmentId AnalyticsSegmentId, params *UpdateAnalyticsSegmentParams, body UpdateAnalyticsSegmentJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAnalyticsSegmentResponse, error)
+
+	// ListAnalyticsSharesWithResponse List a property's share links
+	//
+	// Newest first, revoked and expired links included (`active` tells them apart). A link's
+	// token is shown only once, when it is made; the list carries its first characters as
+	// `token_prefix`.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/shares (the `ListAnalyticsShares` operationId).
+	ListAnalyticsSharesWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsSharesParams, reqEditors ...RequestEditorFn) (*ListAnalyticsSharesResponse, error)
+
+	// CreateAnalyticsShareWithBodyWithResponse Make a read-only share link
+	//
+	// A link anyone holding it can open at `<public URL>/share/<token>` without signing in. It
+	// shows only the `views` it lists, of this property only, read-only. With a `password` the
+	// viewer unlocks it first (`POST /client/v1/analytics-shares/{token}/access`); the password
+	// is stored as an argon2id hash and the token as a SHA-256 hash, so neither can be shown
+	// again: the answer carries the `token` and the `url` once. `expires_at` ends the link;
+	// `embed_origins` lists the sites whose pages may show it in an iframe (the share page's
+	// `frame-ancestors`); without them no other site can frame it. A property has at most 50
+	// links (`403 share_limit`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/shares (the `CreateAnalyticsShare` operationId).
+	CreateAnalyticsShareWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsShareParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAnalyticsShareResponse, error)
+
+	// CreateAnalyticsShareWithResponse Make a read-only share link
+	//
+	// A link anyone holding it can open at `<public URL>/share/<token>` without signing in. It
+	// shows only the `views` it lists, of this property only, read-only. With a `password` the
+	// viewer unlocks it first (`POST /client/v1/analytics-shares/{token}/access`); the password
+	// is stored as an argon2id hash and the token as a SHA-256 hash, so neither can be shown
+	// again: the answer carries the `token` and the `url` once. `expires_at` ends the link;
+	// `embed_origins` lists the sites whose pages may show it in an iframe (the share page's
+	// `frame-ancestors`); without them no other site can frame it. A property has at most 50
+	// links (`403 share_limit`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/shares (the `CreateAnalyticsShare` operationId).
+	CreateAnalyticsShareWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsShareParams, body CreateAnalyticsShareJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAnalyticsShareResponse, error)
+
+	// DeleteAnalyticsShareWithResponse Delete a share link
+	//
+	// The link stops working at once and leaves the list.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/analytics/properties/{propertyId}/shares/{shareId} (the `DeleteAnalyticsShare` operationId).
+	DeleteAnalyticsShareWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *DeleteAnalyticsShareParams, reqEditors ...RequestEditorFn) (*DeleteAnalyticsShareResponse, error)
+
+	// UpdateAnalyticsShareWithBodyWithResponse Change a share link
+	//
+	// Changes the given fields; the token stays. A new `password` (or `password: null`, which
+	// removes it) ends every viewer's unlocked access at once. `expires_at: null` keeps the link
+	// until it is revoked. A revoked link cannot be changed (`409 share_revoked`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/shares/{shareId} (the `UpdateAnalyticsShare` operationId).
+	UpdateAnalyticsShareWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *UpdateAnalyticsShareParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAnalyticsShareResponse, error)
+
+	// UpdateAnalyticsShareWithResponse Change a share link
+	//
+	// Changes the given fields; the token stays. A new `password` (or `password: null`, which
+	// removes it) ends every viewer's unlocked access at once. `expires_at: null` keeps the link
+	// until it is revoked. A revoked link cannot be changed (`409 share_revoked`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/shares/{shareId} (the `UpdateAnalyticsShare` operationId).
+	UpdateAnalyticsShareWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *UpdateAnalyticsShareParams, body UpdateAnalyticsShareJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAnalyticsShareResponse, error)
+
+	// RevokeAnalyticsShareWithResponse Revoke a share link
+	//
+	// The link stops working at once and stays in the list with `revoked_at`. Revoking a revoked
+	// link changes nothing.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/shares/{shareId}/revoke (the `RevokeAnalyticsShare` operationId).
+	RevokeAnalyticsShareWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *RevokeAnalyticsShareParams, reqEditors ...RequestEditorFn) (*RevokeAnalyticsShareResponse, error)
 
 	// ListApiKeysWithResponse List API keys
 	//
@@ -56128,6 +58403,296 @@ type ClientWithResponsesInterface interface {
 	CreateWorkspaceWithResponse(ctx context.Context, body CreateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkspaceResponse, error)
 }
 
+type GetSharedAnalyticsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsSharedPage
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetSharedAnalyticsResponse) GetJSON200() *AnalyticsSharedPage {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetSharedAnalyticsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetSharedAnalyticsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r GetSharedAnalyticsResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r GetSharedAnalyticsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetSharedAnalyticsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetSharedAnalyticsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetSharedAnalyticsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UnlockSharedAnalyticsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsShareAccess
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UnlockSharedAnalyticsResponse) GetJSON200() *AnalyticsShareAccess {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UnlockSharedAnalyticsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UnlockSharedAnalyticsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UnlockSharedAnalyticsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r UnlockSharedAnalyticsResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r UnlockSharedAnalyticsResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r UnlockSharedAnalyticsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UnlockSharedAnalyticsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UnlockSharedAnalyticsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UnlockSharedAnalyticsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type QuerySharedAnalyticsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsResult
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *AnalyticsRangeProblem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r QuerySharedAnalyticsResponse) GetJSON200() *AnalyticsResult {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r QuerySharedAnalyticsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r QuerySharedAnalyticsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r QuerySharedAnalyticsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r QuerySharedAnalyticsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r QuerySharedAnalyticsResponse) GetApplicationproblemJSON422() *AnalyticsRangeProblem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r QuerySharedAnalyticsResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r QuerySharedAnalyticsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r QuerySharedAnalyticsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r QuerySharedAnalyticsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r QuerySharedAnalyticsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetSharedAnalyticsRealtimeResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsRealtime
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetSharedAnalyticsRealtimeResponse) GetJSON200() *AnalyticsRealtime {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetSharedAnalyticsRealtimeResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetSharedAnalyticsRealtimeResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetSharedAnalyticsRealtimeResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r GetSharedAnalyticsRealtimeResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r GetSharedAnalyticsRealtimeResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetSharedAnalyticsRealtimeResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetSharedAnalyticsRealtimeResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetSharedAnalyticsRealtimeResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type CollectAnalyticsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -59720,6 +62285,344 @@ func (r SendAnalyticsEventsResponse) ContentType() string {
 	return ""
 }
 
+type ListAnalyticsExportsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsExportList
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListAnalyticsExportsResponse) GetJSON200() *AnalyticsExportList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListAnalyticsExportsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListAnalyticsExportsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListAnalyticsExportsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListAnalyticsExportsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListAnalyticsExportsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListAnalyticsExportsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListAnalyticsExportsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateAnalyticsExportResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON202 the response for an HTTP 202 `application/json` response
+	JSON202 *AnalyticsExport
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *AnalyticsRangeProblem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON202 returns the response for an HTTP 202 `application/json` response
+func (r CreateAnalyticsExportResponse) GetJSON202() *AnalyticsExport {
+	return r.JSON202
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateAnalyticsExportResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateAnalyticsExportResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateAnalyticsExportResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateAnalyticsExportResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r CreateAnalyticsExportResponse) GetApplicationproblemJSON422() *AnalyticsRangeProblem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r CreateAnalyticsExportResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateAnalyticsExportResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateAnalyticsExportResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateAnalyticsExportResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateAnalyticsExportResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteAnalyticsExportResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteAnalyticsExportResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteAnalyticsExportResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteAnalyticsExportResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteAnalyticsExportResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteAnalyticsExportResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteAnalyticsExportResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteAnalyticsExportResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetAnalyticsExportResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsExport
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetAnalyticsExportResponse) GetJSON200() *AnalyticsExport {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetAnalyticsExportResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetAnalyticsExportResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetAnalyticsExportResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetAnalyticsExportResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetAnalyticsExportResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetAnalyticsExportResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetAnalyticsExportResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// DownloadAnalyticsExportResponse200Headers the declared response headers of an HTTP 200 response for DownloadAnalyticsExport
+type DownloadAnalyticsExportResponse200Headers struct {
+	ContentDisposition *string
+}
+
+type DownloadAnalyticsExportResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *DownloadAnalyticsExportResponse200Headers
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r DownloadAnalyticsExportResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DownloadAnalyticsExportResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DownloadAnalyticsExportResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DownloadAnalyticsExportResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r DownloadAnalyticsExportResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r DownloadAnalyticsExportResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DownloadAnalyticsExportResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DownloadAnalyticsExportResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DownloadAnalyticsExportResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ListAnalyticsFunnelsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -60901,6 +63804,330 @@ func (r UpdateAnalyticsSegmentResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r UpdateAnalyticsSegmentResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListAnalyticsSharesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsShareList
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListAnalyticsSharesResponse) GetJSON200() *AnalyticsShareList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListAnalyticsSharesResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListAnalyticsSharesResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListAnalyticsSharesResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListAnalyticsSharesResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListAnalyticsSharesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListAnalyticsSharesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListAnalyticsSharesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateAnalyticsShareResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *AnalyticsShareCreated
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateAnalyticsShareResponse) GetJSON201() *AnalyticsShareCreated {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateAnalyticsShareResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateAnalyticsShareResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateAnalyticsShareResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateAnalyticsShareResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateAnalyticsShareResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateAnalyticsShareResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateAnalyticsShareResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateAnalyticsShareResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteAnalyticsShareResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteAnalyticsShareResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteAnalyticsShareResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteAnalyticsShareResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteAnalyticsShareResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteAnalyticsShareResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteAnalyticsShareResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteAnalyticsShareResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateAnalyticsShareResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsShare
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateAnalyticsShareResponse) GetJSON200() *AnalyticsShare {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateAnalyticsShareResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateAnalyticsShareResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateAnalyticsShareResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateAnalyticsShareResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r UpdateAnalyticsShareResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateAnalyticsShareResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateAnalyticsShareResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateAnalyticsShareResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateAnalyticsShareResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type RevokeAnalyticsShareResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsShare
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r RevokeAnalyticsShareResponse) GetJSON200() *AnalyticsShare {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r RevokeAnalyticsShareResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r RevokeAnalyticsShareResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r RevokeAnalyticsShareResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r RevokeAnalyticsShareResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r RevokeAnalyticsShareResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RevokeAnalyticsShareResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r RevokeAnalyticsShareResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -75162,6 +78389,135 @@ func (r CreateWorkspaceResponse) ContentType() string {
 	return ""
 }
 
+// GetSharedAnalyticsWithResponse A share link's page settings
+//
+// What the public share page (`<public URL>/share/<token>`, served by the panel) needs first.
+// A link with a password answers only `password_required: true` until the request carries
+// an access token from `unlockSharedAnalytics` as `Authorization: Bearer yuva_sa_…`; then,
+// like a link without a password, it answers the views it may show, the property's name,
+// time zone and currency, the raw window, its goals (with the `goals` view) and the GeoIP
+// attribution to show next to locations.
+//
+// The share page itself is served with `Content-Security-Policy: frame-ancestors` set to the
+// link's `embed_origins` (`'none'` without them, an unknown, revoked or expired link included),
+// so only those sites can show it in an iframe; it carries no analytics script.
+//
+// An unknown, revoked or expired token answers `404`. Every share endpoint is limited per IP
+// address (`429 rate_limited` with `Retry-After`).
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /client/v1/analytics-shares/{token} (the `GetSharedAnalytics` operationId).
+func (c *ClientWithResponses) GetSharedAnalyticsWithResponse(ctx context.Context, token AnalyticsShareToken, reqEditors ...RequestEditorFn) (*GetSharedAnalyticsResponse, error) {
+	rsp, err := c.GetSharedAnalytics(ctx, token, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetSharedAnalyticsResponse(rsp)
+}
+
+// UnlockSharedAnalyticsWithBodyWithResponse Unlock a share link with its password
+//
+// Answers an access token for the link's other endpoints, valid for 12 hours or until the
+// link expires, is revoked or gets another password. A wrong password answers
+// `401 wrong_password`; an IP address may try 10 times a minute per link and 30 times a minute
+// in all (`429 rate_limited`). A link without a password answers `409 no_password`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /client/v1/analytics-shares/{token}/access (the `UnlockSharedAnalytics` operationId).
+func (c *ClientWithResponses) UnlockSharedAnalyticsWithBodyWithResponse(ctx context.Context, token AnalyticsShareToken, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UnlockSharedAnalyticsResponse, error) {
+	rsp, err := c.UnlockSharedAnalyticsWithBody(ctx, token, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUnlockSharedAnalyticsResponse(rsp)
+}
+
+// UnlockSharedAnalyticsWithResponse Unlock a share link with its password
+//
+// Answers an access token for the link's other endpoints, valid for 12 hours or until the
+// link expires, is revoked or gets another password. A wrong password answers
+// `401 wrong_password`; an IP address may try 10 times a minute per link and 30 times a minute
+// in all (`429 rate_limited`). A link without a password answers `409 no_password`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /client/v1/analytics-shares/{token}/access (the `UnlockSharedAnalytics` operationId).
+func (c *ClientWithResponses) UnlockSharedAnalyticsWithResponse(ctx context.Context, token AnalyticsShareToken, body UnlockSharedAnalyticsJSONRequestBody, reqEditors ...RequestEditorFn) (*UnlockSharedAnalyticsResponse, error) {
+	rsp, err := c.UnlockSharedAnalytics(ctx, token, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUnlockSharedAnalyticsResponse(rsp)
+}
+
+// QuerySharedAnalyticsWithBodyWithResponse Query a shared property's numbers
+//
+// `queryAnalytics` for a share link, with the same body and answer, limited to the link's
+// views: totals and time grains with any view; `page`, `entry_page`, `exit_page` and
+// `hostname` with `pages`; `channel`, `source`, `referrer` and the UTM dimensions with
+// `sources`; `country`, `region` and `city` with `locations`; `device`, `browser`,
+// `browser_version`, `os`, `os_version`, `screen_size`, `language`, `platform` and
+// `app_version` with `devices`; `event`, `prop` and the `events` metric with `events`; a
+// `goal_id` of the property and the goal metrics with `goals`. Dimensions and filters outside
+// them answer `403 view_not_shared`; `segment_id` is refused (`400`).
+//
+// A link with a password needs its access token (`401 share_password_required`). Answers are
+// cached like `queryAnalytics` and count towards the workspace's four concurrent queries.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /client/v1/analytics-shares/{token}/query (the `QuerySharedAnalytics` operationId).
+func (c *ClientWithResponses) QuerySharedAnalyticsWithBodyWithResponse(ctx context.Context, token AnalyticsShareToken, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*QuerySharedAnalyticsResponse, error) {
+	rsp, err := c.QuerySharedAnalyticsWithBody(ctx, token, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseQuerySharedAnalyticsResponse(rsp)
+}
+
+// QuerySharedAnalyticsWithResponse Query a shared property's numbers
+//
+// `queryAnalytics` for a share link, with the same body and answer, limited to the link's
+// views: totals and time grains with any view; `page`, `entry_page`, `exit_page` and
+// `hostname` with `pages`; `channel`, `source`, `referrer` and the UTM dimensions with
+// `sources`; `country`, `region` and `city` with `locations`; `device`, `browser`,
+// `browser_version`, `os`, `os_version`, `screen_size`, `language`, `platform` and
+// `app_version` with `devices`; `event`, `prop` and the `events` metric with `events`; a
+// `goal_id` of the property and the goal metrics with `goals`. Dimensions and filters outside
+// them answer `403 view_not_shared`; `segment_id` is refused (`400`).
+//
+// A link with a password needs its access token (`401 share_password_required`). Answers are
+// cached like `queryAnalytics` and count towards the workspace's four concurrent queries.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /client/v1/analytics-shares/{token}/query (the `QuerySharedAnalytics` operationId).
+func (c *ClientWithResponses) QuerySharedAnalyticsWithResponse(ctx context.Context, token AnalyticsShareToken, body QuerySharedAnalyticsJSONRequestBody, reqEditors ...RequestEditorFn) (*QuerySharedAnalyticsResponse, error) {
+	rsp, err := c.QuerySharedAnalytics(ctx, token, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseQuerySharedAnalyticsResponse(rsp)
+}
+
+// GetSharedAnalyticsRealtimeWithResponse A shared property's last 30 minutes
+//
+// `getAnalyticsRealtime` for a share link with the `realtime` view (`403 view_not_shared`
+// otherwise). A link with a password needs its access token (`401 share_password_required`).
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /client/v1/analytics-shares/{token}/realtime (the `GetSharedAnalyticsRealtime` operationId).
+func (c *ClientWithResponses) GetSharedAnalyticsRealtimeWithResponse(ctx context.Context, token AnalyticsShareToken, reqEditors ...RequestEditorFn) (*GetSharedAnalyticsRealtimeResponse, error) {
+	rsp, err := c.GetSharedAnalyticsRealtime(ctx, token, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetSharedAnalyticsRealtimeResponse(rsp)
+}
+
 // CollectAnalyticsWithBodyWithResponse Send analytics events
 //
 // Called by `/yuva-analytics.js` and `useyuva/analytics` with an analytics property's public
@@ -76984,6 +80340,147 @@ func (c *ClientWithResponses) SendAnalyticsEventsWithResponse(ctx context.Contex
 	return ParseSendAnalyticsEventsResponse(rsp)
 }
 
+// ListAnalyticsExportsWithResponse List a property's exports
+//
+// Newest first, until each expires. `raw` exports are listed only for callers who may make
+// them.
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/exports (the `ListAnalyticsExports` operationId).
+func (c *ClientWithResponses) ListAnalyticsExportsWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsExportsParams, reqEditors ...RequestEditorFn) (*ListAnalyticsExportsResponse, error) {
+	rsp, err := c.ListAnalyticsExports(ctx, propertyId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListAnalyticsExportsResponse(rsp)
+}
+
+// CreateAnalyticsExportWithBodyWithResponse Export a property's numbers or raw events
+//
+// A background job writes the file to the server's storage; poll `getAnalyticsExport` until
+// `status` is `done`, then download it with `downloadAnalyticsExport`. Files are kept seven
+// days (`expires_at`) and then deleted.
+//
+//   - `view`: the rows of one `query` (as `queryAnalytics` answers it, every row, no
+//     comparison), CSV or NDJSON.
+//   - `daily`: one row per day of `range` (at most 400 days) with visitors, visits, page views,
+//     views per visit, bounce rate, visit duration, time on page and scroll depth, broken down
+//     by `dimension` when given, CSV or NDJSON.
+//   - `raw`: every stored event of `range` (at most 31 days, inside the raw window of
+//     `YUVA_ANALYTICS_RAW_DAYS`, else `422 needs_raw_window`) with its visit's description, as
+//     NDJSON only (`AnalyticsRawEvent`). It carries no visitor hash, salt, address, contact or
+//     stored visit id: a visit is a number that counts up within the file. Bots are left out.
+//     Raw rows are pseudonymous personal data, so raw exports need `analytics:manage` and an
+//     owner, an admin or an API key without an inbox limit (`403`).
+//
+// CSV cells that start with `=`, `+`, `-`, `@`, a tab or a carriage return get a leading `'`
+// so spreadsheets do not run them as formulas. A file larger than 1 GiB fails with
+// `error` `too_large`. A workspace runs at most three exports at a time (`429 rate_limited`).
+//
+// Scope: `analytics:read`; `analytics:manage` for `raw`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/exports (the `CreateAnalyticsExport` operationId).
+func (c *ClientWithResponses) CreateAnalyticsExportWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsExportParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAnalyticsExportResponse, error) {
+	rsp, err := c.CreateAnalyticsExportWithBody(ctx, propertyId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateAnalyticsExportResponse(rsp)
+}
+
+// CreateAnalyticsExportWithResponse Export a property's numbers or raw events
+//
+// A background job writes the file to the server's storage; poll `getAnalyticsExport` until
+// `status` is `done`, then download it with `downloadAnalyticsExport`. Files are kept seven
+// days (`expires_at`) and then deleted.
+//
+//   - `view`: the rows of one `query` (as `queryAnalytics` answers it, every row, no
+//     comparison), CSV or NDJSON.
+//   - `daily`: one row per day of `range` (at most 400 days) with visitors, visits, page views,
+//     views per visit, bounce rate, visit duration, time on page and scroll depth, broken down
+//     by `dimension` when given, CSV or NDJSON.
+//   - `raw`: every stored event of `range` (at most 31 days, inside the raw window of
+//     `YUVA_ANALYTICS_RAW_DAYS`, else `422 needs_raw_window`) with its visit's description, as
+//     NDJSON only (`AnalyticsRawEvent`). It carries no visitor hash, salt, address, contact or
+//     stored visit id: a visit is a number that counts up within the file. Bots are left out.
+//     Raw rows are pseudonymous personal data, so raw exports need `analytics:manage` and an
+//     owner, an admin or an API key without an inbox limit (`403`).
+//
+// CSV cells that start with `=`, `+`, `-`, `@`, a tab or a carriage return get a leading `'`
+// so spreadsheets do not run them as formulas. A file larger than 1 GiB fails with
+// `error` `too_large`. A workspace runs at most three exports at a time (`429 rate_limited`).
+//
+// Scope: `analytics:read`; `analytics:manage` for `raw`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/exports (the `CreateAnalyticsExport` operationId).
+func (c *ClientWithResponses) CreateAnalyticsExportWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsExportParams, body CreateAnalyticsExportJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAnalyticsExportResponse, error) {
+	rsp, err := c.CreateAnalyticsExport(ctx, propertyId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateAnalyticsExportResponse(rsp)
+}
+
+// DeleteAnalyticsExportWithResponse Delete an export
+//
+// Deletes the export and its file before it expires; one still running stops at its next
+// step.
+//
+// Scope: `analytics:read`; `analytics:manage` for `raw`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/analytics/properties/{propertyId}/exports/{exportId} (the `DeleteAnalyticsExport` operationId).
+func (c *ClientWithResponses) DeleteAnalyticsExportWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params *DeleteAnalyticsExportParams, reqEditors ...RequestEditorFn) (*DeleteAnalyticsExportResponse, error) {
+	rsp, err := c.DeleteAnalyticsExport(ctx, propertyId, exportId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteAnalyticsExportResponse(rsp)
+}
+
+// GetAnalyticsExportWithResponse An export and its progress
+//
+// Scope: `analytics:read`; `analytics:manage` for `raw`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/exports/{exportId} (the `GetAnalyticsExport` operationId).
+func (c *ClientWithResponses) GetAnalyticsExportWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params *GetAnalyticsExportParams, reqEditors ...RequestEditorFn) (*GetAnalyticsExportResponse, error) {
+	rsp, err := c.GetAnalyticsExport(ctx, propertyId, exportId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetAnalyticsExportResponse(rsp)
+}
+
+// DownloadAnalyticsExportWithResponse Download an export's file
+//
+// `text/csv` or `application/x-ndjson`, always as a download (`Content-Disposition:
+// attachment`). An export that is not `done` answers `409 export_not_ready`; an expired or
+// deleted one `404`. Links cannot carry headers, so the workspace can also be named with the
+// `workspace_id` query parameter instead of `Yuva-Workspace`.
+//
+// Scope: `analytics:read`; `analytics:manage` for `raw`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/exports/{exportId}/download (the `DownloadAnalyticsExport` operationId).
+func (c *ClientWithResponses) DownloadAnalyticsExportWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params *DownloadAnalyticsExportParams, reqEditors ...RequestEditorFn) (*DownloadAnalyticsExportResponse, error) {
+	rsp, err := c.DownloadAnalyticsExport(ctx, propertyId, exportId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDownloadAnalyticsExportResponse(rsp)
+}
+
 // ListAnalyticsFunnelsWithResponse List a property's funnels
 //
 // Oldest first. Scope: `analytics:read`.
@@ -77453,6 +80950,146 @@ func (c *ClientWithResponses) UpdateAnalyticsSegmentWithResponse(ctx context.Con
 		return nil, err
 	}
 	return ParseUpdateAnalyticsSegmentResponse(rsp)
+}
+
+// ListAnalyticsSharesWithResponse List a property's share links
+//
+// Newest first, revoked and expired links included (`active` tells them apart). A link's
+// token is shown only once, when it is made; the list carries its first characters as
+// `token_prefix`.
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/shares (the `ListAnalyticsShares` operationId).
+func (c *ClientWithResponses) ListAnalyticsSharesWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsSharesParams, reqEditors ...RequestEditorFn) (*ListAnalyticsSharesResponse, error) {
+	rsp, err := c.ListAnalyticsShares(ctx, propertyId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListAnalyticsSharesResponse(rsp)
+}
+
+// CreateAnalyticsShareWithBodyWithResponse Make a read-only share link
+//
+// A link anyone holding it can open at `<public URL>/share/<token>` without signing in. It
+// shows only the `views` it lists, of this property only, read-only. With a `password` the
+// viewer unlocks it first (`POST /client/v1/analytics-shares/{token}/access`); the password
+// is stored as an argon2id hash and the token as a SHA-256 hash, so neither can be shown
+// again: the answer carries the `token` and the `url` once. `expires_at` ends the link;
+// `embed_origins` lists the sites whose pages may show it in an iframe (the share page's
+// `frame-ancestors`); without them no other site can frame it. A property has at most 50
+// links (`403 share_limit`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/shares (the `CreateAnalyticsShare` operationId).
+func (c *ClientWithResponses) CreateAnalyticsShareWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsShareParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAnalyticsShareResponse, error) {
+	rsp, err := c.CreateAnalyticsShareWithBody(ctx, propertyId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateAnalyticsShareResponse(rsp)
+}
+
+// CreateAnalyticsShareWithResponse Make a read-only share link
+//
+// A link anyone holding it can open at `<public URL>/share/<token>` without signing in. It
+// shows only the `views` it lists, of this property only, read-only. With a `password` the
+// viewer unlocks it first (`POST /client/v1/analytics-shares/{token}/access`); the password
+// is stored as an argon2id hash and the token as a SHA-256 hash, so neither can be shown
+// again: the answer carries the `token` and the `url` once. `expires_at` ends the link;
+// `embed_origins` lists the sites whose pages may show it in an iframe (the share page's
+// `frame-ancestors`); without them no other site can frame it. A property has at most 50
+// links (`403 share_limit`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/shares (the `CreateAnalyticsShare` operationId).
+func (c *ClientWithResponses) CreateAnalyticsShareWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsShareParams, body CreateAnalyticsShareJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAnalyticsShareResponse, error) {
+	rsp, err := c.CreateAnalyticsShare(ctx, propertyId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateAnalyticsShareResponse(rsp)
+}
+
+// DeleteAnalyticsShareWithResponse Delete a share link
+//
+// The link stops working at once and leaves the list.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/analytics/properties/{propertyId}/shares/{shareId} (the `DeleteAnalyticsShare` operationId).
+func (c *ClientWithResponses) DeleteAnalyticsShareWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *DeleteAnalyticsShareParams, reqEditors ...RequestEditorFn) (*DeleteAnalyticsShareResponse, error) {
+	rsp, err := c.DeleteAnalyticsShare(ctx, propertyId, shareId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteAnalyticsShareResponse(rsp)
+}
+
+// UpdateAnalyticsShareWithBodyWithResponse Change a share link
+//
+// Changes the given fields; the token stays. A new `password` (or `password: null`, which
+// removes it) ends every viewer's unlocked access at once. `expires_at: null` keeps the link
+// until it is revoked. A revoked link cannot be changed (`409 share_revoked`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/shares/{shareId} (the `UpdateAnalyticsShare` operationId).
+func (c *ClientWithResponses) UpdateAnalyticsShareWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *UpdateAnalyticsShareParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAnalyticsShareResponse, error) {
+	rsp, err := c.UpdateAnalyticsShareWithBody(ctx, propertyId, shareId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateAnalyticsShareResponse(rsp)
+}
+
+// UpdateAnalyticsShareWithResponse Change a share link
+//
+// Changes the given fields; the token stays. A new `password` (or `password: null`, which
+// removes it) ends every viewer's unlocked access at once. `expires_at: null` keeps the link
+// until it is revoked. A revoked link cannot be changed (`409 share_revoked`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/shares/{shareId} (the `UpdateAnalyticsShare` operationId).
+func (c *ClientWithResponses) UpdateAnalyticsShareWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *UpdateAnalyticsShareParams, body UpdateAnalyticsShareJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAnalyticsShareResponse, error) {
+	rsp, err := c.UpdateAnalyticsShare(ctx, propertyId, shareId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateAnalyticsShareResponse(rsp)
+}
+
+// RevokeAnalyticsShareWithResponse Revoke a share link
+//
+// The link stops working at once and stays in the list with `revoked_at`. Revoking a revoked
+// link changes nothing.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/shares/{shareId}/revoke (the `RevokeAnalyticsShare` operationId).
+func (c *ClientWithResponses) RevokeAnalyticsShareWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *RevokeAnalyticsShareParams, reqEditors ...RequestEditorFn) (*RevokeAnalyticsShareResponse, error) {
+	rsp, err := c.RevokeAnalyticsShare(ctx, propertyId, shareId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRevokeAnalyticsShareResponse(rsp)
 }
 
 // ListApiKeysWithResponse List API keys
@@ -83216,6 +86853,236 @@ func (c *ClientWithResponses) CreateWorkspaceWithResponse(ctx context.Context, b
 	return ParseCreateWorkspaceResponse(rsp)
 }
 
+// ParseGetSharedAnalyticsResponse parses an HTTP response from a GetSharedAnalyticsWithResponse call
+func ParseGetSharedAnalyticsResponse(rsp *http.Response) (*GetSharedAnalyticsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetSharedAnalyticsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsSharedPage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUnlockSharedAnalyticsResponse parses an HTTP response from a UnlockSharedAnalyticsWithResponse call
+func ParseUnlockSharedAnalyticsResponse(rsp *http.Response) (*UnlockSharedAnalyticsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UnlockSharedAnalyticsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsShareAccess
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseQuerySharedAnalyticsResponse parses an HTTP response from a QuerySharedAnalyticsWithResponse call
+func ParseQuerySharedAnalyticsResponse(rsp *http.Response) (*QuerySharedAnalyticsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &QuerySharedAnalyticsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsResult
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest AnalyticsRangeProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetSharedAnalyticsRealtimeResponse parses an HTTP response from a GetSharedAnalyticsRealtimeWithResponse call
+func ParseGetSharedAnalyticsRealtimeResponse(rsp *http.Response) (*GetSharedAnalyticsRealtimeResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetSharedAnalyticsRealtimeResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsRealtime
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseCollectAnalyticsResponse parses an HTTP response from a CollectAnalyticsWithResponse call
 func ParseCollectAnalyticsResponse(rsp *http.Response) (*CollectAnalyticsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -86040,6 +89907,278 @@ func ParseSendAnalyticsEventsResponse(rsp *http.Response) (*SendAnalyticsEventsR
 	return response, nil
 }
 
+// ParseListAnalyticsExportsResponse parses an HTTP response from a ListAnalyticsExportsWithResponse call
+func ParseListAnalyticsExportsResponse(rsp *http.Response) (*ListAnalyticsExportsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListAnalyticsExportsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsExportList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateAnalyticsExportResponse parses an HTTP response from a CreateAnalyticsExportWithResponse call
+func ParseCreateAnalyticsExportResponse(rsp *http.Response) (*CreateAnalyticsExportResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateAnalyticsExportResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest AnalyticsExport
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest AnalyticsRangeProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteAnalyticsExportResponse parses an HTTP response from a DeleteAnalyticsExportWithResponse call
+func ParseDeleteAnalyticsExportResponse(rsp *http.Response) (*DeleteAnalyticsExportResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteAnalyticsExportResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetAnalyticsExportResponse parses an HTTP response from a GetAnalyticsExportWithResponse call
+func ParseGetAnalyticsExportResponse(rsp *http.Response) (*GetAnalyticsExportResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetAnalyticsExportResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsExport
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDownloadAnalyticsExportResponse parses an HTTP response from a DownloadAnalyticsExportWithResponse call
+func ParseDownloadAnalyticsExportResponse(rsp *http.Response) (*DownloadAnalyticsExportResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DownloadAnalyticsExportResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers DownloadAnalyticsExportResponse200Headers
+		if values := rsp.Header.Values("Content-Disposition"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Content-Disposition", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.ContentDisposition = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
 // ParseListAnalyticsFunnelsResponse parses an HTTP response from a ListAnalyticsFunnelsWithResponse call
 func ParseListAnalyticsFunnelsResponse(rsp *http.Response) (*ListAnalyticsFunnelsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -86984,6 +91123,258 @@ func ParseUpdateAnalyticsSegmentResponse(rsp *http.Response) (*UpdateAnalyticsSe
 			return nil, err
 		}
 		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListAnalyticsSharesResponse parses an HTTP response from a ListAnalyticsSharesWithResponse call
+func ParseListAnalyticsSharesResponse(rsp *http.Response) (*ListAnalyticsSharesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListAnalyticsSharesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsShareList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateAnalyticsShareResponse parses an HTTP response from a CreateAnalyticsShareWithResponse call
+func ParseCreateAnalyticsShareResponse(rsp *http.Response) (*CreateAnalyticsShareResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateAnalyticsShareResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest AnalyticsShareCreated
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteAnalyticsShareResponse parses an HTTP response from a DeleteAnalyticsShareWithResponse call
+func ParseDeleteAnalyticsShareResponse(rsp *http.Response) (*DeleteAnalyticsShareResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteAnalyticsShareResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateAnalyticsShareResponse parses an HTTP response from a UpdateAnalyticsShareWithResponse call
+func ParseUpdateAnalyticsShareResponse(rsp *http.Response) (*UpdateAnalyticsShareResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateAnalyticsShareResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsShare
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseRevokeAnalyticsShareResponse parses an HTTP response from a RevokeAnalyticsShareWithResponse call
+func ParseRevokeAnalyticsShareResponse(rsp *http.Response) (*RevokeAnalyticsShareResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RevokeAnalyticsShareResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsShare
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
 
 	}
 
