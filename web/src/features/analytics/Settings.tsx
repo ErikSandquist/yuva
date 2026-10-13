@@ -287,6 +287,87 @@ function Tracking({ p }: { p: AnalyticsProperty }) {
   )
 }
 
+function badProp(k: string) {
+  return k.length > 300 || k.startsWith("$") || k.startsWith("yuva_")
+}
+
+function TrackedProps({ p }: { p: AnalyticsProperty }) {
+  const { canManage } = useSession()
+  const update = useUpdateProperty(p.id)
+  const [value, setValue] = useState(p.tracked_props.join("\n"))
+  const keys = [...new Set(lines(value))]
+  const bad = keys.find(badProp)
+  const tooMany = keys.length > 10
+  const explain = (
+    <Trans>
+      A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and
+      it shows as a chip on the Events view.
+    </Trans>
+  )
+  return (
+    <Section title={<Trans>Tracked props</Trans>} description={explain}>
+      {p.audience === "children" ? (
+        <Card data-testid="tracked-props-children">
+          <p className="text-body text-muted-foreground">
+            <Trans>Properties for children keep no props, so none can be tracked.</Trans>
+          </p>
+        </Card>
+      ) : canManage ? (
+        <FormCard
+          onSubmit={() => update.mutate({ tracked_props: keys })}
+          footer={
+            <FormActions
+              pending={update.isPending}
+              saved={update.isSuccess}
+              error={update.error}
+              disabled={!!bad || tooMany}
+            />
+          }
+        >
+          <Field
+            label={<Trans>Props</Trans>}
+            htmlFor="ap-tracked-props"
+            error={
+              tooMany ? (
+                <Trans>At most 10 props can be tracked.</Trans>
+              ) : bad ? (
+                <Trans>A prop name has at most 300 characters and does not start with $ or yuva_.</Trans>
+              ) : undefined
+            }
+            hint={<Trans>One prop name per line, up to 10, such as plan.</Trans>}
+          >
+            <Textarea
+              id="ap-tracked-props"
+              dir="ltr"
+              rows={3}
+              value={value}
+              placeholder={"plan\nseats"}
+              onChange={(e) => setValue(e.target.value)}
+              data-testid="tracked-props"
+            />
+          </Field>
+        </FormCard>
+      ) : (
+        <Card data-testid="tracked-props-read">
+          {p.tracked_props.length === 0 ? (
+            <p className="text-body text-faint">
+              <Trans>No props are tracked.</Trans>
+            </p>
+          ) : (
+            <ul className="flex flex-wrap gap-1.5">
+              {p.tracked_props.map((k) => (
+                <li key={k} className="rounded-full border bg-card px-2.5 py-0.5 text-small" dir="ltr">
+                  {k}
+                </li>
+              ))}
+            </ul>
+          )}
+        </Card>
+      )}
+    </Section>
+  )
+}
+
 function Install({ p }: { p: AnalyticsProperty }) {
   const { i18n } = useLingui()
   const { canManage } = useSession()
@@ -621,7 +702,9 @@ export function SettingsView() {
   const { canManage } = useSession()
   const p = useCurrentProperty()
   const [params, setParams] = useSearchParams()
-  const tabs: Tab[] = canManage ? ["general", "tracking", "install", "health", "data"] : ["install", "health"]
+  const tabs: Tab[] = canManage
+    ? ["general", "tracking", "install", "health", "data"]
+    : ["install", "tracking", "health"]
   const raw = params.get("tab") as Tab | null
   const tab = raw && tabs.includes(raw) ? raw : tabs[0]
   const names: Record<Tab, string> = {
@@ -642,7 +725,12 @@ export function SettingsView() {
         />
       </div>
       {tab === "general" && <General p={p} />}
-      {tab === "tracking" && <Tracking p={p} />}
+      {tab === "tracking" && (
+        <div className="flex flex-col gap-6">
+          {canManage && <Tracking p={p} />}
+          <TrackedProps p={p} />
+        </div>
+      )}
       {tab === "install" && <Install p={p} />}
       {tab === "health" && <Health p={p} />}
       {tab === "data" && <Data p={p} />}

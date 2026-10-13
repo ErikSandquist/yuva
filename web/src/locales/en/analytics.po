@@ -76,9 +76,17 @@ msgstr "A new key was made"
 msgid "A path. * stands for one part of it, ** for any number of them."
 msgstr "A path. * stands for one part of it, ** for any number of them."
 
+#: src/features/analytics/Settings.tsx
+msgid "A prop name has at most 300 characters and does not start with $ or yuva_."
+msgstr "A prop name has at most 300 characters and does not start with $ or yuva_."
+
 #: src/features/analytics/parts.tsx
 msgid "A range can be at most 400 days long. Pick a shorter one."
 msgstr "A range can be at most 400 days long. Pick a shorter one."
+
+#: src/features/analytics/Settings.tsx
+msgid "A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and it shows as a chip on the Events view."
+msgstr "A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and it shows as a chip on the Events view."
 
 #: src/features/analytics/text.ts
 msgid "A visitor's page views without a gap of 30 minutes, within one day."
@@ -155,6 +163,10 @@ msgstr "Analytics views"
 #: src/features/analytics/text.ts
 msgid "App version"
 msgstr "App version"
+
+#: src/features/analytics/Settings.tsx
+msgid "At most 10 props can be tracked."
+msgstr "At most 10 props can be tracked."
 
 #: src/features/analytics/Settings.tsx
 msgid "Audience"
@@ -854,6 +866,10 @@ msgstr "No goals yet"
 msgid "No properties yet"
 msgstr "No properties yet"
 
+#: src/features/analytics/Settings.tsx
+msgid "No props are tracked."
+msgstr "No props are tracked."
+
 #: src/features/analytics/Controls.tsx
 msgid "No segment"
 msgstr "No segment"
@@ -912,6 +928,10 @@ msgstr "One per line. *.example.com covers every subdomain, but not example.com 
 #: src/features/analytics/NewProperty.tsx
 msgid "One per line. Pages on other domains cannot send events. *.example.com covers every subdomain."
 msgstr "One per line. Pages on other domains cannot send events. *.example.com covers every subdomain."
+
+#: src/features/analytics/Settings.tsx
+msgid "One prop name per line, up to 10, such as plan."
+msgstr "One prop name per line, up to 10, such as plan."
 
 #: src/features/analytics/Settings.tsx
 msgid "Only the country is kept, never the region or city."
@@ -1109,10 +1129,15 @@ msgid "Properties for children keep no props, only the address of outbound links
 msgstr "Properties for children keep no props, only the address of outbound links and downloads."
 
 #: src/features/analytics/Settings.tsx
+msgid "Properties for children keep no props, so none can be tracked."
+msgstr "Properties for children keep no props, so none can be tracked."
+
+#: src/features/analytics/Settings.tsx
 msgid "Property name"
 msgstr "Property name"
 
 #: src/features/analytics/Events.tsx
+#: src/features/analytics/Settings.tsx
 msgid "Props"
 msgstr "Props"
 
@@ -1447,6 +1472,10 @@ msgstr "Too late"
 #: src/features/analytics/Overview.tsx
 msgid "Top pages"
 msgstr "Top pages"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracked props"
+msgstr "Tracked props"
 
 #: src/features/analytics/Settings.tsx
 msgid "Tracking"

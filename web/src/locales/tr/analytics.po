@@ -76,9 +76,17 @@ msgstr "Yeni bir anahtar oluşturuldu"
 msgid "A path. * stands for one part of it, ** for any number of them."
 msgstr "Bir yol. * yolun bir parçası, ** ise herhangi sayıda parçası yerine geçer."
 
+#: src/features/analytics/Settings.tsx
+msgid "A prop name has at most 300 characters and does not start with $ or yuva_."
+msgstr "Bir özellik adı en fazla 300 karakterdir ve $ ya da yuva_ ile başlamaz."
+
 #: src/features/analytics/parts.tsx
 msgid "A range can be at most 400 days long. Pick a shorter one."
 msgstr "Bir aralık en fazla 400 gün olabilir. Daha kısa bir aralık seçin."
+
+#: src/features/analytics/Settings.tsx
+msgid "A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and it shows as a chip on the Events view."
+msgstr "İzlenen bir özellik günlük toplamlarda da saklanır; böylece dökümü ayrıntılı kayıtlar silindikten sonra da kalır ve Olaylar görünümünde bir seçenek olarak çıkar."
 
 #: src/features/analytics/text.ts
 msgid "A visitor's page views without a gap of 30 minutes, within one day."
@@ -155,6 +163,10 @@ msgstr "Analitik görünümleri"
 #: src/features/analytics/text.ts
 msgid "App version"
 msgstr "Uygulama sürümü"
+
+#: src/features/analytics/Settings.tsx
+msgid "At most 10 props can be tracked."
+msgstr "En fazla 10 özellik izlenebilir."
 
 #: src/features/analytics/Settings.tsx
 msgid "Audience"
@@ -854,6 +866,10 @@ msgstr "Henüz hedef yok"
 msgid "No properties yet"
 msgstr "Henüz mülk yok"
 
+#: src/features/analytics/Settings.tsx
+msgid "No props are tracked."
+msgstr "İzlenen özellik yok."
+
 #: src/features/analytics/Controls.tsx
 msgid "No segment"
 msgstr "Segment yok"
@@ -912,6 +928,10 @@ msgstr "Her satıra bir tane. *.example.com tüm alt alan adlarını kapsar, exa
 #: src/features/analytics/NewProperty.tsx
 msgid "One per line. Pages on other domains cannot send events. *.example.com covers every subdomain."
 msgstr "Her satıra bir tane. Başka alan adlarındaki sayfalar olay gönderemez. *.example.com tüm alt alan adlarını kapsar."
+
+#: src/features/analytics/Settings.tsx
+msgid "One prop name per line, up to 10, such as plan."
+msgstr "Her satıra bir özellik adı, en fazla 10 tane; örneğin plan."
 
 #: src/features/analytics/Settings.tsx
 msgid "Only the country is kept, never the region or city."
@@ -1109,10 +1129,15 @@ msgid "Properties for children keep no props, only the address of outbound links
 msgstr "Çocuklara yönelik mülkler özellik saklamaz; yalnızca dış bağlantıların ve indirmelerin adresini tutar."
 
 #: src/features/analytics/Settings.tsx
+msgid "Properties for children keep no props, so none can be tracked."
+msgstr "Çocuklara yönelik mülkler özellik saklamaz, bu yüzden hiçbiri izlenemez."
+
+#: src/features/analytics/Settings.tsx
 msgid "Property name"
 msgstr "Mülk adı"
 
 #: src/features/analytics/Events.tsx
+#: src/features/analytics/Settings.tsx
 msgid "Props"
 msgstr "Özellikler"
 
@@ -1447,6 +1472,10 @@ msgstr "Çok geç"
 #: src/features/analytics/Overview.tsx
 msgid "Top pages"
 msgstr "En çok ziyaret edilen sayfalar"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracked props"
+msgstr "İzlenen özellikler"
 
 #: src/features/analytics/Settings.tsx
 msgid "Tracking"
