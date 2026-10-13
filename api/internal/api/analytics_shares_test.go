@@ -81,7 +81,7 @@ func TestAnalyticsSharePasswordViewsRevokeAndExpiry(t *testing.T) {
 	access := viewer.expect(http.StatusOK, "POST", base+"/access", map[string]any{"password": "correct horse"}).str("access_token")
 	viewer.bearer = access
 	page := viewer.expect(http.StatusOK, "GET", base, nil)
-	if page.body["name"] != "Investors" || page.body["property"].(map[string]any)["name"] != "Site" ||
+	if page.body["password_required"] != false || page.body["name"] != "Investors" || page.body["property"].(map[string]any)["name"] != "Site" ||
 		fmt.Sprint(page.body["views"]) != "[overview pages]" || page.body["goals"] != nil {
 		t.Fatalf("page %s", page.raw)
 	}

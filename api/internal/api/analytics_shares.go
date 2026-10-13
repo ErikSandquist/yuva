@@ -488,7 +488,7 @@ func (s *Server) GetSharedAnalytics(ctx context.Context, req oas.GetSharedAnalyt
 		return nil, err
 	}
 	out := oas.AnalyticsSharedPage{
-		PasswordRequired: sh.PasswordHash != nil, Name: &sh.Name, ExpiresAt: sh.ExpiresAt,
+		PasswordRequired: false, Name: &sh.Name, ExpiresAt: sh.ExpiresAt,
 		Property: &oas.AnalyticsSharedProperty{Name: prop.Name, Timezone: prop.Timezone, Currency: prop.Currency, Platforms: make([]oas.AnalyticsPlatform, len(prop.Platforms))},
 		RawWindowFrom: &openapi_types.Date{Time: s.rawFrom()},
 	}
