@@ -23,6 +23,7 @@ jobs:
       site: ${{ steps.parts.outputs.site }}
       sdk_swift: ${{ steps.parts.outputs.sdk_swift }}
       sdk_kotlin: ${{ steps.parts.outputs.sdk_kotlin }}
+      helm: ${{ steps.parts.outputs.helm }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -58,6 +59,7 @@ jobs:
           part site "^(site|docs|sdk/shadcn|templates/email|api/internal/mail/design/icons)/|^openapi/openapi\.yaml$|^CHANGELOG\.md\$$ts"
           part sdk_swift '^sdk/swift/|^Package\.(swift|resolved)$'
           part sdk_kotlin '^sdk/kotlin/|^jitpack\.yml$'
+          part helm '^deploy/helm/'
 
   openapi:
     needs: changes
@@ -263,3 +265,76 @@ jobs:
           java-version: 21
       - working-directory: sdk/kotlin
         run: ./gradlew --console=plain check :sample:assembleDebug
+
+  helm:
+    needs: changes
+    if: needs.changes.outputs.helm == 'true'
+    runs-on: ubuntu-latest
+    env:
+      CHART: deploy/helm/yuva
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: azure/setup-helm@v5.0.1
+        with:
+          version: v3.22.0
+      - name: chart version is the repository version
+        run: |
+          want="$(sed -n 's/^  version: //p' openapi/openapi.yaml | head -1)"
+          for key in version appVersion; do
+            got="$(sed -n "s/^$key: \"\{0,1\}\([^\"]*\)\"\{0,1\}$/\1/p" "$CHART/Chart.yaml")"
+            if [[ "$got" != "$want" ]]; then
+              echo "::error file=$CHART/Chart.yaml::$key is $got, openapi/openapi.yaml is $want"
+              exit 1
+            fi
+          done
+      - name: lint and template
+        run: |
+          for values in "$CHART"/ci/*-values.yaml; do
+            helm lint --strict "$CHART" -f "$values"
+            helm template yuva "$CHART" -f "$values" > /dev/null
+          done
+          if helm template yuva "$CHART" > /dev/null 2>&1; then
+            echo "::error::the chart rendered without publicUrl"
+            exit 1
+          fi
+      - uses: docker/setup-buildx-action@v4.4.1
+      - uses: docker/build-push-action@v7.4.0
+        with:
+          context: .
+          file: deploy/Dockerfile
+          build-args: VERSION=ci
+          tags: yuva:ci
+          load: true
+          cache-from: |
+            type=gha
+            type=gha,scope=helm
+          cache-to: type=gha,mode=max,scope=helm
+      - uses: helm/kind-action@v1.15.1
+        with:
+          version: v0.33.0
+          cluster_name: yuva
+      - name: install into kind
+        run: |
+          kind load docker-image yuva:ci --name yuva
+          kubectl apply -f "$CHART/ci/postgres.yaml"
+          kubectl rollout status deployment/postgres --timeout=180s
+          helm install yuva "$CHART" -f "$CHART/ci/kind-values.yaml" \
+            --set image.repository=yuva --set image.tag=ci --set image.pullPolicy=Never --wait --timeout 5m
+          kubectl rollout status deployment/yuva --timeout=60s
+      - name: /readyz answers 200
+        run: |
+          kubectl port-forward svc/yuva 18080:80 > /dev/null &
+          for _ in $(seq 1 30); do
+            code="$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18080/readyz || true)"
+            [[ "$code" == 200 ]] && exit 0
+            sleep 1
+          done
+          echo "::error::/readyz answered $code"
+          exit 1
+      - name: cluster state
+        if: failure()
+        run: |
+          kubectl get all
+          kubectl describe pods -l app.kubernetes.io/name=yuva
+          kubectl logs deployment/yuva -c migrate --tail=100 || true
+          kubectl logs deployment/yuva -c yuva --tail=200 || true

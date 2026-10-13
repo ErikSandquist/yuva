@@ -47,6 +47,13 @@ jobs:
               exit 1
             fi
           done
+          for key in version appVersion; do
+            chart="$(sed -n "s/^$key: \"\{0,1\}\([^\"]*\)\"\{0,1\}$/\1/p" deploy/helm/yuva/Chart.yaml)"
+            if [[ "$chart" != "$version" ]]; then
+              echo "::error file=deploy/helm/yuva/Chart.yaml::$key is $chart, the tag is $version"
+              exit 1
+            fi
+          done
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "prerelease=$prerelease" >> "$GITHUB_OUTPUT"
 
@@ -100,6 +107,28 @@ jobs:
           provenance: mode=max
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  chart:
+    needs: [version, image]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: azure/setup-helm@v5.0.1
+        with:
+          version: v3.22.0
+      - name: push the Helm chart to ghcr.io
+        env:
+          VERSION: ${{ needs.version.outputs.version }}
+          ACTOR: ${{ github.actor }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          helm lint --strict deploy/helm/yuva -f deploy/helm/yuva/ci/kind-values.yaml
+          helm package deploy/helm/yuva --version "$VERSION" --app-version "$VERSION" -d dist
+          printf '%s' "$TOKEN" | helm registry login ghcr.io -u "$ACTOR" --password-stdin
+          helm push "dist/yuva-$VERSION.tgz" oci://ghcr.io/productdevbook/charts
 
   mcpb:
     needs: version
@@ -167,7 +196,7 @@ jobs:
           npm publish --access public --tag "$tag"
 
   release:
-    needs: [version, image, mcpb, npm]
+    needs: [version, image, chart, mcpb, npm]
     runs-on: ubuntu-latest
     permissions:
       contents: write
