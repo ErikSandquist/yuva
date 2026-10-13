@@ -1,0 +1,28 @@
+{{.Property}}: your {{if .Monthly}}monthly{{else}}weekly{{end}} analytics report
+
+{{.Property}}, {{.From}} to {{.To}}{{if or .Visitors.Change .Visits.Change .Pageviews.Change}} (changes against the {{if .Monthly}}month{{else}}week{{end}} before){{end}}
+
+Visitors: {{.Visitors.Value}}{{with .Visitors.Change}} ({{.}}){{end}}
+Visits: {{.Visits.Value}}{{with .Visits.Change}} ({{.}}){{end}}
+Page views: {{.Pageviews.Value}}{{with .Pageviews.Change}} ({{.}}){{end}}
+Bounce rate: {{.BounceRate.Value}}
+Visit duration: {{.Duration.Value}}
+{{if .Pages}}
+Top pages:
+{{range .Pages}}  {{.Name}}: {{.Value}}
+{{end}}{{end}}{{if .Sources}}
+Top sources:
+{{range .Sources}}  {{.Name}}: {{.Value}}
+{{end}}{{end}}{{if .Goals}}
+Goals:
+{{range .Goals}}  {{.Name}}: {{.Value}}{{with .Change}} ({{.}}){{end}}
+{{end}}{{end}}{{with .Support}}
+Support from the pages:
+  Conversations: {{.Conversations}}
+  Page feedback: {{.Feedback}}
+  Ratings: {{.Up}} helpful, {{.Down}} not helpful
+{{if .TopPage}}  Most conversations: {{.TopPage}}, {{.TopCount}} ({{.TopRate}} per 1,000 page views)
+{{end}}{{end}}
+Open Analytics: {{.URL}}
+
+You get this report because you chose it for {{.Property}}. Change or stop it: {{.SettingsURL}}

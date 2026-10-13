@@ -1,0 +1,9 @@
+{{.Property}}: {{if eq .Kind "spike"}}mehr Seitenaufrufe als üblich{{else if eq .Kind "drop"}}weniger Seitenaufrufe als üblich{{else if eq .Kind "goal_drop"}}{{.Goal}} wird seltener erreicht{{else if eq .Kind "support_load"}}mehr Support pro Seitenaufruf{{else}}eine neue verweisende Website{{end}}
+
+{{if eq .Kind "spike"}}{{.Property}} hatte am {{.Day}} zwischen {{.HourFrom}} und {{.HourTo}} Uhr {{.Current}} Seitenaufrufe, gegenüber durchschnittlich {{.Baseline}} in denselben Stunden der sieben Tage davor.{{else if eq .Kind "drop"}}{{.Property}} hatte am {{.Day}} zwischen {{.HourFrom}} und {{.HourTo}} Uhr {{.Current}} Seitenaufrufe, gegenüber durchschnittlich {{.Baseline}} in denselben Stunden der sieben Tage davor. Wenn die Website erreichbar ist, prüfen Sie, ob ihre Seiten das Analytics-Skript noch laden.{{else if eq .Kind "goal_drop"}}Das Ziel {{.Goal}} von {{.Property}} wurde am {{.Day}} {{.Current}}-mal erreicht, gegenüber durchschnittlich {{.Baseline}} pro Tag in den sieben Tagen davor.{{else if eq .Kind "support_load"}}{{.Property}} hatte am {{.Day}} {{.Current}} Unterhaltungen pro 1.000 Seitenaufrufe, gegenüber {{.Baseline}} in den 28 Tagen davor. Der Support-Bericht zeigt, auf welchen Seiten sie begonnen haben.{{else}}{{.Referrer}} brachte am {{.Day}} {{.Current}} Besuche auf {{.Property}}, in den 28 Tagen davor keinen.{{end}}
+
+Der Tag hat eine Anmerkung im Diagramm.
+
+Analytics öffnen: {{.URL}}
+
+Sie erhalten diese E-Mail, weil Sie diese Warnung für {{.Property}} gewählt haben. Warnungen ändern: {{.SettingsURL}}

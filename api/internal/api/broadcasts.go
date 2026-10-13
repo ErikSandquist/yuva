@@ -157,7 +157,7 @@ func broadcastBody(b store.Broadcast) oas.Broadcast {
 	}
 	out := oas.Broadcast{
 		Id: b.ID, InboxId: b.InboxID, ChannelId: b.ChannelID, Name: b.Name, Subject: b.Subject, Preheader: b.Preheader,
-		DesignId: b.DesignID, DesignVersion: b.DesignVersion, Audience: aud, ClickTracking: b.ClickTracking,
+		DesignId: b.DesignID, DesignVersion: b.DesignVersion, Audience: aud, ClickTracking: b.ClickTracking, Utm: b.Utm, UtmCampaign: b.UtmCampaign,
 		State: oas.BroadcastState(b.State), StateDetail: b.StateDetail, ScheduledAt: b.ScheduledAt, WaitingUntil: b.WaitingUntil,
 		StartedAt: b.StartedAt, FinishedAt: b.FinishedAt, LastTestAt: b.LastTestAt, Counts: parseCounts(b.Counts).body(b.State),
 		CreatedBy: b.CreatedBy, ScheduledBy: b.ScheduledBy, ScheduledByApiKey: b.ScheduledByKey, CreatedAt: b.CreatedAt, UpdatedAt: b.UpdatedAt,
@@ -477,6 +477,13 @@ func (s *Server) CreateBroadcast(ctx context.Context, req oas.CreateBroadcastReq
 			return nil, err
 		}
 	}
+	id := newID()
+	campaign := campaignOf(name, id)
+	if b.UtmCampaign != nil {
+		if campaign, err = checkCampaign(*b.UtmCampaign); err != nil {
+			return nil, err
+		}
+	}
 	var out store.Broadcast
 	err = s.inTx(ctx, p.workspaceID, func(q *store.Queries, events *eventBatch) error {
 		if s.broadcastMode() == broadcastsApproval {
@@ -503,9 +510,9 @@ func (s *Server) CreateBroadcast(ctx context.Context, req oas.CreateBroadcastReq
 			return err
 		}
 		out, err = q.CreateBroadcast(ctx, store.CreateBroadcastParams{
-			ID: newID(), WorkspaceID: p.workspaceID, InboxID: in.ID, ChannelID: b.ChannelId, Name: name, Subject: subject,
+			ID: id, WorkspaceID: p.workspaceID, InboxID: in.ID, ChannelID: b.ChannelId, Name: name, Subject: subject,
 			Preheader: preheader, DesignID: b.DesignId, Audience: mustJSON(aud), ClickTracking: boolOr(b.ClickTracking, false),
-			CreatedBy: p.memberRef(), Now: s.now(),
+			Utm: boolOr(b.Utm, true), UtmCampaign: campaign, CreatedBy: p.memberRef(), Now: s.now(),
 		})
 		return err
 	})
@@ -529,7 +536,7 @@ func (s *Server) saveBroadcast(ctx context.Context, q *store.Queries, b store.Br
 	return q.SaveBroadcast(ctx, store.SaveBroadcastParams{
 		WorkspaceID: b.WorkspaceID, ID: b.ID, ChannelID: b.ChannelID, Name: b.Name, Subject: b.Subject, Preheader: b.Preheader,
 		DesignID: b.DesignID, DesignVersion: b.DesignVersion, Document: b.Document, Audience: b.Audience, ClickTracking: b.ClickTracking,
-		State: b.State, PauseReason: b.PauseReason, StateDetail: b.StateDetail, ScheduledAt: b.ScheduledAt, WaitingUntil: b.WaitingUntil,
+		Utm: b.Utm, UtmCampaign: b.UtmCampaign, State: b.State, PauseReason: b.PauseReason, StateDetail: b.StateDetail, ScheduledAt: b.ScheduledAt, WaitingUntil: b.WaitingUntil,
 		StartedAt: b.StartedAt, ResumedAt: b.ResumedAt, FinishedAt: b.FinishedAt, LastTestAt: b.LastTestAt,
 		SnapshotAfter: b.SnapshotAfter, SnapshotDone: b.SnapshotDone, SenderFailingSince: b.SenderFailingSince,
 		ScheduledBy: b.ScheduledBy, ScheduledByKey: b.ScheduledByKey, Now: s.now(),
@@ -595,6 +602,14 @@ func (s *Server) UpdateBroadcast(ctx context.Context, req oas.UpdateBroadcastReq
 		}
 		if body.ClickTracking != nil {
 			b.ClickTracking = *body.ClickTracking
+		}
+		if body.Utm != nil {
+			b.Utm = *body.Utm
+		}
+		if body.UtmCampaign != nil {
+			if b.UtmCampaign, err = checkCampaign(*body.UtmCampaign); err != nil {
+				return err
+			}
 		}
 		out, err = s.saveBroadcast(ctx, q, b)
 		return err

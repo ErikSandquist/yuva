@@ -23,8 +23,51 @@ import (
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
+// Defines values for AnalyticsAlertEventType.
+const (
+	AnalyticsAlertEventTypeAnalyticsAlert AnalyticsAlertEventType = "analytics.alert"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsAlertEventType enum.
+func (e AnalyticsAlertEventType) Valid() bool {
+	switch e {
+	case AnalyticsAlertEventTypeAnalyticsAlert:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsAlertKind.
+const (
+	AnalyticsAlertDrop        AnalyticsAlertKind = "drop"
+	AnalyticsAlertGoalDrop    AnalyticsAlertKind = "goal_drop"
+	AnalyticsAlertNewReferrer AnalyticsAlertKind = "new_referrer"
+	AnalyticsAlertSpike       AnalyticsAlertKind = "spike"
+	AnalyticsAlertSupportLoad AnalyticsAlertKind = "support_load"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsAlertKind enum.
+func (e AnalyticsAlertKind) Valid() bool {
+	switch e {
+	case AnalyticsAlertDrop:
+		return true
+	case AnalyticsAlertGoalDrop:
+		return true
+	case AnalyticsAlertNewReferrer:
+		return true
+	case AnalyticsAlertSpike:
+		return true
+	case AnalyticsAlertSupportLoad:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsAnnotationKind.
 const (
+	AnalyticsAnnotationAlert       AnalyticsAnnotationKind = "alert"
 	AnalyticsAnnotationGoalCreated AnalyticsAnnotationKind = "goal_created"
 	AnalyticsAnnotationKeyRotated  AnalyticsAnnotationKind = "key_rotated"
 	AnalyticsAnnotationNote        AnalyticsAnnotationKind = "note"
@@ -33,6 +76,8 @@ const (
 // Valid indicates whether the value is a known member of the AnalyticsAnnotationKind enum.
 func (e AnalyticsAnnotationKind) Valid() bool {
 	switch e {
+	case AnalyticsAnnotationAlert:
+		return true
 	case AnalyticsAnnotationGoalCreated:
 		return true
 	case AnalyticsAnnotationKeyRotated:
@@ -170,6 +215,24 @@ func (e AnalyticsConsentFeature) Valid() bool {
 	case AnalyticsConsentIdentify:
 		return true
 	case AnalyticsConsentPersistent:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsDataset.
+const (
+	AnalyticsDatasetSupport AnalyticsDataset = "support"
+	AnalyticsDatasetTraffic AnalyticsDataset = "traffic"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsDataset enum.
+func (e AnalyticsDataset) Valid() bool {
+	switch e {
+	case AnalyticsDatasetSupport:
+		return true
+	case AnalyticsDatasetTraffic:
 		return true
 	default:
 		return false
@@ -500,16 +563,47 @@ func (e AnalyticsGoalKind) Valid() bool {
 	}
 }
 
+// Defines values for AnalyticsInsightKind.
+const (
+	AnalyticsInsightMetricChange   AnalyticsInsightKind = "metric_change"
+	AnalyticsInsightNewValue       AnalyticsInsightKind = "new_value"
+	AnalyticsInsightRowChange      AnalyticsInsightKind = "row_change"
+	AnalyticsInsightSupportHotspot AnalyticsInsightKind = "support_hotspot"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsInsightKind enum.
+func (e AnalyticsInsightKind) Valid() bool {
+	switch e {
+	case AnalyticsInsightMetricChange:
+		return true
+	case AnalyticsInsightNewValue:
+		return true
+	case AnalyticsInsightRowChange:
+		return true
+	case AnalyticsInsightSupportHotspot:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsMetric.
 const (
 	AnalyticsMetricBounceRate     AnalyticsMetric = "bounce_rate"
 	AnalyticsMetricCompletions    AnalyticsMetric = "completions"
+	AnalyticsMetricConversations  AnalyticsMetric = "conversations"
 	AnalyticsMetricConversionRate AnalyticsMetric = "conversion_rate"
 	AnalyticsMetricConversions    AnalyticsMetric = "conversions"
+	AnalyticsMetricDiscussions    AnalyticsMetric = "discussions"
 	AnalyticsMetricEvents         AnalyticsMetric = "events"
+	AnalyticsMetricFeedback       AnalyticsMetric = "feedback"
+	AnalyticsMetricHelpfulRate    AnalyticsMetric = "helpful_rate"
 	AnalyticsMetricPageviews      AnalyticsMetric = "pageviews"
+	AnalyticsMetricRatingsDown    AnalyticsMetric = "ratings_down"
+	AnalyticsMetricRatingsUp      AnalyticsMetric = "ratings_up"
 	AnalyticsMetricRevenue        AnalyticsMetric = "revenue"
 	AnalyticsMetricScrollDepth    AnalyticsMetric = "scroll_depth"
+	AnalyticsMetricSupportRate    AnalyticsMetric = "support_rate"
 	AnalyticsMetricTimeOnPage     AnalyticsMetric = "time_on_page"
 	AnalyticsMetricViewsPerVisit  AnalyticsMetric = "views_per_visit"
 	AnalyticsMetricVisitDuration  AnalyticsMetric = "visit_duration"
@@ -524,17 +618,31 @@ func (e AnalyticsMetric) Valid() bool {
 		return true
 	case AnalyticsMetricCompletions:
 		return true
+	case AnalyticsMetricConversations:
+		return true
 	case AnalyticsMetricConversionRate:
 		return true
 	case AnalyticsMetricConversions:
 		return true
+	case AnalyticsMetricDiscussions:
+		return true
 	case AnalyticsMetricEvents:
 		return true
+	case AnalyticsMetricFeedback:
+		return true
+	case AnalyticsMetricHelpfulRate:
+		return true
 	case AnalyticsMetricPageviews:
+		return true
+	case AnalyticsMetricRatingsDown:
+		return true
+	case AnalyticsMetricRatingsUp:
 		return true
 	case AnalyticsMetricRevenue:
 		return true
 	case AnalyticsMetricScrollDepth:
+		return true
+	case AnalyticsMetricSupportRate:
 		return true
 	case AnalyticsMetricTimeOnPage:
 		return true
@@ -653,6 +761,27 @@ func (e AnalyticsRawEventType) Valid() bool {
 	case AnalyticsRawEventTypePageview:
 		return true
 	case AnalyticsRawEventTypeScreen:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsReportFrequency.
+const (
+	AnalyticsReportMonthly AnalyticsReportFrequency = "monthly"
+	AnalyticsReportNone    AnalyticsReportFrequency = "none"
+	AnalyticsReportWeekly  AnalyticsReportFrequency = "weekly"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsReportFrequency enum.
+func (e AnalyticsReportFrequency) Valid() bool {
+	switch e {
+	case AnalyticsReportMonthly:
+		return true
+	case AnalyticsReportNone:
+		return true
+	case AnalyticsReportWeekly:
 		return true
 	default:
 		return false
@@ -4135,6 +4264,7 @@ func (e WebhookDeliveryState) Valid() bool {
 
 // Defines values for WebhookEventType.
 const (
+	WebhookEventTypeAnalyticsAlert        WebhookEventType = "analytics.alert"
 	WebhookEventTypeBroadcastUpdated      WebhookEventType = "broadcast.updated"
 	WebhookEventTypeContactDeleted        WebhookEventType = "contact.deleted"
 	WebhookEventTypeContactUpdated        WebhookEventType = "contact.updated"
@@ -4157,6 +4287,8 @@ const (
 // Valid indicates whether the value is a known member of the WebhookEventType enum.
 func (e WebhookEventType) Valid() bool {
 	switch e {
+	case WebhookEventTypeAnalyticsAlert:
+		return true
 	case WebhookEventTypeBroadcastUpdated:
 		return true
 	case WebhookEventTypeContactDeleted:
@@ -4457,9 +4589,87 @@ type AccountDeletion struct {
 	Email string `json:"email"`
 }
 
+// AnalyticsAlert defines model for AnalyticsAlert.
+type AnalyticsAlert struct {
+	AnnotationId *uuid.UUID `json:"annotation_id,omitempty"`
+
+	// Baseline What the rule compared `current` with; 0 for a new referrer.
+	Baseline  float64   `json:"baseline"`
+	CreatedAt time.Time `json:"created_at"`
+	Current   float64   `json:"current"`
+
+	// Day The property's day the alert is about.
+	Day      openapi_types.Date `json:"day"`
+	GoalId   *uuid.UUID         `json:"goal_id,omitempty"`
+	GoalName *string            `json:"goal_name,omitempty"`
+
+	// HoursFrom `spike` and `drop`: the start of the two hours.
+	HoursFrom *time.Time `json:"hours_from,omitempty"`
+	HoursTo   *time.Time `json:"hours_to,omitempty"`
+	Id        uuid.UUID  `json:"id"`
+
+	// Kind Fixed rules, checked every hour over the property's finished hours and days:
+	// `spike` and `drop`, page views of the last two finished hours at least three times, or at
+	// most half, the same two hours' average over the seven days before (at least 20 views
+	// a day in those hours); `goal_drop`, a goal's conversions yesterday at most half its
+	// average of the seven days before (at least 10 a day); `support_load`, yesterday's
+	// conversations per 1,000 page views at least twice the rate of the 28 days before, with at
+	// least 5 conversations (a property linked to an inbox); `new_referrer`, a referring site with
+	// at least 10 visits yesterday and none in the 28 days before. Each kind fires once per
+	// property and day (`new_referrer` once per site).
+	Kind AnalyticsAlertKind `json:"kind"`
+
+	// Metric `pageviews`, `conversions`, `support_rate` or `visits`.
+	Metric     string    `json:"metric"`
+	PropertyId uuid.UUID `json:"property_id"`
+
+	// Referrer `new_referrer`: the site's host.
+	Referrer *string `json:"referrer,omitempty"`
+
+	// Text What was found, in English, as on the annotation.
+	Text string `json:"text"`
+}
+
+// AnalyticsAlertEvent `analytics.alert`: a property raised an alert. Delivered to callers who hold
+// `analytics:read` and can see the property; `inbox_id` is the property's linked inbox.
+type AnalyticsAlertEvent struct {
+	CreatedAt   time.Time               `json:"created_at"`
+	Data        AnalyticsAlertEventData `json:"data"`
+	Id          int64                   `json:"id"`
+	InboxId     *uuid.UUID              `json:"inbox_id,omitempty"`
+	Type        AnalyticsAlertEventType `json:"type"`
+	WorkspaceId uuid.UUID               `json:"workspace_id"`
+}
+
+// AnalyticsAlertEventType defines model for AnalyticsAlertEvent.Type.
+type AnalyticsAlertEventType string
+
+// AnalyticsAlertEventData defines model for AnalyticsAlertEventData.
+type AnalyticsAlertEventData struct {
+	Alert    AnalyticsAlert       `json:"alert"`
+	Property AnalyticsPropertyRef `json:"property"`
+}
+
+// AnalyticsAlertKind Fixed rules, checked every hour over the property's finished hours and days:
+// `spike` and `drop`, page views of the last two finished hours at least three times, or at
+// most half, the same two hours' average over the seven days before (at least 20 views
+// a day in those hours); `goal_drop`, a goal's conversions yesterday at most half its
+// average of the seven days before (at least 10 a day); `support_load`, yesterday's
+// conversations per 1,000 page views at least twice the rate of the 28 days before, with at
+// least 5 conversations (a property linked to an inbox); `new_referrer`, a referring site with
+// at least 10 visits yesterday and none in the 28 days before. Each kind fires once per
+// property and day (`new_referrer` once per site).
+type AnalyticsAlertKind string
+
+// AnalyticsAlertList defines model for AnalyticsAlertList.
+type AnalyticsAlertList struct {
+	Items []AnalyticsAlert `json:"items"`
+}
+
 // AnalyticsAnnotation defines model for AnalyticsAnnotation.
 type AnalyticsAnnotation struct {
-	CreatedAt time.Time `json:"created_at"`
+	AlertId   *uuid.UUID `json:"alert_id,omitempty"`
+	CreatedAt time.Time  `json:"created_at"`
 
 	// CreatedBy The member who wrote it; absent for Yuva's own, API keys and removed members.
 	CreatedBy *uuid.UUID         `json:"created_by,omitempty"`
@@ -4467,16 +4677,18 @@ type AnalyticsAnnotation struct {
 	GoalId    *uuid.UUID         `json:"goal_id,omitempty"`
 	Id        uuid.UUID          `json:"id"`
 
-	// Kind `note` is a member's; Yuva adds `key_rotated` when the property got a new key and
-	// `goal_created` (with `goal_id` while the goal exists, and its name as `text`).
+	// Kind `note` is a member's; Yuva adds `key_rotated` when the property got a new key,
+	// `goal_created` (with `goal_id` while the goal exists, and its name as `text`) and
+	// `alert` (with `alert_id`, what the alert found as `text`).
 	Kind      AnalyticsAnnotationKind `json:"kind"`
 	StartsOn  openapi_types.Date      `json:"starts_on"`
 	Text      string                  `json:"text"`
 	UpdatedAt time.Time               `json:"updated_at"`
 }
 
-// AnalyticsAnnotationKind `note` is a member's; Yuva adds `key_rotated` when the property got a new key and
-// `goal_created` (with `goal_id` while the goal exists, and its name as `text`).
+// AnalyticsAnnotationKind `note` is a member's; Yuva adds `key_rotated` when the property got a new key,
+// `goal_created` (with `goal_id` while the goal exists, and its name as `text`) and
+// `alert` (with `alert_id`, what the alert found as `text`).
 type AnalyticsAnnotationKind string
 
 // AnalyticsAnnotationCreate defines model for AnalyticsAnnotationCreate.
@@ -4588,6 +4800,19 @@ type AnalyticsDataDeletion struct {
 	From *openapi_types.Date `json:"from,omitempty"`
 	To   *openapi_types.Date `json:"to,omitempty"`
 }
+
+// AnalyticsDataset `traffic` (default) counts visits, page views and events. `support` counts, per page and
+// day, what the property's linked inbox received from its pages: conversations started on a
+// page, page feedback, page ratings and discussion threads, next to the page's `pageviews`
+// and `visitors`. Pages are joined by host and path only; no visitor is ever joined to a
+// contact or conversation. It takes the dimensions `page`, `hostname` and `time:day`,
+// `time:week` or `time:month` (a page or host and a grain at most), filters on `page` and
+// `hostname`, no goal, prop or segment, and answers `422 no_linked_inbox` for a property
+// without an inbox. Rows are the pages (or hosts) with any support in the range, ordered by
+// `support_rate` with pages of fewer than 100 page views after the others unless `order_by`
+// says otherwise. Days of the past come from the support rollup, today and days not yet rolled
+// up from the inbox itself.
+type AnalyticsDataset string
 
 // AnalyticsDimension A filter dimension (`AnalyticsFilterDimension`), or a time grain: `time:hour` (local hours
 // of the property's time zone; only alone, and only with `visitors`, `visits`, `pageviews` and
@@ -5077,6 +5302,52 @@ type AnalyticsIngestCounts struct {
 	Scrubbed int64               `json:"scrubbed"`
 }
 
+// AnalyticsInsight A fixed rule over the answer's own numbers; Yuva runs no model.
+// `metric_change`: a total moved by at least 20% against `compare` (at least 10 before or
+// after). With one dimension other than time: `row_change`, a row whose first count metric
+// (by `order_by`, else the first one asked) moved by at least 50% (at least 10 before or
+// after), the three largest moves; `new_value`, a row with at least 10 that had none in the
+// comparison range (a new referrer, page or campaign), the three largest. `support_hotspot`
+// (`dataset: support` by page): a page with at least 3 conversations whose `support_rate` is
+// at least twice the range's, the three highest. The change rules need `compare`.
+type AnalyticsInsight struct {
+	// Change The change in percent of `previous`; absent when `previous` is 0.
+	Change  *float64 `json:"change,omitempty"`
+	Current float64  `json:"current"`
+
+	// Dimension The dimension of the row; absent for a total.
+	Dimension *string              `json:"dimension,omitempty"`
+	Kind      AnalyticsInsightKind `json:"kind"`
+
+	// Metric `visitors` (distinct visitors per day, added up over the range), `visits`, `pageviews`,
+	// `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
+	// `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
+	// focused, per page view that reported it), `scroll_depth` (deepest scroll in percent, per
+	// page view that reported it), `events` (custom and built-in events).
+	//
+	// With a `goal_id`: `conversions` (visitors who completed the goal, per day, added up),
+	// `conversion_rate` (conversions per 100 visitors), `completions` (times the goal was
+	// completed) and `revenue` (what the completing events carried, per currency, in
+	// `metrics.revenue`). With an `event` or `prop` dimension only `visitors`, `visits`, `events`
+	// and `revenue` are offered, counted over the events of each row. `revenue` cannot order rows.
+	//
+	// With `dataset: support` (a property linked to an inbox): `conversations` (conversations
+	// started on the page), `feedback` (page feedback sent from it), `ratings_up` and
+	// `ratings_down` (page ratings), `helpful_rate` (percent of ratings that are `up`),
+	// `discussions` (discussion threads started on it) and `support_rate` (conversations per
+	// 1,000 page views), next to `visitors` and `pageviews`.
+	Metric AnalyticsMetric `json:"metric"`
+
+	// Previous The comparison range's number, or the range's overall `support_rate` for a hotspot.
+	Previous *float64 `json:"previous,omitempty"`
+
+	// Value The row's value of `dimension`.
+	Value *string `json:"value,omitempty"`
+}
+
+// AnalyticsInsightKind defines model for AnalyticsInsight.Kind.
+type AnalyticsInsightKind string
+
 // AnalyticsMetric `visitors` (distinct visitors per day, added up over the range), `visits`, `pageviews`,
 // `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
 // `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
@@ -5088,20 +5359,33 @@ type AnalyticsIngestCounts struct {
 // completed) and `revenue` (what the completing events carried, per currency, in
 // `metrics.revenue`). With an `event` or `prop` dimension only `visitors`, `visits`, `events`
 // and `revenue` are offered, counted over the events of each row. `revenue` cannot order rows.
+//
+// With `dataset: support` (a property linked to an inbox): `conversations` (conversations
+// started on the page), `feedback` (page feedback sent from it), `ratings_up` and
+// `ratings_down` (page ratings), `helpful_rate` (percent of ratings that are `up`),
+// `discussions` (discussion threads started on it) and `support_rate` (conversations per
+// 1,000 page views), next to `visitors` and `pageviews`.
 type AnalyticsMetric string
 
 // AnalyticsMetrics The metrics the query asked for.
 type AnalyticsMetrics struct {
 	BounceRate     *float64 `json:"bounce_rate,omitempty"`
 	Completions    *float64 `json:"completions,omitempty"`
+	Conversations  *float64 `json:"conversations,omitempty"`
 	ConversionRate *float64 `json:"conversion_rate,omitempty"`
 	Conversions    *float64 `json:"conversions,omitempty"`
+	Discussions    *float64 `json:"discussions,omitempty"`
 	Events         *float64 `json:"events,omitempty"`
+	Feedback       *float64 `json:"feedback,omitempty"`
+	HelpfulRate    *float64 `json:"helpful_rate,omitempty"`
 	Pageviews      *float64 `json:"pageviews,omitempty"`
+	RatingsDown    *float64 `json:"ratings_down,omitempty"`
+	RatingsUp      *float64 `json:"ratings_up,omitempty"`
 
 	// Revenue Per currency, most first.
 	Revenue       *[]AnalyticsRevenue `json:"revenue,omitempty"`
 	ScrollDepth   *float64            `json:"scroll_depth,omitempty"`
+	SupportRate   *float64            `json:"support_rate,omitempty"`
 	TimeOnPage    *float64            `json:"time_on_page,omitempty"`
 	ViewsPerVisit *float64            `json:"views_per_visit,omitempty"`
 	VisitDuration *float64            `json:"visit_duration,omitempty"`
@@ -5131,6 +5415,12 @@ type AnalyticsOrder struct {
 	// completed) and `revenue` (what the completing events carried, per currency, in
 	// `metrics.revenue`). With an `event` or `prop` dimension only `visitors`, `visits`, `events`
 	// and `revenue` are offered, counted over the events of each row. `revenue` cannot order rows.
+	//
+	// With `dataset: support` (a property linked to an inbox): `conversations` (conversations
+	// started on the page), `feedback` (page feedback sent from it), `ratings_up` and
+	// `ratings_down` (page ratings), `helpful_rate` (percent of ratings that are `up`),
+	// `discussions` (discussion threads started on it) and `support_rate` (conversations per
+	// 1,000 page views), next to `visitors` and `pageviews`.
 	Metric AnalyticsMetric `json:"metric"`
 }
 
@@ -5251,6 +5541,12 @@ type AnalyticsPropertyList struct {
 	Usage AnalyticsUsage `json:"usage"`
 }
 
+// AnalyticsPropertyRef defines model for AnalyticsPropertyRef.
+type AnalyticsPropertyRef struct {
+	Id   uuid.UUID `json:"id"`
+	Name string    `json:"name"`
+}
+
 // AnalyticsPropertyUpdate defines model for AnalyticsPropertyUpdate.
 type AnalyticsPropertyUpdate struct {
 	// Audience `children` keeps location at country level and allows no consent features or tracked props.
@@ -5285,7 +5581,20 @@ type AnalyticsQuery struct {
 	Compare *AnalyticsCompare `json:"compare,omitempty"`
 
 	// Cursor `next_cursor` of the previous page.
-	Cursor     *string               `json:"cursor,omitempty"`
+	Cursor *string `json:"cursor,omitempty"`
+
+	// Dataset `traffic` (default) counts visits, page views and events. `support` counts, per page and
+	// day, what the property's linked inbox received from its pages: conversations started on a
+	// page, page feedback, page ratings and discussion threads, next to the page's `pageviews`
+	// and `visitors`. Pages are joined by host and path only; no visitor is ever joined to a
+	// contact or conversation. It takes the dimensions `page`, `hostname` and `time:day`,
+	// `time:week` or `time:month` (a page or host and a grain at most), filters on `page` and
+	// `hostname`, no goal, prop or segment, and answers `422 no_linked_inbox` for a property
+	// without an inbox. Rows are the pages (or hosts) with any support in the range, ordered by
+	// `support_rate` with pages of fewer than 100 page views after the others unless `order_by`
+	// says otherwise. Days of the past come from the support rollup, today and days not yet rolled
+	// up from the inbox itself.
+	Dataset    *AnalyticsDataset     `json:"dataset,omitempty"`
 	Dimensions *[]AnalyticsDimension `json:"dimensions,omitempty"`
 	Filters    *[]AnalyticsFilter    `json:"filters,omitempty"`
 
@@ -5295,6 +5604,9 @@ type AnalyticsQuery struct {
 	// filter need raw rows. A goal counts on every day of the raw window, also before it was
 	// made; older days have it only if it existed when they were rolled up.
 	GoalId *uuid.UUID `json:"goal_id,omitempty"`
+
+	// Insights Add `insights` to the answer, worked out from its own numbers by fixed rules.
+	Insights *bool `json:"insights,omitempty"`
 
 	// Limit Rows per page; time series are never cut.
 	Limit   *int              `json:"limit,omitempty"`
@@ -5418,10 +5730,16 @@ type AnalyticsRealtime struct {
 	Visitors int64 `json:"visitors"`
 }
 
+// AnalyticsReportFrequency defines model for AnalyticsReportFrequency.
+type AnalyticsReportFrequency string
+
 // AnalyticsResult defines model for AnalyticsResult.
 type AnalyticsResult struct {
 	Comparison *AnalyticsComparison `json:"comparison,omitempty"`
-	Meta       AnalyticsResultMeta  `json:"meta"`
+
+	// Insights With `insights` in the query; empty when no rule applies.
+	Insights *[]AnalyticsInsight `json:"insights,omitempty"`
+	Meta     AnalyticsResultMeta `json:"meta"`
 
 	// NextCursor Present when there are more rows.
 	NextCursor *string `json:"next_cursor,omitempty"`
@@ -5703,6 +6021,25 @@ type AnalyticsSharedProperty struct {
 	Timezone  string              `json:"timezone"`
 }
 
+// AnalyticsSubscription defines model for AnalyticsSubscription.
+type AnalyticsSubscription struct {
+	Alerts []AnalyticsAlertKind `json:"alerts"`
+
+	// LastReportAt When the last scheduled report went out.
+	LastReportAt *time.Time               `json:"last_report_at,omitempty"`
+	PropertyId   uuid.UUID                `json:"property_id"`
+	Report       AnalyticsReportFrequency `json:"report"`
+
+	// UpdatedAt Absent until the member chose.
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
+}
+
+// AnalyticsSubscriptionUpdate defines model for AnalyticsSubscriptionUpdate.
+type AnalyticsSubscriptionUpdate struct {
+	Alerts *[]AnalyticsAlertKind     `json:"alerts,omitempty"`
+	Report *AnalyticsReportFrequency `json:"report,omitempty"`
+}
+
 // AnalyticsTopValue defines model for AnalyticsTopValue.
 type AnalyticsTopValue struct {
 	Value    string `json:"value"`
@@ -5964,6 +6301,14 @@ type Broadcast struct {
 	Subject   string    `json:"subject"`
 	UpdatedAt time.Time `json:"updated_at"`
 
+	// Utm Links to the web get `utm_source=newsletter`, `utm_medium=email` and
+	// `utm_campaign=<utm_campaign>` (a link that has a `utm_` parameter of its own keeps its
+	// own), so Analytics counts the visits of the campaign. On by default.
+	Utm bool `json:"utm"`
+
+	// UtmCampaign The campaign's name in links; made from `name` when the broadcast is created.
+	UtmCampaign string `json:"utm_campaign"`
+
 	// WaitingUntil The workspace's daily limit is reached; sending continues at this time (the next 00:00 UTC).
 	WaitingUntil *time.Time `json:"waiting_until,omitempty"`
 }
@@ -6027,6 +6372,15 @@ type BroadcastAudienceInput struct {
 	Locales    *[]LanguageTag        `json:"locales,omitempty"`
 }
 
+// BroadcastCampaignVisits defines model for BroadcastCampaignVisits.
+type BroadcastCampaignVisits struct {
+	Pageviews    int64     `json:"pageviews"`
+	PropertyId   uuid.UUID `json:"property_id"`
+	PropertyName string    `json:"property_name"`
+	Visitors     int64     `json:"visitors"`
+	Visits       int64     `json:"visits"`
+}
+
 // BroadcastCondition defines model for BroadcastCondition.
 type BroadcastCondition struct {
 	Attribute string `json:"attribute"`
@@ -6083,6 +6437,12 @@ type BroadcastCreate struct {
 	Name          string                  `json:"name"`
 	Preheader     *string                 `json:"preheader,omitempty"`
 	Subject       *string                 `json:"subject,omitempty"`
+
+	// Utm On when absent at creation.
+	Utm *bool `json:"utm,omitempty"`
+
+	// UtmCampaign Lowercase letters, digits, `-`, `_` and `.`; made from `name` when absent at creation.
+	UtmCampaign *string `json:"utm_campaign,omitempty"`
 }
 
 // BroadcastDelivery defines model for BroadcastDelivery.
@@ -6258,6 +6618,11 @@ type BroadcastRef struct {
 type BroadcastReport struct {
 	BroadcastId uuid.UUID `json:"broadcast_id"`
 
+	// CampaignVisits With `utm` and the scope `analytics:read`: per Analytics property the caller sees, the
+	// visits whose `utm_campaign` is the broadcast's, from the day sending started; only
+	// properties with any.
+	CampaignVisits *[]BroadcastCampaignVisits `json:"campaign_visits,omitempty"`
+
 	// Counts `recipients` is the audience taken when sending started; `queued` the mails still to go
 	// out. `sent` counts mails the SMTP server accepted; `failed` those it refused for good
 	// without naming a bad address. `bounced` and `complained` count recipients whose mail
@@ -6377,6 +6742,12 @@ type BroadcastUpdate struct {
 	Name          *string                      `json:"name,omitempty"`
 	Preheader     *string                      `json:"preheader,omitempty"`
 	Subject       *string                      `json:"subject,omitempty"`
+
+	// Utm On when absent at creation.
+	Utm *bool `json:"utm,omitempty"`
+
+	// UtmCampaign Lowercase letters, digits, `-`, `_` and `.`; made from `name` when absent at creation.
+	UtmCampaign *string `json:"utm_campaign,omitempty"`
 }
 
 // BroadcastsMode The server's `YUVA_BROADCASTS`: `on`, `approval` (a workspace sends only after the
@@ -6649,7 +7020,13 @@ type ClientConversationCreate struct {
 
 	// ClientId The first message's `client_id`.
 	ClientId *string `json:"client_id,omitempty"`
-	Subject  *string `json:"subject,omitempty"`
+
+	// PageTitle The page's title; needs `page_url`.
+	PageTitle *string `json:"page_title,omitempty"`
+
+	// PageUrl The page the conversation starts on, an absolute http(s) URL; query and fragment are dropped.
+	PageUrl *string `json:"page_url,omitempty"`
+	Subject *string `json:"subject,omitempty"`
 }
 
 // ClientConversationCreateMultipart defines model for ClientConversationCreateMultipart.
@@ -6657,7 +7034,13 @@ type ClientConversationCreateMultipart struct {
 	Body     *string               `json:"body,omitempty"`
 	ClientId *string               `json:"client_id,omitempty"`
 	Files    *[]openapi_types.File `json:"files,omitempty"`
-	Subject  *string               `json:"subject,omitempty"`
+
+	// PageTitle The page's title; needs `page_url`.
+	PageTitle *string `json:"page_title,omitempty"`
+
+	// PageUrl The page the conversation starts on, an absolute http(s) URL; query and fragment are dropped.
+	PageUrl *string `json:"page_url,omitempty"`
+	Subject *string `json:"subject,omitempty"`
 }
 
 // ClientConversationCreated defines model for ClientConversationCreated.
@@ -12695,6 +13078,19 @@ type ViewingEvent struct {
 // ViewingEventType defines model for ViewingEvent.Type.
 type ViewingEventType string
 
+// WebhookAnalyticsAlertPayload defines model for WebhookAnalyticsAlertPayload.
+type WebhookAnalyticsAlertPayload struct {
+	Data AnalyticsAlertEventData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
+}
+
 // WebhookAttempt defines model for WebhookAttempt.
 type WebhookAttempt struct {
 	AttemptedAt time.Time `json:"attempted_at"`
@@ -13397,6 +13793,15 @@ type UpdateAnalyticsPropertyParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListAnalyticsAlertsParams defines parameters for ListAnalyticsAlerts.
+type ListAnalyticsAlertsParams struct {
+	// Before `created_at` of the last alert of the previous page.
+	Before *time.Time `form:"before,omitempty" json:"before,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // ListAnalyticsAnnotationsParams defines parameters for ListAnalyticsAnnotations.
 type ListAnalyticsAnnotationsParams struct {
 	From *openapi_types.Date `form:"from,omitempty" json:"from,omitempty"`
@@ -13632,6 +14037,24 @@ type UpdateAnalyticsShareParams struct {
 
 // RevokeAnalyticsShareParams defines parameters for RevokeAnalyticsShare.
 type RevokeAnalyticsShareParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetAnalyticsSubscriptionParams defines parameters for GetAnalyticsSubscription.
+type GetAnalyticsSubscriptionParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateAnalyticsSubscriptionParams defines parameters for UpdateAnalyticsSubscription.
+type UpdateAnalyticsSubscriptionParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// SendAnalyticsReportParams defines parameters for SendAnalyticsReport.
+type SendAnalyticsReportParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -15296,6 +15719,20 @@ type RequestBroadcastApprovalParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// WebhookAnalyticsAlertParams defines parameters for WebhookAnalyticsAlert.
+type WebhookAnalyticsAlertParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
 // WebhookBroadcastUpdatedParams defines parameters for WebhookBroadcastUpdated.
 type WebhookBroadcastUpdatedParams struct {
 	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
@@ -15654,6 +16091,9 @@ type CreateAnalyticsShareJSONRequestBody = AnalyticsShareCreate
 // UpdateAnalyticsShareJSONRequestBody defines body for UpdateAnalyticsShare for application/json ContentType.
 type UpdateAnalyticsShareJSONRequestBody = AnalyticsShareUpdate
 
+// UpdateAnalyticsSubscriptionJSONRequestBody defines body for UpdateAnalyticsSubscription for application/json ContentType.
+type UpdateAnalyticsSubscriptionJSONRequestBody = AnalyticsSubscriptionUpdate
+
 // CreateApiKeyJSONRequestBody defines body for CreateApiKey for application/json ContentType.
 type CreateApiKeyJSONRequestBody = ApiKeyCreate
 
@@ -15875,6 +16315,9 @@ type RequestBroadcastApprovalJSONRequestBody = BroadcastApprovalRequest
 
 // CreateWorkspaceJSONRequestBody defines body for CreateWorkspace for application/json ContentType.
 type CreateWorkspaceJSONRequestBody = WorkspaceCreate
+
+// WebhookAnalyticsAlertJSONRequestBody defines body for WebhookAnalyticsAlert for application/json ContentType.
+type WebhookAnalyticsAlertJSONRequestBody = WebhookAnalyticsAlertPayload
 
 // WebhookBroadcastUpdatedJSONRequestBody defines body for WebhookBroadcastUpdated for application/json ContentType.
 type WebhookBroadcastUpdatedJSONRequestBody = WebhookBroadcastPayload
@@ -18037,6 +18480,32 @@ func (t *RealtimeMessage) MergeMigrationEvent(v MigrationEvent) error {
 	return err
 }
 
+// AsAnalyticsAlertEvent returns the union data inside the RealtimeMessage as a AnalyticsAlertEvent
+func (t RealtimeMessage) AsAnalyticsAlertEvent() (AnalyticsAlertEvent, error) {
+	var body AnalyticsAlertEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAnalyticsAlertEvent overwrites any union data inside the RealtimeMessage as the provided AnalyticsAlertEvent
+func (t *RealtimeMessage) FromAnalyticsAlertEvent(v AnalyticsAlertEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAnalyticsAlertEvent performs a merge with any union data inside the RealtimeMessage, using the provided AnalyticsAlertEvent
+func (t *RealtimeMessage) MergeAnalyticsAlertEvent(v AnalyticsAlertEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsMigrationProgressEvent returns the union data inside the RealtimeMessage as a MigrationProgressEvent
 func (t RealtimeMessage) AsMigrationProgressEvent() (MigrationProgressEvent, error) {
 	var body MigrationProgressEvent
@@ -18337,6 +18806,8 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return nil, err
 	}
 	switch discriminator {
+	case "analytics.alert":
+		return t.AsAnalyticsAlertEvent()
 	case "broadcast.progress":
 		return t.AsBroadcastProgressEvent()
 	case "broadcast.updated":
@@ -18892,6 +19363,32 @@ func (t *StoredEvent) MergeMigrationEvent(v MigrationEvent) error {
 	return err
 }
 
+// AsAnalyticsAlertEvent returns the union data inside the StoredEvent as a AnalyticsAlertEvent
+func (t StoredEvent) AsAnalyticsAlertEvent() (AnalyticsAlertEvent, error) {
+	var body AnalyticsAlertEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAnalyticsAlertEvent overwrites any union data inside the StoredEvent as the provided AnalyticsAlertEvent
+func (t *StoredEvent) FromAnalyticsAlertEvent(v AnalyticsAlertEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAnalyticsAlertEvent performs a merge with any union data inside the StoredEvent, using the provided AnalyticsAlertEvent
+func (t *StoredEvent) MergeAnalyticsAlertEvent(v AnalyticsAlertEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 func (t StoredEvent) Discriminator() (string, error) {
 	var discriminator struct {
 		Discriminator string `json:"type"`
@@ -18906,6 +19403,8 @@ func (t StoredEvent) ValueByDiscriminator() (interface{}, error) {
 		return nil, err
 	}
 	switch discriminator {
+	case "analytics.alert":
+		return t.AsAnalyticsAlertEvent()
 	case "broadcast.updated":
 		return t.AsBroadcastEvent()
 	case "contact.deleted":
@@ -19132,6 +19631,9 @@ type ServerInterface interface {
 	// UpdateAnalyticsProperty Update an analytics property
 	// (PATCH /v1/analytics/properties/{propertyId})
 	UpdateAnalyticsProperty(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params UpdateAnalyticsPropertyParams)
+	// ListAnalyticsAlerts List a property's alerts
+	// (GET /v1/analytics/properties/{propertyId}/alerts)
+	ListAnalyticsAlerts(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params ListAnalyticsAlertsParams)
 	// ListAnalyticsAnnotations List a property's annotations
 	// (GET /v1/analytics/properties/{propertyId}/annotations)
 	ListAnalyticsAnnotations(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params ListAnalyticsAnnotationsParams)
@@ -19231,6 +19733,15 @@ type ServerInterface interface {
 	// RevokeAnalyticsShare Revoke a share link
 	// (POST /v1/analytics/properties/{propertyId}/shares/{shareId}/revoke)
 	RevokeAnalyticsShare(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params RevokeAnalyticsShareParams)
+	// GetAnalyticsSubscription Get my reports and alerts of a property
+	// (GET /v1/analytics/properties/{propertyId}/subscription)
+	GetAnalyticsSubscription(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params GetAnalyticsSubscriptionParams)
+	// UpdateAnalyticsSubscription Choose my reports and alerts of a property
+	// (PUT /v1/analytics/properties/{propertyId}/subscription)
+	UpdateAnalyticsSubscription(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params UpdateAnalyticsSubscriptionParams)
+	// SendAnalyticsReport Send me a report now
+	// (POST /v1/analytics/properties/{propertyId}/subscription/send-report)
+	SendAnalyticsReport(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params SendAnalyticsReportParams)
 	// ListApiKeys List API keys
 	// (GET /v1/api-keys)
 	ListApiKeys(w http.ResponseWriter, r *http.Request, params ListApiKeysParams)
@@ -21609,6 +22120,69 @@ func (siw *ServerInterfaceWrapper) UpdateAnalyticsProperty(w http.ResponseWriter
 	handler.ServeHTTP(w, r)
 }
 
+// ListAnalyticsAlerts operation middleware
+func (siw *ServerInterfaceWrapper) ListAnalyticsAlerts(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListAnalyticsAlertsParams
+
+	// ------------- Optional query parameter "before" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "before", r.URL.Query(), &params.Before, runtime.BindQueryParameterOptions{Type: "string", Format: "date-time"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "before"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "before", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListAnalyticsAlerts(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // ListAnalyticsAnnotations operation middleware
 func (siw *ServerInterfaceWrapper) ListAnalyticsAnnotations(w http.ResponseWriter, r *http.Request) {
 
@@ -23617,6 +24191,156 @@ func (siw *ServerInterfaceWrapper) RevokeAnalyticsShare(w http.ResponseWriter, r
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.RevokeAnalyticsShare(w, r, propertyId, shareId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetAnalyticsSubscription operation middleware
+func (siw *ServerInterfaceWrapper) GetAnalyticsSubscription(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetAnalyticsSubscriptionParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetAnalyticsSubscription(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateAnalyticsSubscription operation middleware
+func (siw *ServerInterfaceWrapper) UpdateAnalyticsSubscription(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateAnalyticsSubscriptionParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateAnalyticsSubscription(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// SendAnalyticsReport operation middleware
+func (siw *ServerInterfaceWrapper) SendAnalyticsReport(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params SendAnalyticsReportParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.SendAnalyticsReport(w, r, propertyId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -36327,6 +37051,10 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/annotations", wrapper.CreateAnalyticsAnnotation)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/annotations/{annotationId}", wrapper.DeleteAnalyticsAnnotation)
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/annotations/{annotationId}", wrapper.UpdateAnalyticsAnnotation)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/subscription", wrapper.GetAnalyticsSubscription)
+	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/subscription", wrapper.UpdateAnalyticsSubscription)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/subscription/send-report", wrapper.SendAnalyticsReport)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/alerts", wrapper.ListAnalyticsAlerts)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/shares", wrapper.ListAnalyticsShares)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/shares", wrapper.CreateAnalyticsShare)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/shares/{shareId}", wrapper.DeleteAnalyticsShare)
@@ -36385,6 +37113,9 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 // webhook http.Handler returned by {Op}WebhookHandler at
 // whatever URL path they advertise to senders.
 type WebhookReceiverInterface interface {
+	// A property raised an alert
+	// HandleWebhookAnalyticsAlertWebhook handles the POST webhook for analytics.alert.
+	HandleWebhookAnalyticsAlertWebhook(w http.ResponseWriter, r *http.Request, params WebhookAnalyticsAlertParams)
 	// A broadcast changed state
 	// HandleWebhookBroadcastUpdatedWebhook handles the POST webhook for broadcast.updated.
 	HandleWebhookBroadcastUpdatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookBroadcastUpdatedParams)
@@ -36441,6 +37172,98 @@ type WebhookReceiverInterface interface {
 // WebhookReceiverMiddlewareFunc wraps an http.Handler with cross-
 // cutting behavior (signature verification, logging, rate limiting, ...).
 type WebhookReceiverMiddlewareFunc func(http.Handler) http.Handler
+
+// WebhookAnalyticsAlertWebhookHandler returns the http.Handler for the analytics.alert webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookAnalyticsAlertWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookAnalyticsAlertParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookAnalyticsAlertWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
 
 // WebhookBroadcastUpdatedWebhookHandler returns the http.Handler for the broadcast.updated webhook.
 // Mount this at the URL path advertised to webhook senders. errHandler
@@ -41877,6 +42700,87 @@ func (response UpdateAnalyticsProperty404ApplicationProblemPlusJSONResponse) Vis
 	return err
 }
 
+type ListAnalyticsAlertsRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     ListAnalyticsAlertsParams
+}
+
+type ListAnalyticsAlertsResponseObject interface {
+	VisitListAnalyticsAlertsResponse(w http.ResponseWriter) error
+}
+
+type ListAnalyticsAlerts200JSONResponse AnalyticsAlertList
+
+func (response ListAnalyticsAlerts200JSONResponse) VisitListAnalyticsAlertsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsAlerts400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListAnalyticsAlerts400ApplicationProblemPlusJSONResponse) VisitListAnalyticsAlertsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsAlerts401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListAnalyticsAlerts401ApplicationProblemPlusJSONResponse) VisitListAnalyticsAlertsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsAlerts403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListAnalyticsAlerts403ApplicationProblemPlusJSONResponse) VisitListAnalyticsAlertsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsAlerts404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListAnalyticsAlerts404ApplicationProblemPlusJSONResponse) VisitListAnalyticsAlertsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type ListAnalyticsAnnotationsRequestObject struct {
 	PropertyId AnalyticsPropertyId `json:"propertyId"`
 	Params     ListAnalyticsAnnotationsParams
@@ -44655,6 +45559,258 @@ func (response RevokeAnalyticsShare404ApplicationProblemPlusJSONResponse) VisitR
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsSubscriptionRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     GetAnalyticsSubscriptionParams
+}
+
+type GetAnalyticsSubscriptionResponseObject interface {
+	VisitGetAnalyticsSubscriptionResponse(w http.ResponseWriter) error
+}
+
+type GetAnalyticsSubscription200JSONResponse AnalyticsSubscription
+
+func (response GetAnalyticsSubscription200JSONResponse) VisitGetAnalyticsSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsSubscription400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetAnalyticsSubscription400ApplicationProblemPlusJSONResponse) VisitGetAnalyticsSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsSubscription401ApplicationProblemPlusJSONResponse Problem
+
+func (response GetAnalyticsSubscription401ApplicationProblemPlusJSONResponse) VisitGetAnalyticsSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsSubscription403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetAnalyticsSubscription403ApplicationProblemPlusJSONResponse) VisitGetAnalyticsSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsSubscription404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetAnalyticsSubscription404ApplicationProblemPlusJSONResponse) VisitGetAnalyticsSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsSubscriptionRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     UpdateAnalyticsSubscriptionParams
+	Body       *UpdateAnalyticsSubscriptionJSONRequestBody
+}
+
+type UpdateAnalyticsSubscriptionResponseObject interface {
+	VisitUpdateAnalyticsSubscriptionResponse(w http.ResponseWriter) error
+}
+
+type UpdateAnalyticsSubscription200JSONResponse AnalyticsSubscription
+
+func (response UpdateAnalyticsSubscription200JSONResponse) VisitUpdateAnalyticsSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsSubscription400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateAnalyticsSubscription400ApplicationProblemPlusJSONResponse) VisitUpdateAnalyticsSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsSubscription401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateAnalyticsSubscription401ApplicationProblemPlusJSONResponse) VisitUpdateAnalyticsSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsSubscription403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateAnalyticsSubscription403ApplicationProblemPlusJSONResponse) VisitUpdateAnalyticsSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsSubscription404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateAnalyticsSubscription404ApplicationProblemPlusJSONResponse) VisitUpdateAnalyticsSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendAnalyticsReportRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     SendAnalyticsReportParams
+}
+
+type SendAnalyticsReportResponseObject interface {
+	VisitSendAnalyticsReportResponse(w http.ResponseWriter) error
+}
+
+type SendAnalyticsReport202Response struct {
+}
+
+func (response SendAnalyticsReport202Response) VisitSendAnalyticsReportResponse(w http.ResponseWriter) error {
+	w.WriteHeader(202)
+	return nil
+}
+
+type SendAnalyticsReport400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response SendAnalyticsReport400ApplicationProblemPlusJSONResponse) VisitSendAnalyticsReportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendAnalyticsReport401ApplicationProblemPlusJSONResponse Problem
+
+func (response SendAnalyticsReport401ApplicationProblemPlusJSONResponse) VisitSendAnalyticsReportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendAnalyticsReport403ApplicationProblemPlusJSONResponse Problem
+
+func (response SendAnalyticsReport403ApplicationProblemPlusJSONResponse) VisitSendAnalyticsReportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendAnalyticsReport404ApplicationProblemPlusJSONResponse Problem
+
+func (response SendAnalyticsReport404ApplicationProblemPlusJSONResponse) VisitSendAnalyticsReportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendAnalyticsReport429ApplicationProblemPlusJSONResponse Problem
+
+func (response SendAnalyticsReport429ApplicationProblemPlusJSONResponse) VisitSendAnalyticsReportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -61348,6 +62504,9 @@ type StrictServerInterface interface {
 	// UpdateAnalyticsProperty Update an analytics property
 	// (PATCH /v1/analytics/properties/{propertyId})
 	UpdateAnalyticsProperty(ctx context.Context, request UpdateAnalyticsPropertyRequestObject) (UpdateAnalyticsPropertyResponseObject, error)
+	// ListAnalyticsAlerts List a property's alerts
+	// (GET /v1/analytics/properties/{propertyId}/alerts)
+	ListAnalyticsAlerts(ctx context.Context, request ListAnalyticsAlertsRequestObject) (ListAnalyticsAlertsResponseObject, error)
 	// ListAnalyticsAnnotations List a property's annotations
 	// (GET /v1/analytics/properties/{propertyId}/annotations)
 	ListAnalyticsAnnotations(ctx context.Context, request ListAnalyticsAnnotationsRequestObject) (ListAnalyticsAnnotationsResponseObject, error)
@@ -61447,6 +62606,15 @@ type StrictServerInterface interface {
 	// RevokeAnalyticsShare Revoke a share link
 	// (POST /v1/analytics/properties/{propertyId}/shares/{shareId}/revoke)
 	RevokeAnalyticsShare(ctx context.Context, request RevokeAnalyticsShareRequestObject) (RevokeAnalyticsShareResponseObject, error)
+	// GetAnalyticsSubscription Get my reports and alerts of a property
+	// (GET /v1/analytics/properties/{propertyId}/subscription)
+	GetAnalyticsSubscription(ctx context.Context, request GetAnalyticsSubscriptionRequestObject) (GetAnalyticsSubscriptionResponseObject, error)
+	// UpdateAnalyticsSubscription Choose my reports and alerts of a property
+	// (PUT /v1/analytics/properties/{propertyId}/subscription)
+	UpdateAnalyticsSubscription(ctx context.Context, request UpdateAnalyticsSubscriptionRequestObject) (UpdateAnalyticsSubscriptionResponseObject, error)
+	// SendAnalyticsReport Send me a report now
+	// (POST /v1/analytics/properties/{propertyId}/subscription/send-report)
+	SendAnalyticsReport(ctx context.Context, request SendAnalyticsReportRequestObject) (SendAnalyticsReportResponseObject, error)
 	// ListApiKeys List API keys
 	// (GET /v1/api-keys)
 	ListApiKeys(ctx context.Context, request ListApiKeysRequestObject) (ListApiKeysResponseObject, error)
@@ -63701,6 +64869,33 @@ func (sh *strictHandler) UpdateAnalyticsProperty(w http.ResponseWriter, r *http.
 	}
 }
 
+// ListAnalyticsAlerts operation middleware
+func (sh *strictHandler) ListAnalyticsAlerts(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params ListAnalyticsAlertsParams) {
+	var request ListAnalyticsAlertsRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListAnalyticsAlerts(ctx, request.(ListAnalyticsAlertsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListAnalyticsAlerts")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListAnalyticsAlertsResponseObject); ok {
+		if err := validResponse.VisitListAnalyticsAlertsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
 // ListAnalyticsAnnotations operation middleware
 func (sh *strictHandler) ListAnalyticsAnnotations(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params ListAnalyticsAnnotationsParams) {
 	var request ListAnalyticsAnnotationsRequestObject
@@ -64697,6 +65892,94 @@ func (sh *strictHandler) RevokeAnalyticsShare(w http.ResponseWriter, r *http.Req
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(RevokeAnalyticsShareResponseObject); ok {
 		if err := validResponse.VisitRevokeAnalyticsShareResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetAnalyticsSubscription operation middleware
+func (sh *strictHandler) GetAnalyticsSubscription(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params GetAnalyticsSubscriptionParams) {
+	var request GetAnalyticsSubscriptionRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetAnalyticsSubscription(ctx, request.(GetAnalyticsSubscriptionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetAnalyticsSubscription")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetAnalyticsSubscriptionResponseObject); ok {
+		if err := validResponse.VisitGetAnalyticsSubscriptionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateAnalyticsSubscription operation middleware
+func (sh *strictHandler) UpdateAnalyticsSubscription(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params UpdateAnalyticsSubscriptionParams) {
+	var request UpdateAnalyticsSubscriptionRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	var body UpdateAnalyticsSubscriptionJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateAnalyticsSubscription(ctx, request.(UpdateAnalyticsSubscriptionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateAnalyticsSubscription")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateAnalyticsSubscriptionResponseObject); ok {
+		if err := validResponse.VisitUpdateAnalyticsSubscriptionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// SendAnalyticsReport operation middleware
+func (sh *strictHandler) SendAnalyticsReport(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params SendAnalyticsReportParams) {
+	var request SendAnalyticsReportRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.SendAnalyticsReport(ctx, request.(SendAnalyticsReportRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "SendAnalyticsReport")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(SendAnalyticsReportResponseObject); ok {
+		if err := validResponse.VisitSendAnalyticsReportResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

@@ -330,7 +330,11 @@ func (r *bcRenderer) render(v design.Values, listID uuid.UUID) (design.Output, e
 	if r.b.Preheader != "" {
 		in.Preheader = r.b.Preheader
 	}
-	return design.Render(in)
+	out, err := design.Render(in)
+	if err != nil {
+		return out, err
+	}
+	return r.addUTM(out), nil
 }
 
 // trackableLinks lists the links that are the same for every recipient (no merge field in them)

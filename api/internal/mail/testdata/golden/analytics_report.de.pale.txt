@@ -1,0 +1,30 @@
+Acme docs: Ihr wöchentlicher Analytics-Bericht
+
+Acme docs, 2026-10-05 bis 2026-10-11 (Veränderungen gegenüber der Vorwoche)
+
+Besucher: 1,204 (+12%)
+Besuche: 1,530 (+9%)
+Seitenaufrufe: 4,210 (−3%)
+Absprungrate: 41%
+Besuchsdauer: 2:05
+
+Meistbesuchte Seiten:
+  /docs/install: 912
+  /pricing: 640
+
+Wichtigste Quellen:
+  Google: 530
+  (direct): 410
+
+Ziele:
+  Signup: 38 (+19%)
+
+Support von den Seiten:
+  Unterhaltungen: 14
+  Seiten-Feedback: 6
+  Bewertungen: 40 hilfreich, 9 nicht hilfreich
+  Die meisten Unterhaltungen: /docs/billing, 5 (12.4 pro 1.000 Seitenaufrufe)
+
+Analytics öffnen: https://yuva.example.com/analytics/1
+
+Sie erhalten diesen Bericht, weil Sie ihn für Acme docs gewählt haben. Ändern oder abbestellen: https://yuva.example.com/analytics/1/settings

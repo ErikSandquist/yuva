@@ -144,7 +144,7 @@ func (q *Queries) CountPendingAnalyticsRollups(ctx context.Context, arg CountPen
 const createAnalyticsAnnotation = `-- name: CreateAnalyticsAnnotation :one
 INSERT INTO analytics_annotations (id, workspace_id, property_id, kind, starts_on, ends_on, text, goal_id, created_by, created_at, updated_at)
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $10)
-RETURNING id, workspace_id, property_id, kind, starts_on, ends_on, text, goal_id, created_by, created_at, updated_at
+RETURNING id, workspace_id, property_id, kind, starts_on, ends_on, text, goal_id, created_by, created_at, updated_at, alert_id
 `
 
 type CreateAnalyticsAnnotationParams struct {
@@ -186,6 +186,7 @@ func (q *Queries) CreateAnalyticsAnnotation(ctx context.Context, arg CreateAnaly
 		&i.CreatedBy,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.AlertID,
 	)
 	return i, err
 }
@@ -634,7 +635,7 @@ func (q *Queries) FindAnalyticsPropertyByKey(ctx context.Context, arg FindAnalyt
 }
 
 const getAnalyticsAnnotation = `-- name: GetAnalyticsAnnotation :one
-SELECT id, workspace_id, property_id, kind, starts_on, ends_on, text, goal_id, created_by, created_at, updated_at FROM analytics_annotations WHERE workspace_id = $1 AND property_id = $2 AND id = $3
+SELECT id, workspace_id, property_id, kind, starts_on, ends_on, text, goal_id, created_by, created_at, updated_at, alert_id FROM analytics_annotations WHERE workspace_id = $1 AND property_id = $2 AND id = $3
 `
 
 type GetAnalyticsAnnotationParams struct {
@@ -658,6 +659,7 @@ func (q *Queries) GetAnalyticsAnnotation(ctx context.Context, arg GetAnalyticsAn
 		&i.CreatedBy,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.AlertID,
 	)
 	return i, err
 }
@@ -864,7 +866,7 @@ func (q *Queries) GetDeletedAnalyticsProperty(ctx context.Context, arg GetDelete
 }
 
 const listAnalyticsAnnotations = `-- name: ListAnalyticsAnnotations :many
-SELECT id, workspace_id, property_id, kind, starts_on, ends_on, text, goal_id, created_by, created_at, updated_at FROM analytics_annotations
+SELECT id, workspace_id, property_id, kind, starts_on, ends_on, text, goal_id, created_by, created_at, updated_at, alert_id FROM analytics_annotations
 WHERE workspace_id = $1 AND property_id = $2
   AND ($3::date IS NULL OR starts_on <= $3::date)
   AND ($4::date IS NULL OR ends_on >= $4::date)
@@ -905,6 +907,7 @@ func (q *Queries) ListAnalyticsAnnotations(ctx context.Context, arg ListAnalytic
 			&i.CreatedBy,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.AlertID,
 		); err != nil {
 			return nil, err
 		}
@@ -1738,7 +1741,7 @@ func (q *Queries) TrimAnalyticsRollupDays(ctx context.Context, arg TrimAnalytics
 const updateAnalyticsAnnotation = `-- name: UpdateAnalyticsAnnotation :one
 UPDATE analytics_annotations SET starts_on = $1, ends_on = $2, text = $3, updated_at = $4
 WHERE workspace_id = $5 AND property_id = $6 AND id = $7
-RETURNING id, workspace_id, property_id, kind, starts_on, ends_on, text, goal_id, created_by, created_at, updated_at
+RETURNING id, workspace_id, property_id, kind, starts_on, ends_on, text, goal_id, created_by, created_at, updated_at, alert_id
 `
 
 type UpdateAnalyticsAnnotationParams struct {
@@ -1774,6 +1777,7 @@ func (q *Queries) UpdateAnalyticsAnnotation(ctx context.Context, arg UpdateAnaly
 		&i.CreatedBy,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.AlertID,
 	)
 	return i, err
 }

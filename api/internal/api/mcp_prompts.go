@@ -112,12 +112,15 @@ func addMCPPrompts(srv *mcp.Server, c *mcpCall) {
 		Arguments:   []*mcp.PromptArgument{{Name: "inbox_id", Description: "Limit the report to one inbox; all inboxes when empty."}},
 	}, func(_ context.Context, req *mcp.GetPromptRequest) (*mcp.GetPromptResult, error) {
 		scope := inboxScope(req.Params.Arguments)
-		return promptResult("Weekly report for "+scope,
-			"Write a weekly support report for "+scope+".",
-			"1. Call get_counts for what is open now.\n"+
-				"2. Call search_conversations (with inbox_id when given) and follow next_cursor while last_activity_at is within the last seven days; note status, labels and assignee.\n"+
-				"3. Call list_feedback the same way for feedback from apps, and list_labels for label names.",
-			"Report: conversations with activity this week and how many are closed, still open, pending or snoozed; unassigned and waiting conversations; the main topics with counts; notable feedback by category; and two or three suggestions. Use numbers from the tools; do not guess."), nil
+		steps := "1. Call get_counts for what is open now.\n" +
+			"2. Call search_conversations (with inbox_id when given) and follow next_cursor while last_activity_at is within the last seven days; note status, labels and assignee.\n" +
+			"3. Call list_feedback the same way for feedback from apps, and list_labels for label names."
+		report := "Report: conversations with activity this week and how many are closed, still open, pending or snoozed; unassigned and waiting conversations; the main topics with counts; notable feedback by category; and two or three suggestions. Use numbers from the tools; do not guess."
+		if c.s.analytics != nil && toolsListed(c.p, "list_properties", "analytics_support_report") {
+			steps += "\n4. Call list_properties; for each property linked to " + scope + " (its inbox_id), call analytics_support_report with period 7d and order_by conversations."
+			report += " Add a section on support and traffic: the pages that led to the most conversations and the highest rate per 1,000 page views, with their views."
+		}
+		return promptResult("Weekly report for "+scope, "Write a weekly support report for "+scope+".", steps, report), nil
 	})
 }
 

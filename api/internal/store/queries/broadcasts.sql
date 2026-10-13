@@ -1,8 +1,8 @@
 -- name: CreateBroadcast :one
 INSERT INTO broadcasts (id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, audience,
-                        click_tracking, created_by, created_at, updated_at)
+                        click_tracking, utm, utm_campaign, created_by, created_at, updated_at)
 VALUES (@id, @workspace_id, @inbox_id, sqlc.narg(channel_id), @name, @subject, @preheader, sqlc.narg(design_id), @audience,
-        @click_tracking, sqlc.narg(created_by), @now, @now)
+        @click_tracking, @utm, @utm_campaign, sqlc.narg(created_by), @now, @now)
 RETURNING *;
 
 -- name: GetBroadcast :one
@@ -14,7 +14,7 @@ SELECT * FROM broadcasts WHERE workspace_id = $1 AND id = $2 FOR UPDATE;
 -- name: SaveBroadcast :one
 UPDATE broadcasts SET channel_id = sqlc.narg(channel_id), name = @name, subject = @subject, preheader = @preheader,
     design_id = sqlc.narg(design_id), design_version = sqlc.narg(design_version), document = sqlc.narg(document),
-    audience = @audience, click_tracking = @click_tracking, state = @state, pause_reason = sqlc.narg(pause_reason),
+    audience = @audience, click_tracking = @click_tracking, utm = @utm, utm_campaign = @utm_campaign, state = @state, pause_reason = sqlc.narg(pause_reason),
     state_detail = sqlc.narg(state_detail), scheduled_at = sqlc.narg(scheduled_at), waiting_until = sqlc.narg(waiting_until),
     started_at = sqlc.narg(started_at), resumed_at = sqlc.narg(resumed_at), finished_at = sqlc.narg(finished_at),
     last_test_at = sqlc.narg(last_test_at), snapshot_after = sqlc.narg(snapshot_after), snapshot_done = @snapshot_done,

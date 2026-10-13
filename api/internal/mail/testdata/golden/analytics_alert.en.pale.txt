@@ -1,0 +1,9 @@
+Acme docs: fewer page views than usual
+
+Acme docs had 4 page views on 2026-10-12 between 10:00 and 12:00, against 120 on average in the same hours of the seven days before. If the site is up, check that its pages still load the analytics script.
+
+The day has an annotation on the chart.
+
+Open Analytics: https://yuva.example.com/analytics/1
+
+You get this e-mail because you chose this alert for Acme docs. Change your alerts: https://yuva.example.com/analytics/1/settings

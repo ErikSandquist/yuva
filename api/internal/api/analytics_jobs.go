@@ -104,6 +104,9 @@ func (s *Server) DeleteAnalytics(ctx context.Context, a AnalyticsDeleteArgs, bud
 			_, err = q.DeleteAnalyticsPropertyRow(ctx, store.DeleteAnalyticsPropertyRowParams{WorkspaceID: a.WorkspaceID, ID: a.PropertyID})
 		case a.All:
 			err = q.DeleteAnalyticsRollups(ctx, store.DeleteAnalyticsRollupsParams{WorkspaceID: a.WorkspaceID, PropertyID: a.PropertyID})
+			if err == nil {
+				err = q.DeleteAnalyticsSupportRollups(ctx, store.DeleteAnalyticsSupportRollupsParams{WorkspaceID: a.WorkspaceID, PropertyID: a.PropertyID})
+			}
 		default:
 			_, err = q.MarkAnalyticsDaysDirty(ctx, store.MarkAnalyticsDaysDirtyParams{WorkspaceID: a.WorkspaceID, PropertyID: a.PropertyID, FromDay: *from, ToDay: *to})
 		}
@@ -341,6 +344,8 @@ func (s *Server) addAnalyticsWorkers(workers *river.Workers) {
 	river.AddWorker(workers, &analyticsSaltsWorker{s: s})
 	river.AddWorker(workers, &analyticsGeoIPWorker{s: s})
 	river.AddWorker(workers, &analyticsExportWorker{s: s})
+	river.AddWorker(workers, &analyticsAlertsWorker{s: s})
+	river.AddWorker(workers, &analyticsReportsWorker{s: s})
 }
 
 // rawFrom is the oldest day whose raw rows the partitions job keeps.
@@ -396,6 +401,12 @@ func (s *Server) MaintainAnalytics(ctx context.Context) error {
 				},
 				func(ctx context.Context, a store.TrimAnalyticsDailyParams) (int64, error) {
 					return s.st.TrimAnalyticsRollupDays(ctx, store.TrimAnalyticsRollupDaysParams(a))
+				},
+				func(ctx context.Context, a store.TrimAnalyticsDailyParams) (int64, error) {
+					return s.st.TrimAnalyticsDailySupport(ctx, store.TrimAnalyticsDailySupportParams(a))
+				},
+				func(ctx context.Context, a store.TrimAnalyticsDailyParams) (int64, error) {
+					return s.st.TrimAnalyticsSupportDays(ctx, store.TrimAnalyticsSupportDaysParams(a))
 				},
 			} {
 				for {
@@ -489,6 +500,12 @@ func (s *Server) RollupAnalyticsDay(ctx context.Context, ws, propertyID uuid.UUI
 	res, err := pg.RollupDay(ctx, ws, propertyID, day, prop.Timezone, s.analytics.settings.RollupTop)
 	if err != nil {
 		return err
+	}
+	if prop.InboxID != nil {
+		src := analytics.SupportSource{WorkspaceID: ws, PropertyID: propertyID, InboxID: *prop.InboxID, Timezone: prop.Timezone, Rules: pathRules(prop.PathRules)}
+		if err := pg.RollupSupportDay(ctx, src, day); err != nil {
+			return err
+		}
 	}
 	if !res.First || len(s.operator) == 0 || res.Dropped < analyticsDropNoticeMin || res.Dropped <= res.Accepted {
 		return nil

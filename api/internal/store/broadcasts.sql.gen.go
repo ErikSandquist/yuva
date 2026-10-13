@@ -435,10 +435,10 @@ func (q *Queries) CountWorkspaceMembersByIDs(ctx context.Context, arg CountWorks
 
 const createBroadcast = `-- name: CreateBroadcast :one
 INSERT INTO broadcasts (id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, audience,
-                        click_tracking, created_by, created_at, updated_at)
+                        click_tracking, utm, utm_campaign, created_by, created_at, updated_at)
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,
-        $10, $11, $12, $12)
-RETURNING id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, design_version, document, audience, click_tracking, state, pause_reason, state_detail, scheduled_at, waiting_until, started_at, resumed_at, finished_at, last_test_at, snapshot_after, snapshot_done, sender_failing_since, counts, created_by, scheduled_by, scheduled_by_key, created_at, updated_at
+        $10, $11, $12, $13, $14, $14)
+RETURNING id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, design_version, document, audience, click_tracking, state, pause_reason, state_detail, scheduled_at, waiting_until, started_at, resumed_at, finished_at, last_test_at, snapshot_after, snapshot_done, sender_failing_since, counts, created_by, scheduled_by, scheduled_by_key, created_at, updated_at, utm, utm_campaign
 `
 
 type CreateBroadcastParams struct {
@@ -452,6 +452,8 @@ type CreateBroadcastParams struct {
 	DesignID      *uuid.UUID
 	Audience      []byte
 	ClickTracking bool
+	Utm           bool
+	UtmCampaign   string
 	CreatedBy     *uuid.UUID
 	Now           time.Time
 }
@@ -468,6 +470,8 @@ func (q *Queries) CreateBroadcast(ctx context.Context, arg CreateBroadcastParams
 		arg.DesignID,
 		arg.Audience,
 		arg.ClickTracking,
+		arg.Utm,
+		arg.UtmCampaign,
 		arg.CreatedBy,
 		arg.Now,
 	)
@@ -503,6 +507,8 @@ func (q *Queries) CreateBroadcast(ctx context.Context, arg CreateBroadcastParams
 		&i.ScheduledByKey,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Utm,
+		&i.UtmCampaign,
 	)
 	return i, err
 }
@@ -774,7 +780,7 @@ func (q *Queries) FindBroadcastDeliveryByTokens(ctx context.Context, arg FindBro
 }
 
 const getBroadcast = `-- name: GetBroadcast :one
-SELECT id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, design_version, document, audience, click_tracking, state, pause_reason, state_detail, scheduled_at, waiting_until, started_at, resumed_at, finished_at, last_test_at, snapshot_after, snapshot_done, sender_failing_since, counts, created_by, scheduled_by, scheduled_by_key, created_at, updated_at FROM broadcasts WHERE workspace_id = $1 AND id = $2
+SELECT id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, design_version, document, audience, click_tracking, state, pause_reason, state_detail, scheduled_at, waiting_until, started_at, resumed_at, finished_at, last_test_at, snapshot_after, snapshot_done, sender_failing_since, counts, created_by, scheduled_by, scheduled_by_key, created_at, updated_at, utm, utm_campaign FROM broadcasts WHERE workspace_id = $1 AND id = $2
 `
 
 type GetBroadcastParams struct {
@@ -816,6 +822,8 @@ func (q *Queries) GetBroadcast(ctx context.Context, arg GetBroadcastParams) (Bro
 		&i.ScheduledByKey,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Utm,
+		&i.UtmCampaign,
 	)
 	return i, err
 }
@@ -1186,7 +1194,7 @@ func (q *Queries) ListBroadcastSenderDomains(ctx context.Context, arg ListBroadc
 }
 
 const listBroadcasts = `-- name: ListBroadcasts :many
-SELECT id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, design_version, document, audience, click_tracking, state, pause_reason, state_detail, scheduled_at, waiting_until, started_at, resumed_at, finished_at, last_test_at, snapshot_after, snapshot_done, sender_failing_since, counts, created_by, scheduled_by, scheduled_by_key, created_at, updated_at FROM broadcasts b
+SELECT id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, design_version, document, audience, click_tracking, state, pause_reason, state_detail, scheduled_at, waiting_until, started_at, resumed_at, finished_at, last_test_at, snapshot_after, snapshot_done, sender_failing_since, counts, created_by, scheduled_by, scheduled_by_key, created_at, updated_at, utm, utm_campaign FROM broadcasts b
 WHERE b.workspace_id = $1
   AND ($2::uuid IS NULL OR b.inbox_id = $2::uuid)
   AND ($3::text[] IS NULL OR b.state = ANY($3::text[]))
@@ -1259,6 +1267,8 @@ func (q *Queries) ListBroadcasts(ctx context.Context, arg ListBroadcastsParams) 
 			&i.ScheduledByKey,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.Utm,
+			&i.UtmCampaign,
 		); err != nil {
 			return nil, err
 		}
@@ -1305,7 +1315,7 @@ func (q *Queries) ListBroadcastsByIDs(ctx context.Context, arg ListBroadcastsByI
 }
 
 const listLatestBroadcasts = `-- name: ListLatestBroadcasts :many
-SELECT id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, design_version, document, audience, click_tracking, state, pause_reason, state_detail, scheduled_at, waiting_until, started_at, resumed_at, finished_at, last_test_at, snapshot_after, snapshot_done, sender_failing_since, counts, created_by, scheduled_by, scheduled_by_key, created_at, updated_at FROM broadcasts WHERE workspace_id = $1 ORDER BY created_at DESC, id DESC LIMIT $2
+SELECT id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, design_version, document, audience, click_tracking, state, pause_reason, state_detail, scheduled_at, waiting_until, started_at, resumed_at, finished_at, last_test_at, snapshot_after, snapshot_done, sender_failing_since, counts, created_by, scheduled_by, scheduled_by_key, created_at, updated_at, utm, utm_campaign FROM broadcasts WHERE workspace_id = $1 ORDER BY created_at DESC, id DESC LIMIT $2
 `
 
 type ListLatestBroadcastsParams struct {
@@ -1353,6 +1363,8 @@ func (q *Queries) ListLatestBroadcasts(ctx context.Context, arg ListLatestBroadc
 			&i.ScheduledByKey,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.Utm,
+			&i.UtmCampaign,
 		); err != nil {
 			return nil, err
 		}
@@ -1394,7 +1406,7 @@ func (q *Queries) ListOptOutHashes(ctx context.Context, arg ListOptOutHashesPara
 }
 
 const listRunningBroadcasts = `-- name: ListRunningBroadcasts :many
-SELECT id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, design_version, document, audience, click_tracking, state, pause_reason, state_detail, scheduled_at, waiting_until, started_at, resumed_at, finished_at, last_test_at, snapshot_after, snapshot_done, sender_failing_since, counts, created_by, scheduled_by, scheduled_by_key, created_at, updated_at FROM broadcasts
+SELECT id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, design_version, document, audience, click_tracking, state, pause_reason, state_detail, scheduled_at, waiting_until, started_at, resumed_at, finished_at, last_test_at, snapshot_after, snapshot_done, sender_failing_since, counts, created_by, scheduled_by, scheduled_by_key, created_at, updated_at, utm, utm_campaign FROM broadcasts
 WHERE workspace_id = $1 AND state IN ('scheduled', 'preparing', 'sending')
 ORDER BY created_at, id
 `
@@ -1439,6 +1451,8 @@ func (q *Queries) ListRunningBroadcasts(ctx context.Context, workspaceID uuid.UU
 			&i.ScheduledByKey,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.Utm,
+			&i.UtmCampaign,
 		); err != nil {
 			return nil, err
 		}
@@ -1451,7 +1465,7 @@ func (q *Queries) ListRunningBroadcasts(ctx context.Context, workspaceID uuid.UU
 }
 
 const listSendingBroadcastsOfChannel = `-- name: ListSendingBroadcastsOfChannel :many
-SELECT id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, design_version, document, audience, click_tracking, state, pause_reason, state_detail, scheduled_at, waiting_until, started_at, resumed_at, finished_at, last_test_at, snapshot_after, snapshot_done, sender_failing_since, counts, created_by, scheduled_by, scheduled_by_key, created_at, updated_at FROM broadcasts
+SELECT id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, design_version, document, audience, click_tracking, state, pause_reason, state_detail, scheduled_at, waiting_until, started_at, resumed_at, finished_at, last_test_at, snapshot_after, snapshot_done, sender_failing_since, counts, created_by, scheduled_by, scheduled_by_key, created_at, updated_at, utm, utm_campaign FROM broadcasts
 WHERE workspace_id = $1 AND channel_id = $2 AND state = 'sending'
 ORDER BY started_at, id
 `
@@ -1501,6 +1515,8 @@ func (q *Queries) ListSendingBroadcastsOfChannel(ctx context.Context, arg ListSe
 			&i.ScheduledByKey,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.Utm,
+			&i.UtmCampaign,
 		); err != nil {
 			return nil, err
 		}
@@ -1548,7 +1564,7 @@ func (q *Queries) ListSendingDays(ctx context.Context, arg ListSendingDaysParams
 }
 
 const lockBroadcast = `-- name: LockBroadcast :one
-SELECT id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, design_version, document, audience, click_tracking, state, pause_reason, state_detail, scheduled_at, waiting_until, started_at, resumed_at, finished_at, last_test_at, snapshot_after, snapshot_done, sender_failing_since, counts, created_by, scheduled_by, scheduled_by_key, created_at, updated_at FROM broadcasts WHERE workspace_id = $1 AND id = $2 FOR UPDATE
+SELECT id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, design_version, document, audience, click_tracking, state, pause_reason, state_detail, scheduled_at, waiting_until, started_at, resumed_at, finished_at, last_test_at, snapshot_after, snapshot_done, sender_failing_since, counts, created_by, scheduled_by, scheduled_by_key, created_at, updated_at, utm, utm_campaign FROM broadcasts WHERE workspace_id = $1 AND id = $2 FOR UPDATE
 `
 
 type LockBroadcastParams struct {
@@ -1590,6 +1606,8 @@ func (q *Queries) LockBroadcast(ctx context.Context, arg LockBroadcastParams) (B
 		&i.ScheduledByKey,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Utm,
+		&i.UtmCampaign,
 	)
 	return i, err
 }
@@ -1856,14 +1874,14 @@ func (q *Queries) RecountBroadcast(ctx context.Context, arg RecountBroadcastPara
 const saveBroadcast = `-- name: SaveBroadcast :one
 UPDATE broadcasts SET channel_id = $1, name = $2, subject = $3, preheader = $4,
     design_id = $5, design_version = $6, document = $7,
-    audience = $8, click_tracking = $9, state = $10, pause_reason = $11,
-    state_detail = $12, scheduled_at = $13, waiting_until = $14,
-    started_at = $15, resumed_at = $16, finished_at = $17,
-    last_test_at = $18, snapshot_after = $19, snapshot_done = $20,
-    sender_failing_since = $21, scheduled_by = $22,
-    scheduled_by_key = $23, updated_at = $24::timestamptz
-WHERE workspace_id = $25 AND id = $26
-RETURNING id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, design_version, document, audience, click_tracking, state, pause_reason, state_detail, scheduled_at, waiting_until, started_at, resumed_at, finished_at, last_test_at, snapshot_after, snapshot_done, sender_failing_since, counts, created_by, scheduled_by, scheduled_by_key, created_at, updated_at
+    audience = $8, click_tracking = $9, utm = $10, utm_campaign = $11, state = $12, pause_reason = $13,
+    state_detail = $14, scheduled_at = $15, waiting_until = $16,
+    started_at = $17, resumed_at = $18, finished_at = $19,
+    last_test_at = $20, snapshot_after = $21, snapshot_done = $22,
+    sender_failing_since = $23, scheduled_by = $24,
+    scheduled_by_key = $25, updated_at = $26::timestamptz
+WHERE workspace_id = $27 AND id = $28
+RETURNING id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, design_version, document, audience, click_tracking, state, pause_reason, state_detail, scheduled_at, waiting_until, started_at, resumed_at, finished_at, last_test_at, snapshot_after, snapshot_done, sender_failing_since, counts, created_by, scheduled_by, scheduled_by_key, created_at, updated_at, utm, utm_campaign
 `
 
 type SaveBroadcastParams struct {
@@ -1876,6 +1894,8 @@ type SaveBroadcastParams struct {
 	Document           []byte
 	Audience           []byte
 	ClickTracking      bool
+	Utm                bool
+	UtmCampaign        string
 	State              string
 	PauseReason        *string
 	StateDetail        *string
@@ -1906,6 +1926,8 @@ func (q *Queries) SaveBroadcast(ctx context.Context, arg SaveBroadcastParams) (B
 		arg.Document,
 		arg.Audience,
 		arg.ClickTracking,
+		arg.Utm,
+		arg.UtmCampaign,
 		arg.State,
 		arg.PauseReason,
 		arg.StateDetail,
@@ -1956,6 +1978,8 @@ func (q *Queries) SaveBroadcast(ctx context.Context, arg SaveBroadcastParams) (B
 		&i.ScheduledByKey,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Utm,
+		&i.UtmCampaign,
 	)
 	return i, err
 }

@@ -1,0 +1,9 @@
+Acme docs: weniger Seitenaufrufe als üblich
+
+Acme docs hatte am 2026-10-12 zwischen 10:00 und 12:00 Uhr 4 Seitenaufrufe, gegenüber durchschnittlich 120 in denselben Stunden der sieben Tage davor. Wenn die Website erreichbar ist, prüfen Sie, ob ihre Seiten das Analytics-Skript noch laden.
+
+Der Tag hat eine Anmerkung im Diagramm.
+
+Analytics öffnen: https://yuva.example.com/analytics/1
+
+Sie erhalten diese E-Mail, weil Sie diese Warnung für Acme docs gewählt haben. Warnungen ändern: https://yuva.example.com/analytics/1/settings

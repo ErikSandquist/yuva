@@ -41,6 +41,8 @@ type Query struct {
 	// Goal asks for its conversions next to the metrics; Prop is the key a prop dimension reads.
 	Goal *Goal
 	Prop string
+	// Dataset is empty for traffic, or DatasetSupport.
+	Dataset string
 }
 
 type Row struct {

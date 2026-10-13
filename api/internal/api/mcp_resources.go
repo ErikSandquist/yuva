@@ -96,7 +96,7 @@ func (c *mcpCall) inboxResources(ctx context.Context) []*mcp.Resource {
 }
 
 func parseResourceURI(uri string) (string, uuid.UUID, bool) {
-	for _, prefix := range []string{mcpInboxPrefix, mcpConvPrefix, mcpContactPrefix, mcpBroadcastPrefix, mcpMigrationPrefix} {
+	for _, prefix := range []string{mcpInboxPrefix, mcpConvPrefix, mcpContactPrefix, mcpBroadcastPrefix, mcpMigrationPrefix, mcpPropertyPrefix} {
 		if rest, ok := strings.CutPrefix(uri, prefix); ok {
 			id, err := uuid.Parse(rest)
 			return prefix, id, err == nil
@@ -143,6 +143,11 @@ func (c *mcpCall) resource(ctx context.Context, uri string) (any, error) {
 			return nil, errInsufficientScope(oas.BroadcastsRead)
 		}
 		return c.getBroadcast(ctx, id)
+	case mcpPropertyPrefix:
+		if !mayReadPropertyResource(c) {
+			return nil, errInsufficientScope(oas.AnalyticsRead)
+		}
+		return c.propertyResource(ctx, id)
 	case mcpMigrationPrefix:
 		t, _ := mcpToolNamed("get_migration")
 		if err := t.refusal(c.p); err != nil {
@@ -295,6 +300,16 @@ func (w *mcpWatcher) matching(e realtime.Event) []string {
 		}
 		if json.Unmarshal(e.Data, &mu) == nil {
 			uris = append(uris, mcpMigrationPrefix+mu.Migration.ID.String())
+		}
+	}
+	if e.Type == eventAnalyticsAlert {
+		var a struct {
+			Property struct {
+				ID uuid.UUID `json:"id"`
+			} `json:"property"`
+		}
+		if json.Unmarshal(e.Data, &a) == nil {
+			uris = append(uris, mcpPropertyPrefix+a.Property.ID.String())
 		}
 	}
 	if e.Type == realtime.ContactUpdated || e.Type == realtime.ContactDeleted {

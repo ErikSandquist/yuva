@@ -767,7 +767,7 @@ func (s *Server) DeleteAnalyticsSegment(ctx context.Context, req oas.DeleteAnaly
 
 func annotationBody(a store.AnalyticsAnnotation) oas.AnalyticsAnnotation {
 	return oas.AnalyticsAnnotation{Id: a.ID, Kind: oas.AnalyticsAnnotationKind(a.Kind), StartsOn: openapi_types.Date{Time: a.StartsOn},
-		EndsOn: openapi_types.Date{Time: a.EndsOn}, Text: a.Text, GoalId: a.GoalID, CreatedBy: a.CreatedBy, CreatedAt: a.CreatedAt, UpdatedAt: a.UpdatedAt}
+		EndsOn: openapi_types.Date{Time: a.EndsOn}, Text: a.Text, GoalId: a.GoalID, AlertId: a.AlertID, CreatedBy: a.CreatedBy, CreatedAt: a.CreatedAt, UpdatedAt: a.UpdatedAt}
 }
 
 func dateOnly(d openapi_types.Date) time.Time {

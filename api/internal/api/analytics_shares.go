@@ -548,6 +548,9 @@ func shareAllows(sh store.AnalyticsShare, b oas.AnalyticsQuery) error {
 	if b.SegmentId != nil {
 		return errValidation("a share link cannot use saved segments; send filters instead")
 	}
+	if b.Dataset != nil && *b.Dataset == oas.AnalyticsDatasetSupport {
+		return errViewNotShared
+	}
 	allowed := func(dim string) bool {
 		if strings.HasPrefix(dim, "time:") {
 			return true

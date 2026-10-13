@@ -1,0 +1,9 @@
+{{.Property}}: {{if eq .Kind "spike"}}more page views than usual{{else if eq .Kind "drop"}}fewer page views than usual{{else if eq .Kind "goal_drop"}}{{.Goal}} converts less{{else if eq .Kind "support_load"}}more support per page view{{else}}a new referrer{{end}}
+
+{{if eq .Kind "spike"}}{{.Property}} had {{.Current}} page views on {{.Day}} between {{.HourFrom}} and {{.HourTo}}, against {{.Baseline}} on average in the same hours of the seven days before.{{else if eq .Kind "drop"}}{{.Property}} had {{.Current}} page views on {{.Day}} between {{.HourFrom}} and {{.HourTo}}, against {{.Baseline}} on average in the same hours of the seven days before. If the site is up, check that its pages still load the analytics script.{{else if eq .Kind "goal_drop"}}The goal {{.Goal}} of {{.Property}} had {{.Current}} conversions on {{.Day}}, against {{.Baseline}} a day on average in the seven days before.{{else if eq .Kind "support_load"}}{{.Property}} had {{.Current}} conversations per 1,000 page views on {{.Day}}, against {{.Baseline}} in the 28 days before. The Support report shows which pages they started on.{{else}}{{.Referrer}} sent {{.Current}} visits to {{.Property}} on {{.Day}}, and none in the 28 days before.{{end}}
+
+The day has an annotation on the chart.
+
+Open Analytics: {{.URL}}
+
+You get this e-mail because you chose this alert for {{.Property}}. Change your alerts: {{.SettingsURL}}

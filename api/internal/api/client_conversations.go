@@ -16,7 +16,7 @@ import (
 
 var (
 	clientMessageFields      = []string{"body", "client_id"}
-	clientConversationFields = []string{"subject", "body", "client_id"}
+	clientConversationFields = []string{"subject", "body", "client_id", "page_url", "page_title"}
 )
 
 func clientAttachmentBody(a store.Attachment) oas.ClientAttachment {
@@ -365,6 +365,7 @@ func (s *Server) CreateClientConversation(ctx context.Context, req oas.CreateCli
 		return nil, err
 	}
 	var in *messageInput
+	var rawPage, rawTitle *string
 	switch {
 	case req.JSONBody != nil:
 		b := req.JSONBody
@@ -372,16 +373,27 @@ func (s *Server) CreateClientConversation(ctx context.Context, req oas.CreateCli
 		if b.Body != nil {
 			in.body = *b.Body
 		}
+		rawPage, rawTitle = b.PageUrl, b.PageTitle
 	case req.MultipartBody != nil:
 		var err error
 		if in, err = s.readMultipart(req.MultipartBody, cp.workspaceID, clientConversationFields); err != nil {
 			return nil, err
+		}
+		if v, ok := in.extra["page_url"]; ok {
+			rawPage = &v
+		}
+		if v, ok := in.extra["page_title"]; ok {
+			rawTitle = &v
 		}
 	default:
 		return nil, errValidation("send application/json or multipart/form-data")
 	}
 	defer in.close()
 	if err := s.validateClientInput(in); err != nil {
+		return nil, err
+	}
+	page, title, err := startPage(cp, rawPage, rawTitle)
+	if err != nil {
 		return nil, err
 	}
 	if in.clientID != nil {
@@ -412,7 +424,7 @@ func (s *Server) CreateClientConversation(ctx context.Context, req oas.CreateCli
 		channelID := cp.channelID
 		c, err := q.CreateConversation(ctx, store.CreateConversationParams{
 			ID: newID(), WorkspaceID: cp.workspaceID, InboxID: cp.inboxID, ContactID: cp.contactID, ChannelID: &channelID,
-			Subject: subject, Priority: string(oas.Normal), Now: s.now(),
+			Subject: subject, Priority: string(oas.Normal), PageUrl: page, PageTitle: title, Now: s.now(),
 		})
 		if err != nil {
 			return err
@@ -431,6 +443,26 @@ func (s *Server) CreateClientConversation(ctx context.Context, req oas.CreateCli
 		return nil, err
 	}
 	return oas.CreateClientConversation201JSONResponse(out), nil
+}
+
+// startPage is the page a conversation starts on, without query and fragment, on one of the
+// chat channel's origins.
+func startPage(cp contactPrincipal, rawPage, rawTitle *string) (*string, *string, error) {
+	if rawPage == nil || strings.TrimSpace(*rawPage) == "" {
+		if rawTitle != nil && strings.TrimSpace(*rawTitle) != "" {
+			return nil, nil, errValidation("page_title needs page_url")
+		}
+		return nil, nil, nil
+	}
+	page, err := channelPage(*rawPage, cp.kind, cp.chat.AllowedOrigins)
+	if err != nil {
+		return nil, nil, err
+	}
+	title, err := pageTitle(rawTitle)
+	if err != nil {
+		return nil, nil, err
+	}
+	return &page, title, nil
 }
 
 func (s *Server) clientConversationCreated(ctx context.Context, cp contactPrincipal, convID, msgID uuid.UUID) (oas.ClientConversationCreated, error) {

@@ -43,6 +43,20 @@ func samples(inbox, text string) map[string]map[string]any {
 		"sign_in_code":    {"Code": "482913", "Minutes": 10},
 		"sign_in_locked":  {"Failures": 10, "Hours": 24},
 		"analytics_limit": {"Workspace": inbox, "Limit": "1,000,000", "Month": "2026-10", "URL": "https://yuva.example.com/analytics"},
+		"analytics_report": {
+			"Property": "Acme docs", "From": "2026-10-05", "To": "2026-10-11",
+			"Visitors": map[string]string{"Value": "1,204", "Change": "+12%"}, "Visits": map[string]string{"Value": "1,530", "Change": "+9%"},
+			"Pageviews": map[string]string{"Value": "4,210", "Change": "−3%"}, "BounceRate": map[string]string{"Value": "41%"},
+			"Duration": map[string]string{"Value": "2:05"},
+			"Pages":    []map[string]string{{"Name": "/docs/install", "Value": "912"}, {"Name": "/pricing", "Value": "640"}},
+			"Sources":  []map[string]string{{"Name": "Google", "Value": "530"}, {"Name": "(direct)", "Value": "410"}},
+			"Goals":    []map[string]string{{"Name": "Signup", "Value": "38", "Change": "+19%"}},
+			"Support": map[string]string{"Conversations": "14", "Feedback": "6", "Up": "40", "Down": "9", "TopPage": "/docs/billing",
+				"TopCount": "5", "TopRate": "12.4"},
+			"URL": "https://yuva.example.com/analytics/1", "SettingsURL": "https://yuva.example.com/analytics/1/settings",
+		},
+		"analytics_alert": {"Kind": "drop", "Property": "Acme docs", "Day": "2026-10-12", "HourFrom": "10:00", "HourTo": "12:00", "Current": "4",
+			"Baseline": "120", "URL": "https://yuva.example.com/analytics/1", "SettingsURL": "https://yuva.example.com/analytics/1/settings"},
 		"invite": {"Workspace": inbox, "Inviter": "Ayşe Yılmaz", "Role": "admin",
 			"URL": "https://yuva.example.com", "Days": 7},
 		"confirm_email": {"Inbox": inbox, "URL": "https://yuva.example.com/email/confirm?token=abc", "Hours": 24},
@@ -70,7 +84,7 @@ func samples(inbox, text string) map[string]map[string]any {
 	}
 }
 
-var htmlMails = []string{"sign_in_code", "sign_in_locked", "invite", "confirm_email", "notification", "discussion_digest", "rating_request", "list_confirm", "list_welcome", "analytics_limit"}
+var htmlMails = []string{"sign_in_code", "sign_in_locked", "invite", "confirm_email", "notification", "discussion_digest", "rating_request", "list_confirm", "list_welcome", "analytics_limit", "analytics_report", "analytics_alert"}
 
 // englishMails go only to the server's operator.
 var englishMails = []string{"operator_digest"}

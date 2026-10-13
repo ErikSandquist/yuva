@@ -58,6 +58,8 @@ const (
 	AnalyticsRollupScanInterval = 5 * time.Minute
 	AnalyticsSaltsInterval      = 15 * time.Minute
 	AnalyticsGeoIPInterval      = 24 * time.Hour
+	AnalyticsAlertsInterval     = time.Hour
+	AnalyticsReportsInterval    = time.Hour
 )
 
 // New starts no migration workers when migrationWorkers is 0, and no analytics workers or analytics
@@ -113,6 +115,12 @@ func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorker
 			river.NewPeriodicJob(river.PeriodicInterval(AnalyticsGeoIPInterval), func() (river.JobArgs, *river.InsertOpts) {
 				return AnalyticsGeoIPArgs{}, onAnalytics
 			}, &river.PeriodicJobOpts{ID: "analytics_geoip"}),
+			river.NewPeriodicJob(river.PeriodicInterval(AnalyticsAlertsInterval), func() (river.JobArgs, *river.InsertOpts) {
+				return AnalyticsAlertsArgs{}, onAnalytics
+			}, &river.PeriodicJobOpts{ID: "analytics_alerts"}),
+			river.NewPeriodicJob(river.PeriodicInterval(AnalyticsReportsInterval), func() (river.JobArgs, *river.InsertOpts) {
+				return AnalyticsReportsArgs{}, onAnalytics
+			}, &river.PeriodicJobOpts{ID: "analytics_reports", RunOnStart: true}),
 		)
 	}
 	return river.NewClient(riverpgxv5.New(pool), &river.Config{
@@ -217,3 +225,15 @@ func (w *EventCleanupWorker) Work(ctx context.Context, _ *river.Job[EventCleanup
 	_, err = w.Queries.DeleteUnusedOAuthClients(ctx, w.Now().Add(-UnusedOAuthClientAge))
 	return err
 }
+
+// AnalyticsAlertsArgs is worked by the api package: it checks the alert rules of every property
+// that has alert subscribers.
+type AnalyticsAlertsArgs struct{}
+
+func (AnalyticsAlertsArgs) Kind() string { return "analytics_alerts" }
+
+// AnalyticsReportsArgs is worked by the api package: it mails the weekly and monthly reports that
+// are due.
+type AnalyticsReportsArgs struct{}
+
+func (AnalyticsReportsArgs) Kind() string { return "analytics_reports" }

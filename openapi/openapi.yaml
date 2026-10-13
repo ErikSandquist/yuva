@@ -7836,6 +7836,10 @@ paths:
         raw rows inside the raw window, for any prop key, and the rollups of the property's
         `tracked_props` before it. `segment_id` adds a saved segment's filters.
 
+        `dataset: support` puts the linked inbox's conversations, page feedback, page ratings and
+        discussions next to each page's views (`AnalyticsDataset`). `insights: true` adds fixed-rule
+        `insights` to the answer.
+
         Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
         two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
         answers that include today for 30 seconds.
@@ -8555,6 +8559,125 @@ paths:
       responses:
         "204":
           description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/subscription:
+    get:
+      operationId: getAnalyticsSubscription
+      summary: Get my reports and alerts of a property
+      description: |
+        The calling member's e-mail report (`none`, `weekly`, `monthly`) and the alert kinds they
+        get by e-mail for the property; `none` and no alerts until they choose. Member session only.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+      responses:
+        "200":
+          description: The subscription.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsSubscription"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    put:
+      operationId: updateAnalyticsSubscription
+      summary: Choose my reports and alerts of a property
+      description: |
+        Weekly reports go out on Monday morning (08:00 in the property's time zone) about the week
+        before, monthly ones on the 1st about the month before, in the member's language, to the
+        member's address: plain numbers, no images, nothing that tracks opening or clicks. Alerts
+        are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
+        session only; the member must see the property.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyticsSubscriptionUpdate"
+      responses:
+        "200":
+          description: The subscription.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsSubscription"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/subscription/send-report:
+    post:
+      operationId: sendAnalyticsReport
+      summary: Send me a report now
+      description: |
+        Mails the calling member the report of the last seven finished days (`weekly`) or the last
+        month (`monthly`, by the subscription; `weekly` when there is none), so they see what it
+        looks like. Five an hour per member (`429`). Member session only.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+      responses:
+        "202":
+          description: The report is on its way.
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/alerts:
+    get:
+      operationId: listAnalyticsAlerts
+      summary: List a property's alerts
+      description: |
+        The alerts the property raised, newest first, at most 100; each also has an annotation on
+        its day and an `analytics.alert` event and webhook. With `before`, older ones.
+
+        Scope: `analytics:read`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+        - name: before
+          in: query
+          description: "`created_at` of the last alert of the previous page."
+          schema:
+            type: string
+            format: date-time
+      responses:
+        "200":
+          description: The alerts.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsAlertList"
+        "400":
+          $ref: "#/components/responses/Problem"
         "401":
           $ref: "#/components/responses/Problem"
         "403":
@@ -9754,9 +9877,14 @@ paths:
       summary: Start a conversation
       description: |
         Starts a conversation on the session's channel with its first message. Send
-        `multipart/form-data` to attach files (`body`, `subject`, `client_id` as form fields and up
-        to 10 `files` parts), with the same size and type rules as `/v1`. Rate limited per IP
-        address and per channel.
+        `multipart/form-data` to attach files (`body`, `subject`, `client_id`, `page_url` and
+        `page_title` as form fields and up to 10 `files` parts), with the same size and type rules
+        as `/v1`. Rate limited per IP address and per channel.
+
+        `page_url` is the page the conversation starts on, kept without query and fragment; on a
+        chat channel its origin must be one of the channel's allowed origins (`400 page_origin`).
+        It is shown as `page` on the conversation and counted per page, and never joined to a
+        visitor of Analytics.
       tags: [client]
       security:
         - contactSession: []
@@ -11100,6 +11228,28 @@ webhooks:
           application/json:
             schema:
               $ref: "#/components/schemas/WebhookBroadcastPayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
+  analytics.alert:
+    post:
+      operationId: webhookAnalyticsAlert
+      summary: A property raised an alert
+      description: |
+        A spike, a drop, a goal drop, support load or a new referrer (`AnalyticsAlertKind`), once
+        per alert. Endpoints of an inbox get the alerts of properties linked to that inbox.
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookAnalyticsAlertPayload"
       responses:
         "200":
           description: Any 2xx answer counts as delivered.
@@ -13204,7 +13354,7 @@ components:
           format: int64
     WebhookEventType:
       type: string
-      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted, discussion.created, discussion.post_created, discussion.answered, discussion.updated, subscription.created, subscription.updated, broadcast.updated]
+      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted, discussion.created, discussion.post_created, discussion.answered, discussion.updated, subscription.created, subscription.updated, broadcast.updated, analytics.alert]
     WebhookEndpoint:
       type: object
       required: [id, url, description, events, include_notes, enabled, created_at, updated_at]
@@ -16644,6 +16794,7 @@ components:
         - $ref: "#/components/schemas/SubscriptionEvent"
         - $ref: "#/components/schemas/BroadcastEvent"
         - $ref: "#/components/schemas/MigrationEvent"
+        - $ref: "#/components/schemas/AnalyticsAlertEvent"
       discriminator:
         propertyName: type
         mapping:
@@ -16672,6 +16823,7 @@ components:
           subscription.updated: "#/components/schemas/SubscriptionEvent"
           broadcast.updated: "#/components/schemas/BroadcastEvent"
           migration.updated: "#/components/schemas/MigrationEvent"
+          analytics.alert: "#/components/schemas/AnalyticsAlertEvent"
     EventPage:
       type: object
       required: [events, next, has_more]
@@ -16716,6 +16868,7 @@ components:
         - $ref: "#/components/schemas/SubscriptionEvent"
         - $ref: "#/components/schemas/BroadcastEvent"
         - $ref: "#/components/schemas/MigrationEvent"
+        - $ref: "#/components/schemas/AnalyticsAlertEvent"
         - $ref: "#/components/schemas/MigrationProgressEvent"
         - $ref: "#/components/schemas/MigrationForwardingConfirmationEvent"
         - $ref: "#/components/schemas/BroadcastProgressEvent"
@@ -16755,6 +16908,7 @@ components:
           subscription.updated: "#/components/schemas/SubscriptionEvent"
           broadcast.updated: "#/components/schemas/BroadcastEvent"
           migration.updated: "#/components/schemas/MigrationEvent"
+          analytics.alert: "#/components/schemas/AnalyticsAlertEvent"
           migration.progress: "#/components/schemas/MigrationProgressEvent"
           migration.forwarding_confirmation: "#/components/schemas/MigrationForwardingConfirmationEvent"
           broadcast.progress: "#/components/schemas/BroadcastProgressEvent"
@@ -17749,7 +17903,7 @@ components:
           $ref: "#/components/schemas/BroadcastSkipped"
     Broadcast:
       type: object
-      required: [id, inbox_id, name, subject, preheader, audience, click_tracking, state, counts, created_at, updated_at]
+      required: [id, inbox_id, name, subject, preheader, audience, click_tracking, utm, utm_campaign, state, counts, created_at, updated_at]
       properties:
         id:
           type: string
@@ -17782,6 +17936,15 @@ components:
         click_tracking:
           type: boolean
           description: Links go through `/c/{token}` on the server's link domain and unique clicks are counted. Off by default.
+        utm:
+          type: boolean
+          description: |
+            Links to the web get `utm_source=newsletter`, `utm_medium=email` and
+            `utm_campaign=<utm_campaign>` (a link that has a `utm_` parameter of its own keeps its
+            own), so Analytics counts the visits of the campaign. On by default.
+        utm_campaign:
+          type: string
+          description: The campaign's name in links; made from `name` when the broadcast is created.
         state:
           $ref: "#/components/schemas/BroadcastState"
         pause_reason:
@@ -17862,6 +18025,15 @@ components:
           $ref: "#/components/schemas/BroadcastAudienceInput"
         click_tracking:
           type: boolean
+        utm:
+          type: boolean
+          description: On when absent at creation.
+        utm_campaign:
+          type: string
+          minLength: 1
+          maxLength: 100
+          pattern: "^[a-z0-9][a-z0-9_.-]*$"
+          description: Lowercase letters, digits, `-`, `_` and `.`; made from `name` when absent at creation.
     BroadcastUpdate:
       type: object
       minProperties: 1
@@ -17886,6 +18058,15 @@ components:
           $ref: "#/components/schemas/BroadcastAudienceInput"
         click_tracking:
           type: boolean
+        utm:
+          type: boolean
+          description: On when absent at creation.
+        utm_campaign:
+          type: string
+          minLength: 1
+          maxLength: 100
+          pattern: "^[a-z0-9][a-z0-9_.-]*$"
+          description: Lowercase letters, digits, `-`, `_` and `.`; made from `name` when absent at creation.
     BroadcastPage:
       type: object
       required: [items]
@@ -18209,6 +18390,32 @@ components:
           description: The first 50 conversations opened by replies.
           items:
             $ref: "#/components/schemas/BroadcastReportReply"
+        campaign_visits:
+          type: array
+          description: |
+            With `utm` and the scope `analytics:read`: per Analytics property the caller sees, the
+            visits whose `utm_campaign` is the broadcast's, from the day sending started; only
+            properties with any.
+          items:
+            $ref: "#/components/schemas/BroadcastCampaignVisits"
+    BroadcastCampaignVisits:
+      type: object
+      required: [property_id, property_name, visitors, visits, pageviews]
+      properties:
+        property_id:
+          type: string
+          format: uuid
+        property_name:
+          type: string
+        visitors:
+          type: integer
+          format: int64
+        visits:
+          type: integer
+          format: int64
+        pageviews:
+          type: integer
+          format: int64
     BroadcastEventData:
       type: object
       required: [broadcast]
@@ -19864,6 +20071,14 @@ components:
           minLength: 1
           maxLength: 200
           description: The first message's `client_id`.
+        page_url:
+          type: string
+          maxLength: 2000
+          description: The page the conversation starts on, an absolute http(s) URL; query and fragment are dropped.
+        page_title:
+          type: string
+          maxLength: 300
+          description: The page's title; needs `page_url`.
     ClientConversationCreateMultipart:
       type: object
       properties:
@@ -19877,6 +20092,14 @@ components:
           type: string
           minLength: 1
           maxLength: 200
+        page_url:
+          type: string
+          maxLength: 2000
+          description: The page the conversation starts on, an absolute http(s) URL; query and fragment are dropped.
+        page_title:
+          type: string
+          maxLength: 300
+          description: The page's title; needs `page_url`.
         files:
           type: array
           maxItems: 10
@@ -20417,11 +20640,19 @@ components:
         completed) and `revenue` (what the completing events carried, per currency, in
         `metrics.revenue`). With an `event` or `prop` dimension only `visitors`, `visits`, `events`
         and `revenue` are offered, counted over the events of each row. `revenue` cannot order rows.
+
+        With `dataset: support` (a property linked to an inbox): `conversations` (conversations
+        started on the page), `feedback` (page feedback sent from it), `ratings_up` and
+        `ratings_down` (page ratings), `helpful_rate` (percent of ratings that are `up`),
+        `discussions` (discussion threads started on it) and `support_rate` (conversations per
+        1,000 page views), next to `visitors` and `pageviews`.
       enum: [visitors, visits, pageviews, views_per_visit, bounce_rate, visit_duration, time_on_page, scroll_depth, events, conversions,
-        conversion_rate, completions, revenue]
+        conversion_rate, completions, revenue, conversations, feedback, ratings_up, ratings_down, helpful_rate, discussions, support_rate]
       x-enum-varnames: [AnalyticsMetricVisitors, AnalyticsMetricVisits, AnalyticsMetricPageviews, AnalyticsMetricViewsPerVisit,
         AnalyticsMetricBounceRate, AnalyticsMetricVisitDuration, AnalyticsMetricTimeOnPage, AnalyticsMetricScrollDepth, AnalyticsMetricEvents,
-        AnalyticsMetricConversions, AnalyticsMetricConversionRate, AnalyticsMetricCompletions, AnalyticsMetricRevenue]
+        AnalyticsMetricConversions, AnalyticsMetricConversionRate, AnalyticsMetricCompletions, AnalyticsMetricRevenue,
+        AnalyticsMetricConversations, AnalyticsMetricFeedback, AnalyticsMetricRatingsUp, AnalyticsMetricRatingsDown, AnalyticsMetricHelpfulRate,
+        AnalyticsMetricDiscussions, AnalyticsMetricSupportRate]
     AnalyticsFilterDimension:
       type: string
       description: |
@@ -20539,16 +20770,38 @@ components:
           enum: [asc, desc]
           default: desc
           x-enum-varnames: [AnalyticsAsc, AnalyticsDesc]
+    AnalyticsDataset:
+      type: string
+      description: |
+        `traffic` (default) counts visits, page views and events. `support` counts, per page and
+        day, what the property's linked inbox received from its pages: conversations started on a
+        page, page feedback, page ratings and discussion threads, next to the page's `pageviews`
+        and `visitors`. Pages are joined by host and path only; no visitor is ever joined to a
+        contact or conversation. It takes the dimensions `page`, `hostname` and `time:day`,
+        `time:week` or `time:month` (a page or host and a grain at most), filters on `page` and
+        `hostname`, no goal, prop or segment, and answers `422 no_linked_inbox` for a property
+        without an inbox. Rows are the pages (or hosts) with any support in the range, ordered by
+        `support_rate` with pages of fewer than 100 page views after the others unless `order_by`
+        says otherwise. Days of the past come from the support rollup, today and days not yet rolled
+        up from the inbox itself.
+      enum: [traffic, support]
+      x-enum-varnames: [AnalyticsDatasetTraffic, AnalyticsDatasetSupport]
     AnalyticsQuery:
       type: object
       required: [metrics, range]
       properties:
+        dataset:
+          $ref: "#/components/schemas/AnalyticsDataset"
         metrics:
           type: array
           minItems: 1
-          maxItems: 13
+          maxItems: 20
           items:
             $ref: "#/components/schemas/AnalyticsMetric"
+        insights:
+          type: boolean
+          default: false
+          description: Add `insights` to the answer, worked out from its own numbers by fixed rules.
         goal_id:
           type: string
           format: uuid
@@ -20641,6 +20894,27 @@ components:
           description: Per currency, most first.
           items:
             $ref: "#/components/schemas/AnalyticsRevenue"
+        conversations:
+          type: number
+          format: double
+        feedback:
+          type: number
+          format: double
+        ratings_up:
+          type: number
+          format: double
+        ratings_down:
+          type: number
+          format: double
+        helpful_rate:
+          type: number
+          format: double
+        discussions:
+          type: number
+          format: double
+        support_rate:
+          type: number
+          format: double
     AnalyticsRevenue:
       type: object
       required: [currency, total, average, events, digits]
@@ -20735,6 +21009,47 @@ components:
         next_cursor:
           type: string
           description: Present when there are more rows.
+        insights:
+          type: array
+          description: With `insights` in the query; empty when no rule applies.
+          items:
+            $ref: "#/components/schemas/AnalyticsInsight"
+    AnalyticsInsight:
+      type: object
+      description: |
+        A fixed rule over the answer's own numbers; Yuva runs no model.
+        `metric_change`: a total moved by at least 20% against `compare` (at least 10 before or
+        after). With one dimension other than time: `row_change`, a row whose first count metric
+        (by `order_by`, else the first one asked) moved by at least 50% (at least 10 before or
+        after), the three largest moves; `new_value`, a row with at least 10 that had none in the
+        comparison range (a new referrer, page or campaign), the three largest. `support_hotspot`
+        (`dataset: support` by page): a page with at least 3 conversations whose `support_rate` is
+        at least twice the range's, the three highest. The change rules need `compare`.
+      required: [kind, metric, current]
+      properties:
+        kind:
+          type: string
+          enum: [metric_change, row_change, new_value, support_hotspot]
+          x-enum-varnames: [AnalyticsInsightMetricChange, AnalyticsInsightRowChange, AnalyticsInsightNewValue, AnalyticsInsightSupportHotspot]
+        metric:
+          $ref: "#/components/schemas/AnalyticsMetric"
+        dimension:
+          type: string
+          description: The dimension of the row; absent for a total.
+        value:
+          type: string
+          description: The row's value of `dimension`.
+        current:
+          type: number
+          format: double
+        previous:
+          type: number
+          format: double
+          description: The comparison range's number, or the range's overall `support_rate` for a hotspot.
+        change:
+          type: number
+          format: double
+          description: The change in percent of `previous`; absent when `previous` is 0.
     AnalyticsRangeProblem:
       allOf:
         - $ref: "#/components/schemas/Problem"
@@ -21293,10 +21608,11 @@ components:
         kind:
           type: string
           description: |
-            `note` is a member's; Yuva adds `key_rotated` when the property got a new key and
-            `goal_created` (with `goal_id` while the goal exists, and its name as `text`).
-          enum: [note, key_rotated, goal_created]
-          x-enum-varnames: [AnalyticsAnnotationNote, AnalyticsAnnotationKeyRotated, AnalyticsAnnotationGoalCreated]
+            `note` is a member's; Yuva adds `key_rotated` when the property got a new key,
+            `goal_created` (with `goal_id` while the goal exists, and its name as `text`) and
+            `alert` (with `alert_id`, what the alert found as `text`).
+          enum: [note, key_rotated, goal_created, alert]
+          x-enum-varnames: [AnalyticsAnnotationNote, AnalyticsAnnotationKeyRotated, AnalyticsAnnotationGoalCreated, AnalyticsAnnotationAlert]
         starts_on:
           type: string
           format: date
@@ -21306,6 +21622,9 @@ components:
         text:
           type: string
         goal_id:
+          type: string
+          format: uuid
+        alert_id:
           type: string
           format: uuid
         created_by:
@@ -21355,6 +21674,163 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/AnalyticsAnnotation"
+    AnalyticsAlertKind:
+      type: string
+      description: |
+        Fixed rules, checked every hour over the property's finished hours and days:
+        `spike` and `drop`, page views of the last two finished hours at least three times, or at
+        most half, the same two hours' average over the seven days before (at least 20 views
+        a day in those hours); `goal_drop`, a goal's conversions yesterday at most half its
+        average of the seven days before (at least 10 a day); `support_load`, yesterday's
+        conversations per 1,000 page views at least twice the rate of the 28 days before, with at
+        least 5 conversations (a property linked to an inbox); `new_referrer`, a referring site with
+        at least 10 visits yesterday and none in the 28 days before. Each kind fires once per
+        property and day (`new_referrer` once per site).
+      enum: [spike, drop, goal_drop, support_load, new_referrer]
+      x-enum-varnames: [AnalyticsAlertSpike, AnalyticsAlertDrop, AnalyticsAlertGoalDrop, AnalyticsAlertSupportLoad, AnalyticsAlertNewReferrer]
+    AnalyticsReportFrequency:
+      type: string
+      enum: [none, weekly, monthly]
+      x-enum-varnames: [AnalyticsReportNone, AnalyticsReportWeekly, AnalyticsReportMonthly]
+    AnalyticsSubscription:
+      type: object
+      required: [property_id, report, alerts]
+      properties:
+        property_id:
+          type: string
+          format: uuid
+        report:
+          $ref: "#/components/schemas/AnalyticsReportFrequency"
+        alerts:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsAlertKind"
+        last_report_at:
+          type: string
+          format: date-time
+          description: When the last scheduled report went out.
+        updated_at:
+          type: string
+          format: date-time
+          description: Absent until the member chose.
+    AnalyticsSubscriptionUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        report:
+          $ref: "#/components/schemas/AnalyticsReportFrequency"
+        alerts:
+          type: array
+          maxItems: 5
+          items:
+            $ref: "#/components/schemas/AnalyticsAlertKind"
+    AnalyticsAlert:
+      type: object
+      required: [id, property_id, kind, day, metric, current, baseline, text, created_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        property_id:
+          type: string
+          format: uuid
+        kind:
+          $ref: "#/components/schemas/AnalyticsAlertKind"
+        day:
+          type: string
+          format: date
+          description: The property's day the alert is about.
+        hours_from:
+          type: string
+          format: date-time
+          description: "`spike` and `drop`: the start of the two hours."
+        hours_to:
+          type: string
+          format: date-time
+        metric:
+          type: string
+          description: "`pageviews`, `conversions`, `support_rate` or `visits`."
+        current:
+          type: number
+          format: double
+        baseline:
+          type: number
+          format: double
+          description: What the rule compared `current` with; 0 for a new referrer.
+        goal_id:
+          type: string
+          format: uuid
+        goal_name:
+          type: string
+        referrer:
+          type: string
+          description: "`new_referrer`: the site's host."
+        text:
+          type: string
+          description: What was found, in English, as on the annotation.
+        annotation_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+    AnalyticsAlertList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsAlert"
+    AnalyticsAlertEventData:
+      type: object
+      required: [alert, property]
+      properties:
+        alert:
+          $ref: "#/components/schemas/AnalyticsAlert"
+        property:
+          $ref: "#/components/schemas/AnalyticsPropertyRef"
+    AnalyticsPropertyRef:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    AnalyticsAlertEvent:
+      type: object
+      description: |
+        `analytics.alert`: a property raised an alert. Delivered to callers who hold
+        `analytics:read` and can see the property; `inbox_id` is the property's linked inbox.
+      required: [id, type, workspace_id, created_at, data]
+      properties:
+        id:
+          type: integer
+          format: int64
+        type:
+          type: string
+          enum: [analytics.alert]
+        workspace_id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          $ref: "#/components/schemas/AnalyticsAlertEventData"
+    WebhookAnalyticsAlertPayload:
+      allOf:
+        - $ref: "#/components/schemas/WebhookPayloadBase"
+        - type: object
+          required: [data]
+          properties:
+            data:
+              $ref: "#/components/schemas/AnalyticsAlertEventData"
     AnalyticsShareView:
       type: string
       description: |

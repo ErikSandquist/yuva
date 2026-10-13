@@ -1,0 +1,30 @@
+Acme docs: haftalık analitik raporunuz
+
+Acme docs, 2026-10-05 – 2026-10-11 (değişimler önceki haftaya göre)
+
+Ziyaretçi: 1,204 (+12%)
+Ziyaret: 1,530 (+9%)
+Sayfa görüntüleme: 4,210 (−3%)
+Hemen çıkma oranı: 41%
+Ziyaret süresi: 2:05
+
+En çok görüntülenen sayfalar:
+  /docs/install: 912
+  /pricing: 640
+
+En çok ziyaret getiren kaynaklar:
+  Google: 530
+  (direct): 410
+
+Hedefler:
+  Signup: 38 (+19%)
+
+Sayfalardan gelen destek:
+  Konuşma: 14
+  Sayfa geri bildirimi: 6
+  Oylar: 40 yararlı, 9 yararsız
+  En çok konuşma: /docs/billing, 5 (1.000 sayfa görüntülemede 12.4)
+
+Analitiği aç: https://yuva.example.com/analytics/1
+
+Bu raporu Acme docs için seçtiğiniz için alıyorsunuz. Değiştirin ya da durdurun: https://yuva.example.com/analytics/1/settings

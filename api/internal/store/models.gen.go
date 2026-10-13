@@ -11,6 +11,26 @@ import (
 	"uuid"
 )
 
+type AnalyticsAlert struct {
+	ID           uuid.UUID
+	WorkspaceID  uuid.UUID
+	PropertyID   uuid.UUID
+	Kind         string
+	Key          string
+	Day          time.Time
+	HoursFrom    *time.Time
+	HoursTo      *time.Time
+	Metric       string
+	Current      float64
+	Baseline     float64
+	GoalID       *uuid.UUID
+	GoalName     *string
+	Referrer     *string
+	Text         string
+	AnnotationID *uuid.UUID
+	CreatedAt    time.Time
+}
+
 type AnalyticsAnnotation struct {
 	ID          uuid.UUID
 	WorkspaceID uuid.UUID
@@ -23,6 +43,7 @@ type AnalyticsAnnotation struct {
 	CreatedBy   *uuid.UUID
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
+	AlertID     *uuid.UUID
 }
 
 type AnalyticsDaily struct {
@@ -71,6 +92,19 @@ type AnalyticsDailyProp struct {
 	Events        int64
 	RevenueMinor  int64
 	RevenueEvents int64
+}
+
+type AnalyticsDailySupport struct {
+	WorkspaceID   uuid.UUID
+	PropertyID    uuid.UUID
+	Day           time.Time
+	Host          string
+	Path          string
+	Conversations int64
+	Feedback      int64
+	RatingsUp     int64
+	RatingsDown   int64
+	Discussions   int64
 }
 
 type AnalyticsEvent struct {
@@ -279,6 +313,26 @@ type AnalyticsShare struct {
 	UpdatedAt    time.Time
 }
 
+type AnalyticsSubscription struct {
+	WorkspaceID  uuid.UUID
+	PropertyID   uuid.UUID
+	MemberID     uuid.UUID
+	Report       string
+	Alerts       []string
+	LastPeriod   *time.Time
+	LastReportAt *time.Time
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
+}
+
+type AnalyticsSupportDay struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Day         time.Time
+	InboxID     uuid.UUID
+	BuiltAt     time.Time
+}
+
 type AnalyticsVisit struct {
 	WorkspaceID  uuid.UUID
 	PropertyID   uuid.UUID
@@ -411,6 +465,8 @@ type Broadcast struct {
 	ScheduledByKey     *uuid.UUID
 	CreatedAt          time.Time
 	UpdatedAt          time.Time
+	Utm                bool
+	UtmCampaign        string
 }
 
 type BroadcastClick struct {

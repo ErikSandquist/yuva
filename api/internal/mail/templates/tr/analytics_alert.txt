@@ -1,0 +1,9 @@
+{{.Property}}: {{if eq .Kind "spike"}}her zamankinden çok sayfa görüntüleme{{else if eq .Kind "drop"}}her zamankinden az sayfa görüntüleme{{else if eq .Kind "goal_drop"}}{{.Goal}} hedefi daha az tamamlanıyor{{else if eq .Kind "support_load"}}sayfa görüntüleme başına daha çok destek{{else}}yeni bir yönlendiren site{{end}}
+
+{{if eq .Kind "spike"}}{{.Property}} {{.Day}} günü {{.HourFrom}} ile {{.HourTo}} arasında {{.Current}} sayfa görüntüleme aldı; önceki yedi günün aynı saatlerinde ortalama {{.Baseline}} idi.{{else if eq .Kind "drop"}}{{.Property}} {{.Day}} günü {{.HourFrom}} ile {{.HourTo}} arasında {{.Current}} sayfa görüntüleme aldı; önceki yedi günün aynı saatlerinde ortalama {{.Baseline}} idi. Site açıksa sayfalarının analitik betiğini hâlâ yüklediğini kontrol edin.{{else if eq .Kind "goal_drop"}}{{.Property}} sitesinin {{.Goal}} hedefi {{.Day}} günü {{.Current}} kez tamamlandı; önceki yedi günde günde ortalama {{.Baseline}} idi.{{else if eq .Kind "support_load"}}{{.Property}} {{.Day}} günü 1.000 sayfa görüntülemede {{.Current}} konuşma aldı; önceki 28 günde {{.Baseline}} idi. Destek raporu konuşmaların hangi sayfalarda başladığını gösterir.{{else}}{{.Referrer}}, {{.Day}} günü {{.Property}} sitesine {{.Current}} ziyaret getirdi; önceki 28 günde hiç getirmemişti.{{end}}
+
+Grafikte bu güne bir not eklendi.
+
+Analitiği aç: {{.URL}}
+
+Bu e-postayı {{.Property}} için bu uyarıyı seçtiğiniz için alıyorsunuz. Uyarılarınızı değiştirin: {{.SettingsURL}}

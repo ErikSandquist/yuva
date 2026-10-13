@@ -1,0 +1,34 @@
+{{template "heading" (print .Property)}}
+<p class="y-muted" style="margin:0 0 16px 0;font-size:13px;color:#71717a;">{{if .Monthly}}Monthly{{else}}Weekly{{end}} report, {{.From}} to {{.To}}{{if or .Visitors.Change .Visits.Change .Pageviews.Change}}; changes against the {{if .Monthly}}month{{else}}week{{end}} before{{end}}</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 20px 0;">
+<tr><td class="y-text" style="padding:6px 0;border-bottom:1px solid #e4e4e7;">Visitors</td><td class="y-text" align="right" style="padding:6px 0;border-bottom:1px solid #e4e4e7;"><strong>{{.Visitors.Value}}</strong>{{with .Visitors.Change}} <span class="y-muted" style="color:#71717a;">{{.}}</span>{{end}}</td></tr>
+<tr><td class="y-text" style="padding:6px 0;border-bottom:1px solid #e4e4e7;">Visits</td><td class="y-text" align="right" style="padding:6px 0;border-bottom:1px solid #e4e4e7;"><strong>{{.Visits.Value}}</strong>{{with .Visits.Change}} <span class="y-muted" style="color:#71717a;">{{.}}</span>{{end}}</td></tr>
+<tr><td class="y-text" style="padding:6px 0;border-bottom:1px solid #e4e4e7;">Page views</td><td class="y-text" align="right" style="padding:6px 0;border-bottom:1px solid #e4e4e7;"><strong>{{.Pageviews.Value}}</strong>{{with .Pageviews.Change}} <span class="y-muted" style="color:#71717a;">{{.}}</span>{{end}}</td></tr>
+<tr><td class="y-text" style="padding:6px 0;border-bottom:1px solid #e4e4e7;">Bounce rate</td><td class="y-text" align="right" style="padding:6px 0;border-bottom:1px solid #e4e4e7;"><strong>{{.BounceRate.Value}}</strong></td></tr>
+<tr><td class="y-text" style="padding:6px 0;border-bottom:1px solid #e4e4e7;">Visit duration</td><td class="y-text" align="right" style="padding:6px 0;border-bottom:1px solid #e4e4e7;"><strong>{{.Duration.Value}}</strong></td></tr>
+</table>
+{{- if .Pages}}
+<p style="margin:0 0 4px 0;font-weight:600;">Top pages</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 20px 0;">
+{{range .Pages}}{{template "analytics_report.row" .}}{{end}}
+</table>
+{{- end}}
+{{- if .Sources}}
+<p style="margin:0 0 4px 0;font-weight:600;">Top sources</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 20px 0;">
+{{range .Sources}}{{template "analytics_report.row" .}}{{end}}
+</table>
+{{- end}}
+{{- if .Goals}}
+<p style="margin:0 0 4px 0;font-weight:600;">Goals</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 20px 0;">
+{{range .Goals}}{{template "analytics_report.row" .}}{{end}}
+</table>
+{{- end}}
+{{- with .Support}}
+<p style="margin:0 0 4px 0;font-weight:600;">Support from the pages</p>
+<p style="margin:0 0 16px 0;">{{.Conversations}} conversations, {{.Feedback}} page feedback, {{.Up}} helpful and {{.Down}} not helpful ratings.{{if .TopPage}} Most conversations: <strong>{{.TopPage}}</strong>, {{.TopCount}} ({{.TopRate}} per 1,000 page views).{{end}}</p>
+{{- end}}
+{{template "button" (button .URL "Open Analytics")}}
+{{define "analytics_report.footer"}}You get this report because you chose it for {{.Property}}. <a href="{{.SettingsURL}}" target="_blank" style="color:#71717a;text-decoration:underline;">Change or stop it</a>{{end}}
+{{define "analytics_report.row"}}<tr><td class="y-text" dir="auto" style="padding:4px 12px 4px 0;border-bottom:1px solid #e4e4e7;word-break:break-all;">{{.Name}}</td><td class="y-text" align="right" style="padding:4px 0;border-bottom:1px solid #e4e4e7;white-space:nowrap;">{{.Value}}{{with .Change}} <span class="y-muted" style="color:#71717a;">{{.}}</span>{{end}}</td></tr>{{end}}

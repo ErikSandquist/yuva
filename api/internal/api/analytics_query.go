@@ -221,6 +221,20 @@ func metricsBody(s analytics.Sums, names []string) oas.AnalyticsMetrics {
 			m.Completions = &v
 		case "revenue":
 			m.Revenue = revenueBody(s.Revenue)
+		case "conversations":
+			m.Conversations = &v
+		case "feedback":
+			m.Feedback = &v
+		case "ratings_up":
+			m.RatingsUp = &v
+		case "ratings_down":
+			m.RatingsDown = &v
+		case "helpful_rate":
+			m.HelpfulRate = &v
+		case "discussions":
+			m.Discussions = &v
+		case "support_rate":
+			m.SupportRate = &v
 		}
 	}
 	return m
@@ -343,6 +357,9 @@ type analyticsRequest struct {
 	order  []analytics.Order
 	limit  int
 	offset int
+	// supportOrder ranks pages with fewer than supportMinViews page views after the others.
+	supportOrder bool
+	insights     bool
 }
 
 func (s *Server) analyticsRequest(ctx context.Context, prop store.AnalyticsProperty, b oas.AnalyticsQuery) (analyticsRequest, error) {
@@ -355,6 +372,13 @@ func (s *Server) analyticsRequest(ctx context.Context, prop store.AnalyticsPrope
 		return ar, err
 	}
 	q := analytics.Query{WorkspaceID: ws, PropertyID: prop.ID, Timezone: prop.Timezone, From: from, To: to, RawFrom: s.rawFrom()}
+	support := b.Dataset != nil && *b.Dataset == oas.AnalyticsDatasetSupport
+	if support {
+		if err := checkSupportQuery(prop, b); err != nil {
+			return ar, err
+		}
+		q.Dataset = analytics.DatasetSupport
+	}
 	if b.Prop != nil {
 		if q.Prop, err = trimmed(*b.Prop, 1, 300, "prop"); err != nil {
 			return ar, err
@@ -373,6 +397,9 @@ func (s *Server) analyticsRequest(ctx context.Context, prop store.AnalyticsPrope
 	for _, m := range b.Metrics {
 		if slices.Contains(q.Metrics, string(m)) {
 			return ar, errValidation("metric " + string(m) + " is listed twice")
+		}
+		if err := checkDatasetMetric(support, string(m)); err != nil {
+			return ar, err
 		}
 		q.Metrics = append(q.Metrics, string(m))
 	}
@@ -409,11 +436,17 @@ func (s *Server) analyticsRequest(ctx context.Context, prop store.AnalyticsPrope
 		first = q.Metrics[i]
 	}
 	order := []analytics.Order{{Metric: first, Desc: true}}
+	if support {
+		order, ar.supportOrder = []analytics.Order{{Metric: "support_rate", Desc: true}, {Metric: "conversations", Desc: true}}, true
+	}
 	if b.OrderBy != nil && len(*b.OrderBy) > 0 {
-		order = nil
+		order, ar.supportOrder = nil, false
 		for _, o := range *b.OrderBy {
 			if o.Metric == oas.AnalyticsMetricRevenue {
 				return ar, errValidation("rows cannot be ordered by revenue, which is per currency")
+			}
+			if err := checkDatasetMetric(support, string(o.Metric)); err != nil {
+				return ar, err
 			}
 			order = append(order, analytics.Order{Metric: string(o.Metric), Desc: o.Dir == nil || *o.Dir == oas.AnalyticsDesc})
 		}
@@ -448,6 +481,7 @@ func (s *Server) analyticsRequest(ctx context.Context, prop store.AnalyticsPrope
 		ar.cmp = &c
 	}
 	ar.q, ar.order, ar.limit, ar.offset = q, order, limit, offset
+	ar.insights = b.Insights != nil && *b.Insights
 	return ar, nil
 }
 
@@ -468,6 +502,13 @@ func (s *Server) analyticsResult(ctx context.Context, prop store.AnalyticsProper
 		rows = nil
 	}
 	sortAnalyticsRows(rows, q.Dimensions, order)
+	if ar.supportOrder {
+		sortSupportRows(rows, q.Dimensions)
+	}
+	var insights []oas.AnalyticsInsight
+	if ar.insights && !all {
+		insights = analyticsInsights(q, ans, order)
+	}
 	next := ""
 	if !timeOnly(q.Dimensions) && !all {
 		if offset > len(rows) {
@@ -488,6 +529,9 @@ func (s *Server) analyticsResult(ctx context.Context, prop store.AnalyticsProper
 	}
 	if next != "" {
 		out.NextCursor = &next
+	}
+	if insights != nil {
+		out.Insights = &insights
 	}
 	for i, r := range rows {
 		out.Rows[i] = rowBody(r, q.Dimensions, q.Metrics)
@@ -537,8 +581,14 @@ func (s *Server) runAnalyticsQuery(ctx context.Context, prop store.AnalyticsProp
 		return analyticsAnswer{}, err
 	}
 	defer release()
+	run := a.store.Query
+	if q.Dataset == analytics.DatasetSupport {
+		run = func(ctx context.Context, q analytics.Query) (analytics.Result, error) {
+			return s.supportQuery(ctx, prop, q)
+		}
+	}
 	var ans analyticsAnswer
-	if ans.result, err = a.store.Query(ctx, q); err != nil {
+	if ans.result, err = run(ctx, q); err != nil {
 		return ans, analyticsQueryError(err)
 	}
 	ttl := analyticsFinishedTTL
@@ -546,7 +596,7 @@ func (s *Server) runAnalyticsQuery(ctx context.Context, prop store.AnalyticsProp
 		ttl = analyticsOpenTTL
 	}
 	if cmp != nil {
-		c, err := a.store.Query(ctx, *cmp)
+		c, err := run(ctx, *cmp)
 		if err != nil {
 			return ans, analyticsQueryError(err)
 		}

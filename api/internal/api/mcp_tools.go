@@ -26,6 +26,8 @@ type mcpTool struct {
 	denied *apiError
 	gate   func(p principal) error
 	add    func(srv *mcp.Server, c *mcpCall)
+	// analytics tools are listed only while the server has analytics on.
+	analytics bool
 }
 
 func (t mcpTool) listed(p principal) bool { return t.refusal(p) == nil }
@@ -693,4 +695,4 @@ var mcpTools = append([]mcpTool{
 			}
 			return contactOut(oas.Contact(res.(oas.MergeContact200JSONResponse))), nil
 		}),
-}, slices.Concat(mcpSetupTools, mcpBroadcastTools, mcpMigrationTools)...)
+}, slices.Concat(mcpSetupTools, mcpBroadcastTools, mcpMigrationTools, mcpAnalyticsTools)...)

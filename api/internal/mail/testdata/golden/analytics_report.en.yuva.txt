@@ -1,0 +1,30 @@
+Acme docs: your weekly analytics report
+
+Acme docs, 2026-10-05 to 2026-10-11 (changes against the week before)
+
+Visitors: 1,204 (+12%)
+Visits: 1,530 (+9%)
+Page views: 4,210 (−3%)
+Bounce rate: 41%
+Visit duration: 2:05
+
+Top pages:
+  /docs/install: 912
+  /pricing: 640
+
+Top sources:
+  Google: 530
+  (direct): 410
+
+Goals:
+  Signup: 38 (+19%)
+
+Support from the pages:
+  Conversations: 14
+  Page feedback: 6
+  Ratings: 40 helpful, 9 not helpful
+  Most conversations: /docs/billing, 5 (12.4 per 1,000 page views)
+
+Open Analytics: https://yuva.example.com/analytics/1
+
+You get this report because you chose it for Acme docs. Change or stop it: https://yuva.example.com/analytics/1/settings

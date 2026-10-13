@@ -1,0 +1,28 @@
+{{.Property}}: Ihr {{if .Monthly}}monatlicher{{else}}wöchentlicher{{end}} Analytics-Bericht
+
+{{.Property}}, {{.From}} bis {{.To}}{{if or .Visitors.Change .Visits.Change .Pageviews.Change}} (Veränderungen gegenüber {{if .Monthly}}dem Vormonat{{else}}der Vorwoche{{end}}){{end}}
+
+Besucher: {{.Visitors.Value}}{{with .Visitors.Change}} ({{.}}){{end}}
+Besuche: {{.Visits.Value}}{{with .Visits.Change}} ({{.}}){{end}}
+Seitenaufrufe: {{.Pageviews.Value}}{{with .Pageviews.Change}} ({{.}}){{end}}
+Absprungrate: {{.BounceRate.Value}}
+Besuchsdauer: {{.Duration.Value}}
+{{if .Pages}}
+Meistbesuchte Seiten:
+{{range .Pages}}  {{.Name}}: {{.Value}}
+{{end}}{{end}}{{if .Sources}}
+Wichtigste Quellen:
+{{range .Sources}}  {{.Name}}: {{.Value}}
+{{end}}{{end}}{{if .Goals}}
+Ziele:
+{{range .Goals}}  {{.Name}}: {{.Value}}{{with .Change}} ({{.}}){{end}}
+{{end}}{{end}}{{with .Support}}
+Support von den Seiten:
+  Unterhaltungen: {{.Conversations}}
+  Seiten-Feedback: {{.Feedback}}
+  Bewertungen: {{.Up}} hilfreich, {{.Down}} nicht hilfreich
+{{if .TopPage}}  Die meisten Unterhaltungen: {{.TopPage}}, {{.TopCount}} ({{.TopRate}} pro 1.000 Seitenaufrufe)
+{{end}}{{end}}
+Analytics öffnen: {{.URL}}
+
+Sie erhalten diesen Bericht, weil Sie ihn für {{.Property}} gewählt haben. Ändern oder abbestellen: {{.SettingsURL}}

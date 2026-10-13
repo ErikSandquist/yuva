@@ -161,6 +161,8 @@ type Sums struct {
 	Visitors, Visits, Views, Bounces, DurationS, Events, EngagedMS, EngagedViews, ScrollSum, ScrollViews int64
 	Conversions, Completions                                                                             int64
 	Revenue                                                                                              map[string]Money
+	// Support: what the linked inbox received from the pages.
+	Conversations, Feedback, RatingsUp, RatingsDown, Discussions int64
 }
 
 // Money is an amount in a currency's minor units and how many events carried it.
@@ -177,6 +179,11 @@ func (s *Sums) addRevenue(currency string, m Money) {
 }
 
 func (s *Sums) Add(o Sums) {
+	s.Conversations += o.Conversations
+	s.Feedback += o.Feedback
+	s.RatingsUp += o.RatingsUp
+	s.RatingsDown += o.RatingsDown
+	s.Discussions += o.Discussions
 	s.Conversions += o.Conversions
 	s.Completions += o.Completions
 	for c, m := range o.Revenue {
@@ -241,6 +248,20 @@ func (s Sums) Metric(name string) float64 {
 		return ratio(s.Conversions, s.Visitors, 100)
 	case "completions":
 		return float64(s.Completions)
+	case "conversations":
+		return float64(s.Conversations)
+	case "feedback":
+		return float64(s.Feedback)
+	case "ratings_up":
+		return float64(s.RatingsUp)
+	case "ratings_down":
+		return float64(s.RatingsDown)
+	case "helpful_rate":
+		return ratio(s.RatingsUp, s.RatingsUp+s.RatingsDown, 100)
+	case "discussions":
+		return float64(s.Discussions)
+	case "support_rate":
+		return ratio(s.Conversations, s.Views, 1000)
 	}
 	return 0
 }

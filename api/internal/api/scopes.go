@@ -243,6 +243,7 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"GetAnalyticsExport":        {oas.AnalyticsRead},
 	"DeleteAnalyticsExport":     {oas.AnalyticsRead},
 	"DownloadAnalyticsExport":   {oas.AnalyticsRead},
+	"ListAnalyticsAlerts":       {oas.AnalyticsRead},
 }
 
 func errInsufficientScope(scope oas.ApiKeyScope) *apiError {

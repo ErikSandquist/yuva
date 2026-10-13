@@ -673,5 +673,12 @@ func (s *Server) GetBroadcastReport(ctx context.Context, req oas.GetBroadcastRep
 			ConversationId: r.ConversationID, Contact: oas.SubscriptionContact{Id: r.ContactID, Name: r.ContactName}, At: r.RepliedAt,
 		})
 	}
+	visits, err := s.campaignVisits(ctx, p, b)
+	if err != nil {
+		return nil, err
+	}
+	if visits != nil {
+		out.CampaignVisits = &visits
+	}
 	return out, nil
 }

@@ -1,0 +1,28 @@
+{{.Property}}: {{if .Monthly}}aylık{{else}}haftalık{{end}} analitik raporunuz
+
+{{.Property}}, {{.From}} – {{.To}}{{if or .Visitors.Change .Visits.Change .Pageviews.Change}} (değişimler önceki {{if .Monthly}}aya{{else}}haftaya{{end}} göre){{end}}
+
+Ziyaretçi: {{.Visitors.Value}}{{with .Visitors.Change}} ({{.}}){{end}}
+Ziyaret: {{.Visits.Value}}{{with .Visits.Change}} ({{.}}){{end}}
+Sayfa görüntüleme: {{.Pageviews.Value}}{{with .Pageviews.Change}} ({{.}}){{end}}
+Hemen çıkma oranı: {{.BounceRate.Value}}
+Ziyaret süresi: {{.Duration.Value}}
+{{if .Pages}}
+En çok görüntülenen sayfalar:
+{{range .Pages}}  {{.Name}}: {{.Value}}
+{{end}}{{end}}{{if .Sources}}
+En çok ziyaret getiren kaynaklar:
+{{range .Sources}}  {{.Name}}: {{.Value}}
+{{end}}{{end}}{{if .Goals}}
+Hedefler:
+{{range .Goals}}  {{.Name}}: {{.Value}}{{with .Change}} ({{.}}){{end}}
+{{end}}{{end}}{{with .Support}}
+Sayfalardan gelen destek:
+  Konuşma: {{.Conversations}}
+  Sayfa geri bildirimi: {{.Feedback}}
+  Oylar: {{.Up}} yararlı, {{.Down}} yararsız
+{{if .TopPage}}  En çok konuşma: {{.TopPage}}, {{.TopCount}} (1.000 sayfa görüntülemede {{.TopRate}})
+{{end}}{{end}}
+Analitiği aç: {{.URL}}
+
+Bu raporu {{.Property}} için seçtiğiniz için alıyorsunuz. Değiştirin ya da durdurun: {{.SettingsURL}}
