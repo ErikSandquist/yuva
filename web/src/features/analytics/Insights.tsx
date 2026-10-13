@@ -1,3 +1,4 @@
+import { plural } from "@lingui/core/macro"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { ArrowDownRightIcon, ArrowUpRightIcon, LifeBuoyIcon, SparkleIcon } from "lucide-react"
 
@@ -30,21 +31,27 @@ export function useInsightText() {
     const kind = dim.toLocaleLowerCase(i18n.locale)
     const value = valueText(text, dimension, x.value ?? "", i18n.locale)
     const up = (x.change ?? 0) >= 0
+    const fresh = !x.previous || x.change === undefined
     switch (x.kind) {
       case "metric_change":
+        if (fresh) return t`${metric}: ${now}, none in the compared days.`
         return up
           ? t`${metric} rose ${change}: ${now}, against ${before} in the compared days.`
           : t`${metric} fell ${change}: ${now}, against ${before} in the compared days.`
       case "row_change":
+        if (fresh) return t`${dim} ${value}: ${metric} ${now}, none in the compared days.`
         return up
           ? t`${dim} ${value}: ${lower} rose ${change}, ${now} against ${before}.`
           : t`${dim} ${value}: ${lower} fell ${change}, ${now} against ${before}.`
       case "new_value":
         return t`New ${kind}: ${value}. ${metric}: ${now}, none in the compared days.`
       case "support_hotspot": {
-        const rate = formatMetric("support_rate", x.current, i18n.locale)
+        const rate = Math.round(x.current * 10) / 10
         const site = formatMetric("support_rate", x.previous ?? 0, i18n.locale)
-        return t`${dim} ${value}: ${rate} conversations per 1,000 views, against ${site} across all pages.`
+        return plural(rate, {
+          one: `${dim} ${value}: # conversation per 1,000 views, against ${site} across all pages.`,
+          other: `${dim} ${value}: # conversations per 1,000 views, against ${site} across all pages.`,
+        })
       }
     }
   }
@@ -57,14 +64,9 @@ export function InsightList({ items, testId }: { items: AnalyticsInsight[]; test
     <ul className="flex flex-col gap-1" data-testid={testId}>
       {sorted.map((x, i) => {
         const up = (x.change ?? 0) >= 0
+        const fresh = x.kind === "new_value" || !x.previous || x.change === undefined
         const Icon =
-          x.kind === "support_hotspot"
-            ? LifeBuoyIcon
-            : x.kind === "new_value"
-              ? SparkleIcon
-              : up
-                ? ArrowUpRightIcon
-                : ArrowDownRightIcon
+          x.kind === "support_hotspot" ? LifeBuoyIcon : fresh ? SparkleIcon : up ? ArrowUpRightIcon : ArrowDownRightIcon
         return (
           <li
             key={`${x.kind}${x.metric}${x.value ?? ""}${i}`}

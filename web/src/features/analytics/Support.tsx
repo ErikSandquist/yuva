@@ -119,7 +119,8 @@ function Tiles({
 }) {
   const { i18n } = useLingui()
   const text = useAnalyticsText()
-  const value = (m: NumMetric, o?: Record<string, unknown>) => o?.[m] as number | undefined
+  const value = (m: NumMetric, o?: Record<string, unknown>) =>
+    m === "support_rate" && !o?.pageviews ? undefined : (o?.[m] as number | undefined)
   return (
     <div className="grid grid-cols-3 gap-2 phone:grid-cols-2" data-testid="support-tiles">
       {TILES.map((m) => (
@@ -311,6 +312,8 @@ function SupportReport({ p }: { p: AnalyticsProperty }) {
                               {fmt("ratings_down", num(r.metrics, "ratings_down"))}
                             </span>
                           </>
+                        ) : m === "support_rate" && !num(r.metrics, "pageviews") ? (
+                          "–"
                         ) : (
                           fmt(m, num(r.metrics, m))
                         )}

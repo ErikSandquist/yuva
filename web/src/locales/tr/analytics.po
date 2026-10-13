@@ -21,6 +21,18 @@ msgstr "{0, plural, one {# satır} other {# satır}}"
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, one {bugünkü ziyaretçi} other {bugünkü ziyaretçi}}"
 
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {{site} sent # visit, and none in the 28 days before.} other {{site} sent # visits, and none in the 28 days before.}}"
+msgstr "{count, plural, one {{site} # ziyaret getirdi; önceki 28 günde hiç getirmemişti.} other {{site} # ziyaret getirdi; önceki 28 günde hiç getirmemişti.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {# conversation per 1,000 views, against {usual} in the 28 days before.} other {# conversations per 1,000 views, against {usual} in the 28 days before.}}"
+msgstr "{count, plural, one {1.000 görüntülemede # konuşma; önceki 28 günde {usual}.} other {1.000 görüntülemede # konuşma; önceki 28 günde {usual}.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {Goal “{goal}” had # conversion, against {usual} a day on average in the week before.} other {Goal “{goal}” had # conversions, against {usual} a day on average in the week before.}}"
+msgstr "{count, plural, one {“{goal}” hedefinde # dönüşüm oldu; önceki hafta günlük ortalama {usual} idi.} other {“{goal}” hedefinde # dönüşüm oldu; önceki hafta günlük ortalama {usual} idi.}}"
+
 #: src/features/analytics/Insights.tsx
 msgid "{dim} {value}: {lower} fell {change}, {now} against {before}."
 msgstr "{dim} {value}: {lower} {change} azaldı, önce {before}, şimdi {now}."
@@ -30,8 +42,8 @@ msgid "{dim} {value}: {lower} rose {change}, {now} against {before}."
 msgstr "{dim} {value}: {lower} {change} arttı, önce {before}, şimdi {now}."
 
 #: src/features/analytics/Insights.tsx
-msgid "{dim} {value}: {rate} conversations per 1,000 views, against {site} across all pages."
-msgstr "{dim} {value}: 1.000 görüntülemede {rate} konuşma; tüm sayfalarda {site}."
+msgid "{dim} {value}: {metric} {now}, none in the compared days."
+msgstr "{dim} {value}: {metric} {now}; karşılaştırılan günlerde hiç yoktu."
 
 #: src/features/analytics/Annotations.tsx
 msgid "{kind}: {found}"
@@ -49,6 +61,10 @@ msgstr "{metric} {change} azaldı: şimdi {now}, karşılaştırılan günlerde 
 msgid "{metric} rose {change}: {now}, against {before} in the compared days."
 msgstr "{metric} {change} arttı: şimdi {now}, karşılaştırılan günlerde {before}."
 
+#: src/features/analytics/Insights.tsx
+msgid "{metric}: {now}, none in the compared days."
+msgstr "{metric}: {now}; karşılaştırılan günlerde hiç yoktu."
+
 #: src/features/analytics/Events.tsx
 msgid "{n} payments, {avg} on average"
 msgstr "{n} ödeme, ortalama {avg}"
@@ -57,17 +73,13 @@ msgstr "{n} ödeme, ortalama {avg}"
 msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
 msgstr "{name} bu mülkün platformlarından biri değil, bu yüzden sunucu uygulamanın olaylarını reddediyor. Bir sahip ya da yönetici açabilir."
 
-#: src/features/analytics/Alerts.tsx
-msgid "{now} conversations per 1,000 views, against {usual} in the 28 days before."
-msgstr "1.000 görüntülemede {now} konuşma; önceki 28 günde {usual}."
-
 #: src/features/analytics/Funnels.tsx
 msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
 msgstr "{from} – {to} arasında ilk adıma ulaşan ziyaretçilerin {overall} kadarı son adıma da ulaştı."
 
-#: src/features/analytics/Alerts.tsx
-msgid "{site} sent {now} visits, and none in the 28 days before."
-msgstr "{site} {now} ziyaret getirdi; önceki 28 günde hiç getirmemişti."
+#: src/features/analytics/Insights.tsx
+msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
+msgstr "{rate, plural, one {{dim} {value}: 1.000 görüntülemede # konuşma; tüm sayfalarda {site}.} other {{dim} {value}: 1.000 görüntülemede # konuşma; tüm sayfalarda {site}.}}"
 
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
@@ -982,10 +994,6 @@ msgstr "Hedef"
 #: src/features/analytics/Annotations.tsx
 msgid "Goal “{0}” was created"
 msgstr "“{0}” hedefi oluşturuldu"
-
-#: src/features/analytics/Alerts.tsx
-msgid "Goal “{goal}” had {now} conversions, against {usual} a day on average in the week before."
-msgstr "“{goal}” hedefinde {now} dönüşüm oldu; önceki hafta günlük ortalama {usual} idi."
 
 #: src/features/analytics/Alerts.tsx
 msgid "Goal drop"

@@ -1,3 +1,4 @@
+import { plural } from "@lingui/core/macro"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { BellIcon, GaugeIcon, GlobeIcon, SendIcon, TargetIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react"
 
@@ -47,6 +48,7 @@ export function useAlertText() {
   const sentence = (a: AnalyticsAlert) => {
     const now = n(a.current)
     const usual = n(a.baseline)
+    const count = Math.round(a.current * 10) / 10
     switch (a.kind) {
       case "spike":
         return t`Views rose to ${now} in two hours, against ${usual} usually.`
@@ -54,13 +56,22 @@ export function useAlertText() {
         return t`Views fell to ${now} in two hours, against ${usual} usually.`
       case "goal_drop": {
         const goal = a.goal_name ?? ""
-        return t`Goal “${goal}” had ${now} conversions, against ${usual} a day on average in the week before.`
+        return plural(count, {
+          one: `Goal “${goal}” had # conversion, against ${usual} a day on average in the week before.`,
+          other: `Goal “${goal}” had # conversions, against ${usual} a day on average in the week before.`,
+        })
       }
       case "support_load":
-        return t`${now} conversations per 1,000 views, against ${usual} in the 28 days before.`
+        return plural(count, {
+          one: `# conversation per 1,000 views, against ${usual} in the 28 days before.`,
+          other: `# conversations per 1,000 views, against ${usual} in the 28 days before.`,
+        })
       case "new_referrer": {
         const site = a.referrer ?? ""
-        return t`${site} sent ${now} visits, and none in the 28 days before.`
+        return plural(count, {
+          one: `${site} sent # visit, and none in the 28 days before.`,
+          other: `${site} sent # visits, and none in the 28 days before.`,
+        })
       }
     }
   }
