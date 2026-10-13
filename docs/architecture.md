@@ -1545,6 +1545,21 @@ in six steps (M15.1–M15.6 in the roadmap). Decisions:
   moves the day's sequence so the fold stops counting until the next one. No Postgres extension. The query
   layer sits behind a `Store` interface so a column store can be added later without a contract change;
   Postgres is the only store in M15 and fits up to about 100M events a month per property.
+- **Events, goals, funnels (M15.2).** Custom and built-in events (`outbound_click` and `file_download`
+  with an http(s) `url`, `not_found`, `chat_open`) carry up to 30 props (keys 1–300 characters, none
+  starting with `$` or `yuva_`; text up to 2,000 characters; e-mail-shaped values dropped and counted as
+  scrubbed; none on children's properties but a built-in event's `url`) and revenue in the currency's
+  minor units, never converted. Goals are a page view, an event with an optional prop equal to a value,
+  or a scroll depth on matching pages; there is no separate revenue goal, because an event goal reports
+  the revenue its events carry, per currency. A change to a goal or to `tracked_props` moves the
+  property's `goals_version`; a rolled-up day records the version its goal and prop rows were built with,
+  so a goal is read from rollups only on days built at or after its own version and from raw rows
+  elsewhere in the raw window, and the rollup scan rebuilds those days' goal and prop rows without
+  touching traffic rollups. Prop breakdowns read raw rows for any key inside the raw window and
+  `tracked_props` rollups before it. Funnels follow visits within a day over the raw window (90 days, or
+  31 when the property counted more than 10M events in the last 30), answers cached 10 minutes.
+  Segments and annotations need `analytics:read` and are edited by their author, owners, admins and keys
+  without an inbox limit; Yuva's own annotations (`key_rotated`, `goal_created`) cannot be edited.
 - **SDKs.** `/yuva-analytics.js` (≤ 1.5 KB gzip, served like `/yuva.js`, off with `YUVA_WIDGET=off`) with
   automatic and SPA pageviews, engagement, opt-in outbound, file and chat-open events; `useyuva/analytics`,
   React and Nuxt helpers; Swift product `YuvaAnalytics` (no `YuvaKit` dependency, SwiftUI `.yuvaScreen`,
