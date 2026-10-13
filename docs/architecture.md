@@ -1598,7 +1598,8 @@ in six steps (M15.1–M15.6 in the roadmap). Decisions:
   Conversations and discussions count on their local day, page ratings on the UTC day they were given.
   `support_rate` is conversations per 1,000 page views, joined to traffic by path (hostname as its own
   dimension or filter), never through a visitor; `<yuva-chat>` sends the page URL without query or
-  fragment and the title with a new conversation. Alerts: spike and drop compare the last two finished
+  fragment and the title with a new conversation, kept only for a chat channel that allows the page's
+  origin and dropped silently otherwise, so the page never refuses a conversation. Alerts: spike and drop compare the last two finished
   hours with the same hours averaged over the 7 days before (3× or more, half or less, a baseline of at
   least 20 views); goal drop is yesterday at half or less of its 7-day average with at least 10 a day;
   support load is yesterday's rate at twice the 28-day rate with at least 5 conversations; a new referrer
