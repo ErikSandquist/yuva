@@ -17,6 +17,7 @@ import { SetupLayout, StepHeader } from "@/features/setup/SetupLayout"
 import { api, ApiError, unwrap } from "@/lib/api"
 import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
+import { timeZones } from "@/lib/utils"
 
 export function NameStep() {
   const { t, i18n } = useLingui()
@@ -27,7 +28,7 @@ export function NameStep() {
   const [name, setName] = useState("")
   const [locale, setLocale] = useState(browserLanguage)
   const [zone, setZone] = useState(browserTimeZone)
-  const zones = useMemo(() => Intl.supportedValuesOf("timeZone"), [])
+  const zones = useMemo(() => timeZones(), [])
   const langs = LANGS.includes(locale) ? LANGS : [locale, ...LANGS]
   const create = useMutation({
     mutationFn: async () => {

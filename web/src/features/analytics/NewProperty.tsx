@@ -16,6 +16,7 @@ import { useCreateProperty, useProperty, useWaitForFirstEvent } from "@/features
 import { ChoiceSelect, Field, FormCard, PageHeader, Section } from "@/features/settings/ui"
 import { useSession } from "@/lib/session"
 import { useInboxes } from "@/lib/workspace"
+import { timeZones } from "@/lib/utils"
 
 const NO_INBOX = "none"
 
@@ -34,7 +35,7 @@ export function hostOnly(s: string) {
 }
 
 export function useZones() {
-  return useMemo(() => Intl.supportedValuesOf("timeZone"), [])
+  return useMemo(() => timeZones(), [])
 }
 
 export function NewPropertyPage() {

@@ -46,6 +46,7 @@ import { useInboxMembers, useMembers } from "@/lib/workspace"
 import { Toggle } from "@/components/ui/toggle"
 import { Label } from "@/components/ui/label"
 import { Item } from "@/components/ui/item"
+import { timeZones } from "@/lib/utils"
 
 const InboxContext = createContext<{ inbox: Inbox } | null>(null)
 
@@ -379,7 +380,7 @@ function Hours({ inbox }: { inbox: Inbox }) {
   const [start, setStart] = useState(u.start)
   const [end, setEnd] = useState(u.end === "24:00" ? "23:59" : u.end)
   const [zone, setZone] = useState(inbox.timezone)
-  const zones = useMemo(() => Intl.supportedValuesOf("timeZone"), [])
+  const zones = useMemo(() => timeZones(), [])
   const days: Set<Weekday> = h.intervals.length ? u.days : new Set(["mon", "tue", "wed", "thu", "fri"])
   const write = (next: Set<Weekday>, s = start, e = end, enabled = h.enabled) => {
     const intervals: Interval[] = WEEKDAYS.filter((d) => next.has(d)).map((day) => ({ day, start: s, end: e }))
