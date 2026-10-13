@@ -172,3 +172,26 @@ func TestAnalyticsAppLateEventsAndRelaunch(t *testing.T) {
 		t.Fatalf("%d events on the web property", n)
 	}
 }
+
+func TestAnalyticsConsentNeverKeepsAnInvalidEvent(t *testing.T) {
+	h := newHarness(t)
+	tm := newTeam(t, h)
+	id, key := createProperty(tm.owner, map[string]any{"name": "Site", "domains": []string{"example.com"}, "collection": "consent"})
+	h.clock.Set(time.Date(2026, 10, 12, 9, 0, 0, 0, time.UTC))
+	consented := map[string]any{"a": 1}
+	r := collect(h, key, collectReq{origin: "https://example.com", ip: "203.0.113.10", body: map[string]any{"e": []any{
+		map[string]any{"n": "pageview", "u": "https://example.com/pricing", "c": consented},
+		map[string]any{"n": "pageview", "u": "not a url", "c": consented},
+	}}})
+	if r.status != http.StatusAccepted {
+		t.Fatalf("status %d: %s", r.status, r.raw)
+	}
+	h.flushAnalytics()
+	if n := h.count("SELECT count(*) FROM analytics_events WHERE workspace_id = $1 AND property_id = $2", tm.ws, id); n != 1 {
+		t.Fatalf("%d events stored, want only the valid one", n)
+	}
+	health := tm.owner.expect(http.StatusOK, "GET", "/v1/analytics/properties/"+id+"/health?days=1", nil)
+	if totals(health)["dropped"].(map[string]any)["invalid"].(float64) != 1 {
+		t.Fatalf("health %s", health.raw)
+	}
+}

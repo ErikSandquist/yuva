@@ -705,7 +705,7 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 	}
 	var keep []int
 	for i, e := range evs {
-		if valid[i] && prop.Collection != string(oas.AnalyticsCollectionConsent) || (e.C != nil && e.C.A == 1) {
+		if valid[i] && (prop.Collection != string(oas.AnalyticsCollectionConsent) || (e.C != nil && e.C.A == 1)) {
 			keep = append(keep, i)
 		}
 	}
