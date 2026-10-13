@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { KeyRoundIcon, PencilIcon, StickyNoteIcon, TargetIcon, Trash2Icon } from "lucide-react"
+import { BellIcon, KeyRoundIcon, PencilIcon, StickyNoteIcon, TargetIcon, Trash2Icon } from "lucide-react"
 import { useState } from "react"
 import { ReferenceArea, ReferenceLine } from "recharts"
 
@@ -8,11 +8,13 @@ import { formatDate } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import { useDeleteAnnotation, useSaveAnnotation } from "@/features/analytics/queries"
+import { useAlertText } from "@/features/analytics/Alerts"
+import { useAlerts, useDeleteAnnotation, useSaveAnnotation } from "@/features/analytics/queries"
 import { todayIso } from "@/features/analytics/state"
 import { Field } from "@/features/settings/ui"
 import type { AnalyticsAnnotation, AnalyticsDimension } from "@/lib/api"
 import { useSession } from "@/lib/session"
+import { cn } from "@/lib/utils"
 
 function bucketOf(buckets: string[], grain: AnalyticsDimension, day: string) {
   const key = grain === "time:hour" ? `${day}T00:00` : day
@@ -32,7 +34,7 @@ export function annotationMarks(items: AnalyticsAnnotation[], buckets: string[],
     if (a.starts_on > lastDay) return []
     const x1 = bucketOf(buckets, grain, a.starts_on) ?? buckets[0]
     const x2 = bucketOf(buckets, grain, a.ends_on) ?? buckets[0]
-    const color = a.kind === "note" ? "var(--brand)" : "var(--muted-foreground)"
+    const color = a.kind === "note" ? "var(--brand)" : a.kind === "alert" ? "var(--warning)" : "var(--muted-foreground)"
     if (x1 === x2) {
       return [
         <ReferenceLine
@@ -49,14 +51,24 @@ export function annotationMarks(items: AnalyticsAnnotation[], buckets: string[],
   })
 }
 
-export function useAnnotationText() {
+export function useAnnotationText(propertyId: string, withAlerts: boolean) {
   const { t } = useLingui()
+  const alertText = useAlertText()
+  const alerts = useAlerts(propertyId, withAlerts)
+  const byId = new Map((alerts.data?.pages.flatMap((p) => p.items) ?? []).map((x) => [x.id, x]))
   return (a: AnalyticsAnnotation) => {
     switch (a.kind) {
       case "key_rotated":
         return t`A new key was made`
       case "goal_created":
         return t`Goal “${a.text}” was created`
+      case "alert": {
+        const alert = a.alert_id ? byId.get(a.alert_id) : undefined
+        if (!alert) return a.text
+        const kind = alertText.kind[alert.kind]
+        const found = alertText.sentence(alert)
+        return t`${kind}: ${found}`
+      }
       default:
         return a.text
     }
@@ -160,7 +172,10 @@ export function AddNoteButton({ propertyId }: { propertyId: string }) {
 export function AnnotationList({ propertyId, items }: { propertyId: string; items: AnalyticsAnnotation[] }) {
   const { t, i18n } = useLingui()
   const { canManage, membership } = useSession()
-  const label = useAnnotationText()
+  const label = useAnnotationText(
+    propertyId,
+    items.some((a) => a.kind === "alert")
+  )
   const remove = useDeleteAnnotation(propertyId)
   const [ask, dialog] = useConfirm()
   const [editing, setEditing] = useState<AnalyticsAnnotation | null>(null)
@@ -169,7 +184,14 @@ export function AnnotationList({ propertyId, items }: { propertyId: string; item
     <>
       <ul className="mt-2 flex flex-col gap-0.5 border-t pt-2" aria-label={t`Notes`} data-testid="annotations">
         {items.map((a) => {
-          const Icon = a.kind === "key_rotated" ? KeyRoundIcon : a.kind === "goal_created" ? TargetIcon : StickyNoteIcon
+          const Icon =
+            a.kind === "key_rotated"
+              ? KeyRoundIcon
+              : a.kind === "goal_created"
+                ? TargetIcon
+                : a.kind === "alert"
+                  ? BellIcon
+                  : StickyNoteIcon
           const mine = a.kind === "note" && (canManage || a.created_by === membership.member_id)
           return (
             <li
@@ -177,7 +199,12 @@ export function AnnotationList({ propertyId, items }: { propertyId: string; item
               className="group flex min-h-8 items-center gap-2 rounded-md px-2 text-small"
               data-testid={`annotation-${a.kind}`}
             >
-              <Icon className={a.kind === "note" ? "size-3.5 shrink-0 text-brand" : "size-3.5 shrink-0 text-faint"} />
+              <Icon
+                className={cn(
+                  "size-3.5 shrink-0",
+                  a.kind === "note" ? "text-brand" : a.kind === "alert" ? "text-warning" : "text-faint"
+                )}
+              />
               <span className="shrink-0 text-faint tabular-nums">{dayRange(a, i18n.locale)}</span>
               <span className="min-w-0 flex-1 truncate" dir="auto" title={label(a)}>
                 {label(a)}

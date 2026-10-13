@@ -241,6 +241,16 @@ function Summary({ b }: { b: Broadcast }) {
   if (b.audience.conditions.length) rows.push([t`Conditions`, String(b.audience.conditions.length)])
   if (b.audience.locales.length) rows.push([t`Languages`, b.audience.locales.join(", ")])
   rows.push([t`Click counting`, b.click_tracking ? t`On` : t`Off`])
+  rows.push([
+    t`Campaign in links`,
+    b.utm ? (
+      <span dir="ltr" key="utm">
+        {b.utm_campaign}
+      </span>
+    ) : (
+      t`Off`
+    ),
+  ])
   if (by) rows.push([t`Scheduled by`, by.name || by.email])
   else if (b.scheduled_by_api_key) rows.push([t`Scheduled by`, t`An API key or assistant`])
   if (b.started_at) rows.push([t`Started`, formatDateTime(b.started_at, i18n.locale)])

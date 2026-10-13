@@ -17,7 +17,10 @@ import { useDocsDays, useDocsPage, useDocsPages, useDocsSort, useDocsSummary } f
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { useConversations } from "@/features/inbox/queries"
 import { Card, EmptyRow, Section } from "@/features/settings/ui"
-import type { ConversationListItem, DocsPageDay } from "@/lib/api"
+import { useAnalyticsProperties } from "@/features/analytics/properties"
+import { useAnalytics } from "@/features/analytics/queries"
+import type { AnalyticsFilter, ConversationListItem, DocsPageDay } from "@/lib/api"
+import type { DocsDays } from "@/lib/keys"
 import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
 
@@ -238,6 +241,75 @@ function Conversations({
   )
 }
 
+function hostMatches(domain: string, host: string) {
+  const d = domain.toLowerCase()
+  return d.startsWith("*.") ? host.endsWith(d.slice(1)) : host === d
+}
+
+function PageTraffic({
+  inboxId,
+  page,
+  days,
+  ratings,
+}: {
+  inboxId: string
+  page: string
+  days: DocsDays
+  ratings: number
+}) {
+  const { t, i18n } = useLingui()
+  const url = URL.canParse(page) ? new URL(page) : null
+  const host = url?.hostname.toLowerCase() ?? ""
+  const linked = (useAnalyticsProperties().data?.items ?? []).filter((p) => p.inbox_id === inboxId)
+  const property = linked.find((p) => p.domains.some((d) => hostMatches(d, host))) ?? linked[0]
+  const period = `${days}d` as const
+  const filters: AnalyticsFilter[] = [
+    { dimension: "page", op: "is", values: [url?.pathname ?? ""] },
+    { dimension: "hostname", op: "is", values: [host] },
+  ]
+  const q = useAnalytics(property?.id ?? "", { metrics: ["pageviews", "visitors"], range: { period }, filters }, !!url)
+  if (!property || !url) return null
+  const fmt = new Intl.NumberFormat(i18n.locale)
+  const views = q.data?.totals.pageviews ?? 0
+  const visitors = q.data?.totals.visitors ?? 0
+  const rate =
+    views > 0 ? new Intl.NumberFormat(i18n.locale, { maximumFractionDigits: 1 }).format((ratings / views) * 1000) : "–"
+  const search = new URLSearchParams([
+    ["period", period],
+    ["f", `page:is:${url.pathname}`],
+    ["f", `hostname:is:${host}`],
+  ])
+  return (
+    <Section
+      title={<Trans>Views</Trans>}
+      action={
+        <Link
+          to={`/analytics/${property.id}/pages?${search}`}
+          className="text-small text-brand underline-offset-4 hover:underline"
+          data-testid="docs-page-analytics"
+        >
+          <Trans>Open in Analytics</Trans>
+        </Link>
+      }
+    >
+      {q.isPending ? (
+        <Skeleton className="h-20 rounded-2xl" />
+      ) : q.error ? (
+        <ErrorLine error={q.error} />
+      ) : (
+        <Tiles
+          testId="docs-page-traffic"
+          tiles={[
+            [fmt.format(views), t`views`],
+            [fmt.format(visitors), t`visitors`],
+            [rate, t`ratings per 1,000 views`],
+          ]}
+        />
+      )}
+    </Section>
+  )
+}
+
 export function DocsPagePane() {
   const { t, i18n } = useLingui()
   const [params] = useSearchParams()
@@ -290,6 +362,7 @@ export function DocsPagePane() {
       {d && (
         <>
           <Tiles tiles={tiles} testId="docs-tiles" />
+          <PageTraffic inboxId={inboxId} page={page} days={days} ratings={d.up + d.down} />
           <Section title={<Trans>Ratings per day</Trans>}>
             <Days days={detail.data?.days ?? []} window={days} />
           </Section>

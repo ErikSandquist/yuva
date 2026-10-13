@@ -20,6 +20,7 @@ import { useAnalyticsProperties } from "@/features/analytics/properties"
 import { useProperty } from "@/features/analytics/queries"
 import { Realtime } from "@/features/analytics/Realtime"
 import { SettingsView } from "@/features/analytics/Settings"
+import { SupportView } from "@/features/analytics/Support"
 import { useViewSearch } from "@/features/analytics/state"
 import { useAnalyticsText } from "@/features/analytics/text"
 import { Segmented } from "@/components/common"
@@ -37,6 +38,7 @@ const VIEWS = [
   "events",
   "goals",
   "funnels",
+  "support",
   "settings",
 ] as const
 type ViewKey = (typeof VIEWS)[number]
@@ -87,6 +89,7 @@ function PropertyLayout() {
     events: t`Events`,
     goals: t`Goals`,
     funnels: t`Funnels`,
+    support: t`Support`,
     settings: t`Settings`,
   }
   const p = property.data
@@ -158,6 +161,7 @@ export default function AnalyticsRoutes() {
         <Route path="events" element={<EventsView />} />
         <Route path="goals" element={<GoalsView />} />
         <Route path="funnels" element={<FunnelsView />} />
+        <Route path="support" element={<SupportView />} />
         <Route path="settings" element={<SettingsView />} />
         <Route path="*" element={<Navigate to=".." replace />} />
       </Route>

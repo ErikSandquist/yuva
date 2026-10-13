@@ -4722,6 +4722,10 @@ export interface paths {
          *     raw rows inside the raw window, for any prop key, and the rollups of the property's
          *     `tracked_props` before it. `segment_id` adds a saved segment's filters.
          *
+         *     `dataset: support` puts the linked inbox's conversations, page feedback, page ratings and
+         *     discussions next to each page's views (`AnalyticsDataset`). `insights: true` adds fixed-rule
+         *     `insights` to the answer.
+         *
          *     Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
          *     two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
          *     answers that include today for 30 seconds.
@@ -5087,6 +5091,80 @@ export interface paths {
          *     Scope: `analytics:read`.
          */
         patch: operations["updateAnalyticsAnnotation"];
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/subscription": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get my reports and alerts of a property
+         * @description The calling member's e-mail report (`none`, `weekly`, `monthly`) and the alert kinds they
+         *     get by e-mail for the property; `none` and no alerts until they choose. Member session only.
+         */
+        get: operations["getAnalyticsSubscription"];
+        /**
+         * Choose my reports and alerts of a property
+         * @description Weekly reports go out on Monday morning (08:00 in the property's time zone) about the week
+         *     before, monthly ones on the 1st about the month before, in the member's language, to the
+         *     member's address: plain numbers, no images, nothing that tracks opening or clicks. Alerts
+         *     are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
+         *     session only; the member must see the property.
+         */
+        put: operations["updateAnalyticsSubscription"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/subscription/send-report": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Send me a report now
+         * @description Mails the calling member the report of the last seven finished days (`weekly`) or the last
+         *     month (`monthly`, by the subscription; `weekly` when there is none), so they see what it
+         *     looks like. Five an hour per member (`429`). Member session only.
+         */
+        post: operations["sendAnalyticsReport"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/alerts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a property's alerts
+         * @description The alerts the property raised, newest first, at most 100; each also has an annotation on
+         *     its day and an `analytics.alert` event and webhook. With `before`, older ones.
+         *
+         *     Scope: `analytics:read`.
+         */
+        get: operations["listAnalyticsAlerts"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/analytics/properties/{propertyId}/shares": {
@@ -5837,9 +5915,15 @@ export interface paths {
         /**
          * Start a conversation
          * @description Starts a conversation on the session's channel with its first message. Send
-         *     `multipart/form-data` to attach files (`body`, `subject`, `client_id` as form fields and up
-         *     to 10 `files` parts), with the same size and type rules as `/v1`. Rate limited per IP
-         *     address and per channel.
+         *     `multipart/form-data` to attach files (`body`, `subject`, `client_id`, `page_url` and
+         *     `page_title` as form fields and up to 10 `files` parts), with the same size and type rules
+         *     as `/v1`. Rate limited per IP address and per channel.
+         *
+         *     `page_url` is the page the conversation starts on, kept without query and fragment only
+         *     when the channel is a chat channel and the page's origin is one of its allowed origins;
+         *     otherwise `page_url` and `page_title` are dropped and the conversation starts without a
+         *     page. The page never refuses a conversation. It is shown as `page` on the conversation and
+         *     counted per page, and never joined to a visitor of Analytics.
          */
         post: operations["createClientConversation"];
         delete?: never;
@@ -6833,6 +6917,27 @@ export interface webhooks {
          *     of an inbox get the broadcasts of that inbox.
          */
         post: operations["webhookBroadcastUpdated"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "analytics.alert": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * A property raised an alert
+         * @description A spike, a drop, a goal drop, support load or a new referrer (`AnalyticsAlertKind`), once
+         *     per alert. Endpoints of an inbox get the alerts of properties linked to that inbox.
+         */
+        post: operations["webhookAnalyticsAlert"];
         delete?: never;
         options?: never;
         head?: never;
@@ -7891,7 +7996,7 @@ export interface components {
             count: number;
         };
         /** @enum {string} */
-        WebhookEventType: "conversation.created" | "conversation.updated" | "conversation.rated" | "message.created" | "feedback.created" | "contact.updated" | "contact.deleted" | "draft.created" | "draft.updated" | "draft.deleted" | "discussion.created" | "discussion.post_created" | "discussion.answered" | "discussion.updated" | "subscription.created" | "subscription.updated" | "broadcast.updated";
+        WebhookEventType: "conversation.created" | "conversation.updated" | "conversation.rated" | "message.created" | "feedback.created" | "contact.updated" | "contact.deleted" | "draft.created" | "draft.updated" | "draft.deleted" | "discussion.created" | "discussion.post_created" | "discussion.answered" | "discussion.updated" | "subscription.created" | "subscription.updated" | "broadcast.updated" | "analytics.alert";
         WebhookEndpoint: {
             /** Format: uuid */
             id: string;
@@ -10312,7 +10417,7 @@ export interface components {
             type: "resync_required";
         };
         /** @description An event as `GET /v1/events` returns it, told apart by `type`; the same objects realtime and webhooks carry. */
-        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"];
+        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"];
         EventPage: {
             events: components["schemas"]["StoredEvent"][];
             /**
@@ -10331,7 +10436,7 @@ export interface components {
             id: number;
         };
         /** @description One server message on `/v1/realtime`, told apart by `type`. */
-        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["MigrationProgressEvent"] | components["schemas"]["MigrationForwardingConfirmationEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
+        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["MigrationProgressEvent"] | components["schemas"]["MigrationForwardingConfirmationEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
         /**
          * @description `auto`: available in `live` inboxes while connected to `/v1/realtime` within business
          *     hours. `away`: never shown as available.
@@ -10964,6 +11069,14 @@ export interface components {
             audience: components["schemas"]["BroadcastAudience"];
             /** @description Links go through `/c/{token}` on the server's link domain and unique clicks are counted. Off by default. */
             click_tracking: boolean;
+            /**
+             * @description Links to the web get `utm_source=newsletter`, `utm_medium=email` and
+             *     `utm_campaign=<utm_campaign>` (a link that has a `utm_` parameter of its own keeps its
+             *     own), so Analytics counts the visits of the campaign. On by default.
+             */
+            utm: boolean;
+            /** @description The campaign's name in links; made from `name` when the broadcast is created. */
+            utm_campaign: string;
             state: components["schemas"]["BroadcastState"];
             pause_reason?: components["schemas"]["BroadcastPauseReason"];
             /** @description Why it paused or failed, in words (an SMTP answer, the rates). */
@@ -11022,6 +11135,10 @@ export interface components {
             design_id?: string;
             audience?: components["schemas"]["BroadcastAudienceInput"];
             click_tracking?: boolean;
+            /** @description On when absent at creation. */
+            utm?: boolean;
+            /** @description Lowercase letters, digits, `-`, `_` and `.`; made from `name` when absent at creation. */
+            utm_campaign?: string;
         };
         BroadcastUpdate: {
             /** Format: uuid */
@@ -11033,6 +11150,10 @@ export interface components {
             design_id?: string | null;
             audience?: components["schemas"]["BroadcastAudienceInput"];
             click_tracking?: boolean;
+            /** @description On when absent at creation. */
+            utm?: boolean;
+            /** @description Lowercase letters, digits, `-`, `_` and `.`; made from `name` when absent at creation. */
+            utm_campaign?: string;
         };
         BroadcastPage: {
             items: components["schemas"]["Broadcast"][];
@@ -11237,6 +11358,23 @@ export interface components {
             links?: components["schemas"]["BroadcastReportLink"][];
             /** @description The first 50 conversations opened by replies. */
             replies: components["schemas"]["BroadcastReportReply"][];
+            /**
+             * @description With `utm` and the scope `analytics:read`: per Analytics property the caller sees, the
+             *     visits whose `utm_campaign` is the broadcast's, from the day sending started; only
+             *     properties with any.
+             */
+            campaign_visits?: components["schemas"]["BroadcastCampaignVisits"][];
+        };
+        BroadcastCampaignVisits: {
+            /** Format: uuid */
+            property_id: string;
+            property_name: string;
+            /** Format: int64 */
+            visitors: number;
+            /** Format: int64 */
+            visits: number;
+            /** Format: int64 */
+            pageviews: number;
         };
         BroadcastEventData: {
             broadcast: components["schemas"]["Broadcast"];
@@ -12268,11 +12406,19 @@ export interface components {
             body?: string;
             /** @description The first message's `client_id`. */
             client_id?: string;
+            /** @description The page the conversation starts on, an absolute http(s) URL; query and fragment are dropped, and so is a page a chat channel does not allow. */
+            page_url?: string;
+            /** @description The page's title; ignored without a kept `page_url`. */
+            page_title?: string;
         };
         ClientConversationCreateMultipart: {
             subject?: string;
             body?: string;
             client_id?: string;
+            /** @description The page the conversation starts on, an absolute http(s) URL; query and fragment are dropped, and so is a page a chat channel does not allow. */
+            page_url?: string;
+            /** @description The page's title; ignored without a kept `page_url`. */
+            page_title?: string;
             files?: string[];
         };
         ClientConversationCreated: {
@@ -12613,9 +12759,15 @@ export interface components {
          *     completed) and `revenue` (what the completing events carried, per currency, in
          *     `metrics.revenue`). With an `event` or `prop` dimension only `visitors`, `visits`, `events`
          *     and `revenue` are offered, counted over the events of each row. `revenue` cannot order rows.
+         *
+         *     With `dataset: support` (a property linked to an inbox): `conversations` (conversations
+         *     started on the page), `feedback` (page feedback sent from it), `ratings_up` and
+         *     `ratings_down` (page ratings), `helpful_rate` (percent of ratings that are `up`),
+         *     `discussions` (discussion threads started on it) and `support_rate` (conversations per
+         *     1,000 page views), next to `visitors` and `pageviews`.
          * @enum {string}
          */
-        AnalyticsMetric: "visitors" | "visits" | "pageviews" | "views_per_visit" | "bounce_rate" | "visit_duration" | "time_on_page" | "scroll_depth" | "events" | "conversions" | "conversion_rate" | "completions" | "revenue";
+        AnalyticsMetric: "visitors" | "visits" | "pageviews" | "views_per_visit" | "bounce_rate" | "visit_duration" | "time_on_page" | "scroll_depth" | "events" | "conversions" | "conversion_rate" | "completions" | "revenue" | "conversations" | "feedback" | "ratings_up" | "ratings_down" | "helpful_rate" | "discussions" | "support_rate";
         /**
          * @description A value of a visit or page. `page` is a path that was viewed (pages are counted by path;
          *     `hostname` tells sites apart), `entry_page` and `exit_page` the first and last of a visit.
@@ -12693,8 +12845,29 @@ export interface components {
              */
             dir: "asc" | "desc";
         };
+        /**
+         * @description `traffic` (default) counts visits, page views and events. `support` counts, per page and
+         *     day, what the property's linked inbox received from its pages: conversations started on a
+         *     page, page feedback, page ratings and discussion threads, next to the page's `pageviews`
+         *     and `visitors`. Pages are joined by host and path only; no visitor is ever joined to a
+         *     contact or conversation. It takes the dimensions `page`, `hostname` and `time:day`,
+         *     `time:week` or `time:month` (a page or host and a grain at most), filters on `page` and
+         *     `hostname`, no goal, prop or segment, and answers `422 no_linked_inbox` for a property
+         *     without an inbox. Rows are the pages (or hosts) with any support in the range, ordered by
+         *     `support_rate` with pages of fewer than 100 page views after the others unless `order_by`
+         *     says otherwise. Days of the past come from the support rollup, today and days not yet rolled
+         *     up from the inbox itself.
+         * @enum {string}
+         */
+        AnalyticsDataset: "traffic" | "support";
         AnalyticsQuery: {
+            dataset?: components["schemas"]["AnalyticsDataset"];
             metrics: components["schemas"]["AnalyticsMetric"][];
+            /**
+             * @description Add `insights` to the answer, worked out from its own numbers by fixed rules.
+             * @default false
+             */
+            insights: boolean;
             /**
              * Format: uuid
              * @description The goal whose `conversions`, `conversion_rate`, `completions` and `revenue` the query
@@ -12753,6 +12926,20 @@ export interface components {
             completions?: number;
             /** @description Per currency, most first. */
             revenue?: components["schemas"]["AnalyticsRevenue"][];
+            /** Format: double */
+            conversations?: number;
+            /** Format: double */
+            feedback?: number;
+            /** Format: double */
+            ratings_up?: number;
+            /** Format: double */
+            ratings_down?: number;
+            /** Format: double */
+            helpful_rate?: number;
+            /** Format: double */
+            discussions?: number;
+            /** Format: double */
+            support_rate?: number;
         };
         AnalyticsRevenue: {
             /** @description ISO 4217 code. */
@@ -12815,6 +13002,39 @@ export interface components {
             meta: components["schemas"]["AnalyticsResultMeta"];
             /** @description Present when there are more rows. */
             next_cursor?: string;
+            /** @description With `insights` in the query; empty when no rule applies. */
+            insights?: components["schemas"]["AnalyticsInsight"][];
+        };
+        /**
+         * @description A fixed rule over the answer's own numbers; Yuva runs no model.
+         *     `metric_change`: a total moved by at least 20% against `compare` (at least 10 before or
+         *     after). With one dimension other than time: `row_change`, a row whose first count metric
+         *     (by `order_by`, else the first one asked) moved by at least 50% (at least 10 before or
+         *     after), the three largest moves; `new_value`, a row with at least 10 that had none in the
+         *     comparison range (a new referrer, page or campaign), the three largest. `support_hotspot`
+         *     (`dataset: support` by page): a page with at least 3 conversations whose `support_rate` is
+         *     at least twice the range's, the three highest. The change rules need `compare`.
+         */
+        AnalyticsInsight: {
+            /** @enum {string} */
+            kind: "metric_change" | "row_change" | "new_value" | "support_hotspot";
+            metric: components["schemas"]["AnalyticsMetric"];
+            /** @description The dimension of the row; absent for a total. */
+            dimension?: string;
+            /** @description The row's value of `dimension`. */
+            value?: string;
+            /** Format: double */
+            current: number;
+            /**
+             * Format: double
+             * @description The comparison range's number, or the range's overall `support_rate` for a hotspot.
+             */
+            previous?: number;
+            /**
+             * Format: double
+             * @description The change in percent of `previous`; absent when `previous` is 0.
+             */
+            change?: number;
         };
         AnalyticsRangeProblem: components["schemas"]["Problem"] & {
             /** Format: date */
@@ -13153,11 +13373,12 @@ export interface components {
             /** Format: uuid */
             id: string;
             /**
-             * @description `note` is a member's; Yuva adds `key_rotated` when the property got a new key and
-             *     `goal_created` (with `goal_id` while the goal exists, and its name as `text`).
+             * @description `note` is a member's; Yuva adds `key_rotated` when the property got a new key,
+             *     `goal_created` (with `goal_id` while the goal exists, and its name as `text`) and
+             *     `alert` (with `alert_id`, what the alert found as `text`).
              * @enum {string}
              */
-            kind: "note" | "key_rotated" | "goal_created";
+            kind: "note" | "key_rotated" | "goal_created" | "alert";
             /** Format: date */
             starts_on: string;
             /** Format: date */
@@ -13165,6 +13386,8 @@ export interface components {
             text: string;
             /** Format: uuid */
             goal_id?: string;
+            /** Format: uuid */
+            alert_id?: string;
             /**
              * Format: uuid
              * @description The member who wrote it; absent for Yuva's own, API keys and removed members.
@@ -13194,6 +13417,115 @@ export interface components {
         };
         AnalyticsAnnotationList: {
             items: components["schemas"]["AnalyticsAnnotation"][];
+        };
+        /**
+         * @description Fixed rules, checked every hour over the property's finished hours and days:
+         *     `spike` and `drop`, page views of the last two finished hours at least three times, or at
+         *     most half, the same two hours' average over the seven days before (at least 20 views
+         *     a day in those hours); `goal_drop`, a goal's conversions yesterday at most half its
+         *     average of the seven days before (at least 10 a day); `support_load`, yesterday's
+         *     conversations per 1,000 page views at least twice the rate of the 28 days before, with at
+         *     least 5 conversations (a property linked to an inbox); `new_referrer`, a referring site with
+         *     at least 10 visits yesterday and none in the 28 days before. Each kind fires once per
+         *     property and day (`new_referrer` once per site).
+         * @enum {string}
+         */
+        AnalyticsAlertKind: "spike" | "drop" | "goal_drop" | "support_load" | "new_referrer";
+        /** @enum {string} */
+        AnalyticsReportFrequency: "none" | "weekly" | "monthly";
+        AnalyticsSubscription: {
+            /** Format: uuid */
+            property_id: string;
+            report: components["schemas"]["AnalyticsReportFrequency"];
+            alerts: components["schemas"]["AnalyticsAlertKind"][];
+            /**
+             * Format: date-time
+             * @description When the last scheduled report went out.
+             */
+            last_report_at?: string;
+            /**
+             * Format: date-time
+             * @description Absent until the member chose.
+             */
+            updated_at?: string;
+        };
+        AnalyticsSubscriptionUpdate: {
+            report?: components["schemas"]["AnalyticsReportFrequency"];
+            alerts?: components["schemas"]["AnalyticsAlertKind"][];
+        };
+        AnalyticsAlert: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            property_id: string;
+            kind: components["schemas"]["AnalyticsAlertKind"];
+            /**
+             * Format: date
+             * @description The property's day the alert is about.
+             */
+            day: string;
+            /**
+             * Format: date-time
+             * @description `spike` and `drop`: the start of the two hours.
+             */
+            hours_from?: string;
+            /** Format: date-time */
+            hours_to?: string;
+            /** @description `pageviews`, `conversions`, `support_rate` or `visits`. */
+            metric: string;
+            /** Format: double */
+            current: number;
+            /**
+             * Format: double
+             * @description What the rule compared `current` with; 0 for a new referrer.
+             */
+            baseline: number;
+            /** Format: uuid */
+            goal_id?: string;
+            goal_name?: string;
+            /** @description `new_referrer`: the site's host. */
+            referrer?: string;
+            /** @description What was found, in English, as on the annotation. */
+            text: string;
+            /** Format: uuid */
+            annotation_id?: string;
+            /** Format: date-time */
+            created_at: string;
+        };
+        AnalyticsAlertList: {
+            items: components["schemas"]["AnalyticsAlert"][];
+        };
+        AnalyticsAlertEventData: {
+            alert: components["schemas"]["AnalyticsAlert"];
+            property: components["schemas"]["AnalyticsPropertyRef"];
+        };
+        AnalyticsPropertyRef: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+        };
+        /**
+         * @description `analytics.alert`: a property raised an alert. Delivered to callers who hold
+         *     `analytics:read` and can see the property; `inbox_id` is the property's linked inbox.
+         */
+        AnalyticsAlertEvent: {
+            /** Format: int64 */
+            id: number;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "analytics.alert";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id?: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["AnalyticsAlertEventData"];
+        };
+        WebhookAnalyticsAlertPayload: components["schemas"]["WebhookPayloadBase"] & {
+            data: components["schemas"]["AnalyticsAlertEventData"];
         };
         /**
          * @description A part of the property's report a share link shows: `overview` (totals and the chart),
@@ -22243,6 +22575,128 @@ export interface operations {
             404: components["responses"]["Problem"];
         };
     };
+    getAnalyticsSubscription: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The subscription. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsSubscription"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateAnalyticsSubscription: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsSubscriptionUpdate"];
+            };
+        };
+        responses: {
+            /** @description The subscription. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsSubscription"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    sendAnalyticsReport: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The report is on its way. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    listAnalyticsAlerts: {
+        parameters: {
+            query?: {
+                /** @description `created_at` of the last alert of the previous page. */
+                before?: string;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The alerts. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsAlertList"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
     listAnalyticsShares: {
         parameters: {
             query?: never;
@@ -24587,6 +25041,39 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["WebhookBroadcastPayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookAnalyticsAlert: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookAnalyticsAlertPayload"];
             };
         };
         responses: {

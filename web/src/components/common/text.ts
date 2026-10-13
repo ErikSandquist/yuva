@@ -50,6 +50,7 @@ export const WEBHOOK_EVENTS: WebhookEventType[] = [
   "subscription.created",
   "subscription.updated",
   "broadcast.updated",
+  "analytics.alert",
 ]
 export const API_KEY_SCOPES: ApiKeyScope[] = [
   "conversations:read",
@@ -132,6 +133,7 @@ export function useEnumText() {
       "subscription.created": t`Someone subscribed to a mailing list`,
       "subscription.updated": t`A subscription changed`,
       "broadcast.updated": t`A broadcast was scheduled, started, paused or finished`,
+      "analytics.alert": t`An analytics property of the inbox raised an alert`,
     } satisfies Record<WebhookEventType, string>,
     scope: {
       "conversations:read": t`Read conversations, messages, labels and canned replies`,

@@ -12,6 +12,7 @@ import {
   type AnalyticsGeoIP,
   type AnalyticsGoal,
   type AnalyticsGoalCreate,
+  type AnalyticsInsight,
   type AnalyticsProperty,
   type AnalyticsPropertyUpdate,
   type AnalyticsQuery,
@@ -21,6 +22,7 @@ import {
   type AnalyticsSharedProperty,
   type AnalyticsShareUpdate,
   type AnalyticsShareView,
+  type AnalyticsSubscriptionUpdate,
 } from "@/lib/api"
 import { saveDownload } from "@/lib/download"
 import type { paths } from "@/lib/schema.gen"
@@ -69,12 +71,15 @@ function runQuery(share: ShareScope | null, id: string, body: AnalyticsQuery): P
       api.POST("/client/v1/analytics-shares/{token}/query", {
         params: { path: { token: share.token } },
         headers: shareHeaders(share.access),
-        body,
+        body: { insights: false, ...body },
       })
     ) as Promise<AnalyticsResult>
   }
   return unwrap(
-    api.POST("/v1/analytics/properties/{propertyId}/query", { params: { path: { propertyId: id } }, body })
+    api.POST("/v1/analytics/properties/{propertyId}/query", {
+      params: { path: { propertyId: id } },
+      body: { insights: false, ...body },
+    })
   ) as Promise<AnalyticsResult>
 }
 
@@ -133,11 +138,34 @@ export function downloadCsv(id: string, body: Query, name: string) {
   return saveDownload(
     api.POST("/v1/analytics/properties/{propertyId}/query", {
       params: { path: { propertyId: id }, query: { format: "csv" } },
-      body: { ...body, limit: 1000, cursor: undefined },
+      body: { insights: false, ...body, limit: 1000, cursor: undefined },
       parseAs: "blob",
     }),
     `${name}.csv`
   )
+}
+
+export function useInsights(id: string, bodies: AnalyticsQuery[], enabled = true) {
+  const share = useShare()
+  const base = useDataKey(id)
+  return useQuery({
+    queryKey: [...base, "insights", bodies],
+    queryFn: async () => {
+      const out: AnalyticsInsight[] = []
+      for (const body of bodies) {
+        try {
+          const r = await runQuery(share, id, { ...body, insights: true })
+          out.push(...(r.insights ?? []))
+        } catch {
+          continue
+        }
+      }
+      return out
+    },
+    placeholderData: keepPreviousData,
+    staleTime: 60_000,
+    enabled: !!id && enabled && bodies.length > 0,
+  })
 }
 
 export function useRealtime(id: string) {
@@ -581,4 +609,45 @@ export function useExportActions(id: string) {
 
 export function exportDownloadUrl(propertyId: string, exportId: string, ws: string) {
   return `/v1/analytics/properties/${encodeURIComponent(propertyId)}/exports/${encodeURIComponent(exportId)}/download?workspace_id=${encodeURIComponent(ws)}`
+}
+
+export function useAlerts(id: string, enabled = true) {
+  const m = useMeta(id)
+  return useInfiniteQuery({
+    queryKey: [...m.base, "alerts"],
+    queryFn: ({ pageParam }) =>
+      unwrap(
+        api.GET("/v1/analytics/properties/{propertyId}/alerts", {
+          params: { path: { propertyId: id }, query: { before: pageParam } },
+        })
+      ),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (last) => (last.items.length >= 100 ? last.items[last.items.length - 1]?.created_at : undefined),
+    staleTime: 60_000,
+    enabled,
+  })
+}
+
+export function useSubscription(id: string) {
+  const m = useMeta(id)
+  return useQuery({
+    queryKey: [...m.base, "subscription"],
+    queryFn: () => unwrap(api.GET("/v1/analytics/properties/{propertyId}/subscription", path(id))),
+  })
+}
+
+export function useUpdateSubscription(id: string) {
+  const qc = useQueryClient()
+  const m = useMeta(id)
+  return useMutation({
+    mutationFn: (body: AnalyticsSubscriptionUpdate) =>
+      unwrap(api.PUT("/v1/analytics/properties/{propertyId}/subscription", { ...path(id), body })),
+    onSuccess: (data) => qc.setQueryData([...m.base, "subscription"], data),
+  })
+}
+
+export function useSendReport(id: string) {
+  return useMutation({
+    mutationFn: () => unwrap(api.POST("/v1/analytics/properties/{propertyId}/subscription/send-report", path(id))),
+  })
 }

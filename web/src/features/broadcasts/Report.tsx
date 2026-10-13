@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { ExternalLinkIcon, MessageSquareReplyIcon, SearchIcon, XIcon } from "lucide-react"
+import { ChartLineIcon, ExternalLinkIcon, MessageSquareReplyIcon, SearchIcon, XIcon } from "lucide-react"
 import { useState } from "react"
 import { Link } from "react-router"
 
@@ -12,6 +12,7 @@ import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "
 import { Label } from "@/components/ui/label"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Switch } from "@/components/ui/switch"
+import { todayIso } from "@/features/analytics/state"
 import { useDeliveries, useReport } from "@/features/broadcasts/broadcastQueries"
 import { useNumber, usePercent } from "@/features/broadcasts/BroadcastParts"
 import { Card, EmptyRow, Rows, Section, StatusTag } from "@/features/settings/ui"
@@ -180,6 +181,66 @@ function Links({ report }: { report: BroadcastReport }) {
   )
 }
 
+function CampaignVisits({ b, report }: { b: Broadcast; report: BroadcastReport }) {
+  const num = useNumber()
+  const visits = report.campaign_visits
+  if (!b.utm || !visits) return null
+  const campaign = b.utm_campaign
+  const filter = new URLSearchParams([["f", `utm_campaign:is:${campaign}`]])
+  if (b.started_at) {
+    const from = b.started_at.slice(0, 10)
+    const to = todayIso()
+    if (to >= from) filter.set("period", `custom:${from},${to}`)
+  }
+  return (
+    <Section
+      title={<Trans>Visits from this campaign</Trans>}
+      description={
+        <Trans>
+          Visits to your sites with utm_campaign={campaign} since sending started, counted by Analytics without cookies.
+        </Trans>
+      }
+    >
+      <Card flush>
+        {visits.length === 0 ? (
+          <EmptyRow>
+            <Trans>No visits from this campaign yet.</Trans>
+          </EmptyRow>
+        ) : (
+          <Rows data-testid="report-campaign-visits">
+            {visits.map((v) => (
+              <li key={v.property_id}>
+                <Link
+                  to={`/analytics/${v.property_id}/sources?${filter}`}
+                  className="flex min-h-[52px] flex-wrap items-center gap-x-4 gap-y-1 px-4 py-2.5 transition-colors hover:bg-muted"
+                  data-testid="report-campaign-property"
+                >
+                  <span className="flex min-w-0 flex-1 items-center gap-2">
+                    <ChartLineIcon className="size-4 shrink-0 text-faint" />
+                    <span className="truncate text-body font-medium">{v.property_name}</span>
+                  </span>
+                  <span className="flex shrink-0 items-baseline gap-4 text-small text-faint tabular-nums">
+                    <span>
+                      <b className="text-body font-medium text-foreground">{num(v.visitors)}</b> <Trans>visitors</Trans>
+                    </span>
+                    <span>
+                      <b className="text-body font-medium text-foreground">{num(v.visits)}</b> <Trans>visits</Trans>
+                    </span>
+                    <span>
+                      <b className="text-body font-medium text-foreground">{num(v.pageviews)}</b>{" "}
+                      <Trans>pageviews</Trans>
+                    </span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </Rows>
+        )}
+      </Card>
+    </Section>
+  )
+}
+
 function Replies({ report }: { report: BroadcastReport }) {
   const { t, i18n } = useLingui()
   const unnamed = t`Unnamed contact`
@@ -231,6 +292,7 @@ export function Report({ b }: { b: Broadcast }) {
       <Tiles b={b} report={report.data} />
       <Timeline b={b} report={report.data} />
       {b.click_tracking && <Links report={report.data} />}
+      <CampaignVisits b={b} report={report.data} />
       <Replies report={report.data} />
     </>
   )

@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { CheckIcon, LoaderIcon, MailWarningIcon, MousePointerClickIcon } from "lucide-react"
+import { ChartLineIcon, CheckIcon, LoaderIcon, MailWarningIcon, MousePointerClickIcon } from "lucide-react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Link } from "react-router"
 
@@ -23,6 +23,7 @@ const NONE = "none"
 const SUBJECT_MAX = 300
 const SUBJECT_SOFT = 80
 const PREHEADER_MAX = 300
+const CAMPAIGN = /^[a-z0-9][a-z0-9_.-]*$/
 
 type Draft = {
   name: string
@@ -32,6 +33,8 @@ type Draft = {
   design_id: string
   audience: Audience
   click_tracking: boolean
+  utm: boolean
+  utm_campaign: string
 }
 
 function draftOf(b: Broadcast): Draft {
@@ -43,6 +46,8 @@ function draftOf(b: Broadcast): Draft {
     design_id: b.design_id ?? "",
     audience: b.audience,
     click_tracking: b.click_tracking,
+    utm: b.utm,
+    utm_campaign: b.utm_campaign,
   }
 }
 
@@ -299,6 +304,7 @@ export function Composer({
     el?.querySelector<HTMLElement>("input, button, [role=combobox]")?.focus({ preventScroll: true })
   }
   const merge = '{{ contact.first_name | "there" }}'
+  const campaignBad = !CAMPAIGN.test(d.utm_campaign)
   return (
     <div className="grid items-start gap-6 @4xl:grid-cols-[minmax(0,1fr)_20rem]" data-testid="broadcast-composer">
       <div className="flex min-w-0 flex-col gap-8">
@@ -443,6 +449,62 @@ export function Composer({
                 data-testid="broadcast-click-tracking"
               />
             </ToggleRow>
+            <ToggleRow
+              title={
+                <span className="inline-flex items-center gap-1.5">
+                  <ChartLineIcon className="size-4 text-faint" />
+                  <Trans>Campaign in links</Trans>
+                </span>
+              }
+              hint={
+                <Trans>
+                  On by default. Links to your sites get utm_source=newsletter, utm_medium=email and the campaign name,
+                  so Analytics shows the visits this broadcast brings. Links with their own utm_ parameters keep them.
+                </Trans>
+              }
+            >
+              <Switch
+                checked={d.utm}
+                disabled={readOnly}
+                onCheckedChange={(on) => set({ utm: on }, { utm: on }, 0)}
+                aria-label={t`Campaign in links`}
+                data-testid="broadcast-utm"
+              />
+            </ToggleRow>
+            {d.utm && (
+              <Field
+                label={<Trans>Campaign name</Trans>}
+                htmlFor="broadcast-utm-campaign"
+                hint={
+                  campaignBad ? undefined : (
+                    <Trans>
+                      Lowercase letters, digits, dashes, underscores and dots. Fixed once the broadcast is sent.
+                    </Trans>
+                  )
+                }
+                error={
+                  campaignBad ? (
+                    <Trans>
+                      Use lowercase letters, digits, dashes, underscores and dots, starting with a letter or digit.
+                    </Trans>
+                  ) : undefined
+                }
+              >
+                <Input
+                  id="broadcast-utm-campaign"
+                  dir="ltr"
+                  value={d.utm_campaign}
+                  maxLength={100}
+                  disabled={readOnly}
+                  aria-invalid={campaignBad || undefined}
+                  onChange={(e) => {
+                    const v = e.target.value.toLowerCase().replace(/\s+/g, "-")
+                    set({ utm_campaign: v }, CAMPAIGN.test(v) ? { utm_campaign: v } : {})
+                  }}
+                  data-testid="broadcast-utm-campaign"
+                />
+              </Field>
+            )}
           </Card>
         </Section>
         {!readOnly && (

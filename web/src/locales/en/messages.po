@@ -1278,6 +1278,10 @@ msgstr "An .mbox file, or a .zip of .eml files, of a Maildir or of uncompressed 
 msgid "An agent's replies, notes and assigned conversations become the member's. Without a member, the agent's name is kept."
 msgstr "An agent's replies, notes and assigned conversations become the member's. Without a member, the agent's name is kept."
 
+#: src/components/common/text.ts
+msgid "An analytics property of the inbox raised an alert"
+msgstr "An analytics property of the inbox raised an alert"
+
 #: src/features/account/AccountPage.tsx
 msgid "An answer was accepted in <0>{title}</0>"
 msgstr "An answer was accepted in <0>{title}</0>"
@@ -1876,6 +1880,15 @@ msgstr "By member"
 #: src/components/common/text.ts
 msgid "By the team"
 msgstr "By the team"
+
+#: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Composer.tsx
+msgid "Campaign in links"
+msgstr "Campaign in links"
+
+#: src/features/broadcasts/Composer.tsx
+msgid "Campaign name"
+msgstr "Campaign name"
 
 #: src/features/auth/AuthLayout.tsx
 msgid "Can I schedule a newsletter for each subscriber?"
@@ -4874,6 +4887,10 @@ msgstr "Lowercase letters, digits and dashes, not at the start or end."
 msgid "Lowercase letters, digits and dashes."
 msgstr "Lowercase letters, digits and dashes."
 
+#: src/features/broadcasts/Composer.tsx
+msgid "Lowercase letters, digits, dashes, underscores and dots. Fixed once the broadcast is sent."
+msgstr "Lowercase letters, digits, dashes, underscores and dots. Fixed once the broadcast is sent."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Mail from these addresses is imported as sent by your team. Your members' sign-in addresses count too."
 msgstr "Mail from these addresses is imported as sent by your team. Your members' sign-in addresses count too."
@@ -5867,6 +5884,10 @@ msgstr "No test message has reached Yuva by the new route yet. If you finish now
 msgid "No test went out since the last change."
 msgstr "No test went out since the last change."
 
+#: src/features/broadcasts/Report.tsx
+msgid "No visits from this campaign yet."
+msgstr "No visits from this campaign yet."
+
 #: src/features/broadcasts/Import.tsx
 msgid "No welcome mail is sent. Each new address waits for confirmation and joins after clicking the link in the mail."
 msgstr "No welcome mail is sent. Each new address waits for confirmation and joins after clicking the link in the mail."
@@ -6201,6 +6222,10 @@ msgstr "Older than the chosen range"
 msgid "On"
 msgstr "On"
 
+#: src/features/broadcasts/Composer.tsx
+msgid "On by default. Links to your sites get utm_source=newsletter, utm_medium=email and the campaign name, so Analytics shows the visits this broadcast brings. Links with their own utm_ parameters keep them."
+msgstr "On by default. Links to your sites get utm_source=newsletter, utm_medium=email and the campaign name, so Analytics shows the visits this broadcast brings. Links with their own utm_ parameters keep them."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "On for this device."
 msgstr "On for this device."
@@ -6455,6 +6480,10 @@ msgstr "Open Google Takeout, choose “Deselect all”, then select only Mail."
 msgid "Open Google's confirmation page"
 msgstr "Open Google's confirmation page"
 
+#: src/features/docs/DocsPages.tsx
+msgid "Open in Analytics"
+msgstr "Open in Analytics"
+
 #: src/features/account/ConnectPage.tsx
 msgid "Open it from the sign-in button of a documentation page."
 msgstr "Open it from the sign-in button of a documentation page."
@@ -6682,6 +6711,10 @@ msgstr "Page where they agreed (optional)"
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Pages that embed the old key can no longer start chats until you update the snippet. Visitors already chatting keep their session."
 msgstr "Pages that embed the old key can no longer start chats until you update the snippet. Visitors already chatting keep their session."
+
+#: src/features/broadcasts/Report.tsx
+msgid "pageviews"
+msgstr "pageviews"
 
 #: src/features/settings/profile/ProfileForm.tsx
 msgid "Panel language"
@@ -7174,6 +7207,10 @@ msgstr "Ratings"
 #: src/features/docs/DocsColumn.tsx
 msgid "Ratings over"
 msgstr "Ratings over"
+
+#: src/features/docs/DocsPages.tsx
+msgid "ratings per 1,000 views"
+msgstr "ratings per 1,000 views"
 
 #: src/features/docs/DocsPages.tsx
 msgid "Ratings per day"
@@ -10421,6 +10458,10 @@ msgstr "Use at most 200 characters."
 msgid "Use at most 500 characters."
 msgstr "Use at most 500 characters."
 
+#: src/features/broadcasts/Composer.tsx
+msgid "Use lowercase letters, digits, dashes, underscores and dots, starting with a letter or digit."
+msgstr "Use lowercase letters, digits, dashes, underscores and dots, starting with a letter or digit."
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/setup/AddChannelStep.tsx
 msgid "Use origins such as https://www.example.com, without a path."
@@ -10514,6 +10555,14 @@ msgstr "Versions"
 msgid "Very large mailbox? Start with a Google Takeout file"
 msgstr "Very large mailbox? Start with a Google Takeout file"
 
+#: src/features/docs/DocsPages.tsx
+msgid "views"
+msgstr "views"
+
+#: src/features/docs/DocsPages.tsx
+msgid "Views"
+msgstr "Views"
+
 #: src/components/common/Source.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/DocsPages.tsx
@@ -10524,6 +10573,11 @@ msgstr "Visitor"
 #: src/components/common/Source.tsx
 msgid "Visitor · {where}"
 msgstr "Visitor · {where}"
+
+#: src/features/broadcasts/Report.tsx
+#: src/features/docs/DocsPages.tsx
+msgid "visitors"
+msgstr "visitors"
 
 #: src/features/contact/ContactsColumn.tsx
 msgid "Visitors"
@@ -10536,6 +10590,18 @@ msgstr "Visitors can chat without an identity token from your backend."
 #: src/features/setup/ChannelStep.tsx
 msgid "Visitors write from any page of your site; you answer here, live."
 msgstr "Visitors write from any page of your site; you answer here, live."
+
+#: src/features/broadcasts/Report.tsx
+msgid "visits"
+msgstr "visits"
+
+#: src/features/broadcasts/Report.tsx
+msgid "Visits from this campaign"
+msgstr "Visits from this campaign"
+
+#: src/features/broadcasts/Report.tsx
+msgid "Visits to your sites with utm_campaign={campaign} since sending started, counted by Analytics without cookies."
+msgstr "Visits to your sites with utm_campaign={campaign} since sending started, counted by Analytics without cookies."
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx

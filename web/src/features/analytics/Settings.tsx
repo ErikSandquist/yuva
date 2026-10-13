@@ -22,6 +22,7 @@ import { Label } from "@/components/ui/label"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Spinner } from "@/components/ui/spinner"
 import { Textarea } from "@/components/ui/textarea"
+import { AlertsView } from "@/features/analytics/Alerts"
 import { Exports } from "@/features/analytics/Exports"
 import { InstallSnippets } from "@/features/analytics/Install"
 import { hostOnly, splitLines, useZones } from "@/features/analytics/NewProperty"
@@ -51,7 +52,7 @@ import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
 
-type Tab = "general" | "tracking" | "install" | "test" | "health" | "sharing" | "data"
+type Tab = "general" | "tracking" | "install" | "test" | "health" | "alerts" | "sharing" | "data"
 
 const VIEW_PARAMS = ["period", "compare", "f", "segment"]
 
@@ -967,8 +968,8 @@ export function SettingsView() {
   const p = useCurrentProperty()
   const [params, setParams] = useSearchParams()
   const tabs: Tab[] = canManage
-    ? ["general", "tracking", "install", "test", "health", "sharing", "data"]
-    : ["install", "test", "tracking", "health", "sharing", "data"]
+    ? ["general", "tracking", "install", "test", "health", "alerts", "sharing", "data"]
+    : ["install", "test", "tracking", "health", "alerts", "sharing", "data"]
   const raw = params.get("tab") as Tab | null
   const tab = raw && tabs.includes(raw) ? raw : tabs[0]
   const names: Record<Tab, string> = {
@@ -977,6 +978,7 @@ export function SettingsView() {
     install: t`Install`,
     test: t`Test events`,
     health: t`Health`,
+    alerts: t`Alerts and reports`,
     sharing: t`Sharing`,
     data: t`Data`,
   }
@@ -1010,6 +1012,7 @@ export function SettingsView() {
       {tab === "install" && <Install p={p} />}
       {tab === "test" && <TestEvents p={p} />}
       {tab === "health" && <Health p={p} />}
+      {tab === "alerts" && <AlertsView p={p} />}
       {tab === "sharing" && <Sharing p={p} />}
       {tab === "data" && (
         <div className="flex flex-col gap-6">

@@ -21,9 +21,33 @@ msgstr "{0, plural, one {# row} other {# rows}}"
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, one {visitor today} other {visitors today}}"
 
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} fell {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} fell {change}, {now} against {before}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} rose {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} rose {change}, {now} against {before}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {rate} conversations per 1,000 views, against {site} across all pages."
+msgstr "{dim} {value}: {rate} conversations per 1,000 views, against {site} across all pages."
+
+#: src/features/analytics/Annotations.tsx
+msgid "{kind}: {found}"
+msgstr "{kind}: {found}"
+
 #: src/features/analytics/Funnels.tsx
 msgid "{lost} left ({lostPct})"
 msgstr "{lost} left ({lostPct})"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} fell {change}: {now}, against {before} in the compared days."
+msgstr "{metric} fell {change}: {now}, against {before} in the compared days."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} rose {change}: {now}, against {before} in the compared days."
+msgstr "{metric} rose {change}: {now}, against {before} in the compared days."
 
 #: src/features/analytics/Events.tsx
 msgid "{n} payments, {avg} on average"
@@ -33,9 +57,17 @@ msgstr "{n} payments, {avg} on average"
 msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
 msgstr "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
 
+#: src/features/analytics/Alerts.tsx
+msgid "{now} conversations per 1,000 views, against {usual} in the 28 days before."
+msgstr "{now} conversations per 1,000 views, against {usual} in the 28 days before."
+
 #: src/features/analytics/Funnels.tsx
 msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
 msgstr "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
+
+#: src/features/analytics/Alerts.tsx
+msgid "{site} sent {now} visits, and none in the 28 days before."
+msgstr "{site} sent {now} visits, and none in the 28 days before."
 
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
@@ -73,6 +105,10 @@ msgstr "A funnel shows how many visitors go from one goal to the next within a v
 msgid "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
 msgstr "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
 
+#: src/features/analytics/Alerts.tsx
+msgid "A goal’s conversions yesterday were at most half its daily average of the week before."
+msgstr "A goal’s conversions yesterday were at most half its daily average of the week before."
+
 #: src/features/analytics/Sharing.tsx
 msgid "A link shows only its views of this property, read-only, without filters or segments. Revoking or deleting it stops it at once."
 msgstr "A link shows only its views of this property, read-only, without filters or segments. Revoking or deleting it stops it at once."
@@ -104,6 +140,10 @@ msgstr "A property can have at most 50 share links. Delete one first."
 #: src/features/analytics/parts.tsx
 msgid "A range can be at most 400 days long. Pick a shorter one."
 msgstr "A range can be at most 400 days long. Pick a shorter one."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A site sent 10 or more visits yesterday and none in the 28 days before."
+msgstr "A site sent 10 or more visits yesterday and none in the 28 days before."
 
 #: src/features/analytics/Settings.tsx
 msgid "A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and it shows as a chip on the Events view."
@@ -170,6 +210,18 @@ msgstr "Add yuva-analytics from JitPack and configure it once in Application.onC
 msgid "Addresses not counted"
 msgstr "Addresses not counted"
 
+#: src/features/analytics/Insights.tsx
+msgid "against the compared days"
+msgstr "against the compared days"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the period before"
+msgstr "against the period before"
+
+#: src/features/analytics/Support.tsx
+msgid "Agents of the inbox can then see this property’s numbers too."
+msgstr "Agents of the inbox can then see this property’s numbers too."
+
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Agents of this inbox can see the numbers."
@@ -179,6 +231,14 @@ msgstr "Agents of this inbox can see the numbers."
 msgid "AI assistants"
 msgstr "AI assistants"
 
+#: src/features/analytics/Alerts.tsx
+msgid "Alerts"
+msgstr "Alerts"
+
+#: src/features/analytics/Settings.tsx
+msgid "Alerts and reports"
+msgstr "Alerts and reports"
+
 #: src/features/analytics/Events.tsx
 msgid "All events"
 msgstr "All events"
@@ -186,6 +246,10 @@ msgstr "All events"
 #: src/features/analytics/Goals.tsx
 msgid "All goals"
 msgstr "All goals"
+
+#: src/features/analytics/Support.tsx
+msgid "An owner or admin can link one in the property’s settings."
+msgstr "An owner or admin can link one in the property’s settings."
 
 #: src/features/analytics/AnalyticsColumn.tsx
 #: src/features/analytics/AnalyticsRoutes.tsx
@@ -302,9 +366,17 @@ msgstr "Channel"
 msgid "Chat opened"
 msgstr "Chat opened"
 
+#: src/features/analytics/Alerts.tsx
+msgid "Checked every hour. Each alert is sent once and also shows as a note on the chart."
+msgstr "Checked every hour. Each alert is sent once and also shows as a note on the chart."
+
 #: src/features/analytics/Settings.tsx
 msgid "Children"
 msgstr "Children"
+
+#: src/features/analytics/Support.tsx
+msgid "Choose an inbox"
+msgstr "Choose an inbox"
 
 #: src/features/analytics/Settings.tsx
 msgid "Choose children for a site made for children."
@@ -372,6 +444,26 @@ msgstr "contains"
 #: src/features/analytics/Install.tsx
 msgid "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
 msgstr "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
+
+#: src/features/analytics/text.ts
+msgid "Conversations"
+msgstr "Conversations"
+
+#: src/features/analytics/text.ts
+msgid "Conversations per 1,000 views of the page."
+msgstr "Conversations per 1,000 views of the page."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Conversations per 1,000 views yesterday were at least twice the rate of the 28 days before."
+msgstr "Conversations per 1,000 views yesterday were at least twice the rate of the 28 days before."
+
+#: src/features/analytics/text.ts
+msgid "Conversations started on the page, from the chat of the linked inbox."
+msgstr "Conversations started on the page, from the chat of the linked inbox."
+
+#: src/features/analytics/Support.tsx
+msgid "Conversations, feedback, ratings and discussions of the linked inbox show here next to each page’s views. They are counted per page and day; no visitor is ever matched to a contact."
+msgstr "Conversations, feedback, ratings and discussions of the linked inbox show here next to each page’s views. They are counted per page and day; no visitor is ever matched to a contact."
 
 #: src/features/analytics/text.ts
 msgid "Conversion rate"
@@ -599,6 +691,14 @@ msgid "Direct / none"
 msgstr "Direct / none"
 
 #: src/features/analytics/text.ts
+msgid "Discussion threads started on the page."
+msgstr "Discussion threads started on the page."
+
+#: src/features/analytics/text.ts
+msgid "Discussions"
+msgstr "Discussions"
+
+#: src/features/analytics/text.ts
 msgid "Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again."
 msgstr "Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again."
 
@@ -717,6 +817,10 @@ msgstr "events dropped"
 msgid "Every event with its visit’s page, source, place and device, as NDJSON. Visits are numbered within the file; there is no visitor id, address or contact. At most 31 days."
 msgstr "Every event with its visit’s page, source, place and device, as NDJSON. Visits are numbered within the file; there is no visitor id, address or contact. At most 31 days."
 
+#: src/features/analytics/Alerts.tsx
+msgid "Every Monday at 08:00 in {zone}, about the week before."
+msgstr "Every Monday at 08:00 in {zone}, about the week before."
+
 #: src/features/analytics/Exports.tsx
 msgid "Every row of the range and the filters you are looking at, without a comparison."
 msgstr "Every row of the range and the filters you are looking at, without a comparison."
@@ -736,6 +840,10 @@ msgstr "Everyone who sees this property can pick it. You, owners and admins can 
 #: src/features/analytics/Annotations.tsx
 msgid "Everyone who sees this property sees the note, such as a launch or a campaign."
 msgstr "Everyone who sees this property sees the note, such as a launch or a campaign."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Everything this property raised, newest first, whoever was notified."
+msgstr "Everything this property raised, newest first, whoever was notified."
 
 #: src/features/analytics/Settings.tsx
 msgid "Excluded"
@@ -770,6 +878,14 @@ msgid "Failed"
 msgstr "Failed"
 
 #: src/features/analytics/text.ts
+msgid "Feedback"
+msgstr "Feedback"
+
+#: src/features/analytics/Support.tsx
+msgid "Fewer than 100 views"
+msgstr "Fewer than 100 views"
+
+#: src/features/analytics/text.ts
 msgid "File download"
 msgstr "File download"
 
@@ -778,6 +894,7 @@ msgid "Files are made in the background and deleted seven days later."
 msgstr "Files are made in the background and deleted seven days later."
 
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Support.tsx
 msgid "Filter by this"
 msgstr "Filter by this"
 
@@ -797,6 +914,10 @@ msgstr "First page or screen"
 #: src/features/analytics/text.ts
 msgid "First screen"
 msgstr "First screen"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Five reports an hour at most. Try again later."
+msgstr "Five reports an hour at most. Try again later."
 
 #: src/features/analytics/NewProperty.tsx
 msgid "For example Fieldnote website"
@@ -833,6 +954,10 @@ msgstr "From a site that is not one of the domains, or from an app whose platfor
 msgid "From pricing to signup"
 msgstr "From pricing to signup"
 
+#: src/features/analytics/Support.tsx
+msgid "From the inbox {inboxName}. Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "From the inbox {inboxName}. Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+
 #: src/features/analytics/Funnels.tsx
 msgid "Funnel"
 msgstr "Funnel"
@@ -858,6 +983,14 @@ msgstr "Goal"
 msgid "Goal “{0}” was created"
 msgstr "Goal “{0}” was created"
 
+#: src/features/analytics/Alerts.tsx
+msgid "Goal “{goal}” had {now} conversions, against {usual} a day on average in the week before."
+msgstr "Goal “{goal}” had {now} conversions, against {usual} a day on average in the week before."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Goal drop"
+msgstr "Goal drop"
+
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Goals"
@@ -870,6 +1003,22 @@ msgstr "had an address removed"
 #: src/features/analytics/Settings.tsx
 msgid "Health"
 msgstr "Health"
+
+#: src/features/analytics/text.ts
+msgid "Helpful"
+msgstr "Helpful"
+
+#: src/features/analytics/Support.tsx
+msgid "Helpful and not helpful"
+msgstr "Helpful and not helpful"
+
+#: src/features/analytics/text.ts
+msgid "Helpful ratings out of all ratings."
+msgstr "Helpful ratings out of all ratings."
+
+#: src/features/analytics/text.ts
+msgid "Helpful share"
+msgstr "Helpful share"
 
 #: src/features/analytics/text.ts
 msgid "Host"
@@ -893,6 +1042,7 @@ msgstr "I saved it"
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
+#: src/features/analytics/Support.tsx
 msgid "Inbox"
 msgstr "Inbox"
 
@@ -1017,8 +1167,18 @@ msgstr "Leave empty to keep the current one"
 msgid "Link"
 msgstr "Link"
 
+#: src/features/analytics/Support.tsx
+msgid "Link an inbox to see support per page"
+msgstr "Link an inbox to see support per page"
+
+#: src/features/analytics/Support.tsx
+msgid "Link inbox"
+msgstr "Link inbox"
+
+#: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
+#: src/features/analytics/Support.tsx
 msgid "Load more"
 msgstr "Load more"
 
@@ -1069,6 +1229,10 @@ msgstr "matches"
 msgid "Mobile"
 msgstr "Mobile"
 
+#: src/features/analytics/Alerts.tsx
+msgid "Monthly"
+msgstr "Monthly"
+
 #: src/features/analytics/Settings.tsx
 msgid "Monthly limit"
 msgstr "Monthly limit"
@@ -1090,6 +1254,10 @@ msgstr "Move up"
 msgid "Name"
 msgstr "Name"
 
+#: src/features/analytics/Alerts.tsx
+msgid "Needs a linked inbox. {help}"
+msgstr "Needs a linked inbox. {help}"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Never"
 msgstr "Never"
@@ -1097,6 +1265,10 @@ msgstr "Never"
 #: src/features/analytics/Sharing.tsx
 msgid "never opened"
 msgstr "never opened"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
+msgstr "New {kind}: {value}. {metric}: {now}, none in the compared days."
 
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
@@ -1114,13 +1286,25 @@ msgstr "New link"
 msgid "New pricing page"
 msgstr "New pricing page"
 
+#: src/features/analytics/Alerts.tsx
+msgid "New referrer"
+msgstr "New referrer"
+
 #: src/features/analytics/Sharing.tsx
 msgid "New share link"
 msgstr "New share link"
 
+#: src/features/analytics/Alerts.tsx
+msgid "No alerts yet."
+msgstr "No alerts yet."
+
 #: src/features/analytics/Controls.tsx
 msgid "No comparison"
 msgstr "No comparison"
+
+#: src/features/analytics/Support.tsx
+msgid "No conversations, feedback, ratings or discussions from these pages in this range."
+msgstr "No conversations, feedback, ratings or discussions from these pages in this range."
 
 #: src/features/analytics/Goals.tsx
 msgid "No conversions in this range."
@@ -1158,6 +1342,10 @@ msgstr "No properties yet"
 msgid "No props are tracked."
 msgstr "No props are tracked."
 
+#: src/features/analytics/Alerts.tsx
+msgid "No scheduled reports."
+msgstr "No scheduled reports."
+
 #: src/features/analytics/Controls.tsx
 msgid "No segment"
 msgstr "No segment"
@@ -1178,6 +1366,10 @@ msgstr "Nobody in the last 30 minutes."
 msgid "Nobody reached the first step in this range."
 msgstr "Nobody reached the first step in this range."
 
+#: src/features/analytics/Alerts.tsx
+msgid "None"
+msgstr "None"
+
 #: src/features/analytics/Settings.tsx
 msgid "None yet"
 msgstr "None yet"
@@ -1194,6 +1386,10 @@ msgstr "None, owners and admins only"
 #: src/features/analytics/parts.tsx
 msgid "Not available for this range."
 msgstr "Not available for this range."
+
+#: src/features/analytics/text.ts
+msgid "Not helpful"
+msgstr "Not helpful"
 
 #: src/features/analytics/Annotations.tsx
 msgid "Note"
@@ -1213,6 +1409,10 @@ msgstr "Nothing"
 msgid "Nothing counted in this range."
 msgstr "Nothing counted in this range."
 
+#: src/features/analytics/Alerts.tsx
+msgid "Notify me"
+msgstr "Notify me"
+
 #: src/features/analytics/Settings.tsx
 msgid "Off"
 msgstr "Off"
@@ -1220,6 +1420,14 @@ msgstr "Off"
 #: src/features/analytics/Settings.tsx
 msgid "Older than 72 hours. Apps keep events without a connection for at most that long."
 msgstr "Older than 72 hours. Apps keep events without a connection for at most that long."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On its way to {email}."
+msgstr "On its way to {email}."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On the 1st of each month at 08:00 in {zone}, about the month before."
+msgstr "On the 1st of each month at 08:00 in {zone}, about the month before."
 
 #: src/features/analytics/Settings.tsx
 msgid "One IP address or range per line, up to 50, such as your office or a monitoring service."
@@ -1248,6 +1456,10 @@ msgstr "One prop name per line, up to 10, such as plan."
 #: src/features/analytics/Exports.tsx
 msgid "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
 msgstr "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Only for you, by e-mail to {email}. Reports are plain numbers, with no images and nothing that tracks opening or clicks."
+msgstr "Only for you, by e-mail to {email}. Reports are plain numbers, with no images and nothing that tracks opening or clicks."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Only members see it, to tell links apart."
@@ -1280,6 +1492,10 @@ msgstr "Open report"
 #: src/features/analytics/NewProperty.tsx
 msgid "Open the overview"
 msgstr "Open the overview"
+
+#: src/features/analytics/Support.tsx
+msgid "Open the property’s settings"
+msgstr "Open the property’s settings"
 
 #: src/features/analytics/text.ts
 msgid "Operating system"
@@ -1338,6 +1554,10 @@ msgstr "Owners and admins make goals. They show up here with their conversions."
 #: src/features/analytics/text.ts
 msgid "Page"
 msgstr "Page"
+
+#: src/features/analytics/text.ts
+msgid "Page feedback sent from the page."
+msgstr "Page feedback sent from the page."
 
 #: src/features/analytics/text.ts
 msgid "Page not found"
@@ -1408,6 +1628,10 @@ msgstr "Paid social"
 msgid "Password"
 msgstr "Password"
 
+#: src/features/analytics/Alerts.tsx
+msgid "Past alerts"
+msgstr "Past alerts"
+
 #: src/features/analytics/Settings.tsx
 msgid "Path rules"
 msgstr "Path rules"
@@ -1419,6 +1643,10 @@ msgstr "Pattern"
 #: src/features/analytics/Controls.tsx
 msgid "Paying customers from Germany"
 msgstr "Paying customers from Germany"
+
+#: src/features/analytics/text.ts
+msgid "Per 1,000 views"
+msgstr "Per 1,000 views"
 
 #: src/features/analytics/Overview.tsx
 msgid "per day"
@@ -1514,9 +1742,17 @@ msgstr "Put these links on your privacy page. Opting out is the only thing the s
 msgid "Range"
 msgstr "Range"
 
+#: src/features/analytics/Support.tsx
+msgid "Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+
 #: src/features/analytics/Settings.tsx
 msgid "Rate limits"
 msgstr "Rate limits"
+
+#: src/features/analytics/Support.tsx
+msgid "Ratings"
+msgstr "Ratings"
 
 #: src/features/analytics/Exports.tsx
 msgid "Raw events"
@@ -1587,6 +1823,10 @@ msgstr "Rename segment"
 #: src/features/analytics/Install.tsx
 msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
 msgstr "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Report"
+msgstr "Report"
 
 #: src/features/analytics/Settings.tsx
 msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
@@ -1698,6 +1938,10 @@ msgstr "Segments"
 msgid "Send a screen or an event from your app or backend while this page is open, and see whether it reached the server. Refreshes every 5 seconds."
 msgstr "Send a screen or an event from your app or backend while this page is open, and see whether it reached the server. Refreshes every 5 seconds."
 
+#: src/features/analytics/Alerts.tsx
+msgid "Send me one now"
+msgstr "Send me one now"
+
 #: src/features/analytics/Goals.tsx
 msgid "Sends an event"
 msgstr "Sends an event"
@@ -1789,6 +2033,19 @@ msgstr "Step {0}"
 #: src/features/analytics/Funnels.tsx
 msgid "Steps"
 msgstr "Steps"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Support.tsx
+msgid "Support"
+msgstr "Support"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Support load"
+msgstr "Support load"
+
+#: src/features/analytics/Support.tsx
+msgid "Support numbers can only be filtered by page and host. The other filters are left out here."
+msgstr "Support numbers can only be filtered by page and host. The other filters are left out here."
 
 #: src/features/analytics/text.ts
 msgid "Tablet"
@@ -1938,6 +2195,10 @@ msgstr "This range cannot be exported. Pick a shorter one, or one inside the det
 msgid "This report has a password"
 msgstr "This report has a password"
 
+#: src/features/analytics/Support.tsx
+msgid "This workspace has no inbox yet."
+msgstr "This workspace has no inbox yet."
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
 msgstr "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
@@ -1970,6 +2231,14 @@ msgstr "Time zone"
 #: src/features/analytics/text.ts
 msgid "Times the goal was reached, also several times by one visitor."
 msgstr "Times the goal was reached, also several times by one visitor."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated helpful."
+msgstr "Times the page was rated helpful."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated not helpful."
+msgstr "Times the page was rated not helpful."
 
 #: src/features/analytics/Annotations.tsx
 #: src/features/analytics/Controls.tsx
@@ -2021,6 +2290,14 @@ msgstr "Tracked props"
 #: src/features/analytics/Settings.tsx
 msgid "Tracking"
 msgstr "Tracking"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic drop"
+msgstr "Traffic drop"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic spike"
+msgstr "Traffic spike"
 
 #: src/features/analytics/SharePage.tsx
 msgid "Try again"
@@ -2080,9 +2357,21 @@ msgstr "Views a page"
 msgid "Views divided by visits."
 msgstr "Views divided by visits."
 
+#: src/features/analytics/Alerts.tsx
+msgid "Views fell to {now} in two hours, against {usual} usually."
+msgstr "Views fell to {now} in two hours, against {usual} usually."
+
 #: src/features/analytics/text.ts
 msgid "Views in the last 30 minutes"
 msgstr "Views in the last 30 minutes"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at least three times the same hours of the week before."
+msgstr "Views of the last two hours are at least three times the same hours of the week before."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at most half the same hours of the week before."
+msgstr "Views of the last two hours are at most half the same hours of the week before."
 
 #: src/features/analytics/text.ts
 msgid "Views per minute"
@@ -2091,6 +2380,10 @@ msgstr "Views per minute"
 #: src/features/analytics/text.ts
 msgid "Views per visit"
 msgstr "Views per visit"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views rose to {now} in two hours, against {usual} usually."
+msgstr "Views rose to {now} in two hours, against {usual} usually."
 
 #: src/features/analytics/text.ts
 msgid "Visit duration"
@@ -2151,6 +2444,18 @@ msgstr "Watch it live"
 #: src/features/analytics/text.ts
 msgid "Web"
 msgstr "Web"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Weekly"
+msgstr "Weekly"
+
+#: src/features/analytics/Insights.tsx
+msgid "What changed"
+msgstr "What changed"
+
+#: src/features/analytics/Support.tsx
+msgid "What stands out"
+msgstr "What stands out"
 
 #: src/features/analytics/text.ts
 msgid "What the goal's events carried, per currency. Currencies are never converted or added up."

@@ -1278,6 +1278,10 @@ msgstr "Bir .mbox dosyası ya da .eml dosyalarının, bir Maildir'in veya sıkı
 msgid "An agent's replies, notes and assigned conversations become the member's. Without a member, the agent's name is kept."
 msgstr "Bir temsilcinin yanıtları, notları ve atanmış konuşmaları üyeye geçer. Üye seçilmezse temsilcinin adı korunur."
 
+#: src/components/common/text.ts
+msgid "An analytics property of the inbox raised an alert"
+msgstr "Gelen kutusunun bir analitik mülkü uyarı verdi"
+
 #: src/features/account/AccountPage.tsx
 msgid "An answer was accepted in <0>{title}</0>"
 msgstr "<0>{title}</0> tartışmasında bir yanıt kabul edildi"
@@ -1876,6 +1880,15 @@ msgstr "Üyeye göre"
 #: src/components/common/text.ts
 msgid "By the team"
 msgstr "Ekip tarafından"
+
+#: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Composer.tsx
+msgid "Campaign in links"
+msgstr "Bağlantılarda kampanya"
+
+#: src/features/broadcasts/Composer.tsx
+msgid "Campaign name"
+msgstr "Kampanya adı"
 
 #: src/features/auth/AuthLayout.tsx
 msgid "Can I schedule a newsletter for each subscriber?"
@@ -4874,6 +4887,10 @@ msgstr "Küçük harf, rakam ve tire; tire başta ya da sonda olamaz."
 msgid "Lowercase letters, digits and dashes."
 msgstr "Küçük harf, rakam ve tire."
 
+#: src/features/broadcasts/Composer.tsx
+msgid "Lowercase letters, digits, dashes, underscores and dots. Fixed once the broadcast is sent."
+msgstr "Küçük harfler, rakamlar, tire, alt çizgi ve nokta. Bülten gönderildikten sonra değişmez."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Mail from these addresses is imported as sent by your team. Your members' sign-in addresses count too."
 msgstr "Bu adreslerden gelen e-postalar ekibinizin gönderdiği olarak aktarılır. Üyelerinizin oturum açma adresleri de sayılır."
@@ -5867,6 +5884,10 @@ msgstr "Henüz hiçbir deneme e-postası yeni yoldan Yuva'ya ulaşmadı. Şimdi 
 msgid "No test went out since the last change."
 msgstr "Son değişiklikten beri deneme gönderilmedi."
 
+#: src/features/broadcasts/Report.tsx
+msgid "No visits from this campaign yet."
+msgstr "Bu kampanyadan henüz ziyaret yok."
+
 #: src/features/broadcasts/Import.tsx
 msgid "No welcome mail is sent. Each new address waits for confirmation and joins after clicking the link in the mail."
 msgstr "Hoş geldin e-postası gönderilmez. Her yeni adres onay bekler ve e-postadaki bağlantıya tıklayınca katılır."
@@ -6201,6 +6222,10 @@ msgstr "Seçilen aralıktan eski"
 msgid "On"
 msgstr "Açık"
 
+#: src/features/broadcasts/Composer.tsx
+msgid "On by default. Links to your sites get utm_source=newsletter, utm_medium=email and the campaign name, so Analytics shows the visits this broadcast brings. Links with their own utm_ parameters keep them."
+msgstr "Varsayılan olarak açık. Sitelerinize giden bağlantılara utm_source=newsletter, utm_medium=email ve kampanya adı eklenir; böylece Analitik bu bültenin getirdiği ziyaretleri gösterir. Kendi utm_ parametreleri olan bağlantılar onları korur."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "On for this device."
 msgstr "Bu cihazda açık."
@@ -6455,6 +6480,10 @@ msgstr "Google Takeout'u açın, “Tüm seçimleri kaldır”ı seçin, sonra y
 msgid "Open Google's confirmation page"
 msgstr "Google'ın onay sayfasını aç"
 
+#: src/features/docs/DocsPages.tsx
+msgid "Open in Analytics"
+msgstr "Analitikte aç"
+
 #: src/features/account/ConnectPage.tsx
 msgid "Open it from the sign-in button of a documentation page."
 msgstr "Bir dokümantasyon sayfasındaki oturum açma düğmesinden açın."
@@ -6682,6 +6711,10 @@ msgstr "İzin verdikleri sayfa (isteğe bağlı)"
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Pages that embed the old key can no longer start chats until you update the snippet. Visitors already chatting keep their session."
 msgstr "Eski anahtarı kullanan sayfalar, kodu güncelleyene kadar sohbet başlatamaz. Şu anda sohbet eden ziyaretçilerin oturumu sürer."
+
+#: src/features/broadcasts/Report.tsx
+msgid "pageviews"
+msgstr "sayfa görüntüleme"
 
 #: src/features/settings/profile/ProfileForm.tsx
 msgid "Panel language"
@@ -7174,6 +7207,10 @@ msgstr "Değerlendirmeler"
 #: src/features/docs/DocsColumn.tsx
 msgid "Ratings over"
 msgstr "Değerlendirme dönemi"
+
+#: src/features/docs/DocsPages.tsx
+msgid "ratings per 1,000 views"
+msgstr "1.000 görüntülemede değerlendirme"
 
 #: src/features/docs/DocsPages.tsx
 msgid "Ratings per day"
@@ -10421,6 +10458,10 @@ msgstr "En fazla 200 karakter girin."
 msgid "Use at most 500 characters."
 msgstr "En fazla 500 karakter kullanın."
 
+#: src/features/broadcasts/Composer.tsx
+msgid "Use lowercase letters, digits, dashes, underscores and dots, starting with a letter or digit."
+msgstr "Harf veya rakamla başlayarak küçük harfler, rakamlar, tire, alt çizgi ve nokta kullanın."
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/setup/AddChannelStep.tsx
 msgid "Use origins such as https://www.example.com, without a path."
@@ -10514,6 +10555,14 @@ msgstr "Sürümler"
 msgid "Very large mailbox? Start with a Google Takeout file"
 msgstr "Posta kutunuz çok mu büyük? Bir Google Takeout dosyasıyla başlayın"
 
+#: src/features/docs/DocsPages.tsx
+msgid "views"
+msgstr "görüntüleme"
+
+#: src/features/docs/DocsPages.tsx
+msgid "Views"
+msgstr "Görüntüleme"
+
 #: src/components/common/Source.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/DocsPages.tsx
@@ -10524,6 +10573,11 @@ msgstr "Ziyaretçi"
 #: src/components/common/Source.tsx
 msgid "Visitor · {where}"
 msgstr "Ziyaretçi · {where}"
+
+#: src/features/broadcasts/Report.tsx
+#: src/features/docs/DocsPages.tsx
+msgid "visitors"
+msgstr "ziyaretçi"
 
 #: src/features/contact/ContactsColumn.tsx
 msgid "Visitors"
@@ -10536,6 +10590,18 @@ msgstr "Ziyaretçiler, sunucunuzdan bir kimlik belirteci olmadan da sohbet edebi
 #: src/features/setup/ChannelStep.tsx
 msgid "Visitors write from any page of your site; you answer here, live."
 msgstr "Ziyaretçiler sitenizin her sayfasından yazar; siz buradan anında yanıtlarsınız."
+
+#: src/features/broadcasts/Report.tsx
+msgid "visits"
+msgstr "ziyaret"
+
+#: src/features/broadcasts/Report.tsx
+msgid "Visits from this campaign"
+msgstr "Bu kampanyadan gelen ziyaretler"
+
+#: src/features/broadcasts/Report.tsx
+msgid "Visits to your sites with utm_campaign={campaign} since sending started, counted by Analytics without cookies."
+msgstr "Gönderim başladığından beri utm_campaign={campaign} ile sitelerinize yapılan ziyaretler; Analitik tarafından çerezsiz sayılır."
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx

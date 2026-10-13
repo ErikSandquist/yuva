@@ -19,6 +19,7 @@ import {
 } from "@/features/analytics/parts"
 import { downloadCsv, useAnalytics, useShare, type Query } from "@/features/analytics/queries"
 import { AddNoteButton, annotationMarks, AnnotationList } from "@/features/analytics/Annotations"
+import { OverviewInsights } from "@/features/analytics/Insights"
 import { useAnnotations } from "@/features/analytics/queries"
 import { grainFor, KPIS, scopeOf, useView, useViewSearch } from "@/features/analytics/state"
 import {
@@ -340,11 +341,13 @@ export function Overview() {
   const property = useCurrentProperty()
   const text = useAnalyticsText()
   const share = useShare()
+  const { view } = useView()
   const shown = (g: Group) => !share || share.views.includes(g)
   const sources: AnalyticsFilterDimension[] = ["channel", "source", "utm_campaign"]
   return (
     <div className="flex flex-col gap-4" data-testid="analytics-overview">
       <Kpis />
+      {!share && <OverviewInsights property={property} view={view} />}
       <TimeChart />
       <div className="grid gap-4 md:grid-cols-2">
         {shown("pages") && (

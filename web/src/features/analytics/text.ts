@@ -81,6 +81,13 @@ export function useAnalyticsText() {
       conversion_rate: t`Conversion rate`,
       completions: t`Completions`,
       revenue: t`Revenue`,
+      conversations: t`Conversations`,
+      feedback: t`Feedback`,
+      ratings_up: t`Helpful`,
+      ratings_down: t`Not helpful`,
+      helpful_rate: t`Helpful share`,
+      discussions: t`Discussions`,
+      support_rate: t`Per 1,000 views`,
     } satisfies Record<AnalyticsMetric, string>,
     metricHelp: {
       visitors: t`Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again.`,
@@ -108,6 +115,13 @@ export function useAnalyticsText() {
       conversion_rate: t`Conversions per 100 visitors.`,
       completions: t`Times the goal was reached, also several times by one visitor.`,
       revenue: t`What the goal's events carried, per currency. Currencies are never converted or added up.`,
+      conversations: t`Conversations started on the page, from the chat of the linked inbox.`,
+      feedback: t`Page feedback sent from the page.`,
+      ratings_up: t`Times the page was rated helpful.`,
+      ratings_down: t`Times the page was rated not helpful.`,
+      helpful_rate: t`Helpful ratings out of all ratings.`,
+      discussions: t`Discussion threads started on the page.`,
+      support_rate: t`Conversations per 1,000 views of the page.`,
     } satisfies Record<AnalyticsMetric, string>,
     dimension: {
       page: words.page,
@@ -275,12 +289,15 @@ export function formatMetric(metric: AnalyticsMetric, v: number | undefined, loc
       return new Intl.NumberFormat(locale, { style: "percent", maximumFractionDigits: 1 }).format(v / 100)
     case "bounce_rate":
     case "scroll_depth":
+    case "helpful_rate":
       return new Intl.NumberFormat(locale, { style: "percent", maximumFractionDigits: 0 }).format(v / 100)
     case "visit_duration":
     case "time_on_page":
       return seconds(v, locale)
     case "views_per_visit":
       return new Intl.NumberFormat(locale, { maximumFractionDigits: 2 }).format(v)
+    case "support_rate":
+      return new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(v)
     default:
       return new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(v)
   }
@@ -294,5 +311,5 @@ export function formatCompact(v: number, locale: string) {
 }
 
 export function lowerIsBetter(metric: AnalyticsMetric) {
-  return metric === "bounce_rate"
+  return metric === "bounce_rate" || metric === "support_rate" || metric === "ratings_down"
 }

@@ -21,9 +21,33 @@ msgstr "{0, plural, one {# satır} other {# satır}}"
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, one {bugünkü ziyaretçi} other {bugünkü ziyaretçi}}"
 
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} fell {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} {change} azaldı, önce {before}, şimdi {now}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} rose {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} {change} arttı, önce {before}, şimdi {now}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {rate} conversations per 1,000 views, against {site} across all pages."
+msgstr "{dim} {value}: 1.000 görüntülemede {rate} konuşma; tüm sayfalarda {site}."
+
+#: src/features/analytics/Annotations.tsx
+msgid "{kind}: {found}"
+msgstr "{kind}: {found}"
+
 #: src/features/analytics/Funnels.tsx
 msgid "{lost} left ({lostPct})"
 msgstr "{lost} kişi ayrıldı ({lostPct})"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} fell {change}: {now}, against {before} in the compared days."
+msgstr "{metric} {change} azaldı: şimdi {now}, karşılaştırılan günlerde {before}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} rose {change}: {now}, against {before} in the compared days."
+msgstr "{metric} {change} arttı: şimdi {now}, karşılaştırılan günlerde {before}."
 
 #: src/features/analytics/Events.tsx
 msgid "{n} payments, {avg} on average"
@@ -33,9 +57,17 @@ msgstr "{n} ödeme, ortalama {avg}"
 msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
 msgstr "{name} bu mülkün platformlarından biri değil, bu yüzden sunucu uygulamanın olaylarını reddediyor. Bir sahip ya da yönetici açabilir."
 
+#: src/features/analytics/Alerts.tsx
+msgid "{now} conversations per 1,000 views, against {usual} in the 28 days before."
+msgstr "1.000 görüntülemede {now} konuşma; önceki 28 günde {usual}."
+
 #: src/features/analytics/Funnels.tsx
 msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
 msgstr "{from} – {to} arasında ilk adıma ulaşan ziyaretçilerin {overall} kadarı son adıma da ulaştı."
+
+#: src/features/analytics/Alerts.tsx
+msgid "{site} sent {now} visits, and none in the 28 days before."
+msgstr "{site} {now} ziyaret getirdi; önceki 28 günde hiç getirmemişti."
 
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
@@ -73,6 +105,10 @@ msgstr "Huni, bir ziyaret içinde kaç ziyaretçinin bir hedeften sonrakine geç
 msgid "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
 msgstr "Hedef, bir sayfayı görüntüleyen, bir olay gönderen ya da yeterince aşağı kaydıran ziyaretçileri ve getirdikleri geliri sayar."
 
+#: src/features/analytics/Alerts.tsx
+msgid "A goal’s conversions yesterday were at most half its daily average of the week before."
+msgstr "Bir hedefin dünkü dönüşümleri, önceki haftadaki günlük ortalamasının en fazla yarısı kadar."
+
 #: src/features/analytics/Sharing.tsx
 msgid "A link shows only its views of this property, read-only, without filters or segments. Revoking or deleting it stops it at once."
 msgstr "Bir bağlantı bu mülkün yalnızca seçilen görünümlerini salt okunur gösterir; filtre ve segment kullanılamaz. İptal etmek ya da silmek bağlantıyı hemen durdurur."
@@ -104,6 +140,10 @@ msgstr "Bir mülkün en fazla 50 paylaşım bağlantısı olabilir. Önce birini
 #: src/features/analytics/parts.tsx
 msgid "A range can be at most 400 days long. Pick a shorter one."
 msgstr "Bir aralık en fazla 400 gün olabilir. Daha kısa bir aralık seçin."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A site sent 10 or more visits yesterday and none in the 28 days before."
+msgstr "Bir site dün 10 veya daha fazla ziyaret getirdi, önceki 28 günde ise hiç getirmemişti."
 
 #: src/features/analytics/Settings.tsx
 msgid "A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and it shows as a chip on the Events view."
@@ -170,6 +210,18 @@ msgstr "yuva-analytics kütüphanesini JitPack'ten ekleyin ve Application.onCrea
 msgid "Addresses not counted"
 msgstr "Sayılmayan adresler"
 
+#: src/features/analytics/Insights.tsx
+msgid "against the compared days"
+msgstr "karşılaştırılan günlere göre"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the period before"
+msgstr "önceki döneme göre"
+
+#: src/features/analytics/Support.tsx
+msgid "Agents of the inbox can then see this property’s numbers too."
+msgstr "Ardından gelen kutusunun temsilcileri de bu mülkün rakamlarını görebilir."
+
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Agents of this inbox can see the numbers."
@@ -179,6 +231,14 @@ msgstr "Bu gelen kutusunun temsilcileri rakamları görebilir."
 msgid "AI assistants"
 msgstr "Yapay zekâ asistanları"
 
+#: src/features/analytics/Alerts.tsx
+msgid "Alerts"
+msgstr "Uyarılar"
+
+#: src/features/analytics/Settings.tsx
+msgid "Alerts and reports"
+msgstr "Uyarılar ve raporlar"
+
 #: src/features/analytics/Events.tsx
 msgid "All events"
 msgstr "Tüm olaylar"
@@ -186,6 +246,10 @@ msgstr "Tüm olaylar"
 #: src/features/analytics/Goals.tsx
 msgid "All goals"
 msgstr "Tüm hedefler"
+
+#: src/features/analytics/Support.tsx
+msgid "An owner or admin can link one in the property’s settings."
+msgstr "Bir sahip veya yönetici, mülkün ayarlarından bir gelen kutusu bağlayabilir."
 
 #: src/features/analytics/AnalyticsColumn.tsx
 #: src/features/analytics/AnalyticsRoutes.tsx
@@ -302,9 +366,17 @@ msgstr "Kanal"
 msgid "Chat opened"
 msgstr "Sohbet açıldı"
 
+#: src/features/analytics/Alerts.tsx
+msgid "Checked every hour. Each alert is sent once and also shows as a note on the chart."
+msgstr "Her saat kontrol edilir. Her uyarı bir kez gönderilir ve grafikte not olarak da görünür."
+
 #: src/features/analytics/Settings.tsx
 msgid "Children"
 msgstr "Çocuklar"
+
+#: src/features/analytics/Support.tsx
+msgid "Choose an inbox"
+msgstr "Bir gelen kutusu seçin"
 
 #: src/features/analytics/Settings.tsx
 msgid "Choose children for a site made for children."
@@ -372,6 +444,26 @@ msgstr "içerir"
 #: src/features/analytics/Install.tsx
 msgid "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
 msgstr "İçerik engelleyiciler başka alan adlarından gelen betikleri sık sık durdurur. Betiği ve uç noktasını kendi sitenizden sunarsanız bu ziyaretçiler de sayılır. Yuva sunucusunun, vekil sunucunuzun ilettiği adrese güvenmesi gerekir; yoksa tüm ziyaretçiler tek kişi gibi görünür."
+
+#: src/features/analytics/text.ts
+msgid "Conversations"
+msgstr "Konuşmalar"
+
+#: src/features/analytics/text.ts
+msgid "Conversations per 1,000 views of the page."
+msgstr "Sayfanın 1.000 görüntülemesi başına konuşma."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Conversations per 1,000 views yesterday were at least twice the rate of the 28 days before."
+msgstr "Dün 1.000 görüntüleme başına konuşma, önceki 28 günün oranının en az iki katıydı."
+
+#: src/features/analytics/text.ts
+msgid "Conversations started on the page, from the chat of the linked inbox."
+msgstr "Bağlı gelen kutusunun sohbetinden, sayfada başlayan konuşmalar."
+
+#: src/features/analytics/Support.tsx
+msgid "Conversations, feedback, ratings and discussions of the linked inbox show here next to each page’s views. They are counted per page and day; no visitor is ever matched to a contact."
+msgstr "Bağlı gelen kutusunun konuşmaları, geri bildirimleri, değerlendirmeleri ve tartışmaları burada her sayfanın görüntülemelerinin yanında görünür. Sayfa ve gün başına sayılır; hiçbir ziyaretçi bir kişiyle eşleştirilmez."
 
 #: src/features/analytics/text.ts
 msgid "Conversion rate"
@@ -599,6 +691,14 @@ msgid "Direct / none"
 msgstr "Doğrudan / yok"
 
 #: src/features/analytics/text.ts
+msgid "Discussion threads started on the page."
+msgstr "Sayfada başlayan tartışmalar."
+
+#: src/features/analytics/text.ts
+msgid "Discussions"
+msgstr "Tartışmalar"
+
+#: src/features/analytics/text.ts
 msgid "Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again."
 msgstr "Her günün farklı ziyaretçileri, aralıktaki günler boyunca toplanır. Başka bir gün geri gelen kişi yeniden sayılır."
 
@@ -717,6 +817,10 @@ msgstr "olay atıldı"
 msgid "Every event with its visit’s page, source, place and device, as NDJSON. Visits are numbered within the file; there is no visitor id, address or contact. At most 31 days."
 msgstr "Her olay, ziyaretinin sayfası, kaynağı, konumu ve cihazıyla birlikte NDJSON olarak. Ziyaretler dosya içinde numaralanır; ziyaretçi kimliği, adres ya da kişi bilgisi yoktur. En fazla 31 gün."
 
+#: src/features/analytics/Alerts.tsx
+msgid "Every Monday at 08:00 in {zone}, about the week before."
+msgstr "Her pazartesi {zone} saatiyle 08.00'de, bir önceki hafta hakkında."
+
 #: src/features/analytics/Exports.tsx
 msgid "Every row of the range and the filters you are looking at, without a comparison."
 msgstr "Baktığınız aralığın ve filtrelerin tüm satırları, karşılaştırma olmadan."
@@ -736,6 +840,10 @@ msgstr "Bu mülkü gören herkes seçebilir. Siz, sahipler ve yöneticiler deği
 #: src/features/analytics/Annotations.tsx
 msgid "Everyone who sees this property sees the note, such as a launch or a campaign."
 msgstr "Bu mülkü gören herkes notu görür; örneğin bir lansman ya da kampanya."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Everything this property raised, newest first, whoever was notified."
+msgstr "Bu mülkün verdiği tüm uyarılar, en yenisi önce; kime bildirildiğinden bağımsız."
 
 #: src/features/analytics/Settings.tsx
 msgid "Excluded"
@@ -770,6 +878,14 @@ msgid "Failed"
 msgstr "Başarısız"
 
 #: src/features/analytics/text.ts
+msgid "Feedback"
+msgstr "Geri bildirim"
+
+#: src/features/analytics/Support.tsx
+msgid "Fewer than 100 views"
+msgstr "100'den az görüntüleme"
+
+#: src/features/analytics/text.ts
 msgid "File download"
 msgstr "Dosya indirme"
 
@@ -778,6 +894,7 @@ msgid "Files are made in the background and deleted seven days later."
 msgstr "Dosyalar arka planda hazırlanır ve yedi gün sonra silinir."
 
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Support.tsx
 msgid "Filter by this"
 msgstr "Buna göre filtrele"
 
@@ -797,6 +914,10 @@ msgstr "İlk sayfa ya da ekran"
 #: src/features/analytics/text.ts
 msgid "First screen"
 msgstr "İlk ekran"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Five reports an hour at most. Try again later."
+msgstr "Saatte en fazla beş rapor. Daha sonra yeniden deneyin."
 
 #: src/features/analytics/NewProperty.tsx
 msgid "For example Fieldnote website"
@@ -833,6 +954,10 @@ msgstr "Alan adlarından biri olmayan bir siteden ya da platformu açık olmayan
 msgid "From pricing to signup"
 msgstr "Fiyatlardan kayda"
 
+#: src/features/analytics/Support.tsx
+msgid "From the inbox {inboxName}. Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "{inboxName} gelen kutusundan. 1.000 görüntüleme başına konuşmaya göre sıralanır; 100'den az görüntülenen sayfalar diğerlerinden sonra gelir. Sayfa ve gün başına sayılır, asla ziyaretçi veya kişi başına değil."
+
 #: src/features/analytics/Funnels.tsx
 msgid "Funnel"
 msgstr "Huni"
@@ -858,6 +983,14 @@ msgstr "Hedef"
 msgid "Goal “{0}” was created"
 msgstr "“{0}” hedefi oluşturuldu"
 
+#: src/features/analytics/Alerts.tsx
+msgid "Goal “{goal}” had {now} conversions, against {usual} a day on average in the week before."
+msgstr "“{goal}” hedefinde {now} dönüşüm oldu; önceki hafta günlük ortalama {usual} idi."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Goal drop"
+msgstr "Hedef düşüşü"
+
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Goals"
@@ -870,6 +1003,22 @@ msgstr "olaydan adres çıkarıldı"
 #: src/features/analytics/Settings.tsx
 msgid "Health"
 msgstr "Durum"
+
+#: src/features/analytics/text.ts
+msgid "Helpful"
+msgstr "Yararlı"
+
+#: src/features/analytics/Support.tsx
+msgid "Helpful and not helpful"
+msgstr "Yararlı ve yararlı değil"
+
+#: src/features/analytics/text.ts
+msgid "Helpful ratings out of all ratings."
+msgstr "Tüm değerlendirmeler içinde yararlı olanların payı."
+
+#: src/features/analytics/text.ts
+msgid "Helpful share"
+msgstr "Yararlı oranı"
 
 #: src/features/analytics/text.ts
 msgid "Host"
@@ -893,6 +1042,7 @@ msgstr "Kaydettim"
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
+#: src/features/analytics/Support.tsx
 msgid "Inbox"
 msgstr "Gelen kutusu"
 
@@ -1017,8 +1167,18 @@ msgstr "Geçerli parolayı korumak için boş bırakın"
 msgid "Link"
 msgstr "Bağlantı"
 
+#: src/features/analytics/Support.tsx
+msgid "Link an inbox to see support per page"
+msgstr "Sayfa başına desteği görmek için bir gelen kutusu bağlayın"
+
+#: src/features/analytics/Support.tsx
+msgid "Link inbox"
+msgstr "Gelen kutusunu bağla"
+
+#: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
+#: src/features/analytics/Support.tsx
 msgid "Load more"
 msgstr "Daha fazla yükle"
 
@@ -1069,6 +1229,10 @@ msgstr "kalıba uyar"
 msgid "Mobile"
 msgstr "Mobil"
 
+#: src/features/analytics/Alerts.tsx
+msgid "Monthly"
+msgstr "Aylık"
+
 #: src/features/analytics/Settings.tsx
 msgid "Monthly limit"
 msgstr "Aylık sınır"
@@ -1090,6 +1254,10 @@ msgstr "Yukarı taşı"
 msgid "Name"
 msgstr "Ad"
 
+#: src/features/analytics/Alerts.tsx
+msgid "Needs a linked inbox. {help}"
+msgstr "Bağlı bir gelen kutusu gerekir. {help}"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Never"
 msgstr "Hiçbir zaman"
@@ -1097,6 +1265,10 @@ msgstr "Hiçbir zaman"
 #: src/features/analytics/Sharing.tsx
 msgid "never opened"
 msgstr "hiç açılmadı"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
+msgstr "Yeni {kind}: {value}. {metric}: {now}; karşılaştırılan günlerde hiç yoktu."
 
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
@@ -1114,13 +1286,25 @@ msgstr "Yeni bağlantı"
 msgid "New pricing page"
 msgstr "Yeni fiyat sayfası"
 
+#: src/features/analytics/Alerts.tsx
+msgid "New referrer"
+msgstr "Yeni yönlendiren"
+
 #: src/features/analytics/Sharing.tsx
 msgid "New share link"
 msgstr "Yeni paylaşım bağlantısı"
 
+#: src/features/analytics/Alerts.tsx
+msgid "No alerts yet."
+msgstr "Henüz uyarı yok."
+
 #: src/features/analytics/Controls.tsx
 msgid "No comparison"
 msgstr "Karşılaştırma yok"
+
+#: src/features/analytics/Support.tsx
+msgid "No conversations, feedback, ratings or discussions from these pages in this range."
+msgstr "Bu aralıkta bu sayfalardan konuşma, geri bildirim, değerlendirme veya tartışma yok."
 
 #: src/features/analytics/Goals.tsx
 msgid "No conversions in this range."
@@ -1158,6 +1342,10 @@ msgstr "Henüz mülk yok"
 msgid "No props are tracked."
 msgstr "İzlenen özellik yok."
 
+#: src/features/analytics/Alerts.tsx
+msgid "No scheduled reports."
+msgstr "Zamanlanmış rapor yok."
+
 #: src/features/analytics/Controls.tsx
 msgid "No segment"
 msgstr "Segment yok"
@@ -1178,6 +1366,10 @@ msgstr "Son 30 dakikada kimse yok."
 msgid "Nobody reached the first step in this range."
 msgstr "Bu aralıkta ilk adıma ulaşan olmadı."
 
+#: src/features/analytics/Alerts.tsx
+msgid "None"
+msgstr "Yok"
+
 #: src/features/analytics/Settings.tsx
 msgid "None yet"
 msgstr "Henüz yok"
@@ -1194,6 +1386,10 @@ msgstr "Yok, yalnızca sahipler ve yöneticiler"
 #: src/features/analytics/parts.tsx
 msgid "Not available for this range."
 msgstr "Bu aralık için gösterilemiyor."
+
+#: src/features/analytics/text.ts
+msgid "Not helpful"
+msgstr "Yararlı değil"
 
 #: src/features/analytics/Annotations.tsx
 msgid "Note"
@@ -1213,6 +1409,10 @@ msgstr "Yok"
 msgid "Nothing counted in this range."
 msgstr "Bu aralıkta sayılan bir şey yok."
 
+#: src/features/analytics/Alerts.tsx
+msgid "Notify me"
+msgstr "Bana bildir"
+
 #: src/features/analytics/Settings.tsx
 msgid "Off"
 msgstr "Kapalı"
@@ -1220,6 +1420,14 @@ msgstr "Kapalı"
 #: src/features/analytics/Settings.tsx
 msgid "Older than 72 hours. Apps keep events without a connection for at most that long."
 msgstr "72 saatten eski. Uygulamalar bağlantı yokken olayları en fazla bu kadar tutar."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On its way to {email}."
+msgstr "{email} adresine gönderiliyor."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On the 1st of each month at 08:00 in {zone}, about the month before."
+msgstr "Her ayın 1'inde {zone} saatiyle 08.00'de, bir önceki ay hakkında."
 
 #: src/features/analytics/Settings.tsx
 msgid "One IP address or range per line, up to 50, such as your office or a monitoring service."
@@ -1248,6 +1456,10 @@ msgstr "Her satıra bir özellik adı, en fazla 10 tane; örneğin plan."
 #: src/features/analytics/Exports.tsx
 msgid "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
 msgstr "Her gün için ziyaretçi, ziyaret, görüntüleme, hemen çıkma oranı, süreler ve kaydırma derinliğini içeren bir satır. En fazla 400 gün."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Only for you, by e-mail to {email}. Reports are plain numbers, with no images and nothing that tracks opening or clicks."
+msgstr "Yalnızca sizin için, {email} adresine e-postayla. Raporlar yalnızca rakamlardan oluşur; görsel yoktur, açılmayı veya tıklamaları izleyen hiçbir şey yoktur."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Only members see it, to tell links apart."
@@ -1280,6 +1492,10 @@ msgstr "Raporu aç"
 #: src/features/analytics/NewProperty.tsx
 msgid "Open the overview"
 msgstr "Genel bakışı aç"
+
+#: src/features/analytics/Support.tsx
+msgid "Open the property’s settings"
+msgstr "Mülkün ayarlarını aç"
 
 #: src/features/analytics/text.ts
 msgid "Operating system"
@@ -1338,6 +1554,10 @@ msgstr "Hedefleri sahipler ve yöneticiler oluşturur. Hedefler burada dönüş�
 #: src/features/analytics/text.ts
 msgid "Page"
 msgstr "Sayfa"
+
+#: src/features/analytics/text.ts
+msgid "Page feedback sent from the page."
+msgstr "Sayfadan gönderilen sayfa geri bildirimleri."
 
 #: src/features/analytics/text.ts
 msgid "Page not found"
@@ -1408,6 +1628,10 @@ msgstr "Ücretli sosyal"
 msgid "Password"
 msgstr "Parola"
 
+#: src/features/analytics/Alerts.tsx
+msgid "Past alerts"
+msgstr "Geçmiş uyarılar"
+
 #: src/features/analytics/Settings.tsx
 msgid "Path rules"
 msgstr "Yol kuralları"
@@ -1419,6 +1643,10 @@ msgstr "Kalıp"
 #: src/features/analytics/Controls.tsx
 msgid "Paying customers from Germany"
 msgstr "Almanya'dan ödeme yapan müşteriler"
+
+#: src/features/analytics/text.ts
+msgid "Per 1,000 views"
+msgstr "1.000 görüntülemede"
 
 #: src/features/analytics/Overview.tsx
 msgid "per day"
@@ -1514,9 +1742,17 @@ msgstr "Bu bağlantıları gizlilik sayfanıza koyun. Betiğin ziyaretçinin cih
 msgid "Range"
 msgstr "Aralık"
 
+#: src/features/analytics/Support.tsx
+msgid "Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "1.000 görüntüleme başına konuşmaya göre sıralanır; 100'den az görüntülenen sayfalar diğerlerinden sonra gelir. Sayfa ve gün başına sayılır, asla ziyaretçi veya kişi başına değil."
+
 #: src/features/analytics/Settings.tsx
 msgid "Rate limits"
 msgstr "Hız sınırları"
+
+#: src/features/analytics/Support.tsx
+msgid "Ratings"
+msgstr "Değerlendirmeler"
 
 #: src/features/analytics/Exports.tsx
 msgid "Raw events"
@@ -1587,6 +1823,10 @@ msgstr "Segmentin adını değiştir"
 #: src/features/analytics/Install.tsx
 msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
 msgstr "Bileşeni kök yerleşimde bir kez kullanın. Ekrana bir şey çizmez; altındaki her yerde useYuvaAnalytics() yöntemleri verir."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Report"
+msgstr "Rapor"
 
 #: src/features/analytics/Settings.tsx
 msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
@@ -1698,6 +1938,10 @@ msgstr "Segmentler"
 msgid "Send a screen or an event from your app or backend while this page is open, and see whether it reached the server. Refreshes every 5 seconds."
 msgstr "Bu sayfa açıkken uygulamanızdan ya da sunucunuzdan bir ekran veya olay gönderin ve sunucuya ulaşıp ulaşmadığını görün. 5 saniyede bir yenilenir."
 
+#: src/features/analytics/Alerts.tsx
+msgid "Send me one now"
+msgstr "Şimdi bir tane gönder"
+
 #: src/features/analytics/Goals.tsx
 msgid "Sends an event"
 msgstr "Olay gönderir"
@@ -1789,6 +2033,19 @@ msgstr "{0}. adım"
 #: src/features/analytics/Funnels.tsx
 msgid "Steps"
 msgstr "Adımlar"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Support.tsx
+msgid "Support"
+msgstr "Destek"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Support load"
+msgstr "Destek yükü"
+
+#: src/features/analytics/Support.tsx
+msgid "Support numbers can only be filtered by page and host. The other filters are left out here."
+msgstr "Destek rakamları yalnızca sayfaya ve ana makineye göre filtrelenebilir. Diğer filtreler burada dikkate alınmaz."
 
 #: src/features/analytics/text.ts
 msgid "Tablet"
@@ -1938,6 +2195,10 @@ msgstr "Bu aralık dışa aktarılamaz. Daha kısa ya da ayrıntılı kayıtlar�
 msgid "This report has a password"
 msgstr "Bu rapor parolalı"
 
+#: src/features/analytics/Support.tsx
+msgid "This workspace has no inbox yet."
+msgstr "Bu çalışma alanında henüz gelen kutusu yok."
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
 msgstr "Bu çalışma alanı bu ayki {limit} analitik olay sınırına ulaştı. Yeni olaylar ay bitene kadar atılır."
@@ -1970,6 +2231,14 @@ msgstr "Saat dilimi"
 #: src/features/analytics/text.ts
 msgid "Times the goal was reached, also several times by one visitor."
 msgstr "Hedefe kaç kez ulaşıldığı; bir ziyaretçinin birden çok kez ulaşması da sayılır."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated helpful."
+msgstr "Sayfanın yararlı olarak değerlendirilme sayısı."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated not helpful."
+msgstr "Sayfanın yararlı değil olarak değerlendirilme sayısı."
 
 #: src/features/analytics/Annotations.tsx
 #: src/features/analytics/Controls.tsx
@@ -2021,6 +2290,14 @@ msgstr "İzlenen özellikler"
 #: src/features/analytics/Settings.tsx
 msgid "Tracking"
 msgstr "İzleme"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic drop"
+msgstr "Trafik düşüşü"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic spike"
+msgstr "Trafik sıçraması"
 
 #: src/features/analytics/SharePage.tsx
 msgid "Try again"
@@ -2080,9 +2357,21 @@ msgstr "Sayfa görüntüler"
 msgid "Views divided by visits."
 msgstr "Görüntülemelerin ziyaretlere bölümü."
 
+#: src/features/analytics/Alerts.tsx
+msgid "Views fell to {now} in two hours, against {usual} usually."
+msgstr "Görüntülemeler iki saatte {now} değerine düştü; normalde {usual}."
+
 #: src/features/analytics/text.ts
 msgid "Views in the last 30 minutes"
 msgstr "Son 30 dakikadaki görüntülemeler"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at least three times the same hours of the week before."
+msgstr "Son iki saatin görüntülemeleri, önceki haftanın aynı saatlerinin en az üç katı."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at most half the same hours of the week before."
+msgstr "Son iki saatin görüntülemeleri, önceki haftanın aynı saatlerinin en fazla yarısı."
 
 #: src/features/analytics/text.ts
 msgid "Views per minute"
@@ -2091,6 +2380,10 @@ msgstr "Dakika başına görüntüleme"
 #: src/features/analytics/text.ts
 msgid "Views per visit"
 msgstr "Ziyaret başına görüntüleme"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views rose to {now} in two hours, against {usual} usually."
+msgstr "Görüntülemeler iki saatte {now} değerine çıktı; normalde {usual}."
 
 #: src/features/analytics/text.ts
 msgid "Visit duration"
@@ -2151,6 +2444,18 @@ msgstr "Canlı izle"
 #: src/features/analytics/text.ts
 msgid "Web"
 msgstr "Web"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Weekly"
+msgstr "Haftalık"
+
+#: src/features/analytics/Insights.tsx
+msgid "What changed"
+msgstr "Neler değişti"
+
+#: src/features/analytics/Support.tsx
+msgid "What stands out"
+msgstr "Öne çıkanlar"
 
 #: src/features/analytics/text.ts
 msgid "What the goal's events carried, per currency. Currencies are never converted or added up."

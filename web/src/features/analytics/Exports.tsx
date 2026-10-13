@@ -67,7 +67,14 @@ function NewExport({ p }: { p: AnalyticsProperty }) {
       create.mutate({
         kind,
         format,
-        query: { metrics: [...VIEW_METRICS], dimensions: [dim], range: view.range, filters: view.filters, limit: 1000 },
+        query: {
+          metrics: [...VIEW_METRICS],
+          dimensions: [dim],
+          range: view.range,
+          filters: view.filters,
+          limit: 1000,
+          insights: false,
+        },
       })
     } else if (kind === "daily") {
       create.mutate({ kind, format, range: view.range, ...(daily !== NONE ? { dimension: daily } : {}) })
