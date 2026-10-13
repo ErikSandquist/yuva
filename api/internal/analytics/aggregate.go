@@ -26,6 +26,8 @@ type Dim struct {
 	// the column itself; Column is that column.
 	Codes  map[string]int16
 	Column string
+	// Event dimensions come from custom events: their name, or the value of one of their props.
+	Event bool
 }
 
 const (
@@ -34,6 +36,8 @@ const (
 	DimPageByChannel int16 = 40
 	DimPageBySource  int16 = 41
 	DimPageByCountry int16 = 42
+	DimEvent         int16 = 50
+	DimProp          int16 = 51
 
 	OtherValue = "(other)"
 )
@@ -117,6 +121,8 @@ var Dims = []Dim{
 	{Code: 22, Name: "platform", Group: caseOf("v.platform", platformNames), Codes: codesOf(platformNames), Column: "v.platform"},
 	{Code: 23, Name: "app_version", Group: "v.app_version"},
 	{Code: DimPage, Name: "page", Page: true, Path: true},
+	{Code: DimEvent, Name: "event", Event: true},
+	{Code: DimProp, Name: "prop", Event: true},
 }
 
 // pagePairs are the page breakdowns the rollups keep per channel, source and country, so a page
@@ -148,12 +154,34 @@ func (d Dim) filterExpr() string {
 	return d.Group
 }
 
-// Sums are the additive numbers of a set of visits, from which every metric follows.
+// Sums are the additive numbers of a set of visits, from which every metric follows. Conversions
+// are the visitors who completed a goal, Completions how often they did, and Revenue what the
+// completing (or, by event, the counted) events carried per currency.
 type Sums struct {
 	Visitors, Visits, Views, Bounces, DurationS, Events, EngagedMS, EngagedViews, ScrollSum, ScrollViews int64
+	Conversions, Completions                                                                             int64
+	Revenue                                                                                              map[string]Money
+}
+
+// Money is an amount in a currency's minor units and how many events carried it.
+type Money struct {
+	Minor, Events int64
+}
+
+func (s *Sums) addRevenue(currency string, m Money) {
+	if s.Revenue == nil {
+		s.Revenue = map[string]Money{}
+	}
+	cur := s.Revenue[currency]
+	s.Revenue[currency] = Money{cur.Minor + m.Minor, cur.Events + m.Events}
 }
 
 func (s *Sums) Add(o Sums) {
+	s.Conversions += o.Conversions
+	s.Completions += o.Completions
+	for c, m := range o.Revenue {
+		s.addRevenue(c, m)
+	}
 	s.Visitors += o.Visitors
 	s.Visits += o.Visits
 	s.Views += o.Views
@@ -171,6 +199,9 @@ func (s *Sums) scan() []any {
 }
 
 var Metrics = []string{"visitors", "visits", "pageviews", "views_per_visit", "bounce_rate", "visit_duration", "time_on_page", "scroll_depth", "events"}
+
+// GoalMetrics need a goal; revenue also comes with an event breakdown.
+var GoalMetrics = []string{"conversions", "conversion_rate", "completions", "revenue"}
 
 // engagementMetrics need the engagement events of each visit.
 var engagementMetrics = map[string]bool{"time_on_page": true, "scroll_depth": true}
@@ -204,6 +235,12 @@ func (s Sums) Metric(name string) float64 {
 		return ratio(s.ScrollSum, s.ScrollViews, 1)
 	case "events":
 		return float64(s.Events)
+	case "conversions":
+		return float64(s.Conversions)
+	case "conversion_rate":
+		return ratio(s.Conversions, s.Visitors, 100)
+	case "completions":
+		return float64(s.Completions)
 	}
 	return 0
 }
@@ -406,7 +443,11 @@ type Filter struct {
 	Dimension string
 	Op        string
 	Values    []string
+	// Prop is the key a prop filter compares.
+	Prop string
 }
+
+var likeEscaper = strings.NewReplacer(`\`, `\\`, "%", `\%`, "_", `\_`)
 
 var regexMeta = regexp.MustCompile(`[\\.+?()|\[\]{}^$]`)
 
@@ -472,6 +513,14 @@ func (s *scope) cond(expr string, f Filter, path bool) string {
 	case "matches":
 		parts := make([]string, len(f.Values))
 		for i, v := range f.Values {
+			if path && !strings.Contains(v, "*") {
+				parts[i] = "(" + expr + ") = ANY(" + s.arg([]string{v, v + "/"}) + "::text[])"
+				continue
+			}
+			if base, ok := strings.CutSuffix(v, "/**"); path && ok && !strings.Contains(base, "*") {
+				parts[i] = "((" + expr + ") = " + s.arg(base) + " OR (" + expr + ") LIKE " + s.arg(likeEscaper.Replace(base)+"/%") + ")"
+				continue
+			}
 			parts[i] = "(" + expr + ") ~ " + s.arg(patternRegex(v, path))
 			if prefix := patternPrefix(v, path); prefix != "" {
 				parts[i] = "starts_with(" + expr + ", " + s.arg(prefix) + ") AND " + parts[i]
@@ -496,6 +545,10 @@ func (s *scope) addFilter(f Filter) error {
 		s.pathWhere = append(s.pathWhere, strings.ReplaceAll(c, "\x00path", "path"))
 		return nil
 	}
+	if d.Event {
+		s.visitWhere = append(s.visitWhere, s.eventFilter(d, f))
+		return nil
+	}
 	if d.Codes != nil && (f.Op == "is" || f.Op == "is_not") {
 		codes := []int16{}
 		for _, v := range f.Values {
@@ -512,4 +565,32 @@ func (s *scope) addFilter(f Filter) error {
 	}
 	s.visitWhere = append(s.visitWhere, s.cond(d.filterExpr(), f, d.Path))
 	return nil
+}
+
+// eventExpr is the value an event dimension reads from the event alias e: its name, or the value of
+// one of its props, empty when it has none.
+func (s *scope) eventExpr(d Dim, alias, prop string) string {
+	if d.Code == DimProp {
+		return "coalesce(" + alias + ".props->>" + s.arg(prop) + ", '')"
+	}
+	return alias + ".name"
+}
+
+// eventFilter keeps the visits with a custom event that matches f; is_not and not_contains keep
+// those without one that matches the values.
+func (s *scope) eventFilter(d Dim, f Filter) string {
+	pos := f
+	neg := false
+	switch f.Op {
+	case "is_not":
+		pos.Op, neg = "is", true
+	case "not_contains":
+		pos.Op, neg = "contains", true
+	}
+	sub := `(v.day, v.visit) IN (SELECT pe.day, pe.visit FROM analytics_events pe
+    WHERE pe.workspace_id = $1 AND pe.property_id = $2 AND pe.day BETWEEN $3 AND $4 AND pe.kind = 3 AND ` + s.cond(s.eventExpr(d, "pe", f.Prop), pos, false) + ")"
+	if neg {
+		return "NOT " + sub
+	}
+	return sub
 }

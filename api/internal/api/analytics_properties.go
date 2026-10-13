@@ -511,6 +511,11 @@ func (s *Server) UpdateAnalyticsProperty(ctx context.Context, req oas.UpdateAnal
 		if err := s.applyPropertyBody(ctx, q, p, &f, *req.Body); err != nil {
 			return err
 		}
+		if !slices.Equal(slices.Sorted(slices.Values(cur.TrackedProps)), slices.Sorted(slices.Values(f.trackedProps))) {
+			if _, err := q.BumpAnalyticsGoalsVersion(ctx, store.BumpAnalyticsGoalsVersionParams{WorkspaceID: p.workspaceID, ID: cur.ID}); err != nil {
+				return err
+			}
+		}
 		out, err = q.UpdateAnalyticsProperty(ctx, store.UpdateAnalyticsPropertyParams{
 			WorkspaceID: p.workspaceID, ID: cur.ID, InboxID: f.inboxID, Name: f.name, Domains: f.domains, Platforms: f.platforms,
 			Timezone: f.timezone, Currency: f.currency, Collection: f.collection, ConsentFeatures: nonNil(f.consentFeatures), Audience: f.audience,
@@ -552,6 +557,11 @@ func (s *Server) RotateAnalyticsKey(ctx context.Context, req oas.RotateAnalytics
 			WorkspaceID: p.workspaceID, ID: cur.ID, PublicKey: newAnalyticsKey(), PreviousUntil: new(now.Add(analyticsKeyOverlap)), Now: now,
 		})
 		if err != nil {
+			return err
+		}
+		today := analytics.LocalDay(now, propertyLocation(out.Timezone))
+		if _, err := q.CreateAnalyticsAnnotation(ctx, store.CreateAnalyticsAnnotationParams{ID: newID(), WorkspaceID: p.workspaceID, PropertyID: out.ID,
+			Kind: annotationKeyRotated, StartsOn: today, EndsOn: today, Now: now}); err != nil {
 			return err
 		}
 		return notifyAnalyticsChanged(ctx, q, p.workspaceID, &out.ID)

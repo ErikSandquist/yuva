@@ -7829,6 +7829,10 @@ paths:
         `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
         added up as `(other)`.
 
+        Events: an `event` breakdown comes from rollups without filters; a `prop` breakdown reads
+        raw rows inside the raw window, for any prop key, and the rollups of the property's
+        `tracked_props` before it. `segment_id` adds a saved segment's filters.
+
         Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
         two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
         answers that include today for 30 seconds.
@@ -7946,6 +7950,548 @@ paths:
                 $ref: "#/components/schemas/AnalyticsHealth"
         "400":
           $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/goals:
+    get:
+      operationId: listAnalyticsGoals
+      summary: List a property's goals
+      description: |
+        Oldest first. Their numbers come from `queryAnalytics` with a `goal_id`.
+
+        Scope: `analytics:read`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+      responses:
+        "200":
+          description: The goals.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsGoalList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createAnalyticsGoal
+      summary: Create a goal
+      description: |
+        A page view (`path_pattern`), a custom or built-in event (`event_name`, optionally with one
+        prop equal to a value) or a scroll depth on matching pages. The goal counts on every day of
+        the raw window, also those before it was made: those days are rolled up again in the
+        background and read from raw rows until then. A property has at most 100 goals
+        (`403 goal_limit`); names are unique per property (`409 goal_taken`). Adds a `goal_created`
+        annotation.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyticsGoalCreate"
+      responses:
+        "201":
+          description: The goal.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsGoal"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/goals/{goalId}:
+    patch:
+      operationId: updateAnalyticsGoal
+      summary: Update a goal
+      description: |
+        Changes the given fields; the goal is checked whole afterwards. A changed definition counts
+        anew over the raw window like a new goal; older days keep what they counted.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+        - $ref: "#/components/parameters/AnalyticsGoalId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyticsGoalUpdate"
+      responses:
+        "200":
+          description: The updated goal.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsGoal"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteAnalyticsGoal
+      summary: Delete a goal
+      description: |
+        Deletes the goal and its rollups. A goal that is a step of a funnel cannot be deleted
+        (`409 goal_in_use`).
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+        - $ref: "#/components/parameters/AnalyticsGoalId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/funnels:
+    get:
+      operationId: listAnalyticsFunnels
+      summary: List a property's funnels
+      description: "Oldest first. Scope: `analytics:read`."
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+      responses:
+        "200":
+          description: The funnels.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsFunnelList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createAnalyticsFunnel
+      summary: Create a funnel
+      description: |
+        Two to eight goals of the property, in order. A property has at most 20 funnels
+        (`403 funnel_limit`); names are unique per property (`409 funnel_taken`).
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyticsFunnelCreate"
+      responses:
+        "201":
+          description: The funnel.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsFunnel"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/funnels/{funnelId}:
+    patch:
+      operationId: updateAnalyticsFunnel
+      summary: Update a funnel
+      description: "Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`."
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+        - $ref: "#/components/parameters/AnalyticsFunnelId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyticsFunnelUpdate"
+      responses:
+        "200":
+          description: The updated funnel.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsFunnel"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteAnalyticsFunnel
+      summary: Delete a funnel
+      description: "Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`."
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+        - $ref: "#/components/parameters/AnalyticsFunnelId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/funnels/{funnelId}/report:
+    get:
+      operationId: getAnalyticsFunnelReport
+      summary: How visitors went through a funnel
+      description: |
+        Per step, the visitors who completed it after every step before it within one visit, from
+        the raw events of the range. A visitor exists for one day, so a funnel never crosses
+        midnight; visitors over a range are added up per day. The range must lie inside the raw
+        window (`422 needs_raw_window`) and span at most 90 days, or 31 when the property counted
+        more than 10 million events over the last 30 days (`422 range_too_large`). Answers are
+        cached for ten minutes.
+
+        Scope: `analytics:read`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+        - $ref: "#/components/parameters/AnalyticsFunnelId"
+        - name: period
+          in: query
+          description: A period ending today as in `AnalyticsRange`; `30d` when neither it nor `from` and `to` are given.
+          schema:
+            type: string
+            enum: [today, yesterday, 7d, 28d, 30d, 90d, month, last_month]
+            x-enum-varnames: [AnalyticsFunnelToday, AnalyticsFunnelYesterday, AnalyticsFunnelLast7Days, AnalyticsFunnelLast28Days,
+              AnalyticsFunnelLast30Days, AnalyticsFunnelLast90Days, AnalyticsFunnelThisMonth, AnalyticsFunnelLastMonth]
+        - name: from
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: The funnel's steps.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsFunnelReport"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "422":
+          description: "`needs_raw_window` or `range_too_large`, as described above."
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsRangeProblem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/segments:
+    get:
+      operationId: listAnalyticsSegments
+      summary: List a property's segments
+      description: |
+        Named filter sets, shared with everyone who sees the property, by name.
+
+        Scope: `analytics:read`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+      responses:
+        "200":
+          description: The segments.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsSegmentList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createAnalyticsSegment
+      summary: Save a segment
+      description: |
+        Anyone who sees the property. A property has at most 100 segments (`403 segment_limit`);
+        names are unique per property (`409 segment_taken`).
+
+        Scope: `analytics:read`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyticsSegmentCreate"
+      responses:
+        "201":
+          description: The segment.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsSegment"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/segments/{segmentId}:
+    patch:
+      operationId: updateAnalyticsSegment
+      summary: Update a segment
+      description: |
+        Its author, owners, admins and API keys without an inbox limit.
+
+        Scope: `analytics:read`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+        - $ref: "#/components/parameters/AnalyticsSegmentId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyticsSegmentUpdate"
+      responses:
+        "200":
+          description: The updated segment.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsSegment"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteAnalyticsSegment
+      summary: Delete a segment
+      description: |
+        Its author, owners, admins and API keys without an inbox limit.
+
+        Scope: `analytics:read`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+        - $ref: "#/components/parameters/AnalyticsSegmentId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/annotations:
+    get:
+      operationId: listAnalyticsAnnotations
+      summary: List a property's annotations
+      description: |
+        Notes on the property's charts, by `starts_on`: members' (`note`) and Yuva's own
+        (`key_rotated`, `goal_created`). With `from` and `to`, those that overlap those days; at
+        most 1,000.
+
+        Scope: `analytics:read`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+        - name: from
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: The annotations.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsAnnotationList"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createAnalyticsAnnotation
+      summary: Add an annotation
+      description: |
+        A note on a day or a range of days of the property. Anyone who sees the property; at most
+        1,000 per property (`403 annotation_limit`).
+
+        Scope: `analytics:read`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyticsAnnotationCreate"
+      responses:
+        "201":
+          description: The annotation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsAnnotation"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/annotations/{annotationId}:
+    patch:
+      operationId: updateAnalyticsAnnotation
+      summary: Update an annotation
+      description: |
+        Its author, owners, admins and API keys without an inbox limit. Yuva's own annotations
+        cannot be changed (`403 annotation_read_only`).
+
+        Scope: `analytics:read`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+        - $ref: "#/components/parameters/AnalyticsAnnotationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyticsAnnotationUpdate"
+      responses:
+        "200":
+          description: The updated annotation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsAnnotation"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteAnalyticsAnnotation
+      summary: Delete an annotation
+      description: |
+        Its author, owners, admins and API keys without an inbox limit; Yuva's own annotations only
+        owners, admins and API keys without an inbox limit.
+
+        Scope: `analytics:read`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+        - $ref: "#/components/parameters/AnalyticsAnnotationId"
+      responses:
+        "204":
+          description: Deleted.
         "401":
           $ref: "#/components/responses/Problem"
         "403":
@@ -9212,6 +9758,11 @@ paths:
         `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
         are refused until app collection exists. An unknown or deleted key answers `404`.
 
+        Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
+        `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
+        an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
+        answers `400` for the whole request.
+
         Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
         of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
         path; events over the property's per-minute limit or the workspace's monthly cap. One
@@ -10204,6 +10755,34 @@ components:
         maxLength: 200
     AnalyticsPropertyId:
       name: propertyId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    AnalyticsGoalId:
+      name: goalId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    AnalyticsFunnelId:
+      name: funnelId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    AnalyticsSegmentId:
+      name: segmentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    AnalyticsAnnotationId:
+      name: annotationId
       in: path
       required: true
       schema:
@@ -19240,10 +19819,18 @@ components:
         `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
         `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
         focused, per page view that reported it), `scroll_depth` (deepest scroll in percent, per
-        page view that reported it), `events` (custom events).
-      enum: [visitors, visits, pageviews, views_per_visit, bounce_rate, visit_duration, time_on_page, scroll_depth, events]
+        page view that reported it), `events` (custom and built-in events).
+
+        With a `goal_id`: `conversions` (visitors who completed the goal, per day, added up),
+        `conversion_rate` (conversions per 100 visitors), `completions` (times the goal was
+        completed) and `revenue` (what the completing events carried, per currency, in
+        `metrics.revenue`). With an `event` or `prop` dimension only `visitors`, `visits`, `events`
+        and `revenue` are offered, counted over the events of each row. `revenue` cannot order rows.
+      enum: [visitors, visits, pageviews, views_per_visit, bounce_rate, visit_duration, time_on_page, scroll_depth, events, conversions,
+        conversion_rate, completions, revenue]
       x-enum-varnames: [AnalyticsMetricVisitors, AnalyticsMetricVisits, AnalyticsMetricPageviews, AnalyticsMetricViewsPerVisit,
-        AnalyticsMetricBounceRate, AnalyticsMetricVisitDuration, AnalyticsMetricTimeOnPage, AnalyticsMetricScrollDepth, AnalyticsMetricEvents]
+        AnalyticsMetricBounceRate, AnalyticsMetricVisitDuration, AnalyticsMetricTimeOnPage, AnalyticsMetricScrollDepth, AnalyticsMetricEvents,
+        AnalyticsMetricConversions, AnalyticsMetricConversionRate, AnalyticsMetricCompletions, AnalyticsMetricRevenue]
     AnalyticsFilterDimension:
       type: string
       description: |
@@ -19253,14 +19840,19 @@ components:
         `email`, `referral`, `ai_assistants`, `internal`; `source` the UTM source, or the named site
         (Google, ChatGPT) or host a visit came from; `device` is `desktop`, `mobile` or `tablet`;
         `screen_size` is `phone`, `tablet`, `laptop` or `desktop`; `country` an ISO 3166-1 alpha-2
-        code. Unknown values are empty strings.
+        code. Unknown values are empty strings. `event` is the name of a custom or built-in event
+        and `prop` the value of the event prop the filter's `prop` (or the query's `prop`) names, empty
+        for events without it: as
+        a filter of visits they keep the visits with such an event; in an `event` or `prop`
+        breakdown they keep the matching events.
       enum: [page, entry_page, exit_page, hostname, channel, source, referrer, utm_source, utm_medium, utm_campaign, utm_term,
-        utm_content, country, region, city, device, browser, browser_version, os, os_version, screen_size, language, platform, app_version]
+        utm_content, country, region, city, device, browser, browser_version, os, os_version, screen_size, language, platform, app_version,
+        event, prop]
       x-enum-varnames: [AnalyticsDimPage, AnalyticsDimEntryPage, AnalyticsDimExitPage, AnalyticsDimHostname, AnalyticsDimChannel,
         AnalyticsDimSource, AnalyticsDimReferrer, AnalyticsDimUtmSource, AnalyticsDimUtmMedium, AnalyticsDimUtmCampaign, AnalyticsDimUtmTerm,
         AnalyticsDimUtmContent, AnalyticsDimCountry, AnalyticsDimRegion, AnalyticsDimCity, AnalyticsDimDevice, AnalyticsDimBrowser,
         AnalyticsDimBrowserVersion, AnalyticsDimOs, AnalyticsDimOsVersion, AnalyticsDimScreenSize, AnalyticsDimLanguage, AnalyticsDimPlatform,
-        AnalyticsDimAppVersion]
+        AnalyticsDimAppVersion, AnalyticsDimEvent, AnalyticsDimProp]
     AnalyticsDimension:
       type: string
       description: |
@@ -19268,15 +19860,17 @@ components:
         of the property's time zone; only alone, and only with `visitors`, `visits`, `pageviews` and
         `events`), `time:day`, `time:week` (weeks start on Monday) or `time:month`. A time grain's
         values are the bucket's start, `2026-10-12` or `2026-10-12T14:00`, and every bucket of the
-        range is present.
+        range is present. `event` breaks custom and built-in events down by name, `prop` by the
+        value of the event prop the query's `prop` names; either takes at most one other dimension,
+        a time grain other than `time:hour` or a visit dimension.
       enum: [time:hour, time:day, time:week, time:month, page, entry_page, exit_page, hostname, channel, source, referrer, utm_source,
         utm_medium, utm_campaign, utm_term, utm_content, country, region, city, device, browser, browser_version, os, os_version,
-        screen_size, language, platform, app_version]
+        screen_size, language, platform, app_version, event, prop]
       x-enum-varnames: [AnalyticsByHour, AnalyticsByDay, AnalyticsByWeek, AnalyticsByMonth, AnalyticsByPage, AnalyticsByEntryPage,
         AnalyticsByExitPage, AnalyticsByHostname, AnalyticsByChannel, AnalyticsBySource, AnalyticsByReferrer, AnalyticsByUtmSource,
         AnalyticsByUtmMedium, AnalyticsByUtmCampaign, AnalyticsByUtmTerm, AnalyticsByUtmContent, AnalyticsByCountry, AnalyticsByRegion,
         AnalyticsByCity, AnalyticsByDevice, AnalyticsByBrowser, AnalyticsByBrowserVersion, AnalyticsByOs, AnalyticsByOsVersion,
-        AnalyticsByScreenSize, AnalyticsByLanguage, AnalyticsByPlatform, AnalyticsByAppVersion]
+        AnalyticsByScreenSize, AnalyticsByLanguage, AnalyticsByPlatform, AnalyticsByAppVersion, AnalyticsByEvent, AnalyticsByProp]
     AnalyticsFilter:
       type: object
       description: |
@@ -19288,6 +19882,11 @@ components:
       properties:
         dimension:
           $ref: "#/components/schemas/AnalyticsFilterDimension"
+        prop:
+          type: string
+          minLength: 1
+          maxLength: 300
+          description: With `dimension` `prop`, the prop key compared.
         op:
           type: string
           enum: [is, is_not, contains, not_contains, matches]
@@ -19353,9 +19952,27 @@ components:
         metrics:
           type: array
           minItems: 1
-          maxItems: 9
+          maxItems: 13
           items:
             $ref: "#/components/schemas/AnalyticsMetric"
+        goal_id:
+          type: string
+          format: uuid
+          description: |
+            The goal whose `conversions`, `conversion_rate`, `completions` and `revenue` the query
+            asks for. Goal numbers of finished days come from rollups by total, time, `entry_page`,
+            `channel`, `source`, `utm_campaign`, `country` and `device`; other breakdowns and any
+            filter need raw rows. A goal counts on every day of the raw window, also before it was
+            made; older days have it only if it existed when they were rolled up.
+        prop:
+          type: string
+          minLength: 1
+          maxLength: 300
+          description: The event prop key a `prop` dimension breaks down by.
+        segment_id:
+          type: string
+          format: uuid
+          description: A saved segment of the property, whose filters are added to `filters`.
         dimensions:
           type: array
           maxItems: 2
@@ -19416,6 +20033,42 @@ components:
         events:
           type: number
           format: double
+        conversions:
+          type: number
+          format: double
+        conversion_rate:
+          type: number
+          format: double
+        completions:
+          type: number
+          format: double
+        revenue:
+          type: array
+          description: Per currency, most first.
+          items:
+            $ref: "#/components/schemas/AnalyticsRevenue"
+    AnalyticsRevenue:
+      type: object
+      required: [currency, total, average, events, digits]
+      properties:
+        currency:
+          type: string
+          description: ISO 4217 code.
+        total:
+          type: integer
+          format: int64
+          description: In the currency's minor units (cents; yen for JPY).
+        average:
+          type: integer
+          format: int64
+          description: Per event that carried revenue, in minor units, rounded.
+        events:
+          type: integer
+          format: int64
+          description: Events that carried revenue in this currency.
+        digits:
+          type: integer
+          description: The currency's minor-unit digits, so `total / 10^digits` is the amount.
     AnalyticsRow:
       type: object
       required: [dimensions, metrics]
@@ -19659,6 +20312,349 @@ components:
             $ref: "#/components/schemas/AnalyticsHealthDay"
         totals:
           $ref: "#/components/schemas/AnalyticsIngestCounts"
+    AnalyticsGoalKind:
+      type: string
+      description: |
+        `pageview`: a page view whose path matches `path_pattern`. `event`: a custom or built-in
+        event named `event_name`, and with `prop_key` only when that prop equals `prop_value`.
+        `scroll`: a page whose path matches `path_pattern` scrolled to at least `scroll_pct`.
+      enum: [pageview, event, scroll]
+      x-enum-varnames: [AnalyticsGoalPageview, AnalyticsGoalEvent, AnalyticsGoalScroll]
+    AnalyticsGoal:
+      type: object
+      required: [id, name, kind, counts_from, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        kind:
+          $ref: "#/components/schemas/AnalyticsGoalKind"
+        path_pattern:
+          $ref: "#/components/schemas/AnalyticsPathPattern"
+        event_name:
+          type: string
+        prop_key:
+          type: string
+        prop_value:
+          type: string
+        scroll_pct:
+          type: integer
+          minimum: 1
+          maximum: 100
+        counts_from:
+          type: string
+          format: date
+          description: The first day the goal has numbers for, the start of the raw window when it was made.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    AnalyticsGoalCreate:
+      type: object
+      required: [name, kind]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        kind:
+          $ref: "#/components/schemas/AnalyticsGoalKind"
+        path_pattern:
+          $ref: "#/components/schemas/AnalyticsPathPattern"
+        event_name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        prop_key:
+          type: string
+          minLength: 1
+          maxLength: 300
+        prop_value:
+          type: string
+          maxLength: 2000
+        scroll_pct:
+          type: integer
+          minimum: 1
+          maximum: 100
+    AnalyticsGoalUpdate:
+      type: object
+      minProperties: 1
+      description: Fields the goal's (new) kind does not use are dropped.
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        kind:
+          $ref: "#/components/schemas/AnalyticsGoalKind"
+        path_pattern:
+          $ref: "#/components/schemas/AnalyticsPathPattern"
+        event_name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        prop_key:
+          type: [string, "null"]
+          maxLength: 300
+          description: "`null` drops the prop condition, with its value."
+        prop_value:
+          type: string
+          maxLength: 2000
+        scroll_pct:
+          type: integer
+          minimum: 1
+          maximum: 100
+    AnalyticsGoalList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsGoal"
+    AnalyticsFunnel:
+      type: object
+      required: [id, name, steps, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        steps:
+          type: array
+          description: Goal ids, in order.
+          items:
+            type: string
+            format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    AnalyticsFunnelCreate:
+      type: object
+      required: [name, steps]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        steps:
+          type: array
+          minItems: 2
+          maxItems: 8
+          items:
+            type: string
+            format: uuid
+    AnalyticsFunnelUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        steps:
+          type: array
+          minItems: 2
+          maxItems: 8
+          items:
+            type: string
+            format: uuid
+    AnalyticsFunnelList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsFunnel"
+    AnalyticsFunnelStep:
+      type: object
+      required: [goal_id, name, visitors, visits, dropoff, conversion_rate, step_rate]
+      properties:
+        goal_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          description: The goal's name.
+        visitors:
+          type: integer
+          format: int64
+          description: Visitors who reached this step after all before it within a visit, added up per day.
+        visits:
+          type: integer
+          format: int64
+        dropoff:
+          type: integer
+          format: int64
+          description: Visitors of the step before who did not reach this one; 0 for the first step.
+        conversion_rate:
+          type: number
+          format: double
+          description: Percent of the first step's visitors.
+        step_rate:
+          type: number
+          format: double
+          description: Percent of the step before's visitors; 100 for the first step.
+    AnalyticsFunnelReport:
+      type: object
+      required: [funnel_id, from, to, steps, raw_window_from]
+      properties:
+        funnel_id:
+          type: string
+          format: uuid
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+        steps:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsFunnelStep"
+        raw_window_from:
+          type: string
+          format: date
+    AnalyticsSegment:
+      type: object
+      required: [id, name, filters, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        filters:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsFilter"
+        created_by:
+          type: string
+          format: uuid
+          description: The member who saved it; absent for API keys and removed members.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    AnalyticsSegmentCreate:
+      type: object
+      required: [name, filters]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        filters:
+          type: array
+          minItems: 1
+          maxItems: 10
+          items:
+            $ref: "#/components/schemas/AnalyticsFilter"
+    AnalyticsSegmentUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        filters:
+          type: array
+          minItems: 1
+          maxItems: 10
+          items:
+            $ref: "#/components/schemas/AnalyticsFilter"
+    AnalyticsSegmentList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsSegment"
+    AnalyticsAnnotation:
+      type: object
+      required: [id, kind, starts_on, ends_on, text, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        kind:
+          type: string
+          description: |
+            `note` is a member's; Yuva adds `key_rotated` when the property got a new key and
+            `goal_created` (with `goal_id` while the goal exists, and its name as `text`).
+          enum: [note, key_rotated, goal_created]
+          x-enum-varnames: [AnalyticsAnnotationNote, AnalyticsAnnotationKeyRotated, AnalyticsAnnotationGoalCreated]
+        starts_on:
+          type: string
+          format: date
+        ends_on:
+          type: string
+          format: date
+        text:
+          type: string
+        goal_id:
+          type: string
+          format: uuid
+        created_by:
+          type: string
+          format: uuid
+          description: The member who wrote it; absent for Yuva's own, API keys and removed members.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    AnalyticsAnnotationCreate:
+      type: object
+      required: [starts_on, text]
+      properties:
+        starts_on:
+          type: string
+          format: date
+        ends_on:
+          type: string
+          format: date
+          description: The last day; `starts_on` when absent.
+        text:
+          type: string
+          minLength: 1
+          maxLength: 300
+    AnalyticsAnnotationUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        starts_on:
+          type: string
+          format: date
+        ends_on:
+          type: string
+          format: date
+        text:
+          type: string
+          minLength: 1
+          maxLength: 300
+    AnalyticsAnnotationList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsAnnotation"
     AnalyticsConsent:
       type: object
       properties:
@@ -19675,8 +20671,15 @@ components:
       properties:
         n:
           type: string
-          description: "`pageview`, or `engagement` (sent once per view when the page is hidden or left)."
-          enum: [pageview, engagement]
+          description: |
+            `pageview`; `engagement` (sent once per view when the page is hidden or left); a built-in
+            event: `outbound_click` (a link to another host, with prop `url`), `file_download` (a
+            link to a file, with prop `url`), `not_found` (the page is the site's 404 page) or
+            `chat_open` (the page's chat was opened); or a custom event's name, 1 to 120
+            characters. `screen` and names starting with `$` or `yuva_` are reserved.
+          minLength: 1
+          maxLength: 120
+          examples: [pageview, Signup, outbound_click]
         u:
           type: string
           description: |
@@ -19703,8 +20706,47 @@ components:
           description: "`engagement` only: the deepest scroll position reached, in percent."
           minimum: 0
           maximum: 100
+        p:
+          type: object
+          description: |
+            Custom and built-in events only: up to 30 props. Keys have 1 to 300 characters and must
+            not start with `$` or `yuva_`; values are strings, numbers or booleans, kept as text of
+            at most 2,000 characters. A value shaped like an e-mail address is dropped (and counted
+            as scrubbed); a children's property keeps no props but a built-in event's `url`. The
+            `url` of `outbound_click` and `file_download` is kept without its query and fragment.
+          maxProperties: 30
+          additionalProperties:
+            oneOf:
+              - type: string
+              - type: number
+              - type: boolean
+          examples: [{plan: pro, seats: 3}]
+        $:
+          $ref: "#/components/schemas/AnalyticsEventRevenue"
+        i:
+          type: boolean
+          description: "`false` makes a custom event non-interactive, so a visit with only that event still bounces."
         c:
           $ref: "#/components/schemas/AnalyticsConsent"
+    AnalyticsEventRevenue:
+      type: object
+      description: |
+        Revenue a custom or built-in event carries: `a` the amount, a decimal with at most the
+        currency's minor-unit digits (2 for most, 0 for JPY or KRW, 3 for KWD), `c` the ISO 4217
+        code. It is stored in minor units per currency; Yuva converts nothing.
+      required: [a, c]
+      properties:
+        a:
+          description: As a string ("29.90") or a number.
+          oneOf:
+            - type: string
+              maxLength: 32
+            - type: number
+          examples: ["29.90"]
+        c:
+          type: string
+          pattern: "^[A-Za-z]{3}$"
+          examples: [EUR]
     AnalyticsEventBatch:
       type: object
       required: [e]

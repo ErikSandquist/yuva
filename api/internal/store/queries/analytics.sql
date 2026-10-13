@@ -75,7 +75,9 @@ WITH d AS (DELETE FROM analytics_daily WHERE analytics_daily.workspace_id = @wor
      h AS (DELETE FROM analytics_hourly WHERE analytics_hourly.workspace_id = @workspace_id AND analytics_hourly.property_id = @property_id),
      pd AS (DELETE FROM analytics_partial_daily WHERE analytics_partial_daily.workspace_id = @workspace_id AND analytics_partial_daily.property_id = @property_id),
      ph AS (DELETE FROM analytics_partial_hourly WHERE analytics_partial_hourly.workspace_id = @workspace_id AND analytics_partial_hourly.property_id = @property_id),
-     pf AS (DELETE FROM analytics_partial_days WHERE analytics_partial_days.workspace_id = @workspace_id AND analytics_partial_days.property_id = @property_id)
+     pf AS (DELETE FROM analytics_partial_days WHERE analytics_partial_days.workspace_id = @workspace_id AND analytics_partial_days.property_id = @property_id),
+     dg AS (DELETE FROM analytics_daily_goals WHERE analytics_daily_goals.workspace_id = @workspace_id AND analytics_daily_goals.property_id = @property_id),
+     dp AS (DELETE FROM analytics_daily_props WHERE analytics_daily_props.workspace_id = @workspace_id AND analytics_daily_props.property_id = @property_id)
 DELETE FROM analytics_rollup_days WHERE analytics_rollup_days.workspace_id = @workspace_id AND analytics_rollup_days.property_id = @property_id;
 
 -- name: GetAnalyticsUsage :one
@@ -144,3 +146,136 @@ ORDER BY day, reason;
 -- name: CountPendingAnalyticsRollups :one
 SELECT count(*) FROM analytics_rollup_days
 WHERE workspace_id = @workspace_id AND property_id = @property_id AND (built_at IS NULL OR dirty);
+
+-- name: BumpAnalyticsGoalsVersion :one
+UPDATE analytics_properties SET goals_version = goals_version + 1
+WHERE workspace_id = @workspace_id AND id = @id AND deleted_at IS NULL
+RETURNING goals_version;
+
+-- name: ListAnalyticsGoals :many
+SELECT * FROM analytics_goals WHERE workspace_id = @workspace_id AND property_id = @property_id ORDER BY created_at, id;
+
+-- name: ListAnalyticsGoalsByID :many
+SELECT * FROM analytics_goals WHERE workspace_id = @workspace_id AND property_id = @property_id AND id = ANY(@ids::uuid[]);
+
+-- name: GetAnalyticsGoal :one
+SELECT * FROM analytics_goals WHERE workspace_id = @workspace_id AND property_id = @property_id AND id = @id;
+
+-- name: CountAnalyticsGoals :one
+SELECT count(*) FROM analytics_goals WHERE workspace_id = @workspace_id AND property_id = @property_id;
+
+-- name: CreateAnalyticsGoal :one
+INSERT INTO analytics_goals (id, workspace_id, property_id, name, kind, path_pattern, event_name, prop_key, prop_value, scroll_pct,
+    version, counts_from, created_by, created_at, updated_at)
+VALUES (@id, @workspace_id, @property_id, @name, @kind, sqlc.narg(path_pattern), sqlc.narg(event_name), sqlc.narg(prop_key),
+    sqlc.narg(prop_value), sqlc.narg(scroll_pct), @version, @counts_from, sqlc.narg(created_by), @now, @now)
+RETURNING *;
+
+-- name: UpdateAnalyticsGoal :one
+UPDATE analytics_goals SET name = @name, kind = @kind, path_pattern = sqlc.narg(path_pattern), event_name = sqlc.narg(event_name),
+    prop_key = sqlc.narg(prop_key), prop_value = sqlc.narg(prop_value), scroll_pct = sqlc.narg(scroll_pct), version = @version,
+    updated_at = @now
+WHERE workspace_id = @workspace_id AND property_id = @property_id AND id = @id
+RETURNING *;
+
+-- name: DeleteAnalyticsGoal :execrows
+DELETE FROM analytics_goals WHERE workspace_id = @workspace_id AND property_id = @property_id AND id = @id;
+
+-- name: ListFunnelsWithGoal :many
+SELECT name FROM analytics_funnels
+WHERE workspace_id = @workspace_id AND property_id = @property_id AND @goal_id::uuid = ANY(steps)
+ORDER BY name;
+
+-- name: ListAnalyticsFunnels :many
+SELECT * FROM analytics_funnels WHERE workspace_id = @workspace_id AND property_id = @property_id ORDER BY created_at, id;
+
+-- name: GetAnalyticsFunnel :one
+SELECT * FROM analytics_funnels WHERE workspace_id = @workspace_id AND property_id = @property_id AND id = @id;
+
+-- name: CountAnalyticsFunnels :one
+SELECT count(*) FROM analytics_funnels WHERE workspace_id = @workspace_id AND property_id = @property_id;
+
+-- name: CreateAnalyticsFunnel :one
+INSERT INTO analytics_funnels (id, workspace_id, property_id, name, steps, created_by, created_at, updated_at)
+VALUES (@id, @workspace_id, @property_id, @name, @steps, sqlc.narg(created_by), @now, @now)
+RETURNING *;
+
+-- name: UpdateAnalyticsFunnel :one
+UPDATE analytics_funnels SET name = @name, steps = @steps, updated_at = @now
+WHERE workspace_id = @workspace_id AND property_id = @property_id AND id = @id
+RETURNING *;
+
+-- name: DeleteAnalyticsFunnel :execrows
+DELETE FROM analytics_funnels WHERE workspace_id = @workspace_id AND property_id = @property_id AND id = @id;
+
+-- name: ListAnalyticsSegments :many
+SELECT * FROM analytics_segments WHERE workspace_id = @workspace_id AND property_id = @property_id ORDER BY name, id;
+
+-- name: GetAnalyticsSegment :one
+SELECT * FROM analytics_segments WHERE workspace_id = @workspace_id AND property_id = @property_id AND id = @id;
+
+-- name: CountAnalyticsSegments :one
+SELECT count(*) FROM analytics_segments WHERE workspace_id = @workspace_id AND property_id = @property_id;
+
+-- name: CreateAnalyticsSegment :one
+INSERT INTO analytics_segments (id, workspace_id, property_id, name, filters, created_by, created_at, updated_at)
+VALUES (@id, @workspace_id, @property_id, @name, @filters, sqlc.narg(created_by), @now, @now)
+RETURNING *;
+
+-- name: UpdateAnalyticsSegment :one
+UPDATE analytics_segments SET name = @name, filters = @filters, updated_at = @now
+WHERE workspace_id = @workspace_id AND property_id = @property_id AND id = @id
+RETURNING *;
+
+-- name: DeleteAnalyticsSegment :execrows
+DELETE FROM analytics_segments WHERE workspace_id = @workspace_id AND property_id = @property_id AND id = @id;
+
+-- name: ListAnalyticsAnnotations :many
+SELECT * FROM analytics_annotations
+WHERE workspace_id = @workspace_id AND property_id = @property_id
+  AND (sqlc.narg(to_day)::date IS NULL OR starts_on <= sqlc.narg(to_day)::date)
+  AND (sqlc.narg(from_day)::date IS NULL OR ends_on >= sqlc.narg(from_day)::date)
+ORDER BY starts_on, created_at, id
+LIMIT 1000;
+
+-- name: GetAnalyticsAnnotation :one
+SELECT * FROM analytics_annotations WHERE workspace_id = @workspace_id AND property_id = @property_id AND id = @id;
+
+-- name: CountAnalyticsAnnotations :one
+SELECT count(*) FROM analytics_annotations WHERE workspace_id = @workspace_id AND property_id = @property_id;
+
+-- name: CreateAnalyticsAnnotation :one
+INSERT INTO analytics_annotations (id, workspace_id, property_id, kind, starts_on, ends_on, text, goal_id, created_by, created_at, updated_at)
+VALUES (@id, @workspace_id, @property_id, @kind, @starts_on, @ends_on, @text, sqlc.narg(goal_id), sqlc.narg(created_by), @now, @now)
+RETURNING *;
+
+-- name: UpdateAnalyticsAnnotation :one
+UPDATE analytics_annotations SET starts_on = @starts_on, ends_on = @ends_on, text = @text, updated_at = @now
+WHERE workspace_id = @workspace_id AND property_id = @property_id AND id = @id
+RETURNING *;
+
+-- name: DeleteAnalyticsAnnotation :execrows
+DELETE FROM analytics_annotations WHERE workspace_id = @workspace_id AND property_id = @property_id AND id = @id;
+
+-- name: ListAnalyticsGoalRollupTodo :many
+-- Rolled-up days of the raw window whose goal and prop rows predate the property's goals and
+-- tracked props; dirty days are rolled up whole instead.
+SELECT d.property_id, d.day FROM analytics_rollup_days d
+JOIN analytics_properties p ON p.workspace_id = d.workspace_id AND p.id = d.property_id
+WHERE d.workspace_id = @workspace_id AND d.built_at IS NOT NULL AND NOT d.dirty AND d.goals_version < p.goals_version
+  AND p.deleted_at IS NULL AND d.day >= @oldest
+ORDER BY d.property_id, d.day;
+
+-- name: CountAnalyticsEventsSince :one
+SELECT coalesce(sum(events), 0)::bigint FROM analytics_ingest_stats
+WHERE workspace_id = @workspace_id AND property_id = @property_id AND reason = 'accepted' AND day >= @from_day;
+
+-- name: TrimAnalyticsDailyGoals :execrows
+DELETE FROM analytics_daily_goals WHERE ctid = ANY(ARRAY(
+    SELECT t.ctid FROM analytics_daily_goals t
+    WHERE t.workspace_id = @workspace_id AND t.property_id = @property_id AND t.day < @before LIMIT 1000));
+
+-- name: TrimAnalyticsDailyProps :execrows
+DELETE FROM analytics_daily_props WHERE ctid = ANY(ARRAY(
+    SELECT t.ctid FROM analytics_daily_props t
+    WHERE t.workspace_id = @workspace_id AND t.property_id = @property_id AND t.day < @before LIMIT 1000));

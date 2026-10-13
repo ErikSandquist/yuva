@@ -91,6 +91,8 @@ type Event struct {
 	EngagedMS   *int32
 	Scroll      *int16
 	Interactive bool
+	Props       map[string]string
+	Revenue     *Revenue
 	Info        *VisitInfo
 }
 
@@ -154,6 +156,8 @@ type Store interface {
 	Query(ctx context.Context, q Query) (Result, error)
 	// Realtime is a property's last 30 minutes.
 	Realtime(ctx context.Context, workspaceID, propertyID uuid.UUID, loc *time.Location, now time.Time) (Realtime, error)
+	// Funnel counts the visitors and visits that went through the steps in order within a visit.
+	Funnel(ctx context.Context, workspaceID, propertyID uuid.UUID, from, to time.Time, steps []Goal) ([]FunnelStep, error)
 }
 
 // LocalDay is the date of t in loc, as midnight UTC, the form days are stored and compared in.

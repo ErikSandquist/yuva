@@ -21,6 +21,27 @@ import (
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
+// Defines values for AnalyticsAnnotationKind.
+const (
+	AnalyticsAnnotationGoalCreated AnalyticsAnnotationKind = "goal_created"
+	AnalyticsAnnotationKeyRotated  AnalyticsAnnotationKind = "key_rotated"
+	AnalyticsAnnotationNote        AnalyticsAnnotationKind = "note"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsAnnotationKind enum.
+func (e AnalyticsAnnotationKind) Valid() bool {
+	switch e {
+	case AnalyticsAnnotationGoalCreated:
+		return true
+	case AnalyticsAnnotationKeyRotated:
+		return true
+	case AnalyticsAnnotationNote:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsAudience.
 const (
 	AnalyticsAudienceChildren AnalyticsAudience = "children"
@@ -125,6 +146,7 @@ const (
 	AnalyticsByDay            AnalyticsDimension = "time:day"
 	AnalyticsByDevice         AnalyticsDimension = "device"
 	AnalyticsByEntryPage      AnalyticsDimension = "entry_page"
+	AnalyticsByEvent          AnalyticsDimension = "event"
 	AnalyticsByExitPage       AnalyticsDimension = "exit_page"
 	AnalyticsByHostname       AnalyticsDimension = "hostname"
 	AnalyticsByHour           AnalyticsDimension = "time:hour"
@@ -134,6 +156,7 @@ const (
 	AnalyticsByOsVersion      AnalyticsDimension = "os_version"
 	AnalyticsByPage           AnalyticsDimension = "page"
 	AnalyticsByPlatform       AnalyticsDimension = "platform"
+	AnalyticsByProp           AnalyticsDimension = "prop"
 	AnalyticsByReferrer       AnalyticsDimension = "referrer"
 	AnalyticsByRegion         AnalyticsDimension = "region"
 	AnalyticsByScreenSize     AnalyticsDimension = "screen_size"
@@ -167,6 +190,8 @@ func (e AnalyticsDimension) Valid() bool {
 		return true
 	case AnalyticsByEntryPage:
 		return true
+	case AnalyticsByEvent:
+		return true
 	case AnalyticsByExitPage:
 		return true
 	case AnalyticsByHostname:
@@ -184,6 +209,8 @@ func (e AnalyticsDimension) Valid() bool {
 	case AnalyticsByPage:
 		return true
 	case AnalyticsByPlatform:
+		return true
+	case AnalyticsByProp:
 		return true
 	case AnalyticsByReferrer:
 		return true
@@ -204,24 +231,6 @@ func (e AnalyticsDimension) Valid() bool {
 	case AnalyticsByUtmTerm:
 		return true
 	case AnalyticsByWeek:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for AnalyticsEventN.
-const (
-	Engagement AnalyticsEventN = "engagement"
-	Pageview   AnalyticsEventN = "pageview"
-)
-
-// Valid indicates whether the value is a known member of the AnalyticsEventN enum.
-func (e AnalyticsEventN) Valid() bool {
-	switch e {
-	case Engagement:
-		return true
-	case Pageview:
 		return true
 	default:
 		return false
@@ -265,6 +274,7 @@ const (
 	AnalyticsDimCountry        AnalyticsFilterDimension = "country"
 	AnalyticsDimDevice         AnalyticsFilterDimension = "device"
 	AnalyticsDimEntryPage      AnalyticsFilterDimension = "entry_page"
+	AnalyticsDimEvent          AnalyticsFilterDimension = "event"
 	AnalyticsDimExitPage       AnalyticsFilterDimension = "exit_page"
 	AnalyticsDimHostname       AnalyticsFilterDimension = "hostname"
 	AnalyticsDimLanguage       AnalyticsFilterDimension = "language"
@@ -272,6 +282,7 @@ const (
 	AnalyticsDimOsVersion      AnalyticsFilterDimension = "os_version"
 	AnalyticsDimPage           AnalyticsFilterDimension = "page"
 	AnalyticsDimPlatform       AnalyticsFilterDimension = "platform"
+	AnalyticsDimProp           AnalyticsFilterDimension = "prop"
 	AnalyticsDimReferrer       AnalyticsFilterDimension = "referrer"
 	AnalyticsDimRegion         AnalyticsFilterDimension = "region"
 	AnalyticsDimScreenSize     AnalyticsFilterDimension = "screen_size"
@@ -302,6 +313,8 @@ func (e AnalyticsFilterDimension) Valid() bool {
 		return true
 	case AnalyticsDimEntryPage:
 		return true
+	case AnalyticsDimEvent:
+		return true
 	case AnalyticsDimExitPage:
 		return true
 	case AnalyticsDimHostname:
@@ -315,6 +328,8 @@ func (e AnalyticsFilterDimension) Valid() bool {
 	case AnalyticsDimPage:
 		return true
 	case AnalyticsDimPlatform:
+		return true
+	case AnalyticsDimProp:
 		return true
 	case AnalyticsDimReferrer:
 		return true
@@ -360,17 +375,42 @@ func (e AnalyticsGeoIPSource) Valid() bool {
 	}
 }
 
+// Defines values for AnalyticsGoalKind.
+const (
+	AnalyticsGoalEvent    AnalyticsGoalKind = "event"
+	AnalyticsGoalPageview AnalyticsGoalKind = "pageview"
+	AnalyticsGoalScroll   AnalyticsGoalKind = "scroll"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsGoalKind enum.
+func (e AnalyticsGoalKind) Valid() bool {
+	switch e {
+	case AnalyticsGoalEvent:
+		return true
+	case AnalyticsGoalPageview:
+		return true
+	case AnalyticsGoalScroll:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsMetric.
 const (
-	AnalyticsMetricBounceRate    AnalyticsMetric = "bounce_rate"
-	AnalyticsMetricEvents        AnalyticsMetric = "events"
-	AnalyticsMetricPageviews     AnalyticsMetric = "pageviews"
-	AnalyticsMetricScrollDepth   AnalyticsMetric = "scroll_depth"
-	AnalyticsMetricTimeOnPage    AnalyticsMetric = "time_on_page"
-	AnalyticsMetricViewsPerVisit AnalyticsMetric = "views_per_visit"
-	AnalyticsMetricVisitDuration AnalyticsMetric = "visit_duration"
-	AnalyticsMetricVisitors      AnalyticsMetric = "visitors"
-	AnalyticsMetricVisits        AnalyticsMetric = "visits"
+	AnalyticsMetricBounceRate     AnalyticsMetric = "bounce_rate"
+	AnalyticsMetricCompletions    AnalyticsMetric = "completions"
+	AnalyticsMetricConversionRate AnalyticsMetric = "conversion_rate"
+	AnalyticsMetricConversions    AnalyticsMetric = "conversions"
+	AnalyticsMetricEvents         AnalyticsMetric = "events"
+	AnalyticsMetricPageviews      AnalyticsMetric = "pageviews"
+	AnalyticsMetricRevenue        AnalyticsMetric = "revenue"
+	AnalyticsMetricScrollDepth    AnalyticsMetric = "scroll_depth"
+	AnalyticsMetricTimeOnPage     AnalyticsMetric = "time_on_page"
+	AnalyticsMetricViewsPerVisit  AnalyticsMetric = "views_per_visit"
+	AnalyticsMetricVisitDuration  AnalyticsMetric = "visit_duration"
+	AnalyticsMetricVisitors       AnalyticsMetric = "visitors"
+	AnalyticsMetricVisits         AnalyticsMetric = "visits"
 )
 
 // Valid indicates whether the value is a known member of the AnalyticsMetric enum.
@@ -378,9 +418,17 @@ func (e AnalyticsMetric) Valid() bool {
 	switch e {
 	case AnalyticsMetricBounceRate:
 		return true
+	case AnalyticsMetricCompletions:
+		return true
+	case AnalyticsMetricConversionRate:
+		return true
+	case AnalyticsMetricConversions:
+		return true
 	case AnalyticsMetricEvents:
 		return true
 	case AnalyticsMetricPageviews:
+		return true
+	case AnalyticsMetricRevenue:
 		return true
 	case AnalyticsMetricScrollDepth:
 		return true
@@ -4074,6 +4122,42 @@ func (e ListClientMessagesParamsOrder) Valid() bool {
 	}
 }
 
+// Defines values for GetAnalyticsFunnelReportParamsPeriod.
+const (
+	AnalyticsFunnelLast28Days GetAnalyticsFunnelReportParamsPeriod = "28d"
+	AnalyticsFunnelLast30Days GetAnalyticsFunnelReportParamsPeriod = "30d"
+	AnalyticsFunnelLast7Days  GetAnalyticsFunnelReportParamsPeriod = "7d"
+	AnalyticsFunnelLast90Days GetAnalyticsFunnelReportParamsPeriod = "90d"
+	AnalyticsFunnelLastMonth  GetAnalyticsFunnelReportParamsPeriod = "last_month"
+	AnalyticsFunnelThisMonth  GetAnalyticsFunnelReportParamsPeriod = "month"
+	AnalyticsFunnelToday      GetAnalyticsFunnelReportParamsPeriod = "today"
+	AnalyticsFunnelYesterday  GetAnalyticsFunnelReportParamsPeriod = "yesterday"
+)
+
+// Valid indicates whether the value is a known member of the GetAnalyticsFunnelReportParamsPeriod enum.
+func (e GetAnalyticsFunnelReportParamsPeriod) Valid() bool {
+	switch e {
+	case AnalyticsFunnelLast28Days:
+		return true
+	case AnalyticsFunnelLast30Days:
+		return true
+	case AnalyticsFunnelLast7Days:
+		return true
+	case AnalyticsFunnelLast90Days:
+		return true
+	case AnalyticsFunnelLastMonth:
+		return true
+	case AnalyticsFunnelThisMonth:
+		return true
+	case AnalyticsFunnelToday:
+		return true
+	case AnalyticsFunnelYesterday:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for QueryAnalyticsParamsFormat.
 const (
 	AnalyticsFormatCSV  QueryAnalyticsParamsFormat = "csv"
@@ -4209,6 +4293,48 @@ type AccountDeletion struct {
 	Email string `json:"email"`
 }
 
+// AnalyticsAnnotation defines model for AnalyticsAnnotation.
+type AnalyticsAnnotation struct {
+	CreatedAt time.Time `json:"created_at"`
+
+	// CreatedBy The member who wrote it; absent for Yuva's own, API keys and removed members.
+	CreatedBy *uuid.UUID         `json:"created_by,omitempty"`
+	EndsOn    openapi_types.Date `json:"ends_on"`
+	GoalId    *uuid.UUID         `json:"goal_id,omitempty"`
+	Id        uuid.UUID          `json:"id"`
+
+	// Kind `note` is a member's; Yuva adds `key_rotated` when the property got a new key and
+	// `goal_created` (with `goal_id` while the goal exists, and its name as `text`).
+	Kind      AnalyticsAnnotationKind `json:"kind"`
+	StartsOn  openapi_types.Date      `json:"starts_on"`
+	Text      string                  `json:"text"`
+	UpdatedAt time.Time               `json:"updated_at"`
+}
+
+// AnalyticsAnnotationKind `note` is a member's; Yuva adds `key_rotated` when the property got a new key and
+// `goal_created` (with `goal_id` while the goal exists, and its name as `text`).
+type AnalyticsAnnotationKind string
+
+// AnalyticsAnnotationCreate defines model for AnalyticsAnnotationCreate.
+type AnalyticsAnnotationCreate struct {
+	// EndsOn The last day; `starts_on` when absent.
+	EndsOn   *openapi_types.Date `json:"ends_on,omitempty"`
+	StartsOn openapi_types.Date  `json:"starts_on"`
+	Text     string              `json:"text"`
+}
+
+// AnalyticsAnnotationList defines model for AnalyticsAnnotationList.
+type AnalyticsAnnotationList struct {
+	Items []AnalyticsAnnotation `json:"items"`
+}
+
+// AnalyticsAnnotationUpdate defines model for AnalyticsAnnotationUpdate.
+type AnalyticsAnnotationUpdate struct {
+	EndsOn   *openapi_types.Date `json:"ends_on,omitempty"`
+	StartsOn *openapi_types.Date `json:"starts_on,omitempty"`
+	Text     *string             `json:"text,omitempty"`
+}
+
 // AnalyticsAudience `children` keeps location at country level and allows no consent features or tracked props.
 type AnalyticsAudience string
 
@@ -4269,7 +4395,9 @@ type AnalyticsDataDeletion struct {
 // of the property's time zone; only alone, and only with `visitors`, `visits`, `pageviews` and
 // `events`), `time:day`, `time:week` (weeks start on Monday) or `time:month`. A time grain's
 // values are the bucket's start, `2026-10-12` or `2026-10-12T14:00`, and every bucket of the
-// range is present.
+// range is present. `event` breaks custom and built-in events down by name, `prop` by the
+// value of the event prop the query's `prop` names; either takes at most one other dimension,
+// a time grain other than `time:hour` or a visit dimension.
 type AnalyticsDimension string
 
 // AnalyticsDomain A host name whose pages may send events, without scheme or port: `example.com`,
@@ -4305,16 +4433,40 @@ type AnalyticsDropCounts struct {
 // AnalyticsEvent One event. Keys the server does not know are ignored, so newer scripts keep working with
 // older servers.
 type AnalyticsEvent struct {
-	C *AnalyticsConsent `json:"c,omitempty"`
+	// DollarSign Revenue a custom or built-in event carries: `a` the amount, a decimal with at most the
+	// currency's minor-unit digits (2 for most, 0 for JPY or KRW, 3 for KWD), `c` the ISO 4217
+	// code. It is stored in minor units per currency; Yuva converts nothing.
+	DollarSign *AnalyticsEventRevenue `json:"$,omitempty"`
+	C          *AnalyticsConsent      `json:"c,omitempty"`
 
 	// H The page uses hash routing, so the fragment is part of the path.
 	H *bool `json:"h,omitempty"`
 
+	// I `false` makes a custom event non-interactive, so a visit with only that event still bounces.
+	I *bool `json:"i,omitempty"`
+
 	// Ms `engagement` only: milliseconds the page was visible and focused, at most 30 minutes.
 	Ms *int `json:"ms,omitempty"`
 
-	// N `pageview`, or `engagement` (sent once per view when the page is hidden or left).
-	N AnalyticsEventN `json:"n"`
+	// N `pageview`; `engagement` (sent once per view when the page is hidden or left); a built-in
+	// event: `outbound_click` (a link to another host, with prop `url`), `file_download` (a
+	// link to a file, with prop `url`), `not_found` (the page is the site's 404 page) or
+	// `chat_open` (the page's chat was opened); or a custom event's name, 1 to 120
+	// characters. `screen` and names starting with `$` or `yuva_` are reserved.
+	//
+	//
+	// Examples: pageview, Signup, outbound_click
+	N string `json:"n"`
+
+	// P Custom and built-in events only: up to 30 props. Keys have 1 to 300 characters and must
+	// not start with `$` or `yuva_`; values are strings, numbers or booleans, kept as text of
+	// at most 2,000 characters. A value shaped like an e-mail address is dropped (and counted
+	// as scrubbed); a children's property keeps no props but a built-in event's `url`. The
+	// `url` of `outbound_click` and `file_download` is kept without its query and fragment.
+	//
+	//
+	// Examples: {"plan":"pro","seats":3}
+	P *map[string]AnalyticsEvent_P_AdditionalProperties `json:"p,omitempty"`
 
 	// R `document.referrer`; only its host and path are kept, and none when it is the page's own host.
 	R *string `json:"r,omitempty"`
@@ -4332,12 +4484,49 @@ type AnalyticsEvent struct {
 	W *int `json:"w,omitempty"`
 }
 
-// AnalyticsEventN `pageview`, or `engagement` (sent once per view when the page is hidden or left).
-type AnalyticsEventN string
+// AnalyticsEventP0 defines model for AnalyticsEvent.P.0.
+type AnalyticsEventP0 = string
+
+// AnalyticsEventP1 defines model for AnalyticsEvent.P.1.
+type AnalyticsEventP1 = float32
+
+// AnalyticsEventP2 defines model for AnalyticsEvent.P.2.
+type AnalyticsEventP2 = bool
+
+// AnalyticsEvent_P_AdditionalProperties defines model for AnalyticsEvent.p.AdditionalProperties.
+type AnalyticsEvent_P_AdditionalProperties struct {
+	union json.RawMessage
+}
 
 // AnalyticsEventBatch defines model for AnalyticsEventBatch.
 type AnalyticsEventBatch struct {
 	E []AnalyticsEvent `json:"e"`
+}
+
+// AnalyticsEventRevenue Revenue a custom or built-in event carries: `a` the amount, a decimal with at most the
+// currency's minor-unit digits (2 for most, 0 for JPY or KRW, 3 for KWD), `c` the ISO 4217
+// code. It is stored in minor units per currency; Yuva converts nothing.
+type AnalyticsEventRevenue struct {
+	// A As a string ("29.90") or a number.
+	//
+	// Examples: 29.90
+	A AnalyticsEventRevenue_A `json:"a"`
+
+	// C Examples: EUR
+	C string `json:"c"`
+}
+
+// AnalyticsEventRevenueA0 defines model for AnalyticsEventRevenue.A.0.
+type AnalyticsEventRevenueA0 = string
+
+// AnalyticsEventRevenueA1 defines model for AnalyticsEventRevenue.A.1.
+type AnalyticsEventRevenueA1 = float32
+
+// AnalyticsEventRevenue_A As a string ("29.90") or a number.
+//
+// Examples: 29.90
+type AnalyticsEventRevenue_A struct {
+	union json.RawMessage
 }
 
 // AnalyticsExcludedAddress An IP address or CIDR range whose events are dropped, such as an office or a monitoring host.
@@ -4356,10 +4545,17 @@ type AnalyticsFilter struct {
 	// `email`, `referral`, `ai_assistants`, `internal`; `source` the UTM source, or the named site
 	// (Google, ChatGPT) or host a visit came from; `device` is `desktop`, `mobile` or `tablet`;
 	// `screen_size` is `phone`, `tablet`, `laptop` or `desktop`; `country` an ISO 3166-1 alpha-2
-	// code. Unknown values are empty strings.
+	// code. Unknown values are empty strings. `event` is the name of a custom or built-in event
+	// and `prop` the value of the event prop the filter's `prop` (or the query's `prop`) names, empty
+	// for events without it: as
+	// a filter of visits they keep the visits with such an event; in an `event` or `prop`
+	// breakdown they keep the matching events.
 	Dimension AnalyticsFilterDimension `json:"dimension"`
 	Op        AnalyticsFilterOp        `json:"op"`
-	Values    []string                 `json:"values"`
+
+	// Prop With `dimension` `prop`, the prop key compared.
+	Prop   *string  `json:"prop,omitempty"`
+	Values []string `json:"values"`
 }
 
 // AnalyticsFilterOp defines model for AnalyticsFilter.Op.
@@ -4371,8 +4567,69 @@ type AnalyticsFilterOp string
 // `email`, `referral`, `ai_assistants`, `internal`; `source` the UTM source, or the named site
 // (Google, ChatGPT) or host a visit came from; `device` is `desktop`, `mobile` or `tablet`;
 // `screen_size` is `phone`, `tablet`, `laptop` or `desktop`; `country` an ISO 3166-1 alpha-2
-// code. Unknown values are empty strings.
+// code. Unknown values are empty strings. `event` is the name of a custom or built-in event
+// and `prop` the value of the event prop the filter's `prop` (or the query's `prop`) names, empty
+// for events without it: as
+// a filter of visits they keep the visits with such an event; in an `event` or `prop`
+// breakdown they keep the matching events.
 type AnalyticsFilterDimension string
+
+// AnalyticsFunnel defines model for AnalyticsFunnel.
+type AnalyticsFunnel struct {
+	CreatedAt time.Time `json:"created_at"`
+	Id        uuid.UUID `json:"id"`
+	Name      string    `json:"name"`
+
+	// Steps Goal ids, in order.
+	Steps     []uuid.UUID `json:"steps"`
+	UpdatedAt time.Time   `json:"updated_at"`
+}
+
+// AnalyticsFunnelCreate defines model for AnalyticsFunnelCreate.
+type AnalyticsFunnelCreate struct {
+	Name  string      `json:"name"`
+	Steps []uuid.UUID `json:"steps"`
+}
+
+// AnalyticsFunnelList defines model for AnalyticsFunnelList.
+type AnalyticsFunnelList struct {
+	Items []AnalyticsFunnel `json:"items"`
+}
+
+// AnalyticsFunnelReport defines model for AnalyticsFunnelReport.
+type AnalyticsFunnelReport struct {
+	From          openapi_types.Date    `json:"from"`
+	FunnelId      uuid.UUID             `json:"funnel_id"`
+	RawWindowFrom openapi_types.Date    `json:"raw_window_from"`
+	Steps         []AnalyticsFunnelStep `json:"steps"`
+	To            openapi_types.Date    `json:"to"`
+}
+
+// AnalyticsFunnelStep defines model for AnalyticsFunnelStep.
+type AnalyticsFunnelStep struct {
+	// ConversionRate Percent of the first step's visitors.
+	ConversionRate float64 `json:"conversion_rate"`
+
+	// Dropoff Visitors of the step before who did not reach this one; 0 for the first step.
+	Dropoff int64     `json:"dropoff"`
+	GoalId  uuid.UUID `json:"goal_id"`
+
+	// Name The goal's name.
+	Name string `json:"name"`
+
+	// StepRate Percent of the step before's visitors; 100 for the first step.
+	StepRate float64 `json:"step_rate"`
+
+	// Visitors Visitors who reached this step after all before it within a visit, added up per day.
+	Visitors int64 `json:"visitors"`
+	Visits   int64 `json:"visits"`
+}
+
+// AnalyticsFunnelUpdate defines model for AnalyticsFunnelUpdate.
+type AnalyticsFunnelUpdate struct {
+	Name  *string      `json:"name,omitempty"`
+	Steps *[]uuid.UUID `json:"steps,omitempty"`
+}
 
 // AnalyticsGeoIP defines model for AnalyticsGeoIP.
 type AnalyticsGeoIP struct {
@@ -4392,6 +4649,80 @@ type AnalyticsGeoIP struct {
 
 // AnalyticsGeoIPSource `dbip` (DB-IP Lite, downloaded monthly), `file` (the operator's MMDB file) or `off` (country from the CDN only, if any).
 type AnalyticsGeoIPSource string
+
+// AnalyticsGoal defines model for AnalyticsGoal.
+type AnalyticsGoal struct {
+	// CountsFrom The first day the goal has numbers for, the start of the raw window when it was made.
+	CountsFrom openapi_types.Date `json:"counts_from"`
+	CreatedAt  time.Time          `json:"created_at"`
+	EventName  *string            `json:"event_name,omitempty"`
+	Id         uuid.UUID          `json:"id"`
+
+	// Kind `pageview`: a page view whose path matches `path_pattern`. `event`: a custom or built-in
+	// event named `event_name`, and with `prop_key` only when that prop equals `prop_value`.
+	// `scroll`: a page whose path matches `path_pattern` scrolled to at least `scroll_pct`.
+	Kind AnalyticsGoalKind `json:"kind"`
+	Name string            `json:"name"`
+
+	// PathPattern A path starting with `/`, where `*` matches one segment and `**` any number of them.
+	//
+	// Examples: /admin/**, /preview/*
+	PathPattern *AnalyticsPathPattern `json:"path_pattern,omitempty"`
+	PropKey     *string               `json:"prop_key,omitempty"`
+	PropValue   *string               `json:"prop_value,omitempty"`
+	ScrollPct   *int                  `json:"scroll_pct,omitempty"`
+	UpdatedAt   time.Time             `json:"updated_at"`
+}
+
+// AnalyticsGoalCreate defines model for AnalyticsGoalCreate.
+type AnalyticsGoalCreate struct {
+	EventName *string `json:"event_name,omitempty"`
+
+	// Kind `pageview`: a page view whose path matches `path_pattern`. `event`: a custom or built-in
+	// event named `event_name`, and with `prop_key` only when that prop equals `prop_value`.
+	// `scroll`: a page whose path matches `path_pattern` scrolled to at least `scroll_pct`.
+	Kind AnalyticsGoalKind `json:"kind"`
+	Name string            `json:"name"`
+
+	// PathPattern A path starting with `/`, where `*` matches one segment and `**` any number of them.
+	//
+	// Examples: /admin/**, /preview/*
+	PathPattern *AnalyticsPathPattern `json:"path_pattern,omitempty"`
+	PropKey     *string               `json:"prop_key,omitempty"`
+	PropValue   *string               `json:"prop_value,omitempty"`
+	ScrollPct   *int                  `json:"scroll_pct,omitempty"`
+}
+
+// AnalyticsGoalKind `pageview`: a page view whose path matches `path_pattern`. `event`: a custom or built-in
+// event named `event_name`, and with `prop_key` only when that prop equals `prop_value`.
+// `scroll`: a page whose path matches `path_pattern` scrolled to at least `scroll_pct`.
+type AnalyticsGoalKind string
+
+// AnalyticsGoalList defines model for AnalyticsGoalList.
+type AnalyticsGoalList struct {
+	Items []AnalyticsGoal `json:"items"`
+}
+
+// AnalyticsGoalUpdate Fields the goal's (new) kind does not use are dropped.
+type AnalyticsGoalUpdate struct {
+	EventName *string `json:"event_name,omitempty"`
+
+	// Kind `pageview`: a page view whose path matches `path_pattern`. `event`: a custom or built-in
+	// event named `event_name`, and with `prop_key` only when that prop equals `prop_value`.
+	// `scroll`: a page whose path matches `path_pattern` scrolled to at least `scroll_pct`.
+	Kind *AnalyticsGoalKind `json:"kind,omitempty"`
+	Name *string            `json:"name,omitempty"`
+
+	// PathPattern A path starting with `/`, where `*` matches one segment and `**` any number of them.
+	//
+	// Examples: /admin/**, /preview/*
+	PathPattern *AnalyticsPathPattern `json:"path_pattern,omitempty"`
+
+	// PropKey `null` drops the prop condition, with its value.
+	PropKey   nullable.Nullable[string] `json:"prop_key,omitempty"`
+	PropValue *string                   `json:"prop_value,omitempty"`
+	ScrollPct *int                      `json:"scroll_pct,omitempty"`
+}
 
 // AnalyticsHealth defines model for AnalyticsHealth.
 type AnalyticsHealth struct {
@@ -4430,20 +4761,32 @@ type AnalyticsIngestCounts struct {
 // `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
 // `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
 // focused, per page view that reported it), `scroll_depth` (deepest scroll in percent, per
-// page view that reported it), `events` (custom events).
+// page view that reported it), `events` (custom and built-in events).
+//
+// With a `goal_id`: `conversions` (visitors who completed the goal, per day, added up),
+// `conversion_rate` (conversions per 100 visitors), `completions` (times the goal was
+// completed) and `revenue` (what the completing events carried, per currency, in
+// `metrics.revenue`). With an `event` or `prop` dimension only `visitors`, `visits`, `events`
+// and `revenue` are offered, counted over the events of each row. `revenue` cannot order rows.
 type AnalyticsMetric string
 
 // AnalyticsMetrics The metrics the query asked for.
 type AnalyticsMetrics struct {
-	BounceRate    *float64 `json:"bounce_rate,omitempty"`
-	Events        *float64 `json:"events,omitempty"`
-	Pageviews     *float64 `json:"pageviews,omitempty"`
-	ScrollDepth   *float64 `json:"scroll_depth,omitempty"`
-	TimeOnPage    *float64 `json:"time_on_page,omitempty"`
-	ViewsPerVisit *float64 `json:"views_per_visit,omitempty"`
-	VisitDuration *float64 `json:"visit_duration,omitempty"`
-	Visitors      *float64 `json:"visitors,omitempty"`
-	Visits        *float64 `json:"visits,omitempty"`
+	BounceRate     *float64 `json:"bounce_rate,omitempty"`
+	Completions    *float64 `json:"completions,omitempty"`
+	ConversionRate *float64 `json:"conversion_rate,omitempty"`
+	Conversions    *float64 `json:"conversions,omitempty"`
+	Events         *float64 `json:"events,omitempty"`
+	Pageviews      *float64 `json:"pageviews,omitempty"`
+
+	// Revenue Per currency, most first.
+	Revenue       *[]AnalyticsRevenue `json:"revenue,omitempty"`
+	ScrollDepth   *float64            `json:"scroll_depth,omitempty"`
+	TimeOnPage    *float64            `json:"time_on_page,omitempty"`
+	ViewsPerVisit *float64            `json:"views_per_visit,omitempty"`
+	VisitDuration *float64            `json:"visit_duration,omitempty"`
+	Visitors      *float64            `json:"visitors,omitempty"`
+	Visits        *float64            `json:"visits,omitempty"`
 }
 
 // AnalyticsMinute defines model for AnalyticsMinute.
@@ -4461,7 +4804,13 @@ type AnalyticsOrder struct {
 	// `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
 	// `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
 	// focused, per page view that reported it), `scroll_depth` (deepest scroll in percent, per
-	// page view that reported it), `events` (custom events).
+	// page view that reported it), `events` (custom and built-in events).
+	//
+	// With a `goal_id`: `conversions` (visitors who completed the goal, per day, added up),
+	// `conversion_rate` (conversions per 100 visitors), `completions` (times the goal was
+	// completed) and `revenue` (what the completing events carried, per currency, in
+	// `metrics.revenue`). With an `event` or `prop` dimension only `visitors`, `visits`, `events`
+	// and `revenue` are offered, counted over the events of each row. `revenue` cannot order rows.
 	Metric AnalyticsMetric `json:"metric"`
 }
 
@@ -4619,6 +4968,13 @@ type AnalyticsQuery struct {
 	Dimensions *[]AnalyticsDimension `json:"dimensions,omitempty"`
 	Filters    *[]AnalyticsFilter    `json:"filters,omitempty"`
 
+	// GoalId The goal whose `conversions`, `conversion_rate`, `completions` and `revenue` the query
+	// asks for. Goal numbers of finished days come from rollups by total, time, `entry_page`,
+	// `channel`, `source`, `utm_campaign`, `country` and `device`; other breakdowns and any
+	// filter need raw rows. A goal counts on every day of the raw window, also before it was
+	// made; older days have it only if it existed when they were rolled up.
+	GoalId *uuid.UUID `json:"goal_id,omitempty"`
+
 	// Limit Rows per page; time series are never cut.
 	Limit   *int              `json:"limit,omitempty"`
 	Metrics []AnalyticsMetric `json:"metrics"`
@@ -4626,11 +4982,17 @@ type AnalyticsQuery struct {
 	// OrderBy Time series come in time order; breakdowns by `visitors`, most first, unless this says otherwise.
 	OrderBy *[]AnalyticsOrder `json:"order_by,omitempty"`
 
+	// Prop The event prop key a `prop` dimension breaks down by.
+	Prop *string `json:"prop,omitempty"`
+
 	// Range Days of the property's time zone: a `period` ending today (`today`, `yesterday`, `7d`,
 	// `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
 	// `year` are the current calendar month and year to date; `last_month` the one before), or
 	// `from` and `to` (inclusive, at most 400 days apart).
 	Range AnalyticsRange `json:"range"`
+
+	// SegmentId A saved segment of the property, whose filters are added to `filters`.
+	SegmentId *uuid.UUID `json:"segment_id,omitempty"`
 }
 
 // AnalyticsRange Days of the property's time zone: a `period` ending today (`today`, `yesterday`, `7d`,
@@ -4720,6 +5082,24 @@ type AnalyticsResultMeta struct {
 // AnalyticsResultMetaServedFrom defines model for AnalyticsResultMeta.ServedFrom.
 type AnalyticsResultMetaServedFrom string
 
+// AnalyticsRevenue defines model for AnalyticsRevenue.
+type AnalyticsRevenue struct {
+	// Average Per event that carried revenue, in minor units, rounded.
+	Average int64 `json:"average"`
+
+	// Currency ISO 4217 code.
+	Currency string `json:"currency"`
+
+	// Digits The currency's minor-unit digits, so `total / 10^digits` is the amount.
+	Digits int `json:"digits"`
+
+	// Events Events that carried revenue in this currency.
+	Events int64 `json:"events"`
+
+	// Total In the currency's minor units (cents; yen for JPY).
+	Total int64 `json:"total"`
+}
+
 // AnalyticsRow defines model for AnalyticsRow.
 type AnalyticsRow struct {
 	// Country With a `region` or `city` dimension, the place's country.
@@ -4733,6 +5113,35 @@ type AnalyticsRow struct {
 
 	// Region With a `city` dimension, the city's region.
 	Region *string `json:"region,omitempty"`
+}
+
+// AnalyticsSegment defines model for AnalyticsSegment.
+type AnalyticsSegment struct {
+	CreatedAt time.Time `json:"created_at"`
+
+	// CreatedBy The member who saved it; absent for API keys and removed members.
+	CreatedBy *uuid.UUID        `json:"created_by,omitempty"`
+	Filters   []AnalyticsFilter `json:"filters"`
+	Id        uuid.UUID         `json:"id"`
+	Name      string            `json:"name"`
+	UpdatedAt time.Time         `json:"updated_at"`
+}
+
+// AnalyticsSegmentCreate defines model for AnalyticsSegmentCreate.
+type AnalyticsSegmentCreate struct {
+	Filters []AnalyticsFilter `json:"filters"`
+	Name    string            `json:"name"`
+}
+
+// AnalyticsSegmentList defines model for AnalyticsSegmentList.
+type AnalyticsSegmentList struct {
+	Items []AnalyticsSegment `json:"items"`
+}
+
+// AnalyticsSegmentUpdate defines model for AnalyticsSegmentUpdate.
+type AnalyticsSegmentUpdate struct {
+	Filters *[]AnalyticsFilter `json:"filters,omitempty"`
+	Name    *string            `json:"name,omitempty"`
 }
 
 // AnalyticsTopValue defines model for AnalyticsTopValue.
@@ -12129,8 +12538,20 @@ type WorkspaceUpdate struct {
 	RetentionDays nullable.Nullable[int32] `json:"retention_days,omitempty"`
 }
 
+// AnalyticsAnnotationId defines model for AnalyticsAnnotationId.
+type AnalyticsAnnotationId = uuid.UUID
+
+// AnalyticsFunnelId defines model for AnalyticsFunnelId.
+type AnalyticsFunnelId = uuid.UUID
+
+// AnalyticsGoalId defines model for AnalyticsGoalId.
+type AnalyticsGoalId = uuid.UUID
+
 // AnalyticsPropertyId defines model for AnalyticsPropertyId.
 type AnalyticsPropertyId = uuid.UUID
+
+// AnalyticsSegmentId defines model for AnalyticsSegmentId.
+type AnalyticsSegmentId = uuid.UUID
 
 // ApiKeyId defines model for ApiKeyId.
 type ApiKeyId = uuid.UUID
@@ -12408,11 +12829,109 @@ type UpdateAnalyticsPropertyParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListAnalyticsAnnotationsParams defines parameters for ListAnalyticsAnnotations.
+type ListAnalyticsAnnotationsParams struct {
+	From *openapi_types.Date `form:"from,omitempty" json:"from,omitempty"`
+	To   *openapi_types.Date `form:"to,omitempty" json:"to,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateAnalyticsAnnotationParams defines parameters for CreateAnalyticsAnnotation.
+type CreateAnalyticsAnnotationParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteAnalyticsAnnotationParams defines parameters for DeleteAnalyticsAnnotation.
+type DeleteAnalyticsAnnotationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateAnalyticsAnnotationParams defines parameters for UpdateAnalyticsAnnotation.
+type UpdateAnalyticsAnnotationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // DeleteAnalyticsDataParams defines parameters for DeleteAnalyticsData.
 type DeleteAnalyticsDataParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListAnalyticsFunnelsParams defines parameters for ListAnalyticsFunnels.
+type ListAnalyticsFunnelsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateAnalyticsFunnelParams defines parameters for CreateAnalyticsFunnel.
+type CreateAnalyticsFunnelParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteAnalyticsFunnelParams defines parameters for DeleteAnalyticsFunnel.
+type DeleteAnalyticsFunnelParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateAnalyticsFunnelParams defines parameters for UpdateAnalyticsFunnel.
+type UpdateAnalyticsFunnelParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetAnalyticsFunnelReportParams defines parameters for GetAnalyticsFunnelReport.
+type GetAnalyticsFunnelReportParams struct {
+	// Period A period ending today as in `AnalyticsRange`; `30d` when neither it nor `from` and `to` are given.
+	Period *GetAnalyticsFunnelReportParamsPeriod `form:"period,omitempty" json:"period,omitempty"`
+	From   *openapi_types.Date                   `form:"from,omitempty" json:"from,omitempty"`
+	To     *openapi_types.Date                   `form:"to,omitempty" json:"to,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetAnalyticsFunnelReportParamsPeriod defines parameters for GetAnalyticsFunnelReport.
+type GetAnalyticsFunnelReportParamsPeriod string
+
+// ListAnalyticsGoalsParams defines parameters for ListAnalyticsGoals.
+type ListAnalyticsGoalsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateAnalyticsGoalParams defines parameters for CreateAnalyticsGoal.
+type CreateAnalyticsGoalParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteAnalyticsGoalParams defines parameters for DeleteAnalyticsGoal.
+type DeleteAnalyticsGoalParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateAnalyticsGoalParams defines parameters for UpdateAnalyticsGoal.
+type UpdateAnalyticsGoalParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -12449,6 +12968,33 @@ type RotateAnalyticsKeyParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListAnalyticsSegmentsParams defines parameters for ListAnalyticsSegments.
+type ListAnalyticsSegmentsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateAnalyticsSegmentParams defines parameters for CreateAnalyticsSegment.
+type CreateAnalyticsSegmentParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteAnalyticsSegmentParams defines parameters for DeleteAnalyticsSegment.
+type DeleteAnalyticsSegmentParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateAnalyticsSegmentParams defines parameters for UpdateAnalyticsSegment.
+type UpdateAnalyticsSegmentParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -14429,11 +14975,35 @@ type DeleteAnalyticsPropertyJSONRequestBody = AnalyticsPropertyDeletion
 // UpdateAnalyticsPropertyJSONRequestBody defines body for UpdateAnalyticsProperty for application/json ContentType.
 type UpdateAnalyticsPropertyJSONRequestBody = AnalyticsPropertyUpdate
 
+// CreateAnalyticsAnnotationJSONRequestBody defines body for CreateAnalyticsAnnotation for application/json ContentType.
+type CreateAnalyticsAnnotationJSONRequestBody = AnalyticsAnnotationCreate
+
+// UpdateAnalyticsAnnotationJSONRequestBody defines body for UpdateAnalyticsAnnotation for application/json ContentType.
+type UpdateAnalyticsAnnotationJSONRequestBody = AnalyticsAnnotationUpdate
+
 // DeleteAnalyticsDataJSONRequestBody defines body for DeleteAnalyticsData for application/json ContentType.
 type DeleteAnalyticsDataJSONRequestBody = AnalyticsDataDeletion
 
+// CreateAnalyticsFunnelJSONRequestBody defines body for CreateAnalyticsFunnel for application/json ContentType.
+type CreateAnalyticsFunnelJSONRequestBody = AnalyticsFunnelCreate
+
+// UpdateAnalyticsFunnelJSONRequestBody defines body for UpdateAnalyticsFunnel for application/json ContentType.
+type UpdateAnalyticsFunnelJSONRequestBody = AnalyticsFunnelUpdate
+
+// CreateAnalyticsGoalJSONRequestBody defines body for CreateAnalyticsGoal for application/json ContentType.
+type CreateAnalyticsGoalJSONRequestBody = AnalyticsGoalCreate
+
+// UpdateAnalyticsGoalJSONRequestBody defines body for UpdateAnalyticsGoal for application/json ContentType.
+type UpdateAnalyticsGoalJSONRequestBody = AnalyticsGoalUpdate
+
 // QueryAnalyticsJSONRequestBody defines body for QueryAnalytics for application/json ContentType.
 type QueryAnalyticsJSONRequestBody = AnalyticsQuery
+
+// CreateAnalyticsSegmentJSONRequestBody defines body for CreateAnalyticsSegment for application/json ContentType.
+type CreateAnalyticsSegmentJSONRequestBody = AnalyticsSegmentCreate
+
+// UpdateAnalyticsSegmentJSONRequestBody defines body for UpdateAnalyticsSegment for application/json ContentType.
+type UpdateAnalyticsSegmentJSONRequestBody = AnalyticsSegmentUpdate
 
 // CreateApiKeyJSONRequestBody defines body for CreateApiKey for application/json ContentType.
 type CreateApiKeyJSONRequestBody = ApiKeyCreate
@@ -14766,6 +15336,156 @@ func (t AnalyticsBatch) MarshalJSON() ([]byte, error) {
 }
 
 func (t *AnalyticsBatch) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsAnalyticsEventP0 returns the union data inside the AnalyticsEvent_P_AdditionalProperties as a AnalyticsEventP0
+func (t AnalyticsEvent_P_AdditionalProperties) AsAnalyticsEventP0() (AnalyticsEventP0, error) {
+	var body AnalyticsEventP0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAnalyticsEventP0 overwrites any union data inside the AnalyticsEvent_P_AdditionalProperties as the provided AnalyticsEventP0
+func (t *AnalyticsEvent_P_AdditionalProperties) FromAnalyticsEventP0(v AnalyticsEventP0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAnalyticsEventP0 performs a merge with any union data inside the AnalyticsEvent_P_AdditionalProperties, using the provided AnalyticsEventP0
+func (t *AnalyticsEvent_P_AdditionalProperties) MergeAnalyticsEventP0(v AnalyticsEventP0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsAnalyticsEventP1 returns the union data inside the AnalyticsEvent_P_AdditionalProperties as a AnalyticsEventP1
+func (t AnalyticsEvent_P_AdditionalProperties) AsAnalyticsEventP1() (AnalyticsEventP1, error) {
+	var body AnalyticsEventP1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAnalyticsEventP1 overwrites any union data inside the AnalyticsEvent_P_AdditionalProperties as the provided AnalyticsEventP1
+func (t *AnalyticsEvent_P_AdditionalProperties) FromAnalyticsEventP1(v AnalyticsEventP1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAnalyticsEventP1 performs a merge with any union data inside the AnalyticsEvent_P_AdditionalProperties, using the provided AnalyticsEventP1
+func (t *AnalyticsEvent_P_AdditionalProperties) MergeAnalyticsEventP1(v AnalyticsEventP1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsAnalyticsEventP2 returns the union data inside the AnalyticsEvent_P_AdditionalProperties as a AnalyticsEventP2
+func (t AnalyticsEvent_P_AdditionalProperties) AsAnalyticsEventP2() (AnalyticsEventP2, error) {
+	var body AnalyticsEventP2
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAnalyticsEventP2 overwrites any union data inside the AnalyticsEvent_P_AdditionalProperties as the provided AnalyticsEventP2
+func (t *AnalyticsEvent_P_AdditionalProperties) FromAnalyticsEventP2(v AnalyticsEventP2) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAnalyticsEventP2 performs a merge with any union data inside the AnalyticsEvent_P_AdditionalProperties, using the provided AnalyticsEventP2
+func (t *AnalyticsEvent_P_AdditionalProperties) MergeAnalyticsEventP2(v AnalyticsEventP2) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t AnalyticsEvent_P_AdditionalProperties) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *AnalyticsEvent_P_AdditionalProperties) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsAnalyticsEventRevenueA0 returns the union data inside the AnalyticsEventRevenue_A as a AnalyticsEventRevenueA0
+func (t AnalyticsEventRevenue_A) AsAnalyticsEventRevenueA0() (AnalyticsEventRevenueA0, error) {
+	var body AnalyticsEventRevenueA0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAnalyticsEventRevenueA0 overwrites any union data inside the AnalyticsEventRevenue_A as the provided AnalyticsEventRevenueA0
+func (t *AnalyticsEventRevenue_A) FromAnalyticsEventRevenueA0(v AnalyticsEventRevenueA0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAnalyticsEventRevenueA0 performs a merge with any union data inside the AnalyticsEventRevenue_A, using the provided AnalyticsEventRevenueA0
+func (t *AnalyticsEventRevenue_A) MergeAnalyticsEventRevenueA0(v AnalyticsEventRevenueA0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsAnalyticsEventRevenueA1 returns the union data inside the AnalyticsEventRevenue_A as a AnalyticsEventRevenueA1
+func (t AnalyticsEventRevenue_A) AsAnalyticsEventRevenueA1() (AnalyticsEventRevenueA1, error) {
+	var body AnalyticsEventRevenueA1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAnalyticsEventRevenueA1 overwrites any union data inside the AnalyticsEventRevenue_A as the provided AnalyticsEventRevenueA1
+func (t *AnalyticsEventRevenue_A) FromAnalyticsEventRevenueA1(v AnalyticsEventRevenueA1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAnalyticsEventRevenueA1 performs a merge with any union data inside the AnalyticsEventRevenue_A, using the provided AnalyticsEventRevenueA1
+func (t *AnalyticsEventRevenue_A) MergeAnalyticsEventRevenueA1(v AnalyticsEventRevenueA1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t AnalyticsEventRevenue_A) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *AnalyticsEventRevenue_A) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }
@@ -17601,6 +18321,11 @@ type ClientInterface interface {
 	// `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
 	// are refused until app collection exists. An unknown or deleted key answers `404`.
 	//
+	// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
+	// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
+	// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
+	// answers `400` for the whole request.
+	//
 	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 	// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 	// path; events over the property's per-minute limit or the workspace's monthly cap. One
@@ -17626,6 +18351,11 @@ type ClientInterface interface {
 	// `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
 	// are refused until app collection exists. An unknown or deleted key answers `404`.
 	//
+	// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
+	// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
+	// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
+	// answers `400` for the whole request.
+	//
 	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 	// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 	// path; events over the property's per-minute limit or the workspace's monthly cap. One
@@ -17650,6 +18380,11 @@ type ClientInterface interface {
 	// `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
 	// `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
 	// are refused until app collection exists. An unknown or deleted key answers `404`.
+	//
+	// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
+	// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
+	// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
+	// answers `400` for the whole request.
 	//
 	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 	// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
@@ -18619,6 +19354,75 @@ type ClientInterface interface {
 	// Corresponds with PATCH /v1/analytics/properties/{propertyId} (the `UpdateAnalyticsProperty` operationId).
 	UpdateAnalyticsProperty(ctx context.Context, propertyId AnalyticsPropertyId, params *UpdateAnalyticsPropertyParams, body UpdateAnalyticsPropertyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListAnalyticsAnnotations List a property's annotations
+	//
+	// Notes on the property's charts, by `starts_on`: members' (`note`) and Yuva's own
+	// (`key_rotated`, `goal_created`). With `from` and `to`, those that overlap those days; at
+	// most 1,000.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/annotations (the `ListAnalyticsAnnotations` operationId).
+	ListAnalyticsAnnotations(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsAnnotationsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateAnalyticsAnnotationWithBody Add an annotation
+	//
+	// A note on a day or a range of days of the property. Anyone who sees the property; at most
+	// 1,000 per property (`403 annotation_limit`).
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/annotations (the `CreateAnalyticsAnnotation` operationId).
+	CreateAnalyticsAnnotationWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsAnnotationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateAnalyticsAnnotation Add an annotation
+	//
+	// A note on a day or a range of days of the property. Anyone who sees the property; at most
+	// 1,000 per property (`403 annotation_limit`).
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/annotations (the `CreateAnalyticsAnnotation` operationId).
+	CreateAnalyticsAnnotation(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsAnnotationParams, body CreateAnalyticsAnnotationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteAnalyticsAnnotation Delete an annotation
+	//
+	// Its author, owners, admins and API keys without an inbox limit; Yuva's own annotations only
+	// owners, admins and API keys without an inbox limit.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with DELETE /v1/analytics/properties/{propertyId}/annotations/{annotationId} (the `DeleteAnalyticsAnnotation` operationId).
+	DeleteAnalyticsAnnotation(ctx context.Context, propertyId AnalyticsPropertyId, annotationId AnalyticsAnnotationId, params *DeleteAnalyticsAnnotationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateAnalyticsAnnotationWithBody Update an annotation
+	//
+	// Its author, owners, admins and API keys without an inbox limit. Yuva's own annotations
+	// cannot be changed (`403 annotation_read_only`).
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/annotations/{annotationId} (the `UpdateAnalyticsAnnotation` operationId).
+	UpdateAnalyticsAnnotationWithBody(ctx context.Context, propertyId AnalyticsPropertyId, annotationId AnalyticsAnnotationId, params *UpdateAnalyticsAnnotationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateAnalyticsAnnotation Update an annotation
+	//
+	// Its author, owners, admins and API keys without an inbox limit. Yuva's own annotations
+	// cannot be changed (`403 annotation_read_only`).
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/annotations/{annotationId} (the `UpdateAnalyticsAnnotation` operationId).
+	UpdateAnalyticsAnnotation(ctx context.Context, propertyId AnalyticsPropertyId, annotationId AnalyticsAnnotationId, params *UpdateAnalyticsAnnotationParams, body UpdateAnalyticsAnnotationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// DeleteAnalyticsDataWithBody Delete a property's collected data
 	//
 	// Deletes the visits and events of the days `from` to `to` (dates in the property's time
@@ -18646,6 +19450,151 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /v1/analytics/properties/{propertyId}/delete-data (the `DeleteAnalyticsData` operationId).
 	DeleteAnalyticsData(ctx context.Context, propertyId AnalyticsPropertyId, params *DeleteAnalyticsDataParams, body DeleteAnalyticsDataJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListAnalyticsFunnels List a property's funnels
+	//
+	// Oldest first. Scope: `analytics:read`.
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/funnels (the `ListAnalyticsFunnels` operationId).
+	ListAnalyticsFunnels(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsFunnelsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateAnalyticsFunnelWithBody Create a funnel
+	//
+	// Two to eight goals of the property, in order. A property has at most 20 funnels
+	// (`403 funnel_limit`); names are unique per property (`409 funnel_taken`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/funnels (the `CreateAnalyticsFunnel` operationId).
+	CreateAnalyticsFunnelWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsFunnelParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateAnalyticsFunnel Create a funnel
+	//
+	// Two to eight goals of the property, in order. A property has at most 20 funnels
+	// (`403 funnel_limit`); names are unique per property (`409 funnel_taken`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/funnels (the `CreateAnalyticsFunnel` operationId).
+	CreateAnalyticsFunnel(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsFunnelParams, body CreateAnalyticsFunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteAnalyticsFunnel Delete a funnel
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Corresponds with DELETE /v1/analytics/properties/{propertyId}/funnels/{funnelId} (the `DeleteAnalyticsFunnel` operationId).
+	DeleteAnalyticsFunnel(ctx context.Context, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *DeleteAnalyticsFunnelParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateAnalyticsFunnelWithBody Update a funnel
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/funnels/{funnelId} (the `UpdateAnalyticsFunnel` operationId).
+	UpdateAnalyticsFunnelWithBody(ctx context.Context, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *UpdateAnalyticsFunnelParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateAnalyticsFunnel Update a funnel
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/funnels/{funnelId} (the `UpdateAnalyticsFunnel` operationId).
+	UpdateAnalyticsFunnel(ctx context.Context, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *UpdateAnalyticsFunnelParams, body UpdateAnalyticsFunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetAnalyticsFunnelReport How visitors went through a funnel
+	//
+	// Per step, the visitors who completed it after every step before it within one visit, from
+	// the raw events of the range. A visitor exists for one day, so a funnel never crosses
+	// midnight; visitors over a range are added up per day. The range must lie inside the raw
+	// window (`422 needs_raw_window`) and span at most 90 days, or 31 when the property counted
+	// more than 10 million events over the last 30 days (`422 range_too_large`). Answers are
+	// cached for ten minutes.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/funnels/{funnelId}/report (the `GetAnalyticsFunnelReport` operationId).
+	GetAnalyticsFunnelReport(ctx context.Context, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *GetAnalyticsFunnelReportParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListAnalyticsGoals List a property's goals
+	//
+	// Oldest first. Their numbers come from `queryAnalytics` with a `goal_id`.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/goals (the `ListAnalyticsGoals` operationId).
+	ListAnalyticsGoals(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsGoalsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateAnalyticsGoalWithBody Create a goal
+	//
+	// A page view (`path_pattern`), a custom or built-in event (`event_name`, optionally with one
+	// prop equal to a value) or a scroll depth on matching pages. The goal counts on every day of
+	// the raw window, also those before it was made: those days are rolled up again in the
+	// background and read from raw rows until then. A property has at most 100 goals
+	// (`403 goal_limit`); names are unique per property (`409 goal_taken`). Adds a `goal_created`
+	// annotation.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/goals (the `CreateAnalyticsGoal` operationId).
+	CreateAnalyticsGoalWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsGoalParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateAnalyticsGoal Create a goal
+	//
+	// A page view (`path_pattern`), a custom or built-in event (`event_name`, optionally with one
+	// prop equal to a value) or a scroll depth on matching pages. The goal counts on every day of
+	// the raw window, also those before it was made: those days are rolled up again in the
+	// background and read from raw rows until then. A property has at most 100 goals
+	// (`403 goal_limit`); names are unique per property (`409 goal_taken`). Adds a `goal_created`
+	// annotation.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/goals (the `CreateAnalyticsGoal` operationId).
+	CreateAnalyticsGoal(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsGoalParams, body CreateAnalyticsGoalJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteAnalyticsGoal Delete a goal
+	//
+	// Deletes the goal and its rollups. A goal that is a step of a funnel cannot be deleted
+	// (`409 goal_in_use`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Corresponds with DELETE /v1/analytics/properties/{propertyId}/goals/{goalId} (the `DeleteAnalyticsGoal` operationId).
+	DeleteAnalyticsGoal(ctx context.Context, propertyId AnalyticsPropertyId, goalId AnalyticsGoalId, params *DeleteAnalyticsGoalParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateAnalyticsGoalWithBody Update a goal
+	//
+	// Changes the given fields; the goal is checked whole afterwards. A changed definition counts
+	// anew over the raw window like a new goal; older days keep what they counted.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/goals/{goalId} (the `UpdateAnalyticsGoal` operationId).
+	UpdateAnalyticsGoalWithBody(ctx context.Context, propertyId AnalyticsPropertyId, goalId AnalyticsGoalId, params *UpdateAnalyticsGoalParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateAnalyticsGoal Update a goal
+	//
+	// Changes the given fields; the goal is checked whole afterwards. A changed definition counts
+	// anew over the raw window like a new goal; older days keep what they counted.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/goals/{goalId} (the `UpdateAnalyticsGoal` operationId).
+	UpdateAnalyticsGoal(ctx context.Context, propertyId AnalyticsPropertyId, goalId AnalyticsGoalId, params *UpdateAnalyticsGoalParams, body UpdateAnalyticsGoalJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetAnalyticsHealth How a property's collection is doing
 	//
@@ -18677,6 +19626,10 @@ type ClientInterface interface {
 	// `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
 	// added up as `(other)`.
 	//
+	// Events: an `event` breakdown comes from rollups without filters; a `prop` breakdown reads
+	// raw rows inside the raw window, for any prop key, and the rollups of the property's
+	// `tracked_props` before it. `segment_id` adds a saved segment's filters.
+	//
 	// Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
 	// two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
 	// answers that include today for 30 seconds.
@@ -18704,6 +19657,10 @@ type ClientInterface interface {
 	// starts earlier answers `422 needs_raw_window`, with the first day that can be served in
 	// `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
 	// added up as `(other)`.
+	//
+	// Events: an `event` breakdown comes from rollups without filters; a `prop` breakdown reads
+	// raw rows inside the raw window, for any prop key, and the rollups of the property's
+	// `tracked_props` before it. `segment_id` adds a saved segment's filters.
 	//
 	// Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
 	// two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
@@ -18736,6 +19693,70 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /v1/analytics/properties/{propertyId}/rotate-key (the `RotateAnalyticsKey` operationId).
 	RotateAnalyticsKey(ctx context.Context, propertyId AnalyticsPropertyId, params *RotateAnalyticsKeyParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListAnalyticsSegments List a property's segments
+	//
+	// Named filter sets, shared with everyone who sees the property, by name.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/segments (the `ListAnalyticsSegments` operationId).
+	ListAnalyticsSegments(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsSegmentsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateAnalyticsSegmentWithBody Save a segment
+	//
+	// Anyone who sees the property. A property has at most 100 segments (`403 segment_limit`);
+	// names are unique per property (`409 segment_taken`).
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/segments (the `CreateAnalyticsSegment` operationId).
+	CreateAnalyticsSegmentWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsSegmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateAnalyticsSegment Save a segment
+	//
+	// Anyone who sees the property. A property has at most 100 segments (`403 segment_limit`);
+	// names are unique per property (`409 segment_taken`).
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/segments (the `CreateAnalyticsSegment` operationId).
+	CreateAnalyticsSegment(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsSegmentParams, body CreateAnalyticsSegmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteAnalyticsSegment Delete a segment
+	//
+	// Its author, owners, admins and API keys without an inbox limit.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with DELETE /v1/analytics/properties/{propertyId}/segments/{segmentId} (the `DeleteAnalyticsSegment` operationId).
+	DeleteAnalyticsSegment(ctx context.Context, propertyId AnalyticsPropertyId, segmentId AnalyticsSegmentId, params *DeleteAnalyticsSegmentParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateAnalyticsSegmentWithBody Update a segment
+	//
+	// Its author, owners, admins and API keys without an inbox limit.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/segments/{segmentId} (the `UpdateAnalyticsSegment` operationId).
+	UpdateAnalyticsSegmentWithBody(ctx context.Context, propertyId AnalyticsPropertyId, segmentId AnalyticsSegmentId, params *UpdateAnalyticsSegmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateAnalyticsSegment Update a segment
+	//
+	// Its author, owners, admins and API keys without an inbox limit.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/segments/{segmentId} (the `UpdateAnalyticsSegment` operationId).
+	UpdateAnalyticsSegment(ctx context.Context, propertyId AnalyticsPropertyId, segmentId AnalyticsSegmentId, params *UpdateAnalyticsSegmentParams, body UpdateAnalyticsSegmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListApiKeys List API keys
 	//
@@ -22510,6 +23531,11 @@ type ClientInterface interface {
 // `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
 // are refused until app collection exists. An unknown or deleted key answers `404`.
 //
+// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
+// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
+// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
+// answers `400` for the whole request.
+//
 // Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 // of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 // path; events over the property's per-minute limit or the workspace's monthly cap. One
@@ -22545,6 +23571,11 @@ func (c *Client) CollectAnalyticsWithBody(ctx context.Context, key string, conte
 // `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
 // are refused until app collection exists. An unknown or deleted key answers `404`.
 //
+// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
+// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
+// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
+// answers `400` for the whole request.
+//
 // Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 // of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 // path; events over the property's per-minute limit or the workspace's monthly cap. One
@@ -22579,6 +23610,11 @@ func (c *Client) CollectAnalytics(ctx context.Context, key string, body CollectA
 // `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
 // `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
 // are refused until app collection exists. An unknown or deleted key answers `404`.
+//
+// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
+// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
+// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
+// answers `400` for the whole request.
 //
 // Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 // of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
@@ -24258,6 +25294,135 @@ func (c *Client) UpdateAnalyticsProperty(ctx context.Context, propertyId Analyti
 	return c.Client.Do(req)
 }
 
+// ListAnalyticsAnnotations List a property's annotations
+//
+// Notes on the property's charts, by `starts_on`: members' (`note`) and Yuva's own
+// (`key_rotated`, `goal_created`). With `from` and `to`, those that overlap those days; at
+// most 1,000.
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/annotations (the `ListAnalyticsAnnotations` operationId).
+func (c *Client) ListAnalyticsAnnotations(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsAnnotationsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListAnalyticsAnnotationsRequest(c.Server, propertyId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateAnalyticsAnnotationWithBody Add an annotation
+//
+// A note on a day or a range of days of the property. Anyone who sees the property; at most
+// 1,000 per property (`403 annotation_limit`).
+//
+// Scope: `analytics:read`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/annotations (the `CreateAnalyticsAnnotation` operationId).
+func (c *Client) CreateAnalyticsAnnotationWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsAnnotationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAnalyticsAnnotationRequestWithBody(c.Server, propertyId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateAnalyticsAnnotation Add an annotation
+//
+// A note on a day or a range of days of the property. Anyone who sees the property; at most
+// 1,000 per property (`403 annotation_limit`).
+//
+// Scope: `analytics:read`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/annotations (the `CreateAnalyticsAnnotation` operationId).
+func (c *Client) CreateAnalyticsAnnotation(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsAnnotationParams, body CreateAnalyticsAnnotationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAnalyticsAnnotationRequest(c.Server, propertyId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteAnalyticsAnnotation Delete an annotation
+//
+// Its author, owners, admins and API keys without an inbox limit; Yuva's own annotations only
+// owners, admins and API keys without an inbox limit.
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with DELETE /v1/analytics/properties/{propertyId}/annotations/{annotationId} (the `DeleteAnalyticsAnnotation` operationId).
+func (c *Client) DeleteAnalyticsAnnotation(ctx context.Context, propertyId AnalyticsPropertyId, annotationId AnalyticsAnnotationId, params *DeleteAnalyticsAnnotationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteAnalyticsAnnotationRequest(c.Server, propertyId, annotationId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateAnalyticsAnnotationWithBody Update an annotation
+//
+// Its author, owners, admins and API keys without an inbox limit. Yuva's own annotations
+// cannot be changed (`403 annotation_read_only`).
+//
+// Scope: `analytics:read`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/annotations/{annotationId} (the `UpdateAnalyticsAnnotation` operationId).
+func (c *Client) UpdateAnalyticsAnnotationWithBody(ctx context.Context, propertyId AnalyticsPropertyId, annotationId AnalyticsAnnotationId, params *UpdateAnalyticsAnnotationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateAnalyticsAnnotationRequestWithBody(c.Server, propertyId, annotationId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateAnalyticsAnnotation Update an annotation
+//
+// Its author, owners, admins and API keys without an inbox limit. Yuva's own annotations
+// cannot be changed (`403 annotation_read_only`).
+//
+// Scope: `analytics:read`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/annotations/{annotationId} (the `UpdateAnalyticsAnnotation` operationId).
+func (c *Client) UpdateAnalyticsAnnotation(ctx context.Context, propertyId AnalyticsPropertyId, annotationId AnalyticsAnnotationId, params *UpdateAnalyticsAnnotationParams, body UpdateAnalyticsAnnotationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateAnalyticsAnnotationRequest(c.Server, propertyId, annotationId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // DeleteAnalyticsDataWithBody Delete a property's collected data
 //
 // Deletes the visits and events of the days `from` to `to` (dates in the property's time
@@ -24296,6 +25461,281 @@ func (c *Client) DeleteAnalyticsDataWithBody(ctx context.Context, propertyId Ana
 // Corresponds with POST /v1/analytics/properties/{propertyId}/delete-data (the `DeleteAnalyticsData` operationId).
 func (c *Client) DeleteAnalyticsData(ctx context.Context, propertyId AnalyticsPropertyId, params *DeleteAnalyticsDataParams, body DeleteAnalyticsDataJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteAnalyticsDataRequest(c.Server, propertyId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListAnalyticsFunnels List a property's funnels
+//
+// Oldest first. Scope: `analytics:read`.
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/funnels (the `ListAnalyticsFunnels` operationId).
+func (c *Client) ListAnalyticsFunnels(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsFunnelsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListAnalyticsFunnelsRequest(c.Server, propertyId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateAnalyticsFunnelWithBody Create a funnel
+//
+// Two to eight goals of the property, in order. A property has at most 20 funnels
+// (`403 funnel_limit`); names are unique per property (`409 funnel_taken`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/funnels (the `CreateAnalyticsFunnel` operationId).
+func (c *Client) CreateAnalyticsFunnelWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsFunnelParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAnalyticsFunnelRequestWithBody(c.Server, propertyId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateAnalyticsFunnel Create a funnel
+//
+// Two to eight goals of the property, in order. A property has at most 20 funnels
+// (`403 funnel_limit`); names are unique per property (`409 funnel_taken`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/funnels (the `CreateAnalyticsFunnel` operationId).
+func (c *Client) CreateAnalyticsFunnel(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsFunnelParams, body CreateAnalyticsFunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAnalyticsFunnelRequest(c.Server, propertyId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteAnalyticsFunnel Delete a funnel
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Corresponds with DELETE /v1/analytics/properties/{propertyId}/funnels/{funnelId} (the `DeleteAnalyticsFunnel` operationId).
+func (c *Client) DeleteAnalyticsFunnel(ctx context.Context, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *DeleteAnalyticsFunnelParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteAnalyticsFunnelRequest(c.Server, propertyId, funnelId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateAnalyticsFunnelWithBody Update a funnel
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/funnels/{funnelId} (the `UpdateAnalyticsFunnel` operationId).
+func (c *Client) UpdateAnalyticsFunnelWithBody(ctx context.Context, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *UpdateAnalyticsFunnelParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateAnalyticsFunnelRequestWithBody(c.Server, propertyId, funnelId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateAnalyticsFunnel Update a funnel
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/funnels/{funnelId} (the `UpdateAnalyticsFunnel` operationId).
+func (c *Client) UpdateAnalyticsFunnel(ctx context.Context, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *UpdateAnalyticsFunnelParams, body UpdateAnalyticsFunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateAnalyticsFunnelRequest(c.Server, propertyId, funnelId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetAnalyticsFunnelReport How visitors went through a funnel
+//
+// Per step, the visitors who completed it after every step before it within one visit, from
+// the raw events of the range. A visitor exists for one day, so a funnel never crosses
+// midnight; visitors over a range are added up per day. The range must lie inside the raw
+// window (`422 needs_raw_window`) and span at most 90 days, or 31 when the property counted
+// more than 10 million events over the last 30 days (`422 range_too_large`). Answers are
+// cached for ten minutes.
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/funnels/{funnelId}/report (the `GetAnalyticsFunnelReport` operationId).
+func (c *Client) GetAnalyticsFunnelReport(ctx context.Context, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *GetAnalyticsFunnelReportParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetAnalyticsFunnelReportRequest(c.Server, propertyId, funnelId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListAnalyticsGoals List a property's goals
+//
+// Oldest first. Their numbers come from `queryAnalytics` with a `goal_id`.
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/goals (the `ListAnalyticsGoals` operationId).
+func (c *Client) ListAnalyticsGoals(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsGoalsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListAnalyticsGoalsRequest(c.Server, propertyId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateAnalyticsGoalWithBody Create a goal
+//
+// A page view (`path_pattern`), a custom or built-in event (`event_name`, optionally with one
+// prop equal to a value) or a scroll depth on matching pages. The goal counts on every day of
+// the raw window, also those before it was made: those days are rolled up again in the
+// background and read from raw rows until then. A property has at most 100 goals
+// (`403 goal_limit`); names are unique per property (`409 goal_taken`). Adds a `goal_created`
+// annotation.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/goals (the `CreateAnalyticsGoal` operationId).
+func (c *Client) CreateAnalyticsGoalWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsGoalParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAnalyticsGoalRequestWithBody(c.Server, propertyId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateAnalyticsGoal Create a goal
+//
+// A page view (`path_pattern`), a custom or built-in event (`event_name`, optionally with one
+// prop equal to a value) or a scroll depth on matching pages. The goal counts on every day of
+// the raw window, also those before it was made: those days are rolled up again in the
+// background and read from raw rows until then. A property has at most 100 goals
+// (`403 goal_limit`); names are unique per property (`409 goal_taken`). Adds a `goal_created`
+// annotation.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/goals (the `CreateAnalyticsGoal` operationId).
+func (c *Client) CreateAnalyticsGoal(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsGoalParams, body CreateAnalyticsGoalJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAnalyticsGoalRequest(c.Server, propertyId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteAnalyticsGoal Delete a goal
+//
+// Deletes the goal and its rollups. A goal that is a step of a funnel cannot be deleted
+// (`409 goal_in_use`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Corresponds with DELETE /v1/analytics/properties/{propertyId}/goals/{goalId} (the `DeleteAnalyticsGoal` operationId).
+func (c *Client) DeleteAnalyticsGoal(ctx context.Context, propertyId AnalyticsPropertyId, goalId AnalyticsGoalId, params *DeleteAnalyticsGoalParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteAnalyticsGoalRequest(c.Server, propertyId, goalId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateAnalyticsGoalWithBody Update a goal
+//
+// Changes the given fields; the goal is checked whole afterwards. A changed definition counts
+// anew over the raw window like a new goal; older days keep what they counted.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/goals/{goalId} (the `UpdateAnalyticsGoal` operationId).
+func (c *Client) UpdateAnalyticsGoalWithBody(ctx context.Context, propertyId AnalyticsPropertyId, goalId AnalyticsGoalId, params *UpdateAnalyticsGoalParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateAnalyticsGoalRequestWithBody(c.Server, propertyId, goalId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateAnalyticsGoal Update a goal
+//
+// Changes the given fields; the goal is checked whole afterwards. A changed definition counts
+// anew over the raw window like a new goal; older days keep what they counted.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/goals/{goalId} (the `UpdateAnalyticsGoal` operationId).
+func (c *Client) UpdateAnalyticsGoal(ctx context.Context, propertyId AnalyticsPropertyId, goalId AnalyticsGoalId, params *UpdateAnalyticsGoalParams, body UpdateAnalyticsGoalJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateAnalyticsGoalRequest(c.Server, propertyId, goalId, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -24346,6 +25786,10 @@ func (c *Client) GetAnalyticsHealth(ctx context.Context, propertyId AnalyticsPro
 // `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
 // added up as `(other)`.
 //
+// Events: an `event` breakdown comes from rollups without filters; a `prop` breakdown reads
+// raw rows inside the raw window, for any prop key, and the rollups of the property's
+// `tracked_props` before it. `segment_id` adds a saved segment's filters.
+//
 // Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
 // two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
 // answers that include today for 30 seconds.
@@ -24383,6 +25827,10 @@ func (c *Client) QueryAnalyticsWithBody(ctx context.Context, propertyId Analytic
 // starts earlier answers `422 needs_raw_window`, with the first day that can be served in
 // `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
 // added up as `(other)`.
+//
+// Events: an `event` breakdown comes from rollups without filters; a `prop` breakdown reads
+// raw rows inside the raw window, for any prop key, and the rollups of the property's
+// `tracked_props` before it. `segment_id` adds a saved segment's filters.
 //
 // Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
 // two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
@@ -24436,6 +25884,130 @@ func (c *Client) GetAnalyticsRealtime(ctx context.Context, propertyId AnalyticsP
 // Corresponds with POST /v1/analytics/properties/{propertyId}/rotate-key (the `RotateAnalyticsKey` operationId).
 func (c *Client) RotateAnalyticsKey(ctx context.Context, propertyId AnalyticsPropertyId, params *RotateAnalyticsKeyParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRotateAnalyticsKeyRequest(c.Server, propertyId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListAnalyticsSegments List a property's segments
+//
+// Named filter sets, shared with everyone who sees the property, by name.
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/segments (the `ListAnalyticsSegments` operationId).
+func (c *Client) ListAnalyticsSegments(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsSegmentsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListAnalyticsSegmentsRequest(c.Server, propertyId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateAnalyticsSegmentWithBody Save a segment
+//
+// Anyone who sees the property. A property has at most 100 segments (`403 segment_limit`);
+// names are unique per property (`409 segment_taken`).
+//
+// Scope: `analytics:read`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/segments (the `CreateAnalyticsSegment` operationId).
+func (c *Client) CreateAnalyticsSegmentWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsSegmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAnalyticsSegmentRequestWithBody(c.Server, propertyId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateAnalyticsSegment Save a segment
+//
+// Anyone who sees the property. A property has at most 100 segments (`403 segment_limit`);
+// names are unique per property (`409 segment_taken`).
+//
+// Scope: `analytics:read`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/segments (the `CreateAnalyticsSegment` operationId).
+func (c *Client) CreateAnalyticsSegment(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsSegmentParams, body CreateAnalyticsSegmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAnalyticsSegmentRequest(c.Server, propertyId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteAnalyticsSegment Delete a segment
+//
+// Its author, owners, admins and API keys without an inbox limit.
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with DELETE /v1/analytics/properties/{propertyId}/segments/{segmentId} (the `DeleteAnalyticsSegment` operationId).
+func (c *Client) DeleteAnalyticsSegment(ctx context.Context, propertyId AnalyticsPropertyId, segmentId AnalyticsSegmentId, params *DeleteAnalyticsSegmentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteAnalyticsSegmentRequest(c.Server, propertyId, segmentId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateAnalyticsSegmentWithBody Update a segment
+//
+// Its author, owners, admins and API keys without an inbox limit.
+//
+// Scope: `analytics:read`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/segments/{segmentId} (the `UpdateAnalyticsSegment` operationId).
+func (c *Client) UpdateAnalyticsSegmentWithBody(ctx context.Context, propertyId AnalyticsPropertyId, segmentId AnalyticsSegmentId, params *UpdateAnalyticsSegmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateAnalyticsSegmentRequestWithBody(c.Server, propertyId, segmentId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateAnalyticsSegment Update a segment
+//
+// Its author, owners, admins and API keys without an inbox limit.
+//
+// Scope: `analytics:read`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/segments/{segmentId} (the `UpdateAnalyticsSegment` operationId).
+func (c *Client) UpdateAnalyticsSegment(ctx context.Context, propertyId AnalyticsPropertyId, segmentId AnalyticsSegmentId, params *UpdateAnalyticsSegmentParams, body UpdateAnalyticsSegmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateAnalyticsSegmentRequest(c.Server, propertyId, segmentId, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -33406,6 +34978,292 @@ func NewUpdateAnalyticsPropertyRequestWithBody(server string, propertyId Analyti
 	return req, nil
 }
 
+// NewListAnalyticsAnnotationsRequest constructs an http.Request for the ListAnalyticsAnnotations method
+func NewListAnalyticsAnnotationsRequest(server string, propertyId AnalyticsPropertyId, params *ListAnalyticsAnnotationsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/annotations", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.From != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "from", *params.From, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.To != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "to", *params.To, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateAnalyticsAnnotationRequest calls the generic CreateAnalyticsAnnotation builder with application/json body
+func NewCreateAnalyticsAnnotationRequest(server string, propertyId AnalyticsPropertyId, params *CreateAnalyticsAnnotationParams, body CreateAnalyticsAnnotationJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateAnalyticsAnnotationRequestWithBody(server, propertyId, params, "application/json", bodyReader)
+}
+
+// NewCreateAnalyticsAnnotationRequestWithBody constructs an http.Request for the CreateAnalyticsAnnotation method, with any body, and a specified content type
+func NewCreateAnalyticsAnnotationRequestWithBody(server string, propertyId AnalyticsPropertyId, params *CreateAnalyticsAnnotationParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/annotations", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteAnalyticsAnnotationRequest constructs an http.Request for the DeleteAnalyticsAnnotation method
+func NewDeleteAnalyticsAnnotationRequest(server string, propertyId AnalyticsPropertyId, annotationId AnalyticsAnnotationId, params *DeleteAnalyticsAnnotationParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "annotationId", annotationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/annotations/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateAnalyticsAnnotationRequest calls the generic UpdateAnalyticsAnnotation builder with application/json body
+func NewUpdateAnalyticsAnnotationRequest(server string, propertyId AnalyticsPropertyId, annotationId AnalyticsAnnotationId, params *UpdateAnalyticsAnnotationParams, body UpdateAnalyticsAnnotationJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateAnalyticsAnnotationRequestWithBody(server, propertyId, annotationId, params, "application/json", bodyReader)
+}
+
+// NewUpdateAnalyticsAnnotationRequestWithBody constructs an http.Request for the UpdateAnalyticsAnnotation method, with any body, and a specified content type
+func NewUpdateAnalyticsAnnotationRequestWithBody(server string, propertyId AnalyticsPropertyId, annotationId AnalyticsAnnotationId, params *UpdateAnalyticsAnnotationParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "annotationId", annotationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/annotations/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewDeleteAnalyticsDataRequest calls the generic DeleteAnalyticsData builder with application/json body
 func NewDeleteAnalyticsDataRequest(server string, propertyId AnalyticsPropertyId, params *DeleteAnalyticsDataParams, body DeleteAnalyticsDataJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -33472,6 +35330,607 @@ func NewDeleteAnalyticsDataRequestWithBody(server string, propertyId AnalyticsPr
 			}
 
 			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListAnalyticsFunnelsRequest constructs an http.Request for the ListAnalyticsFunnels method
+func NewListAnalyticsFunnelsRequest(server string, propertyId AnalyticsPropertyId, params *ListAnalyticsFunnelsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/funnels", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateAnalyticsFunnelRequest calls the generic CreateAnalyticsFunnel builder with application/json body
+func NewCreateAnalyticsFunnelRequest(server string, propertyId AnalyticsPropertyId, params *CreateAnalyticsFunnelParams, body CreateAnalyticsFunnelJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateAnalyticsFunnelRequestWithBody(server, propertyId, params, "application/json", bodyReader)
+}
+
+// NewCreateAnalyticsFunnelRequestWithBody constructs an http.Request for the CreateAnalyticsFunnel method, with any body, and a specified content type
+func NewCreateAnalyticsFunnelRequestWithBody(server string, propertyId AnalyticsPropertyId, params *CreateAnalyticsFunnelParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/funnels", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteAnalyticsFunnelRequest constructs an http.Request for the DeleteAnalyticsFunnel method
+func NewDeleteAnalyticsFunnelRequest(server string, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *DeleteAnalyticsFunnelParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "funnelId", funnelId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/funnels/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateAnalyticsFunnelRequest calls the generic UpdateAnalyticsFunnel builder with application/json body
+func NewUpdateAnalyticsFunnelRequest(server string, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *UpdateAnalyticsFunnelParams, body UpdateAnalyticsFunnelJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateAnalyticsFunnelRequestWithBody(server, propertyId, funnelId, params, "application/json", bodyReader)
+}
+
+// NewUpdateAnalyticsFunnelRequestWithBody constructs an http.Request for the UpdateAnalyticsFunnel method, with any body, and a specified content type
+func NewUpdateAnalyticsFunnelRequestWithBody(server string, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *UpdateAnalyticsFunnelParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "funnelId", funnelId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/funnels/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetAnalyticsFunnelReportRequest constructs an http.Request for the GetAnalyticsFunnelReport method
+func NewGetAnalyticsFunnelReportRequest(server string, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *GetAnalyticsFunnelReportParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "funnelId", funnelId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/funnels/%s/report", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Period != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "period", *params.Period, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.From != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "from", *params.From, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.To != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "to", *params.To, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListAnalyticsGoalsRequest constructs an http.Request for the ListAnalyticsGoals method
+func NewListAnalyticsGoalsRequest(server string, propertyId AnalyticsPropertyId, params *ListAnalyticsGoalsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/goals", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateAnalyticsGoalRequest calls the generic CreateAnalyticsGoal builder with application/json body
+func NewCreateAnalyticsGoalRequest(server string, propertyId AnalyticsPropertyId, params *CreateAnalyticsGoalParams, body CreateAnalyticsGoalJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateAnalyticsGoalRequestWithBody(server, propertyId, params, "application/json", bodyReader)
+}
+
+// NewCreateAnalyticsGoalRequestWithBody constructs an http.Request for the CreateAnalyticsGoal method, with any body, and a specified content type
+func NewCreateAnalyticsGoalRequestWithBody(server string, propertyId AnalyticsPropertyId, params *CreateAnalyticsGoalParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/goals", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteAnalyticsGoalRequest constructs an http.Request for the DeleteAnalyticsGoal method
+func NewDeleteAnalyticsGoalRequest(server string, propertyId AnalyticsPropertyId, goalId AnalyticsGoalId, params *DeleteAnalyticsGoalParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "goalId", goalId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/goals/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateAnalyticsGoalRequest calls the generic UpdateAnalyticsGoal builder with application/json body
+func NewUpdateAnalyticsGoalRequest(server string, propertyId AnalyticsPropertyId, goalId AnalyticsGoalId, params *UpdateAnalyticsGoalParams, body UpdateAnalyticsGoalJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateAnalyticsGoalRequestWithBody(server, propertyId, goalId, params, "application/json", bodyReader)
+}
+
+// NewUpdateAnalyticsGoalRequestWithBody constructs an http.Request for the UpdateAnalyticsGoal method, with any body, and a specified content type
+func NewUpdateAnalyticsGoalRequestWithBody(server string, propertyId AnalyticsPropertyId, goalId AnalyticsGoalId, params *UpdateAnalyticsGoalParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "goalId", goalId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/goals/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
 		}
 
 	}
@@ -33746,6 +36205,253 @@ func NewRotateAnalyticsKeyRequest(server string, propertyId AnalyticsPropertyId,
 			}
 
 			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListAnalyticsSegmentsRequest constructs an http.Request for the ListAnalyticsSegments method
+func NewListAnalyticsSegmentsRequest(server string, propertyId AnalyticsPropertyId, params *ListAnalyticsSegmentsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/segments", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateAnalyticsSegmentRequest calls the generic CreateAnalyticsSegment builder with application/json body
+func NewCreateAnalyticsSegmentRequest(server string, propertyId AnalyticsPropertyId, params *CreateAnalyticsSegmentParams, body CreateAnalyticsSegmentJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateAnalyticsSegmentRequestWithBody(server, propertyId, params, "application/json", bodyReader)
+}
+
+// NewCreateAnalyticsSegmentRequestWithBody constructs an http.Request for the CreateAnalyticsSegment method, with any body, and a specified content type
+func NewCreateAnalyticsSegmentRequestWithBody(server string, propertyId AnalyticsPropertyId, params *CreateAnalyticsSegmentParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/segments", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteAnalyticsSegmentRequest constructs an http.Request for the DeleteAnalyticsSegment method
+func NewDeleteAnalyticsSegmentRequest(server string, propertyId AnalyticsPropertyId, segmentId AnalyticsSegmentId, params *DeleteAnalyticsSegmentParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "segmentId", segmentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/segments/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateAnalyticsSegmentRequest calls the generic UpdateAnalyticsSegment builder with application/json body
+func NewUpdateAnalyticsSegmentRequest(server string, propertyId AnalyticsPropertyId, segmentId AnalyticsSegmentId, params *UpdateAnalyticsSegmentParams, body UpdateAnalyticsSegmentJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateAnalyticsSegmentRequestWithBody(server, propertyId, segmentId, params, "application/json", bodyReader)
+}
+
+// NewUpdateAnalyticsSegmentRequestWithBody constructs an http.Request for the UpdateAnalyticsSegment method, with any body, and a specified content type
+func NewUpdateAnalyticsSegmentRequestWithBody(server string, propertyId AnalyticsPropertyId, segmentId AnalyticsSegmentId, params *UpdateAnalyticsSegmentParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "segmentId", segmentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/segments/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
 		}
 
 	}
@@ -47139,6 +49845,11 @@ type ClientWithResponsesInterface interface {
 	// `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
 	// are refused until app collection exists. An unknown or deleted key answers `404`.
 	//
+	// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
+	// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
+	// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
+	// answers `400` for the whole request.
+	//
 	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 	// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 	// path; events over the property's per-minute limit or the workspace's monthly cap. One
@@ -47164,6 +49875,11 @@ type ClientWithResponsesInterface interface {
 	// `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
 	// are refused until app collection exists. An unknown or deleted key answers `404`.
 	//
+	// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
+	// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
+	// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
+	// answers `400` for the whole request.
+	//
 	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 	// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 	// path; events over the property's per-minute limit or the workspace's monthly cap. One
@@ -47188,6 +49904,11 @@ type ClientWithResponsesInterface interface {
 	// `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
 	// `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
 	// are refused until app collection exists. An unknown or deleted key answers `404`.
+	//
+	// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
+	// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
+	// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
+	// answers `400` for the whole request.
 	//
 	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 	// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
@@ -48213,6 +50934,79 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /v1/analytics/properties/{propertyId} (the `UpdateAnalyticsProperty` operationId).
 	UpdateAnalyticsPropertyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *UpdateAnalyticsPropertyParams, body UpdateAnalyticsPropertyJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAnalyticsPropertyResponse, error)
 
+	// ListAnalyticsAnnotationsWithResponse List a property's annotations
+	//
+	// Notes on the property's charts, by `starts_on`: members' (`note`) and Yuva's own
+	// (`key_rotated`, `goal_created`). With `from` and `to`, those that overlap those days; at
+	// most 1,000.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/annotations (the `ListAnalyticsAnnotations` operationId).
+	ListAnalyticsAnnotationsWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsAnnotationsParams, reqEditors ...RequestEditorFn) (*ListAnalyticsAnnotationsResponse, error)
+
+	// CreateAnalyticsAnnotationWithBodyWithResponse Add an annotation
+	//
+	// A note on a day or a range of days of the property. Anyone who sees the property; at most
+	// 1,000 per property (`403 annotation_limit`).
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/annotations (the `CreateAnalyticsAnnotation` operationId).
+	CreateAnalyticsAnnotationWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsAnnotationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAnalyticsAnnotationResponse, error)
+
+	// CreateAnalyticsAnnotationWithResponse Add an annotation
+	//
+	// A note on a day or a range of days of the property. Anyone who sees the property; at most
+	// 1,000 per property (`403 annotation_limit`).
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/annotations (the `CreateAnalyticsAnnotation` operationId).
+	CreateAnalyticsAnnotationWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsAnnotationParams, body CreateAnalyticsAnnotationJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAnalyticsAnnotationResponse, error)
+
+	// DeleteAnalyticsAnnotationWithResponse Delete an annotation
+	//
+	// Its author, owners, admins and API keys without an inbox limit; Yuva's own annotations only
+	// owners, admins and API keys without an inbox limit.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/analytics/properties/{propertyId}/annotations/{annotationId} (the `DeleteAnalyticsAnnotation` operationId).
+	DeleteAnalyticsAnnotationWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, annotationId AnalyticsAnnotationId, params *DeleteAnalyticsAnnotationParams, reqEditors ...RequestEditorFn) (*DeleteAnalyticsAnnotationResponse, error)
+
+	// UpdateAnalyticsAnnotationWithBodyWithResponse Update an annotation
+	//
+	// Its author, owners, admins and API keys without an inbox limit. Yuva's own annotations
+	// cannot be changed (`403 annotation_read_only`).
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/annotations/{annotationId} (the `UpdateAnalyticsAnnotation` operationId).
+	UpdateAnalyticsAnnotationWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, annotationId AnalyticsAnnotationId, params *UpdateAnalyticsAnnotationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAnalyticsAnnotationResponse, error)
+
+	// UpdateAnalyticsAnnotationWithResponse Update an annotation
+	//
+	// Its author, owners, admins and API keys without an inbox limit. Yuva's own annotations
+	// cannot be changed (`403 annotation_read_only`).
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/annotations/{annotationId} (the `UpdateAnalyticsAnnotation` operationId).
+	UpdateAnalyticsAnnotationWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, annotationId AnalyticsAnnotationId, params *UpdateAnalyticsAnnotationParams, body UpdateAnalyticsAnnotationJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAnalyticsAnnotationResponse, error)
+
 	// DeleteAnalyticsDataWithBodyWithResponse Delete a property's collected data
 	//
 	// Deletes the visits and events of the days `from` to `to` (dates in the property's time
@@ -48240,6 +51034,161 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /v1/analytics/properties/{propertyId}/delete-data (the `DeleteAnalyticsData` operationId).
 	DeleteAnalyticsDataWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *DeleteAnalyticsDataParams, body DeleteAnalyticsDataJSONRequestBody, reqEditors ...RequestEditorFn) (*DeleteAnalyticsDataResponse, error)
+
+	// ListAnalyticsFunnelsWithResponse List a property's funnels
+	//
+	// Oldest first. Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/funnels (the `ListAnalyticsFunnels` operationId).
+	ListAnalyticsFunnelsWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsFunnelsParams, reqEditors ...RequestEditorFn) (*ListAnalyticsFunnelsResponse, error)
+
+	// CreateAnalyticsFunnelWithBodyWithResponse Create a funnel
+	//
+	// Two to eight goals of the property, in order. A property has at most 20 funnels
+	// (`403 funnel_limit`); names are unique per property (`409 funnel_taken`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/funnels (the `CreateAnalyticsFunnel` operationId).
+	CreateAnalyticsFunnelWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsFunnelParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAnalyticsFunnelResponse, error)
+
+	// CreateAnalyticsFunnelWithResponse Create a funnel
+	//
+	// Two to eight goals of the property, in order. A property has at most 20 funnels
+	// (`403 funnel_limit`); names are unique per property (`409 funnel_taken`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/funnels (the `CreateAnalyticsFunnel` operationId).
+	CreateAnalyticsFunnelWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsFunnelParams, body CreateAnalyticsFunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAnalyticsFunnelResponse, error)
+
+	// DeleteAnalyticsFunnelWithResponse Delete a funnel
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/analytics/properties/{propertyId}/funnels/{funnelId} (the `DeleteAnalyticsFunnel` operationId).
+	DeleteAnalyticsFunnelWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *DeleteAnalyticsFunnelParams, reqEditors ...RequestEditorFn) (*DeleteAnalyticsFunnelResponse, error)
+
+	// UpdateAnalyticsFunnelWithBodyWithResponse Update a funnel
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/funnels/{funnelId} (the `UpdateAnalyticsFunnel` operationId).
+	UpdateAnalyticsFunnelWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *UpdateAnalyticsFunnelParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAnalyticsFunnelResponse, error)
+
+	// UpdateAnalyticsFunnelWithResponse Update a funnel
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/funnels/{funnelId} (the `UpdateAnalyticsFunnel` operationId).
+	UpdateAnalyticsFunnelWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *UpdateAnalyticsFunnelParams, body UpdateAnalyticsFunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAnalyticsFunnelResponse, error)
+
+	// GetAnalyticsFunnelReportWithResponse How visitors went through a funnel
+	//
+	// Per step, the visitors who completed it after every step before it within one visit, from
+	// the raw events of the range. A visitor exists for one day, so a funnel never crosses
+	// midnight; visitors over a range are added up per day. The range must lie inside the raw
+	// window (`422 needs_raw_window`) and span at most 90 days, or 31 when the property counted
+	// more than 10 million events over the last 30 days (`422 range_too_large`). Answers are
+	// cached for ten minutes.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/funnels/{funnelId}/report (the `GetAnalyticsFunnelReport` operationId).
+	GetAnalyticsFunnelReportWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *GetAnalyticsFunnelReportParams, reqEditors ...RequestEditorFn) (*GetAnalyticsFunnelReportResponse, error)
+
+	// ListAnalyticsGoalsWithResponse List a property's goals
+	//
+	// Oldest first. Their numbers come from `queryAnalytics` with a `goal_id`.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/goals (the `ListAnalyticsGoals` operationId).
+	ListAnalyticsGoalsWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsGoalsParams, reqEditors ...RequestEditorFn) (*ListAnalyticsGoalsResponse, error)
+
+	// CreateAnalyticsGoalWithBodyWithResponse Create a goal
+	//
+	// A page view (`path_pattern`), a custom or built-in event (`event_name`, optionally with one
+	// prop equal to a value) or a scroll depth on matching pages. The goal counts on every day of
+	// the raw window, also those before it was made: those days are rolled up again in the
+	// background and read from raw rows until then. A property has at most 100 goals
+	// (`403 goal_limit`); names are unique per property (`409 goal_taken`). Adds a `goal_created`
+	// annotation.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/goals (the `CreateAnalyticsGoal` operationId).
+	CreateAnalyticsGoalWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsGoalParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAnalyticsGoalResponse, error)
+
+	// CreateAnalyticsGoalWithResponse Create a goal
+	//
+	// A page view (`path_pattern`), a custom or built-in event (`event_name`, optionally with one
+	// prop equal to a value) or a scroll depth on matching pages. The goal counts on every day of
+	// the raw window, also those before it was made: those days are rolled up again in the
+	// background and read from raw rows until then. A property has at most 100 goals
+	// (`403 goal_limit`); names are unique per property (`409 goal_taken`). Adds a `goal_created`
+	// annotation.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/goals (the `CreateAnalyticsGoal` operationId).
+	CreateAnalyticsGoalWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsGoalParams, body CreateAnalyticsGoalJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAnalyticsGoalResponse, error)
+
+	// DeleteAnalyticsGoalWithResponse Delete a goal
+	//
+	// Deletes the goal and its rollups. A goal that is a step of a funnel cannot be deleted
+	// (`409 goal_in_use`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/analytics/properties/{propertyId}/goals/{goalId} (the `DeleteAnalyticsGoal` operationId).
+	DeleteAnalyticsGoalWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, goalId AnalyticsGoalId, params *DeleteAnalyticsGoalParams, reqEditors ...RequestEditorFn) (*DeleteAnalyticsGoalResponse, error)
+
+	// UpdateAnalyticsGoalWithBodyWithResponse Update a goal
+	//
+	// Changes the given fields; the goal is checked whole afterwards. A changed definition counts
+	// anew over the raw window like a new goal; older days keep what they counted.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/goals/{goalId} (the `UpdateAnalyticsGoal` operationId).
+	UpdateAnalyticsGoalWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, goalId AnalyticsGoalId, params *UpdateAnalyticsGoalParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAnalyticsGoalResponse, error)
+
+	// UpdateAnalyticsGoalWithResponse Update a goal
+	//
+	// Changes the given fields; the goal is checked whole afterwards. A changed definition counts
+	// anew over the raw window like a new goal; older days keep what they counted.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/goals/{goalId} (the `UpdateAnalyticsGoal` operationId).
+	UpdateAnalyticsGoalWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, goalId AnalyticsGoalId, params *UpdateAnalyticsGoalParams, body UpdateAnalyticsGoalJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAnalyticsGoalResponse, error)
 
 	// GetAnalyticsHealthWithResponse How a property's collection is doing
 	//
@@ -48273,6 +51222,10 @@ type ClientWithResponsesInterface interface {
 	// `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
 	// added up as `(other)`.
 	//
+	// Events: an `event` breakdown comes from rollups without filters; a `prop` breakdown reads
+	// raw rows inside the raw window, for any prop key, and the rollups of the property's
+	// `tracked_props` before it. `segment_id` adds a saved segment's filters.
+	//
 	// Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
 	// two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
 	// answers that include today for 30 seconds.
@@ -48300,6 +51253,10 @@ type ClientWithResponsesInterface interface {
 	// starts earlier answers `422 needs_raw_window`, with the first day that can be served in
 	// `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
 	// added up as `(other)`.
+	//
+	// Events: an `event` breakdown comes from rollups without filters; a `prop` breakdown reads
+	// raw rows inside the raw window, for any prop key, and the rollups of the property's
+	// `tracked_props` before it. `segment_id` adds a saved segment's filters.
 	//
 	// Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
 	// two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
@@ -48336,6 +51293,74 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /v1/analytics/properties/{propertyId}/rotate-key (the `RotateAnalyticsKey` operationId).
 	RotateAnalyticsKeyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *RotateAnalyticsKeyParams, reqEditors ...RequestEditorFn) (*RotateAnalyticsKeyResponse, error)
+
+	// ListAnalyticsSegmentsWithResponse List a property's segments
+	//
+	// Named filter sets, shared with everyone who sees the property, by name.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/segments (the `ListAnalyticsSegments` operationId).
+	ListAnalyticsSegmentsWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsSegmentsParams, reqEditors ...RequestEditorFn) (*ListAnalyticsSegmentsResponse, error)
+
+	// CreateAnalyticsSegmentWithBodyWithResponse Save a segment
+	//
+	// Anyone who sees the property. A property has at most 100 segments (`403 segment_limit`);
+	// names are unique per property (`409 segment_taken`).
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/segments (the `CreateAnalyticsSegment` operationId).
+	CreateAnalyticsSegmentWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsSegmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAnalyticsSegmentResponse, error)
+
+	// CreateAnalyticsSegmentWithResponse Save a segment
+	//
+	// Anyone who sees the property. A property has at most 100 segments (`403 segment_limit`);
+	// names are unique per property (`409 segment_taken`).
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/segments (the `CreateAnalyticsSegment` operationId).
+	CreateAnalyticsSegmentWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsSegmentParams, body CreateAnalyticsSegmentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAnalyticsSegmentResponse, error)
+
+	// DeleteAnalyticsSegmentWithResponse Delete a segment
+	//
+	// Its author, owners, admins and API keys without an inbox limit.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/analytics/properties/{propertyId}/segments/{segmentId} (the `DeleteAnalyticsSegment` operationId).
+	DeleteAnalyticsSegmentWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, segmentId AnalyticsSegmentId, params *DeleteAnalyticsSegmentParams, reqEditors ...RequestEditorFn) (*DeleteAnalyticsSegmentResponse, error)
+
+	// UpdateAnalyticsSegmentWithBodyWithResponse Update a segment
+	//
+	// Its author, owners, admins and API keys without an inbox limit.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/segments/{segmentId} (the `UpdateAnalyticsSegment` operationId).
+	UpdateAnalyticsSegmentWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, segmentId AnalyticsSegmentId, params *UpdateAnalyticsSegmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAnalyticsSegmentResponse, error)
+
+	// UpdateAnalyticsSegmentWithResponse Update a segment
+	//
+	// Its author, owners, admins and API keys without an inbox limit.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/segments/{segmentId} (the `UpdateAnalyticsSegment` operationId).
+	UpdateAnalyticsSegmentWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, segmentId AnalyticsSegmentId, params *UpdateAnalyticsSegmentParams, body UpdateAnalyticsSegmentJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAnalyticsSegmentResponse, error)
 
 	// ListApiKeysWithResponse List API keys
 	//
@@ -55575,6 +58600,268 @@ func (r UpdateAnalyticsPropertyResponse) ContentType() string {
 	return ""
 }
 
+type ListAnalyticsAnnotationsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsAnnotationList
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListAnalyticsAnnotationsResponse) GetJSON200() *AnalyticsAnnotationList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListAnalyticsAnnotationsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListAnalyticsAnnotationsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListAnalyticsAnnotationsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListAnalyticsAnnotationsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListAnalyticsAnnotationsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListAnalyticsAnnotationsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListAnalyticsAnnotationsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListAnalyticsAnnotationsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateAnalyticsAnnotationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *AnalyticsAnnotation
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateAnalyticsAnnotationResponse) GetJSON201() *AnalyticsAnnotation {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateAnalyticsAnnotationResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateAnalyticsAnnotationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateAnalyticsAnnotationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateAnalyticsAnnotationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateAnalyticsAnnotationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateAnalyticsAnnotationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateAnalyticsAnnotationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateAnalyticsAnnotationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteAnalyticsAnnotationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteAnalyticsAnnotationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteAnalyticsAnnotationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteAnalyticsAnnotationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteAnalyticsAnnotationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteAnalyticsAnnotationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteAnalyticsAnnotationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteAnalyticsAnnotationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateAnalyticsAnnotationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsAnnotation
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateAnalyticsAnnotationResponse) GetJSON200() *AnalyticsAnnotation {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateAnalyticsAnnotationResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateAnalyticsAnnotationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateAnalyticsAnnotationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateAnalyticsAnnotationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateAnalyticsAnnotationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateAnalyticsAnnotationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateAnalyticsAnnotationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateAnalyticsAnnotationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type DeleteAnalyticsDataResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -55631,6 +58918,634 @@ func (r DeleteAnalyticsDataResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r DeleteAnalyticsDataResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListAnalyticsFunnelsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsFunnelList
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListAnalyticsFunnelsResponse) GetJSON200() *AnalyticsFunnelList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListAnalyticsFunnelsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListAnalyticsFunnelsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListAnalyticsFunnelsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListAnalyticsFunnelsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListAnalyticsFunnelsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListAnalyticsFunnelsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListAnalyticsFunnelsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateAnalyticsFunnelResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *AnalyticsFunnel
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateAnalyticsFunnelResponse) GetJSON201() *AnalyticsFunnel {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateAnalyticsFunnelResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateAnalyticsFunnelResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateAnalyticsFunnelResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateAnalyticsFunnelResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CreateAnalyticsFunnelResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateAnalyticsFunnelResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateAnalyticsFunnelResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateAnalyticsFunnelResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateAnalyticsFunnelResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteAnalyticsFunnelResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteAnalyticsFunnelResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteAnalyticsFunnelResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteAnalyticsFunnelResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteAnalyticsFunnelResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteAnalyticsFunnelResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteAnalyticsFunnelResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteAnalyticsFunnelResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateAnalyticsFunnelResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsFunnel
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateAnalyticsFunnelResponse) GetJSON200() *AnalyticsFunnel {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateAnalyticsFunnelResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateAnalyticsFunnelResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateAnalyticsFunnelResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateAnalyticsFunnelResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r UpdateAnalyticsFunnelResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateAnalyticsFunnelResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateAnalyticsFunnelResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateAnalyticsFunnelResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateAnalyticsFunnelResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetAnalyticsFunnelReportResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsFunnelReport
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *AnalyticsRangeProblem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetAnalyticsFunnelReportResponse) GetJSON200() *AnalyticsFunnelReport {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r GetAnalyticsFunnelReportResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetAnalyticsFunnelReportResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetAnalyticsFunnelReportResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetAnalyticsFunnelReportResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r GetAnalyticsFunnelReportResponse) GetApplicationproblemJSON422() *AnalyticsRangeProblem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r GetAnalyticsFunnelReportResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r GetAnalyticsFunnelReportResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetAnalyticsFunnelReportResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetAnalyticsFunnelReportResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetAnalyticsFunnelReportResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListAnalyticsGoalsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsGoalList
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListAnalyticsGoalsResponse) GetJSON200() *AnalyticsGoalList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListAnalyticsGoalsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListAnalyticsGoalsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListAnalyticsGoalsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListAnalyticsGoalsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListAnalyticsGoalsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListAnalyticsGoalsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListAnalyticsGoalsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateAnalyticsGoalResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *AnalyticsGoal
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateAnalyticsGoalResponse) GetJSON201() *AnalyticsGoal {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateAnalyticsGoalResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateAnalyticsGoalResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateAnalyticsGoalResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateAnalyticsGoalResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CreateAnalyticsGoalResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateAnalyticsGoalResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateAnalyticsGoalResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateAnalyticsGoalResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateAnalyticsGoalResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteAnalyticsGoalResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteAnalyticsGoalResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteAnalyticsGoalResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteAnalyticsGoalResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r DeleteAnalyticsGoalResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteAnalyticsGoalResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteAnalyticsGoalResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteAnalyticsGoalResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteAnalyticsGoalResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateAnalyticsGoalResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsGoal
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateAnalyticsGoalResponse) GetJSON200() *AnalyticsGoal {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateAnalyticsGoalResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateAnalyticsGoalResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateAnalyticsGoalResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateAnalyticsGoalResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r UpdateAnalyticsGoalResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateAnalyticsGoalResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateAnalyticsGoalResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateAnalyticsGoalResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateAnalyticsGoalResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -55921,6 +59836,275 @@ func (r RotateAnalyticsKeyResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r RotateAnalyticsKeyResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListAnalyticsSegmentsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsSegmentList
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListAnalyticsSegmentsResponse) GetJSON200() *AnalyticsSegmentList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListAnalyticsSegmentsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListAnalyticsSegmentsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListAnalyticsSegmentsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListAnalyticsSegmentsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListAnalyticsSegmentsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListAnalyticsSegmentsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListAnalyticsSegmentsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateAnalyticsSegmentResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *AnalyticsSegment
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateAnalyticsSegmentResponse) GetJSON201() *AnalyticsSegment {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateAnalyticsSegmentResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateAnalyticsSegmentResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateAnalyticsSegmentResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateAnalyticsSegmentResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CreateAnalyticsSegmentResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateAnalyticsSegmentResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateAnalyticsSegmentResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateAnalyticsSegmentResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateAnalyticsSegmentResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteAnalyticsSegmentResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteAnalyticsSegmentResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteAnalyticsSegmentResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteAnalyticsSegmentResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteAnalyticsSegmentResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteAnalyticsSegmentResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteAnalyticsSegmentResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteAnalyticsSegmentResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateAnalyticsSegmentResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsSegment
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateAnalyticsSegmentResponse) GetJSON200() *AnalyticsSegment {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateAnalyticsSegmentResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateAnalyticsSegmentResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateAnalyticsSegmentResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateAnalyticsSegmentResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r UpdateAnalyticsSegmentResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateAnalyticsSegmentResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateAnalyticsSegmentResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateAnalyticsSegmentResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateAnalyticsSegmentResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -70195,6 +74379,11 @@ func (r CreateWorkspaceResponse) ContentType() string {
 // `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
 // are refused until app collection exists. An unknown or deleted key answers `404`.
 //
+// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
+// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
+// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
+// answers `400` for the whole request.
+//
 // Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 // of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 // path; events over the property's per-minute limit or the workspace's monthly cap. One
@@ -70226,6 +74415,11 @@ func (c *ClientWithResponses) CollectAnalyticsWithBodyWithResponse(ctx context.C
 // `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
 // are refused until app collection exists. An unknown or deleted key answers `404`.
 //
+// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
+// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
+// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
+// answers `400` for the whole request.
+//
 // Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 // of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 // path; events over the property's per-minute limit or the workspace's monthly cap. One
@@ -70256,6 +74450,11 @@ func (c *ClientWithResponses) CollectAnalyticsWithResponse(ctx context.Context, 
 // `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
 // `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
 // are refused until app collection exists. An unknown or deleted key answers `404`.
+//
+// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
+// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
+// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
+// answers `400` for the whole request.
 //
 // Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 // of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
@@ -71707,6 +75906,115 @@ func (c *ClientWithResponses) UpdateAnalyticsPropertyWithResponse(ctx context.Co
 	return ParseUpdateAnalyticsPropertyResponse(rsp)
 }
 
+// ListAnalyticsAnnotationsWithResponse List a property's annotations
+//
+// Notes on the property's charts, by `starts_on`: members' (`note`) and Yuva's own
+// (`key_rotated`, `goal_created`). With `from` and `to`, those that overlap those days; at
+// most 1,000.
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/annotations (the `ListAnalyticsAnnotations` operationId).
+func (c *ClientWithResponses) ListAnalyticsAnnotationsWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsAnnotationsParams, reqEditors ...RequestEditorFn) (*ListAnalyticsAnnotationsResponse, error) {
+	rsp, err := c.ListAnalyticsAnnotations(ctx, propertyId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListAnalyticsAnnotationsResponse(rsp)
+}
+
+// CreateAnalyticsAnnotationWithBodyWithResponse Add an annotation
+//
+// A note on a day or a range of days of the property. Anyone who sees the property; at most
+// 1,000 per property (`403 annotation_limit`).
+//
+// Scope: `analytics:read`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/annotations (the `CreateAnalyticsAnnotation` operationId).
+func (c *ClientWithResponses) CreateAnalyticsAnnotationWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsAnnotationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAnalyticsAnnotationResponse, error) {
+	rsp, err := c.CreateAnalyticsAnnotationWithBody(ctx, propertyId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateAnalyticsAnnotationResponse(rsp)
+}
+
+// CreateAnalyticsAnnotationWithResponse Add an annotation
+//
+// A note on a day or a range of days of the property. Anyone who sees the property; at most
+// 1,000 per property (`403 annotation_limit`).
+//
+// Scope: `analytics:read`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/annotations (the `CreateAnalyticsAnnotation` operationId).
+func (c *ClientWithResponses) CreateAnalyticsAnnotationWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsAnnotationParams, body CreateAnalyticsAnnotationJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAnalyticsAnnotationResponse, error) {
+	rsp, err := c.CreateAnalyticsAnnotation(ctx, propertyId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateAnalyticsAnnotationResponse(rsp)
+}
+
+// DeleteAnalyticsAnnotationWithResponse Delete an annotation
+//
+// Its author, owners, admins and API keys without an inbox limit; Yuva's own annotations only
+// owners, admins and API keys without an inbox limit.
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/analytics/properties/{propertyId}/annotations/{annotationId} (the `DeleteAnalyticsAnnotation` operationId).
+func (c *ClientWithResponses) DeleteAnalyticsAnnotationWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, annotationId AnalyticsAnnotationId, params *DeleteAnalyticsAnnotationParams, reqEditors ...RequestEditorFn) (*DeleteAnalyticsAnnotationResponse, error) {
+	rsp, err := c.DeleteAnalyticsAnnotation(ctx, propertyId, annotationId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteAnalyticsAnnotationResponse(rsp)
+}
+
+// UpdateAnalyticsAnnotationWithBodyWithResponse Update an annotation
+//
+// Its author, owners, admins and API keys without an inbox limit. Yuva's own annotations
+// cannot be changed (`403 annotation_read_only`).
+//
+// Scope: `analytics:read`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/annotations/{annotationId} (the `UpdateAnalyticsAnnotation` operationId).
+func (c *ClientWithResponses) UpdateAnalyticsAnnotationWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, annotationId AnalyticsAnnotationId, params *UpdateAnalyticsAnnotationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAnalyticsAnnotationResponse, error) {
+	rsp, err := c.UpdateAnalyticsAnnotationWithBody(ctx, propertyId, annotationId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateAnalyticsAnnotationResponse(rsp)
+}
+
+// UpdateAnalyticsAnnotationWithResponse Update an annotation
+//
+// Its author, owners, admins and API keys without an inbox limit. Yuva's own annotations
+// cannot be changed (`403 annotation_read_only`).
+//
+// Scope: `analytics:read`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/annotations/{annotationId} (the `UpdateAnalyticsAnnotation` operationId).
+func (c *ClientWithResponses) UpdateAnalyticsAnnotationWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, annotationId AnalyticsAnnotationId, params *UpdateAnalyticsAnnotationParams, body UpdateAnalyticsAnnotationJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAnalyticsAnnotationResponse, error) {
+	rsp, err := c.UpdateAnalyticsAnnotation(ctx, propertyId, annotationId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateAnalyticsAnnotationResponse(rsp)
+}
+
 // DeleteAnalyticsDataWithBodyWithResponse Delete a property's collected data
 //
 // Deletes the visits and events of the days `from` to `to` (dates in the property's time
@@ -71747,6 +76055,239 @@ func (c *ClientWithResponses) DeleteAnalyticsDataWithResponse(ctx context.Contex
 	return ParseDeleteAnalyticsDataResponse(rsp)
 }
 
+// ListAnalyticsFunnelsWithResponse List a property's funnels
+//
+// Oldest first. Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/funnels (the `ListAnalyticsFunnels` operationId).
+func (c *ClientWithResponses) ListAnalyticsFunnelsWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsFunnelsParams, reqEditors ...RequestEditorFn) (*ListAnalyticsFunnelsResponse, error) {
+	rsp, err := c.ListAnalyticsFunnels(ctx, propertyId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListAnalyticsFunnelsResponse(rsp)
+}
+
+// CreateAnalyticsFunnelWithBodyWithResponse Create a funnel
+//
+// Two to eight goals of the property, in order. A property has at most 20 funnels
+// (`403 funnel_limit`); names are unique per property (`409 funnel_taken`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/funnels (the `CreateAnalyticsFunnel` operationId).
+func (c *ClientWithResponses) CreateAnalyticsFunnelWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsFunnelParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAnalyticsFunnelResponse, error) {
+	rsp, err := c.CreateAnalyticsFunnelWithBody(ctx, propertyId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateAnalyticsFunnelResponse(rsp)
+}
+
+// CreateAnalyticsFunnelWithResponse Create a funnel
+//
+// Two to eight goals of the property, in order. A property has at most 20 funnels
+// (`403 funnel_limit`); names are unique per property (`409 funnel_taken`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/funnels (the `CreateAnalyticsFunnel` operationId).
+func (c *ClientWithResponses) CreateAnalyticsFunnelWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsFunnelParams, body CreateAnalyticsFunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAnalyticsFunnelResponse, error) {
+	rsp, err := c.CreateAnalyticsFunnel(ctx, propertyId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateAnalyticsFunnelResponse(rsp)
+}
+
+// DeleteAnalyticsFunnelWithResponse Delete a funnel
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/analytics/properties/{propertyId}/funnels/{funnelId} (the `DeleteAnalyticsFunnel` operationId).
+func (c *ClientWithResponses) DeleteAnalyticsFunnelWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *DeleteAnalyticsFunnelParams, reqEditors ...RequestEditorFn) (*DeleteAnalyticsFunnelResponse, error) {
+	rsp, err := c.DeleteAnalyticsFunnel(ctx, propertyId, funnelId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteAnalyticsFunnelResponse(rsp)
+}
+
+// UpdateAnalyticsFunnelWithBodyWithResponse Update a funnel
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/funnels/{funnelId} (the `UpdateAnalyticsFunnel` operationId).
+func (c *ClientWithResponses) UpdateAnalyticsFunnelWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *UpdateAnalyticsFunnelParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAnalyticsFunnelResponse, error) {
+	rsp, err := c.UpdateAnalyticsFunnelWithBody(ctx, propertyId, funnelId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateAnalyticsFunnelResponse(rsp)
+}
+
+// UpdateAnalyticsFunnelWithResponse Update a funnel
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/funnels/{funnelId} (the `UpdateAnalyticsFunnel` operationId).
+func (c *ClientWithResponses) UpdateAnalyticsFunnelWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *UpdateAnalyticsFunnelParams, body UpdateAnalyticsFunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAnalyticsFunnelResponse, error) {
+	rsp, err := c.UpdateAnalyticsFunnel(ctx, propertyId, funnelId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateAnalyticsFunnelResponse(rsp)
+}
+
+// GetAnalyticsFunnelReportWithResponse How visitors went through a funnel
+//
+// Per step, the visitors who completed it after every step before it within one visit, from
+// the raw events of the range. A visitor exists for one day, so a funnel never crosses
+// midnight; visitors over a range are added up per day. The range must lie inside the raw
+// window (`422 needs_raw_window`) and span at most 90 days, or 31 when the property counted
+// more than 10 million events over the last 30 days (`422 range_too_large`). Answers are
+// cached for ten minutes.
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/funnels/{funnelId}/report (the `GetAnalyticsFunnelReport` operationId).
+func (c *ClientWithResponses) GetAnalyticsFunnelReportWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, funnelId AnalyticsFunnelId, params *GetAnalyticsFunnelReportParams, reqEditors ...RequestEditorFn) (*GetAnalyticsFunnelReportResponse, error) {
+	rsp, err := c.GetAnalyticsFunnelReport(ctx, propertyId, funnelId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetAnalyticsFunnelReportResponse(rsp)
+}
+
+// ListAnalyticsGoalsWithResponse List a property's goals
+//
+// Oldest first. Their numbers come from `queryAnalytics` with a `goal_id`.
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/goals (the `ListAnalyticsGoals` operationId).
+func (c *ClientWithResponses) ListAnalyticsGoalsWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsGoalsParams, reqEditors ...RequestEditorFn) (*ListAnalyticsGoalsResponse, error) {
+	rsp, err := c.ListAnalyticsGoals(ctx, propertyId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListAnalyticsGoalsResponse(rsp)
+}
+
+// CreateAnalyticsGoalWithBodyWithResponse Create a goal
+//
+// A page view (`path_pattern`), a custom or built-in event (`event_name`, optionally with one
+// prop equal to a value) or a scroll depth on matching pages. The goal counts on every day of
+// the raw window, also those before it was made: those days are rolled up again in the
+// background and read from raw rows until then. A property has at most 100 goals
+// (`403 goal_limit`); names are unique per property (`409 goal_taken`). Adds a `goal_created`
+// annotation.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/goals (the `CreateAnalyticsGoal` operationId).
+func (c *ClientWithResponses) CreateAnalyticsGoalWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsGoalParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAnalyticsGoalResponse, error) {
+	rsp, err := c.CreateAnalyticsGoalWithBody(ctx, propertyId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateAnalyticsGoalResponse(rsp)
+}
+
+// CreateAnalyticsGoalWithResponse Create a goal
+//
+// A page view (`path_pattern`), a custom or built-in event (`event_name`, optionally with one
+// prop equal to a value) or a scroll depth on matching pages. The goal counts on every day of
+// the raw window, also those before it was made: those days are rolled up again in the
+// background and read from raw rows until then. A property has at most 100 goals
+// (`403 goal_limit`); names are unique per property (`409 goal_taken`). Adds a `goal_created`
+// annotation.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/goals (the `CreateAnalyticsGoal` operationId).
+func (c *ClientWithResponses) CreateAnalyticsGoalWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsGoalParams, body CreateAnalyticsGoalJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAnalyticsGoalResponse, error) {
+	rsp, err := c.CreateAnalyticsGoal(ctx, propertyId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateAnalyticsGoalResponse(rsp)
+}
+
+// DeleteAnalyticsGoalWithResponse Delete a goal
+//
+// Deletes the goal and its rollups. A goal that is a step of a funnel cannot be deleted
+// (`409 goal_in_use`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/analytics/properties/{propertyId}/goals/{goalId} (the `DeleteAnalyticsGoal` operationId).
+func (c *ClientWithResponses) DeleteAnalyticsGoalWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, goalId AnalyticsGoalId, params *DeleteAnalyticsGoalParams, reqEditors ...RequestEditorFn) (*DeleteAnalyticsGoalResponse, error) {
+	rsp, err := c.DeleteAnalyticsGoal(ctx, propertyId, goalId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteAnalyticsGoalResponse(rsp)
+}
+
+// UpdateAnalyticsGoalWithBodyWithResponse Update a goal
+//
+// Changes the given fields; the goal is checked whole afterwards. A changed definition counts
+// anew over the raw window like a new goal; older days keep what they counted.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/goals/{goalId} (the `UpdateAnalyticsGoal` operationId).
+func (c *ClientWithResponses) UpdateAnalyticsGoalWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, goalId AnalyticsGoalId, params *UpdateAnalyticsGoalParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAnalyticsGoalResponse, error) {
+	rsp, err := c.UpdateAnalyticsGoalWithBody(ctx, propertyId, goalId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateAnalyticsGoalResponse(rsp)
+}
+
+// UpdateAnalyticsGoalWithResponse Update a goal
+//
+// Changes the given fields; the goal is checked whole afterwards. A changed definition counts
+// anew over the raw window like a new goal; older days keep what they counted.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/goals/{goalId} (the `UpdateAnalyticsGoal` operationId).
+func (c *ClientWithResponses) UpdateAnalyticsGoalWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, goalId AnalyticsGoalId, params *UpdateAnalyticsGoalParams, body UpdateAnalyticsGoalJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAnalyticsGoalResponse, error) {
+	rsp, err := c.UpdateAnalyticsGoal(ctx, propertyId, goalId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateAnalyticsGoalResponse(rsp)
+}
+
 // GetAnalyticsHealthWithResponse How a property's collection is doing
 //
 // Events accepted and dropped per day and reason (bots, rate limits, refused origins, invalid
@@ -71785,6 +76326,10 @@ func (c *ClientWithResponses) GetAnalyticsHealthWithResponse(ctx context.Context
 // `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
 // added up as `(other)`.
 //
+// Events: an `event` breakdown comes from rollups without filters; a `prop` breakdown reads
+// raw rows inside the raw window, for any prop key, and the rollups of the property's
+// `tracked_props` before it. `segment_id` adds a saved segment's filters.
+//
 // Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
 // two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
 // answers that include today for 30 seconds.
@@ -71818,6 +76363,10 @@ func (c *ClientWithResponses) QueryAnalyticsWithBodyWithResponse(ctx context.Con
 // starts earlier answers `422 needs_raw_window`, with the first day that can be served in
 // `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
 // added up as `(other)`.
+//
+// Events: an `event` breakdown comes from rollups without filters; a `prop` breakdown reads
+// raw rows inside the raw window, for any prop key, and the rollups of the property's
+// `tracked_props` before it. `segment_id` adds a saved segment's filters.
 //
 // Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
 // two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
@@ -71871,6 +76420,110 @@ func (c *ClientWithResponses) RotateAnalyticsKeyWithResponse(ctx context.Context
 		return nil, err
 	}
 	return ParseRotateAnalyticsKeyResponse(rsp)
+}
+
+// ListAnalyticsSegmentsWithResponse List a property's segments
+//
+// Named filter sets, shared with everyone who sees the property, by name.
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/segments (the `ListAnalyticsSegments` operationId).
+func (c *ClientWithResponses) ListAnalyticsSegmentsWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsSegmentsParams, reqEditors ...RequestEditorFn) (*ListAnalyticsSegmentsResponse, error) {
+	rsp, err := c.ListAnalyticsSegments(ctx, propertyId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListAnalyticsSegmentsResponse(rsp)
+}
+
+// CreateAnalyticsSegmentWithBodyWithResponse Save a segment
+//
+// Anyone who sees the property. A property has at most 100 segments (`403 segment_limit`);
+// names are unique per property (`409 segment_taken`).
+//
+// Scope: `analytics:read`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/segments (the `CreateAnalyticsSegment` operationId).
+func (c *ClientWithResponses) CreateAnalyticsSegmentWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsSegmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAnalyticsSegmentResponse, error) {
+	rsp, err := c.CreateAnalyticsSegmentWithBody(ctx, propertyId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateAnalyticsSegmentResponse(rsp)
+}
+
+// CreateAnalyticsSegmentWithResponse Save a segment
+//
+// Anyone who sees the property. A property has at most 100 segments (`403 segment_limit`);
+// names are unique per property (`409 segment_taken`).
+//
+// Scope: `analytics:read`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/segments (the `CreateAnalyticsSegment` operationId).
+func (c *ClientWithResponses) CreateAnalyticsSegmentWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *CreateAnalyticsSegmentParams, body CreateAnalyticsSegmentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAnalyticsSegmentResponse, error) {
+	rsp, err := c.CreateAnalyticsSegment(ctx, propertyId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateAnalyticsSegmentResponse(rsp)
+}
+
+// DeleteAnalyticsSegmentWithResponse Delete a segment
+//
+// Its author, owners, admins and API keys without an inbox limit.
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/analytics/properties/{propertyId}/segments/{segmentId} (the `DeleteAnalyticsSegment` operationId).
+func (c *ClientWithResponses) DeleteAnalyticsSegmentWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, segmentId AnalyticsSegmentId, params *DeleteAnalyticsSegmentParams, reqEditors ...RequestEditorFn) (*DeleteAnalyticsSegmentResponse, error) {
+	rsp, err := c.DeleteAnalyticsSegment(ctx, propertyId, segmentId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteAnalyticsSegmentResponse(rsp)
+}
+
+// UpdateAnalyticsSegmentWithBodyWithResponse Update a segment
+//
+// Its author, owners, admins and API keys without an inbox limit.
+//
+// Scope: `analytics:read`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/segments/{segmentId} (the `UpdateAnalyticsSegment` operationId).
+func (c *ClientWithResponses) UpdateAnalyticsSegmentWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, segmentId AnalyticsSegmentId, params *UpdateAnalyticsSegmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAnalyticsSegmentResponse, error) {
+	rsp, err := c.UpdateAnalyticsSegmentWithBody(ctx, propertyId, segmentId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateAnalyticsSegmentResponse(rsp)
+}
+
+// UpdateAnalyticsSegmentWithResponse Update a segment
+//
+// Its author, owners, admins and API keys without an inbox limit.
+//
+// Scope: `analytics:read`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/segments/{segmentId} (the `UpdateAnalyticsSegment` operationId).
+func (c *ClientWithResponses) UpdateAnalyticsSegmentWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, segmentId AnalyticsSegmentId, params *UpdateAnalyticsSegmentParams, body UpdateAnalyticsSegmentJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAnalyticsSegmentResponse, error) {
+	rsp, err := c.UpdateAnalyticsSegment(ctx, propertyId, segmentId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateAnalyticsSegmentResponse(rsp)
 }
 
 // ListApiKeysWithResponse List API keys
@@ -80142,6 +84795,211 @@ func ParseUpdateAnalyticsPropertyResponse(rsp *http.Response) (*UpdateAnalyticsP
 	return response, nil
 }
 
+// ParseListAnalyticsAnnotationsResponse parses an HTTP response from a ListAnalyticsAnnotationsWithResponse call
+func ParseListAnalyticsAnnotationsResponse(rsp *http.Response) (*ListAnalyticsAnnotationsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListAnalyticsAnnotationsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsAnnotationList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateAnalyticsAnnotationResponse parses an HTTP response from a CreateAnalyticsAnnotationWithResponse call
+func ParseCreateAnalyticsAnnotationResponse(rsp *http.Response) (*CreateAnalyticsAnnotationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateAnalyticsAnnotationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest AnalyticsAnnotation
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteAnalyticsAnnotationResponse parses an HTTP response from a DeleteAnalyticsAnnotationWithResponse call
+func ParseDeleteAnalyticsAnnotationResponse(rsp *http.Response) (*DeleteAnalyticsAnnotationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteAnalyticsAnnotationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateAnalyticsAnnotationResponse parses an HTTP response from a UpdateAnalyticsAnnotationWithResponse call
+func ParseUpdateAnalyticsAnnotationResponse(rsp *http.Response) (*UpdateAnalyticsAnnotationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateAnalyticsAnnotationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsAnnotation
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseDeleteAnalyticsDataResponse parses an HTTP response from a DeleteAnalyticsDataWithResponse call
 func ParseDeleteAnalyticsDataResponse(rsp *http.Response) (*DeleteAnalyticsDataResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -80186,6 +85044,505 @@ func ParseDeleteAnalyticsDataResponse(rsp *http.Response) (*DeleteAnalyticsDataR
 			return nil, err
 		}
 		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListAnalyticsFunnelsResponse parses an HTTP response from a ListAnalyticsFunnelsWithResponse call
+func ParseListAnalyticsFunnelsResponse(rsp *http.Response) (*ListAnalyticsFunnelsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListAnalyticsFunnelsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsFunnelList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateAnalyticsFunnelResponse parses an HTTP response from a CreateAnalyticsFunnelWithResponse call
+func ParseCreateAnalyticsFunnelResponse(rsp *http.Response) (*CreateAnalyticsFunnelResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateAnalyticsFunnelResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest AnalyticsFunnel
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteAnalyticsFunnelResponse parses an HTTP response from a DeleteAnalyticsFunnelWithResponse call
+func ParseDeleteAnalyticsFunnelResponse(rsp *http.Response) (*DeleteAnalyticsFunnelResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteAnalyticsFunnelResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateAnalyticsFunnelResponse parses an HTTP response from a UpdateAnalyticsFunnelWithResponse call
+func ParseUpdateAnalyticsFunnelResponse(rsp *http.Response) (*UpdateAnalyticsFunnelResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateAnalyticsFunnelResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsFunnel
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetAnalyticsFunnelReportResponse parses an HTTP response from a GetAnalyticsFunnelReportWithResponse call
+func ParseGetAnalyticsFunnelReportResponse(rsp *http.Response) (*GetAnalyticsFunnelReportResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetAnalyticsFunnelReportResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsFunnelReport
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest AnalyticsRangeProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListAnalyticsGoalsResponse parses an HTTP response from a ListAnalyticsGoalsWithResponse call
+func ParseListAnalyticsGoalsResponse(rsp *http.Response) (*ListAnalyticsGoalsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListAnalyticsGoalsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsGoalList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateAnalyticsGoalResponse parses an HTTP response from a CreateAnalyticsGoalWithResponse call
+func ParseCreateAnalyticsGoalResponse(rsp *http.Response) (*CreateAnalyticsGoalResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateAnalyticsGoalResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest AnalyticsGoal
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteAnalyticsGoalResponse parses an HTTP response from a DeleteAnalyticsGoalWithResponse call
+func ParseDeleteAnalyticsGoalResponse(rsp *http.Response) (*DeleteAnalyticsGoalResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteAnalyticsGoalResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateAnalyticsGoalResponse parses an HTTP response from a UpdateAnalyticsGoalWithResponse call
+func ParseUpdateAnalyticsGoalResponse(rsp *http.Response) (*UpdateAnalyticsGoalResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateAnalyticsGoalResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsGoal
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
 
 	}
 
@@ -80425,6 +85782,218 @@ func ParseRotateAnalyticsKeyResponse(rsp *http.Response) (*RotateAnalyticsKeyRes
 			return nil, err
 		}
 		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListAnalyticsSegmentsResponse parses an HTTP response from a ListAnalyticsSegmentsWithResponse call
+func ParseListAnalyticsSegmentsResponse(rsp *http.Response) (*ListAnalyticsSegmentsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListAnalyticsSegmentsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsSegmentList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateAnalyticsSegmentResponse parses an HTTP response from a CreateAnalyticsSegmentWithResponse call
+func ParseCreateAnalyticsSegmentResponse(rsp *http.Response) (*CreateAnalyticsSegmentResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateAnalyticsSegmentResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest AnalyticsSegment
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteAnalyticsSegmentResponse parses an HTTP response from a DeleteAnalyticsSegmentWithResponse call
+func ParseDeleteAnalyticsSegmentResponse(rsp *http.Response) (*DeleteAnalyticsSegmentResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteAnalyticsSegmentResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateAnalyticsSegmentResponse parses an HTTP response from a UpdateAnalyticsSegmentWithResponse call
+func ParseUpdateAnalyticsSegmentResponse(rsp *http.Response) (*UpdateAnalyticsSegmentResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateAnalyticsSegmentResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsSegment
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
 
 	}
 

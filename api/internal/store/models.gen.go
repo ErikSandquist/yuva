@@ -11,6 +11,20 @@ import (
 	"uuid"
 )
 
+type AnalyticsAnnotation struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Kind        string
+	StartsOn    time.Time
+	EndsOn      time.Time
+	Text        string
+	GoalID      *uuid.UUID
+	CreatedBy   *uuid.UUID
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+}
+
 type AnalyticsDaily struct {
 	WorkspaceID  uuid.UUID
 	PropertyID   uuid.UUID
@@ -27,6 +41,36 @@ type AnalyticsDaily struct {
 	EngagedViews int64
 	ScrollSum    int64
 	ScrollViews  int64
+}
+
+type AnalyticsDailyGoal struct {
+	WorkspaceID   uuid.UUID
+	PropertyID    uuid.UUID
+	Day           time.Time
+	GoalID        uuid.UUID
+	Dim           int16
+	Value         string
+	Currency      string
+	Visitors      int64
+	Visits        int64
+	Completions   int64
+	RevenueMinor  int64
+	RevenueEvents int64
+}
+
+type AnalyticsDailyProp struct {
+	WorkspaceID   uuid.UUID
+	PropertyID    uuid.UUID
+	Day           time.Time
+	Name          string
+	Prop          string
+	Value         string
+	Currency      string
+	Visitors      int64
+	Visits        int64
+	Events        int64
+	RevenueMinor  int64
+	RevenueEvents int64
 }
 
 type AnalyticsEvent struct {
@@ -46,6 +90,35 @@ type AnalyticsEvent struct {
 	EngagedMs    *int32
 	Scroll       *int16
 	Interactive  bool
+}
+
+type AnalyticsFunnel struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Name        string
+	Steps       []uuid.UUID
+	CreatedBy   *uuid.UUID
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+}
+
+type AnalyticsGoal struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Name        string
+	Kind        string
+	PathPattern *string
+	EventName   *string
+	PropKey     *string
+	PropValue   *string
+	ScrollPct   *int16
+	Version     int64
+	CountsFrom  time.Time
+	CreatedBy   *uuid.UUID
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
 }
 
 type AnalyticsHourly struct {
@@ -134,6 +207,7 @@ type AnalyticsProperty struct {
 	CreatedAt        time.Time
 	UpdatedAt        time.Time
 	DeletedAt        *time.Time
+	GoalsVersion     int64
 }
 
 type AnalyticsRollupDay struct {
@@ -144,6 +218,7 @@ type AnalyticsRollupDay struct {
 	Dirty         bool
 	LateSeq       int64
 	EngagementSeq int64
+	GoalsVersion  int64
 }
 
 type AnalyticsSalt struct {
@@ -152,6 +227,17 @@ type AnalyticsSalt struct {
 	Day         time.Time
 	Salt        []byte
 	ExpiresAt   time.Time
+}
+
+type AnalyticsSegment struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Name        string
+	Filters     []byte
+	CreatedBy   *uuid.UUID
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
 }
 
 type AnalyticsVisit struct {

@@ -212,6 +212,46 @@ func (w *analyticsRollupWorker) Work(ctx context.Context, job *river.Job[Analyti
 	return w.s.RollupAnalyticsDay(ctx, job.Args.WorkspaceID, job.Args.PropertyID, day)
 }
 
+// AnalyticsGoalRollupArgs rebuilds the goal and prop rollups of one rolled-up local day of a
+// property after its goals or tracked props changed.
+type AnalyticsGoalRollupArgs struct {
+	WorkspaceID uuid.UUID `json:"workspace_id"`
+	PropertyID  uuid.UUID `json:"property_id"`
+	Day         string    `json:"day"`
+}
+
+func (AnalyticsGoalRollupArgs) Kind() string { return "analytics_goal_rollup" }
+
+func (AnalyticsGoalRollupArgs) InsertOpts() river.InsertOpts {
+	return river.InsertOpts{Queue: jobs.AnalyticsQueue, UniqueOpts: river.UniqueOpts{ByArgs: true, ByState: analyticsRollupStates}}
+}
+
+type analyticsGoalRollupWorker struct {
+	river.WorkerDefaults[AnalyticsGoalRollupArgs]
+	s *Server
+}
+
+func (w *analyticsGoalRollupWorker) Timeout(*river.Job[AnalyticsGoalRollupArgs]) time.Duration {
+	return analyticsRollupTimeout
+}
+
+func (w *analyticsGoalRollupWorker) Work(ctx context.Context, job *river.Job[AnalyticsGoalRollupArgs]) error {
+	day, err := time.Parse(time.DateOnly, job.Args.Day)
+	if err != nil {
+		return err
+	}
+	return w.s.RollupAnalyticsGoals(ctx, job.Args.WorkspaceID, job.Args.PropertyID, day)
+}
+
+// RollupAnalyticsGoals rebuilds a rolled-up day's goal and prop rollups.
+func (s *Server) RollupAnalyticsGoals(ctx context.Context, ws, propertyID uuid.UUID, day time.Time) error {
+	if s.analytics == nil {
+		return nil
+	}
+	pg := &analytics.PGStore{Pool: s.st.Pool}
+	return pg.RollupGoalsDay(ctx, ws, propertyID, day, s.analytics.settings.RollupTop)
+}
+
 // AnalyticsFoldArgs folds the visitors of an open local day of a property whose visits are over.
 type AnalyticsFoldArgs struct {
 	WorkspaceID uuid.UUID `json:"workspace_id"`
@@ -288,6 +328,7 @@ func (w *analyticsGeoIPWorker) Work(ctx context.Context, _ *river.Job[jobs.Analy
 func (s *Server) addAnalyticsWorkers(workers *river.Workers) {
 	river.AddWorker(workers, &analyticsDeleteWorker{s: s})
 	river.AddWorker(workers, &analyticsRollupWorker{s: s})
+	river.AddWorker(workers, &analyticsGoalRollupWorker{s: s})
 	river.AddWorker(workers, &analyticsFoldWorker{s: s})
 	river.AddWorker(workers, &analyticsPartitionsWorker{s: s})
 	river.AddWorker(workers, &analyticsRollupScanWorker{s: s})
@@ -334,6 +375,12 @@ func (s *Server) MaintainAnalytics(ctx context.Context) error {
 				s.st.TrimAnalyticsDaily,
 				func(ctx context.Context, a store.TrimAnalyticsDailyParams) (int64, error) {
 					return s.st.TrimAnalyticsHourly(ctx, store.TrimAnalyticsHourlyParams(a))
+				},
+				func(ctx context.Context, a store.TrimAnalyticsDailyParams) (int64, error) {
+					return s.st.TrimAnalyticsDailyGoals(ctx, store.TrimAnalyticsDailyGoalsParams(a))
+				},
+				func(ctx context.Context, a store.TrimAnalyticsDailyParams) (int64, error) {
+					return s.st.TrimAnalyticsDailyProps(ctx, store.TrimAnalyticsDailyPropsParams(a))
 				},
 				func(ctx context.Context, a store.TrimAnalyticsDailyParams) (int64, error) {
 					return s.st.TrimAnalyticsRollupDays(ctx, store.TrimAnalyticsRollupDaysParams(a))
@@ -394,6 +441,20 @@ func (s *Server) ScanAnalyticsRollups(ctx context.Context) (int, error) {
 			if _, err := s.jobs.InsertMany(ctx, folds); err != nil {
 				return queued, err
 			}
+		}
+		stale, err := s.st.ListAnalyticsGoalRollupTodo(ctx, store.ListAnalyticsGoalRollupTodoParams{WorkspaceID: ws, Oldest: s.rawFrom()})
+		if err != nil {
+			return queued, err
+		}
+		var goals []river.InsertManyParams
+		for _, t := range stale {
+			goals = append(goals, river.InsertManyParams{Args: AnalyticsGoalRollupArgs{WorkspaceID: ws, PropertyID: t.PropertyID, Day: t.Day.Format(time.DateOnly)}})
+		}
+		if len(goals) > 0 {
+			if _, err := s.jobs.InsertMany(ctx, goals); err != nil {
+				return queued, err
+			}
+			queued += len(goals)
 		}
 	}
 	return queued, nil

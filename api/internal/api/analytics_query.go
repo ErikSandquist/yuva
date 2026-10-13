@@ -2,10 +2,12 @@ package api
 
 import (
 	"bytes"
+	"cmp"
 	"context"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
+	"math"
 	"net/http"
 	"slices"
 	"strconv"
@@ -210,9 +212,33 @@ func metricsBody(s analytics.Sums, names []string) oas.AnalyticsMetrics {
 			m.ScrollDepth = &v
 		case "events":
 			m.Events = &v
+		case "conversions":
+			m.Conversions = &v
+		case "conversion_rate":
+			m.ConversionRate = &v
+		case "completions":
+			m.Completions = &v
+		case "revenue":
+			m.Revenue = revenueBody(s.Revenue)
 		}
 	}
 	return m
+}
+
+// revenueBody lists the revenue per currency, the largest total first.
+func revenueBody(r map[string]analytics.Money) *[]oas.AnalyticsRevenue {
+	out := []oas.AnalyticsRevenue{}
+	for c, m := range r {
+		avg := int64(0)
+		if m.Events > 0 {
+			avg = int64(math.Round(float64(m.Minor) / float64(m.Events)))
+		}
+		out = append(out, oas.AnalyticsRevenue{Currency: c, Total: m.Minor, Average: avg, Events: m.Events, Digits: analytics.CurrencyDigits(c)})
+	}
+	slices.SortFunc(out, func(a, b oas.AnalyticsRevenue) int {
+		return cmp.Or(cmp.Compare(b.Total, a.Total), strings.Compare(a.Currency, b.Currency))
+	})
+	return &out
 }
 
 // rowBody splits places into their name and the country (and region) they are in.
@@ -299,6 +325,21 @@ func (s *Server) QueryAnalytics(ctx context.Context, req oas.QueryAnalyticsReque
 		return nil, err
 	}
 	q := analytics.Query{WorkspaceID: p.workspaceID, PropertyID: prop.ID, Timezone: prop.Timezone, From: from, To: to, RawFrom: s.rawFrom()}
+	if b.Prop != nil {
+		if q.Prop, err = trimmed(*b.Prop, 1, 300, "prop"); err != nil {
+			return nil, err
+		}
+	}
+	if b.GoalId != nil {
+		g, err := s.st.GetAnalyticsGoal(ctx, store.GetAnalyticsGoalParams{WorkspaceID: p.workspaceID, PropertyID: prop.ID, ID: *b.GoalId})
+		if store.IsNotFound(err) {
+			return nil, errGoalGone
+		}
+		if err != nil {
+			return nil, err
+		}
+		q.Goal = goalDef(g)
+	}
 	for _, m := range b.Metrics {
 		if slices.Contains(q.Metrics, string(m)) {
 			return nil, errValidation("metric " + string(m) + " is listed twice")
@@ -311,14 +352,39 @@ func (s *Server) QueryAnalytics(ctx context.Context, req oas.QueryAnalyticsReque
 		}
 	}
 	if b.Filters != nil {
-		for _, f := range *b.Filters {
-			q.Filters = append(q.Filters, analytics.Filter{Dimension: string(f.Dimension), Op: string(f.Op), Values: f.Values})
+		if q.Filters, err = segmentFilters(*b.Filters); err != nil {
+			return nil, err
 		}
 	}
-	order := []analytics.Order{{Metric: "visitors", Desc: true}}
+	if b.SegmentId != nil {
+		sg, err := s.st.GetAnalyticsSegment(ctx, store.GetAnalyticsSegmentParams{WorkspaceID: p.workspaceID, PropertyID: prop.ID, ID: *b.SegmentId})
+		if store.IsNotFound(err) {
+			return nil, errSegmentGone
+		}
+		if err != nil {
+			return nil, err
+		}
+		var saved []oas.AnalyticsFilter
+		if err := json.Unmarshal(sg.Filters, &saved); err != nil {
+			return nil, err
+		}
+		fs, err := segmentFilters(saved)
+		if err != nil {
+			return nil, err
+		}
+		q.Filters = append(q.Filters, fs...)
+	}
+	first := "visitors"
+	if i := slices.IndexFunc(q.Metrics, func(m string) bool { return m != "revenue" }); i >= 0 && !slices.Contains(q.Metrics, first) {
+		first = q.Metrics[i]
+	}
+	order := []analytics.Order{{Metric: first, Desc: true}}
 	if b.OrderBy != nil && len(*b.OrderBy) > 0 {
 		order = nil
 		for _, o := range *b.OrderBy {
+			if o.Metric == oas.AnalyticsMetricRevenue {
+				return nil, errValidation("rows cannot be ordered by revenue, which is per currency")
+			}
 			order = append(order, analytics.Order{Metric: string(o.Metric), Desc: o.Dir == nil || *o.Dir == oas.AnalyticsDesc})
 		}
 	}

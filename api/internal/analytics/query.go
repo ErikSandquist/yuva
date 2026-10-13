@@ -38,6 +38,9 @@ type Query struct {
 	RawFrom     time.Time
 	// SortBy are further metrics the rows are ordered by.
 	SortBy []string
+	// Goal asks for its conversions next to the metrics; Prop is the key a prop dimension reads.
+	Goal *Goal
+	Prop string
 }
 
 type Row struct {
@@ -97,6 +100,9 @@ func (p *plan) parse() error {
 		if !ok {
 			return badQuery("unknown dimension %q", name)
 		}
+		if d.Event {
+			return badQuery("%q cannot be combined with these metrics", name)
+		}
 		if slices.ContainsFunc(p.dims, func(x Dim) bool { return x.Name == name }) {
 			return badQuery("dimension %q is listed twice", name)
 		}
@@ -117,12 +123,19 @@ func (p *plan) parse() error {
 		}
 		p.engagement = p.engagement || engagementMetrics[m]
 	}
-	for _, f := range p.q.Filters {
+	return CheckFilters(p.q.Filters)
+}
+
+func CheckFilters(fs []Filter) error {
+	for _, f := range fs {
 		if _, ok := DimByName(f.Dimension); !ok {
 			return badQuery("unknown filter dimension %q", f.Dimension)
 		}
 		if !slices.Contains([]string{"is", "is_not", "contains", "not_contains", "matches"}, f.Op) || len(f.Values) == 0 {
 			return badQuery("the filter on %q needs an op of is, is_not, contains, not_contains or matches and at least one value", f.Dimension)
+		}
+		if (f.Dimension == "prop") != (f.Prop != "") {
+			return badQuery("a filter names a prop key exactly when its dimension is prop")
 		}
 	}
 	return nil
@@ -134,6 +147,11 @@ func (p *plan) parse() error {
 func (p *plan) fromRollups() bool {
 	fs := p.q.Filters
 	single := len(fs) == 1 && fs[0].Op == "is" && len(fs[0].Values) == 1
+	for _, f := range fs {
+		if d, _ := DimByName(f.Dimension); d.Event {
+			return false
+		}
+	}
 	switch {
 	case p.grain == "hour":
 		return len(fs) == 0
@@ -170,17 +188,38 @@ func days(from, to time.Time) []time.Time {
 }
 
 // Query answers q from the rollups of finished days and the raw rows of the others, under a
-// statement timeout.
+// statement timeout: traffic, a goal's conversions next to it, or custom events.
 func (s *PGStore) Query(ctx context.Context, q Query) (Result, error) {
+	mode, err := queryMode(q)
+	if err != nil {
+		return Result{}, err
+	}
+	var res Result
+	err = pgx.BeginTxFunc(ctx, s.Pool, pgx.TxOptions{AccessMode: pgx.ReadOnly, IsoLevel: pgx.RepeatableRead}, func(tx pgx.Tx) error {
+		if err := queryLimits(ctx, tx); err != nil {
+			return err
+		}
+		switch mode {
+		case modeGoal:
+			res, err = goalQuery(ctx, tx, q)
+		case modeEvents:
+			res, err = eventQuery(ctx, tx, q)
+		default:
+			res, err = trafficQuery(ctx, tx, q)
+		}
+		return err
+	})
+	return res, err
+}
+
+// trafficQuery answers a query of visits and page views.
+func trafficQuery(ctx context.Context, tx pgx.Tx, q Query) (Result, error) {
 	p := &plan{q: q}
 	if err := p.parse(); err != nil {
 		return Result{}, err
 	}
 	var res Result
-	err := pgx.BeginTxFunc(ctx, s.Pool, pgx.TxOptions{AccessMode: pgx.ReadOnly, IsoLevel: pgx.RepeatableRead}, func(tx pgx.Tx) error {
-		if err := queryLimits(ctx, tx); err != nil {
-			return err
-		}
+	err := func() error {
 		rows, err := tx.Query(ctx, `SELECT d.day, d.built_at IS NOT NULL AND (NOT d.dirty OR d.day < $5), f.until_at,
 			coalesce(f.late_seq = d.late_seq AND (NOT $6 OR f.engagement_seq = d.engagement_seq), false)
 			FROM analytics_rollup_days d LEFT JOIN analytics_partial_days f ON f.workspace_id = d.workspace_id AND f.property_id = d.property_id AND f.day = d.day
@@ -228,7 +267,7 @@ func (s *PGStore) Query(ctx context.Context, q Query) (Result, error) {
 		}
 		res, err = p.run(ctx, tx)
 		return err
-	})
+	}()
 	return res, err
 }
 

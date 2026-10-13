@@ -13,12 +13,112 @@ import (
 	"uuid"
 )
 
+const bumpAnalyticsGoalsVersion = `-- name: BumpAnalyticsGoalsVersion :one
+UPDATE analytics_properties SET goals_version = goals_version + 1
+WHERE workspace_id = $1 AND id = $2 AND deleted_at IS NULL
+RETURNING goals_version
+`
+
+type BumpAnalyticsGoalsVersionParams struct {
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) BumpAnalyticsGoalsVersion(ctx context.Context, arg BumpAnalyticsGoalsVersionParams) (int64, error) {
+	row := q.db.QueryRow(ctx, bumpAnalyticsGoalsVersion, arg.WorkspaceID, arg.ID)
+	var goals_version int64
+	err := row.Scan(&goals_version)
+	return goals_version, err
+}
+
+const countAnalyticsAnnotations = `-- name: CountAnalyticsAnnotations :one
+SELECT count(*) FROM analytics_annotations WHERE workspace_id = $1 AND property_id = $2
+`
+
+type CountAnalyticsAnnotationsParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+}
+
+func (q *Queries) CountAnalyticsAnnotations(ctx context.Context, arg CountAnalyticsAnnotationsParams) (int64, error) {
+	row := q.db.QueryRow(ctx, countAnalyticsAnnotations, arg.WorkspaceID, arg.PropertyID)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
+const countAnalyticsEventsSince = `-- name: CountAnalyticsEventsSince :one
+SELECT coalesce(sum(events), 0)::bigint FROM analytics_ingest_stats
+WHERE workspace_id = $1 AND property_id = $2 AND reason = 'accepted' AND day >= $3
+`
+
+type CountAnalyticsEventsSinceParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	FromDay     time.Time
+}
+
+func (q *Queries) CountAnalyticsEventsSince(ctx context.Context, arg CountAnalyticsEventsSinceParams) (int64, error) {
+	row := q.db.QueryRow(ctx, countAnalyticsEventsSince, arg.WorkspaceID, arg.PropertyID, arg.FromDay)
+	var column_1 int64
+	err := row.Scan(&column_1)
+	return column_1, err
+}
+
+const countAnalyticsFunnels = `-- name: CountAnalyticsFunnels :one
+SELECT count(*) FROM analytics_funnels WHERE workspace_id = $1 AND property_id = $2
+`
+
+type CountAnalyticsFunnelsParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+}
+
+func (q *Queries) CountAnalyticsFunnels(ctx context.Context, arg CountAnalyticsFunnelsParams) (int64, error) {
+	row := q.db.QueryRow(ctx, countAnalyticsFunnels, arg.WorkspaceID, arg.PropertyID)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
+const countAnalyticsGoals = `-- name: CountAnalyticsGoals :one
+SELECT count(*) FROM analytics_goals WHERE workspace_id = $1 AND property_id = $2
+`
+
+type CountAnalyticsGoalsParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+}
+
+func (q *Queries) CountAnalyticsGoals(ctx context.Context, arg CountAnalyticsGoalsParams) (int64, error) {
+	row := q.db.QueryRow(ctx, countAnalyticsGoals, arg.WorkspaceID, arg.PropertyID)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
 const countAnalyticsProperties = `-- name: CountAnalyticsProperties :one
 SELECT count(*) FROM analytics_properties WHERE workspace_id = $1 AND deleted_at IS NULL
 `
 
 func (q *Queries) CountAnalyticsProperties(ctx context.Context, workspaceID uuid.UUID) (int64, error) {
 	row := q.db.QueryRow(ctx, countAnalyticsProperties, workspaceID)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
+const countAnalyticsSegments = `-- name: CountAnalyticsSegments :one
+SELECT count(*) FROM analytics_segments WHERE workspace_id = $1 AND property_id = $2
+`
+
+type CountAnalyticsSegmentsParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+}
+
+func (q *Queries) CountAnalyticsSegments(ctx context.Context, arg CountAnalyticsSegmentsParams) (int64, error) {
+	row := q.db.QueryRow(ctx, countAnalyticsSegments, arg.WorkspaceID, arg.PropertyID)
 	var count int64
 	err := row.Scan(&count)
 	return count, err
@@ -41,6 +141,158 @@ func (q *Queries) CountPendingAnalyticsRollups(ctx context.Context, arg CountPen
 	return count, err
 }
 
+const createAnalyticsAnnotation = `-- name: CreateAnalyticsAnnotation :one
+INSERT INTO analytics_annotations (id, workspace_id, property_id, kind, starts_on, ends_on, text, goal_id, created_by, created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $10)
+RETURNING id, workspace_id, property_id, kind, starts_on, ends_on, text, goal_id, created_by, created_at, updated_at
+`
+
+type CreateAnalyticsAnnotationParams struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Kind        string
+	StartsOn    time.Time
+	EndsOn      time.Time
+	Text        string
+	GoalID      *uuid.UUID
+	CreatedBy   *uuid.UUID
+	Now         time.Time
+}
+
+func (q *Queries) CreateAnalyticsAnnotation(ctx context.Context, arg CreateAnalyticsAnnotationParams) (AnalyticsAnnotation, error) {
+	row := q.db.QueryRow(ctx, createAnalyticsAnnotation,
+		arg.ID,
+		arg.WorkspaceID,
+		arg.PropertyID,
+		arg.Kind,
+		arg.StartsOn,
+		arg.EndsOn,
+		arg.Text,
+		arg.GoalID,
+		arg.CreatedBy,
+		arg.Now,
+	)
+	var i AnalyticsAnnotation
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.PropertyID,
+		&i.Kind,
+		&i.StartsOn,
+		&i.EndsOn,
+		&i.Text,
+		&i.GoalID,
+		&i.CreatedBy,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const createAnalyticsFunnel = `-- name: CreateAnalyticsFunnel :one
+INSERT INTO analytics_funnels (id, workspace_id, property_id, name, steps, created_by, created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $7)
+RETURNING id, workspace_id, property_id, name, steps, created_by, created_at, updated_at
+`
+
+type CreateAnalyticsFunnelParams struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Name        string
+	Steps       []uuid.UUID
+	CreatedBy   *uuid.UUID
+	Now         time.Time
+}
+
+func (q *Queries) CreateAnalyticsFunnel(ctx context.Context, arg CreateAnalyticsFunnelParams) (AnalyticsFunnel, error) {
+	row := q.db.QueryRow(ctx, createAnalyticsFunnel,
+		arg.ID,
+		arg.WorkspaceID,
+		arg.PropertyID,
+		arg.Name,
+		arg.Steps,
+		arg.CreatedBy,
+		arg.Now,
+	)
+	var i AnalyticsFunnel
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.PropertyID,
+		&i.Name,
+		&i.Steps,
+		&i.CreatedBy,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const createAnalyticsGoal = `-- name: CreateAnalyticsGoal :one
+INSERT INTO analytics_goals (id, workspace_id, property_id, name, kind, path_pattern, event_name, prop_key, prop_value, scroll_pct,
+    version, counts_from, created_by, created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8,
+    $9, $10, $11, $12, $13, $14, $14)
+RETURNING id, workspace_id, property_id, name, kind, path_pattern, event_name, prop_key, prop_value, scroll_pct, version, counts_from, created_by, created_at, updated_at
+`
+
+type CreateAnalyticsGoalParams struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Name        string
+	Kind        string
+	PathPattern *string
+	EventName   *string
+	PropKey     *string
+	PropValue   *string
+	ScrollPct   *int16
+	Version     int64
+	CountsFrom  time.Time
+	CreatedBy   *uuid.UUID
+	Now         time.Time
+}
+
+func (q *Queries) CreateAnalyticsGoal(ctx context.Context, arg CreateAnalyticsGoalParams) (AnalyticsGoal, error) {
+	row := q.db.QueryRow(ctx, createAnalyticsGoal,
+		arg.ID,
+		arg.WorkspaceID,
+		arg.PropertyID,
+		arg.Name,
+		arg.Kind,
+		arg.PathPattern,
+		arg.EventName,
+		arg.PropKey,
+		arg.PropValue,
+		arg.ScrollPct,
+		arg.Version,
+		arg.CountsFrom,
+		arg.CreatedBy,
+		arg.Now,
+	)
+	var i AnalyticsGoal
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.PropertyID,
+		&i.Name,
+		&i.Kind,
+		&i.PathPattern,
+		&i.EventName,
+		&i.PropKey,
+		&i.PropValue,
+		&i.ScrollPct,
+		&i.Version,
+		&i.CountsFrom,
+		&i.CreatedBy,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
 const createAnalyticsProperty = `-- name: CreateAnalyticsProperty :one
 INSERT INTO analytics_properties (id, workspace_id, inbox_id, name, public_key, domains, platforms, timezone, currency, collection,
     consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, created_by,
@@ -48,7 +300,7 @@ INSERT INTO analytics_properties (id, workspace_id, inbox_id, name, public_key, 
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
     $11, $12, $13, $14, $15, $16, $17, $18,
     $19, $20, $20)
-RETURNING id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at
+RETURNING id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version
 `
 
 type CreateAnalyticsPropertyParams struct {
@@ -126,8 +378,103 @@ func (q *Queries) CreateAnalyticsProperty(ctx context.Context, arg CreateAnalyti
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
+		&i.GoalsVersion,
 	)
 	return i, err
+}
+
+const createAnalyticsSegment = `-- name: CreateAnalyticsSegment :one
+INSERT INTO analytics_segments (id, workspace_id, property_id, name, filters, created_by, created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $7)
+RETURNING id, workspace_id, property_id, name, filters, created_by, created_at, updated_at
+`
+
+type CreateAnalyticsSegmentParams struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Name        string
+	Filters     []byte
+	CreatedBy   *uuid.UUID
+	Now         time.Time
+}
+
+func (q *Queries) CreateAnalyticsSegment(ctx context.Context, arg CreateAnalyticsSegmentParams) (AnalyticsSegment, error) {
+	row := q.db.QueryRow(ctx, createAnalyticsSegment,
+		arg.ID,
+		arg.WorkspaceID,
+		arg.PropertyID,
+		arg.Name,
+		arg.Filters,
+		arg.CreatedBy,
+		arg.Now,
+	)
+	var i AnalyticsSegment
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.PropertyID,
+		&i.Name,
+		&i.Filters,
+		&i.CreatedBy,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const deleteAnalyticsAnnotation = `-- name: DeleteAnalyticsAnnotation :execrows
+DELETE FROM analytics_annotations WHERE workspace_id = $1 AND property_id = $2 AND id = $3
+`
+
+type DeleteAnalyticsAnnotationParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) DeleteAnalyticsAnnotation(ctx context.Context, arg DeleteAnalyticsAnnotationParams) (int64, error) {
+	result, err := q.db.Exec(ctx, deleteAnalyticsAnnotation, arg.WorkspaceID, arg.PropertyID, arg.ID)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
+const deleteAnalyticsFunnel = `-- name: DeleteAnalyticsFunnel :execrows
+DELETE FROM analytics_funnels WHERE workspace_id = $1 AND property_id = $2 AND id = $3
+`
+
+type DeleteAnalyticsFunnelParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) DeleteAnalyticsFunnel(ctx context.Context, arg DeleteAnalyticsFunnelParams) (int64, error) {
+	result, err := q.db.Exec(ctx, deleteAnalyticsFunnel, arg.WorkspaceID, arg.PropertyID, arg.ID)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
+const deleteAnalyticsGoal = `-- name: DeleteAnalyticsGoal :execrows
+DELETE FROM analytics_goals WHERE workspace_id = $1 AND property_id = $2 AND id = $3
+`
+
+type DeleteAnalyticsGoalParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) DeleteAnalyticsGoal(ctx context.Context, arg DeleteAnalyticsGoalParams) (int64, error) {
+	result, err := q.db.Exec(ctx, deleteAnalyticsGoal, arg.WorkspaceID, arg.PropertyID, arg.ID)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
 }
 
 const deleteAnalyticsPropertyRow = `-- name: DeleteAnalyticsPropertyRow :execrows
@@ -152,7 +499,9 @@ WITH d AS (DELETE FROM analytics_daily WHERE analytics_daily.workspace_id = $1 A
      h AS (DELETE FROM analytics_hourly WHERE analytics_hourly.workspace_id = $1 AND analytics_hourly.property_id = $2),
      pd AS (DELETE FROM analytics_partial_daily WHERE analytics_partial_daily.workspace_id = $1 AND analytics_partial_daily.property_id = $2),
      ph AS (DELETE FROM analytics_partial_hourly WHERE analytics_partial_hourly.workspace_id = $1 AND analytics_partial_hourly.property_id = $2),
-     pf AS (DELETE FROM analytics_partial_days WHERE analytics_partial_days.workspace_id = $1 AND analytics_partial_days.property_id = $2)
+     pf AS (DELETE FROM analytics_partial_days WHERE analytics_partial_days.workspace_id = $1 AND analytics_partial_days.property_id = $2),
+     dg AS (DELETE FROM analytics_daily_goals WHERE analytics_daily_goals.workspace_id = $1 AND analytics_daily_goals.property_id = $2),
+     dp AS (DELETE FROM analytics_daily_props WHERE analytics_daily_props.workspace_id = $1 AND analytics_daily_props.property_id = $2)
 DELETE FROM analytics_rollup_days WHERE analytics_rollup_days.workspace_id = $1 AND analytics_rollup_days.property_id = $2
 `
 
@@ -164,6 +513,24 @@ type DeleteAnalyticsRollupsParams struct {
 func (q *Queries) DeleteAnalyticsRollups(ctx context.Context, arg DeleteAnalyticsRollupsParams) error {
 	_, err := q.db.Exec(ctx, deleteAnalyticsRollups, arg.WorkspaceID, arg.PropertyID)
 	return err
+}
+
+const deleteAnalyticsSegment = `-- name: DeleteAnalyticsSegment :execrows
+DELETE FROM analytics_segments WHERE workspace_id = $1 AND property_id = $2 AND id = $3
+`
+
+type DeleteAnalyticsSegmentParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) DeleteAnalyticsSegment(ctx context.Context, arg DeleteAnalyticsSegmentParams) (int64, error) {
+	result, err := q.db.Exec(ctx, deleteAnalyticsSegment, arg.WorkspaceID, arg.PropertyID, arg.ID)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
 }
 
 const deleteExpiredAnalyticsSalts = `-- name: DeleteExpiredAnalyticsSalts :execrows
@@ -218,7 +585,7 @@ func (q *Queries) DeleteStaleAnalyticsVisitClaims(ctx context.Context, arg Delet
 }
 
 const findAnalyticsPropertyByKey = `-- name: FindAnalyticsPropertyByKey :one
-SELECT p.id, p.workspace_id, p.inbox_id, p.name, p.public_key, p.previous_key, p.previous_key_until, p.domains, p.platforms, p.timezone, p.currency, p.collection, p.consent_features, p.audience, p.excluded_paths, p.excluded_ips, p.path_rules, p.tracked_props, p.retention_months, p.visitor_key, p.rollup_version, p.first_event_at, p.last_event_at, p.created_by, p.created_at, p.updated_at, p.deleted_at FROM analytics_properties p JOIN workspaces w ON w.id = p.workspace_id
+SELECT p.id, p.workspace_id, p.inbox_id, p.name, p.public_key, p.previous_key, p.previous_key_until, p.domains, p.platforms, p.timezone, p.currency, p.collection, p.consent_features, p.audience, p.excluded_paths, p.excluded_ips, p.path_rules, p.tracked_props, p.retention_months, p.visitor_key, p.rollup_version, p.first_event_at, p.last_event_at, p.created_by, p.created_at, p.updated_at, p.deleted_at, p.goals_version FROM analytics_properties p JOIN workspaces w ON w.id = p.workspace_id
 WHERE (p.public_key = $1 OR (p.previous_key = $1 AND p.previous_key_until > $2))
   AND p.deleted_at IS NULL AND w.deleted_at IS NULL
 `
@@ -261,12 +628,101 @@ func (q *Queries) FindAnalyticsPropertyByKey(ctx context.Context, arg FindAnalyt
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
+		&i.GoalsVersion,
+	)
+	return i, err
+}
+
+const getAnalyticsAnnotation = `-- name: GetAnalyticsAnnotation :one
+SELECT id, workspace_id, property_id, kind, starts_on, ends_on, text, goal_id, created_by, created_at, updated_at FROM analytics_annotations WHERE workspace_id = $1 AND property_id = $2 AND id = $3
+`
+
+type GetAnalyticsAnnotationParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) GetAnalyticsAnnotation(ctx context.Context, arg GetAnalyticsAnnotationParams) (AnalyticsAnnotation, error) {
+	row := q.db.QueryRow(ctx, getAnalyticsAnnotation, arg.WorkspaceID, arg.PropertyID, arg.ID)
+	var i AnalyticsAnnotation
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.PropertyID,
+		&i.Kind,
+		&i.StartsOn,
+		&i.EndsOn,
+		&i.Text,
+		&i.GoalID,
+		&i.CreatedBy,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const getAnalyticsFunnel = `-- name: GetAnalyticsFunnel :one
+SELECT id, workspace_id, property_id, name, steps, created_by, created_at, updated_at FROM analytics_funnels WHERE workspace_id = $1 AND property_id = $2 AND id = $3
+`
+
+type GetAnalyticsFunnelParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) GetAnalyticsFunnel(ctx context.Context, arg GetAnalyticsFunnelParams) (AnalyticsFunnel, error) {
+	row := q.db.QueryRow(ctx, getAnalyticsFunnel, arg.WorkspaceID, arg.PropertyID, arg.ID)
+	var i AnalyticsFunnel
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.PropertyID,
+		&i.Name,
+		&i.Steps,
+		&i.CreatedBy,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const getAnalyticsGoal = `-- name: GetAnalyticsGoal :one
+SELECT id, workspace_id, property_id, name, kind, path_pattern, event_name, prop_key, prop_value, scroll_pct, version, counts_from, created_by, created_at, updated_at FROM analytics_goals WHERE workspace_id = $1 AND property_id = $2 AND id = $3
+`
+
+type GetAnalyticsGoalParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) GetAnalyticsGoal(ctx context.Context, arg GetAnalyticsGoalParams) (AnalyticsGoal, error) {
+	row := q.db.QueryRow(ctx, getAnalyticsGoal, arg.WorkspaceID, arg.PropertyID, arg.ID)
+	var i AnalyticsGoal
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.PropertyID,
+		&i.Name,
+		&i.Kind,
+		&i.PathPattern,
+		&i.EventName,
+		&i.PropKey,
+		&i.PropValue,
+		&i.ScrollPct,
+		&i.Version,
+		&i.CountsFrom,
+		&i.CreatedBy,
+		&i.CreatedAt,
+		&i.UpdatedAt,
 	)
 	return i, err
 }
 
 const getAnalyticsProperty = `-- name: GetAnalyticsProperty :one
-SELECT id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at FROM analytics_properties WHERE workspace_id = $1 AND id = $2 AND deleted_at IS NULL
+SELECT id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version FROM analytics_properties WHERE workspace_id = $1 AND id = $2 AND deleted_at IS NULL
 `
 
 type GetAnalyticsPropertyParams struct {
@@ -305,6 +761,33 @@ func (q *Queries) GetAnalyticsProperty(ctx context.Context, arg GetAnalyticsProp
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
+		&i.GoalsVersion,
+	)
+	return i, err
+}
+
+const getAnalyticsSegment = `-- name: GetAnalyticsSegment :one
+SELECT id, workspace_id, property_id, name, filters, created_by, created_at, updated_at FROM analytics_segments WHERE workspace_id = $1 AND property_id = $2 AND id = $3
+`
+
+type GetAnalyticsSegmentParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) GetAnalyticsSegment(ctx context.Context, arg GetAnalyticsSegmentParams) (AnalyticsSegment, error) {
+	row := q.db.QueryRow(ctx, getAnalyticsSegment, arg.WorkspaceID, arg.PropertyID, arg.ID)
+	var i AnalyticsSegment
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.PropertyID,
+		&i.Name,
+		&i.Filters,
+		&i.CreatedBy,
+		&i.CreatedAt,
+		&i.UpdatedAt,
 	)
 	return i, err
 }
@@ -336,7 +819,7 @@ func (q *Queries) GetAnalyticsUsage(ctx context.Context, arg GetAnalyticsUsagePa
 }
 
 const getDeletedAnalyticsProperty = `-- name: GetDeletedAnalyticsProperty :one
-SELECT id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at FROM analytics_properties WHERE workspace_id = $1 AND id = $2 AND deleted_at IS NOT NULL
+SELECT id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version FROM analytics_properties WHERE workspace_id = $1 AND id = $2 AND deleted_at IS NOT NULL
 `
 
 type GetDeletedAnalyticsPropertyParams struct {
@@ -375,8 +858,231 @@ func (q *Queries) GetDeletedAnalyticsProperty(ctx context.Context, arg GetDelete
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
+		&i.GoalsVersion,
 	)
 	return i, err
+}
+
+const listAnalyticsAnnotations = `-- name: ListAnalyticsAnnotations :many
+SELECT id, workspace_id, property_id, kind, starts_on, ends_on, text, goal_id, created_by, created_at, updated_at FROM analytics_annotations
+WHERE workspace_id = $1 AND property_id = $2
+  AND ($3::date IS NULL OR starts_on <= $3::date)
+  AND ($4::date IS NULL OR ends_on >= $4::date)
+ORDER BY starts_on, created_at, id
+LIMIT 1000
+`
+
+type ListAnalyticsAnnotationsParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	ToDay       *time.Time
+	FromDay     *time.Time
+}
+
+func (q *Queries) ListAnalyticsAnnotations(ctx context.Context, arg ListAnalyticsAnnotationsParams) ([]AnalyticsAnnotation, error) {
+	rows, err := q.db.Query(ctx, listAnalyticsAnnotations,
+		arg.WorkspaceID,
+		arg.PropertyID,
+		arg.ToDay,
+		arg.FromDay,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []AnalyticsAnnotation
+	for rows.Next() {
+		var i AnalyticsAnnotation
+		if err := rows.Scan(
+			&i.ID,
+			&i.WorkspaceID,
+			&i.PropertyID,
+			&i.Kind,
+			&i.StartsOn,
+			&i.EndsOn,
+			&i.Text,
+			&i.GoalID,
+			&i.CreatedBy,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listAnalyticsFunnels = `-- name: ListAnalyticsFunnels :many
+SELECT id, workspace_id, property_id, name, steps, created_by, created_at, updated_at FROM analytics_funnels WHERE workspace_id = $1 AND property_id = $2 ORDER BY created_at, id
+`
+
+type ListAnalyticsFunnelsParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+}
+
+func (q *Queries) ListAnalyticsFunnels(ctx context.Context, arg ListAnalyticsFunnelsParams) ([]AnalyticsFunnel, error) {
+	rows, err := q.db.Query(ctx, listAnalyticsFunnels, arg.WorkspaceID, arg.PropertyID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []AnalyticsFunnel
+	for rows.Next() {
+		var i AnalyticsFunnel
+		if err := rows.Scan(
+			&i.ID,
+			&i.WorkspaceID,
+			&i.PropertyID,
+			&i.Name,
+			&i.Steps,
+			&i.CreatedBy,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listAnalyticsGoalRollupTodo = `-- name: ListAnalyticsGoalRollupTodo :many
+SELECT d.property_id, d.day FROM analytics_rollup_days d
+JOIN analytics_properties p ON p.workspace_id = d.workspace_id AND p.id = d.property_id
+WHERE d.workspace_id = $1 AND d.built_at IS NOT NULL AND NOT d.dirty AND d.goals_version < p.goals_version
+  AND p.deleted_at IS NULL AND d.day >= $2
+ORDER BY d.property_id, d.day
+`
+
+type ListAnalyticsGoalRollupTodoParams struct {
+	WorkspaceID uuid.UUID
+	Oldest      time.Time
+}
+
+type ListAnalyticsGoalRollupTodoRow struct {
+	PropertyID uuid.UUID
+	Day        time.Time
+}
+
+// Rolled-up days of the raw window whose goal and prop rows predate the property's goals and
+// tracked props; dirty days are rolled up whole instead.
+func (q *Queries) ListAnalyticsGoalRollupTodo(ctx context.Context, arg ListAnalyticsGoalRollupTodoParams) ([]ListAnalyticsGoalRollupTodoRow, error) {
+	rows, err := q.db.Query(ctx, listAnalyticsGoalRollupTodo, arg.WorkspaceID, arg.Oldest)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListAnalyticsGoalRollupTodoRow
+	for rows.Next() {
+		var i ListAnalyticsGoalRollupTodoRow
+		if err := rows.Scan(&i.PropertyID, &i.Day); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listAnalyticsGoals = `-- name: ListAnalyticsGoals :many
+SELECT id, workspace_id, property_id, name, kind, path_pattern, event_name, prop_key, prop_value, scroll_pct, version, counts_from, created_by, created_at, updated_at FROM analytics_goals WHERE workspace_id = $1 AND property_id = $2 ORDER BY created_at, id
+`
+
+type ListAnalyticsGoalsParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+}
+
+func (q *Queries) ListAnalyticsGoals(ctx context.Context, arg ListAnalyticsGoalsParams) ([]AnalyticsGoal, error) {
+	rows, err := q.db.Query(ctx, listAnalyticsGoals, arg.WorkspaceID, arg.PropertyID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []AnalyticsGoal
+	for rows.Next() {
+		var i AnalyticsGoal
+		if err := rows.Scan(
+			&i.ID,
+			&i.WorkspaceID,
+			&i.PropertyID,
+			&i.Name,
+			&i.Kind,
+			&i.PathPattern,
+			&i.EventName,
+			&i.PropKey,
+			&i.PropValue,
+			&i.ScrollPct,
+			&i.Version,
+			&i.CountsFrom,
+			&i.CreatedBy,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listAnalyticsGoalsByID = `-- name: ListAnalyticsGoalsByID :many
+SELECT id, workspace_id, property_id, name, kind, path_pattern, event_name, prop_key, prop_value, scroll_pct, version, counts_from, created_by, created_at, updated_at FROM analytics_goals WHERE workspace_id = $1 AND property_id = $2 AND id = ANY($3::uuid[])
+`
+
+type ListAnalyticsGoalsByIDParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Ids         []uuid.UUID
+}
+
+func (q *Queries) ListAnalyticsGoalsByID(ctx context.Context, arg ListAnalyticsGoalsByIDParams) ([]AnalyticsGoal, error) {
+	rows, err := q.db.Query(ctx, listAnalyticsGoalsByID, arg.WorkspaceID, arg.PropertyID, arg.Ids)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []AnalyticsGoal
+	for rows.Next() {
+		var i AnalyticsGoal
+		if err := rows.Scan(
+			&i.ID,
+			&i.WorkspaceID,
+			&i.PropertyID,
+			&i.Name,
+			&i.Kind,
+			&i.PathPattern,
+			&i.EventName,
+			&i.PropKey,
+			&i.PropValue,
+			&i.ScrollPct,
+			&i.Version,
+			&i.CountsFrom,
+			&i.CreatedBy,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 const listAnalyticsIngestStats = `-- name: ListAnalyticsIngestStats :many
@@ -418,7 +1124,7 @@ func (q *Queries) ListAnalyticsIngestStats(ctx context.Context, arg ListAnalytic
 }
 
 const listAnalyticsProperties = `-- name: ListAnalyticsProperties :many
-SELECT id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at FROM analytics_properties p
+SELECT id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version FROM analytics_properties p
 WHERE p.workspace_id = $1 AND p.deleted_at IS NULL
   AND ($2::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
@@ -469,6 +1175,7 @@ func (q *Queries) ListAnalyticsProperties(ctx context.Context, arg ListAnalytics
 			&i.CreatedAt,
 			&i.UpdatedAt,
 			&i.DeletedAt,
+			&i.GoalsVersion,
 		); err != nil {
 			return nil, err
 		}
@@ -596,6 +1303,44 @@ func (q *Queries) ListAnalyticsRollupTodo(ctx context.Context, arg ListAnalytics
 	return items, nil
 }
 
+const listAnalyticsSegments = `-- name: ListAnalyticsSegments :many
+SELECT id, workspace_id, property_id, name, filters, created_by, created_at, updated_at FROM analytics_segments WHERE workspace_id = $1 AND property_id = $2 ORDER BY name, id
+`
+
+type ListAnalyticsSegmentsParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+}
+
+func (q *Queries) ListAnalyticsSegments(ctx context.Context, arg ListAnalyticsSegmentsParams) ([]AnalyticsSegment, error) {
+	rows, err := q.db.Query(ctx, listAnalyticsSegments, arg.WorkspaceID, arg.PropertyID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []AnalyticsSegment
+	for rows.Next() {
+		var i AnalyticsSegment
+		if err := rows.Scan(
+			&i.ID,
+			&i.WorkspaceID,
+			&i.PropertyID,
+			&i.Name,
+			&i.Filters,
+			&i.CreatedBy,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listAnalyticsWorkspaceIDs = `-- name: ListAnalyticsWorkspaceIDs :many
 SELECT DISTINCT workspace_id FROM analytics_properties ORDER BY workspace_id
 `
@@ -614,6 +1359,38 @@ func (q *Queries) ListAnalyticsWorkspaceIDs(ctx context.Context) ([]uuid.UUID, e
 			return nil, err
 		}
 		items = append(items, workspace_id)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listFunnelsWithGoal = `-- name: ListFunnelsWithGoal :many
+SELECT name FROM analytics_funnels
+WHERE workspace_id = $1 AND property_id = $2 AND $3::uuid = ANY(steps)
+ORDER BY name
+`
+
+type ListFunnelsWithGoalParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	GoalID      uuid.UUID
+}
+
+func (q *Queries) ListFunnelsWithGoal(ctx context.Context, arg ListFunnelsWithGoalParams) ([]string, error) {
+	rows, err := q.db.Query(ctx, listFunnelsWithGoal, arg.WorkspaceID, arg.PropertyID, arg.GoalID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []string
+	for rows.Next() {
+		var name string
+		if err := rows.Scan(&name); err != nil {
+			return nil, err
+		}
+		items = append(items, name)
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err
@@ -677,7 +1454,7 @@ func (q *Queries) ListWorkspaceAnalyticsPropertyIDs(ctx context.Context, workspa
 }
 
 const lockAnalyticsProperty = `-- name: LockAnalyticsProperty :one
-SELECT id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at FROM analytics_properties WHERE workspace_id = $1 AND id = $2 AND deleted_at IS NULL FOR UPDATE
+SELECT id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version FROM analytics_properties WHERE workspace_id = $1 AND id = $2 AND deleted_at IS NULL FOR UPDATE
 `
 
 type LockAnalyticsPropertyParams struct {
@@ -716,6 +1493,7 @@ func (q *Queries) LockAnalyticsProperty(ctx context.Context, arg LockAnalyticsPr
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
+		&i.GoalsVersion,
 	)
 	return i, err
 }
@@ -787,7 +1565,7 @@ const rotateAnalyticsKey = `-- name: RotateAnalyticsKey :one
 UPDATE analytics_properties SET
     previous_key = public_key, previous_key_until = $1, public_key = $2, updated_at = $3
 WHERE workspace_id = $4 AND id = $5 AND deleted_at IS NULL
-RETURNING id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at
+RETURNING id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version
 `
 
 type RotateAnalyticsKeyParams struct {
@@ -835,6 +1613,7 @@ func (q *Queries) RotateAnalyticsKey(ctx context.Context, arg RotateAnalyticsKey
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
+		&i.GoalsVersion,
 	)
 	return i, err
 }
@@ -870,6 +1649,46 @@ type TrimAnalyticsDailyParams struct {
 
 func (q *Queries) TrimAnalyticsDaily(ctx context.Context, arg TrimAnalyticsDailyParams) (int64, error) {
 	result, err := q.db.Exec(ctx, trimAnalyticsDaily, arg.WorkspaceID, arg.PropertyID, arg.Before)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
+const trimAnalyticsDailyGoals = `-- name: TrimAnalyticsDailyGoals :execrows
+DELETE FROM analytics_daily_goals WHERE ctid = ANY(ARRAY(
+    SELECT t.ctid FROM analytics_daily_goals t
+    WHERE t.workspace_id = $1 AND t.property_id = $2 AND t.day < $3 LIMIT 1000))
+`
+
+type TrimAnalyticsDailyGoalsParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Before      time.Time
+}
+
+func (q *Queries) TrimAnalyticsDailyGoals(ctx context.Context, arg TrimAnalyticsDailyGoalsParams) (int64, error) {
+	result, err := q.db.Exec(ctx, trimAnalyticsDailyGoals, arg.WorkspaceID, arg.PropertyID, arg.Before)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
+const trimAnalyticsDailyProps = `-- name: TrimAnalyticsDailyProps :execrows
+DELETE FROM analytics_daily_props WHERE ctid = ANY(ARRAY(
+    SELECT t.ctid FROM analytics_daily_props t
+    WHERE t.workspace_id = $1 AND t.property_id = $2 AND t.day < $3 LIMIT 1000))
+`
+
+type TrimAnalyticsDailyPropsParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Before      time.Time
+}
+
+func (q *Queries) TrimAnalyticsDailyProps(ctx context.Context, arg TrimAnalyticsDailyPropsParams) (int64, error) {
+	result, err := q.db.Exec(ctx, trimAnalyticsDailyProps, arg.WorkspaceID, arg.PropertyID, arg.Before)
 	if err != nil {
 		return 0, err
 	}
@@ -916,6 +1735,146 @@ func (q *Queries) TrimAnalyticsRollupDays(ctx context.Context, arg TrimAnalytics
 	return result.RowsAffected(), nil
 }
 
+const updateAnalyticsAnnotation = `-- name: UpdateAnalyticsAnnotation :one
+UPDATE analytics_annotations SET starts_on = $1, ends_on = $2, text = $3, updated_at = $4
+WHERE workspace_id = $5 AND property_id = $6 AND id = $7
+RETURNING id, workspace_id, property_id, kind, starts_on, ends_on, text, goal_id, created_by, created_at, updated_at
+`
+
+type UpdateAnalyticsAnnotationParams struct {
+	StartsOn    time.Time
+	EndsOn      time.Time
+	Text        string
+	Now         time.Time
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) UpdateAnalyticsAnnotation(ctx context.Context, arg UpdateAnalyticsAnnotationParams) (AnalyticsAnnotation, error) {
+	row := q.db.QueryRow(ctx, updateAnalyticsAnnotation,
+		arg.StartsOn,
+		arg.EndsOn,
+		arg.Text,
+		arg.Now,
+		arg.WorkspaceID,
+		arg.PropertyID,
+		arg.ID,
+	)
+	var i AnalyticsAnnotation
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.PropertyID,
+		&i.Kind,
+		&i.StartsOn,
+		&i.EndsOn,
+		&i.Text,
+		&i.GoalID,
+		&i.CreatedBy,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const updateAnalyticsFunnel = `-- name: UpdateAnalyticsFunnel :one
+UPDATE analytics_funnels SET name = $1, steps = $2, updated_at = $3
+WHERE workspace_id = $4 AND property_id = $5 AND id = $6
+RETURNING id, workspace_id, property_id, name, steps, created_by, created_at, updated_at
+`
+
+type UpdateAnalyticsFunnelParams struct {
+	Name        string
+	Steps       []uuid.UUID
+	Now         time.Time
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) UpdateAnalyticsFunnel(ctx context.Context, arg UpdateAnalyticsFunnelParams) (AnalyticsFunnel, error) {
+	row := q.db.QueryRow(ctx, updateAnalyticsFunnel,
+		arg.Name,
+		arg.Steps,
+		arg.Now,
+		arg.WorkspaceID,
+		arg.PropertyID,
+		arg.ID,
+	)
+	var i AnalyticsFunnel
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.PropertyID,
+		&i.Name,
+		&i.Steps,
+		&i.CreatedBy,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const updateAnalyticsGoal = `-- name: UpdateAnalyticsGoal :one
+UPDATE analytics_goals SET name = $1, kind = $2, path_pattern = $3, event_name = $4,
+    prop_key = $5, prop_value = $6, scroll_pct = $7, version = $8,
+    updated_at = $9
+WHERE workspace_id = $10 AND property_id = $11 AND id = $12
+RETURNING id, workspace_id, property_id, name, kind, path_pattern, event_name, prop_key, prop_value, scroll_pct, version, counts_from, created_by, created_at, updated_at
+`
+
+type UpdateAnalyticsGoalParams struct {
+	Name        string
+	Kind        string
+	PathPattern *string
+	EventName   *string
+	PropKey     *string
+	PropValue   *string
+	ScrollPct   *int16
+	Version     int64
+	Now         time.Time
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) UpdateAnalyticsGoal(ctx context.Context, arg UpdateAnalyticsGoalParams) (AnalyticsGoal, error) {
+	row := q.db.QueryRow(ctx, updateAnalyticsGoal,
+		arg.Name,
+		arg.Kind,
+		arg.PathPattern,
+		arg.EventName,
+		arg.PropKey,
+		arg.PropValue,
+		arg.ScrollPct,
+		arg.Version,
+		arg.Now,
+		arg.WorkspaceID,
+		arg.PropertyID,
+		arg.ID,
+	)
+	var i AnalyticsGoal
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.PropertyID,
+		&i.Name,
+		&i.Kind,
+		&i.PathPattern,
+		&i.EventName,
+		&i.PropKey,
+		&i.PropValue,
+		&i.ScrollPct,
+		&i.Version,
+		&i.CountsFrom,
+		&i.CreatedBy,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
 const updateAnalyticsProperty = `-- name: UpdateAnalyticsProperty :one
 UPDATE analytics_properties SET
     inbox_id = $1, name = $2, domains = $3, platforms = $4, timezone = $5,
@@ -923,7 +1882,7 @@ UPDATE analytics_properties SET
     excluded_paths = $10, excluded_ips = $11, path_rules = $12, tracked_props = $13,
     retention_months = $14, updated_at = $15
 WHERE workspace_id = $16 AND id = $17 AND deleted_at IS NULL
-RETURNING id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at
+RETURNING id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version
 `
 
 type UpdateAnalyticsPropertyParams struct {
@@ -995,6 +1954,45 @@ func (q *Queries) UpdateAnalyticsProperty(ctx context.Context, arg UpdateAnalyti
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
+		&i.GoalsVersion,
+	)
+	return i, err
+}
+
+const updateAnalyticsSegment = `-- name: UpdateAnalyticsSegment :one
+UPDATE analytics_segments SET name = $1, filters = $2, updated_at = $3
+WHERE workspace_id = $4 AND property_id = $5 AND id = $6
+RETURNING id, workspace_id, property_id, name, filters, created_by, created_at, updated_at
+`
+
+type UpdateAnalyticsSegmentParams struct {
+	Name        string
+	Filters     []byte
+	Now         time.Time
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) UpdateAnalyticsSegment(ctx context.Context, arg UpdateAnalyticsSegmentParams) (AnalyticsSegment, error) {
+	row := q.db.QueryRow(ctx, updateAnalyticsSegment,
+		arg.Name,
+		arg.Filters,
+		arg.Now,
+		arg.WorkspaceID,
+		arg.PropertyID,
+		arg.ID,
+	)
+	var i AnalyticsSegment
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.PropertyID,
+		&i.Name,
+		&i.Filters,
+		&i.CreatedBy,
+		&i.CreatedAt,
+		&i.UpdatedAt,
 	)
 	return i, err
 }

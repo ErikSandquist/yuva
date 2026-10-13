@@ -17,7 +17,7 @@ import (
 func visitDims() []Dim {
 	var out []Dim
 	for _, d := range Dims {
-		if !d.Page {
+		if !d.Page && !d.Event {
 			out = append(out, d)
 		}
 	}
@@ -139,6 +139,9 @@ func (s *PGStore) RollupDay(ctx context.Context, ws, property uuid.UUID, day tim
 			SELECT $1, $2, h.day, h.hour, h.visitors, h.visits, h.views, h.events FROM (`+q+`) AS h(day, hour, visitors, visits, views, events)`,
 			hs.args...); err != nil {
 			return fmt.Errorf("rollup hourly: %w", err)
+		}
+		if err := buildExtras(ctx, tx, ws, property, day, top); err != nil {
+			return err
 		}
 		if _, err := tx.Exec(ctx, `UPDATE analytics_rollup_days SET built_at = now(), dirty = false WHERE workspace_id = $1 AND property_id = $2 AND day = $3`,
 			ws, property, day); err != nil {

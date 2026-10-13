@@ -179,8 +179,8 @@ func TestAnalyticsCollectionPrivacy(t *testing.T) {
 	if r := collect(h, "yuva_ak_unknown", collectReq{origin: "https://example.com", ip: "198.51.100.3", body: pageview("https://example.com/")}); r.status != http.StatusNotFound {
 		t.Fatalf("unknown key: %d", r.status)
 	}
-	if r := collect(h, key, collectReq{origin: "https://example.com", ip: "198.51.100.3", body: map[string]any{"n": "signup", "u": "https://example.com/"}}); r.status != http.StatusBadRequest {
-		t.Fatalf("unknown event: %d", r.status)
+	if r := collect(h, key, collectReq{origin: "https://example.com", ip: "198.51.100.3", body: map[string]any{"n": "yuva_signup", "u": "https://example.com/"}}); r.status != http.StatusBadRequest {
+		t.Fatalf("reserved event name: %d", r.status)
 	}
 	if r := collect(h, key, collectReq{origin: "https://example.com", ip: "198.51.100.3", body: bytes.Repeat([]byte("a"), 70<<10)}); r.status != http.StatusRequestEntityTooLarge {
 		t.Fatalf("large body: %d", r.status)

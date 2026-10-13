@@ -517,16 +517,67 @@ func matchHost(h string) string {
 }
 
 type collectEvent struct {
-	N  string `json:"n"`
-	U  string `json:"u"`
-	R  string `json:"r"`
-	W  int    `json:"w"`
-	H  bool   `json:"h"`
-	MS int64  `json:"ms"`
-	SD int    `json:"sd"`
-	C  *struct {
+	N   string          `json:"n"`
+	U   string          `json:"u"`
+	R   string          `json:"r"`
+	W   int             `json:"w"`
+	H   bool            `json:"h"`
+	MS  int64           `json:"ms"`
+	SD  int             `json:"sd"`
+	P   json.RawMessage `json:"p"`
+	Rev json.RawMessage `json:"$"`
+	I   *bool           `json:"i"`
+	C   *struct {
 		A int `json:"a"`
 	} `json:"c"`
+}
+
+// customEvent is a custom or built-in event once its name, props and revenue are checked.
+type customEvent struct {
+	name        string
+	props       map[string]string
+	revenue     *analytics.Revenue
+	interactive bool
+	scrubbed    bool
+}
+
+// parseCustomEvent checks an event that is neither a page view nor an engagement. Built-in
+// outbound and download events need an http(s) url, an outbound one on another host than the page;
+// a children's property keeps no props but that url.
+func parseCustomEvent(e collectEvent, pg analytics.Page, children bool) (customEvent, error) {
+	name, err := analytics.EventName(e.N)
+	if err != nil {
+		return customEvent{}, err
+	}
+	props, err := analytics.ParseProps(e.P)
+	if err != nil {
+		return customEvent{}, err
+	}
+	rev, err := analytics.ParseRevenue(e.Rev)
+	if err != nil {
+		return customEvent{}, err
+	}
+	out := customEvent{name: name, props: props.Values, revenue: rev, interactive: e.I == nil || *e.I, scrubbed: props.Scrubbed > 0}
+	if children {
+		out.props = nil
+	}
+	switch name {
+	case analytics.EventOutbound, analytics.EventFile:
+		link, ok := analytics.LinkURL(props.Values[analytics.PropURL])
+		if !ok {
+			return customEvent{}, errors.New(name + " needs a url prop with an http(s) URL")
+		}
+		if name == analytics.EventOutbound && strings.EqualFold(link.Hostname(), pg.Host) {
+			return customEvent{}, errors.New("outbound_click's url must be on another host than the page")
+		}
+		if out.props == nil {
+			out.props = map[string]string{}
+		}
+		out.props[analytics.PropURL] = link.String()
+	case analytics.EventNotFound:
+		out.interactive = false
+	}
+	return out, nil
 }
 
 func parseAnalyticsBatch(body []byte) ([]collectEvent, error) {
@@ -588,12 +639,9 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	pages := make([]analytics.Page, len(evs))
+	customs := make([]*customEvent, len(evs))
+	children := prop.Audience == string(oas.AnalyticsAudienceChildren)
 	for i, e := range evs {
-		if e.N != "pageview" && e.N != "engagement" {
-			drop(analytics.ReasonInvalid, len(evs))
-			writeProblem(w, errValidation("n must be pageview or engagement"))
-			return
-		}
 		pg, ok := analytics.ParsePage(e.U, e.H)
 		if !ok {
 			drop(analytics.ReasonInvalid, len(evs))
@@ -606,6 +654,21 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		pages[i] = pg
+		if e.N == "pageview" || e.N == "engagement" {
+			if len(e.Rev) > 0 && string(e.Rev) != "null" {
+				drop(analytics.ReasonInvalid, len(evs))
+				writeProblem(w, errValidation("only custom and built-in events carry revenue"))
+				return
+			}
+			continue
+		}
+		ce, err := parseCustomEvent(e, pg, children)
+		if err != nil {
+			drop(analytics.ReasonInvalid, len(evs))
+			writeProblem(w, errValidation(err.Error()))
+			return
+		}
+		customs[i] = &ce
 	}
 	var keep []int
 	for i, e := range evs {
@@ -706,12 +769,16 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 			drop(analytics.ReasonBot, 1)
 			continue
 		}
-		if pg.Scrubbed {
+		ce := customs[i]
+		if pg.Scrubbed || (ce != nil && ce.scrubbed) {
 			scrubbed++
 		}
 		ev := analytics.Event{
 			WorkspaceID: prop.WorkspaceID, PropertyID: prop.ID, Day: v.Day, TS: now, Visit: v.Visit, Visitor: v.Visitor,
 			Kind: analytics.KindPageview, Name: e.N, Hostname: pg.Host, Path: path, Interactive: true,
+		}
+		if ce != nil {
+			ev.Kind, ev.Name, ev.Props, ev.Revenue, ev.Interactive = analytics.KindCustom, ce.name, ce.props, ce.revenue, ce.interactive
 		}
 		if engagement {
 			ev.Kind, ev.Interactive = analytics.KindEngagement, false

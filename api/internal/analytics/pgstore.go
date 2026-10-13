@@ -183,8 +183,15 @@ func (s *PGStore) Ingest(ctx context.Context, b Batch, now time.Time) (IngestRes
 			if e.Scroll != nil {
 				scroll = *e.Scroll
 			}
+			var props, revenue, currency any
+			if len(e.Props) > 0 {
+				props = e.Props
+			}
+			if e.Revenue != nil {
+				revenue, currency = e.Revenue.Minor, e.Revenue.Currency
+			}
 			rows = append(rows, []any{e.WorkspaceID, e.PropertyID, e.Day, e.TS, e.Visit, e.Visitor, int16(e.Kind), e.Name, e.Hostname, e.Path,
-				nil, nil, nil, engaged, scroll, e.Interactive})
+				props, revenue, currency, engaged, scroll, e.Interactive})
 			accepted[dayKey{e.WorkspaceID, e.PropertyID, e.Day}]++
 			if !e.TS.After(stale) {
 				changed.late[dayKey{e.WorkspaceID, e.PropertyID, e.Day}] = true
