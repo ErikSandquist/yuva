@@ -1574,6 +1574,23 @@ in six steps (M15.1–M15.6 in the roadmap). Decisions:
   come back in `errors`, and only a body or auth problem refuses the request. `sdk/go/analytics` drops
   DNT and GPC requests before sending and retries 429, 5xx and network errors with backoff that honours
   `Retry-After`.
+- **Sharing and export (M15.5).** `analytics_shares` keep a SHA-256 of the link token (`yuva_sh_…`, shown
+  once) and an argon2id password hash (m=19 MiB, t=2, p=1); unlocking gives a 12-hour `yuva_sa_` token
+  HMAC-signed over the link id, its expiry and the password hash, so a new password ends every token;
+  revoke and expiry stop a link at once. 50 links per property; 120 requests a minute per address, 10
+  unlocks a minute per address and link, 30 in all. A link lists its views (`overview`, `realtime`,
+  `pages`, `sources`, `locations`, `devices`, `events`, `goals`): totals and time grains come with every
+  view, other dimensions, filters and event or goal metrics only with theirs, saved segments never; its
+  queries share the workspace's query slots and cache. The server serves the panel at `/share/{token}`
+  with `frame-ancestors` set to the link's embed origins, otherwise `'none'` and `X-Frame-Options: DENY`,
+  without the panel's analytics script and with the token left out of request logs; the share API is
+  `/client/v1/analytics-shares/{token}`. Exports are `view` (one query), `daily` (a row per day, optionally
+  by one dimension) and `raw` (NDJSON, at most 31 days inside the raw window, bots left out, visits
+  renumbered per file, no visitor hash, salt, stored id, contact or referrer path), written by
+  `analytics_export` jobs to storage (1 GiB cap, 3 at a time per workspace) and deleted 7 days after they
+  finish. `view` and `daily` need `analytics:read`; `raw` needs `analytics:manage` and an owner, admin or
+  key without an inbox limit, because raw rows are pseudonymous. CSV cells starting with `=`, `+`, `-`,
+  `@`, tab or CR get a leading `'`.
 - **SDKs.** `/yuva-analytics.js` (≤ 1.5 KB gzip, served like `/yuva.js`, off with `YUVA_WIDGET=off`) with
   automatic and SPA pageviews, engagement, opt-in outbound, file and chat-open events; `useyuva/analytics`,
   React and Nuxt helpers; Swift product `YuvaAnalytics` (no `YuvaKit` dependency, SwiftUI `.yuvaScreen`,
