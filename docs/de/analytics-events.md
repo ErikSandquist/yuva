@@ -106,8 +106,10 @@ Props geben einem Event Details: den gewählten Tarif, den geklickten Button, da
 | Websites für Kinder | Es werden keine Props gespeichert, außer der `url` von `outbound_click` und `file_download`. |
 
 Ein Event, das eine Regel bricht (zu viele Props, ein reservierter Schlüssel, ein Wert, der eine Liste oder
-ein Objekt ist), wird mit `400` abgelehnt, und mit ihm jedes andere Event derselben Anfrage. Prüfen Sie neue
-Events im Netzwerk-Tab Ihres Browsers.
+ein Objekt ist), wird nicht gespeichert.
+Allein gesendet antwortet er mit `400` und dem Grund; in einem Batch (das Skript bündelt die Events eines
+Moments) wird nur dieses Event verworfen, die übrigen werden gespeichert. In beiden Fällen zählt er unter
+**Settings → Health** als `invalid`; schauen Sie dort nach, wenn ein Event nicht erscheint.
 
 Props beliebigen Namens lassen sich in der [Events-Ansicht](#die-events-ansicht) für die Tage aufschlüsseln, für
 die die detaillierten Datensätze aufbewahrt werden ([`YUVA_ANALYTICS_RAW_DAYS`](configuration.md#analytics),
@@ -131,7 +133,7 @@ track("Purchase", { revenue: { amount: "29.90", currency: "EUR" } })
 - **Währungen werden nie umgerechnet oder addiert.** Eine Website, die in EUR und USD verkauft, sieht je Währung
   eine eigene Umsatzzahl.
 - Der Betrag darf nicht mehr Nachkommastellen haben als die Währung: zwei bei EUR, keine bei JPY und KRW, drei
-  bei KWD. `"29.999"` in EUR wird mit `400` abgelehnt, und mit ihm jedes andere Event der Anfrage.
+  bei KWD. `"29.999"` in EUR ist ungültig und wird nicht gespeichert.
 - Nur eigene und eingebaute Events tragen Umsatz. Umsatz an einem Seitenaufruf wird abgelehnt.
 
 Umsatz melden Goals und die Events-Ansicht, nie die Zahlen der Seitenaufrufe.

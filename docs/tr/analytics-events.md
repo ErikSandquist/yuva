@@ -106,8 +106,10 @@ açıldı diye adlandırır.
 | E-posta adresleri | E-posta adresine benzeyen bir değer saklanmaz, atılır. Olayın kendisi kalır ve **Ayarlar → Durum** bunu "adres çıkarıldı" olarak sayar. |
 | Çocuklara yönelik web siteleri | `outbound_click` ve `file_download` olaylarının `url` değeri dışında hiçbir özellik saklanmaz. |
 
-Bir kuralı çiğneyen olay (çok fazla özellik, ayrılmış anahtar, liste ya da nesne olan değer) `400` ile reddedilir;
-aynı istekte gönderilen diğer olaylar da öyle. Yeni olayları tarayıcınızın ağ sekmesinde deneyin.
+Bir kuralı çiğneyen olay (çok fazla özellik, ayrılmış anahtar, liste ya da nesne olan değer) saklanmaz.
+Tek başına gönderilirse nedeniyle birlikte `400` yanıtı alır; bir toplu istekte (betik aynı andaki olayları
+toplar) yalnızca o olay atılır, diğerleri saklanır. İki durumda da **Ayarlar → Durum** altında `invalid`
+olarak sayılır; bir olay görünmüyorsa oraya bakın.
 
 Herhangi bir adın özellikleri, ayrıntılı kayıtların tutulduğu günler için [Olaylar görünümünde](#olaylar-görünümü)
 kırılımlanabilir ([`YUVA_ANALYTICS_RAW_DAYS`](configuration.md#analitik), varsayılan 90). **Ayarlar → İzleme →
@@ -130,7 +132,7 @@ track("Purchase", { revenue: { amount: "29.90", currency: "EUR" } })
 - **Para birimleri asla çevrilmez ya da toplanmaz.** EUR ve USD ile satan bir site her para birimi için ayrı bir
   gelir rakamı görür.
 - Tutarın ondalık basamağı para biriminin izin verdiğinden fazla olamaz: EUR için iki, JPY ve KRW için sıfır,
-  KWD için üç. EUR'da `"29.999"` `400` ile reddedilir; aynı istekteki diğer olaylar da.
+  KWD için üç. EUR'da `"29.999"` geçersizdir ve saklanmaz.
 - Yalnızca özel ve yerleşik olaylar gelir taşır. Sayfa görüntülemede gelir reddedilir.
 
 Geliri hedefler ve Olaylar görünümü raporlar; sayfa görüntüleme rakamları asla.

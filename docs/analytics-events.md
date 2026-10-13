@@ -104,9 +104,10 @@ Props add detail to an event: the plan chosen, the button clicked, the form used
 | E-mail addresses | A value that looks like an e-mail address is dropped, not stored. The event itself is kept, and **Settings → Health** counts it as "had an address removed". |
 | Children's websites | No props are kept, except the `url` of `outbound_click` and `file_download`. |
 
-An event that breaks a rule (too many props, a reserved key, a value that is a list or an object) is refused
-with `400`, and so is every other event sent in the same request. Check new events in your browser's network
-tab.
+An event that breaks a rule (too many props, a reserved key, a value that is a list or an object) is not
+stored. Sent alone it answers `400` with the reason; in a batch (the script batches events of one moment) only
+that event is dropped and the rest are stored. Either way it is counted as `invalid` in **Settings → Health**,
+so look there when an event does not show up.
 
 Props of any name can be broken down on the [Events view](#the-events-view) for the days the detailed records are
 kept ([`YUVA_ANALYTICS_RAW_DAYS`](configuration.md#analytics), 90 by default). A prop you also list under
@@ -128,7 +129,7 @@ track("Purchase", { revenue: { amount: "29.90", currency: "EUR" } })
   the API (`digits` in the revenue answer) turn it back.
 - **Currencies are never converted or added up.** A site selling in EUR and USD sees one revenue figure per currency.
 - The amount may have no more decimals than the currency has: two for EUR, none for JPY and KRW, three for
-  KWD. `"29.999"` in EUR is refused with `400`, and so is every other event in that request.
+  KWD. `"29.999"` in EUR is invalid and not stored.
 - Only custom and built-in events carry revenue. Revenue on a page view is refused.
 
 Revenue is reported by goals and by the Events view, never by the page-view numbers.
