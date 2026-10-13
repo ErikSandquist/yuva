@@ -392,10 +392,7 @@ func (s *Server) CreateClientConversation(ctx context.Context, req oas.CreateCli
 	if err := s.validateClientInput(in); err != nil {
 		return nil, err
 	}
-	page, title, err := startPage(cp, rawPage, rawTitle)
-	if err != nil {
-		return nil, err
-	}
+	page, title := startPage(cp, rawPage, rawTitle)
 	if in.clientID != nil {
 		prev, err := s.st.FindContactMessageByClientID(ctx, store.FindContactMessageByClientIDParams{
 			WorkspaceID: cp.workspaceID, InboxID: cp.inboxID, ContactID: cp.contactID, ClientID: *in.clientID,
@@ -445,24 +442,22 @@ func (s *Server) CreateClientConversation(ctx context.Context, req oas.CreateCli
 	return oas.CreateClientConversation201JSONResponse(out), nil
 }
 
-// startPage is the page a conversation starts on, without query and fragment, on one of the
-// chat channel's origins.
-func startPage(cp contactPrincipal, rawPage, rawTitle *string) (*string, *string, error) {
+// startPage is the page a conversation starts on, without query and fragment, kept only for a chat
+// channel that allows the page's origin; anything else is dropped, so the page never refuses a
+// conversation.
+func startPage(cp contactPrincipal, rawPage, rawTitle *string) (*string, *string) {
 	if rawPage == nil || strings.TrimSpace(*rawPage) == "" {
-		if rawTitle != nil && strings.TrimSpace(*rawTitle) != "" {
-			return nil, nil, errValidation("page_title needs page_url")
-		}
-		return nil, nil, nil
+		return nil, nil
 	}
 	page, err := channelPage(*rawPage, cp.kind, cp.chat.AllowedOrigins)
 	if err != nil {
-		return nil, nil, err
+		return nil, nil
 	}
 	title, err := pageTitle(rawTitle)
 	if err != nil {
-		return nil, nil, err
+		return &page, nil
 	}
-	return &page, title, nil
+	return &page, title
 }
 
 func (s *Server) clientConversationCreated(ctx context.Context, cp contactPrincipal, convID, msgID uuid.UUID) (oas.ClientConversationCreated, error) {

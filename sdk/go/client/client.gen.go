@@ -7019,10 +7019,10 @@ type ClientConversationCreate struct {
 	// ClientId The first message's `client_id`.
 	ClientId *string `json:"client_id,omitempty"`
 
-	// PageTitle The page's title; needs `page_url`.
+	// PageTitle The page's title; ignored without a kept `page_url`.
 	PageTitle *string `json:"page_title,omitempty"`
 
-	// PageUrl The page the conversation starts on, an absolute http(s) URL; query and fragment are dropped.
+	// PageUrl The page the conversation starts on, an absolute http(s) URL; query and fragment are dropped, and so is a page a chat channel does not allow.
 	PageUrl *string `json:"page_url,omitempty"`
 	Subject *string `json:"subject,omitempty"`
 }
@@ -7033,10 +7033,10 @@ type ClientConversationCreateMultipart struct {
 	ClientId *string               `json:"client_id,omitempty"`
 	Files    *[]openapi_types.File `json:"files,omitempty"`
 
-	// PageTitle The page's title; needs `page_url`.
+	// PageTitle The page's title; ignored without a kept `page_url`.
 	PageTitle *string `json:"page_title,omitempty"`
 
-	// PageUrl The page the conversation starts on, an absolute http(s) URL; query and fragment are dropped.
+	// PageUrl The page the conversation starts on, an absolute http(s) URL; query and fragment are dropped, and so is a page a chat channel does not allow.
 	PageUrl *string `json:"page_url,omitempty"`
 	Subject *string `json:"subject,omitempty"`
 }
@@ -20007,10 +20007,11 @@ type ClientInterface interface {
 	// `page_title` as form fields and up to 10 `files` parts), with the same size and type rules
 	// as `/v1`. Rate limited per IP address and per channel.
 	//
-	// `page_url` is the page the conversation starts on, kept without query and fragment; on a
-	// chat channel its origin must be one of the channel's allowed origins (`400 page_origin`).
-	// It is shown as `page` on the conversation and counted per page, and never joined to a
-	// visitor of Analytics.
+	// `page_url` is the page the conversation starts on, kept without query and fragment only
+	// when the channel is a chat channel and the page's origin is one of its allowed origins;
+	// otherwise `page_url` and `page_title` are dropped and the conversation starts without a
+	// page. The page never refuses a conversation. It is shown as `page` on the conversation and
+	// counted per page, and never joined to a visitor of Analytics.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -20024,10 +20025,11 @@ type ClientInterface interface {
 	// `page_title` as form fields and up to 10 `files` parts), with the same size and type rules
 	// as `/v1`. Rate limited per IP address and per channel.
 	//
-	// `page_url` is the page the conversation starts on, kept without query and fragment; on a
-	// chat channel its origin must be one of the channel's allowed origins (`400 page_origin`).
-	// It is shown as `page` on the conversation and counted per page, and never joined to a
-	// visitor of Analytics.
+	// `page_url` is the page the conversation starts on, kept without query and fragment only
+	// when the channel is a chat channel and the page's origin is one of its allowed origins;
+	// otherwise `page_url` and `page_title` are dropped and the conversation starts without a
+	// page. The page never refuses a conversation. It is shown as `page` on the conversation and
+	// counted per page, and never joined to a visitor of Analytics.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -25897,10 +25899,11 @@ func (c *Client) ListClientConversations(ctx context.Context, params *ListClient
 // `page_title` as form fields and up to 10 `files` parts), with the same size and type rules
 // as `/v1`. Rate limited per IP address and per channel.
 //
-// `page_url` is the page the conversation starts on, kept without query and fragment; on a
-// chat channel its origin must be one of the channel's allowed origins (`400 page_origin`).
-// It is shown as `page` on the conversation and counted per page, and never joined to a
-// visitor of Analytics.
+// `page_url` is the page the conversation starts on, kept without query and fragment only
+// when the channel is a chat channel and the page's origin is one of its allowed origins;
+// otherwise `page_url` and `page_title` are dropped and the conversation starts without a
+// page. The page never refuses a conversation. It is shown as `page` on the conversation and
+// counted per page, and never joined to a visitor of Analytics.
 //
 // Takes any type of body and a specified content type.
 //
@@ -25924,10 +25927,11 @@ func (c *Client) CreateClientConversationWithBody(ctx context.Context, params *C
 // `page_title` as form fields and up to 10 `files` parts), with the same size and type rules
 // as `/v1`. Rate limited per IP address and per channel.
 //
-// `page_url` is the page the conversation starts on, kept without query and fragment; on a
-// chat channel its origin must be one of the channel's allowed origins (`400 page_origin`).
-// It is shown as `page` on the conversation and counted per page, and never joined to a
-// visitor of Analytics.
+// `page_url` is the page the conversation starts on, kept without query and fragment only
+// when the channel is a chat channel and the page's origin is one of its allowed origins;
+// otherwise `page_url` and `page_title` are dropped and the conversation starts without a
+// page. The page never refuses a conversation. It is shown as `page` on the conversation and
+// counted per page, and never joined to a visitor of Analytics.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -53812,10 +53816,11 @@ type ClientWithResponsesInterface interface {
 	// `page_title` as form fields and up to 10 `files` parts), with the same size and type rules
 	// as `/v1`. Rate limited per IP address and per channel.
 	//
-	// `page_url` is the page the conversation starts on, kept without query and fragment; on a
-	// chat channel its origin must be one of the channel's allowed origins (`400 page_origin`).
-	// It is shown as `page` on the conversation and counted per page, and never joined to a
-	// visitor of Analytics.
+	// `page_url` is the page the conversation starts on, kept without query and fragment only
+	// when the channel is a chat channel and the page's origin is one of its allowed origins;
+	// otherwise `page_url` and `page_title` are dropped and the conversation starts without a
+	// page. The page never refuses a conversation. It is shown as `page` on the conversation and
+	// counted per page, and never joined to a visitor of Analytics.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -53829,10 +53834,11 @@ type ClientWithResponsesInterface interface {
 	// `page_title` as form fields and up to 10 `files` parts), with the same size and type rules
 	// as `/v1`. Rate limited per IP address and per channel.
 	//
-	// `page_url` is the page the conversation starts on, kept without query and fragment; on a
-	// chat channel its origin must be one of the channel's allowed origins (`400 page_origin`).
-	// It is shown as `page` on the conversation and counted per page, and never joined to a
-	// visitor of Analytics.
+	// `page_url` is the page the conversation starts on, kept without query and fragment only
+	// when the channel is a chat channel and the page's origin is one of its allowed origins;
+	// otherwise `page_url` and `page_title` are dropped and the conversation starts without a
+	// page. The page never refuses a conversation. It is shown as `page` on the conversation and
+	// counted per page, and never joined to a visitor of Analytics.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -80270,10 +80276,11 @@ func (c *ClientWithResponses) ListClientConversationsWithResponse(ctx context.Co
 // `page_title` as form fields and up to 10 `files` parts), with the same size and type rules
 // as `/v1`. Rate limited per IP address and per channel.
 //
-// `page_url` is the page the conversation starts on, kept without query and fragment; on a
-// chat channel its origin must be one of the channel's allowed origins (`400 page_origin`).
-// It is shown as `page` on the conversation and counted per page, and never joined to a
-// visitor of Analytics.
+// `page_url` is the page the conversation starts on, kept without query and fragment only
+// when the channel is a chat channel and the page's origin is one of its allowed origins;
+// otherwise `page_url` and `page_title` are dropped and the conversation starts without a
+// page. The page never refuses a conversation. It is shown as `page` on the conversation and
+// counted per page, and never joined to a visitor of Analytics.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -80293,10 +80300,11 @@ func (c *ClientWithResponses) CreateClientConversationWithBodyWithResponse(ctx c
 // `page_title` as form fields and up to 10 `files` parts), with the same size and type rules
 // as `/v1`. Rate limited per IP address and per channel.
 //
-// `page_url` is the page the conversation starts on, kept without query and fragment; on a
-// chat channel its origin must be one of the channel's allowed origins (`400 page_origin`).
-// It is shown as `page` on the conversation and counted per page, and never joined to a
-// visitor of Analytics.
+// `page_url` is the page the conversation starts on, kept without query and fragment only
+// when the channel is a chat channel and the page's origin is one of its allowed origins;
+// otherwise `page_url` and `page_title` are dropped and the conversation starts without a
+// page. The page never refuses a conversation. It is shown as `page` on the conversation and
+// counted per page, and never joined to a visitor of Analytics.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //

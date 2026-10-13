@@ -7021,10 +7021,10 @@ type ClientConversationCreate struct {
 	// ClientId The first message's `client_id`.
 	ClientId *string `json:"client_id,omitempty"`
 
-	// PageTitle The page's title; needs `page_url`.
+	// PageTitle The page's title; ignored without a kept `page_url`.
 	PageTitle *string `json:"page_title,omitempty"`
 
-	// PageUrl The page the conversation starts on, an absolute http(s) URL; query and fragment are dropped.
+	// PageUrl The page the conversation starts on, an absolute http(s) URL; query and fragment are dropped, and so is a page a chat channel does not allow.
 	PageUrl *string `json:"page_url,omitempty"`
 	Subject *string `json:"subject,omitempty"`
 }
@@ -7035,10 +7035,10 @@ type ClientConversationCreateMultipart struct {
 	ClientId *string               `json:"client_id,omitempty"`
 	Files    *[]openapi_types.File `json:"files,omitempty"`
 
-	// PageTitle The page's title; needs `page_url`.
+	// PageTitle The page's title; ignored without a kept `page_url`.
 	PageTitle *string `json:"page_title,omitempty"`
 
-	// PageUrl The page the conversation starts on, an absolute http(s) URL; query and fragment are dropped.
+	// PageUrl The page the conversation starts on, an absolute http(s) URL; query and fragment are dropped, and so is a page a chat channel does not allow.
 	PageUrl *string `json:"page_url,omitempty"`
 	Subject *string `json:"subject,omitempty"`
 }

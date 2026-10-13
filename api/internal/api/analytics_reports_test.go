@@ -88,9 +88,6 @@ func TestAnalyticsSupportReport(t *testing.T) {
 	other := newTeam(t, h)
 	id, _ := seedSupport(t, h, ct)
 
-	cs := ct.session(h, map[string]any{})
-	cs.expectProblem(http.StatusBadRequest, "page_origin", "POST", "/client/v1/conversations", map[string]any{"body": "x", "page_url": "https://elsewhere.example/docs"})
-	cs.expectProblem(http.StatusBadRequest, "validation_failed", "POST", "/client/v1/conversations", map[string]any{"body": "x", "page_title": "No page"})
 	convs := ct.owner.expect(http.StatusOK, "GET", "/v1/conversations?inbox_id="+ct.chatInbox+"&limit=100", nil).body["items"].([]any)
 	pages := 0
 	for _, c := range convs {
@@ -162,6 +159,41 @@ func TestAnalyticsSupportReport(t *testing.T) {
 	}
 	if in := supportRows(rolled)["/docs/install"]; in["ratings_up"] != 3.0 || in["pageviews"] != 150.0 {
 		t.Fatalf("a rolled-up day reads the rollup, not the inbox: %v", in)
+	}
+}
+
+func conversationPageOf(t *testing.T, c *client, id string) any {
+	t.Helper()
+	return c.expect(http.StatusOK, "GET", "/v1/conversations/"+id, nil).body["page"]
+}
+
+func TestConversationPageNeverRefusesAConversation(t *testing.T) {
+	h := newHarness(t)
+	ct := newChatTeam(t, h, "live", true)
+	start := func(cs contactSession, body map[string]any) string {
+		body["body"], body["client_id"] = "hello", unique("c")
+		return cs.expect(http.StatusCreated, "POST", "/client/v1/conversations", body).body["conversation"].(map[string]any)["id"].(string)
+	}
+	chat := ct.session(h, map[string]any{})
+	kept := start(chat, map[string]any{"page_url": ct.origin + "/docs/billing?plan=pro#vat", "page_title": "Billing"})
+	if p, ok := conversationPageOf(t, ct.owner, kept).(map[string]any); !ok || p["page_url"] != ct.origin+"/docs/billing" || p["page_title"] != "Billing" {
+		t.Fatalf("an allowed page was not kept: %v", p)
+	}
+	for _, body := range []map[string]any{
+		{"page_url": "https://elsewhere.example/docs", "page_title": "Elsewhere"},
+		{"page_title": "No page"},
+		{"page_url": "not a url"},
+		{"page_url": ct.origin + "/" + strings.Repeat("a", 2100)},
+	} {
+		if p := conversationPageOf(t, ct.owner, start(ct.session(h, map[string]any{}), body)); p != nil {
+			t.Fatalf("%v stored the page %v", body, p)
+		}
+	}
+	at := newAppTeam(t, h, false)
+	app := at.session(h, "u-"+unique("a"))
+	id := start(app, map[string]any{"page_url": "https://web.example/help", "page_title": "Help"})
+	if p := conversationPageOf(t, at.owner, id); p != nil {
+		t.Fatalf("an app channel stored the page %v", p)
 	}
 }
 
