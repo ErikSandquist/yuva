@@ -130,13 +130,45 @@ export function useApiQuery(id: string, query: ApiQuery, enabled = true) {
 
 export function useApiRoutes(id: string, enabled = true) {
   const base = useDataKey(id)
+  const share = useShare()
   return useQuery({
     queryKey: [...base, "routes"],
     queryFn: () =>
       unwrap(api.GET("/v1/analytics/properties/{propertyId}/routes", { params: { path: { propertyId: id } } })),
     select: (d) => d.items,
     staleTime: 60_000,
-    enabled,
+    enabled: enabled && !share,
+  })
+}
+
+export function useConsumers(id: string, q: string) {
+  const base = useDataKey(id)
+  return useInfiniteQuery({
+    queryKey: [...base, "consumers", q],
+    queryFn: ({ pageParam }) =>
+      unwrap(
+        api.GET("/v1/analytics/properties/{propertyId}/consumers", {
+          params: { path: { propertyId: id }, query: { q: q || undefined, cursor: pageParam, limit: 50 } },
+        })
+      ),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (last) => last.next_cursor,
+    placeholderData: keepPreviousData,
+    staleTime: 30_000,
+  })
+}
+
+export function useEraseConsumer(id: string) {
+  const qc = useQueryClient()
+  const base = useDataKey(id)
+  return useMutation({
+    mutationFn: (consumerId: number) =>
+      unwrap(
+        api.DELETE("/v1/analytics/properties/{propertyId}/consumers/{consumerId}", {
+          params: { path: { propertyId: id, consumerId } },
+        })
+      ),
+    onSuccess: () => void qc.invalidateQueries({ queryKey: base }),
   })
 }
 

@@ -30,7 +30,7 @@ import {
   useRouteIndex,
 } from "@/features/analytics/MonitorParts"
 import { BarList, CsvButton, Panel, PanelProblem, QueryProblem, useCurrentProperty } from "@/features/analytics/parts"
-import { downloadCsv, useAnalyticsTable, useApiQuery, useApiRoutes } from "@/features/analytics/queries"
+import { downloadCsv, useAnalyticsTable, useApiQuery, useApiRoutes, useShare } from "@/features/analytics/queries"
 import { EXTRA_DIMENSIONS, useViewSearch } from "@/features/analytics/state"
 import {
   formatCompact,
@@ -43,7 +43,7 @@ import {
 } from "@/features/analytics/text"
 import { ChoiceSelect } from "@/features/settings/ui"
 import type { AnalyticsFilter, AnalyticsFilterDimension, AnalyticsQuery } from "@/lib/api"
-import { useSession } from "@/lib/session"
+import { useOptionalSession, useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 
 function useHasRequests(propertyId: string) {
@@ -75,9 +75,16 @@ function ApiEmpty() {
 
 function WhenRequests({ children }: { children: React.ReactNode }) {
   const property = useCurrentProperty()
+  const share = useShare()
   const has = useHasRequests(property.id)
   if (has.pending) return <Skeleton className="h-64 rounded-2xl" />
   if (has.error) return <QueryProblem error={has.error} />
+  if (!has.any && share)
+    return (
+      <p className="px-2 py-10 text-center text-body text-faint" data-testid="api-empty">
+        <Trans>No requests yet</Trans>
+      </p>
+    )
   if (!has.any) return <ApiEmpty />
   return <>{children}</>
 }
@@ -93,6 +100,10 @@ function TopRoutes() {
   const property = useCurrentProperty()
   const search = useViewSearch()
   const { view } = useApiView()
+  const share = useShare()
+  const all = share
+    ? `/share/${share.token}${share.views[0] === "api_routes" ? "" : "/api_routes"}${search}`
+    : `/analytics/${property.id}/routes${search}`
   const blocked = blockerOf(view.range, view.filters, ["route", "method"])
   const q = useApiQuery(
     property.id,
@@ -105,10 +116,7 @@ function TopRoutes() {
       title={<Trans>Busiest routes</Trans>}
       testId="api-top-routes"
       footer={
-        <Link
-          to={`/analytics/${property.id}/routes${search}`}
-          className="text-small text-brand underline-offset-4 hover:underline"
-        >
+        <Link to={all} className="text-small text-brand underline-offset-4 hover:underline">
           <Trans>All routes</Trans>
         </Link>
       }
@@ -134,7 +142,7 @@ function TopRoutes() {
               label: <RouteName method={method} route={route} />,
               value: v,
               display: formatCompact(v, i18n.locale),
-              to: route === OTHER ? undefined : `${routePath(property.id, method, route)}${search}`,
+              to: route === OTHER || share ? undefined : `${routePath(property.id, method, route)}${search}`,
             }
           })}
         />
@@ -175,6 +183,7 @@ function BreakdownPanel({ base, dims }: { base: AnalyticsFilter[]; dims: Analyti
   const text = useAnalyticsText()
   const property = useCurrentProperty()
   const { view, addFilter } = useApiView()
+  const share = useShare()
   const [dim, setDim] = useState(dims[0]!)
   const filters = [...base, ...view.filters]
   const blocked = blockerOf(view.range, filters, [dim])
@@ -230,7 +239,7 @@ function BreakdownPanel({ base, dims }: { base: AnalyticsFilter[]; dims: Analyti
             {rows.map((r, i) => {
               const v = r.dimensions[0] ?? ""
               const label = apiValue(text, dim, v, i18n.locale)
-              const can = v !== OTHER && !filtered.has(dim)
+              const can = v !== OTHER && !filtered.has(dim) && !share
               return (
                 <tr key={`${v}${i}`} className="hover:bg-muted/50">
                   <td className="truncate px-1 py-1.5">
@@ -273,6 +282,9 @@ function BreakdownPanel({ base, dims }: { base: AnalyticsFilter[]; dims: Analyti
 }
 
 export function ApiOverview() {
+  const share = useShare()
+  const routes = !share || share.views.includes("api_routes")
+  const dims = share ? OVERVIEW_DIMS.filter((d) => d !== "method" && d !== "consumer") : OVERVIEW_DIMS
   return (
     <WhenRequests>
       <div className="flex flex-col gap-4" data-testid="api-overview">
@@ -287,18 +299,22 @@ export function ApiOverview() {
         </Guard>
         <div className="grid gap-4 md:grid-cols-2">
           <Guard>
-            <BreakdownPanel base={[]} dims={OVERVIEW_DIMS} />
+            <BreakdownPanel base={[]} dims={dims} />
           </Guard>
-          <Guard>
-            <TopRoutes />
-          </Guard>
+          {routes && (
+            <Guard>
+              <TopRoutes />
+            </Guard>
+          )}
         </div>
         <Guard>
           <SizeStats base={[]} />
         </Guard>
-        <Guard>
-          <ConversationsChart />
-        </Guard>
+        {!share && (
+          <Guard>
+            <ConversationsChart />
+          </Guard>
+        )}
       </div>
     </WhenRequests>
   )
@@ -384,7 +400,8 @@ function AllRoutes() {
   const search = useViewSearch()
   const { view } = useApiView()
   const sort = useSort()
-  const { canManage } = useSession()
+  const canManage = useOptionalSession()?.canManage ?? false
+  const share = useShare()
   const index = useRouteIndex(property.id)
   const body: AnalyticsQuery = {
     dataset: "api",
@@ -446,8 +463,8 @@ function AllRoutes() {
                     return (
                       <tr key={`${method} ${route} ${i}`} className="hover:bg-muted/50" data-testid="api-route-row">
                         <td className="px-4 py-2">
-                          {route === OTHER ? (
-                            <RouteName method={method} route={route} />
+                          {route === OTHER || share ? (
+                            <RouteName method={method} route={route} inferred={info?.inferred} wrap />
                           ) : (
                             <Link
                               to={`${routePath(property.id, method, route)}${search}`}
@@ -501,6 +518,7 @@ function ChangedRoutes({ list }: { list: "new" | "silent" }) {
   const search = useViewSearch()
   const { view } = useApiView()
   const index = useRouteIndex(property.id)
+  const share = useShare()
   const blocked = blockerOf(view.range, view.filters, ["route"])
   const q = useApiQuery(
     property.id,
@@ -568,12 +586,16 @@ function ChangedRoutes({ list }: { list: "new" | "silent" }) {
                 return (
                   <tr key={route} className="hover:bg-muted/50" data-testid="api-route-row">
                     <td className="px-4 py-2">
-                      <Link
-                        to={`${routePath(property.id, ALL_METHODS, route)}${search}`}
-                        className="block max-w-full rounded outline-none hover:text-brand focus-visible:ring-2 focus-visible:ring-ring"
-                      >
+                      {share ? (
                         <RouteName route={route} inferred={info?.inferred} wrap />
-                      </Link>
+                      ) : (
+                        <Link
+                          to={`${routePath(property.id, ALL_METHODS, route)}${search}`}
+                          className="block max-w-full rounded outline-none hover:text-brand focus-visible:ring-2 focus-visible:ring-ring"
+                        >
+                          <RouteName route={route} inferred={info?.inferred} wrap />
+                        </Link>
+                      )}
                     </td>
                     {list === "silent" ? (
                       <td className="px-2 py-2 text-end tabular-nums">
@@ -648,6 +670,7 @@ export function ApiConsumers() {
   const text = useAnalyticsText()
   const property = useCurrentProperty()
   const { view, addFilter } = useApiView()
+  const share = useShare()
   const sort = useSort()
   const body: AnalyticsQuery = {
     dataset: "api",
@@ -717,7 +740,7 @@ export function ApiConsumers() {
                       return (
                         <tr key={`${v}${i}`} className="hover:bg-muted/50" data-testid="api-consumer-row">
                           <td className="truncate px-4 py-2">
-                            {v === OTHER || filtered ? (
+                            {v === OTHER || filtered || share ? (
                               label
                             ) : (
                               <button

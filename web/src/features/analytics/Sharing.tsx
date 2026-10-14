@@ -44,6 +44,12 @@ export const SHARE_VIEWS: AnalyticsShareView[] = [
   "goals",
 ]
 
+export const API_SHARE_VIEWS: AnalyticsShareView[] = ["api_overview", "api_routes", "api_consumers"]
+
+export function shareViewsFor(kind: AnalyticsProperty["kind"]) {
+  return kind === "api" ? API_SHARE_VIEWS : SHARE_VIEWS
+}
+
 export function useShareViewNames(): Record<AnalyticsShareView, string> {
   const { t } = useLingui()
   const text = useAnalyticsText()
@@ -56,6 +62,9 @@ export function useShareViewNames(): Record<AnalyticsShareView, string> {
     devices: t`Devices`,
     events: t`Events`,
     goals: t`Goals`,
+    api_overview: t`Overview`,
+    api_routes: t`Routes`,
+    api_consumers: t`Consumers`,
   }
 }
 
@@ -100,12 +109,14 @@ export function formatInZone(iso: string, locale: string, tz: string) {
 function ShareDialog({
   propertyId,
   timezone,
+  kind,
   share,
   onClose,
   onCreated,
 }: {
   propertyId: string
   timezone: string
+  kind: AnalyticsProperty["kind"]
   share?: AnalyticsShare
   onClose: () => void
   onCreated: (c: AnalyticsShareCreated) => void
@@ -115,7 +126,8 @@ function ShareDialog({
   const create = useCreateShare(propertyId)
   const { update } = useShareActions(propertyId)
   const [name, setName] = useState(share?.name ?? "")
-  const [views, setViews] = useState<AnalyticsShareView[]>(share?.views ?? ["overview"])
+  const all = shareViewsFor(kind)
+  const [views, setViews] = useState<AnalyticsShareView[]>(share?.views ?? [all[0]!])
   const [locked, setLocked] = useState(share?.has_password ?? false)
   const [password, setPassword] = useState("")
   const [origins, setOrigins] = useState((share?.embed_origins ?? []).join("\n"))
@@ -128,7 +140,7 @@ function ShareDialog({
   const valid = !!name.trim() && views.length > 0 && passwordOk && list.length <= 20 && (!expires || expires >= today)
   const save = share ? update : create
   const submit = () => {
-    const ordered = SHARE_VIEWS.filter((v) => views.includes(v))
+    const ordered = all.filter((v) => views.includes(v))
     if (!share) {
       create.mutate(
         {
@@ -191,7 +203,7 @@ function ShareDialog({
           </Field>
           <Field label={<Trans>Views</Trans>}>
             <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
-              {SHARE_VIEWS.map((v) => (
+              {all.map((v) => (
                 <Label key={v} className="font-normal" data-testid={`share-view-${v}`}>
                   <Checkbox
                     checked={views.includes(v)}
@@ -202,10 +214,20 @@ function ShareDialog({
                 </Label>
               ))}
             </div>
-            {views.length === 0 && (
+            {views.length === 0 ? (
               <p role="alert" className="text-small text-destructive">
                 <Trans>Pick at least one view.</Trans>
               </p>
+            ) : (
+              kind === "api" && (
+                <p className="text-small text-faint">
+                  {views.includes("api_consumers") ? (
+                    <Trans>Consumers shows the names your server gives its callers to everyone with the link.</Trans>
+                  ) : (
+                    <Trans>Without Consumers, the link shows no consumer names.</Trans>
+                  )}
+                </p>
+              )
             )}
           </Field>
           <div className="flex flex-col gap-2.5">
@@ -540,6 +562,7 @@ export function Sharing({ p }: { p: AnalyticsProperty }) {
         <ShareDialog
           propertyId={p.id}
           timezone={p.timezone}
+          kind={p.kind}
           share={editing === "new" ? undefined : editing}
           onClose={() => setEditing(null)}
           onCreated={(c) => {

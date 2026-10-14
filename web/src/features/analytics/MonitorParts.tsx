@@ -11,7 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { ComparePicker, FilterBar, RangePicker } from "@/features/analytics/Controls"
 import { Change } from "@/features/analytics/Overview"
 import { Panel, PanelProblem, QueryProblem, useCurrentProperty } from "@/features/analytics/parts"
-import { useAnnotations, useApiQuery, useApiRoutes, useUpdateRoute } from "@/features/analytics/queries"
+import { useAnnotations, useApiQuery, useApiRoutes, useShare, useUpdateRoute } from "@/features/analytics/queries"
 import { apiGrainFor, EXTRA_DIMENSIONS, isMinuteRange, useView } from "@/features/analytics/state"
 import { formatMetric, num, useAnalyticsText, valueText, type NumMetric } from "@/features/analytics/text"
 import type {
@@ -263,11 +263,12 @@ function Estimated({ show }: { show?: boolean }) {
 }
 
 export function ApiControls({ meta, compare = true }: { meta?: AnalyticsResult["meta"]; compare?: boolean }) {
+  const share = useShare()
   return (
     <div className="flex flex-col gap-2.5">
       <div className="flex flex-wrap items-center gap-2">
         <RangePicker kind="api" />
-        {compare && <ComparePicker kind="api" />}
+        {compare && !share && <ComparePicker kind="api" />}
         <Estimated show={meta?.estimated} />
       </div>
       <FilterBar kind="api" />

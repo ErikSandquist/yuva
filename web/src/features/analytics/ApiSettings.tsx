@@ -1,9 +1,9 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { ClockIcon, EyeIcon } from "lucide-react"
+import { ClockIcon, EraserIcon, EyeIcon } from "lucide-react"
 import { useState } from "react"
 import { useSearchParams } from "react-router"
 
-import { ErrorLine, Notice, ScrollRow, Segmented } from "@/components/common"
+import { ErrorLine, Notice, ScrollRow, Segmented, useConfirm } from "@/components/common"
 import { formatDateTime } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -15,17 +15,25 @@ import { ApiInstallSnippets } from "@/features/analytics/Install"
 import { InferredTag } from "@/features/analytics/MonitorParts"
 import { hostOnly, splitLines, useZones } from "@/features/analytics/NewProperty"
 import { useCurrentProperty } from "@/features/analytics/parts"
-import { useApiRoutes, useUpdateRoute, useUpdateProperty } from "@/features/analytics/queries"
+import {
+  useApiRoutes,
+  useConsumers,
+  useEraseConsumer,
+  useUpdateProperty,
+  useUpdateRoute,
+} from "@/features/analytics/queries"
 import { NotifyMe } from "@/features/analytics/Alerts"
+import { Exports } from "@/features/analytics/Exports"
 import { DeletePropertySection, RuleRows } from "@/features/analytics/Settings"
-import { formatInZone } from "@/features/analytics/Sharing"
+import { formatInZone, Sharing } from "@/features/analytics/Sharing"
 import { useAnalyticsText, valueText } from "@/features/analytics/text"
-import { ChoiceSelect, Field, FormActions, FormCard, Section } from "@/features/settings/ui"
+import { Card, ChoiceSelect, EmptyRow, Field, FormActions, FormCard, Section } from "@/features/settings/ui"
 import type { AnalyticsPathRule, AnalyticsPlatform, AnalyticsProperty } from "@/lib/api"
+import { useDebounced } from "@/hooks/use-debounced"
 import { useSession } from "@/lib/session"
 import { useInboxes } from "@/lib/workspace"
 
-type Tab = "general" | "routes" | "reports" | "install" | "data"
+type Tab = "general" | "routes" | "reports" | "sharing" | "data" | "install"
 
 const VIEW_PARAMS = ["period"]
 
@@ -44,13 +52,10 @@ function General({ p }: { p: AnalyticsProperty }) {
   const [zone, setZone] = useState(p.timezone)
   const [inbox, setInbox] = useState(p.inbox_id ?? NO_INBOX)
   const [apdex, setApdex] = useState(String(p.apdex_ms))
-  const [hourDays, setHourDays] = useState(String(p.monitor_hour_days))
   const [platforms, setPlatforms] = useState<AnalyticsPlatform[]>(p.platforms.filter((x) => APPS.includes(x)))
   const hosts = splitLines(domains).map(hostOnly).filter(Boolean)
   const apdexMs = Number(apdex)
-  const days = Number(hourDays)
   const apdexOk = Number.isInteger(apdexMs) && apdexMs >= 1 && apdexMs <= 60_000
-  const daysOk = Number.isInteger(days) && days >= 7 && days <= 400
   const applies = p.timezone_applies_at ? formatInZone(p.timezone_applies_at, i18n.locale, p.timezone) : ""
   const current = p.timezone
   return (
@@ -62,7 +67,6 @@ function General({ p }: { p: AnalyticsProperty }) {
           timezone: zone,
           inbox_id: inbox === NO_INBOX ? null : inbox,
           apdex_ms: apdexMs,
-          monitor_hour_days: days,
           platforms: APPS.filter((x) => platforms.includes(x)),
         })
       }
@@ -71,7 +75,7 @@ function General({ p }: { p: AnalyticsProperty }) {
           pending={update.isPending}
           saved={update.isSuccess}
           error={update.error}
-          disabled={!name.trim() || !zones.includes(zone) || !apdexOk || !daysOk}
+          disabled={!name.trim() || !zones.includes(zone) || !apdexOk}
         />
       }
     >
@@ -167,26 +171,200 @@ function General({ p }: { p: AnalyticsProperty }) {
             className="sm:max-w-40"
           />
         </Field>
-        <Field
-          label={<Trans>Hourly detail</Trans>}
-          htmlFor="ap-hour-days"
-          hint={<Trans>Days the counts per hour are kept. Daily counts are kept as long as the property’s data.</Trans>}
-          error={daysOk ? undefined : <Trans>From 7 to 400 days.</Trans>}
-        >
-          <Input
-            id="ap-hour-days"
-            type="number"
-            inputMode="numeric"
-            min={7}
-            max={400}
-            value={hourDays}
-            onChange={(e) => setHourDays(e.target.value)}
-            className="sm:max-w-40"
-          />
-        </Field>
       </div>
     </FormCard>
   )
+}
+
+const KEEP = ["1", "3", "6", "12", "24", "36", "60", "120"] as const
+const FOREVER = "forever"
+
+function Retention({ p }: { p: AnalyticsProperty }) {
+  const { t, i18n } = useLingui()
+  const { canManage } = useSession()
+  const update = useUpdateProperty(p.id)
+  const [hourDays, setHourDays] = useState(String(p.monitor_hour_days))
+  const [months, setMonths] = useState(p.retention_months ? String(p.retention_months) : FOREVER)
+  const days = Number(hourDays)
+  const daysOk = Number.isInteger(days) && days >= 7 && days <= 400
+  const monthName = (m: number) =>
+    new Intl.NumberFormat(i18n.locale, { style: "unit", unit: "month", unitDisplay: "long" }).format(m)
+  const options = [
+    ...KEEP.map((m) => [m, monthName(Number(m))] as const),
+    ...(months !== FOREVER && !(KEEP as readonly string[]).includes(months)
+      ? [[months, monthName(Number(months))] as const]
+      : []),
+    [FOREVER, t`Forever`] as const,
+  ]
+  return (
+    <Section
+      title={<Trans>Retention</Trans>}
+      description={
+        <Trans>
+          Counts per minute are kept 8 days on every server, and older rows of each kind are deleted. Nothing else about
+          a request is ever stored.
+        </Trans>
+      }
+    >
+      <FormCard
+        onSubmit={() => {
+          if (canManage && daysOk)
+            update.mutate({ monitor_hour_days: days, retention_months: months === FOREVER ? null : Number(months) })
+        }}
+        footer={
+          canManage ? (
+            <FormActions pending={update.isPending} saved={update.isSuccess} error={update.error} disabled={!daysOk} />
+          ) : undefined
+        }
+      >
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Field
+            label={<Trans>Counts per hour, in days</Trans>}
+            htmlFor="ap-hour-days"
+            hint={<Trans>Hourly rows, with consumers, countries and app versions.</Trans>}
+            error={daysOk ? undefined : <Trans>From 7 to 400 days.</Trans>}
+          >
+            <Input
+              id="ap-hour-days"
+              type="number"
+              inputMode="numeric"
+              min={7}
+              max={400}
+              value={hourDays}
+              disabled={!canManage}
+              onChange={(e) => setHourDays(e.target.value)}
+              className="sm:max-w-40"
+              data-testid="ap-hour-days"
+            />
+          </Field>
+          <Field
+            label={<Trans>Counts per day</Trans>}
+            htmlFor="ap-months"
+            hint={<Trans>Daily rows, the totals of every older range.</Trans>}
+          >
+            <ChoiceSelect
+              id="ap-months"
+              label={t`Counts per day`}
+              value={months}
+              onChange={setMonths}
+              options={options}
+              disabled={!canManage}
+              className="w-full"
+            />
+          </Field>
+        </div>
+      </FormCard>
+    </Section>
+  )
+}
+
+function Consumers({ p }: { p: AnalyticsProperty }) {
+  const { t, i18n } = useLingui()
+  const { canManage } = useSession()
+  const [q, setQ] = useState("")
+  const term = useDebounced(q.trim(), 300)
+  const list = useConsumers(p.id, term)
+  const erase = useEraseConsumer(p.id)
+  const [ask, confirm] = useConfirm()
+  const items = list.data?.pages.flatMap((x) => x.items) ?? []
+  return (
+    <Section
+      title={<Trans>Consumers</Trans>}
+      description={
+        <Trans>
+          The callers your server named. Erase one when someone asks for their data to be deleted: their rows by hour
+          and by day go, and the name is never used again.
+        </Trans>
+      }
+    >
+      <Card flush>
+        <div className="border-b p-3">
+          <Input
+            type="search"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder={t`Search consumers`}
+            aria-label={t`Search consumers`}
+            maxLength={100}
+            data-testid="consumers-search"
+          />
+        </div>
+        {list.isPending ? (
+          <Skeleton className="m-4 h-10" />
+        ) : list.error ? (
+          <ErrorLine error={list.error} className="p-4" />
+        ) : items.length === 0 ? (
+          <EmptyRow>{term ? <Trans>No consumer matches.</Trans> : <Trans>No consumers counted yet.</Trans>}</EmptyRow>
+        ) : (
+          <ul className="divide-y" data-testid="consumers-list">
+            {items.map((c) => {
+              const seen = formatDateTime(c.first_seen_at, i18n.locale)
+              return (
+                <li key={c.id} className="flex items-center gap-3 px-4 py-2.5" data-testid="consumer-row">
+                  <span className="flex min-w-0 flex-1 flex-col">
+                    <span className="truncate text-body" dir="auto">
+                      {c.name}
+                    </span>
+                    <span className="text-caption text-faint">
+                      <Trans>First seen {seen}</Trans>
+                    </span>
+                  </span>
+                  {canManage && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      disabled={erase.isPending}
+                      onClick={() =>
+                        ask({
+                          title: <EraseTitle name={c.name} />,
+                          description: (
+                            <Trans>
+                              Its rows by hour and by day are deleted now and again a few minutes later. Totals stay the
+                              same, since they never held the consumer. Export files made before keep the name until
+                              they are deleted, at most 7 days.
+                            </Trans>
+                          ),
+                          confirm: <Trans>Erase</Trans>,
+                          run: () => erase.mutate(c.id),
+                        })
+                      }
+                      data-testid="consumer-erase"
+                    >
+                      <EraserIcon />
+                      <Trans>Erase</Trans>
+                    </Button>
+                  )}
+                </li>
+              )
+            })}
+          </ul>
+        )}
+        {list.hasNextPage && (
+          <div className="flex justify-center border-t p-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => void list.fetchNextPage()}
+              disabled={list.isFetchingNextPage}
+            >
+              <Trans>Load more</Trans>
+            </Button>
+          </div>
+        )}
+      </Card>
+      <ErrorLine error={erase.error} />
+      {erase.isSuccess && (
+        <p role="status" className="text-small text-muted-foreground">
+          <Trans>Erased.</Trans>
+        </p>
+      )}
+      {confirm}
+    </Section>
+  )
+}
+
+function EraseTitle({ name }: { name: string }) {
+  return <Trans>Erase the consumer “{name}”?</Trans>
 }
 
 function PathRules({ p }: { p: AnalyticsProperty }) {
@@ -288,13 +466,16 @@ export function ApiSettingsView() {
   const { canManage } = useSession()
   const p = useCurrentProperty()
   const [params, setParams] = useSearchParams()
-  const tabs: Tab[] = canManage ? ["general", "routes", "reports", "install", "data"] : ["reports", "install", "routes"]
+  const tabs: Tab[] = canManage
+    ? ["general", "routes", "reports", "sharing", "data", "install"]
+    : ["reports", "routes", "sharing", "data", "install"]
   const raw = params.get("tab") as Tab | null
   const tab = raw && tabs.includes(raw) ? raw : tabs[0]!
   const names: Record<Tab, string> = {
     general: t`General`,
     routes: t`Routes`,
     reports: t`Reports`,
+    sharing: t`Sharing`,
     install: t`Install`,
     data: t`Data`,
   }
@@ -331,7 +512,15 @@ export function ApiSettingsView() {
           <ApiInstallSnippets property={p} />
         </div>
       )}
-      {tab === "data" && <DeletePropertySection p={p} />}
+      {tab === "sharing" && <Sharing p={p} />}
+      {tab === "data" && (
+        <div className="flex flex-col gap-6">
+          <Retention p={p} />
+          <Exports p={p} />
+          <Consumers p={p} />
+          {canManage && <DeletePropertySection p={p} />}
+        </div>
+      )}
     </div>
   )
 }

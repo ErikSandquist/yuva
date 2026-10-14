@@ -9,13 +9,15 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { FilterBar, RangePicker } from "@/features/analytics/Controls"
 import { exportDownloadUrl, useExportActions, useExports, useHealth } from "@/features/analytics/queries"
-import { FILTER_DIMENSIONS, todayIso, useView, useViewSearch } from "@/features/analytics/state"
+import { API_FILTER_DIMENSIONS, FILTER_DIMENSIONS, todayIso, useView, useViewSearch } from "@/features/analytics/state"
 import { useAnalyticsText } from "@/features/analytics/text"
 import { Card, ChoiceSelect, EmptyRow, Field, Row, Rows, Section, StatusTag } from "@/features/settings/ui"
 import {
   ApiError,
+  type AnalyticsDataset,
   type AnalyticsExport,
   type AnalyticsExportKind,
+  type AnalyticsMetric,
   type AnalyticsFilterDimension,
   type AnalyticsProperty,
 } from "@/lib/api"
@@ -238,6 +240,174 @@ function NewExport({ p }: { p: AnalyticsProperty }) {
   )
 }
 
+const API_DIMS: AnalyticsFilterDimension[] = API_FILTER_DIMENSIONS
+const API_METRICS: AnalyticsMetric[] = [
+  "requests",
+  "errors",
+  "error_rate",
+  "client_error_rate",
+  "p50",
+  "p95",
+  "p99",
+  "apdex",
+]
+const UPTIME_METRICS: AnalyticsMetric[] = [
+  "runs",
+  "failures",
+  "uptime",
+  "downtime",
+  "response_time_p50",
+  "response_time_p95",
+  "cert_days_left",
+]
+
+type ExportDataset = "api" | "uptime"
+
+function ApiNewExport({ p }: { p: AnalyticsProperty }) {
+  const { t } = useLingui()
+  const text = useAnalyticsText()
+  const { view } = useView("api")
+  const { create } = useExportActions(p.id)
+  const [kind, setKind] = useState<"view" | "daily">("view")
+  const [dataset, setDataset] = useState<ExportDataset>("api")
+  const [format, setFormat] = useState<Format>("csv")
+  const [dim, setDim] = useState<AnalyticsFilterDimension>("route")
+  const [daily, setDaily] = useState<AnalyticsFilterDimension | typeof NONE>(NONE)
+  const dims: AnalyticsFilterDimension[] = dataset === "api" ? API_DIMS : ["check"]
+  const by = dims.includes(dim) ? dim : dims[0]!
+  const dailyBy = daily === NONE || dims.includes(daily) ? daily : NONE
+  const filters = dataset === "api" ? view.filters : []
+  const submit = () => {
+    if (kind === "view") {
+      create.mutate({
+        kind,
+        format,
+        query: {
+          dataset,
+          metrics: dataset === "api" ? API_METRICS : UPTIME_METRICS,
+          dimensions: [by],
+          range: view.range,
+          filters,
+          limit: 1000,
+          insights: false,
+        },
+      })
+    } else {
+      create.mutate({ kind, format, dataset, range: view.range, ...(dailyBy !== NONE ? { dimension: dailyBy } : {}) })
+    }
+  }
+  const err = create.error instanceof ApiError ? create.error : null
+  return (
+    <Card
+      footer={
+        <>
+          {err?.status === 429 ? (
+            <p role="alert" className="min-w-0 flex-1 text-body text-destructive">
+              <Trans>Three exports are already running in this workspace. Try again when one finishes.</Trans>
+            </p>
+          ) : (
+            <ErrorLine error={create.error} className="min-w-0 flex-1" />
+          )}
+          <Button
+            size="sm"
+            className="ms-auto"
+            disabled={create.isPending}
+            onClick={submit}
+            data-testid="export-create"
+          >
+            <FileDownIcon />
+            <Trans>Export</Trans>
+          </Button>
+        </>
+      }
+      data-testid="export-new"
+    >
+      <div className="flex flex-wrap items-end gap-3">
+        <Field label={<Trans>What to export</Trans>}>
+          <Segmented
+            value={kind}
+            onChange={setKind}
+            label={t`What to export`}
+            items={[
+              { value: "view", label: t`Current view`, testId: "export-kind-view" },
+              { value: "daily", label: t`Day by day`, testId: "export-kind-daily" },
+            ]}
+          />
+        </Field>
+        <Field label={<Trans>Numbers</Trans>}>
+          <Segmented
+            value={dataset}
+            onChange={setDataset}
+            label={t`Numbers`}
+            items={[
+              { value: "api", label: t`Requests`, testId: "export-dataset-api" },
+              { value: "uptime", label: t`Uptime checks`, testId: "export-dataset-uptime" },
+            ]}
+          />
+        </Field>
+      </div>
+      <p className="text-body text-muted-foreground">
+        {kind === "view" ? (
+          dataset === "api" ? (
+            <Trans>
+              One row per value, with requests, errors, error rates, p50, p95, p99 and Apdex, for the range and filters
+              you are looking at.
+            </Trans>
+          ) : (
+            <Trans>
+              One row per check, with runs, failures, uptime, downtime, response times and certificate days.
+            </Trans>
+          )
+        ) : dataset === "api" ? (
+          <Trans>One row per day with the request numbers, optionally broken down. At most 400 days.</Trans>
+        ) : (
+          <Trans>One row per day with the uptime numbers, optionally per check. At most 400 days.</Trans>
+        )}
+      </p>
+      <div className="flex flex-wrap items-end gap-3">
+        <Field label={<Trans>Range</Trans>}>
+          <RangePicker kind="api" />
+        </Field>
+        {kind === "view" ? (
+          <Field label={<Trans>Rows</Trans>} htmlFor="export-dim">
+            <ChoiceSelect
+              id="export-dim"
+              value={by}
+              onChange={setDim}
+              options={dims.map((d) => [d, text.dimension[d]] as const)}
+            />
+          </Field>
+        ) : (
+          <Field label={<Trans>Broken down by</Trans>} htmlFor="export-daily-dim">
+            <ChoiceSelect
+              id="export-daily-dim"
+              value={dailyBy}
+              onChange={setDaily}
+              options={[[NONE, t`Nothing`] as const, ...dims.map((d) => [d, text.dimension[d]] as const)]}
+            />
+          </Field>
+        )}
+        <Field label={<Trans>Format</Trans>}>
+          <Segmented
+            value={format}
+            onChange={setFormat}
+            label={t`Format`}
+            items={[
+              { value: "csv", label: "CSV" },
+              { value: "ndjson", label: "NDJSON" },
+            ]}
+          />
+        </Field>
+      </div>
+      {kind === "view" && dataset === "api" && filters.length > 0 && (
+        <Field label={<Trans>Filters</Trans>}>
+          <FilterBar kind="api" />
+        </Field>
+      )}
+    </Card>
+  )
+}
+
 function useFailure() {
   const { t } = useLingui()
   return (e: AnalyticsExport) => {
@@ -258,6 +428,12 @@ function useFailure() {
 function ExportRow({ e, ws, onDelete }: { e: AnalyticsExport; ws: string; onDelete: () => void }) {
   const { t, i18n } = useLingui()
   const failure = useFailure()
+  const datasets: Record<AnalyticsDataset, string> = {
+    traffic: t`Visits`,
+    support: t`Support`,
+    api: t`Requests`,
+    uptime: t`Uptime checks`,
+  }
   const kinds: Record<AnalyticsExportKind, string> = {
     view: t`Current view`,
     daily: t`Day by day`,
@@ -272,7 +448,10 @@ function ExportRow({ e, ws, onDelete }: { e: AnalyticsExport; ws: string; onDele
       <div className="flex min-w-0 flex-1 flex-col gap-1.5">
         <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1">
           <p className="min-w-0 text-body font-medium">
-            {kinds[e.kind]} <span className="font-normal text-faint">· {e.format.toUpperCase()}</span>
+            {kinds[e.kind]}{" "}
+            <span className="font-normal text-faint" data-testid="export-dataset">
+              · {datasets[e.dataset]} · {e.format.toUpperCase()}
+            </span>
           </p>
           {e.status === "done" ? (
             <StatusTag tone="success" data-testid="export-status">
@@ -360,7 +539,7 @@ export function Exports({ p }: { p: AnalyticsProperty }) {
         title={<Trans>Export</Trans>}
         description={<Trans>Files are made in the background and deleted seven days later.</Trans>}
       >
-        <NewExport p={p} />
+        {p.kind === "api" ? <ApiNewExport p={p} /> : <NewExport p={p} />}
       </Section>
       <Section title={<Trans>Exports</Trans>}>
         <Card flush>

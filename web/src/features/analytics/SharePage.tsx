@@ -15,17 +15,18 @@ import { BreakdownView } from "@/features/analytics/Breakdown"
 import { RangePicker } from "@/features/analytics/Controls"
 import { EventsView } from "@/features/analytics/Events"
 import { GoalsView } from "@/features/analytics/Goals"
+import { ApiConsumers, ApiOverview, ApiRoutes } from "@/features/analytics/Monitor"
 import { Overview } from "@/features/analytics/Overview"
 import { ShareContext, shareHeaders, type ShareScope } from "@/features/analytics/queries"
 import { Realtime } from "@/features/analytics/Realtime"
-import { formatInZone, SHARE_VIEWS, useShareViewNames } from "@/features/analytics/Sharing"
+import { formatInZone, shareViewsFor, useShareViewNames } from "@/features/analytics/Sharing"
 import { useViewSearch } from "@/features/analytics/state"
 import { api, ApiError, unwrap, type AnalyticsProperty, type AnalyticsShareView } from "@/lib/api"
 
 function asProperty(token: string, p: ShareScope["property"]): AnalyticsProperty {
   return {
     id: token,
-    kind: "site",
+    kind: p.kind,
     name: p.name,
     public_key: "",
     domains: [],
@@ -171,7 +172,7 @@ function SharedLayout({ scope, expiresAt }: { scope: ShareScope; expiresAt?: str
   const navigate = useNavigate()
   const search = useViewSearch()
   const property = useMemo(() => asProperty(scope.token, scope.property), [scope.token, scope.property])
-  const views = SHARE_VIEWS.filter((v) => scope.views.includes(v))
+  const views = shareViewsFor(scope.property.kind).filter((v) => scope.views.includes(v))
   const last = pathname.split("/")[3] as AnalyticsShareView | undefined
   const current = last && views.includes(last) ? last : (views[0] ?? "overview")
   const expires = expiresAt ? formatInZone(expiresAt, i18n.locale, scope.property.timezone) : ""
@@ -215,9 +216,9 @@ function SharedLayout({ scope, expiresAt }: { scope: ShareScope; expiresAt?: str
             />
           </div>
         )}
-        {current !== "realtime" && (
+        {current !== "realtime" && property.kind !== "api" && (
           <div className="flex flex-wrap items-center gap-2">
-            <RangePicker />
+            <RangePicker kind={property.kind} />
           </div>
         )}
         <Outlet context={{ property }} />
@@ -236,6 +237,12 @@ function viewElement(v: AnalyticsShareView) {
       return <EventsView />
     case "goals":
       return <GoalsView />
+    case "api_overview":
+      return <ApiOverview />
+    case "api_routes":
+      return <ApiRoutes />
+    case "api_consumers":
+      return <ApiConsumers />
     default:
       return <BreakdownView group={v} />
   }
@@ -321,7 +328,7 @@ export default function SharePage() {
       />
     )
   }
-  const views = SHARE_VIEWS.filter((v) => scope.views.includes(v))
+  const views = shareViewsFor(scope.property.kind).filter((v) => scope.views.includes(v))
   if (views.length === 0) {
     return <Message icon={LinkIcon} title={<Trans>This link is not available</Trans>} />
   }

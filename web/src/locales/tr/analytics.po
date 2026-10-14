@@ -684,8 +684,14 @@ msgid "Consumer"
 msgstr "Tüketici"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/ApiSettings.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Consumers"
 msgstr "Tüketiciler"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Consumers shows the names your server gives its callers to everyone with the link."
+msgstr "Tüketiciler, sunucunuzun çağıranlarına verdiği adları bağlantıya sahip herkese gösterir."
 
 #: src/features/analytics/MonitorParts.tsx
 msgid "Consumers, countries and app versions are counted on their own, so only one of them can be used at a time. Remove a filter on one of them."
@@ -791,6 +797,18 @@ msgstr "Ülke"
 msgid "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
 msgstr "Her ziyaretçiyi sormadan sayar: cihaza hiçbir şey yazılmaz ve IP adresi saklanmaz."
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "Counts per day"
+msgstr "Günlük sayılar"
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Counts per hour, in days"
+msgstr "Saatlik sayılar, gün"
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Counts per minute are kept 8 days on every server, and older rows of each kind are deleted. Nothing else about a request is ever stored."
+msgstr "Dakikalık sayılar her sunucuda 8 gün tutulur ve her türün daha eski satırları silinir. Bir istekle ilgili başka hiçbir şey saklanmaz."
+
 #: src/features/analytics/Funnels.tsx
 msgid "Counts the visitors who reached each step after the ones before it, within one visit on one day. Numbers are at most ten minutes old."
 msgstr "Her adıma, öncekilerden sonra, aynı gün tek bir ziyaret içinde ulaşan ziyaretçileri sayar. Sayılar en fazla on dakika eskidir."
@@ -814,6 +832,10 @@ msgstr "Özel aralık"
 #: src/features/analytics/Controls.tsx
 msgid "Custom range…"
 msgstr "Özel aralık…"
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Daily rows, the totals of every older range."
+msgstr "Günlük satırlar; daha eski her aralığın toplamları."
 
 #: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Settings.tsx
@@ -848,10 +870,6 @@ msgstr "Günler bu saat dilimine göre sayılır"
 #: src/features/analytics/Settings.tsx
 msgid "Days are in the property’s time zone. Their totals are counted again without them."
 msgstr "Günler mülkün saat dilimine göredir. Toplamlar bu günler olmadan yeniden hesaplanır."
-
-#: src/features/analytics/ApiSettings.tsx
-msgid "Days the counts per hour are kept. Daily counts are kept as long as the property’s data."
-msgstr "Saatlik sayıların saklandığı gün sayısı. Günlük sayılar mülkün verileri kadar saklanır."
 
 #: src/features/analytics/Settings.tsx
 msgid "Days waiting to be summed up"
@@ -1084,6 +1102,18 @@ msgstr "Ortam"
 msgid "equal to"
 msgstr "değeri"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "Erase"
+msgstr "Sil"
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Erase the consumer “{name}”?"
+msgstr "“{name}” tüketicisi silinsin mi?"
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Erased."
+msgstr "Silindi."
+
 #: src/features/analytics/text.ts
 msgid "Error rate"
 msgstr "Hata oranı"
@@ -1268,6 +1298,10 @@ msgstr "İlk istek"
 msgid "First screen"
 msgstr "İlk ekran"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "First seen {seen}"
+msgstr "İlk görülme: {seen}"
+
 #: src/features/analytics/Retention.tsx
 msgid "First week"
 msgstr "İlk hafta"
@@ -1295,6 +1329,10 @@ msgstr "Kayıt ya da ödeme gibi yalnızca sunucunuzun gördüğü işler için.
 #: src/features/analytics/Install.tsx
 msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
 msgstr "Kayıt ya da ödeme gibi yalnızca sunucunuzun gördüğü işler için. Track ziyaretçinin adresini ve tarayıcısını iletir, böylece olay ziyaretine eklenir; Do Not Track ya da Global Privacy Control taşıyan istekler gönderilmez. Bir sahip ya da yöneticiden analytics:write yetkili bir API anahtarı gerekir ve bu anahtar sunucunuzda kalır."
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Forever"
+msgstr "Süresiz"
 
 #: src/features/analytics/Exports.tsx
 msgid "Format"
@@ -1437,8 +1475,8 @@ msgid "Host or app"
 msgstr "Alan adı ya da uygulama"
 
 #: src/features/analytics/ApiSettings.tsx
-msgid "Hourly detail"
-msgstr "Saatlik ayrıntı"
+msgid "Hourly rows, with consumers, countries and app versions."
+msgstr "Tüketiciler, ülkeler ve uygulama sürümleriyle saatlik satırlar."
 
 #: src/features/analytics/text.ts
 msgid "How long the check was down."
@@ -1516,6 +1554,10 @@ msgstr "Hedefleri kalır."
 #: src/features/analytics/Goals.tsx
 msgid "Its numbers are deleted too. This cannot be undone."
 msgstr "Sayıları da silinir. Bu geri alınamaz."
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Its rows by hour and by day are deleted now and again a few minutes later. Totals stay the same, since they never held the consumer. Export files made before keep the name until they are deleted, at most 7 days."
+msgstr "Saatlik ve günlük satırları şimdi ve birkaç dakika sonra yeniden silinir. Toplamlar tüketiciyi hiç tutmadığı için aynı kalır. Daha önce yapılmış dışa aktarma dosyaları, silinene kadar en fazla 7 gün adı korur."
 
 #: src/features/analytics/Events.tsx
 msgid "Keep only visits with this value"
@@ -1639,6 +1681,7 @@ msgid "Link signed-in users to their contact"
 msgstr "Oturum açan kullanıcıları kişi kayıtlarına bağla"
 
 #: src/features/analytics/Alerts.tsx
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/Monitor.tsx
@@ -1836,6 +1879,14 @@ msgstr "Bu aralıkta izin veren ziyaretçi yok."
 msgid "No consented visitors yet"
 msgstr "Henüz izin veren ziyaretçi yok"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "No consumer matches."
+msgstr "Eşleşen tüketici yok."
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "No consumers counted yet."
+msgstr "Henüz sayılan tüketici yok."
+
 #: src/features/analytics/Support.tsx
 msgid "No conversations, feedback, ratings or discussions from these pages in this range."
 msgstr "Bu aralıkta bu sayfalardan konuşma, geri bildirim, değerlendirme veya tartışma yok."
@@ -1982,6 +2033,10 @@ msgstr "Bu aralıkta sayılan bir şey yok."
 msgid "Notify me"
 msgstr "Bana bildir"
 
+#: src/features/analytics/Exports.tsx
+msgid "Numbers"
+msgstr "Sayılar"
+
 #: src/features/analytics/Settings.tsx
 msgid "Off"
 msgstr "Kapalı"
@@ -2027,8 +2082,24 @@ msgid "One prop name per line, up to 10, such as plan."
 msgstr "Her satıra bir özellik adı, en fazla 10 tane; örneğin plan."
 
 #: src/features/analytics/Exports.tsx
+msgid "One row per check, with runs, failures, uptime, downtime, response times and certificate days."
+msgstr "Denetim başına bir satır; çalıştırmalar, başarısızlıklar, çalışma süresi, kesinti süresi, yanıt süreleri ve sertifika günleriyle."
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per day with the request numbers, optionally broken down. At most 400 days."
+msgstr "Gün başına bir satır, istek sayılarıyla; isteğe bağlı olarak ayrılmış. En fazla 400 gün."
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per day with the uptime numbers, optionally per check. At most 400 days."
+msgstr "Gün başına bir satır, çalışma süresi sayılarıyla; isteğe bağlı olarak denetim başına. En fazla 400 gün."
+
+#: src/features/analytics/Exports.tsx
 msgid "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
 msgstr "Her gün için ziyaretçi, ziyaret, görüntüleme, hemen çıkma oranı, süreler ve kaydırma derinliğini içeren bir satır. En fazla 400 gün."
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per value, with requests, errors, error rates, p50, p95, p99 and Apdex, for the range and filters you are looking at."
+msgstr "Baktığınız aralık ve filtreler için değer başına bir satır; istekler, hatalar, hata oranları, p50, p95, p99 ve Apdex ile."
 
 #: src/features/analytics/Alerts.tsx
 msgid "Only for you, by e-mail to {email}. Reports are plain numbers, with no images and nothing that tracks opening or clicks."
@@ -2498,6 +2569,7 @@ msgstr "İstek gövdeleri"
 msgid "Request body bytes, added up, of the requests that reported a size."
 msgstr "Boyut bildiren isteklerin gövde baytlarının toplamı."
 
+#: src/features/analytics/Exports.tsx
 #: src/features/analytics/MonitorParts.tsx
 #: src/features/analytics/text.ts
 msgid "Requests"
@@ -2568,6 +2640,7 @@ msgid "Response time p99"
 msgstr "Yanıt süresi p99"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Geri dönüş"
@@ -2603,6 +2676,7 @@ msgstr "Rota"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/ApiSettings.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Routes"
 msgstr "Rotalar"
 
@@ -2700,6 +2774,10 @@ msgstr "{path} sayfasında {pct} kaydırma"
 msgid "Scrolls"
 msgstr "Kaydırır"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "Search consumers"
+msgstr "Tüketici ara"
+
 #: src/features/analytics/Controls.tsx
 msgid "Segment"
 msgstr "Segment"
@@ -2750,6 +2828,7 @@ msgstr "İzlenen sürenin, denetimin çalıştığı payı."
 msgid "Shared with Yuva"
 msgstr "Yuva ile paylaşıldı"
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Sharing"
 msgstr "Paylaşım"
@@ -2855,6 +2934,7 @@ msgid "Steps"
 msgstr "Adımlar"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Exports.tsx
 #: src/features/analytics/Support.tsx
 msgid "Support"
 msgstr "Destek"
@@ -2886,6 +2966,10 @@ msgstr "Parola yanlış."
 #: src/features/analytics/ApiSettings.tsx
 msgid "The apps allowed to time their own calls to this API with the Swift or Kotlin library. Records from your servers need neither."
 msgstr "Bu API’ye yaptıkları çağrıları Swift ya da Kotlin kitaplığıyla ölçmesine izin verilen uygulamalar. Sunucularınızdan gelen kayıtlar için gerekmez."
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "The callers your server named. Erase one when someone asks for their data to be deleted: their rows by hour and by day go, and the name is never used again."
+msgstr "Sunucunuzun adlandırdığı çağıranlar. Biri verilerinin silinmesini istediğinde onu silin: saatlik ve günlük satırları gider ve ad bir daha kullanılmaz."
 
 #: src/features/analytics/Funnels.tsx
 msgid "The consented counts follow visitors with a persistent id from one visit and day to the next, so a step reached on a later day still counts."
@@ -3261,6 +3345,10 @@ msgstr "İstek başına en fazla 100 olay; her biri ziyaretçinin IP adresi ve k
 msgid "Uptime"
 msgstr "Çalışma süresi"
 
+#: src/features/analytics/Exports.tsx
+msgid "Uptime checks"
+msgstr "Çalışma süresi denetimleri"
+
 #: src/features/analytics/MonitorParts.tsx
 msgid "Use the property’s"
 msgstr "Mülkün eşiğini kullan"
@@ -3352,6 +3440,7 @@ msgstr "Hedefe ulaşan ziyaretçiler; gün başına sayılıp aralığın günle
 msgid "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
 msgstr "Do Not Track ya da Global Privacy Control kullanan ziyaretçiler hiçbir şey göndermez, bu yüzden burada da sayılmazlar. Atılan bir olaydan sayısı dışında hiçbir şey saklanmaz."
 
+#: src/features/analytics/Exports.tsx
 #: src/features/analytics/text.ts
 msgid "Visits"
 msgstr "Ziyaretler"
@@ -3459,6 +3548,10 @@ msgstr "yuva.consent çağrısında persistent true olduğunda cihaz 13 ay boyun
 #: src/features/analytics/text.ts
 msgid "Without consent"
 msgstr "İzinsiz"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Without Consumers, the link shows no consumer names."
+msgstr "Tüketiciler olmadan bağlantı hiçbir tüketici adı göstermez."
 
 #: src/features/analytics/Retention.tsx
 msgid "Without cookies a visitor is new every day, so nobody can be followed from one day to the next. Only visitors who agree to a persistent id in your consent tool show up here."

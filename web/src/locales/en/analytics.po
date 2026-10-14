@@ -684,8 +684,14 @@ msgid "Consumer"
 msgstr "Consumer"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/ApiSettings.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Consumers"
 msgstr "Consumers"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Consumers shows the names your server gives its callers to everyone with the link."
+msgstr "Consumers shows the names your server gives its callers to everyone with the link."
 
 #: src/features/analytics/MonitorParts.tsx
 msgid "Consumers, countries and app versions are counted on their own, so only one of them can be used at a time. Remove a filter on one of them."
@@ -791,6 +797,18 @@ msgstr "Country"
 msgid "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
 msgstr "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "Counts per day"
+msgstr "Counts per day"
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Counts per hour, in days"
+msgstr "Counts per hour, in days"
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Counts per minute are kept 8 days on every server, and older rows of each kind are deleted. Nothing else about a request is ever stored."
+msgstr "Counts per minute are kept 8 days on every server, and older rows of each kind are deleted. Nothing else about a request is ever stored."
+
 #: src/features/analytics/Funnels.tsx
 msgid "Counts the visitors who reached each step after the ones before it, within one visit on one day. Numbers are at most ten minutes old."
 msgstr "Counts the visitors who reached each step after the ones before it, within one visit on one day. Numbers are at most ten minutes old."
@@ -814,6 +832,10 @@ msgstr "Custom range"
 #: src/features/analytics/Controls.tsx
 msgid "Custom range…"
 msgstr "Custom range…"
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Daily rows, the totals of every older range."
+msgstr "Daily rows, the totals of every older range."
 
 #: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Settings.tsx
@@ -848,10 +870,6 @@ msgstr "Days are counted in this time zone"
 #: src/features/analytics/Settings.tsx
 msgid "Days are in the property’s time zone. Their totals are counted again without them."
 msgstr "Days are in the property’s time zone. Their totals are counted again without them."
-
-#: src/features/analytics/ApiSettings.tsx
-msgid "Days the counts per hour are kept. Daily counts are kept as long as the property’s data."
-msgstr "Days the counts per hour are kept. Daily counts are kept as long as the property’s data."
 
 #: src/features/analytics/Settings.tsx
 msgid "Days waiting to be summed up"
@@ -1084,6 +1102,18 @@ msgstr "Environment"
 msgid "equal to"
 msgstr "equal to"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "Erase"
+msgstr "Erase"
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Erase the consumer “{name}”?"
+msgstr "Erase the consumer “{name}”?"
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Erased."
+msgstr "Erased."
+
 #: src/features/analytics/text.ts
 msgid "Error rate"
 msgstr "Error rate"
@@ -1268,6 +1298,10 @@ msgstr "First request"
 msgid "First screen"
 msgstr "First screen"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "First seen {seen}"
+msgstr "First seen {seen}"
+
 #: src/features/analytics/Retention.tsx
 msgid "First week"
 msgstr "First week"
@@ -1295,6 +1329,10 @@ msgstr "For what only your backend sees, such as a signup or a payment. Track fo
 #: src/features/analytics/Install.tsx
 msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
 msgstr "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Forever"
+msgstr "Forever"
 
 #: src/features/analytics/Exports.tsx
 msgid "Format"
@@ -1437,8 +1475,8 @@ msgid "Host or app"
 msgstr "Host or app"
 
 #: src/features/analytics/ApiSettings.tsx
-msgid "Hourly detail"
-msgstr "Hourly detail"
+msgid "Hourly rows, with consumers, countries and app versions."
+msgstr "Hourly rows, with consumers, countries and app versions."
 
 #: src/features/analytics/text.ts
 msgid "How long the check was down."
@@ -1516,6 +1554,10 @@ msgstr "Its goals stay."
 #: src/features/analytics/Goals.tsx
 msgid "Its numbers are deleted too. This cannot be undone."
 msgstr "Its numbers are deleted too. This cannot be undone."
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Its rows by hour and by day are deleted now and again a few minutes later. Totals stay the same, since they never held the consumer. Export files made before keep the name until they are deleted, at most 7 days."
+msgstr "Its rows by hour and by day are deleted now and again a few minutes later. Totals stay the same, since they never held the consumer. Export files made before keep the name until they are deleted, at most 7 days."
 
 #: src/features/analytics/Events.tsx
 msgid "Keep only visits with this value"
@@ -1639,6 +1681,7 @@ msgid "Link signed-in users to their contact"
 msgstr "Link signed-in users to their contact"
 
 #: src/features/analytics/Alerts.tsx
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/Monitor.tsx
@@ -1836,6 +1879,14 @@ msgstr "No consented visitors in this range."
 msgid "No consented visitors yet"
 msgstr "No consented visitors yet"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "No consumer matches."
+msgstr "No consumer matches."
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "No consumers counted yet."
+msgstr "No consumers counted yet."
+
 #: src/features/analytics/Support.tsx
 msgid "No conversations, feedback, ratings or discussions from these pages in this range."
 msgstr "No conversations, feedback, ratings or discussions from these pages in this range."
@@ -1982,6 +2033,10 @@ msgstr "Nothing counted in this range."
 msgid "Notify me"
 msgstr "Notify me"
 
+#: src/features/analytics/Exports.tsx
+msgid "Numbers"
+msgstr "Numbers"
+
 #: src/features/analytics/Settings.tsx
 msgid "Off"
 msgstr "Off"
@@ -2027,8 +2082,24 @@ msgid "One prop name per line, up to 10, such as plan."
 msgstr "One prop name per line, up to 10, such as plan."
 
 #: src/features/analytics/Exports.tsx
+msgid "One row per check, with runs, failures, uptime, downtime, response times and certificate days."
+msgstr "One row per check, with runs, failures, uptime, downtime, response times and certificate days."
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per day with the request numbers, optionally broken down. At most 400 days."
+msgstr "One row per day with the request numbers, optionally broken down. At most 400 days."
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per day with the uptime numbers, optionally per check. At most 400 days."
+msgstr "One row per day with the uptime numbers, optionally per check. At most 400 days."
+
+#: src/features/analytics/Exports.tsx
 msgid "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
 msgstr "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per value, with requests, errors, error rates, p50, p95, p99 and Apdex, for the range and filters you are looking at."
+msgstr "One row per value, with requests, errors, error rates, p50, p95, p99 and Apdex, for the range and filters you are looking at."
 
 #: src/features/analytics/Alerts.tsx
 msgid "Only for you, by e-mail to {email}. Reports are plain numbers, with no images and nothing that tracks opening or clicks."
@@ -2498,6 +2569,7 @@ msgstr "Request bodies"
 msgid "Request body bytes, added up, of the requests that reported a size."
 msgstr "Request body bytes, added up, of the requests that reported a size."
 
+#: src/features/analytics/Exports.tsx
 #: src/features/analytics/MonitorParts.tsx
 #: src/features/analytics/text.ts
 msgid "Requests"
@@ -2568,6 +2640,7 @@ msgid "Response time p99"
 msgstr "Response time p99"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Retention"
@@ -2603,6 +2676,7 @@ msgstr "Route"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/ApiSettings.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Routes"
 msgstr "Routes"
 
@@ -2700,6 +2774,10 @@ msgstr "Scrolled to {pct} on {path}"
 msgid "Scrolls"
 msgstr "Scrolls"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "Search consumers"
+msgstr "Search consumers"
+
 #: src/features/analytics/Controls.tsx
 msgid "Segment"
 msgstr "Segment"
@@ -2750,6 +2828,7 @@ msgstr "Share of the watched time the check was not down."
 msgid "Shared with Yuva"
 msgstr "Shared with Yuva"
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Sharing"
 msgstr "Sharing"
@@ -2855,6 +2934,7 @@ msgid "Steps"
 msgstr "Steps"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Exports.tsx
 #: src/features/analytics/Support.tsx
 msgid "Support"
 msgstr "Support"
@@ -2886,6 +2966,10 @@ msgstr "That password is not right."
 #: src/features/analytics/ApiSettings.tsx
 msgid "The apps allowed to time their own calls to this API with the Swift or Kotlin library. Records from your servers need neither."
 msgstr "The apps allowed to time their own calls to this API with the Swift or Kotlin library. Records from your servers need neither."
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "The callers your server named. Erase one when someone asks for their data to be deleted: their rows by hour and by day go, and the name is never used again."
+msgstr "The callers your server named. Erase one when someone asks for their data to be deleted: their rows by hour and by day go, and the name is never used again."
 
 #: src/features/analytics/Funnels.tsx
 msgid "The consented counts follow visitors with a persistent id from one visit and day to the next, so a step reached on a later day still counts."
@@ -3261,6 +3345,10 @@ msgstr "Up to 100 events per request, each with the visitor’s IP address and u
 msgid "Uptime"
 msgstr "Uptime"
 
+#: src/features/analytics/Exports.tsx
+msgid "Uptime checks"
+msgstr "Uptime checks"
+
 #: src/features/analytics/MonitorParts.tsx
 msgid "Use the property’s"
 msgstr "Use the property’s"
@@ -3352,6 +3440,7 @@ msgstr "Visitors who reached the goal, per day, added up over the days of the ra
 msgid "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
 msgstr "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
 
+#: src/features/analytics/Exports.tsx
 #: src/features/analytics/text.ts
 msgid "Visits"
 msgstr "Visits"
@@ -3459,6 +3548,10 @@ msgstr "With yuva.consent and persistent set to true, the device keeps a random 
 #: src/features/analytics/text.ts
 msgid "Without consent"
 msgstr "Without consent"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Without Consumers, the link shows no consumer names."
+msgstr "Without Consumers, the link shows no consumer names."
 
 #: src/features/analytics/Retention.tsx
 msgid "Without cookies a visitor is new every day, so nobody can be followed from one day to the next. Only visitors who agree to a persistent id in your consent tool show up here."
