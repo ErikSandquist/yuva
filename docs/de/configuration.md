@@ -180,6 +180,11 @@ Die Befehle laufen wie unter [Operator-Befehle](operations.md#operator-befehle):
 | `YUVA_MONITOR_RECORDS_PER_MINUTE` | `600000` | Request-Records, die eine API-Property und ein API-Schlüssel pro Minute senden dürfen; weitere werden nicht gezählt. Mindestens 1. |
 | `YUVA_MONITOR_BUFFER_KEYS` | `200000` | Offene Zeilen, die ein Prozess hält, bevor er sie schreibt (alle 10 Sekunden). Sind so viele offen, antwortet der Endpunkt mit `503` und `Retry-After`. Mindestens 1000. |
 | `YUVA_MONITOR_MINUTE_DAYS` | `8` | Tage, die die Minutenwerte aufbewahrt werden, von 2 bis 31; `time:minute`-Abfragen reichen so weit zurück. |
+| `YUVA_MONITOR_WORKERS` | `8` | [Uptime-Check](analytics-api-uptime.md)-Läufe und [Alert](analytics-api-alerts.md)-Jobs, die ein Prozess gleichzeitig ausführt, auf der Queue `monitoring`, damit langsame Endpunkte weder Mail noch Rollups verzögern. `0` führt in diesem Prozess keine aus; ohne Worker in einem anderen Prozess läuft kein Check und entsteht kein Alert. |
+| `YUVA_MONITOR_CHECKS` | `500`, bei `YUVA_SIGNUP=open` `50` | Uptime-Checks, die ein Workspace haben darf. Mindestens 1. |
+| `YUVA_MONITOR_MIN_INTERVAL` | `30s`, bei `YUVA_SIGNUP=open` `60s` | Das kürzeste Intervall eines Uptime-Checks, von `30s` bis `24h`. |
+| `YUVA_MONITOR_ALLOW_PRIVATE` | `false` | Lässt Uptime-Checks private und Loopback-Adressen aufrufen, für Dienste innerhalb einer selbst betriebenen Installation. Link-Local- und Cloud-Metadaten-Adressen bleiben abgelehnt. |
+| `YUVA_MONITOR_CHECK_DAYS` | `30` | Tage, die jeder Lauf eines Uptime-Checks aufbewahrt wird, von 2 bis 90; ältere Tage bleiben 400 Tage als Tageszahlen. |
 
 Der Befehl, ausgeführt wie in [Operator-Befehle](operations.md#operator-befehle):
 

@@ -53,6 +53,7 @@ or out of order: skip a `webhook-id` you have handled and order by `timestamp`.
 | `subscription.created` | Someone subscribed to a [list](lists.md) of the endpoint's inbox, in any state (`pending` while waiting for confirmation) | `subscription`, `list`, `contact` |
 | `subscription.updated` | A subscription was confirmed, unsubscribed (with `unsubscribe_reason`) or subscribed again | `subscription`, `list`, `contact`, `previous_state` |
 | `analytics.alert` | A website of [Analytics](analytics.md) raised an [alert](analytics-support.md#alerts): spike, drop, goal drop, support load or new referrer | `alert`, `property` |
+| `monitor.alert` | An [API monitoring alert](analytics-api-alerts.md) fired or resolved (`alert.state`) | `alert`, `property`, `check` |
 | `broadcast.updated` | A [broadcast](broadcasts.md) changed state: scheduled, sending, paused, sent, cancelled, failed or back to draft | `broadcast`, `previous_state` |
 
 Every body has `type`, `timestamp` (when it happened), `workspace_id`, `inbox_id` (not on contact

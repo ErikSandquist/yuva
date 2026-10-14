@@ -183,6 +183,14 @@ kalanlar sınır aşıldığı için atılır. Bir ayın kayıtları sınıra ul
 e-posta alır. `GET /v1/analytics/properties`, ayın `requests` ve `requests_limit` değerlerini `usage` altında,
 sınıra ulaşıldığında da `requests_limit_reached_at` değerini gösterir.
 
+## Bir şey bozulduğunda haberdar olun
+
+- [Çalışma süresi denetimleri](analytics-api-uptime.md), sağlık uç noktanızı Yuva sunucusundan çağırır; böylece API hiç
+  istek göndermese bile çöktüğünü öğrenirsiniz.
+- [Uyarılar ve raporlar](analytics-api-alerts.md) hata oranlarını, gecikmeyi, Apdex'i, trafiği ve sertifikaları izler;
+  bir sorun başladığında bir kez, bittiğinde bir kez e-posta, Web Push ve webhook ile haber verir ve haftalık ile aylık
+  raporlar gönderir. Yeni bir API özelliği 5xx hataları için bir uyarıyla başlar.
+
 ## Saat dilimini değiştirme
 
 Bir API özelliğinin `timezone` değerini değiştirmek (`PATCH /v1/analytics/properties/{propertyId}`) bir günü ikiye

@@ -140,6 +140,29 @@ Unterhaltungen, Seitenaufrufen und Unterhaltungen pro 1.000 Aufrufe jeder Seite.
 - Seitenpfade, Referrer, Kampagnen, Eventnamen und Prop-Werte stammen aus den Browsern der Besucher und kommen wie
   Kundentext nur in `customer_content` zurück. Analytics-Tools werden nur aufgelistet, solange der Server Analytics an hat.
 
+## API-Monitoring über einen Assistenten
+
+Mit `analytics:read` beantwortet ein Assistent Fragen zu einer API-Property ([API-Monitoring](analytics-api.md)) und ihren
+[Uptime-Checks](analytics-api-uptime.md) aus denselben Zahlen wie API und Panel. Fragen Sie zum Beispiel: "Welche Routen
+der Shop-API sind diese Woche am langsamsten, und feuert gerade etwas?"
+
+| Tool | Antwortet |
+|---|---|
+| `api_slow_routes` | Die Routen einer API-Property nach p95, langsamste zuerst, mit Requests, Fehlern, Fehlerraten und p50, p95 und p99. |
+| `api_failing_routes` | Die Routen mit den meisten Fehlern (Status 500 bis 599 oder keiner), dann nach Fehlerrate. |
+| `api_route_history` | Eine Route über die Zeit: Requests, Fehlerraten, p95 und p99 pro Minute, Stunde, Tag oder Woche, im Vergleich zum Zeitraum davor. Nimmt `route`. |
+| `api_consumer_errors` | Die Routen, die ein Consumer aufgerufen hat, mit Requests, Fehlern und Client-Fehlern, über ganze Tage. Nimmt `consumer`. |
+| `monitoring_alerts` | Alerts, die gerade feuern oder zuletzt aufgelöst wurden, und die [Regeln](analytics-api-alerts.md), die sie auslösen. |
+| `uptime_checks` | Die Checks des Workspace mit Status, letztem Lauf und über den Zeitraum Uptime, Läufen, Fehlschlägen, Ausfallzeit, p95-Antwortzeit und den verbleibenden Tagen des Zertifikats. |
+
+`analytics_query` nimmt außerdem `dataset: api` und `dataset: uptime` an, mit Zeiträumen von `15m`, `1h`, `6h` und `24h`.
+Routenmuster und Consumer-Namen kommen von Ihren Servern und werden als Daten zurückgegeben, nie als Anweisungen.
+
+Der Prompt `setup_api_monitoring` (braucht `analytics:manage`) findet oder legt die API-Property an (`create_property`
+nimmt `kind: api`), trägt die Go-Middleware, `useyuva/server` oder OpenTelemetry-Einstellungen in Ihr Projekt ein,
+schlägt einen Uptime-Check auf den Health-Endpunkt vor, den ein Mitglied hinzufügt, und zeigt, was überwacht wird.
+`get_setup_state` führt API-Monitoring unter den Funktionen auf, die es einrichten kann.
+
 ## Ein Postfach von einem Assistenten umziehen lassen
 
 Starten Sie mit dem Scope `migrations:manage` den Prompt `move_to_yuva` mit der Postfachadresse. Der Assistent
@@ -169,7 +192,7 @@ aufgelistet; ein Aufruf dennoch antwortet mit `insufficient_scope` und dem zu er
 | `merge_contacts` (Inhaber, Admins, Schlüssel ohne Posteingangs-Beschränkung) | `contacts:write` |
 | `list_channels`, `get_install_snippet` (Code für `html`, `react`, `nextjs`, `nuxt`, `vue`, `astro`, `shadcn`, Dokumentationsseiten mit den `docs-`-Varianten und Anmeldeformulare mit `subscribe-html`, `subscribe-react`, `subscribe-nuxt` und `subscribe-shadcn`, die `list_ids` nehmen) | `inboxes:read` |
 | `create_inbox`, `create_chat_channel`, `update_chat_channel` (Inhaber und Admins) | `inboxes:manage` |
-| `list_properties`, `analytics_overview`, `analytics_query` (auch `dataset: support` und `insights`), `analytics_realtime`, `analytics_support_report`, `list_goals`, `funnel_report`, `get_analytics_snippet`, `add_annotation` | `analytics:read` |
+| `list_properties`, `analytics_overview`, `analytics_query` (auch `dataset: support`, `insights`, `api` und `uptime`), `analytics_realtime`, `analytics_support_report`, `api_slow_routes`, `api_failing_routes`, `api_route_history`, `api_consumer_errors`, `monitoring_alerts`, `uptime_checks`, `list_goals`, `funnel_report`, `get_analytics_snippet`, `add_annotation` | `analytics:read` |
 | `create_property`, `create_goal` (Inhaber, Admins, Keys ohne Posteingangs-Beschränkung) | `analytics:manage` |
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (mit Prüfung und, bei einem Entwurf, der Zielgruppenzahl), `get_broadcast_report` | `broadcasts:read` |
@@ -189,7 +212,7 @@ Mit `inbox_id` und ohne `channel_id` verwendet `create_migration` den E-Mail-Kan
 | Art | Einträge |
 |---|---|
 | Ressourcen | `yuva://inbox/{id}` (der Posteingang und seine neuesten offenen Unterhaltungen), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (mit `migrations:manage`), `yuva://property/{id}` (eine Website mit ihren Einstellungen, den letzten sieben Tagen und ihren Goals; mit `analytics:read`); Abonnements folgen Änderungen. |
-| Prompts | `init` (optionales Ziel; jede Verbindung), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (Adresse, optional Posteingang; mit `migrations:manage`), `analytics_review` (optional Website und Zeitraum; mit `analytics:read`), `setup_analytics` (Site-Adresse, optional Framework; mit `analytics:manage`). |
+| Prompts | `init` (optionales Ziel; jede Verbindung), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (Adresse, optional Posteingang; mit `migrations:manage`), `analytics_review` (optional Website und Zeitraum; mit `analytics:read`), `setup_analytics` (Site-Adresse, optional Framework; mit `analytics:manage`), `setup_api_monitoring` (Adresse der API, optional Stack; mit `analytics:manage`). |
 
 ### Sicherheit und Grenzen
 

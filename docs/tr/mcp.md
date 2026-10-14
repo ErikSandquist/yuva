@@ -138,6 +138,29 @@ konuşmalarını, sayfa görüntülemelerini ve 1.000 görüntüleme başına ko
   müşteri metni gibi yalnızca `customer_content` içinde döner. Analitik araçları yalnızca sunucuda analitik açıkken
   listelenir.
 
+## Bir asistanla API izleme
+
+`analytics:read` ile bir asistan, bir API özelliği ([API izleme](analytics-api.md)) ve [çalışma süresi
+denetimleri](analytics-api-uptime.md) hakkındaki soruları API'nin ve panelin kullandığı aynı rakamlardan yanıtlar.
+Örneğin sorun: "Shop API'nin bu hafta en yavaş rotaları hangileri ve tetiklenmiş bir uyarı var mı?"
+
+| Araç | Yanıtı |
+|---|---|
+| `api_slow_routes` | Bir API özelliğinin rotaları p95'e göre, en yavaş önce; istekler, hatalar, hata oranları ve p50, p95, p99 ile. |
+| `api_failing_routes` | En çok hata veren rotalar (durum 500 ile 599 ya da yanıtsız), sonra hata oranına göre. |
+| `api_route_history` | Tek bir rota zaman içinde: dakika, saat, gün ya da hafta başına istekler, hata oranları, p95 ve p99, önceki döneme göre. `route` alır. |
+| `api_consumer_errors` | Bir tüketicinin çağırdığı rotalar; istekler, hatalar ve istemci hataları, tam günler üzerinden. `consumer` alır. |
+| `monitoring_alerts` | Tetiklenmiş ya da yakın zamanda çözülmüş uyarılar ve onları üreten [kurallar](analytics-api-alerts.md). |
+| `uptime_checks` | Çalışma alanının denetimleri; durum, son çalıştırma ve dönem boyunca çalışma süresi, çalıştırmalar, başarısızlıklar, kesinti, p95 yanıt süresi ve sertifikada kalan gün. |
+
+`analytics_query` ayrıca `dataset: api` ve `dataset: uptime` alır; dönem olarak `15m`, `1h`, `6h` ve `24h` da kullanılabilir.
+Rota desenleri ve tüketici adları sunucularınızdan gelir ve talimat olarak değil, veri olarak döndürülür.
+
+`setup_api_monitoring` prompt'u (`analytics:manage` ister) API özelliğini bulur ya da oluşturur (`create_property`
+`kind: api` alır), projenize Go ara katmanını, `useyuva/server` ya da OpenTelemetry ayarlarını ekler, bir üyenin ekleyeceği
+sağlık uç noktası için çalışma süresi denetimi önerir ve nelerin izlendiğini gösterir. `get_setup_state`, kurabileceği
+özellikler arasında API izlemeyi de listeler.
+
 ## Bir posta kutusunu asistanla taşıyın
 
 `migrations:manage` yetkisiyle `move_to_yuva` prompt'unu posta kutusunun adresiyle çalıştırın. Asistan
@@ -167,7 +190,7 @@ Araçlar `/v1` ile aynı kontrollerden geçer. Kullanamayacağınız araçlar li
 | `merge_contacts` (sahipler, yöneticiler, gelen kutusu sınırı olmayan anahtarlar) | `contacts:write` |
 | `list_channels`, `get_install_snippet` (`html`, `react`, `nextjs`, `nuxt`, `vue`, `astro`, `shadcn`, `docs-` varyantlarıyla dokümantasyon siteleri ve `list_ids` alan `subscribe-html`, `subscribe-react`, `subscribe-nuxt` ve `subscribe-shadcn` ile abonelik formları için kod) | `inboxes:read` |
 | `create_inbox`, `create_chat_channel`, `update_chat_channel` (sahipler ve yöneticiler) | `inboxes:manage` |
-| `list_properties`, `analytics_overview`, `analytics_query` (`dataset: support` ve `insights` dahil), `analytics_realtime`, `analytics_support_report`, `list_goals`, `funnel_report`, `get_analytics_snippet`, `add_annotation` | `analytics:read` |
+| `list_properties`, `analytics_overview`, `analytics_query` (`dataset: support`, `insights`, `api` ve `uptime` dahil), `analytics_realtime`, `analytics_support_report`, `api_slow_routes`, `api_failing_routes`, `api_route_history`, `api_consumer_errors`, `monitoring_alerts`, `uptime_checks`, `list_goals`, `funnel_report`, `get_analytics_snippet`, `add_annotation` | `analytics:read` |
 | `create_property`, `create_goal` (sahipler, yöneticiler, gelen kutusu sınırı olmayan anahtarlar) | `analytics:manage` |
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (gözden geçirme ve taslak için kitle sayısıyla), `get_broadcast_report` | `broadcasts:read` |
@@ -187,7 +210,7 @@ Hiçbir taşıma aracı şifre almaz: `create_migration`, uygulama şifresini gi
 | Tür | Öğeler |
 |---|---|
 | Kaynaklar | `yuva://inbox/{id}` (gelen kutusu ve en son açık konuşmaları), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (`migrations:manage` ile), `yuva://property/{id}` (bir web sitesi, ayarları, son yedi günü ve hedefleriyle; `analytics:read` ile); abonelikler değişiklikleri izler. |
-| Prompt'lar | `init` (isteğe bağlı hedef; her bağlantı), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (adres, isteğe bağlı gelen kutusu; `migrations:manage` ile), `analytics_review` (isteğe bağlı web sitesi ve aralık; `analytics:read` ile), `setup_analytics` (site adresi, isteğe bağlı framework; `analytics:manage` ile). |
+| Prompt'lar | `init` (isteğe bağlı hedef; her bağlantı), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (adres, isteğe bağlı gelen kutusu; `migrations:manage` ile), `analytics_review` (isteğe bağlı web sitesi ve aralık; `analytics:read` ile), `setup_analytics` (site adresi, isteğe bağlı framework; `analytics:manage` ile), `setup_api_monitoring` (API'nin adresi, isteğe bağlı stack; `analytics:manage` ile). |
 
 ### Güvenlik ve sınırlar
 

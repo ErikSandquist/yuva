@@ -180,6 +180,14 @@ counted, and the rest are dropped as over the limit. When a month's records reac
 get one e-mail, once a month. `GET /v1/analytics/properties` shows the month's `requests` and the `requests_limit`
 under `usage`, and `requests_limit_reached_at` once the limit is reached.
 
+## Get told when something breaks
+
+- [Uptime checks](analytics-api-uptime.md) call your health endpoint from the Yuva server, so you learn about an API
+  that is down even when it sends no requests.
+- [Alerts and reports](analytics-api-alerts.md) watch error rates, latency, Apdex, traffic and certificates, tell you
+  by e-mail, Web Push and webhook once when a problem starts and once when it ends, and send weekly and monthly
+  reports. A new API property starts with an alert for 5xx errors.
+
 ## Change the time zone
 
 Changing an API property's `timezone` (`PATCH /v1/analytics/properties/{propertyId}`) does not cut a day in two. The

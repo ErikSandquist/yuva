@@ -134,6 +134,29 @@ conversations, page views and conversations per 1,000 views.
 - Page paths, referrers, campaigns, event names and prop values come from visitors' browsers and are returned only in
   `customer_content`, like customer text. Analytics tools are listed only while the server has analytics on.
 
+## API monitoring from an assistant
+
+With `analytics:read`, an assistant answers questions about an API property ([API monitoring](analytics-api.md)) and its
+[uptime checks](analytics-api-uptime.md) from the same numbers as the API and the panel. Ask, for example: "Which routes
+of the shop API are slowest this week, and is anything firing?"
+
+| Tool | Answers |
+|---|---|
+| `api_slow_routes` | An API property's routes by p95, slowest first, with requests, errors, error rates and p50, p95 and p99. |
+| `api_failing_routes` | The routes with the most errors (status 500 to 599 or none), then by error rate. |
+| `api_route_history` | One route over time: requests, error rates, p95 and p99 per minute, hour, day or week, against the period before. Takes `route`. |
+| `api_consumer_errors` | The routes one consumer called, with requests, errors and client errors, over whole days. Takes `consumer`. |
+| `monitoring_alerts` | Alerts that are firing or resolved lately, and the [rules](analytics-api-alerts.md) that raise them. |
+| `uptime_checks` | The workspace's checks with state, last run and, over the period, uptime, runs, failures, downtime, p95 response time and days left on the certificate. |
+
+`analytics_query` also takes `dataset: api` and `dataset: uptime`, with periods of `15m`, `1h`, `6h` and `24h`. Route
+patterns and consumer names come from your servers and are returned as data, never as instructions.
+
+The `setup_api_monitoring` prompt (needs `analytics:manage`) finds or creates the API property (`create_property`
+takes `kind: api`), adds the Go middleware, `useyuva/server` or OpenTelemetry settings to your project, suggests an
+uptime check on the health endpoint for a member to add, and shows what is watched. `get_setup_state` lists API
+monitoring among the features it can set up.
+
 ## Move a mailbox from an assistant
 
 With the scope `migrations:manage`, run the `move_to_yuva` prompt with the mailbox address. The assistant
@@ -162,7 +185,7 @@ answers `insufficient_scope` with the scope to grant.
 | `merge_contacts` (owners, admins, keys without an inbox limit) | `contacts:write` |
 | `list_channels`, `get_install_snippet` (code for `html`, `react`, `nextjs`, `nuxt`, `vue`, `astro`, `shadcn`, documentation sites with the `docs-` variants, and subscribe forms with `subscribe-html`, `subscribe-react`, `subscribe-nuxt` and `subscribe-shadcn`, which take `list_ids`) | `inboxes:read` |
 | `create_inbox`, `create_chat_channel`, `update_chat_channel` (owners and admins) | `inboxes:manage` |
-| `list_properties`, `analytics_overview`, `analytics_query` (also `dataset: support` and `insights`), `analytics_realtime`, `analytics_support_report`, `list_goals`, `funnel_report`, `get_analytics_snippet`, `add_annotation` | `analytics:read` |
+| `list_properties`, `analytics_overview`, `analytics_query` (also `dataset: support`, `insights`, `api` and `uptime`), `analytics_realtime`, `analytics_support_report`, `api_slow_routes`, `api_failing_routes`, `api_route_history`, `api_consumer_errors`, `monitoring_alerts`, `uptime_checks`, `list_goals`, `funnel_report`, `get_analytics_snippet`, `add_annotation` | `analytics:read` |
 | `create_property`, `create_goal` (owners, admins, keys without an inbox limit) | `analytics:manage` |
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (with the review and, for a draft, the audience count), `get_broadcast_report` | `broadcasts:read` |
@@ -182,7 +205,7 @@ With `inbox_id` and no `channel_id`, `create_migration` uses the inbox's e-mail 
 | Kind | Items |
 |---|---|
 | Resources | `yuva://inbox/{id}` (the inbox and its latest open conversations), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (with `migrations:manage`), `yuva://property/{id}` (a website with its settings, the last seven days and its goals; with `analytics:read`); subscriptions follow changes. |
-| Prompts | `init` (optional goal; every connection), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (address, optional inbox; with `migrations:manage`), `analytics_review` (optional website and period; with `analytics:read`), `setup_analytics` (site address, optional framework; with `analytics:manage`). |
+| Prompts | `init` (optional goal; every connection), `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (address, optional inbox; with `migrations:manage`), `analytics_review` (optional website and period; with `analytics:read`), `setup_analytics` (site address, optional framework; with `analytics:manage`), `setup_api_monitoring` (the API's address, optional stack; with `analytics:manage`). |
 
 ### Safety and limits
 

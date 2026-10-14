@@ -188,6 +188,14 @@ eines Monats die Grenze, erhalten die Owner des Workspace einmal im Monat eine E
 `GET /v1/analytics/properties` zeigt die `requests` des Monats und das `requests_limit` unter `usage`, bei
 erreichter Grenze auch `requests_limit_reached_at`.
 
+## Bescheid bekommen, wenn etwas kaputtgeht
+
+- [Uptime-Checks](analytics-api-uptime.md) rufen Ihren Health-Endpunkt vom Yuva-Server aus auf; so erfahren Sie von einer
+  ausgefallenen API auch dann, wenn sie keine Requests mehr sendet.
+- [Alerts und Berichte](analytics-api-alerts.md) überwachen Fehlerraten, Latenz, Apdex, Traffic und Zertifikate, melden
+  per E-Mail, Web Push und Webhook einmal, wenn ein Problem beginnt, und einmal, wenn es endet, und senden wöchentliche
+  und monatliche Berichte. Eine neue API-Property startet mit einem Alert für 5xx-Fehler.
+
 ## Die Zeitzone ändern
 
 Eine Änderung der `timezone` einer API-Property (`PATCH /v1/analytics/properties/{propertyId}`) schneidet keinen

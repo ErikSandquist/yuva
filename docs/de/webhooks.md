@@ -55,6 +55,7 @@ eine `webhook-id`, die Sie schon verarbeitet haben, und sortieren Sie nach `time
 | `subscription.created` | Jemand hat eine [Liste](lists.md) des Posteingangs des Endpunkts abonniert, in jedem Zustand (`pending`, solange die Bestätigung aussteht) | `subscription`, `list`, `contact` |
 | `subscription.updated` | Ein Abonnement wurde bestätigt, abgemeldet (mit `unsubscribe_reason`) oder erneut abonniert | `subscription`, `list`, `contact`, `previous_state` |
 | `analytics.alert` | Eine [Analytics](analytics.md)-Website hat einen [Alert](analytics-support.md#alerts) ausgelöst: Spike, Einbruch, Goal-Einbruch, Support-Last oder neuer Referrer | `alert`, `property` |
+| `monitor.alert` | Ein [API-Monitoring-Alert](analytics-api-alerts.md) wurde ausgelöst oder aufgelöst (`alert.state`) | `alert`, `property`, `check` |
 | `broadcast.updated` | Ein [Broadcast](broadcasts.md) hat den Status gewechselt: geplant, sendend, pausiert, gesendet, abgebrochen, fehlgeschlagen oder zurück zum Entwurf | `broadcast`, `previous_state` |
 
 Jeder Body hat `type`, `timestamp` (wann es passiert ist), `workspace_id`, `inbox_id` (nicht bei

@@ -179,6 +179,11 @@ Komutlar, [Operatör komutları](operations.md#operatör-komutları) bölümünd
 | `YUVA_MONITOR_RECORDS_PER_MINUTE` | `600000` | Bir API özelliğinin ve bir API anahtarının dakikada gönderebileceği istek kaydı sayısı; fazlası sayılmaz. En az 1. |
 | `YUVA_MONITOR_BUFFER_KEYS` | `200000` | Bir işlemin yazmadan önce (10 saniyede bir) tuttuğu açık satır sayısı. O kadar satır açıkken uç nokta `Retry-After` ile `503` yanıtlar. En az 1000. |
 | `YUVA_MONITOR_MINUTE_DAYS` | `8` | Dakika başına sayıların saklandığı gün sayısı, 2 ile 31 arası; `time:minute` sorguları o kadar geriye gider. |
+| `YUVA_MONITOR_WORKERS` | `8` | Bir sürecin aynı anda yürüttüğü [çalışma süresi denetimi](analytics-api-uptime.md) çalıştırmaları ve [uyarı](analytics-api-alerts.md) işleri; yavaş uç noktalar postayı ya da toplamları geciktirmesin diye `monitoring` kuyruğunda çalışır. `0` bu süreçte hiçbirini çalıştırmaz; başka bir süreçte işçi yoksa hiçbir denetim çalışmaz ve hiçbir uyarı üretilmez. |
+| `YUVA_MONITOR_CHECKS` | `500`, `YUVA_SIGNUP=open` ise `50` | Bir çalışma alanının sahip olabileceği çalışma süresi denetimi. En az 1. |
+| `YUVA_MONITOR_MIN_INTERVAL` | `30s`, `YUVA_SIGNUP=open` ise `60s` | Bir çalışma süresi denetiminin en kısa aralığı, `30s` ile `24h` arası. |
+| `YUVA_MONITOR_ALLOW_PRIVATE` | `false` | Denetimlerin özel ve loopback adresleri çağırmasına izin verir; kendi sunucusunda kurulumun içindeki servisler için. Link-local ve bulut metadata adresleri reddedilmeye devam eder. |
+| `YUVA_MONITOR_CHECK_DAYS` | `30` | Bir çalışma süresi denetiminin her çalıştırmasının saklandığı gün sayısı, 2 ile 90 arası; daha eski günler 400 gün boyunca günlük sayı olarak kalır. |
 
 Komut, [Operatör komutları](operations.md#operatör-komutları) gibi çalıştırılır:
 

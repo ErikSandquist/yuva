@@ -31,6 +31,8 @@ const groups = [
       "analytics-api-otel",
       "analytics-api-apps",
       "analytics-api-analysis",
+      "analytics-api-uptime",
+      "analytics-api-alerts",
       "analytics-sharing",
       "analytics-support",
       "analytics-consent",
