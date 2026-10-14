@@ -175,8 +175,8 @@ func sortMonitorRows(rows []monitor.Row, dims []string, order []analytics.Order)
 		}
 		return strings.Compare(strings.Join(a.Dims, "\x1f"), strings.Join(b.Dims, "\x1f"))
 	})
-	if ti := timeIndex(dims); ti >= 0 {
-		slices.SortStableFunc(rows, func(a, b monitor.Row) int { return strings.Compare(a.Dims[ti], b.Dims[ti]) })
+	if timeIndex(dims) >= 0 {
+		slices.SortStableFunc(rows, func(a, b monitor.Row) int { return a.Start.Compare(b.Start) })
 	}
 }
 

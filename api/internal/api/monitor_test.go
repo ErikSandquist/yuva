@@ -220,7 +220,7 @@ func TestMonitorCountsRoutesAndPercentiles(t *testing.T) {
 	for _, row := range list {
 		sum += row.(map[string]any)["metrics"].(map[string]any)["requests"].(float64)
 	}
-	if len(list) != 15 || sum != totals(live)["requests"].(float64) || !strings.HasSuffix(list[len(list)-1].(map[string]any)["dimensions"].([]any)[0].(string), "T14:30") {
+	if len(list) != 15 || sum != totals(live)["requests"].(float64) || !strings.HasSuffix(list[len(list)-1].(map[string]any)["dimensions"].([]any)[0].(string), "T14:30+05:30") {
 		t.Fatalf("minutes %s", minutes.raw)
 	}
 	statuses := rowsBy(apiQuery(tm.owner, id, map[string]any{"metrics": []string{"requests"}, "range": dayRange(day), "dimensions": []string{"status_class"},
@@ -253,7 +253,7 @@ func TestMonitorCountsRoutesAndPercentiles(t *testing.T) {
 		t.Fatalf("folded days differ from minute rows:\nminutes %s\ndays    %s", numbers(live), numbers(folded))
 	}
 	hours := apiQuery(tm.owner, id, map[string]any{"metrics": []string{"requests"}, "range": dayRange(day), "dimensions": []string{"time:hour"}})
-	if hl := hours.body["rows"].([]any); len(hl) != 24 || hl[14].(map[string]any)["dimensions"].([]any)[0] != "2026-10-12T14:00" {
+	if hl := hours.body["rows"].([]any); len(hl) != 24 || hl[14].(map[string]any)["dimensions"].([]any)[0] != "2026-10-12T14:00+05:30" {
 		t.Fatalf("local hours %s", hours.raw)
 	}
 }
@@ -574,7 +574,7 @@ func TestMonitorTimeZoneChangeAppliesFromTheNextLocalDay(t *testing.T) {
 		first := hours.body["rows"].([]any)[0].(map[string]any)["dimensions"].([]any)[0]
 		return fmt.Sprintf("%s first %v hours %v", numbers(byDay), first, hl)
 	}
-	want := `{"rows":[{"dimensions":["2026-10-12"],"metrics":{"requests":2}},{"dimensions":["2026-10-13"],"metrics":{"requests":2}}],"totals":{"requests":4}} first 2026-10-13T05:30 hours [2026-10-13T06:00 2026-10-13T23:00]`
+	want := `{"rows":[{"dimensions":["2026-10-12"],"metrics":{"requests":2}},{"dimensions":["2026-10-13"],"metrics":{"requests":2}}],"totals":{"requests":4}} first 2026-10-13T05:30+05:30 hours [2026-10-13T06:00+05:30 2026-10-13T23:00+05:30]`
 	if got := answers(); got != want {
 		t.Fatalf("from minute rows:\n%s\nwant\n%s", got, want)
 	}
@@ -619,6 +619,78 @@ func TestMonitorDeleteProperty(t *testing.T) {
 	for _, table := range []string{"monitor_minute", "monitor_dim_hour", "monitor_rollup_hours", "monitor_routes", "monitor_names"} {
 		if n := h.count("SELECT count(*) FROM "+table+" WHERE workspace_id = $1 AND property_id = $2", tm.ws, id); n != 0 {
 			t.Fatalf("%s keeps %d rows", table, n)
+		}
+	}
+}
+
+func TestMonitorTimeSeriesWithALocalClockAndAPendingZone(t *testing.T) {
+	istanbul, err := time.LoadLocation("Europe/Istanbul")
+	if err != nil {
+		t.Fatal(err)
+	}
+	local := time.Local
+	time.Local = istanbul
+	t.Cleanup(func() { time.Local = local })
+	h := newHarness(t)
+	tm := newTeam(t, h)
+	id := createAPIProperty(tm.owner, map[string]any{"name": "API", "timezone": "UTC"})
+	now := time.Date(2026, 10, 12, 15, 0, 30, 0, time.Local)
+	h.clock.Set(now)
+	tm.owner.expect(http.StatusOK, "PATCH", "/v1/analytics/properties/"+id, map[string]any{"timezone": "Asia/Kolkata"})
+	var recs []map[string]any
+	for i := range 30 {
+		recs = append(recs, map[string]any{"method": "GET", "route": "/ping", "status": 200, "duration_us": 100,
+			"time": now.Add(-time.Duration(i*2) * time.Minute).Format(time.RFC3339)})
+	}
+	sendRecords(tm.apiKey(h), http.StatusAccepted, id, recs...)
+	h.flushMonitor()
+	total := totals(apiQuery(tm.owner, id, map[string]any{"metrics": []string{"requests"}, "range": map[string]any{"period": "1h"}}))["requests"].(float64)
+	if total != 30 {
+		t.Fatalf("totals %v", total)
+	}
+	for _, c := range []struct {
+		grain, period string
+		buckets       int
+		first, last   string
+	}{
+		{"time:minute", "1h", 60, "2026-10-12T11:01+00:00", "2026-10-12T12:00+00:00"},
+		{"time:hour", "today", 24, "2026-10-12T00:00+00:00", "2026-10-12T23:00+00:00"},
+		{"time:day", "7d", 7, "2026-10-06", "2026-10-12"},
+	} {
+		res := apiQuery(tm.owner, id, map[string]any{"metrics": []string{"requests"}, "range": map[string]any{"period": c.period}, "dimensions": []string{c.grain}})
+		rows := res.body["rows"].([]any)
+		seen, sum := map[string]bool{}, 0.0
+		for _, r := range rows {
+			m := r.(map[string]any)
+			label := m["dimensions"].([]any)[0].(string)
+			if seen[label] {
+				t.Fatalf("%s: %s twice", c.grain, label)
+			}
+			seen[label] = true
+			sum += m["metrics"].(map[string]any)["requests"].(float64)
+		}
+		first, last := rows[0].(map[string]any)["dimensions"].([]any)[0], rows[len(rows)-1].(map[string]any)["dimensions"].([]any)[0]
+		if len(rows) != c.buckets || sum != 30 || totals(res)["requests"].(float64) != 30 || first != c.first || last != c.last {
+			t.Fatalf("%s %s: %d rows from %v to %v, %v requests in rows, totals %v", c.grain, c.period, len(rows), first, last, sum, totals(res))
+		}
+	}
+
+	behind := createAPIProperty(tm.owner, map[string]any{"name": "Behind", "timezone": "Europe/Istanbul"})
+	tm.owner.expect(http.StatusOK, "PATCH", "/v1/analytics/properties/"+behind, map[string]any{"timezone": "UTC"})
+	for _, dims := range [][]string{{"time:hour"}, {"time:hour", "route"}} {
+		res := apiQuery(tm.owner, behind, map[string]any{"metrics": []string{"requests"}, "range": map[string]any{"period": "today"}, "dimensions": dims})
+		var prev time.Time
+		rows := res.body["rows"].([]any)
+		for _, r := range rows {
+			label := r.(map[string]any)["dimensions"].([]any)[0].(string)
+			at, err := time.Parse("2006-01-02T15:04-07:00", label)
+			if err != nil || !at.After(prev) {
+				t.Fatalf("%v: %s after %v is out of order: %s", dims, label, prev, res.raw)
+			}
+			prev = at
+		}
+		if len(dims) == 1 && (len(rows) != 27 || rows[26].(map[string]any)["dimensions"].([]any)[0] != "2026-10-12T23:00+00:00") {
+			t.Fatalf("the Istanbul day that ends in UTC has %d hours: %s", len(rows), res.raw)
 		}
 	}
 }

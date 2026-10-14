@@ -21,7 +21,7 @@ const (
 	ServedMixed   = analytics.ServedMixed
 
 	MaxMinuteBuckets = 1440
-	minuteLabel      = "2006-01-02T15:04"
+	minuteLabel      = "2006-01-02T15:04-07:00"
 )
 
 // Dims are the dimensions an API query breaks down and filters by; Metrics its metrics.
@@ -59,7 +59,10 @@ type Query struct {
 }
 
 type Row struct {
-	Dims []string
+	// Start is the first instant of a row's time bucket, which orders rows: labels of two zones do
+	// not sort by time.
+	Start time.Time
+	Dims  []string
 	Agg  Agg
 	// Minutes is how many minutes of the row's range have passed, for requests_per_minute.
 	Minutes float64
@@ -208,25 +211,28 @@ func (p *plan) tiers(ctx context.Context, tx pgx.Tx) error {
 	if err := rows.Err(); err != nil {
 		return err
 	}
-	byDay := map[time.Time]bool{}
+	byDay := map[int64]bool{}
 	if q.Days && p.grain != "hour" {
-		ready := map[time.Time]bool{}
+		ready := map[int64]bool{}
+		days := map[int64]time.Time{}
 		for _, h := range states {
-			if _, ok := ready[h.day]; !ok {
-				ready[h.day] = true
+			k := h.day.UnixNano()
+			if _, ok := ready[k]; !ok {
+				ready[k], days[k] = true, h.day
 			}
-			ready[h.day] = ready[h.day] && h.built && h.dayBuilt
+			ready[k] = ready[k] && h.built && h.dayBuilt
 		}
-		for d, ok := range ready {
+		for k, ok := range ready {
+			d := days[k]
 			if ok && !q.Zone.DayStart(d).Before(q.Start) && !q.Zone.DayStart(d.AddDate(0, 0, 1)).After(q.End) {
-				byDay[d] = true
+				byDay[k] = true
 				p.days = append(p.days, d)
 			}
 		}
 		slices.SortFunc(p.days, func(a, b time.Time) int { return a.Compare(b) })
 	}
 	for _, h := range states {
-		if byDay[h.day] {
+		if byDay[h.day.UnixNano()] {
 			continue
 		}
 		end := q.Zone.HourEnd(h.hour)
@@ -534,7 +540,7 @@ func (s *PGStore) Query(ctx context.Context, q Query) (Result, error) {
 					}
 					a.Durations.Merge(sk)
 				}
-				key := g.bucket.UTC().Format(time.RFC3339) + "|" + fmt.Sprint(g.vals)
+				key := bucketKey(g.bucket, g.vals)
 				if cur := groups[key]; cur != nil {
 					cur.agg.Merge(&g.agg)
 				} else {
@@ -604,29 +610,31 @@ func (p *plan) result(groups map[string]*group, order []string, names nameMaps) 
 	q := p.q
 	res := Result{Totals: NewAgg(), Minutes: passed(q.Start, q.End, q.Now)}
 	if p.grain != "" && len(p.dims) == 0 {
-		have := map[time.Time]bool{}
+		have := map[int64]bool{}
 		for _, g := range groups {
-			have[p.bucketStart(g.bucket)] = true
+			have[p.bucketStart(g.bucket).UnixNano()] = true
 		}
 		for t := p.firstBucket(); t.Before(q.End); t = p.step(t) {
-			if !have[t] {
-				b := t
-				if p.grain == "day" {
-					b = q.Zone.LocalDay(t)
-				}
-				key := b.Format(time.RFC3339) + "|[]"
-				groups[key] = &group{bucket: b, agg: NewAgg()}
-				order = append(order, key)
+			if have[t.UnixNano()] {
+				continue
 			}
+			b := t.UTC()
+			if p.grain == "day" {
+				b = q.Zone.LocalDay(t)
+			}
+			key := bucketKey(b, nil)
+			groups[key] = &group{bucket: b, agg: NewAgg()}
+			order = append(order, key)
 		}
 	}
 	for _, key := range order {
 		g := groups[key]
 		res.Totals.Merge(&g.agg)
 		var dims []string
+		var start time.Time
 		minutes := res.Minutes
 		if p.grain != "" {
-			start := p.bucketStart(g.bucket)
+			start = p.bucketStart(g.bucket)
 			dims = append(dims, p.label(g.bucket))
 			minutes = passed(maxTime(start, q.Start), minTime(p.step(start), q.End), q.Now)
 		}
@@ -646,13 +654,19 @@ func (p *plan) result(groups map[string]*group, order []string, names nameMaps) 
 			}
 		}
 		if p.grain != "" || len(p.dims) > 0 {
-			res.Rows = append(res.Rows, Row{Dims: dims, Agg: g.agg, Minutes: minutes})
+			res.Rows = append(res.Rows, Row{Start: start, Dims: dims, Agg: g.agg, Minutes: minutes})
 		}
 	}
 	if p.grain != "" {
-		slices.SortStableFunc(res.Rows, func(a, b Row) int { return strings.Compare(a.Dims[0], b.Dims[0]) })
+		slices.SortStableFunc(res.Rows, func(a, b Row) int { return a.Start.Compare(b.Start) })
 	}
 	return res
+}
+
+// bucketKey names a group by its bucket's instant and its dimension values, so the same instant
+// in two locations is one group.
+func bucketKey(bucket time.Time, vals []int32) string {
+	return strconv.FormatInt(bucket.UnixNano(), 10) + "|" + fmt.Sprint(vals)
 }
 
 func (p *plan) firstBucket() time.Time {

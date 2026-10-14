@@ -87,8 +87,8 @@ type Aggregator struct {
 
 	names     nameCache
 	partMu    sync.Mutex
-	minuteDay map[time.Time]bool
-	hourMonth map[time.Time]bool
+	minuteDay map[int64]bool
+	hourMonth map[int64]bool
 }
 
 func (a *Aggregator) init() {
@@ -116,7 +116,7 @@ func (a *Aggregator) Count(workspaceID, propertyID uuid.UUID, day time.Time, rea
 	a.mu.Lock()
 	defer a.mu.Unlock()
 	a.init()
-	a.counts[countKey{workspaceID, propertyID, day, reason}] += n
+	a.counts[countKey{workspaceID, propertyID, day.UTC(), reason}] += n
 }
 
 type resolved struct {
@@ -217,7 +217,7 @@ func (a *Aggregator) Add(ctx context.Context, p Property, recs []Record) error {
 	for i := range recs {
 		r := &recs[i]
 		minute := r.Time.UTC().Truncate(time.Minute)
-		hour, day := r.Hour.UTC(), r.Day
+		hour, day := r.Hour.UTC(), r.Day.UTC()
 		ck := coreCellKey{p.WorkspaceID, p.ID, minute, keys[i].core}
 		if !minute.Add(time.Minute + LastFlush).After(now) {
 			add(a.lateCore, ck, hour, day, time.Time{}, r)
@@ -284,7 +284,7 @@ func (a *Aggregator) take(now time.Time) *pending {
 			hours[k] = &HourMark{WorkspaceID: ws, PropertyID: prop, Hour: hour, Day: day, Capped: a.capped[k]}
 		}
 	}
-	days, months := map[time.Time]bool{}, map[time.Time]bool{}
+	days, months := map[int64]time.Time{}, map[int64]time.Time{}
 	for k, c := range a.core {
 		if !c.dirty {
 			continue
@@ -293,7 +293,7 @@ func (a *Aggregator) take(now time.Time) *pending {
 		p.core = append(p.core, k)
 		p.w.Minutes = append(p.w.Minutes, MinuteRow{WorkspaceID: k.ws, PropertyID: k.prop, Minute: k.minute, Hour: c.hour, Day: c.day, Writer: a.writer, Key: k.key, Agg: c.agg.Clone()})
 		mark(k.ws, k.prop, c.hour, c.day)
-		days[utcDay(k.minute)] = true
+		days[utcDay(k.minute).UnixNano()] = utcDay(k.minute)
 	}
 	for k, c := range a.dims {
 		if !c.dirty {
@@ -309,19 +309,19 @@ func (a *Aggregator) take(now time.Time) *pending {
 		p.dims = append(p.dims, k)
 		p.w.Dims = append(p.w.Dims, DimRow{WorkspaceID: k.ws, PropertyID: k.prop, Hour: k.hour, Day: c.day, Writer: a.writer, Key: k.key, Agg: c.agg.Clone()})
 		mark(k.ws, k.prop, c.hour, c.day)
-		months[monthOf(k.hour)] = true
+		months[monthOf(k.hour).UnixNano()] = monthOf(k.hour)
 	}
 	if len(p.lateCore)+len(p.lateDims) > 0 {
 		late := newWriter()
 		for k, c := range p.lateCore {
 			p.w.Minutes = append(p.w.Minutes, MinuteRow{WorkspaceID: k.ws, PropertyID: k.prop, Minute: k.minute, Hour: c.hour, Day: c.day, Writer: late, Key: k.key, Agg: c.agg})
 			mark(k.ws, k.prop, c.hour, c.day)
-			days[utcDay(k.minute)] = true
+			days[utcDay(k.minute).UnixNano()] = utcDay(k.minute)
 		}
 		for k, c := range p.lateDims {
 			p.w.Dims = append(p.w.Dims, DimRow{WorkspaceID: k.ws, PropertyID: k.prop, Hour: k.hour, Day: c.day, Writer: late, Key: k.key, Agg: c.agg})
 			mark(k.ws, k.prop, c.hour, c.day)
-			months[monthOf(k.hour)] = true
+			months[monthOf(k.hour).UnixNano()] = monthOf(k.hour)
 		}
 	}
 	for _, h := range hours {
@@ -332,7 +332,7 @@ func (a *Aggregator) take(now time.Time) *pending {
 		p.w.Counts = append(p.w.Counts, Count{WorkspaceID: k.ws, PropertyID: k.prop, Day: k.day, Reason: k.reason, N: n})
 	}
 	p.w.Usage = maps.Clone(p.usage)
-	p.minuteDay, p.hourMonth = slices.Collect(maps.Keys(days)), slices.Collect(maps.Keys(months))
+	p.minuteDay, p.hourMonth = slices.Collect(maps.Values(days)), slices.Collect(maps.Values(months))
 	return p
 }
 
@@ -422,22 +422,22 @@ func (a *Aggregator) ensure(ctx context.Context, days, months []time.Time) error
 	a.partMu.Lock()
 	defer a.partMu.Unlock()
 	if a.minuteDay == nil {
-		a.minuteDay, a.hourMonth = map[time.Time]bool{}, map[time.Time]bool{}
+		a.minuteDay, a.hourMonth = map[int64]bool{}, map[int64]bool{}
 	}
 	for _, d := range days {
-		if !a.minuteDay[d] {
+		if !a.minuteDay[d.UnixNano()] {
 			if err := a.Store.EnsureMinutePartitions(ctx, d, d); err != nil {
 				return err
 			}
-			a.minuteDay[d] = true
+			a.minuteDay[d.UnixNano()] = true
 		}
 	}
 	for _, m := range months {
-		if !a.hourMonth[m] {
+		if !a.hourMonth[m.UnixNano()] {
 			if err := a.Store.EnsureHourPartitions(ctx, m, m); err != nil {
 				return err
 			}
-			a.hourMonth[m] = true
+			a.hourMonth[m.UnixNano()] = true
 		}
 	}
 	return nil
