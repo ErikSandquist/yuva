@@ -1883,6 +1883,13 @@ request. Decisions:
   to `monitor_check_results` (partitioned by day, `YUVA_MONITOR_CHECK_DAYS`, 30) and fold into
   `monitor_check_days` (runs, failures, down seconds, a response-time sketch; 400 days). Caps per
   workspace: `YUVA_MONITOR_CHECKS` (50 with open sign-up, else 500), and at most 10 checks on one host.
+  Checks live under `/v1/monitoring/checks` (results with timings under `…/{checkId}/results`); header
+  values never come back, and Host, Cookie and Proxy-* cannot be set; result details are fixed texts that
+  never reveal resolved addresses. Each connection attempt keeps the webhook dialer's 10-second connect
+  timeout, whatever the check's own timeout. `POST /v1/monitoring/query` reads the `uptime` dataset over
+  every check of the workspace, so a check without a property is queryable; the property query
+  operation reads it for that property's checks. Uptime buckets and check days are UTC. A run is judged
+  about 40 seconds after its minute closes, so a stopped endpoint shows as down after 2 to 3 minutes.
 - **Alerts and reports (M16.4).** `monitor_alert_rules` per property, route, service or check: error
   rate, client error rate, p95, p99 or Apdex past a threshold over a window (5–60 minutes, with at least
   `min_requests`, 20); traffic spike or drop (the last 15 closed minutes at 3× or at most half of the
@@ -1895,7 +1902,15 @@ request. Decisions:
   `firing` or `resolved`) and an annotation, and reach the rule's member recipients by e-mail and Web
   Push (urgency `high`, the alert as `Topic`, a one-hour TTL); M15's one-shot `analytics_alerts` stay as
   they are, because these open and close. A new API property gets one rule: 5xx rate at 5% over 5
-  minutes, sent to its creator. Weekly and monthly reports use `analytics_subscriptions` and the
+  minutes, sent to its creator; a member who creates a check gets a `check_state` rule sent to them.
+  Rules live under `/v1/monitoring/alert-rules` (at most 200 per workspace, 20 recipients each) and
+  alerts under `/v1/monitoring/alerts`; one open alert per rule and key is a unique index. An alert also
+  resolves when its window falls below `min_requests`, when its check is paused, and a silent-route alert
+  as soon as the route is called again; for Apdex the 10% margin is a tenth of the distance to 1. The
+  `service_state` kind waits for M16.7. A check alert annotates the check's property when the rule has
+  none. `monitor.alert` is also a realtime message and the push event `monitor_alert`. API properties
+  refuse subscription `alerts` (their alerts are rules) and their reports use the `monitor_report`
+  template. Weekly and monthly reports use `analytics_subscriptions` and the
   `analytics_reports` job with an API template (requests, error rates, p95, slowest and most failing
   routes, uptime, incidents). Support in aggregate: a property linked to an inbox gets `conversations`
   per local day of the inbox next to its errors, by time only; no request is ever joined to a person or
@@ -2176,7 +2191,8 @@ now; per-channel limits can narrow them later.
     `monitor_minute` and `monitor_check_results` and month partitions of `monitor_hour` and
     `monitor_dim_hour` hold every workspace's rows and are made and dropped by the aggregator and the
     `analytics_partitions` job; `monitor_checks_due`, `monitor_alerts`, `monitor_states` and
-    `status_domains` list due work across workspaces, and every read, write and delete after that
+    `status_domains` list due work across workspaces (`ListDueMonitorChecks`, `ListMonitorAlertWorkspaces`,
+    and the server-wide runs and pending minutes behind the unknown-minute rule), and every read, write and delete after that
     filters by `workspace_id`.
 
 Server (`api/`), the River bullet gains: "uptime checks, health pulls and certificate orders on their
