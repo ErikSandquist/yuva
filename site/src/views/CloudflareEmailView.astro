@@ -116,9 +116,12 @@ const contract = `${edgeReadme}#ingress-contract`
               <span class={num}>{i + 1}</span>
               <div class="min-w-0 flex-1 pt-0.5">
                 <p class="leading-relaxed text-night-soft">{s.text}</p>
-                {s.code && <pre class="mt-3 overflow-x-auto rounded-2xl border border-night-rule bg-night p-4 font-mono text-[0.85rem] leading-relaxed text-night-ink">
-                      {s.code}
-                    </pre>}
+                {s.code && (
+                  <pre
+                    class="mt-3 overflow-x-auto rounded-2xl border border-night-rule bg-night p-4 font-mono text-[0.85rem] leading-relaxed text-night-ink"
+                    set:text={s.code}
+                  />
+                )}
               </div>
             </li>
           ))}
