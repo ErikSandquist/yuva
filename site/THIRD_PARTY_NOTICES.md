@@ -10,6 +10,10 @@ Docker, Swift, Kotlin, Go, OpenAPI Initiative and Model Context Protocol. They a
 single colour. Each mark is a trademark of its owner; it names compatibility and implies no
 endorsement.
 
+Nitro's mark is not in `simple-icons`; it is the outer shape of `docs/.docs/public/icon.svg` from the
+Nitro repository (https://github.com/nitrojs/nitro), MIT License, Copyright (c) Pooya Parsa and Nitro
+contributors, drawn in a single colour like the others (`src/lib/marks.ts`).
+
 ## Cloudflare
 
 Cloudflare's trademark guidelines (https://www.cloudflare.com/trademark/) allow the name in text

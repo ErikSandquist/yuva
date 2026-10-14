@@ -13,11 +13,13 @@ import {
   siSwift,
   siVuedotjs,
 } from "simple-icons"
+import { nitroMark } from "@/lib/marks"
 import { ai, cloudflareEmail, doc, docsPath, type Locale } from "@/lib/routes"
 
 export interface StackItem {
   name: string
   path?: string
+  viewBox?: string
   href: Record<Locale, string>
 }
 
@@ -30,7 +32,7 @@ export const stack: StackItem[] = [
   { name: "React", path: siReact.path, href: docs("analytics/") },
   { name: "Vue", path: siVuedotjs.path, href: docs("analytics/") },
   { name: "Nuxt", path: siNuxt.path, href: docs("analytics/#nuxt") },
-  { name: "Nitro", href: same(doc("examples/nitro")) },
+  { name: "Nitro", path: nitroMark, viewBox: "0 0 40 40", href: same(doc("examples/nitro")) },
   { name: "h3", path: siH3.path, href: same(doc("sdk/js/README.md#server")) },
   { name: "shadcn/ui", path: siShadcnui.path, href: docs("documentation-pages/#shadcnui") },
   { name: "Astro", path: siAstro.path, href: docs("analytics/") },
