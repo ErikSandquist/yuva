@@ -137,8 +137,8 @@ olmaz.
 
 `GET /v1/analytics/properties/{propertyId}/routes` (kapsam `analytics:read`), özelliğin saydığı her rotayı kalıba
 göre listeler; her biri `id`'si, yoldan `inferred` (çıkarılmış) olup olmadığı, `hidden` (gizli) olup olmadığı ve ilk
-ile son görülme zamanıyla gelir. `(unmatched)` listededir; bir rota `(other)` altında sayıldığında `(other)` de
-listeye girer.
+ile son görülme zamanıyla gelir. `(unmatched)` listededir; `(other)` da property'nin saydığı ilk rotadan itibaren
+listededir ve bir rota onun altında sayılana kadar isteği yoktur.
 
 Yalnızca gürültü ekleyen bir rota, örneğin yük dengeleyicinizin çağırdığı sağlık denetimi, gizlenebilir:
 

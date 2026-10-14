@@ -136,7 +136,8 @@ A route names a part of your API, never one record, so an id never becomes a rou
 
 `GET /v1/analytics/properties/{propertyId}/routes` (scope `analytics:read`) lists every route the property
 counted, by pattern, each with its `id`, whether it was `inferred` from paths, whether it is `hidden`, and when it
-was first and last seen. `(unmatched)` is in the list, and so is `(other)` once a route has been counted under it.
+was first and last seen. `(unmatched)` is in the list, and so is `(other)`, from the first route the property counted, with no requests until a route
+is counted under it.
 
 A route that only adds noise, such as the health check your load balancer calls, can be hidden:
 

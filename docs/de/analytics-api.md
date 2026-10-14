@@ -141,8 +141,8 @@ Eine Route benennt einen Teil Ihrer API, nie einen einzelnen Datensatz; eine ID 
 
 `GET /v1/analytics/properties/{propertyId}/routes` (Scope `analytics:read`) listet jede Route auf, die die
 Property gezählt hat, nach Muster, jeweils mit `id`, ob sie aus Pfaden `inferred` (abgeleitet) wurde, ob sie
-`hidden` (ausgeblendet) ist, sowie erster und letzter Sichtung. `(unmatched)` steht in der Liste, und `(other)`,
-sobald eine Route darunter gezählt wurde.
+`hidden` (ausgeblendet) ist, sowie erster und letzter Sichtung. `(unmatched)` steht in der Liste, und `(other)` ab der ersten
+gezählten Route, ohne Anfragen, bis eine Route darunter gezählt wird.
 
 Eine Route, die nur Rauschen erzeugt, etwa der Health-Check, den Ihr Load Balancer aufruft, lässt sich ausblenden:
 
