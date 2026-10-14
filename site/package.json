@@ -50,6 +50,7 @@
     "prettier": "3.9.10",
     "prettier-plugin-astro": "1.1.1",
     "shadcn": "4.21.4",
+    "simple-icons": "16.35.0",
     "typescript": "~6"
   }
 }

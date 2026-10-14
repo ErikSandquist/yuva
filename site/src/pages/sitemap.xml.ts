@@ -8,6 +8,7 @@ import {
   brand,
   contact,
   ai,
+  cloudflareEmail,
   docsPath,
   home,
   locales,
@@ -20,7 +21,18 @@ import {
 export const GET: APIRoute = async () => {
   const posts = (await getCollection("blog")).map((p) => `<url><loc>${absolute(post(p.id))}</loc></url>`)
   const docs = ["", ...(await ordered()).map((d) => docRel(d.id)), "api/"].map(docsPath)
-  const urls = [home, ai, blog, releases, brand, contact, templates, ...gallery().map((g) => template(g.slug)), ...docs]
+  const urls = [
+    home,
+    ai,
+    cloudflareEmail,
+    blog,
+    releases,
+    brand,
+    contact,
+    templates,
+    ...gallery().map((g) => template(g.slug)),
+    ...docs,
+  ]
     .flatMap((page) => {
       const alternates = locales
         .map((l) => `<xhtml:link rel="alternate" hreflang="${l}" href="${absolute(page[l])}"/>`)

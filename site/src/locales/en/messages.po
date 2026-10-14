@@ -40,6 +40,10 @@ msgstr "{name} endpoints of the Yuva API."
 msgid "{name}: {description} A free Yuva e-mail template."
 msgstr "{name}: {description} A free Yuva e-mail template."
 
+#: src/copy/cloudflare-email.ts
+msgid "A customer writes to one of your support addresses, for example support@example.com."
+msgstr "A customer writes to one of your support addresses, for example support@example.com."
+
 #: src/copy/home.ts
 msgid "A feedback form rendered by your own backend posts to /v1/feedback with a workspace API key. Scripts create inboxes, channels and keys, and host backends look up or delete contacts by their own user id."
 msgstr "A feedback form rendered by your own backend posts to /v1/feedback with a workspace API key. Scripts create inboxes, channels and keys, and host backends look up or delete contacts by their own user id."
@@ -55,6 +59,14 @@ msgstr "A host with Docker, Postgres 16 or newer, an SMTP account for sign-in co
 #: src/copy/contact.ts
 msgid "A hosted service and commercial licenses"
 msgstr "A hosted service and commercial licenses"
+
+#: src/copy/cloudflare-email.ts
+msgid "A message can be up to 25 MiB including attachments, which is the Cloudflare Email Routing limit. Yuva keeps up to 50 attachments per message, each within the server's attachment size limit (25 MiB by default) and allowed types; it leaves out the rest."
+msgstr "A message can be up to 25 MiB including attachments, which is the Cloudflare Email Routing limit. Yuva keeps up to 50 attachments per message, each within the server's attachment size limit (25 MiB by default) and allowed types; it leaves out the rest."
+
+#: src/copy/cloudflare-email.ts
+msgid "A small open-source Worker"
+msgstr "A small open-source Worker"
 
 #: src/copy/home.ts
 msgid "A support inbox holds other people's words. Yuva is built with that in mind, and says plainly that it has not had an independent security audit yet."
@@ -132,6 +144,10 @@ msgstr "Announcement"
 #: src/copy/home.ts
 msgid "Answer from one panel"
 msgstr "Answer from one panel"
+
+#: src/copy/cloudflare-email.ts
+msgid "Any domain you manage in Cloudflare and whose mail no other server handles, because Email Routing becomes its MX. Each e-mail channel has an address, or the catch-all *@example.com for every address of the domain that no channel has exactly. A subaddress such as support+billing@example.com reaches the channel of support@example.com."
+msgstr "Any domain you manage in Cloudflare and whose mail no other server handles, because Email Routing becomes its MX. Each e-mail channel has an address, or the catch-all *@example.com for every address of the domain that no channel has exactly. A subaddress such as support+billing@example.com reaches the channel of support@example.com."
 
 #: src/copy/contact.ts
 #: src/copy/home.ts
@@ -249,6 +265,10 @@ msgstr "Can I host it for my customers?"
 msgid "Can I schedule a newsletter in each subscriber's time zone?"
 msgstr "Can I schedule a newsletter in each subscriber's time zone?"
 
+#: src/copy/cloudflare-email.ts
+msgid "Can someone forge mail to my Yuva server?"
+msgstr "Can someone forge mail to my Yuva server?"
+
 #: src/copy/home.ts
 msgid "Careful with what it holds."
 msgstr "Careful with what it holds."
@@ -286,6 +306,26 @@ msgstr "Choose the workspace and what the assistant may do, then approve."
 #: src/copy/brand.ts
 msgid "Click a colour to copy its hex code."
 msgstr "Click a colour to copy its hex code."
+
+#: src/layouts/Footer.astro
+msgid "Cloudflare e-mail"
+msgstr "Cloudflare e-mail"
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare Email Routing becomes the MX of your domain and receives the mail. Yuva does not listen for SMTP, so there is no mail server to install or keep patched."
+msgstr "Cloudflare Email Routing becomes the MX of your domain and receives the mail. Yuva does not listen for SMTP, so there is no mail server to install or keep patched."
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare Email Routing receives the message and passes it to the Yuva Email Worker."
+msgstr "Cloudflare Email Routing receives the message and passes it to the Yuva Email Worker."
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare, the Cloudflare logo and Cloudflare Workers are trademarks and/or registered trademarks of Cloudflare, Inc. in the United States and other jurisdictions. Yuva is an independent open-source project, not affiliated with or endorsed by Cloudflare."
+msgstr "Cloudflare, the Cloudflare logo and Cloudflare Workers are trademarks and/or registered trademarks of Cloudflare, Inc. in the United States and other jurisdictions. Yuva is an independent open-source project, not affiliated with or endorsed by Cloudflare."
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare® Email Routing receives the mail for your support addresses, and the open-source Yuva Email Worker hands each message to Yuva, signed. It lands in your shared inbox as a conversation your team answers."
+msgstr "Cloudflare® Email Routing receives the mail for your support addresses, and the open-source Yuva Email Worker hands each message to Yuva, signed. It lands in your shared inbox as a conversation your team answers."
 
 #: src/copy/brand.ts
 msgid "Colours"
@@ -412,6 +452,10 @@ msgstr "Delete a contact, from the panel or by your own user id, and their conve
 msgid "Deliverability"
 msgstr "Deliverability"
 
+#: src/copy/cloudflare-email.ts
+msgid "Deploy the Worker to your Cloudflare account, using the same secret:"
+msgstr "Deploy the Worker to your Cloudflare account, using the same secret:"
+
 #: src/copy/pages.ts
 msgid "Deprecated"
 msgstr "Deprecated"
@@ -440,6 +484,10 @@ msgstr "Digest"
 msgid "Do"
 msgstr "Do"
 
+#: src/copy/cloudflare-email.ts
+msgid "Do I need to run a mail server?"
+msgstr "Do I need to run a mail server?"
+
 #: src/copy/docs.ts
 msgid "Docs"
 msgstr "Docs"
@@ -449,6 +497,10 @@ msgstr "Docs"
 #: src/layouts/Footer.astro
 msgid "Documentation"
 msgstr "Documentation"
+
+#: src/copy/cloudflare-email.ts
+msgid "Does Yuva use the DMARC result from Cloudflare?"
+msgstr "Does Yuva use the DMARC result from Cloudflare?"
 
 #: src/copy/brand.ts
 msgid "Don't"
@@ -503,6 +555,14 @@ msgstr "Early and built in the open"
 #: src/copy/docs.ts
 msgid "Edit this page on GitHub"
 msgstr "Edit this page on GitHub"
+
+#: src/copy/cloudflare-email.ts
+msgid "Email Routing becomes the MX of the domain, so use a domain or subdomain that no other mail server handles."
+msgstr "Email Routing becomes the MX of the domain, so use a domain or subdomain that no other mail server handles."
+
+#: src/copy/cloudflare-email.ts
+msgid "Email Routing in front"
+msgstr "Email Routing in front"
 
 #: src/copy/brand.ts
 msgid "Ember"
@@ -559,6 +619,10 @@ msgstr "FAQ"
 #: src/copy/home.ts
 msgid "Feedback with a category (bug, idea, praise, other), screenshots and device details: app version, build, system, device and screen."
 msgstr "Feedback with a category (bug, idea, praise, other), screenshots and device details: app version, build, system, device and screen."
+
+#: src/copy/cloudflare-email.ts
+msgid "Film: support e-mail from Cloudflare to the Yuva inbox"
+msgstr "Film: support e-mail from Cloudflare to the Yuva inbox"
 
 #: src/copy/pages.ts
 msgid "Fixed"
@@ -628,6 +692,14 @@ msgstr "Hosted"
 msgid "Hosted service and commercial licenses"
 msgstr "Hosted service and commercial licenses"
 
+#: src/copy/cloudflare-email.ts
+msgid "How a message gets from the customer to your team"
+msgstr "How a message gets from the customer to your team"
+
+#: src/copy/cloudflare-email.ts
+msgid "How big can a message be?"
+msgstr "How big can a message be?"
+
 #: src/copy/home.ts
 msgid "How is it different from hosted support tools?"
 msgstr "How is it different from hosted support tools?"
@@ -672,6 +744,14 @@ msgstr "I'm writing about Yuva and have a few questions."
 msgid "Identity tokens"
 msgstr "Identity tokens"
 
+#: src/copy/cloudflare-email.ts
+msgid "If Yuva answers with a server error, does not answer within 20 seconds or cannot be reached, the Worker can forward the message to an address you choose, as long as you set FALLBACK_FORWARD. That address must be a verified destination in Email Routing. The message then arrives as a plain forward and does not appear in Yuva. Without FALLBACK_FORWARD the delivery fails with an error and the sending server may retry later."
+msgstr "If Yuva answers with a server error, does not answer within 20 seconds or cannot be reached, the Worker can forward the message to an address you choose, as long as you set FALLBACK_FORWARD. That address must be a verified destination in Email Routing. The message then arrives as a plain forward and does not appear in Yuva. Without FALLBACK_FORWARD the delivery fails with an error and the sending server may retry later."
+
+#: src/copy/cloudflare-email.ts
+msgid "If Yuva is unreachable"
+msgstr "If Yuva is unreachable"
+
 #: src/copy/ai.ts
 msgid "If Yuva itself misbehaves, the assistant can prepare a GitHub issue with your names, addresses and keys removed. You read it before anything is opened."
 msgstr "If Yuva itself misbehaves, the assistant can prepare a GitHub issue with your names, addresses and keys removed. You read it before anything is opened."
@@ -683,6 +763,14 @@ msgstr "In"
 #: src/copy/ai.ts
 msgid "In claude.ai or Claude Desktop, open Customize → Connectors → Add custom connector."
 msgstr "In claude.ai or Claude Desktop, open Customize → Connectors → Add custom connector."
+
+#: src/copy/cloudflare-email.ts
+msgid "In the Cloudflare dashboard, open your domain → Email → Email Routing and enable it. Cloudflare adds its MX and SPF records."
+msgstr "In the Cloudflare dashboard, open your domain → Email → Email Routing and enable it. Cloudflare adds its MX and SPF records."
+
+#: src/copy/cloudflare-email.ts
+msgid "In Yuva, open Settings → your inbox → Channels → E-mail and add the support address. Set a secret on the server and restart it:"
+msgstr "In Yuva, open Settings → your inbox → Channels → E-mail and add the support address. Set a secret on the server and restart it:"
 
 #: src/copy/contact.ts
 #: src/copy/home.ts
@@ -863,6 +951,10 @@ msgstr "Look at this project and tell me how to add Yuva. Use Yuva's init prompt
 msgid "Made to be embedded in your products."
 msgstr "Made to be embedded in your products."
 
+#: src/copy/cloudflare-email.ts
+msgid "Mail to a support address opens or continues a conversation in the inbox, and the team answers from the same panel as chat and app messages."
+msgstr "Mail to a support address opens or continues a conversation in the inbox, and the team answers from the same panel as chat and app messages."
+
 #: src/copy/pages.ts
 msgid "Maintainer of Yuva"
 msgstr "Maintainer of Yuva"
@@ -980,6 +1072,10 @@ msgstr "No authentication"
 msgid "No content"
 msgstr "No content"
 
+#: src/copy/cloudflare-email.ts
+msgid "No mail server to run."
+msgstr "No mail server to run."
+
 #: src/copy/home.ts
 msgid "No requests into your network"
 msgstr "No requests into your network"
@@ -991,6 +1087,14 @@ msgstr "No results"
 #: src/copy/contact.ts
 msgid "Not every message needs an e-mail. Some answers are better in public, and some reports must stay private."
 msgstr "Not every message needs an e-mail. Some answers are better in public, and some reports must stay private."
+
+#: src/copy/cloudflare-email.ts
+msgid "Not for incoming mail. Yuva does not listen for SMTP; Cloudflare Email Routing receives the mail and the Worker passes it on. Replies need an SMTP account for the e-mail channel, such as Amazon SES, Postmark or your own relay."
+msgstr "Not for incoming mail. Yuva does not listen for SMTP; Cloudflare Email Routing receives the mail and the Worker passes it on. Replies need an SMTP account for the e-mail channel, such as Amazon SES, Postmark or your own relay."
+
+#: src/copy/cloudflare-email.ts
+msgid "Not tied to Cloudflare"
+msgstr "Not tied to Cloudflare"
 
 #: src/copy/brand.ts
 msgid "Not without written permission"
@@ -1126,6 +1230,10 @@ msgstr "OpenAPI contract"
 msgid "Opens Yuva's e-mail designer with this template. You sign in first if you have not."
 msgstr "Opens Yuva's e-mail designer with this template. You sign in first if you have not."
 
+#: src/copy/cloudflare-email.ts
+msgid "Optional: keep mail during an outage by adding a fallback address to the deploy command:"
+msgstr "Optional: keep mail during an outage by adding a fallback address to the deploy command:"
+
 #: src/copy/ai.ts
 msgid "Or ask for one thing"
 msgstr "Or ask for one thing"
@@ -1137,6 +1245,10 @@ msgstr "Or host it yourself"
 #: src/copy/ai.ts
 msgid "Or type the sentence:"
 msgstr "Or type the sentence:"
+
+#: src/copy/cloudflare-email.ts
+msgid "Other ways to bring mail in"
+msgstr "Other ways to bring mail in"
 
 #: src/copy/contact.ts
 msgid "Other ways to reach us"
@@ -1240,6 +1352,10 @@ msgstr "Project"
 msgid "publish a modified version under the Yuva name — rename your fork;"
 msgstr "publish a modified version under the Yuva name — rename your fork;"
 
+#: src/copy/cloudflare-email.ts
+msgid "Questions and answers"
+msgstr "Questions and answers"
+
 #: src/copy/contact.ts
 msgid "Questions and bugs"
 msgstr "Questions and bugs"
@@ -1273,6 +1389,10 @@ msgstr "Read the code, run {version} on your machine, and follow along as it gro
 msgid "Read the English page"
 msgstr "Read the English page"
 
+#: src/copy/cloudflare-email.ts
+msgid "Read the ingress contract"
+msgstr "Read the ingress contract"
+
 #: src/copy/templates.ts
 msgid "Read the license"
 msgstr "Read the license"
@@ -1290,13 +1410,29 @@ msgstr "Read the post"
 msgid "Read the quick start"
 msgstr "Read the quick start"
 
+#: src/copy/cloudflare-email.ts
+msgid "Read the setup guide"
+msgstr "Read the setup guide"
+
 #: src/copy/brand.ts
 msgid "Read TRADEMARK.md"
 msgstr "Read TRADEMARK.md"
 
+#: src/copy/cloudflare-email.ts
+msgid "Real conversations"
+msgstr "Real conversations"
+
 #: src/copy/home.ts
 msgid "Realtime"
 msgstr "Realtime"
+
+#: src/copy/cloudflare-email.ts
+msgid "Receive your support e-mail in Yuva with Cloudflare Email Routing and the open-source Yuva Email Worker. Signed delivery, threaded conversations, no mail server to run."
+msgstr "Receive your support e-mail in Yuva with Cloudflare Email Routing and the open-source Yuva Email Worker. Signed delivery, threaded conversations, no mail server to run."
+
+#: src/copy/cloudflare-email.ts
+msgid "Refusals reach the sender"
+msgstr "Refusals reach the sender"
 
 #: src/copy/brand.ts
 msgid "Regular, Medium and Semibold"
@@ -1428,6 +1564,10 @@ msgstr "Self-hosted"
 msgid "Self-hosting"
 msgstr "Self-hosting"
 
+#: src/copy/cloudflare-email.ts
+msgid "Send a test message and watch the conversation appear in the panel."
+msgstr "Send a test message and watch the conversation appear in the panel."
+
 #: src/copy/home.ts
 msgid "Send newsletters, move in, and see who visits."
 msgstr "Send newsletters, move in, and see who visits."
@@ -1443,6 +1583,10 @@ msgstr "Server and panel"
 #: src/layouts/Footer.astro
 msgid "Server and panel under AGPL-3.0, SDKs and API contract under MIT."
 msgstr "Server and panel under AGPL-3.0, SDKs and API contract under MIT."
+
+#: src/copy/cloudflare-email.ts
+msgid "Set it up in a few steps"
+msgstr "Set it up in a few steps"
 
 #: src/copy/ai.ts
 msgid "Set up Yuva analytics for this site, with a goal for sign-ups."
@@ -1507,6 +1651,14 @@ msgstr "Starter designs for the e-mail designer, in English, Turkish and German.
 #: src/copy/brand.ts
 msgid "Stretch or squash it"
 msgstr "Stretch or squash it"
+
+#: src/copy/cloudflare-email.ts
+msgid "Support e-mail through Cloudflare Email Routing | Yuva"
+msgstr "Support e-mail through Cloudflare Email Routing | Yuva"
+
+#: src/copy/cloudflare-email.ts
+msgid "Support e-mail through Cloudflare."
+msgstr "Support e-mail through Cloudflare."
 
 #: src/copy/pages.ts
 msgid "Tag on GitHub"
@@ -1605,9 +1757,21 @@ msgstr "The team panel"
 msgid "The widget, the Swift, Kotlin and Go SDKs and the OpenAPI contract are MIT, so they ship inside closed-source apps and store builds without obligations."
 msgstr "The widget, the Swift, Kotlin and Go SDKs and the OpenAPI contract are MIT, so they ship inside closed-source apps and store builds without obligations."
 
+#: src/copy/cloudflare-email.ts
+msgid "The Worker is one way to call /ingress/email. Any mail server or relay can post the raw message with the same signed headers, and a mail server that delivers to a command can pipe the message into yuva ingest-email. The request format is documented in the Worker's README."
+msgstr "The Worker is one way to call /ingress/email. Any mail server or relay can post the raw message with the same signed headers, and a mail server that delivers to a command can pipe the message into yuva ingest-email. The request format is documented in the Worker's README."
+
+#: src/copy/cloudflare-email.ts
+msgid "The Worker signs the raw message, both envelope addresses and a timestamp with HMAC-SHA256 under a secret you share with Yuva, and sends them to /ingress/email on your Yuva server."
+msgstr "The Worker signs the raw message, both envelope addresses and a timestamp with HMAC-SHA256 under a secret you share with Yuva, and sends them to /ingress/email on your Yuva server."
+
 #: src/copy/home.ts
 msgid "The Yuva chat widget open on a newsletter tool's website: the visitor's question and a member's reply, with the member shown online."
 msgstr "The Yuva chat widget open on a newsletter tool's website: the visitor's question and a member's reply, with the member shown online."
+
+#: src/copy/cloudflare-email.ts
+msgid "The Yuva Email Worker reads the raw message and the envelope, signs the request and posts it to Yuva. Parsing, threading and spam decisions stay on the server."
+msgstr "The Yuva Email Worker reads the raw message and the envelope, signs the request and posts it to Yuva. Parsing, threading and spam decisions stay on the server."
 
 #: src/copy/brand.ts
 msgid "The Yuva logo, colours and typeface, ready for articles, integrations and app listings. Please read the rules for the name and logo before you use them."
@@ -1664,6 +1828,10 @@ msgstr "Typeface"
 #: src/pages/404.astro
 msgid "Undeliverable"
 msgstr "Undeliverable"
+
+#: src/copy/cloudflare-email.ts
+msgid "Under Routing rules, send each support address to the Worker yuva-edge. For a catch-all channel, point the catch-all rule at it."
+msgstr "Under Routing rules, send each support address to the Worker yuva-edge. For a catch-all channel, point the catch-all rule at it."
 
 #: src/copy/home.ts
 msgid "Untrusted mail stays inert"
@@ -1761,17 +1929,33 @@ msgstr "What do I need to run it?"
 msgid "What happens when you sign in"
 msgstr "What happens when you sign in"
 
+#: src/copy/cloudflare-email.ts
+msgid "What happens when Yuva is down?"
+msgstr "What happens when Yuva is down?"
+
 #: src/copy/contact.ts
 msgid "What is it about?"
 msgstr "What is it about?"
+
+#: src/copy/cloudflare-email.ts
+msgid "What it is"
+msgstr "What it is"
 
 #: src/copy/home.ts
 msgid "When the visitor has left, unread replies follow them by e-mail, and their answer continues the same conversation."
 msgstr "When the visitor has left, unread replies follow them by e-mail, and their answer continues the same conversation."
 
+#: src/copy/cloudflare-email.ts
+msgid "When Yuva refuses a message for good, for example an unknown address, a blocked sender or a message that is too large, the Worker rejects it and the sender gets a permanent SMTP error with Yuva's reason."
+msgstr "When Yuva refuses a message for good, for example an unknown address, a blocked sender or a message that is too large, the Worker rejects it and the sender gets a permanent SMTP error with Yuva's reason."
+
 #: src/copy/contact.ts
 msgid "Whether you want to invest in Yuva, build on it together, need a commercial license or are writing about it, write to us. We read every message."
 msgstr "Whether you want to invest in Yuva, build on it together, need a commercial license or are writing about it, write to us. We read every message."
+
+#: src/copy/cloudflare-email.ts
+msgid "Which domains and addresses can I use?"
+msgstr "Which domains and addresses can I use?"
 
 #: src/copy/brand.ts
 msgid "White"
@@ -1780,6 +1964,14 @@ msgstr "White"
 #: src/copy/home.ts
 msgid "Widget guide"
 msgstr "Widget guide"
+
+#: src/copy/cloudflare-email.ts
+msgid "With FALLBACK_FORWARD set, the message is forwarded to that address instead. Without it the delivery fails and the sending server may retry. Messages that Yuva refuses on purpose, such as mail to an unknown address, are rejected, not forwarded."
+msgstr "With FALLBACK_FORWARD set, the message is forwarded to that address instead. Without it the delivery fails and the sending server may retry. Messages that Yuva refuses on purpose, such as mail to an unknown address, are rejected, not forwarded."
+
+#: src/copy/cloudflare-email.ts
+msgid "Worker source on GitHub"
+msgstr "Worker source on GitHub"
 
 #: src/copy/home.ts
 msgid "Works with"
@@ -1793,6 +1985,10 @@ msgstr "Write an e-mail"
 msgid "Write to the Yuva team about investment, partnerships, commercial licenses or press, or find the right place for questions and security reports."
 msgstr "Write to the Yuva team about investment, partnerships, commercial licenses or press, or find the right place for questions and security reports."
 
+#: src/copy/cloudflare-email.ts
+msgid "Yes, when you set YUVA_INGRESS_AUTHSERV_ID to mx.cloudflare.net. Yuva then reads the DMARC verdict that Email Routing adds. A new conversation that fails DMARC is marked as spam."
+msgstr "Yes, when you set YUVA_INGRESS_AUTHSERV_ID to mx.cloudflare.net. Yuva then reads the DMARC verdict that Email Routing adds. A new conversation that fails DMARC is marked as spam."
+
 #: src/copy/home.ts
 msgid "Yes. The SDKs and the API contract are MIT. Only the server and the panel are AGPL, and that matters when you modify them and offer them to others as a network service."
 msgstr "Yes. The SDKs and the API contract are MIT. Only the server and the panel are AGPL, and that matters when you modify them and offer them to others as a network service."
@@ -1800,6 +1996,10 @@ msgstr "Yes. The SDKs and the API contract are MIT. Only the server and the pane
 #: src/copy/brand.ts
 msgid "You may"
 msgstr "You may"
+
+#: src/copy/cloudflare-email.ts
+msgid "You need a Yuva server and a Cloudflare account that manages the domain."
+msgstr "You need a Yuva server and a Cloudflare account that manages the domain."
 
 #: src/copy/ai.ts
 msgid "You stay in charge"
@@ -1820,6 +2020,10 @@ msgstr "Your code stays on your machine. Yuva only sees what the assistant creat
 #: src/copy/docs.ts
 msgid "Your support e-mail, live chat on your sites and messages inside your apps, in one inbox."
 msgstr "Your support e-mail, live chat on your sites and messages inside your apps, in one inbox."
+
+#: src/copy/cloudflare-email.ts
+msgid "Your team answers in the panel. The reply is sent through the e-mail channel's own SMTP account, such as Amazon SES, Postmark or your own relay, from the same address and in the same thread. Replies do not go through the Worker."
+msgstr "Your team answers in the panel. The reply is sent through the e-mail channel's own SMTP account, such as Amazon SES, Postmark or your own relay, from the same address and in the same thread. Replies do not go through the Worker."
 
 #: src/copy/ai.ts
 msgid "Your Yuva server"
@@ -1845,6 +2049,10 @@ msgstr "Yuva brand assets: logo, colours and name"
 msgid "Yuva brings support e-mail, live chat and in-app conversations from all of your products into one shared inbox, and adds newsletters, mail migration and cookieless analytics. Open source, self-hosted, one Go binary with Postgres."
 msgstr "Yuva brings support e-mail, live chat and in-app conversations from all of your products into one shared inbox, and adds newsletters, mail migration and cookieless analytics. Open source, self-hosted, one Go binary with Postgres."
 
+#: src/copy/cloudflare-email.ts
+msgid "Yuva checks the signature and that the timestamp is within 5 minutes before it reads the message. A request with a wrong signature is refused."
+msgstr "Yuva checks the signature and that the timestamp is within 5 minutes before it reads the message. A request with a wrong signature is refused."
+
 #: src/copy/ai.ts
 msgid "Yuva cloud"
 msgstr "Yuva cloud"
@@ -1852,6 +2060,14 @@ msgstr "Yuva cloud"
 #: src/copy/docs.ts
 msgid "Yuva documentation"
 msgstr "Yuva documentation"
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva Email Worker for Cloudflare"
+msgstr "Yuva Email Worker for Cloudflare"
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva finds the e-mail channel for the recipient address and threads the message by In-Reply-To and References into the conversation it belongs to. Anything else starts a new conversation. A reply reopens the conversation."
+msgstr "Yuva finds the e-mail channel for the recipient address and threads the message by In-Reply-To and References into the conversation it belongs to. Anything else starts a new conversation. A reply reopens the conversation."
 
 #: src/copy/ai.ts
 msgid "Yuva has a built-in MCP server. Connect it once, and your assistant reads your project, sees what your workspace already has, and sets up live chat, analytics or newsletters, asking before each change."
@@ -1888,6 +2104,10 @@ msgstr "Yuva orange"
 #: src/copy/home.ts
 msgid "Yuva puts e-mail, live chat on your website and messages from your iOS and Android apps into one chat-style panel for your team. AI assistants such as Claude, ChatGPT and Cursor connect through MCP and draft replies; a teammate reviews and sends them. Open source, one Go binary with Postgres."
 msgstr "Yuva puts e-mail, live chat on your website and messages from your iOS and Android apps into one chat-style panel for your team. AI assistants such as Claude, ChatGPT and Cursor connect through MCP and draft replies; a teammate reviews and sends them. Open source, one Go binary with Postgres."
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva refuses any request without a valid HMAC signature or with a timestamp more than 5 minutes off, before it reads the body. Keep the secret to yourself."
+msgstr "Yuva refuses any request without a valid HMAC signature or with a timestamp more than 5 minutes off, before it reads the body. Keep the secret to yourself."
 
 #: src/copy/pages.ts
 msgid "Yuva releases"

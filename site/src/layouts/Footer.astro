@@ -1,7 +1,19 @@
 ---
 import { msg } from "@lingui/core/macro"
 import { i18nFor } from "@/i18n"
-import { ai, blog, brand, contact, docsRoot, home, links, releases, templates, type Locale } from "@/lib/routes"
+import {
+  ai,
+  blog,
+  brand,
+  cloudflareEmail,
+  contact,
+  docsRoot,
+  home,
+  links,
+  releases,
+  templates,
+  type Locale,
+} from "@/lib/routes"
 import LangMenu from "@/ui/LangMenu.astro"
 import Logo from "@/ui/Logo.astro"
 
@@ -30,6 +42,7 @@ const columns = [
     items: [
       { href: docsRoot(locale), label: i18n._(msg`Documentation`) },
       { href: ai[locale], label: i18n._(msg`AI assistants`) },
+      { href: cloudflareEmail[locale], label: i18n._(msg`Cloudflare e-mail`) },
       { href: `${docsRoot(locale)}api/`, label: i18n._(msg`API contract`) },
       { href: links.repo, label: i18n._(msg`Source code on GitHub`) },
     ],
