@@ -134,6 +134,7 @@ export function useEnumText() {
       "subscription.updated": t`A subscription changed`,
       "broadcast.updated": t`A broadcast was scheduled, started, paused or finished`,
       "analytics.alert": t`An analytics property of the inbox raised an alert`,
+      "monitor.alert": t`An API monitoring alert of the inbox fired or resolved`,
     } satisfies Record<WebhookEventType, string>,
     scope: {
       "conversations:read": t`Read conversations, messages, labels and canned replies`,
@@ -260,6 +261,14 @@ export function useErrorText() {
       return t`This e-mail address bounced or complained, so the reply was not sent. Clear it on the contact to send again.`
     if (err.code === "email_not_configured")
       return t`This conversation's e-mail channel has no SMTP account, so the reply was not sent. Add one in the inbox settings.`
+    if (err.code === "refused_address")
+      return t`The server will not call this address: it is a loopback, private, link-local or cloud metadata address, or it names a user and password.`
+    if (err.code === "interval_too_short") return t`The interval is shorter than this server allows.`
+    if (err.code === "check_limit")
+      return t`This workspace has as many uptime checks as it may. Delete one to add another.`
+    if (err.code === "host_limit") return t`This host has as many uptime checks as one host may have.`
+    if (err.code === "rule_limit")
+      return t`This workspace has as many alert rules as it may. Delete one to add another.`
     if (err.code === "email_address_taken") return t`Another channel already receives mail at this address.`
     if (err.code === "webhook_disabled") return t`The endpoint is disabled. Enable it to send deliveries again.`
     if (err.code === "no_email_channel")

@@ -10,6 +10,7 @@ import { SHORTCUTS, ShortcutSheet } from "@/components/common/ShortcutSheet"
 import { focusListSearch } from "@/features/inbox/listSearch"
 import { useCounts } from "@/features/inbox/queries"
 import { useAnalyticsVisible } from "@/features/analytics/properties"
+import { useMonitoringVisible } from "@/features/monitoring/queries"
 import { useOpenSetup } from "@/features/setup/setup"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { useRegisterPushOnStart } from "@/lib/push"
@@ -46,6 +47,7 @@ export function AppShell() {
   const chats = isChats(pathname)
   const go = useGo()
   const analytics = useAnalyticsVisible()
+  const monitoring = useMonitoringVisible()
   useHotkeys({
     [SHORTCUTS.help]: () => setShortcuts(true),
     [SHORTCUTS.search]: () => {
@@ -66,6 +68,7 @@ export function AppShell() {
     [SHORTCUTS.docs]: () => go("docs"),
     [SHORTCUTS.broadcasts]: () => go("broadcasts"),
     [SHORTCUTS.analytics]: () => analytics && go("analytics"),
+    [SHORTCUTS.monitoring]: () => monitoring && go("monitoring"),
     [SHORTCUTS.assistants]: () => go("assistants"),
     [SHORTCUTS.mentions]: () => go("mentions"),
   })

@@ -24,6 +24,7 @@ export const keys = {
   analyticsProperties: (ws: string) => ["ws", ws, "analytics", "properties"] as const,
   analyticsProperty: (ws: string, id: string) => ["ws", ws, "analytics", "property", id] as const,
   analyticsData: (ws: string, id: string) => ["ws", ws, "analytics", "data", id] as const,
+  monitoring: (ws: string) => ["ws", ws, "monitoring"] as const,
   workspace: (ws: string) => ["ws", ws, "workspace"] as const,
   members: (ws: string) => ["ws", ws, "members"] as const,
   invites: (ws: string) => ["ws", ws, "invites"] as const,

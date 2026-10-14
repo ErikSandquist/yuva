@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro"
 import {
+  ActivityIcon,
   AtSignIcon,
   BarChart3Icon,
   BookOpenTextIcon,
@@ -18,6 +19,7 @@ import { UserMenu } from "@/app/UserMenu"
 import { mod, SHORTCUTS, keyLabel } from "@/components/common/ShortcutSheet"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { useAnalyticsVisible } from "@/features/analytics/properties"
+import { useMonitoringVisible } from "@/features/monitoring/queries"
 import { useConversations, useDrafts, useMentions } from "@/features/inbox/queries"
 import { setRailView, useRailView } from "@/features/inbox/railView"
 import { cn } from "@/lib/utils"
@@ -42,6 +44,7 @@ function useEntries(): Entry[] {
   const unseen = Number(useMentions().data?.pages[0]?.unseen ?? 0)
   const drafts = Number(useDrafts({}).data?.pages[0]?.total ?? 0)
   const analytics = useAnalyticsVisible()
+  const monitoring = useMonitoringVisible()
   const entries: Entry[] = [
     {
       key: "conversations",
@@ -65,6 +68,7 @@ function useEntries(): Entry[] {
     { key: "docs", label: t`Docs`, icon: BookOpenTextIcon, shortcut: SHORTCUTS.docs },
     { key: "broadcasts", label: t`Broadcasts`, icon: MegaphoneIcon, shortcut: SHORTCUTS.broadcasts },
     { key: "analytics", label: t`Analytics`, icon: ChartLineIcon, shortcut: SHORTCUTS.analytics },
+    { key: "monitoring", label: t`Monitoring`, icon: ActivityIcon, shortcut: SHORTCUTS.monitoring },
     {
       key: "assistants",
       label: t`Assistants`,
@@ -74,7 +78,7 @@ function useEntries(): Entry[] {
       badgeLabel: t`Assistants, ${drafts} drafts waiting`,
     },
   ]
-  return analytics ? entries : entries.filter((e) => e.key !== "analytics")
+  return entries.filter((e) => (e.key !== "analytics" || analytics) && (e.key !== "monitoring" || monitoring))
 }
 
 export function useSection() {

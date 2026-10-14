@@ -240,6 +240,10 @@ msgstr "{created, plural, one {# new} other {# new}}"
 msgid "{d, plural, one {# day} other {# days}}"
 msgstr "{d, plural, one {# day} other {# days}}"
 
+#: src/features/monitoring/CheckPage.tsx
+msgid "{days, plural, one {# day left} other {# days left}}"
+msgstr "{days, plural, one {# day left} other {# days left}}"
+
 #: src/features/docs/DocsPages.tsx
 msgid "{days, plural, one {The last day, over the inboxes you can see.} other {The last # days, over the inboxes you can see.}}"
 msgstr "{days, plural, one {The last day, over the inboxes you can see.} other {The last # days, over the inboxes you can see.}}"
@@ -623,6 +627,10 @@ msgstr "{threads} open discussions"
 msgid "{up} helpful"
 msgstr "{up} helpful"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "{v} requests in 15 minutes, against {base} usually."
+msgstr "{v} requests in 15 minutes, against {base} usually."
+
 #: src/features/broadcasts/Import.tsx
 msgid "{valid, plural, one {Import # address} other {Import # addresses}}"
 msgstr "{valid, plural, one {Import # address} other {Import # addresses}}"
@@ -708,6 +716,14 @@ msgstr "3 months"
 #: src/features/migrations/SwitchStep.tsx
 msgid "3. Finish"
 msgstr "3. Finish"
+
+#: src/features/monitoring/text.ts
+msgid "95 out of 100 requests took longer than the threshold."
+msgstr "95 out of 100 requests took longer than the threshold."
+
+#: src/features/monitoring/text.ts
+msgid "99 out of 100 requests took longer than the threshold."
+msgstr "99 out of 100 requests took longer than the threshold."
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -801,6 +817,10 @@ msgstr "A custom MCP server in ChatGPT on the web. It acts as you, with the acce
 msgid "A day ahead, lower the TTL of the MX records, so the change spreads quickly."
 msgstr "A day ahead, lower the TTL of the MX records, so the change spreads quickly."
 
+#: src/features/monitoring/Alerts.tsx
+msgid "A deleted check"
+msgstr "A deleted check"
+
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "A design of another inbox or archived"
 msgstr "A design of another inbox or archived"
@@ -881,6 +901,10 @@ msgstr "A part of the file arrived damaged several times. Check your connection,
 msgid "A part of the file was larger than the server takes. Reload the page and pick the file again."
 msgstr "A part of the file was larger than the server takes. Reload the page and pick the file again."
 
+#: src/features/monitoring/Alerts.tsx
+msgid "A positive number."
+msgstr "A positive number."
+
 #: src/components/common/text.ts
 msgid "A property can have at most 1,000 notes. Delete old ones first."
 msgstr "A property can have at most 1,000 notes. Delete old ones first."
@@ -912,6 +936,10 @@ msgstr "A real address where you receive post"
 #: src/components/common/text.ts
 msgid "A reply was written in a discussion"
 msgstr "A reply was written in a discussion"
+
+#: src/features/monitoring/text.ts
+msgid "A route that got a request a minute on average over the day before got none for 15 minutes."
+msgstr "A route that got a request a minute on average over the day before got none for 15 minutes."
 
 #: src/features/migrations/MigrationsPage.tsx
 msgid "A sign-in must come back within 10 minutes and works once. Open the migration and sign in again."
@@ -962,6 +990,10 @@ msgstr "About {from} to {to}"
 msgid "about done by {end}"
 msgstr "about done by {end}"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "Above {shown} over {window} minutes, with at least {min} requests"
+msgstr "Above {shown} over {window} minutes, with at least {min} requests"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Accepted answer"
 msgstr "Accepted answer"
@@ -998,6 +1030,7 @@ msgstr "Acme Support"
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/migrations/MapStep.tsx
+#: src/features/monitoring/MonitoringColumn.tsx
 msgid "Add"
 msgstr "Add"
 
@@ -1005,9 +1038,17 @@ msgstr "Add"
 msgid "Add a block"
 msgstr "Add a block"
 
+#: src/features/monitoring/MonitoringColumn.tsx
+msgid "Add a check to hear when an address stops answering, and when it is back."
+msgstr "Add a check to hear when an address stops answering, and when it is back."
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Add a condition"
 msgstr "Add a condition"
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Add a header"
+msgstr "Add a header"
 
 #: src/features/conversation/HeaderActions.tsx
 msgid "Add a note (optional)"
@@ -1021,6 +1062,10 @@ msgstr "Add a passkey"
 msgid "Add a remote server with the Streamable HTTP transport and the server URL. Many clients take a configuration like this:"
 msgstr "Add a remote server with the Streamable HTTP transport and the server URL. Many clients take a configuration like this:"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "Add a rule"
+msgstr "Add a rule"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
@@ -1032,6 +1077,10 @@ msgstr "Add a subscriber to {listName}"
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "Add a website chat in the inbox settings"
 msgstr "Add a website chat in the inbox settings"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Add an alert rule"
+msgstr "Add an alert rule"
 
 #: src/app/Palette.tsx
 msgid "Add an analytics property"
@@ -1047,6 +1096,13 @@ msgstr "Add an inbox"
 #: src/features/migrations/text.ts
 msgid "Add an OAuth client named “Yuva”, as a confidential client, and enter the redirect URL below as its redirect URL."
 msgstr "Add an OAuth client named “Yuva”, as a confidential client, and enter the redirect URL below as its redirect URL."
+
+#: src/app/Palette.tsx
+#: src/features/monitoring/CheckForm.tsx
+#: src/features/monitoring/MonitoringRoutes.tsx
+#: src/features/monitoring/Uptime.tsx
+msgid "Add an uptime check"
+msgstr "Add an uptime check"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/setup/AddChannelStep.tsx
@@ -1075,6 +1131,10 @@ msgstr "Add subscriber"
 #: src/features/setup/InstallStep.tsx
 msgid "Add the chat to your site"
 msgstr "Add the chat to your site"
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Add the check"
+msgstr "Add the check"
 
 #: src/features/docs/DocsColumn.tsx
 msgid "Add the page feedback and discussions elements to your documentation site, on one of the inbox's chat channels. Ratings, feedback and discussions then show up here per page."
@@ -1170,6 +1230,18 @@ msgstr "Agreed on"
 #: src/features/settings/notifications/TabAlertsSection.tsx
 msgid "Alert me while the tab is in the background"
 msgstr "Alert me while the tab is in the background"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Alert rules"
+msgstr "Alert rules"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Alerts"
+msgstr "Alerts"
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Alerts when the certificate expires within this many days."
+msgstr "Alerts when the certificate expires within this many days."
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
@@ -1302,6 +1374,10 @@ msgstr "An API key"
 msgid "An API key or assistant"
 msgstr "An API key or assistant"
 
+#: src/components/common/text.ts
+msgid "An API monitoring alert of the inbox fired or resolved"
+msgstr "An API monitoring alert of the inbox fired or resolved"
+
 #: src/features/migrations/ConnectStep.tsx
 msgid "An app password could be used to change mail; Yuva's connection refuses every command that changes anything. Yuva deletes this password when the migration ends; you can also revoke it in {provider} afterwards."
 msgstr "An app password could be used to change mail; Yuva's connection refuses every command that changes anything. Yuva deletes this password when the migration ends; you can also revoke it in {provider} afterwards."
@@ -1326,6 +1402,10 @@ msgstr "An entry in the zip is larger, unpacked, than this server takes for one 
 msgid "An entry in the zip unpacks to more than 100 times its size, so the file was refused as unsafe."
 msgstr "An entry in the zip unpacks to more than 100 times its size, so the file was refused as unsafe."
 
+#: src/features/monitoring/CheckForm.tsx
+msgid "An http or https address, without a user or password."
+msgstr "An http or https address, without a user or password."
+
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "An https image URL."
 msgstr "An https image URL."
@@ -1346,9 +1426,21 @@ msgstr "An owner or admin can let assistants send on their own with Bots may sen
 msgid "An owner or admin turns signing on once the record is published."
 msgstr "An owner or admin turns signing on once the record is published."
 
+#: src/features/monitoring/text.ts
+msgid "An unexpected status"
+msgstr "An unexpected status"
+
 #: src/features/migrations/UploadStep.tsx
 msgid "An upload was cut off: {count} parts, {size}, are already on the server."
 msgstr "An upload was cut off: {count} parts, {size}, are already on the server."
+
+#: src/features/monitoring/text.ts
+msgid "An uptime check is down."
+msgstr "An uptime check is down."
+
+#: src/features/monitoring/text.ts
+msgid "An uptime check’s certificate expires within the threshold."
+msgstr "An uptime check’s certificate expires within the threshold."
 
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
@@ -1442,6 +1534,14 @@ msgstr "Anyone who opens the page can read this. Remove names, e-mail addresses,
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Anything using this key stops working at once."
 msgstr "Anything using this key stops working at once."
+
+#: src/features/monitoring/text.ts
+msgid "Apdex"
+msgstr "Apdex"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Apdex was {v}, below {th}."
+msgstr "Apdex was {v}, below {th}."
 
 #: src/components/common/Source.tsx
 #: src/components/common/text.ts
@@ -1624,6 +1724,10 @@ msgstr "Assistants, {drafts} drafts waiting"
 msgid "Async"
 msgstr "Async"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "At least, requests"
+msgstr "At least, requests"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "At most once per contact every (hours)"
 msgstr "At most once per contact every (hours)"
@@ -1743,6 +1847,14 @@ msgstr "Back to waiting"
 #: src/features/migrations/ConnectStep.tsx
 msgid "Before you connect"
 msgstr "Before you connect"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Below {shown} over {window} minutes, with at least {min} requests"
+msgstr "Below {shown} over {window} minutes, with at least {min} requests"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Between 0 and 1."
+msgstr "Between 0 and 1."
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Billing"
@@ -1880,6 +1992,10 @@ msgstr "By"
 msgid "By e-mail"
 msgstr "By e-mail"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "By e-mail and push notification, when an alert fires and when it resolves. Up to 20 members."
+msgstr "By e-mail and push notification, when an alert fires and when it resolves. Up to 20 members."
+
 #: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
 msgid "By member"
@@ -1912,6 +2028,7 @@ msgstr "Can I schedule a newsletter for each subscriber?"
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/monitoring/Alerts.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Cancel"
 msgstr "Cancel"
@@ -1997,6 +2114,19 @@ msgstr "Category"
 msgid "Cc: {cc}"
 msgstr "Cc: {cc}"
 
+#: src/features/monitoring/text.ts
+msgid "Certificate expiring"
+msgstr "Certificate expiring"
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Certificate warning, in days"
+msgstr "Certificate warning, in days"
+
+#: src/features/monitoring/Alerts.tsx
+#: src/features/monitoring/CheckPage.tsx
+msgid "Change"
+msgstr "Change"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "Change address"
@@ -2004,6 +2134,14 @@ msgstr "Change address"
 #: src/features/migrations/SwitchStep.tsx
 msgid "Change that forwarding to the address below, so the mail of {address} reaches Yuva instead of {provider}."
 msgstr "Change that forwarding to the address below, so the mail of {address} reaches Yuva instead of {provider}."
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Change the alert rule"
+msgstr "Change the alert rule"
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Change the check"
+msgstr "Change the check"
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "Change the choice"
@@ -2038,6 +2176,10 @@ msgstr "Channel added"
 msgid "Channel removed"
 msgstr "Channel removed"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "Check"
+msgstr "Check"
+
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Check again"
 msgstr "Check again"
@@ -2057,6 +2199,14 @@ msgstr "Check deliverability and set up DKIM"
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Check DNS and start signing"
 msgstr "Check DNS and start signing"
+
+#: src/features/monitoring/text.ts
+msgid "Check down"
+msgstr "Check down"
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Check every"
+msgstr "Check every"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
@@ -2082,6 +2232,10 @@ msgstr "Checked {when}"
 msgid "Checked and waiting for an owner or admin to start it."
 msgstr "Checked and waiting for an owner or admin to start it."
 
+#: src/features/monitoring/Alerts.tsx
+msgid "Checked every minute. An alert fires once when its rule holds and resolves once it has been back to normal for a whole window."
+msgstr "Checked every minute. An alert fires once when its rule holds and resolves once it has been back to normal for a whole window."
+
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/migrations/UploadStep.tsx
 msgid "Checking"
@@ -2102,6 +2256,10 @@ msgstr "Checking what is already on the server…"
 #: src/features/migrations/UploadStep.tsx
 msgid "Checking what is on the server"
 msgstr "Checking what is on the server"
+
+#: src/features/monitoring/MonitoringColumn.tsx
+msgid "Checks show up here once an owner or admin adds them."
+msgstr "Checks show up here once an owner or admin adds them."
 
 #: src/features/migrations/Wizard.tsx
 msgid "Choose"
@@ -2173,6 +2331,10 @@ msgstr "Clicked"
 #: src/features/broadcasts/Report.tsx
 msgid "clicked a link, roughly"
 msgstr "clicked a link, roughly"
+
+#: src/features/monitoring/text.ts
+msgid "Client error rate"
+msgstr "Client error rate"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Client identifier"
@@ -2256,6 +2418,10 @@ msgstr "Closes"
 #: src/features/auth/SignInForm.tsx
 msgid "Code"
 msgstr "Code"
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Codes from 200 to 399, at most 20, such as 200, 204 or 200-204."
+msgstr "Codes from 200 to 399, at most 20, such as 200, 204 or 200-204."
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Color"
@@ -2641,6 +2807,10 @@ msgstr "Copying {percent}%"
 msgid "Copying {provider}"
 msgstr "Copying {provider}"
 
+#: src/features/monitoring/text.ts
+msgid "Could not connect"
+msgstr "Could not connect"
+
 #: src/features/conversation/messages/MessageActions.tsx
 msgid "Could not copy"
 msgstr "Could not copy"
@@ -2786,6 +2956,10 @@ msgstr "Data retention and deleting the workspace"
 msgid "Dates"
 msgstr "Dates"
 
+#: src/features/monitoring/text.ts
+msgid "days"
+msgstr "days"
+
 #: src/features/broadcasts/Growth.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Days"
@@ -2804,6 +2978,7 @@ msgstr "Default: {fallback}"
 #: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/contact/ContactNotes.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/monitoring/Alerts.tsx
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
@@ -2828,6 +3003,10 @@ msgstr "Delete {name}?"
 msgid "Delete after (days)"
 msgstr "Delete after (days)"
 
+#: src/features/monitoring/CheckPage.tsx
+msgid "Delete check"
+msgstr "Delete check"
+
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Delete draft"
 msgstr "Delete draft"
@@ -2849,6 +3028,10 @@ msgstr "Delete list"
 msgid "Delete my account"
 msgstr "Delete my account"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "Delete rule"
+msgstr "Delete rule"
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Delete subscription"
 msgstr "Delete subscription"
@@ -2857,6 +3040,14 @@ msgstr "Delete subscription"
 msgid "Delete the app you created for Yuva"
 msgstr "Delete the app you created for Yuva"
 
+#: src/features/monitoring/CheckPage.tsx
+msgid "Delete the check"
+msgstr "Delete the check"
+
+#: src/features/monitoring/CheckPage.tsx
+msgid "Delete the check “{name}”?"
+msgstr "Delete the check “{name}”?"
+
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
 msgstr "Delete the label {name}?"
@@ -2864,6 +3055,10 @@ msgstr "Delete the label {name}?"
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the OAuth client you created for Yuva"
 msgstr "Delete the OAuth client you created for Yuva"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Delete the rule “{name}”?"
+msgstr "Delete the rule “{name}”?"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the selected block"
@@ -3147,6 +3342,15 @@ msgstr "Does it work with server-side rendering?"
 msgid "Done"
 msgstr "Done"
 
+#: src/features/monitoring/MonitoringColumn.tsx
+#: src/features/monitoring/text.ts
+msgid "Down"
+msgstr "Down"
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Down when the keyword is there, up when it is missing"
+msgstr "Down when the keyword is there, up when it is missing"
+
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
 msgid "Download {0}"
@@ -3295,6 +3499,10 @@ msgstr "E-mail: {label}"
 msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
 msgstr "Each conversation keeps the status {provider} reports for it: open, pending or closed."
 
+#: src/features/monitoring/CheckForm.tsx
+msgid "Each failed run is tried again after 20 seconds before it counts."
+msgstr "Each failed run is tried again after 20 seconds before it counts."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Each goes into its inbox's e-mail channel for its address, else that inbox's oldest e-mail channel, so replies reach the customer. An inbox without an e-mail channel keeps them as history only."
 msgstr "Each goes into its inbox's e-mail channel for its address, else that inbox's oldest e-mail channel, so replies reach the customer. An inbox without an e-mail channel keeps them as history only."
@@ -3311,6 +3519,10 @@ msgstr "Each new e-mail starts a conversation; replies continue it."
 #: src/features/broadcasts/Report.tsx
 msgid "Each reply is a conversation in the inbox. The first 50 are listed here."
 msgstr "Each reply is a conversation in the inbox. The first 50 are listed here."
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Each route"
+msgstr "Each route"
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "Each with all its messages and notes"
@@ -3377,6 +3589,10 @@ msgstr "Embed snippet"
 msgid "Emoji"
 msgstr "Emoji"
 
+#: src/features/monitoring/CheckForm.tsx
+msgid "Empty for any status from 200 to 399."
+msgstr "Empty for any status from 200 to 399."
+
 #: src/features/broadcasts/Import.tsx
 msgid "Empty in the first rows"
 msgstr "Empty in the first rows"
@@ -3427,14 +3643,30 @@ msgstr "Entry: {entry}"
 msgid "Error or answer"
 msgstr "Error or answer"
 
+#: src/features/monitoring/text.ts
+msgid "Error rate"
+msgstr "Error rate"
+
 #: src/features/settings/webhooks/WebhookDialog.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Events"
 msgstr "Events"
 
+#: src/features/monitoring/CheckPage.tsx
+msgid "every {every}"
+msgstr "every {every}"
+
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off."
 msgstr "Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off."
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Every check"
+msgstr "Every check"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Every check of this property"
+msgstr "Every check of this property"
 
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
@@ -3467,6 +3699,10 @@ msgstr "Every open discussion has an answer."
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Every request to this endpoint, newest first. The newest 100 are kept."
 msgstr "Every request to this endpoint, newest first. The newest 100 are kept."
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Every route"
+msgstr "Every route"
 
 #: src/features/inbox/SourceFilter.tsx
 msgid "Every site"
@@ -3565,6 +3801,10 @@ msgstr "Failed"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "Failed five times"
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Failed runs before down"
+msgstr "Failed runs before down"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -3665,6 +3905,18 @@ msgstr "Finish without checking"
 msgid "Finished"
 msgstr "Finished"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "Fired {fired}"
+msgstr "Fired {fired}"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Fired {fired}, resolved {resolved}"
+msgstr "Fired {fired}, resolved {resolved}"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Firing"
+msgstr "Firing"
+
 #: src/features/setup/SetupLayout.tsx
 msgid "First message"
 msgstr "First message"
@@ -3747,6 +3999,10 @@ msgstr "For developers"
 msgid "For every inbox in this workspace, unless an inbox below says otherwise."
 msgstr "For every inbox in this workspace, unless an inbox below says otherwise."
 
+#: src/features/monitoring/CheckForm.tsx
+msgid "For example \"status\":\"ok\""
+msgstr "For example \"status\":\"ok\""
+
 #: src/features/auth/CreateWorkspace.tsx
 msgid "For example Acme"
 msgstr "For example Acme"
@@ -3760,6 +4016,10 @@ msgstr "For example Fieldnote"
 msgid "For example on your own sign-up form, at checkout or on paper. They are subscribed now."
 msgstr "For example on your own sign-up form, at checkout or on paper. They are subscribed now."
 
+#: src/features/monitoring/CheckForm.tsx
+msgid "For example Shop API health"
+msgstr "For example Shop API health"
+
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "For example: a monthly product newsletter from our company to our customers."
 msgstr "For example: a monthly product newsletter from our company to our customers."
@@ -3767,6 +4027,10 @@ msgstr "For example: a monthly product newsletter from our company to our custom
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "For example: a subscribe form with confirmation on our site, or a checkbox at sign-up."
 msgstr "For example: a subscribe form with confirmation on our site, or a checkbox at sign-up."
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "For https addresses."
+msgstr "For https addresses."
 
 #: src/features/settings/channels/app/AppInstall.tsx
 msgid "For signed-in users, your backend signs an identity token with the inbox's identity secret and the app passes it to the SDK."
@@ -3849,6 +4113,34 @@ msgstr "From"
 msgid "From (optional)"
 msgstr "From (optional)"
 
+#: src/features/monitoring/CheckPage.tsx
+msgid "from {from} to {to}"
+msgstr "from {from} to {to}"
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "From 0 to 5."
+msgstr "From 0 to 5."
+
+#: src/features/monitoring/Alerts.tsx
+msgid "From 1 to 1,000,000."
+msgstr "From 1 to 1,000,000."
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "From 1 to 10."
+msgstr "From 1 to 10."
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "From 1 to 30."
+msgstr "From 1 to 30."
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "From 1 to 90."
+msgstr "From 1 to 90."
+
+#: src/features/monitoring/Alerts.tsx
+msgid "From 5 to 60."
+msgstr "From 5 to 60."
+
 #: src/features/migrations/text.ts
 msgid "From a blocked contact"
 msgstr "From a blocked contact"
@@ -3864,6 +4156,10 @@ msgstr "From address (optional)"
 #: src/features/migrations/parts.tsx
 msgid "From blocked contacts"
 msgstr "From blocked contacts"
+
+#: src/features/monitoring/CheckPage.tsx
+msgid "From the runs kept on the server, up to 30 days."
+msgstr "From the runs kept on the server, up to 30 days."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "From the terminal"
@@ -3988,6 +4284,18 @@ msgstr "Handed to {name}"
 #: src/features/contact/ContactsColumn.tsx
 msgid "Has an open conversation"
 msgstr "Has an open conversation"
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Header name"
+msgstr "Header name"
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Header value"
+msgstr "Header value"
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Headers"
+msgstr "Headers"
 
 #: src/features/setup/WaitStep.tsx
 msgid "Hello from the setup"
@@ -4491,6 +4799,10 @@ msgstr "It is removed from every conversation."
 msgid "It is yours now"
 msgstr "It is yours now"
 
+#: src/features/monitoring/text.ts
+msgid "It led to an address the server will not call"
+msgstr "It led to an address the server will not call"
+
 #: src/features/migrations/text.ts
 msgid "It must end in the browser of the member who started it. Start it again here and finish it in this browser."
 msgstr "It must end in the browser of the member who started it. Start it again here and finish it in this browser."
@@ -4527,6 +4839,10 @@ msgstr "It stops within a moment. Subscribers it already added stay on the list.
 msgid "It was {name} ({total}). Pick it again to send only what is missing."
 msgstr "It was {name} ({total}). Pick it again to send only what is missing."
 
+#: src/features/monitoring/Alerts.tsx
+msgid "It was {v}, above {th}."
+msgstr "It was {v}, above {th}."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "It will act as you, <0>{email}</0>, with only the access you allow below."
@@ -4538,6 +4854,10 @@ msgstr "It will no longer receive notifications."
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "Its access ends at once. To use it again, connect it again."
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Its alerts go too. The notes on the charts stay."
+msgstr "Its alerts go too. The notes on the charts stay."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Its consent record is deleted with it, so you can no longer show how they agreed. To stop mailing them, unsubscribe them instead."
@@ -4551,9 +4871,17 @@ msgstr "Its consent record is deleted with it. Because they unsubscribed, the ad
 msgid "Its report and the list of recipients are deleted. Conversations opened by replies stay."
 msgstr "Its report and the list of recipients are deleted. Conversations opened by replies stay."
 
+#: src/features/monitoring/CheckPage.tsx
+msgid "Its runs, its daily numbers and its alert rules go with it."
+msgstr "Its runs, its daily numbers and its alert rules go with it."
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "Its settings, credentials and progress are deleted. Imported conversations stay."
 msgstr "Its settings, credentials and progress are deleted. Imported conversations stay."
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Its uptime then shows on the property and in its reports."
+msgstr "Its uptime then shows on the property and in its reports."
 
 #: src/features/conversation/ConversationStatus.tsx
 msgid "Just wrote"
@@ -4602,9 +4930,17 @@ msgstr "Keys and assistants may not schedule broadcasts in this workspace."
 msgid "Keys and assistants may send broadcasts"
 msgstr "Keys and assistants may send broadcasts"
 
+#: src/features/monitoring/CheckForm.tsx
+msgid "Keyword"
+msgstr "Keyword"
+
 #: src/features/settings/channels/ChannelDialog.tsx
 msgid "Kind"
 msgstr "Kind"
+
+#: src/features/monitoring/MonitoringRoutes.tsx
+msgid "Know when your services stop answering"
+msgstr "Know when your services stop answering"
 
 #: src/features/contact/ContactsColumn.tsx
 msgid "Known"
@@ -4667,6 +5003,22 @@ msgstr "Larger than this server's limit"
 #: src/features/migrations/text.ts
 msgid "Larger than this server's limit for one message"
 msgstr "Larger than this server's limit for one message"
+
+#: src/features/monitoring/CheckPage.tsx
+msgid "Last 24 hours"
+msgstr "Last 24 hours"
+
+#: src/features/monitoring/CheckPage.tsx
+msgid "Last 30 days"
+msgstr "Last 30 days"
+
+#: src/features/monitoring/CheckPage.tsx
+msgid "Last 7 days"
+msgstr "Last 7 days"
+
+#: src/features/monitoring/CheckPage.tsx
+msgid "Last 90 days"
+msgstr "Last 90 days"
 
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "Last attempt"
@@ -4839,6 +5191,8 @@ msgstr "Load images"
 #: src/features/docs/discussions/parts.tsx
 #: src/features/docs/DocsColumn.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/monitoring/Alerts.tsx
+#: src/features/monitoring/CheckPage.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/team/MemberPage.tsx
 msgid "Load more"
@@ -5178,6 +5532,10 @@ msgstr "Messages copied"
 msgid "Messages imported"
 msgstr "Messages imported"
 
+#: src/features/monitoring/CheckForm.tsx
+msgid "Method"
+msgstr "Method"
+
 #: src/features/migrations/text.ts
 msgid "Microsoft granted more than IMAP access"
 msgstr "Microsoft granted more than IMAP access"
@@ -5240,6 +5598,14 @@ msgstr "Moderated"
 #: src/components/common/text.ts
 msgid "Monday"
 msgstr "Monday"
+
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/monitoring/CheckForm.tsx
+#: src/features/monitoring/CheckPage.tsx
+#: src/features/monitoring/MonitoringColumn.tsx
+msgid "Monitoring"
+msgstr "Monitoring"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "More actions"
@@ -5322,6 +5688,10 @@ msgstr "Moved from {from}"
 msgid "Moving from Gmail, Google Workspace, Yandex, iCloud, Zoho, Yahoo, Fastmail, GMX or any IMAP server? Yuva copies the mailbox's history into an inbox, quietly and newest first, while your team keeps working. Then you forward the mailbox here and nothing is lost in between."
 msgstr "Moving from Gmail, Google Workspace, Yandex, iCloud, Zoho, Yahoo, Fastmail, GMX or any IMAP server? Yuva copies the mailbox's history into an inbox, quietly and newest first, while your team keeps working. Then you forward the mailbox here and nothing is lost in between."
 
+#: src/features/monitoring/text.ts
+msgid "ms"
+msgstr "ms"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
 msgstr "MX change"
@@ -5338,6 +5708,8 @@ msgstr "My profile"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
+#: src/features/monitoring/Alerts.tsx
+#: src/features/monitoring/CheckForm.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/channels/ChannelDialog.tsx
 #: src/features/settings/channels/email/Deliverability.tsx
@@ -5583,6 +5955,10 @@ msgstr "Newest conversations first. You can close this page; members can work me
 msgid "Newest first. Finished deliveries are kept for 7 days."
 msgstr "Newest first. Finished deliveries are kept for 7 days."
 
+#: src/features/monitoring/Alerts.tsx
+msgid "Newest first. Resolved alerts are kept 400 days."
+msgstr "Newest first. Resolved alerts are kept 400 days."
+
 #: src/features/broadcasts/Import.tsx
 msgid "Newsletter checkbox on the checkout page of our shop, 2023 to 2026"
 msgstr "Newsletter checkbox on the checkout page of our shop, 2023 to 2026"
@@ -5611,9 +5987,21 @@ msgstr "No"
 msgid "No {provider} account has that subdomain. Check it in your address: acme in acme.zendesk.com."
 msgstr "No {provider} account has that subdomain. Check it in your address: acme in acme.zendesk.com."
 
+#: src/features/monitoring/Alerts.tsx
+msgid "No alert rules yet."
+msgstr "No alert rules yet."
+
+#: src/features/monitoring/Alerts.tsx
+msgid "No alerts yet."
+msgstr "No alerts yet."
+
 #: src/features/settings/webhooks/parts.tsx
 msgid "no answer"
 msgstr "no answer"
+
+#: src/features/monitoring/text.ts
+msgid "No answer in time"
+msgstr "No answer in time"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "No API keys yet."
@@ -5707,6 +6095,10 @@ msgstr "No conversations here."
 #: src/features/inbox/ChatList.tsx
 msgid "No conversations yet."
 msgstr "No conversations yet."
+
+#: src/features/monitoring/CheckPage.tsx
+msgid "No counted runs yet."
+msgstr "No counted runs yet."
 
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "No design yet"
@@ -5842,9 +6234,17 @@ msgstr "No ratings today."
 msgid "No replies yet."
 msgstr "No replies yet."
 
+#: src/features/monitoring/Alerts.tsx
+msgid "No requests for 15 minutes, after {base} a minute the day before."
+msgstr "No requests for 15 minutes, after {base} a minute the day before."
+
 #: src/app/Palette.tsx
 msgid "No results"
 msgstr "No results"
+
+#: src/features/monitoring/CheckPage.tsx
+msgid "No runs yet. The first one is due now."
+msgstr "No runs yet. The first one is due now."
 
 #: src/features/settings/channels/ChannelSummary.tsx
 msgid "No settings"
@@ -5896,6 +6296,14 @@ msgstr "No test message has reached Yuva by the new route yet. If you finish now
 msgid "No test went out since the last change."
 msgstr "No test went out since the last change."
 
+#: src/features/monitoring/Uptime.tsx
+msgid "No uptime checks are linked to this property yet."
+msgstr "No uptime checks are linked to this property yet."
+
+#: src/features/monitoring/MonitoringColumn.tsx
+msgid "No uptime checks yet"
+msgstr "No uptime checks yet"
+
 #: src/features/broadcasts/Report.tsx
 msgid "No visits from this campaign yet."
 msgstr "No visits from this campaign yet."
@@ -5943,6 +6351,7 @@ msgstr "Nobody would get this mail. Pick lists with subscribers, or loosen the c
 
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/contact/MergePreview.tsx
+#: src/features/monitoring/CheckForm.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "None"
 msgstr "None"
@@ -5984,6 +6393,10 @@ msgstr "Not an admin"
 msgid "Not an origin: {notOrigins}. Use scheme and host only, such as https://www.example.com."
 msgstr "Not an origin: {notOrigins}. Use scheme and host only, such as https://www.example.com."
 
+#: src/features/monitoring/text.ts
+msgid "Not checked yet"
+msgstr "Not checked yet"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Not confirmed yet"
 msgstr "Not confirmed yet"
@@ -5995,6 +6408,10 @@ msgstr "Not connected yet"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Not connected yet. This page updates when you finish signing in."
 msgstr "Not connected yet. This page updates when you finish signing in."
+
+#: src/features/monitoring/text.ts
+msgid "Not counted"
+msgstr "Not counted"
 
 #: src/features/conversation/messages/DeliveryState.tsx
 msgid "Not delivered"
@@ -6190,6 +6607,7 @@ msgid "October newsletter"
 msgstr "October newsletter"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/monitoring/Alerts.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/settings/webhooks/parts.tsx
 msgid "Off"
@@ -6234,6 +6652,7 @@ msgid "Older visits"
 msgstr "Older visits"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/monitoring/Alerts.tsx
 #: src/features/settings/webhooks/parts.tsx
 msgid "On"
 msgstr "On"
@@ -6604,6 +7023,22 @@ msgstr "open, unassigned"
 msgid "Opens"
 msgstr "Opens"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "Optional; named after what it watches."
+msgstr "Optional; named after what it watches."
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Optional."
+msgstr "Optional."
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Optional. Looked for in the first 64 KiB of the answer."
+msgstr "Optional. Looked for in the first 64 KiB of the answer."
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Optional. The service it watches, by the name its records give."
+msgstr "Optional. The service it watches, by the name its records give."
+
 #: src/features/broadcasts/Composer.tsx
 msgid "Options"
 msgstr "Options"
@@ -6713,6 +7148,14 @@ msgstr "Owners and admins see every inbox; members see the inboxes they are give
 msgid "Owners and admins write and send broadcasts. You see the broadcasts of your inboxes, so you know what a reply answers."
 msgstr "Owners and admins write and send broadcasts. You see the broadcasts of your inboxes, so you know what a reply answers."
 
+#: src/features/monitoring/text.ts
+msgid "p95 latency"
+msgstr "p95 latency"
+
+#: src/features/monitoring/text.ts
+msgid "p99 latency"
+msgstr "p99 latency"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Pace (mails a second)"
 msgstr "Pace (mails a second)"
@@ -6784,6 +7227,7 @@ msgstr "Paste this before the closing body tag of your pages"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/monitoring/CheckPage.tsx
 msgid "Pause"
 msgstr "Pause"
 
@@ -6793,6 +7237,7 @@ msgstr "Pause or resume sending"
 
 #: src/components/common/text.ts
 #: src/features/migrations/text.ts
+#: src/features/monitoring/CheckPage.tsx
 msgid "Paused"
 msgstr "Paused"
 
@@ -6865,9 +7310,17 @@ msgstr "People who sign up on a form confirm by clicking a link in a mail before
 msgid "People write from inside your app, signed in as themselves."
 msgstr "People write from inside your app, signed in as themselves."
 
+#: src/features/monitoring/CheckPage.tsx
+msgid "per day, UTC"
+msgstr "per day, UTC"
+
 #: src/features/broadcasts/Report.tsx
 msgid "Per hour for the first three days, then per day. Replies count people who answered; automatic replies are left out."
 msgstr "Per hour for the first three days, then per day. Replies count people who answered; automatic replies are left out."
+
+#: src/features/monitoring/CheckPage.tsx
+msgid "per hour, UTC"
+msgstr "per hour, UTC"
 
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Per inbox"
@@ -7136,6 +7589,10 @@ msgstr "Profile"
 msgid "Progress"
 msgstr "Progress"
 
+#: src/features/monitoring/CheckForm.tsx
+msgid "Property"
+msgstr "Property"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Export the mailbox with Proton Mail's export tool, put the folder in a .zip and upload it as an export file below."
 msgstr "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Export the mailbox with Proton Mail's export tool, put the folder in a .zip and upload it as an export file below."
@@ -7202,6 +7659,10 @@ msgstr "Queued. The new attempt shows up below in a moment."
 #: src/features/inbox/ChatList.tsx
 msgid "Quick cleanup"
 msgstr "Quick cleanup"
+
+#: src/features/monitoring/CheckPage.tsx
+msgid "Range"
+msgstr "Range"
 
 #: src/features/conversation/rating.tsx
 msgid "Rated bad"
@@ -7356,6 +7817,10 @@ msgstr "Receiving"
 msgid "Recent activity"
 msgstr "Recent activity"
 
+#: src/features/monitoring/CheckPage.tsx
+msgid "Recent runs"
+msgstr "Recent runs"
+
 #: src/features/contact/ContactPage.tsx
 msgid "Recent visits"
 msgstr "Recent visits"
@@ -7391,6 +7856,10 @@ msgstr "Redeliver"
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Redirect URL"
 msgstr "Redirect URL"
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Redirects to follow"
+msgstr "Redirects to follow"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Redo"
@@ -7459,6 +7928,10 @@ msgstr "Remove {sender}"
 msgid "Remove condition {n}"
 msgstr "Remove condition {n}"
 
+#: src/features/monitoring/CheckForm.tsx
+msgid "Remove header"
+msgstr "Remove header"
+
 #: src/features/migrations/parts.tsx
 msgid "Remove history"
 msgstr "Remove history"
@@ -7523,6 +7996,10 @@ msgstr "Reopen"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Replace"
 msgstr "Replace"
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Replace the headers"
+msgstr "Replace the headers"
 
 #: src/features/broadcasts/Report.tsx
 msgid "replied"
@@ -7670,19 +8147,44 @@ msgstr "Reported as spam"
 msgid "Reports"
 msgstr "Reports"
 
+#: src/features/monitoring/text.ts
+msgid "Requests with status 400 to 499 above a share of all requests."
+msgstr "Requests with status 400 to 499 above a share of all requests."
+
+#: src/features/monitoring/text.ts
+msgid "Requests with status 500 to 599, or no answer, above a share of all requests."
+msgstr "Requests with status 500 to 599, or no answer, above a share of all requests."
+
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
 msgstr "Reset to defaults"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Resolved"
+msgstr "Resolved"
+
+#: src/features/monitoring/CheckPage.tsx
+msgid "Response time"
+msgstr "Response time"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
 msgstr "Restore"
 
+#: src/features/monitoring/CheckPage.tsx
+msgid "Result"
+msgstr "Result"
+
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/monitoring/CheckPage.tsx
 msgid "Resume"
 msgstr "Resume"
+
+#: src/features/monitoring/CheckPage.tsx
+msgid "retried"
+msgstr "retried"
 
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -7776,9 +8278,21 @@ msgstr "Rotate the public key?"
 msgid "Rotate the signing secret?"
 msgstr "Rotate the signing secret?"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "Route"
+msgstr "Route"
+
+#: src/features/monitoring/text.ts
+msgid "Route went silent"
+msgstr "Route went silent"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Route your mail to Yuva"
 msgstr "Route your mail to Yuva"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Rule on"
+msgstr "Rule on"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Run a check"
@@ -7818,6 +8332,8 @@ msgstr "Saturday"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/monitoring/Alerts.tsx
+#: src/features/monitoring/CheckForm.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
 #: src/features/settings/channels/ChannelDialog.tsx
@@ -7855,6 +8371,10 @@ msgstr "Saving removes the broadcast account; broadcasts then use the account ab
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Saving removes the stored password."
 msgstr "Saving removes the stored password."
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Saving replaces every header the check sends now."
+msgstr "Saving replaces every header the check sends now."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Saving…"
@@ -8288,6 +8808,15 @@ msgstr "Server settings"
 msgid "Server URL"
 msgstr "Server URL"
 
+#: src/features/monitoring/Alerts.tsx
+#: src/features/monitoring/CheckForm.tsx
+msgid "Service"
+msgstr "Service"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Service {service}"
+msgstr "Service {service}"
+
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -8570,6 +9099,14 @@ msgstr "Signing secret"
 msgid "Since"
 msgstr "Since"
 
+#: src/features/monitoring/CheckPage.tsx
+msgid "since {from}"
+msgstr "since {from}"
+
+#: src/features/monitoring/CheckPage.tsx
+msgid "since {since}"
+msgstr "since {since}"
+
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Since {since}"
 msgstr "Since {since}"
@@ -8674,6 +9211,10 @@ msgstr "Someone on several lists gets one mail, under the first list they are on
 #: src/components/common/text.ts
 msgid "Someone subscribed to a mailing list"
 msgstr "Someone subscribed to a mailing list"
+
+#: src/features/monitoring/text.ts
+msgid "Something else went wrong"
+msgstr "Something else went wrong"
 
 #: src/features/contact/ContactNotes.tsx
 msgid "Something the team should know…"
@@ -8794,10 +9335,18 @@ msgstr "STARTTLS (port 587)"
 msgid "State"
 msgstr "State"
 
+#: src/features/monitoring/CheckPage.tsx
+msgid "State history"
+msgstr "State history"
+
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
 msgstr "Status"
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Statuses that count as up"
+msgstr "Statuses that count as up"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Stay under your provider’s sending rate. Support replies are never slowed down by a broadcast."
@@ -9027,6 +9576,10 @@ msgstr "Team right now"
 msgid "teammate@company.com"
 msgstr "teammate@company.com"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "Tell"
+msgstr "Tell"
+
 #: src/features/broadcasts/Composer.tsx
 msgid "Test"
 msgstr "Test"
@@ -9088,6 +9641,10 @@ msgstr "The address bounced or complained"
 msgid "The address your customers write to. Conversations go into the inbox whose e-mail channel receives it, unless the Map step sends a brand or mailbox elsewhere."
 msgstr "The address your customers write to. Conversations go into the inbox whose e-mail channel receives it, unless the Map step sends a brand or mailbox elsewhere."
 
+#: src/features/monitoring/text.ts
+msgid "The Apdex score fell below the threshold."
+msgstr "The Apdex score fell below the threshold."
+
 #: src/features/setup/previews.tsx
 msgid "The app logs me out after the update."
 msgstr "The app logs me out after the update."
@@ -9107,6 +9664,10 @@ msgstr "The broadcast was cancelled"
 #: src/features/settings/notifications/TabAlertsSection.tsx
 msgid "The browser has to allow desktop notifications first; until then only the sound plays."
 msgstr "The browser has to allow desktop notifications first; until then only the sound plays."
+
+#: src/features/monitoring/Alerts.tsx
+msgid "The certificate had {v} days left."
+msgstr "The certificate had {v} days left."
 
 #: src/components/common/text.ts
 msgid "The channel already has a DKIM key. Delete it before creating another."
@@ -9139,6 +9700,18 @@ msgstr "The chat shows when you usually reply"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The chat shows who is available and typing"
 msgstr "The chat shows who is available and typing"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "The check was down."
+msgstr "The check was down."
+
+#: src/features/monitoring/Alerts.tsx
+msgid "The check’s"
+msgstr "The check’s"
+
+#: src/features/monitoring/Uptime.tsx
+msgid "The checks linked to this property, with their last 7 days."
+msgstr "The checks linked to this property, with their last 7 days."
 
 #: src/features/auth/SignInForm.tsx
 msgid "The code is wrong or has expired."
@@ -9336,6 +9909,10 @@ msgstr "The inbox could not be opened read-only."
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 
+#: src/components/common/text.ts
+msgid "The interval is shorter than this server allows."
+msgstr "The interval is shorter than this server allows."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
@@ -9348,9 +9925,21 @@ msgstr "The key sees only these inboxes and cannot manage inboxes, webhooks or t
 msgid "The key stops working at the end of this day."
 msgstr "The key stops working at the end of this day."
 
+#: src/features/monitoring/text.ts
+msgid "The keyword check failed"
+msgstr "The keyword check failed"
+
 #: src/features/settings/channels/ChannelDialog.tsx
 msgid "The kind cannot be changed later."
 msgstr "The kind cannot be changed later."
+
+#: src/features/monitoring/text.ts
+msgid "The last 15 minutes had at least three times the requests of the same 15 minutes over the week before."
+msgstr "The last 15 minutes had at least three times the requests of the same 15 minutes over the week before."
+
+#: src/features/monitoring/text.ts
+msgid "The last 15 minutes had at most half the requests of the same 15 minutes over the week before."
+msgstr "The last 15 minutes had at most half the requests of the same 15 minutes over the week before."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The last check could not send its test mail. Look at the channel’s SMTP settings."
@@ -9431,6 +10020,10 @@ msgstr "The migration continues where it stopped."
 #: src/components/common/text.ts
 msgid "The migration moved on in the meantime. Look at its state and try again."
 msgstr "The migration moved on in the meantime. Look at its state and try again."
+
+#: src/features/monitoring/text.ts
+msgid "The name did not resolve"
+msgstr "The name did not resolve"
 
 #: src/components/common/text.ts
 msgid "The number of conversations changed since you looked. Check it and confirm again."
@@ -9557,6 +10150,14 @@ msgstr "The server {host} answered."
 msgid "The server answered, but not as an IMAP server. Check the host and port."
 msgstr "The server answered, but not as an IMAP server. Check the host and port."
 
+#: src/features/monitoring/CheckForm.tsx
+msgid "The server calls an address on an interval and tells you when it stops answering as expected, and when it is back."
+msgstr "The server calls an address on an interval and tells you when it stops answering as expected, and when it is back."
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "The server calls it from its own network. Loopback, private, link-local and cloud metadata addresses are refused."
+msgstr "The server calls it from its own network. Loopback, private, link-local and cloud metadata addresses are refused."
+
 #: src/features/migrations/text.ts
 msgid "The server gave an answer Yuva did not expect. The details below show it."
 msgstr "The server gave an answer Yuva did not expect. The details below show it."
@@ -9564,6 +10165,10 @@ msgstr "The server gave an answer Yuva did not expect. The details below show it
 #: src/features/migrations/text.ts
 msgid "The server offers no STARTTLS. Use TLS on port 993 instead."
 msgstr "The server offers no STARTTLS. Use TLS on port 993 instead."
+
+#: src/components/common/text.ts
+msgid "The server will not call this address: it is a loopback, private, link-local or cloud metadata address, or it names a user and password."
+msgstr "The server will not call this address: it is a loopback, private, link-local or cloud metadata address, or it names a user and password."
 
 #: src/features/migrations/text.ts
 msgid "The server's certificate is not valid for {host}. If it is your own server with its own certificate, you can trust it below."
@@ -9638,6 +10243,10 @@ msgstr "The test still goes only to the members you picked, never to the contact
 msgid "The test stopped at a step."
 msgstr "The test stopped at a step."
 
+#: src/features/monitoring/text.ts
+msgid "The TLS handshake or certificate failed"
+msgstr "The TLS handshake or certificate failed"
+
 #: src/features/migrations/DoneStep.tsx
 msgid "The uploaded file is deleted when the migration ends. Yuva keeps only what it imported."
 msgstr "The uploaded file is deleted when the migration ends. Yuva keeps only what it imported."
@@ -9654,6 +10263,10 @@ msgstr "The user name is your iCloud address without @icloud.com."
 #: src/features/conversation/messages/Thread.tsx
 msgid "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
 msgstr "The visitor typed {0} in the chat and has not confirmed it yet. This reply came from that address, so it may not be from the visitor."
+
+#: src/features/monitoring/Alerts.tsx
+msgid "The whole API"
+msgstr "The whole API"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The workspace may not send broadcasts for now."
@@ -9829,6 +10442,10 @@ msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the
 msgstr "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
 
 #: src/components/common/text.ts
+msgid "This host has as many uptime checks as one host may have."
+msgstr "This host has as many uptime checks as one host may have."
+
+#: src/components/common/text.ts
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox already has a list with this name."
 msgstr "This inbox already has a list with this name."
@@ -9931,6 +10548,10 @@ msgstr "This migration has ended, so nothing more can be uploaded. Start a new o
 msgid "This month"
 msgstr "This month"
 
+#: src/features/monitoring/CheckPage.tsx
+msgid "This part could not be shown. Reload the page to try again."
+msgstr "This part could not be shown. Reload the page to try again."
+
 #: src/components/common/text.ts
 msgid "This person unsubscribed from everything, reported a mail as spam or had their data erased, so the team cannot add them again."
 msgstr "This person unsubscribed from everything, reported a mail as spam or had their data erased, so the team cannot add them again."
@@ -9954,6 +10575,10 @@ msgstr "This request expired or was already used. Start connecting again from th
 #: src/features/oauth/ConsentPage.tsx
 msgid "This request has ended"
 msgstr "This request has ended"
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "This server allows {shortest} at the shortest."
+msgstr "This server allows {shortest} at the shortest."
 
 #: src/components/common/text.ts
 msgid "This server does not offer imports from this kind of mailbox."
@@ -10008,8 +10633,16 @@ msgid "This window lost the page that opened it. Close it and sign in again from
 msgstr "This window lost the page that opened it. Close it and sign in again from {host}."
 
 #: src/components/common/text.ts
+msgid "This workspace has as many alert rules as it may. Delete one to add another."
+msgstr "This workspace has as many alert rules as it may. Delete one to add another."
+
+#: src/components/common/text.ts
 msgid "This workspace has as many broadcasts as allowed. Delete old ones first."
 msgstr "This workspace has as many broadcasts as allowed. Delete old ones first."
+
+#: src/components/common/text.ts
+msgid "This workspace has as many uptime checks as it may. Delete one to add another."
+msgstr "This workspace has as many uptime checks as it may. Delete one to add another."
 
 #: src/components/common/text.ts
 msgid "This workspace may not send broadcasts for now."
@@ -10038,6 +10671,10 @@ msgstr "Threads of only your team's mail"
 #: src/features/migrations/ChooseStep.tsx
 msgid "Threads whose last message is on or after"
 msgstr "Threads whose last message is on or after"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Threshold"
+msgstr "Threshold"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "through its own broadcast account"
@@ -10076,6 +10713,14 @@ msgstr "Time"
 #: src/features/setup/NameStep.tsx
 msgid "Time zone"
 msgstr "Time zone"
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Timeout in seconds"
+msgstr "Timeout in seconds"
+
+#: src/features/monitoring/CheckPage.tsx
+msgid "Timings"
+msgstr "Timings"
 
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -10136,13 +10781,29 @@ msgstr "Tomorrow at {at}"
 msgid "Too many attempts. Wait a little and try again."
 msgstr "Too many attempts. Wait a little and try again."
 
+#: src/features/monitoring/text.ts
+msgid "Too many redirects, or a redirect that is not allowed"
+msgstr "Too many redirects, or a redirect that is not allowed"
+
 #: src/features/auth/CreateWorkspace.tsx
 msgid "Too many workspaces were created from your network today. Try again tomorrow."
 msgstr "Too many workspaces were created from your network today. Try again tomorrow."
 
+#: src/features/monitoring/CheckPage.tsx
+msgid "Total"
+msgstr "Total"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "tr, en-GB"
 msgstr "tr, en-GB"
+
+#: src/features/monitoring/text.ts
+msgid "Traffic drop"
+msgstr "Traffic drop"
+
+#: src/features/monitoring/text.ts
+msgid "Traffic spike"
+msgstr "Traffic spike"
 
 #: src/features/migrations/parts.tsx
 msgid "Trash"
@@ -10386,9 +11047,17 @@ msgstr "Until they click the link they stay waiting for confirmation and get no 
 msgid "Unverified sender"
 msgstr "Unverified sender"
 
+#: src/features/monitoring/text.ts
+msgid "Up"
+msgstr "Up"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "Up to 5, such as Authorization. Values are stored encrypted and never shown again."
+msgstr "Up to 5, such as Authorization. Values are stored encrypted and never shown again."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Updating"
@@ -10430,10 +11099,25 @@ msgstr "Uploaded {step}%"
 msgid "Uploading…"
 msgstr "Uploading…"
 
+#: src/features/monitoring/CheckForm.tsx
+msgid "Uptime check"
+msgstr "Uptime check"
+
+#: src/app/Palette.tsx
+#: src/features/monitoring/MonitoringColumn.tsx
+#: src/features/monitoring/Uptime.tsx
+msgid "Uptime checks"
+msgstr "Uptime checks"
+
+#: src/features/monitoring/MonitoringRoutes.tsx
+msgid "Uptime checks call an address from the server on an interval, time each answer and alert you when it goes down and when it is back."
+msgstr "Uptime checks call an address from the server on an interval, time each answer and alert you when it goes down and when it is back."
+
 #: src/components/common/text.ts
 msgid "Urgent"
 msgstr "Urgent"
 
+#: src/features/monitoring/CheckForm.tsx
 #: src/features/settings/webhooks/WebhookDialog.tsx
 msgid "URL"
 msgstr "URL"
@@ -10629,6 +11313,7 @@ msgstr "Visits to your sites with utm_campaign={campaign} since sending started,
 
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/monitoring/text.ts
 msgid "Waiting"
 msgstr "Waiting"
 
@@ -10815,6 +11500,8 @@ msgid "What you write often"
 msgstr "What you write often"
 
 #: src/features/broadcasts/ReviewPanel.tsx
+#: src/features/monitoring/Alerts.tsx
+#: src/features/monitoring/CheckPage.tsx
 msgid "When"
 msgstr "When"
 
@@ -10934,6 +11621,10 @@ msgstr "Who sends, and what about?"
 msgid "Who should take it?"
 msgstr "Who should take it?"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "Window, minutes"
+msgstr "Window, minutes"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Windows-1252 (Western Excel)"
 msgstr "Windows-1252 (Western Excel)"
@@ -10945,6 +11636,10 @@ msgstr "Windows-1254 (Turkish Excel)"
 #: src/features/conversation/ConversationStatus.tsx
 msgid "With {name}"
 msgstr "With {name}"
+
+#: src/features/monitoring/CheckForm.tsx
+msgid "With 0 the redirect’s own status is judged."
+msgstr "With 0 the redirect’s own status is judged."
 
 #: src/features/setup/InstallStep.tsx
 msgid "With Cloudflare Email Routing, deploy the Email Worker from edge/ of the Yuva repository and add a routing rule for the address with the action Send to a Worker. Any other mail server can post each message, signed with YUVA_INGRESS_SECRET, to:"
@@ -10967,6 +11662,10 @@ msgstr "Withdraw"
 msgid "Withdraw the invite for {0}"
 msgstr "Withdraw the invite for {0}"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "Within {days} days"
+msgstr "Within {days} days"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Within {m} minutes"
 msgstr "Within {m} minutes"
@@ -10986,6 +11685,10 @@ msgstr "Within an hour"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Within minutes"
 msgstr "Within minutes"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Within the check’s warning days"
+msgstr "Within the check’s warning days"
 
 #: src/features/broadcasts/ListForm.tsx
 msgid "Without a confirmation anyone can type someone else's address into your form, and you cannot show that the owner of the address agreed. Keep it on unless your forms are only shown to people whose address you have already verified."

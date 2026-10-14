@@ -15,6 +15,8 @@ import { EventsView } from "@/features/analytics/Events"
 import { FunnelsView } from "@/features/analytics/Funnels"
 import { GoalsView } from "@/features/analytics/Goals"
 import { ApiSettingsView } from "@/features/analytics/ApiSettings"
+import { PropertyAlerts } from "@/features/monitoring/Alerts"
+import { PropertyUptime } from "@/features/monitoring/Uptime"
 import { ApiConsumers, ApiOverview, ApiRoutePage, ApiRoutes } from "@/features/analytics/Monitor"
 import { RequestsBanner } from "@/features/analytics/MonitorParts"
 import { InstallPropertyPage, NewPropertyPage, WaitForFirstEvent } from "@/features/analytics/NewProperty"
@@ -50,7 +52,7 @@ const VIEWS = [
 ] as const
 type ViewKey = (typeof VIEWS)[number]
 
-const API_VIEWS = ["overview", "routes", "consumers", "settings"] as const
+const API_VIEWS = ["overview", "routes", "consumers", "uptime", "alerts", "settings"] as const
 type ApiViewKey = (typeof API_VIEWS)[number]
 
 function AnalyticsHome() {
@@ -118,9 +120,10 @@ function PropertyLayout() {
     )
   }
   if (p.kind === "api") return <ApiLayout property={p} />
-  if ((last as string | undefined) === "routes" || (last as string | undefined) === "consumers")
+  if (["routes", "consumers", "uptime"].includes(last as string))
     return <Navigate to={`/analytics/${p.id}${search}`} replace />
-  const controls = current !== "realtime" && current !== "settings" && current !== "retention"
+  const controls =
+    current !== "realtime" && current !== "settings" && current !== "retention" && (last as string) !== "alerts"
   return (
     <Pane wide testId="analytics-property" className="gap-5" key={p.id}>
       <PropertyHeader property={p} />
@@ -144,6 +147,15 @@ function PropertyLayout() {
       <Outlet context={{ property: p }} />
     </Pane>
   )
+}
+
+function UptimeFor() {
+  return <PropertyUptime propertyId={useCurrentProperty().id} />
+}
+
+function AlertsFor() {
+  const p = useCurrentProperty()
+  return <PropertyAlerts propertyId={p.id} api={p.kind === "api"} />
 }
 
 function SettingsFor() {
@@ -201,6 +213,8 @@ function ApiLayout({ property: p }: { property: AnalyticsProperty }) {
     overview: t`Overview`,
     routes: t`Routes`,
     consumers: t`Consumers`,
+    uptime: t`Uptime`,
+    alerts: t`Alerts`,
     settings: t`Settings`,
   }
   return (
@@ -242,6 +256,8 @@ export default function AnalyticsRoutes() {
         <Route path="routes" element={<ApiRoutes />} />
         <Route path="routes/:method/*" element={<ApiRoutePage />} />
         <Route path="consumers" element={<ApiConsumers />} />
+        <Route path="uptime" element={<UptimeFor />} />
+        <Route path="alerts" element={<AlertsFor />} />
         <Route path="*" element={<Navigate to=".." replace />} />
       </Route>
     </Routes>

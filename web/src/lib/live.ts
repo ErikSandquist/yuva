@@ -646,5 +646,12 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
       void qc.invalidateQueries({ queryKey: [...data, "annotations"] })
       return
     }
+    case "monitor.alert": {
+      void qc.invalidateQueries({ queryKey: keys.monitoring(ctx.ws) })
+      if (event.data.property) {
+        void qc.invalidateQueries({ queryKey: [...keys.analyticsData(ctx.ws, event.data.property.id), "annotations"] })
+      }
+      return
+    }
   }
 }

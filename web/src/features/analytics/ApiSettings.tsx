@@ -16,6 +16,7 @@ import { InferredTag } from "@/features/analytics/MonitorParts"
 import { hostOnly, splitLines, useZones } from "@/features/analytics/NewProperty"
 import { useCurrentProperty } from "@/features/analytics/parts"
 import { useApiRoutes, useUpdateRoute, useUpdateProperty } from "@/features/analytics/queries"
+import { NotifyMe } from "@/features/analytics/Alerts"
 import { DeletePropertySection, RuleRows } from "@/features/analytics/Settings"
 import { formatInZone } from "@/features/analytics/Sharing"
 import { useAnalyticsText, valueText } from "@/features/analytics/text"
@@ -24,7 +25,7 @@ import type { AnalyticsPathRule, AnalyticsPlatform, AnalyticsProperty } from "@/
 import { useSession } from "@/lib/session"
 import { useInboxes } from "@/lib/workspace"
 
-type Tab = "general" | "routes" | "install" | "data"
+type Tab = "general" | "routes" | "reports" | "install" | "data"
 
 const VIEW_PARAMS = ["period"]
 
@@ -287,12 +288,13 @@ export function ApiSettingsView() {
   const { canManage } = useSession()
   const p = useCurrentProperty()
   const [params, setParams] = useSearchParams()
-  const tabs: Tab[] = canManage ? ["general", "routes", "install", "data"] : ["install", "routes"]
+  const tabs: Tab[] = canManage ? ["general", "routes", "reports", "install", "data"] : ["reports", "install", "routes"]
   const raw = params.get("tab") as Tab | null
   const tab = raw && tabs.includes(raw) ? raw : tabs[0]!
   const names: Record<Tab, string> = {
     general: t`General`,
     routes: t`Routes`,
+    reports: t`Reports`,
     install: t`Install`,
     data: t`Data`,
   }
@@ -323,6 +325,7 @@ export function ApiSettingsView() {
           {canManage && <PathRules p={p} />}
         </div>
       )}
+      {tab === "reports" && <NotifyMe p={p} />}
       {tab === "install" && (
         <div className="flex flex-col gap-5 rounded-2xl border bg-card p-4">
           <ApiInstallSnippets property={p} />

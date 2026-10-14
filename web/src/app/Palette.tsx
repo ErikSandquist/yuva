@@ -21,6 +21,7 @@ import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { focusListSearch, setListQuery } from "@/features/inbox/listSearch"
 import { useConversations } from "@/features/inbox/queries"
 import { useAnalyticsVisible } from "@/features/analytics/properties"
+import { useMonitoringVisible } from "@/features/monitoring/queries"
 import { useSession } from "@/lib/session"
 import { useChannelMap, useInboxes } from "@/lib/workspace"
 import { setTheme } from "@/lib/theme"
@@ -34,6 +35,7 @@ function useItems(open: boolean): Item[] {
   const { pathname } = useLocation()
   const { canManage } = useSession()
   const analytics = useAnalyticsVisible()
+  const monitoring = useMonitoringVisible()
   const { openShortcuts } = useShell()
   const inboxList = useInboxes().data
   const channels = useChannelMap()
@@ -97,6 +99,7 @@ function useItems(open: boolean): Item[] {
     go(t`Discussion posts waiting for approval`, "/docs/discussions/queue")
     go(t`Broadcasts`, "/broadcasts", keyLabel(SHORTCUTS.broadcasts))
     if (analytics) go(t`Analytics`, "/analytics", keyLabel(SHORTCUTS.analytics))
+    if (monitoring) go(t`Uptime checks`, "/monitoring", keyLabel(SHORTCUTS.monitoring))
     go(t`Mailing lists`, "/broadcasts/lists")
     go(t`E-mail designs`, "/broadcasts/designs")
     go(t`Settings`, "/settings", [mod, ","])
@@ -111,6 +114,7 @@ function useItems(open: boolean): Item[] {
     if (canManage) {
       go(t`Add an inbox`, "/setup")
       if (analytics) go(t`Add an analytics property`, "/analytics/new")
+      if (monitoring) go(t`Add an uptime check`, "/monitoring/checks/new")
       go(t`API keys`, "/settings/api-keys")
       go(t`Webhooks`, "/settings/webhooks")
       go(t`Workspace`, "/settings/workspace")
@@ -133,6 +137,7 @@ function useItems(open: boolean): Item[] {
     setFilter,
     canManage,
     analytics,
+    monitoring,
     pathname,
   ])
 }

@@ -91,7 +91,7 @@ function when(a: AnalyticsAlert, locale: string, timeZone: string) {
   }
 }
 
-function NotifyMe({ p }: { p: AnalyticsProperty }) {
+export function NotifyMe({ p }: { p: AnalyticsProperty }) {
   const { t } = useLingui()
   const { me } = useSession()
   const text = useAlertText()
@@ -172,34 +172,36 @@ function NotifyMe({ p }: { p: AnalyticsProperty }) {
               )}
             </div>
           </Card>
-          <Card data-testid="analytics-alert-kinds">
-            <span className="text-body font-medium">
-              <Trans>Alerts</Trans>
-            </span>
-            {ALERT_KINDS.map((k) => {
-              const on = s.alerts.includes(k)
-              const help = text.help[k]
-              const off = k === "support_load" && !p.inbox_id
-              return (
-                <ToggleRow key={k} title={text.kind[k]} hint={off ? t`Needs a linked inbox. ${help}` : help}>
-                  <Switch
-                    checked={on}
-                    disabled={update.isPending}
-                    onCheckedChange={(v) =>
-                      update.mutate({
-                        alerts: ALERT_KINDS.filter((x) => (x === k ? v : s.alerts.includes(x))),
-                      })
-                    }
-                    aria-label={text.kind[k]}
-                    data-testid={`alert-kind-${k}`}
-                  />
-                </ToggleRow>
-              )
-            })}
-            <p className="text-small text-faint">
-              <Trans>Checked every hour. Each alert is sent once and also shows as a note on the chart.</Trans>
-            </p>
-          </Card>
+          {p.kind !== "api" && (
+            <Card data-testid="analytics-alert-kinds">
+              <span className="text-body font-medium">
+                <Trans>Alerts</Trans>
+              </span>
+              {ALERT_KINDS.map((k) => {
+                const on = s.alerts.includes(k)
+                const help = text.help[k]
+                const off = k === "support_load" && !p.inbox_id
+                return (
+                  <ToggleRow key={k} title={text.kind[k]} hint={off ? t`Needs a linked inbox. ${help}` : help}>
+                    <Switch
+                      checked={on}
+                      disabled={update.isPending}
+                      onCheckedChange={(v) =>
+                        update.mutate({
+                          alerts: ALERT_KINDS.filter((x) => (x === k ? v : s.alerts.includes(x))),
+                        })
+                      }
+                      aria-label={text.kind[k]}
+                      data-testid={`alert-kind-${k}`}
+                    />
+                  </ToggleRow>
+                )
+              })}
+              <p className="text-small text-faint">
+                <Trans>Checked every hour. Each alert is sent once and also shows as a note on the chart.</Trans>
+              </p>
+            </Card>
+          )}
           <ErrorLine error={update.error} />
         </>
       )}

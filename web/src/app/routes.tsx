@@ -44,6 +44,7 @@ const GalleryPage = lazy(() => import("@/features/designs/GalleryPage"))
 const DesignerPage = lazy(() => import("@/features/designs/designer/DesignerPage"))
 const AnalyticsRoutes = lazy(() => import("@/features/analytics/AnalyticsRoutes"))
 const SharePage = lazy(() => import("@/features/analytics/SharePage"))
+const MonitoringRoutes = lazy(() => import("@/features/monitoring/MonitoringRoutes"))
 
 function Loading() {
   return <div className="flex-1 bg-background" data-testid="route-loading" />
@@ -123,6 +124,14 @@ export function AppRoutes() {
             element={
               <Suspense fallback={<Loading />}>
                 <AnalyticsRoutes />
+              </Suspense>
+            }
+          />
+          <Route
+            path="monitoring/*"
+            element={
+              <Suspense fallback={<Loading />}>
+                <MonitoringRoutes />
               </Suspense>
             }
           />

@@ -107,6 +107,17 @@ export function useAnalyticsText() {
       response_size_p50: t`Response size p50`,
       response_size_p95: t`Response size p95`,
       latency_bands: t`Latency heatmap`,
+      runs: t`Runs`,
+      failures: t`Failed runs`,
+      up: t`Up`,
+      uptime: t`Uptime`,
+      downtime: t`Downtime`,
+      response_time_p50: t`Response time p50`,
+      response_time_p95: t`Response time p95`,
+      response_time_p99: t`Response time p99`,
+      avg_response_time: t`Average response time`,
+      ttfb: t`Time to first byte`,
+      cert_days_left: t`Certificate days left`,
     } satisfies Record<AnalyticsMetric, string>,
     metricHelp: {
       visitors: t`Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again.`,
@@ -160,6 +171,17 @@ export function useAnalyticsText() {
       response_size_p50: t`Half of the responses were at most this large.`,
       response_size_p95: t`95 out of 100 responses were at most this large.`,
       latency_bands: t`Requests by how long they took, in bands that double in width.`,
+      runs: t`Runs of the checks that were counted.`,
+      failures: t`Counted runs that failed.`,
+      up: t`Checks whose last counted run succeeded.`,
+      uptime: t`Share of the watched time the check was not down.`,
+      downtime: t`How long the check was down.`,
+      response_time_p50: t`Half of the answered runs took at most this long.`,
+      response_time_p95: t`95 out of 100 answered runs took at most this long.`,
+      response_time_p99: t`99 out of 100 answered runs took at most this long.`,
+      avg_response_time: t`The mean time an answered run took.`,
+      ttfb: t`The mean time until the answer’s first byte.`,
+      cert_days_left: t`The fewest days until a certificate expires.`,
     } satisfies Record<AnalyticsMetric, string>,
     dimension: {
       page: words.page,
@@ -197,6 +219,7 @@ export function useAnalyticsText() {
       api_version: t`API version`,
       service: t`Service`,
       consumer: t`Consumer`,
+      check: t`Check`,
     } satisfies Record<AnalyticsFilterDimension, string>,
     event: {
       outbound_click: t`Outbound link`,
@@ -402,6 +425,19 @@ export function formatMetric(metric: AnalyticsMetric, v: number | undefined, loc
     case "p99":
     case "avg_duration":
       return millis(v, locale)
+    case "uptime":
+      return new Intl.NumberFormat(locale, {
+        style: "percent",
+        maximumFractionDigits: v >= 99 && v < 100 ? 3 : 2,
+      }).format(v / 100)
+    case "downtime":
+      return seconds(v, locale)
+    case "response_time_p50":
+    case "response_time_p95":
+    case "response_time_p99":
+    case "avg_response_time":
+    case "ttfb":
+      return millis(v, locale)
     case "apdex":
       return new Intl.NumberFormat(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(v)
     case "request_bytes":
@@ -453,6 +489,13 @@ export function lowerIsBetter(metric: AnalyticsMetric) {
       "p99",
       "avg_duration",
       "max_duration",
+      "failures",
+      "downtime",
+      "response_time_p50",
+      "response_time_p95",
+      "response_time_p99",
+      "avg_response_time",
+      "ttfb",
     ].includes(metric)
   )
 }

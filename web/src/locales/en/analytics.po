@@ -166,12 +166,20 @@ msgid "90 out of 100 requests took at most this long."
 msgstr "90 out of 100 requests took at most this long."
 
 #: src/features/analytics/text.ts
+msgid "95 out of 100 answered runs took at most this long."
+msgstr "95 out of 100 answered runs took at most this long."
+
+#: src/features/analytics/text.ts
 msgid "95 out of 100 requests took at most this long."
 msgstr "95 out of 100 requests took at most this long."
 
 #: src/features/analytics/text.ts
 msgid "95 out of 100 responses were at most this large."
 msgstr "95 out of 100 responses were at most this large."
+
+#: src/features/analytics/text.ts
+msgid "99 out of 100 answered runs took at most this long."
+msgstr "99 out of 100 answered runs took at most this long."
 
 #: src/features/analytics/text.ts
 msgid "99 out of 100 requests took at most this long."
@@ -357,6 +365,7 @@ msgid "AI assistants"
 msgstr "AI assistants"
 
 #: src/features/analytics/Alerts.tsx
+#: src/features/analytics/AnalyticsRoutes.tsx
 msgid "Alerts"
 msgstr "Alerts"
 
@@ -469,6 +478,10 @@ msgstr "Available until {expires}"
 msgid "Average duration"
 msgstr "Average duration"
 
+#: src/features/analytics/text.ts
+msgid "Average response time"
+msgstr "Average response time"
+
 #: src/features/analytics/Settings.tsx
 msgid "Bots"
 msgstr "Bots"
@@ -527,6 +540,10 @@ msgstr "Call it once in the browser. During server rendering it does nothing."
 msgid "Cancel"
 msgstr "Cancel"
 
+#: src/features/analytics/text.ts
+msgid "Certificate days left"
+msgstr "Certificate days left"
+
 #: src/features/analytics/Controls.tsx
 msgid "Change filter: {label}"
 msgstr "Change filter: {label}"
@@ -543,9 +560,17 @@ msgstr "Channel"
 msgid "Chat opened"
 msgstr "Chat opened"
 
+#: src/features/analytics/text.ts
+msgid "Check"
+msgstr "Check"
+
 #: src/features/analytics/Alerts.tsx
 msgid "Checked every hour. Each alert is sent once and also shows as a note on the chart."
 msgstr "Checked every hour. Each alert is sent once and also shows as a note on the chart."
+
+#: src/features/analytics/text.ts
+msgid "Checks whose last counted run succeeded."
+msgstr "Checks whose last counted run succeeded."
 
 #: src/features/analytics/Settings.tsx
 msgid "Children"
@@ -750,6 +775,10 @@ msgstr "Counted"
 msgid "Counted as"
 msgstr "Counted as"
 
+#: src/features/analytics/text.ts
+msgid "Counted runs that failed."
+msgstr "Counted runs that failed."
+
 #: src/features/analytics/Realtime.tsx
 msgid "Countries"
 msgstr "Countries"
@@ -806,14 +835,6 @@ msgstr "Day {period}"
 #: src/features/analytics/Exports.tsx
 msgid "Day by day"
 msgstr "Day by day"
-
-#: src/features/analytics/Monitor.tsx
-msgid "Day of the first request"
-msgstr "Day of the first request"
-
-#: src/features/analytics/Monitor.tsx
-msgid "Day of the last request"
-msgstr "Day of the last request"
 
 #: src/features/analytics/Retention.tsx
 msgid "Days"
@@ -992,6 +1013,10 @@ msgstr "Download"
 #: src/features/analytics/parts.tsx
 msgid "Download CSV"
 msgstr "Download CSV"
+
+#: src/features/analytics/text.ts
+msgid "Downtime"
+msgstr "Downtime"
 
 #: src/features/analytics/Settings.tsx
 msgid "Dropped"
@@ -1189,6 +1214,10 @@ msgid "Failed"
 msgstr "Failed"
 
 #: src/features/analytics/text.ts
+msgid "Failed runs"
+msgstr "Failed runs"
+
+#: src/features/analytics/text.ts
 msgid "Feedback"
 msgstr "Feedback"
 
@@ -1230,6 +1259,10 @@ msgstr "First month"
 #: src/features/analytics/text.ts
 msgid "First page or screen"
 msgstr "First page or screen"
+
+#: src/features/analytics/Monitor.tsx
+msgid "First request"
+msgstr "First request"
 
 #: src/features/analytics/text.ts
 msgid "First screen"
@@ -1342,6 +1375,10 @@ msgid "had an address removed"
 msgstr "had an address removed"
 
 #: src/features/analytics/text.ts
+msgid "Half of the answered runs took at most this long."
+msgstr "Half of the answered runs took at most this long."
+
+#: src/features/analytics/text.ts
 msgid "Half of the requests took at most this long."
 msgstr "Half of the requests took at most this long."
 
@@ -1399,17 +1436,13 @@ msgstr "Host names"
 msgid "Host or app"
 msgstr "Host or app"
 
-#: src/features/analytics/Monitor.tsx
-msgid "Hour of the first request"
-msgstr "Hour of the first request"
-
-#: src/features/analytics/Monitor.tsx
-msgid "Hour of the last request"
-msgstr "Hour of the last request"
-
 #: src/features/analytics/ApiSettings.tsx
 msgid "Hourly detail"
 msgstr "Hourly detail"
+
+#: src/features/analytics/text.ts
+msgid "How long the check was down."
+msgstr "How long the check was down."
 
 #: src/features/analytics/Install.tsx
 msgid "How to install"
@@ -1564,6 +1597,10 @@ msgstr "last opened {viewed}"
 msgid "Last page or screen"
 msgstr "Last page or screen"
 
+#: src/features/analytics/Monitor.tsx
+msgid "Last request"
+msgstr "Last request"
+
 #: src/features/analytics/ApiSettings.tsx
 msgid "Last request {seen}"
 msgstr "Last request {seen}"
@@ -1667,14 +1704,6 @@ msgstr "Middleware records every request the mux answers, with its route pattern
 #: src/features/analytics/Install.tsx
 msgid "Middleware records every request the mux answers, with its route pattern, status and duration, and sends them in batches. It needs an API key with the analytics:write scope from an owner or admin."
 msgstr "Middleware records every request the mux answers, with its route pattern, status and duration, and sends them in batches. It needs an API key with the analytics:write scope from an owner or admin."
-
-#: src/features/analytics/Monitor.tsx
-msgid "Minute of the first request"
-msgstr "Minute of the first request"
-
-#: src/features/analytics/Monitor.tsx
-msgid "Minute of the last request"
-msgstr "Minute of the last request"
 
 #: src/features/analytics/MonitorParts.tsx
 msgid "Minutes are not kept per consumer, country or app version. Remove that filter to see them."
@@ -2457,6 +2486,10 @@ msgstr "Render the component once, in the root layout. It renders nothing; useYu
 msgid "Report"
 msgstr "Report"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "Reports"
+msgstr "Reports"
+
 #: src/features/analytics/text.ts
 msgid "Request bodies"
 msgstr "Request bodies"
@@ -2522,6 +2555,18 @@ msgstr "Response size p50"
 msgid "Response size p95"
 msgstr "Response size p95"
 
+#: src/features/analytics/text.ts
+msgid "Response time p50"
+msgstr "Response time p50"
+
+#: src/features/analytics/text.ts
+msgid "Response time p95"
+msgstr "Response time p95"
+
+#: src/features/analytics/text.ts
+msgid "Response time p99"
+msgstr "Response time p99"
+
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Overview.tsx
 msgid "Retention"
@@ -2576,6 +2621,14 @@ msgstr "Rows"
 #: src/features/analytics/Exports.tsx
 msgid "Running"
 msgstr "Running"
+
+#: src/features/analytics/text.ts
+msgid "Runs"
+msgstr "Runs"
+
+#: src/features/analytics/text.ts
+msgid "Runs of the checks that were counted."
+msgstr "Runs of the checks that were counted."
 
 #: src/features/analytics/Annotations.tsx
 #: src/features/analytics/Controls.tsx
@@ -2688,6 +2741,10 @@ msgstr "Settings"
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"
 msgstr "Share links"
+
+#: src/features/analytics/text.ts
+msgid "Share of the watched time the check was not down."
+msgstr "Share of the watched time the check was not down."
 
 #: src/features/analytics/SharePage.tsx
 msgid "Shared with Yuva"
@@ -2846,6 +2903,10 @@ msgstr "The deepest point reached on the page, per view."
 msgid "The export failed on the server."
 msgstr "The export failed on the server."
 
+#: src/features/analytics/text.ts
+msgid "The fewest days until a certificate expires."
+msgstr "The fewest days until a certificate expires."
+
 #: src/features/analytics/Exports.tsx
 msgid "The file would be larger than 1 GiB. Export a shorter range."
 msgstr "The file would be larger than 1 GiB. Export a shorter range."
@@ -2893,6 +2954,14 @@ msgstr "The longest a single request took."
 #: src/features/analytics/text.ts
 msgid "The mean time a request took."
 msgstr "The mean time a request took."
+
+#: src/features/analytics/text.ts
+msgid "The mean time an answered run took."
+msgstr "The mean time an answered run took."
+
+#: src/features/analytics/text.ts
+msgid "The mean time until the answer’s first byte."
+msgstr "The mean time until the answer’s first byte."
 
 #: src/features/analytics/Install.tsx
 msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
@@ -3054,6 +3123,10 @@ msgstr "Time on page"
 msgid "Time the page was visible and in focus, per view."
 msgstr "Time the page was visible and in focus, per view."
 
+#: src/features/analytics/text.ts
+msgid "Time to first byte"
+msgstr "Time to first byte"
+
 #: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -3167,6 +3240,10 @@ msgstr "Unknown"
 msgid "Unmatched"
 msgstr "Unmatched"
 
+#: src/features/analytics/text.ts
+msgid "Up"
+msgstr "Up"
+
 #: src/features/analytics/MonitorParts.tsx
 msgid "up to {to}"
 msgstr "up to {to}"
@@ -3178,6 +3255,11 @@ msgstr "Up to 1,000 records per request, gzip allowed. Send route when your rout
 #: src/features/analytics/Install.tsx
 msgid "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
 msgstr "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/text.ts
+msgid "Uptime"
+msgstr "Uptime"
 
 #: src/features/analytics/MonitorParts.tsx
 msgid "Use the property’s"
@@ -3321,14 +3403,6 @@ msgstr "Website or app"
 #: src/features/analytics/Retention.tsx
 msgid "Week {period}"
 msgstr "Week {period}"
-
-#: src/features/analytics/Monitor.tsx
-msgid "Week of the first request"
-msgstr "Week of the first request"
-
-#: src/features/analytics/Monitor.tsx
-msgid "Week of the last request"
-msgstr "Week of the last request"
 
 #: src/features/analytics/Alerts.tsx
 msgid "Weekly"

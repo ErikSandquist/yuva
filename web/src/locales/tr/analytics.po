@@ -166,12 +166,20 @@ msgid "90 out of 100 requests took at most this long."
 msgstr "100 isteğin 90’ı en fazla bu kadar sürdü."
 
 #: src/features/analytics/text.ts
+msgid "95 out of 100 answered runs took at most this long."
+msgstr "Yanıt alınan 100 çalıştırmanın 95’i en fazla bu kadar sürdü."
+
+#: src/features/analytics/text.ts
 msgid "95 out of 100 requests took at most this long."
 msgstr "100 isteğin 95’i en fazla bu kadar sürdü."
 
 #: src/features/analytics/text.ts
 msgid "95 out of 100 responses were at most this large."
 msgstr "100 yanıtın 95’i en fazla bu büyüklükteydi."
+
+#: src/features/analytics/text.ts
+msgid "99 out of 100 answered runs took at most this long."
+msgstr "Yanıt alınan 100 çalıştırmanın 99’u en fazla bu kadar sürdü."
 
 #: src/features/analytics/text.ts
 msgid "99 out of 100 requests took at most this long."
@@ -357,6 +365,7 @@ msgid "AI assistants"
 msgstr "Yapay zekâ asistanları"
 
 #: src/features/analytics/Alerts.tsx
+#: src/features/analytics/AnalyticsRoutes.tsx
 msgid "Alerts"
 msgstr "Uyarılar"
 
@@ -469,6 +478,10 @@ msgstr "{expires} tarihine kadar açık"
 msgid "Average duration"
 msgstr "Ortalama süre"
 
+#: src/features/analytics/text.ts
+msgid "Average response time"
+msgstr "Ortalama yanıt süresi"
+
 #: src/features/analytics/Settings.tsx
 msgid "Bots"
 msgstr "Botlar"
@@ -527,6 +540,10 @@ msgstr "Tarayıcıda bir kez çağırın. Sunucu tarafında oluşturma sırasın
 msgid "Cancel"
 msgstr "Vazgeç"
 
+#: src/features/analytics/text.ts
+msgid "Certificate days left"
+msgstr "Sertifikanın kalan günleri"
+
 #: src/features/analytics/Controls.tsx
 msgid "Change filter: {label}"
 msgstr "Filtreyi değiştir: {label}"
@@ -543,9 +560,17 @@ msgstr "Kanal"
 msgid "Chat opened"
 msgstr "Sohbet açıldı"
 
+#: src/features/analytics/text.ts
+msgid "Check"
+msgstr "Denetim"
+
 #: src/features/analytics/Alerts.tsx
 msgid "Checked every hour. Each alert is sent once and also shows as a note on the chart."
 msgstr "Her saat kontrol edilir. Her uyarı bir kez gönderilir ve grafikte not olarak da görünür."
+
+#: src/features/analytics/text.ts
+msgid "Checks whose last counted run succeeded."
+msgstr "Son sayılan çalıştırması başarılı olan denetimler."
 
 #: src/features/analytics/Settings.tsx
 msgid "Children"
@@ -750,6 +775,10 @@ msgstr "Sayılan"
 msgid "Counted as"
 msgstr "Şöyle sayılır"
 
+#: src/features/analytics/text.ts
+msgid "Counted runs that failed."
+msgstr "Başarısız olan sayılmış çalıştırmalar."
+
 #: src/features/analytics/Realtime.tsx
 msgid "Countries"
 msgstr "Ülkeler"
@@ -806,14 +835,6 @@ msgstr "{period}. gün"
 #: src/features/analytics/Exports.tsx
 msgid "Day by day"
 msgstr "Gün gün"
-
-#: src/features/analytics/Monitor.tsx
-msgid "Day of the first request"
-msgstr "İlk isteğin günü"
-
-#: src/features/analytics/Monitor.tsx
-msgid "Day of the last request"
-msgstr "Son isteğin günü"
 
 #: src/features/analytics/Retention.tsx
 msgid "Days"
@@ -992,6 +1013,10 @@ msgstr "İndir"
 #: src/features/analytics/parts.tsx
 msgid "Download CSV"
 msgstr "CSV indir"
+
+#: src/features/analytics/text.ts
+msgid "Downtime"
+msgstr "Kesinti süresi"
 
 #: src/features/analytics/Settings.tsx
 msgid "Dropped"
@@ -1189,6 +1214,10 @@ msgid "Failed"
 msgstr "Başarısız"
 
 #: src/features/analytics/text.ts
+msgid "Failed runs"
+msgstr "Başarısız çalıştırmalar"
+
+#: src/features/analytics/text.ts
 msgid "Feedback"
 msgstr "Geri bildirim"
 
@@ -1230,6 +1259,10 @@ msgstr "İlk ay"
 #: src/features/analytics/text.ts
 msgid "First page or screen"
 msgstr "İlk sayfa ya da ekran"
+
+#: src/features/analytics/Monitor.tsx
+msgid "First request"
+msgstr "İlk istek"
 
 #: src/features/analytics/text.ts
 msgid "First screen"
@@ -1342,6 +1375,10 @@ msgid "had an address removed"
 msgstr "olaydan adres çıkarıldı"
 
 #: src/features/analytics/text.ts
+msgid "Half of the answered runs took at most this long."
+msgstr "Yanıt alınan çalıştırmaların yarısı en fazla bu kadar sürdü."
+
+#: src/features/analytics/text.ts
 msgid "Half of the requests took at most this long."
 msgstr "İsteklerin yarısı en fazla bu kadar sürdü."
 
@@ -1399,17 +1436,13 @@ msgstr "Ana makine adları"
 msgid "Host or app"
 msgstr "Alan adı ya da uygulama"
 
-#: src/features/analytics/Monitor.tsx
-msgid "Hour of the first request"
-msgstr "İlk isteğin saati"
-
-#: src/features/analytics/Monitor.tsx
-msgid "Hour of the last request"
-msgstr "Son isteğin saati"
-
 #: src/features/analytics/ApiSettings.tsx
 msgid "Hourly detail"
 msgstr "Saatlik ayrıntı"
+
+#: src/features/analytics/text.ts
+msgid "How long the check was down."
+msgstr "Denetimin ne kadar süre çalışmadığı."
 
 #: src/features/analytics/Install.tsx
 msgid "How to install"
@@ -1564,6 +1597,10 @@ msgstr "son açılış {viewed}"
 msgid "Last page or screen"
 msgstr "Son sayfa ya da ekran"
 
+#: src/features/analytics/Monitor.tsx
+msgid "Last request"
+msgstr "Son istek"
+
 #: src/features/analytics/ApiSettings.tsx
 msgid "Last request {seen}"
 msgstr "Son istek {seen}"
@@ -1667,14 +1704,6 @@ msgstr "Middleware, mux’ın yanıtladığı her isteği rota kalıbı, durumu 
 #: src/features/analytics/Install.tsx
 msgid "Middleware records every request the mux answers, with its route pattern, status and duration, and sends them in batches. It needs an API key with the analytics:write scope from an owner or admin."
 msgstr "Middleware, mux’ın yanıtladığı her isteği rota kalıbı, durumu ve süresiyle kaydeder ve toplu olarak gönderir. Bir sahip ya da yöneticiden analytics:write yetkili bir API anahtarı gerekir."
-
-#: src/features/analytics/Monitor.tsx
-msgid "Minute of the first request"
-msgstr "İlk isteğin dakikası"
-
-#: src/features/analytics/Monitor.tsx
-msgid "Minute of the last request"
-msgstr "Son isteğin dakikası"
 
 #: src/features/analytics/MonitorParts.tsx
 msgid "Minutes are not kept per consumer, country or app version. Remove that filter to see them."
@@ -2457,6 +2486,10 @@ msgstr "Bileşeni kök yerleşimde bir kez kullanın. Ekrana bir şey çizmez; a
 msgid "Report"
 msgstr "Rapor"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "Reports"
+msgstr "Raporlar"
+
 #: src/features/analytics/text.ts
 msgid "Request bodies"
 msgstr "İstek gövdeleri"
@@ -2522,6 +2555,18 @@ msgstr "Yanıt boyutu p50"
 msgid "Response size p95"
 msgstr "Yanıt boyutu p95"
 
+#: src/features/analytics/text.ts
+msgid "Response time p50"
+msgstr "Yanıt süresi p50"
+
+#: src/features/analytics/text.ts
+msgid "Response time p95"
+msgstr "Yanıt süresi p95"
+
+#: src/features/analytics/text.ts
+msgid "Response time p99"
+msgstr "Yanıt süresi p99"
+
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Overview.tsx
 msgid "Retention"
@@ -2576,6 +2621,14 @@ msgstr "Satırlar"
 #: src/features/analytics/Exports.tsx
 msgid "Running"
 msgstr "Hazırlanıyor"
+
+#: src/features/analytics/text.ts
+msgid "Runs"
+msgstr "Çalıştırmalar"
+
+#: src/features/analytics/text.ts
+msgid "Runs of the checks that were counted."
+msgstr "Denetimlerin sayılan çalıştırmaları."
 
 #: src/features/analytics/Annotations.tsx
 #: src/features/analytics/Controls.tsx
@@ -2688,6 +2741,10 @@ msgstr "Ayarlar"
 #: src/features/analytics/Sharing.tsx
 msgid "Share links"
 msgstr "Paylaşım bağlantıları"
+
+#: src/features/analytics/text.ts
+msgid "Share of the watched time the check was not down."
+msgstr "İzlenen sürenin, denetimin çalıştığı payı."
 
 #: src/features/analytics/SharePage.tsx
 msgid "Shared with Yuva"
@@ -2846,6 +2903,10 @@ msgstr "Görüntüleme başına sayfada inilen en derin nokta."
 msgid "The export failed on the server."
 msgstr "Dışa aktarma sunucuda başarısız oldu."
 
+#: src/features/analytics/text.ts
+msgid "The fewest days until a certificate expires."
+msgstr "Bir sertifikanın bitmesine kalan en az gün."
+
 #: src/features/analytics/Exports.tsx
 msgid "The file would be larger than 1 GiB. Export a shorter range."
 msgstr "Dosya 1 GiB'tan büyük olurdu. Daha kısa bir aralık dışa aktarın."
@@ -2893,6 +2954,14 @@ msgstr "Tek bir isteğin en uzun süresi."
 #: src/features/analytics/text.ts
 msgid "The mean time a request took."
 msgstr "Bir isteğin ortalama süresi."
+
+#: src/features/analytics/text.ts
+msgid "The mean time an answered run took."
+msgstr "Yanıt alınan bir çalıştırmanın ortalama süresi."
+
+#: src/features/analytics/text.ts
+msgid "The mean time until the answer’s first byte."
+msgstr "Yanıtın ilk baytına kadar geçen ortalama süre."
 
 #: src/features/analytics/Install.tsx
 msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
@@ -3054,6 +3123,10 @@ msgstr "Sayfada geçen süre"
 msgid "Time the page was visible and in focus, per view."
 msgstr "Görüntüleme başına sayfanın görünür ve odakta kaldığı süre."
 
+#: src/features/analytics/text.ts
+msgid "Time to first byte"
+msgstr "İlk bayta kadar süre"
+
 #: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -3167,6 +3240,10 @@ msgstr "Bilinmiyor"
 msgid "Unmatched"
 msgstr "Eşleşmeyen"
 
+#: src/features/analytics/text.ts
+msgid "Up"
+msgstr "Çalışıyor"
+
 #: src/features/analytics/MonitorParts.tsx
 msgid "up to {to}"
 msgstr "en fazla {to}"
@@ -3178,6 +3255,11 @@ msgstr "İstek başına en fazla 1.000 kayıt, gzip kullanılabilir. Yönlendiri
 #: src/features/analytics/Install.tsx
 msgid "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
 msgstr "İstek başına en fazla 100 olay; her biri ziyaretçinin IP adresi ve kullanıcı aracısıyla ya da kendi visitor_key değerinizle. Hiçbiri saklanmaz. Geçersiz diye dışarıda bırakılan olaylar sıralarıyla errors içinde döner; nelerin geldiğini Test olayları altında görün."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/text.ts
+msgid "Uptime"
+msgstr "Çalışma süresi"
 
 #: src/features/analytics/MonitorParts.tsx
 msgid "Use the property’s"
@@ -3321,14 +3403,6 @@ msgstr "Web sitesi ya da uygulama"
 #: src/features/analytics/Retention.tsx
 msgid "Week {period}"
 msgstr "{period}. hafta"
-
-#: src/features/analytics/Monitor.tsx
-msgid "Week of the first request"
-msgstr "İlk isteğin haftası"
-
-#: src/features/analytics/Monitor.tsx
-msgid "Week of the last request"
-msgstr "Son isteğin haftası"
 
 #: src/features/analytics/Alerts.tsx
 msgid "Weekly"
