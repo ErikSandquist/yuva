@@ -807,6 +807,14 @@ msgstr "{period}. gün"
 msgid "Day by day"
 msgstr "Gün gün"
 
+#: src/features/analytics/Monitor.tsx
+msgid "Day of the first request"
+msgstr "İlk isteğin günü"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Day of the last request"
+msgstr "Son isteğin günü"
+
 #: src/features/analytics/Retention.tsx
 msgid "Days"
 msgstr "Günler"
@@ -1223,10 +1231,6 @@ msgstr "İlk ay"
 msgid "First page or screen"
 msgstr "İlk sayfa ya da ekran"
 
-#: src/features/analytics/Monitor.tsx
-msgid "First request"
-msgstr "İlk istek"
-
 #: src/features/analytics/text.ts
 msgid "First screen"
 msgstr "İlk ekran"
@@ -1395,6 +1399,14 @@ msgstr "Ana makine adları"
 msgid "Host or app"
 msgstr "Alan adı ya da uygulama"
 
+#: src/features/analytics/Monitor.tsx
+msgid "Hour of the first request"
+msgstr "İlk isteğin saati"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Hour of the last request"
+msgstr "Son isteğin saati"
+
 #: src/features/analytics/ApiSettings.tsx
 msgid "Hourly detail"
 msgstr "Saatlik ayrıntı"
@@ -1552,10 +1564,6 @@ msgstr "son açılış {viewed}"
 msgid "Last page or screen"
 msgstr "Son sayfa ya da ekran"
 
-#: src/features/analytics/Monitor.tsx
-msgid "Last request"
-msgstr "Son istek"
-
 #: src/features/analytics/ApiSettings.tsx
 msgid "Last request {seen}"
 msgstr "Son istek {seen}"
@@ -1659,6 +1667,14 @@ msgstr "Middleware, mux’ın yanıtladığı her isteği rota kalıbı, durumu 
 #: src/features/analytics/Install.tsx
 msgid "Middleware records every request the mux answers, with its route pattern, status and duration, and sends them in batches. It needs an API key with the analytics:write scope from an owner or admin."
 msgstr "Middleware, mux’ın yanıtladığı her isteği rota kalıbı, durumu ve süresiyle kaydeder ve toplu olarak gönderir. Bir sahip ya da yöneticiden analytics:write yetkili bir API anahtarı gerekir."
+
+#: src/features/analytics/Monitor.tsx
+msgid "Minute of the first request"
+msgstr "İlk isteğin dakikası"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Minute of the last request"
+msgstr "Son isteğin dakikası"
 
 #: src/features/analytics/MonitorParts.tsx
 msgid "Minutes are not kept per consumer, country or app version. Remove that filter to see them."
@@ -2966,6 +2982,10 @@ msgstr "Bu bağlantı kullanılamıyor"
 msgid "This month"
 msgstr "Bu ay"
 
+#: src/features/analytics/MonitorParts.tsx
+msgid "This part could not be shown. Reload the page to try again."
+msgstr "Bu bölüm gösterilemedi. Yeniden denemek için sayfayı yenileyin."
+
 #: src/features/analytics/Funnels.tsx
 msgid "This property already has a funnel with this name."
 msgstr "Bu mülkte bu adla bir huni zaten var."
@@ -3301,6 +3321,14 @@ msgstr "Web sitesi ya da uygulama"
 #: src/features/analytics/Retention.tsx
 msgid "Week {period}"
 msgstr "{period}. hafta"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Week of the first request"
+msgstr "İlk isteğin haftası"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Week of the last request"
+msgstr "Son isteğin haftası"
 
 #: src/features/analytics/Alerts.tsx
 msgid "Weekly"

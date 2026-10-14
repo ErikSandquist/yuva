@@ -1,9 +1,9 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
 import { CircleSlashIcon, EyeOffIcon, GaugeIcon, LayersIcon, SigmaIcon } from "lucide-react"
-import { useState } from "react"
+import { Fragment, useState } from "react"
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, ReferenceLine, XAxis, YAxis } from "recharts"
 
-import { Notice, toast } from "@/components/common"
+import { ErrorBoundary, Notice, toast } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart"
@@ -408,10 +408,7 @@ export function SeriesChart({
   const labels = data.map((d) => String(d.at))
   const repeated = repeatedWalls(labels)
   const top = Math.max(0, ...data.flatMap((d) => [...metrics, "previous"].map((m) => Number(d[m]) || 0)))
-  const axisWidth = Math.max(
-    40,
-    ...[top, top * 1.25, top / 2].map((v) => formatMetric(first, v, i18n.locale).length * 7 + 12)
-  )
+  const axisWidth = axisWidthFor(first, top, i18n.locale)
   const config: ChartConfig = {
     ...Object.fromEntries(metrics.map((m) => [m, { label: text.metric[m], color: SERIES_COLOR[m] ?? "var(--brand)" }])),
     ...(view.compare ? { previous: { label: t`Compared range`, color: "var(--muted-foreground)" } } : {}),
@@ -537,6 +534,13 @@ export function SeriesChart({
       )}
     </Panel>
   )
+}
+
+export function axisWidthFor(metric: NumMetric, top: number, locale: string) {
+  const longest = Math.max(
+    ...Array.from({ length: 13 }, (_, i) => formatMetric(metric, (top * 1.25 * i) / 12, locale).length)
+  )
+  return Math.max(40, Math.ceil(longest * 7.5) + 14)
 }
 
 function DeployList({ items }: { items: (AnalyticsAnnotation & { at: string })[] }) {
@@ -778,10 +782,18 @@ export function RouteName({
     <span className={cn("flex min-w-0 items-center gap-x-2", wrap && "flex-wrap gap-y-1")}>
       {method && method !== ALL_METHODS && <MethodTag method={method} />}
       <span
-        className={cn("min-w-0", wrap ? "break-all" : "truncate", plain && "font-mono text-small")}
+        className={cn("min-w-0", wrap ? "break-words" : "truncate", plain && "font-mono text-small")}
         dir={plain ? "ltr" : undefined}
       >
-        {valueText(text, "route", route, i18n.locale)}
+        {wrap && plain
+          ? route.split("/").map((part, i) => (
+              <Fragment key={i}>
+                {i > 0 && "/"}
+                {i > 0 && <wbr />}
+                {part}
+              </Fragment>
+            ))
+          : valueText(text, "route", route, i18n.locale)}
       </span>
       {inferred && <InferredTag />}
     </span>
@@ -957,8 +969,8 @@ export function LatencyHeatmap({ base }: { base: AnalyticsFilter[] }) {
   const bands = max > 0 ? Array.from({ length: hi - lo + 1 }, (_, i) => hi - i) : []
   const short = grain === "time:minute" || grain === "time:hour"
   const fmt = new Intl.DateTimeFormat(i18n.locale, {
-    ...(short ? { timeStyle: "short" } : {}),
     ...(grain === "time:minute" ? {} : { day: "numeric", month: "short" }),
+    ...(short ? { hour: "numeric", minute: "2-digit" } : {}),
     timeZone: "UTC",
   })
   const labels = rows.map((r) => r.dimensions[0] ?? "")
@@ -1042,5 +1054,21 @@ export function LatencyHeatmap({ base }: { base: AnalyticsFilter[] }) {
         </div>
       )}
     </Panel>
+  )
+}
+
+export function Guard({ title, children }: { title?: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <ErrorBoundary
+      fallback={
+        <Panel title={title} testId="api-panel-failed">
+          <p className="px-2 py-6 text-center text-body text-faint">
+            <Trans>This part could not be shown. Reload the page to try again.</Trans>
+          </p>
+        </Panel>
+      }
+    >
+      {children}
+    </ErrorBoundary>
   )
 }

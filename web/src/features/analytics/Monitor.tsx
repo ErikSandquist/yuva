@@ -4,7 +4,6 @@ import { useState } from "react"
 import { Link, useParams, useSearchParams } from "react-router"
 
 import { ErrorLine, Notice, Segmented } from "@/components/common"
-import { formatDateTime } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ApiInstallSnippets } from "@/features/analytics/Install"
@@ -16,6 +15,7 @@ import {
   blockerOf,
   Charts,
   ConversationsChart,
+  Guard,
   HideRouteButton,
   Kpis,
   LastHour,
@@ -27,10 +27,11 @@ import {
   useApiView,
   useHideRoute,
   useRouteIndex,
+  wallTime,
 } from "@/features/analytics/MonitorParts"
 import { BarList, CsvButton, Panel, PanelProblem, QueryProblem, useCurrentProperty } from "@/features/analytics/parts"
 import { downloadCsv, useAnalyticsTable, useApiQuery, useApiRoutes } from "@/features/analytics/queries"
-import { EXTRA_DIMENSIONS, useViewSearch } from "@/features/analytics/state"
+import { apiGrainFor, EXTRA_DIMENSIONS, useViewSearch } from "@/features/analytics/state"
 import {
   formatCompact,
   formatMetric,
@@ -275,15 +276,29 @@ export function ApiOverview() {
   return (
     <WhenRequests>
       <div className="flex flex-col gap-4" data-testid="api-overview">
-        <Kpis base={[]} testId="api-kpis" />
-        <LastHour base={[]} />
-        <Charts base={[]} />
+        <Guard>
+          <Kpis base={[]} testId="api-kpis" />
+        </Guard>
+        <Guard>
+          <LastHour base={[]} />
+        </Guard>
+        <Guard>
+          <Charts base={[]} />
+        </Guard>
         <div className="grid gap-4 md:grid-cols-2">
-          <BreakdownPanel base={[]} dims={OVERVIEW_DIMS} />
-          <TopRoutes />
+          <Guard>
+            <BreakdownPanel base={[]} dims={OVERVIEW_DIMS} />
+          </Guard>
+          <Guard>
+            <TopRoutes />
+          </Guard>
         </div>
-        <SizeStats base={[]} />
-        <ConversationsChart />
+        <Guard>
+          <SizeStats base={[]} />
+        </Guard>
+        <Guard>
+          <ConversationsChart />
+        </Guard>
       </div>
     </WhenRequests>
   )
@@ -479,6 +494,51 @@ function AllRoutes() {
 
 const CHANGED: NumMetric[] = ["requests", "error_rate", "p95"]
 
+function RouteTimeHead({ list }: { list: "new" | "silent" }) {
+  const { view } = useApiView()
+  const grain = apiGrainFor(view.range)
+  if (list === "new") {
+    if (grain === "time:minute") return <Trans>Minute of the first request</Trans>
+    if (grain === "time:hour") return <Trans>Hour of the first request</Trans>
+    if (grain === "time:week") return <Trans>Week of the first request</Trans>
+    return <Trans>Day of the first request</Trans>
+  }
+  if (grain === "time:minute") return <Trans>Minute of the last request</Trans>
+  if (grain === "time:hour") return <Trans>Hour of the last request</Trans>
+  if (grain === "time:week") return <Trans>Week of the last request</Trans>
+  return <Trans>Day of the last request</Trans>
+}
+
+function RouteTime({ route, list }: { route: string; list: "new" | "silent" }) {
+  const { i18n } = useLingui()
+  const property = useCurrentProperty()
+  const { view } = useApiView()
+  const grain = apiGrainFor(view.range)
+  const q = useApiQuery(property.id, {
+    metrics: ["requests"],
+    dimensions: [grain],
+    range: view.range,
+    filters: [{ dimension: "route", op: "is", values: [route] }],
+    compare: list === "silent" ? { with: "previous" } : undefined,
+  })
+  if (q.isPending) return <Skeleton className="ms-auto h-4 w-24" />
+  const rows = (list === "silent" ? q.data?.comparison?.rows : q.data?.rows) ?? []
+  const hit =
+    list === "new"
+      ? rows.find((r) => (num(r.metrics, "requests") ?? 0) > 0)
+      : rows.findLast((r) => (num(r.metrics, "requests") ?? 0) > 0)
+  const label = hit?.dimensions[0]
+  if (!label) return <>–</>
+  const short = grain === "time:minute" || grain === "time:hour"
+  const fmt = new Intl.DateTimeFormat(i18n.locale, {
+    day: "numeric",
+    month: "short",
+    ...(short ? { hour: "numeric", minute: "2-digit" } : {}),
+    timeZone: "UTC",
+  })
+  return <>{fmt.format(wallTime(label))}</>
+}
+
 function ChangedRoutes({ list }: { list: "new" | "silent" }) {
   const { i18n } = useLingui()
   const text = useAnalyticsText()
@@ -527,8 +587,8 @@ function ChangedRoutes({ list }: { list: "new" | "silent" }) {
               ) : (
                 <MetricHead metrics={metrics} phone="requests" />
               )}
-              <th className="w-44 px-4 py-2.5 text-end font-medium phone:hidden">
-                {list === "new" ? <Trans>First request</Trans> : <Trans>Last request</Trans>}
+              <th className="w-48 px-4 py-2.5 text-end font-medium phone:hidden">
+                <RouteTimeHead list={list} />
               </th>
             </tr>
           </thead>
@@ -549,7 +609,6 @@ function ChangedRoutes({ list }: { list: "new" | "silent" }) {
               rows.map((r) => {
                 const route = r.dimensions[0] ?? ""
                 const info = index.get(route)
-                const at = list === "new" ? info?.first_seen_at : info?.last_seen_at
                 return (
                   <tr key={route} className="hover:bg-muted/50" data-testid="api-route-row">
                     <td className="px-4 py-2">
@@ -575,7 +634,9 @@ function ChangedRoutes({ list }: { list: "new" | "silent" }) {
                       ))
                     )}
                     <td className="px-4 py-2 text-end text-small text-muted-foreground tabular-nums phone:hidden">
-                      {at ? formatDateTime(at, i18n.locale) : "–"}
+                      <Guard>
+                        <RouteTime route={route} list={list} />
+                      </Guard>
                     </td>
                   </tr>
                 )
@@ -932,19 +993,39 @@ export function ApiRoutePage() {
       ) : (
         !info?.hidden && (
           <>
-            <Kpis base={base} testId="api-route-kpis" />
-            {info && <ApdexThreshold key={`${info.id}-${info.apdex_ms ?? ""}`} route={info} canManage={canManage} />}
-            <Charts base={base} />
-            <LatencyHeatmap base={base} />
+            <Guard>
+              <Kpis base={base} testId="api-route-kpis" />
+            </Guard>
+            {info && (
+              <Guard>
+                <ApdexThreshold key={`${info.id}-${info.apdex_ms ?? ""}`} route={info} canManage={canManage} />
+              </Guard>
+            )}
+            <Guard>
+              <Charts base={base} />
+            </Guard>
+            <Guard>
+              <LatencyHeatmap base={base} />
+            </Guard>
             <div className="grid gap-4 md:grid-cols-2">
-              <StatusCodes base={base} />
-              <LastHour base={base} />
+              <Guard>
+                <StatusCodes base={base} />
+              </Guard>
+              <Guard>
+                <LastHour base={base} />
+              </Guard>
             </div>
             <div className="grid gap-4 md:grid-cols-2">
-              <BreakdownPanel base={base} dims={dims} />
-              <TopConsumers base={base} />
+              <Guard>
+                <BreakdownPanel base={base} dims={dims} />
+              </Guard>
+              <Guard>
+                <TopConsumers base={base} />
+              </Guard>
             </div>
-            <SizeStats base={base} />
+            <Guard>
+              <SizeStats base={base} />
+            </Guard>
           </>
         )
       )}

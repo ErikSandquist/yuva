@@ -807,6 +807,14 @@ msgstr "Day {period}"
 msgid "Day by day"
 msgstr "Day by day"
 
+#: src/features/analytics/Monitor.tsx
+msgid "Day of the first request"
+msgstr "Day of the first request"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Day of the last request"
+msgstr "Day of the last request"
+
 #: src/features/analytics/Retention.tsx
 msgid "Days"
 msgstr "Days"
@@ -1223,10 +1231,6 @@ msgstr "First month"
 msgid "First page or screen"
 msgstr "First page or screen"
 
-#: src/features/analytics/Monitor.tsx
-msgid "First request"
-msgstr "First request"
-
 #: src/features/analytics/text.ts
 msgid "First screen"
 msgstr "First screen"
@@ -1395,6 +1399,14 @@ msgstr "Host names"
 msgid "Host or app"
 msgstr "Host or app"
 
+#: src/features/analytics/Monitor.tsx
+msgid "Hour of the first request"
+msgstr "Hour of the first request"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Hour of the last request"
+msgstr "Hour of the last request"
+
 #: src/features/analytics/ApiSettings.tsx
 msgid "Hourly detail"
 msgstr "Hourly detail"
@@ -1552,10 +1564,6 @@ msgstr "last opened {viewed}"
 msgid "Last page or screen"
 msgstr "Last page or screen"
 
-#: src/features/analytics/Monitor.tsx
-msgid "Last request"
-msgstr "Last request"
-
 #: src/features/analytics/ApiSettings.tsx
 msgid "Last request {seen}"
 msgstr "Last request {seen}"
@@ -1659,6 +1667,14 @@ msgstr "Middleware records every request the mux answers, with its route pattern
 #: src/features/analytics/Install.tsx
 msgid "Middleware records every request the mux answers, with its route pattern, status and duration, and sends them in batches. It needs an API key with the analytics:write scope from an owner or admin."
 msgstr "Middleware records every request the mux answers, with its route pattern, status and duration, and sends them in batches. It needs an API key with the analytics:write scope from an owner or admin."
+
+#: src/features/analytics/Monitor.tsx
+msgid "Minute of the first request"
+msgstr "Minute of the first request"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Minute of the last request"
+msgstr "Minute of the last request"
 
 #: src/features/analytics/MonitorParts.tsx
 msgid "Minutes are not kept per consumer, country or app version. Remove that filter to see them."
@@ -2966,6 +2982,10 @@ msgstr "This link is not available"
 msgid "This month"
 msgstr "This month"
 
+#: src/features/analytics/MonitorParts.tsx
+msgid "This part could not be shown. Reload the page to try again."
+msgstr "This part could not be shown. Reload the page to try again."
+
 #: src/features/analytics/Funnels.tsx
 msgid "This property already has a funnel with this name."
 msgstr "This property already has a funnel with this name."
@@ -3301,6 +3321,14 @@ msgstr "Website or app"
 #: src/features/analytics/Retention.tsx
 msgid "Week {period}"
 msgstr "Week {period}"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Week of the first request"
+msgstr "Week of the first request"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Week of the last request"
+msgstr "Week of the last request"
 
 #: src/features/analytics/Alerts.tsx
 msgid "Weekly"
