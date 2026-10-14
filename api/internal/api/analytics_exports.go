@@ -13,8 +13,8 @@ import (
 	"uuid"
 
 	"github.com/jackc/pgx/v5"
-	"github.com/riverqueue/river"
 	openapi_types "github.com/oapi-codegen/runtime/types"
+	"github.com/riverqueue/river"
 
 	"github.com/productdevbook/yuva/api/internal/analytics"
 	"github.com/productdevbook/yuva/api/internal/jobs"
