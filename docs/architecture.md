@@ -1716,8 +1716,9 @@ request. Decisions:
   M15 table that hangs off a property works for an API without a parallel table. Its `domains` (0–50)
   are the API's hostnames, its `platforms` the apps allowed to send app-side records (`ios`,
   `android`, or none); it takes no goals, props, funnels or consent features, and `audience` does not
-  apply. New columns: `apdex_ms` (500) and `monitor_hour_days` (90). The collection endpoint and the
-  site views refuse an API property; the API endpoints refuse a site.
+  apply. New columns: `apdex_ms` (500) and `monitor_hour_days` (90). An API property is created with
+  `domains: []`. The collection endpoint answers `404` for an API property's key; site views and API
+  endpoints called on the other kind answer `422 property_kind`.
 - **A record.** Method (the RFC 9110 methods and `PATCH`, else `_OTHER`), route, status (100–599, or 0
   when no response was sent), duration (microseconds), request and response size, time, and optionally
   `consumer` (1–100 characters, chosen by the host: an API key's name or a client id, never a person's
@@ -1725,14 +1726,16 @@ request. Decisions:
   `production` by default), `service` (≤ 100), `release` (≤ 80, only for deploy markers), `ip` (only
   to find the country) and `sample_rate` (1–10,000, 1 by default). No body, header, query string,
   fragment, user agent or address is accepted or kept. 5xx and 0 are errors, 4xx client errors; both
-  rates are shown.
+  rates are shown. Status 0 has the status class `none`.
 - **Routes, never raw paths.** A record names its route pattern (`/users/{id}`: `r.Pattern` from
   `http.ServeMux`, the framework's router, OpenTelemetry `http.route`). When it can only give `path`,
-  ingest infers a pattern: segments that are numbers, UUIDs, dates, hex or base64url of 16 or more
-  characters, e-mail-shaped or longer than 40 characters become `{id}`, and `?`, `#` and what follows
-  are cut first. A record without a pattern that answered 404 or 405 goes to `(unmatched)`, so scanners
+  ingest infers a pattern: segments that are numbers, UUIDs, dates, hex, tokens of 16 or more
+  characters with two or more digits or with both cases and a digit (so `user-preferences` stays),
+  e-mail-shaped or longer than 40 characters become `{id}`, and `?`, `#` and what follows are cut
+  first. Patterns the host sends go through the same segment rule, so a raw id never becomes a route
+  either way. A record without a pattern that answered 404 or 405 goes to `(unmatched)`, so scanners
   never create routes. `monitor_routes` marks inferred patterns; members hide a route or map inferred
-  ones onto a pattern of their own (route rules, applied at ingest from then on). Caps per property:
+  ones onto a pattern of their own (the property's `path_rules`, applied at ingest from then on). Caps per property:
   1,000 routes, 10,000 consumers, 50 API versions, 200 app versions, 20 environments; 100 services per
   workspace. A value past its cap is counted as `(other)` and the panel says which cap was reached.
 - **Percentiles from mergeable sketches.** Durations go into a sparse log-bucketed histogram with base
@@ -1764,14 +1767,17 @@ request. Decisions:
   half-hour offsets included; a time zone change applies from the next local day. The `monitor_rollup`
   job on the `analytics` queue folds a closed hour's minute rows into one row per key, compacts its
   dimension rows to one writer, and folds finished local days, tracked in `monitor_rollup_hours`
-  (built, dirty) like `analytics_rollup_days`. Queries read folded rows for closed hours and minute and
+  (built, dirty, and `day` with `day_built_at` for the day fold) like `analytics_rollup_days`. A
+  process that could not write an hour's dimension rows within 5 minutes after the hour ended drops
+  them and logs it, so they are never counted twice. Queries read folded rows for closed hours and minute and
   writer rows for open ones. An hour holds at most 50,000 dimension rows per property; later new
   combinations of that hour count as `(other)` and the hour is marked capped. Dictionaries give the
   rollups integer ids: `monitor_routes` (pattern, inferred, hidden, `apdex_ms`, first and last seen)
   and `monitor_names` (consumers, API versions, app versions, environments, countries per property).
 - **Sampling.** Off by default: records are aggregated on arrival, so cost grows with distinct keys, not
   with requests. An SDK may sample successful requests (`sampleRate`), never 4xx, 5xx or failed ones;
-  a record carries its weight, counters and buckets add it, and `sampled` keeps the weighted requests
+  a record carries its weight (one with `sample_rate` above 1 and an error status is refused as
+  invalid), counters and buckets add it, and `sampled` keeps the weighted requests
   of each row, so views, exports and the Prometheus endpoint mark a range that holds any as estimated.
   An OTLP span weighs the adjusted count of its tracestate `ot=th` threshold (OpenTelemetry's
   probability sampling, still a Development spec) and 1 without one, so a head-sampled exporter
@@ -1799,7 +1805,8 @@ request. Decisions:
     the first function that sees it, then dropped. Limits per property
     (`YUVA_MONITOR_RECORDS_PER_MINUTE`, 600,000) and per key; in-memory keys per process are capped
     (`YUVA_MONITOR_BUFFER_KEYS`, 200,000; full answers `503`). `monitor_ingest_stats` counts accepted,
-    invalid, rate, over_limit and buffer per property and day.
+    invalid, late, rate, over_limit and buffer per property and day. The monthly limit counts records
+    received, not their sampled weight; records past it are counted as `over_limit`.
 - **SDKs (M16.2).** `sdk/go/analytics` gets `Middleware` for `net/http`: it wraps the mux and reads
   `r.Pattern` after the handler ran (`ServeMux` sets it on the same request), without its method and
   host, or a `Route func(*http.Request) string`; batches of 500 or every 5 seconds through the existing
@@ -1815,12 +1822,14 @@ request. Decisions:
   `p90`, `p95`, `p99`, `avg_duration`, `max_duration`, `apdex`, `request_bytes`, `response_bytes`,
   `response_size_p50`, `response_size_p95` and `conversations`; dimensions route, method, status,
   status class, API version, environment, service, source, platform, consumer, country, app version and
-  `time:minute` (inside the minute tier, at most 1,440 buckets), `time:hour`, `time:day`, `time:week`,
+  `time:minute` (inside the minute tier, at most 1,440 buckets, labelled in the property's local time), `time:hour`, `time:day`, `time:week`,
   `time:month`. `range` also takes `15m`, `1h`, `6h` and `24h` and minute-aligned `since` and `until`.
   Any combination of core dimensions filters and breaks down from every tier; at most one extra
   dimension (consumer, country or app version) joins them, from hours and days (`422
   dimension_combination` otherwise). Comparisons, the 4 query slots per workspace and the cache are
-  M15's. New routes are first seen in the range, silent routes were called in the previous period and
+  M15's, except that answers over open ranges are cached for 5 seconds instead of 30, so new records
+  show within 15 seconds. Results carry `meta.estimated` and `meta.caps_reached`, and the usage object
+  `requests` and `requests_limit`. New routes are first seen in the range, silent routes were called in the previous period and
   not since. A new `release` per service and environment writes a `deploy` annotation, which gains a
   time (`at`) so minute charts place it; Yuva's own annotations stay read-only.
 - **Uptime checks (M16.4).** `monitor_checks`: name, `http` or `https` URL without credentials, `GET`
