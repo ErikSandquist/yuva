@@ -1734,7 +1734,8 @@ request. Decisions:
   e-mail-shaped or longer than 40 characters become `{id}`, and `?`, `#` and what follows are cut
   first. Patterns the host sends go through the same segment rule, so a raw id never becomes a route
   either way. A record without a pattern that answered 404 or 405 goes to `(unmatched)`, so scanners
-  never create routes. `monitor_routes` marks inferred patterns; members hide a route or map inferred
+  never create routes. `monitor_routes` marks inferred patterns; members hide a route (`GET …/routes`, `PATCH …/routes/{routeId}`; hidden routes leave rows, totals
+  and filters but keep their counts) or map inferred
   ones onto a pattern of their own (the property's `path_rules`, applied at ingest from then on). Caps per property:
   1,000 routes, 10,000 consumers, 50 API versions, 200 app versions, 20 environments; 100 services per
   workspace. A value past its cap is counted as `(other)` and the panel says which cap was reached.
@@ -1764,7 +1765,9 @@ request. Decisions:
     property's `monitor_hour_days` (7–400).
   - `monitor_day`, `monitor_dim_day`: by local day, kept `retention_months`.
   Hours are local, so 24 of them (23 or 25 at a DST change) make the property's day in every time zone,
-  half-hour offsets included; a time zone change applies from the next local day. The `monitor_rollup`
+  half-hour offsets included; a time zone change applies from the old zone's next local midnight
+  (`timezone_applies_at` until then, `timezone_history` after), and every instant is counted in the
+  zone that applied at that time. The `monitor_rollup`
   job on the `analytics` queue folds a closed hour's minute rows into one row per key, compacts its
   dimension rows to one writer, and folds finished local days, tracked in `monitor_rollup_hours`
   (built, dirty, and `day` with `day_built_at` for the day fold) like `analytics_rollup_days`. A
@@ -1806,7 +1809,9 @@ request. Decisions:
     (`YUVA_MONITOR_RECORDS_PER_MINUTE`, 600,000) and per key; in-memory keys per process are capped
     (`YUVA_MONITOR_BUFFER_KEYS`, 200,000; full answers `503`). `monitor_ingest_stats` counts accepted,
     invalid, late, rate, over_limit and buffer per property and day. The monthly limit counts records
-    received, not their sampled weight; records past it are counted as `over_limit`.
+    received, not their sampled weight; a batch takes the records that still fit, the rest are counted
+    as `over_limit`, and owners get one `monitor_limit` mail a month with a line in the operator digest
+    (`requests_limit_reached_at` in the usage object).
 - **SDKs (M16.2).** `sdk/go/analytics` gets `Middleware` for `net/http`: it wraps the mux and reads
   `r.Pattern` after the handler ran (`ServeMux` sets it on the same request), without its method and
   host, or a `Route func(*http.Request) string`; batches of 500 or every 5 seconds through the existing
