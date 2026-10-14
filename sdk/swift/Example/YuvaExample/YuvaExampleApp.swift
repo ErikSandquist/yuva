@@ -8,6 +8,7 @@ struct ExampleConfig {
     let identityTokenURL: URL?
     let analyticsKey: String?
     let analyticsRequireConsent: Bool
+    let apiKey: String?
 
     static func load() -> ExampleConfig? {
         guard let url = Bundle.main.url(forResource: "Config", withExtension: "plist"),
@@ -19,7 +20,8 @@ struct ExampleConfig {
         return ExampleConfig(
             serverURL: server, channelKey: channel, identityTokenURL: values["IdentityTokenURL"].flatMap(URL.init(string:)),
             analyticsKey: values["AnalyticsKey"].flatMap { $0.isEmpty ? nil : $0 },
-            analyticsRequireConsent: values["AnalyticsConsent"] == "required")
+            analyticsRequireConsent: values["AnalyticsConsent"] == "required",
+            apiKey: values["APIKey"].flatMap { $0.isEmpty ? nil : $0 })
     }
 }
 
@@ -32,7 +34,12 @@ struct YuvaExampleApp: App {
         if let config, let key = config.analyticsKey {
             YuvaAnalytics.configure(
                 YuvaAnalyticsConfiguration(
-                    serverURL: config.serverURL, key: key, requireConsent: config.analyticsRequireConsent, debug: true))
+                    serverURL: config.serverURL, key: key, requireConsent: config.analyticsRequireConsent, debug: true,
+                    requests: config.apiKey.map {
+                        YuvaRequestMonitoring(
+                            key: $0, hosts: [config.serverURL.host ?? ""],
+                            routes: ["/healthz", "/readyz", "/client/v1/conversations/{id}"], environment: "development")
+                    }))
         }
     }
 

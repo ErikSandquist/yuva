@@ -9,6 +9,8 @@ enum AnalyticsCommand: Sendable {
     case optIn
     case flush((@Sendable () -> Void)?)
     case width(Int)
+    case request(RequestRecord)
+    case queuedRequests(@Sendable (Int) -> Void)
 }
 
 actor AnalyticsCore {
@@ -127,6 +129,8 @@ actor AnalyticsCore {
         case .width(let width):
             app.width = width
             queue.updateApp(key: processKey) { if $0.width == nil { $0.width = width } }
+        case .request, .queuedRequests:
+            break
         }
     }
 

@@ -43,6 +43,7 @@ struct AnalyticsView: View {
                     }
                     .accessibilityIdentifier("example.analytics.flush")
                 }
+                APICallsSection(config: config)
                 Section("Privacy") {
                     if config.analyticsRequireConsent {
                         ToggleRow(title: "Analytics consent", isOn: $consent)

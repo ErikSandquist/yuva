@@ -12,16 +12,49 @@ public struct YuvaAnalyticsConfiguration: Sendable {
     public var appId: String
     public var requireConsent: Bool
     public var debug: Bool
+    public var requests: YuvaRequestMonitoring?
 
     public init(
         serverURL: URL, key: String, appId: String = Bundle.main.bundleIdentifier ?? "app",
-        requireConsent: Bool = false, debug: Bool = false
+        requireConsent: Bool = false, debug: Bool = false, requests: YuvaRequestMonitoring? = nil
     ) {
         self.serverURL = serverURL
         self.key = key
         self.appId = appId
         self.requireConsent = requireConsent
         self.debug = debug
+        self.requests = requests
+    }
+}
+
+public struct YuvaRequestMonitoring: Sendable {
+    public var key: String
+    public var hosts: [String]
+    public var routes: [String]
+    public var route: (@Sendable (URLRequest) -> String?)?
+    public var sendUnmatchedPaths: Bool
+    public var apiVersion: String?
+    public var environment: String?
+
+    public init(
+        key: String, hosts: [String], routes: [String] = [], route: (@Sendable (URLRequest) -> String?)? = nil,
+        sendUnmatchedPaths: Bool = false, apiVersion: String? = nil, environment: String? = nil
+    ) {
+        self.key = key
+        self.hosts = hosts
+        self.routes = routes
+        self.route = route
+        self.sendUnmatchedPaths = sendUnmatchedPaths
+        self.apiVersion = apiVersion
+        self.environment = environment
+    }
+}
+
+public final class YuvaRequestDelegate: NSObject, URLSessionTaskDelegate, Sendable {
+    override public init() {}
+
+    public func urlSession(_ session: URLSession, task: URLSessionTask, didFinishCollecting metrics: URLSessionTaskMetrics) {
+        YuvaAnalytics.recordRequest(task, metrics: metrics)
     }
 }
 
@@ -80,14 +113,24 @@ public enum YuvaAnalytics {
     @MainActor
     public static func configure(_ configuration: YuvaAnalyticsConfiguration) {
         let optedOut = UserDefaults.standard.bool(forKey: optOutKey)
+        let app = Device.app()
+        let session = URLSession(configuration: .ephemeral)
+        let collect = configuration.serverURL.appendingPathComponent("client/v1/analytics")
         let core = AnalyticsCore(
-            endpoint: configuration.serverURL.appendingPathComponent("client/v1/analytics")
-                .appendingPathComponent(configuration.key),
-            processKey: processKey, app: Device.app(), home: "app://\(configuration.appId)/",
+            endpoint: collect.appendingPathComponent(configuration.key),
+            processKey: processKey, app: app, home: "app://\(configuration.appId)/",
             requireConsent: configuration.requireConsent, optedOut: optedOut, queueFile: queueFile(key: configuration.key),
-            ids: PersistentIDStore(defaults: .standard), session: URLSession(configuration: .ephemeral),
+            ids: PersistentIDStore(defaults: .standard), session: session,
             debug: configuration.debug)
-        state.install(core: core, appId: configuration.appId)
+        let requests = configuration.requests.map {
+            RequestCore(
+                endpoint: collect.appendingPathComponent($0.key).appendingPathComponent("requests"), app: app,
+                requireConsent: configuration.requireConsent, optedOut: optedOut,
+                queueFile: queueFile(key: $0.key + "_requests"), session: session, debug: configuration.debug)
+        }
+        state.install(
+            core: core, requests: requests, matcher: configuration.requests.map(RequestMatcher.init),
+            appId: configuration.appId)
         Device.observe()
     }
 
@@ -139,6 +182,19 @@ public enum YuvaAnalytics {
         state.send(.flush(nil))
     }
 
+    public static func recordRequest(_ task: URLSessionTask, metrics: URLSessionTaskMetrics) {
+        guard let record = state.matcher?.record(task, metrics: metrics) else { return }
+        state.send(.request(record))
+    }
+
+    public static func queuedRequests() async -> Int {
+        await withCheckedContinuation { continuation in
+            if !state.send(.queuedRequests { continuation.resume(returning: $0) }, requests: true) {
+                continuation.resume(returning: 0)
+            }
+        }
+    }
+
     static func screenURL(appId: String, name: String) -> String {
         let path = name.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
         var allowed = CharacterSet.urlPathAllowed
@@ -166,6 +222,8 @@ public enum YuvaAnalytics {
     private final class State: @unchecked Sendable {
         private let lock = NSLock()
         private var installed: AnalyticsCore?
+        private var requests: RequestCore?
+        private var requestMatcher: RequestMatcher?
         private var continuation: AsyncStream<AnalyticsCommand>.Continuation?
         private var appId = ""
         private var current: String?
@@ -177,11 +235,17 @@ public enum YuvaAnalytics {
             }
         }
 
-        func install(core: AnalyticsCore, appId: String) {
+        var matcher: RequestMatcher? {
+            lock.withLock { requestMatcher }
+        }
+
+        func install(core: AnalyticsCore, requests: RequestCore?, matcher: RequestMatcher?, appId: String) {
             let (stream, continuation) = AsyncStream<AnalyticsCommand>.makeStream()
             let previous = lock.withLock {
                 let previous = self.continuation
                 installed = core
+                self.requests = requests
+                requestMatcher = matcher
                 self.continuation = continuation
                 self.appId = appId
                 return previous
@@ -189,7 +253,22 @@ public enum YuvaAnalytics {
             previous?.finish()
             Task {
                 await core.start()
-                for await command in stream { await core.handle(command) }
+                await requests?.start()
+                for await command in stream {
+                    if case .flush(let done?) = command, let requests {
+                        await requests.handle(.flush(nil))
+                        await core.handle(
+                            .flush {
+                                Task {
+                                    await requests.idle()
+                                    done()
+                                }
+                            })
+                    } else {
+                        await core.handle(command)
+                        await requests?.handle(command)
+                    }
+                }
             }
         }
 
@@ -202,8 +281,12 @@ public enum YuvaAnalytics {
             }
         }
 
-        func send(_ command: AnalyticsCommand) {
-            _ = lock.withLock { continuation }?.yield(command)
+        @discardableResult
+        func send(_ command: AnalyticsCommand, requests needed: Bool = false) -> Bool {
+            let target = lock.withLock { needed && requests == nil ? nil : continuation }
+            guard let target else { return false }
+            if case .enqueued = target.yield(command) { return true }
+            return false
         }
     }
 

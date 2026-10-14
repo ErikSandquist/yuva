@@ -10,6 +10,8 @@
 	<string>http://localhost:8090/identity-token</string>
 	<key>AnalyticsKey</key>
 	<string>yuva_ak_your-analytics-property-key</string>
+	<key>APIKey</key>
+	<string>yuva_ak_your-api-property-key</string>
 	<key>AnalyticsConsent</key>
 	<string>none</string>
 </dict>
