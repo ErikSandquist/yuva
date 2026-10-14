@@ -6,7 +6,7 @@ The strip under the home page hero names the frameworks, languages and protocols
 or SDK support for. Their marks come from the `simple-icons` package (pinned in `package.json`),
 which is released under CC0-1.0 (https://github.com/simple-icons/simple-icons). Only the icons the
 strip uses are imported (`src/lib/stack.ts`): Next.js, React, Vue.js, Nuxt, shadcn/ui, Astro,
-Docker, MinIO, Firebase, Swift, Kotlin, Go, OpenAPI Initiative and Model Context Protocol. They are drawn unmodified in a
+Docker, Hono, Express, Fastify, MinIO, Firebase, Swift, Kotlin, Go, OpenAPI Initiative and Model Context Protocol. They are drawn unmodified in a
 single colour. Each mark is a trademark of its owner; it names compatibility and implies no
 endorsement.
 
@@ -14,7 +14,9 @@ Nitro's mark is not in `simple-icons`; it is the outer shape of `docs/.docs/publ
 Nitro repository (https://github.com/nitrojs/nitro), MIT License, Copyright (c) Pooya Parsa and Nitro
 contributors, drawn in a single colour like the others (`src/lib/marks.ts`). h3's mark is
 `docs/.docs/public/icon.svg` from the h3 repository (https://github.com/h3js/h3), MIT License, drawn
-the same way; the `simple-icons` "H3" is Uber's geospatial index and is not used.
+the same way; the `simple-icons` "H3" is Uber's geospatial index and is not used. srvx's mark is
+`docs/.docs/public/icon.svg` from the srvx repository (https://github.com/h3js/srvx), MIT License, drawn
+the same way.
 
 ## Cloudflare
 

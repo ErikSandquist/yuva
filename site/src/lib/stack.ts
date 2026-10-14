@@ -1,8 +1,11 @@
 import {
   siAstro,
   siDocker,
+  siExpress,
+  siFastify,
   siFirebase,
   siGo,
+  siHono,
   siKotlin,
   siMinio,
   siModelcontextprotocol,
@@ -14,7 +17,7 @@ import {
   siSwift,
   siVuedotjs,
 } from "simple-icons"
-import { h3Mark, nitroMark } from "@/lib/marks"
+import { h3Mark, nitroMark, srvxMark } from "@/lib/marks"
 import { ai, cloudflareEmail, doc, docsPath, type Locale } from "@/lib/routes"
 
 export interface StackItem {
@@ -35,6 +38,10 @@ export const stack: StackItem[] = [
   { name: "Nuxt", path: siNuxt.path, href: docs("analytics/#nuxt") },
   { name: "Nitro", path: nitroMark, viewBox: "0 0 40 40", href: same(doc("examples/nitro")) },
   { name: "h3", path: h3Mark, viewBox: "0 0 264 264", href: same(doc("sdk/js/README.md#server")) },
+  { name: "srvx", path: srvxMark, viewBox: "0 0 264 264", href: same(doc("sdk/js/README.md#srvx")) },
+  { name: "Hono", path: siHono.path, href: same(doc("sdk/js/README.md#hono")) },
+  { name: "Express", path: siExpress.path, href: same(doc("sdk/js/README.md#express")) },
+  { name: "Fastify", path: siFastify.path, href: same(doc("sdk/js/README.md#fastify")) },
   { name: "shadcn/ui", path: siShadcnui.path, href: docs("documentation-pages/#shadcnui") },
   { name: "Astro", path: siAstro.path, href: docs("analytics/") },
   { name: "Swift", path: siSwift.path, href: docs("mobile/#2-ios") },
