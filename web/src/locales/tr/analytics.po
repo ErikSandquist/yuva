@@ -2765,8 +2765,8 @@ msgid "This report has a password"
 msgstr "Bu rapor parolalı"
 
 #: src/features/analytics/Monitor.tsx
-msgid "This route is hidden: it is left out of every number and list, with all its methods. Its requests are still counted."
-msgstr "Bu rota gizli: tüm yöntemleriyle birlikte her sayıdan ve listeden çıkarılır. İstekleri yine de sayılır."
+msgid "This route is hidden, with all its methods, so its numbers are left out of every view. Requests to it are still counted and show again with it."
+msgstr "Bu rota tüm yöntemleriyle birlikte gizli, bu yüzden sayıları hiçbir görünümde yer almaz. İstekleri yine de sayılır ve rota yeniden gösterildiğinde geri gelir."
 
 #: src/features/analytics/Support.tsx
 msgid "This workspace has no inbox yet."

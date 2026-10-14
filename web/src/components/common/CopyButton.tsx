@@ -48,9 +48,9 @@ export function CodeLine({ value, testId }: { value: string; testId?: string }) 
 
 export function CodeBlock({ value, testId }: { value: string; testId?: string }) {
   return (
-    <div className="flex min-w-0 items-start gap-3 rounded-xl border bg-surface py-2 ps-3.5 pe-2">
+    <div className="flex min-w-0 items-start gap-3 rounded-xl border bg-surface py-2 ps-3.5 pe-2 phone:flex-col-reverse phone:items-end phone:gap-1">
       <pre
-        className="min-w-0 flex-1 overflow-x-auto py-1 font-mono text-caption leading-relaxed whitespace-pre"
+        className="min-w-0 flex-1 overflow-x-auto py-1 phone:self-stretch font-mono text-caption leading-relaxed whitespace-pre"
         data-testid={testId}
         tabIndex={0}
       >

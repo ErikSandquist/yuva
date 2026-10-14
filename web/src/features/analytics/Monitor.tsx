@@ -252,6 +252,11 @@ function SeriesChart({
     for (const m of metrics) row[m] = num(r.metrics, m) ?? 0
     return row
   })
+  const top = Math.max(0, ...data.flatMap((d) => metrics.map((m) => Number(d[m]) || 0)))
+  const axisWidth = Math.max(
+    40,
+    ...[top, top * 1.25, top / 2].map((v) => formatMetric(metrics[0]!, v, i18n.locale).length * 7 + 12)
+  )
   const config: ChartConfig = Object.fromEntries(
     metrics.map((m) => [m, { label: text.metric[m], color: SERIES_COLOR[m] ?? "var(--brand)" }])
   )
@@ -297,7 +302,7 @@ function SeriesChart({
             <YAxis
               tickLine={false}
               axisLine={false}
-              width={56}
+              width={axisWidth}
               tickFormatter={(v) => formatMetric(metrics[0]!, Number(v), i18n.locale)}
             />
             <ChartTooltip
@@ -439,14 +444,27 @@ export function InferredTag() {
   )
 }
 
-function RouteName({ method, route, inferred }: { method?: string; route: string; inferred?: boolean }) {
+function RouteName({
+  method,
+  route,
+  inferred,
+  wrap,
+}: {
+  method?: string
+  route: string
+  inferred?: boolean
+  wrap?: boolean
+}) {
   const { i18n } = useLingui()
   const text = useAnalyticsText()
   const plain = route.startsWith("/")
   return (
-    <span className="flex min-w-0 items-center gap-2">
+    <span className={cn("flex min-w-0 items-center gap-x-2", wrap && "flex-wrap gap-y-1")}>
       {method && <MethodTag method={method} />}
-      <span className={cn("min-w-0 truncate", plain && "font-mono text-small")} dir={plain ? "ltr" : undefined}>
+      <span
+        className={cn("min-w-0", wrap ? "break-all" : "truncate", plain && "font-mono text-small")}
+        dir={plain ? "ltr" : undefined}
+      >
         {valueText(text, "route", route, i18n.locale)}
       </span>
       {inferred && <InferredTag />}
@@ -748,7 +766,7 @@ export function ApiRoutes() {
                             to={`${routePath(property.id, method, route)}${search}`}
                             className="block max-w-full rounded outline-none hover:text-brand focus-visible:ring-2 focus-visible:ring-ring"
                           >
-                            <RouteName method={method} route={route} inferred={info?.inferred} />
+                            <RouteName method={method} route={route} inferred={info?.inferred} wrap />
                           </Link>
                         )}
                       </td>
@@ -852,6 +870,7 @@ export function ApiRoutePage() {
   const route = tail.startsWith("(") ? tail : `/${tail}`
   const filters = routeFilters(route, method)
   const { canManage } = useSession()
+  const routes = useApiRoutes(property.id)
   const info = useRouteIndex(property.id).get(route)
   const hide = useHideRoute(property.id)
   return (
@@ -867,7 +886,7 @@ export function ApiRoutePage() {
         </Link>
         <div className="flex min-w-0 flex-wrap items-center gap-2">
           <h2 className="min-w-0 flex-1 text-title" data-testid="api-route-name">
-            <RouteName method={method} route={route} inferred={info?.inferred} />
+            <RouteName method={method} route={route} inferred={info?.inferred} wrap />
           </h2>
           {canManage && info && !info.hidden && (
             <Button
@@ -888,8 +907,8 @@ export function ApiRoutePage() {
         <Notice icon={EyeOffIcon} data-testid="api-route-hidden">
           <p>
             <Trans>
-              This route is hidden: it is left out of every number and list, with all its methods. Its requests are
-              still counted.
+              This route is hidden, with all its methods, so its numbers are left out of every view. Requests to it are
+              still counted and show again with it.
             </Trans>
           </p>
           {canManage && (
@@ -907,12 +926,20 @@ export function ApiRoutePage() {
           )}
         </Notice>
       )}
-      <Kpis filters={filters} testId="api-route-kpis" />
-      <Charts filters={filters} />
-      <div className="grid gap-4 md:grid-cols-2">
-        <StatusCodes filters={filters} />
-        <LastHour filters={filters} />
-      </div>
+      {routes.isPending ? (
+        <Skeleton className="h-64 rounded-2xl" />
+      ) : (
+        !info?.hidden && (
+          <>
+            <Kpis filters={filters} testId="api-route-kpis" />
+            <Charts filters={filters} />
+            <div className="grid gap-4 md:grid-cols-2">
+              <StatusCodes filters={filters} />
+              <LastHour filters={filters} />
+            </div>
+          </>
+        )
+      )}
     </div>
   )
 }
