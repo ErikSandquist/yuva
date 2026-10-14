@@ -216,8 +216,9 @@ func nextCheckState(state string, inRow, failures int32, ok bool) (string, int32
 }
 
 // SettleMonitorResults judges the runs of the minutes that closed, oldest first: a minute where
-// at least 20 checks of the server ran and more than half failed records its runs unknown; the
-// other runs move their check's state in order.
+// at least 20 checks of the server ran and more than half failed records its failed runs unknown,
+// since the server's own network is the likelier fault, while an answer that came is believed; the
+// other runs move their check's state in order and are recorded with the state after them.
 func (s *Server) SettleMonitorResults(ctx context.Context) error {
 	if _, err := s.monitorOn(); err != nil {
 		return nil
@@ -267,16 +268,13 @@ func (s *Server) settleCheck(ctx context.Context, runs []store.ListPendingMonito
 		state, inRow, since := c.State, c.FailuresInRow, c.StateSince
 		for _, r := range runs {
 			recorded := resultUnknown
-			if !unknown {
+			if r.Ok || !unknown {
 				next, n := nextCheckState(state, inRow, c.FailuresBeforeDown, r.Ok)
 				if next != state {
 					since = &r.At
 				}
 				state, inRow = next, n
-				recorded = resultUp
-				if state == resultDown {
-					recorded = resultDown
-				}
+				recorded = state
 			}
 			if err := q.SetMonitorResultState(ctx, store.SetMonitorResultStateParams{WorkspaceID: ws, CheckID: id, At: r.At, State: &recorded}); err != nil {
 				return err

@@ -367,17 +367,21 @@ func TestMonitorUnknownWhenMostChecksFail(t *testing.T) {
 		h.runCheck(tm.ws, id, at)
 	}
 	h.settleChecks(at.Add(2 * time.Minute))
-	if n := h.count("SELECT count(*) FROM monitor_check_results WHERE workspace_id = $1 AND state = 'unknown'", tm.ws); n != 20 {
+	if n := h.count("SELECT count(*) FROM monitor_check_results WHERE workspace_id = $1 AND state = 'unknown'", tm.ws); n != 11 {
 		t.Fatalf("unknown runs %d", n)
 	}
-	for _, id := range ids {
-		if s := tm.owner.expect(http.StatusOK, "GET", "/v1/monitoring/checks/"+id, nil).str("state"); s != "unknown" {
-			t.Fatalf("a check moved on an unknown minute: %s", s)
+	for i, id := range ids {
+		want := "unknown"
+		if i >= 11 {
+			want = "up"
+		}
+		if s := tm.owner.expect(http.StatusOK, "GET", "/v1/monitoring/checks/"+id, nil).str("state"); s != want {
+			t.Fatalf("check %d on an unknown minute: %s", i, s)
 		}
 	}
 	q := map[string]any{"dataset": "uptime", "metrics": []string{"runs", "failures"}, "range": map[string]any{"since": "2026-03-05T08:00:00Z", "until": "2026-03-05T08:02:00Z"}}
-	if tot := tm.owner.expect(http.StatusOK, "POST", "/v1/monitoring/query", q).body["totals"].(map[string]any); tot["runs"].(float64) != 0 {
-		t.Fatalf("unknown runs counted: %v", tot)
+	if tot := tm.owner.expect(http.StatusOK, "POST", "/v1/monitoring/query", q).body["totals"].(map[string]any); tot["runs"].(float64) != 9 || tot["failures"].(float64) != 0 {
+		t.Fatalf("unknown failures counted: %v", tot)
 	}
 	for _, id := range ids[11:] {
 		h.runCheck(tm.ws, id, at.Add(time.Minute))
@@ -388,6 +392,80 @@ func TestMonitorUnknownWhenMostChecksFail(t *testing.T) {
 	}
 	if m := len(h.alertMails(personEmail(tm.owner))); m != 0 {
 		t.Fatalf("mails about unknown minutes: %d", m)
+	}
+}
+
+// A check goes down, then most of the server's checks start failing (another workspace's checks on
+// hosts that do not resolve), then the check's endpoint answers again: the answers count, so the
+// check comes back up and its alert resolves while the failures of those minutes stay uncounted.
+func TestMonitorCheckRecoversWhileMostChecksFail(t *testing.T) {
+	h, _ := monitorHarness(t, true, nil)
+	tm, noisy := newTeam(t, h), newTeam(t, h)
+	tg := newTarget(t)
+	tg.status.Store(503)
+	owner := personEmail(tm.owner)
+	id := createCheck(tm.owner, map[string]any{"name": "Payments", "url": tg.url("pay.test"), "interval_seconds": 30})["id"].(string)
+	var others []string
+	for i := range 20 {
+		others = append(others, createCheck(noisy.owner, map[string]any{"name": fmt.Sprint("Gone ", i), "url": fmt.Sprintf("http://gone%d.example/", i),
+			"interval_seconds": 30})["id"].(string))
+	}
+	check := func() map[string]any {
+		return tm.owner.expect(http.StatusOK, "GET", "/v1/monitoring/checks/"+id, nil).body
+	}
+	t0 := time.Date(2026, 3, 7, 9, 0, 4, 0, time.UTC)
+	step := func(from, to time.Duration, noise bool) {
+		for d := from; d < to; d += 10 * time.Second {
+			at := t0.Add(d)
+			if d%(30*time.Second) == 0 {
+				h.runCheck(tm.ws, id, at)
+				if noise {
+					for _, o := range others {
+						h.runCheck(noisy.ws, o, at)
+					}
+				}
+			}
+			h.settleChecks(at.Add(10 * time.Second))
+		}
+	}
+
+	step(0, 4*time.Minute, false)
+	first := tm.owner.expect(http.StatusOK, "GET", "/v1/monitoring/checks/"+id+"/results?before="+t0.Add(30*time.Second).Format(time.RFC3339), nil).body["items"].([]any)
+	if len(first) != 1 || first[0].(map[string]any)["state"] != "unknown" {
+		t.Fatalf("the first failed run of a new check: %v", first)
+	}
+	if c := check(); c["state"] != "down" || len(h.alertMails(owner)) != 1 {
+		t.Fatalf("after 4 minutes of 503: state %v, mails %v", c["state"], h.alertMails(owner))
+	}
+
+	step(4*time.Minute, 6*time.Minute, true)
+	tg.status.Store(200)
+	step(6*time.Minute, 9*time.Minute, true)
+	c := check()
+	if c["state"] != "up" {
+		t.Fatalf("answered 200 for 3 minutes while most checks failed: state %v", c["state"])
+	}
+	if since, _ := time.Parse(time.RFC3339Nano, c["state_since"].(string)); !since.Equal(t0.Add(6 * time.Minute)) {
+		t.Fatalf("up since %v", c["state_since"])
+	}
+	if mails := h.alertMails(owner); len(mails) != 2 || !strings.HasPrefix(mails[1], "Resolved: ") {
+		t.Fatalf("alert mails %v", mails)
+	}
+	alerts := tm.owner.expect(http.StatusOK, "GET", "/v1/monitoring/alerts?check_id="+id, nil).body["items"].([]any)
+	if len(alerts) != 1 || alerts[0].(map[string]any)["state"] != "resolved" {
+		t.Fatalf("alerts %v", alerts)
+	}
+	byState := map[string]int{}
+	for _, r := range tm.owner.expect(http.StatusOK, "GET", "/v1/monitoring/checks/"+id+"/results?limit=500", nil).body["items"].([]any) {
+		res := r.(map[string]any)
+		at, _ := time.Parse(time.RFC3339Nano, res["at"].(string))
+		if res["ok"] == true && at.Before(t0.Add(7*time.Minute)) && res["state"] != "up" {
+			t.Fatalf("a judged answer reads %v at %v", res["state"], at)
+		}
+		byState[res["state"].(string)]++
+	}
+	if byState["unknown"] != 5 || byState["down"] != 7 {
+		t.Fatalf("runs by state %v", byState)
 	}
 }
 
