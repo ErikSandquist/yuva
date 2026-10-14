@@ -1,5 +1,6 @@
 import {
   siAstro,
+  siDocker,
   siGo,
   siH3,
   siKotlin,
@@ -36,6 +37,11 @@ export const stack: StackItem[] = [
   { name: "Swift", path: siSwift.path, href: docs("mobile/#2-ios") },
   { name: "Kotlin", path: siKotlin.path, href: docs("mobile/#3-android") },
   { name: "Go", path: siGo.path, href: docs("analytics-server/#go") },
+  { name: "Amazon SES", href: docs("email/") },
+  { name: "Postmark", href: docs("email/") },
+  { name: "S3 · R2 · MinIO", href: docs("configuration/") },
+  { name: "APNs · FCM", href: docs("mobile/") },
+  { name: "Docker", path: siDocker.path, href: docs("install/") },
   { name: "OpenAPI", path: siOpenapiinitiative.path, href: docs("api/") },
   { name: "MCP", path: siModelcontextprotocol.path, href: ai },
 ]

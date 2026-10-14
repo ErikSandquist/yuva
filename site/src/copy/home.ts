@@ -38,7 +38,6 @@ export function homeCopy(i18n: I18n, quickStartRel: string) {
       tags: i18n._(msg`Open source · Self-hosted · Pre-alpha`),
       tagsHosted: i18n._(msg`Open source · Hosted or self-hosted · Pre-alpha`),
       worksWith: i18n._(msg`Works with`),
-      stack: ["Cloudflare Email Workers", "Amazon SES", "Postmark", "S3 · R2 · MinIO", "APNs · FCM", "Docker"],
       badges: {
         email: i18n._(msg`E-mail`),
         live: i18n._(msg`Live chat`),
