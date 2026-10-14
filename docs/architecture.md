@@ -1800,10 +1800,23 @@ request. Decisions:
     (or the older `deployment.environment`), `service.version` as the release and `service.instance.id`;
     span attributes `yuva.consumer` and `yuva.api_version`. Other spans are ignored. The answer is `200`
     with an `ExportTraceServiceResponse` whose `partial_success` counts invalid spans, or `429`/`503`
-    with `Retry-After`.
+    with `Retry-After`; 429 only when the per-minute limits take none of the batch, otherwise the
+    rest count as `rate` and the answer is 200, and over-cap or late spans do not appear in
+    `partial_success`. Errors are a `google.rpc.Status` in the request's encoding whose message starts
+    with the problem code. Bodies are at most 8 MiB raw and decompressed. SERVER spans without a
+    method (gRPC and the like) are skipped; the pre-1.20 HTTP attribute names are read when the new ones
+    are absent. A sampled span may carry an error status, since head sampling decides before the
+    response; a weight above 10,000 makes it invalid. Rows from OTLP get source `otlp`.
+    `service.instance.id` waits for M16.7 and `service.version` for M16.3. Decoding lives in
+    `api/internal/otlp`; every span then goes through the same record validation and admission
+    (rate, monthly cap, aggregator, ingest stats) as the records endpoint.
   - App-side: `POST /client/v1/analytics/{key}/requests` from the Swift and Kotlin modules, a batch of
     up to 100 records with `a.platform` in the property's `platforms` and `a.app_version`; source
     `app`, no consumer, sent only under the property's `collection` rules exactly like app events.
+    The batch is `{"a": AnalyticsApp, "records": [...]}`: the app version is `a.version`, records use the
+    server record's field names without service, release, sample rate, consumer or ip, consent is per
+    record (`c.a: 1`), `Sec-GPC` or `DNT` counts none, the country comes from the connecting address, and
+    600 records a minute per shortened address are accepted before `429`. A site key answers `404`.
   - On every path the address is shortened and looked up for the country only (no region or city) in
     the first function that sees it, then dropped. Limits per property
     (`YUVA_MONITOR_RECORDS_PER_MINUTE`, 600,000) and per key; in-memory keys per process are capped
