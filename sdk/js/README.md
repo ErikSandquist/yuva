@@ -412,6 +412,79 @@ server left out (`AnalyticsEventError`) go to `onError`. The timers never keep a
 `flush()` sends what is queued and resolves to the last batch error, if any, without rejecting, so
 it can go to `waitUntil`; `close()` flushes and stops the client before the process exits.
 
+### h3
+
+`useyuva/h3` wraps the same helpers for an [h3](https://h3.dev) v2 app (`h3` is an optional peer
+dependency):
+
+```ts
+import { H3, serve } from "h3";
+import { defineYuvaAnalytics, defineYuvaIdentityHandler, defineYuvaWebhookHandler } from "useyuva/h3";
+import { createAnalytics } from "useyuva/server";
+
+const app = new H3()
+  .use(
+    defineYuvaAnalytics({
+      analytics: createAnalytics({
+        server: "https://support.example.com",
+        apiKey: process.env.YUVA_API_KEY!,
+        propertyId: process.env.YUVA_ANALYTICS_PROPERTY!,
+      }),
+    })
+  )
+  .get(
+    "/yuva-token",
+    defineYuvaIdentityHandler({
+      secret: process.env.YUVA_IDENTITY_SECRET!,
+      user: async (event) => {
+        const user = await currentUser(event); // your session; null when signed out
+        return user && { subject: user.id, email: user.email, emailVerified: user.emailConfirmed, name: user.name };
+      },
+    })
+  )
+  .post(
+    "/webhooks/yuva",
+    defineYuvaWebhookHandler({
+      secret: process.env.YUVA_WEBHOOK_SECRET!,
+      on: {
+        "message.created": async (payload) => {
+          if (!payload.data.contact?.online) await sendPush(payload.data);
+        },
+        "conversation.rated": (payload) => saveRating(payload.data.conversation),
+      },
+    })
+  )
+  .post("/signup", async (event) => {
+    // ...
+    event.context.yuva?.track({ name: "Signup", props: { plan: "pro" } });
+    return Response.redirect(new URL("/welcome", event.req.url), 303);
+  });
+
+serve(app);
+```
+
+```html
+<yuva-chat channel="yuva_pk_…" server="https://support.example.com"></yuva-chat>
+<script type="module">
+  import "useyuva/chat";
+  document.querySelector("yuva-chat").setIdentityToken(async () => {
+    const response = await fetch("/yuva-token", { credentials: "same-origin" });
+    return response.ok ? response.text() : null;
+  });
+</script>
+```
+
+`defineYuvaIdentityHandler({ secret, user, ttl })` answers with a token for the claims `user(event)`
+returns, as `text/plain` with `Cache-Control: no-store`, and `401` when it returns nothing; `ttl` is
+the default for claims without their own. `defineYuvaWebhookHandler({ secret, tolerance, on })`
+verifies the raw request with `verifyWebhook` and calls the handler for the event's `type` with the
+event typed for it; it answers `401` when the signature does not verify, `204` for a type without a
+handler, and otherwise the `Response` the handler returns or `204`. A handler that throws answers
+`500`, so Yuva retries. `defineYuvaAnalytics({ analytics })` is a middleware that puts
+`track(event)` (`analytics.track` with the request) on `event.context.yuva` and, after a request
+that tracked something, hands `flush()` to the request's `waitUntil`, which srvx sets on every
+runtime it serves; without one the queue goes out on the client's timer.
+
 ## License
 
 MIT

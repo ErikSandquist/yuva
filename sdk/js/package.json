@@ -65,6 +65,10 @@
       "types": "./dist/types/server.d.ts",
       "default": "./dist/esm/server.js"
     },
+    "./h3": {
+      "types": "./dist/types/h3.d.ts",
+      "default": "./dist/esm/h3.js"
+    },
     "./nuxt": {
       "types": "./dist/types/nuxt/module.d.ts",
       "default": "./dist/esm/nuxt/module.js"
@@ -109,11 +113,15 @@
   },
   "peerDependencies": {
     "@nuxt/kit": ">=3.15.0",
+    "h3": "^2.0.0",
     "react": ">=18",
     "vue": ">=3.5.0"
   },
   "peerDependenciesMeta": {
     "@nuxt/kit": {
+      "optional": true
+    },
+    "h3": {
       "optional": true
     },
     "react": {
@@ -134,6 +142,7 @@
     "@types/bun": "^1.4.2",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
+    "h3": "2.0.2",
     "happy-dom": "^20.14.5",
     "oxfmt": "0.72.0",
     "oxlint": "1.87.0",
