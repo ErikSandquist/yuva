@@ -1922,7 +1922,17 @@ request. Decisions:
   (server-wide, partitions dropped), hours `monitor_hour_days`, days and dimension days
   `retention_months`, check results 30 days, check days, state changes and service history 400 days;
   `DELETE …/consumers/{id}` erases a consumer's rows and name. Deleting a property, a service or a
-  check deletes its rows; workspace `retention_days` does not apply.
+  check deletes its rows; workspace `retention_days` does not apply. A site takes only site views and an
+  API property only `api_` views (`422 property_kind`). `api_overview` is every dimension except route,
+  method and consumer; `api_routes` adds route, method and `routes: new|silent`; `api_consumers` adds
+  consumer. API links never share `uptime`, `support` or `conversations` (`403 view_not_shared`), and
+  the shared page carries `property.kind`. Exports store their range fixed at creation, are refused at
+  creation for a bad query, and a file made before an erasure keeps the name until it expires (7 days).
+  `GET …/consumers` lists a property's consumers (search, cursor) so one can be erased. Erasure leaves a
+  name row with no value and `erased_at`, so the id is never given to another consumer (one named again
+  gets a new id), tells every process to drop it from memory, and two `monitor_erase` jobs at 2 and 11
+  minutes delete rows a process was still writing. Totals do not change, since minute, hour and day rows
+  never hold the consumer. Deleting a property leaves its checks with no property.
 - **Dashboards (M16.6).** `monitor_dashboards` belong to the workspace: name, a JSON document
   (`MonitorDashboardDocument`, `schema: 1`: a default time range, auto-refresh off or 30 s to 15 min,
   up to 10 variables of kind property, route, consumer, environment, service or custom, and up to 50
