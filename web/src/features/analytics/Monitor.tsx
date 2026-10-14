@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { ArrowDownIcon, ArrowLeftIcon, EyeIcon, EyeOffIcon } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link, useParams, useSearchParams } from "react-router"
 
 import { ErrorLine, Notice, ScrollRow, Segmented } from "@/components/common"
@@ -669,9 +669,14 @@ export function ApiConsumers() {
   const { t, i18n } = useLingui()
   const text = useAnalyticsText()
   const property = useCurrentProperty()
-  const { view, addFilter } = useApiView()
+  const { view, addFilter, setRange } = useApiView()
   const share = useShare()
   const sort = useSort()
+  const [params] = useSearchParams()
+  const unset = !params.has("period")
+  useEffect(() => {
+    if (unset) setRange({ period: "7d" })
+  }, [unset, setRange])
   const body: AnalyticsQuery = {
     dataset: "api",
     metrics: CONSUMER_METRICS,

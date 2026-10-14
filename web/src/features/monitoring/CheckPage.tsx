@@ -143,12 +143,12 @@ function ResponseChart({ filters, span }: { filters: AnalyticsFilter[]; span: Sp
   return (
     <Panel
       title={
-        <>
+        <span className="flex flex-col">
           <Trans>Response time</Trans>
-          <span className="ms-2 text-caption font-normal text-faint">
+          <span className="text-caption font-normal text-faint">
             {hourly ? <Trans>per hour, UTC</Trans> : <Trans>per day, UTC</Trans>}
           </span>
-        </>
+        </span>
       }
       action={
         <span className="flex flex-wrap items-center gap-3 text-caption text-muted-foreground">
