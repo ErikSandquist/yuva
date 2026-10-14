@@ -6627,10 +6627,12 @@ type AnalyticsQuery struct {
 	// 400 days apart.
 	Range AnalyticsRange `json:"range"`
 
-	// Routes `dataset: api` with the dimension `route` alone: only `new` routes, first seen in the
-	// range, or `silent` routes, called in the previous period of the range's length and
-	// not since its start (with the query's filters). Every such route has a row, with zeros
-	// when it had no request; `compare` with `previous` shows a silent route's numbers.
+	// Routes `dataset: api` with the dimension `route` alone: only `new` routes, whose first request
+	// (`first_request_at`, by the request times the rollups keep, not when the records
+	// arrived) falls in the range, or `silent` routes, called in the previous period of the
+	// range's length and not since its start (with the query's filters). Every silent route
+	// has a row, with zeros; `compare` with `previous` shows its numbers. Rows carry
+	// `first_request_at` and `last_request_at`.
 	// `(unmatched)`, `(other)` and hidden routes are never listed.
 	Routes *AnalyticsQueryRoutes `json:"routes,omitempty"`
 
@@ -6638,10 +6640,12 @@ type AnalyticsQuery struct {
 	SegmentId *uuid.UUID `json:"segment_id,omitempty"`
 }
 
-// AnalyticsQueryRoutes `dataset: api` with the dimension `route` alone: only `new` routes, first seen in the
-// range, or `silent` routes, called in the previous period of the range's length and
-// not since its start (with the query's filters). Every such route has a row, with zeros
-// when it had no request; `compare` with `previous` shows a silent route's numbers.
+// AnalyticsQueryRoutes `dataset: api` with the dimension `route` alone: only `new` routes, whose first request
+// (`first_request_at`, by the request times the rollups keep, not when the records
+// arrived) falls in the range, or `silent` routes, called in the previous period of the
+// range's length and not since its start (with the query's filters). Every silent route
+// has a row, with zeros; `compare` with `previous` shows its numbers. Rows carry
+// `first_request_at` and `last_request_at`.
 // `(unmatched)`, `(other)` and hidden routes are never listed.
 type AnalyticsQueryRoutes string
 
@@ -6959,6 +6963,14 @@ type AnalyticsRow struct {
 
 	// Dimensions One value per dimension of the query, in its order.
 	Dimensions []string `json:"dimensions"`
+
+	// FirstRequestAt `dataset: api` with `routes`: when the route's first request was, by the rollups: the start
+	// of its first minute in the minute rows, or before them of its first hour, or before the
+	// hourly rows of its first local day.
+	FirstRequestAt *time.Time `json:"first_request_at,omitempty"`
+
+	// LastRequestAt `dataset: api` with `routes`: the start of the latest minute, hour or local day the route had a request in.
+	LastRequestAt *time.Time `json:"last_request_at,omitempty"`
 
 	// Metrics The metrics the query asked for.
 	Metrics AnalyticsMetrics `json:"metrics"`
