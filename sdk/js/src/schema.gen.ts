@@ -4992,7 +4992,8 @@ export interface paths {
          * Hide or show a route
          * @description `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
          *     included, such as a health check the API's own load balancer calls; `hidden: false` shows
-         *     it again. Nothing counted is deleted. To count a path under another pattern, add a
+         *     it again. Nothing counted is deleted. `apdex_ms` sets the route's own Apdex threshold, for
+         *     a route that is slow by nature such as an export; `null` goes back to the property's. To count a path under another pattern, add a
          *     property `path_rules` entry instead.
          *
          *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
@@ -13126,14 +13127,21 @@ export interface components {
          *     1,000 page views), next to `visitors` and `pageviews`.
          *
          *     With `dataset: api` (an API property) only: `requests`, `requests_per_minute` (requests
-         *     per minute of the range or bucket, up to now), `errors` (status 500 to 599, or 0 when no
-         *     response was sent), `error_rate` and `client_error_rate` (percent of requests),
-         *     `client_errors` (status 400 to 499), `p50`, `p95` and `p99` (the duration in milliseconds
-         *     that this share of requests stayed within, from sketches accurate to 1.1%) and
-         *     `avg_duration` (milliseconds).
+         *     per minute of the range or bucket, up to now: the throughput), `errors` (status 500 to 599,
+         *     or 0 when no response was sent), `error_rate` and `client_error_rate` (percent of
+         *     requests), `client_errors` (status 400 to 499), `p50`, `p75`, `p90`, `p95` and `p99` (the
+         *     duration in milliseconds that this share of requests stayed within, from sketches accurate
+         *     to 1.1%), `avg_duration` and `max_duration` (milliseconds, exact), `apdex` (0 to 1:
+         *     requests within T count 1, within 4T a half, T the route's `apdex_ms` or else the
+         *     property's, read from the same sketches), `request_bytes` and `response_bytes` (body bytes
+         *     added up, of the records that gave a size), `response_size_p50` and `response_size_p95`
+         *     (bytes, accurate to 9%) and `conversations` (conversations the property's linked inbox
+         *     received, by its local day; only with no dimension or a `time:day`, `time:week` or
+         *     `time:month` grain alone, and no filter or `routes`; `422 no_linked_inbox` without an
+         *     inbox).
          * @enum {string}
          */
-        AnalyticsMetric: "visitors" | "visits" | "pageviews" | "views_per_visit" | "bounce_rate" | "visit_duration" | "time_on_page" | "scroll_depth" | "events" | "conversions" | "conversion_rate" | "completions" | "revenue" | "conversations" | "feedback" | "ratings_up" | "ratings_down" | "helpful_rate" | "discussions" | "support_rate" | "requests" | "requests_per_minute" | "errors" | "error_rate" | "client_errors" | "client_error_rate" | "p50" | "p95" | "p99" | "avg_duration";
+        AnalyticsMetric: "visitors" | "visits" | "pageviews" | "views_per_visit" | "bounce_rate" | "visit_duration" | "time_on_page" | "scroll_depth" | "events" | "conversions" | "conversion_rate" | "completions" | "revenue" | "conversations" | "feedback" | "ratings_up" | "ratings_down" | "helpful_rate" | "discussions" | "support_rate" | "requests" | "requests_per_minute" | "errors" | "error_rate" | "client_errors" | "client_error_rate" | "p50" | "p75" | "p90" | "p95" | "p99" | "avg_duration" | "max_duration" | "apdex" | "request_bytes" | "response_bytes" | "response_size_p50" | "response_size_p95";
         /**
          * @description A value of a visit or page. `page` is a path that was viewed (pages are counted by path;
          *     `hostname` tells sites apart), `entry_page` and `exit_page` the first and last of a visit.
@@ -13152,14 +13160,21 @@ export interface components {
          *     a filter of visits they keep the visits with such an event; in an `event` or `prop`
          *     breakdown they keep the matching events.
          *
-         *     With `dataset: api`: `route` is the route pattern (`/users/{id}`), `(unmatched)` for
-         *     requests that answered 404 or 405 without one, or `(other)` past the property's 1,000
-         *     routes; `method` an HTTP method or `_OTHER`; `status` the status code (`0` when no response
-         *     was sent); `status_class` `1xx` to `5xx`, or `none` for status 0; `environment` the record's
-         *     environment (`production` by default, `(other)` past 20).
+         *     With `dataset: api` the core dimensions are `route`, the route pattern (`/users/{id}`),
+         *     `(unmatched)` for requests that answered 404 or 405 without one, or `(other)` past the
+         *     property's 1,000 routes; `method` an HTTP method or `_OTHER`; `status` the status code (`0`
+         *     when no response was sent); `status_class` `1xx` to `5xx`, or `none` for status 0;
+         *     `api_version` (`(other)` past 50); `environment` (`production` by default, `(other)` past
+         *     20); `service` (`(other)` past 100 per workspace); `source` `server`
+         *     (`sendAnalyticsRequests`), `otlp` (`exportOtlpTraces`) or `app` (`collectAnalyticsRequests`);
+         *     `platform` `ios` or `android` for app records. A record that gave no API version, service or
+         *     platform has the empty string. The extra dimensions are `consumer` (`(other)` past 10,000),
+         *     `country` and `app_version` (`(other)` past 200); they count only the requests that have
+         *     one, and each is kept by local hour with `route`, `method` and `status_class` only (see
+         *     `AnalyticsDataset`).
          * @enum {string}
          */
-        AnalyticsFilterDimension: "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version" | "visitor_type" | "event" | "prop" | "route" | "method" | "status" | "status_class" | "environment";
+        AnalyticsFilterDimension: "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version" | "visitor_type" | "event" | "prop" | "route" | "method" | "status" | "status_class" | "environment" | "api_version" | "service" | "consumer";
         /**
          * @description A filter dimension (`AnalyticsFilterDimension`), or a time grain: `time:hour` (local hours
          *     of the property's time zone; only alone, and only with `visitors`, `visits`, `pageviews` and
@@ -13169,16 +13184,17 @@ export interface components {
          *     value of the event prop the query's `prop` names; either takes at most one other dimension,
          *     a time grain other than `time:hour` or a visit dimension.
          *
-         *     With `dataset: api`, two of `route`, `method`, `status`, `status_class`, `environment` and
-         *     one grain: `time:minute` (minutes, inside the last `YUVA_MONITOR_MINUTE_DAYS` days and at
-         *     most 1,440 of them), `time:hour` (local hours) or `time:day`. Minute and hour values are the
-         *     bucket's start in the property's time zone with its UTC offset, `2026-10-12T14:05+03:00`,
-         *     so the hour a clock repeats in autumn and the hours around a pending zone change
-         *     (`timezone_applies_at`) stay apart; day values are the local date, `2026-10-12`. Every
-         *     bucket of the range is present when the grain is the only dimension.
+         *     With `dataset: api`, two of the API dimensions of `AnalyticsFilterDimension`, one of them
+         *     a grain at most: `time:minute` (minutes, inside the last `YUVA_MONITOR_MINUTE_DAYS` days
+         *     and at most 1,440 of them), `time:hour` (local hours), `time:day`, `time:week` (weeks start
+         *     on Monday) or `time:month`. Minute and hour values are the bucket's start in the property's
+         *     time zone with its UTC offset, `2026-10-12T14:05+03:00`, so the hour a clock repeats in
+         *     autumn and the hours around a pending zone change (`timezone_applies_at`) stay apart; day,
+         *     week and month values are the local date they start on, `2026-10-12`. Every bucket of the
+         *     range is present when the grain is the only dimension.
          * @enum {string}
          */
-        AnalyticsDimension: "time:minute" | "time:hour" | "time:day" | "time:week" | "time:month" | "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version" | "visitor_type" | "event" | "prop" | "route" | "method" | "status" | "status_class" | "environment";
+        AnalyticsDimension: "time:minute" | "time:hour" | "time:day" | "time:week" | "time:month" | "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version" | "visitor_type" | "event" | "prop" | "route" | "method" | "status" | "status_class" | "environment" | "api_version" | "service" | "consumer";
         /**
          * @description `is` and `is_not` compare whole values, `contains` and `not_contains` parts of them (case
          *     does not matter), `matches` patterns: on paths `*` is one segment and `**` any number of
@@ -13198,9 +13214,22 @@ export interface components {
          *     `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
          *     `year` are the current calendar month and year to date; `last_month` the one before), or
          *     `from` and `to` (inclusive, at most 400 days apart). With `dataset: api` a period can also
-         *     be the last `15m`, `1h`, `6h` or `24h` up to the current minute, included.
+         *     be the last `15m`, `1h`, `6h` or `24h` up to the current minute, included, and the range
+         *     can be `since` and `until` instead: instants on a whole minute, `until` excluded, at most
+         *     400 days apart.
          */
         AnalyticsRange: {
+            /**
+             * Format: date-time
+             * @description `dataset: api`: the first minute of the range, with `until`.
+             * @example 2026-10-12T14:05:00+03:00
+             */
+            since?: string;
+            /**
+             * Format: date-time
+             * @description `dataset: api`: the minute the range ends at, not included.
+             */
+            until?: string;
             /** @enum {string} */
             period?: "today" | "yesterday" | "7d" | "28d" | "30d" | "90d" | "6mo" | "12mo" | "month" | "last_month" | "year" | "15m" | "1h" | "6h" | "24h";
             /** Format: date */
@@ -13210,7 +13239,9 @@ export interface components {
         };
         /**
          * @description `previous` is the range of the same length just before, `year` the same days a year
-         *     earlier, `range` the days `from` to `to`.
+         *     earlier, `range` the days `from` to `to`. With `dataset: api` and a range of minutes
+         *     (`15m` to `24h`, `since` and `until`), `previous` is as many minutes just before and `year`
+         *     the same instants a year earlier.
          */
         AnalyticsCompare: {
             /** @enum {string} */
@@ -13243,11 +13274,25 @@ export interface components {
          *
          *     `api` is an API property's requests (`sendAnalyticsRequests`), and the only dataset an API
          *     property takes (`422 property_kind` otherwise, and for `api` on a site). It takes the API
-         *     metrics of `AnalyticsMetric`, the API dimensions of `AnalyticsDimension` and filters on
-         *     them, no goal, prop, segment, comparison or insights. Closed local days come from daily
-         *     rows, closed hours from hourly rows and the rest from minute rows, which processes write
-         *     every 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
-         *     Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by `requests` unless `order_by` says otherwise.
+         *     metrics of `AnalyticsMetric`, the API dimensions of `AnalyticsDimension`, filters on them
+         *     and `compare`; no goal, prop, segment or insights. Closed local days come from daily rows,
+         *     closed hours from hourly rows and the rest from minute rows, which processes write every
+         *     10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
+         *     Answers that reach into open hours are cached for 5 seconds.
+         *
+         *     Any combination of the core dimensions (`route`, `method`, `status`, `status_class`,
+         *     `api_version`, `environment`, `service`, `source`, `platform`) breaks down and filters
+         *     from every tier. One extra dimension (`consumer`, `country` or `app_version`), as a
+         *     dimension or a filter, joins only `route`, `method`, `status_class` and the grains from
+         *     `time:hour` up, over a range of whole local hours (days, or `since` and `until` on the
+         *     hour), since it is kept by local hour with those three. Anything else answers
+         *     `422 dimension_combination`: two extra dimensions, an extra one with another core
+         *     dimension or filter, with `time:minute`, or over a range that is not whole hours.
+         *     Requests without a value of the extra dimension are not in its answers.
+         *
+         *     Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by
+         *     `requests` unless `order_by` says otherwise; slowest and most failing routes are a `route`
+         *     breakdown ordered by `p95` or `error_rate`.
          * @enum {string}
          */
         AnalyticsDataset: "traffic" | "support" | "api";
@@ -13279,6 +13324,15 @@ export interface components {
             filters?: components["schemas"]["AnalyticsFilter"][];
             range: components["schemas"]["AnalyticsRange"];
             compare?: components["schemas"]["AnalyticsCompare"];
+            /**
+             * @description `dataset: api` with the dimension `route` alone: only `new` routes, first seen in the
+             *     range, or `silent` routes, called in the previous period of the range's length and
+             *     not since its start (with the query's filters). Every such route has a row, with zeros
+             *     when it had no request; `compare` with `previous` shows a silent route's numbers.
+             *     `(unmatched)`, `(other)` and hidden routes are never listed.
+             * @enum {string}
+             */
+            routes?: "new" | "silent";
             /** @description Time series come in time order; breakdowns by `visitors`, most first, unless this says otherwise. */
             order_by?: components["schemas"]["AnalyticsOrder"][];
             /**
@@ -13346,11 +13400,27 @@ export interface components {
             /** Format: double */
             p50?: number;
             /** Format: double */
+            p75?: number;
+            /** Format: double */
+            p90?: number;
+            /** Format: double */
             p95?: number;
             /** Format: double */
             p99?: number;
             /** Format: double */
             avg_duration?: number;
+            /** Format: double */
+            max_duration?: number;
+            /** Format: double */
+            apdex?: number;
+            /** Format: double */
+            request_bytes?: number;
+            /** Format: double */
+            response_bytes?: number;
+            /** Format: double */
+            response_size_p50?: number;
+            /** Format: double */
+            response_size_p95?: number;
         };
         AnalyticsRevenue: {
             /** @description ISO 4217 code. */
@@ -13387,6 +13457,16 @@ export interface components {
             from: string;
             /** Format: date */
             to: string;
+            /**
+             * Format: date-time
+             * @description `dataset: api`: the comparison range's first instant.
+             */
+            since?: string;
+            /**
+             * Format: date-time
+             * @description `dataset: api`: the instant the comparison range ends at, not included.
+             */
+            until?: string;
             totals: components["schemas"]["AnalyticsMetrics"];
             /** @description The comparison range's rows with the same dimension values as `rows` (time buckets by position). */
             rows: components["schemas"]["AnalyticsRow"][];
@@ -13397,6 +13477,16 @@ export interface components {
             /** Format: date */
             to: string;
             timezone: string;
+            /**
+             * Format: date-time
+             * @description `dataset: api`: the range's first instant.
+             */
+            since?: string;
+            /**
+             * Format: date-time
+             * @description `dataset: api`: the instant the range ends at, not included.
+             */
+            until?: string;
             /** @enum {string} */
             served_from: "rollups" | "raw" | "mixed";
             /**
@@ -13692,7 +13782,11 @@ export interface components {
             environment?: string;
             /** @description The service that served the request. */
             service?: string;
-            /** @description The service's release, for deploy markers. */
+            /**
+             * @description The service's release, such as a version or commit. The first record of a release
+             *     not seen before for its service and environment writes a `deploy` annotation at its
+             *     time; at most 50 a day per property.
+             */
             release?: string;
             /** @description The caller's address, only to find its country; shortened on arrival, never stored. */
             ip?: string;
@@ -13712,6 +13806,11 @@ export interface components {
             inferred: boolean;
             /** @description Left out of `dataset: api` answers. */
             hidden: boolean;
+            /**
+             * Format: int32
+             * @description The route's Apdex threshold in milliseconds; absent when it uses the property's `apdex_ms`.
+             */
+            apdex_ms?: number;
             /** Format: date-time */
             first_seen_at: string;
             /**
@@ -13724,7 +13823,12 @@ export interface components {
             items: components["schemas"]["AnalyticsRoute"][];
         };
         AnalyticsRouteUpdate: {
-            hidden: boolean;
+            hidden?: boolean;
+            /**
+             * Format: int32
+             * @description The route's Apdex threshold in milliseconds; `null` goes back to the property's.
+             */
+            apdex_ms?: number | null;
         };
         AnalyticsRequestsResult: {
             /** @description The valid records, counted unless a rule of the operation dropped them. */
@@ -14084,10 +14188,13 @@ export interface components {
             /**
              * @description `note` is a member's; Yuva adds `key_rotated` when the property got a new key,
              *     `goal_created` (with `goal_id` while the goal exists, and its name as `text`) and
-             *     `alert` (with `alert_id`, what the alert found as `text`).
+             *     `alert` (with `alert_id`, what the alert found as `text`). An API property gets
+             *     `deploy` when a record brings a release not seen before for its service and
+             *     environment: `at` is that record's time, `text` the release, and `service`,
+             *     `environment` and `release` say which.
              * @enum {string}
              */
-            kind: "note" | "key_rotated" | "goal_created" | "alert";
+            kind: "note" | "key_rotated" | "goal_created" | "alert" | "deploy";
             /** Format: date */
             starts_on: string;
             /** Format: date */
@@ -14097,6 +14204,17 @@ export interface components {
             goal_id?: string;
             /** Format: uuid */
             alert_id?: string;
+            /**
+             * Format: date-time
+             * @description `deploy`: when it happened, so minute and hour charts place it.
+             */
+            at?: string;
+            /** @description `deploy`: the service, empty when the records name none. */
+            service?: string;
+            /** @description `deploy`: the environment. */
+            environment?: string;
+            /** @description `deploy`: the new release. */
+            release?: string;
             /**
              * Format: uuid
              * @description The member who wrote it; absent for Yuva's own, API keys and removed members.
@@ -22707,6 +22825,9 @@ export interface operations {
              *     `raw_window_from` is the first day it can serve. `range_too_large`: the range is longer
              *     than 400 days, or with `time:minute` more than 1,440 minutes or older than the minute
              *     rows. `property_kind`: the dataset does not fit the property's kind.
+             *     `dimension_combination`: `dataset: api` asked for dimensions and filters that are not
+             *     kept together (`AnalyticsDataset`). `no_linked_inbox`: `conversations` on a property
+             *     without an inbox.
              */
             422: {
                 headers: {
@@ -22847,6 +22968,7 @@ export interface operations {
             401: components["responses"]["OtlpStatus"];
             403: components["responses"]["OtlpStatus"];
             404: components["responses"]["OtlpStatus"];
+            413: components["responses"]["OtlpStatus"];
             415: components["responses"]["OtlpStatus"];
             422: components["responses"]["OtlpStatus"];
             429: components["responses"]["OtlpStatus"];

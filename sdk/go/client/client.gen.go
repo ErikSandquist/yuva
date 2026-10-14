@@ -66,6 +66,7 @@ func (e AnalyticsAlertKind) Valid() bool {
 // Defines values for AnalyticsAnnotationKind.
 const (
 	AnalyticsAnnotationAlert       AnalyticsAnnotationKind = "alert"
+	AnalyticsAnnotationDeploy      AnalyticsAnnotationKind = "deploy"
 	AnalyticsAnnotationGoalCreated AnalyticsAnnotationKind = "goal_created"
 	AnalyticsAnnotationKeyRotated  AnalyticsAnnotationKind = "key_rotated"
 	AnalyticsAnnotationNote        AnalyticsAnnotationKind = "note"
@@ -75,6 +76,8 @@ const (
 func (e AnalyticsAnnotationKind) Valid() bool {
 	switch e {
 	case AnalyticsAnnotationAlert:
+		return true
+	case AnalyticsAnnotationDeploy:
 		return true
 	case AnalyticsAnnotationGoalCreated:
 		return true
@@ -260,11 +263,13 @@ func (e AnalyticsDataset) Valid() bool {
 
 // Defines values for AnalyticsDimension.
 const (
+	AnalyticsByApiVersion     AnalyticsDimension = "api_version"
 	AnalyticsByAppVersion     AnalyticsDimension = "app_version"
 	AnalyticsByBrowser        AnalyticsDimension = "browser"
 	AnalyticsByBrowserVersion AnalyticsDimension = "browser_version"
 	AnalyticsByChannel        AnalyticsDimension = "channel"
 	AnalyticsByCity           AnalyticsDimension = "city"
+	AnalyticsByConsumer       AnalyticsDimension = "consumer"
 	AnalyticsByCountry        AnalyticsDimension = "country"
 	AnalyticsByDay            AnalyticsDimension = "time:day"
 	AnalyticsByDevice         AnalyticsDimension = "device"
@@ -287,6 +292,7 @@ const (
 	AnalyticsByRegion         AnalyticsDimension = "region"
 	AnalyticsByRoute          AnalyticsDimension = "route"
 	AnalyticsByScreenSize     AnalyticsDimension = "screen_size"
+	AnalyticsByService        AnalyticsDimension = "service"
 	AnalyticsBySource         AnalyticsDimension = "source"
 	AnalyticsByStatus         AnalyticsDimension = "status"
 	AnalyticsByStatusClass    AnalyticsDimension = "status_class"
@@ -302,6 +308,8 @@ const (
 // Valid indicates whether the value is a known member of the AnalyticsDimension enum.
 func (e AnalyticsDimension) Valid() bool {
 	switch e {
+	case AnalyticsByApiVersion:
+		return true
 	case AnalyticsByAppVersion:
 		return true
 	case AnalyticsByBrowser:
@@ -311,6 +319,8 @@ func (e AnalyticsDimension) Valid() bool {
 	case AnalyticsByChannel:
 		return true
 	case AnalyticsByCity:
+		return true
+	case AnalyticsByConsumer:
 		return true
 	case AnalyticsByCountry:
 		return true
@@ -355,6 +365,8 @@ func (e AnalyticsDimension) Valid() bool {
 	case AnalyticsByRoute:
 		return true
 	case AnalyticsByScreenSize:
+		return true
+	case AnalyticsByService:
 		return true
 	case AnalyticsBySource:
 		return true
@@ -473,11 +485,13 @@ func (e AnalyticsFilterOp) Valid() bool {
 
 // Defines values for AnalyticsFilterDimension.
 const (
+	AnalyticsDimApiVersion     AnalyticsFilterDimension = "api_version"
 	AnalyticsDimAppVersion     AnalyticsFilterDimension = "app_version"
 	AnalyticsDimBrowser        AnalyticsFilterDimension = "browser"
 	AnalyticsDimBrowserVersion AnalyticsFilterDimension = "browser_version"
 	AnalyticsDimChannel        AnalyticsFilterDimension = "channel"
 	AnalyticsDimCity           AnalyticsFilterDimension = "city"
+	AnalyticsDimConsumer       AnalyticsFilterDimension = "consumer"
 	AnalyticsDimCountry        AnalyticsFilterDimension = "country"
 	AnalyticsDimDevice         AnalyticsFilterDimension = "device"
 	AnalyticsDimEntryPage      AnalyticsFilterDimension = "entry_page"
@@ -496,6 +510,7 @@ const (
 	AnalyticsDimRegion         AnalyticsFilterDimension = "region"
 	AnalyticsDimRoute          AnalyticsFilterDimension = "route"
 	AnalyticsDimScreenSize     AnalyticsFilterDimension = "screen_size"
+	AnalyticsDimService        AnalyticsFilterDimension = "service"
 	AnalyticsDimSource         AnalyticsFilterDimension = "source"
 	AnalyticsDimStatus         AnalyticsFilterDimension = "status"
 	AnalyticsDimStatusClass    AnalyticsFilterDimension = "status_class"
@@ -510,6 +525,8 @@ const (
 // Valid indicates whether the value is a known member of the AnalyticsFilterDimension enum.
 func (e AnalyticsFilterDimension) Valid() bool {
 	switch e {
+	case AnalyticsDimApiVersion:
+		return true
 	case AnalyticsDimAppVersion:
 		return true
 	case AnalyticsDimBrowser:
@@ -519,6 +536,8 @@ func (e AnalyticsFilterDimension) Valid() bool {
 	case AnalyticsDimChannel:
 		return true
 	case AnalyticsDimCity:
+		return true
+	case AnalyticsDimConsumer:
 		return true
 	case AnalyticsDimCountry:
 		return true
@@ -555,6 +574,8 @@ func (e AnalyticsFilterDimension) Valid() bool {
 	case AnalyticsDimRoute:
 		return true
 	case AnalyticsDimScreenSize:
+		return true
+	case AnalyticsDimService:
 		return true
 	case AnalyticsDimSource:
 		return true
@@ -650,6 +671,7 @@ func (e AnalyticsInsightKind) Valid() bool {
 
 // Defines values for AnalyticsMetric.
 const (
+	AnalyticsMetricApdex             AnalyticsMetric = "apdex"
 	AnalyticsMetricAvgDuration       AnalyticsMetric = "avg_duration"
 	AnalyticsMetricBounceRate        AnalyticsMetric = "bounce_rate"
 	AnalyticsMetricClientErrorRate   AnalyticsMetric = "client_error_rate"
@@ -664,14 +686,21 @@ const (
 	AnalyticsMetricEvents            AnalyticsMetric = "events"
 	AnalyticsMetricFeedback          AnalyticsMetric = "feedback"
 	AnalyticsMetricHelpfulRate       AnalyticsMetric = "helpful_rate"
+	AnalyticsMetricMaxDuration       AnalyticsMetric = "max_duration"
 	AnalyticsMetricP50               AnalyticsMetric = "p50"
+	AnalyticsMetricP75               AnalyticsMetric = "p75"
+	AnalyticsMetricP90               AnalyticsMetric = "p90"
 	AnalyticsMetricP95               AnalyticsMetric = "p95"
 	AnalyticsMetricP99               AnalyticsMetric = "p99"
 	AnalyticsMetricPageviews         AnalyticsMetric = "pageviews"
 	AnalyticsMetricRatingsDown       AnalyticsMetric = "ratings_down"
 	AnalyticsMetricRatingsUp         AnalyticsMetric = "ratings_up"
+	AnalyticsMetricRequestBytes      AnalyticsMetric = "request_bytes"
 	AnalyticsMetricRequests          AnalyticsMetric = "requests"
 	AnalyticsMetricRequestsPerMinute AnalyticsMetric = "requests_per_minute"
+	AnalyticsMetricResponseBytes     AnalyticsMetric = "response_bytes"
+	AnalyticsMetricResponseSizeP50   AnalyticsMetric = "response_size_p50"
+	AnalyticsMetricResponseSizeP95   AnalyticsMetric = "response_size_p95"
 	AnalyticsMetricRevenue           AnalyticsMetric = "revenue"
 	AnalyticsMetricScrollDepth       AnalyticsMetric = "scroll_depth"
 	AnalyticsMetricSupportRate       AnalyticsMetric = "support_rate"
@@ -685,6 +714,8 @@ const (
 // Valid indicates whether the value is a known member of the AnalyticsMetric enum.
 func (e AnalyticsMetric) Valid() bool {
 	switch e {
+	case AnalyticsMetricApdex:
+		return true
 	case AnalyticsMetricAvgDuration:
 		return true
 	case AnalyticsMetricBounceRate:
@@ -713,7 +744,13 @@ func (e AnalyticsMetric) Valid() bool {
 		return true
 	case AnalyticsMetricHelpfulRate:
 		return true
+	case AnalyticsMetricMaxDuration:
+		return true
 	case AnalyticsMetricP50:
+		return true
+	case AnalyticsMetricP75:
+		return true
+	case AnalyticsMetricP90:
 		return true
 	case AnalyticsMetricP95:
 		return true
@@ -725,9 +762,17 @@ func (e AnalyticsMetric) Valid() bool {
 		return true
 	case AnalyticsMetricRatingsUp:
 		return true
+	case AnalyticsMetricRequestBytes:
+		return true
 	case AnalyticsMetricRequests:
 		return true
 	case AnalyticsMetricRequestsPerMinute:
+		return true
+	case AnalyticsMetricResponseBytes:
+		return true
+	case AnalyticsMetricResponseSizeP50:
+		return true
+	case AnalyticsMetricResponseSizeP95:
 		return true
 	case AnalyticsMetricRevenue:
 		return true
@@ -801,6 +846,24 @@ func (e AnalyticsPropertyKind) Valid() bool {
 	case AnalyticsKindApi:
 		return true
 	case AnalyticsKindSite:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsQueryRoutes.
+const (
+	AnalyticsRoutesNew    AnalyticsQueryRoutes = "new"
+	AnalyticsRoutesSilent AnalyticsQueryRoutes = "silent"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsQueryRoutes enum.
+func (e AnalyticsQueryRoutes) Valid() bool {
+	switch e {
+	case AnalyticsRoutesNew:
+		return true
+	case AnalyticsRoutesSilent:
 		return true
 	default:
 		return false
@@ -4900,27 +4963,45 @@ type AnalyticsAlertList struct {
 
 // AnalyticsAnnotation defines model for AnalyticsAnnotation.
 type AnalyticsAnnotation struct {
-	AlertId   *uuid.UUID `json:"alert_id,omitempty"`
+	AlertId *uuid.UUID `json:"alert_id,omitempty"`
+
+	// At `deploy`: when it happened, so minute and hour charts place it.
+	At        *time.Time `json:"at,omitempty"`
 	CreatedAt time.Time  `json:"created_at"`
 
 	// CreatedBy The member who wrote it; absent for Yuva's own, API keys and removed members.
 	CreatedBy *uuid.UUID         `json:"created_by,omitempty"`
 	EndsOn    openapi_types.Date `json:"ends_on"`
-	GoalId    *uuid.UUID         `json:"goal_id,omitempty"`
-	Id        uuid.UUID          `json:"id"`
+
+	// Environment `deploy`: the environment.
+	Environment *string    `json:"environment,omitempty"`
+	GoalId      *uuid.UUID `json:"goal_id,omitempty"`
+	Id          uuid.UUID  `json:"id"`
 
 	// Kind `note` is a member's; Yuva adds `key_rotated` when the property got a new key,
 	// `goal_created` (with `goal_id` while the goal exists, and its name as `text`) and
-	// `alert` (with `alert_id`, what the alert found as `text`).
-	Kind      AnalyticsAnnotationKind `json:"kind"`
-	StartsOn  openapi_types.Date      `json:"starts_on"`
-	Text      string                  `json:"text"`
-	UpdatedAt time.Time               `json:"updated_at"`
+	// `alert` (with `alert_id`, what the alert found as `text`). An API property gets
+	// `deploy` when a record brings a release not seen before for its service and
+	// environment: `at` is that record's time, `text` the release, and `service`,
+	// `environment` and `release` say which.
+	Kind AnalyticsAnnotationKind `json:"kind"`
+
+	// Release `deploy`: the new release.
+	Release *string `json:"release,omitempty"`
+
+	// Service `deploy`: the service, empty when the records name none.
+	Service   *string            `json:"service,omitempty"`
+	StartsOn  openapi_types.Date `json:"starts_on"`
+	Text      string             `json:"text"`
+	UpdatedAt time.Time          `json:"updated_at"`
 }
 
 // AnalyticsAnnotationKind `note` is a member's; Yuva adds `key_rotated` when the property got a new key,
 // `goal_created` (with `goal_id` while the goal exists, and its name as `text`) and
-// `alert` (with `alert_id`, what the alert found as `text`).
+// `alert` (with `alert_id`, what the alert found as `text`). An API property gets
+// `deploy` when a record brings a release not seen before for its service and
+// environment: `at` is that record's time, `text` the release, and `service`,
+// `environment` and `release` say which.
 type AnalyticsAnnotationKind string
 
 // AnalyticsAnnotationCreate defines model for AnalyticsAnnotationCreate.
@@ -5049,7 +5130,9 @@ type AnalyticsCohort struct {
 type AnalyticsCollection string
 
 // AnalyticsCompare `previous` is the range of the same length just before, `year` the same days a year
-// earlier, `range` the days `from` to `to`.
+// earlier, `range` the days `from` to `to`. With `dataset: api` and a range of minutes
+// (`15m` to `24h`, `since` and `until`), `previous` is as many minutes just before and `year`
+// the same instants a year earlier.
 type AnalyticsCompare struct {
 	From *openapi_types.Date  `json:"from,omitempty"`
 	To   *openapi_types.Date  `json:"to,omitempty"`
@@ -5064,11 +5147,17 @@ type AnalyticsComparison struct {
 	From openapi_types.Date `json:"from"`
 
 	// Rows The comparison range's rows with the same dimension values as `rows` (time buckets by position).
-	Rows []AnalyticsRow     `json:"rows"`
-	To   openapi_types.Date `json:"to"`
+	Rows []AnalyticsRow `json:"rows"`
+
+	// Since `dataset: api`: the comparison range's first instant.
+	Since *time.Time         `json:"since,omitempty"`
+	To    openapi_types.Date `json:"to"`
 
 	// Totals The metrics the query asked for.
 	Totals AnalyticsMetrics `json:"totals"`
+
+	// Until `dataset: api`: the instant the comparison range ends at, not included.
+	Until *time.Time `json:"until,omitempty"`
 }
 
 // AnalyticsConsent What the visitor agreed to in the site's or app's own consent tool. `p` and `j` count only
@@ -5167,11 +5256,25 @@ type AnalyticsDataDeletion struct {
 //
 // `api` is an API property's requests (`sendAnalyticsRequests`), and the only dataset an API
 // property takes (`422 property_kind` otherwise, and for `api` on a site). It takes the API
-// metrics of `AnalyticsMetric`, the API dimensions of `AnalyticsDimension` and filters on
-// them, no goal, prop, segment, comparison or insights. Closed local days come from daily
-// rows, closed hours from hourly rows and the rest from minute rows, which processes write
-// every 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
-// Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by `requests` unless `order_by` says otherwise.
+// metrics of `AnalyticsMetric`, the API dimensions of `AnalyticsDimension`, filters on them
+// and `compare`; no goal, prop, segment or insights. Closed local days come from daily rows,
+// closed hours from hourly rows and the rest from minute rows, which processes write every
+// 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
+// Answers that reach into open hours are cached for 5 seconds.
+//
+// Any combination of the core dimensions (`route`, `method`, `status`, `status_class`,
+// `api_version`, `environment`, `service`, `source`, `platform`) breaks down and filters
+// from every tier. One extra dimension (`consumer`, `country` or `app_version`), as a
+// dimension or a filter, joins only `route`, `method`, `status_class` and the grains from
+// `time:hour` up, over a range of whole local hours (days, or `since` and `until` on the
+// hour), since it is kept by local hour with those three. Anything else answers
+// `422 dimension_combination`: two extra dimensions, an extra one with another core
+// dimension or filter, with `time:minute`, or over a range that is not whole hours.
+// Requests without a value of the extra dimension are not in its answers.
+//
+// Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by
+// `requests` unless `order_by` says otherwise; slowest and most failing routes are a `route`
+// breakdown ordered by `p95` or `error_rate`.
 type AnalyticsDataset string
 
 // AnalyticsDimension A filter dimension (`AnalyticsFilterDimension`), or a time grain: `time:hour` (local hours
@@ -5182,13 +5285,14 @@ type AnalyticsDataset string
 // value of the event prop the query's `prop` names; either takes at most one other dimension,
 // a time grain other than `time:hour` or a visit dimension.
 //
-// With `dataset: api`, two of `route`, `method`, `status`, `status_class`, `environment` and
-// one grain: `time:minute` (minutes, inside the last `YUVA_MONITOR_MINUTE_DAYS` days and at
-// most 1,440 of them), `time:hour` (local hours) or `time:day`. Minute and hour values are the
-// bucket's start in the property's time zone with its UTC offset, `2026-10-12T14:05+03:00`,
-// so the hour a clock repeats in autumn and the hours around a pending zone change
-// (`timezone_applies_at`) stay apart; day values are the local date, `2026-10-12`. Every
-// bucket of the range is present when the grain is the only dimension.
+// With `dataset: api`, two of the API dimensions of `AnalyticsFilterDimension`, one of them
+// a grain at most: `time:minute` (minutes, inside the last `YUVA_MONITOR_MINUTE_DAYS` days
+// and at most 1,440 of them), `time:hour` (local hours), `time:day`, `time:week` (weeks start
+// on Monday) or `time:month`. Minute and hour values are the bucket's start in the property's
+// time zone with its UTC offset, `2026-10-12T14:05+03:00`, so the hour a clock repeats in
+// autumn and the hours around a pending zone change (`timezone_applies_at`) stay apart; day,
+// week and month values are the local date they start on, `2026-10-12`. Every bucket of the
+// range is present when the grain is the only dimension.
 type AnalyticsDimension string
 
 // AnalyticsDomain A host name whose pages may send events, without scheme or port: `example.com`,
@@ -5431,11 +5535,18 @@ type AnalyticsExportCreate struct {
 	// a filter of visits they keep the visits with such an event; in an `event` or `prop`
 	// breakdown they keep the matching events.
 	//
-	// With `dataset: api`: `route` is the route pattern (`/users/{id}`), `(unmatched)` for
-	// requests that answered 404 or 405 without one, or `(other)` past the property's 1,000
-	// routes; `method` an HTTP method or `_OTHER`; `status` the status code (`0` when no response
-	// was sent); `status_class` `1xx` to `5xx`, or `none` for status 0; `environment` the record's
-	// environment (`production` by default, `(other)` past 20).
+	// With `dataset: api` the core dimensions are `route`, the route pattern (`/users/{id}`),
+	// `(unmatched)` for requests that answered 404 or 405 without one, or `(other)` past the
+	// property's 1,000 routes; `method` an HTTP method or `_OTHER`; `status` the status code (`0`
+	// when no response was sent); `status_class` `1xx` to `5xx`, or `none` for status 0;
+	// `api_version` (`(other)` past 50); `environment` (`production` by default, `(other)` past
+	// 20); `service` (`(other)` past 100 per workspace); `source` `server`
+	// (`sendAnalyticsRequests`), `otlp` (`exportOtlpTraces`) or `app` (`collectAnalyticsRequests`);
+	// `platform` `ios` or `android` for app records. A record that gave no API version, service or
+	// platform has the empty string. The extra dimensions are `consumer` (`(other)` past 10,000),
+	// `country` and `app_version` (`(other)` past 200); they count only the requests that have
+	// one, and each is kept by local hour with `route`, `method` and `status_class` only (see
+	// `AnalyticsDataset`).
 	Dimension *AnalyticsFilterDimension `json:"dimension,omitempty"`
 	Format    *AnalyticsExportFormat    `json:"format,omitempty"`
 	Kind      AnalyticsExportKind       `json:"kind"`
@@ -5445,7 +5556,9 @@ type AnalyticsExportCreate struct {
 	// `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
 	// `year` are the current calendar month and year to date; `last_month` the one before), or
 	// `from` and `to` (inclusive, at most 400 days apart). With `dataset: api` a period can also
-	// be the last `15m`, `1h`, `6h` or `24h` up to the current minute, included.
+	// be the last `15m`, `1h`, `6h` or `24h` up to the current minute, included, and the range
+	// can be `since` and `until` instead: instants on a whole minute, `until` excluded, at most
+	// 400 days apart.
 	Range *AnalyticsRange `json:"range,omitempty"`
 }
 
@@ -5482,11 +5595,18 @@ type AnalyticsFilter struct {
 	// a filter of visits they keep the visits with such an event; in an `event` or `prop`
 	// breakdown they keep the matching events.
 	//
-	// With `dataset: api`: `route` is the route pattern (`/users/{id}`), `(unmatched)` for
-	// requests that answered 404 or 405 without one, or `(other)` past the property's 1,000
-	// routes; `method` an HTTP method or `_OTHER`; `status` the status code (`0` when no response
-	// was sent); `status_class` `1xx` to `5xx`, or `none` for status 0; `environment` the record's
-	// environment (`production` by default, `(other)` past 20).
+	// With `dataset: api` the core dimensions are `route`, the route pattern (`/users/{id}`),
+	// `(unmatched)` for requests that answered 404 or 405 without one, or `(other)` past the
+	// property's 1,000 routes; `method` an HTTP method or `_OTHER`; `status` the status code (`0`
+	// when no response was sent); `status_class` `1xx` to `5xx`, or `none` for status 0;
+	// `api_version` (`(other)` past 50); `environment` (`production` by default, `(other)` past
+	// 20); `service` (`(other)` past 100 per workspace); `source` `server`
+	// (`sendAnalyticsRequests`), `otlp` (`exportOtlpTraces`) or `app` (`collectAnalyticsRequests`);
+	// `platform` `ios` or `android` for app records. A record that gave no API version, service or
+	// platform has the empty string. The extra dimensions are `consumer` (`(other)` past 10,000),
+	// `country` and `app_version` (`(other)` past 200); they count only the requests that have
+	// one, and each is kept by local hour with `route`, `method` and `status_class` only (see
+	// `AnalyticsDataset`).
 	Dimension AnalyticsFilterDimension `json:"dimension"`
 	Op        AnalyticsFilterOp        `json:"op"`
 
@@ -5515,11 +5635,18 @@ type AnalyticsFilterOp string
 // a filter of visits they keep the visits with such an event; in an `event` or `prop`
 // breakdown they keep the matching events.
 //
-// With `dataset: api`: `route` is the route pattern (`/users/{id}`), `(unmatched)` for
-// requests that answered 404 or 405 without one, or `(other)` past the property's 1,000
-// routes; `method` an HTTP method or `_OTHER`; `status` the status code (`0` when no response
-// was sent); `status_class` `1xx` to `5xx`, or `none` for status 0; `environment` the record's
-// environment (`production` by default, `(other)` past 20).
+// With `dataset: api` the core dimensions are `route`, the route pattern (`/users/{id}`),
+// `(unmatched)` for requests that answered 404 or 405 without one, or `(other)` past the
+// property's 1,000 routes; `method` an HTTP method or `_OTHER`; `status` the status code (`0`
+// when no response was sent); `status_class` `1xx` to `5xx`, or `none` for status 0;
+// `api_version` (`(other)` past 50); `environment` (`production` by default, `(other)` past
+// 20); `service` (`(other)` past 100 per workspace); `source` `server`
+// (`sendAnalyticsRequests`), `otlp` (`exportOtlpTraces`) or `app` (`collectAnalyticsRequests`);
+// `platform` `ios` or `android` for app records. A record that gave no API version, service or
+// platform has the empty string. The extra dimensions are `consumer` (`(other)` past 10,000),
+// `country` and `app_version` (`(other)` past 200); they count only the requests that have
+// one, and each is kept by local hour with `route`, `method` and `status_class` only (see
+// `AnalyticsDataset`).
 type AnalyticsFilterDimension string
 
 // AnalyticsFunnel defines model for AnalyticsFunnel.
@@ -5755,11 +5882,18 @@ type AnalyticsInsight struct {
 	// 1,000 page views), next to `visitors` and `pageviews`.
 	//
 	// With `dataset: api` (an API property) only: `requests`, `requests_per_minute` (requests
-	// per minute of the range or bucket, up to now), `errors` (status 500 to 599, or 0 when no
-	// response was sent), `error_rate` and `client_error_rate` (percent of requests),
-	// `client_errors` (status 400 to 499), `p50`, `p95` and `p99` (the duration in milliseconds
-	// that this share of requests stayed within, from sketches accurate to 1.1%) and
-	// `avg_duration` (milliseconds).
+	// per minute of the range or bucket, up to now: the throughput), `errors` (status 500 to 599,
+	// or 0 when no response was sent), `error_rate` and `client_error_rate` (percent of
+	// requests), `client_errors` (status 400 to 499), `p50`, `p75`, `p90`, `p95` and `p99` (the
+	// duration in milliseconds that this share of requests stayed within, from sketches accurate
+	// to 1.1%), `avg_duration` and `max_duration` (milliseconds, exact), `apdex` (0 to 1:
+	// requests within T count 1, within 4T a half, T the route's `apdex_ms` or else the
+	// property's, read from the same sketches), `request_bytes` and `response_bytes` (body bytes
+	// added up, of the records that gave a size), `response_size_p50` and `response_size_p95`
+	// (bytes, accurate to 9%) and `conversations` (conversations the property's linked inbox
+	// received, by its local day; only with no dimension or a `time:day`, `time:week` or
+	// `time:month` grain alone, and no filter or `routes`; `422 no_linked_inbox` without an
+	// inbox).
 	Metric AnalyticsMetric `json:"metric"`
 
 	// Previous The comparison range's number (0 for `metric_new` and `new_value`), or the range's overall `support_rate` for a hotspot.
@@ -5794,15 +5928,23 @@ type AnalyticsInsightKind string
 // 1,000 page views), next to `visitors` and `pageviews`.
 //
 // With `dataset: api` (an API property) only: `requests`, `requests_per_minute` (requests
-// per minute of the range or bucket, up to now), `errors` (status 500 to 599, or 0 when no
-// response was sent), `error_rate` and `client_error_rate` (percent of requests),
-// `client_errors` (status 400 to 499), `p50`, `p95` and `p99` (the duration in milliseconds
-// that this share of requests stayed within, from sketches accurate to 1.1%) and
-// `avg_duration` (milliseconds).
+// per minute of the range or bucket, up to now: the throughput), `errors` (status 500 to 599,
+// or 0 when no response was sent), `error_rate` and `client_error_rate` (percent of
+// requests), `client_errors` (status 400 to 499), `p50`, `p75`, `p90`, `p95` and `p99` (the
+// duration in milliseconds that this share of requests stayed within, from sketches accurate
+// to 1.1%), `avg_duration` and `max_duration` (milliseconds, exact), `apdex` (0 to 1:
+// requests within T count 1, within 4T a half, T the route's `apdex_ms` or else the
+// property's, read from the same sketches), `request_bytes` and `response_bytes` (body bytes
+// added up, of the records that gave a size), `response_size_p50` and `response_size_p95`
+// (bytes, accurate to 9%) and `conversations` (conversations the property's linked inbox
+// received, by its local day; only with no dimension or a `time:day`, `time:week` or
+// `time:month` grain alone, and no filter or `routes`; `422 no_linked_inbox` without an
+// inbox).
 type AnalyticsMetric string
 
 // AnalyticsMetrics The metrics the query asked for.
 type AnalyticsMetrics struct {
+	Apdex             *float64 `json:"apdex,omitempty"`
 	AvgDuration       *float64 `json:"avg_duration,omitempty"`
 	BounceRate        *float64 `json:"bounce_rate,omitempty"`
 	ClientErrorRate   *float64 `json:"client_error_rate,omitempty"`
@@ -5817,14 +5959,21 @@ type AnalyticsMetrics struct {
 	Events            *float64 `json:"events,omitempty"`
 	Feedback          *float64 `json:"feedback,omitempty"`
 	HelpfulRate       *float64 `json:"helpful_rate,omitempty"`
+	MaxDuration       *float64 `json:"max_duration,omitempty"`
 	P50               *float64 `json:"p50,omitempty"`
+	P75               *float64 `json:"p75,omitempty"`
+	P90               *float64 `json:"p90,omitempty"`
 	P95               *float64 `json:"p95,omitempty"`
 	P99               *float64 `json:"p99,omitempty"`
 	Pageviews         *float64 `json:"pageviews,omitempty"`
 	RatingsDown       *float64 `json:"ratings_down,omitempty"`
 	RatingsUp         *float64 `json:"ratings_up,omitempty"`
+	RequestBytes      *float64 `json:"request_bytes,omitempty"`
 	Requests          *float64 `json:"requests,omitempty"`
 	RequestsPerMinute *float64 `json:"requests_per_minute,omitempty"`
+	ResponseBytes     *float64 `json:"response_bytes,omitempty"`
+	ResponseSizeP50   *float64 `json:"response_size_p50,omitempty"`
+	ResponseSizeP95   *float64 `json:"response_size_p95,omitempty"`
 
 	// Revenue Per currency, most first.
 	Revenue       *[]AnalyticsRevenue `json:"revenue,omitempty"`
@@ -5870,11 +6019,18 @@ type AnalyticsOrder struct {
 	// 1,000 page views), next to `visitors` and `pageviews`.
 	//
 	// With `dataset: api` (an API property) only: `requests`, `requests_per_minute` (requests
-	// per minute of the range or bucket, up to now), `errors` (status 500 to 599, or 0 when no
-	// response was sent), `error_rate` and `client_error_rate` (percent of requests),
-	// `client_errors` (status 400 to 499), `p50`, `p95` and `p99` (the duration in milliseconds
-	// that this share of requests stayed within, from sketches accurate to 1.1%) and
-	// `avg_duration` (milliseconds).
+	// per minute of the range or bucket, up to now: the throughput), `errors` (status 500 to 599,
+	// or 0 when no response was sent), `error_rate` and `client_error_rate` (percent of
+	// requests), `client_errors` (status 400 to 499), `p50`, `p75`, `p90`, `p95` and `p99` (the
+	// duration in milliseconds that this share of requests stayed within, from sketches accurate
+	// to 1.1%), `avg_duration` and `max_duration` (milliseconds, exact), `apdex` (0 to 1:
+	// requests within T count 1, within 4T a half, T the route's `apdex_ms` or else the
+	// property's, read from the same sketches), `request_bytes` and `response_bytes` (body bytes
+	// added up, of the records that gave a size), `response_size_p50` and `response_size_p95`
+	// (bytes, accurate to 9%) and `conversations` (conversations the property's linked inbox
+	// received, by its local day; only with no dimension or a `time:day`, `time:week` or
+	// `time:month` grain alone, and no filter or `routes`; `422 no_linked_inbox` without an
+	// inbox).
 	Metric AnalyticsMetric `json:"metric"`
 }
 
@@ -6074,7 +6230,9 @@ type AnalyticsPropertyUpdate struct {
 // AnalyticsQuery defines model for AnalyticsQuery.
 type AnalyticsQuery struct {
 	// Compare `previous` is the range of the same length just before, `year` the same days a year
-	// earlier, `range` the days `from` to `to`.
+	// earlier, `range` the days `from` to `to`. With `dataset: api` and a range of minutes
+	// (`15m` to `24h`, `since` and `until`), `previous` is as many minutes just before and `year`
+	// the same instants a year earlier.
 	Compare *AnalyticsCompare `json:"compare,omitempty"`
 
 	// Cursor `next_cursor` of the previous page.
@@ -6094,11 +6252,25 @@ type AnalyticsQuery struct {
 	//
 	// `api` is an API property's requests (`sendAnalyticsRequests`), and the only dataset an API
 	// property takes (`422 property_kind` otherwise, and for `api` on a site). It takes the API
-	// metrics of `AnalyticsMetric`, the API dimensions of `AnalyticsDimension` and filters on
-	// them, no goal, prop, segment, comparison or insights. Closed local days come from daily
-	// rows, closed hours from hourly rows and the rest from minute rows, which processes write
-	// every 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
-	// Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by `requests` unless `order_by` says otherwise.
+	// metrics of `AnalyticsMetric`, the API dimensions of `AnalyticsDimension`, filters on them
+	// and `compare`; no goal, prop, segment or insights. Closed local days come from daily rows,
+	// closed hours from hourly rows and the rest from minute rows, which processes write every
+	// 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
+	// Answers that reach into open hours are cached for 5 seconds.
+	//
+	// Any combination of the core dimensions (`route`, `method`, `status`, `status_class`,
+	// `api_version`, `environment`, `service`, `source`, `platform`) breaks down and filters
+	// from every tier. One extra dimension (`consumer`, `country` or `app_version`), as a
+	// dimension or a filter, joins only `route`, `method`, `status_class` and the grains from
+	// `time:hour` up, over a range of whole local hours (days, or `since` and `until` on the
+	// hour), since it is kept by local hour with those three. Anything else answers
+	// `422 dimension_combination`: two extra dimensions, an extra one with another core
+	// dimension or filter, with `time:minute`, or over a range that is not whole hours.
+	// Requests without a value of the extra dimension are not in its answers.
+	//
+	// Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by
+	// `requests` unless `order_by` says otherwise; slowest and most failing routes are a `route`
+	// breakdown ordered by `p95` or `error_rate`.
 	Dataset    *AnalyticsDataset     `json:"dataset,omitempty"`
 	Dimensions *[]AnalyticsDimension `json:"dimensions,omitempty"`
 	Filters    *[]AnalyticsFilter    `json:"filters,omitempty"`
@@ -6127,22 +6299,48 @@ type AnalyticsQuery struct {
 	// `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
 	// `year` are the current calendar month and year to date; `last_month` the one before), or
 	// `from` and `to` (inclusive, at most 400 days apart). With `dataset: api` a period can also
-	// be the last `15m`, `1h`, `6h` or `24h` up to the current minute, included.
+	// be the last `15m`, `1h`, `6h` or `24h` up to the current minute, included, and the range
+	// can be `since` and `until` instead: instants on a whole minute, `until` excluded, at most
+	// 400 days apart.
 	Range AnalyticsRange `json:"range"`
+
+	// Routes `dataset: api` with the dimension `route` alone: only `new` routes, first seen in the
+	// range, or `silent` routes, called in the previous period of the range's length and
+	// not since its start (with the query's filters). Every such route has a row, with zeros
+	// when it had no request; `compare` with `previous` shows a silent route's numbers.
+	// `(unmatched)`, `(other)` and hidden routes are never listed.
+	Routes *AnalyticsQueryRoutes `json:"routes,omitempty"`
 
 	// SegmentId A saved segment of the property, whose filters are added to `filters`.
 	SegmentId *uuid.UUID `json:"segment_id,omitempty"`
 }
 
+// AnalyticsQueryRoutes `dataset: api` with the dimension `route` alone: only `new` routes, first seen in the
+// range, or `silent` routes, called in the previous period of the range's length and
+// not since its start (with the query's filters). Every such route has a row, with zeros
+// when it had no request; `compare` with `previous` shows a silent route's numbers.
+// `(unmatched)`, `(other)` and hidden routes are never listed.
+type AnalyticsQueryRoutes string
+
 // AnalyticsRange Days of the property's time zone: a `period` ending today (`today`, `yesterday`, `7d`,
 // `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
 // `year` are the current calendar month and year to date; `last_month` the one before), or
 // `from` and `to` (inclusive, at most 400 days apart). With `dataset: api` a period can also
-// be the last `15m`, `1h`, `6h` or `24h` up to the current minute, included.
+// be the last `15m`, `1h`, `6h` or `24h` up to the current minute, included, and the range
+// can be `since` and `until` instead: instants on a whole minute, `until` excluded, at most
+// 400 days apart.
 type AnalyticsRange struct {
 	From   *openapi_types.Date   `json:"from,omitempty"`
 	Period *AnalyticsRangePeriod `json:"period,omitempty"`
-	To     *openapi_types.Date   `json:"to,omitempty"`
+
+	// Since `dataset: api`: the first minute of the range, with `until`.
+	//
+	// Examples: 2026-10-12T14:05:00+03:00
+	Since *time.Time          `json:"since,omitempty"`
+	To    *openapi_types.Date `json:"to,omitempty"`
+
+	// Until `dataset: api`: the minute the range ends at, not included.
+	Until *time.Time `json:"until,omitempty"`
 }
 
 // AnalyticsRangePeriod defines model for AnalyticsRange.Period.
@@ -6266,7 +6464,9 @@ type AnalyticsRequestRecord struct {
 	// Examples: /users/42
 	Path *string `json:"path,omitempty"`
 
-	// Release The service's release, for deploy markers.
+	// Release The service's release, such as a version or commit. The first record of a release
+	// not seen before for its service and environment writes a `deploy` annotation at its
+	// time; at most 50 a day per property.
 	Release *string `json:"release,omitempty"`
 
 	// RequestSize Bytes of the request body.
@@ -6341,8 +6541,14 @@ type AnalyticsResultMeta struct {
 	// RawWindowFrom The first day raw rows are kept for, which filters and breakdowns the rollups cannot answer need.
 	RawWindowFrom openapi_types.Date            `json:"raw_window_from"`
 	ServedFrom    AnalyticsResultMetaServedFrom `json:"served_from"`
-	Timezone      string                        `json:"timezone"`
-	To            openapi_types.Date            `json:"to"`
+
+	// Since `dataset: api`: the range's first instant.
+	Since    *time.Time         `json:"since,omitempty"`
+	Timezone string             `json:"timezone"`
+	To       openapi_types.Date `json:"to"`
+
+	// Until `dataset: api`: the instant the range ends at, not included.
+	Until *time.Time `json:"until,omitempty"`
 }
 
 // AnalyticsResultMetaCapsReached defines model for AnalyticsResultMeta.CapsReached.
@@ -6388,6 +6594,8 @@ type AnalyticsRevenue struct {
 
 // AnalyticsRoute defines model for AnalyticsRoute.
 type AnalyticsRoute struct {
+	// ApdexMs The route's Apdex threshold in milliseconds; absent when it uses the property's `apdex_ms`.
+	ApdexMs     *int32    `json:"apdex_ms,omitempty"`
 	FirstSeenAt time.Time `json:"first_seen_at"`
 
 	// Hidden Left out of `dataset: api` answers.
@@ -6411,7 +6619,9 @@ type AnalyticsRouteList struct {
 
 // AnalyticsRouteUpdate defines model for AnalyticsRouteUpdate.
 type AnalyticsRouteUpdate struct {
-	Hidden bool `json:"hidden"`
+	// ApdexMs The route's Apdex threshold in milliseconds; `null` goes back to the property's.
+	ApdexMs nullable.Nullable[int32] `json:"apdex_ms,omitempty"`
+	Hidden  *bool                    `json:"hidden,omitempty"`
 }
 
 // AnalyticsRow defines model for AnalyticsRow.
@@ -22375,7 +22585,8 @@ type ClientInterface interface {
 	//
 	// `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
 	// included, such as a health check the API's own load balancer calls; `hidden: false` shows
-	// it again. Nothing counted is deleted. To count a path under another pattern, add a
+	// it again. Nothing counted is deleted. `apdex_ms` sets the route's own Apdex threshold, for
+	// a route that is slow by nature such as an export; `null` goes back to the property's. To count a path under another pattern, add a
 	// property `path_rules` entry instead.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
@@ -22389,7 +22600,8 @@ type ClientInterface interface {
 	//
 	// `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
 	// included, such as a health check the API's own load balancer calls; `hidden: false` shows
-	// it again. Nothing counted is deleted. To count a path under another pattern, add a
+	// it again. Nothing counted is deleted. `apdex_ms` sets the route's own Apdex threshold, for
+	// a route that is slow by nature such as an export; `null` goes back to the property's. To count a path under another pattern, add a
 	// property `path_rules` entry instead.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
@@ -29624,7 +29836,8 @@ func (c *Client) ListAnalyticsRoutes(ctx context.Context, propertyId AnalyticsPr
 //
 // `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
 // included, such as a health check the API's own load balancer calls; `hidden: false` shows
-// it again. Nothing counted is deleted. To count a path under another pattern, add a
+// it again. Nothing counted is deleted. `apdex_ms` sets the route's own Apdex threshold, for
+// a route that is slow by nature such as an export; `null` goes back to the property's. To count a path under another pattern, add a
 // property `path_rules` entry instead.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
@@ -29648,7 +29861,8 @@ func (c *Client) UpdateAnalyticsRouteWithBody(ctx context.Context, propertyId An
 //
 // `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
 // included, such as a health check the API's own load balancer calls; `hidden: false` shows
-// it again. Nothing counted is deleted. To count a path under another pattern, add a
+// it again. Nothing counted is deleted. `apdex_ms` sets the route's own Apdex threshold, for
+// a route that is slow by nature such as an export; `null` goes back to the property's. To count a path under another pattern, add a
 // property `path_rules` entry instead.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
@@ -57609,7 +57823,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
 	// included, such as a health check the API's own load balancer calls; `hidden: false` shows
-	// it again. Nothing counted is deleted. To count a path under another pattern, add a
+	// it again. Nothing counted is deleted. `apdex_ms` sets the route's own Apdex threshold, for
+	// a route that is slow by nature such as an export; `null` goes back to the property's. To count a path under another pattern, add a
 	// property `path_rules` entry instead.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
@@ -57623,7 +57838,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
 	// included, such as a health check the API's own load balancer calls; `hidden: false` shows
-	// it again. Nothing counted is deleted. To count a path under another pattern, add a
+	// it again. Nothing counted is deleted. `apdex_ms` sets the route's own Apdex threshold, for
+	// a route that is slow by nature such as an export; `null` goes back to the property's. To count a path under another pattern, add a
 	// property `path_rules` entry instead.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
@@ -64696,6 +64912,11 @@ type ExportOtlpTracesResponse404Headers struct {
 	RetryAfter *int
 }
 
+// ExportOtlpTracesResponse413Headers the declared response headers of an HTTP 413 response for ExportOtlpTraces
+type ExportOtlpTracesResponse413Headers struct {
+	RetryAfter *int
+}
+
 // ExportOtlpTracesResponse415Headers the declared response headers of an HTTP 415 response for ExportOtlpTraces
 type ExportOtlpTracesResponse415Headers struct {
 	RetryAfter *int
@@ -64729,6 +64950,8 @@ type ExportOtlpTracesResponse struct {
 	JSON403 *OtlpStatus
 	// JSON404 the response for an HTTP 404 `application/json` response
 	JSON404 *OtlpStatus
+	// JSON413 the response for an HTTP 413 `application/json` response
+	JSON413 *OtlpStatus
 	// JSON415 the response for an HTTP 415 `application/json` response
 	JSON415 *OtlpStatus
 	// JSON422 the response for an HTTP 422 `application/json` response
@@ -64745,6 +64968,8 @@ type ExportOtlpTracesResponse struct {
 	Headers403 *ExportOtlpTracesResponse403Headers
 	// Headers404 the parsed response headers for an HTTP 404 response
 	Headers404 *ExportOtlpTracesResponse404Headers
+	// Headers413 the parsed response headers for an HTTP 413 response
+	Headers413 *ExportOtlpTracesResponse413Headers
 	// Headers415 the parsed response headers for an HTTP 415 response
 	Headers415 *ExportOtlpTracesResponse415Headers
 	// Headers422 the parsed response headers for an HTTP 422 response
@@ -64778,6 +65003,11 @@ func (r ExportOtlpTracesResponse) GetJSON403() *OtlpStatus {
 // GetJSON404 returns the response for an HTTP 404 `application/json` response
 func (r ExportOtlpTracesResponse) GetJSON404() *OtlpStatus {
 	return r.JSON404
+}
+
+// GetJSON413 returns the response for an HTTP 413 `application/json` response
+func (r ExportOtlpTracesResponse) GetJSON413() *OtlpStatus {
+	return r.JSON413
 }
 
 // GetJSON415 returns the response for an HTTP 415 `application/json` response
@@ -85694,7 +85924,8 @@ func (c *ClientWithResponses) ListAnalyticsRoutesWithResponse(ctx context.Contex
 //
 // `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
 // included, such as a health check the API's own load balancer calls; `hidden: false` shows
-// it again. Nothing counted is deleted. To count a path under another pattern, add a
+// it again. Nothing counted is deleted. `apdex_ms` sets the route's own Apdex threshold, for
+// a route that is slow by nature such as an export; `null` goes back to the property's. To count a path under another pattern, add a
 // property `path_rules` entry instead.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
@@ -85714,7 +85945,8 @@ func (c *ClientWithResponses) UpdateAnalyticsRouteWithBodyWithResponse(ctx conte
 //
 // `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
 // included, such as a health check the API's own load balancer calls; `hidden: false` shows
-// it again. Nothing counted is deleted. To count a path under another pattern, add a
+// it again. Nothing counted is deleted. `apdex_ms` sets the route's own Apdex threshold, for
+// a route that is slow by nature such as an export; `null` goes back to the property's. To count a path under another pattern, add a
 // property `path_rules` entry instead.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
@@ -94096,6 +94328,13 @@ func ParseExportOtlpTracesResponse(rsp *http.Response) (*ExportOtlpTracesRespons
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 413:
+		var dest OtlpStatus
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON413 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 415:
 		var dest OtlpStatus
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -94137,6 +94376,9 @@ func ParseExportOtlpTracesResponse(rsp *http.Response) (*ExportOtlpTracesRespons
 	// Content-type (application/x-protobuf) unsupported
 
 	case rsp.StatusCode == 404:
+	// Content-type (application/x-protobuf) unsupported
+
+	case rsp.StatusCode == 413:
 	// Content-type (application/x-protobuf) unsupported
 
 	case rsp.StatusCode == 415:
@@ -94194,6 +94436,16 @@ func ParseExportOtlpTracesResponse(rsp *http.Response) (*ExportOtlpTracesRespons
 			headers.RetryAfter = &value
 		}
 		response.Headers404 = &headers
+	case rsp.StatusCode == 413:
+		var headers ExportOtlpTracesResponse413Headers
+		if values := rsp.Header.Values("Retry-After"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "Retry-After", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.RetryAfter = &value
+		}
+		response.Headers413 = &headers
 	case rsp.StatusCode == 415:
 		var headers ExportOtlpTracesResponse415Headers
 		if values := rsp.Header.Values("Retry-After"); len(values) > 0 {
