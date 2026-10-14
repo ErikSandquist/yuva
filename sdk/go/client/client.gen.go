@@ -5101,9 +5101,12 @@ type AnalyticsDataset string
 // a time grain other than `time:hour` or a visit dimension.
 //
 // With `dataset: api`, two of `route`, `method`, `status`, `status_class`, `environment` and
-// one grain: `time:minute` (minutes, `2026-10-12T14:05` in the property's time zone, inside
-// the last `YUVA_MONITOR_MINUTE_DAYS` days and at most 1,440 of them), `time:hour` (local
-// hours) or `time:day`.
+// one grain: `time:minute` (minutes, inside the last `YUVA_MONITOR_MINUTE_DAYS` days and at
+// most 1,440 of them), `time:hour` (local hours) or `time:day`. Minute and hour values are the
+// bucket's start in the property's time zone with its UTC offset, `2026-10-12T14:05+03:00`,
+// so the hour a clock repeats in autumn and the hours around a pending zone change
+// (`timezone_applies_at`) stay apart; day values are the local date, `2026-10-12`. Every
+// bucket of the range is present when the grain is the only dimension.
 type AnalyticsDimension string
 
 // AnalyticsDomain A host name whose pages may send events, without scheme or port: `example.com`,
