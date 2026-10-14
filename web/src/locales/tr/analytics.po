@@ -3181,7 +3181,7 @@ msgstr "İstek başına en fazla 100 olay; her biri ziyaretçinin IP adresi ve k
 
 #: src/features/analytics/MonitorParts.tsx
 msgid "Use the property’s"
-msgstr "Mülkünkünü kullan"
+msgstr "Mülkün eşiğini kullan"
 
 #: src/features/analytics/text.ts
 msgid "UTM campaign"
