@@ -33,6 +33,7 @@ const groups = [
       "analytics-api-analysis",
       "analytics-api-uptime",
       "analytics-api-alerts",
+      "analytics-api-sharing",
       "analytics-sharing",
       "analytics-support",
       "analytics-consent",

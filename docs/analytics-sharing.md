@@ -4,6 +4,9 @@ A share link shows part of a website's numbers to people who have no Yuva accoun
 iframe on your own pages. An export writes a website's numbers or raw events to a file you download. Both belong to a
 website of [Yuva Analytics](analytics.md); the API calls it a property.
 
+For an [API property](analytics-api.md) the views, exports and retention differ: see
+[Share, export and keep API monitoring](analytics-api-sharing.md).
+
 ## Share links
 
 A share link is a web address, `<your Yuva address>/share/<token>`, that opens a read-only report of one website

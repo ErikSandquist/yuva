@@ -31,6 +31,10 @@ and cannot be traced to a person.
 
 You can delete days or everything at any time ([Keys and data](analytics.md#keys-and-data)).
 
+An [API property](analytics-api.md) keeps no visitor data: its numbers are request counts per minute, hour and day.
+They are kept 8 days by default for minutes, 90 days for hours and 25 months for days. A consumer name can identify a
+person if you name consumers after people; it can be [erased](analytics-api-sharing.md#erase-a-consumer) on request.
+
 ## Do you need a cookie banner?
 
 A banner is about consent to storing or reading something on the visitor's device. Yuva Analytics stores

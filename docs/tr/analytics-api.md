@@ -191,6 +191,12 @@ sınıra ulaşıldığında da `requests_limit_reached_at` değerini gösterir.
   bir sorun başladığında bir kez, bittiğinde bir kez e-posta, Web Push ve webhook ile haber verir ve haftalık ile aylık
   raporlar gönderir. Yeni bir API özelliği 5xx hataları için bir uyarıyla başlar.
 
+## Paylaşma, dışa aktarma ve saklama
+
+- [API izlemeyi paylaşma, dışa aktarma ve saklama](analytics-api-sharing.md): tüketicileri siz listelemedikçe gizleyen
+  salt okunur paylaşım bağlantıları, CSV ve NDJSON dışa aktarmaları, her rakam katmanının ne kadar saklandığı ve bir
+  tüketicinin silinmesi.
+
 ## Saat dilimini değiştirme
 
 Bir API özelliğinin `timezone` değerini değiştirmek (`PATCH /v1/analytics/properties/{propertyId}`) bir günü ikiye

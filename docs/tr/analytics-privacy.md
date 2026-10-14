@@ -31,6 +31,11 @@ bağlanamaz.
 
 Günleri ya da her şeyi istediğiniz zaman silebilirsiniz ([Anahtarlar ve veriler](analytics.md#anahtarlar-ve-veriler)).
 
+Bir [API özelliği](analytics-api.md) ziyaretçi verisi tutmaz: rakamları dakika, saat ve gün başına istek sayılarıdır.
+Varsayılan olarak dakikalar 8 gün, saatler 90 gün, günler 25 ay saklanır. Tüketicileri kişilerin adıyla
+adlandırırsanız bir tüketici adı bir kişiyi belirleyebilir; talep üzerine
+[silinebilir](analytics-api-sharing.md#bir-tüketiciyi-silme).
+
 ## Çerez bandına ihtiyacınız var mı?
 
 Bant, ziyaretçinin cihazında bir şey saklamak ya da okumak için rıza ile ilgilidir. Yuva Analytics orada hiçbir

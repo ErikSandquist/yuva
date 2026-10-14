@@ -5,6 +5,9 @@ iframe auf Ihren eigenen Seiten stehen. Ein Export schreibt die Zahlen oder die 
 Datei, die Sie herunterladen. Beides gehört zu einer Website von [Yuva Analytics](analytics.md); die API nennt sie
 Property.
 
+Für eine [API-Property](analytics-api.md) unterscheiden sich Ansichten, Exporte und Aufbewahrung: siehe
+[API-Monitoring teilen, exportieren und aufbewahren](analytics-api-sharing.md).
+
 ## Freigabelinks
 
 Ein Freigabelink ist eine Webadresse, `<Ihre Yuva-Adresse>/share/<Token>`, die einen schreibgeschützten Bericht

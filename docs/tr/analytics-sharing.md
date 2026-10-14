@@ -5,6 +5,9 @@ ve kendi sayfalarınızda bir iframe içinde durabilir. Dışa aktarma, bir web 
 indireceğiniz bir dosyaya yazar. İkisi de bir [Yuva Analytics](analytics.md) web sitesine aittir; API buna mülk
 (property) der.
 
+Bir [API özelliği](analytics-api.md) için görünümler, dışa aktarmalar ve saklama farklıdır: bkz.
+[API izlemeyi paylaşma, dışa aktarma ve saklama](analytics-api-sharing.md).
+
 ## Paylaşım bağlantıları
 
 Paylaşım bağlantısı, `<Yuva adresiniz>/share/<token>` biçiminde bir web adresidir; bir web sitesinin salt okunur

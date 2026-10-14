@@ -188,6 +188,11 @@ under `usage`, and `requests_limit_reached_at` once the limit is reached.
   by e-mail, Web Push and webhook once when a problem starts and once when it ends, and send weekly and monthly
   reports. A new API property starts with an alert for 5xx errors.
 
+## Share, export and keep
+
+- [Share, export and keep API monitoring](analytics-api-sharing.md): read-only share links that hide consumers unless
+  you list them, CSV and NDJSON exports, how long each tier of numbers is kept, and erasing a consumer.
+
 ## Change the time zone
 
 Changing an API property's `timezone` (`PATCH /v1/analytics/properties/{propertyId}`) does not cut a day in two. The

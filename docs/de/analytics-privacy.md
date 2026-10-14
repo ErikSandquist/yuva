@@ -31,6 +31,11 @@ Tagessummen zählen Besuche und lassen sich keiner Person zuordnen.
 
 Sie können Tage oder alles jederzeit löschen ([Schlüssel und Daten](analytics.md#schlüssel-und-daten)).
 
+Eine [API-Property](analytics-api.md) speichert keine Besucherdaten: Ihre Zahlen sind Request-Zählungen pro Minute,
+Stunde und Tag. Standardmäßig bleiben Minuten 8 Tage, Stunden 90 Tage und Tage 25 Monate. Ein Consumer-Name kann eine
+Person identifizieren, wenn Sie Consumer nach Personen benennen; er lässt sich auf Anfrage
+[löschen](analytics-api-sharing.md#einen-consumer-löschen).
+
 ## Brauchen Sie ein Cookie-Banner?
 
 Ein Banner betrifft die Einwilligung dazu, etwas auf dem Gerät des Besuchers zu speichern oder auszulesen. Yuva

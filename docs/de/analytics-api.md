@@ -196,6 +196,12 @@ erreichter Grenze auch `requests_limit_reached_at`.
   per E-Mail, Web Push und Webhook einmal, wenn ein Problem beginnt, und einmal, wenn es endet, und senden wöchentliche
   und monatliche Berichte. Eine neue API-Property startet mit einem Alert für 5xx-Fehler.
 
+## Teilen, exportieren und aufbewahren
+
+- [API-Monitoring teilen, exportieren und aufbewahren](analytics-api-sharing.md): schreibgeschützte Freigabelinks, die
+  Consumer verbergen, solange Sie sie nicht listen, Exporte als CSV und NDJSON, wie lange jede Zahlenstufe bleibt und
+  das Löschen eines Consumers.
+
 ## Die Zeitzone ändern
 
 Eine Änderung der `timezone` einer API-Property (`PATCH /v1/analytics/properties/{propertyId}`) schneidet keinen
