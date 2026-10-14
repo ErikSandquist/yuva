@@ -58,8 +58,27 @@ export function routePath(propertyId: string, method: string, route: string) {
   return `/analytics/${propertyId}/routes/${encodeURIComponent(method)}/${tail.split("/").map(encodeURIComponent).join("/")}`
 }
 
-function bucketDate(v: string) {
-  return new Date(v.length > 10 ? `${v}:00Z` : `${v}T00:00:00Z`)
+const WALL = 16
+
+function wallTime(v: string) {
+  return new Date(`${v.length > 10 ? v.slice(0, WALL) : `${v}T00:00`}:00Z`)
+}
+
+function repeatedWalls(labels: string[]) {
+  const seen = new Set<string>()
+  const twice = new Set<string>()
+  for (const v of labels) {
+    const w = v.slice(0, WALL)
+    if (seen.has(w)) twice.add(w)
+    seen.add(w)
+  }
+  return twice
+}
+
+function bucketText(fmt: Intl.DateTimeFormat, v: string, repeated: Set<string>) {
+  const text = fmt.format(wallTime(v))
+  const offset = v.slice(WALL)
+  return offset && repeated.has(v.slice(0, WALL)) ? `${text} (UTC${offset})` : text
 }
 
 export function RequestsBanner({ usage }: { usage: AnalyticsUsage }) {
@@ -252,6 +271,7 @@ function SeriesChart({
     for (const m of metrics) row[m] = num(r.metrics, m) ?? 0
     return row
   })
+  const repeated = repeatedWalls(data.map((d) => String(d.at)))
   const top = Math.max(0, ...data.flatMap((d) => metrics.map((m) => Number(d[m]) || 0)))
   const axisWidth = Math.max(
     40,
@@ -297,7 +317,7 @@ function SeriesChart({
               tickMargin={8}
               minTickGap={28}
               interval="preserveStartEnd"
-              tickFormatter={(v) => tick.format(bucketDate(String(v)))}
+              tickFormatter={(v) => tick.format(wallTime(String(v)))}
             />
             <YAxis
               tickLine={false}
@@ -309,7 +329,7 @@ function SeriesChart({
               cursor={false}
               content={
                 <ChartTooltipContent
-                  labelFormatter={(_, p) => (p?.[0] ? long.format(bucketDate(String(p[0].payload.at))) : "")}
+                  labelFormatter={(_, p) => (p?.[0] ? bucketText(long, String(p[0].payload.at), repeated) : "")}
                   formatter={(value, name) => (
                     <div className="flex w-full items-center gap-2">
                       <span
@@ -360,6 +380,7 @@ function LastHour({ filters }: { filters: AnalyticsFilter[] }) {
     const errors = num(r.metrics, "errors") ?? 0
     return { at: r.dimensions[0] ?? "", ok: Math.max(0, requests - errors), errors, requests }
   })
+  const repeated = repeatedWalls(data.map((d) => d.at))
   const config: ChartConfig = {
     ok: { label: text.metric.requests, color: "var(--brand)" },
     errors: { label: text.metric.errors, color: "var(--destructive)" },
@@ -395,14 +416,14 @@ function LastHour({ filters }: { filters: AnalyticsFilter[] }) {
               axisLine={false}
               tickMargin={8}
               minTickGap={32}
-              tickFormatter={(v) => time.format(bucketDate(String(v)))}
+              tickFormatter={(v) => time.format(wallTime(String(v)))}
             />
             <YAxis allowDecimals={false} tickLine={false} axisLine={false} width={48} tickFormatter={(v) => fmt(v)} />
             <ChartTooltip
               cursor={false}
               content={
                 <ChartTooltipContent
-                  labelFormatter={(_, p) => (p?.[0] ? time.format(bucketDate(String(p[0].payload.at))) : "")}
+                  labelFormatter={(_, p) => (p?.[0] ? bucketText(time, String(p[0].payload.at), repeated) : "")}
                 />
               }
             />

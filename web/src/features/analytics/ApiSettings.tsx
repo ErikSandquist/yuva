@@ -15,6 +15,7 @@ import { hostOnly, splitLines, useZones } from "@/features/analytics/NewProperty
 import { useCurrentProperty } from "@/features/analytics/parts"
 import { useApiRoutes, useSetRouteHidden, useUpdateProperty } from "@/features/analytics/queries"
 import { DeletePropertySection, RuleRows } from "@/features/analytics/Settings"
+import { formatInZone } from "@/features/analytics/Sharing"
 import { useAnalyticsText, valueText } from "@/features/analytics/text"
 import { ChoiceSelect, Field, FormActions, FormCard, Section } from "@/features/settings/ui"
 import type { AnalyticsPathRule, AnalyticsProperty } from "@/lib/api"
@@ -43,7 +44,7 @@ function General({ p }: { p: AnalyticsProperty }) {
   const days = Number(hourDays)
   const apdexOk = Number.isInteger(apdexMs) && apdexMs >= 1 && apdexMs <= 60_000
   const daysOk = Number.isInteger(days) && days >= 7 && days <= 400
-  const applies = p.timezone_applies_at ? formatDateTime(p.timezone_applies_at, i18n.locale) : ""
+  const applies = p.timezone_applies_at ? formatInZone(p.timezone_applies_at, i18n.locale, p.timezone) : ""
   const current = p.timezone
   return (
     <FormCard
