@@ -21405,7 +21405,7 @@ type ClientInterface interface {
 	// with `Content-Encoding: gzip`, at most 8 MiB either way; any other type answers `415`. The
 	// answer has the request's type.
 	//
-	// Only spans of kind `SERVER` with `http.request.method` count, one request each; other spans
+	// Only spans of kind `SERVER` with an HTTP method count, one request each; other spans
 	// (clients, internal work, gRPC servers) are skipped without being rejected. A span is read as
 	// a request record of `sendAnalyticsRequests`, with the same checks, route inference and
 	// caps:
@@ -21413,6 +21413,11 @@ type ClientInterface interface {
 	//   inference only), `http.response.status_code` (0 when absent), end minus start as the
 	//   duration, start as the time, `http.request.body.size` and `http.response.body.size` when
 	//   present, `client.address` for the country only, `yuva.consumer` and `yuva.api_version`.
+	// - Spans of the HTTP semantic conventions 1.20 and before are read by their names where the
+	//   current ones are absent: `http.method`, `http.status_code`, `http.target` (without its
+	//   query) or the path of `http.url`, `http.request_content_length`,
+	//   `http.response_content_length`, and `http.client_ip`, `net.sock.peer.addr` or
+	//   `net.peer.ip` for the country.
 	// - Resource: `service.name` as the service, `deployment.environment.name` (or the older
 	//   `deployment.environment`) as the environment, `service.version` as the release.
 	// - A span stands for the adjusted count of its tracestate's `ot=th` sampling threshold
@@ -21449,7 +21454,7 @@ type ClientInterface interface {
 	// with `Content-Encoding: gzip`, at most 8 MiB either way; any other type answers `415`. The
 	// answer has the request's type.
 	//
-	// Only spans of kind `SERVER` with `http.request.method` count, one request each; other spans
+	// Only spans of kind `SERVER` with an HTTP method count, one request each; other spans
 	// (clients, internal work, gRPC servers) are skipped without being rejected. A span is read as
 	// a request record of `sendAnalyticsRequests`, with the same checks, route inference and
 	// caps:
@@ -21457,6 +21462,11 @@ type ClientInterface interface {
 	//   inference only), `http.response.status_code` (0 when absent), end minus start as the
 	//   duration, start as the time, `http.request.body.size` and `http.response.body.size` when
 	//   present, `client.address` for the country only, `yuva.consumer` and `yuva.api_version`.
+	// - Spans of the HTTP semantic conventions 1.20 and before are read by their names where the
+	//   current ones are absent: `http.method`, `http.status_code`, `http.target` (without its
+	//   query) or the path of `http.url`, `http.request_content_length`,
+	//   `http.response_content_length`, and `http.client_ip`, `net.sock.peer.addr` or
+	//   `net.peer.ip` for the country.
 	// - Resource: `service.name` as the service, `deployment.environment.name` (or the older
 	//   `deployment.environment`) as the environment, `service.version` as the release.
 	// - A span stands for the adjusted count of its tracestate's `ot=th` sampling threshold
@@ -28034,7 +28044,7 @@ func (c *Client) GetHealthz(ctx context.Context, reqEditors ...RequestEditorFn) 
 // with `Content-Encoding: gzip`, at most 8 MiB either way; any other type answers `415`. The
 // answer has the request's type.
 //
-// Only spans of kind `SERVER` with `http.request.method` count, one request each; other spans
+// Only spans of kind `SERVER` with an HTTP method count, one request each; other spans
 // (clients, internal work, gRPC servers) are skipped without being rejected. A span is read as
 // a request record of `sendAnalyticsRequests`, with the same checks, route inference and
 // caps:
@@ -28042,6 +28052,11 @@ func (c *Client) GetHealthz(ctx context.Context, reqEditors ...RequestEditorFn) 
 //     inference only), `http.response.status_code` (0 when absent), end minus start as the
 //     duration, start as the time, `http.request.body.size` and `http.response.body.size` when
 //     present, `client.address` for the country only, `yuva.consumer` and `yuva.api_version`.
+//   - Spans of the HTTP semantic conventions 1.20 and before are read by their names where the
+//     current ones are absent: `http.method`, `http.status_code`, `http.target` (without its
+//     query) or the path of `http.url`, `http.request_content_length`,
+//     `http.response_content_length`, and `http.client_ip`, `net.sock.peer.addr` or
+//     `net.peer.ip` for the country.
 //   - Resource: `service.name` as the service, `deployment.environment.name` (or the older
 //     `deployment.environment`) as the environment, `service.version` as the release.
 //   - A span stands for the adjusted count of its tracestate's `ot=th` sampling threshold
@@ -28088,7 +28103,7 @@ func (c *Client) ExportOtlpTracesWithBody(ctx context.Context, propertyId Analyt
 // with `Content-Encoding: gzip`, at most 8 MiB either way; any other type answers `415`. The
 // answer has the request's type.
 //
-// Only spans of kind `SERVER` with `http.request.method` count, one request each; other spans
+// Only spans of kind `SERVER` with an HTTP method count, one request each; other spans
 // (clients, internal work, gRPC servers) are skipped without being rejected. A span is read as
 // a request record of `sendAnalyticsRequests`, with the same checks, route inference and
 // caps:
@@ -28096,6 +28111,11 @@ func (c *Client) ExportOtlpTracesWithBody(ctx context.Context, propertyId Analyt
 //     inference only), `http.response.status_code` (0 when absent), end minus start as the
 //     duration, start as the time, `http.request.body.size` and `http.response.body.size` when
 //     present, `client.address` for the country only, `yuva.consumer` and `yuva.api_version`.
+//   - Spans of the HTTP semantic conventions 1.20 and before are read by their names where the
+//     current ones are absent: `http.method`, `http.status_code`, `http.target` (without its
+//     query) or the path of `http.url`, `http.request_content_length`,
+//     `http.response_content_length`, and `http.client_ip`, `net.sock.peer.addr` or
+//     `net.peer.ip` for the country.
 //   - Resource: `service.name` as the service, `deployment.environment.name` (or the older
 //     `deployment.environment`) as the environment, `service.version` as the release.
 //   - A span stands for the adjusted count of its tracestate's `ot=th` sampling threshold
@@ -56569,7 +56589,7 @@ type ClientWithResponsesInterface interface {
 	// with `Content-Encoding: gzip`, at most 8 MiB either way; any other type answers `415`. The
 	// answer has the request's type.
 	//
-	// Only spans of kind `SERVER` with `http.request.method` count, one request each; other spans
+	// Only spans of kind `SERVER` with an HTTP method count, one request each; other spans
 	// (clients, internal work, gRPC servers) are skipped without being rejected. A span is read as
 	// a request record of `sendAnalyticsRequests`, with the same checks, route inference and
 	// caps:
@@ -56577,6 +56597,11 @@ type ClientWithResponsesInterface interface {
 	//   inference only), `http.response.status_code` (0 when absent), end minus start as the
 	//   duration, start as the time, `http.request.body.size` and `http.response.body.size` when
 	//   present, `client.address` for the country only, `yuva.consumer` and `yuva.api_version`.
+	// - Spans of the HTTP semantic conventions 1.20 and before are read by their names where the
+	//   current ones are absent: `http.method`, `http.status_code`, `http.target` (without its
+	//   query) or the path of `http.url`, `http.request_content_length`,
+	//   `http.response_content_length`, and `http.client_ip`, `net.sock.peer.addr` or
+	//   `net.peer.ip` for the country.
 	// - Resource: `service.name` as the service, `deployment.environment.name` (or the older
 	//   `deployment.environment`) as the environment, `service.version` as the release.
 	// - A span stands for the adjusted count of its tracestate's `ot=th` sampling threshold
@@ -56613,7 +56638,7 @@ type ClientWithResponsesInterface interface {
 	// with `Content-Encoding: gzip`, at most 8 MiB either way; any other type answers `415`. The
 	// answer has the request's type.
 	//
-	// Only spans of kind `SERVER` with `http.request.method` count, one request each; other spans
+	// Only spans of kind `SERVER` with an HTTP method count, one request each; other spans
 	// (clients, internal work, gRPC servers) are skipped without being rejected. A span is read as
 	// a request record of `sendAnalyticsRequests`, with the same checks, route inference and
 	// caps:
@@ -56621,6 +56646,11 @@ type ClientWithResponsesInterface interface {
 	//   inference only), `http.response.status_code` (0 when absent), end minus start as the
 	//   duration, start as the time, `http.request.body.size` and `http.response.body.size` when
 	//   present, `client.address` for the country only, `yuva.consumer` and `yuva.api_version`.
+	// - Spans of the HTTP semantic conventions 1.20 and before are read by their names where the
+	//   current ones are absent: `http.method`, `http.status_code`, `http.target` (without its
+	//   query) or the path of `http.url`, `http.request_content_length`,
+	//   `http.response_content_length`, and `http.client_ip`, `net.sock.peer.addr` or
+	//   `net.peer.ip` for the country.
 	// - Resource: `service.name` as the service, `deployment.environment.name` (or the older
 	//   `deployment.environment`) as the environment, `service.version` as the release.
 	// - A span stands for the adjusted count of its tracestate's `ot=th` sampling threshold
@@ -84278,7 +84308,7 @@ func (c *ClientWithResponses) GetHealthzWithResponse(ctx context.Context, reqEdi
 // with `Content-Encoding: gzip`, at most 8 MiB either way; any other type answers `415`. The
 // answer has the request's type.
 //
-// Only spans of kind `SERVER` with `http.request.method` count, one request each; other spans
+// Only spans of kind `SERVER` with an HTTP method count, one request each; other spans
 // (clients, internal work, gRPC servers) are skipped without being rejected. A span is read as
 // a request record of `sendAnalyticsRequests`, with the same checks, route inference and
 // caps:
@@ -84286,6 +84316,11 @@ func (c *ClientWithResponses) GetHealthzWithResponse(ctx context.Context, reqEdi
 //     inference only), `http.response.status_code` (0 when absent), end minus start as the
 //     duration, start as the time, `http.request.body.size` and `http.response.body.size` when
 //     present, `client.address` for the country only, `yuva.consumer` and `yuva.api_version`.
+//   - Spans of the HTTP semantic conventions 1.20 and before are read by their names where the
+//     current ones are absent: `http.method`, `http.status_code`, `http.target` (without its
+//     query) or the path of `http.url`, `http.request_content_length`,
+//     `http.response_content_length`, and `http.client_ip`, `net.sock.peer.addr` or
+//     `net.peer.ip` for the country.
 //   - Resource: `service.name` as the service, `deployment.environment.name` (or the older
 //     `deployment.environment`) as the environment, `service.version` as the release.
 //   - A span stands for the adjusted count of its tracestate's `ot=th` sampling threshold
@@ -84328,7 +84363,7 @@ func (c *ClientWithResponses) ExportOtlpTracesWithBodyWithResponse(ctx context.C
 // with `Content-Encoding: gzip`, at most 8 MiB either way; any other type answers `415`. The
 // answer has the request's type.
 //
-// Only spans of kind `SERVER` with `http.request.method` count, one request each; other spans
+// Only spans of kind `SERVER` with an HTTP method count, one request each; other spans
 // (clients, internal work, gRPC servers) are skipped without being rejected. A span is read as
 // a request record of `sendAnalyticsRequests`, with the same checks, route inference and
 // caps:
@@ -84336,6 +84371,11 @@ func (c *ClientWithResponses) ExportOtlpTracesWithBodyWithResponse(ctx context.C
 //     inference only), `http.response.status_code` (0 when absent), end minus start as the
 //     duration, start as the time, `http.request.body.size` and `http.response.body.size` when
 //     present, `client.address` for the country only, `yuva.consumer` and `yuva.api_version`.
+//   - Spans of the HTTP semantic conventions 1.20 and before are read by their names where the
+//     current ones are absent: `http.method`, `http.status_code`, `http.target` (without its
+//     query) or the path of `http.url`, `http.request_content_length`,
+//     `http.response_content_length`, and `http.client_ip`, `net.sock.peer.addr` or
+//     `net.peer.ip` for the country.
 //   - Resource: `service.name` as the service, `deployment.environment.name` (or the older
 //     `deployment.environment`) as the environment, `service.version` as the release.
 //   - A span stands for the adjusted count of its tracestate's `ot=th` sampling threshold
