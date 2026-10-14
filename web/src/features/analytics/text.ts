@@ -95,9 +95,17 @@ export function useAnalyticsText() {
       client_errors: t`Client errors`,
       client_error_rate: t`Client error rate`,
       p50: t`p50`,
+      p75: t`p75`,
+      p90: t`p90`,
       p95: t`p95`,
       p99: t`p99`,
       avg_duration: t`Average duration`,
+      max_duration: t`Slowest`,
+      apdex: t`Apdex`,
+      request_bytes: t`Request bodies`,
+      response_bytes: t`Response bodies`,
+      response_size_p50: t`Response size p50`,
+      response_size_p95: t`Response size p95`,
     } satisfies Record<AnalyticsMetric, string>,
     metricHelp: {
       visitors: t`Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again.`,
@@ -139,9 +147,17 @@ export function useAnalyticsText() {
       client_errors: t`Requests that answered with a status from 400 to 499.`,
       client_error_rate: t`Client errors out of all requests.`,
       p50: t`Half of the requests took at most this long.`,
+      p75: t`75 out of 100 requests took at most this long.`,
+      p90: t`90 out of 100 requests took at most this long.`,
       p95: t`95 out of 100 requests took at most this long.`,
       p99: t`99 out of 100 requests took at most this long.`,
       avg_duration: t`The mean time a request took.`,
+      max_duration: t`The longest a single request took.`,
+      apdex: t`From 0 to 1: requests within the threshold count fully, those within four times it count half.`,
+      request_bytes: t`Request body bytes, added up, of the requests that reported a size.`,
+      response_bytes: t`Response body bytes, added up, of the requests that reported a size.`,
+      response_size_p50: t`Half of the responses were at most this large.`,
+      response_size_p95: t`95 out of 100 responses were at most this large.`,
     } satisfies Record<AnalyticsMetric, string>,
     dimension: {
       page: words.page,
@@ -176,6 +192,9 @@ export function useAnalyticsText() {
       status: t`Status`,
       status_class: t`Status class`,
       environment: t`Environment`,
+      api_version: t`API version`,
+      service: t`Service`,
+      consumer: t`Consumer`,
     } satisfies Record<AnalyticsFilterDimension, string>,
     event: {
       outbound_click: t`Outbound link`,
@@ -230,6 +249,8 @@ export function useAnalyticsText() {
     unmatched: t`Unmatched`,
     otherMethod: t`Other method`,
     noResponse: t`No response`,
+    none: t`None`,
+    apiSource: { server: t`Server`, otlp: "OpenTelemetry", app: t`App` } as Record<string, string>,
   }
 }
 
@@ -265,12 +286,15 @@ export function valueText(text: AnalyticsText, dim: AnalyticsDimension, value: s
   if ((dim === "status" && value === "0") || (dim === "status_class" && value === "none")) return text.noResponse
   if (value === "") {
     if (dim === "prop") return text.notSet
+    if (dim === "api_version" || dim === "service") return text.none
     if (dim === "visitor_type") return text.withoutConsent
     return ["source", "referrer", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"].includes(dim)
       ? text.direct
       : text.unknown
   }
   switch (dim) {
+    case "source":
+      return text.apiSource[value] ?? value
     case "channel":
       return text.channel[value] ?? value
     case "device":
@@ -345,6 +369,21 @@ function millis(v: number, locale: string) {
   return unit(v / 1000, "second", v < 10_000 ? 2 : 1)
 }
 
+function bytes(v: number, locale: string) {
+  const units = ["byte", "kilobyte", "megabyte", "gigabyte", "terabyte"] as const
+  let i = 0
+  while (v >= 1000 && i < units.length - 1) {
+    v /= 1000
+    i++
+  }
+  return new Intl.NumberFormat(locale, {
+    style: "unit",
+    unit: units[i],
+    unitDisplay: "short",
+    maximumFractionDigits: i === 0 || v >= 100 ? 0 : 1,
+  }).format(v)
+}
+
 export function formatMetric(metric: AnalyticsMetric, v: number | undefined, locale: string) {
   if (v === undefined || Number.isNaN(v)) return "–"
   switch (metric) {
@@ -354,10 +393,20 @@ export function formatMetric(metric: AnalyticsMetric, v: number | undefined, loc
         v / 100
       )
     case "p50":
+    case "p75":
+    case "p90":
+    case "max_duration":
     case "p95":
     case "p99":
     case "avg_duration":
       return millis(v, locale)
+    case "apdex":
+      return new Intl.NumberFormat(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(v)
+    case "request_bytes":
+    case "response_bytes":
+    case "response_size_p50":
+    case "response_size_p95":
+      return bytes(v, locale)
     case "requests_per_minute":
       return new Intl.NumberFormat(locale, { maximumFractionDigits: v < 10 ? 1 : 0 }).format(v)
     case "conversion_rate":
@@ -390,6 +439,18 @@ export function lowerIsBetter(metric: AnalyticsMetric) {
     metric === "bounce_rate" ||
     metric === "support_rate" ||
     metric === "ratings_down" ||
-    ["errors", "error_rate", "client_errors", "client_error_rate", "p50", "p95", "p99", "avg_duration"].includes(metric)
+    [
+      "errors",
+      "error_rate",
+      "client_errors",
+      "client_error_rate",
+      "p50",
+      "p75",
+      "p90",
+      "p95",
+      "p99",
+      "avg_duration",
+      "max_duration",
+    ].includes(metric)
   )
 }

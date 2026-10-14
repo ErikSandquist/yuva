@@ -6,19 +6,21 @@ import { useSearchParams } from "react-router"
 import { ErrorLine, Notice, Segmented } from "@/components/common"
 import { formatDateTime } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Textarea } from "@/components/ui/textarea"
 import { ApiInstallSnippets } from "@/features/analytics/Install"
-import { InferredTag } from "@/features/analytics/Monitor"
+import { InferredTag } from "@/features/analytics/MonitorParts"
 import { hostOnly, splitLines, useZones } from "@/features/analytics/NewProperty"
 import { useCurrentProperty } from "@/features/analytics/parts"
-import { useApiRoutes, useSetRouteHidden, useUpdateProperty } from "@/features/analytics/queries"
+import { useApiRoutes, useUpdateRoute, useUpdateProperty } from "@/features/analytics/queries"
 import { DeletePropertySection, RuleRows } from "@/features/analytics/Settings"
 import { formatInZone } from "@/features/analytics/Sharing"
 import { useAnalyticsText, valueText } from "@/features/analytics/text"
 import { ChoiceSelect, Field, FormActions, FormCard, Section } from "@/features/settings/ui"
-import type { AnalyticsPathRule, AnalyticsProperty } from "@/lib/api"
+import type { AnalyticsPathRule, AnalyticsPlatform, AnalyticsProperty } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { useInboxes } from "@/lib/workspace"
 
@@ -28,8 +30,11 @@ const VIEW_PARAMS = ["period"]
 
 const NO_INBOX = "none"
 
+const APPS: AnalyticsPlatform[] = ["ios", "android"]
+
 function General({ p }: { p: AnalyticsProperty }) {
   const { t, i18n } = useLingui()
+  const text = useAnalyticsText()
   const inboxes = useInboxes().data ?? []
   const zones = useZones()
   const update = useUpdateProperty(p.id)
@@ -39,6 +44,7 @@ function General({ p }: { p: AnalyticsProperty }) {
   const [inbox, setInbox] = useState(p.inbox_id ?? NO_INBOX)
   const [apdex, setApdex] = useState(String(p.apdex_ms))
   const [hourDays, setHourDays] = useState(String(p.monitor_hour_days))
+  const [platforms, setPlatforms] = useState<AnalyticsPlatform[]>(p.platforms.filter((x) => APPS.includes(x)))
   const hosts = splitLines(domains).map(hostOnly).filter(Boolean)
   const apdexMs = Number(apdex)
   const days = Number(hourDays)
@@ -56,6 +62,7 @@ function General({ p }: { p: AnalyticsProperty }) {
           inbox_id: inbox === NO_INBOX ? null : inbox,
           apdex_ms: apdexMs,
           monitor_hour_days: days,
+          platforms: APPS.filter((x) => platforms.includes(x)),
         })
       }
       footer={
@@ -84,6 +91,28 @@ function General({ p }: { p: AnalyticsProperty }) {
           onChange={(e) => setDomains(e.target.value)}
         />
       </Field>
+      <div className="flex min-w-0 flex-col gap-2">
+        <span className="text-body font-medium" id="ap-platforms">
+          <Trans>Apps</Trans>
+        </span>
+        <div className="flex flex-wrap gap-x-5 gap-y-2" role="group" aria-labelledby="ap-platforms">
+          {APPS.map((x) => (
+            <Label key={x} className="font-normal" data-testid={`ap-platform-${x}`}>
+              <Checkbox
+                checked={platforms.includes(x)}
+                onCheckedChange={(on) => setPlatforms(on ? [...platforms, x] : platforms.filter((y) => y !== x))}
+              />
+              {text.platform[x]}
+            </Label>
+          ))}
+        </div>
+        <p className="text-small text-faint">
+          <Trans>
+            The apps allowed to time their own calls to this API with the Swift or Kotlin library. Records from your
+            servers need neither.
+          </Trans>
+        </p>
+      </div>
       <div className="grid gap-5 sm:grid-cols-2">
         <Field
           label={<Trans>Time zone</Trans>}
@@ -192,7 +221,7 @@ function HiddenRoutes({ p }: { p: AnalyticsProperty }) {
   const text = useAnalyticsText()
   const { canManage } = useSession()
   const routes = useApiRoutes(p.id)
-  const show = useSetRouteHidden(p.id)
+  const show = useUpdateRoute(p.id)
   const hidden = (routes.data ?? []).filter((r) => r.hidden)
   return (
     <Section

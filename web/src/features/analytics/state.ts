@@ -81,6 +81,21 @@ export const FILTER_DIMENSIONS: AnalyticsFilterDimension[] = [
   "event",
 ]
 
+export const EXTRA_DIMENSIONS: AnalyticsFilterDimension[] = ["consumer", "country", "app_version"]
+
+export const API_FILTER_DIMENSIONS: AnalyticsFilterDimension[] = [
+  "route",
+  "method",
+  "status",
+  "status_class",
+  "api_version",
+  "environment",
+  "service",
+  "source",
+  "platform",
+  ...EXTRA_DIMENSIONS,
+]
+
 export const OPS: FilterOp[] = ["is", "is_not", "contains", "not_contains", "matches"]
 
 export const KPIS: Exclude<AnalyticsMetric, "revenue">[] = [
@@ -120,7 +135,8 @@ export function parseCompare(raw: string | null): AnalyticsCompare | undefined {
 
 const PROP = "prop."
 
-export function parseFilters(values: string[]): AnalyticsFilter[] {
+export function parseFilters(values: string[], kind: Kind = "site"): AnalyticsFilter[] {
+  const allowed = kind === "api" ? API_FILTER_DIMENSIONS : FILTER_DIMENSIONS
   const out: AnalyticsFilter[] = []
   for (const v of values) {
     const a = v.indexOf(":")
@@ -130,7 +146,7 @@ export function parseFilters(values: string[]): AnalyticsFilter[] {
     const op = v.slice(a + 1, b) as FilterOp
     if (!OPS.includes(op)) continue
     const value = v.slice(b + 1)
-    if (head.startsWith(PROP)) {
+    if (kind === "site" && head.startsWith(PROP)) {
       let prop = ""
       try {
         prop = decodeURIComponent(head.slice(PROP.length))
@@ -141,7 +157,7 @@ export function parseFilters(values: string[]): AnalyticsFilter[] {
       continue
     }
     const dimension = head as AnalyticsFilterDimension
-    if (!FILTER_DIMENSIONS.includes(dimension)) continue
+    if (!allowed.includes(dimension)) continue
     out.push({ dimension, op, values: [value] })
   }
   return out.slice(0, 10)
@@ -245,7 +261,12 @@ export function apiGrainFor(range: AnalyticsRange): AnalyticsDimension {
     case "yesterday":
       return "time:hour"
   }
-  return rangeDays(range) <= 2 ? "time:hour" : "time:day"
+  const days = rangeDays(range)
+  return days <= 2 ? "time:hour" : days <= 90 ? "time:day" : "time:week"
+}
+
+export function isMinuteRange(range: AnalyticsRange) {
+  return range.period === "15m" || range.period === "1h" || range.period === "6h" || range.period === "24h"
 }
 
 export function useView(kind: Kind = "site") {
@@ -254,7 +275,7 @@ export function useView(kind: Kind = "site") {
   const view: View = {
     range: parseRange(params.get("period"), kind),
     compare: parseCompare(params.get("compare")),
-    filters: parseFilters(params.getAll("f")),
+    filters: parseFilters(params.getAll("f"), kind),
     segment: UUID.test(params.get("segment") ?? "") ? params.get("segment")! : undefined,
     metric: metric && KPIS.includes(metric) ? metric : "visitors",
   }

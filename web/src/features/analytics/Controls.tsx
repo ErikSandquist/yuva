@@ -161,9 +161,9 @@ export function RangePicker({ kind = "site" }: { kind?: Kind }) {
   )
 }
 
-export function ComparePicker() {
+export function ComparePicker({ kind = "site" }: { kind?: Kind }) {
   const { t, i18n } = useLingui()
-  const { view, setCompare } = useView()
+  const { view, setCompare } = useView(kind)
   const [custom, setCustom] = useState(false)
   const c = view.compare
   const value = c?.with ?? "none"
@@ -219,10 +219,10 @@ export function filterLabel(text: AnalyticsText, f: AnalyticsFilter, locale: str
   return `${filterName(text, f)} ${text.op[f.op]} ${valueText(text, f.dimension, f.values[0] ?? "", locale)}`
 }
 
-function FilterChip({ f, i }: { f: AnalyticsFilter; i: number }) {
+function FilterChip({ f, i, kind }: { f: AnalyticsFilter; i: number; kind: Kind }) {
   const { t, i18n } = useLingui()
   const text = useAnalyticsText()
-  const { setFilter, removeFilter } = useView()
+  const { setFilter, removeFilter } = useView(kind)
   const value = f.values[0] ?? ""
   const shown = valueText(text, f.dimension, value, i18n.locale)
   const label = filterLabel(text, f, i18n.locale)
@@ -272,15 +272,15 @@ function FilterChip({ f, i }: { f: AnalyticsFilter; i: number }) {
   )
 }
 
-export function FilterBar() {
+export function FilterBar({ kind = "site" }: { kind?: Kind }) {
   const { t } = useLingui()
-  const { view, clearFilters } = useView()
+  const { view, clearFilters } = useView(kind)
   if (view.filters.length === 0) return null
   return (
     <div className="-mx-1 flex items-center gap-2 overflow-x-auto px-1 py-0.5" aria-label={t`Filters`} role="group">
       <ul className="flex items-center gap-1.5">
         {view.filters.map((f, i) => (
-          <FilterChip key={`${f.dimension}${i}`} f={f} i={i} />
+          <FilterChip key={`${f.dimension}${i}`} f={f} i={i} kind={kind} />
         ))}
       </ul>
       {view.filters.length > 1 && (

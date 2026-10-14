@@ -15,7 +15,8 @@ import { EventsView } from "@/features/analytics/Events"
 import { FunnelsView } from "@/features/analytics/Funnels"
 import { GoalsView } from "@/features/analytics/Goals"
 import { ApiSettingsView } from "@/features/analytics/ApiSettings"
-import { ApiOverview, ApiRoutePage, ApiRoutes, RequestsBanner } from "@/features/analytics/Monitor"
+import { ApiConsumers, ApiOverview, ApiRoutePage, ApiRoutes } from "@/features/analytics/Monitor"
+import { RequestsBanner } from "@/features/analytics/MonitorParts"
 import { InstallPropertyPage, NewPropertyPage, WaitForFirstEvent } from "@/features/analytics/NewProperty"
 import { Overview } from "@/features/analytics/Overview"
 import { useCurrentProperty } from "@/features/analytics/parts"
@@ -49,7 +50,7 @@ const VIEWS = [
 ] as const
 type ViewKey = (typeof VIEWS)[number]
 
-const API_VIEWS = ["overview", "routes", "settings"] as const
+const API_VIEWS = ["overview", "routes", "consumers", "settings"] as const
 type ApiViewKey = (typeof API_VIEWS)[number]
 
 function AnalyticsHome() {
@@ -117,7 +118,8 @@ function PropertyLayout() {
     )
   }
   if (p.kind === "api") return <ApiLayout property={p} />
-  if ((last as string | undefined) === "routes") return <Navigate to={`/analytics/${p.id}${search}`} replace />
+  if ((last as string | undefined) === "routes" || (last as string | undefined) === "consumers")
+    return <Navigate to={`/analytics/${p.id}${search}`} replace />
   const controls = current !== "realtime" && current !== "settings" && current !== "retention"
   return (
     <Pane wide testId="analytics-property" className="gap-5" key={p.id}>
@@ -198,6 +200,7 @@ function ApiLayout({ property: p }: { property: AnalyticsProperty }) {
   const names: Record<ApiViewKey, string> = {
     overview: t`Overview`,
     routes: t`Routes`,
+    consumers: t`Consumers`,
     settings: t`Settings`,
   }
   return (
@@ -238,6 +241,7 @@ export default function AnalyticsRoutes() {
         <Route path="settings" element={<SettingsFor />} />
         <Route path="routes" element={<ApiRoutes />} />
         <Route path="routes/:method/*" element={<ApiRoutePage />} />
+        <Route path="consumers" element={<ApiConsumers />} />
         <Route path="*" element={<Navigate to=".." replace />} />
       </Route>
     </Routes>

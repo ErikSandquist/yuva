@@ -122,7 +122,7 @@ export function useAnalytics(id: string, query: Query, enabled = true) {
   })
 }
 
-export type ApiQuery = Omit<Query, "dataset" | "compare" | "goal_id" | "segment_id" | "prop">
+export type ApiQuery = Omit<Query, "dataset" | "goal_id" | "segment_id" | "prop">
 
 export function useApiQuery(id: string, query: ApiQuery, enabled = true) {
   return useAnalytics(id, { ...query, dataset: "api" }, enabled)
@@ -140,22 +140,22 @@ export function useApiRoutes(id: string, enabled = true) {
   })
 }
 
-export function useSetRouteHidden(id: string) {
+export function useUpdateRoute(id: string) {
   const qc = useQueryClient()
   const base = useDataKey(id)
   return useMutation({
-    mutationFn: ({ routeId, hidden }: { routeId: number; hidden: boolean }) =>
+    mutationFn: ({ routeId, ...body }: { routeId: number; hidden?: boolean; apdex_ms?: number | null }) =>
       unwrap(
         api.PATCH("/v1/analytics/properties/{propertyId}/routes/{routeId}", {
           params: { path: { propertyId: id, routeId } },
-          body: { hidden },
+          body,
         })
       ),
     onSuccess: () => void qc.invalidateQueries({ queryKey: base }),
   })
 }
 
-export function useAnalyticsTable(id: string, body: AnalyticsQuery) {
+export function useAnalyticsTable(id: string, body: AnalyticsQuery, enabled = true) {
   const share = useShare()
   const base = useDataKey(id)
   return useInfiniteQuery({
@@ -165,6 +165,7 @@ export function useAnalyticsTable(id: string, body: AnalyticsQuery) {
     getNextPageParam: (last) => last.next_cursor,
     placeholderData: keepPreviousData,
     staleTime: 30_000,
+    enabled,
   })
 }
 
