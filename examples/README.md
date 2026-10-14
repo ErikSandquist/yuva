@@ -10,7 +10,8 @@ your own code. The walkthroughs are the [Headless guide](../docs/headless.md) an
 | [headless-chat](headless-chat) | A terminal chat for a contact, built only on `createYuvaClient()` from `useyuva` | Node 22.18+ |
 | [inbox-feed](inbox-feed) | Follows a workspace through the event feed `GET /v1/events` with the typed `/v1` client from `useyuva/api` | Node 22.18+ |
 | [draft-bot](draft-bot) | A webhook receiver that verifies the signature and answers every incoming message with a draft | Go 1.27 |
-| [nuxt-content](nuxt-content) | A Nuxt Content documentation site with `<yuva-page-feedback>` and `<yuva-discussions>` on every page | Node 22.5+, Nuxt 4, Nuxt Content 3 |
+| [nuxt-content](nuxt-content) | A Nuxt Content documentation site with `<yuva-page-feedback>` and `<yuva-discussions>` on every page, signed in as a demo reader through `/_yuva/identity` | Node 22.5+, Nuxt 4, Nuxt Content 3 |
+| [nitro](nitro) | A Nitro app with `useyuva/nitro`: a chat for a demo user signed in through `/_yuva/identity`, a webhook receiver and a server-side analytics event | Node 22+, Nitro 3 |
 | [fumadocs](fumadocs) | A Fumadocs site (from `create-fumadocs-app`) with `YuvaPageFeedback` and `YuvaDiscussions` on every docs page | Node 20.9+, Next.js 16, Fumadocs 16 |
 | [shadcn-next](shadcn-next) | A Next.js app on shadcn/ui with the `yuva-discussions` and `yuva-page-feedback` components installed from Yuva's shadcn registry | Node 20.9+, Next.js 16, shadcn 4 |
 
@@ -75,9 +76,31 @@ A four-page Nuxt Content site with both elements on every page, set up as in
 ```sh
 cd examples/nuxt-content
 npm install
-cp .env.example .env   # set NUXT_PUBLIC_YUVA_SERVER and NUXT_PUBLIC_YUVA_CHANNEL
+cp .env.example .env   # set NUXT_PUBLIC_YUVA_SERVER, NUXT_PUBLIC_YUVA_CHANNEL and NUXT_YUVA_IDENTITY_SECRET
 npm run dev            # http://localhost:3101
 ```
+
+`server/yuva.ts` signs every visitor in as the same demo reader, so discussions are written as that
+contact; replace `user(event)` with your own session. Without `NUXT_YUVA_IDENTITY_SECRET` the
+readers stay anonymous.
+
+## nitro
+
+Needs a chat channel with `http://localhost:3104` among its allowed origins, the inbox's identity
+secret and, for the optional parts, a webhook endpoint pointing at `/_yuva/webhook` and an API key
+with `analytics:write` for an analytics property.
+
+```sh
+cd examples/nitro
+npm install
+cp .env.example .env   # set the NITRO_YUVA_ values; leave out the parts you do not need
+npm run dev            # http://localhost:3104
+```
+
+"Sign in as Ada" sets a demo cookie that `user(event)` in `server/yuva.ts` turns into an identity,
+and tracks a `Sign in` event; the page asks `/_yuva/identity` for the token. `message.created`
+webhooks are logged. `npm run build` and `npm start` run the same app from `.output`; the secrets are
+read at runtime, but a route is built only when its secret is set at build time too.
 
 ## fumadocs
 

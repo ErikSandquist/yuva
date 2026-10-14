@@ -11,7 +11,10 @@
     "isolatedModules": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "paths": { "#imports": ["./src/nuxt/runtime/imports.d.ts"] }
+    "paths": {
+      "#imports": ["./src/nuxt/runtime/imports.d.ts"],
+      "#yuva/server": ["./src/nitro/runtime/virtual.d.ts"]
+    }
   },
   "include": ["src", "test", "scripts", "lingui.config.ts"]
 }

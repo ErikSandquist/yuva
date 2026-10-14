@@ -36,6 +36,13 @@ type Props = {
   identityToken?: string | IdentityTokenSource | null
 } & Record<string, unknown>
 
+function identityRoute(path: string): IdentityTokenSource {
+  return async () => {
+    const response = await fetch(path, { credentials: "same-origin" })
+    return response.ok ? ((await response.json()) as { token?: string }).token : null
+  }
+}
+
 function setup(
   tag: string,
   load: () => Promise<unknown>,
@@ -45,11 +52,12 @@ function setup(
 ) {
   const config = useRuntimeConfig().public.yuva
   const element = ref<Tokened | null>(null)
+  const route = config?.identity ? identityRoute(config.identity) : undefined
 
   onMounted(() => {
     void load()
     watch(
-      () => props.identityToken,
+      () => (props.identityToken === undefined ? route : props.identityToken),
       (source) => {
         const target = element.value
         if (!target || typeof source !== "function") return

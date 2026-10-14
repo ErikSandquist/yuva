@@ -90,7 +90,20 @@ check(
 await Bun.write("dist/esm/react.js", `"use client";\n${await Bun.file("dist/esm/react.js").text()}`)
 
 const transpiler = new Bun.Transpiler({ loader: "ts", target: "node" })
-for (const name of ["nuxt/module", "nuxt/runtime/components", "nuxt/runtime/analytics", "nuxt/runtime/plugin"]) {
+const transpiled = [
+  "nuxt/module",
+  "nuxt/runtime/components",
+  "nuxt/runtime/analytics",
+  "nuxt/runtime/plugin",
+  "nitro/module",
+  "nitro/setup",
+  "nitro/runtime/define",
+  "nitro/runtime/core",
+  "nitro/runtime/identity",
+  "nitro/runtime/webhook",
+  "nitro/runtime/plugin",
+]
+for (const name of transpiled) {
   const code = transpiler.transformSync(await Bun.file(`src/${name}.ts`).text())
   await Bun.write(`dist/esm/${name}.js`, code.replace(/((?:from|import\()\s*")(\.\.?\/[^"]+?)(?<!\.js)"/g, '$1$2.js"'))
 }
@@ -132,6 +145,9 @@ for (const name of [
   "esm/nuxt/runtime/components.js",
   "esm/nuxt/runtime/analytics.js",
   "esm/nuxt/runtime/plugin.js",
+  "esm/nitro/module.js",
+  "esm/nitro/setup.js",
+  "esm/nitro/runtime/core.js",
 ]) {
   const bytes = await Bun.file(`dist/${name}`).bytes()
   const gzip = Bun.gzipSync(bytes, { level: 9 }).length

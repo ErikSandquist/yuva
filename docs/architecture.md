@@ -288,6 +288,21 @@ close to other names, and the `@yuva` scope belongs to someone else), MIT, versi
 - `useyuva/nuxt`: a Nuxt module with `YuvaChat`, `YuvaPageFeedback` and `YuvaPageQuestions`
   components (`@nuxt/kit` and Vue are optional peers).
 - `useyuva/api`: a typed `/v1` client for TypeScript backends, generated from the contract.
+
+**Server helpers.** `useyuva/server` signs identity tokens, verifies webhooks and queues server-side
+analytics events with only Web Crypto, `Request` and `fetch`; `useyuva/h3` wraps it as h3 v2
+handlers and a middleware; `useyuva/nitro` is a Nitro v3 module, and the Nuxt module installs the
+same server part on Nitro v2 or v3. That part serves `GET /_yuva/identity` (a token for what the
+app's `server/yuva.ts` returns from `user(event)`, which the Nuxt components then use on their own)
+and `POST /_yuva/webhook` (verified, then dispatched to that file's `webhooks` by type), each added
+only when its secret is known at build time and answering `404` while it is empty at runtime, and
+flushes server analytics through `waitUntil` per request and on Nitro's `close` hook. The runtime
+handlers talk to Nitro through a generated module that adapts h3 v1 (`toWebRequest`) or v2
+(`event.req`) to Web `Request` and `Response`. The identity secret, webhook secret and analytics
+API key live only in the server runtime config (`yuva.identitySecret`, `yuva.webhookSecret`,
+`yuva.analytics.apiKey` and `propertyId`, overridable as `NUXT_YUVA_*` or `NITRO_YUVA_*`), never in
+the public config or a client bundle.
+
 `sdk/go` gets a `/v1` client generated from the contract (`sdk/go/client`), next to `identity` and
 `webhook`.
 

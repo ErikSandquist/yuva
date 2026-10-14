@@ -10,7 +10,8 @@ JavaScript SDK for [Yuva](https://github.com/productdevbook/yuva), open-source c
 | `useyuva/subscribe` | `<yuva-subscribe>`, a mailing list sign-up form. Registers in the browser only. |
 | `useyuva/analytics` | `createAnalytics()`: cookieless pageviews and engagement for an analytics property. Does nothing during SSR. |
 | `useyuva/react` | `YuvaProvider`, `useConversations`, `useMessages`, `YuvaAnalytics`, `useYuvaAnalytics`. React 18+ is an optional peer. |
-| `useyuva/nuxt` | A Nuxt module: `YuvaChat`, `YuvaPageFeedback`, `YuvaDiscussions` and `YuvaSubscribe` components, configured once in `nuxt.config`. |
+| `useyuva/nuxt` | A Nuxt module: `YuvaChat`, `YuvaPageFeedback`, `YuvaDiscussions` and `YuvaSubscribe` components, configured once in `nuxt.config`, and the identity and webhook routes on the server. |
+| `useyuva/nitro` | A Nitro v3 module serving `/_yuva/identity` and `/_yuva/webhook` and sending server-side analytics; `defineYuvaServer` from `useyuva/nitro/runtime`. |
 | `useyuva/api` | A typed `/v1` client for backends (API key), generated from the OpenAPI contract. |
 | `useyuva/server` | `signIdentityToken`, `verifyWebhook` and `createAnalytics` for backends. Web Crypto and `fetch` only: Node 22+, Bun, Deno, workers, srvx. |
 
@@ -274,7 +275,46 @@ export default defineNuxtConfig({
 `NUXT_PUBLIC_YUVA_SERVER`, `NUXT_PUBLIC_YUVA_CHANNEL`, `NUXT_PUBLIC_YUVA_LOCALE` and, when
 `analytics` is set, `NUXT_PUBLIC_YUVA_ANALYTICS_KEY` override the options at runtime. `analytics`
 takes `key`, `server` (defaults to `yuva.server`), `hash`, `consent`, `manual`, `outbound`, `files` and `chat`, adds a client
-plugin and auto-imports `useYuvaAnalytics()`. `<YuvaChat />`, `<YuvaPageFeedback />`, `<YuvaDiscussions />` and `<YuvaSubscribe />` are
+plugin and auto-imports `useYuvaAnalytics()`.
+
+For signed-in users, the only code you write is who they are:
+
+```ts
+// server/yuva.ts
+export default defineYuvaServer({
+  user: async (event) => {
+    const { user } = await getUserSession(event); // your session; null when signed out
+    return user && { subject: user.id, email: user.email, emailVerified: user.emailConfirmed, name: user.name };
+  },
+  webhooks: {
+    "message.created": async (payload) => {
+      if (!payload.data.contact?.online) await sendPush(payload.data);
+    },
+  },
+});
+```
+
+```sh
+NUXT_YUVA_IDENTITY_SECRET=yuva_is_…   # at build and at runtime
+NUXT_YUVA_WEBHOOK_SECRET=whsec_…
+NUXT_YUVA_ANALYTICS_API_KEY=yuva_…
+NUXT_YUVA_ANALYTICS_PROPERTY_ID=…
+```
+
+With an identity secret, the module serves `GET /_yuva/identity` (the [h3](#h3) identity handler for
+`user(event)`) and every component fetches its token there on its own; pass `identityToken` to
+override that, or `null` for anonymous. With a webhook secret it serves `POST /_yuva/webhook`, which
+verifies the request and calls `webhooks[type]` like `defineYuvaWebhookHandler`. With an analytics API
+key (`analytics:write`) and property id, `event.context.yuva.track(event)` sends server-side events
+to `yuva.server` (or `NUXT_YUVA_SERVER`), flushed through `waitUntil` after the request where the
+platform has one and when Nitro closes. The secrets are the options `identitySecret`,
+`webhookSecret`, `analytics.apiKey` and `analytics.propertyId` or the variables above; they go only
+into the server runtime config (`useRuntimeConfig().yuva`), never into the public one. A route is
+added only when its secret is known at build time, from `nuxt.config` or the environment; a secret
+that is only in the build environment is not written into the build, so set it at runtime too. A
+route whose secret is empty at runtime answers `404`. `defineYuvaServer` is auto-imported on the
+server (`useyuva/nitro/runtime`), and `event` has your Nuxt's `H3Event` type. Works on Nitro v2 and
+v3. `<YuvaChat />`, `<YuvaPageFeedback />`, `<YuvaDiscussions />` and `<YuvaSubscribe />` are
 auto-imported, render on the server and load their element in the browser when they mount. Props
 are the attributes in camelCase (`pageTitle`, `identityToken`, which also takes a function);
 events are `@rating`, `@feedback`, `@discussion`, `@post`, `@reader` and `@unread`. `yuva-*` tags are custom elements in
@@ -484,6 +524,41 @@ handler, and otherwise the `Response` the handler returns or `204`. A handler th
 `track(event)` (`analytics.track` with the request) on `event.context.yuva` and, after a request
 that tracked something, hands `flush()` to the request's `waitUntil`, which srvx sets on every
 runtime it serves; without one the queue goes out on the client's timer.
+
+### Nitro
+
+`useyuva/nitro` is the same server part for a [Nitro](https://nitro.build) v3 app:
+
+```ts
+// nitro.config.ts
+import { defineConfig } from "nitro";
+
+export default defineConfig({
+  serverDir: "./server",
+  modules: ["useyuva/nitro"],
+});
+```
+
+```ts
+// server/yuva.ts
+import { getCookie } from "nitro/h3";
+import { defineYuvaServer } from "useyuva/nitro/runtime";
+
+export default defineYuvaServer({
+  user: async (event) => {
+    const user = await findSession(getCookie(event, "session")); // null when signed out
+    return user && { subject: user.id, email: user.email, emailVerified: user.emailConfirmed, name: user.name };
+  },
+  webhooks: { "conversation.rated": (payload) => saveRating(payload.data.conversation) },
+});
+```
+
+The variables are `NITRO_YUVA_IDENTITY_SECRET`, `NITRO_YUVA_WEBHOOK_SECRET`,
+`NITRO_YUVA_ANALYTICS_API_KEY`, `NITRO_YUVA_ANALYTICS_PROPERTY_ID` and `NITRO_YUVA_SERVER` (the Yuva
+server analytics goes to), or `yuva({ identitySecret, webhookSecret, analytics: { apiKey, propertyId }, server })`
+from `useyuva/nitro` in `modules`; routes, `track` and the build-time rule are as in [Nuxt](#nuxt).
+`yuva.ts` is read from `serverDir`, or the root without one. The page asks for the token as in the
+h3 example, at `/_yuva/identity`.
 
 ## License
 
