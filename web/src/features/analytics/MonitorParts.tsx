@@ -902,3 +902,145 @@ export function ApdexThreshold({ route, canManage }: { route: AnalyticsRoute; ca
     </Panel>
   )
 }
+
+function bandRange(bounds: number[], i: number, locale: string) {
+  const ms = (us: number) => formatMetric("p50", us / 1000, locale)
+  if (i === 0) return { from: "", to: ms(bounds[0] ?? 256) }
+  if (i >= bounds.length) return { from: ms(bounds[bounds.length - 1] ?? 0), to: "" }
+  return { from: ms(bounds[i - 1]!), to: ms(bounds[i]!) }
+}
+
+function BandText({ bounds, band }: { bounds: number[]; band: number }) {
+  const { i18n } = useLingui()
+  const { from, to } = bandRange(bounds, band, i18n.locale)
+  if (!from) return <Trans>up to {to}</Trans>
+  if (!to) return <Trans>over {from}</Trans>
+  return (
+    <Trans>
+      {from} to {to}
+    </Trans>
+  )
+}
+
+export function LatencyHeatmap({ base }: { base: AnalyticsFilter[] }) {
+  const { i18n } = useLingui()
+  const text = useAnalyticsText()
+  const property = useCurrentProperty()
+  const { view } = useApiView()
+  const grain = apiGrainFor(view.range)
+  const filters = [...base, ...view.filters]
+  const blocked = blockerOf(view.range, filters, [grain])
+  const q = useApiQuery(
+    property.id,
+    { metrics: ["latency_bands"], dimensions: [grain], range: view.range, filters },
+    !blocked
+  )
+  const [hover, setHover] = useState<{ col: number; band: number } | null>(null)
+  const rows = q.data?.rows ?? []
+  const bounds = q.data?.meta.latency_band_bounds ?? []
+  const cells = rows.map((r) => r.metrics.latency_bands ?? [])
+  let lo = 19
+  let hi = 0
+  let max = 0
+  for (const c of cells)
+    c.forEach((n, i) => {
+      if (n > 0) {
+        lo = Math.min(lo, i)
+        hi = Math.max(hi, i)
+        max = Math.max(max, n)
+      }
+    })
+  if (max > 0) {
+    lo = Math.max(0, lo - 1)
+    hi = Math.min(19, hi + 1)
+  }
+  const bands = max > 0 ? Array.from({ length: hi - lo + 1 }, (_, i) => hi - i) : []
+  const short = grain === "time:minute" || grain === "time:hour"
+  const fmt = new Intl.DateTimeFormat(i18n.locale, {
+    ...(short ? { timeStyle: "short" } : {}),
+    ...(grain === "time:minute" ? {} : { day: "numeric", month: "short" }),
+    timeZone: "UTC",
+  })
+  const labels = rows.map((r) => r.dimensions[0] ?? "")
+  const repeated = repeatedWalls(labels)
+  const shade = (n: number) => (n <= 0 ? 0 : 0.15 + 0.85 * (Math.log1p(n) / Math.log1p(max)))
+  const picked = hover ? { at: labels[hover.col] ?? "", n: cells[hover.col]?.[hover.band] ?? 0 } : null
+  const requests = picked?.n ?? 0
+  return (
+    <Panel
+      title={
+        <>
+          {text.metric.latency_bands}
+          <span className="ms-2 text-caption font-normal text-faint">{grainText(grain)}</span>
+        </>
+      }
+      action={
+        picked && hover ? (
+          <span className="text-caption text-muted-foreground tabular-nums" data-testid="api-heatmap-hover">
+            {bucketText(fmt, picked.at, repeated)} · <BandText bounds={bounds} band={hover.band} /> ·{" "}
+            <Plural value={requests} one="# request" other="# requests" />
+          </span>
+        ) : null
+      }
+      testId="api-heatmap"
+    >
+      {blocked ? (
+        <Blocked reason={blocked} />
+      ) : q.isPending ? (
+        <Skeleton className="h-48 w-full" />
+      ) : q.error ? (
+        <PanelProblem error={q.error} />
+      ) : max === 0 ? (
+        <p className="px-2 py-6 text-center text-body text-faint">
+          <Trans>No requests in this range.</Trans>
+        </p>
+      ) : (
+        <div className="flex min-w-0 gap-2" onMouseLeave={() => setHover(null)}>
+          <div className="flex shrink-0 flex-col text-end text-caption text-faint tabular-nums">
+            {bands.map((b, i) => (
+              <span key={b} className="h-3 leading-3">
+                {i % 2 === 0 ? bandRange(bounds, b, i18n.locale).to || bandRange(bounds, b, i18n.locale).from : ""}
+              </span>
+            ))}
+          </div>
+          <div className="flex min-w-0 flex-1 flex-col gap-1">
+            <svg
+              viewBox={`0 0 ${rows.length} ${bands.length}`}
+              preserveAspectRatio="none"
+              className="w-full"
+              style={{ height: bands.length * 12 }}
+              role="img"
+              aria-label={text.metricHelp.latency_bands}
+            >
+              {cells.map((c, col) =>
+                bands.map((b, row) => {
+                  const n = c[b] ?? 0
+                  return (
+                    <rect
+                      key={`${col}-${b}`}
+                      x={col}
+                      y={row}
+                      width={1}
+                      height={1}
+                      fill={n > 0 ? "var(--brand)" : "var(--muted)"}
+                      fillOpacity={n > 0 ? shade(n) : 0.5}
+                      stroke={hover && hover.col === col && hover.band === b ? "var(--foreground)" : "none"}
+                      strokeWidth={0.08}
+                      vectorEffect="non-scaling-stroke"
+                      onMouseEnter={() => setHover({ col, band: b })}
+                    />
+                  )
+                })
+              )}
+            </svg>
+            <div className="flex justify-between text-caption text-faint tabular-nums">
+              <span>{labels[0] ? fmt.format(wallTime(labels[0])) : ""}</span>
+              <span>{labels.length > 2 ? fmt.format(wallTime(labels[Math.floor(labels.length / 2)]!)) : ""}</span>
+              <span>{labels.length > 1 ? fmt.format(wallTime(labels[labels.length - 1]!)) : ""}</span>
+            </div>
+          </div>
+        </div>
+      )}
+    </Panel>
+  )
+}

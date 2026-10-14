@@ -69,6 +69,10 @@ msgstr "{dim} {value}: {metric} {now}, none in the compared days."
 msgid "{errors, plural, one {# error} other {# errors}}"
 msgstr "{errors, plural, one {# error} other {# errors}}"
 
+#: src/features/analytics/MonitorParts.tsx
+msgid "{from} to {to}"
+msgstr "{from} to {to}"
+
 #: src/features/analytics/Annotations.tsx
 msgid "{kind}: {found}"
 msgstr "{kind}: {found}"
@@ -1565,6 +1569,10 @@ msgstr "Last screen"
 msgid "Latency"
 msgstr "Latency"
 
+#: src/features/analytics/text.ts
+msgid "Latency heatmap"
+msgstr "Latency heatmap"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Leave empty to keep the current one"
 msgstr "Leave empty to keep the current one"
@@ -1840,6 +1848,7 @@ msgid "No requests in this range named a consumer."
 msgstr "No requests in this range named a consumer."
 
 #: src/features/analytics/Monitor.tsx
+#: src/features/analytics/MonitorParts.tsx
 msgid "No requests in this range."
 msgstr "No requests in this range."
 
@@ -2072,6 +2081,10 @@ msgstr "Other sites"
 #: src/features/analytics/text.ts
 msgid "Outbound link"
 msgstr "Outbound link"
+
+#: src/features/analytics/MonitorParts.tsx
+msgid "over {from}"
+msgstr "over {from}"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Sharing.tsx
@@ -2444,6 +2457,10 @@ msgstr "Requests"
 #: src/features/analytics/Monitor.tsx
 msgid "Requests before"
 msgstr "Requests before"
+
+#: src/features/analytics/text.ts
+msgid "Requests by how long they took, in bands that double in width."
+msgstr "Requests by how long they took, in bands that double in width."
 
 #: src/features/analytics/text.ts
 msgid "Requests divided by the minutes of the range, up to now."
@@ -3129,6 +3146,10 @@ msgstr "Unknown"
 #: src/features/analytics/text.ts
 msgid "Unmatched"
 msgstr "Unmatched"
+
+#: src/features/analytics/MonitorParts.tsx
+msgid "up to {to}"
+msgstr "up to {to}"
 
 #: src/features/analytics/Install.tsx
 msgid "Up to 1,000 records per request, gzip allowed. Send route when your router knows the pattern, else path, and ids are taken out of it. Records left out as invalid come back in errors with their position."

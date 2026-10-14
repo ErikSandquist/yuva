@@ -69,6 +69,10 @@ msgstr "{dim} {value}: {metric} {now}; karşılaştırılan günlerde hiç yoktu
 msgid "{errors, plural, one {# error} other {# errors}}"
 msgstr "{errors, plural, one {# hata} other {# hata}}"
 
+#: src/features/analytics/MonitorParts.tsx
+msgid "{from} to {to}"
+msgstr "{from} ile {to} arası"
+
 #: src/features/analytics/Annotations.tsx
 msgid "{kind}: {found}"
 msgstr "{kind}: {found}"
@@ -1565,6 +1569,10 @@ msgstr "Son ekran"
 msgid "Latency"
 msgstr "Gecikme"
 
+#: src/features/analytics/text.ts
+msgid "Latency heatmap"
+msgstr "Gecikme ısı haritası"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Leave empty to keep the current one"
 msgstr "Geçerli parolayı korumak için boş bırakın"
@@ -1840,6 +1848,7 @@ msgid "No requests in this range named a consumer."
 msgstr "Bu aralıkta tüketici adı veren istek yok."
 
 #: src/features/analytics/Monitor.tsx
+#: src/features/analytics/MonitorParts.tsx
 msgid "No requests in this range."
 msgstr "Bu aralıkta istek yok."
 
@@ -2072,6 +2081,10 @@ msgstr "Başka siteler"
 #: src/features/analytics/text.ts
 msgid "Outbound link"
 msgstr "Dış bağlantı"
+
+#: src/features/analytics/MonitorParts.tsx
+msgid "over {from}"
+msgstr "{from} üzeri"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Sharing.tsx
@@ -2444,6 +2457,10 @@ msgstr "İstekler"
 #: src/features/analytics/Monitor.tsx
 msgid "Requests before"
 msgstr "Önceki istekler"
+
+#: src/features/analytics/text.ts
+msgid "Requests by how long they took, in bands that double in width."
+msgstr "İstekler, sürelerine göre, genişliği her seferinde iki katına çıkan aralıklarda."
 
 #: src/features/analytics/text.ts
 msgid "Requests divided by the minutes of the range, up to now."
@@ -3129,6 +3146,10 @@ msgstr "Bilinmiyor"
 #: src/features/analytics/text.ts
 msgid "Unmatched"
 msgstr "Eşleşmeyen"
+
+#: src/features/analytics/MonitorParts.tsx
+msgid "up to {to}"
+msgstr "en fazla {to}"
 
 #: src/features/analytics/Install.tsx
 msgid "Up to 1,000 records per request, gzip allowed. Send route when your router knows the pattern, else path, and ids are taken out of it. Records left out as invalid come back in errors with their position."

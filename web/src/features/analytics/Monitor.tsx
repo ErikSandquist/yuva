@@ -19,6 +19,7 @@ import {
   HideRouteButton,
   Kpis,
   LastHour,
+  LatencyHeatmap,
   RouteName,
   routeFilters,
   routePath,
@@ -934,6 +935,7 @@ export function ApiRoutePage() {
             <Kpis base={base} testId="api-route-kpis" />
             {info && <ApdexThreshold key={`${info.id}-${info.apdex_ms ?? ""}`} route={info} canManage={canManage} />}
             <Charts base={base} />
+            <LatencyHeatmap base={base} />
             <div className="grid gap-4 md:grid-cols-2">
               <StatusCodes base={base} />
               <LastHour base={base} />

@@ -106,6 +106,7 @@ export function useAnalyticsText() {
       response_bytes: t`Response bodies`,
       response_size_p50: t`Response size p50`,
       response_size_p95: t`Response size p95`,
+      latency_bands: t`Latency heatmap`,
     } satisfies Record<AnalyticsMetric, string>,
     metricHelp: {
       visitors: t`Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again.`,
@@ -158,6 +159,7 @@ export function useAnalyticsText() {
       response_bytes: t`Response body bytes, added up, of the requests that reported a size.`,
       response_size_p50: t`Half of the responses were at most this large.`,
       response_size_p95: t`95 out of 100 responses were at most this large.`,
+      latency_bands: t`Requests by how long they took, in bands that double in width.`,
     } satisfies Record<AnalyticsMetric, string>,
     dimension: {
       page: words.page,
@@ -336,9 +338,9 @@ function seconds(v: number, locale: string) {
   return `${unit(Math.floor(s / 3600), "hour")} ${unit(Math.floor((s % 3600) / 60), "minute")}`
 }
 
-export type NumMetric = Exclude<AnalyticsMetric, "revenue">
+export type NumMetric = Exclude<AnalyticsMetric, "revenue" | "latency_bands">
 
-export function num(m: AnalyticsMetrics | undefined, k: NumMetric) {
+export function num(m: AnalyticsMetrics | undefined, k: NumMetric): number | undefined {
   return m?.[k]
 }
 

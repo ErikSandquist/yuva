@@ -98,7 +98,7 @@ export const API_FILTER_DIMENSIONS: AnalyticsFilterDimension[] = [
 
 export const OPS: FilterOp[] = ["is", "is_not", "contains", "not_contains", "matches"]
 
-export const KPIS: Exclude<AnalyticsMetric, "revenue">[] = [
+export const KPIS: Exclude<AnalyticsMetric, "revenue" | "latency_bands">[] = [
   "visitors",
   "visits",
   "pageviews",
@@ -234,7 +234,7 @@ export type View = {
   compare?: AnalyticsCompare
   filters: AnalyticsFilter[]
   segment?: string
-  metric: Exclude<AnalyticsMetric, "revenue">
+  metric: Exclude<AnalyticsMetric, "revenue" | "latency_bands">
 }
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i

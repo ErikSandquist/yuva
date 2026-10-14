@@ -13135,13 +13135,16 @@ export interface components {
          *     requests within T count 1, within 4T a half, T the route's `apdex_ms` or else the
          *     property's, read from the same sketches), `request_bytes` and `response_bytes` (body bytes
          *     added up, of the records that gave a size), `response_size_p50` and `response_size_p95`
-         *     (bytes, accurate to 9%) and `conversations` (conversations the property's linked inbox
+         *     (bytes, accurate to 9%), `conversations` (conversations the property's linked inbox
          *     received, by its local day; only with no dimension or a `time:day`, `time:week` or
          *     `time:month` grain alone, and no filter or `routes`; `422 no_linked_inbox` without an
-         *     inbox).
+         *     inbox) and `latency_bands` (the latency heatmap: requests per duration band in
+         *     `metrics.latency_bands`, 20 bands whose upper bounds `meta.latency_band_bounds` lists;
+         *     the same bands for every range, read exactly from the duration sketches; it cannot order
+         *     rows).
          * @enum {string}
          */
-        AnalyticsMetric: "visitors" | "visits" | "pageviews" | "views_per_visit" | "bounce_rate" | "visit_duration" | "time_on_page" | "scroll_depth" | "events" | "conversions" | "conversion_rate" | "completions" | "revenue" | "conversations" | "feedback" | "ratings_up" | "ratings_down" | "helpful_rate" | "discussions" | "support_rate" | "requests" | "requests_per_minute" | "errors" | "error_rate" | "client_errors" | "client_error_rate" | "p50" | "p75" | "p90" | "p95" | "p99" | "avg_duration" | "max_duration" | "apdex" | "request_bytes" | "response_bytes" | "response_size_p50" | "response_size_p95";
+        AnalyticsMetric: "visitors" | "visits" | "pageviews" | "views_per_visit" | "bounce_rate" | "visit_duration" | "time_on_page" | "scroll_depth" | "events" | "conversions" | "conversion_rate" | "completions" | "revenue" | "conversations" | "feedback" | "ratings_up" | "ratings_down" | "helpful_rate" | "discussions" | "support_rate" | "requests" | "requests_per_minute" | "errors" | "error_rate" | "client_errors" | "client_error_rate" | "p50" | "p75" | "p90" | "p95" | "p99" | "avg_duration" | "max_duration" | "apdex" | "request_bytes" | "response_bytes" | "response_size_p50" | "response_size_p95" | "latency_bands";
         /**
          * @description A value of a visit or page. `page` is a path that was viewed (pages are counted by path;
          *     `hostname` tells sites apart), `entry_page` and `exit_page` the first and last of a visit.
@@ -13333,7 +13336,7 @@ export interface components {
              * @enum {string}
              */
             routes?: "new" | "silent";
-            /** @description Time series come in time order; breakdowns by `visitors`, most first, unless this says otherwise. */
+            /** @description Time series come in time order; breakdowns by `visitors`, most first, unless this says otherwise. `revenue` and `latency_bands` cannot order rows. */
             order_by?: components["schemas"]["AnalyticsOrder"][];
             /**
              * @description Rows per page; time series are never cut.
@@ -13421,6 +13424,12 @@ export interface components {
             response_size_p50?: number;
             /** Format: double */
             response_size_p95?: number;
+            /**
+             * @description Requests per duration band, fastest first: band 0 holds the requests of at most
+             *     `meta.latency_band_bounds[0]` microseconds, band i those above bound i-1 up to bound i,
+             *     and the last band those above the last bound. They add up to `requests`.
+             */
+            latency_bands?: number[];
         };
         AnalyticsRevenue: {
             /** @description ISO 4217 code. */
@@ -13482,6 +13491,12 @@ export interface components {
              * @description `dataset: api`: the range's first instant.
              */
             since?: string;
+            /**
+             * @description With `latency_bands`: the upper bounds of the first 19 bands in microseconds, powers of
+             *     two from 256 µs to about 67 s (2^8 to 2^26), the same in every answer. A duration
+             *     sketch's buckets end on these bounds, so each request is counted in its band exactly.
+             */
+            latency_band_bounds?: number[];
             /**
              * Format: date-time
              * @description `dataset: api`: the instant the range ends at, not included.
