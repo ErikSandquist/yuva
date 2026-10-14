@@ -132,6 +132,26 @@ A route names a part of your API, never one record, so an id never becomes a rou
   workspace 100 services. Past a cap, new values are counted as `(other)`, and the query answer lists the cap
   in `meta.caps_reached`.
 
+### List and hide routes
+
+`GET /v1/analytics/properties/{propertyId}/routes` (scope `analytics:read`) lists every route the property
+counted, by pattern, each with its `id`, whether it was `inferred` from paths, whether it is `hidden`, and when it
+was first and last seen. `(unmatched)` is in the list, and so is `(other)` once a route has been counted under it.
+
+A route that only adds noise, such as the health check your load balancer calls, can be hidden:
+
+```sh
+curl -X PATCH https://support.example.com/v1/analytics/properties/PROPERTY_ID/routes/ROUTE_ID \
+  -H "Authorization: Bearer $YUVA_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{ "hidden": true }'
+```
+
+Hiding takes the route out of every `dataset: api` answer from then on, rows and totals alike, and a filter on it
+matches nothing. Its requests are still counted and nothing is deleted: `"hidden": false` brings it back with all
+its numbers. Hiding needs the scope `analytics:manage` and is for owners and admins. To count a path under another
+route instead, use a route rule.
+
 ## What is recorded
 
 Recorded, per minute, hour and day: the number of requests, those with status 500 to 599 or `0` (errors) and
@@ -194,5 +214,14 @@ The answer is `202` when the request was valid, whatever happened to the records
   with `Retry-After`: send the batch again after that.
 
 The monthly limit counts the records received, not the requests they stand for: a sampled record is one record
-whatever its `sample_rate`. `GET /v1/analytics/properties` shows the month's `requests` and the `requests_limit`
-under `usage`.
+whatever its `sample_rate`. A batch that crosses the limit is taken up to it: the records that still fit are
+counted, and the rest are dropped as over the limit. When a month's records reach the limit, the workspace's owners
+get one e-mail, once a month. `GET /v1/analytics/properties` shows the month's `requests` and the `requests_limit`
+under `usage`, and `requests_limit_reached_at` once the limit is reached.
+
+## Change the time zone
+
+Changing an API property's `timezone` (`PATCH /v1/analytics/properties/{propertyId}`) does not cut a day in two. The
+property keeps counting in the old zone until that zone's next local midnight, and from then on in the new one.
+Until then the property carries `timezone_applies_at`, the instant the new zone starts. Days already counted keep
+the zone they were counted in.

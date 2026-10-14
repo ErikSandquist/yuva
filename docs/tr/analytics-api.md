@@ -133,6 +133,27 @@ olmaz.
   servis sayar. Sınırdan sonra yeni değerler `(other)` olarak sayılır ve sorgu yanıtı sınırı
   `meta.caps_reached` içinde listeler.
 
+### Rotaları listeleme ve gizleme
+
+`GET /v1/analytics/properties/{propertyId}/routes` (kapsam `analytics:read`), özelliğin saydığı her rotayı kalıba
+göre listeler; her biri `id`'si, yoldan `inferred` (çıkarılmış) olup olmadığı, `hidden` (gizli) olup olmadığı ve ilk
+ile son görülme zamanıyla gelir. `(unmatched)` listededir; bir rota `(other)` altında sayıldığında `(other)` de
+listeye girer.
+
+Yalnızca gürültü ekleyen bir rota, örneğin yük dengeleyicinizin çağırdığı sağlık denetimi, gizlenebilir:
+
+```sh
+curl -X PATCH https://support.example.com/v1/analytics/properties/PROPERTY_ID/routes/ROUTE_ID \
+  -H "Authorization: Bearer $YUVA_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{ "hidden": true }'
+```
+
+Gizleme, rotayı o andan itibaren her `dataset: api` yanıtından çıkarır; satırlardan da toplamlardan da, ve o rotaya
+göre filtre hiçbir şeyle eşleşmez. İstekleri yine sayılır ve hiçbir şey silinmez: `"hidden": false` rotayı tüm
+sayılarıyla geri getirir. Gizlemek `analytics:manage` kapsamı ister ve sahipler ile yöneticiler içindir. Bir yolu
+başka bir rota altında saymak için rota kuralı kullanın.
+
 ## Ne kaydedilir
 
 Dakika, saat ve gün başına kaydedilenler: istek sayısı, durumu 500-599 ya da `0` olanlar (hatalar) ve 400-499
@@ -196,5 +217,14 @@ Bir kayıt sorguda yaklaşık 15 saniye içinde görünür.
   `Retry-After` ile `503` yanıtlar: o süreden sonra grubu yeniden gönderin.
 
 Aylık sınır, kayıtların temsil ettiği istekleri değil, alınan kayıtları sayar: örneklenmiş bir kayıt `sample_rate`
-değeri ne olursa olsun bir kayıttır. `GET /v1/analytics/properties`, ayın `requests` ve `requests_limit`
-değerlerini `usage` altında gösterir.
+değeri ne olursa olsun bir kayıttır. Sınırı aşan bir grup sınıra kadar alınır: hâlâ sığan kayıtlar sayılır,
+kalanlar sınır aşıldığı için atılır. Bir ayın kayıtları sınıra ulaştığında çalışma alanının sahipleri ayda bir kez
+e-posta alır. `GET /v1/analytics/properties`, ayın `requests` ve `requests_limit` değerlerini `usage` altında,
+sınıra ulaşıldığında da `requests_limit_reached_at` değerini gösterir.
+
+## Saat dilimini değiştirme
+
+Bir API özelliğinin `timezone` değerini değiştirmek (`PATCH /v1/analytics/properties/{propertyId}`) bir günü ikiye
+bölmez. Özellik, eski dilimin bir sonraki yerel gece yarısına kadar eski dilimde saymaya devam eder, ondan sonra
+yenisinde. O ana kadar özellik, yeni dilimin başladığı an olan `timezone_applies_at` değerini taşır. Daha önce
+sayılmış günler sayıldıkları dilimde kalır.

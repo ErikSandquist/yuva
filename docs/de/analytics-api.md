@@ -137,6 +137,27 @@ Eine Route benennt einen Teil Ihrer API, nie einen einzelnen Datensatz; eine ID 
   Environments, ein Workspace 100 Services. Über einer Grenze zählen neue Werte als `(other)`, und die Antwort der
   Abfrage nennt die Grenze in `meta.caps_reached`.
 
+### Routen auflisten und ausblenden
+
+`GET /v1/analytics/properties/{propertyId}/routes` (Scope `analytics:read`) listet jede Route auf, die die
+Property gezählt hat, nach Muster, jeweils mit `id`, ob sie aus Pfaden `inferred` (abgeleitet) wurde, ob sie
+`hidden` (ausgeblendet) ist, sowie erster und letzter Sichtung. `(unmatched)` steht in der Liste, und `(other)`,
+sobald eine Route darunter gezählt wurde.
+
+Eine Route, die nur Rauschen erzeugt, etwa der Health-Check, den Ihr Load Balancer aufruft, lässt sich ausblenden:
+
+```sh
+curl -X PATCH https://support.example.com/v1/analytics/properties/PROPERTY_ID/routes/ROUTE_ID \
+  -H "Authorization: Bearer $YUVA_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{ "hidden": true }'
+```
+
+Das Ausblenden nimmt die Route ab sofort aus jeder `dataset: api`-Antwort, aus Zeilen wie aus Summen, und ein
+Filter auf sie trifft nichts. Ihre Requests werden weiter gezählt und nichts wird gelöscht: `"hidden": false`
+bringt sie mit allen Zahlen zurück. Ausblenden braucht den Scope `analytics:manage` und ist Owners und Admins
+vorbehalten. Um einen Pfad unter einer anderen Route zu zählen, nutzen Sie eine Routenregel.
+
 ## Was erfasst wird
 
 Erfasst wird pro Minute, Stunde und Tag: die Zahl der Requests, die mit Status 500 bis 599 oder `0` (Fehler) und
@@ -202,5 +223,15 @@ Die Antwort ist `202`, wenn die Anfrage gültig war, was auch mit den Records ge
   Batch danach erneut.
 
 Die Monatsgrenze zählt die empfangenen Records, nicht die Requests, für die sie stehen: Ein gesampelter Record ist
-ein Record, egal welche `sample_rate` er hat. `GET /v1/analytics/properties` zeigt die `requests` des Monats und
-das `requests_limit` unter `usage`.
+ein Record, egal welche `sample_rate` er hat. Ein Batch, der die Grenze überschreitet, wird bis zu ihr angenommen:
+die Records, die noch passen, werden gezählt, der Rest wird als über der Grenze verworfen. Erreichen die Records
+eines Monats die Grenze, erhalten die Owner des Workspace einmal im Monat eine E-Mail.
+`GET /v1/analytics/properties` zeigt die `requests` des Monats und das `requests_limit` unter `usage`, bei
+erreichter Grenze auch `requests_limit_reached_at`.
+
+## Die Zeitzone ändern
+
+Eine Änderung der `timezone` einer API-Property (`PATCH /v1/analytics/properties/{propertyId}`) schneidet keinen
+Tag entzwei. Die Property zählt bis zur nächsten lokalen Mitternacht der alten Zone weiter in dieser und danach in
+der neuen. Bis dahin trägt sie `timezone_applies_at`, den Zeitpunkt, ab dem die neue Zone gilt. Bereits gezählte
+Tage behalten die Zone, in der sie gezählt wurden.
