@@ -138,32 +138,41 @@ func validHeaderValue(v string) bool {
 	return !strings.ContainsAny(v, "\r\n\x00")
 }
 
+// checkedURL is a URL the uptime runner may call, with its host in lower case: http or https,
+// without credentials or fragment, its host refused when it names or resolves to an address the
+// server does not call; ctx bounds the lookup.
+func (s *Server) checkedURL(ctx context.Context, m *monitorState, raw, field string) (string, string, error) {
+	raw = strings.TrimSpace(raw)
+	if len(raw) > 2000 {
+		return "", "", errValidation(field + " must be at most 2000 characters")
+	}
+	u, err := m.prober.CheckTarget(raw)
+	if errors.Is(err, webhook.ErrRefusedAddress) {
+		return "", "", errCheckRefused
+	}
+	if err != nil {
+		return "", "", errValidation(field + " must be an http or https URL with a host and no credentials or fragment")
+	}
+	host := strings.ToLower(strings.TrimSuffix(u.Hostname(), "."))
+	if _, err := netip.ParseAddr(host); err != nil {
+		lookup, cancel := context.WithTimeout(ctx, checkResolveTimeout)
+		ips, err := m.resolver.LookupNetIP(lookup, "ip", host)
+		cancel()
+		if err == nil && slices.ContainsFunc(ips, m.prober.Refused) {
+			return "", "", errCheckRefused
+		}
+	}
+	return u.String(), host, nil
+}
+
 // validate checks the fields and the URL's address; ctx bounds the lookup of its host.
 func (s *Server) validateCheck(ctx context.Context, m *monitorState, f *checkFields) error {
 	var err error
 	if f.name, err = trimmed(f.name, 1, 100, "name"); err != nil {
 		return err
 	}
-	f.url = strings.TrimSpace(f.url)
-	if len(f.url) > 2000 {
-		return errValidation("url must be at most 2000 characters")
-	}
-	u, err := m.prober.CheckTarget(f.url)
-	if errors.Is(err, webhook.ErrRefusedAddress) {
-		return errCheckRefused
-	}
-	if err != nil {
-		return errValidation("url must be an http or https URL with a host and no credentials or fragment")
-	}
-	f.url = u.String()
-	f.host = strings.ToLower(strings.TrimSuffix(u.Hostname(), "."))
-	if _, err := netip.ParseAddr(f.host); err != nil {
-		lookup, cancel := context.WithTimeout(ctx, checkResolveTimeout)
-		ips, err := m.resolver.LookupNetIP(lookup, "ip", f.host)
-		cancel()
-		if err == nil && slices.ContainsFunc(ips, m.prober.Refused) {
-			return errCheckRefused
-		}
+	if f.url, f.host, err = s.checkedURL(ctx, m, f.url, "url"); err != nil {
+		return err
 	}
 	if f.method != string(oas.MonitorCheckGet) && f.method != string(oas.MonitorCheckHead) {
 		return errValidation("method must be GET or HEAD")

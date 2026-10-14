@@ -251,5 +251,8 @@ func (s *Server) spanRecord(sp *otlp.Span, zone monitor.Zone, rules []analytics.
 		return rec, false, errors.New("the tracestate threshold samples fewer than 1 in 10,000 spans")
 	}
 	rec.Source, rec.Weight = monitor.SourceOTLP, int64(weight)
+	if rec.Service != "" {
+		rec.Instance = truncateRunes(strings.TrimSpace(sp.Resource.Instance), 200)
+	}
 	return rec, late, nil
 }

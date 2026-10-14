@@ -49,18 +49,19 @@ var (
 	metricRuleKinds  = []string{"error_rate", "client_error_rate", "p95", "p99", "apdex"}
 	trafficRuleKinds = []string{"spike", "drop", "silent"}
 	checkRuleKinds   = []string{"check_state", "certificate"}
+	ownerRuleKinds   = []string{"check_state", "certificate", "service_state"}
 )
 
 func ruleBody(r store.MonitorAlertRule, firing int64) oas.MonitorAlertRule {
 	out := oas.MonitorAlertRule{Id: r.ID, Name: r.Name, Kind: oas.MonitorAlertRuleKind(r.Kind), PropertyId: r.PropertyID, Route: r.Route, Service: r.Service,
-		CheckId: r.CheckID, Threshold: r.Threshold, WindowMinutes: int(r.WindowMinutes), MinRequests: int(r.MinRequests), Recipients: nonNil(r.Recipients),
+		CheckId: r.CheckID, ServiceId: r.ServiceID, DependencyId: r.DependencyID, Threshold: r.Threshold, WindowMinutes: int(r.WindowMinutes), MinRequests: int(r.MinRequests), Recipients: nonNil(r.Recipients),
 		Enabled: r.Enabled, Firing: int(firing), CreatedBy: r.CreatedBy, CreatedAt: r.CreatedAt, UpdatedAt: r.UpdatedAt}
 	return out
 }
 
 func monitorAlertBody(a store.MonitorAlert, r store.MonitorAlertRule) oas.MonitorAlert {
 	out := oas.MonitorAlert{Id: a.ID, RuleId: a.RuleID, RuleName: r.Name, Kind: oas.MonitorAlertRuleKind(a.Kind), Key: a.Key, State: oas.MonitorAlertFiring,
-		PropertyId: a.PropertyID, Route: r.Route, Service: r.Service, CheckId: a.CheckID, Value: a.Value, Threshold: a.Threshold, Baseline: a.Baseline,
+		PropertyId: a.PropertyID, Route: r.Route, Service: r.Service, CheckId: a.CheckID, ServiceId: a.ServiceID, DependencyId: a.DependencyID, Value: a.Value, Threshold: a.Threshold, Baseline: a.Baseline,
 		ResolvedValue: a.ResolvedValue, WindowMinutes: new(int(a.WindowMinutes)), Text: a.Text, FiredAt: a.FiredAt.UTC(),
 		AnnotationId: a.AnnotationID}
 	if a.ResolvedAt != nil {
@@ -77,6 +78,7 @@ type ruleFields struct {
 	name                *string
 	kind                string
 	propertyID, checkID *uuid.UUID
+	serviceID, depID    *uuid.UUID
 	route, service      *string
 	threshold           *float64
 	window, minRequests int32
@@ -84,10 +86,12 @@ type ruleFields struct {
 	enabled             bool
 	prop                *store.AnalyticsProperty
 	check               *store.MonitorCheck
+	svc                 *store.MonitorService
+	dep                 *store.MonitorDependency
 }
 
 func ruleFieldsOf(r store.MonitorAlertRule) ruleFields {
-	return ruleFields{name: &r.Name, kind: r.Kind, propertyID: r.PropertyID, checkID: r.CheckID, route: r.Route, service: r.Service, threshold: r.Threshold,
+	return ruleFields{name: &r.Name, kind: r.Kind, propertyID: r.PropertyID, checkID: r.CheckID, serviceID: r.ServiceID, depID: r.DependencyID, route: r.Route, service: r.Service, threshold: r.Threshold,
 		window: r.WindowMinutes, minRequests: r.MinRequests, recipients: r.Recipients, enabled: r.Enabled}
 }
 
@@ -130,7 +134,14 @@ func thresholdText(kind string, t float64) string {
 
 func defaultRuleName(f *ruleFields) string {
 	subject := "all checks"
+	if f.kind == "service_state" {
+		subject = "all services"
+	}
 	switch {
+	case f.dep != nil && f.svc != nil:
+		subject = f.dep.Name + " of " + serviceLabel(*f.svc)
+	case f.svc != nil:
+		subject = serviceLabel(*f.svc)
 	case f.prop != nil && f.route != nil:
 		subject = f.prop.Name + " " + *f.route
 	case f.prop != nil && f.service != nil:
@@ -164,6 +175,8 @@ func defaultRuleName(f *ruleFields) string {
 		name = subject + " is down"
 	case "certificate":
 		name = "Certificate of " + subject + " expiring"
+	case "service_state":
+		name = subject + " is degraded or down"
 	}
 	return truncateRunes(name, 100)
 }
@@ -171,9 +184,9 @@ func defaultRuleName(f *ruleFields) string {
 // validateRule checks a rule whole; the property must be visible to p and the check must exist.
 func (s *Server) validateRule(ctx context.Context, q *store.Queries, p principal, f *ruleFields) error {
 	if !oas.MonitorAlertRuleKind(f.kind).Valid() {
-		return errValidation("kind must be one of error_rate, client_error_rate, p95, p99, apdex, spike, drop, silent, check_state, certificate")
+		return errValidation("kind must be one of error_rate, client_error_rate, p95, p99, apdex, spike, drop, silent, check_state, certificate, service_state")
 	}
-	onChecks := slices.Contains(checkRuleKinds, f.kind)
+	onChecks := slices.Contains(ownerRuleKinds, f.kind)
 	if f.propertyID != nil {
 		prop, err := visibleProperty(ctx, q, p, *f.propertyID, false)
 		if err != nil {
@@ -186,11 +199,38 @@ func (s *Server) validateRule(ctx context.Context, q *store.Queries, p principal
 	} else if !onChecks {
 		return errValidation("a rule of kind " + f.kind + " needs property_id, an API property")
 	}
+	if f.kind == "service_state" {
+		if f.checkID != nil {
+			return errValidation("check_id belongs to check_state and certificate rules")
+		}
+		if f.serviceID != nil {
+			svc, err := s.getService(ctx, q, p.workspaceID, *f.serviceID, false)
+			if err != nil {
+				return err
+			}
+			f.svc = &svc
+		}
+		if f.depID != nil {
+			if f.svc == nil {
+				return errValidation("dependency_id needs the service_id it belongs to")
+			}
+			d, err := q.GetMonitorDependency(ctx, store.GetMonitorDependencyParams{WorkspaceID: p.workspaceID, ID: *f.depID})
+			if store.IsNotFound(err) || (err == nil && d.ServiceID != f.svc.ID) {
+				return problem(http.StatusNotFound, "not_found", "no such dependency of the service")
+			}
+			if err != nil {
+				return err
+			}
+			f.dep = &d
+		}
+	} else if f.serviceID != nil || f.depID != nil {
+		return errValidation("service_id and dependency_id belong to service_state rules")
+	}
 	if onChecks {
 		if f.route != nil || f.service != nil {
-			return errValidation("check rules take no route or service")
+			return errValidation("check and service rules take no route or service")
 		}
-		if f.checkID != nil {
+		if f.checkID != nil && f.kind != "service_state" {
 			c, err := s.getCheck(ctx, q, p.workspaceID, *f.checkID, false)
 			if err != nil {
 				return err
@@ -336,7 +376,7 @@ func (s *Server) ListMonitorAlertRules(ctx context.Context, req oas.ListMonitorA
 	}
 	p := principalFrom(ctx)
 	rows, err := s.st.ListMonitorAlertRules(ctx, store.ListMonitorAlertRulesParams{WorkspaceID: p.workspaceID, PropertyID: req.Params.PropertyId,
-		CheckID: req.Params.CheckId})
+		CheckID: req.Params.CheckId, ServiceID: req.Params.ServiceId})
 	if err != nil {
 		return nil, err
 	}
@@ -382,8 +422,9 @@ func (s *Server) CreateMonitorAlertRule(ctx context.Context, req oas.CreateMonit
 		return nil, err
 	}
 	b := req.Body
-	f := ruleFields{name: b.Name, kind: string(b.Kind), propertyID: b.PropertyId, checkID: b.CheckId, route: b.Route, service: b.Service,
-		window: defaultRuleWindow, minRequests: defaultRuleMinRequests, recipients: []uuid.UUID{}, enabled: true}
+	f := ruleFields{name: b.Name, kind: string(b.Kind), propertyID: b.PropertyId, checkID: b.CheckId, serviceID: b.ServiceId, depID: b.DependencyId, route: b.Route,
+		service: b.Service,
+		window:  defaultRuleWindow, minRequests: defaultRuleMinRequests, recipients: []uuid.UUID{}, enabled: true}
 	f.apply(oas.MonitorAlertRuleUpdate{Threshold: b.Threshold, WindowMinutes: b.WindowMinutes, MinRequests: b.MinRequests, Recipients: b.Recipients,
 		Enabled: b.Enabled})
 	var out store.MonitorAlertRule
@@ -403,8 +444,8 @@ func (s *Server) CreateMonitorAlertRule(ctx context.Context, req oas.CreateMonit
 		}
 		out, err = q.CreateMonitorAlertRule(ctx, store.CreateMonitorAlertRuleParams{
 			ID: newID(), WorkspaceID: p.workspaceID, Name: *f.name, Kind: f.kind, PropertyID: f.propertyID, Route: f.route, Service: f.service,
-			CheckID: f.checkID, Threshold: f.threshold, WindowMinutes: f.window, MinRequests: f.minRequests, Recipients: f.recipients, Enabled: f.enabled,
-			CreatedBy: p.memberRef(), Now: s.now(),
+			CheckID: f.checkID, ServiceID: f.serviceID, DependencyID: f.depID, Threshold: f.threshold, WindowMinutes: f.window, MinRequests: f.minRequests,
+			Recipients: f.recipients, Enabled: f.enabled, CreatedBy: p.memberRef(), Now: s.now(),
 		})
 		return err
 	})
@@ -489,7 +530,8 @@ func (s *Server) ListMonitorAlerts(ctx context.Context, req oas.ListMonitorAlert
 		return nil, errValidation("limit must be 1 to 100")
 	}
 	arg := store.ListMonitorAlertsParams{WorkspaceID: p.workspaceID, AllProperties: p.seesAllInboxes(), PropertyIds: []uuid.UUID{},
-		PropertyID: req.Params.PropertyId, CheckID: req.Params.CheckId, RuleID: req.Params.RuleId, Before: req.Params.Before, Lim: int32(limit)}
+		PropertyID: req.Params.PropertyId, CheckID: req.Params.CheckId, RuleID: req.Params.RuleId, ServiceID: req.Params.ServiceId, Before: req.Params.Before,
+		Lim: int32(limit)}
 	if req.Params.State != nil {
 		if !req.Params.State.Valid() {
 			return nil, errValidation("state must be firing or resolved")
@@ -512,6 +554,7 @@ func (s *Server) ListMonitorAlerts(ctx context.Context, req oas.ListMonitorAlert
 	out := oas.ListMonitorAlerts200JSONResponse{Items: make([]oas.MonitorAlert, len(rows))}
 	for i, r := range rows {
 		a := store.MonitorAlert{ID: r.ID, WorkspaceID: r.WorkspaceID, RuleID: r.RuleID, Key: r.Key, Kind: r.Kind, PropertyID: r.PropertyID, CheckID: r.CheckID,
+			ServiceID: r.ServiceID, DependencyID: r.DependencyID,
 			Value: r.Value, Threshold: r.Threshold, Baseline: r.Baseline, ResolvedValue: r.ResolvedValue, WindowMinutes: r.WindowMinutes, Text: r.Text,
 			FiredAt: r.FiredAt, ResolvedAt: r.ResolvedAt, AnnotationID: r.AnnotationID, CreatedAt: r.CreatedAt}
 		out.Items[i] = monitorAlertBody(a, store.MonitorAlertRule{Name: r.RuleName, Route: r.RuleRoute, Service: r.RuleService})
@@ -528,12 +571,16 @@ type ruleFinding struct {
 	baseline      *float64
 	text          string
 	checkID       *uuid.UUID
+	serviceID     *uuid.UUID
+	depID         *uuid.UUID
 	since         time.Time
 }
 
 type ruleScope struct {
-	prop   *store.AnalyticsProperty
-	checks map[uuid.UUID]store.MonitorCheck
+	prop     *store.AnalyticsProperty
+	checks   map[uuid.UUID]store.MonitorCheck
+	services map[uuid.UUID]store.MonitorService
+	deps     map[uuid.UUID]store.MonitorDependency
 }
 
 func (s *Server) monitorQuery(prop store.AnalyticsProperty, start, end time.Time, metrics, dims []string, r store.MonitorAlertRule) monitor.Query {
@@ -679,6 +726,12 @@ func (s *Server) evaluateRule(ctx context.Context, r store.MonitorAlertRule, ope
 				text: fmt.Sprintf("Route %s had no requests for 15 minutes after %s a minute over the day before", route, strconv.FormatFloat(perMinute, 'f', 1, 64))})
 		}
 		return out, scope, nil
+	case r.Kind == "service_state":
+		return s.evaluateServiceRule(ctx, r, scope)
+	}
+	mt, err := s.activeMaintenance(ctx, s.st.Queries, r.WorkspaceID, now)
+	if err != nil {
+		return nil, scope, err
 	}
 	var checks []store.MonitorCheck
 	if r.CheckID != nil {
@@ -702,7 +755,7 @@ func (s *Server) evaluateRule(ctx context.Context, r store.MonitorAlertRule, ope
 		f := ruleFinding{key: c.ID.String(), checkID: &c.ID}
 		if r.Kind == "check_state" {
 			down := c.State == resultDown && !c.Paused
-			f.holds, f.clears = down, !down && (c.State == resultUp || c.Paused)
+			f.holds, f.clears = down && !mt.check(c.ID), !down && (c.State == resultUp || c.Paused)
 			if down {
 				f.value = 1
 			}
@@ -837,6 +890,11 @@ func (s *Server) alertEventData(a store.MonitorAlert, r store.MonitorAlertRule, 
 			d.Check = &oas.MonitorCheckRef{Id: c.ID, Name: c.Name, Url: c.Url}
 		}
 	}
+	if a.ServiceID != nil {
+		if svc, ok := scope.services[*a.ServiceID]; ok {
+			d.Service = &oas.MonitorServiceRef{Id: svc.ID, Name: svc.Name, Environment: svc.Environment}
+		}
+	}
 	return d
 }
 
@@ -844,6 +902,15 @@ func (s *Server) alertAnnotation(ctx context.Context, q *store.Queries, a store.
 	prop := scope.prop
 	if c, ok := scope.checks[derefID(a.CheckID)]; prop == nil && ok && c.PropertyID != nil {
 		p, err := q.GetAnalyticsProperty(ctx, store.GetAnalyticsPropertyParams{WorkspaceID: a.WorkspaceID, ID: *c.PropertyID})
+		if err != nil && !store.IsNotFound(err) {
+			return nil, err
+		}
+		if err == nil {
+			prop = &p
+		}
+	}
+	if svc, ok := scope.services[derefID(a.ServiceID)]; prop == nil && ok && svc.PropertyID != nil {
+		p, err := q.GetAnalyticsProperty(ctx, store.GetAnalyticsPropertyParams{WorkspaceID: a.WorkspaceID, ID: *svc.PropertyID})
 		if err != nil && !store.IsNotFound(err) {
 			return nil, err
 		}
@@ -874,7 +941,7 @@ func (s *Server) fireMonitorAlert(ctx context.Context, r store.MonitorAlertRule,
 	err := s.inTx(ctx, r.WorkspaceID, func(q *store.Queries, events *eventBatch) error {
 		var err error
 		a, err = q.OpenMonitorAlert(ctx, store.OpenMonitorAlertParams{ID: newID(), WorkspaceID: r.WorkspaceID, RuleID: r.ID, Key: f.key, Kind: r.Kind,
-			PropertyID: r.PropertyID, CheckID: f.checkID, Value: f.value, Threshold: r.Threshold, Baseline: f.baseline, WindowMinutes: r.WindowMinutes,
+			PropertyID: r.PropertyID, CheckID: f.checkID, ServiceID: f.serviceID, DependencyID: f.depID, Value: f.value, Threshold: r.Threshold, Baseline: f.baseline, WindowMinutes: r.WindowMinutes,
 			Text: analytics.Clean(text, 300), FiredAt: end, Now: now})
 		if store.IsNotFound(err) {
 			return nil
@@ -946,7 +1013,9 @@ func (s *Server) alertPaths(a store.MonitorAlert, scope ruleScope) (string, stri
 		return path + "?workspace_id=" + a.WorkspaceID.String(), s.panelPropertyURL(a.WorkspaceID, scope.prop.ID, "alerts")
 	}
 	path := "/monitoring/checks"
-	if a.CheckID != nil {
+	if a.ServiceID != nil {
+		path = "/monitoring/services/" + a.ServiceID.String()
+	} else if a.CheckID != nil {
 		path += "/" + a.CheckID.String()
 	}
 	return path + "?workspace_id=" + a.WorkspaceID.String(), s.auth.PublicURL + path + "?workspace=" + a.WorkspaceID.String()
@@ -956,7 +1025,7 @@ func (s *Server) monitorAlertMail(r store.MonitorAlertRule, a store.MonitorAlert
 	d := map[string]any{
 		"Kind": a.Kind, "Resolved": a.ResolvedAt != nil, "Rule": r.Name, "Window": strconv.Itoa(int(a.WindowMinutes)), "URL": url, "SettingsURL": url,
 		"Value": reportDecimal(a.Value, locale), "Route": deref(r.Route), "Service": deref(r.Service), "Days": reportNumber(a.Value, locale),
-		"Subject": "", "Check": "",
+		"Subject": "", "Check": "", "ServiceName": "", "Dependency": "", "State": "",
 	}
 	switch a.Kind {
 	case "error_rate", "client_error_rate":
@@ -1002,6 +1071,20 @@ func (s *Server) monitorAlertMail(r store.MonitorAlertRule, a store.MonitorAlert
 	if a.CheckID != nil {
 		if c, ok := scope.checks[*a.CheckID]; ok {
 			d["Check"], d["Subject"] = c.Name, c.Name
+		}
+	}
+	if a.ServiceID != nil {
+		if svc, ok := scope.services[*a.ServiceID]; ok {
+			d["ServiceName"], d["Subject"] = serviceLabel(svc), serviceLabel(svc)
+		}
+		d["State"] = stateDegraded
+		if a.Value >= 2 {
+			d["State"] = stateDown
+		}
+	}
+	if a.DependencyID != nil {
+		if dep, ok := scope.deps[*a.DependencyID]; ok {
+			d["Dependency"] = dep.Name
 		}
 	}
 	return d
@@ -1091,4 +1174,80 @@ func defaultAPIRule(ws, prop uuid.UUID, createdBy *uuid.UUID, now time.Time) sto
 	return store.CreateMonitorAlertRuleParams{ID: newID(), WorkspaceID: ws, Name: "5xx rate above 5%", Kind: string(oas.MonitorRuleErrorRate), PropertyID: &prop,
 		Threshold: new(float64(default5xxThreshold)), WindowMinutes: defaultRuleWindow, MinRequests: defaultRuleMinRequests, Recipients: recipients,
 		Enabled: true, CreatedBy: createdBy, Now: now}
+}
+
+// evaluateServiceRule finds which services (or the rule's one dependency) are degraded or down;
+// none fires inside an active maintenance window.
+func (s *Server) evaluateServiceRule(ctx context.Context, r store.MonitorAlertRule, scope ruleScope) ([]ruleFinding, ruleScope, error) {
+	var svcs []store.MonitorService
+	if r.ServiceID != nil {
+		svc, err := s.st.GetMonitorService(ctx, store.GetMonitorServiceParams{WorkspaceID: r.WorkspaceID, ID: *r.ServiceID})
+		if err != nil && !store.IsNotFound(err) {
+			return nil, scope, err
+		}
+		if err == nil {
+			svcs = append(svcs, svc)
+		}
+	} else {
+		var err error
+		if svcs, err = s.st.ListMonitorServices(ctx, store.ListMonitorServicesParams{WorkspaceID: r.WorkspaceID, PropertyID: r.PropertyID}); err != nil {
+			return nil, scope, err
+		}
+	}
+	mt, err := s.activeMaintenance(ctx, s.st.Queries, r.WorkspaceID, s.now())
+	if err != nil {
+		return nil, scope, err
+	}
+	scope.services, scope.deps = map[uuid.UUID]store.MonitorService{}, map[uuid.UUID]store.MonitorDependency{}
+	var out []ruleFinding
+	for _, svc := range svcs {
+		scope.services[svc.ID] = svc
+		f := ruleFinding{key: svc.ID.String(), serviceID: &svc.ID}
+		state, held := svc.State, mt.service(svc.ID)
+		text := "Service " + serviceLabel(svc) + " is " + state
+		if svc.Reason != nil && *svc.Reason != "" {
+			text += ": " + *svc.Reason
+		}
+		if r.DependencyID != nil {
+			d, err := s.st.GetMonitorDependency(ctx, store.GetMonitorDependencyParams{WorkspaceID: r.WorkspaceID, ID: *r.DependencyID})
+			if store.IsNotFound(err) {
+				continue
+			}
+			if err != nil {
+				return nil, scope, err
+			}
+			scope.deps[d.ID] = d
+			f.key, f.depID = d.ID.String(), &d.ID
+			state, held = d.State, mt.dependency(d)
+			text = d.Name + " of " + serviceLabel(svc) + " is " + state
+			if d.Message != nil && *d.Message != "" {
+				text += ": " + *d.Message
+			}
+		}
+		bad := state == stateDegraded || state == stateDown
+		f.holds, f.clears, f.value, f.text = bad && !held, !bad, stateValue(state), text
+		out = append(out, f)
+	}
+	return out, scope, nil
+}
+
+// serviceRulesOn applies the service_state rules that cover svc right after it or one of its
+// dependencies changed state.
+func (s *Server) serviceRulesOn(ctx context.Context, svc store.MonitorService) error {
+	rules, err := s.st.ListEnabledMonitorAlertRules(ctx, svc.WorkspaceID)
+	if err != nil {
+		return err
+	}
+	for _, r := range rules {
+		if r.Kind != "service_state" {
+			continue
+		}
+		if (r.ServiceID != nil && *r.ServiceID != svc.ID) || (r.ServiceID == nil && r.PropertyID != nil && (svc.PropertyID == nil || *svc.PropertyID != *r.PropertyID)) {
+			continue
+		}
+		if _, err := s.applyRule(ctx, r); err != nil {
+			return err
+		}
+	}
+	return nil
 }

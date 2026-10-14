@@ -335,6 +335,10 @@ func (f *eventFilter) allows(ctx context.Context, q *store.Queries, e realtime.E
 			}
 			return d.Property == nil || f.p.seesAllInboxes(), nil
 		}
+	case eventMonitorIncident:
+		if requireScope(f.p, oas.AnalyticsRead) != nil {
+			return false, nil
+		}
 	case eventMigrationUpdated, eventMigrationProgress, eventMigrationForwardingConfirmation:
 		return requireMigrationManager(f.p) == nil && requireScope(f.p, oas.MigrationsManage) == nil, nil
 	case realtime.Typing:

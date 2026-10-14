@@ -69,6 +69,9 @@ func (w *monitorChecksDueWorker) Work(ctx context.Context, _ *river.Job[jobs.Mon
 	if _, err := w.s.QueueDueMonitorChecks(ctx); err != nil {
 		return err
 	}
+	if _, err := w.s.QueueDueMonitorPulls(ctx); err != nil {
+		return err
+	}
 	return w.s.SettleMonitorResults(ctx)
 }
 
@@ -87,6 +90,8 @@ func (s *Server) addMonitorWorkers(workers *river.Workers) {
 	river.AddWorker(workers, &monitorChecksDueWorker{s: s})
 	river.AddWorker(workers, &monitorAlertsWorker{s: s})
 	river.AddWorker(workers, &monitorEraseWorker{s: s})
+	river.AddWorker(workers, &monitorPullWorker{s: s})
+	river.AddWorker(workers, &monitorStatesWorker{s: s})
 }
 
 // QueueDueMonitorChecks takes the due checks of every workspace, moves each one's next run on by
@@ -351,6 +356,8 @@ func (s *Server) trimMonitorChecks(ctx context.Context, ws uuid.UUID, today time
 	if _, err := s.st.DeleteOldMonitorCheckDays(ctx, store.DeleteOldMonitorCheckDaysParams{WorkspaceID: ws, Before: today.AddDate(0, 0, -checkDaysKept)}); err != nil {
 		return err
 	}
-	_, err := s.st.DeleteOldMonitorAlerts(ctx, store.DeleteOldMonitorAlertsParams{WorkspaceID: ws, Before: new(s.now().Add(-monitorAlertsKept))})
-	return err
+	if _, err := s.st.DeleteOldMonitorAlerts(ctx, store.DeleteOldMonitorAlertsParams{WorkspaceID: ws, Before: new(s.now().Add(-monitorAlertsKept))}); err != nil {
+		return err
+	}
+	return s.trimMonitorHealth(ctx, ws)
 }

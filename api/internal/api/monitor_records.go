@@ -82,14 +82,21 @@ func monitorSettings(m MonitorSettings) MonitorSettings {
 }
 
 type monitorState struct {
-	settings MonitorSettings
-	store    *monitor.PGStore
-	agg      *monitor.Aggregator
-	usage    *usageCache
-	releases releaseCache
-	prober   *monitor.Prober
-	resolver webhook.Resolver
-	parts    sync.Map
+	settings  MonitorSettings
+	store     *monitor.PGStore
+	agg       *monitor.Aggregator
+	usage     *usageCache
+	releases  releaseCache
+	prober    *monitor.Prober
+	resolver  webhook.Resolver
+	parts     sync.Map
+	sightings sightingCache
+}
+
+// sightingCache remembers when this process last noted each service and instance records named.
+type sightingCache struct {
+	mu sync.Mutex
+	at map[serviceSighting]time.Time
 }
 
 func (s *Server) newMonitor(d Deps) *monitorState {
@@ -327,6 +334,7 @@ func (s *Server) admitRecords(ctx context.Context, m *monitorState, prop store.A
 	}
 	count(monitor.ReasonAccepted, len(recs))
 	s.noteReleases(ctx, m, prop, recs)
+	s.noteServices(ctx, m, prop, recs)
 	return 0, nil
 }
 

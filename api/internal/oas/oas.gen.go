@@ -4071,6 +4071,7 @@ const (
 	MonitorRuleErrorRate       MonitorAlertRuleKind = "error_rate"
 	MonitorRuleP95             MonitorAlertRuleKind = "p95"
 	MonitorRuleP99             MonitorAlertRuleKind = "p99"
+	MonitorRuleServiceState    MonitorAlertRuleKind = "service_state"
 	MonitorRuleSilent          MonitorAlertRuleKind = "silent"
 	MonitorRuleSpike           MonitorAlertRuleKind = "spike"
 )
@@ -4093,6 +4094,8 @@ func (e MonitorAlertRuleKind) Valid() bool {
 	case MonitorRuleP95:
 		return true
 	case MonitorRuleP99:
+		return true
+	case MonitorRuleServiceState:
 		return true
 	case MonitorRuleSilent:
 		return true
@@ -4217,6 +4220,216 @@ func (e MonitorCheckState) Valid() bool {
 	case MonitorCheckUnknown:
 		return true
 	case MonitorCheckUp:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MonitorDependencyKind.
+const (
+	MonitorDependencyCache    MonitorDependencyKind = "cache"
+	MonitorDependencyDatabase MonitorDependencyKind = "database"
+	MonitorDependencyHTTP     MonitorDependencyKind = "http"
+	MonitorDependencyOther    MonitorDependencyKind = "other"
+	MonitorDependencyQueue    MonitorDependencyKind = "queue"
+)
+
+// Valid indicates whether the value is a known member of the MonitorDependencyKind enum.
+func (e MonitorDependencyKind) Valid() bool {
+	switch e {
+	case MonitorDependencyCache:
+		return true
+	case MonitorDependencyDatabase:
+		return true
+	case MonitorDependencyHTTP:
+		return true
+	case MonitorDependencyOther:
+		return true
+	case MonitorDependencyQueue:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MonitorHealthStatus.
+const (
+	MonitorHealthDegraded MonitorHealthStatus = "degraded"
+	MonitorHealthDown     MonitorHealthStatus = "down"
+	MonitorHealthHealthy  MonitorHealthStatus = "healthy"
+)
+
+// Valid indicates whether the value is a known member of the MonitorHealthStatus enum.
+func (e MonitorHealthStatus) Valid() bool {
+	switch e {
+	case MonitorHealthDegraded:
+		return true
+	case MonitorHealthDown:
+		return true
+	case MonitorHealthHealthy:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MonitorIncidentEventType.
+const (
+	MonitorIncidentEventTypeMonitorIncident MonitorIncidentEventType = "monitor.incident"
+)
+
+// Valid indicates whether the value is a known member of the MonitorIncidentEventType enum.
+func (e MonitorIncidentEventType) Valid() bool {
+	switch e {
+	case MonitorIncidentEventTypeMonitorIncident:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MonitorIncidentImpact.
+const (
+	MonitorImpactCritical MonitorIncidentImpact = "critical"
+	MonitorImpactMajor    MonitorIncidentImpact = "major"
+	MonitorImpactMinor    MonitorIncidentImpact = "minor"
+	MonitorImpactNone     MonitorIncidentImpact = "none"
+)
+
+// Valid indicates whether the value is a known member of the MonitorIncidentImpact enum.
+func (e MonitorIncidentImpact) Valid() bool {
+	switch e {
+	case MonitorImpactCritical:
+		return true
+	case MonitorImpactMajor:
+		return true
+	case MonitorImpactMinor:
+		return true
+	case MonitorImpactNone:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MonitorIncidentKind.
+const (
+	MonitorIncidentIncident    MonitorIncidentKind = "incident"
+	MonitorIncidentMaintenance MonitorIncidentKind = "maintenance"
+)
+
+// Valid indicates whether the value is a known member of the MonitorIncidentKind enum.
+func (e MonitorIncidentKind) Valid() bool {
+	switch e {
+	case MonitorIncidentIncident:
+		return true
+	case MonitorIncidentMaintenance:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MonitorIncidentOrigin.
+const (
+	MonitorIncidentAuto   MonitorIncidentOrigin = "auto"
+	MonitorIncidentManual MonitorIncidentOrigin = "manual"
+)
+
+// Valid indicates whether the value is a known member of the MonitorIncidentOrigin enum.
+func (e MonitorIncidentOrigin) Valid() bool {
+	switch e {
+	case MonitorIncidentAuto:
+		return true
+	case MonitorIncidentManual:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MonitorIncidentState.
+const (
+	MonitorIncidentIdentified    MonitorIncidentState = "identified"
+	MonitorIncidentInvestigating MonitorIncidentState = "investigating"
+	MonitorIncidentMonitoring    MonitorIncidentState = "monitoring"
+	MonitorIncidentResolved      MonitorIncidentState = "resolved"
+)
+
+// Valid indicates whether the value is a known member of the MonitorIncidentState enum.
+func (e MonitorIncidentState) Valid() bool {
+	switch e {
+	case MonitorIncidentIdentified:
+		return true
+	case MonitorIncidentInvestigating:
+		return true
+	case MonitorIncidentMonitoring:
+		return true
+	case MonitorIncidentResolved:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MonitorServiceMode.
+const (
+	MonitorServicePull MonitorServiceMode = "pull"
+	MonitorServicePush MonitorServiceMode = "push"
+)
+
+// Valid indicates whether the value is a known member of the MonitorServiceMode enum.
+func (e MonitorServiceMode) Valid() bool {
+	switch e {
+	case MonitorServicePull:
+		return true
+	case MonitorServicePush:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MonitorServiceOrigin.
+const (
+	MonitorServiceFromMember  MonitorServiceOrigin = "member"
+	MonitorServiceFromRecords MonitorServiceOrigin = "records"
+	MonitorServiceFromReport  MonitorServiceOrigin = "report"
+)
+
+// Valid indicates whether the value is a known member of the MonitorServiceOrigin enum.
+func (e MonitorServiceOrigin) Valid() bool {
+	switch e {
+	case MonitorServiceFromMember:
+		return true
+	case MonitorServiceFromRecords:
+		return true
+	case MonitorServiceFromReport:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MonitorServiceState.
+const (
+	MonitorServiceDegraded MonitorServiceState = "degraded"
+	MonitorServiceDown     MonitorServiceState = "down"
+	MonitorServiceHealthy  MonitorServiceState = "healthy"
+	MonitorServiceUnknown  MonitorServiceState = "unknown"
+)
+
+// Valid indicates whether the value is a known member of the MonitorServiceState enum.
+func (e MonitorServiceState) Valid() bool {
+	switch e {
+	case MonitorServiceDegraded:
+		return true
+	case MonitorServiceDown:
+		return true
+	case MonitorServiceHealthy:
+		return true
+	case MonitorServiceUnknown:
 		return true
 	default:
 		return false
@@ -4755,6 +4968,7 @@ const (
 	WebhookEventTypeFeedbackCreated       WebhookEventType = "feedback.created"
 	WebhookEventTypeMessageCreated        WebhookEventType = "message.created"
 	WebhookEventTypeMonitorAlert          WebhookEventType = "monitor.alert"
+	WebhookEventTypeMonitorIncident       WebhookEventType = "monitor.incident"
 	WebhookEventTypeSubscriptionCreated   WebhookEventType = "subscription.created"
 	WebhookEventTypeSubscriptionUpdated   WebhookEventType = "subscription.updated"
 )
@@ -4795,6 +5009,8 @@ func (e WebhookEventType) Valid() bool {
 	case WebhookEventTypeMessageCreated:
 		return true
 	case WebhookEventTypeMonitorAlert:
+		return true
+	case WebhookEventTypeMonitorIncident:
 		return true
 	case WebhookEventTypeSubscriptionCreated:
 		return true
@@ -5093,6 +5309,24 @@ func (e GetMailingListGrowthParamsDays) Valid() bool {
 	case N30:
 		return true
 	case N90:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ListMonitorIncidentsParamsState.
+const (
+	MonitorIncidentsOpen     ListMonitorIncidentsParamsState = "open"
+	MonitorIncidentsResolved ListMonitorIncidentsParamsState = "resolved"
+)
+
+// Valid indicates whether the value is a known member of the ListMonitorIncidentsParamsState enum.
+func (e ListMonitorIncidentsParamsState) Valid() bool {
+	switch e {
+	case MonitorIncidentsOpen:
+		return true
+	case MonitorIncidentsResolved:
 		return true
 	default:
 		return false
@@ -13418,14 +13652,15 @@ type MonitorAlert struct {
 	AnnotationId *uuid.UUID `json:"annotation_id,omitempty"`
 
 	// Baseline `spike` and `drop`: the average it was compared with; `silent`: requests a minute over the day before.
-	Baseline *float64   `json:"baseline,omitempty"`
-	CheckId  *uuid.UUID `json:"check_id,omitempty"`
+	Baseline     *float64   `json:"baseline,omitempty"`
+	CheckId      *uuid.UUID `json:"check_id,omitempty"`
+	DependencyId *uuid.UUID `json:"dependency_id,omitempty"`
 
 	// FiredAt The end of the window that fired it.
 	FiredAt time.Time `json:"fired_at"`
 	Id      uuid.UUID `json:"id"`
 
-	// Key What the alert is about within its rule; empty for a rule's whole subject, a route pattern for `silent`, a check id for check rules.
+	// Key What the alert is about within its rule; empty for a rule's whole subject, a route pattern for `silent`, a check id for check rules, a service or dependency id for `service_state`.
 	Key string `json:"key"`
 
 	// Kind On a property's requests (`property_id` required, narrowed by `route` or `service`), over
@@ -13446,11 +13681,17 @@ type MonitorAlert struct {
 	// - `certificate`: the check's certificate expires within `threshold` days (the check's
 	//   `cert_warning_days` when absent).
 	//
+	// On services (`service_id`, or one of its dependencies with `dependency_id` as well, or
+	// every service of `property_id`, or every service of the workspace):
+	// - `service_state`: the service (or the dependency) is degraded or down (`value` 1 or 2).
+	//   No alert fires while an active maintenance window covers it.
+	//
 	// An alert resolves once its value has been back inside the threshold with a 10% margin
 	// (below 90% of it; for `apdex` above it by a tenth of the distance to 1; for `spike`
 	// below 2.7 times, for `drop` above 0.55 times the average) over a whole window that began
 	// after it fired, or the window has fewer than `min_requests`; a silent route once it was
-	// called again; a check once it is up, or its certificate is renewed.
+	// called again; a check once it is up, or its certificate is renewed; a service once it is
+	// healthy.
 	Kind          MonitorAlertRuleKind `json:"kind"`
 	PropertyId    *uuid.UUID           `json:"property_id,omitempty"`
 	ResolvedAt    *time.Time           `json:"resolved_at,omitempty"`
@@ -13459,21 +13700,22 @@ type MonitorAlert struct {
 	RuleId        uuid.UUID            `json:"rule_id"`
 	RuleName      string               `json:"rule_name"`
 	Service       *string              `json:"service,omitempty"`
+	ServiceId     *uuid.UUID           `json:"service_id,omitempty"`
 	State         MonitorAlertState    `json:"state"`
 
 	// Text What was found, in English, as on the annotation.
 	Text      string   `json:"text"`
 	Threshold *float64 `json:"threshold,omitempty"`
 
-	// Value The value when it fired; requests of the 15 minutes for `spike` and `drop`, days left for `certificate`, 1 for a check that is down.
+	// Value The value when it fired; requests of the 15 minutes for `spike` and `drop`, days left for `certificate`, 1 for a check that is down, 1 for degraded and 2 for down for `service_state`.
 	Value         float64 `json:"value"`
 	WindowMinutes *int    `json:"window_minutes,omitempty"`
 }
 
 // MonitorAlertEvent `monitor.alert`: an alert fired (`alert.state: firing`) or resolved (`resolved`); each
 // happens once per alert. Delivered to callers who hold `analytics:read` and can see the
-// rule: `inbox_id` is the linked inbox of the alert's property; alerts on checks without a
-// property reach every member.
+// rule: `inbox_id` is the linked inbox of the alert's property; alerts on checks and services
+// without a property reach every member.
 type MonitorAlertEvent struct {
 	CreatedAt   time.Time             `json:"created_at"`
 	Data        MonitorAlertEventData `json:"data"`
@@ -13491,6 +13733,7 @@ type MonitorAlertEventData struct {
 	Alert    MonitorAlert          `json:"alert"`
 	Check    *MonitorCheckRef      `json:"check,omitempty"`
 	Property *AnalyticsPropertyRef `json:"property,omitempty"`
+	Service  *MonitorServiceRef    `json:"service,omitempty"`
 }
 
 // MonitorAlertList defines model for MonitorAlertList.
@@ -13500,10 +13743,11 @@ type MonitorAlertList struct {
 
 // MonitorAlertRule defines model for MonitorAlertRule.
 type MonitorAlertRule struct {
-	CheckId   *uuid.UUID `json:"check_id,omitempty"`
-	CreatedAt time.Time  `json:"created_at"`
-	CreatedBy *uuid.UUID `json:"created_by,omitempty"`
-	Enabled   bool       `json:"enabled"`
+	CheckId      *uuid.UUID `json:"check_id,omitempty"`
+	CreatedAt    time.Time  `json:"created_at"`
+	CreatedBy    *uuid.UUID `json:"created_by,omitempty"`
+	DependencyId *uuid.UUID `json:"dependency_id,omitempty"`
+	Enabled      bool       `json:"enabled"`
 
 	// Firing The rule's open alerts.
 	Firing int       `json:"firing"`
@@ -13527,11 +13771,17 @@ type MonitorAlertRule struct {
 	// - `certificate`: the check's certificate expires within `threshold` days (the check's
 	//   `cert_warning_days` when absent).
 	//
+	// On services (`service_id`, or one of its dependencies with `dependency_id` as well, or
+	// every service of `property_id`, or every service of the workspace):
+	// - `service_state`: the service (or the dependency) is degraded or down (`value` 1 or 2).
+	//   No alert fires while an active maintenance window covers it.
+	//
 	// An alert resolves once its value has been back inside the threshold with a 10% margin
 	// (below 90% of it; for `apdex` above it by a tenth of the distance to 1; for `spike`
 	// below 2.7 times, for `drop` above 0.55 times the average) over a whole window that began
 	// after it fired, or the window has fewer than `min_requests`; a silent route once it was
-	// called again; a check once it is up, or its certificate is renewed.
+	// called again; a check once it is up, or its certificate is renewed; a service once it is
+	// healthy.
 	Kind          MonitorAlertRuleKind `json:"kind"`
 	MinRequests   int                  `json:"min_requests"`
 	Name          string               `json:"name"`
@@ -13539,6 +13789,7 @@ type MonitorAlertRule struct {
 	Recipients    []uuid.UUID          `json:"recipients"`
 	Route         *string              `json:"route,omitempty"`
 	Service       *string              `json:"service,omitempty"`
+	ServiceId     *uuid.UUID           `json:"service_id,omitempty"`
 	Threshold     *float64             `json:"threshold,omitempty"`
 	UpdatedAt     time.Time            `json:"updated_at"`
 	WindowMinutes int                  `json:"window_minutes"`
@@ -13547,7 +13798,10 @@ type MonitorAlertRule struct {
 // MonitorAlertRuleCreate defines model for MonitorAlertRuleCreate.
 type MonitorAlertRuleCreate struct {
 	CheckId *uuid.UUID `json:"check_id,omitempty"`
-	Enabled *bool      `json:"enabled,omitempty"`
+
+	// DependencyId `service_state`: one dependency of `service_id`.
+	DependencyId *uuid.UUID `json:"dependency_id,omitempty"`
+	Enabled      *bool      `json:"enabled,omitempty"`
 
 	// Kind On a property's requests (`property_id` required, narrowed by `route` or `service`), over
 	// the last `window_minutes` closed minutes with at least `min_requests`:
@@ -13567,11 +13821,17 @@ type MonitorAlertRuleCreate struct {
 	// - `certificate`: the check's certificate expires within `threshold` days (the check's
 	//   `cert_warning_days` when absent).
 	//
+	// On services (`service_id`, or one of its dependencies with `dependency_id` as well, or
+	// every service of `property_id`, or every service of the workspace):
+	// - `service_state`: the service (or the dependency) is degraded or down (`value` 1 or 2).
+	//   No alert fires while an active maintenance window covers it.
+	//
 	// An alert resolves once its value has been back inside the threshold with a 10% margin
 	// (below 90% of it; for `apdex` above it by a tenth of the distance to 1; for `spike`
 	// below 2.7 times, for `drop` above 0.55 times the average) over a whole window that began
 	// after it fired, or the window has fewer than `min_requests`; a silent route once it was
-	// called again; a check once it is up, or its certificate is renewed.
+	// called again; a check once it is up, or its certificate is renewed; a service once it is
+	// healthy.
 	Kind MonitorAlertRuleKind `json:"kind"`
 
 	// MinRequests The fewest requests a window needs to be judged; 20 when absent.
@@ -13587,6 +13847,9 @@ type MonitorAlertRuleCreate struct {
 	// Route A route pattern of the property, as `listAnalyticsRoutes` lists it.
 	Route   *string `json:"route,omitempty"`
 	Service *string `json:"service,omitempty"`
+
+	// ServiceId `service_state`: the service.
+	ServiceId *uuid.UUID `json:"service_id,omitempty"`
 
 	// Threshold Percent for the rates, milliseconds for `p95` and `p99`, 0 to 1 for `apdex`, days for `certificate`.
 	Threshold nullable.Nullable[float64] `json:"threshold,omitempty"`
@@ -13633,11 +13896,17 @@ type MonitorAlertRuleFields struct {
 //   - `certificate`: the check's certificate expires within `threshold` days (the check's
 //     `cert_warning_days` when absent).
 //
+// On services (`service_id`, or one of its dependencies with `dependency_id` as well, or
+// every service of `property_id`, or every service of the workspace):
+//   - `service_state`: the service (or the dependency) is degraded or down (`value` 1 or 2).
+//     No alert fires while an active maintenance window covers it.
+//
 // An alert resolves once its value has been back inside the threshold with a 10% margin
 // (below 90% of it; for `apdex` above it by a tenth of the distance to 1; for `spike`
 // below 2.7 times, for `drop` above 0.55 times the average) over a whole window that began
 // after it fired, or the window has fewer than `min_requests`; a silent route once it was
-// called again; a check once it is up, or its certificate is renewed.
+// called again; a check once it is up, or its certificate is renewed; a service once it is
+// healthy.
 type MonitorAlertRuleKind string
 
 // MonitorAlertRuleList defines model for MonitorAlertRuleList.
@@ -13921,6 +14190,582 @@ type MonitorCheckUpdate struct {
 	//
 	// Examples: https://api.example.com/healthz
 	Url *string `json:"url,omitempty"`
+}
+
+// MonitorDependency defines model for MonitorDependency.
+type MonitorDependency struct {
+	Critical     bool                  `json:"critical"`
+	Id           uuid.UUID             `json:"id"`
+	Kind         MonitorDependencyKind `json:"kind"`
+	LastReportAt *time.Time            `json:"last_report_at,omitempty"`
+
+	// LatencyMs The last reported latency.
+	LatencyMs *float64 `json:"latency_ms,omitempty"`
+
+	// Maintenance An active maintenance window lists it or its service.
+	Maintenance bool    `json:"maintenance"`
+	Message     *string `json:"message,omitempty"`
+	Name        string  `json:"name"`
+
+	// State `unknown` before a service's first report; then the worst of what applies:
+	// - `down`: the service reported itself down, a critical dependency is down, no report came
+	//   within `silence_after_seconds`, or an uptime check naming the service (`MonitorCheck`
+	//   `service`) is down;
+	// - `degraded`: the service reported itself degraded, a dependency is degraded, a
+	//   non-critical dependency is down, or over the last 5 minutes with at least 20 requests the
+	//   linked property's 5xx rate reached `error_rate_threshold` or its p95 passed
+	//   `p95_threshold_ms` (requests naming the service, or no service, in its environment);
+	// - `healthy` otherwise.
+	//
+	// A worse state applies at once, and so does `unknown`; a better one after two evaluations in
+	// a row found it. The `monitor_states` job evaluates every 30 seconds and every report
+	// evaluates its service. A dependency's state is its last reported status with the same rule,
+	// and `unknown` when the last report did not list it or the service went silent.
+	// Dependencies and checks that an active maintenance window lists do not count; a service
+	// the window lists keeps its state, which only no longer alerts or opens incidents.
+	State      MonitorServiceState  `json:"state"`
+	StateSince *time.Time           `json:"state_since,omitempty"`
+	Status     *MonitorHealthStatus `json:"status,omitempty"`
+}
+
+// MonitorDependencyKind defines model for MonitorDependencyKind.
+type MonitorDependencyKind string
+
+// MonitorHealthCheck One dependency as the service saw it.
+type MonitorHealthCheck struct {
+	// Critical A critical dependency down makes the service down, any other degraded; true when absent.
+	Critical *bool                  `json:"critical,omitempty"`
+	Kind     *MonitorDependencyKind `json:"kind,omitempty"`
+
+	// LatencyMs How long the check took.
+	LatencyMs *float64 `json:"latency_ms,omitempty"`
+
+	// Message What went wrong; shown to members only.
+	Message *string `json:"message,omitempty"`
+
+	// Name The dependency, such as `postgres`; a service keeps 50.
+	Name   string              `json:"name"`
+	Status MonitorHealthStatus `json:"status"`
+}
+
+// MonitorHealthHour defines model for MonitorHealthHour.
+type MonitorHealthHour struct {
+	Degraded int64 `json:"degraded"`
+
+	// Dependency The dependency's name; absent for the service's own reports.
+	Dependency *string   `json:"dependency,omitempty"`
+	Down       int64     `json:"down"`
+	Healthy    int64     `json:"healthy"`
+	Hour       time.Time `json:"hour"`
+
+	// LatencyAvg Milliseconds, of the reports with a latency.
+	LatencyAvg *float64 `json:"latency_avg,omitempty"`
+	LatencyP50 *float64 `json:"latency_p50,omitempty"`
+	LatencyP95 *float64 `json:"latency_p95,omitempty"`
+	LatencyP99 *float64 `json:"latency_p99,omitempty"`
+	Reports    int64    `json:"reports"`
+}
+
+// MonitorHealthHourList defines model for MonitorHealthHourList.
+type MonitorHealthHourList struct {
+	Items []MonitorHealthHour `json:"items"`
+}
+
+// MonitorHealthReport defines model for MonitorHealthReport.
+type MonitorHealthReport struct {
+	Checks *[]MonitorHealthCheck `json:"checks,omitempty"`
+
+	// Environment `production` when absent.
+	Environment *string `json:"environment,omitempty"`
+
+	// Instance The process that reports, such as a pod name; a service keeps 200 and forgets one after 24 hours without a report.
+	Instance *string `json:"instance,omitempty"`
+
+	// Service The service's name, as its request records and spans give it.
+	Service string               `json:"service"`
+	Status  *MonitorHealthStatus `json:"status,omitempty"`
+	Version *string              `json:"version,omitempty"`
+}
+
+// MonitorHealthReportResult defines model for MonitorHealthReportResult.
+type MonitorHealthReportResult struct {
+	// IgnoredChecks Checks of new names past the 50 dependencies a service keeps.
+	IgnoredChecks []string  `json:"ignored_checks"`
+	ServiceId     uuid.UUID `json:"service_id"`
+
+	// State `unknown` before a service's first report; then the worst of what applies:
+	// - `down`: the service reported itself down, a critical dependency is down, no report came
+	//   within `silence_after_seconds`, or an uptime check naming the service (`MonitorCheck`
+	//   `service`) is down;
+	// - `degraded`: the service reported itself degraded, a dependency is degraded, a
+	//   non-critical dependency is down, or over the last 5 minutes with at least 20 requests the
+	//   linked property's 5xx rate reached `error_rate_threshold` or its p95 passed
+	//   `p95_threshold_ms` (requests naming the service, or no service, in its environment);
+	// - `healthy` otherwise.
+	//
+	// A worse state applies at once, and so does `unknown`; a better one after two evaluations in
+	// a row found it. The `monitor_states` job evaluates every 30 seconds and every report
+	// evaluates its service. A dependency's state is its last reported status with the same rule,
+	// and `unknown` when the last report did not list it or the service went silent.
+	// Dependencies and checks that an active maintenance window lists do not count; a service
+	// the window lists keeps its state, which only no longer alerts or opens incidents.
+	State MonitorServiceState `json:"state"`
+}
+
+// MonitorHealthStatus defines model for MonitorHealthStatus.
+type MonitorHealthStatus string
+
+// MonitorIncident defines model for MonitorIncident.
+type MonitorIncident struct {
+	// Active Open; for a maintenance window, open and inside its window.
+	Active        bool                  `json:"active"`
+	CheckIds      []uuid.UUID           `json:"check_ids"`
+	CreatedAt     time.Time             `json:"created_at"`
+	CreatedBy     *uuid.UUID            `json:"created_by,omitempty"`
+	DependencyIds []uuid.UUID           `json:"dependency_ids"`
+	Id            uuid.UUID             `json:"id"`
+	Impact        MonitorIncidentImpact `json:"impact"`
+	Kind          MonitorIncidentKind   `json:"kind"`
+
+	// Origin `auto`: opened when a service turned degraded or down, one open per service, resolved after 5 minutes healthy; `manual`: by a member.
+	Origin MonitorIncidentOrigin `json:"origin"`
+
+	// Published Status pages may show it (M16.8).
+	Published      bool        `json:"published"`
+	ResolvedAt     *time.Time  `json:"resolved_at,omitempty"`
+	ScheduledEnd   *time.Time  `json:"scheduled_end,omitempty"`
+	ScheduledStart *time.Time  `json:"scheduled_start,omitempty"`
+	ServiceIds     []uuid.UUID `json:"service_ids"`
+
+	// StartedAt When it began; a window's start.
+	StartedAt time.Time            `json:"started_at"`
+	State     MonitorIncidentState `json:"state"`
+	Title     string               `json:"title"`
+	UpdatedAt time.Time            `json:"updated_at"`
+
+	// Updates Newest first.
+	Updates []MonitorIncidentUpdate `json:"updates"`
+}
+
+// MonitorIncidentChange defines model for MonitorIncidentChange.
+type MonitorIncidentChange struct {
+	CheckIds       *[]uuid.UUID           `json:"check_ids,omitempty"`
+	DependencyIds  *[]uuid.UUID           `json:"dependency_ids,omitempty"`
+	Impact         *MonitorIncidentImpact `json:"impact,omitempty"`
+	Published      *bool                  `json:"published,omitempty"`
+	ScheduledEnd   *time.Time             `json:"scheduled_end,omitempty"`
+	ScheduledStart *time.Time             `json:"scheduled_start,omitempty"`
+	ServiceIds     *[]uuid.UUID           `json:"service_ids,omitempty"`
+	Title          *string                `json:"title,omitempty"`
+}
+
+// MonitorIncidentComponents defines model for MonitorIncidentComponents.
+type MonitorIncidentComponents struct {
+	CheckIds      *[]uuid.UUID `json:"check_ids,omitempty"`
+	DependencyIds *[]uuid.UUID `json:"dependency_ids,omitempty"`
+	ServiceIds    *[]uuid.UUID `json:"service_ids,omitempty"`
+}
+
+// MonitorIncidentCreate defines model for MonitorIncidentCreate.
+type MonitorIncidentCreate struct {
+	CheckIds      *[]uuid.UUID           `json:"check_ids,omitempty"`
+	DependencyIds *[]uuid.UUID           `json:"dependency_ids,omitempty"`
+	Impact        *MonitorIncidentImpact `json:"impact,omitempty"`
+	Kind          *MonitorIncidentKind   `json:"kind,omitempty"`
+
+	// Notify Whether the first update tells subscribers; true when absent.
+	Notify       *bool      `json:"notify,omitempty"`
+	Published    *bool      `json:"published,omitempty"`
+	ScheduledEnd *time.Time `json:"scheduled_end,omitempty"`
+
+	// ScheduledStart `maintenance`: required, as is `scheduled_end` after it (at most 31 days later).
+	ScheduledStart *time.Time            `json:"scheduled_start,omitempty"`
+	ServiceIds     *[]uuid.UUID          `json:"service_ids,omitempty"`
+	State          *MonitorIncidentState `json:"state,omitempty"`
+
+	// Text The first update; the title when absent.
+	Text  *string `json:"text,omitempty"`
+	Title string  `json:"title"`
+}
+
+// MonitorIncidentEvent `monitor.incident`: an incident or maintenance window was opened, changed, got an update
+// (`update`) or resolved. Delivered to every caller with `analytics:read`.
+type MonitorIncidentEvent struct {
+	CreatedAt   time.Time                `json:"created_at"`
+	Data        MonitorIncidentEventData `json:"data"`
+	Id          int64                    `json:"id"`
+	Type        MonitorIncidentEventType `json:"type"`
+	WorkspaceId uuid.UUID                `json:"workspace_id"`
+}
+
+// MonitorIncidentEventType defines model for MonitorIncidentEvent.Type.
+type MonitorIncidentEventType string
+
+// MonitorIncidentEventData defines model for MonitorIncidentEventData.
+type MonitorIncidentEventData struct {
+	Incident MonitorIncident        `json:"incident"`
+	Update   *MonitorIncidentUpdate `json:"update,omitempty"`
+}
+
+// MonitorIncidentImpact defines model for MonitorIncidentImpact.
+type MonitorIncidentImpact string
+
+// MonitorIncidentKind defines model for MonitorIncidentKind.
+type MonitorIncidentKind string
+
+// MonitorIncidentList defines model for MonitorIncidentList.
+type MonitorIncidentList struct {
+	Items []MonitorIncident `json:"items"`
+}
+
+// MonitorIncidentOrigin `auto`: opened when a service turned degraded or down, one open per service, resolved after 5 minutes healthy; `manual`: by a member.
+type MonitorIncidentOrigin string
+
+// MonitorIncidentState defines model for MonitorIncidentState.
+type MonitorIncidentState string
+
+// MonitorIncidentUpdate defines model for MonitorIncidentUpdate.
+type MonitorIncidentUpdate struct {
+	// AuthorId The member who wrote it; absent for the server's own updates.
+	AuthorId  *uuid.UUID `json:"author_id,omitempty"`
+	CreatedAt time.Time  `json:"created_at"`
+	Id        uuid.UUID  `json:"id"`
+
+	// Notify Whether status page subscribers are told (M16.8).
+	Notify bool                 `json:"notify"`
+	State  MonitorIncidentState `json:"state"`
+	Text   string               `json:"text"`
+}
+
+// MonitorIncidentUpdateCreate defines model for MonitorIncidentUpdateCreate.
+type MonitorIncidentUpdateCreate struct {
+	// Notify True when absent for `resolved`, false otherwise.
+	Notify *bool                `json:"notify,omitempty"`
+	State  MonitorIncidentState `json:"state"`
+	Text   string               `json:"text"`
+}
+
+// MonitorInstance defines model for MonitorInstance.
+type MonitorInstance struct {
+	FirstSeenAt time.Time            `json:"first_seen_at"`
+	Instance    string               `json:"instance"`
+	LastSeenAt  time.Time            `json:"last_seen_at"`
+	Status      *MonitorHealthStatus `json:"status,omitempty"`
+	Version     *string              `json:"version,omitempty"`
+}
+
+// MonitorService defines model for MonitorService.
+type MonitorService struct {
+	// CheckIds The uptime checks naming it.
+	CheckIds           []uuid.UUID         `json:"check_ids"`
+	CreatedAt          time.Time           `json:"created_at"`
+	CreatedBy          *uuid.UUID          `json:"created_by,omitempty"`
+	Dependencies       []MonitorDependency `json:"dependencies"`
+	Environment        string              `json:"environment"`
+	ErrorRateThreshold float64             `json:"error_rate_threshold"`
+	HealthUrl          *string             `json:"health_url,omitempty"`
+	Id                 uuid.UUID           `json:"id"`
+	InstanceCount      int                 `json:"instance_count"`
+
+	// Instances `getMonitorService` only; most recent first.
+	Instances       *[]MonitorInstance   `json:"instances,omitempty"`
+	IntervalSeconds int                  `json:"interval_seconds"`
+	LastReportAt    *time.Time           `json:"last_report_at,omitempty"`
+	LastStatus      *MonitorHealthStatus `json:"last_status,omitempty"`
+
+	// Maintenance An active maintenance window lists it.
+	Maintenance bool `json:"maintenance"`
+
+	// Mode `push`: the service reports with `sendMonitorHealth`. `pull`: the server calls `health_url`
+	// and reads `application/health+json` (the IETF health check draft; a check's `critical` and
+	// `kind` keys are read when present), Spring Boot Actuator's `status` and `components`, or
+	// anything else by its status code (200 to 399 healthy, otherwise down). A pull that gets no
+	// answer is tried again after 20 seconds before it counts as down.
+	Mode       MonitorServiceMode `json:"mode"`
+	Name       string             `json:"name"`
+	NextPullAt *time.Time         `json:"next_pull_at,omitempty"`
+
+	// OpenIncidentId Its open incident, the automatic one first.
+	OpenIncidentId *uuid.UUID `json:"open_incident_id,omitempty"`
+
+	// Origin What made the service.
+	Origin         MonitorServiceOrigin `json:"origin"`
+	P95ThresholdMs *float64             `json:"p95_threshold_ms,omitempty"`
+	PropertyId     *uuid.UUID           `json:"property_id,omitempty"`
+
+	// Reason Why it is in its state, in English.
+	Reason *string `json:"reason,omitempty"`
+
+	// SilenceAfterSeconds The silence that makes it down.
+	SilenceAfterSeconds int `json:"silence_after_seconds"`
+
+	// SilenceSeconds As set; absent for three intervals.
+	SilenceSeconds *int `json:"silence_seconds,omitempty"`
+
+	// State `unknown` before a service's first report; then the worst of what applies:
+	// - `down`: the service reported itself down, a critical dependency is down, no report came
+	//   within `silence_after_seconds`, or an uptime check naming the service (`MonitorCheck`
+	//   `service`) is down;
+	// - `degraded`: the service reported itself degraded, a dependency is degraded, a
+	//   non-critical dependency is down, or over the last 5 minutes with at least 20 requests the
+	//   linked property's 5xx rate reached `error_rate_threshold` or its p95 passed
+	//   `p95_threshold_ms` (requests naming the service, or no service, in its environment);
+	// - `healthy` otherwise.
+	//
+	// A worse state applies at once, and so does `unknown`; a better one after two evaluations in
+	// a row found it. The `monitor_states` job evaluates every 30 seconds and every report
+	// evaluates its service. A dependency's state is its last reported status with the same rule,
+	// and `unknown` when the last report did not list it or the service went silent.
+	// Dependencies and checks that an active maintenance window lists do not count; a service
+	// the window lists keeps its state, which only no longer alerts or opens incidents.
+	State          MonitorServiceState `json:"state"`
+	StateSince     *time.Time          `json:"state_since,omitempty"`
+	TimeoutSeconds int                 `json:"timeout_seconds"`
+	UpdatedAt      time.Time           `json:"updated_at"`
+
+	// Version The last version a report, record or span gave.
+	Version *string `json:"version,omitempty"`
+}
+
+// MonitorServiceCreate defines model for MonitorServiceCreate.
+type MonitorServiceCreate struct {
+	// Environment `production` when absent.
+	Environment *string `json:"environment,omitempty"`
+
+	// ErrorRateThreshold The linked property's 5xx rate in percent that makes the service degraded; 5 when absent.
+	ErrorRateThreshold *float64 `json:"error_rate_threshold,omitempty"`
+
+	// HealthUrl `pull`: an `http` or `https` URL without credentials.
+	//
+	// Examples: https://api.example.com/health
+	HealthUrl nullable.Nullable[string] `json:"health_url,omitempty"`
+
+	// IntervalSeconds How often a pull service is called, or a push service reports; at least `YUVA_MONITOR_MIN_INTERVAL` for pulls.
+	IntervalSeconds *int `json:"interval_seconds,omitempty"`
+
+	// Mode `push`: the service reports with `sendMonitorHealth`. `pull`: the server calls `health_url`
+	// and reads `application/health+json` (the IETF health check draft; a check's `critical` and
+	// `kind` keys are read when present), Spring Boot Actuator's `status` and `components`, or
+	// anything else by its status code (200 to 399 healthy, otherwise down). A pull that gets no
+	// answer is tried again after 20 seconds before it counts as down.
+	Mode *MonitorServiceMode `json:"mode,omitempty"`
+	Name string              `json:"name"`
+
+	// P95ThresholdMs The linked property's p95 in milliseconds that makes the service degraded; none when null.
+	P95ThresholdMs nullable.Nullable[float64] `json:"p95_threshold_ms,omitempty"`
+
+	// PropertyId The API property whose 5xx rate and p95 count toward the state.
+	PropertyId nullable.Nullable[uuid.UUID] `json:"property_id,omitempty"`
+
+	// SilenceSeconds Without a report this long the service is down; three intervals when null.
+	SilenceSeconds nullable.Nullable[int] `json:"silence_seconds,omitempty"`
+	TimeoutSeconds *int                   `json:"timeout_seconds,omitempty"`
+}
+
+// MonitorServiceFields defines model for MonitorServiceFields.
+type MonitorServiceFields struct {
+	// ErrorRateThreshold The linked property's 5xx rate in percent that makes the service degraded; 5 when absent.
+	ErrorRateThreshold *float64 `json:"error_rate_threshold,omitempty"`
+
+	// HealthUrl `pull`: an `http` or `https` URL without credentials.
+	//
+	// Examples: https://api.example.com/health
+	HealthUrl nullable.Nullable[string] `json:"health_url,omitempty"`
+
+	// IntervalSeconds How often a pull service is called, or a push service reports; at least `YUVA_MONITOR_MIN_INTERVAL` for pulls.
+	IntervalSeconds *int `json:"interval_seconds,omitempty"`
+
+	// Mode `push`: the service reports with `sendMonitorHealth`. `pull`: the server calls `health_url`
+	// and reads `application/health+json` (the IETF health check draft; a check's `critical` and
+	// `kind` keys are read when present), Spring Boot Actuator's `status` and `components`, or
+	// anything else by its status code (200 to 399 healthy, otherwise down). A pull that gets no
+	// answer is tried again after 20 seconds before it counts as down.
+	Mode *MonitorServiceMode `json:"mode,omitempty"`
+
+	// P95ThresholdMs The linked property's p95 in milliseconds that makes the service degraded; none when null.
+	P95ThresholdMs nullable.Nullable[float64] `json:"p95_threshold_ms,omitempty"`
+
+	// PropertyId The API property whose 5xx rate and p95 count toward the state.
+	PropertyId nullable.Nullable[uuid.UUID] `json:"property_id,omitempty"`
+
+	// SilenceSeconds Without a report this long the service is down; three intervals when null.
+	SilenceSeconds nullable.Nullable[int] `json:"silence_seconds,omitempty"`
+	TimeoutSeconds *int                   `json:"timeout_seconds,omitempty"`
+}
+
+// MonitorServiceHistory defines model for MonitorServiceHistory.
+type MonitorServiceHistory struct {
+	Days []MonitorServiceHistoryDay `json:"days"`
+
+	// Uptime Percent over all the days.
+	Uptime *float64 `json:"uptime,omitempty"`
+}
+
+// MonitorServiceHistoryDay defines model for MonitorServiceHistoryDay.
+type MonitorServiceHistoryDay struct {
+	Day             openapi_types.Date `json:"day"`
+	DegradedSeconds int                `json:"degraded_seconds"`
+	DownSeconds     int                `json:"down_seconds"`
+	HealthySeconds  int                `json:"healthy_seconds"`
+
+	// MaintenanceSeconds Time inside maintenance windows, whatever the state; not in the other counts.
+	MaintenanceSeconds int `json:"maintenance_seconds"`
+
+	// UnknownSeconds Unknown, and today's time still to come.
+	UnknownSeconds int `json:"unknown_seconds"`
+
+	// Uptime Percent of the known time that was not down; absent when none was known.
+	Uptime *float64 `json:"uptime,omitempty"`
+
+	// Worst `unknown` before a service's first report; then the worst of what applies:
+	// - `down`: the service reported itself down, a critical dependency is down, no report came
+	//   within `silence_after_seconds`, or an uptime check naming the service (`MonitorCheck`
+	//   `service`) is down;
+	// - `degraded`: the service reported itself degraded, a dependency is degraded, a
+	//   non-critical dependency is down, or over the last 5 minutes with at least 20 requests the
+	//   linked property's 5xx rate reached `error_rate_threshold` or its p95 passed
+	//   `p95_threshold_ms` (requests naming the service, or no service, in its environment);
+	// - `healthy` otherwise.
+	//
+	// A worse state applies at once, and so does `unknown`; a better one after two evaluations in
+	// a row found it. The `monitor_states` job evaluates every 30 seconds and every report
+	// evaluates its service. A dependency's state is its last reported status with the same rule,
+	// and `unknown` when the last report did not list it or the service went silent.
+	// Dependencies and checks that an active maintenance window lists do not count; a service
+	// the window lists keeps its state, which only no longer alerts or opens incidents.
+	Worst MonitorServiceState `json:"worst"`
+}
+
+// MonitorServiceList defines model for MonitorServiceList.
+type MonitorServiceList struct {
+	Items []MonitorService `json:"items"`
+
+	// Limit The workspace's services at most.
+	Limit int `json:"limit"`
+}
+
+// MonitorServiceMode `push`: the service reports with `sendMonitorHealth`. `pull`: the server calls `health_url`
+// and reads `application/health+json` (the IETF health check draft; a check's `critical` and
+// `kind` keys are read when present), Spring Boot Actuator's `status` and `components`, or
+// anything else by its status code (200 to 399 healthy, otherwise down). A pull that gets no
+// answer is tried again after 20 seconds before it counts as down.
+type MonitorServiceMode string
+
+// MonitorServiceOrigin What made the service.
+type MonitorServiceOrigin string
+
+// MonitorServiceRef defines model for MonitorServiceRef.
+type MonitorServiceRef struct {
+	Environment string    `json:"environment"`
+	Id          uuid.UUID `json:"id"`
+	Name        string    `json:"name"`
+}
+
+// MonitorServiceState `unknown` before a service's first report; then the worst of what applies:
+//   - `down`: the service reported itself down, a critical dependency is down, no report came
+//     within `silence_after_seconds`, or an uptime check naming the service (`MonitorCheck`
+//     `service`) is down;
+//   - `degraded`: the service reported itself degraded, a dependency is degraded, a
+//     non-critical dependency is down, or over the last 5 minutes with at least 20 requests the
+//     linked property's 5xx rate reached `error_rate_threshold` or its p95 passed
+//     `p95_threshold_ms` (requests naming the service, or no service, in its environment);
+//   - `healthy` otherwise.
+//
+// A worse state applies at once, and so does `unknown`; a better one after two evaluations in
+// a row found it. The `monitor_states` job evaluates every 30 seconds and every report
+// evaluates its service. A dependency's state is its last reported status with the same rule,
+// and `unknown` when the last report did not list it or the service went silent.
+// Dependencies and checks that an active maintenance window lists do not count; a service
+// the window lists keeps its state, which only no longer alerts or opens incidents.
+type MonitorServiceState string
+
+// MonitorServiceUpdate defines model for MonitorServiceUpdate.
+type MonitorServiceUpdate struct {
+	// ErrorRateThreshold The linked property's 5xx rate in percent that makes the service degraded; 5 when absent.
+	ErrorRateThreshold *float64 `json:"error_rate_threshold,omitempty"`
+
+	// HealthUrl `pull`: an `http` or `https` URL without credentials.
+	//
+	// Examples: https://api.example.com/health
+	HealthUrl nullable.Nullable[string] `json:"health_url,omitempty"`
+
+	// IntervalSeconds How often a pull service is called, or a push service reports; at least `YUVA_MONITOR_MIN_INTERVAL` for pulls.
+	IntervalSeconds *int `json:"interval_seconds,omitempty"`
+
+	// Mode `push`: the service reports with `sendMonitorHealth`. `pull`: the server calls `health_url`
+	// and reads `application/health+json` (the IETF health check draft; a check's `critical` and
+	// `kind` keys are read when present), Spring Boot Actuator's `status` and `components`, or
+	// anything else by its status code (200 to 399 healthy, otherwise down). A pull that gets no
+	// answer is tried again after 20 seconds before it counts as down.
+	Mode *MonitorServiceMode `json:"mode,omitempty"`
+
+	// P95ThresholdMs The linked property's p95 in milliseconds that makes the service degraded; none when null.
+	P95ThresholdMs nullable.Nullable[float64] `json:"p95_threshold_ms,omitempty"`
+
+	// PropertyId The API property whose 5xx rate and p95 count toward the state.
+	PropertyId nullable.Nullable[uuid.UUID] `json:"property_id,omitempty"`
+
+	// SilenceSeconds Without a report this long the service is down; three intervals when null.
+	SilenceSeconds nullable.Nullable[int] `json:"silence_seconds,omitempty"`
+	TimeoutSeconds *int                   `json:"timeout_seconds,omitempty"`
+}
+
+// MonitorStateChange defines model for MonitorStateChange.
+type MonitorStateChange struct {
+	At time.Time `json:"at"`
+
+	// Dependency The dependency's name.
+	Dependency *string `json:"dependency,omitempty"`
+
+	// DependencyId Absent for the service's own change.
+	DependencyId *uuid.UUID `json:"dependency_id,omitempty"`
+	Id           uuid.UUID  `json:"id"`
+
+	// Maintenance It happened inside a maintenance window, so no alert or incident followed.
+	Maintenance bool `json:"maintenance"`
+
+	// Previous `unknown` before a service's first report; then the worst of what applies:
+	// - `down`: the service reported itself down, a critical dependency is down, no report came
+	//   within `silence_after_seconds`, or an uptime check naming the service (`MonitorCheck`
+	//   `service`) is down;
+	// - `degraded`: the service reported itself degraded, a dependency is degraded, a
+	//   non-critical dependency is down, or over the last 5 minutes with at least 20 requests the
+	//   linked property's 5xx rate reached `error_rate_threshold` or its p95 passed
+	//   `p95_threshold_ms` (requests naming the service, or no service, in its environment);
+	// - `healthy` otherwise.
+	//
+	// A worse state applies at once, and so does `unknown`; a better one after two evaluations in
+	// a row found it. The `monitor_states` job evaluates every 30 seconds and every report
+	// evaluates its service. A dependency's state is its last reported status with the same rule,
+	// and `unknown` when the last report did not list it or the service went silent.
+	// Dependencies and checks that an active maintenance window lists do not count; a service
+	// the window lists keeps its state, which only no longer alerts or opens incidents.
+	Previous  MonitorServiceState `json:"previous"`
+	Reason    *string             `json:"reason,omitempty"`
+	ServiceId uuid.UUID           `json:"service_id"`
+
+	// State `unknown` before a service's first report; then the worst of what applies:
+	// - `down`: the service reported itself down, a critical dependency is down, no report came
+	//   within `silence_after_seconds`, or an uptime check naming the service (`MonitorCheck`
+	//   `service`) is down;
+	// - `degraded`: the service reported itself degraded, a dependency is degraded, a
+	//   non-critical dependency is down, or over the last 5 minutes with at least 20 requests the
+	//   linked property's 5xx rate reached `error_rate_threshold` or its p95 passed
+	//   `p95_threshold_ms` (requests naming the service, or no service, in its environment);
+	// - `healthy` otherwise.
+	//
+	// A worse state applies at once, and so does `unknown`; a better one after two evaluations in
+	// a row found it. The `monitor_states` job evaluates every 30 seconds and every report
+	// evaluates its service. A dependency's state is its last reported status with the same rule,
+	// and `unknown` when the last report did not list it or the service went silent.
+	// Dependencies and checks that an active maintenance window lists do not count; a service
+	// the window lists keeps its state, which only no longer alerts or opens incidents.
+	State MonitorServiceState `json:"state"`
+}
+
+// MonitorStateChangeList defines model for MonitorStateChangeList.
+type MonitorStateChangeList struct {
+	Items []MonitorStateChange `json:"items"`
 }
 
 // NotificationChannels defines model for NotificationChannels.
@@ -15301,6 +16146,19 @@ type WebhookMonitorAlertPayload struct {
 	WorkspaceId uuid.UUID        `json:"workspace_id"`
 }
 
+// WebhookMonitorIncidentPayload defines model for WebhookMonitorIncidentPayload.
+type WebhookMonitorIncidentPayload struct {
+	Data MonitorIncidentEventData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
+}
+
 // WebhookPayloadBase Standard Webhooks payload envelope.
 type WebhookPayloadBase struct {
 	// InboxId The conversation's inbox; absent for contact events.
@@ -15526,6 +16384,12 @@ type MonitorAlertRuleId = uuid.UUID
 
 // MonitorCheckId defines model for MonitorCheckId.
 type MonitorCheckId = uuid.UUID
+
+// MonitorIncidentId defines model for MonitorIncidentId.
+type MonitorIncidentId = uuid.UUID
+
+// MonitorServiceId defines model for MonitorServiceId.
+type MonitorServiceId = uuid.UUID
 
 // OAuthGrantId defines model for OAuthGrantId.
 type OAuthGrantId = uuid.UUID
@@ -17580,6 +18444,7 @@ type UploadMigrationPartParams struct {
 type ListMonitorAlertRulesParams struct {
 	PropertyId *uuid.UUID `form:"property_id,omitempty" json:"property_id,omitempty"`
 	CheckId    *uuid.UUID `form:"check_id,omitempty" json:"check_id,omitempty"`
+	ServiceId  *uuid.UUID `form:"service_id,omitempty" json:"service_id,omitempty"`
 
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
@@ -17619,6 +18484,7 @@ type ListMonitorAlertsParams struct {
 	PropertyId *uuid.UUID         `form:"property_id,omitempty" json:"property_id,omitempty"`
 	CheckId    *uuid.UUID         `form:"check_id,omitempty" json:"check_id,omitempty"`
 	RuleId     *uuid.UUID         `form:"rule_id,omitempty" json:"rule_id,omitempty"`
+	ServiceId  *uuid.UUID         `form:"service_id,omitempty" json:"service_id,omitempty"`
 
 	// Before `fired_at` of the last alert of the previous page.
 	Before *time.Time `form:"before,omitempty" json:"before,omitempty"`
@@ -17673,6 +18539,66 @@ type ListMonitorCheckResultsParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// SendMonitorHealthParams defines parameters for SendMonitorHealth.
+type SendMonitorHealthParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListMonitorIncidentsParams defines parameters for ListMonitorIncidents.
+type ListMonitorIncidentsParams struct {
+	// State `open` (not resolved) or `resolved`; both when absent.
+	State     *ListMonitorIncidentsParamsState `form:"state,omitempty" json:"state,omitempty"`
+	Kind      *MonitorIncidentKind             `form:"kind,omitempty" json:"kind,omitempty"`
+	ServiceId *uuid.UUID                       `form:"service_id,omitempty" json:"service_id,omitempty"`
+
+	// Before `started_at` of the last incident of the previous page.
+	Before *time.Time `form:"before,omitempty" json:"before,omitempty"`
+	Limit  *int       `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListMonitorIncidentsParamsState defines parameters for ListMonitorIncidents.
+type ListMonitorIncidentsParamsState string
+
+// CreateMonitorIncidentParams defines parameters for CreateMonitorIncident.
+type CreateMonitorIncidentParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteMonitorIncidentParams defines parameters for DeleteMonitorIncident.
+type DeleteMonitorIncidentParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetMonitorIncidentParams defines parameters for GetMonitorIncident.
+type GetMonitorIncidentParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateMonitorIncidentParams defines parameters for UpdateMonitorIncident.
+type UpdateMonitorIncidentParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateMonitorIncidentUpdateParams defines parameters for CreateMonitorIncidentUpdate.
+type CreateMonitorIncidentUpdateParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // QueryMonitoringParams defines parameters for QueryMonitoring.
 type QueryMonitoringParams struct {
 	// Format `json` (the default) or `csv`.
@@ -17684,6 +18610,72 @@ type QueryMonitoringParams struct {
 
 // QueryMonitoringParamsFormat defines parameters for QueryMonitoring.
 type QueryMonitoringParamsFormat string
+
+// ListMonitorServicesParams defines parameters for ListMonitorServices.
+type ListMonitorServicesParams struct {
+	PropertyId *uuid.UUID `form:"property_id,omitempty" json:"property_id,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateMonitorServiceParams defines parameters for CreateMonitorService.
+type CreateMonitorServiceParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteMonitorServiceParams defines parameters for DeleteMonitorService.
+type DeleteMonitorServiceParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetMonitorServiceParams defines parameters for GetMonitorService.
+type GetMonitorServiceParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateMonitorServiceParams defines parameters for UpdateMonitorService.
+type UpdateMonitorServiceParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetMonitorServiceHistoryParams defines parameters for GetMonitorServiceHistory.
+type GetMonitorServiceHistoryParams struct {
+	// Days The last days, today included.
+	Days         *int       `form:"days,omitempty" json:"days,omitempty"`
+	DependencyId *uuid.UUID `form:"dependency_id,omitempty" json:"dependency_id,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListMonitorHealthHoursParams defines parameters for ListMonitorHealthHours.
+type ListMonitorHealthHoursParams struct {
+	// Hours The last hours, the current one included.
+	Hours *int `form:"hours,omitempty" json:"hours,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListMonitorStateChangesParams defines parameters for ListMonitorStateChanges.
+type ListMonitorStateChangesParams struct {
+	DependencyId *uuid.UUID `form:"dependency_id,omitempty" json:"dependency_id,omitempty"`
+
+	// Before `at` of the last change of the previous page.
+	Before *time.Time `form:"before,omitempty" json:"before,omitempty"`
+	Limit  *int       `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
 
 // ListOAuthGrantsParams defines parameters for ListOAuthGrants.
 type ListOAuthGrantsParams struct {
@@ -18053,6 +19045,20 @@ type WebhookMessageCreatedParams struct {
 
 // WebhookMonitorAlertParams defines parameters for WebhookMonitorAlert.
 type WebhookMonitorAlertParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookMonitorIncidentParams defines parameters for WebhookMonitorIncident.
+type WebhookMonitorIncidentParams struct {
 	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
 	WebhookId WebhookIdHeader `json:"webhook-id"`
 
@@ -18435,8 +19441,26 @@ type CreateMonitorCheckJSONRequestBody = MonitorCheckCreate
 // UpdateMonitorCheckJSONRequestBody defines body for UpdateMonitorCheck for application/json ContentType.
 type UpdateMonitorCheckJSONRequestBody = MonitorCheckUpdate
 
+// SendMonitorHealthJSONRequestBody defines body for SendMonitorHealth for application/json ContentType.
+type SendMonitorHealthJSONRequestBody = MonitorHealthReport
+
+// CreateMonitorIncidentJSONRequestBody defines body for CreateMonitorIncident for application/json ContentType.
+type CreateMonitorIncidentJSONRequestBody = MonitorIncidentCreate
+
+// UpdateMonitorIncidentJSONRequestBody defines body for UpdateMonitorIncident for application/json ContentType.
+type UpdateMonitorIncidentJSONRequestBody = MonitorIncidentChange
+
+// CreateMonitorIncidentUpdateJSONRequestBody defines body for CreateMonitorIncidentUpdate for application/json ContentType.
+type CreateMonitorIncidentUpdateJSONRequestBody = MonitorIncidentUpdateCreate
+
 // QueryMonitoringJSONRequestBody defines body for QueryMonitoring for application/json ContentType.
 type QueryMonitoringJSONRequestBody = AnalyticsQuery
+
+// CreateMonitorServiceJSONRequestBody defines body for CreateMonitorService for application/json ContentType.
+type CreateMonitorServiceJSONRequestBody = MonitorServiceCreate
+
+// UpdateMonitorServiceJSONRequestBody defines body for UpdateMonitorService for application/json ContentType.
+type UpdateMonitorServiceJSONRequestBody = MonitorServiceUpdate
 
 // ApproveOAuthRequestJSONRequestBody defines body for ApproveOAuthRequest for application/json ContentType.
 type ApproveOAuthRequestJSONRequestBody = OAuthApproval
@@ -18509,6 +19533,9 @@ type WebhookMessageCreatedJSONRequestBody = WebhookMessagePayload
 
 // WebhookMonitorAlertJSONRequestBody defines body for WebhookMonitorAlert for application/json ContentType.
 type WebhookMonitorAlertJSONRequestBody = WebhookMonitorAlertPayload
+
+// WebhookMonitorIncidentJSONRequestBody defines body for WebhookMonitorIncident for application/json ContentType.
+type WebhookMonitorIncidentJSONRequestBody = WebhookMonitorIncidentPayload
 
 // WebhookSubscriptionCreatedJSONRequestBody defines body for WebhookSubscriptionCreated for application/json ContentType.
 type WebhookSubscriptionCreatedJSONRequestBody = WebhookSubscriptionPayload
@@ -20678,6 +21705,32 @@ func (t *RealtimeMessage) MergeMonitorAlertEvent(v MonitorAlertEvent) error {
 	return err
 }
 
+// AsMonitorIncidentEvent returns the union data inside the RealtimeMessage as a MonitorIncidentEvent
+func (t RealtimeMessage) AsMonitorIncidentEvent() (MonitorIncidentEvent, error) {
+	var body MonitorIncidentEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromMonitorIncidentEvent overwrites any union data inside the RealtimeMessage as the provided MonitorIncidentEvent
+func (t *RealtimeMessage) FromMonitorIncidentEvent(v MonitorIncidentEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeMonitorIncidentEvent performs a merge with any union data inside the RealtimeMessage, using the provided MonitorIncidentEvent
+func (t *RealtimeMessage) MergeMonitorIncidentEvent(v MonitorIncidentEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsMigrationProgressEvent returns the union data inside the RealtimeMessage as a MigrationProgressEvent
 func (t RealtimeMessage) AsMigrationProgressEvent() (MigrationProgressEvent, error) {
 	var body MigrationProgressEvent
@@ -21042,6 +22095,8 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsMigrationEvent()
 	case "monitor.alert":
 		return t.AsMonitorAlertEvent()
+	case "monitor.incident":
+		return t.AsMonitorIncidentEvent()
 	case "ready":
 		return t.AsRealtimeReady()
 	case "resync_required":
@@ -21589,6 +22644,32 @@ func (t *StoredEvent) MergeMonitorAlertEvent(v MonitorAlertEvent) error {
 	return err
 }
 
+// AsMonitorIncidentEvent returns the union data inside the StoredEvent as a MonitorIncidentEvent
+func (t StoredEvent) AsMonitorIncidentEvent() (MonitorIncidentEvent, error) {
+	var body MonitorIncidentEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromMonitorIncidentEvent overwrites any union data inside the StoredEvent as the provided MonitorIncidentEvent
+func (t *StoredEvent) FromMonitorIncidentEvent(v MonitorIncidentEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeMonitorIncidentEvent performs a merge with any union data inside the StoredEvent, using the provided MonitorIncidentEvent
+func (t *StoredEvent) MergeMonitorIncidentEvent(v MonitorIncidentEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 func (t StoredEvent) Discriminator() (string, error) {
 	var discriminator struct {
 		Discriminator string `json:"type"`
@@ -21653,6 +22734,8 @@ func (t StoredEvent) ValueByDiscriminator() (interface{}, error) {
 		return t.AsMigrationEvent()
 	case "monitor.alert":
 		return t.AsMonitorAlertEvent()
+	case "monitor.incident":
+		return t.AsMonitorIncidentEvent()
 	case "subscription.created":
 		return t.AsSubscriptionEvent()
 	case "subscription.updated":
@@ -22580,9 +23663,54 @@ type ServerInterface interface {
 	// ListMonitorCheckResults List a check's runs
 	// (GET /v1/monitoring/checks/{checkId}/results)
 	ListMonitorCheckResults(w http.ResponseWriter, r *http.Request, checkId MonitorCheckId, params ListMonitorCheckResultsParams)
+	// SendMonitorHealth Report a service's health
+	// (POST /v1/monitoring/health)
+	SendMonitorHealth(w http.ResponseWriter, r *http.Request, params SendMonitorHealthParams)
+	// ListMonitorIncidents List incidents
+	// (GET /v1/monitoring/incidents)
+	ListMonitorIncidents(w http.ResponseWriter, r *http.Request, params ListMonitorIncidentsParams)
+	// CreateMonitorIncident Open an incident or schedule maintenance
+	// (POST /v1/monitoring/incidents)
+	CreateMonitorIncident(w http.ResponseWriter, r *http.Request, params CreateMonitorIncidentParams)
+	// DeleteMonitorIncident Delete an incident
+	// (DELETE /v1/monitoring/incidents/{incidentId})
+	DeleteMonitorIncident(w http.ResponseWriter, r *http.Request, incidentId MonitorIncidentId, params DeleteMonitorIncidentParams)
+	// GetMonitorIncident Get an incident
+	// (GET /v1/monitoring/incidents/{incidentId})
+	GetMonitorIncident(w http.ResponseWriter, r *http.Request, incidentId MonitorIncidentId, params GetMonitorIncidentParams)
+	// UpdateMonitorIncident Update an incident
+	// (PATCH /v1/monitoring/incidents/{incidentId})
+	UpdateMonitorIncident(w http.ResponseWriter, r *http.Request, incidentId MonitorIncidentId, params UpdateMonitorIncidentParams)
+	// CreateMonitorIncidentUpdate Post an incident update
+	// (POST /v1/monitoring/incidents/{incidentId}/updates)
+	CreateMonitorIncidentUpdate(w http.ResponseWriter, r *http.Request, incidentId MonitorIncidentId, params CreateMonitorIncidentUpdateParams)
 	// QueryMonitoring Query the workspace's uptime checks
 	// (POST /v1/monitoring/query)
 	QueryMonitoring(w http.ResponseWriter, r *http.Request, params QueryMonitoringParams)
+	// ListMonitorServices List services
+	// (GET /v1/monitoring/services)
+	ListMonitorServices(w http.ResponseWriter, r *http.Request, params ListMonitorServicesParams)
+	// CreateMonitorService Add a service
+	// (POST /v1/monitoring/services)
+	CreateMonitorService(w http.ResponseWriter, r *http.Request, params CreateMonitorServiceParams)
+	// DeleteMonitorService Delete a service
+	// (DELETE /v1/monitoring/services/{serviceId})
+	DeleteMonitorService(w http.ResponseWriter, r *http.Request, serviceId MonitorServiceId, params DeleteMonitorServiceParams)
+	// GetMonitorService Get a service
+	// (GET /v1/monitoring/services/{serviceId})
+	GetMonitorService(w http.ResponseWriter, r *http.Request, serviceId MonitorServiceId, params GetMonitorServiceParams)
+	// UpdateMonitorService Update a service
+	// (PATCH /v1/monitoring/services/{serviceId})
+	UpdateMonitorService(w http.ResponseWriter, r *http.Request, serviceId MonitorServiceId, params UpdateMonitorServiceParams)
+	// GetMonitorServiceHistory A service's history by day
+	// (GET /v1/monitoring/services/{serviceId}/history)
+	GetMonitorServiceHistory(w http.ResponseWriter, r *http.Request, serviceId MonitorServiceId, params GetMonitorServiceHistoryParams)
+	// ListMonitorHealthHours List a service's health by hour
+	// (GET /v1/monitoring/services/{serviceId}/hours)
+	ListMonitorHealthHours(w http.ResponseWriter, r *http.Request, serviceId MonitorServiceId, params ListMonitorHealthHoursParams)
+	// ListMonitorStateChanges List a service's state changes
+	// (GET /v1/monitoring/services/{serviceId}/state-changes)
+	ListMonitorStateChanges(w http.ResponseWriter, r *http.Request, serviceId MonitorServiceId, params ListMonitorStateChangesParams)
 	// ListOAuthGrants List connected apps
 	// (GET /v1/oauth/grants)
 	ListOAuthGrants(w http.ResponseWriter, r *http.Request, params ListOAuthGrantsParams)
@@ -38371,6 +39499,19 @@ func (siw *ServerInterfaceWrapper) ListMonitorAlertRules(w http.ResponseWriter, 
 		return
 	}
 
+	// ------------- Optional query parameter "service_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "service_id", r.URL.Query(), &params.ServiceId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "service_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "service_id", Err: err})
+		}
+		return
+	}
+
 	headers := r.Header
 
 	// ------------- Optional header parameter "Yuva-Workspace" -------------
@@ -38670,6 +39811,19 @@ func (siw *ServerInterfaceWrapper) ListMonitorAlerts(w http.ResponseWriter, r *h
 			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "rule_id"})
 		} else {
 			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "rule_id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "service_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "service_id", r.URL.Query(), &params.ServiceId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "service_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "service_id", Err: err})
 		}
 		return
 	}
@@ -39072,6 +40226,432 @@ func (siw *ServerInterfaceWrapper) ListMonitorCheckResults(w http.ResponseWriter
 	handler.ServeHTTP(w, r)
 }
 
+// SendMonitorHealth operation middleware
+func (siw *ServerInterfaceWrapper) SendMonitorHealth(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params SendMonitorHealthParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.SendMonitorHealth(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListMonitorIncidents operation middleware
+func (siw *ServerInterfaceWrapper) ListMonitorIncidents(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListMonitorIncidentsParams
+
+	// ------------- Optional query parameter "state" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "state", r.URL.Query(), &params.State, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "state"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "state", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "kind" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "kind", r.URL.Query(), &params.Kind, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "kind"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "kind", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "service_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "service_id", r.URL.Query(), &params.ServiceId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "service_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "service_id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "before" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "before", r.URL.Query(), &params.Before, runtime.BindQueryParameterOptions{Type: "string", Format: "date-time"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "before"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "before", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListMonitorIncidents(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateMonitorIncident operation middleware
+func (siw *ServerInterfaceWrapper) CreateMonitorIncident(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateMonitorIncidentParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateMonitorIncident(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteMonitorIncident operation middleware
+func (siw *ServerInterfaceWrapper) DeleteMonitorIncident(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "incidentId" -------------
+	var incidentId MonitorIncidentId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "incidentId", r.PathValue("incidentId"), &incidentId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "incidentId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteMonitorIncidentParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteMonitorIncident(w, r, incidentId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetMonitorIncident operation middleware
+func (siw *ServerInterfaceWrapper) GetMonitorIncident(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "incidentId" -------------
+	var incidentId MonitorIncidentId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "incidentId", r.PathValue("incidentId"), &incidentId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "incidentId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetMonitorIncidentParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetMonitorIncident(w, r, incidentId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateMonitorIncident operation middleware
+func (siw *ServerInterfaceWrapper) UpdateMonitorIncident(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "incidentId" -------------
+	var incidentId MonitorIncidentId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "incidentId", r.PathValue("incidentId"), &incidentId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "incidentId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateMonitorIncidentParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateMonitorIncident(w, r, incidentId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateMonitorIncidentUpdate operation middleware
+func (siw *ServerInterfaceWrapper) CreateMonitorIncidentUpdate(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "incidentId" -------------
+	var incidentId MonitorIncidentId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "incidentId", r.PathValue("incidentId"), &incidentId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "incidentId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateMonitorIncidentUpdateParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateMonitorIncidentUpdate(w, r, incidentId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // QueryMonitoring operation middleware
 func (siw *ServerInterfaceWrapper) QueryMonitoring(w http.ResponseWriter, r *http.Request) {
 
@@ -39117,6 +40697,498 @@ func (siw *ServerInterfaceWrapper) QueryMonitoring(w http.ResponseWriter, r *htt
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.QueryMonitoring(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListMonitorServices operation middleware
+func (siw *ServerInterfaceWrapper) ListMonitorServices(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListMonitorServicesParams
+
+	// ------------- Optional query parameter "property_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "property_id", r.URL.Query(), &params.PropertyId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "property_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "property_id", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListMonitorServices(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateMonitorService operation middleware
+func (siw *ServerInterfaceWrapper) CreateMonitorService(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateMonitorServiceParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateMonitorService(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteMonitorService operation middleware
+func (siw *ServerInterfaceWrapper) DeleteMonitorService(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "serviceId" -------------
+	var serviceId MonitorServiceId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "serviceId", r.PathValue("serviceId"), &serviceId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "serviceId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteMonitorServiceParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteMonitorService(w, r, serviceId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetMonitorService operation middleware
+func (siw *ServerInterfaceWrapper) GetMonitorService(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "serviceId" -------------
+	var serviceId MonitorServiceId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "serviceId", r.PathValue("serviceId"), &serviceId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "serviceId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetMonitorServiceParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetMonitorService(w, r, serviceId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateMonitorService operation middleware
+func (siw *ServerInterfaceWrapper) UpdateMonitorService(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "serviceId" -------------
+	var serviceId MonitorServiceId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "serviceId", r.PathValue("serviceId"), &serviceId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "serviceId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateMonitorServiceParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateMonitorService(w, r, serviceId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetMonitorServiceHistory operation middleware
+func (siw *ServerInterfaceWrapper) GetMonitorServiceHistory(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "serviceId" -------------
+	var serviceId MonitorServiceId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "serviceId", r.PathValue("serviceId"), &serviceId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "serviceId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetMonitorServiceHistoryParams
+
+	// ------------- Optional query parameter "days" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "days", r.URL.Query(), &params.Days, runtime.BindQueryParameterOptions{Type: "integer", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "days"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "days", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "dependency_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "dependency_id", r.URL.Query(), &params.DependencyId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "dependency_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "dependency_id", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetMonitorServiceHistory(w, r, serviceId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListMonitorHealthHours operation middleware
+func (siw *ServerInterfaceWrapper) ListMonitorHealthHours(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "serviceId" -------------
+	var serviceId MonitorServiceId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "serviceId", r.PathValue("serviceId"), &serviceId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "serviceId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListMonitorHealthHoursParams
+
+	// ------------- Optional query parameter "hours" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "hours", r.URL.Query(), &params.Hours, runtime.BindQueryParameterOptions{Type: "integer", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "hours"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "hours", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListMonitorHealthHours(w, r, serviceId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListMonitorStateChanges operation middleware
+func (siw *ServerInterfaceWrapper) ListMonitorStateChanges(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "serviceId" -------------
+	var serviceId MonitorServiceId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "serviceId", r.PathValue("serviceId"), &serviceId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "serviceId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListMonitorStateChangesParams
+
+	// ------------- Optional query parameter "dependency_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "dependency_id", r.URL.Query(), &params.DependencyId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "dependency_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "dependency_id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "before" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "before", r.URL.Query(), &params.Before, runtime.BindQueryParameterOptions{Type: "string", Format: "date-time"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "before"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "before", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListMonitorStateChanges(w, r, serviceId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -40672,6 +42744,21 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/monitoring/alert-rules/{ruleId}", wrapper.GetMonitorAlertRule)
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/monitoring/alert-rules/{ruleId}", wrapper.UpdateMonitorAlertRule)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/monitoring/alerts", wrapper.ListMonitorAlerts)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/monitoring/health", wrapper.SendMonitorHealth)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/monitoring/services", wrapper.ListMonitorServices)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/monitoring/services", wrapper.CreateMonitorService)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/monitoring/services/{serviceId}", wrapper.DeleteMonitorService)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/monitoring/services/{serviceId}", wrapper.GetMonitorService)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/monitoring/services/{serviceId}", wrapper.UpdateMonitorService)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/monitoring/services/{serviceId}/history", wrapper.GetMonitorServiceHistory)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/monitoring/services/{serviceId}/state-changes", wrapper.ListMonitorStateChanges)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/monitoring/services/{serviceId}/hours", wrapper.ListMonitorHealthHours)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/monitoring/incidents", wrapper.ListMonitorIncidents)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/monitoring/incidents", wrapper.CreateMonitorIncident)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/monitoring/incidents/{incidentId}", wrapper.DeleteMonitorIncident)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/monitoring/incidents/{incidentId}", wrapper.GetMonitorIncident)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/monitoring/incidents/{incidentId}", wrapper.UpdateMonitorIncident)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/monitoring/incidents/{incidentId}/updates", wrapper.CreateMonitorIncidentUpdate)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/client/v1/session", wrapper.DeleteClientSession)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/session", wrapper.GetClientSession)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/session", wrapper.CreateClientSession)
@@ -40771,6 +42858,9 @@ type WebhookReceiverInterface interface {
 	// An API monitoring alert fired or resolved
 	// HandleWebhookMonitorAlertWebhook handles the POST webhook for monitor.alert.
 	HandleWebhookMonitorAlertWebhook(w http.ResponseWriter, r *http.Request, params WebhookMonitorAlertParams)
+	// An incident or maintenance window changed
+	// HandleWebhookMonitorIncidentWebhook handles the POST webhook for monitor.incident.
+	HandleWebhookMonitorIncidentWebhook(w http.ResponseWriter, r *http.Request, params WebhookMonitorIncidentParams)
 	// A subscription was created
 	// HandleWebhookSubscriptionCreatedWebhook handles the POST webhook for subscription.created.
 	HandleWebhookSubscriptionCreatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookSubscriptionCreatedParams)
@@ -42340,6 +44430,98 @@ func WebhookMonitorAlertWebhookHandler(si WebhookReceiverInterface, errHandler f
 		}
 
 		si.HandleWebhookMonitorAlertWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
+// WebhookMonitorIncidentWebhookHandler returns the http.Handler for the monitor.incident webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookMonitorIncidentWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookMonitorIncidentParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookMonitorIncidentWebhook(w, r, params)
 	})
 	for _, mw := range middlewares {
 		h = mw(h)
@@ -66165,6 +68347,624 @@ func (response ListMonitorCheckResults404ApplicationProblemPlusJSONResponse) Vis
 	return err
 }
 
+type SendMonitorHealthRequestObject struct {
+	Params SendMonitorHealthParams
+	Body   *SendMonitorHealthJSONRequestBody
+}
+
+type SendMonitorHealthResponseObject interface {
+	VisitSendMonitorHealthResponse(w http.ResponseWriter) error
+}
+
+type SendMonitorHealth200JSONResponse MonitorHealthReportResult
+
+func (response SendMonitorHealth200JSONResponse) VisitSendMonitorHealthResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendMonitorHealth400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response SendMonitorHealth400ApplicationProblemPlusJSONResponse) VisitSendMonitorHealthResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendMonitorHealth401ApplicationProblemPlusJSONResponse Problem
+
+func (response SendMonitorHealth401ApplicationProblemPlusJSONResponse) VisitSendMonitorHealthResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendMonitorHealth403ApplicationProblemPlusJSONResponse Problem
+
+func (response SendMonitorHealth403ApplicationProblemPlusJSONResponse) VisitSendMonitorHealthResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendMonitorHealth404ApplicationProblemPlusJSONResponse Problem
+
+func (response SendMonitorHealth404ApplicationProblemPlusJSONResponse) VisitSendMonitorHealthResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendMonitorHealth409ApplicationProblemPlusJSONResponse Problem
+
+func (response SendMonitorHealth409ApplicationProblemPlusJSONResponse) VisitSendMonitorHealthResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendMonitorHealth422ApplicationProblemPlusJSONResponse Problem
+
+func (response SendMonitorHealth422ApplicationProblemPlusJSONResponse) VisitSendMonitorHealthResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendMonitorHealth429ApplicationProblemPlusJSONResponse Problem
+
+func (response SendMonitorHealth429ApplicationProblemPlusJSONResponse) VisitSendMonitorHealthResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorIncidentsRequestObject struct {
+	Params ListMonitorIncidentsParams
+}
+
+type ListMonitorIncidentsResponseObject interface {
+	VisitListMonitorIncidentsResponse(w http.ResponseWriter) error
+}
+
+type ListMonitorIncidents200JSONResponse MonitorIncidentList
+
+func (response ListMonitorIncidents200JSONResponse) VisitListMonitorIncidentsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorIncidents400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListMonitorIncidents400ApplicationProblemPlusJSONResponse) VisitListMonitorIncidentsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorIncidents401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMonitorIncidents401ApplicationProblemPlusJSONResponse) VisitListMonitorIncidentsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorIncidents403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMonitorIncidents403ApplicationProblemPlusJSONResponse) VisitListMonitorIncidentsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorIncidents404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMonitorIncidents404ApplicationProblemPlusJSONResponse) VisitListMonitorIncidentsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMonitorIncidentRequestObject struct {
+	Params CreateMonitorIncidentParams
+	Body   *CreateMonitorIncidentJSONRequestBody
+}
+
+type CreateMonitorIncidentResponseObject interface {
+	VisitCreateMonitorIncidentResponse(w http.ResponseWriter) error
+}
+
+type CreateMonitorIncident201JSONResponse MonitorIncident
+
+func (response CreateMonitorIncident201JSONResponse) VisitCreateMonitorIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMonitorIncident400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateMonitorIncident400ApplicationProblemPlusJSONResponse) VisitCreateMonitorIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMonitorIncident401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateMonitorIncident401ApplicationProblemPlusJSONResponse) VisitCreateMonitorIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMonitorIncident403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateMonitorIncident403ApplicationProblemPlusJSONResponse) VisitCreateMonitorIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMonitorIncident404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateMonitorIncident404ApplicationProblemPlusJSONResponse) VisitCreateMonitorIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMonitorIncident422ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateMonitorIncident422ApplicationProblemPlusJSONResponse) VisitCreateMonitorIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteMonitorIncidentRequestObject struct {
+	IncidentId MonitorIncidentId `json:"incidentId"`
+	Params     DeleteMonitorIncidentParams
+}
+
+type DeleteMonitorIncidentResponseObject interface {
+	VisitDeleteMonitorIncidentResponse(w http.ResponseWriter) error
+}
+
+type DeleteMonitorIncident204Response struct {
+}
+
+func (response DeleteMonitorIncident204Response) VisitDeleteMonitorIncidentResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteMonitorIncident401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteMonitorIncident401ApplicationProblemPlusJSONResponse) VisitDeleteMonitorIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteMonitorIncident403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteMonitorIncident403ApplicationProblemPlusJSONResponse) VisitDeleteMonitorIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteMonitorIncident404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteMonitorIncident404ApplicationProblemPlusJSONResponse) VisitDeleteMonitorIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMonitorIncidentRequestObject struct {
+	IncidentId MonitorIncidentId `json:"incidentId"`
+	Params     GetMonitorIncidentParams
+}
+
+type GetMonitorIncidentResponseObject interface {
+	VisitGetMonitorIncidentResponse(w http.ResponseWriter) error
+}
+
+type GetMonitorIncident200JSONResponse MonitorIncident
+
+func (response GetMonitorIncident200JSONResponse) VisitGetMonitorIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMonitorIncident401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetMonitorIncident401ApplicationProblemPlusJSONResponse) VisitGetMonitorIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMonitorIncident403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetMonitorIncident403ApplicationProblemPlusJSONResponse) VisitGetMonitorIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMonitorIncident404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetMonitorIncident404ApplicationProblemPlusJSONResponse) VisitGetMonitorIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateMonitorIncidentRequestObject struct {
+	IncidentId MonitorIncidentId `json:"incidentId"`
+	Params     UpdateMonitorIncidentParams
+	Body       *UpdateMonitorIncidentJSONRequestBody
+}
+
+type UpdateMonitorIncidentResponseObject interface {
+	VisitUpdateMonitorIncidentResponse(w http.ResponseWriter) error
+}
+
+type UpdateMonitorIncident200JSONResponse MonitorIncident
+
+func (response UpdateMonitorIncident200JSONResponse) VisitUpdateMonitorIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateMonitorIncident400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateMonitorIncident400ApplicationProblemPlusJSONResponse) VisitUpdateMonitorIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateMonitorIncident401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateMonitorIncident401ApplicationProblemPlusJSONResponse) VisitUpdateMonitorIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateMonitorIncident403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateMonitorIncident403ApplicationProblemPlusJSONResponse) VisitUpdateMonitorIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateMonitorIncident404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateMonitorIncident404ApplicationProblemPlusJSONResponse) VisitUpdateMonitorIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateMonitorIncident422ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateMonitorIncident422ApplicationProblemPlusJSONResponse) VisitUpdateMonitorIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMonitorIncidentUpdateRequestObject struct {
+	IncidentId MonitorIncidentId `json:"incidentId"`
+	Params     CreateMonitorIncidentUpdateParams
+	Body       *CreateMonitorIncidentUpdateJSONRequestBody
+}
+
+type CreateMonitorIncidentUpdateResponseObject interface {
+	VisitCreateMonitorIncidentUpdateResponse(w http.ResponseWriter) error
+}
+
+type CreateMonitorIncidentUpdate201JSONResponse MonitorIncident
+
+func (response CreateMonitorIncidentUpdate201JSONResponse) VisitCreateMonitorIncidentUpdateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMonitorIncidentUpdate400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateMonitorIncidentUpdate400ApplicationProblemPlusJSONResponse) VisitCreateMonitorIncidentUpdateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMonitorIncidentUpdate401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateMonitorIncidentUpdate401ApplicationProblemPlusJSONResponse) VisitCreateMonitorIncidentUpdateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMonitorIncidentUpdate403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateMonitorIncidentUpdate403ApplicationProblemPlusJSONResponse) VisitCreateMonitorIncidentUpdateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMonitorIncidentUpdate404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateMonitorIncidentUpdate404ApplicationProblemPlusJSONResponse) VisitCreateMonitorIncidentUpdateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMonitorIncidentUpdate422ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateMonitorIncidentUpdate422ApplicationProblemPlusJSONResponse) VisitCreateMonitorIncidentUpdateResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type QueryMonitoringRequestObject struct {
 	Params QueryMonitoringParams
 	Body   *QueryMonitoringJSONRequestBody
@@ -66304,6 +69104,662 @@ func (response QueryMonitoring429ApplicationProblemPlusJSONResponse) VisitQueryM
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorServicesRequestObject struct {
+	Params ListMonitorServicesParams
+}
+
+type ListMonitorServicesResponseObject interface {
+	VisitListMonitorServicesResponse(w http.ResponseWriter) error
+}
+
+type ListMonitorServices200JSONResponse MonitorServiceList
+
+func (response ListMonitorServices200JSONResponse) VisitListMonitorServicesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorServices400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListMonitorServices400ApplicationProblemPlusJSONResponse) VisitListMonitorServicesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorServices401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMonitorServices401ApplicationProblemPlusJSONResponse) VisitListMonitorServicesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorServices403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMonitorServices403ApplicationProblemPlusJSONResponse) VisitListMonitorServicesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorServices404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMonitorServices404ApplicationProblemPlusJSONResponse) VisitListMonitorServicesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMonitorServiceRequestObject struct {
+	Params CreateMonitorServiceParams
+	Body   *CreateMonitorServiceJSONRequestBody
+}
+
+type CreateMonitorServiceResponseObject interface {
+	VisitCreateMonitorServiceResponse(w http.ResponseWriter) error
+}
+
+type CreateMonitorService201JSONResponse MonitorService
+
+func (response CreateMonitorService201JSONResponse) VisitCreateMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMonitorService400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateMonitorService400ApplicationProblemPlusJSONResponse) VisitCreateMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMonitorService401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateMonitorService401ApplicationProblemPlusJSONResponse) VisitCreateMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMonitorService403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateMonitorService403ApplicationProblemPlusJSONResponse) VisitCreateMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMonitorService404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateMonitorService404ApplicationProblemPlusJSONResponse) VisitCreateMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMonitorService409ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateMonitorService409ApplicationProblemPlusJSONResponse) VisitCreateMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMonitorService422ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateMonitorService422ApplicationProblemPlusJSONResponse) VisitCreateMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteMonitorServiceRequestObject struct {
+	ServiceId MonitorServiceId `json:"serviceId"`
+	Params    DeleteMonitorServiceParams
+}
+
+type DeleteMonitorServiceResponseObject interface {
+	VisitDeleteMonitorServiceResponse(w http.ResponseWriter) error
+}
+
+type DeleteMonitorService204Response struct {
+}
+
+func (response DeleteMonitorService204Response) VisitDeleteMonitorServiceResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteMonitorService401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteMonitorService401ApplicationProblemPlusJSONResponse) VisitDeleteMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteMonitorService403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteMonitorService403ApplicationProblemPlusJSONResponse) VisitDeleteMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteMonitorService404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteMonitorService404ApplicationProblemPlusJSONResponse) VisitDeleteMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMonitorServiceRequestObject struct {
+	ServiceId MonitorServiceId `json:"serviceId"`
+	Params    GetMonitorServiceParams
+}
+
+type GetMonitorServiceResponseObject interface {
+	VisitGetMonitorServiceResponse(w http.ResponseWriter) error
+}
+
+type GetMonitorService200JSONResponse MonitorService
+
+func (response GetMonitorService200JSONResponse) VisitGetMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMonitorService401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetMonitorService401ApplicationProblemPlusJSONResponse) VisitGetMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMonitorService403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetMonitorService403ApplicationProblemPlusJSONResponse) VisitGetMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMonitorService404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetMonitorService404ApplicationProblemPlusJSONResponse) VisitGetMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateMonitorServiceRequestObject struct {
+	ServiceId MonitorServiceId `json:"serviceId"`
+	Params    UpdateMonitorServiceParams
+	Body      *UpdateMonitorServiceJSONRequestBody
+}
+
+type UpdateMonitorServiceResponseObject interface {
+	VisitUpdateMonitorServiceResponse(w http.ResponseWriter) error
+}
+
+type UpdateMonitorService200JSONResponse MonitorService
+
+func (response UpdateMonitorService200JSONResponse) VisitUpdateMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateMonitorService400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateMonitorService400ApplicationProblemPlusJSONResponse) VisitUpdateMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateMonitorService401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateMonitorService401ApplicationProblemPlusJSONResponse) VisitUpdateMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateMonitorService403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateMonitorService403ApplicationProblemPlusJSONResponse) VisitUpdateMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateMonitorService404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateMonitorService404ApplicationProblemPlusJSONResponse) VisitUpdateMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateMonitorService422ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateMonitorService422ApplicationProblemPlusJSONResponse) VisitUpdateMonitorServiceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMonitorServiceHistoryRequestObject struct {
+	ServiceId MonitorServiceId `json:"serviceId"`
+	Params    GetMonitorServiceHistoryParams
+}
+
+type GetMonitorServiceHistoryResponseObject interface {
+	VisitGetMonitorServiceHistoryResponse(w http.ResponseWriter) error
+}
+
+type GetMonitorServiceHistory200JSONResponse MonitorServiceHistory
+
+func (response GetMonitorServiceHistory200JSONResponse) VisitGetMonitorServiceHistoryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMonitorServiceHistory400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetMonitorServiceHistory400ApplicationProblemPlusJSONResponse) VisitGetMonitorServiceHistoryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMonitorServiceHistory401ApplicationProblemPlusJSONResponse Problem
+
+func (response GetMonitorServiceHistory401ApplicationProblemPlusJSONResponse) VisitGetMonitorServiceHistoryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMonitorServiceHistory403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetMonitorServiceHistory403ApplicationProblemPlusJSONResponse) VisitGetMonitorServiceHistoryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMonitorServiceHistory404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetMonitorServiceHistory404ApplicationProblemPlusJSONResponse) VisitGetMonitorServiceHistoryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorHealthHoursRequestObject struct {
+	ServiceId MonitorServiceId `json:"serviceId"`
+	Params    ListMonitorHealthHoursParams
+}
+
+type ListMonitorHealthHoursResponseObject interface {
+	VisitListMonitorHealthHoursResponse(w http.ResponseWriter) error
+}
+
+type ListMonitorHealthHours200JSONResponse MonitorHealthHourList
+
+func (response ListMonitorHealthHours200JSONResponse) VisitListMonitorHealthHoursResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorHealthHours400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListMonitorHealthHours400ApplicationProblemPlusJSONResponse) VisitListMonitorHealthHoursResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorHealthHours401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMonitorHealthHours401ApplicationProblemPlusJSONResponse) VisitListMonitorHealthHoursResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorHealthHours403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMonitorHealthHours403ApplicationProblemPlusJSONResponse) VisitListMonitorHealthHoursResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorHealthHours404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMonitorHealthHours404ApplicationProblemPlusJSONResponse) VisitListMonitorHealthHoursResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorStateChangesRequestObject struct {
+	ServiceId MonitorServiceId `json:"serviceId"`
+	Params    ListMonitorStateChangesParams
+}
+
+type ListMonitorStateChangesResponseObject interface {
+	VisitListMonitorStateChangesResponse(w http.ResponseWriter) error
+}
+
+type ListMonitorStateChanges200JSONResponse MonitorStateChangeList
+
+func (response ListMonitorStateChanges200JSONResponse) VisitListMonitorStateChangesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorStateChanges400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListMonitorStateChanges400ApplicationProblemPlusJSONResponse) VisitListMonitorStateChangesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorStateChanges401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMonitorStateChanges401ApplicationProblemPlusJSONResponse) VisitListMonitorStateChangesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorStateChanges403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMonitorStateChanges403ApplicationProblemPlusJSONResponse) VisitListMonitorStateChangesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMonitorStateChanges404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMonitorStateChanges404ApplicationProblemPlusJSONResponse) VisitListMonitorStateChangesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -68823,9 +72279,54 @@ type StrictServerInterface interface {
 	// ListMonitorCheckResults List a check's runs
 	// (GET /v1/monitoring/checks/{checkId}/results)
 	ListMonitorCheckResults(ctx context.Context, request ListMonitorCheckResultsRequestObject) (ListMonitorCheckResultsResponseObject, error)
+	// SendMonitorHealth Report a service's health
+	// (POST /v1/monitoring/health)
+	SendMonitorHealth(ctx context.Context, request SendMonitorHealthRequestObject) (SendMonitorHealthResponseObject, error)
+	// ListMonitorIncidents List incidents
+	// (GET /v1/monitoring/incidents)
+	ListMonitorIncidents(ctx context.Context, request ListMonitorIncidentsRequestObject) (ListMonitorIncidentsResponseObject, error)
+	// CreateMonitorIncident Open an incident or schedule maintenance
+	// (POST /v1/monitoring/incidents)
+	CreateMonitorIncident(ctx context.Context, request CreateMonitorIncidentRequestObject) (CreateMonitorIncidentResponseObject, error)
+	// DeleteMonitorIncident Delete an incident
+	// (DELETE /v1/monitoring/incidents/{incidentId})
+	DeleteMonitorIncident(ctx context.Context, request DeleteMonitorIncidentRequestObject) (DeleteMonitorIncidentResponseObject, error)
+	// GetMonitorIncident Get an incident
+	// (GET /v1/monitoring/incidents/{incidentId})
+	GetMonitorIncident(ctx context.Context, request GetMonitorIncidentRequestObject) (GetMonitorIncidentResponseObject, error)
+	// UpdateMonitorIncident Update an incident
+	// (PATCH /v1/monitoring/incidents/{incidentId})
+	UpdateMonitorIncident(ctx context.Context, request UpdateMonitorIncidentRequestObject) (UpdateMonitorIncidentResponseObject, error)
+	// CreateMonitorIncidentUpdate Post an incident update
+	// (POST /v1/monitoring/incidents/{incidentId}/updates)
+	CreateMonitorIncidentUpdate(ctx context.Context, request CreateMonitorIncidentUpdateRequestObject) (CreateMonitorIncidentUpdateResponseObject, error)
 	// QueryMonitoring Query the workspace's uptime checks
 	// (POST /v1/monitoring/query)
 	QueryMonitoring(ctx context.Context, request QueryMonitoringRequestObject) (QueryMonitoringResponseObject, error)
+	// ListMonitorServices List services
+	// (GET /v1/monitoring/services)
+	ListMonitorServices(ctx context.Context, request ListMonitorServicesRequestObject) (ListMonitorServicesResponseObject, error)
+	// CreateMonitorService Add a service
+	// (POST /v1/monitoring/services)
+	CreateMonitorService(ctx context.Context, request CreateMonitorServiceRequestObject) (CreateMonitorServiceResponseObject, error)
+	// DeleteMonitorService Delete a service
+	// (DELETE /v1/monitoring/services/{serviceId})
+	DeleteMonitorService(ctx context.Context, request DeleteMonitorServiceRequestObject) (DeleteMonitorServiceResponseObject, error)
+	// GetMonitorService Get a service
+	// (GET /v1/monitoring/services/{serviceId})
+	GetMonitorService(ctx context.Context, request GetMonitorServiceRequestObject) (GetMonitorServiceResponseObject, error)
+	// UpdateMonitorService Update a service
+	// (PATCH /v1/monitoring/services/{serviceId})
+	UpdateMonitorService(ctx context.Context, request UpdateMonitorServiceRequestObject) (UpdateMonitorServiceResponseObject, error)
+	// GetMonitorServiceHistory A service's history by day
+	// (GET /v1/monitoring/services/{serviceId}/history)
+	GetMonitorServiceHistory(ctx context.Context, request GetMonitorServiceHistoryRequestObject) (GetMonitorServiceHistoryResponseObject, error)
+	// ListMonitorHealthHours List a service's health by hour
+	// (GET /v1/monitoring/services/{serviceId}/hours)
+	ListMonitorHealthHours(ctx context.Context, request ListMonitorHealthHoursRequestObject) (ListMonitorHealthHoursResponseObject, error)
+	// ListMonitorStateChanges List a service's state changes
+	// (GET /v1/monitoring/services/{serviceId}/state-changes)
+	ListMonitorStateChanges(ctx context.Context, request ListMonitorStateChangesRequestObject) (ListMonitorStateChangesResponseObject, error)
 	// ListOAuthGrants List connected apps
 	// (GET /v1/oauth/grants)
 	ListOAuthGrants(ctx context.Context, request ListOAuthGrantsRequestObject) (ListOAuthGrantsResponseObject, error)
@@ -77806,6 +81307,220 @@ func (sh *strictHandler) ListMonitorCheckResults(w http.ResponseWriter, r *http.
 	}
 }
 
+// SendMonitorHealth operation middleware
+func (sh *strictHandler) SendMonitorHealth(w http.ResponseWriter, r *http.Request, params SendMonitorHealthParams) {
+	var request SendMonitorHealthRequestObject
+
+	request.Params = params
+
+	var body SendMonitorHealthJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.SendMonitorHealth(ctx, request.(SendMonitorHealthRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "SendMonitorHealth")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(SendMonitorHealthResponseObject); ok {
+		if err := validResponse.VisitSendMonitorHealthResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListMonitorIncidents operation middleware
+func (sh *strictHandler) ListMonitorIncidents(w http.ResponseWriter, r *http.Request, params ListMonitorIncidentsParams) {
+	var request ListMonitorIncidentsRequestObject
+
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListMonitorIncidents(ctx, request.(ListMonitorIncidentsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListMonitorIncidents")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListMonitorIncidentsResponseObject); ok {
+		if err := validResponse.VisitListMonitorIncidentsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateMonitorIncident operation middleware
+func (sh *strictHandler) CreateMonitorIncident(w http.ResponseWriter, r *http.Request, params CreateMonitorIncidentParams) {
+	var request CreateMonitorIncidentRequestObject
+
+	request.Params = params
+
+	var body CreateMonitorIncidentJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateMonitorIncident(ctx, request.(CreateMonitorIncidentRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateMonitorIncident")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateMonitorIncidentResponseObject); ok {
+		if err := validResponse.VisitCreateMonitorIncidentResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteMonitorIncident operation middleware
+func (sh *strictHandler) DeleteMonitorIncident(w http.ResponseWriter, r *http.Request, incidentId MonitorIncidentId, params DeleteMonitorIncidentParams) {
+	var request DeleteMonitorIncidentRequestObject
+
+	request.IncidentId = incidentId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteMonitorIncident(ctx, request.(DeleteMonitorIncidentRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteMonitorIncident")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteMonitorIncidentResponseObject); ok {
+		if err := validResponse.VisitDeleteMonitorIncidentResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetMonitorIncident operation middleware
+func (sh *strictHandler) GetMonitorIncident(w http.ResponseWriter, r *http.Request, incidentId MonitorIncidentId, params GetMonitorIncidentParams) {
+	var request GetMonitorIncidentRequestObject
+
+	request.IncidentId = incidentId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetMonitorIncident(ctx, request.(GetMonitorIncidentRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetMonitorIncident")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetMonitorIncidentResponseObject); ok {
+		if err := validResponse.VisitGetMonitorIncidentResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateMonitorIncident operation middleware
+func (sh *strictHandler) UpdateMonitorIncident(w http.ResponseWriter, r *http.Request, incidentId MonitorIncidentId, params UpdateMonitorIncidentParams) {
+	var request UpdateMonitorIncidentRequestObject
+
+	request.IncidentId = incidentId
+	request.Params = params
+
+	var body UpdateMonitorIncidentJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateMonitorIncident(ctx, request.(UpdateMonitorIncidentRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateMonitorIncident")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateMonitorIncidentResponseObject); ok {
+		if err := validResponse.VisitUpdateMonitorIncidentResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateMonitorIncidentUpdate operation middleware
+func (sh *strictHandler) CreateMonitorIncidentUpdate(w http.ResponseWriter, r *http.Request, incidentId MonitorIncidentId, params CreateMonitorIncidentUpdateParams) {
+	var request CreateMonitorIncidentUpdateRequestObject
+
+	request.IncidentId = incidentId
+	request.Params = params
+
+	var body CreateMonitorIncidentUpdateJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateMonitorIncidentUpdate(ctx, request.(CreateMonitorIncidentUpdateRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateMonitorIncidentUpdate")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateMonitorIncidentUpdateResponseObject); ok {
+		if err := validResponse.VisitCreateMonitorIncidentUpdateResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
 // QueryMonitoring operation middleware
 func (sh *strictHandler) QueryMonitoring(w http.ResponseWriter, r *http.Request, params QueryMonitoringParams) {
 	var request QueryMonitoringRequestObject
@@ -77832,6 +81547,234 @@ func (sh *strictHandler) QueryMonitoring(w http.ResponseWriter, r *http.Request,
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(QueryMonitoringResponseObject); ok {
 		if err := validResponse.VisitQueryMonitoringResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListMonitorServices operation middleware
+func (sh *strictHandler) ListMonitorServices(w http.ResponseWriter, r *http.Request, params ListMonitorServicesParams) {
+	var request ListMonitorServicesRequestObject
+
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListMonitorServices(ctx, request.(ListMonitorServicesRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListMonitorServices")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListMonitorServicesResponseObject); ok {
+		if err := validResponse.VisitListMonitorServicesResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateMonitorService operation middleware
+func (sh *strictHandler) CreateMonitorService(w http.ResponseWriter, r *http.Request, params CreateMonitorServiceParams) {
+	var request CreateMonitorServiceRequestObject
+
+	request.Params = params
+
+	var body CreateMonitorServiceJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateMonitorService(ctx, request.(CreateMonitorServiceRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateMonitorService")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateMonitorServiceResponseObject); ok {
+		if err := validResponse.VisitCreateMonitorServiceResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteMonitorService operation middleware
+func (sh *strictHandler) DeleteMonitorService(w http.ResponseWriter, r *http.Request, serviceId MonitorServiceId, params DeleteMonitorServiceParams) {
+	var request DeleteMonitorServiceRequestObject
+
+	request.ServiceId = serviceId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteMonitorService(ctx, request.(DeleteMonitorServiceRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteMonitorService")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteMonitorServiceResponseObject); ok {
+		if err := validResponse.VisitDeleteMonitorServiceResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetMonitorService operation middleware
+func (sh *strictHandler) GetMonitorService(w http.ResponseWriter, r *http.Request, serviceId MonitorServiceId, params GetMonitorServiceParams) {
+	var request GetMonitorServiceRequestObject
+
+	request.ServiceId = serviceId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetMonitorService(ctx, request.(GetMonitorServiceRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetMonitorService")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetMonitorServiceResponseObject); ok {
+		if err := validResponse.VisitGetMonitorServiceResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateMonitorService operation middleware
+func (sh *strictHandler) UpdateMonitorService(w http.ResponseWriter, r *http.Request, serviceId MonitorServiceId, params UpdateMonitorServiceParams) {
+	var request UpdateMonitorServiceRequestObject
+
+	request.ServiceId = serviceId
+	request.Params = params
+
+	var body UpdateMonitorServiceJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateMonitorService(ctx, request.(UpdateMonitorServiceRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateMonitorService")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateMonitorServiceResponseObject); ok {
+		if err := validResponse.VisitUpdateMonitorServiceResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetMonitorServiceHistory operation middleware
+func (sh *strictHandler) GetMonitorServiceHistory(w http.ResponseWriter, r *http.Request, serviceId MonitorServiceId, params GetMonitorServiceHistoryParams) {
+	var request GetMonitorServiceHistoryRequestObject
+
+	request.ServiceId = serviceId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetMonitorServiceHistory(ctx, request.(GetMonitorServiceHistoryRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetMonitorServiceHistory")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetMonitorServiceHistoryResponseObject); ok {
+		if err := validResponse.VisitGetMonitorServiceHistoryResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListMonitorHealthHours operation middleware
+func (sh *strictHandler) ListMonitorHealthHours(w http.ResponseWriter, r *http.Request, serviceId MonitorServiceId, params ListMonitorHealthHoursParams) {
+	var request ListMonitorHealthHoursRequestObject
+
+	request.ServiceId = serviceId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListMonitorHealthHours(ctx, request.(ListMonitorHealthHoursRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListMonitorHealthHours")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListMonitorHealthHoursResponseObject); ok {
+		if err := validResponse.VisitListMonitorHealthHoursResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListMonitorStateChanges operation middleware
+func (sh *strictHandler) ListMonitorStateChanges(w http.ResponseWriter, r *http.Request, serviceId MonitorServiceId, params ListMonitorStateChangesParams) {
+	var request ListMonitorStateChangesRequestObject
+
+	request.ServiceId = serviceId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListMonitorStateChanges(ctx, request.(ListMonitorStateChangesRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListMonitorStateChanges")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListMonitorStateChangesResponseObject); ok {
+		if err := validResponse.VisitListMonitorStateChangesResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

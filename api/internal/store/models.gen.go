@@ -1374,6 +1374,8 @@ type MonitorAlert struct {
 	ResolvedAt    *time.Time
 	AnnotationID  *uuid.UUID
 	CreatedAt     time.Time
+	ServiceID     *uuid.UUID
+	DependencyID  *uuid.UUID
 }
 
 type MonitorAlertRule struct {
@@ -1393,6 +1395,8 @@ type MonitorAlertRule struct {
 	CreatedBy     *uuid.UUID
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
+	ServiceID     *uuid.UUID
+	DependencyID  *uuid.UUID
 }
 
 type MonitorCheck struct {
@@ -1491,6 +1495,24 @@ type MonitorDay struct {
 	ResponseSizes []byte
 }
 
+type MonitorDependency struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	ServiceID   uuid.UUID
+	Name        string
+	Kind        string
+	Critical    bool
+	Status      *string
+	LatencyMs   *float64
+	Message     *string
+	ReportedAt  *time.Time
+	State       string
+	StateSince  *time.Time
+	BetterState *string
+	BetterInRow int32
+	CreatedAt   time.Time
+}
+
 type MonitorDimDay struct {
 	WorkspaceID   uuid.UUID
 	PropertyID    uuid.UUID
@@ -1536,6 +1558,20 @@ type MonitorDimHour struct {
 	ResponseSizes []byte
 }
 
+type MonitorHealthHour struct {
+	WorkspaceID uuid.UUID
+	ServiceID   uuid.UUID
+	Dependency  string
+	Hour        time.Time
+	Reports     int64
+	Healthy     int64
+	Degraded    int64
+	Down        int64
+	LatencySum  float64
+	LatencyN    int64
+	Latencies   []byte
+}
+
 type MonitorHour struct {
 	WorkspaceID   uuid.UUID
 	PropertyID    uuid.UUID
@@ -1561,12 +1597,55 @@ type MonitorHour struct {
 	ResponseSizes []byte
 }
 
+type MonitorIncident struct {
+	ID             uuid.UUID
+	WorkspaceID    uuid.UUID
+	Origin         string
+	Kind           string
+	Title          string
+	State          string
+	Impact         string
+	ServiceIds     []uuid.UUID
+	DependencyIds  []uuid.UUID
+	CheckIds       []uuid.UUID
+	AutoServiceID  *uuid.UUID
+	StartedAt      time.Time
+	ResolvedAt     *time.Time
+	ScheduledStart *time.Time
+	ScheduledEnd   *time.Time
+	Published      bool
+	CreatedBy      *uuid.UUID
+	CreatedAt      time.Time
+	UpdatedAt      time.Time
+}
+
+type MonitorIncidentUpdate struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	IncidentID  uuid.UUID
+	State       string
+	Text        string
+	AuthorID    *uuid.UUID
+	Notify      bool
+	CreatedAt   time.Time
+}
+
 type MonitorIngestStat struct {
 	WorkspaceID uuid.UUID
 	PropertyID  uuid.UUID
 	Day         time.Time
 	Reason      string
 	Records     int64
+}
+
+type MonitorInstance struct {
+	WorkspaceID uuid.UUID
+	ServiceID   uuid.UUID
+	Instance    string
+	Version     *string
+	Status      *string
+	FirstSeenAt time.Time
+	LastSeenAt  time.Time
 }
 
 type MonitorMinute struct {
@@ -1635,6 +1714,47 @@ type MonitorRoute struct {
 	ApdexMs     *int32
 	FirstSeenAt time.Time
 	LastSeenAt  time.Time
+}
+
+type MonitorService struct {
+	ID                 uuid.UUID
+	WorkspaceID        uuid.UUID
+	Name               string
+	Environment        string
+	Origin             string
+	PropertyID         *uuid.UUID
+	Mode               string
+	HealthUrl          *string
+	IntervalSeconds    int32
+	TimeoutSeconds     int32
+	SilenceSeconds     *int32
+	ErrorRateThreshold float64
+	P95ThresholdMs     *float64
+	Version            *string
+	State              string
+	StateSince         *time.Time
+	Reason             *string
+	BetterState        *string
+	BetterInRow        int32
+	LastReportAt       *time.Time
+	LastStatus         *string
+	LastMessage        *string
+	NextPullAt         *time.Time
+	CreatedBy          *uuid.UUID
+	CreatedAt          time.Time
+	UpdatedAt          time.Time
+}
+
+type MonitorStateChange struct {
+	ID           uuid.UUID
+	WorkspaceID  uuid.UUID
+	ServiceID    uuid.UUID
+	DependencyID *uuid.UUID
+	State        string
+	Previous     string
+	Reason       *string
+	Maintenance  bool
+	At           time.Time
 }
 
 type NotificationEmail struct {

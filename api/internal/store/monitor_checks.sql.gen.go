@@ -181,11 +181,11 @@ func (q *Queries) CreateMonitorAlertAnnotation(ctx context.Context, arg CreateMo
 }
 
 const createMonitorAlertRule = `-- name: CreateMonitorAlertRule :one
-INSERT INTO monitor_alert_rules (id, workspace_id, name, kind, property_id, route, service, check_id, threshold, window_minutes, min_requests,
-    recipients, enabled, created_by, created_at, updated_at)
+INSERT INTO monitor_alert_rules (id, workspace_id, name, kind, property_id, route, service, check_id, service_id, dependency_id, threshold, window_minutes,
+    min_requests, recipients, enabled, created_by, created_at, updated_at)
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,
-    $10, $11, $12, $13, $14, $15, $15)
-RETURNING id, workspace_id, name, kind, property_id, route, service, check_id, threshold, window_minutes, min_requests, recipients, enabled, created_by, created_at, updated_at
+    $10, $11, $12, $13, $14, $15, $16, $17, $17)
+RETURNING id, workspace_id, name, kind, property_id, route, service, check_id, threshold, window_minutes, min_requests, recipients, enabled, created_by, created_at, updated_at, service_id, dependency_id
 `
 
 type CreateMonitorAlertRuleParams struct {
@@ -197,6 +197,8 @@ type CreateMonitorAlertRuleParams struct {
 	Route         *string
 	Service       *string
 	CheckID       *uuid.UUID
+	ServiceID     *uuid.UUID
+	DependencyID  *uuid.UUID
 	Threshold     *float64
 	WindowMinutes int32
 	MinRequests   int32
@@ -216,6 +218,8 @@ func (q *Queries) CreateMonitorAlertRule(ctx context.Context, arg CreateMonitorA
 		arg.Route,
 		arg.Service,
 		arg.CheckID,
+		arg.ServiceID,
+		arg.DependencyID,
 		arg.Threshold,
 		arg.WindowMinutes,
 		arg.MinRequests,
@@ -242,6 +246,8 @@ func (q *Queries) CreateMonitorAlertRule(ctx context.Context, arg CreateMonitorA
 		&i.CreatedBy,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.ServiceID,
+		&i.DependencyID,
 	)
 	return i, err
 }
@@ -432,7 +438,7 @@ func (q *Queries) DeleteWorkspaceMonitorCheckResults(ctx context.Context, worksp
 }
 
 const getMonitorAlertRule = `-- name: GetMonitorAlertRule :one
-SELECT id, workspace_id, name, kind, property_id, route, service, check_id, threshold, window_minutes, min_requests, recipients, enabled, created_by, created_at, updated_at FROM monitor_alert_rules WHERE workspace_id = $1 AND id = $2
+SELECT id, workspace_id, name, kind, property_id, route, service, check_id, threshold, window_minutes, min_requests, recipients, enabled, created_by, created_at, updated_at, service_id, dependency_id FROM monitor_alert_rules WHERE workspace_id = $1 AND id = $2
 `
 
 type GetMonitorAlertRuleParams struct {
@@ -460,6 +466,8 @@ func (q *Queries) GetMonitorAlertRule(ctx context.Context, arg GetMonitorAlertRu
 		&i.CreatedBy,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.ServiceID,
+		&i.DependencyID,
 	)
 	return i, err
 }
@@ -609,7 +617,7 @@ func (q *Queries) ListDueMonitorChecks(ctx context.Context, arg ListDueMonitorCh
 }
 
 const listEnabledMonitorAlertRules = `-- name: ListEnabledMonitorAlertRules :many
-SELECT r.id, r.workspace_id, r.name, r.kind, r.property_id, r.route, r.service, r.check_id, r.threshold, r.window_minutes, r.min_requests, r.recipients, r.enabled, r.created_by, r.created_at, r.updated_at FROM monitor_alert_rules r
+SELECT r.id, r.workspace_id, r.name, r.kind, r.property_id, r.route, r.service, r.check_id, r.threshold, r.window_minutes, r.min_requests, r.recipients, r.enabled, r.created_by, r.created_at, r.updated_at, r.service_id, r.dependency_id FROM monitor_alert_rules r
 LEFT JOIN analytics_properties p ON p.workspace_id = r.workspace_id AND p.id = r.property_id
 WHERE r.workspace_id = $1 AND r.enabled AND (r.property_id IS NULL OR p.deleted_at IS NULL)
 ORDER BY r.created_at, r.id
@@ -641,6 +649,8 @@ func (q *Queries) ListEnabledMonitorAlertRules(ctx context.Context, workspaceID 
 			&i.CreatedBy,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ServiceID,
+			&i.DependencyID,
 		); err != nil {
 			return nil, err
 		}
@@ -704,10 +714,11 @@ func (q *Queries) ListLastMonitorCheckResults(ctx context.Context, arg ListLastM
 }
 
 const listMonitorAlertRules = `-- name: ListMonitorAlertRules :many
-SELECT id, workspace_id, name, kind, property_id, route, service, check_id, threshold, window_minutes, min_requests, recipients, enabled, created_by, created_at, updated_at FROM monitor_alert_rules
+SELECT id, workspace_id, name, kind, property_id, route, service, check_id, threshold, window_minutes, min_requests, recipients, enabled, created_by, created_at, updated_at, service_id, dependency_id FROM monitor_alert_rules
 WHERE workspace_id = $1
   AND ($2::uuid IS NULL OR property_id = $2::uuid)
   AND ($3::uuid IS NULL OR check_id = $3::uuid)
+  AND ($4::uuid IS NULL OR service_id = $4::uuid)
 ORDER BY created_at, id
 `
 
@@ -715,10 +726,16 @@ type ListMonitorAlertRulesParams struct {
 	WorkspaceID uuid.UUID
 	PropertyID  *uuid.UUID
 	CheckID     *uuid.UUID
+	ServiceID   *uuid.UUID
 }
 
 func (q *Queries) ListMonitorAlertRules(ctx context.Context, arg ListMonitorAlertRulesParams) ([]MonitorAlertRule, error) {
-	rows, err := q.db.Query(ctx, listMonitorAlertRules, arg.WorkspaceID, arg.PropertyID, arg.CheckID)
+	rows, err := q.db.Query(ctx, listMonitorAlertRules,
+		arg.WorkspaceID,
+		arg.PropertyID,
+		arg.CheckID,
+		arg.ServiceID,
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -743,6 +760,8 @@ func (q *Queries) ListMonitorAlertRules(ctx context.Context, arg ListMonitorAler
 			&i.CreatedBy,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ServiceID,
+			&i.DependencyID,
 		); err != nil {
 			return nil, err
 		}
@@ -784,7 +803,7 @@ func (q *Queries) ListMonitorAlertWorkspaces(ctx context.Context) ([]uuid.UUID, 
 }
 
 const listMonitorAlerts = `-- name: ListMonitorAlerts :many
-SELECT a.id, a.workspace_id, a.rule_id, a.key, a.kind, a.property_id, a.check_id, a.value, a.threshold, a.baseline, a.resolved_value, a.window_minutes, a.text, a.fired_at, a.resolved_at, a.annotation_id, a.created_at, r.name AS rule_name, r.route AS rule_route, r.service AS rule_service FROM monitor_alerts a
+SELECT a.id, a.workspace_id, a.rule_id, a.key, a.kind, a.property_id, a.check_id, a.value, a.threshold, a.baseline, a.resolved_value, a.window_minutes, a.text, a.fired_at, a.resolved_at, a.annotation_id, a.created_at, a.service_id, a.dependency_id, r.name AS rule_name, r.route AS rule_route, r.service AS rule_service FROM monitor_alerts a
 JOIN monitor_alert_rules r ON r.workspace_id = a.workspace_id AND r.id = a.rule_id
 WHERE a.workspace_id = $1
   AND ($2::boolean OR a.property_id IS NULL OR a.property_id = ANY($3::uuid[]))
@@ -792,9 +811,10 @@ WHERE a.workspace_id = $1
   AND ($5::uuid IS NULL OR a.property_id = $5::uuid)
   AND ($6::uuid IS NULL OR a.check_id = $6::uuid)
   AND ($7::uuid IS NULL OR a.rule_id = $7::uuid)
-  AND ($8::timestamptz IS NULL OR a.fired_at < $8::timestamptz)
+  AND ($8::uuid IS NULL OR a.service_id = $8::uuid)
+  AND ($9::timestamptz IS NULL OR a.fired_at < $9::timestamptz)
 ORDER BY a.fired_at DESC, a.id DESC
-LIMIT $9
+LIMIT $10
 `
 
 type ListMonitorAlertsParams struct {
@@ -805,6 +825,7 @@ type ListMonitorAlertsParams struct {
 	PropertyID    *uuid.UUID
 	CheckID       *uuid.UUID
 	RuleID        *uuid.UUID
+	ServiceID     *uuid.UUID
 	Before        *time.Time
 	Lim           int32
 }
@@ -827,6 +848,8 @@ type ListMonitorAlertsRow struct {
 	ResolvedAt    *time.Time
 	AnnotationID  *uuid.UUID
 	CreatedAt     time.Time
+	ServiceID     *uuid.UUID
+	DependencyID  *uuid.UUID
 	RuleName      string
 	RuleRoute     *string
 	RuleService   *string
@@ -841,6 +864,7 @@ func (q *Queries) ListMonitorAlerts(ctx context.Context, arg ListMonitorAlertsPa
 		arg.PropertyID,
 		arg.CheckID,
 		arg.RuleID,
+		arg.ServiceID,
 		arg.Before,
 		arg.Lim,
 	)
@@ -869,6 +893,8 @@ func (q *Queries) ListMonitorAlerts(ctx context.Context, arg ListMonitorAlertsPa
 			&i.ResolvedAt,
 			&i.AnnotationID,
 			&i.CreatedAt,
+			&i.ServiceID,
+			&i.DependencyID,
 			&i.RuleName,
 			&i.RuleRoute,
 			&i.RuleService,
@@ -884,7 +910,7 @@ func (q *Queries) ListMonitorAlerts(ctx context.Context, arg ListMonitorAlertsPa
 }
 
 const listMonitorAlertsFired = `-- name: ListMonitorAlertsFired :many
-SELECT a.id, a.workspace_id, a.rule_id, a.key, a.kind, a.property_id, a.check_id, a.value, a.threshold, a.baseline, a.resolved_value, a.window_minutes, a.text, a.fired_at, a.resolved_at, a.annotation_id, a.created_at, r.name AS rule_name FROM monitor_alerts a
+SELECT a.id, a.workspace_id, a.rule_id, a.key, a.kind, a.property_id, a.check_id, a.value, a.threshold, a.baseline, a.resolved_value, a.window_minutes, a.text, a.fired_at, a.resolved_at, a.annotation_id, a.created_at, a.service_id, a.dependency_id, r.name AS rule_name FROM monitor_alerts a
 JOIN monitor_alert_rules r ON r.workspace_id = a.workspace_id AND r.id = a.rule_id
 WHERE a.workspace_id = $1 AND a.property_id = $2 AND a.fired_at >= $3 AND a.fired_at < $4
 ORDER BY a.fired_at, a.id
@@ -915,6 +941,8 @@ type ListMonitorAlertsFiredRow struct {
 	ResolvedAt    *time.Time
 	AnnotationID  *uuid.UUID
 	CreatedAt     time.Time
+	ServiceID     *uuid.UUID
+	DependencyID  *uuid.UUID
 	RuleName      string
 }
 
@@ -950,6 +978,8 @@ func (q *Queries) ListMonitorAlertsFired(ctx context.Context, arg ListMonitorAle
 			&i.ResolvedAt,
 			&i.AnnotationID,
 			&i.CreatedAt,
+			&i.ServiceID,
+			&i.DependencyID,
 			&i.RuleName,
 		); err != nil {
 			return nil, err
@@ -1174,12 +1204,13 @@ func (q *Queries) ListMonitorRecipients(ctx context.Context, arg ListMonitorReci
 
 const listMonitorWorkspaceIDs = `-- name: ListMonitorWorkspaceIDs :many
 SELECT id FROM workspaces w WHERE w.deleted_at IS NULL
-  AND (EXISTS (SELECT 1 FROM monitor_checks c WHERE c.workspace_id = w.id) OR EXISTS (SELECT 1 FROM monitor_alert_rules r WHERE r.workspace_id = w.id))
+  AND (EXISTS (SELECT 1 FROM monitor_checks c WHERE c.workspace_id = w.id) OR EXISTS (SELECT 1 FROM monitor_alert_rules r WHERE r.workspace_id = w.id)
+    OR EXISTS (SELECT 1 FROM monitor_services s WHERE s.workspace_id = w.id))
 ORDER BY id
 `
 
-// Maintenance finds the live workspaces with checks or alert rules; everything after it is scoped
-// by workspace.
+// Maintenance finds the live workspaces with checks, alert rules or services; everything after it
+// is scoped by workspace.
 func (q *Queries) ListMonitorWorkspaceIDs(ctx context.Context) ([]uuid.UUID, error) {
 	rows, err := q.db.Query(ctx, listMonitorWorkspaceIDs)
 	if err != nil {
@@ -1201,7 +1232,7 @@ func (q *Queries) ListMonitorWorkspaceIDs(ctx context.Context) ([]uuid.UUID, err
 }
 
 const listOpenMonitorAlerts = `-- name: ListOpenMonitorAlerts :many
-SELECT id, workspace_id, rule_id, key, kind, property_id, check_id, value, threshold, baseline, resolved_value, window_minutes, text, fired_at, resolved_at, annotation_id, created_at FROM monitor_alerts WHERE workspace_id = $1 AND rule_id = $2 AND resolved_at IS NULL ORDER BY fired_at, id
+SELECT id, workspace_id, rule_id, key, kind, property_id, check_id, value, threshold, baseline, resolved_value, window_minutes, text, fired_at, resolved_at, annotation_id, created_at, service_id, dependency_id FROM monitor_alerts WHERE workspace_id = $1 AND rule_id = $2 AND resolved_at IS NULL ORDER BY fired_at, id
 `
 
 type ListOpenMonitorAlertsParams struct {
@@ -1236,6 +1267,8 @@ func (q *Queries) ListOpenMonitorAlerts(ctx context.Context, arg ListOpenMonitor
 			&i.ResolvedAt,
 			&i.AnnotationID,
 			&i.CreatedAt,
+			&i.ServiceID,
+			&i.DependencyID,
 		); err != nil {
 			return nil, err
 		}
@@ -1322,7 +1355,7 @@ func (q *Queries) ListPendingMonitorResults(ctx context.Context, arg ListPending
 }
 
 const lockMonitorAlertRule = `-- name: LockMonitorAlertRule :one
-SELECT id, workspace_id, name, kind, property_id, route, service, check_id, threshold, window_minutes, min_requests, recipients, enabled, created_by, created_at, updated_at FROM monitor_alert_rules WHERE workspace_id = $1 AND id = $2 FOR UPDATE
+SELECT id, workspace_id, name, kind, property_id, route, service, check_id, threshold, window_minutes, min_requests, recipients, enabled, created_by, created_at, updated_at, service_id, dependency_id FROM monitor_alert_rules WHERE workspace_id = $1 AND id = $2 FOR UPDATE
 `
 
 type LockMonitorAlertRuleParams struct {
@@ -1350,6 +1383,8 @@ func (q *Queries) LockMonitorAlertRule(ctx context.Context, arg LockMonitorAlert
 		&i.CreatedBy,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.ServiceID,
+		&i.DependencyID,
 	)
 	return i, err
 }
@@ -1422,11 +1457,12 @@ func (q *Queries) MarkMonitorCheckRun(ctx context.Context, arg MarkMonitorCheckR
 }
 
 const openMonitorAlert = `-- name: OpenMonitorAlert :one
-INSERT INTO monitor_alerts (id, workspace_id, rule_id, key, kind, property_id, check_id, value, threshold, baseline, window_minutes, text, fired_at, created_at)
+INSERT INTO monitor_alerts (id, workspace_id, rule_id, key, kind, property_id, check_id, service_id, dependency_id, value, threshold, baseline, window_minutes,
+    text, fired_at, created_at)
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
-    $11, $12, $13, $14)
+    $11, $12, $13, $14, $15, $16)
 ON CONFLICT (rule_id, key) WHERE resolved_at IS NULL DO NOTHING
-RETURNING id, workspace_id, rule_id, key, kind, property_id, check_id, value, threshold, baseline, resolved_value, window_minutes, text, fired_at, resolved_at, annotation_id, created_at
+RETURNING id, workspace_id, rule_id, key, kind, property_id, check_id, value, threshold, baseline, resolved_value, window_minutes, text, fired_at, resolved_at, annotation_id, created_at, service_id, dependency_id
 `
 
 type OpenMonitorAlertParams struct {
@@ -1437,6 +1473,8 @@ type OpenMonitorAlertParams struct {
 	Kind          string
 	PropertyID    *uuid.UUID
 	CheckID       *uuid.UUID
+	ServiceID     *uuid.UUID
+	DependencyID  *uuid.UUID
 	Value         float64
 	Threshold     *float64
 	Baseline      *float64
@@ -1455,6 +1493,8 @@ func (q *Queries) OpenMonitorAlert(ctx context.Context, arg OpenMonitorAlertPara
 		arg.Kind,
 		arg.PropertyID,
 		arg.CheckID,
+		arg.ServiceID,
+		arg.DependencyID,
 		arg.Value,
 		arg.Threshold,
 		arg.Baseline,
@@ -1482,6 +1522,8 @@ func (q *Queries) OpenMonitorAlert(ctx context.Context, arg OpenMonitorAlertPara
 		&i.ResolvedAt,
 		&i.AnnotationID,
 		&i.CreatedAt,
+		&i.ServiceID,
+		&i.DependencyID,
 	)
 	return i, err
 }
@@ -1489,7 +1531,7 @@ func (q *Queries) OpenMonitorAlert(ctx context.Context, arg OpenMonitorAlertPara
 const resolveMonitorAlert = `-- name: ResolveMonitorAlert :one
 UPDATE monitor_alerts SET resolved_at = $1, resolved_value = $2
 WHERE workspace_id = $3 AND id = $4 AND resolved_at IS NULL
-RETURNING id, workspace_id, rule_id, key, kind, property_id, check_id, value, threshold, baseline, resolved_value, window_minutes, text, fired_at, resolved_at, annotation_id, created_at
+RETURNING id, workspace_id, rule_id, key, kind, property_id, check_id, value, threshold, baseline, resolved_value, window_minutes, text, fired_at, resolved_at, annotation_id, created_at, service_id, dependency_id
 `
 
 type ResolveMonitorAlertParams struct {
@@ -1525,6 +1567,8 @@ func (q *Queries) ResolveMonitorAlert(ctx context.Context, arg ResolveMonitorAle
 		&i.ResolvedAt,
 		&i.AnnotationID,
 		&i.CreatedAt,
+		&i.ServiceID,
+		&i.DependencyID,
 	)
 	return i, err
 }
@@ -1550,7 +1594,7 @@ func (q *Queries) ResolveRuleAlertsQuietly(ctx context.Context, arg ResolveRuleA
 
 const setMonitorAlertAnnotation = `-- name: SetMonitorAlertAnnotation :one
 UPDATE monitor_alerts SET annotation_id = $1 WHERE workspace_id = $2 AND id = $3
-RETURNING id, workspace_id, rule_id, key, kind, property_id, check_id, value, threshold, baseline, resolved_value, window_minutes, text, fired_at, resolved_at, annotation_id, created_at
+RETURNING id, workspace_id, rule_id, key, kind, property_id, check_id, value, threshold, baseline, resolved_value, window_minutes, text, fired_at, resolved_at, annotation_id, created_at, service_id, dependency_id
 `
 
 type SetMonitorAlertAnnotationParams struct {
@@ -1580,6 +1624,8 @@ func (q *Queries) SetMonitorAlertAnnotation(ctx context.Context, arg SetMonitorA
 		&i.ResolvedAt,
 		&i.AnnotationID,
 		&i.CreatedAt,
+		&i.ServiceID,
+		&i.DependencyID,
 	)
 	return i, err
 }
@@ -1680,7 +1726,7 @@ const updateMonitorAlertRule = `-- name: UpdateMonitorAlertRule :one
 UPDATE monitor_alert_rules SET name = $1, threshold = $2, window_minutes = $3, min_requests = $4,
     recipients = $5, enabled = $6, updated_at = $7
 WHERE workspace_id = $8 AND id = $9
-RETURNING id, workspace_id, name, kind, property_id, route, service, check_id, threshold, window_minutes, min_requests, recipients, enabled, created_by, created_at, updated_at
+RETURNING id, workspace_id, name, kind, property_id, route, service, check_id, threshold, window_minutes, min_requests, recipients, enabled, created_by, created_at, updated_at, service_id, dependency_id
 `
 
 type UpdateMonitorAlertRuleParams struct {
@@ -1725,6 +1771,8 @@ func (q *Queries) UpdateMonitorAlertRule(ctx context.Context, arg UpdateMonitorA
 		&i.CreatedBy,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.ServiceID,
+		&i.DependencyID,
 	)
 	return i, err
 }

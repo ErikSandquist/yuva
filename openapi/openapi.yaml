@@ -272,6 +272,12 @@ tags:
       (`MonitorAlert`) every minute, with a `monitor.alert` event and webhook, an annotation, e-mail
       and Web Push.
 
+      Services (`MonitorService`) report their own health and their dependencies' with
+      `sendMonitorHealth`, or are pulled from a health URL; their state (`MonitorServiceState`)
+      opens and resolves automatic incidents (`MonitorIncident`) and raises `service_state`
+      alerts. Members post incidents and maintenance windows, each change a `monitor.incident`
+      event and webhook.
+
       The server calls only public addresses: a check's URL, every address its host resolves to on
       every run and every redirect hop are refused when they are loopback, private, link-local,
       CGNAT, multicast or reserved, or a cloud metadata address. A request is made to the address
@@ -9785,7 +9791,8 @@ paths:
       summary: List alert rules
       description: |
         The workspace's API monitoring alert rules, oldest first: those on a property the caller
-        can see, and every rule on checks. `property_id` and `check_id` narrow the list.
+        can see, and every rule on checks and services. `property_id`, `check_id` and
+        `service_id` narrow the list.
 
         Scope: `analytics:read`.
       tags: [monitoring]
@@ -9797,6 +9804,11 @@ paths:
             type: string
             format: uuid
         - name: check_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: service_id
           in: query
           schema:
             type: string
@@ -9969,6 +9981,11 @@ paths:
           schema:
             type: string
             format: uuid
+        - name: service_id
+          in: query
+          schema:
+            type: string
+            format: uuid
         - name: before
           in: query
           description: "`fired_at` of the last alert of the previous page."
@@ -9996,6 +10013,545 @@ paths:
         "403":
           $ref: "#/components/responses/Problem"
         "404":
+          $ref: "#/components/responses/Problem"
+  /v1/monitoring/health:
+    post:
+      operationId: sendMonitorHealth
+      summary: Report a service's health
+      description: |
+        A health report pushed by the service itself (`MonitorHealthReport`): its own status and
+        the checks of its dependencies. The first report of a name and environment makes the
+        service (`403 service_limit` past 100 services in the workspace); later ones update its
+        version, instance and dependencies, record the hour in `listMonitorHealthHours` and
+        evaluate the service's state at once (`MonitorServiceState`). A service with 50
+        dependencies ignores checks of new names (`ignored_checks`). Each service takes 600
+        reports a minute (`429` with `Retry-After`). Messages are shown to members only, never on
+        a status page.
+
+        Only an API key can report. Scope: `analytics:write`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MonitorHealthReport"
+      responses:
+        "200":
+          description: The report was taken; the service's state after it.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorHealthReportResult"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /v1/monitoring/services:
+    get:
+      operationId: listMonitorServices
+      summary: List services
+      description: |
+        The workspace's services by name and environment, each with its state, dependencies and
+        open incident. Every member sees every service. `property_id` narrows the list to the
+        services linked to one property.
+
+        Scope: `analytics:read`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - name: property_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: The services.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorServiceList"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createMonitorService
+      summary: Add a service
+      description: |
+        Adds a service by name and environment (`409 service_exists` when the workspace has it).
+        A `pull` service is called on its `health_url` every `interval_seconds` through the uptime
+        runner, with the address checks of `createMonitorCheck` (`422 refused_address`); a `push`
+        service waits for `sendMonitorHealth`. A workspace has at most 100 services
+        (`403 service_limit`). A member who adds a service gets an alert rule of kind
+        `service_state` for it, sent to them.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MonitorServiceCreate"
+      responses:
+        "201":
+          description: The service; a pull service's first pull is due now.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorService"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+  /v1/monitoring/services/{serviceId}:
+    get:
+      operationId: getMonitorService
+      summary: Get a service
+      description: |
+        The service with its dependencies and its instances.
+
+        Scope: `analytics:read`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MonitorServiceId"
+      responses:
+        "200":
+          description: The service.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorService"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: updateMonitorService
+      summary: Update a service
+      description: |
+        Changes the given fields; the service is checked whole afterwards. Its name and environment
+        stay, since reports find it by them. Switching to `pull`, or a changed URL or interval,
+        pulls next right away.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MonitorServiceId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MonitorServiceUpdate"
+      responses:
+        "200":
+          description: The service.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorService"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteMonitorService
+      summary: Delete a service
+      description: |
+        Deletes the service with its dependencies, instances, state changes and hours, and the alert
+        rules that name it with their alerts. Incidents stay and no longer list it. A later report or
+        record naming it makes it again.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MonitorServiceId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/monitoring/services/{serviceId}/history:
+    get:
+      operationId: getMonitorServiceHistory
+      summary: A service's history by day
+      description: |
+        The service's (or with `dependency_id`, one dependency's) time in each state per UTC day,
+        from its state changes, which are kept 400 days, and its uptime: the share of the known
+        time outside maintenance that was not `down`. Days before the service existed are absent.
+
+        Scope: `analytics:read`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MonitorServiceId"
+        - name: days
+          in: query
+          description: The last days, today included.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 400
+            default: 90
+        - name: dependency_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: The days, oldest first.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorServiceHistory"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/monitoring/services/{serviceId}/state-changes:
+    get:
+      operationId: listMonitorStateChanges
+      summary: List a service's state changes
+      description: |
+        Every change of the service's state and of its dependencies', newest first, with the reason;
+        changes inside a maintenance window are marked. With `dependency_id`, one dependency's;
+        with `before`, older ones. Kept 400 days.
+
+        Scope: `analytics:read`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MonitorServiceId"
+        - name: dependency_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: before
+          in: query
+          description: "`at` of the last change of the previous page."
+          schema:
+            type: string
+            format: date-time
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 500
+            default: 100
+      responses:
+        "200":
+          description: The changes.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorStateChangeList"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/monitoring/services/{serviceId}/hours:
+    get:
+      operationId: listMonitorHealthHours
+      summary: List a service's health by hour
+      description: |
+        The service's reports per UTC hour by status, and each dependency's with its latency
+        percentiles from a sketch of every reported latency (within 1.1%). Kept 90 days.
+
+        Scope: `analytics:read`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MonitorServiceId"
+        - name: hours
+          in: query
+          description: The last hours, the current one included.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 2160
+            default: 24
+      responses:
+        "200":
+          description: The hours, oldest first; the service's own rows have no `dependency`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorHealthHourList"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/monitoring/incidents:
+    get:
+      operationId: listMonitorIncidents
+      summary: List incidents
+      description: |
+        Incidents and maintenance windows, newest first by start, with their updates. Every member
+        sees every incident. Automatic incidents are private (`published: false`) until a member
+        publishes them.
+
+        Scope: `analytics:read`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - name: state
+          in: query
+          description: "`open` (not resolved) or `resolved`; both when absent."
+          schema:
+            type: string
+            enum: [open, resolved]
+            x-enum-varnames: [MonitorIncidentsOpen, MonitorIncidentsResolved]
+        - name: kind
+          in: query
+          schema:
+            $ref: "#/components/schemas/MonitorIncidentKind"
+        - name: service_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: before
+          in: query
+          description: "`started_at` of the last incident of the previous page."
+          schema:
+            type: string
+            format: date-time
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+      responses:
+        "200":
+          description: The incidents.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorIncidentList"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createMonitorIncident
+      summary: Open an incident or schedule maintenance
+      description: |
+        A manual incident, or a maintenance window (`kind: maintenance` with `scheduled_start` and
+        `scheduled_end`). While a window is active its services, dependencies and checks show
+        maintenance: their state changes are recorded, marked, without alerts or automatic
+        incidents, and a dependency or check the window lists does not change its service's state.
+        A window resolves itself at its end. Writes a `monitor.incident` event and webhook.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MonitorIncidentCreate"
+      responses:
+        "201":
+          description: The incident.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorIncident"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+  /v1/monitoring/incidents/{incidentId}:
+    get:
+      operationId: getMonitorIncident
+      summary: Get an incident
+      description: |
+        Scope: `analytics:read`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MonitorIncidentId"
+      responses:
+        "200":
+          description: The incident with its updates, newest first.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorIncident"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: updateMonitorIncident
+      summary: Update an incident
+      description: |
+        Changes the title, impact, affected components, window or `published`. The state moves
+        with `createMonitorIncidentUpdate`. Writes a `monitor.incident` event and webhook.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MonitorIncidentId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MonitorIncidentChange"
+      responses:
+        "200":
+          description: The incident.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorIncident"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteMonitorIncident
+      summary: Delete an incident
+      description: |
+        Deletes the incident with its updates; an automatic incident of a service that is still
+        degraded or down is not opened again for the same outage.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MonitorIncidentId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/monitoring/incidents/{incidentId}/updates:
+    post:
+      operationId: createMonitorIncidentUpdate
+      summary: Post an incident update
+      description: |
+        Adds an update and moves the incident to its `state`; `resolved` ends it (a maintenance
+        window too, early), and a later update reopens it. Writes a `monitor.incident` event and
+        webhook.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MonitorIncidentId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MonitorIncidentUpdateCreate"
+      responses:
+        "201":
+          description: The incident with the new update first.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorIncident"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "422":
           $ref: "#/components/responses/Problem"
   /v1/realtime:
     get:
@@ -12332,6 +12888,28 @@ webhooks:
       responses:
         "200":
           description: Any 2xx answer counts as delivered.
+  monitor.incident:
+    post:
+      operationId: webhookMonitorIncident
+      summary: An incident or maintenance window changed
+      description: |
+        When an incident or maintenance window is opened, changed, gets an update (`data.update`)
+        or resolves, automatic incidents included. Every endpoint that subscribed gets it.
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookMonitorIncidentPayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
 components:
   securitySchemes:
     session:
@@ -12604,6 +13182,20 @@ components:
         format: uuid
     MonitorAlertRuleId:
       name: ruleId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    MonitorServiceId:
+      name: serviceId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    MonitorIncidentId:
+      name: incidentId
       in: path
       required: true
       schema:
@@ -14484,7 +15076,7 @@ components:
           format: int64
     WebhookEventType:
       type: string
-      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted, discussion.created, discussion.post_created, discussion.answered, discussion.updated, subscription.created, subscription.updated, broadcast.updated, analytics.alert, monitor.alert]
+      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted, discussion.created, discussion.post_created, discussion.answered, discussion.updated, subscription.created, subscription.updated, broadcast.updated, analytics.alert, monitor.alert, monitor.incident]
     WebhookEndpoint:
       type: object
       required: [id, url, description, events, include_notes, enabled, created_at, updated_at]
@@ -17926,6 +18518,7 @@ components:
         - $ref: "#/components/schemas/MigrationEvent"
         - $ref: "#/components/schemas/AnalyticsAlertEvent"
         - $ref: "#/components/schemas/MonitorAlertEvent"
+        - $ref: "#/components/schemas/MonitorIncidentEvent"
       discriminator:
         propertyName: type
         mapping:
@@ -17956,6 +18549,7 @@ components:
           migration.updated: "#/components/schemas/MigrationEvent"
           analytics.alert: "#/components/schemas/AnalyticsAlertEvent"
           monitor.alert: "#/components/schemas/MonitorAlertEvent"
+          monitor.incident: "#/components/schemas/MonitorIncidentEvent"
     EventPage:
       type: object
       required: [events, next, has_more]
@@ -18002,6 +18596,7 @@ components:
         - $ref: "#/components/schemas/MigrationEvent"
         - $ref: "#/components/schemas/AnalyticsAlertEvent"
         - $ref: "#/components/schemas/MonitorAlertEvent"
+        - $ref: "#/components/schemas/MonitorIncidentEvent"
         - $ref: "#/components/schemas/MigrationProgressEvent"
         - $ref: "#/components/schemas/MigrationForwardingConfirmationEvent"
         - $ref: "#/components/schemas/BroadcastProgressEvent"
@@ -18043,6 +18638,7 @@ components:
           migration.updated: "#/components/schemas/MigrationEvent"
           analytics.alert: "#/components/schemas/AnalyticsAlertEvent"
           monitor.alert: "#/components/schemas/MonitorAlertEvent"
+          monitor.incident: "#/components/schemas/MonitorIncidentEvent"
           migration.progress: "#/components/schemas/MigrationProgressEvent"
           migration.forwarding_confirmation: "#/components/schemas/MigrationForwardingConfirmationEvent"
           broadcast.progress: "#/components/schemas/BroadcastProgressEvent"
@@ -22837,14 +23433,20 @@ components:
         - `certificate`: the check's certificate expires within `threshold` days (the check's
           `cert_warning_days` when absent).
 
+        On services (`service_id`, or one of its dependencies with `dependency_id` as well, or
+        every service of `property_id`, or every service of the workspace):
+        - `service_state`: the service (or the dependency) is degraded or down (`value` 1 or 2).
+          No alert fires while an active maintenance window covers it.
+
         An alert resolves once its value has been back inside the threshold with a 10% margin
         (below 90% of it; for `apdex` above it by a tenth of the distance to 1; for `spike`
         below 2.7 times, for `drop` above 0.55 times the average) over a whole window that began
         after it fired, or the window has fewer than `min_requests`; a silent route once it was
-        called again; a check once it is up, or its certificate is renewed.
-      enum: [error_rate, client_error_rate, p95, p99, apdex, spike, drop, silent, check_state, certificate]
+        called again; a check once it is up, or its certificate is renewed; a service once it is
+        healthy.
+      enum: [error_rate, client_error_rate, p95, p99, apdex, spike, drop, silent, check_state, certificate, service_state]
       x-enum-varnames: [MonitorRuleErrorRate, MonitorRuleClientErrorRate, MonitorRuleP95, MonitorRuleP99, MonitorRuleApdex, MonitorRuleSpike,
-        MonitorRuleDrop, MonitorRuleSilent, MonitorRuleCheckState, MonitorRuleCertificate]
+        MonitorRuleDrop, MonitorRuleSilent, MonitorRuleCheckState, MonitorRuleCertificate, MonitorRuleServiceState]
     MonitorAlertRuleFields:
       type: object
       properties:
@@ -22901,6 +23503,14 @@ components:
             check_id:
               type: string
               format: uuid
+            service_id:
+              type: string
+              format: uuid
+              description: "`service_state`: the service."
+            dependency_id:
+              type: string
+              format: uuid
+              description: "`service_state`: one dependency of `service_id`."
     MonitorAlertRuleUpdate:
       allOf:
         - $ref: "#/components/schemas/MonitorAlertRuleFields"
@@ -22925,6 +23535,12 @@ components:
         service:
           type: string
         check_id:
+          type: string
+          format: uuid
+        service_id:
+          type: string
+          format: uuid
+        dependency_id:
           type: string
           format: uuid
         threshold:
@@ -22981,7 +23597,7 @@ components:
           $ref: "#/components/schemas/MonitorAlertRuleKind"
         key:
           type: string
-          description: What the alert is about within its rule; empty for a rule's whole subject, a route pattern for `silent`, a check id for check rules.
+          description: What the alert is about within its rule; empty for a rule's whole subject, a route pattern for `silent`, a check id for check rules, a service or dependency id for `service_state`.
         state:
           $ref: "#/components/schemas/MonitorAlertState"
         property_id:
@@ -22994,10 +23610,16 @@ components:
         check_id:
           type: string
           format: uuid
+        service_id:
+          type: string
+          format: uuid
+        dependency_id:
+          type: string
+          format: uuid
         value:
           type: number
           format: double
-          description: The value when it fired; requests of the 15 minutes for `spike` and `drop`, days left for `certificate`, 1 for a check that is down.
+          description: The value when it fired; requests of the 15 minutes for `spike` and `drop`, days left for `certificate`, 1 for a check that is down, 1 for degraded and 2 for down for `service_state`.
         threshold:
           type: number
           format: double
@@ -23052,13 +23674,15 @@ components:
           $ref: "#/components/schemas/AnalyticsPropertyRef"
         check:
           $ref: "#/components/schemas/MonitorCheckRef"
+        service:
+          $ref: "#/components/schemas/MonitorServiceRef"
     MonitorAlertEvent:
       type: object
       description: |
         `monitor.alert`: an alert fired (`alert.state: firing`) or resolved (`resolved`); each
         happens once per alert. Delivered to callers who hold `analytics:read` and can see the
-        rule: `inbox_id` is the linked inbox of the alert's property; alerts on checks without a
-        property reach every member.
+        rule: `inbox_id` is the linked inbox of the alert's property; alerts on checks and services
+        without a property reach every member.
       required: [id, type, workspace_id, created_at, data]
       properties:
         id:
@@ -23086,6 +23710,704 @@ components:
           properties:
             data:
               $ref: "#/components/schemas/MonitorAlertEventData"
+    MonitorServiceState:
+      type: string
+      description: |
+        `unknown` before a service's first report; then the worst of what applies:
+        - `down`: the service reported itself down, a critical dependency is down, no report came
+          within `silence_after_seconds`, or an uptime check naming the service (`MonitorCheck`
+          `service`) is down;
+        - `degraded`: the service reported itself degraded, a dependency is degraded, a
+          non-critical dependency is down, or over the last 5 minutes with at least 20 requests the
+          linked property's 5xx rate reached `error_rate_threshold` or its p95 passed
+          `p95_threshold_ms` (requests naming the service, or no service, in its environment);
+        - `healthy` otherwise.
+
+        A worse state applies at once, and so does `unknown`; a better one after two evaluations in
+        a row found it. The `monitor_states` job evaluates every 30 seconds and every report
+        evaluates its service. A dependency's state is its last reported status with the same rule,
+        and `unknown` when the last report did not list it or the service went silent.
+        Dependencies and checks that an active maintenance window lists do not count; a service
+        the window lists keeps its state, which only no longer alerts or opens incidents.
+      enum: [unknown, healthy, degraded, down]
+      x-enum-varnames: [MonitorServiceUnknown, MonitorServiceHealthy, MonitorServiceDegraded, MonitorServiceDown]
+    MonitorHealthStatus:
+      type: string
+      enum: [healthy, degraded, down]
+      x-enum-varnames: [MonitorHealthHealthy, MonitorHealthDegraded, MonitorHealthDown]
+    MonitorDependencyKind:
+      type: string
+      enum: [database, cache, queue, http, other]
+      x-enum-varnames: [MonitorDependencyDatabase, MonitorDependencyCache, MonitorDependencyQueue, MonitorDependencyHTTP, MonitorDependencyOther]
+    MonitorHealthCheck:
+      type: object
+      description: One dependency as the service saw it.
+      required: [name, status]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: The dependency, such as `postgres`; a service keeps 50.
+        kind:
+          $ref: "#/components/schemas/MonitorDependencyKind"
+        status:
+          $ref: "#/components/schemas/MonitorHealthStatus"
+        latency_ms:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 3600000
+          description: How long the check took.
+        critical:
+          type: boolean
+          description: A critical dependency down makes the service down, any other degraded; true when absent.
+        message:
+          type: string
+          maxLength: 200
+          description: What went wrong; shown to members only.
+    MonitorHealthReport:
+      type: object
+      required: [service]
+      properties:
+        service:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: The service's name, as its request records and spans give it.
+        environment:
+          type: string
+          minLength: 1
+          maxLength: 40
+          description: "`production` when absent."
+        version:
+          type: string
+          minLength: 1
+          maxLength: 80
+        instance:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: The process that reports, such as a pod name; a service keeps 200 and forgets one after 24 hours without a report.
+        status:
+          $ref: "#/components/schemas/MonitorHealthStatus"
+        checks:
+          type: array
+          maxItems: 50
+          items:
+            $ref: "#/components/schemas/MonitorHealthCheck"
+    MonitorHealthReportResult:
+      type: object
+      required: [service_id, state, ignored_checks]
+      properties:
+        service_id:
+          type: string
+          format: uuid
+        state:
+          $ref: "#/components/schemas/MonitorServiceState"
+        ignored_checks:
+          type: array
+          description: Checks of new names past the 50 dependencies a service keeps.
+          items:
+            type: string
+    MonitorServiceMode:
+      type: string
+      description: |
+        `push`: the service reports with `sendMonitorHealth`. `pull`: the server calls `health_url`
+        and reads `application/health+json` (the IETF health check draft; a check's `critical` and
+        `kind` keys are read when present), Spring Boot Actuator's `status` and `components`, or
+        anything else by its status code (200 to 399 healthy, otherwise down). A pull that gets no
+        answer is tried again after 20 seconds before it counts as down.
+      enum: [push, pull]
+      x-enum-varnames: [MonitorServicePush, MonitorServicePull]
+    MonitorServiceFields:
+      type: object
+      properties:
+        property_id:
+          type:
+            - string
+            - "null"
+          format: uuid
+          description: The API property whose 5xx rate and p95 count toward the state.
+        mode:
+          $ref: "#/components/schemas/MonitorServiceMode"
+        health_url:
+          type:
+            - string
+            - "null"
+          maxLength: 2000
+          description: "`pull`: an `http` or `https` URL without credentials."
+          examples: ["https://api.example.com/health"]
+        interval_seconds:
+          type: integer
+          minimum: 30
+          maximum: 600
+          description: How often a pull service is called, or a push service reports; at least `YUVA_MONITOR_MIN_INTERVAL` for pulls.
+        timeout_seconds:
+          type: integer
+          minimum: 1
+          maximum: 30
+        silence_seconds:
+          type:
+            - integer
+            - "null"
+          minimum: 60
+          maximum: 86400
+          description: Without a report this long the service is down; three intervals when null.
+        error_rate_threshold:
+          type: number
+          format: double
+          exclusiveMinimum: 0
+          maximum: 100
+          description: The linked property's 5xx rate in percent that makes the service degraded; 5 when absent.
+        p95_threshold_ms:
+          type:
+            - number
+            - "null"
+          format: double
+          exclusiveMinimum: 0
+          maximum: 3600000
+          description: The linked property's p95 in milliseconds that makes the service degraded; none when null.
+    MonitorServiceCreate:
+      allOf:
+        - $ref: "#/components/schemas/MonitorServiceFields"
+        - type: object
+          required: [name]
+          description: Defaults to `push`, an interval of 60 seconds and a timeout of 10.
+          properties:
+            name:
+              type: string
+              minLength: 1
+              maxLength: 100
+            environment:
+              type: string
+              minLength: 1
+              maxLength: 40
+              description: "`production` when absent."
+    MonitorServiceUpdate:
+      allOf:
+        - $ref: "#/components/schemas/MonitorServiceFields"
+        - type: object
+          minProperties: 1
+    MonitorDependency:
+      type: object
+      required: [id, name, kind, critical, state, maintenance]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        kind:
+          $ref: "#/components/schemas/MonitorDependencyKind"
+        critical:
+          type: boolean
+        state:
+          $ref: "#/components/schemas/MonitorServiceState"
+        state_since:
+          type: string
+          format: date-time
+        status:
+          $ref: "#/components/schemas/MonitorHealthStatus"
+        latency_ms:
+          type: number
+          format: double
+          description: The last reported latency.
+        message:
+          type: string
+        last_report_at:
+          type: string
+          format: date-time
+        maintenance:
+          type: boolean
+          description: An active maintenance window lists it or its service.
+    MonitorInstance:
+      type: object
+      required: [instance, first_seen_at, last_seen_at]
+      properties:
+        instance:
+          type: string
+        version:
+          type: string
+        status:
+          $ref: "#/components/schemas/MonitorHealthStatus"
+        first_seen_at:
+          type: string
+          format: date-time
+        last_seen_at:
+          type: string
+          format: date-time
+    MonitorServiceOrigin:
+      type: string
+      description: What made the service.
+      enum: [report, member, records]
+      x-enum-varnames: [MonitorServiceFromReport, MonitorServiceFromMember, MonitorServiceFromRecords]
+    MonitorService:
+      type: object
+      required: [id, name, environment, origin, mode, interval_seconds, timeout_seconds, silence_after_seconds, error_rate_threshold, state, maintenance,
+        check_ids, dependencies, instance_count, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        environment:
+          type: string
+        origin:
+          $ref: "#/components/schemas/MonitorServiceOrigin"
+        property_id:
+          type: string
+          format: uuid
+        mode:
+          $ref: "#/components/schemas/MonitorServiceMode"
+        health_url:
+          type: string
+        interval_seconds:
+          type: integer
+        timeout_seconds:
+          type: integer
+        silence_seconds:
+          type: integer
+          description: As set; absent for three intervals.
+        silence_after_seconds:
+          type: integer
+          description: The silence that makes it down.
+        error_rate_threshold:
+          type: number
+          format: double
+        p95_threshold_ms:
+          type: number
+          format: double
+        version:
+          type: string
+          description: The last version a report, record or span gave.
+        state:
+          $ref: "#/components/schemas/MonitorServiceState"
+        state_since:
+          type: string
+          format: date-time
+        reason:
+          type: string
+          description: Why it is in its state, in English.
+        last_report_at:
+          type: string
+          format: date-time
+        last_status:
+          $ref: "#/components/schemas/MonitorHealthStatus"
+        next_pull_at:
+          type: string
+          format: date-time
+        maintenance:
+          type: boolean
+          description: An active maintenance window lists it.
+        open_incident_id:
+          type: string
+          format: uuid
+          description: Its open incident, the automatic one first.
+        check_ids:
+          type: array
+          description: The uptime checks naming it.
+          items:
+            type: string
+            format: uuid
+        dependencies:
+          type: array
+          items:
+            $ref: "#/components/schemas/MonitorDependency"
+        instance_count:
+          type: integer
+        instances:
+          type: array
+          description: "`getMonitorService` only; most recent first."
+          items:
+            $ref: "#/components/schemas/MonitorInstance"
+        created_by:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    MonitorServiceList:
+      type: object
+      required: [items, limit]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/MonitorService"
+        limit:
+          type: integer
+          description: The workspace's services at most.
+    MonitorServiceRef:
+      type: object
+      required: [id, name, environment]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        environment:
+          type: string
+    MonitorStateChange:
+      type: object
+      required: [id, service_id, state, previous, at, maintenance]
+      properties:
+        id:
+          type: string
+          format: uuid
+        service_id:
+          type: string
+          format: uuid
+        dependency_id:
+          type: string
+          format: uuid
+          description: Absent for the service's own change.
+        dependency:
+          type: string
+          description: The dependency's name.
+        state:
+          $ref: "#/components/schemas/MonitorServiceState"
+        previous:
+          $ref: "#/components/schemas/MonitorServiceState"
+        reason:
+          type: string
+        at:
+          type: string
+          format: date-time
+        maintenance:
+          type: boolean
+          description: It happened inside a maintenance window, so no alert or incident followed.
+    MonitorStateChangeList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/MonitorStateChange"
+    MonitorServiceHistoryDay:
+      type: object
+      required: [day, healthy_seconds, degraded_seconds, down_seconds, unknown_seconds, maintenance_seconds, worst]
+      properties:
+        day:
+          type: string
+          format: date
+        healthy_seconds:
+          type: integer
+        degraded_seconds:
+          type: integer
+        down_seconds:
+          type: integer
+        unknown_seconds:
+          type: integer
+          description: Unknown, and today's time still to come.
+        maintenance_seconds:
+          type: integer
+          description: Time inside maintenance windows, whatever the state; not in the other counts.
+        worst:
+          $ref: "#/components/schemas/MonitorServiceState"
+        uptime:
+          type: number
+          format: double
+          description: Percent of the known time that was not down; absent when none was known.
+    MonitorServiceHistory:
+      type: object
+      required: [days]
+      properties:
+        days:
+          type: array
+          items:
+            $ref: "#/components/schemas/MonitorServiceHistoryDay"
+        uptime:
+          type: number
+          format: double
+          description: Percent over all the days.
+    MonitorHealthHour:
+      type: object
+      required: [hour, reports, healthy, degraded, down]
+      properties:
+        hour:
+          type: string
+          format: date-time
+        dependency:
+          type: string
+          description: The dependency's name; absent for the service's own reports.
+        reports:
+          type: integer
+          format: int64
+        healthy:
+          type: integer
+          format: int64
+        degraded:
+          type: integer
+          format: int64
+        down:
+          type: integer
+          format: int64
+        latency_avg:
+          type: number
+          format: double
+          description: Milliseconds, of the reports with a latency.
+        latency_p50:
+          type: number
+          format: double
+        latency_p95:
+          type: number
+          format: double
+        latency_p99:
+          type: number
+          format: double
+    MonitorHealthHourList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/MonitorHealthHour"
+    MonitorIncidentKind:
+      type: string
+      enum: [incident, maintenance]
+      x-enum-varnames: [MonitorIncidentIncident, MonitorIncidentMaintenance]
+    MonitorIncidentOrigin:
+      type: string
+      description: "`auto`: opened when a service turned degraded or down, one open per service, resolved after 5 minutes healthy; `manual`: by a member."
+      enum: [auto, manual]
+      x-enum-varnames: [MonitorIncidentAuto, MonitorIncidentManual]
+    MonitorIncidentState:
+      type: string
+      enum: [investigating, identified, monitoring, resolved]
+      x-enum-varnames: [MonitorIncidentInvestigating, MonitorIncidentIdentified, MonitorIncidentMonitoring, MonitorIncidentResolved]
+    MonitorIncidentImpact:
+      type: string
+      enum: [none, minor, major, critical]
+      x-enum-varnames: [MonitorImpactNone, MonitorImpactMinor, MonitorImpactMajor, MonitorImpactCritical]
+    MonitorIncidentUpdate:
+      type: object
+      required: [id, state, text, notify, created_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        state:
+          $ref: "#/components/schemas/MonitorIncidentState"
+        text:
+          type: string
+        author_id:
+          type: string
+          format: uuid
+          description: The member who wrote it; absent for the server's own updates.
+        notify:
+          type: boolean
+          description: Whether status page subscribers are told (M16.8).
+        created_at:
+          type: string
+          format: date-time
+    MonitorIncident:
+      type: object
+      required: [id, origin, kind, title, state, impact, service_ids, dependency_ids, check_ids, started_at, published, active, updates, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        origin:
+          $ref: "#/components/schemas/MonitorIncidentOrigin"
+        kind:
+          $ref: "#/components/schemas/MonitorIncidentKind"
+        title:
+          type: string
+        state:
+          $ref: "#/components/schemas/MonitorIncidentState"
+        impact:
+          $ref: "#/components/schemas/MonitorIncidentImpact"
+        service_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        dependency_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        check_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        started_at:
+          type: string
+          format: date-time
+          description: When it began; a window's start.
+        resolved_at:
+          type: string
+          format: date-time
+        scheduled_start:
+          type: string
+          format: date-time
+        scheduled_end:
+          type: string
+          format: date-time
+        published:
+          type: boolean
+          description: Status pages may show it (M16.8).
+        active:
+          type: boolean
+          description: Open; for a maintenance window, open and inside its window.
+        updates:
+          type: array
+          description: Newest first.
+          items:
+            $ref: "#/components/schemas/MonitorIncidentUpdate"
+        created_by:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    MonitorIncidentComponents:
+      type: object
+      properties:
+        service_ids:
+          type: array
+          maxItems: 100
+          items:
+            type: string
+            format: uuid
+        dependency_ids:
+          type: array
+          maxItems: 100
+          items:
+            type: string
+            format: uuid
+        check_ids:
+          type: array
+          maxItems: 100
+          items:
+            type: string
+            format: uuid
+    MonitorIncidentCreate:
+      allOf:
+        - $ref: "#/components/schemas/MonitorIncidentComponents"
+        - type: object
+          required: [title]
+          properties:
+            kind:
+              $ref: "#/components/schemas/MonitorIncidentKind"
+            title:
+              type: string
+              minLength: 1
+              maxLength: 200
+            state:
+              $ref: "#/components/schemas/MonitorIncidentState"
+            impact:
+              $ref: "#/components/schemas/MonitorIncidentImpact"
+            scheduled_start:
+              type: string
+              format: date-time
+              description: "`maintenance`: required, as is `scheduled_end` after it (at most 31 days later)."
+            scheduled_end:
+              type: string
+              format: date-time
+            published:
+              type: boolean
+            text:
+              type: string
+              minLength: 1
+              maxLength: 5000
+              description: The first update; the title when absent.
+            notify:
+              type: boolean
+              description: Whether the first update tells subscribers; true when absent.
+          description: |
+            Defaults: `incident`, state `investigating` (`identified` for maintenance), impact
+            `minor` (`none` for maintenance), not published.
+    MonitorIncidentChange:
+      allOf:
+        - $ref: "#/components/schemas/MonitorIncidentComponents"
+        - type: object
+          minProperties: 1
+          properties:
+            title:
+              type: string
+              minLength: 1
+              maxLength: 200
+            impact:
+              $ref: "#/components/schemas/MonitorIncidentImpact"
+            scheduled_start:
+              type: string
+              format: date-time
+            scheduled_end:
+              type: string
+              format: date-time
+            published:
+              type: boolean
+    MonitorIncidentUpdateCreate:
+      type: object
+      required: [state, text]
+      properties:
+        state:
+          $ref: "#/components/schemas/MonitorIncidentState"
+        text:
+          type: string
+          minLength: 1
+          maxLength: 5000
+        notify:
+          type: boolean
+          description: True when absent for `resolved`, false otherwise.
+    MonitorIncidentList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/MonitorIncident"
+    MonitorIncidentEventData:
+      type: object
+      required: [incident]
+      properties:
+        incident:
+          $ref: "#/components/schemas/MonitorIncident"
+        update:
+          $ref: "#/components/schemas/MonitorIncidentUpdate"
+    MonitorIncidentEvent:
+      type: object
+      description: |
+        `monitor.incident`: an incident or maintenance window was opened, changed, got an update
+        (`update`) or resolved. Delivered to every caller with `analytics:read`.
+      required: [id, type, workspace_id, created_at, data]
+      properties:
+        id:
+          type: integer
+          format: int64
+        type:
+          type: string
+          enum: [monitor.incident]
+        workspace_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          $ref: "#/components/schemas/MonitorIncidentEventData"
+    WebhookMonitorIncidentPayload:
+      allOf:
+        - $ref: "#/components/schemas/WebhookPayloadBase"
+        - type: object
+          required: [data]
+          properties:
+            data:
+              $ref: "#/components/schemas/MonitorIncidentEventData"
     AnalyticsRangeProblem:
       allOf:
         - $ref: "#/components/schemas/Problem"

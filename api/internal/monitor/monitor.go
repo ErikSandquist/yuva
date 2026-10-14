@@ -91,6 +91,8 @@ type Record struct {
 	Weight        int64
 	// Release is the service's release, for deploy markers only; rows do not keep it.
 	Release string
+	// Instance is the process that answered (OTLP service.instance.id), for service health only.
+	Instance string
 }
 
 // LocalHour is the first instant of the local hour t is in: the hour starts when loc's clock last

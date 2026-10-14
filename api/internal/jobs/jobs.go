@@ -70,6 +70,7 @@ const MonitoringQueue = "monitoring"
 const (
 	MonitorChecksDueInterval = 10 * time.Second
 	MonitorAlertsInterval    = time.Minute
+	MonitorStatesInterval    = 30 * time.Second
 )
 
 // New starts no migration workers when migrationWorkers is 0, no analytics workers or analytics
@@ -149,6 +150,9 @@ func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorker
 			river.NewPeriodicJob(river.PeriodicInterval(MonitorAlertsInterval), func() (river.JobArgs, *river.InsertOpts) {
 				return MonitorAlertsArgs{}, onMonitoring
 			}, &river.PeriodicJobOpts{ID: "monitor_alerts"}),
+			river.NewPeriodicJob(river.PeriodicInterval(MonitorStatesInterval), func() (river.JobArgs, *river.InsertOpts) {
+				return MonitorStatesArgs{}, onMonitoring
+			}, &river.PeriodicJobOpts{ID: "monitor_states"}),
 		)
 	}
 	return river.NewClient(riverpgxv5.New(pool), &river.Config{
@@ -283,3 +287,9 @@ func (MonitorChecksDueArgs) Kind() string { return "monitor_checks_due" }
 type MonitorAlertsArgs struct{}
 
 func (MonitorAlertsArgs) Kind() string { return "monitor_alerts" }
+
+// MonitorStatesArgs is worked by the api package: it evaluates every service's health, ends the
+// maintenance windows that passed and resolves the automatic incidents of healed services.
+type MonitorStatesArgs struct{}
+
+func (MonitorStatesArgs) Kind() string { return "monitor_states" }

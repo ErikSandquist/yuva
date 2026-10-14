@@ -48,6 +48,11 @@ type ProbeSpec struct {
 	Timeout       time.Duration
 	MaxRedirects  int
 	UserAgent     string
+	// AnyStatus takes every status as an answer and KeepBody keeps what was read, for health pulls
+	// that judge the body.
+	AnyStatus bool
+	KeepBody  bool
+	Accept    string
 }
 
 // ProbeResult is what a run found. Timings add up the redirect hops; TTFB is until the first byte of
@@ -65,6 +70,8 @@ type ProbeResult struct {
 	TTFB        time.Duration
 	Total       time.Duration
 	CertExpires *time.Time
+	Body        []byte
+	ContentType string
 }
 
 // Prober calls check URLs through the webhook client's dialer: each connection resolves its host
@@ -205,6 +212,9 @@ func (p *Prober) Probe(ctx context.Context, spec ProbeSpec) ProbeResult {
 		req.Header.Set(h[0], h[1])
 	}
 	req.Header.Set("User-Agent", spec.UserAgent)
+	if spec.Accept != "" {
+		req.Header.Set("Accept", spec.Accept)
+	}
 	start := time.Now()
 	resp, err := client.Do(req)
 	finish := func() {
@@ -229,7 +239,13 @@ func (p *Prober) Probe(ctx context.Context, spec ProbeSpec) ProbeResult {
 	if resp.TLS != nil && len(resp.TLS.PeerCertificates) > 0 {
 		res.CertExpires = new(resp.TLS.PeerCertificates[0].NotAfter.UTC())
 	}
-	if !expected(spec.Expected, resp.StatusCode) {
+	if spec.KeepBody {
+		if readErr != nil {
+			return failed(res, classify(readErr, false), "")
+		}
+		res.Body, res.ContentType = body, resp.Header.Get("Content-Type")
+	}
+	if !spec.AnyStatus && !expected(spec.Expected, resp.StatusCode) {
 		return failed(res, ProbeStatus, "answered "+strconv.Itoa(resp.StatusCode))
 	}
 	if spec.Keyword != "" && spec.Method == http.MethodGet {

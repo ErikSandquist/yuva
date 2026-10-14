@@ -109,20 +109,21 @@ SELECT count(*) FROM monitor_check_results
 WHERE workspace_id = @workspace_id AND check_id = @check_id AND at >= @from_at AND at < @to_at AND state IS NULL;
 
 -- name: ListMonitorWorkspaceIDs :many
--- Maintenance finds the live workspaces with checks or alert rules; everything after it is scoped
--- by workspace.
+-- Maintenance finds the live workspaces with checks, alert rules or services; everything after it
+-- is scoped by workspace.
 SELECT id FROM workspaces w WHERE w.deleted_at IS NULL
-  AND (EXISTS (SELECT 1 FROM monitor_checks c WHERE c.workspace_id = w.id) OR EXISTS (SELECT 1 FROM monitor_alert_rules r WHERE r.workspace_id = w.id))
+  AND (EXISTS (SELECT 1 FROM monitor_checks c WHERE c.workspace_id = w.id) OR EXISTS (SELECT 1 FROM monitor_alert_rules r WHERE r.workspace_id = w.id)
+    OR EXISTS (SELECT 1 FROM monitor_services s WHERE s.workspace_id = w.id))
 ORDER BY id;
 
 -- name: DeleteOldMonitorCheckDays :execrows
 DELETE FROM monitor_check_days WHERE workspace_id = @workspace_id AND day < @before;
 
 -- name: CreateMonitorAlertRule :one
-INSERT INTO monitor_alert_rules (id, workspace_id, name, kind, property_id, route, service, check_id, threshold, window_minutes, min_requests,
-    recipients, enabled, created_by, created_at, updated_at)
-VALUES (@id, @workspace_id, @name, @kind, sqlc.narg(property_id), sqlc.narg(route), sqlc.narg(service), sqlc.narg(check_id), sqlc.narg(threshold),
-    @window_minutes, @min_requests, @recipients, @enabled, sqlc.narg(created_by), @now, @now)
+INSERT INTO monitor_alert_rules (id, workspace_id, name, kind, property_id, route, service, check_id, service_id, dependency_id, threshold, window_minutes,
+    min_requests, recipients, enabled, created_by, created_at, updated_at)
+VALUES (@id, @workspace_id, @name, @kind, sqlc.narg(property_id), sqlc.narg(route), sqlc.narg(service), sqlc.narg(check_id), sqlc.narg(service_id),
+    sqlc.narg(dependency_id), sqlc.narg(threshold), @window_minutes, @min_requests, @recipients, @enabled, sqlc.narg(created_by), @now, @now)
 RETURNING *;
 
 -- name: GetMonitorAlertRule :one
@@ -136,6 +137,7 @@ SELECT * FROM monitor_alert_rules
 WHERE workspace_id = @workspace_id
   AND (sqlc.narg(property_id)::uuid IS NULL OR property_id = sqlc.narg(property_id)::uuid)
   AND (sqlc.narg(check_id)::uuid IS NULL OR check_id = sqlc.narg(check_id)::uuid)
+  AND (sqlc.narg(service_id)::uuid IS NULL OR service_id = sqlc.narg(service_id)::uuid)
 ORDER BY created_at, id;
 
 -- name: CountMonitorAlertRules :one
@@ -170,9 +172,10 @@ WHERE r.workspace_id = @workspace_id AND r.enabled AND (r.property_id IS NULL OR
 ORDER BY r.created_at, r.id;
 
 -- name: OpenMonitorAlert :one
-INSERT INTO monitor_alerts (id, workspace_id, rule_id, key, kind, property_id, check_id, value, threshold, baseline, window_minutes, text, fired_at, created_at)
-VALUES (@id, @workspace_id, @rule_id, @key, @kind, sqlc.narg(property_id), sqlc.narg(check_id), @value, sqlc.narg(threshold), sqlc.narg(baseline),
-    @window_minutes, @text, @fired_at, @now)
+INSERT INTO monitor_alerts (id, workspace_id, rule_id, key, kind, property_id, check_id, service_id, dependency_id, value, threshold, baseline, window_minutes,
+    text, fired_at, created_at)
+VALUES (@id, @workspace_id, @rule_id, @key, @kind, sqlc.narg(property_id), sqlc.narg(check_id), sqlc.narg(service_id), sqlc.narg(dependency_id), @value,
+    sqlc.narg(threshold), sqlc.narg(baseline), @window_minutes, @text, @fired_at, @now)
 ON CONFLICT (rule_id, key) WHERE resolved_at IS NULL DO NOTHING
 RETURNING *;
 
@@ -201,6 +204,7 @@ WHERE a.workspace_id = @workspace_id
   AND (sqlc.narg(property_id)::uuid IS NULL OR a.property_id = sqlc.narg(property_id)::uuid)
   AND (sqlc.narg(check_id)::uuid IS NULL OR a.check_id = sqlc.narg(check_id)::uuid)
   AND (sqlc.narg(rule_id)::uuid IS NULL OR a.rule_id = sqlc.narg(rule_id)::uuid)
+  AND (sqlc.narg(service_id)::uuid IS NULL OR a.service_id = sqlc.narg(service_id)::uuid)
   AND (sqlc.narg(before)::timestamptz IS NULL OR a.fired_at < sqlc.narg(before)::timestamptz)
 ORDER BY a.fired_at DESC, a.id DESC
 LIMIT @lim;
