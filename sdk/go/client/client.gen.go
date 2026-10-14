@@ -1094,19 +1094,28 @@ func (e AnalyticsRetentionGrain) Valid() bool {
 
 // Defines values for AnalyticsShareView.
 const (
-	AnalyticsShareDevices   AnalyticsShareView = "devices"
-	AnalyticsShareEvents    AnalyticsShareView = "events"
-	AnalyticsShareGoals     AnalyticsShareView = "goals"
-	AnalyticsShareLocations AnalyticsShareView = "locations"
-	AnalyticsShareOverview  AnalyticsShareView = "overview"
-	AnalyticsSharePages     AnalyticsShareView = "pages"
-	AnalyticsShareRealtime  AnalyticsShareView = "realtime"
-	AnalyticsShareSources   AnalyticsShareView = "sources"
+	AnalyticsShareAPIConsumers AnalyticsShareView = "api_consumers"
+	AnalyticsShareAPIOverview  AnalyticsShareView = "api_overview"
+	AnalyticsShareAPIRoutes    AnalyticsShareView = "api_routes"
+	AnalyticsShareDevices      AnalyticsShareView = "devices"
+	AnalyticsShareEvents       AnalyticsShareView = "events"
+	AnalyticsShareGoals        AnalyticsShareView = "goals"
+	AnalyticsShareLocations    AnalyticsShareView = "locations"
+	AnalyticsShareOverview     AnalyticsShareView = "overview"
+	AnalyticsSharePages        AnalyticsShareView = "pages"
+	AnalyticsShareRealtime     AnalyticsShareView = "realtime"
+	AnalyticsShareSources      AnalyticsShareView = "sources"
 )
 
 // Valid indicates whether the value is a known member of the AnalyticsShareView enum.
 func (e AnalyticsShareView) Valid() bool {
 	switch e {
+	case AnalyticsShareAPIConsumers:
+		return true
+	case AnalyticsShareAPIOverview:
+		return true
+	case AnalyticsShareAPIRoutes:
+		return true
 	case AnalyticsShareDevices:
 		return true
 	case AnalyticsShareEvents:
@@ -5444,6 +5453,23 @@ type AnalyticsConsentA int
 // these features.
 type AnalyticsConsentFeature string
 
+// AnalyticsConsumer defines model for AnalyticsConsumer.
+type AnalyticsConsumer struct {
+	FirstSeenAt time.Time `json:"first_seen_at"`
+	Id          int32     `json:"id"`
+
+	// Name The `consumer` the records named.
+	Name string `json:"name"`
+}
+
+// AnalyticsConsumerPage defines model for AnalyticsConsumerPage.
+type AnalyticsConsumerPage struct {
+	Items []AnalyticsConsumer `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
 // AnalyticsContactVisit One visit, described as its first event saw it, as the dimensions of `AnalyticsFilterDimension` name its values.
 type AnalyticsContactVisit struct {
 	AppVersion string    `json:"app_version"`
@@ -5743,6 +5769,48 @@ type AnalyticsExport struct {
 	// CreatedBy The member who asked for it; absent for API keys and removed members.
 	CreatedBy *uuid.UUID `json:"created_by,omitempty"`
 
+	// Dataset `traffic` (default) counts visits, page views and events. `support` counts, per page and
+	// day, what the property's linked inbox received from its pages: conversations started on a
+	// page, page feedback, page ratings and discussion threads, next to the page's `pageviews`
+	// and `visitors`. Pages are joined by host and path only; no visitor is ever joined to a
+	// contact or conversation. It takes the dimensions `page`, `hostname` and `time:day`,
+	// `time:week` or `time:month` (a page or host and a grain at most), filters on `page` and
+	// `hostname`, no goal, prop or segment, and answers `422 no_linked_inbox` for a property
+	// without an inbox. Rows are the pages (or hosts) with any support in the range, ordered by
+	// `support_rate` with pages of fewer than 100 page views after the others unless `order_by`
+	// says otherwise. Days of the past come from the support rollup, today and days not yet rolled
+	// up from the inbox itself.
+	//
+	// `api` is an API property's requests (`sendAnalyticsRequests`), and the only dataset an API
+	// property takes (`422 property_kind` otherwise, and for `api` on a site). It takes the API
+	// metrics of `AnalyticsMetric`, the API dimensions of `AnalyticsDimension`, filters on them
+	// and `compare`; no goal, prop, segment or insights. Closed local days come from daily rows,
+	// closed hours from hourly rows and the rest from minute rows, which processes write every
+	// 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
+	// Answers that reach into open hours are cached for 5 seconds.
+	//
+	// Any combination of the core dimensions (`route`, `method`, `status`, `status_class`,
+	// `api_version`, `environment`, `service`, `source`, `platform`) breaks down and filters
+	// from every tier. One extra dimension (`consumer`, `country` or `app_version`), as a
+	// dimension or a filter, joins only `route`, `method`, `status_class` and the grains from
+	// `time:hour` up, over a range of whole local hours (days, or `since` and `until` on the
+	// hour), since it is kept by local hour with those three. Anything else answers
+	// `422 dimension_combination`: two extra dimensions, an extra one with another core
+	// dimension or filter, with `time:minute`, or over a range that is not whole hours.
+	// Requests without a value of the extra dimension are not in its answers.
+	//
+	// Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by
+	// `requests` unless `order_by` says otherwise; slowest and most failing routes are a `route`
+	// breakdown ordered by `p95` or `error_rate`.
+	//
+	// `uptime` is the runs of uptime checks (`MonitorCheck`): on a property (of either kind) its
+	// checks, on `queryMonitoring` every check of the workspace. It takes the uptime metrics of
+	// `AnalyticsMetric`, the dimension `check` and a grain, filters on `check` (`is`, `is_not`),
+	// the ranges of the `api` dataset (counted in UTC) and `compare`. Days whose runs were folded
+	// come from daily rows, the rest from the runs, which are kept `YUVA_MONITOR_CHECK_DAYS` days.
+	// Checks are probes, not consumers, so their requests never enter the `api` dataset.
+	Dataset AnalyticsDataset `json:"dataset"`
+
 	// Error Why a `failed` export failed: `too_large`, `needs_raw_window`, `invalid_query` (with the
 	// reason after a colon) or `internal`.
 	Error *string `json:"error,omitempty"`
@@ -5772,10 +5840,58 @@ type AnalyticsExport struct {
 // AnalyticsExportStatus defines model for AnalyticsExport.Status.
 type AnalyticsExportStatus string
 
-// AnalyticsExportCreate `view` takes `query` (its own range; `compare`, `limit` and `cursor` are ignored); `daily`
-// and `raw` take `range`, `daily` also an optional `dimension` other than `event` and `prop`.
-// `format` is `csv` by default, and must be `ndjson` for `raw`.
+// AnalyticsExportCreate `view` takes `query` (its own range and `dataset`; `compare`, `limit` and `cursor` are
+// ignored); `daily` and `raw` take `range`, `daily` also an optional `dimension` and
+// `dataset`. `format` is `csv` by default, and must be `ndjson` for `raw`.
+//
+// `dataset` of a `daily` export is `traffic` (the default on a site) or `uptime` on a site,
+// `api` (the default on an API property) or `uptime` on an API property; `support` is not
+// exported daily. A traffic `dimension` is one other than `event` and `prop`, an `api` one
+// any API dimension, an `uptime` one `check`. An API property has no `raw` export, because it
+// keeps no row per request (`422 property_kind`).
 type AnalyticsExportCreate struct {
+	// Dataset `traffic` (default) counts visits, page views and events. `support` counts, per page and
+	// day, what the property's linked inbox received from its pages: conversations started on a
+	// page, page feedback, page ratings and discussion threads, next to the page's `pageviews`
+	// and `visitors`. Pages are joined by host and path only; no visitor is ever joined to a
+	// contact or conversation. It takes the dimensions `page`, `hostname` and `time:day`,
+	// `time:week` or `time:month` (a page or host and a grain at most), filters on `page` and
+	// `hostname`, no goal, prop or segment, and answers `422 no_linked_inbox` for a property
+	// without an inbox. Rows are the pages (or hosts) with any support in the range, ordered by
+	// `support_rate` with pages of fewer than 100 page views after the others unless `order_by`
+	// says otherwise. Days of the past come from the support rollup, today and days not yet rolled
+	// up from the inbox itself.
+	//
+	// `api` is an API property's requests (`sendAnalyticsRequests`), and the only dataset an API
+	// property takes (`422 property_kind` otherwise, and for `api` on a site). It takes the API
+	// metrics of `AnalyticsMetric`, the API dimensions of `AnalyticsDimension`, filters on them
+	// and `compare`; no goal, prop, segment or insights. Closed local days come from daily rows,
+	// closed hours from hourly rows and the rest from minute rows, which processes write every
+	// 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
+	// Answers that reach into open hours are cached for 5 seconds.
+	//
+	// Any combination of the core dimensions (`route`, `method`, `status`, `status_class`,
+	// `api_version`, `environment`, `service`, `source`, `platform`) breaks down and filters
+	// from every tier. One extra dimension (`consumer`, `country` or `app_version`), as a
+	// dimension or a filter, joins only `route`, `method`, `status_class` and the grains from
+	// `time:hour` up, over a range of whole local hours (days, or `since` and `until` on the
+	// hour), since it is kept by local hour with those three. Anything else answers
+	// `422 dimension_combination`: two extra dimensions, an extra one with another core
+	// dimension or filter, with `time:minute`, or over a range that is not whole hours.
+	// Requests without a value of the extra dimension are not in its answers.
+	//
+	// Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by
+	// `requests` unless `order_by` says otherwise; slowest and most failing routes are a `route`
+	// breakdown ordered by `p95` or `error_rate`.
+	//
+	// `uptime` is the runs of uptime checks (`MonitorCheck`): on a property (of either kind) its
+	// checks, on `queryMonitoring` every check of the workspace. It takes the uptime metrics of
+	// `AnalyticsMetric`, the dimension `check` and a grain, filters on `check` (`is`, `is_not`),
+	// the ranges of the `api` dataset (counted in UTC) and `compare`. Days whose runs were folded
+	// come from daily rows, the rest from the runs, which are kept `YUVA_MONITOR_CHECK_DAYS` days.
+	// Checks are probes, not consumers, so their requests never enter the `api` dataset.
+	Dataset *AnalyticsDataset `json:"dataset,omitempty"`
+
 	// Dimension A value of a visit or page. `page` is a path that was viewed (pages are counted by path;
 	// `hostname` tells sites apart), `entry_page` and `exit_page` the first and last of a visit.
 	// `channel` is one of `direct`, `organic_search`, `paid_search`, `social`, `paid_social`,
@@ -7181,8 +7297,12 @@ type AnalyticsShareUpdate struct {
 	Views    *[]AnalyticsShareView     `json:"views,omitempty"`
 }
 
-// AnalyticsShareView A part of the property's report a share link shows: `overview` (totals and the chart),
-// `realtime`, `pages`, `sources`, `locations`, `devices`, `events`, `goals`.
+// AnalyticsShareView A part of the property's report a share link shows. A site's: `overview` (totals and the
+// chart), `realtime`, `pages`, `sources`, `locations`, `devices`, `events`, `goals`. An API
+// property's: `api_overview` (totals, the charts and the breakdowns by status, status class,
+// environment, service, API version, source, platform, country and app version),
+// `api_routes` (routes and methods, new and silent routes) and `api_consumers` (consumer
+// names). Each kind takes only its own views (`422 property_kind`).
 type AnalyticsShareView string
 
 // AnalyticsSharedPage With `password_required` and no valid access token only that field is present; otherwise
@@ -7199,17 +7319,25 @@ type AnalyticsSharedPage struct {
 	PasswordRequired bool                     `json:"password_required"`
 	Property         *AnalyticsSharedProperty `json:"property,omitempty"`
 
-	// RawWindowFrom The first day queries that need raw rows can serve.
+	// RawWindowFrom The first day queries that need raw rows can serve; for an API property the first
+	// UTC day of the minute rows, which `time:minute` needs.
 	RawWindowFrom *openapi_types.Date   `json:"raw_window_from,omitempty"`
 	Views         *[]AnalyticsShareView `json:"views,omitempty"`
 }
 
 // AnalyticsSharedProperty defines model for AnalyticsSharedProperty.
 type AnalyticsSharedProperty struct {
-	Currency  string              `json:"currency"`
-	Name      string              `json:"name"`
-	Platforms []AnalyticsPlatform `json:"platforms"`
-	Timezone  string              `json:"timezone"`
+	Currency string `json:"currency"`
+
+	// Kind `site` measures websites and apps (page views, events, visitors). `api` watches an API: its
+	// host sends a record per request (`sendAnalyticsRequests`) and `dataset: api` queries them. An
+	// API property's `domains` (0 to 50) are the API's host names and its `platforms` the apps
+	// allowed to send app-side records (`ios`, `android`, or none); it takes no goals, funnels,
+	// tracked props or consent features. The kind is fixed when the property is made.
+	Kind      AnalyticsPropertyKind `json:"kind"`
+	Name      string                `json:"name"`
+	Platforms []AnalyticsPlatform   `json:"platforms"`
+	Timezone  string                `json:"timezone"`
 }
 
 // AnalyticsSubscription defines model for AnalyticsSubscription.
@@ -15291,6 +15419,9 @@ type WorkspaceUpdate struct {
 // AnalyticsAnnotationId defines model for AnalyticsAnnotationId.
 type AnalyticsAnnotationId = uuid.UUID
 
+// AnalyticsConsumerId defines model for AnalyticsConsumerId.
+type AnalyticsConsumerId = int32
+
 // AnalyticsExportId defines model for AnalyticsExportId.
 type AnalyticsExportId = uuid.UUID
 
@@ -15641,6 +15772,26 @@ type DeleteAnalyticsAnnotationParams struct {
 
 // UpdateAnalyticsAnnotationParams defines parameters for UpdateAnalyticsAnnotation.
 type UpdateAnalyticsAnnotationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListAnalyticsConsumersParams defines parameters for ListAnalyticsConsumers.
+type ListAnalyticsConsumersParams struct {
+	Q *string `form:"q,omitempty" json:"q,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteAnalyticsConsumerParams defines parameters for DeleteAnalyticsConsumer.
+type DeleteAnalyticsConsumerParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -21634,8 +21785,8 @@ type ClientInterface interface {
 	// A link with a password answers only `password_required: true` until the request carries
 	// an access token from `unlockSharedAnalytics` as `Authorization: Bearer yuva_sa_…`; then,
 	// like a link without a password, it answers the views it may show, the property's name,
-	// time zone and currency, the raw window, its goals (with the `goals` view) and the GeoIP
-	// attribution to show next to locations.
+	// kind, time zone and currency, the raw window, its goals (with the `goals` view) and the
+	// GeoIP attribution to show next to locations (with `locations` or `api_overview`).
 	//
 	// The share page itself is served with `Content-Security-Policy: frame-ancestors` set to the
 	// link's `embed_origins` (`'none'` without them, an unknown, revoked or expired link included),
@@ -21680,7 +21831,15 @@ type ClientInterface interface {
 	// `browser_version`, `os`, `os_version`, `screen_size`, `language`, `platform` and
 	// `app_version` with `devices`; `event`, `prop` and the `events` metric with `events`; a
 	// `goal_id` of the property and the goal metrics with `goals`. Dimensions and filters outside
-	// them answer `403 view_not_shared`; `segment_id` is refused (`400`).
+	// them answer `403 view_not_shared`; `segment_id` is refused (`400`), and so are the
+	// `support` and `uptime` datasets (`403 view_not_shared`).
+	//
+	// An API property's link takes `dataset: api` only, with totals and time grains with any
+	// view; `status`, `status_class`, `environment`, `service`, `api_version`, `source`,
+	// `platform`, `country` and `app_version` with `api_overview`; `route`, `method` and
+	// `routes` (new and silent routes) with `api_routes`; `consumer`, as a dimension or a
+	// filter, with `api_consumers` only, so a link without it never shows a consumer's name.
+	// The `conversations` metric is the linked inbox's and is not shared.
 	//
 	// A link with a password needs its access token (`401 share_password_required`). Answers are
 	// cached like `queryAnalytics` and count towards the workspace's four concurrent queries.
@@ -21699,7 +21858,15 @@ type ClientInterface interface {
 	// `browser_version`, `os`, `os_version`, `screen_size`, `language`, `platform` and
 	// `app_version` with `devices`; `event`, `prop` and the `events` metric with `events`; a
 	// `goal_id` of the property and the goal metrics with `goals`. Dimensions and filters outside
-	// them answer `403 view_not_shared`; `segment_id` is refused (`400`).
+	// them answer `403 view_not_shared`; `segment_id` is refused (`400`), and so are the
+	// `support` and `uptime` datasets (`403 view_not_shared`).
+	//
+	// An API property's link takes `dataset: api` only, with totals and time grains with any
+	// view; `status`, `status_class`, `environment`, `service`, `api_version`, `source`,
+	// `platform`, `country` and `app_version` with `api_overview`; `route`, `method` and
+	// `routes` (new and silent routes) with `api_routes`; `consumer`, as a dimension or a
+	// filter, with `api_consumers` only, so a link without it never shows a consumer's name.
+	// The `conversations` metric is the linked inbox's and is not shared.
 	//
 	// A link with a password needs its access token (`401 share_password_required`). Answers are
 	// cached like `queryAnalytics` and count towards the workspace's four concurrent queries.
@@ -23091,6 +23258,32 @@ type ClientInterface interface {
 	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/annotations/{annotationId} (the `UpdateAnalyticsAnnotation` operationId).
 	UpdateAnalyticsAnnotation(ctx context.Context, propertyId AnalyticsPropertyId, annotationId AnalyticsAnnotationId, params *UpdateAnalyticsAnnotationParams, body UpdateAnalyticsAnnotationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListAnalyticsConsumers List an API property's consumers
+	//
+	// The consumers the property counted (the `consumer` of its records), by name, with the id
+	// `deleteAnalyticsConsumer` takes. `q` keeps the names that contain it, without regard to
+	// case. `(other)`, where requests past the cap of 10,000 consumers are counted, is not
+	// listed. A site answers `422 property_kind`.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/consumers (the `ListAnalyticsConsumers` operationId).
+	ListAnalyticsConsumers(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsConsumersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteAnalyticsConsumer Erase a consumer
+	//
+	// For an erasure request about a consumer: deletes the consumer's hourly and daily rows in
+	// every tier and its name, at once and again two minutes later for what processes were still
+	// adding up in memory. Totals keep the consumer's requests, since the core rows never knew
+	// who sent them; `consumer` breakdowns and filters no longer show it. Its id is not used
+	// again; records that name the consumer later count under a new id. Export files made
+	// before keep it until they expire. `(other)` cannot be erased (`400 validation_failed`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Corresponds with DELETE /v1/analytics/properties/{propertyId}/consumers/{consumerId} (the `DeleteAnalyticsConsumer` operationId).
+	DeleteAnalyticsConsumer(ctx context.Context, propertyId AnalyticsPropertyId, consumerId AnalyticsConsumerId, params *DeleteAnalyticsConsumerParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// DeleteAnalyticsDataWithBody Delete a property's collected data
 	//
 	// Deletes the visits and events of the days `from` to `to` (dates in the property's time
@@ -23214,10 +23407,14 @@ type ClientInterface interface {
 	// days (`expires_at`) and then deleted.
 	//
 	// - `view`: the rows of one `query` (as `queryAnalytics` answers it, every row, no
-	//   comparison), CSV or NDJSON.
-	// - `daily`: one row per day of `range` (at most 400 days) with visitors, visits, page views,
-	//   views per visit, bounce rate, visit duration, time on page and scroll depth, broken down
-	//   by `dimension` when given, CSV or NDJSON.
+	//   comparison), CSV or NDJSON, of any dataset but `support`. A range of the `api` and
+	//   `uptime` datasets given as a period (`24h`, `7d`) is fixed when the export is asked for.
+	// - `daily`: one row per day of `range` (at most 400 days), broken down by `dimension` when
+	//   given, CSV or NDJSON. Traffic rows carry visitors, visits, page views, views per visit,
+	//   bounce rate, visit duration, time on page and scroll depth; `api` rows (local days)
+	//   requests, errors, error rate, client errors, client error rate, p50, p95, p99, average
+	//   duration, Apdex, request bytes and response bytes; `uptime` rows (UTC days) runs,
+	//   failures, uptime, downtime, response time p50, p95 and p99 and average response time.
 	// - `raw`: every stored event of `range` (at most 31 days, inside the raw window of
 	//   `YUVA_ANALYTICS_RAW_DAYS`, else `422 needs_raw_window`) with its visit's description, as
 	//   NDJSON only (`AnalyticsRawEvent`). It carries no visitor hash, salt, address, contact or
@@ -23243,10 +23440,14 @@ type ClientInterface interface {
 	// days (`expires_at`) and then deleted.
 	//
 	// - `view`: the rows of one `query` (as `queryAnalytics` answers it, every row, no
-	//   comparison), CSV or NDJSON.
-	// - `daily`: one row per day of `range` (at most 400 days) with visitors, visits, page views,
-	//   views per visit, bounce rate, visit duration, time on page and scroll depth, broken down
-	//   by `dimension` when given, CSV or NDJSON.
+	//   comparison), CSV or NDJSON, of any dataset but `support`. A range of the `api` and
+	//   `uptime` datasets given as a period (`24h`, `7d`) is fixed when the export is asked for.
+	// - `daily`: one row per day of `range` (at most 400 days), broken down by `dimension` when
+	//   given, CSV or NDJSON. Traffic rows carry visitors, visits, page views, views per visit,
+	//   bounce rate, visit duration, time on page and scroll depth; `api` rows (local days)
+	//   requests, errors, error rate, client errors, client error rate, p50, p95, p99, average
+	//   duration, Apdex, request bytes and response bytes; `uptime` rows (UTC days) runs,
+	//   failures, uptime, downtime, response time p50, p95 and p99 and average response time.
 	// - `raw`: every stored event of `range` (at most 31 days, inside the raw window of
 	//   `YUVA_ANALYTICS_RAW_DAYS`, else `422 needs_raw_window`) with its visit's description, as
 	//   NDJSON only (`AnalyticsRawEvent`). It carries no visitor hash, salt, address, contact or
@@ -23761,7 +23962,9 @@ type ClientInterface interface {
 	// again: the answer carries the `token` and the `url` once. `expires_at` ends the link;
 	// `embed_origins` lists the sites whose pages may show it in an iframe (the share page's
 	// `frame-ancestors`); without them no other site can frame it. A property has at most 50
-	// links (`403 share_limit`).
+	// links (`403 share_limit`). A site takes the site views and an API property the `api_`
+	// views of `AnalyticsShareView` (`422 property_kind` otherwise); an API link shows consumer
+	// names only with `api_consumers`.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -23779,7 +23982,9 @@ type ClientInterface interface {
 	// again: the answer carries the `token` and the `url` once. `expires_at` ends the link;
 	// `embed_origins` lists the sites whose pages may show it in an iframe (the share page's
 	// `frame-ancestors`); without them no other site can frame it. A property has at most 50
-	// links (`403 share_limit`).
+	// links (`403 share_limit`). A site takes the site views and an API property the `api_`
+	// views of `AnalyticsShareView` (`422 property_kind` otherwise); an API link shows consumer
+	// names only with `api_consumers`.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -23801,7 +24006,8 @@ type ClientInterface interface {
 	//
 	// Changes the given fields; the token stays. A new `password` (or `password: null`, which
 	// removes it) ends every viewer's unlocked access at once. `expires_at: null` keeps the link
-	// until it is revoked. A revoked link cannot be changed (`409 share_revoked`).
+	// until it is revoked. A revoked link cannot be changed (`409 share_revoked`). `views` follow
+	// the property's kind as on `createAnalyticsShare` (`422 property_kind`).
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -23814,7 +24020,8 @@ type ClientInterface interface {
 	//
 	// Changes the given fields; the token stays. A new `password` (or `password: null`, which
 	// removes it) ends every viewer's unlocked access at once. `expires_at: null` keeps the link
-	// until it is revoked. A revoked link cannot be changed (`409 share_revoked`).
+	// until it is revoked. A revoked link cannot be changed (`409 share_revoked`). `views` follow
+	// the property's kind as on `createAnalyticsShare` (`422 property_kind`).
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -27913,8 +28120,8 @@ type ClientInterface interface {
 // A link with a password answers only `password_required: true` until the request carries
 // an access token from `unlockSharedAnalytics` as `Authorization: Bearer yuva_sa_…`; then,
 // like a link without a password, it answers the views it may show, the property's name,
-// time zone and currency, the raw window, its goals (with the `goals` view) and the GeoIP
-// attribution to show next to locations.
+// kind, time zone and currency, the raw window, its goals (with the `goals` view) and the
+// GeoIP attribution to show next to locations (with `locations` or `api_overview`).
 //
 // The share page itself is served with `Content-Security-Policy: frame-ancestors` set to the
 // link's `embed_origins` (`'none'` without them, an unknown, revoked or expired link included),
@@ -27989,7 +28196,15 @@ func (c *Client) UnlockSharedAnalytics(ctx context.Context, token AnalyticsShare
 // `browser_version`, `os`, `os_version`, `screen_size`, `language`, `platform` and
 // `app_version` with `devices`; `event`, `prop` and the `events` metric with `events`; a
 // `goal_id` of the property and the goal metrics with `goals`. Dimensions and filters outside
-// them answer `403 view_not_shared`; `segment_id` is refused (`400`).
+// them answer `403 view_not_shared`; `segment_id` is refused (`400`), and so are the
+// `support` and `uptime` datasets (`403 view_not_shared`).
+//
+// An API property's link takes `dataset: api` only, with totals and time grains with any
+// view; `status`, `status_class`, `environment`, `service`, `api_version`, `source`,
+// `platform`, `country` and `app_version` with `api_overview`; `route`, `method` and
+// `routes` (new and silent routes) with `api_routes`; `consumer`, as a dimension or a
+// filter, with `api_consumers` only, so a link without it never shows a consumer's name.
+// The `conversations` metric is the linked inbox's and is not shared.
 //
 // A link with a password needs its access token (`401 share_password_required`). Answers are
 // cached like `queryAnalytics` and count towards the workspace's four concurrent queries.
@@ -28018,7 +28233,15 @@ func (c *Client) QuerySharedAnalyticsWithBody(ctx context.Context, token Analyti
 // `browser_version`, `os`, `os_version`, `screen_size`, `language`, `platform` and
 // `app_version` with `devices`; `event`, `prop` and the `events` metric with `events`; a
 // `goal_id` of the property and the goal metrics with `goals`. Dimensions and filters outside
-// them answer `403 view_not_shared`; `segment_id` is refused (`400`).
+// them answer `403 view_not_shared`; `segment_id` is refused (`400`), and so are the
+// `support` and `uptime` datasets (`403 view_not_shared`).
+//
+// An API property's link takes `dataset: api` only, with totals and time grains with any
+// view; `status`, `status_class`, `environment`, `service`, `api_version`, `source`,
+// `platform`, `country` and `app_version` with `api_overview`; `route`, `method` and
+// `routes` (new and silent routes) with `api_routes`; `consumer`, as a dimension or a
+// filter, with `api_consumers` only, so a link without it never shows a consumer's name.
+// The `conversations` metric is the linked inbox's and is not shared.
 //
 // A link with a password needs its access token (`401 share_password_required`). Answers are
 // cached like `queryAnalytics` and count towards the workspace's four concurrent queries.
@@ -30270,6 +30493,52 @@ func (c *Client) UpdateAnalyticsAnnotation(ctx context.Context, propertyId Analy
 	return c.Client.Do(req)
 }
 
+// ListAnalyticsConsumers List an API property's consumers
+//
+// The consumers the property counted (the `consumer` of its records), by name, with the id
+// `deleteAnalyticsConsumer` takes. `q` keeps the names that contain it, without regard to
+// case. `(other)`, where requests past the cap of 10,000 consumers are counted, is not
+// listed. A site answers `422 property_kind`.
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/consumers (the `ListAnalyticsConsumers` operationId).
+func (c *Client) ListAnalyticsConsumers(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsConsumersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListAnalyticsConsumersRequest(c.Server, propertyId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteAnalyticsConsumer Erase a consumer
+//
+// For an erasure request about a consumer: deletes the consumer's hourly and daily rows in
+// every tier and its name, at once and again two minutes later for what processes were still
+// adding up in memory. Totals keep the consumer's requests, since the core rows never knew
+// who sent them; `consumer` breakdowns and filters no longer show it. Its id is not used
+// again; records that name the consumer later count under a new id. Export files made
+// before keep it until they expire. `(other)` cannot be erased (`400 validation_failed`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Corresponds with DELETE /v1/analytics/properties/{propertyId}/consumers/{consumerId} (the `DeleteAnalyticsConsumer` operationId).
+func (c *Client) DeleteAnalyticsConsumer(ctx context.Context, propertyId AnalyticsPropertyId, consumerId AnalyticsConsumerId, params *DeleteAnalyticsConsumerParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteAnalyticsConsumerRequest(c.Server, propertyId, consumerId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // DeleteAnalyticsDataWithBody Delete a property's collected data
 //
 // Deletes the visits and events of the days `from` to `to` (dates in the property's time
@@ -30443,10 +30712,14 @@ func (c *Client) ListAnalyticsExports(ctx context.Context, propertyId AnalyticsP
 // days (`expires_at`) and then deleted.
 //
 //   - `view`: the rows of one `query` (as `queryAnalytics` answers it, every row, no
-//     comparison), CSV or NDJSON.
-//   - `daily`: one row per day of `range` (at most 400 days) with visitors, visits, page views,
-//     views per visit, bounce rate, visit duration, time on page and scroll depth, broken down
-//     by `dimension` when given, CSV or NDJSON.
+//     comparison), CSV or NDJSON, of any dataset but `support`. A range of the `api` and
+//     `uptime` datasets given as a period (`24h`, `7d`) is fixed when the export is asked for.
+//   - `daily`: one row per day of `range` (at most 400 days), broken down by `dimension` when
+//     given, CSV or NDJSON. Traffic rows carry visitors, visits, page views, views per visit,
+//     bounce rate, visit duration, time on page and scroll depth; `api` rows (local days)
+//     requests, errors, error rate, client errors, client error rate, p50, p95, p99, average
+//     duration, Apdex, request bytes and response bytes; `uptime` rows (UTC days) runs,
+//     failures, uptime, downtime, response time p50, p95 and p99 and average response time.
 //   - `raw`: every stored event of `range` (at most 31 days, inside the raw window of
 //     `YUVA_ANALYTICS_RAW_DAYS`, else `422 needs_raw_window`) with its visit's description, as
 //     NDJSON only (`AnalyticsRawEvent`). It carries no visitor hash, salt, address, contact or
@@ -30482,10 +30755,14 @@ func (c *Client) CreateAnalyticsExportWithBody(ctx context.Context, propertyId A
 // days (`expires_at`) and then deleted.
 //
 //   - `view`: the rows of one `query` (as `queryAnalytics` answers it, every row, no
-//     comparison), CSV or NDJSON.
-//   - `daily`: one row per day of `range` (at most 400 days) with visitors, visits, page views,
-//     views per visit, bounce rate, visit duration, time on page and scroll depth, broken down
-//     by `dimension` when given, CSV or NDJSON.
+//     comparison), CSV or NDJSON, of any dataset but `support`. A range of the `api` and
+//     `uptime` datasets given as a period (`24h`, `7d`) is fixed when the export is asked for.
+//   - `daily`: one row per day of `range` (at most 400 days), broken down by `dimension` when
+//     given, CSV or NDJSON. Traffic rows carry visitors, visits, page views, views per visit,
+//     bounce rate, visit duration, time on page and scroll depth; `api` rows (local days)
+//     requests, errors, error rate, client errors, client error rate, p50, p95, p99, average
+//     duration, Apdex, request bytes and response bytes; `uptime` rows (UTC days) runs,
+//     failures, uptime, downtime, response time p50, p95 and p99 and average response time.
 //   - `raw`: every stored event of `range` (at most 31 days, inside the raw window of
 //     `YUVA_ANALYTICS_RAW_DAYS`, else `422 needs_raw_window`) with its visit's description, as
 //     NDJSON only (`AnalyticsRawEvent`). It carries no visitor hash, salt, address, contact or
@@ -31350,7 +31627,9 @@ func (c *Client) ListAnalyticsShares(ctx context.Context, propertyId AnalyticsPr
 // again: the answer carries the `token` and the `url` once. `expires_at` ends the link;
 // `embed_origins` lists the sites whose pages may show it in an iframe (the share page's
 // `frame-ancestors`); without them no other site can frame it. A property has at most 50
-// links (`403 share_limit`).
+// links (`403 share_limit`). A site takes the site views and an API property the `api_`
+// views of `AnalyticsShareView` (`422 property_kind` otherwise); an API link shows consumer
+// names only with `api_consumers`.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -31378,7 +31657,9 @@ func (c *Client) CreateAnalyticsShareWithBody(ctx context.Context, propertyId An
 // again: the answer carries the `token` and the `url` once. `expires_at` ends the link;
 // `embed_origins` lists the sites whose pages may show it in an iframe (the share page's
 // `frame-ancestors`); without them no other site can frame it. A property has at most 50
-// links (`403 share_limit`).
+// links (`403 share_limit`). A site takes the site views and an API property the `api_`
+// views of `AnalyticsShareView` (`422 property_kind` otherwise); an API link shows consumer
+// names only with `api_consumers`.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -31420,7 +31701,8 @@ func (c *Client) DeleteAnalyticsShare(ctx context.Context, propertyId AnalyticsP
 //
 // Changes the given fields; the token stays. A new `password` (or `password: null`, which
 // removes it) ends every viewer's unlocked access at once. `expires_at: null` keeps the link
-// until it is revoked. A revoked link cannot be changed (`409 share_revoked`).
+// until it is revoked. A revoked link cannot be changed (`409 share_revoked`). `views` follow
+// the property's kind as on `createAnalyticsShare` (`422 property_kind`).
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -31443,7 +31725,8 @@ func (c *Client) UpdateAnalyticsShareWithBody(ctx context.Context, propertyId An
 //
 // Changes the given fields; the token stays. A new `password` (or `password: null`, which
 // removes it) ends every viewer's unlocked access at once. `expires_at: null` keeps the link
-// until it is revoked. A revoked link cannot be changed (`409 share_revoked`).
+// until it is revoked. A revoked link cannot be changed (`409 share_revoked`). `views` follow
+// the property's kind as on `createAnalyticsShare` (`422 property_kind`).
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -41610,6 +41893,162 @@ func NewUpdateAnalyticsAnnotationRequestWithBody(server string, propertyId Analy
 	}
 
 	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListAnalyticsConsumersRequest constructs an http.Request for the ListAnalyticsConsumers method
+func NewListAnalyticsConsumersRequest(server string, propertyId AnalyticsPropertyId, params *ListAnalyticsConsumersParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/consumers", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Q != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "q", *params.Q, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteAnalyticsConsumerRequest constructs an http.Request for the DeleteAnalyticsConsumer method
+func NewDeleteAnalyticsConsumerRequest(server string, propertyId AnalyticsPropertyId, consumerId AnalyticsConsumerId, params *DeleteAnalyticsConsumerParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "consumerId", consumerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int32"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/consumers/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
 
 	if params != nil {
 
@@ -58355,8 +58794,8 @@ type ClientWithResponsesInterface interface {
 	// A link with a password answers only `password_required: true` until the request carries
 	// an access token from `unlockSharedAnalytics` as `Authorization: Bearer yuva_sa_…`; then,
 	// like a link without a password, it answers the views it may show, the property's name,
-	// time zone and currency, the raw window, its goals (with the `goals` view) and the GeoIP
-	// attribution to show next to locations.
+	// kind, time zone and currency, the raw window, its goals (with the `goals` view) and the
+	// GeoIP attribution to show next to locations (with `locations` or `api_overview`).
 	//
 	// The share page itself is served with `Content-Security-Policy: frame-ancestors` set to the
 	// link's `embed_origins` (`'none'` without them, an unknown, revoked or expired link included),
@@ -58403,7 +58842,15 @@ type ClientWithResponsesInterface interface {
 	// `browser_version`, `os`, `os_version`, `screen_size`, `language`, `platform` and
 	// `app_version` with `devices`; `event`, `prop` and the `events` metric with `events`; a
 	// `goal_id` of the property and the goal metrics with `goals`. Dimensions and filters outside
-	// them answer `403 view_not_shared`; `segment_id` is refused (`400`).
+	// them answer `403 view_not_shared`; `segment_id` is refused (`400`), and so are the
+	// `support` and `uptime` datasets (`403 view_not_shared`).
+	//
+	// An API property's link takes `dataset: api` only, with totals and time grains with any
+	// view; `status`, `status_class`, `environment`, `service`, `api_version`, `source`,
+	// `platform`, `country` and `app_version` with `api_overview`; `route`, `method` and
+	// `routes` (new and silent routes) with `api_routes`; `consumer`, as a dimension or a
+	// filter, with `api_consumers` only, so a link without it never shows a consumer's name.
+	// The `conversations` metric is the linked inbox's and is not shared.
 	//
 	// A link with a password needs its access token (`401 share_password_required`). Answers are
 	// cached like `queryAnalytics` and count towards the workspace's four concurrent queries.
@@ -58422,7 +58869,15 @@ type ClientWithResponsesInterface interface {
 	// `browser_version`, `os`, `os_version`, `screen_size`, `language`, `platform` and
 	// `app_version` with `devices`; `event`, `prop` and the `events` metric with `events`; a
 	// `goal_id` of the property and the goal metrics with `goals`. Dimensions and filters outside
-	// them answer `403 view_not_shared`; `segment_id` is refused (`400`).
+	// them answer `403 view_not_shared`; `segment_id` is refused (`400`), and so are the
+	// `support` and `uptime` datasets (`403 view_not_shared`).
+	//
+	// An API property's link takes `dataset: api` only, with totals and time grains with any
+	// view; `status`, `status_class`, `environment`, `service`, `api_version`, `source`,
+	// `platform`, `country` and `app_version` with `api_overview`; `route`, `method` and
+	// `routes` (new and silent routes) with `api_routes`; `consumer`, as a dimension or a
+	// filter, with `api_consumers` only, so a link without it never shows a consumer's name.
+	// The `conversations` metric is the linked inbox's and is not shared.
 	//
 	// A link with a password needs its access token (`401 share_password_required`). Answers are
 	// cached like `queryAnalytics` and count towards the workspace's four concurrent queries.
@@ -59878,6 +60333,36 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/annotations/{annotationId} (the `UpdateAnalyticsAnnotation` operationId).
 	UpdateAnalyticsAnnotationWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, annotationId AnalyticsAnnotationId, params *UpdateAnalyticsAnnotationParams, body UpdateAnalyticsAnnotationJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAnalyticsAnnotationResponse, error)
 
+	// ListAnalyticsConsumersWithResponse List an API property's consumers
+	//
+	// The consumers the property counted (the `consumer` of its records), by name, with the id
+	// `deleteAnalyticsConsumer` takes. `q` keeps the names that contain it, without regard to
+	// case. `(other)`, where requests past the cap of 10,000 consumers are counted, is not
+	// listed. A site answers `422 property_kind`.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/consumers (the `ListAnalyticsConsumers` operationId).
+	ListAnalyticsConsumersWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsConsumersParams, reqEditors ...RequestEditorFn) (*ListAnalyticsConsumersResponse, error)
+
+	// DeleteAnalyticsConsumerWithResponse Erase a consumer
+	//
+	// For an erasure request about a consumer: deletes the consumer's hourly and daily rows in
+	// every tier and its name, at once and again two minutes later for what processes were still
+	// adding up in memory. Totals keep the consumer's requests, since the core rows never knew
+	// who sent them; `consumer` breakdowns and filters no longer show it. Its id is not used
+	// again; records that name the consumer later count under a new id. Export files made
+	// before keep it until they expire. `(other)` cannot be erased (`400 validation_failed`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/analytics/properties/{propertyId}/consumers/{consumerId} (the `DeleteAnalyticsConsumer` operationId).
+	DeleteAnalyticsConsumerWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, consumerId AnalyticsConsumerId, params *DeleteAnalyticsConsumerParams, reqEditors ...RequestEditorFn) (*DeleteAnalyticsConsumerResponse, error)
+
 	// DeleteAnalyticsDataWithBodyWithResponse Delete a property's collected data
 	//
 	// Deletes the visits and events of the days `from` to `to` (dates in the property's time
@@ -60003,10 +60488,14 @@ type ClientWithResponsesInterface interface {
 	// days (`expires_at`) and then deleted.
 	//
 	// - `view`: the rows of one `query` (as `queryAnalytics` answers it, every row, no
-	//   comparison), CSV or NDJSON.
-	// - `daily`: one row per day of `range` (at most 400 days) with visitors, visits, page views,
-	//   views per visit, bounce rate, visit duration, time on page and scroll depth, broken down
-	//   by `dimension` when given, CSV or NDJSON.
+	//   comparison), CSV or NDJSON, of any dataset but `support`. A range of the `api` and
+	//   `uptime` datasets given as a period (`24h`, `7d`) is fixed when the export is asked for.
+	// - `daily`: one row per day of `range` (at most 400 days), broken down by `dimension` when
+	//   given, CSV or NDJSON. Traffic rows carry visitors, visits, page views, views per visit,
+	//   bounce rate, visit duration, time on page and scroll depth; `api` rows (local days)
+	//   requests, errors, error rate, client errors, client error rate, p50, p95, p99, average
+	//   duration, Apdex, request bytes and response bytes; `uptime` rows (UTC days) runs,
+	//   failures, uptime, downtime, response time p50, p95 and p99 and average response time.
 	// - `raw`: every stored event of `range` (at most 31 days, inside the raw window of
 	//   `YUVA_ANALYTICS_RAW_DAYS`, else `422 needs_raw_window`) with its visit's description, as
 	//   NDJSON only (`AnalyticsRawEvent`). It carries no visitor hash, salt, address, contact or
@@ -60032,10 +60521,14 @@ type ClientWithResponsesInterface interface {
 	// days (`expires_at`) and then deleted.
 	//
 	// - `view`: the rows of one `query` (as `queryAnalytics` answers it, every row, no
-	//   comparison), CSV or NDJSON.
-	// - `daily`: one row per day of `range` (at most 400 days) with visitors, visits, page views,
-	//   views per visit, bounce rate, visit duration, time on page and scroll depth, broken down
-	//   by `dimension` when given, CSV or NDJSON.
+	//   comparison), CSV or NDJSON, of any dataset but `support`. A range of the `api` and
+	//   `uptime` datasets given as a period (`24h`, `7d`) is fixed when the export is asked for.
+	// - `daily`: one row per day of `range` (at most 400 days), broken down by `dimension` when
+	//   given, CSV or NDJSON. Traffic rows carry visitors, visits, page views, views per visit,
+	//   bounce rate, visit duration, time on page and scroll depth; `api` rows (local days)
+	//   requests, errors, error rate, client errors, client error rate, p50, p95, p99, average
+	//   duration, Apdex, request bytes and response bytes; `uptime` rows (UTC days) runs,
+	//   failures, uptime, downtime, response time p50, p95 and p99 and average response time.
 	// - `raw`: every stored event of `range` (at most 31 days, inside the raw window of
 	//   `YUVA_ANALYTICS_RAW_DAYS`, else `422 needs_raw_window`) with its visit's description, as
 	//   NDJSON only (`AnalyticsRawEvent`). It carries no visitor hash, salt, address, contact or
@@ -60582,7 +61075,9 @@ type ClientWithResponsesInterface interface {
 	// again: the answer carries the `token` and the `url` once. `expires_at` ends the link;
 	// `embed_origins` lists the sites whose pages may show it in an iframe (the share page's
 	// `frame-ancestors`); without them no other site can frame it. A property has at most 50
-	// links (`403 share_limit`).
+	// links (`403 share_limit`). A site takes the site views and an API property the `api_`
+	// views of `AnalyticsShareView` (`422 property_kind` otherwise); an API link shows consumer
+	// names only with `api_consumers`.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -60600,7 +61095,9 @@ type ClientWithResponsesInterface interface {
 	// again: the answer carries the `token` and the `url` once. `expires_at` ends the link;
 	// `embed_origins` lists the sites whose pages may show it in an iframe (the share page's
 	// `frame-ancestors`); without them no other site can frame it. A property has at most 50
-	// links (`403 share_limit`).
+	// links (`403 share_limit`). A site takes the site views and an API property the `api_`
+	// views of `AnalyticsShareView` (`422 property_kind` otherwise); an API link shows consumer
+	// names only with `api_consumers`.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -60624,7 +61121,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Changes the given fields; the token stays. A new `password` (or `password: null`, which
 	// removes it) ends every viewer's unlocked access at once. `expires_at: null` keeps the link
-	// until it is revoked. A revoked link cannot be changed (`409 share_revoked`).
+	// until it is revoked. A revoked link cannot be changed (`409 share_revoked`). `views` follow
+	// the property's kind as on `createAnalyticsShare` (`422 property_kind`).
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -60637,7 +61135,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Changes the given fields; the token stays. A new `password` (or `password: null`, which
 	// removes it) ends every viewer's unlocked access at once. `expires_at: null` keeps the link
-	// until it is revoked. A revoked link cannot be changed (`409 share_revoked`).
+	// until it is revoked. A revoked link cannot be changed (`409 share_revoked`). `views` follow
+	// the property's kind as on `createAnalyticsShare` (`422 property_kind`).
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -69098,6 +69597,151 @@ func (r UpdateAnalyticsAnnotationResponse) ContentType() string {
 	return ""
 }
 
+type ListAnalyticsConsumersResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsConsumerPage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListAnalyticsConsumersResponse) GetJSON200() *AnalyticsConsumerPage {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListAnalyticsConsumersResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListAnalyticsConsumersResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListAnalyticsConsumersResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListAnalyticsConsumersResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r ListAnalyticsConsumersResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r ListAnalyticsConsumersResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListAnalyticsConsumersResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListAnalyticsConsumersResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListAnalyticsConsumersResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteAnalyticsConsumerResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r DeleteAnalyticsConsumerResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteAnalyticsConsumerResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteAnalyticsConsumerResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteAnalyticsConsumerResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r DeleteAnalyticsConsumerResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteAnalyticsConsumerResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteAnalyticsConsumerResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteAnalyticsConsumerResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteAnalyticsConsumerResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type DeleteAnalyticsDataResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -71140,6 +71784,8 @@ type CreateAnalyticsShareResponse struct {
 	ApplicationproblemJSON403 *Problem
 	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
 	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
@@ -71165,6 +71811,11 @@ func (r CreateAnalyticsShareResponse) GetApplicationproblemJSON403() *Problem {
 // GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
 func (r CreateAnalyticsShareResponse) GetApplicationproblemJSON404() *Problem {
 	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r CreateAnalyticsShareResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
 }
 
 // GetBody returns the raw response body bytes
@@ -71266,6 +71917,8 @@ type UpdateAnalyticsShareResponse struct {
 	ApplicationproblemJSON404 *Problem
 	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
 	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -71296,6 +71949,11 @@ func (r UpdateAnalyticsShareResponse) GetApplicationproblemJSON404() *Problem {
 // GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
 func (r UpdateAnalyticsShareResponse) GetApplicationproblemJSON409() *Problem {
 	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r UpdateAnalyticsShareResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
 }
 
 // GetBody returns the raw response body bytes
@@ -86892,8 +87550,8 @@ func (r CreateWorkspaceResponse) ContentType() string {
 // A link with a password answers only `password_required: true` until the request carries
 // an access token from `unlockSharedAnalytics` as `Authorization: Bearer yuva_sa_…`; then,
 // like a link without a password, it answers the views it may show, the property's name,
-// time zone and currency, the raw window, its goals (with the `goals` view) and the GeoIP
-// attribution to show next to locations.
+// kind, time zone and currency, the raw window, its goals (with the `goals` view) and the
+// GeoIP attribution to show next to locations (with `locations` or `api_overview`).
 //
 // The share page itself is served with `Content-Security-Policy: frame-ancestors` set to the
 // link's `embed_origins` (`'none'` without them, an unknown, revoked or expired link included),
@@ -86958,7 +87616,15 @@ func (c *ClientWithResponses) UnlockSharedAnalyticsWithResponse(ctx context.Cont
 // `browser_version`, `os`, `os_version`, `screen_size`, `language`, `platform` and
 // `app_version` with `devices`; `event`, `prop` and the `events` metric with `events`; a
 // `goal_id` of the property and the goal metrics with `goals`. Dimensions and filters outside
-// them answer `403 view_not_shared`; `segment_id` is refused (`400`).
+// them answer `403 view_not_shared`; `segment_id` is refused (`400`), and so are the
+// `support` and `uptime` datasets (`403 view_not_shared`).
+//
+// An API property's link takes `dataset: api` only, with totals and time grains with any
+// view; `status`, `status_class`, `environment`, `service`, `api_version`, `source`,
+// `platform`, `country` and `app_version` with `api_overview`; `route`, `method` and
+// `routes` (new and silent routes) with `api_routes`; `consumer`, as a dimension or a
+// filter, with `api_consumers` only, so a link without it never shows a consumer's name.
+// The `conversations` metric is the linked inbox's and is not shared.
 //
 // A link with a password needs its access token (`401 share_password_required`). Answers are
 // cached like `queryAnalytics` and count towards the workspace's four concurrent queries.
@@ -86983,7 +87649,15 @@ func (c *ClientWithResponses) QuerySharedAnalyticsWithBodyWithResponse(ctx conte
 // `browser_version`, `os`, `os_version`, `screen_size`, `language`, `platform` and
 // `app_version` with `devices`; `event`, `prop` and the `events` metric with `events`; a
 // `goal_id` of the property and the goal metrics with `goals`. Dimensions and filters outside
-// them answer `403 view_not_shared`; `segment_id` is refused (`400`).
+// them answer `403 view_not_shared`; `segment_id` is refused (`400`), and so are the
+// `support` and `uptime` datasets (`403 view_not_shared`).
+//
+// An API property's link takes `dataset: api` only, with totals and time grains with any
+// view; `status`, `status_class`, `environment`, `service`, `api_version`, `source`,
+// `platform`, `country` and `app_version` with `api_overview`; `route`, `method` and
+// `routes` (new and silent routes) with `api_routes`; `consumer`, as a dimension or a
+// filter, with `api_consumers` only, so a link without it never shows a consumer's name.
+// The `conversations` metric is the linked inbox's and is not shared.
 //
 // A link with a password needs its access token (`401 share_password_required`). Answers are
 // cached like `queryAnalytics` and count towards the workspace's four concurrent queries.
@@ -88955,6 +89629,48 @@ func (c *ClientWithResponses) UpdateAnalyticsAnnotationWithResponse(ctx context.
 	return ParseUpdateAnalyticsAnnotationResponse(rsp)
 }
 
+// ListAnalyticsConsumersWithResponse List an API property's consumers
+//
+// The consumers the property counted (the `consumer` of its records), by name, with the id
+// `deleteAnalyticsConsumer` takes. `q` keeps the names that contain it, without regard to
+// case. `(other)`, where requests past the cap of 10,000 consumers are counted, is not
+// listed. A site answers `422 property_kind`.
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/consumers (the `ListAnalyticsConsumers` operationId).
+func (c *ClientWithResponses) ListAnalyticsConsumersWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsConsumersParams, reqEditors ...RequestEditorFn) (*ListAnalyticsConsumersResponse, error) {
+	rsp, err := c.ListAnalyticsConsumers(ctx, propertyId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListAnalyticsConsumersResponse(rsp)
+}
+
+// DeleteAnalyticsConsumerWithResponse Erase a consumer
+//
+// For an erasure request about a consumer: deletes the consumer's hourly and daily rows in
+// every tier and its name, at once and again two minutes later for what processes were still
+// adding up in memory. Totals keep the consumer's requests, since the core rows never knew
+// who sent them; `consumer` breakdowns and filters no longer show it. Its id is not used
+// again; records that name the consumer later count under a new id. Export files made
+// before keep it until they expire. `(other)` cannot be erased (`400 validation_failed`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/analytics/properties/{propertyId}/consumers/{consumerId} (the `DeleteAnalyticsConsumer` operationId).
+func (c *ClientWithResponses) DeleteAnalyticsConsumerWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, consumerId AnalyticsConsumerId, params *DeleteAnalyticsConsumerParams, reqEditors ...RequestEditorFn) (*DeleteAnalyticsConsumerResponse, error) {
+	rsp, err := c.DeleteAnalyticsConsumer(ctx, propertyId, consumerId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteAnalyticsConsumerResponse(rsp)
+}
+
 // DeleteAnalyticsDataWithBodyWithResponse Delete a property's collected data
 //
 // Deletes the visits and events of the days `from` to `to` (dates in the property's time
@@ -89110,10 +89826,14 @@ func (c *ClientWithResponses) ListAnalyticsExportsWithResponse(ctx context.Conte
 // days (`expires_at`) and then deleted.
 //
 //   - `view`: the rows of one `query` (as `queryAnalytics` answers it, every row, no
-//     comparison), CSV or NDJSON.
-//   - `daily`: one row per day of `range` (at most 400 days) with visitors, visits, page views,
-//     views per visit, bounce rate, visit duration, time on page and scroll depth, broken down
-//     by `dimension` when given, CSV or NDJSON.
+//     comparison), CSV or NDJSON, of any dataset but `support`. A range of the `api` and
+//     `uptime` datasets given as a period (`24h`, `7d`) is fixed when the export is asked for.
+//   - `daily`: one row per day of `range` (at most 400 days), broken down by `dimension` when
+//     given, CSV or NDJSON. Traffic rows carry visitors, visits, page views, views per visit,
+//     bounce rate, visit duration, time on page and scroll depth; `api` rows (local days)
+//     requests, errors, error rate, client errors, client error rate, p50, p95, p99, average
+//     duration, Apdex, request bytes and response bytes; `uptime` rows (UTC days) runs,
+//     failures, uptime, downtime, response time p50, p95 and p99 and average response time.
 //   - `raw`: every stored event of `range` (at most 31 days, inside the raw window of
 //     `YUVA_ANALYTICS_RAW_DAYS`, else `422 needs_raw_window`) with its visit's description, as
 //     NDJSON only (`AnalyticsRawEvent`). It carries no visitor hash, salt, address, contact or
@@ -89145,10 +89865,14 @@ func (c *ClientWithResponses) CreateAnalyticsExportWithBodyWithResponse(ctx cont
 // days (`expires_at`) and then deleted.
 //
 //   - `view`: the rows of one `query` (as `queryAnalytics` answers it, every row, no
-//     comparison), CSV or NDJSON.
-//   - `daily`: one row per day of `range` (at most 400 days) with visitors, visits, page views,
-//     views per visit, bounce rate, visit duration, time on page and scroll depth, broken down
-//     by `dimension` when given, CSV or NDJSON.
+//     comparison), CSV or NDJSON, of any dataset but `support`. A range of the `api` and
+//     `uptime` datasets given as a period (`24h`, `7d`) is fixed when the export is asked for.
+//   - `daily`: one row per day of `range` (at most 400 days), broken down by `dimension` when
+//     given, CSV or NDJSON. Traffic rows carry visitors, visits, page views, views per visit,
+//     bounce rate, visit duration, time on page and scroll depth; `api` rows (local days)
+//     requests, errors, error rate, client errors, client error rate, p50, p95, p99, average
+//     duration, Apdex, request bytes and response bytes; `uptime` rows (UTC days) runs,
+//     failures, uptime, downtime, response time p50, p95 and p99 and average response time.
 //   - `raw`: every stored event of `range` (at most 31 days, inside the raw window of
 //     `YUVA_ANALYTICS_RAW_DAYS`, else `422 needs_raw_window`) with its visit's description, as
 //     NDJSON only (`AnalyticsRawEvent`). It carries no visitor hash, salt, address, contact or
@@ -89905,7 +90629,9 @@ func (c *ClientWithResponses) ListAnalyticsSharesWithResponse(ctx context.Contex
 // again: the answer carries the `token` and the `url` once. `expires_at` ends the link;
 // `embed_origins` lists the sites whose pages may show it in an iframe (the share page's
 // `frame-ancestors`); without them no other site can frame it. A property has at most 50
-// links (`403 share_limit`).
+// links (`403 share_limit`). A site takes the site views and an API property the `api_`
+// views of `AnalyticsShareView` (`422 property_kind` otherwise); an API link shows consumer
+// names only with `api_consumers`.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -89929,7 +90655,9 @@ func (c *ClientWithResponses) CreateAnalyticsShareWithBodyWithResponse(ctx conte
 // again: the answer carries the `token` and the `url` once. `expires_at` ends the link;
 // `embed_origins` lists the sites whose pages may show it in an iframe (the share page's
 // `frame-ancestors`); without them no other site can frame it. A property has at most 50
-// links (`403 share_limit`).
+// links (`403 share_limit`). A site takes the site views and an API property the `api_`
+// views of `AnalyticsShareView` (`422 property_kind` otherwise); an API link shows consumer
+// names only with `api_consumers`.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -89965,7 +90693,8 @@ func (c *ClientWithResponses) DeleteAnalyticsShareWithResponse(ctx context.Conte
 //
 // Changes the given fields; the token stays. A new `password` (or `password: null`, which
 // removes it) ends every viewer's unlocked access at once. `expires_at: null` keeps the link
-// until it is revoked. A revoked link cannot be changed (`409 share_revoked`).
+// until it is revoked. A revoked link cannot be changed (`409 share_revoked`). `views` follow
+// the property's kind as on `createAnalyticsShare` (`422 property_kind`).
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -89984,7 +90713,8 @@ func (c *ClientWithResponses) UpdateAnalyticsShareWithBodyWithResponse(ctx conte
 //
 // Changes the given fields; the token stays. A new `password` (or `password: null`, which
 // removes it) ends every viewer's unlocked access at once. `expires_at: null` keeps the link
-// until it is revoked. A revoked link cannot be changed (`409 share_revoked`).
+// until it is revoked. A revoked link cannot be changed (`409 share_revoked`). `views` follow
+// the property's kind as on `createAnalyticsShare` (`422 property_kind`).
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -99533,6 +100263,124 @@ func ParseUpdateAnalyticsAnnotationResponse(rsp *http.Response) (*UpdateAnalytic
 	return response, nil
 }
 
+// ParseListAnalyticsConsumersResponse parses an HTTP response from a ListAnalyticsConsumersWithResponse call
+func ParseListAnalyticsConsumersResponse(rsp *http.Response) (*ListAnalyticsConsumersResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListAnalyticsConsumersResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsConsumerPage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteAnalyticsConsumerResponse parses an HTTP response from a DeleteAnalyticsConsumerWithResponse call
+func ParseDeleteAnalyticsConsumerResponse(rsp *http.Response) (*DeleteAnalyticsConsumerResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteAnalyticsConsumerResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseDeleteAnalyticsDataResponse parses an HTTP response from a DeleteAnalyticsDataWithResponse call
 func ParseDeleteAnalyticsDataResponse(rsp *http.Response) (*DeleteAnalyticsDataResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -101206,6 +102054,13 @@ func ParseCreateAnalyticsShareResponse(rsp *http.Response) (*CreateAnalyticsShar
 		}
 		response.ApplicationproblemJSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
 	}
 
 	return response, nil
@@ -101309,6 +102164,13 @@ func ParseUpdateAnalyticsShareResponse(rsp *http.Response) (*UpdateAnalyticsShar
 			return nil, err
 		}
 		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
 
 	}
 
