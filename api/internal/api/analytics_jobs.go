@@ -91,9 +91,15 @@ func (s *Server) DeleteAnalytics(ctx context.Context, a AnalyticsDeleteArgs, bud
 		}
 		from, to = &f, &t
 	}
-	p, err := s.purgeAnalyticsRaw(ctx, a.WorkspaceID, a.PropertyID, from, to, time.Now().Add(budget))
+	deadline := time.Now().Add(budget)
+	p, err := s.purgeAnalyticsRaw(ctx, a.WorkspaceID, a.PropertyID, from, to, deadline)
 	if err != nil {
 		return false, err
+	}
+	if p.Done {
+		if p.Done, err = s.purgeMonitor(ctx, a.WorkspaceID, a.PropertyID, from, to, deadline); err != nil {
+			return false, err
+		}
 	}
 	if p.Done {
 		switch {
@@ -174,6 +180,9 @@ func (s *Server) purgeWorkspaceAnalytics(ctx context.Context, ws uuid.UUID, dead
 		}
 		p, err := s.purgeAnalyticsRaw(ctx, ws, id, nil, nil, deadline)
 		if err != nil || !p.Done {
+			return false, err
+		}
+		if done, err := s.purgeMonitor(ctx, ws, id, nil, nil, deadline); err != nil || !done {
 			return false, err
 		}
 	}
@@ -362,6 +371,7 @@ func (s *Server) addAnalyticsWorkers(workers *river.Workers) {
 	river.AddWorker(workers, &analyticsExportWorker{s: s})
 	river.AddWorker(workers, &analyticsAlertsWorker{s: s})
 	river.AddWorker(workers, &analyticsReportsWorker{s: s})
+	river.AddWorker(workers, &monitorRollupWorker{s: s})
 }
 
 // rawFrom is the oldest day whose raw rows the partitions job keeps.
@@ -377,6 +387,9 @@ func (s *Server) MaintainAnalytics(ctx context.Context) error {
 	}
 	today := analytics.LocalDay(s.now(), time.UTC)
 	if err := s.analytics.store.EnsurePartitions(ctx, today.AddDate(0, 0, -partitionsBehind), today.AddDate(0, 0, partitionsAhead)); err != nil {
+		return err
+	}
+	if err := s.maintainMonitor(ctx, today); err != nil {
 		return err
 	}
 	pg := &analytics.PGStore{Pool: s.st.Pool}
@@ -439,6 +452,9 @@ func (s *Server) MaintainAnalytics(ctx context.Context) error {
 		if _, err := s.st.DeleteOldAnalyticsIngestStats(ctx, store.DeleteOldAnalyticsIngestStatsParams{WorkspaceID: ws, Before: today.AddDate(0, 0, -analyticsStatsDays)}); err != nil {
 			return err
 		}
+		if err := s.trimMonitor(ctx, ws, today); err != nil {
+			return err
+		}
 	}
 	return nil
 }
@@ -481,6 +497,11 @@ func (s *Server) ScanAnalyticsRollups(ctx context.Context) (int, error) {
 				return queued, err
 			}
 		}
+		n, err := s.scanMonitorRollups(ctx, ws)
+		if err != nil {
+			return queued, err
+		}
+		queued += n
 		stale, err := s.st.ListAnalyticsGoalRollupTodo(ctx, store.ListAnalyticsGoalRollupTodoParams{WorkspaceID: ws, Oldest: s.rawFrom()})
 		if err != nil {
 			return queued, err

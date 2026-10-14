@@ -375,7 +375,7 @@ func (s *Server) Handler() http.Handler {
 		}
 		panel.ServeHTTP(w, r)
 	})
-	return s.recoverer(s.logRequests(noSniff(s.linkHost(oauthCORS(s.clientCORS(s.guardCookieWrites(s.limitBody(s.idempotency(mux)))))))))
+	return s.recoverer(s.logRequests(noSniff(s.linkHost(oauthCORS(s.clientCORS(s.guardCookieWrites(s.limitBody(s.gunzipRecords(s.idempotency(mux))))))))))
 }
 
 var mailLinkPrefixes = []string{managePathPrefix, confirmPathPrefix, clickPathPrefix, emailImagePathPrefix}

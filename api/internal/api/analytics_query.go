@@ -140,6 +140,8 @@ func analyticsRange(r oas.AnalyticsRange, today time.Time) (time.Time, time.Time
 			return month.AddDate(0, -1, 0), month.AddDate(0, 0, -1), nil
 		case oas.AnalyticsThisYear:
 			return time.Date(y, 1, 1, 0, 0, 0, 0, time.UTC), today, nil
+		case oas.AnalyticsLast15Minutes, oas.AnalyticsLastHour, oas.AnalyticsLast6Hours, oas.AnalyticsLast24Hours:
+			return time.Time{}, time.Time{}, errValidation("the periods 15m, 1h, 6h and 24h need dataset api")
 		}
 		return time.Time{}, time.Time{}, errValidation("unknown range.period")
 	}
@@ -332,6 +334,9 @@ func (s *Server) QueryAnalytics(ctx context.Context, req oas.QueryAnalyticsReque
 	if err != nil {
 		return nil, err
 	}
+	if isAPIProperty(prop) || (req.Body.Dataset != nil && *req.Body.Dataset == oas.AnalyticsDatasetApi) {
+		return s.queryMonitor(ctx, prop, *req.Body, req.Params.Format != nil && *req.Params.Format == oas.AnalyticsFormatCSV)
+	}
 	ar, err := s.analyticsRequest(ctx, prop, *req.Body)
 	if err != nil {
 		return nil, err
@@ -364,6 +369,12 @@ type analyticsRequest struct {
 
 func (s *Server) analyticsRequest(ctx context.Context, prop store.AnalyticsProperty, b oas.AnalyticsQuery) (analyticsRequest, error) {
 	var ar analyticsRequest
+	if err := siteProperty(prop); err != nil {
+		return ar, err
+	}
+	if b.Dataset != nil && *b.Dataset == oas.AnalyticsDatasetApi {
+		return ar, errAPIOnly
+	}
 	ws := prop.WorkspaceID
 	loc := propertyLocation(prop.Timezone)
 	today := analytics.LocalDay(s.now(), loc)
@@ -672,6 +683,9 @@ func (s *Server) GetAnalyticsRealtime(ctx context.Context, req oas.GetAnalyticsR
 	p := principalFrom(ctx)
 	prop, err := visibleProperty(ctx, s.st.Queries, p, req.PropertyId, false)
 	if err != nil {
+		return nil, err
+	}
+	if err := siteProperty(prop); err != nil {
 		return nil, err
 	}
 	out, err := s.analyticsRealtime(ctx, prop)

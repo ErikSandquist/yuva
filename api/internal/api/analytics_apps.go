@@ -285,6 +285,9 @@ func (s *Server) SendAnalyticsEvents(ctx context.Context, req oas.SendAnalyticsE
 	if err != nil {
 		return nil, err
 	}
+	if err := siteProperty(prop); err != nil {
+		return nil, err
+	}
 	if req.Body == nil || len(req.Body.Events) == 0 || len(req.Body.Events) > maxAnalyticsBatch {
 		return nil, errValidation("events must hold 1 to 100 events")
 	}

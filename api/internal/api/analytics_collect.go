@@ -72,6 +72,7 @@ type AnalyticsSettings struct {
 	GeoIPFile string
 	// GeoIPURL replaces DB-IP's download address, for tests.
 	GeoIPURL func(month time.Time) string
+	Monitor  MonitorSettings
 }
 
 func analyticsSettings(a AnalyticsSettings) AnalyticsSettings {
@@ -99,6 +100,7 @@ func analyticsSettings(a AnalyticsSettings) AnalyticsSettings {
 	if a.GeoIP == "" {
 		a.GeoIP = analytics.GeoOff
 	}
+	a.Monitor = monitorSettings(a.Monitor)
 	return a
 }
 
@@ -115,6 +117,7 @@ type analyticsState struct {
 	props       *propertyCache
 	usage       *usageCache
 	limits      *rateLimiter
+	monitor     *monitorState
 }
 
 func (s *Server) newAnalytics(d Deps) *analyticsState {
@@ -129,6 +132,9 @@ func (s *Server) newAnalytics(d Deps) *analyticsState {
 		a.geo = &analytics.GeoIP{Mode: set.GeoIP, Dir: set.GeoIPDir, File: set.GeoIPFile, URL: set.GeoIPURL, Now: s.now}
 	}
 	a.flusher = &analytics.Flusher{Store: st, Buffer: a.buffer, Log: s.log, Now: s.now, AfterFlush: s.afterAnalyticsFlush}
+	if !d.Analytics.Monitor.Off {
+		a.monitor = s.newMonitor(d)
+	}
 	if d.Hub != nil {
 		d.Hub.OnInvalidate(a.invalidated)
 	}
@@ -136,6 +142,9 @@ func (s *Server) newAnalytics(d Deps) *analyticsState {
 }
 
 func (a *analyticsState) forget(propertyID uuid.UUID) {
+	if a.monitor != nil {
+		a.monitor.agg.Forget(propertyID)
+	}
 	a.props.forget(propertyID)
 	a.answers.forget(propertyID)
 	a.resolver.Salts.Forget(propertyID)
@@ -187,11 +196,22 @@ func (a *analyticsState) invalidated(payload string) {
 	}
 }
 
-// RunAnalytics writes collected events until ctx ends and then drains what is left; it returns at
-// once when analytics is off.
+// RunAnalytics writes collected events and request rows until ctx ends and then drains what is
+// left; it returns at once when analytics is off.
 func (s *Server) RunAnalytics(ctx context.Context) {
 	if s.analytics == nil {
 		return
+	}
+	if m := s.analytics.monitor; m != nil {
+		if err := m.agg.Prepare(ctx); err != nil {
+			s.log.ErrorContext(ctx, "monitor partitions", slog.Any("error", err))
+		}
+		done := make(chan struct{})
+		go func() {
+			defer close(done)
+			m.agg.Run(ctx)
+		}()
+		defer func() { <-done }()
 	}
 	if err := s.analytics.flusher.Prepare(ctx); err != nil {
 		s.log.ErrorContext(ctx, "analytics partitions", slog.Any("error", err))
@@ -371,7 +391,7 @@ func (s *Server) analyticsUsage(ctx context.Context, ws uuid.UUID) (oas.Analytic
 			out.LimitReachedAt = u.LimitReachedAt
 		}
 	}
-	return out, nil
+	return out, s.monitorUsage(ctx, ws, &out)
 }
 
 // afterAnalyticsFlush tells owners and the operator, once a month, that a workspace reached its cap.
@@ -485,7 +505,7 @@ func (s *Server) analyticsCORS(w http.ResponseWriter, r *http.Request, next http
 		writeProblem(w, errInternal)
 		return
 	}
-	if cp == nil {
+	if cp == nil || isAPIProperty(cp.prop) {
 		writeProblem(w, errNotFound)
 		return
 	}

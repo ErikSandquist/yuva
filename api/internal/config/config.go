@@ -127,6 +127,18 @@ type Analytics struct {
 	GeoIP     string
 	GeoIPDir  string
 	GeoIPFile string
+	Monitor   Monitor
+}
+
+// Monitor is API monitoring (YUVA_MONITOR), part of analytics: off with either.
+type Monitor struct {
+	On bool
+	// MonthlyRequests caps each workspace's request records a month; 0 is no limit. A server with
+	// open sign-up defaults to 10,000,000.
+	MonthlyRequests  int64
+	RecordsPerMinute int
+	BufferKeys       int
+	MinuteDays       int
 }
 
 type VAPID struct {
@@ -389,6 +401,9 @@ func (c *Config) loadAnalytics() error {
 	if a.RollupTop, err = strconv.Atoi(env("YUVA_ANALYTICS_ROLLUP_TOP", "1000")); err != nil || a.RollupTop < 10 || a.RollupTop > 100000 {
 		return errors.New("YUVA_ANALYTICS_ROLLUP_TOP must be 10 to 100000 values")
 	}
+	if err := c.loadMonitor(); err != nil {
+		return err
+	}
 	a.GeoIP = strings.ToLower(env("YUVA_GEOIP", "dbip"))
 	a.GeoIPDir = env("YUVA_GEOIP_DIR", "data/geoip")
 	a.GeoIPFile = env("YUVA_GEOIP_FILE", "")
@@ -400,6 +415,31 @@ func (c *Config) loadAnalytics() error {
 		}
 	default:
 		return errors.New("YUVA_GEOIP must be dbip, file or off")
+	}
+	return nil
+}
+
+func (c *Config) loadMonitor() error {
+	m := &c.Analytics.Monitor
+	var err error
+	if m.On, err = switchEnv("YUVA_MONITOR", true); err != nil {
+		return err
+	}
+	def := "0"
+	if c.SignupOpen {
+		def = "10000000"
+	}
+	if m.MonthlyRequests, err = strconv.ParseInt(env("YUVA_MONITOR_MONTHLY_REQUESTS", def), 10, 64); err != nil || m.MonthlyRequests < 0 {
+		return errors.New("YUVA_MONITOR_MONTHLY_REQUESTS must be a number of requests, 0 for no limit")
+	}
+	if m.RecordsPerMinute, err = strconv.Atoi(env("YUVA_MONITOR_RECORDS_PER_MINUTE", "600000")); err != nil || m.RecordsPerMinute < 1 {
+		return errors.New("YUVA_MONITOR_RECORDS_PER_MINUTE must be a positive number of records")
+	}
+	if m.BufferKeys, err = strconv.Atoi(env("YUVA_MONITOR_BUFFER_KEYS", "200000")); err != nil || m.BufferKeys < 1000 {
+		return errors.New("YUVA_MONITOR_BUFFER_KEYS must be a number of rows, at least 1000")
+	}
+	if m.MinuteDays, err = strconv.Atoi(env("YUVA_MONITOR_MINUTE_DAYS", "8")); err != nil || m.MinuteDays < 2 || m.MinuteDays > 31 {
+		return errors.New("YUVA_MONITOR_MINUTE_DAYS must be 2 to 31 days")
 	}
 	return nil
 }

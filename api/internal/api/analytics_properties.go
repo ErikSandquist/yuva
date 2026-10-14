@@ -26,12 +26,16 @@ const (
 	analyticsKeyOverlap     = 24 * time.Hour
 	defaultRetentionMonths  = 25
 	maxAnalyticsDeleteRange = 400
+	defaultApdexMS          = 500
+	defaultMonitorHourDays  = 90
 )
 
 var (
 	errPropertyGone        = problem(http.StatusNotFound, "not_found", "no such analytics property")
 	errPropertyLimit       = problem(http.StatusForbidden, "property_limit", "this workspace has as many analytics properties as the server allows (YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE)")
 	errPropertyConfirm     = problem(http.StatusBadRequest, "confirmation_mismatch", "type the property's name exactly to delete it")
+	errSiteOnly            = problem(http.StatusUnprocessableEntity, "property_kind", "this is an API property; it takes request records and dataset api")
+	errAPIOnly             = problem(http.StatusUnprocessableEntity, "property_kind", "this is a site property; request records and dataset api need an API property")
 	analyticsDomainPattern = regexp.MustCompile(`^(\*\.)?([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)*[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$`)
 	currencyPattern        = regexp.MustCompile(`^[A-Z]{3}$`)
 )
@@ -79,6 +83,18 @@ func visibleProperty(ctx context.Context, q *store.Queries, p principal, id uuid
 	return prop, nil
 }
 
+func isAPIProperty(prop store.AnalyticsProperty) bool {
+	return prop.Kind == string(oas.AnalyticsKindApi)
+}
+
+// siteProperty refuses an API property where only sites have the feature.
+func siteProperty(prop store.AnalyticsProperty) error {
+	if isAPIProperty(prop) {
+		return errSiteOnly
+	}
+	return nil
+}
+
 func requireAnalyticsManager(p principal) error {
 	if p.isKey() && p.limited {
 		return errForbidden
@@ -94,7 +110,8 @@ func pathRules(raw []byte) []analytics.PathRule {
 
 func (s *Server) propertyBody(prop store.AnalyticsProperty, visitorsToday int64) oas.AnalyticsProperty {
 	out := oas.AnalyticsProperty{
-		Id: prop.ID, InboxId: prop.InboxID, Name: prop.Name, PublicKey: prop.PublicKey, Timezone: prop.Timezone, Currency: prop.Currency,
+		Id: prop.ID, Kind: oas.AnalyticsPropertyKind(prop.Kind), InboxId: prop.InboxID, Name: prop.Name, PublicKey: prop.PublicKey, Timezone: prop.Timezone, Currency: prop.Currency,
+		ApdexMs: prop.ApdexMs, MonitorHourDays: prop.MonitorHourDays,
 		Collection: oas.AnalyticsCollection(prop.Collection), Audience: oas.AnalyticsAudience(prop.Audience),
 		Domains: prop.Domains, ExcludedPaths: prop.ExcludedPaths, TrackedProps: prop.TrackedProps, RetentionMonths: prop.RetentionMonths,
 		VisitorsToday: visitorsToday, FirstEventAt: prop.FirstEventAt, LastEventAt: prop.LastEventAt, CreatedAt: prop.CreatedAt, UpdatedAt: prop.UpdatedAt,
@@ -148,6 +165,7 @@ func propertyLocation(tz string) *time.Location {
 
 // propertyFields are a property's settings while they are checked.
 type propertyFields struct {
+	kind            string
 	inboxID         *uuid.UUID
 	name            string
 	domains         []string
@@ -162,13 +180,16 @@ type propertyFields struct {
 	pathRules       []analytics.PathRule
 	trackedProps    []string
 	retention       *int32
+	apdexMS         int32
+	hourDays        int32
 }
 
 func fieldsOf(prop store.AnalyticsProperty) propertyFields {
 	return propertyFields{
-		inboxID: prop.InboxID, name: prop.Name, domains: prop.Domains, platforms: prop.Platforms, timezone: prop.Timezone, currency: prop.Currency,
+		kind: prop.Kind, inboxID: prop.InboxID, name: prop.Name, domains: prop.Domains, platforms: prop.Platforms, timezone: prop.Timezone, currency: prop.Currency,
 		collection: prop.Collection, consentFeatures: prop.ConsentFeatures, audience: prop.Audience, excludedPaths: prop.ExcludedPaths,
 		excludedIPs: prop.ExcludedIps, pathRules: pathRules(prop.PathRules), trackedProps: prop.TrackedProps, retention: prop.RetentionMonths,
+		apdexMS: prop.ApdexMs, hourDays: prop.MonitorHourDays,
 	}
 }
 
@@ -210,7 +231,8 @@ func (f *propertyFields) validate() error {
 	if f.name, err = trimmed(f.name, 1, 100, "name"); err != nil {
 		return err
 	}
-	if len(f.domains) < 1 || len(f.domains) > 50 {
+	api := f.kind == string(oas.AnalyticsKindApi)
+	if (len(f.domains) < 1 && !api) || len(f.domains) > 50 {
 		return errValidation("domains must list 1 to 50 host names")
 	}
 	for i, d := range f.domains {
@@ -221,8 +243,11 @@ func (f *propertyFields) validate() error {
 		f.domains[i] = n
 	}
 	f.domains = uniqueStrings(f.domains)
-	if len(f.platforms) == 0 {
+	if len(f.platforms) == 0 && !api {
 		return errValidation("platforms must name at least one platform")
+	}
+	if api && slices.Contains(f.platforms, string(oas.AnalyticsPlatformWeb)) {
+		return errValidation("an API property's platforms are the apps that send app-side records, ios and android")
 	}
 	for _, v := range f.platforms {
 		if !oas.AnalyticsPlatform(v).Valid() {
@@ -297,6 +322,15 @@ func (f *propertyFields) validate() error {
 	}
 	if f.retention != nil && (*f.retention < 1 || *f.retention > 120) {
 		return errValidation("retention_months must be 1 to 120, or null to keep rollups forever")
+	}
+	if api && (len(f.consentFeatures) > 0 || len(f.trackedProps) > 0 || f.audience != string(oas.AnalyticsAudienceGeneral)) {
+		return errValidation("an API property takes no consent features, tracked props or audience")
+	}
+	if f.apdexMS < 1 || f.apdexMS > 60000 {
+		return errValidation("apdex_ms must be 1 to 60000")
+	}
+	if f.hourDays < 7 || f.hourDays > 400 {
+		return errValidation("monitor_hour_days must be 7 to 400")
 	}
 	return nil
 }
@@ -388,6 +422,12 @@ func (s *Server) applyPropertyBody(ctx context.Context, q *store.Queries, p prin
 			f.retention = new(b.RetentionMonths.MustGet())
 		}
 	}
+	if b.ApdexMs != nil {
+		f.apdexMS = *b.ApdexMs
+	}
+	if b.MonitorHourDays != nil {
+		f.hourDays = *b.MonitorHourDays
+	}
 	return f.validate()
 }
 
@@ -428,9 +468,22 @@ func (s *Server) CreateAnalyticsProperty(ctx context.Context, req oas.CreateAnal
 	}
 	b := req.Body
 	f := propertyFields{
-		name: b.Name, timezone: "UTC", currency: "EUR", collection: string(oas.AnalyticsCollectionAnonymous), audience: string(oas.AnalyticsAudienceGeneral),
-		platforms: []string{string(oas.AnalyticsPlatformWeb)}, consentFeatures: []string{}, excludedPaths: []string{}, excludedIPs: []netip.Prefix{},
-		pathRules: []analytics.PathRule{}, trackedProps: []string{}, retention: new(int32(defaultRetentionMonths)),
+		kind: string(oas.AnalyticsKindSite), name: b.Name, timezone: "UTC", currency: "EUR", collection: string(oas.AnalyticsCollectionAnonymous),
+		audience: string(oas.AnalyticsAudienceGeneral), platforms: []string{string(oas.AnalyticsPlatformWeb)}, consentFeatures: []string{},
+		excludedPaths: []string{}, excludedIPs: []netip.Prefix{}, pathRules: []analytics.PathRule{}, trackedProps: []string{},
+		retention: new(int32(defaultRetentionMonths)), apdexMS: defaultApdexMS, hourDays: defaultMonitorHourDays,
+	}
+	if b.Kind != nil {
+		if !b.Kind.Valid() {
+			return nil, errValidation("kind must be site or api")
+		}
+		f.kind = string(*b.Kind)
+	}
+	if f.kind == string(oas.AnalyticsKindApi) {
+		if s.analytics.monitor == nil {
+			return nil, errValidation("API monitoring is off on this server (YUVA_MONITOR=off)")
+		}
+		f.platforms = []string{}
 	}
 	var out store.AnalyticsProperty
 	err := s.st.InTx(ctx, func(q *store.Queries) error {
@@ -444,7 +497,8 @@ func (s *Server) CreateAnalyticsProperty(ctx context.Context, req oas.CreateAnal
 		upd := oas.AnalyticsPropertyUpdate{
 			Domains: &b.Domains, Platforms: b.Platforms, Timezone: b.Timezone, Currency: b.Currency, Collection: b.Collection,
 			Audience: b.Audience, ConsentFeatures: b.ConsentFeatures, ExcludedPaths: b.ExcludedPaths, ExcludedIps: b.ExcludedIps,
-			PathRules: b.PathRules, TrackedProps: b.TrackedProps, RetentionMonths: b.RetentionMonths,
+			PathRules: b.PathRules, TrackedProps: b.TrackedProps, RetentionMonths: b.RetentionMonths, ApdexMs: b.ApdexMs,
+			MonitorHourDays: b.MonitorHourDays,
 		}
 		if err := s.applyPropertyBody(ctx, q, p, &f, upd); err != nil {
 			return err
@@ -465,9 +519,9 @@ func (s *Server) CreateAnalyticsProperty(ctx context.Context, req oas.CreateAnal
 			createdBy = &p.memberID
 		}
 		out, err = q.CreateAnalyticsProperty(ctx, store.CreateAnalyticsPropertyParams{
-			ID: id, WorkspaceID: p.workspaceID, InboxID: f.inboxID, Name: f.name, PublicKey: newAnalyticsKey(), Domains: f.domains,
-			Platforms: f.platforms, Timezone: f.timezone, Currency: f.currency, Collection: f.collection, ConsentFeatures: nonNil(f.consentFeatures),
-			Audience: f.audience, ExcludedPaths: nonNil(f.excludedPaths), ExcludedIps: nonNil(f.excludedIPs), PathRules: mustJSON(nonNil(f.pathRules)),
+			ID: id, WorkspaceID: p.workspaceID, InboxID: f.inboxID, Kind: f.kind, Name: f.name, PublicKey: newAnalyticsKey(), Domains: nonNil(f.domains),
+			Platforms: nonNil(f.platforms), Timezone: f.timezone, Currency: f.currency, Collection: f.collection, ConsentFeatures: nonNil(f.consentFeatures),
+			ApdexMs: f.apdexMS, MonitorHourDays: f.hourDays, Audience: f.audience, ExcludedPaths: nonNil(f.excludedPaths), ExcludedIps: nonNil(f.excludedIPs), PathRules: mustJSON(nonNil(f.pathRules)),
 			TrackedProps: nonNil(f.trackedProps), RetentionMonths: f.retention, VisitorKey: s.secrets.Seal(analytics.NewSalt(), analyticsSecretContext(p.workspaceID, id)),
 			CreatedBy: createdBy, Now: s.now(),
 		})
@@ -525,10 +579,10 @@ func (s *Server) UpdateAnalyticsProperty(ctx context.Context, req oas.UpdateAnal
 			}
 		}
 		out, err = q.UpdateAnalyticsProperty(ctx, store.UpdateAnalyticsPropertyParams{
-			WorkspaceID: p.workspaceID, ID: cur.ID, InboxID: f.inboxID, Name: f.name, Domains: f.domains, Platforms: f.platforms,
+			WorkspaceID: p.workspaceID, ID: cur.ID, InboxID: f.inboxID, Name: f.name, Domains: nonNil(f.domains), Platforms: nonNil(f.platforms),
 			Timezone: f.timezone, Currency: f.currency, Collection: f.collection, ConsentFeatures: nonNil(f.consentFeatures), Audience: f.audience,
 			ExcludedPaths: nonNil(f.excludedPaths), ExcludedIps: nonNil(f.excludedIPs), PathRules: mustJSON(nonNil(f.pathRules)),
-			TrackedProps: nonNil(f.trackedProps), RetentionMonths: f.retention, Now: s.now(),
+			TrackedProps: nonNil(f.trackedProps), RetentionMonths: f.retention, ApdexMs: f.apdexMS, MonitorHourDays: f.hourDays, Now: s.now(),
 		})
 		if err != nil {
 			return err

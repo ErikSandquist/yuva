@@ -34,7 +34,8 @@ const (
 		"       yuva workspace broadcasts approve|deny|suspend --workspace <id|name> [--reason <text>]\n" +
 		"       yuva workspace broadcasts limit --workspace <id|name> --daily <n>   (0 removes the limit)\n" +
 		"       yuva workspace broadcasts show --workspace <id|name>\n" +
-		"       yuva workspace analytics-limit --workspace <id|name> <events|0>   (0 removes the limit)"
+		"       yuva workspace analytics-limit --workspace <id|name> <events|0>   (0 removes the limit)\n" +
+		"       yuva workspace monitor-limit --workspace <id|name> <requests|0>   (0 removes the limit)"
 	analyticsUsage = "usage: yuva analytics property create --workspace <id|name> --name <name> --domain <host>... [--inbox <id|slug>] [--platform web|ios|android]... [--timezone <zone>]\n" +
 		"       yuva analytics property list --workspace <id|name>\n" +
 		"       yuva analytics geoip-update"
@@ -67,6 +68,9 @@ func operatorCLI(ctx context.Context, cfg config.Config, cmd string, args []stri
 		}
 		if len(args) > 0 && args[0] == "analytics-limit" {
 			return analyticsLimitCommand(ctx, st, srv, args[1:], os.Stderr)
+		}
+		if len(args) > 0 && args[0] == "monitor-limit" {
+			return monitorLimitCommand(ctx, st, srv, args[1:], os.Stderr)
 		}
 		return workspaceCommand(ctx, st, srv, args, os.Stderr)
 	case "person":
@@ -513,6 +517,35 @@ func analyticsLimitCommand(ctx context.Context, st *store.Store, srv *api.Server
 		return nil
 	}
 	fmt.Fprintf(stderr, "workspace %q (%s): at most %d analytics events a month\n", ws.Name, ws.ID, events)
+	return nil
+}
+
+func monitorLimitCommand(ctx context.Context, st *store.Store, srv *api.Server, args []string, stderr io.Writer) error {
+	fs := flag.NewFlagSet("workspace monitor-limit", flag.ContinueOnError)
+	fs.SetOutput(stderr)
+	workspace := fs.String("workspace", "", "workspace id or exact name")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if fs.NArg() != 1 {
+		return errors.New(workspaceUsage)
+	}
+	requests, err := strconv.ParseInt(fs.Arg(0), 10, 64)
+	if err != nil || requests < 0 {
+		return errors.New("the limit must be a number of requests, 0 for no limit")
+	}
+	ws, err := api.FindWorkspace(ctx, st, *workspace)
+	if err != nil {
+		return err
+	}
+	if err := srv.OperatorLimitMonitor(ctx, ws.ID, requests); err != nil {
+		return err
+	}
+	if requests == 0 {
+		fmt.Fprintf(stderr, "workspace %q (%s): API request records are not limited\n", ws.Name, ws.ID)
+		return nil
+	}
+	fmt.Fprintf(stderr, "workspace %q (%s): at most %d API request records a month\n", ws.Name, ws.ID, requests)
 	return nil
 }
 

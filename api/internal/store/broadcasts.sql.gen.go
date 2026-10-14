@@ -2104,7 +2104,7 @@ func (q *Queries) SetConversationBroadcast(ctx context.Context, arg SetConversat
 }
 
 const setWorkspaceBroadcastDailyLimit = `-- name: SetWorkspaceBroadcastDailyLimit :one
-UPDATE workspaces SET broadcast_daily_limit = $1 WHERE id = $2 RETURNING id, name, created_at, retention_days, deleted_at, bots_may_send, created_by, created_ip, broadcasts_status, broadcasts_status_reason, broadcasts_status_at, broadcast_daily_limit, broadcasts_by_keys, analytics_monthly_events
+UPDATE workspaces SET broadcast_daily_limit = $1 WHERE id = $2 RETURNING id, name, created_at, retention_days, deleted_at, bots_may_send, created_by, created_ip, broadcasts_status, broadcasts_status_reason, broadcasts_status_at, broadcast_daily_limit, broadcasts_by_keys, analytics_monthly_events, monitor_monthly_requests
 `
 
 type SetWorkspaceBroadcastDailyLimitParams struct {
@@ -2130,12 +2130,13 @@ func (q *Queries) SetWorkspaceBroadcastDailyLimit(ctx context.Context, arg SetWo
 		&i.BroadcastDailyLimit,
 		&i.BroadcastsByKeys,
 		&i.AnalyticsMonthlyEvents,
+		&i.MonitorMonthlyRequests,
 	)
 	return i, err
 }
 
 const setWorkspaceBroadcastsByKeys = `-- name: SetWorkspaceBroadcastsByKeys :one
-UPDATE workspaces SET broadcasts_by_keys = $1 WHERE id = $2 RETURNING id, name, created_at, retention_days, deleted_at, bots_may_send, created_by, created_ip, broadcasts_status, broadcasts_status_reason, broadcasts_status_at, broadcast_daily_limit, broadcasts_by_keys, analytics_monthly_events
+UPDATE workspaces SET broadcasts_by_keys = $1 WHERE id = $2 RETURNING id, name, created_at, retention_days, deleted_at, bots_may_send, created_by, created_ip, broadcasts_status, broadcasts_status_reason, broadcasts_status_at, broadcast_daily_limit, broadcasts_by_keys, analytics_monthly_events, monitor_monthly_requests
 `
 
 type SetWorkspaceBroadcastsByKeysParams struct {
@@ -2161,6 +2162,7 @@ func (q *Queries) SetWorkspaceBroadcastsByKeys(ctx context.Context, arg SetWorks
 		&i.BroadcastDailyLimit,
 		&i.BroadcastsByKeys,
 		&i.AnalyticsMonthlyEvents,
+		&i.MonitorMonthlyRequests,
 	)
 	return i, err
 }
@@ -2168,7 +2170,7 @@ func (q *Queries) SetWorkspaceBroadcastsByKeys(ctx context.Context, arg SetWorks
 const setWorkspaceBroadcastsStatus = `-- name: SetWorkspaceBroadcastsStatus :one
 UPDATE workspaces SET broadcasts_status = $1, broadcasts_status_reason = $2, broadcasts_status_at = $3::timestamptz
 WHERE id = $4
-RETURNING id, name, created_at, retention_days, deleted_at, bots_may_send, created_by, created_ip, broadcasts_status, broadcasts_status_reason, broadcasts_status_at, broadcast_daily_limit, broadcasts_by_keys, analytics_monthly_events
+RETURNING id, name, created_at, retention_days, deleted_at, bots_may_send, created_by, created_ip, broadcasts_status, broadcasts_status_reason, broadcasts_status_at, broadcast_daily_limit, broadcasts_by_keys, analytics_monthly_events, monitor_monthly_requests
 `
 
 type SetWorkspaceBroadcastsStatusParams struct {
@@ -2201,6 +2203,7 @@ func (q *Queries) SetWorkspaceBroadcastsStatus(ctx context.Context, arg SetWorks
 		&i.BroadcastDailyLimit,
 		&i.BroadcastsByKeys,
 		&i.AnalyticsMonthlyEvents,
+		&i.MonitorMonthlyRequests,
 	)
 	return i, err
 }

@@ -1,10 +1,10 @@
 -- name: CreateAnalyticsProperty :one
-INSERT INTO analytics_properties (id, workspace_id, inbox_id, name, public_key, domains, platforms, timezone, currency, collection,
-    consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, created_by,
-    created_at, updated_at)
-VALUES (@id, @workspace_id, sqlc.narg(inbox_id), @name, @public_key, @domains, @platforms, @timezone, @currency, @collection,
-    @consent_features, @audience, @excluded_paths, @excluded_ips, @path_rules, @tracked_props, sqlc.narg(retention_months), @visitor_key,
-    sqlc.narg(created_by), @now, @now)
+INSERT INTO analytics_properties (id, workspace_id, inbox_id, kind, name, public_key, domains, platforms, timezone, currency, collection,
+    consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, apdex_ms, monitor_hour_days,
+    visitor_key, created_by, created_at, updated_at)
+VALUES (@id, @workspace_id, sqlc.narg(inbox_id), @kind, @name, @public_key, @domains, @platforms, @timezone, @currency, @collection,
+    @consent_features, @audience, @excluded_paths, @excluded_ips, @path_rules, @tracked_props, sqlc.narg(retention_months), @apdex_ms,
+    @monitor_hour_days, @visitor_key, sqlc.narg(created_by), @now, @now)
 RETURNING *;
 
 -- name: GetAnalyticsProperty :one
@@ -29,7 +29,7 @@ UPDATE analytics_properties SET
     inbox_id = sqlc.narg(inbox_id), name = @name, domains = @domains, platforms = @platforms, timezone = @timezone,
     currency = @currency, collection = @collection, consent_features = @consent_features, audience = @audience,
     excluded_paths = @excluded_paths, excluded_ips = @excluded_ips, path_rules = @path_rules, tracked_props = @tracked_props,
-    retention_months = sqlc.narg(retention_months), updated_at = @now
+    retention_months = sqlc.narg(retention_months), apdex_ms = @apdex_ms, monitor_hour_days = @monitor_hour_days, updated_at = @now
 WHERE workspace_id = @workspace_id AND id = @id AND deleted_at IS NULL
 RETURNING *;
 

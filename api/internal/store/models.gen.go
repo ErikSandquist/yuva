@@ -290,6 +290,9 @@ type AnalyticsProperty struct {
 	DeletedAt        *time.Time
 	GoalsVersion     int64
 	CohortsBuiltAt   *time.Time
+	Kind             string
+	ApdexMs          int32
+	MonitorHourDays  int32
 }
 
 type AnalyticsRollupDay struct {
@@ -1348,6 +1351,167 @@ type MigrationUploadPart struct {
 	CreatedAt   time.Time
 }
 
+type MonitorDay struct {
+	WorkspaceID   uuid.UUID
+	PropertyID    uuid.UUID
+	Day           time.Time
+	Environment   int32
+	Service       int32
+	Route         int32
+	Method        int16
+	Status        int16
+	ApiVersion    int32
+	Source        int16
+	Platform      int16
+	Requests      int64
+	Errors        int64
+	ClientErrors  int64
+	Sampled       int64
+	DurationSum   int64
+	DurationMin   int64
+	DurationMax   int64
+	Durations     []byte
+	RequestBytes  int64
+	ResponseBytes int64
+	ResponseSizes []byte
+}
+
+type MonitorDimDay struct {
+	WorkspaceID   uuid.UUID
+	PropertyID    uuid.UUID
+	Day           time.Time
+	Dim           int16
+	Value         int32
+	Route         int32
+	Method        int16
+	StatusClass   int16
+	Requests      int64
+	Errors        int64
+	ClientErrors  int64
+	Sampled       int64
+	DurationSum   int64
+	DurationMin   int64
+	DurationMax   int64
+	Durations     []byte
+	RequestBytes  int64
+	ResponseBytes int64
+	ResponseSizes []byte
+}
+
+type MonitorDimHour struct {
+	WorkspaceID   uuid.UUID
+	PropertyID    uuid.UUID
+	Hour          time.Time
+	Writer        int64
+	Dim           int16
+	Value         int32
+	Route         int32
+	Method        int16
+	StatusClass   int16
+	Requests      int64
+	Errors        int64
+	ClientErrors  int64
+	Sampled       int64
+	DurationSum   int64
+	DurationMin   int64
+	DurationMax   int64
+	Durations     []byte
+	RequestBytes  int64
+	ResponseBytes int64
+	ResponseSizes []byte
+}
+
+type MonitorHour struct {
+	WorkspaceID   uuid.UUID
+	PropertyID    uuid.UUID
+	Hour          time.Time
+	Environment   int32
+	Service       int32
+	Route         int32
+	Method        int16
+	Status        int16
+	ApiVersion    int32
+	Source        int16
+	Platform      int16
+	Requests      int64
+	Errors        int64
+	ClientErrors  int64
+	Sampled       int64
+	DurationSum   int64
+	DurationMin   int64
+	DurationMax   int64
+	Durations     []byte
+	RequestBytes  int64
+	ResponseBytes int64
+	ResponseSizes []byte
+}
+
+type MonitorIngestStat struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Day         time.Time
+	Reason      string
+	Records     int64
+}
+
+type MonitorMinute struct {
+	WorkspaceID   uuid.UUID
+	PropertyID    uuid.UUID
+	Minute        time.Time
+	Writer        int64
+	Environment   int32
+	Service       int32
+	Route         int32
+	Method        int16
+	Status        int16
+	ApiVersion    int32
+	Source        int16
+	Platform      int16
+	Requests      int64
+	Errors        int64
+	ClientErrors  int64
+	Sampled       int64
+	DurationSum   int64
+	DurationMin   int64
+	DurationMax   int64
+	Durations     []byte
+	RequestBytes  int64
+	ResponseBytes int64
+	ResponseSizes []byte
+}
+
+type MonitorName struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Kind        string
+	ID          int32
+	Value       string
+	FirstSeenAt time.Time
+}
+
+type MonitorRollupHour struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Hour        time.Time
+	Day         time.Time
+	BuiltAt     *time.Time
+	Dirty       bool
+	Capped      bool
+	DayBuiltAt  *time.Time
+}
+
+type MonitorRoute struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	ID          int32
+	Pattern     string
+	Inferred    bool
+	Hidden      bool
+	ApdexMs     *int32
+	FirstSeenAt time.Time
+	LastSeenAt  time.Time
+}
+
 type NotificationEmail struct {
 	WorkspaceID    uuid.UUID
 	MemberID       uuid.UUID
@@ -1531,6 +1695,7 @@ type UsageCounter struct {
 	ImportedBytes           int64
 	AnalyticsEvents         int64
 	AnalyticsLimitReachedAt *time.Time
+	MonitorRequests         int64
 }
 
 type WebauthnCeremony struct {
@@ -1604,4 +1769,5 @@ type Workspace struct {
 	BroadcastDailyLimit    *int32
 	BroadcastsByKeys       bool
 	AnalyticsMonthlyEvents *int64
+	MonitorMonthlyRequests *int64
 }

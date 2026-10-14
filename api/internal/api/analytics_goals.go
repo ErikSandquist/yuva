@@ -193,6 +193,9 @@ func (s *Server) CreateAnalyticsGoal(ctx context.Context, req oas.CreateAnalytic
 		if err := requireAnalyticsManager(p); err != nil {
 			return err
 		}
+		if err := siteProperty(prop); err != nil {
+			return err
+		}
 		if err := f.validate(); err != nil {
 			return err
 		}
@@ -395,6 +398,9 @@ func (s *Server) CreateAnalyticsFunnel(ctx context.Context, req oas.CreateAnalyt
 			return err
 		}
 		if err := requireAnalyticsManager(p); err != nil {
+			return err
+		}
+		if err := siteProperty(prop); err != nil {
 			return err
 		}
 		name, err := trimmed(req.Body.Name, 1, 120, "name")

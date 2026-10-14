@@ -54,6 +54,7 @@ const usageText = `usage:
   yuva workspace broadcasts limit --workspace <id|name> --daily <n>   (0 removes the limit)
   yuva workspace broadcasts show --workspace <id|name>
   yuva workspace analytics-limit --workspace <id|name> <events|0>   (0 removes the limit)
+  yuva workspace monitor-limit --workspace <id|name> <requests|0>   (0 removes the limit)
   yuva analytics property create --workspace <id|name> --name <name> --domain <host>... [--inbox <id|slug>] [--platform web|ios|android]... [--timezone <zone>]
       (prints the property id and its public key, tab-separated)
   yuva analytics property list --workspace <id|name>
@@ -274,6 +275,8 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 	}
 	if !cfg.Analytics.On {
 		log.Info("YUVA_ANALYTICS is off; analytics endpoints, the script and collection are not served")
+	} else if !cfg.Analytics.Monitor.On {
+		log.Info("YUVA_MONITOR is off; API properties and request records are not served")
 	}
 	if cfg.IngressAcceptV1 {
 		log.Warn("YUVA_INGRESS_ACCEPT_V1 is set; /ingress/email accepts v1 signatures, which do not cover the envelope sender")
@@ -332,6 +335,8 @@ func analyticsSettings(cfg config.Config) api.AnalyticsSettings {
 		Off: !a.On, Buffer: a.Buffer, VisitCache: a.VisitCache, SaltGrace: a.SaltGrace, MonthlyEvents: a.MonthlyEvents,
 		PropertyEventsPerMinute: a.PropertyEventsPerMinute, PropertiesPerWorkspace: a.PropertiesPerWorkspace,
 		RawDays: a.RawDays, RollupTop: a.RollupTop, GeoIP: a.GeoIP, GeoIPDir: a.GeoIPDir, GeoIPFile: a.GeoIPFile,
+		Monitor: api.MonitorSettings{Off: !a.Monitor.On, MonthlyRequests: a.Monitor.MonthlyRequests, RecordsPerMinute: a.Monitor.RecordsPerMinute,
+			BufferKeys: a.Monitor.BufferKeys, MinuteDays: a.Monitor.MinuteDays},
 	}
 }
 

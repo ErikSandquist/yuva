@@ -223,6 +223,7 @@ func (e AnalyticsConsentFeature) Valid() bool {
 
 // Defines values for AnalyticsDataset.
 const (
+	AnalyticsDatasetApi     AnalyticsDataset = "api"
 	AnalyticsDatasetSupport AnalyticsDataset = "support"
 	AnalyticsDatasetTraffic AnalyticsDataset = "traffic"
 )
@@ -230,6 +231,8 @@ const (
 // Valid indicates whether the value is a known member of the AnalyticsDataset enum.
 func (e AnalyticsDataset) Valid() bool {
 	switch e {
+	case AnalyticsDatasetApi:
+		return true
 	case AnalyticsDatasetSupport:
 		return true
 	case AnalyticsDatasetTraffic:
@@ -250,11 +253,14 @@ const (
 	AnalyticsByDay            AnalyticsDimension = "time:day"
 	AnalyticsByDevice         AnalyticsDimension = "device"
 	AnalyticsByEntryPage      AnalyticsDimension = "entry_page"
+	AnalyticsByEnvironment    AnalyticsDimension = "environment"
 	AnalyticsByEvent          AnalyticsDimension = "event"
 	AnalyticsByExitPage       AnalyticsDimension = "exit_page"
 	AnalyticsByHostname       AnalyticsDimension = "hostname"
 	AnalyticsByHour           AnalyticsDimension = "time:hour"
 	AnalyticsByLanguage       AnalyticsDimension = "language"
+	AnalyticsByMethod         AnalyticsDimension = "method"
+	AnalyticsByMinute         AnalyticsDimension = "time:minute"
 	AnalyticsByMonth          AnalyticsDimension = "time:month"
 	AnalyticsByOs             AnalyticsDimension = "os"
 	AnalyticsByOsVersion      AnalyticsDimension = "os_version"
@@ -263,8 +269,11 @@ const (
 	AnalyticsByProp           AnalyticsDimension = "prop"
 	AnalyticsByReferrer       AnalyticsDimension = "referrer"
 	AnalyticsByRegion         AnalyticsDimension = "region"
+	AnalyticsByRoute          AnalyticsDimension = "route"
 	AnalyticsByScreenSize     AnalyticsDimension = "screen_size"
 	AnalyticsBySource         AnalyticsDimension = "source"
+	AnalyticsByStatus         AnalyticsDimension = "status"
+	AnalyticsByStatusClass    AnalyticsDimension = "status_class"
 	AnalyticsByUtmCampaign    AnalyticsDimension = "utm_campaign"
 	AnalyticsByUtmContent     AnalyticsDimension = "utm_content"
 	AnalyticsByUtmMedium      AnalyticsDimension = "utm_medium"
@@ -295,6 +304,8 @@ func (e AnalyticsDimension) Valid() bool {
 		return true
 	case AnalyticsByEntryPage:
 		return true
+	case AnalyticsByEnvironment:
+		return true
 	case AnalyticsByEvent:
 		return true
 	case AnalyticsByExitPage:
@@ -304,6 +315,10 @@ func (e AnalyticsDimension) Valid() bool {
 	case AnalyticsByHour:
 		return true
 	case AnalyticsByLanguage:
+		return true
+	case AnalyticsByMethod:
+		return true
+	case AnalyticsByMinute:
 		return true
 	case AnalyticsByMonth:
 		return true
@@ -321,9 +336,15 @@ func (e AnalyticsDimension) Valid() bool {
 		return true
 	case AnalyticsByRegion:
 		return true
+	case AnalyticsByRoute:
+		return true
 	case AnalyticsByScreenSize:
 		return true
 	case AnalyticsBySource:
+		return true
+	case AnalyticsByStatus:
+		return true
+	case AnalyticsByStatusClass:
 		return true
 	case AnalyticsByUtmCampaign:
 		return true
@@ -444,10 +465,12 @@ const (
 	AnalyticsDimCountry        AnalyticsFilterDimension = "country"
 	AnalyticsDimDevice         AnalyticsFilterDimension = "device"
 	AnalyticsDimEntryPage      AnalyticsFilterDimension = "entry_page"
+	AnalyticsDimEnvironment    AnalyticsFilterDimension = "environment"
 	AnalyticsDimEvent          AnalyticsFilterDimension = "event"
 	AnalyticsDimExitPage       AnalyticsFilterDimension = "exit_page"
 	AnalyticsDimHostname       AnalyticsFilterDimension = "hostname"
 	AnalyticsDimLanguage       AnalyticsFilterDimension = "language"
+	AnalyticsDimMethod         AnalyticsFilterDimension = "method"
 	AnalyticsDimOs             AnalyticsFilterDimension = "os"
 	AnalyticsDimOsVersion      AnalyticsFilterDimension = "os_version"
 	AnalyticsDimPage           AnalyticsFilterDimension = "page"
@@ -455,8 +478,11 @@ const (
 	AnalyticsDimProp           AnalyticsFilterDimension = "prop"
 	AnalyticsDimReferrer       AnalyticsFilterDimension = "referrer"
 	AnalyticsDimRegion         AnalyticsFilterDimension = "region"
+	AnalyticsDimRoute          AnalyticsFilterDimension = "route"
 	AnalyticsDimScreenSize     AnalyticsFilterDimension = "screen_size"
 	AnalyticsDimSource         AnalyticsFilterDimension = "source"
+	AnalyticsDimStatus         AnalyticsFilterDimension = "status"
+	AnalyticsDimStatusClass    AnalyticsFilterDimension = "status_class"
 	AnalyticsDimUtmCampaign    AnalyticsFilterDimension = "utm_campaign"
 	AnalyticsDimUtmContent     AnalyticsFilterDimension = "utm_content"
 	AnalyticsDimUtmMedium      AnalyticsFilterDimension = "utm_medium"
@@ -484,6 +510,8 @@ func (e AnalyticsFilterDimension) Valid() bool {
 		return true
 	case AnalyticsDimEntryPage:
 		return true
+	case AnalyticsDimEnvironment:
+		return true
 	case AnalyticsDimEvent:
 		return true
 	case AnalyticsDimExitPage:
@@ -491,6 +519,8 @@ func (e AnalyticsFilterDimension) Valid() bool {
 	case AnalyticsDimHostname:
 		return true
 	case AnalyticsDimLanguage:
+		return true
+	case AnalyticsDimMethod:
 		return true
 	case AnalyticsDimOs:
 		return true
@@ -506,9 +536,15 @@ func (e AnalyticsFilterDimension) Valid() bool {
 		return true
 	case AnalyticsDimRegion:
 		return true
+	case AnalyticsDimRoute:
+		return true
 	case AnalyticsDimScreenSize:
 		return true
 	case AnalyticsDimSource:
+		return true
+	case AnalyticsDimStatus:
+		return true
+	case AnalyticsDimStatusClass:
 		return true
 	case AnalyticsDimUtmCampaign:
 		return true
@@ -598,32 +634,48 @@ func (e AnalyticsInsightKind) Valid() bool {
 
 // Defines values for AnalyticsMetric.
 const (
-	AnalyticsMetricBounceRate     AnalyticsMetric = "bounce_rate"
-	AnalyticsMetricCompletions    AnalyticsMetric = "completions"
-	AnalyticsMetricConversations  AnalyticsMetric = "conversations"
-	AnalyticsMetricConversionRate AnalyticsMetric = "conversion_rate"
-	AnalyticsMetricConversions    AnalyticsMetric = "conversions"
-	AnalyticsMetricDiscussions    AnalyticsMetric = "discussions"
-	AnalyticsMetricEvents         AnalyticsMetric = "events"
-	AnalyticsMetricFeedback       AnalyticsMetric = "feedback"
-	AnalyticsMetricHelpfulRate    AnalyticsMetric = "helpful_rate"
-	AnalyticsMetricPageviews      AnalyticsMetric = "pageviews"
-	AnalyticsMetricRatingsDown    AnalyticsMetric = "ratings_down"
-	AnalyticsMetricRatingsUp      AnalyticsMetric = "ratings_up"
-	AnalyticsMetricRevenue        AnalyticsMetric = "revenue"
-	AnalyticsMetricScrollDepth    AnalyticsMetric = "scroll_depth"
-	AnalyticsMetricSupportRate    AnalyticsMetric = "support_rate"
-	AnalyticsMetricTimeOnPage     AnalyticsMetric = "time_on_page"
-	AnalyticsMetricViewsPerVisit  AnalyticsMetric = "views_per_visit"
-	AnalyticsMetricVisitDuration  AnalyticsMetric = "visit_duration"
-	AnalyticsMetricVisitors       AnalyticsMetric = "visitors"
-	AnalyticsMetricVisits         AnalyticsMetric = "visits"
+	AnalyticsMetricAvgDuration       AnalyticsMetric = "avg_duration"
+	AnalyticsMetricBounceRate        AnalyticsMetric = "bounce_rate"
+	AnalyticsMetricClientErrorRate   AnalyticsMetric = "client_error_rate"
+	AnalyticsMetricClientErrors      AnalyticsMetric = "client_errors"
+	AnalyticsMetricCompletions       AnalyticsMetric = "completions"
+	AnalyticsMetricConversations     AnalyticsMetric = "conversations"
+	AnalyticsMetricConversionRate    AnalyticsMetric = "conversion_rate"
+	AnalyticsMetricConversions       AnalyticsMetric = "conversions"
+	AnalyticsMetricDiscussions       AnalyticsMetric = "discussions"
+	AnalyticsMetricErrorRate         AnalyticsMetric = "error_rate"
+	AnalyticsMetricErrors            AnalyticsMetric = "errors"
+	AnalyticsMetricEvents            AnalyticsMetric = "events"
+	AnalyticsMetricFeedback          AnalyticsMetric = "feedback"
+	AnalyticsMetricHelpfulRate       AnalyticsMetric = "helpful_rate"
+	AnalyticsMetricP50               AnalyticsMetric = "p50"
+	AnalyticsMetricP95               AnalyticsMetric = "p95"
+	AnalyticsMetricP99               AnalyticsMetric = "p99"
+	AnalyticsMetricPageviews         AnalyticsMetric = "pageviews"
+	AnalyticsMetricRatingsDown       AnalyticsMetric = "ratings_down"
+	AnalyticsMetricRatingsUp         AnalyticsMetric = "ratings_up"
+	AnalyticsMetricRequests          AnalyticsMetric = "requests"
+	AnalyticsMetricRequestsPerMinute AnalyticsMetric = "requests_per_minute"
+	AnalyticsMetricRevenue           AnalyticsMetric = "revenue"
+	AnalyticsMetricScrollDepth       AnalyticsMetric = "scroll_depth"
+	AnalyticsMetricSupportRate       AnalyticsMetric = "support_rate"
+	AnalyticsMetricTimeOnPage        AnalyticsMetric = "time_on_page"
+	AnalyticsMetricViewsPerVisit     AnalyticsMetric = "views_per_visit"
+	AnalyticsMetricVisitDuration     AnalyticsMetric = "visit_duration"
+	AnalyticsMetricVisitors          AnalyticsMetric = "visitors"
+	AnalyticsMetricVisits            AnalyticsMetric = "visits"
 )
 
 // Valid indicates whether the value is a known member of the AnalyticsMetric enum.
 func (e AnalyticsMetric) Valid() bool {
 	switch e {
+	case AnalyticsMetricAvgDuration:
+		return true
 	case AnalyticsMetricBounceRate:
+		return true
+	case AnalyticsMetricClientErrorRate:
+		return true
+	case AnalyticsMetricClientErrors:
 		return true
 	case AnalyticsMetricCompletions:
 		return true
@@ -635,17 +687,31 @@ func (e AnalyticsMetric) Valid() bool {
 		return true
 	case AnalyticsMetricDiscussions:
 		return true
+	case AnalyticsMetricErrorRate:
+		return true
+	case AnalyticsMetricErrors:
+		return true
 	case AnalyticsMetricEvents:
 		return true
 	case AnalyticsMetricFeedback:
 		return true
 	case AnalyticsMetricHelpfulRate:
 		return true
+	case AnalyticsMetricP50:
+		return true
+	case AnalyticsMetricP95:
+		return true
+	case AnalyticsMetricP99:
+		return true
 	case AnalyticsMetricPageviews:
 		return true
 	case AnalyticsMetricRatingsDown:
 		return true
 	case AnalyticsMetricRatingsUp:
+		return true
+	case AnalyticsMetricRequests:
+		return true
+	case AnalyticsMetricRequestsPerMinute:
 		return true
 	case AnalyticsMetricRevenue:
 		return true
@@ -707,19 +773,41 @@ func (e AnalyticsPlatform) Valid() bool {
 	}
 }
 
+// Defines values for AnalyticsPropertyKind.
+const (
+	AnalyticsKindApi  AnalyticsPropertyKind = "api"
+	AnalyticsKindSite AnalyticsPropertyKind = "site"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsPropertyKind enum.
+func (e AnalyticsPropertyKind) Valid() bool {
+	switch e {
+	case AnalyticsKindApi:
+		return true
+	case AnalyticsKindSite:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsRangePeriod.
 const (
-	AnalyticsLast12Months AnalyticsRangePeriod = "12mo"
-	AnalyticsLast28Days   AnalyticsRangePeriod = "28d"
-	AnalyticsLast30Days   AnalyticsRangePeriod = "30d"
-	AnalyticsLast6Months  AnalyticsRangePeriod = "6mo"
-	AnalyticsLast7Days    AnalyticsRangePeriod = "7d"
-	AnalyticsLast90Days   AnalyticsRangePeriod = "90d"
-	AnalyticsLastMonth    AnalyticsRangePeriod = "last_month"
-	AnalyticsThisMonth    AnalyticsRangePeriod = "month"
-	AnalyticsThisYear     AnalyticsRangePeriod = "year"
-	AnalyticsToday        AnalyticsRangePeriod = "today"
-	AnalyticsYesterday    AnalyticsRangePeriod = "yesterday"
+	AnalyticsLast12Months  AnalyticsRangePeriod = "12mo"
+	AnalyticsLast15Minutes AnalyticsRangePeriod = "15m"
+	AnalyticsLast24Hours   AnalyticsRangePeriod = "24h"
+	AnalyticsLast28Days    AnalyticsRangePeriod = "28d"
+	AnalyticsLast30Days    AnalyticsRangePeriod = "30d"
+	AnalyticsLast6Hours    AnalyticsRangePeriod = "6h"
+	AnalyticsLast6Months   AnalyticsRangePeriod = "6mo"
+	AnalyticsLast7Days     AnalyticsRangePeriod = "7d"
+	AnalyticsLast90Days    AnalyticsRangePeriod = "90d"
+	AnalyticsLastHour      AnalyticsRangePeriod = "1h"
+	AnalyticsLastMonth     AnalyticsRangePeriod = "last_month"
+	AnalyticsThisMonth     AnalyticsRangePeriod = "month"
+	AnalyticsThisYear      AnalyticsRangePeriod = "year"
+	AnalyticsToday         AnalyticsRangePeriod = "today"
+	AnalyticsYesterday     AnalyticsRangePeriod = "yesterday"
 )
 
 // Valid indicates whether the value is a known member of the AnalyticsRangePeriod enum.
@@ -727,15 +815,23 @@ func (e AnalyticsRangePeriod) Valid() bool {
 	switch e {
 	case AnalyticsLast12Months:
 		return true
+	case AnalyticsLast15Minutes:
+		return true
+	case AnalyticsLast24Hours:
+		return true
 	case AnalyticsLast28Days:
 		return true
 	case AnalyticsLast30Days:
+		return true
+	case AnalyticsLast6Hours:
 		return true
 	case AnalyticsLast6Months:
 		return true
 	case AnalyticsLast7Days:
 		return true
 	case AnalyticsLast90Days:
+		return true
+	case AnalyticsLastHour:
 		return true
 	case AnalyticsLastMonth:
 		return true
@@ -791,6 +887,39 @@ func (e AnalyticsReportFrequency) Valid() bool {
 	case AnalyticsReportNone:
 		return true
 	case AnalyticsReportWeekly:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsResultMetaCapsReached.
+const (
+	AnalyticsCapApiVersions   AnalyticsResultMetaCapsReached = "api_versions"
+	AnalyticsCapAppVersions   AnalyticsResultMetaCapsReached = "app_versions"
+	AnalyticsCapConsumers     AnalyticsResultMetaCapsReached = "consumers"
+	AnalyticsCapDimensionRows AnalyticsResultMetaCapsReached = "dimension_rows"
+	AnalyticsCapEnvironments  AnalyticsResultMetaCapsReached = "environments"
+	AnalyticsCapRoutes        AnalyticsResultMetaCapsReached = "routes"
+	AnalyticsCapServices      AnalyticsResultMetaCapsReached = "services"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsResultMetaCapsReached enum.
+func (e AnalyticsResultMetaCapsReached) Valid() bool {
+	switch e {
+	case AnalyticsCapApiVersions:
+		return true
+	case AnalyticsCapAppVersions:
+		return true
+	case AnalyticsCapConsumers:
+		return true
+	case AnalyticsCapDimensionRows:
+		return true
+	case AnalyticsCapEnvironments:
+		return true
+	case AnalyticsCapRoutes:
+		return true
+	case AnalyticsCapServices:
 		return true
 	default:
 		return false
@@ -4502,6 +4631,24 @@ func (e QueryAnalyticsParamsFormat) Valid() bool {
 	}
 }
 
+// Defines values for SendAnalyticsRequestsParamsContentEncoding.
+const (
+	SendAnalyticsRequestsParamsContentEncodingGzip     SendAnalyticsRequestsParamsContentEncoding = "gzip"
+	SendAnalyticsRequestsParamsContentEncodingIdentity SendAnalyticsRequestsParamsContentEncoding = "identity"
+)
+
+// Valid indicates whether the value is a known member of the SendAnalyticsRequestsParamsContentEncoding enum.
+func (e SendAnalyticsRequestsParamsContentEncoding) Valid() bool {
+	switch e {
+	case SendAnalyticsRequestsParamsContentEncodingGzip:
+		return true
+	case SendAnalyticsRequestsParamsContentEncodingIdentity:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for GetAnalyticsRetentionParamsGrain.
 const (
 	AnalyticsRetentionDay   GetAnalyticsRetentionParamsGrain = "day"
@@ -4937,6 +5084,14 @@ type AnalyticsDataDeletion struct {
 // `support_rate` with pages of fewer than 100 page views after the others unless `order_by`
 // says otherwise. Days of the past come from the support rollup, today and days not yet rolled
 // up from the inbox itself.
+//
+// `api` is an API property's requests (`sendAnalyticsRequests`), and the only dataset an API
+// property takes (`422 property_kind` otherwise, and for `api` on a site). It takes the API
+// metrics of `AnalyticsMetric`, the API dimensions of `AnalyticsDimension` and filters on
+// them, no goal, prop, segment, comparison or insights. Closed local days come from daily
+// rows, closed hours from hourly rows and the rest from minute rows, which processes write
+// every 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
+// Rows are ordered by `requests` unless `order_by` says otherwise.
 type AnalyticsDataset string
 
 // AnalyticsDimension A filter dimension (`AnalyticsFilterDimension`), or a time grain: `time:hour` (local hours
@@ -4946,6 +5101,11 @@ type AnalyticsDataset string
 // range is present. `event` breaks custom and built-in events down by name, `prop` by the
 // value of the event prop the query's `prop` names; either takes at most one other dimension,
 // a time grain other than `time:hour` or a visit dimension.
+//
+// With `dataset: api`, two of `route`, `method`, `status`, `status_class`, `environment` and
+// one grain: `time:minute` (minutes, `2026-10-12T14:05` in the property's time zone, inside
+// the last `YUVA_MONITOR_MINUTE_DAYS` days and at most 1,440 of them), `time:hour` (local
+// hours) or `time:day`.
 type AnalyticsDimension string
 
 // AnalyticsDomain A host name whose pages may send events, without scheme or port: `example.com`,
@@ -5187,6 +5347,12 @@ type AnalyticsExportCreate struct {
 	// for events without it: as
 	// a filter of visits they keep the visits with such an event; in an `event` or `prop`
 	// breakdown they keep the matching events.
+	//
+	// With `dataset: api`: `route` is the route pattern (`/users/{id}`), `(unmatched)` for
+	// requests that answered 404 or 405 without one, or `(other)` past the property's 1,000
+	// routes; `method` an HTTP method or `_OTHER`; `status` the status code (`0` when no response
+	// was sent); `status_class` `1xx` to `5xx`, or `none` for status 0; `environment` the record's
+	// environment (`production` by default, `(other)` past 20).
 	Dimension *AnalyticsFilterDimension `json:"dimension,omitempty"`
 	Format    *AnalyticsExportFormat    `json:"format,omitempty"`
 	Kind      AnalyticsExportKind       `json:"kind"`
@@ -5195,7 +5361,8 @@ type AnalyticsExportCreate struct {
 	// Range Days of the property's time zone: a `period` ending today (`today`, `yesterday`, `7d`,
 	// `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
 	// `year` are the current calendar month and year to date; `last_month` the one before), or
-	// `from` and `to` (inclusive, at most 400 days apart).
+	// `from` and `to` (inclusive, at most 400 days apart). With `dataset: api` a period can also
+	// be the last `15m`, `1h`, `6h` or `24h` up to the current minute, included.
 	Range *AnalyticsRange `json:"range,omitempty"`
 }
 
@@ -5231,6 +5398,12 @@ type AnalyticsFilter struct {
 	// for events without it: as
 	// a filter of visits they keep the visits with such an event; in an `event` or `prop`
 	// breakdown they keep the matching events.
+	//
+	// With `dataset: api`: `route` is the route pattern (`/users/{id}`), `(unmatched)` for
+	// requests that answered 404 or 405 without one, or `(other)` past the property's 1,000
+	// routes; `method` an HTTP method or `_OTHER`; `status` the status code (`0` when no response
+	// was sent); `status_class` `1xx` to `5xx`, or `none` for status 0; `environment` the record's
+	// environment (`production` by default, `(other)` past 20).
 	Dimension AnalyticsFilterDimension `json:"dimension"`
 	Op        AnalyticsFilterOp        `json:"op"`
 
@@ -5258,6 +5431,12 @@ type AnalyticsFilterOp string
 // for events without it: as
 // a filter of visits they keep the visits with such an event; in an `event` or `prop`
 // breakdown they keep the matching events.
+//
+// With `dataset: api`: `route` is the route pattern (`/users/{id}`), `(unmatched)` for
+// requests that answered 404 or 405 without one, or `(other)` past the property's 1,000
+// routes; `method` an HTTP method or `_OTHER`; `status` the status code (`0` when no response
+// was sent); `status_class` `1xx` to `5xx`, or `none` for status 0; `environment` the record's
+// environment (`production` by default, `(other)` past 20).
 type AnalyticsFilterDimension string
 
 // AnalyticsFunnel defines model for AnalyticsFunnel.
@@ -5491,6 +5670,13 @@ type AnalyticsInsight struct {
 	// `ratings_down` (page ratings), `helpful_rate` (percent of ratings that are `up`),
 	// `discussions` (discussion threads started on it) and `support_rate` (conversations per
 	// 1,000 page views), next to `visitors` and `pageviews`.
+	//
+	// With `dataset: api` (an API property) only: `requests`, `requests_per_minute` (requests
+	// per minute of the range or bucket, up to now), `errors` (status 500 to 599, or 0 when no
+	// response was sent), `error_rate` and `client_error_rate` (percent of requests),
+	// `client_errors` (status 400 to 499), `p50`, `p95` and `p99` (the duration in milliseconds
+	// that this share of requests stayed within, from sketches accurate to 1.1%) and
+	// `avg_duration` (milliseconds).
 	Metric AnalyticsMetric `json:"metric"`
 
 	// Previous The comparison range's number (0 for `metric_new` and `new_value`), or the range's overall `support_rate` for a hotspot.
@@ -5523,22 +5709,39 @@ type AnalyticsInsightKind string
 // `ratings_down` (page ratings), `helpful_rate` (percent of ratings that are `up`),
 // `discussions` (discussion threads started on it) and `support_rate` (conversations per
 // 1,000 page views), next to `visitors` and `pageviews`.
+//
+// With `dataset: api` (an API property) only: `requests`, `requests_per_minute` (requests
+// per minute of the range or bucket, up to now), `errors` (status 500 to 599, or 0 when no
+// response was sent), `error_rate` and `client_error_rate` (percent of requests),
+// `client_errors` (status 400 to 499), `p50`, `p95` and `p99` (the duration in milliseconds
+// that this share of requests stayed within, from sketches accurate to 1.1%) and
+// `avg_duration` (milliseconds).
 type AnalyticsMetric string
 
 // AnalyticsMetrics The metrics the query asked for.
 type AnalyticsMetrics struct {
-	BounceRate     *float64 `json:"bounce_rate,omitempty"`
-	Completions    *float64 `json:"completions,omitempty"`
-	Conversations  *float64 `json:"conversations,omitempty"`
-	ConversionRate *float64 `json:"conversion_rate,omitempty"`
-	Conversions    *float64 `json:"conversions,omitempty"`
-	Discussions    *float64 `json:"discussions,omitempty"`
-	Events         *float64 `json:"events,omitempty"`
-	Feedback       *float64 `json:"feedback,omitempty"`
-	HelpfulRate    *float64 `json:"helpful_rate,omitempty"`
-	Pageviews      *float64 `json:"pageviews,omitempty"`
-	RatingsDown    *float64 `json:"ratings_down,omitempty"`
-	RatingsUp      *float64 `json:"ratings_up,omitempty"`
+	AvgDuration       *float64 `json:"avg_duration,omitempty"`
+	BounceRate        *float64 `json:"bounce_rate,omitempty"`
+	ClientErrorRate   *float64 `json:"client_error_rate,omitempty"`
+	ClientErrors      *float64 `json:"client_errors,omitempty"`
+	Completions       *float64 `json:"completions,omitempty"`
+	Conversations     *float64 `json:"conversations,omitempty"`
+	ConversionRate    *float64 `json:"conversion_rate,omitempty"`
+	Conversions       *float64 `json:"conversions,omitempty"`
+	Discussions       *float64 `json:"discussions,omitempty"`
+	ErrorRate         *float64 `json:"error_rate,omitempty"`
+	Errors            *float64 `json:"errors,omitempty"`
+	Events            *float64 `json:"events,omitempty"`
+	Feedback          *float64 `json:"feedback,omitempty"`
+	HelpfulRate       *float64 `json:"helpful_rate,omitempty"`
+	P50               *float64 `json:"p50,omitempty"`
+	P95               *float64 `json:"p95,omitempty"`
+	P99               *float64 `json:"p99,omitempty"`
+	Pageviews         *float64 `json:"pageviews,omitempty"`
+	RatingsDown       *float64 `json:"ratings_down,omitempty"`
+	RatingsUp         *float64 `json:"ratings_up,omitempty"`
+	Requests          *float64 `json:"requests,omitempty"`
+	RequestsPerMinute *float64 `json:"requests_per_minute,omitempty"`
 
 	// Revenue Per currency, most first.
 	Revenue       *[]AnalyticsRevenue `json:"revenue,omitempty"`
@@ -5582,6 +5785,13 @@ type AnalyticsOrder struct {
 	// `ratings_down` (page ratings), `helpful_rate` (percent of ratings that are `up`),
 	// `discussions` (discussion threads started on it) and `support_rate` (conversations per
 	// 1,000 page views), next to `visitors` and `pageviews`.
+	//
+	// With `dataset: api` (an API property) only: `requests`, `requests_per_minute` (requests
+	// per minute of the range or bucket, up to now), `errors` (status 500 to 599, or 0 when no
+	// response was sent), `error_rate` and `client_error_rate` (percent of requests),
+	// `client_errors` (status 400 to 499), `p50`, `p95` and `p99` (the duration in milliseconds
+	// that this share of requests stayed within, from sketches accurate to 1.1%) and
+	// `avg_duration` (milliseconds).
 	Metric AnalyticsMetric `json:"metric"`
 }
 
@@ -5608,8 +5818,11 @@ type AnalyticsPathRule struct {
 // apps send without an `Origin`. Server-side events (`sendAnalyticsEvents`) need no platform.
 type AnalyticsPlatform string
 
-// AnalyticsProperty A website or app the workspace measures.
+// AnalyticsProperty A website, app or API the workspace measures.
 type AnalyticsProperty struct {
+	// ApdexMs An API's Apdex threshold T in milliseconds; a request is satisfied within T and tolerated within 4T.
+	ApdexMs int32 `json:"apdex_ms"`
+
 	// Audience `children` keeps location at country level and allows no consent features or tracked props.
 	Audience AnalyticsAudience `json:"audience"`
 
@@ -5633,11 +5846,21 @@ type AnalyticsProperty struct {
 	// InboxId The linked inbox, whose agents can read the property; absent when none.
 	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
 
+	// Kind `site` measures websites and apps (page views, events, visitors). `api` watches an API: its
+	// host sends a record per request (`sendAnalyticsRequests`) and `dataset: api` queries them. An
+	// API property's `domains` (0 to 50) are the API's host names and its `platforms` the apps
+	// allowed to send app-side records (`ios`, `android`, or none); it takes no goals, funnels,
+	// tracked props or consent features. The kind is fixed when the property is made.
+	Kind AnalyticsPropertyKind `json:"kind"`
+
 	// LastEventAt When an event was last stored, to the minute.
-	LastEventAt *time.Time          `json:"last_event_at,omitempty"`
-	Name        string              `json:"name"`
-	PathRules   []AnalyticsPathRule `json:"path_rules"`
-	Platforms   []AnalyticsPlatform `json:"platforms"`
+	LastEventAt *time.Time `json:"last_event_at,omitempty"`
+
+	// MonitorHourDays How many days an API's hourly rows are kept; daily rows follow `retention_months`.
+	MonitorHourDays int32               `json:"monitor_hour_days"`
+	Name            string              `json:"name"`
+	PathRules       []AnalyticsPathRule `json:"path_rules"`
+	Platforms       []AnalyticsPlatform `json:"platforms"`
 
 	// PreviousKeyExpiresAt After a rotation, when the previous key stops working; absent when there is none.
 	PreviousKeyExpiresAt *time.Time `json:"previous_key_expires_at,omitempty"`
@@ -5661,23 +5884,35 @@ type AnalyticsProperty struct {
 
 // AnalyticsPropertyCreate defines model for AnalyticsPropertyCreate.
 type AnalyticsPropertyCreate struct {
+	ApdexMs *int32 `json:"apdex_ms,omitempty"`
+
 	// Audience `children` keeps location at country level and allows no consent features or tracked props.
 	Audience *AnalyticsAudience `json:"audience,omitempty"`
 
 	// Collection `anonymous` counts without consent: nothing is put on the visitor's device and no IP
 	// address is stored. `consent` takes an event only when it carries `c.a: 1`, which the
 	// script sends after `yuva.consent({analytics: true})`.
-	Collection      *AnalyticsCollection        `json:"collection,omitempty"`
-	ConsentFeatures *[]AnalyticsConsentFeature  `json:"consent_features,omitempty"`
-	Currency        *string                     `json:"currency,omitempty"`
-	Domains         []AnalyticsDomain           `json:"domains"`
-	ExcludedIps     *[]AnalyticsExcludedAddress `json:"excluded_ips,omitempty"`
-	ExcludedPaths   *[]AnalyticsPathPattern     `json:"excluded_paths,omitempty"`
-	InboxId         *uuid.UUID                  `json:"inbox_id,omitempty"`
-	Name            string                      `json:"name"`
-	PathRules       *[]AnalyticsPathRule        `json:"path_rules,omitempty"`
+	Collection      *AnalyticsCollection       `json:"collection,omitempty"`
+	ConsentFeatures *[]AnalyticsConsentFeature `json:"consent_features,omitempty"`
+	Currency        *string                    `json:"currency,omitempty"`
 
-	// Platforms `[web]` when absent.
+	// Domains 1 to 50 host names for a site, 0 to 50 for an API.
+	Domains       []AnalyticsDomain           `json:"domains"`
+	ExcludedIps   *[]AnalyticsExcludedAddress `json:"excluded_ips,omitempty"`
+	ExcludedPaths *[]AnalyticsPathPattern     `json:"excluded_paths,omitempty"`
+	InboxId       *uuid.UUID                  `json:"inbox_id,omitempty"`
+
+	// Kind `site` measures websites and apps (page views, events, visitors). `api` watches an API: its
+	// host sends a record per request (`sendAnalyticsRequests`) and `dataset: api` queries them. An
+	// API property's `domains` (0 to 50) are the API's host names and its `platforms` the apps
+	// allowed to send app-side records (`ios`, `android`, or none); it takes no goals, funnels,
+	// tracked props or consent features. The kind is fixed when the property is made.
+	Kind            *AnalyticsPropertyKind `json:"kind,omitempty"`
+	MonitorHourDays *int32                 `json:"monitor_hour_days,omitempty"`
+	Name            string                 `json:"name"`
+	PathRules       *[]AnalyticsPathRule   `json:"path_rules,omitempty"`
+
+	// Platforms At least one for a site, `[web]` when absent; for an API `ios` and `android` only, none when absent.
 	Platforms *[]AnalyticsPlatform `json:"platforms,omitempty"`
 
 	// RetentionMonths 25 when absent; `null` keeps rollups forever.
@@ -5693,6 +5928,13 @@ type AnalyticsPropertyDeletion struct {
 	// Name The property's name, exactly.
 	Name string `json:"name"`
 }
+
+// AnalyticsPropertyKind `site` measures websites and apps (page views, events, visitors). `api` watches an API: its
+// host sends a record per request (`sendAnalyticsRequests`) and `dataset: api` queries them. An
+// API property's `domains` (0 to 50) are the API's host names and its `platforms` the apps
+// allowed to send app-side records (`ios`, `android`, or none); it takes no goals, funnels,
+// tracked props or consent features. The kind is fixed when the property is made.
+type AnalyticsPropertyKind string
 
 // AnalyticsPropertyList defines model for AnalyticsPropertyList.
 type AnalyticsPropertyList struct {
@@ -5710,24 +5952,31 @@ type AnalyticsPropertyRef struct {
 
 // AnalyticsPropertyUpdate defines model for AnalyticsPropertyUpdate.
 type AnalyticsPropertyUpdate struct {
+	ApdexMs *int32 `json:"apdex_ms,omitempty"`
+
 	// Audience `children` keeps location at country level and allows no consent features or tracked props.
 	Audience *AnalyticsAudience `json:"audience,omitempty"`
 
 	// Collection `anonymous` counts without consent: nothing is put on the visitor's device and no IP
 	// address is stored. `consent` takes an event only when it carries `c.a: 1`, which the
 	// script sends after `yuva.consent({analytics: true})`.
-	Collection      *AnalyticsCollection        `json:"collection,omitempty"`
-	ConsentFeatures *[]AnalyticsConsentFeature  `json:"consent_features,omitempty"`
-	Currency        *string                     `json:"currency,omitempty"`
-	Domains         *[]AnalyticsDomain          `json:"domains,omitempty"`
-	ExcludedIps     *[]AnalyticsExcludedAddress `json:"excluded_ips,omitempty"`
-	ExcludedPaths   *[]AnalyticsPathPattern     `json:"excluded_paths,omitempty"`
+	Collection      *AnalyticsCollection       `json:"collection,omitempty"`
+	ConsentFeatures *[]AnalyticsConsentFeature `json:"consent_features,omitempty"`
+	Currency        *string                    `json:"currency,omitempty"`
+
+	// Domains 1 to 50 host names for a site, 0 to 50 for an API.
+	Domains       *[]AnalyticsDomain          `json:"domains,omitempty"`
+	ExcludedIps   *[]AnalyticsExcludedAddress `json:"excluded_ips,omitempty"`
+	ExcludedPaths *[]AnalyticsPathPattern     `json:"excluded_paths,omitempty"`
 
 	// InboxId `null` unlinks the property from its inbox.
-	InboxId   nullable.Nullable[uuid.UUID] `json:"inbox_id,omitempty"`
-	Name      *string                      `json:"name,omitempty"`
-	PathRules *[]AnalyticsPathRule         `json:"path_rules,omitempty"`
-	Platforms *[]AnalyticsPlatform         `json:"platforms,omitempty"`
+	InboxId         nullable.Nullable[uuid.UUID] `json:"inbox_id,omitempty"`
+	MonitorHourDays *int32                       `json:"monitor_hour_days,omitempty"`
+	Name            *string                      `json:"name,omitempty"`
+	PathRules       *[]AnalyticsPathRule         `json:"path_rules,omitempty"`
+
+	// Platforms At least one for a site; for an API `ios` and `android` only.
+	Platforms *[]AnalyticsPlatform `json:"platforms,omitempty"`
 
 	// RetentionMonths `null` keeps rollups forever.
 	RetentionMonths nullable.Nullable[int32] `json:"retention_months,omitempty"`
@@ -5755,6 +6004,14 @@ type AnalyticsQuery struct {
 	// `support_rate` with pages of fewer than 100 page views after the others unless `order_by`
 	// says otherwise. Days of the past come from the support rollup, today and days not yet rolled
 	// up from the inbox itself.
+	//
+	// `api` is an API property's requests (`sendAnalyticsRequests`), and the only dataset an API
+	// property takes (`422 property_kind` otherwise, and for `api` on a site). It takes the API
+	// metrics of `AnalyticsMetric`, the API dimensions of `AnalyticsDimension` and filters on
+	// them, no goal, prop, segment, comparison or insights. Closed local days come from daily
+	// rows, closed hours from hourly rows and the rest from minute rows, which processes write
+	// every 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
+	// Rows are ordered by `requests` unless `order_by` says otherwise.
 	Dataset    *AnalyticsDataset     `json:"dataset,omitempty"`
 	Dimensions *[]AnalyticsDimension `json:"dimensions,omitempty"`
 	Filters    *[]AnalyticsFilter    `json:"filters,omitempty"`
@@ -5782,7 +6039,8 @@ type AnalyticsQuery struct {
 	// Range Days of the property's time zone: a `period` ending today (`today`, `yesterday`, `7d`,
 	// `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
 	// `year` are the current calendar month and year to date; `last_month` the one before), or
-	// `from` and `to` (inclusive, at most 400 days apart).
+	// `from` and `to` (inclusive, at most 400 days apart). With `dataset: api` a period can also
+	// be the last `15m`, `1h`, `6h` or `24h` up to the current minute, included.
 	Range AnalyticsRange `json:"range"`
 
 	// SegmentId A saved segment of the property, whose filters are added to `filters`.
@@ -5792,7 +6050,8 @@ type AnalyticsQuery struct {
 // AnalyticsRange Days of the property's time zone: a `period` ending today (`today`, `yesterday`, `7d`,
 // `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
 // `year` are the current calendar month and year to date; `last_month` the one before), or
-// `from` and `to` (inclusive, at most 400 days apart).
+// `from` and `to` (inclusive, at most 400 days apart). With `dataset: api` a period can also
+// be the last `15m`, `1h`, `6h` or `24h` up to the current minute, included.
 type AnalyticsRange struct {
 	From   *openapi_types.Date   `json:"from,omitempty"`
 	Period *AnalyticsRangePeriod `json:"period,omitempty"`
@@ -5894,6 +6153,74 @@ type AnalyticsRealtime struct {
 // AnalyticsReportFrequency defines model for AnalyticsReportFrequency.
 type AnalyticsReportFrequency string
 
+// AnalyticsRequestRecord One request an API served. Give `route`, or `path` when the router knows no pattern.
+type AnalyticsRequestRecord struct {
+	ApiVersion *string `json:"api_version,omitempty"`
+
+	// Consumer Who called, as you name them, such as an API key's name or a client id; never a person's address (e-mail-shaped values become `(scrubbed)`).
+	Consumer *string `json:"consumer,omitempty"`
+
+	// DurationUs How long the request took, in microseconds.
+	DurationUs int64 `json:"duration_us"`
+
+	// Environment `production` when absent.
+	Environment *string `json:"environment,omitempty"`
+
+	// Ip The caller's address, only to find its country; shortened on arrival, never stored.
+	Ip *string `json:"ip,omitempty"`
+
+	// Method The request method; anything but the RFC 9110 methods and `PATCH` counts as `_OTHER`.
+	//
+	// Examples: GET
+	Method string `json:"method"`
+
+	// Path The request path, when there is no `route`; only the pattern inferred from it is kept.
+	//
+	// Examples: /users/42
+	Path *string `json:"path,omitempty"`
+
+	// Release The service's release, for deploy markers.
+	Release *string `json:"release,omitempty"`
+
+	// RequestSize Bytes of the request body.
+	RequestSize *int64 `json:"request_size,omitempty"`
+
+	// ResponseSize Bytes of the response body.
+	ResponseSize *int64 `json:"response_size,omitempty"`
+
+	// Route The route pattern that matched, starting with `/`, without method or host.
+	//
+	// Examples: /users/{id}
+	Route *string `json:"route,omitempty"`
+
+	// SampleRate This record stands for this many requests, for a host that sends one in N successful
+	// requests. Only records with a status of 1 to 399 may be sampled.
+	SampleRate *int `json:"sample_rate,omitempty"`
+
+	// Service The service that served the request.
+	Service *string `json:"service,omitempty"`
+
+	// Status The response status, 100 to 599, or 0 when no response was sent.
+	Status int `json:"status"`
+
+	// Time When the request started; now when absent. Records older than 72 hours are not counted.
+	Time *time.Time `json:"time,omitempty"`
+}
+
+// AnalyticsRequestRecords defines model for AnalyticsRequestRecords.
+type AnalyticsRequestRecords struct {
+	Records []AnalyticsRequestRecord `json:"records"`
+}
+
+// AnalyticsRequestsResult defines model for AnalyticsRequestsResult.
+type AnalyticsRequestsResult struct {
+	// Accepted The valid records, counted unless a rule of the operation dropped them.
+	Accepted int `json:"accepted"`
+
+	// Errors The records left out as invalid, by their position in `records`.
+	Errors []AnalyticsEventError `json:"errors"`
+}
+
 // AnalyticsResult defines model for AnalyticsResult.
 type AnalyticsResult struct {
 	Comparison *AnalyticsComparison `json:"comparison,omitempty"`
@@ -5914,7 +6241,15 @@ type AnalyticsResult struct {
 
 // AnalyticsResultMeta defines model for AnalyticsResultMeta.
 type AnalyticsResultMeta struct {
-	From openapi_types.Date `json:"from"`
+	// CapsReached `dataset: api`: the caps the property has reached, so new values count as `(other)`:
+	// `routes` (1,000), `consumers` (10,000), `api_versions` (50), `app_versions` (200),
+	// `environments` (20), `services` (100 per workspace), `dimension_rows` (an hour of the
+	// range reached 50,000 consumer, country or app version rows).
+	CapsReached *[]AnalyticsResultMetaCapsReached `json:"caps_reached,omitempty"`
+
+	// Estimated `dataset: api`: some requests of the range were sampled (`sample_rate`), so counts are estimates.
+	Estimated *bool              `json:"estimated,omitempty"`
+	From      openapi_types.Date `json:"from"`
 
 	// RawWindowFrom The first day raw rows are kept for, which filters and breakdowns the rollups cannot answer need.
 	RawWindowFrom openapi_types.Date            `json:"raw_window_from"`
@@ -5922,6 +6257,9 @@ type AnalyticsResultMeta struct {
 	Timezone      string                        `json:"timezone"`
 	To            openapi_types.Date            `json:"to"`
 }
+
+// AnalyticsResultMetaCapsReached defines model for AnalyticsResultMeta.CapsReached.
+type AnalyticsResultMetaCapsReached string
 
 // AnalyticsResultMetaServedFrom defines model for AnalyticsResultMeta.ServedFrom.
 type AnalyticsResultMetaServedFrom string
@@ -6250,6 +6588,12 @@ type AnalyticsUsage struct {
 
 	// Month Examples: 2026-10
 	Month string `json:"month"`
+
+	// Requests API request records counted this month (`sendAnalyticsRequests`); absent when API monitoring is off.
+	Requests *int64 `json:"requests,omitempty"`
+
+	// RequestsLimit The monthly cap on request records; absent when there is none. Records over it are not counted until the month ends.
+	RequestsLimit *int64 `json:"requests_limit,omitempty"`
 }
 
 // AnalyticsVisitPage defines model for AnalyticsVisitPage.
@@ -6351,8 +6695,8 @@ type ApiKeyList struct {
 //	    Yuva. Owners and admins only; never offered to agents' tokens, refused for keys limited
 //	    to inboxes.
 //	  - `analytics:read`: analytics properties.
-//	  - `analytics:write`: server-side analytics events; for API keys only, never offered to
-//	    OAuth clients.
+//	  - `analytics:write`: server-side analytics events and API request records; for API keys
+//	    only, never offered to OAuth clients.
 //	  - `analytics:manage`: create, change and delete analytics properties, rotate their keys,
 //	    delete their data. Never offered to agents' tokens, refused for keys limited to inboxes.
 //
@@ -14166,6 +14510,15 @@ type GetAnalyticsRealtimeParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// SendAnalyticsRequestsParams defines parameters for SendAnalyticsRequests.
+type SendAnalyticsRequestsParams struct {
+	// ContentEncoding `gzip` when the body is compressed.
+	ContentEncoding *SendAnalyticsRequestsParamsContentEncoding `json:"Content-Encoding,omitempty"`
+}
+
+// SendAnalyticsRequestsParamsContentEncoding defines parameters for SendAnalyticsRequests.
+type SendAnalyticsRequestsParamsContentEncoding string
+
 // GetAnalyticsRetentionParams defines parameters for GetAnalyticsRetention.
 type GetAnalyticsRetentionParams struct {
 	// Grain `week` when absent.
@@ -16307,6 +16660,9 @@ type UpdateAnalyticsGoalJSONRequestBody = AnalyticsGoalUpdate
 
 // QueryAnalyticsJSONRequestBody defines body for QueryAnalytics for application/json ContentType.
 type QueryAnalyticsJSONRequestBody = AnalyticsQuery
+
+// SendAnalyticsRequestsJSONRequestBody defines body for SendAnalyticsRequests for application/json ContentType.
+type SendAnalyticsRequestsJSONRequestBody = AnalyticsRequestRecords
 
 // CreateAnalyticsSegmentJSONRequestBody defines body for CreateAnalyticsSegment for application/json ContentType.
 type CreateAnalyticsSegmentJSONRequestBody = AnalyticsSegmentCreate
@@ -19932,6 +20288,9 @@ type ServerInterface interface {
 	// GetAnalyticsRealtime The last 30 minutes
 	// (GET /v1/analytics/properties/{propertyId}/realtime)
 	GetAnalyticsRealtime(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params GetAnalyticsRealtimeParams)
+	// SendAnalyticsRequests Send an API's request records
+	// (POST /v1/analytics/properties/{propertyId}/requests)
+	SendAnalyticsRequests(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params SendAnalyticsRequestsParams)
 	// GetAnalyticsRetention How consented visitors come back
 	// (GET /v1/analytics/properties/{propertyId}/retention)
 	GetAnalyticsRetention(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params GetAnalyticsRetentionParams)
@@ -23827,6 +24186,56 @@ func (siw *ServerInterfaceWrapper) GetAnalyticsRealtime(w http.ResponseWriter, r
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.GetAnalyticsRealtime(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// SendAnalyticsRequests operation middleware
+func (siw *ServerInterfaceWrapper) SendAnalyticsRequests(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params SendAnalyticsRequestsParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Content-Encoding" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Content-Encoding")]; found {
+		var ContentEncoding SendAnalyticsRequestsParamsContentEncoding
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Content-Encoding", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Content-Encoding", valueList[0], &ContentEncoding, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Content-Encoding", Err: err})
+			return
+		}
+
+		params.ContentEncoding = &ContentEncoding
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.SendAnalyticsRequests(w, r, propertyId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -37496,6 +37905,7 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/query", wrapper.QueryAnalytics)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/realtime", wrapper.GetAnalyticsRealtime)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/events", wrapper.SendAnalyticsEvents)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/requests", wrapper.SendAnalyticsRequests)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/retention", wrapper.GetAnalyticsRetention)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/visitors/{persistentId}", wrapper.DeleteAnalyticsVisitor)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/health", wrapper.GetAnalyticsHealth)
@@ -45259,6 +45669,116 @@ func (response GetAnalyticsRealtime429ApplicationProblemPlusJSONResponse) VisitG
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendAnalyticsRequestsRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     SendAnalyticsRequestsParams
+	Body       *SendAnalyticsRequestsJSONRequestBody
+}
+
+type SendAnalyticsRequestsResponseObject interface {
+	VisitSendAnalyticsRequestsResponse(w http.ResponseWriter) error
+}
+
+type SendAnalyticsRequests202JSONResponse AnalyticsRequestsResult
+
+func (response SendAnalyticsRequests202JSONResponse) VisitSendAnalyticsRequestsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(202)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendAnalyticsRequests400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response SendAnalyticsRequests400ApplicationProblemPlusJSONResponse) VisitSendAnalyticsRequestsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendAnalyticsRequests401ApplicationProblemPlusJSONResponse Problem
+
+func (response SendAnalyticsRequests401ApplicationProblemPlusJSONResponse) VisitSendAnalyticsRequestsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendAnalyticsRequests403ApplicationProblemPlusJSONResponse Problem
+
+func (response SendAnalyticsRequests403ApplicationProblemPlusJSONResponse) VisitSendAnalyticsRequestsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendAnalyticsRequests404ApplicationProblemPlusJSONResponse Problem
+
+func (response SendAnalyticsRequests404ApplicationProblemPlusJSONResponse) VisitSendAnalyticsRequestsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendAnalyticsRequests422ApplicationProblemPlusJSONResponse Problem
+
+func (response SendAnalyticsRequests422ApplicationProblemPlusJSONResponse) VisitSendAnalyticsRequestsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendAnalyticsRequests503ApplicationProblemPlusJSONResponse Problem
+
+func (response SendAnalyticsRequests503ApplicationProblemPlusJSONResponse) VisitSendAnalyticsRequestsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(503)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -63293,6 +63813,9 @@ type StrictServerInterface interface {
 	// GetAnalyticsRealtime The last 30 minutes
 	// (GET /v1/analytics/properties/{propertyId}/realtime)
 	GetAnalyticsRealtime(ctx context.Context, request GetAnalyticsRealtimeRequestObject) (GetAnalyticsRealtimeResponseObject, error)
+	// SendAnalyticsRequests Send an API's request records
+	// (POST /v1/analytics/properties/{propertyId}/requests)
+	SendAnalyticsRequests(ctx context.Context, request SendAnalyticsRequestsRequestObject) (SendAnalyticsRequestsResponseObject, error)
 	// GetAnalyticsRetention How consented visitors come back
 	// (GET /v1/analytics/properties/{propertyId}/retention)
 	GetAnalyticsRetention(ctx context.Context, request GetAnalyticsRetentionRequestObject) (GetAnalyticsRetentionResponseObject, error)
@@ -66315,6 +66838,40 @@ func (sh *strictHandler) GetAnalyticsRealtime(w http.ResponseWriter, r *http.Req
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(GetAnalyticsRealtimeResponseObject); ok {
 		if err := validResponse.VisitGetAnalyticsRealtimeResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// SendAnalyticsRequests operation middleware
+func (sh *strictHandler) SendAnalyticsRequests(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params SendAnalyticsRequestsParams) {
+	var request SendAnalyticsRequestsRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	var body SendAnalyticsRequestsJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.SendAnalyticsRequests(ctx, request.(SendAnalyticsRequestsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "SendAnalyticsRequests")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(SendAnalyticsRequestsResponseObject); ok {
+		if err := validResponse.VisitSendAnalyticsRequestsResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
