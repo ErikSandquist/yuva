@@ -1844,14 +1844,24 @@ request. Decisions:
   `time:month`. `range` also takes `15m`, `1h`, `6h` and `24h` and minute-aligned `since` and `until`.
   Minute and hour labels are the property's local time with its UTC offset
   (`2026-10-12T14:05+03:00`), so a repeated DST hour and a pending zone change stay apart.
-  Any combination of core dimensions filters and breaks down from every tier; at most one extra
-  dimension (consumer, country or app version) joins them, from hours and days (`422
-  dimension_combination` otherwise). Comparisons, the 4 query slots per workspace and the cache are
+  Any combination of core dimensions filters and breaks down from every tier. One extra dimension
+  (consumer, country or app version) joins only route, method and status class, because that is what
+  the hourly dimension rows keep, and only over whole local hours (not `15m` to `24h`); anything else
+  answers `422 dimension_combination` with a `detail` saying what to change. An extra-dimension
+  breakdown leaves out requests without that value, so its totals can be below the overall total. Comparisons, the 4 query slots per workspace and the cache are
   M15's, except that answers over open ranges are cached for 5 seconds instead of 30, so new records
   show within 15 seconds. Results carry `meta.estimated` and `meta.caps_reached`, and the usage object
-  `requests` and `requests_limit`. New routes are first seen in the range, silent routes were called in the previous period and
-  not since. A new `release` per service and environment writes a `deploy` annotation, which gains a
-  time (`at`) so minute charts place it; Yuva's own annotations stay read-only.
+  `requests` and `requests_limit`. `routes: new | silent` (with the `route` dimension alone) lists
+  routes the server first received within the range, or called in the previous period and not since,
+  up to the end of the current local hour, each with a row even at zero. `conversations` works with no
+  dimension or a day, week or month grain alone and no filter (`422 no_linked_inbox` without a linked
+  inbox). `compare` (previous, year, range in days) shifts minute ranges by minutes; insights stay
+  refused for `dataset: api`. Ranges that cover whole local days read the day rows. Routes take their
+  own `apdex_ms` (`PATCH …/routes/{routeId}`, `null` falls back to the property's). A `release` new to
+  a service and environment, the first one included, writes a `deploy` annotation (`at`, service,
+  environment, release as its text; at most 50 per property and local day; going back to a release seen
+  before writes none; `monitor_releases` remembers them), placed by `at` on minute charts; Yuva's own
+  annotations stay read-only (`403 annotation_read_only`).
 - **Uptime checks (M16.4).** `monitor_checks`: name, `http` or `https` URL without credentials, `GET`
   or `HEAD`, up to 5 headers (values sealed under the master key), expected statuses (200–399), an
   optional keyword the first 64 KiB must or must not contain, timeout (1–30 s, 10), interval (30 s to
