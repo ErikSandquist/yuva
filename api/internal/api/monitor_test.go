@@ -396,7 +396,8 @@ func TestMonitorAccessAndKinds(t *testing.T) {
 }
 
 func TestMonitorUsageLimitAndCaps(t *testing.T) {
-	h := newHarness(t)
+	operator := "operator-" + unique("op") + "@example.com"
+	h := newHarnessWith(t, func(d *api.Deps) { d.OperatorEmails = []string{operator} })
 	tm := newTeam(t, h)
 	id := createAPIProperty(tm.owner, map[string]any{"name": "API"})
 	h.clock.Set(time.Date(2026, 10, 12, 12, 0, 0, 0, time.UTC))
@@ -410,14 +411,46 @@ func TestMonitorUsageLimitAndCaps(t *testing.T) {
 	}
 	sendRecords(backend, http.StatusAccepted, id, recs...)
 	sendRecords(backend, http.StatusAccepted, id, map[string]any{"method": "GET", "route": "/one-too-many", "status": 200, "duration_us": 100})
+	h.flushMonitor()
+	var owner string
+	if err := h.st.Pool.QueryRow(context.Background(), "SELECT p.email FROM members m JOIN people p ON p.id = m.person_id WHERE m.workspace_id = $1 AND m.role = 'owner'", tm.ws).Scan(&owner); err != nil {
+		t.Fatal(err)
+	}
+	limitMails := func() int {
+		n := 0
+		for _, m := range h.mail.to(owner) {
+			if strings.Contains(m.Subject, "reached its API monitoring limit") {
+				n++
+			}
+		}
+		return n
+	}
+	if limitMails() != 0 {
+		t.Fatal("told about the cap before reaching it")
+	}
 	sendRecords(backend, http.StatusAccepted, id, recs[:600]...)
 	h.flushMonitor()
 	usage := tm.owner.expect(http.StatusOK, "GET", "/v1/analytics/properties", nil).body["usage"].(map[string]any)
-	if usage["requests"].(float64) != 1001 || usage["requests_limit"].(float64) != 1500 {
+	if usage["requests"].(float64) != 1500 || usage["requests_limit"].(float64) != 1500 || usage["requests_limit_reached_at"] == nil {
 		t.Fatalf("usage %v", usage)
 	}
-	if n := h.count("SELECT records::int FROM monitor_ingest_stats WHERE workspace_id = $1 AND property_id = $2 AND reason = 'over_limit'", tm.ws, id); n != 600 {
+	if n := h.count("SELECT records::int FROM monitor_ingest_stats WHERE workspace_id = $1 AND property_id = $2 AND reason = 'over_limit'", tm.ws, id); n != 101 {
 		t.Fatalf("%d records over the limit", n)
+	}
+	if limitMails() != 1 {
+		t.Fatal("the owner was not told about the cap")
+	}
+	notices := func() int {
+		return h.count(`SELECT count(*) FROM operator_notices n JOIN workspaces w ON w.name = n.workspace_name
+			WHERE w.id = $1 AND n.kind = 'monitor_limit' AND n.detail LIKE '1,500 API request records%'`, tm.ws)
+	}
+	if notices() != 1 {
+		t.Fatal("no operator notice")
+	}
+	sendRecords(backend, http.StatusAccepted, id, recs[:10]...)
+	h.flushMonitor()
+	if limitMails() != 1 || notices() != 1 {
+		t.Fatal("told about the cap twice in a month")
 	}
 	res := apiQuery(tm.owner, id, map[string]any{"metrics": []string{"requests"}, "range": dayRange("2026-10-12"), "dimensions": []string{"route"}, "limit": 1000})
 	byRoute := rowsBy(res)
@@ -427,6 +460,134 @@ func TestMonitorUsageLimitAndCaps(t *testing.T) {
 	}
 	if res.body["next_cursor"] == nil {
 		t.Fatal("1,001 routes fit on one page of 1,000")
+	}
+}
+
+func TestMonitorHiddenRoutes(t *testing.T) {
+	h := newHarness(t)
+	tm := newTeam(t, h)
+	other := newTeam(t, h)
+	id := createAPIProperty(tm.owner, map[string]any{"name": "API"})
+	site, _ := createProperty(tm.owner, map[string]any{"name": "Site", "domains": []string{"example.com"}})
+	h.clock.Set(time.Date(2026, 10, 12, 12, 0, 0, 0, time.UTC))
+	sendRecords(tm.apiKey(h), http.StatusAccepted, id,
+		map[string]any{"method": "GET", "route": "/healthz", "status": 200, "duration_us": 50},
+		map[string]any{"method": "GET", "route": "/healthz", "status": 200, "duration_us": 50},
+		map[string]any{"method": "GET", "path": "/users/42", "status": 200, "duration_us": 5000},
+		map[string]any{"method": "GET", "path": "/users/43", "status": 500, "duration_us": 9000},
+	)
+	h.flushMonitor()
+	routes := map[string]map[string]any{}
+	for _, r := range tm.owner.expect(http.StatusOK, "GET", "/v1/analytics/properties/"+id+"/routes", nil).body["items"].([]any) {
+		m := r.(map[string]any)
+		routes[m["pattern"].(string)] = m
+	}
+	if routes["/healthz"]["inferred"] != false || routes["/users/{id}"]["inferred"] != true || routes["/healthz"]["hidden"] != false || routes["/users/{id}"]["last_seen_at"] == nil {
+		t.Fatalf("routes %v", routes)
+	}
+	health := fmt.Sprint(routes["/healthz"]["id"])
+	path := "/v1/analytics/properties/" + id + "/routes/" + health
+	q := map[string]any{"metrics": []string{"requests", "errors"}, "range": dayRange("2026-10-12"), "dimensions": []string{"route"}}
+	if totals(apiQuery(tm.owner, id, q))["requests"].(float64) != 4 {
+		t.Fatal("before hiding")
+	}
+	hidden := tm.owner.expect(http.StatusOK, "PATCH", path, map[string]any{"hidden": true})
+	if hidden.body["hidden"] != true || hidden.str("pattern") != "/healthz" {
+		t.Fatalf("hide %s", hidden.raw)
+	}
+	res := apiQuery(tm.owner, id, q)
+	if rows := rowsBy(res); rows["/healthz"] != nil || totals(res)["requests"].(float64) != 2 || totals(res)["errors"].(float64) != 1 {
+		t.Fatalf("a hidden route is answered: %s", res.raw)
+	}
+	only := apiQuery(tm.owner, id, map[string]any{"metrics": []string{"requests"}, "range": dayRange("2026-10-12"),
+		"filters": []map[string]any{{"dimension": "route", "op": "is", "values": []string{"/healthz"}}}})
+	if totals(only)["requests"].(float64) != 0 {
+		t.Fatalf("a filter reaches a hidden route: %s", only.raw)
+	}
+	tm.owner.expect(http.StatusOK, "PATCH", path, map[string]any{"hidden": false})
+	if totals(apiQuery(tm.owner, id, q))["requests"].(float64) != 4 {
+		t.Fatal("the route came not back")
+	}
+
+	reader := h.client()
+	reader.bearer = tm.owner.expect(http.StatusCreated, "POST", "/v1/api-keys", map[string]any{"name": "reader", "scopes": []string{"analytics:read"}}).str("secret")
+	reader.expect(http.StatusOK, "GET", "/v1/analytics/properties/"+id+"/routes", nil)
+	reader.expectProblem(http.StatusForbidden, "insufficient_scope", "PATCH", path, map[string]any{"hidden": true})
+	tm.agent.expectProblem(http.StatusNotFound, "not_found", "PATCH", path, map[string]any{"hidden": true})
+	other.owner.expectProblem(http.StatusNotFound, "not_found", "GET", "/v1/analytics/properties/"+id+"/routes", nil)
+	other.owner.expectProblem(http.StatusNotFound, "not_found", "PATCH", path, map[string]any{"hidden": true})
+	tm.owner.expectProblem(http.StatusNotFound, "not_found", "PATCH", "/v1/analytics/properties/"+id+"/routes/999999", map[string]any{"hidden": true})
+	tm.owner.expectProblem(http.StatusUnprocessableEntity, "property_kind", "GET", "/v1/analytics/properties/"+site+"/routes", nil)
+	tm.owner.expectProblem(http.StatusUnprocessableEntity, "property_kind", "PATCH", "/v1/analytics/properties/"+site+"/routes/1", map[string]any{"hidden": true})
+}
+
+func TestMonitorTimeZoneChangeAppliesFromTheNextLocalDay(t *testing.T) {
+	h := newHarness(t)
+	tm := newTeam(t, h)
+	id := createAPIProperty(tm.owner, map[string]any{"name": "API", "timezone": "UTC"})
+	ctx := context.Background()
+	backend := tm.apiKey(h)
+	send := func(at time.Time) {
+		t.Helper()
+		h.clock.Set(at)
+		sendRecords(backend, http.StatusAccepted, id, map[string]any{"method": "GET", "route": "/ping", "status": 200, "duration_us": 100, "time": at.Format(time.RFC3339)})
+		h.flushMonitor()
+	}
+	send(time.Date(2026, 10, 12, 10, 0, 0, 0, time.UTC))
+	h.clock.Set(time.Date(2026, 10, 12, 10, 5, 0, 0, time.UTC))
+	changed := tm.owner.expect(http.StatusOK, "PATCH", "/v1/analytics/properties/"+id, map[string]any{"timezone": "Asia/Kolkata"})
+	if changed.str("timezone") != "Asia/Kolkata" || changed.str("timezone_applies_at") != "2026-10-13T00:00:00Z" {
+		t.Fatalf("change %s", changed.raw)
+	}
+	send(time.Date(2026, 10, 12, 20, 0, 0, 0, time.UTC))
+	send(time.Date(2026, 10, 13, 1, 0, 0, 0, time.UTC))
+	send(time.Date(2026, 10, 13, 18, 0, 0, 0, time.UTC))
+	if got := tm.owner.expect(http.StatusOK, "GET", "/v1/analytics/properties/"+id, nil); got.body["timezone_applies_at"] != nil {
+		t.Fatalf("the zone still waits: %s", got.raw)
+	}
+	var days []string
+	rows, err := h.st.Pool.Query(ctx, "SELECT to_char(hour AT TIME ZONE 'UTC', 'MM-DD HH24:MI') || ' ' || to_char(day, 'MM-DD') FROM monitor_rollup_hours WHERE property_id = $1 ORDER BY hour", id)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for rows.Next() {
+		var d string
+		_ = rows.Scan(&d)
+		days = append(days, d)
+	}
+	rows.Close()
+	if fmt.Sprint(days) != "[10-12 10:00 10-12 10-12 20:00 10-12 10-13 00:30 10-13 10-13 17:30 10-13]" {
+		t.Fatalf("hours and their days %v", days)
+	}
+	answers := func() string {
+		t.Helper()
+		byDay := apiQuery(tm.owner, id, map[string]any{"metrics": []string{"requests"}, "range": map[string]any{"from": "2026-10-12", "to": "2026-10-13"},
+			"dimensions": []string{"time:day"}})
+		hours := apiQuery(tm.owner, id, map[string]any{"metrics": []string{"requests"}, "range": dayRange("2026-10-13"), "dimensions": []string{"time:hour"}})
+		var hl []string
+		for _, r := range hours.body["rows"].([]any) {
+			m := r.(map[string]any)
+			if m["metrics"].(map[string]any)["requests"].(float64) > 0 {
+				hl = append(hl, m["dimensions"].([]any)[0].(string))
+			}
+		}
+		first := hours.body["rows"].([]any)[0].(map[string]any)["dimensions"].([]any)[0]
+		return fmt.Sprintf("%s first %v hours %v", numbers(byDay), first, hl)
+	}
+	want := `{"rows":[{"dimensions":["2026-10-12"],"metrics":{"requests":2}},{"dimensions":["2026-10-13"],"metrics":{"requests":2}}],"totals":{"requests":4}} first 2026-10-13T05:30 hours [2026-10-13T06:00 2026-10-13T23:00]`
+	if got := answers(); got != want {
+		t.Fatalf("from minute rows:\n%s\nwant\n%s", got, want)
+	}
+	h.clock.Set(time.Date(2026, 10, 14, 12, 0, 0, 0, time.UTC))
+	h.flushMonitor()
+	if err := h.srv.RollupMonitor(ctx, uuid.MustParse(tm.ws), uuid.MustParse(id)); err != nil {
+		t.Fatal(err)
+	}
+	if n := h.count("SELECT count(*) FROM monitor_rollup_hours WHERE property_id = $1 AND (built_at IS NULL OR day_built_at IS NULL)", id); n != 0 {
+		t.Fatalf("%d hours or days not folded", n)
+	}
+	if got := answers(); got != want {
+		t.Fatalf("from folded rows:\n%s\nwant\n%s", got, want)
 	}
 }
 

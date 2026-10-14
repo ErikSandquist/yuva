@@ -301,7 +301,7 @@ INSERT INTO analytics_properties (id, workspace_id, inbox_id, kind, name, public
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,
     $12, $13, $14, $15, $16, $17, $18, $19,
     $20, $21, $22, $23, $23)
-RETURNING id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version, cohorts_built_at, kind, apdex_ms, monitor_hour_days
+RETURNING id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version, cohorts_built_at, kind, apdex_ms, monitor_hour_days, timezone_history
 `
 
 type CreateAnalyticsPropertyParams struct {
@@ -390,6 +390,7 @@ func (q *Queries) CreateAnalyticsProperty(ctx context.Context, arg CreateAnalyti
 		&i.Kind,
 		&i.ApdexMs,
 		&i.MonitorHourDays,
+		&i.TimezoneHistory,
 	)
 	return i, err
 }
@@ -596,7 +597,7 @@ func (q *Queries) DeleteStaleAnalyticsVisitClaims(ctx context.Context, arg Delet
 }
 
 const findAnalyticsPropertyByKey = `-- name: FindAnalyticsPropertyByKey :one
-SELECT p.id, p.workspace_id, p.inbox_id, p.name, p.public_key, p.previous_key, p.previous_key_until, p.domains, p.platforms, p.timezone, p.currency, p.collection, p.consent_features, p.audience, p.excluded_paths, p.excluded_ips, p.path_rules, p.tracked_props, p.retention_months, p.visitor_key, p.rollup_version, p.first_event_at, p.last_event_at, p.created_by, p.created_at, p.updated_at, p.deleted_at, p.goals_version, p.cohorts_built_at, p.kind, p.apdex_ms, p.monitor_hour_days FROM analytics_properties p JOIN workspaces w ON w.id = p.workspace_id
+SELECT p.id, p.workspace_id, p.inbox_id, p.name, p.public_key, p.previous_key, p.previous_key_until, p.domains, p.platforms, p.timezone, p.currency, p.collection, p.consent_features, p.audience, p.excluded_paths, p.excluded_ips, p.path_rules, p.tracked_props, p.retention_months, p.visitor_key, p.rollup_version, p.first_event_at, p.last_event_at, p.created_by, p.created_at, p.updated_at, p.deleted_at, p.goals_version, p.cohorts_built_at, p.kind, p.apdex_ms, p.monitor_hour_days, p.timezone_history FROM analytics_properties p JOIN workspaces w ON w.id = p.workspace_id
 WHERE (p.public_key = $1 OR (p.previous_key = $1 AND p.previous_key_until > $2))
   AND p.deleted_at IS NULL AND w.deleted_at IS NULL
 `
@@ -644,6 +645,7 @@ func (q *Queries) FindAnalyticsPropertyByKey(ctx context.Context, arg FindAnalyt
 		&i.Kind,
 		&i.ApdexMs,
 		&i.MonitorHourDays,
+		&i.TimezoneHistory,
 	)
 	return i, err
 }
@@ -738,7 +740,7 @@ func (q *Queries) GetAnalyticsGoal(ctx context.Context, arg GetAnalyticsGoalPara
 }
 
 const getAnalyticsProperty = `-- name: GetAnalyticsProperty :one
-SELECT id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version, cohorts_built_at, kind, apdex_ms, monitor_hour_days FROM analytics_properties WHERE workspace_id = $1 AND id = $2 AND deleted_at IS NULL
+SELECT id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version, cohorts_built_at, kind, apdex_ms, monitor_hour_days, timezone_history FROM analytics_properties WHERE workspace_id = $1 AND id = $2 AND deleted_at IS NULL
 `
 
 type GetAnalyticsPropertyParams struct {
@@ -782,6 +784,7 @@ func (q *Queries) GetAnalyticsProperty(ctx context.Context, arg GetAnalyticsProp
 		&i.Kind,
 		&i.ApdexMs,
 		&i.MonitorHourDays,
+		&i.TimezoneHistory,
 	)
 	return i, err
 }
@@ -839,7 +842,7 @@ func (q *Queries) GetAnalyticsUsage(ctx context.Context, arg GetAnalyticsUsagePa
 }
 
 const getDeletedAnalyticsProperty = `-- name: GetDeletedAnalyticsProperty :one
-SELECT id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version, cohorts_built_at, kind, apdex_ms, monitor_hour_days FROM analytics_properties WHERE workspace_id = $1 AND id = $2 AND deleted_at IS NOT NULL
+SELECT id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version, cohorts_built_at, kind, apdex_ms, monitor_hour_days, timezone_history FROM analytics_properties WHERE workspace_id = $1 AND id = $2 AND deleted_at IS NOT NULL
 `
 
 type GetDeletedAnalyticsPropertyParams struct {
@@ -883,6 +886,7 @@ func (q *Queries) GetDeletedAnalyticsProperty(ctx context.Context, arg GetDelete
 		&i.Kind,
 		&i.ApdexMs,
 		&i.MonitorHourDays,
+		&i.TimezoneHistory,
 	)
 	return i, err
 }
@@ -1149,7 +1153,7 @@ func (q *Queries) ListAnalyticsIngestStats(ctx context.Context, arg ListAnalytic
 }
 
 const listAnalyticsProperties = `-- name: ListAnalyticsProperties :many
-SELECT id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version, cohorts_built_at, kind, apdex_ms, monitor_hour_days FROM analytics_properties p
+SELECT id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version, cohorts_built_at, kind, apdex_ms, monitor_hour_days, timezone_history FROM analytics_properties p
 WHERE p.workspace_id = $1 AND p.deleted_at IS NULL
   AND ($2::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
@@ -1205,6 +1209,7 @@ func (q *Queries) ListAnalyticsProperties(ctx context.Context, arg ListAnalytics
 			&i.Kind,
 			&i.ApdexMs,
 			&i.MonitorHourDays,
+			&i.TimezoneHistory,
 		); err != nil {
 			return nil, err
 		}
@@ -1483,7 +1488,7 @@ func (q *Queries) ListWorkspaceAnalyticsPropertyIDs(ctx context.Context, workspa
 }
 
 const lockAnalyticsProperty = `-- name: LockAnalyticsProperty :one
-SELECT id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version, cohorts_built_at, kind, apdex_ms, monitor_hour_days FROM analytics_properties WHERE workspace_id = $1 AND id = $2 AND deleted_at IS NULL FOR UPDATE
+SELECT id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version, cohorts_built_at, kind, apdex_ms, monitor_hour_days, timezone_history FROM analytics_properties WHERE workspace_id = $1 AND id = $2 AND deleted_at IS NULL FOR UPDATE
 `
 
 type LockAnalyticsPropertyParams struct {
@@ -1527,6 +1532,7 @@ func (q *Queries) LockAnalyticsProperty(ctx context.Context, arg LockAnalyticsPr
 		&i.Kind,
 		&i.ApdexMs,
 		&i.MonitorHourDays,
+		&i.TimezoneHistory,
 	)
 	return i, err
 }
@@ -1598,7 +1604,7 @@ const rotateAnalyticsKey = `-- name: RotateAnalyticsKey :one
 UPDATE analytics_properties SET
     previous_key = public_key, previous_key_until = $1, public_key = $2, updated_at = $3
 WHERE workspace_id = $4 AND id = $5 AND deleted_at IS NULL
-RETURNING id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version, cohorts_built_at, kind, apdex_ms, monitor_hour_days
+RETURNING id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version, cohorts_built_at, kind, apdex_ms, monitor_hour_days, timezone_history
 `
 
 type RotateAnalyticsKeyParams struct {
@@ -1651,6 +1657,7 @@ func (q *Queries) RotateAnalyticsKey(ctx context.Context, arg RotateAnalyticsKey
 		&i.Kind,
 		&i.ApdexMs,
 		&i.MonitorHourDays,
+		&i.TimezoneHistory,
 	)
 	return i, err
 }
@@ -1918,9 +1925,10 @@ UPDATE analytics_properties SET
     inbox_id = $1, name = $2, domains = $3, platforms = $4, timezone = $5,
     currency = $6, collection = $7, consent_features = $8, audience = $9,
     excluded_paths = $10, excluded_ips = $11, path_rules = $12, tracked_props = $13,
-    retention_months = $14, apdex_ms = $15, monitor_hour_days = $16, updated_at = $17
-WHERE workspace_id = $18 AND id = $19 AND deleted_at IS NULL
-RETURNING id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version, cohorts_built_at, kind, apdex_ms, monitor_hour_days
+    retention_months = $14, apdex_ms = $15, monitor_hour_days = $16,
+    timezone_history = $17, updated_at = $18
+WHERE workspace_id = $19 AND id = $20 AND deleted_at IS NULL
+RETURNING id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at, goals_version, cohorts_built_at, kind, apdex_ms, monitor_hour_days, timezone_history
 `
 
 type UpdateAnalyticsPropertyParams struct {
@@ -1940,6 +1948,7 @@ type UpdateAnalyticsPropertyParams struct {
 	RetentionMonths *int32
 	ApdexMs         int32
 	MonitorHourDays int32
+	TimezoneHistory []byte
 	Now             time.Time
 	WorkspaceID     uuid.UUID
 	ID              uuid.UUID
@@ -1963,6 +1972,7 @@ func (q *Queries) UpdateAnalyticsProperty(ctx context.Context, arg UpdateAnalyti
 		arg.RetentionMonths,
 		arg.ApdexMs,
 		arg.MonitorHourDays,
+		arg.TimezoneHistory,
 		arg.Now,
 		arg.WorkspaceID,
 		arg.ID,
@@ -2001,6 +2011,7 @@ func (q *Queries) UpdateAnalyticsProperty(ctx context.Context, arg UpdateAnalyti
 		&i.Kind,
 		&i.ApdexMs,
 		&i.MonitorHourDays,
+		&i.TimezoneHistory,
 	)
 	return i, err
 }

@@ -12,6 +12,24 @@ import (
 	"uuid"
 )
 
+const bumpAnalyticsRollupVersion = `-- name: BumpAnalyticsRollupVersion :one
+UPDATE analytics_properties SET rollup_version = rollup_version + 1
+WHERE workspace_id = $1 AND id = $2 AND deleted_at IS NULL
+RETURNING rollup_version
+`
+
+type BumpAnalyticsRollupVersionParams struct {
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) BumpAnalyticsRollupVersion(ctx context.Context, arg BumpAnalyticsRollupVersionParams) (int32, error) {
+	row := q.db.QueryRow(ctx, bumpAnalyticsRollupVersion, arg.WorkspaceID, arg.ID)
+	var rollup_version int32
+	err := row.Scan(&rollup_version)
+	return rollup_version, err
+}
+
 const deleteMonitorMinutes = `-- name: DeleteMonitorMinutes :execrows
 DELETE FROM monitor_minute WHERE (tableoid, ctid) IN (
     SELECT t.tableoid, t.ctid FROM monitor_minute t
@@ -114,7 +132,8 @@ func (q *Queries) DeleteOldMonitorIngestStats(ctx context.Context, arg DeleteOld
 
 const getMonitorUsage = `-- name: GetMonitorUsage :one
 SELECT w.monitor_monthly_requests AS monthly_limit,
-       coalesce(u.monitor_requests, 0)::bigint AS requests
+       coalesce(u.monitor_requests, 0)::bigint AS requests,
+       u.monitor_limit_reached_at AS limit_reached_at
 FROM workspaces w LEFT JOIN usage_counters u ON u.workspace_id = w.id AND u.month = $1
 WHERE w.id = $2
 `
@@ -125,19 +144,20 @@ type GetMonitorUsageParams struct {
 }
 
 type GetMonitorUsageRow struct {
-	MonthlyLimit *int64
-	Requests     int64
+	MonthlyLimit   *int64
+	Requests       int64
+	LimitReachedAt *time.Time
 }
 
 func (q *Queries) GetMonitorUsage(ctx context.Context, arg GetMonitorUsageParams) (GetMonitorUsageRow, error) {
 	row := q.db.QueryRow(ctx, getMonitorUsage, arg.Month, arg.WorkspaceID)
 	var i GetMonitorUsageRow
-	err := row.Scan(&i.MonthlyLimit, &i.Requests)
+	err := row.Scan(&i.MonthlyLimit, &i.Requests, &i.LimitReachedAt)
 	return i, err
 }
 
 const listMonitorRetention = `-- name: ListMonitorRetention :many
-SELECT id, retention_months, monitor_hour_days, timezone FROM analytics_properties
+SELECT id, retention_months, monitor_hour_days, timezone, timezone_history FROM analytics_properties
 WHERE workspace_id = $1 AND kind = 'api' AND deleted_at IS NULL
 ORDER BY id
 `
@@ -147,6 +167,7 @@ type ListMonitorRetentionRow struct {
 	RetentionMonths *int32
 	MonitorHourDays int32
 	Timezone        string
+	TimezoneHistory []byte
 }
 
 func (q *Queries) ListMonitorRetention(ctx context.Context, workspaceID uuid.UUID) ([]ListMonitorRetentionRow, error) {
@@ -163,6 +184,7 @@ func (q *Queries) ListMonitorRetention(ctx context.Context, workspaceID uuid.UUI
 			&i.RetentionMonths,
 			&i.MonitorHourDays,
 			&i.Timezone,
+			&i.TimezoneHistory,
 		); err != nil {
 			return nil, err
 		}
@@ -205,6 +227,113 @@ func (q *Queries) ListMonitorRollupProperties(ctx context.Context, arg ListMonit
 		return nil, err
 	}
 	return items, nil
+}
+
+const listMonitorRoutes = `-- name: ListMonitorRoutes :many
+SELECT id, pattern, inferred, hidden, first_seen_at, last_seen_at FROM monitor_routes
+WHERE workspace_id = $1 AND property_id = $2
+ORDER BY pattern
+`
+
+type ListMonitorRoutesParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+}
+
+type ListMonitorRoutesRow struct {
+	ID          int32
+	Pattern     string
+	Inferred    bool
+	Hidden      bool
+	FirstSeenAt time.Time
+	LastSeenAt  time.Time
+}
+
+func (q *Queries) ListMonitorRoutes(ctx context.Context, arg ListMonitorRoutesParams) ([]ListMonitorRoutesRow, error) {
+	rows, err := q.db.Query(ctx, listMonitorRoutes, arg.WorkspaceID, arg.PropertyID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListMonitorRoutesRow
+	for rows.Next() {
+		var i ListMonitorRoutesRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Pattern,
+			&i.Inferred,
+			&i.Hidden,
+			&i.FirstSeenAt,
+			&i.LastSeenAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const markMonitorLimitReached = `-- name: MarkMonitorLimitReached :execrows
+UPDATE usage_counters SET monitor_limit_reached_at = $1
+WHERE workspace_id = $2 AND month = $3 AND monitor_limit_reached_at IS NULL
+`
+
+type MarkMonitorLimitReachedParams struct {
+	Now         *time.Time
+	WorkspaceID uuid.UUID
+	Month       time.Time
+}
+
+func (q *Queries) MarkMonitorLimitReached(ctx context.Context, arg MarkMonitorLimitReachedParams) (int64, error) {
+	result, err := q.db.Exec(ctx, markMonitorLimitReached, arg.Now, arg.WorkspaceID, arg.Month)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
+const setMonitorRouteHidden = `-- name: SetMonitorRouteHidden :one
+UPDATE monitor_routes SET hidden = $1
+WHERE workspace_id = $2 AND property_id = $3 AND id = $4
+RETURNING id, pattern, inferred, hidden, first_seen_at, last_seen_at
+`
+
+type SetMonitorRouteHiddenParams struct {
+	Hidden      bool
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	ID          int32
+}
+
+type SetMonitorRouteHiddenRow struct {
+	ID          int32
+	Pattern     string
+	Inferred    bool
+	Hidden      bool
+	FirstSeenAt time.Time
+	LastSeenAt  time.Time
+}
+
+func (q *Queries) SetMonitorRouteHidden(ctx context.Context, arg SetMonitorRouteHiddenParams) (SetMonitorRouteHiddenRow, error) {
+	row := q.db.QueryRow(ctx, setMonitorRouteHidden,
+		arg.Hidden,
+		arg.WorkspaceID,
+		arg.PropertyID,
+		arg.ID,
+	)
+	var i SetMonitorRouteHiddenRow
+	err := row.Scan(
+		&i.ID,
+		&i.Pattern,
+		&i.Inferred,
+		&i.Hidden,
+		&i.FirstSeenAt,
+		&i.LastSeenAt,
+	)
+	return i, err
 }
 
 const setWorkspaceMonitorLimit = `-- name: SetWorkspaceMonitorLimit :execrows

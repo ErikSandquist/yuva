@@ -1,0 +1,4 @@
+{{template "heading" "API monitoring limit reached"}}
+<p style="margin:0 0 16px 0;">The APIs of <strong>{{.Workspace}}</strong> sent {{.Limit}} request records this month, as many as this server takes from a workspace in a month. New requests are not counted until the month ends; everything counted so far stays.</p>
+<p style="margin:0 0 16px 0;">The server's operator can raise the limit for your workspace.</p>
+{{template "button" (button .URL "Open Analytics")}}

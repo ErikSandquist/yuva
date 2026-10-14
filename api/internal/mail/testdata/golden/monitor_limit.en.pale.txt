@@ -1,0 +1,9 @@
+Acme Support reached its API monitoring limit for this month
+
+The APIs of Acme Support sent 10,000,000 request records this month, as many as this server
+takes from a workspace in a month. New requests are not counted until the month ends; everything
+counted so far stays.
+
+The server's operator can raise the limit for your workspace.
+
+https://yuva.example.com/analytics

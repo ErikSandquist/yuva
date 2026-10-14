@@ -42,8 +42,8 @@ func (s *Server) monitorRequest(prop store.AnalyticsProperty, b oas.AnalyticsQue
 	if b.GoalId != nil || b.Prop != nil || b.SegmentId != nil || b.Compare != nil || (b.Insights != nil && *b.Insights) {
 		return mr, errValidation("the api dataset takes no goal_id, prop, segment_id, compare or insights")
 	}
-	loc, now := propertyLocation(prop.Timezone), s.now()
-	q := monitor.Query{WorkspaceID: prop.WorkspaceID, PropertyID: prop.ID, Location: loc, Now: now,
+	zone, now := monitorZone(prop.Timezone, prop.TimezoneHistory), s.now()
+	q := monitor.Query{WorkspaceID: prop.WorkspaceID, PropertyID: prop.ID, Zone: zone, Now: now,
 		MinuteFrom: monitor.LocalDay(now, time.UTC).AddDate(0, 0, 1-m.settings.MinuteDays)}
 	if d, ok := monitorPeriods[derefPeriod(b.Range.Period)]; ok && b.Range.Period != nil {
 		if b.Range.From != nil || b.Range.To != nil {
@@ -52,11 +52,11 @@ func (s *Server) monitorRequest(prop store.AnalyticsProperty, b oas.AnalyticsQue
 		q.End = now.Truncate(time.Minute).Add(time.Minute)
 		q.Start = q.End.Add(-d)
 	} else {
-		from, to, err := analyticsRange(b.Range, monitor.LocalDay(now, loc))
+		from, to, err := analyticsRange(b.Range, zone.LocalDay(now))
 		if err != nil {
 			return mr, err
 		}
-		q.Start, q.End, q.Days = monitor.DayStart(from, loc), monitor.DayStart(to.AddDate(0, 0, 1), loc), true
+		q.Start, q.End, q.Days = zone.DayStart(from), zone.DayStart(to.AddDate(0, 0, 1)), true
 	}
 	for _, metric := range b.Metrics {
 		if slices.Contains(q.Metrics, string(metric)) {
@@ -187,9 +187,9 @@ func (s *Server) runMonitorQuery(ctx context.Context, prop store.AnalyticsProper
 	a, m := s.analytics, s.analytics.monitor
 	now := q.Now
 	keyQ := q
-	keyQ.Now, keyQ.Location = time.Time{}, nil
+	keyQ.Now, keyQ.Zone = time.Time{}, monitor.Zone{}
 	key, _ := json.Marshal(keyQ)
-	cacheKey := prop.ID.String() + "|" + strconv.Itoa(int(prop.RollupVersion)) + "|api|" + prop.Timezone + "|" + string(key)
+	cacheKey := prop.ID.String() + "|" + strconv.Itoa(int(prop.RollupVersion)) + "|api|" + prop.Timezone + string(prop.TimezoneHistory) + "|" + string(key)
 	if v, ok := a.answers.get(cacheKey, now); ok {
 		return v.(monitor.Result), nil
 	}
@@ -243,7 +243,7 @@ func (s *Server) queryMonitor(ctx context.Context, prop store.AnalyticsProperty,
 	out := oas.AnalyticsResult{
 		Rows: make([]oas.AnalyticsRow, len(rows)), Totals: apiMetricsBody(&res.Totals, res.Minutes, q.Metrics),
 		Meta: oas.AnalyticsResultMeta{
-			From: openapi_types.Date{Time: monitor.LocalDay(q.Start, q.Location)}, To: openapi_types.Date{Time: monitor.LocalDay(q.End.Add(-time.Nanosecond), q.Location)},
+			From: openapi_types.Date{Time: q.Zone.LocalDay(q.Start)}, To: openapi_types.Date{Time: q.Zone.LocalDay(q.End.Add(-time.Nanosecond))},
 			Timezone: prop.Timezone, ServedFrom: oas.AnalyticsResultMetaServedFrom(res.ServedFrom), RawWindowFrom: openapi_types.Date{Time: q.MinuteFrom},
 		},
 	}

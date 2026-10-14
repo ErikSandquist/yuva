@@ -3,6 +3,7 @@ package monitor
 import (
 	"cmp"
 	"context"
+	"errors"
 	"fmt"
 	"maps"
 	"slices"
@@ -312,8 +313,9 @@ const aggReplace = `requests = EXCLUDED.requests, errors = EXCLUDED.errors, clie
     duration_sum = EXCLUDED.duration_sum, duration_min = EXCLUDED.duration_min, duration_max = EXCLUDED.duration_max, durations = EXCLUDED.durations,
     request_bytes = EXCLUDED.request_bytes, response_bytes = EXCLUDED.response_bytes, response_sizes = EXCLUDED.response_sizes`
 
-func (s *PGStore) Write(ctx context.Context, w Write, now time.Time) error {
-	return pgx.BeginFunc(ctx, s.Pool, func(tx pgx.Tx) error {
+func (s *PGStore) Write(ctx context.Context, w Write, now time.Time) (map[uuid.UUID]int64, error) {
+	totals := map[uuid.UUID]int64{}
+	err := pgx.BeginFunc(ctx, s.Pool, func(tx pgx.Tx) error {
 		live, err := liveProperties(ctx, tx, w)
 		if err != nil {
 			return err
@@ -374,11 +376,12 @@ ON CONFLICT (property_id, hour, writer, dim, value, route, method, status_class)
 		if err := addCounts(ctx, tx, w.Counts, live); err != nil {
 			return err
 		}
-		if err := addUsage(ctx, tx, monthOf(now), w.Usage); err != nil {
+		if err := addUsage(ctx, tx, monthOf(now), w.Usage, totals); err != nil {
 			return err
 		}
 		return touchRoutes(ctx, tx, mins, now)
 	})
+	return totals, err
 }
 
 func compareCore(a, b CoreKey) int {
@@ -440,17 +443,23 @@ ON CONFLICT (property_id, day, reason) DO UPDATE SET records = monitor_ingest_st
 	return nil
 }
 
-func addUsage(ctx context.Context, tx pgx.Tx, month time.Time, usage map[uuid.UUID]int64) error {
+func addUsage(ctx context.Context, tx pgx.Tx, month time.Time, usage, out map[uuid.UUID]int64) error {
 	for _, ws := range slices.SortedFunc(maps.Keys(usage), func(a, b uuid.UUID) int { return a.Compare(b) }) {
 		if usage[ws] == 0 {
 			continue
 		}
-		if _, err := tx.Exec(ctx, `
+		var total int64
+		err := tx.QueryRow(ctx, `
 INSERT INTO usage_counters (workspace_id, month, monitor_requests) SELECT $1, $2, $3 WHERE EXISTS (SELECT 1 FROM workspaces WHERE id = $1)
-ON CONFLICT (workspace_id, month) DO UPDATE SET monitor_requests = usage_counters.monitor_requests + EXCLUDED.monitor_requests`,
-			ws, month, usage[ws]); err != nil {
+ON CONFLICT (workspace_id, month) DO UPDATE SET monitor_requests = usage_counters.monitor_requests + EXCLUDED.monitor_requests
+RETURNING monitor_requests`, ws, month, usage[ws]).Scan(&total)
+		if errors.Is(err, pgx.ErrNoRows) {
+			continue
+		}
+		if err != nil {
 			return fmt.Errorf("monitor usage: %w", err)
 		}
+		out[ws] = total
 	}
 	return nil
 }

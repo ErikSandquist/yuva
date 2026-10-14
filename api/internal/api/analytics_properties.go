@@ -118,6 +118,7 @@ func (s *Server) propertyBody(prop store.AnalyticsProperty, visitorsToday int64)
 		Platforms: make([]oas.AnalyticsPlatform, len(prop.Platforms)), ConsentFeatures: make([]oas.AnalyticsConsentFeature, len(prop.ConsentFeatures)),
 		ExcludedIps: make([]string, len(prop.ExcludedIps)), PathRules: []oas.AnalyticsPathRule{},
 	}
+	out.TimezoneAppliesAt = zoneAppliesAt(prop, s.now())
 	if prop.PreviousKeyUntil != nil && prop.PreviousKeyUntil.After(s.now()) {
 		out.PreviousKeyExpiresAt = prop.PreviousKeyUntil
 	}
@@ -573,6 +574,10 @@ func (s *Server) UpdateAnalyticsProperty(ctx context.Context, req oas.UpdateAnal
 		if err := s.applyPropertyBody(ctx, q, p, &f, *req.Body); err != nil {
 			return err
 		}
+		history := cur.TimezoneHistory
+		if isAPIProperty(cur) && f.timezone != cur.Timezone {
+			history = nextZoneHistory(cur, s.now())
+		}
 		if !slices.Equal(slices.Sorted(slices.Values(cur.TrackedProps)), slices.Sorted(slices.Values(f.trackedProps))) {
 			if _, err := q.BumpAnalyticsGoalsVersion(ctx, store.BumpAnalyticsGoalsVersionParams{WorkspaceID: p.workspaceID, ID: cur.ID}); err != nil {
 				return err
@@ -582,7 +587,8 @@ func (s *Server) UpdateAnalyticsProperty(ctx context.Context, req oas.UpdateAnal
 			WorkspaceID: p.workspaceID, ID: cur.ID, InboxID: f.inboxID, Name: f.name, Domains: nonNil(f.domains), Platforms: nonNil(f.platforms),
 			Timezone: f.timezone, Currency: f.currency, Collection: f.collection, ConsentFeatures: nonNil(f.consentFeatures), Audience: f.audience,
 			ExcludedPaths: nonNil(f.excludedPaths), ExcludedIps: nonNil(f.excludedIPs), PathRules: mustJSON(nonNil(f.pathRules)),
-			TrackedProps: nonNil(f.trackedProps), RetentionMonths: f.retention, ApdexMs: f.apdexMS, MonitorHourDays: f.hourDays, Now: s.now(),
+			TrackedProps: nonNil(f.trackedProps), RetentionMonths: f.retention, ApdexMs: f.apdexMS, MonitorHourDays: f.hourDays,
+			TimezoneHistory: history, Now: s.now(),
 		})
 		if err != nil {
 			return err

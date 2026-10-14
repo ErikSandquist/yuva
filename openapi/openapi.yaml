@@ -7745,7 +7745,9 @@ paths:
       description: |
         Changes the given fields. `inbox_id: null` unlinks the property from its inbox;
         `retention_months: null` keeps its rollups forever. A new `timezone` applies to events
-        received from then on: finished days keep the zone they were counted in.
+        received from then on: finished days keep the zone they were counted in. An API property
+        counts in the new zone from the next local midnight of the zone before
+        (`timezone_applies_at`), so no local day is cut in two.
 
         Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
       tags: [analytics]
@@ -8109,6 +8111,76 @@ paths:
         "422":
           $ref: "#/components/responses/Problem"
         "503":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/routes:
+    get:
+      operationId: listAnalyticsRoutes
+      summary: List an API property's routes
+      description: |
+        Every route the property counted, by pattern: those its host named, those inferred from
+        paths (`inferred`), and `(unmatched)` and `(other)`, which take no place under the cap of
+        1,000. Hidden routes
+        (`hidden`) are left out of `queryAnalytics` with `dataset: api`; their requests are still
+        counted, and showing a route again brings them back. A site answers `422 property_kind`.
+
+        Scope: `analytics:read`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+      responses:
+        "200":
+          description: The routes, by pattern.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsRouteList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/routes/{routeId}:
+    patch:
+      operationId: updateAnalyticsRoute
+      summary: Hide or show a route
+      description: |
+        `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
+        included, such as a health check the API's own load balancer calls; `hidden: false` shows
+        it again. Nothing counted is deleted. To count a path under another pattern, add a
+        property `path_rules` entry instead.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+        - $ref: "#/components/parameters/AnalyticsRouteId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyticsRouteUpdate"
+      responses:
+        "200":
+          description: The route.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsRoute"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "422":
           $ref: "#/components/responses/Problem"
   /v1/analytics/properties/{propertyId}/retention:
     get:
@@ -11714,6 +11786,15 @@ components:
       schema:
         type: string
         format: uuid
+    AnalyticsRouteId:
+      name: routeId
+      in: path
+      required: true
+      description: A route's `id` from `listAnalyticsRoutes`.
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
     AnalyticsFunnelId:
       name: funnelId
       in: path
@@ -20645,6 +20726,12 @@ components:
         timezone:
           type: string
           description: IANA time zone that defines the property's day.
+        timezone_applies_at:
+          type: string
+          format: date-time
+          description: |
+            An API property whose `timezone` was just changed keeps counting its hours and days in
+            the zone before until its next local midnight, this instant; absent once the zone applies.
         currency:
           type: string
           description: ISO 4217 code revenue is reported in.
@@ -20881,6 +20968,10 @@ components:
           type: integer
           format: int64
           description: The monthly cap on request records; absent when there is none. Records over it are not counted until the month ends.
+        requests_limit_reached_at:
+          type: string
+          format: date-time
+          description: When this month's request records reached the cap; owners get an e-mail and the operator a digest line then, once a month.
     AnalyticsPropertyList:
       type: object
       required: [items, usage]
@@ -21105,7 +21196,7 @@ components:
         them, no goal, prop, segment, comparison or insights. Closed local days come from daily
         rows, closed hours from hourly rows and the rest from minute rows, which processes write
         every 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
-        Rows are ordered by `requests` unless `order_by` says otherwise.
+        Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by `requests` unless `order_by` says otherwise.
       enum: [traffic, support, api]
       x-enum-varnames: [AnalyticsDatasetTraffic, AnalyticsDatasetSupport, AnalyticsDatasetApi]
     AnalyticsQuery:
@@ -21760,6 +21851,43 @@ components:
           description: |
             This record stands for this many requests, for a host that sends one in N successful
             requests. Only records with a status of 1 to 399 may be sampled.
+    AnalyticsRoute:
+      type: object
+      required: [id, pattern, inferred, hidden, first_seen_at, last_seen_at]
+      properties:
+        id:
+          type: integer
+          format: int32
+        pattern:
+          type: string
+          examples: ["/users/{id}"]
+        inferred:
+          type: boolean
+          description: The pattern was inferred from request paths rather than named by the host's router.
+        hidden:
+          type: boolean
+          description: "Left out of `dataset: api` answers."
+        first_seen_at:
+          type: string
+          format: date-time
+        last_seen_at:
+          type: string
+          format: date-time
+          description: When a request was last counted on the route, to the minute.
+    AnalyticsRouteList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsRoute"
+    AnalyticsRouteUpdate:
+      type: object
+      required: [hidden]
+      properties:
+        hidden:
+          type: boolean
     AnalyticsRequestsResult:
       type: object
       required: [accepted, errors]

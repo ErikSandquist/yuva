@@ -293,6 +293,7 @@ type AnalyticsProperty struct {
 	Kind             string
 	ApdexMs          int32
 	MonitorHourDays  int32
+	TimezoneHistory  []byte
 }
 
 type AnalyticsRollupDay struct {
@@ -1696,6 +1697,7 @@ type UsageCounter struct {
 	AnalyticsEvents         int64
 	AnalyticsLimitReachedAt *time.Time
 	MonitorRequests         int64
+	MonitorLimitReachedAt   *time.Time
 }
 
 type WebauthnCeremony struct {

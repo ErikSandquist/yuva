@@ -1,0 +1,9 @@
+Acme Support bu ayki API izleme sınırına ulaştı
+
+Acme Support çalışma alanının API'leri bu ay 10,000,000 istek kaydı gönderdi; bu sunucunun bir
+çalışma alanından bir ayda aldığı en fazla kayıt sayısı bu. Ay bitene kadar yeni istekler
+sayılmaz; şimdiye kadar sayılanlar kalır.
+
+Sunucunun yöneticisi çalışma alanınız için sınırı yükseltebilir.
+
+https://yuva.example.com/analytics

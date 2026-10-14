@@ -219,6 +219,8 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"DeleteAnalyticsVisitor":  {oas.AnalyticsManage},
 	"SendAnalyticsEvents":     {oas.AnalyticsWrite},
 	"SendAnalyticsRequests":   {oas.AnalyticsWrite},
+	"ListAnalyticsRoutes":     {oas.AnalyticsRead},
+	"UpdateAnalyticsRoute":    {oas.AnalyticsManage},
 
 	"ListAnalyticsGoals":        {oas.AnalyticsRead},
 	"CreateAnalyticsGoal":       {oas.AnalyticsManage},

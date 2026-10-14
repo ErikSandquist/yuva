@@ -1,8 +1,23 @@
 -- name: GetMonitorUsage :one
 SELECT w.monitor_monthly_requests AS monthly_limit,
-       coalesce(u.monitor_requests, 0)::bigint AS requests
+       coalesce(u.monitor_requests, 0)::bigint AS requests,
+       u.monitor_limit_reached_at AS limit_reached_at
 FROM workspaces w LEFT JOIN usage_counters u ON u.workspace_id = w.id AND u.month = @month
 WHERE w.id = @workspace_id;
+
+-- name: MarkMonitorLimitReached :execrows
+UPDATE usage_counters SET monitor_limit_reached_at = @now
+WHERE workspace_id = @workspace_id AND month = @month AND monitor_limit_reached_at IS NULL;
+
+-- name: ListMonitorRoutes :many
+SELECT id, pattern, inferred, hidden, first_seen_at, last_seen_at FROM monitor_routes
+WHERE workspace_id = @workspace_id AND property_id = @property_id
+ORDER BY pattern;
+
+-- name: SetMonitorRouteHidden :one
+UPDATE monitor_routes SET hidden = @hidden
+WHERE workspace_id = @workspace_id AND property_id = @property_id AND id = @id
+RETURNING id, pattern, inferred, hidden, first_seen_at, last_seen_at;
 
 -- name: SetWorkspaceMonitorLimit :execrows
 UPDATE workspaces SET monitor_monthly_requests = sqlc.narg(monthly_requests) WHERE id = @id AND deleted_at IS NULL;
@@ -15,7 +30,7 @@ WHERE h.workspace_id = @workspace_id AND p.deleted_at IS NULL AND h.hour < @befo
 ORDER BY h.property_id;
 
 -- name: ListMonitorRetention :many
-SELECT id, retention_months, monitor_hour_days, timezone FROM analytics_properties
+SELECT id, retention_months, monitor_hour_days, timezone, timezone_history FROM analytics_properties
 WHERE workspace_id = @workspace_id AND kind = 'api' AND deleted_at IS NULL
 ORDER BY id;
 
@@ -73,3 +88,8 @@ WITH h AS (DELETE FROM monitor_hour WHERE monitor_hour.workspace_id = @workspace
                AND monitor_dim_day.day BETWEEN @from_day AND @to_day)
 DELETE FROM monitor_rollup_hours WHERE monitor_rollup_hours.workspace_id = @workspace_id AND monitor_rollup_hours.property_id = @property_id
     AND monitor_rollup_hours.day BETWEEN @from_day AND @to_day;
+
+-- name: BumpAnalyticsRollupVersion :one
+UPDATE analytics_properties SET rollup_version = rollup_version + 1
+WHERE workspace_id = @workspace_id AND id = @id AND deleted_at IS NULL
+RETURNING rollup_version;

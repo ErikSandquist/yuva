@@ -43,6 +43,7 @@ func samples(inbox, text string) map[string]map[string]any {
 		"sign_in_code":    {"Code": "482913", "Minutes": 10},
 		"sign_in_locked":  {"Failures": 10, "Hours": 24},
 		"analytics_limit": {"Workspace": inbox, "Limit": "1,000,000", "Month": "2026-10", "URL": "https://yuva.example.com/analytics"},
+		"monitor_limit":   {"Workspace": inbox, "Limit": "10,000,000", "Month": "2026-10", "URL": "https://yuva.example.com/analytics"},
 		"analytics_report": {
 			"Property": "Acme docs", "From": "2026-10-05", "To": "2026-10-11",
 			"Visitors": map[string]string{"Value": "1,204", "Change": "+12%"}, "Visits": map[string]string{"Value": "1,530", "Change": "+9%"},
@@ -84,7 +85,7 @@ func samples(inbox, text string) map[string]map[string]any {
 	}
 }
 
-var htmlMails = []string{"sign_in_code", "sign_in_locked", "invite", "confirm_email", "notification", "discussion_digest", "rating_request", "list_confirm", "list_welcome", "analytics_limit", "analytics_report", "analytics_alert"}
+var htmlMails = []string{"sign_in_code", "sign_in_locked", "invite", "confirm_email", "notification", "discussion_digest", "rating_request", "list_confirm", "list_welcome", "analytics_limit", "analytics_report", "analytics_alert", "monitor_limit"}
 
 // englishMails go only to the server's operator.
 var englishMails = []string{"operator_digest"}

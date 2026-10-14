@@ -162,7 +162,7 @@ func bumpVersion(ctx context.Context, tx pgx.Tx, ws, prop uuid.UUID) error {
 // FoldHour folds a closed local hour: its minute rows into one hourly row per key, and its
 // dimension rows of every writer into one. The hour's row in monitor_rollup_hours is locked first,
 // so a writer that adds rows meanwhile marks the hour dirty again rather than being lost.
-func (s *PGStore) FoldHour(ctx context.Context, ws, prop uuid.UUID, hour time.Time, now time.Time) error {
+func (s *PGStore) FoldHour(ctx context.Context, ws, prop uuid.UUID, hour, end time.Time, now time.Time) error {
 	if err := s.EnsureHourPartitions(ctx, hour, hour); err != nil {
 		return err
 	}
@@ -173,7 +173,7 @@ func (s *PGStore) FoldHour(ctx context.Context, ws, prop uuid.UUID, hour time.Ti
 			return err
 		}
 		rows, err := tx.Query(ctx, `SELECT `+coreColumns+`, `+aggColumns+` FROM monitor_minute
-			WHERE workspace_id = $1 AND property_id = $2 AND minute >= $3 AND minute < $4`, ws, prop, hour, hour.Add(time.Hour))
+			WHERE workspace_id = $1 AND property_id = $2 AND minute >= $3 AND minute < $4`, ws, prop, hour, end)
 		if err != nil {
 			return err
 		}
@@ -297,7 +297,7 @@ func (s *PGStore) FoldDay(ctx context.Context, ws, prop uuid.UUID, day time.Time
 
 // Rollup folds a property's hours that closed FoldAfter ago and are not folded or changed since,
 // then its local days that ended FoldAfter ago with every hour folded; it says how many of each.
-func (s *PGStore) Rollup(ctx context.Context, ws, prop uuid.UUID, loc *time.Location, now time.Time) (int, int, error) {
+func (s *PGStore) Rollup(ctx context.Context, ws, prop uuid.UUID, zone Zone, now time.Time) (int, int, error) {
 	rows, err := s.Pool.Query(ctx, `SELECT hour FROM monitor_rollup_hours
 		WHERE workspace_id = $1 AND property_id = $2 AND (built_at IS NULL OR dirty) AND hour <= $3 ORDER BY hour`,
 		ws, prop, now.Add(-time.Hour-FoldAfter))
@@ -309,7 +309,7 @@ func (s *PGStore) Rollup(ctx context.Context, ws, prop uuid.UUID, loc *time.Loca
 		return 0, 0, err
 	}
 	for _, h := range hours {
-		if err := s.FoldHour(ctx, ws, prop, h, now); err != nil {
+		if err := s.FoldHour(ctx, ws, prop, h, zone.HourEnd(h), now); err != nil {
 			return 0, 0, err
 		}
 	}
@@ -325,7 +325,7 @@ func (s *PGStore) Rollup(ctx context.Context, ws, prop uuid.UUID, loc *time.Loca
 	folded := 0
 	for _, d := range days {
 		d = d.UTC()
-		if now.Before(DayStart(d.AddDate(0, 0, 1), loc).Add(FoldAfter)) {
+		if now.Before(zone.DayStart(d.AddDate(0, 0, 1)).Add(FoldAfter)) {
 			continue
 		}
 		ok, err := s.FoldDay(ctx, ws, prop, d, now)

@@ -69,7 +69,7 @@ func (s *Server) newMonitor(d Deps) *monitorState {
 	st := &monitor.PGStore{Pool: d.Store.Pool}
 	return &monitorState{
 		settings: set, store: st, usage: &usageCache{m: map[uuid.UUID]*usageEntry{}},
-		agg: &monitor.Aggregator{Store: st, Log: s.log, Now: s.now, MaxKeys: set.BufferKeys},
+		agg: &monitor.Aggregator{Store: st, Log: s.log, Now: s.now, MaxKeys: set.BufferKeys, AfterFlush: s.afterMonitorFlush},
 	}
 }
 
@@ -109,28 +109,28 @@ func (s *Server) loadMonitorUsage(ctx context.Context, ws uuid.UUID, now time.Ti
 	if err != nil {
 		return nil, err
 	}
-	e = &usageEntry{month: month, limit: s.workspaceMonitorLimit(u.MonthlyLimit), events: u.Requests, loaded: now}
+	e = &usageEntry{month: month, limit: s.workspaceMonitorLimit(u.MonthlyLimit), events: u.Requests, reached: u.LimitReachedAt != nil, loaded: now}
 	c.mu.Lock()
 	c.m[ws] = e
 	c.mu.Unlock()
 	return e, nil
 }
 
-// takeMonitorUsage counts n records against the workspace's monthly cap; false means the cap is
-// reached.
-func (s *Server) takeMonitorUsage(ctx context.Context, ws uuid.UUID, n int, now time.Time) (bool, error) {
+// takeMonitorUsage counts up to n records against the workspace's monthly cap and says how many
+// fit, so a workspace's records reach the cap exactly.
+func (s *Server) takeMonitorUsage(ctx context.Context, ws uuid.UUID, n int, now time.Time) (int, error) {
 	e, err := s.loadMonitorUsage(ctx, ws, now)
 	if err != nil {
-		return false, err
+		return 0, err
 	}
 	c := s.analytics.monitor.usage
 	c.mu.Lock()
 	defer c.mu.Unlock()
-	if e.limit > 0 && e.events+int64(n) > e.limit {
-		return false, nil
+	if e.limit > 0 {
+		n = int(max(min(int64(n), e.limit-e.events), 0))
 	}
 	e.events += int64(n)
-	return true, nil
+	return n, nil
 }
 
 func (s *Server) monitorUsage(ctx context.Context, ws uuid.UUID, out *oas.AnalyticsUsage) error {
@@ -144,6 +144,9 @@ func (s *Server) monitorUsage(ctx context.Context, ws uuid.UUID, out *oas.Analyt
 	out.Requests = &u.Requests
 	if l := s.workspaceMonitorLimit(u.MonthlyLimit); l > 0 {
 		out.RequestsLimit = &l
+		if u.Requests >= l {
+			out.RequestsLimitReachedAt = u.LimitReachedAt
+		}
 	}
 	return nil
 }
@@ -211,8 +214,8 @@ func (s *Server) SendAnalyticsRequests(ctx context.Context, req oas.SendAnalytic
 	if req.Body == nil || len(req.Body.Records) == 0 || len(req.Body.Records) > maxRequestRecords {
 		return nil, errValidation("records must hold 1 to 1,000 records")
 	}
-	now, loc := s.now(), propertyLocation(prop.Timezone)
-	day := monitor.LocalDay(now, loc)
+	now, zone := s.now(), monitorZone(prop.Timezone, prop.TimezoneHistory)
+	day := zone.LocalDay(now)
 	count := func(reason string, n int) {
 		if n > 0 {
 			m.agg.Count(prop.WorkspaceID, prop.ID, day, reason, int64(n))
@@ -223,7 +226,7 @@ func (s *Server) SendAnalyticsRequests(ctx context.Context, req oas.SendAnalytic
 	recs := make([]monitor.Record, 0, len(req.Body.Records))
 	late := 0
 	for i := range req.Body.Records {
-		rec, isLate, err := s.requestRecord(&req.Body.Records[i], loc, rules, now)
+		rec, isLate, err := s.requestRecord(&req.Body.Records[i], zone, rules, now)
 		if err != nil {
 			out.Errors = append(out.Errors, oas.AnalyticsEventError{Index: i, Detail: err.Error()})
 			continue
@@ -253,15 +256,15 @@ func (s *Server) SendAnalyticsRequests(ctx context.Context, req oas.SendAnalytic
 	if len(recs) == 0 {
 		return oas.SendAnalyticsRequests202JSONResponse(out), nil
 	}
-	ok, err := s.takeMonitorUsage(ctx, prop.WorkspaceID, len(recs), now)
+	fit, err := s.takeMonitorUsage(ctx, prop.WorkspaceID, len(recs), now)
 	if err != nil {
 		return nil, err
 	}
-	if !ok {
-		count(monitor.ReasonOverLimit, len(recs))
+	count(monitor.ReasonOverLimit, len(recs)-fit)
+	if recs = recs[:fit]; len(recs) == 0 {
 		return oas.SendAnalyticsRequests202JSONResponse(out), nil
 	}
-	if err := m.agg.Add(ctx, monitor.Property{WorkspaceID: prop.WorkspaceID, ID: prop.ID, Location: loc}, recs); err != nil {
+	if err := m.agg.Add(ctx, monitor.Property{WorkspaceID: prop.WorkspaceID, ID: prop.ID}, recs); err != nil {
 		if errors.Is(err, monitor.ErrFull) {
 			count(monitor.ReasonBuffer, len(recs))
 			return nil, errMonitorBusy
@@ -299,7 +302,7 @@ func recordText(v *string, max int, name string) (string, error) {
 }
 
 // requestRecord checks one request record; late reports a valid record older than 72 hours.
-func (s *Server) requestRecord(r *oas.AnalyticsRequestRecord, loc *time.Location, rules []analytics.PathRule, now time.Time) (monitor.Record, bool, error) {
+func (s *Server) requestRecord(r *oas.AnalyticsRequestRecord, zone monitor.Zone, rules []analytics.PathRule, now time.Time) (monitor.Record, bool, error) {
 	country := s.recordCountry(&r.Ip)
 	out := monitor.Record{Country: country, Source: monitor.SourceServer, Platform: monitor.PlatformNone, RequestBytes: -1, ResponseBytes: -1, Weight: 1}
 	if m := strings.TrimSpace(r.Method); m == "" || len(m) > 20 {
@@ -368,7 +371,7 @@ func (s *Server) requestRecord(r *oas.AnalyticsRequestRecord, loc *time.Location
 		at = *r.Time
 	}
 	at, late := eventTime(at, now)
-	out.Time, out.Hour, out.Day = at, monitor.LocalHour(at, loc), monitor.LocalDay(at, loc)
+	out.Time, out.Hour, out.Day = at, zone.LocalHour(at), zone.LocalDay(at)
 	return out, late, nil
 }
 

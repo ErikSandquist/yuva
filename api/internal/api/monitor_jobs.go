@@ -58,7 +58,7 @@ func (s *Server) RollupMonitor(ctx context.Context, ws, propertyID uuid.UUID) er
 	if err != nil {
 		return err
 	}
-	hours, days, err := m.store.Rollup(ctx, ws, propertyID, propertyLocation(prop.Timezone), s.now())
+	hours, days, err := m.store.Rollup(ctx, ws, propertyID, monitorZone(prop.Timezone, prop.TimezoneHistory), s.now())
 	if err != nil {
 		return err
 	}
@@ -133,8 +133,8 @@ func (s *Server) trimMonitor(ctx context.Context, ws uuid.UUID, today time.Time)
 		}
 	}
 	for _, p := range props {
-		loc := propertyLocation(p.Timezone)
-		hourBefore := monitor.DayStart(monitor.LocalDay(s.now(), loc).AddDate(0, 0, -int(p.MonitorHourDays)), loc)
+		zone := monitorZone(p.Timezone, p.TimezoneHistory)
+		hourBefore := zone.DayStart(zone.LocalDay(s.now()).AddDate(0, 0, -int(p.MonitorHourDays)))
 		if err := drain(func() (int64, error) {
 			return s.st.TrimMonitorHour(ctx, store.TrimMonitorHourParams{WorkspaceID: ws, PropertyID: p.ID, Before: hourBefore})
 		}); err != nil {
@@ -148,7 +148,7 @@ func (s *Server) trimMonitor(ctx context.Context, ws uuid.UUID, today time.Time)
 		if p.RetentionMonths == nil {
 			continue
 		}
-		dayBefore := monitor.LocalDay(s.now(), loc).AddDate(0, -int(*p.RetentionMonths), 0)
+		dayBefore := zone.LocalDay(s.now()).AddDate(0, -int(*p.RetentionMonths), 0)
 		if err := drain(func() (int64, error) {
 			return s.st.TrimMonitorDay(ctx, store.TrimMonitorDayParams{WorkspaceID: ws, PropertyID: p.ID, Before: dayBefore})
 		}); err != nil {
@@ -160,7 +160,7 @@ func (s *Server) trimMonitor(ctx context.Context, ws uuid.UUID, today time.Time)
 			return err
 		}
 		if err := drain(func() (int64, error) {
-			return s.st.TrimMonitorRollupHours(ctx, store.TrimMonitorRollupHoursParams{WorkspaceID: ws, PropertyID: p.ID, Before: monitor.DayStart(dayBefore, loc)})
+			return s.st.TrimMonitorRollupHours(ctx, store.TrimMonitorRollupHoursParams{WorkspaceID: ws, PropertyID: p.ID, Before: zone.DayStart(dayBefore)})
 		}); err != nil {
 			return err
 		}
@@ -180,8 +180,8 @@ func (s *Server) purgeMonitor(ctx context.Context, ws, propertyID uuid.UUID, fro
 		if err != nil {
 			return false, err
 		}
-		loc := propertyLocation(prop.Timezone)
-		fromAt, toAt = new(monitor.DayStart(*from, loc)), new(monitor.DayStart(to.AddDate(0, 0, 1), loc))
+		zone := monitorZone(prop.Timezone, prop.TimezoneHistory)
+		fromAt, toAt = new(zone.DayStart(*from)), new(zone.DayStart(to.AddDate(0, 0, 1)))
 	}
 	for {
 		n, err := s.st.DeleteMonitorMinutes(ctx, store.DeleteMonitorMinutesParams{WorkspaceID: ws, PropertyID: propertyID, FromAt: fromAt, ToAt: toAt, MaxRows: monitorDeleteBatch})

@@ -84,7 +84,7 @@ func TestMonitorLoad(t *testing.T) {
 	rep.add(t, "|---|---|---|---|")
 	for _, v := range views {
 		q := v.q
-		q.WorkspaceID, q.PropertyID, q.Location, q.Now, q.MinuteFrom = ws, prop, time.UTC, now, today.AddDate(0, 0, -7)
+		q.WorkspaceID, q.PropertyID, q.Zone, q.Now, q.MinuteFrom = ws, prop, monitor.FixedZone(time.UTC), now, today.AddDate(0, 0, -7)
 		var times []time.Duration
 		var res monitor.Result
 		for range 20 {

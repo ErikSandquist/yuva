@@ -1,0 +1,9 @@
+{{.Workspace}} hat das API-Monitoring-Limit dieses Monats erreicht
+
+Die APIs von {{.Workspace}} haben diesen Monat {{.Limit}} Anfrage-Datensätze gesendet, so viele,
+wie dieser Server von einem Arbeitsbereich im Monat annimmt. Neue Anfragen werden bis zum
+Monatsende nicht gezählt; alles bisher Gezählte bleibt erhalten.
+
+Der Betreiber des Servers kann das Limit für Ihren Arbeitsbereich erhöhen.
+
+{{.URL}}

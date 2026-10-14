@@ -1,0 +1,4 @@
+{{template "heading" "API izleme sınırına ulaşıldı"}}
+<p style="margin:0 0 16px 0;"><strong>{{.Workspace}}</strong> çalışma alanının API'leri bu ay {{.Limit}} istek kaydı gönderdi; bu sunucunun bir çalışma alanından bir ayda aldığı en fazla kayıt sayısı bu. Ay bitene kadar yeni istekler sayılmaz; şimdiye kadar sayılanlar kalır.</p>
+<p style="margin:0 0 16px 0;">Sunucunun yöneticisi çalışma alanınız için sınırı yükseltebilir.</p>
+{{template "button" (button .URL "Analitiği aç")}}

@@ -71,6 +71,8 @@ type Aggregator struct {
 	Log     *slog.Logger
 	Now     func() time.Time
 	MaxKeys int
+	// AfterFlush learns each workspace's request records of the month after a flush wrote some.
+	AfterFlush func(ctx context.Context, month time.Time, usage map[uuid.UUID]int64)
 
 	mu       sync.Mutex
 	writer   int64
@@ -451,14 +453,18 @@ func (a *Aggregator) Flush(ctx context.Context) error {
 		return nil
 	}
 	err := a.ensure(ctx, p.minuteDay, p.hourMonth)
+	var totals map[uuid.UUID]int64
 	if err == nil {
-		err = a.Store.Write(ctx, p.w, now)
+		totals, err = a.Store.Write(ctx, p.w, now)
 	}
 	if err != nil {
 		a.putBack(p)
 		return err
 	}
 	a.forget(p, now)
+	if a.AfterFlush != nil && len(totals) > 0 {
+		a.AfterFlush(ctx, monthOf(now), totals)
+	}
 	return nil
 }
 

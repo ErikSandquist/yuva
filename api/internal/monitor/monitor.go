@@ -113,7 +113,6 @@ func DayStart(day time.Time, loc *time.Location) time.Time {
 type Property struct {
 	WorkspaceID uuid.UUID
 	ID          uuid.UUID
-	Location    *time.Location
 }
 
 // Agg is what rows add up: exact counters and the duration and response size sketches.
@@ -267,8 +266,9 @@ type Store interface {
 	// Names returns the ids of values of a property, adding the new ones as far as their caps
 	// allow and giving the others (other)'s id.
 	Names(ctx context.Context, workspaceID, propertyID uuid.UUID, reqs []NameRequest, now time.Time) ([]int32, error)
-	// Write upserts a flush in one transaction.
-	Write(ctx context.Context, w Write, now time.Time) error
+	// Write upserts a flush in one transaction and returns each workspace's request records of the
+	// month after it.
+	Write(ctx context.Context, w Write, now time.Time) (map[uuid.UUID]int64, error)
 	// Query answers one query over a property's rows.
 	Query(ctx context.Context, q Query) (Result, error)
 }

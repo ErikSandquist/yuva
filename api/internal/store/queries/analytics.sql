@@ -29,7 +29,8 @@ UPDATE analytics_properties SET
     inbox_id = sqlc.narg(inbox_id), name = @name, domains = @domains, platforms = @platforms, timezone = @timezone,
     currency = @currency, collection = @collection, consent_features = @consent_features, audience = @audience,
     excluded_paths = @excluded_paths, excluded_ips = @excluded_ips, path_rules = @path_rules, tracked_props = @tracked_props,
-    retention_months = sqlc.narg(retention_months), apdex_ms = @apdex_ms, monitor_hour_days = @monitor_hour_days, updated_at = @now
+    retention_months = sqlc.narg(retention_months), apdex_ms = @apdex_ms, monitor_hour_days = @monitor_hour_days,
+    timezone_history = @timezone_history, updated_at = @now
 WHERE workspace_id = @workspace_id AND id = @id AND deleted_at IS NULL
 RETURNING *;
 

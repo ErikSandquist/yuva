@@ -1,0 +1,4 @@
+{{template "heading" "API-Monitoring-Limit erreicht"}}
+<p style="margin:0 0 16px 0;">Die APIs von <strong>{{.Workspace}}</strong> haben diesen Monat {{.Limit}} Anfrage-Datensätze gesendet, so viele, wie dieser Server von einem Arbeitsbereich im Monat annimmt. Neue Anfragen werden bis zum Monatsende nicht gezählt; alles bisher Gezählte bleibt erhalten.</p>
+<p style="margin:0 0 16px 0;">Der Betreiber des Servers kann das Limit für Ihren Arbeitsbereich erhöhen.</p>
+{{template "button" (button .URL "Analytics öffnen")}}

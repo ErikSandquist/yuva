@@ -5091,7 +5091,7 @@ type AnalyticsDataDeletion struct {
 // them, no goal, prop, segment, comparison or insights. Closed local days come from daily
 // rows, closed hours from hourly rows and the rest from minute rows, which processes write
 // every 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
-// Rows are ordered by `requests` unless `order_by` says otherwise.
+// Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by `requests` unless `order_by` says otherwise.
 type AnalyticsDataset string
 
 // AnalyticsDimension A filter dimension (`AnalyticsFilterDimension`), or a time grain: `time:hour` (local hours
@@ -5874,9 +5874,13 @@ type AnalyticsProperty struct {
 	RetentionMonths *int32 `json:"retention_months,omitempty"`
 
 	// Timezone IANA time zone that defines the property's day.
-	Timezone     string                 `json:"timezone"`
-	TrackedProps []AnalyticsTrackedProp `json:"tracked_props"`
-	UpdatedAt    time.Time              `json:"updated_at"`
+	Timezone string `json:"timezone"`
+
+	// TimezoneAppliesAt An API property whose `timezone` was just changed keeps counting its hours and days in
+	// the zone before until its next local midnight, this instant; absent once the zone applies.
+	TimezoneAppliesAt *time.Time             `json:"timezone_applies_at,omitempty"`
+	TrackedProps      []AnalyticsTrackedProp `json:"tracked_props"`
+	UpdatedAt         time.Time              `json:"updated_at"`
 
 	// VisitorsToday Distinct visitors so far today, in the property's time zone.
 	VisitorsToday int64 `json:"visitors_today"`
@@ -6011,7 +6015,7 @@ type AnalyticsQuery struct {
 	// them, no goal, prop, segment, comparison or insights. Closed local days come from daily
 	// rows, closed hours from hourly rows and the rest from minute rows, which processes write
 	// every 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
-	// Rows are ordered by `requests` unless `order_by` says otherwise.
+	// Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by `requests` unless `order_by` says otherwise.
 	Dataset    *AnalyticsDataset     `json:"dataset,omitempty"`
 	Dimensions *[]AnalyticsDimension `json:"dimensions,omitempty"`
 	Filters    *[]AnalyticsFilter    `json:"filters,omitempty"`
@@ -6297,6 +6301,34 @@ type AnalyticsRevenue struct {
 
 	// Total In the currency's minor units (cents; yen for JPY).
 	Total int64 `json:"total"`
+}
+
+// AnalyticsRoute defines model for AnalyticsRoute.
+type AnalyticsRoute struct {
+	FirstSeenAt time.Time `json:"first_seen_at"`
+
+	// Hidden Left out of `dataset: api` answers.
+	Hidden bool  `json:"hidden"`
+	Id     int32 `json:"id"`
+
+	// Inferred The pattern was inferred from request paths rather than named by the host's router.
+	Inferred bool `json:"inferred"`
+
+	// LastSeenAt When a request was last counted on the route, to the minute.
+	LastSeenAt time.Time `json:"last_seen_at"`
+
+	// Pattern Examples: /users/{id}
+	Pattern string `json:"pattern"`
+}
+
+// AnalyticsRouteList defines model for AnalyticsRouteList.
+type AnalyticsRouteList struct {
+	Items []AnalyticsRoute `json:"items"`
+}
+
+// AnalyticsRouteUpdate defines model for AnalyticsRouteUpdate.
+type AnalyticsRouteUpdate struct {
+	Hidden bool `json:"hidden"`
 }
 
 // AnalyticsRow defines model for AnalyticsRow.
@@ -6594,6 +6626,9 @@ type AnalyticsUsage struct {
 
 	// RequestsLimit The monthly cap on request records; absent when there is none. Records over it are not counted until the month ends.
 	RequestsLimit *int64 `json:"requests_limit,omitempty"`
+
+	// RequestsLimitReachedAt When this month's request records reached the cap; owners get an e-mail and the operator a digest line then, once a month.
+	RequestsLimitReachedAt *time.Time `json:"requests_limit_reached_at,omitempty"`
 }
 
 // AnalyticsVisitPage defines model for AnalyticsVisitPage.
@@ -14046,6 +14081,9 @@ type AnalyticsGoalId = uuid.UUID
 // AnalyticsPropertyId defines model for AnalyticsPropertyId.
 type AnalyticsPropertyId = uuid.UUID
 
+// AnalyticsRouteId defines model for AnalyticsRouteId.
+type AnalyticsRouteId = int32
+
 // AnalyticsSegmentId defines model for AnalyticsSegmentId.
 type AnalyticsSegmentId = uuid.UUID
 
@@ -14542,6 +14580,18 @@ type RotateAnalyticsKeyParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListAnalyticsRoutesParams defines parameters for ListAnalyticsRoutes.
+type ListAnalyticsRoutesParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateAnalyticsRouteParams defines parameters for UpdateAnalyticsRoute.
+type UpdateAnalyticsRouteParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -16663,6 +16713,9 @@ type QueryAnalyticsJSONRequestBody = AnalyticsQuery
 
 // SendAnalyticsRequestsJSONRequestBody defines body for SendAnalyticsRequests for application/json ContentType.
 type SendAnalyticsRequestsJSONRequestBody = AnalyticsRequestRecords
+
+// UpdateAnalyticsRouteJSONRequestBody defines body for UpdateAnalyticsRoute for application/json ContentType.
+type UpdateAnalyticsRouteJSONRequestBody = AnalyticsRouteUpdate
 
 // CreateAnalyticsSegmentJSONRequestBody defines body for CreateAnalyticsSegment for application/json ContentType.
 type CreateAnalyticsSegmentJSONRequestBody = AnalyticsSegmentCreate
@@ -20297,6 +20350,12 @@ type ServerInterface interface {
 	// RotateAnalyticsKey Give an analytics property a new public key
 	// (POST /v1/analytics/properties/{propertyId}/rotate-key)
 	RotateAnalyticsKey(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params RotateAnalyticsKeyParams)
+	// ListAnalyticsRoutes List an API property's routes
+	// (GET /v1/analytics/properties/{propertyId}/routes)
+	ListAnalyticsRoutes(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params ListAnalyticsRoutesParams)
+	// UpdateAnalyticsRoute Hide or show a route
+	// (PATCH /v1/analytics/properties/{propertyId}/routes/{routeId})
+	UpdateAnalyticsRoute(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, routeId AnalyticsRouteId, params UpdateAnalyticsRouteParams)
 	// ListAnalyticsSegments List a property's segments
 	// (GET /v1/analytics/properties/{propertyId}/segments)
 	ListAnalyticsSegments(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params ListAnalyticsSegmentsParams)
@@ -24394,6 +24453,115 @@ func (siw *ServerInterfaceWrapper) RotateAnalyticsKey(w http.ResponseWriter, r *
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.RotateAnalyticsKey(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListAnalyticsRoutes operation middleware
+func (siw *ServerInterfaceWrapper) ListAnalyticsRoutes(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListAnalyticsRoutesParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListAnalyticsRoutes(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateAnalyticsRoute operation middleware
+func (siw *ServerInterfaceWrapper) UpdateAnalyticsRoute(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "routeId" -------------
+	var routeId AnalyticsRouteId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "routeId", r.PathValue("routeId"), &routeId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "integer", Format: "int32", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "routeId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateAnalyticsRouteParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateAnalyticsRoute(w, r, propertyId, routeId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -37906,6 +38074,8 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/realtime", wrapper.GetAnalyticsRealtime)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/events", wrapper.SendAnalyticsEvents)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/requests", wrapper.SendAnalyticsRequests)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/routes", wrapper.ListAnalyticsRoutes)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/routes/{routeId}", wrapper.UpdateAnalyticsRoute)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/retention", wrapper.GetAnalyticsRetention)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/visitors/{persistentId}", wrapper.DeleteAnalyticsVisitor)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/health", wrapper.GetAnalyticsHealth)
@@ -45941,6 +46111,184 @@ func (response RotateAnalyticsKey404ApplicationProblemPlusJSONResponse) VisitRot
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsRoutesRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     ListAnalyticsRoutesParams
+}
+
+type ListAnalyticsRoutesResponseObject interface {
+	VisitListAnalyticsRoutesResponse(w http.ResponseWriter) error
+}
+
+type ListAnalyticsRoutes200JSONResponse AnalyticsRouteList
+
+func (response ListAnalyticsRoutes200JSONResponse) VisitListAnalyticsRoutesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsRoutes401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListAnalyticsRoutes401ApplicationProblemPlusJSONResponse) VisitListAnalyticsRoutesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsRoutes403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListAnalyticsRoutes403ApplicationProblemPlusJSONResponse) VisitListAnalyticsRoutesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsRoutes404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListAnalyticsRoutes404ApplicationProblemPlusJSONResponse) VisitListAnalyticsRoutesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsRoutes422ApplicationProblemPlusJSONResponse Problem
+
+func (response ListAnalyticsRoutes422ApplicationProblemPlusJSONResponse) VisitListAnalyticsRoutesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsRouteRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	RouteId    AnalyticsRouteId    `json:"routeId"`
+	Params     UpdateAnalyticsRouteParams
+	Body       *UpdateAnalyticsRouteJSONRequestBody
+}
+
+type UpdateAnalyticsRouteResponseObject interface {
+	VisitUpdateAnalyticsRouteResponse(w http.ResponseWriter) error
+}
+
+type UpdateAnalyticsRoute200JSONResponse AnalyticsRoute
+
+func (response UpdateAnalyticsRoute200JSONResponse) VisitUpdateAnalyticsRouteResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsRoute400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateAnalyticsRoute400ApplicationProblemPlusJSONResponse) VisitUpdateAnalyticsRouteResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsRoute401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateAnalyticsRoute401ApplicationProblemPlusJSONResponse) VisitUpdateAnalyticsRouteResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsRoute403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateAnalyticsRoute403ApplicationProblemPlusJSONResponse) VisitUpdateAnalyticsRouteResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsRoute404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateAnalyticsRoute404ApplicationProblemPlusJSONResponse) VisitUpdateAnalyticsRouteResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsRoute422ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateAnalyticsRoute422ApplicationProblemPlusJSONResponse) VisitUpdateAnalyticsRouteResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -63822,6 +64170,12 @@ type StrictServerInterface interface {
 	// RotateAnalyticsKey Give an analytics property a new public key
 	// (POST /v1/analytics/properties/{propertyId}/rotate-key)
 	RotateAnalyticsKey(ctx context.Context, request RotateAnalyticsKeyRequestObject) (RotateAnalyticsKeyResponseObject, error)
+	// ListAnalyticsRoutes List an API property's routes
+	// (GET /v1/analytics/properties/{propertyId}/routes)
+	ListAnalyticsRoutes(ctx context.Context, request ListAnalyticsRoutesRequestObject) (ListAnalyticsRoutesResponseObject, error)
+	// UpdateAnalyticsRoute Hide or show a route
+	// (PATCH /v1/analytics/properties/{propertyId}/routes/{routeId})
+	UpdateAnalyticsRoute(ctx context.Context, request UpdateAnalyticsRouteRequestObject) (UpdateAnalyticsRouteResponseObject, error)
 	// ListAnalyticsSegments List a property's segments
 	// (GET /v1/analytics/properties/{propertyId}/segments)
 	ListAnalyticsSegments(ctx context.Context, request ListAnalyticsSegmentsRequestObject) (ListAnalyticsSegmentsResponseObject, error)
@@ -66926,6 +67280,68 @@ func (sh *strictHandler) RotateAnalyticsKey(w http.ResponseWriter, r *http.Reque
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(RotateAnalyticsKeyResponseObject); ok {
 		if err := validResponse.VisitRotateAnalyticsKeyResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListAnalyticsRoutes operation middleware
+func (sh *strictHandler) ListAnalyticsRoutes(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params ListAnalyticsRoutesParams) {
+	var request ListAnalyticsRoutesRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListAnalyticsRoutes(ctx, request.(ListAnalyticsRoutesRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListAnalyticsRoutes")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListAnalyticsRoutesResponseObject); ok {
+		if err := validResponse.VisitListAnalyticsRoutesResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateAnalyticsRoute operation middleware
+func (sh *strictHandler) UpdateAnalyticsRoute(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, routeId AnalyticsRouteId, params UpdateAnalyticsRouteParams) {
+	var request UpdateAnalyticsRouteRequestObject
+
+	request.PropertyId = propertyId
+	request.RouteId = routeId
+	request.Params = params
+
+	var body UpdateAnalyticsRouteJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateAnalyticsRoute(ctx, request.(UpdateAnalyticsRouteRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateAnalyticsRoute")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateAnalyticsRouteResponseObject); ok {
+		if err := validResponse.VisitUpdateAnalyticsRouteResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

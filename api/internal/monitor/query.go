@@ -48,7 +48,7 @@ type Filter = analytics.Filter
 type Query struct {
 	WorkspaceID uuid.UUID
 	PropertyID  uuid.UUID
-	Location    *time.Location
+	Zone        Zone
 	Start, End  time.Time
 	Days        bool
 	Metrics     []string
@@ -218,7 +218,7 @@ func (p *plan) tiers(ctx context.Context, tx pgx.Tx) error {
 			ready[h.day] = ready[h.day] && h.built && h.dayBuilt
 		}
 		for d, ok := range ready {
-			if ok && !DayStart(d, q.Location).Before(q.Start) && !DayStart(d.AddDate(0, 0, 1), q.Location).After(q.End) {
+			if ok && !q.Zone.DayStart(d).Before(q.Start) && !q.Zone.DayStart(d.AddDate(0, 0, 1)).After(q.End) {
 				byDay[d] = true
 				p.days = append(p.days, d)
 			}
@@ -229,7 +229,7 @@ func (p *plan) tiers(ctx context.Context, tx pgx.Tx) error {
 		if byDay[h.day] {
 			continue
 		}
-		end := h.hour.Add(time.Hour)
+		end := q.Zone.HourEnd(h.hour)
 		if h.built && !h.hour.Before(q.Start) && !end.After(q.End) {
 			p.hours = append(p.hours, h.hour)
 			continue
@@ -247,6 +247,7 @@ func (p *plan) tiers(ctx context.Context, tx pgx.Tx) error {
 // names maps a property's dictionary ids to their values.
 type nameMaps struct {
 	routes, envs map[int32]string
+	hidden       []int32
 }
 
 func loadNames(ctx context.Context, tx pgx.Tx, ws, prop uuid.UUID) (nameMaps, error) {
@@ -256,6 +257,13 @@ func loadNames(ctx context.Context, tx pgx.Tx, ws, prop uuid.UUID) (nameMaps, er
 		return out, err
 	}
 	if err := collectNames(rows, out.routes); err != nil {
+		return out, err
+	}
+	rows, err = tx.Query(ctx, `SELECT id FROM monitor_routes WHERE workspace_id = $1 AND property_id = $2 AND hidden ORDER BY id`, ws, prop)
+	if err != nil {
+		return out, err
+	}
+	if out.hidden, err = pgx.CollectRows(rows, pgx.RowTo[int32]); err != nil {
 		return out, err
 	}
 	rows, err = tx.Query(ctx, `SELECT id, value FROM monitor_names WHERE workspace_id = $1 AND property_id = $2 AND kind = 'environment'`, ws, prop)
@@ -388,21 +396,26 @@ type tier struct {
 }
 
 // bucketSQL is a tier's expression for the query's grain: instants for minutes and hours, local
-// dates for days.
-func (p *plan) bucketSQL(t tier, tz int) string {
+// dates for days, each in the zone that applied at the row's time. Parameters go to args.
+func (p *plan) bucketSQL(t tier, args *[]any) string {
+	z := p.q.Zone
 	switch p.grain {
 	case "minute":
 		return t.timeCol
 	case "hour":
 		if t.timeCol == "minute" {
-			return fmt.Sprintf("(minute - make_interval(mins => extract(minute FROM minute AT TIME ZONE $%d)::int))", tz)
+			return z.sql("minute", func(tz string) string {
+				return "(minute - make_interval(mins => extract(minute FROM minute AT TIME ZONE " + tz + ")::int))"
+			}, true, args)
 		}
 		return t.timeCol
 	case "day":
 		if t.timeCol == "day" {
 			return "day::timestamp AT TIME ZONE 'UTC'"
 		}
-		return fmt.Sprintf("((%s AT TIME ZONE $%d)::date)::timestamp AT TIME ZONE 'UTC'", t.timeCol, tz)
+		return z.sql(t.timeCol, func(tz string) string {
+			return "((" + t.timeCol + " AT TIME ZONE " + tz + ")::date)::timestamp AT TIME ZONE 'UTC'"
+		}, false, args)
 	}
 	return ""
 }
@@ -461,25 +474,24 @@ func (s *PGStore) Query(ctx context.Context, q Query) (Result, error) {
 		for _, t := range tiers {
 			args := append([]any{q.WorkspaceID, q.PropertyID}, t.args...)
 			var cols []string
-			tz := 0
 			if p.grain != "" {
-				if p.grain != "minute" && !(p.grain == "hour" && t.timeCol == "hour") && !(p.grain == "day" && t.timeCol == "day") {
-					args = append(args, q.Location.String())
-					tz = len(args)
-				}
-				cols = append(cols, p.bucketSQL(t, tz))
+				cols = append(cols, p.bucketSQL(t, &args))
 			}
 			for _, d := range p.dims {
 				cols = append(cols, dimSQL(d))
 			}
 			fsql, fargs := filterSQL(q.Filters, names, len(args)+1)
 			args = append(args, fargs...)
+			if len(names.hidden) > 0 {
+				args = append(args, names.hidden)
+				fsql += fmt.Sprintf(" AND NOT route = ANY($%d::int[])", len(args))
+			}
 			sel := `sum(requests)::bigint, sum(errors)::bigint, sum(client_errors)::bigint, sum(sampled)::bigint, sum(duration_sum)::bigint,
 				min(duration_min)::bigint, max(duration_max)::bigint, sum(request_bytes)::bigint, sum(response_bytes)::bigint`
 			if p.sketches {
 				sel += ", array_agg(durations)"
 			}
-			groupBy := ""
+			groupBy := " HAVING count(*) > 0"
 			if len(cols) > 0 {
 				pos := make([]string, len(cols))
 				for i := range cols {
@@ -568,15 +580,15 @@ func (p *plan) step(t time.Time) time.Time {
 	case "minute":
 		return t.Add(time.Minute)
 	case "hour":
-		return t.Add(time.Hour)
+		return p.q.Zone.HourEnd(t)
 	}
-	return DayStart(LocalDay(t, p.q.Location).AddDate(0, 0, 1), p.q.Location)
+	return p.q.Zone.DayStart(p.q.Zone.LocalDay(t).AddDate(0, 0, 1))
 }
 
 // bucketStart is a bucket's first instant: day buckets are labelled with their local date.
 func (p *plan) bucketStart(b time.Time) time.Time {
 	if p.grain == "day" {
-		return DayStart(b, p.q.Location)
+		return p.q.Zone.DayStart(b)
 	}
 	return b
 }
@@ -585,7 +597,7 @@ func (p *plan) label(b time.Time) string {
 	if p.grain == "day" {
 		return b.Format(time.DateOnly)
 	}
-	return b.In(p.q.Location).Format(minuteLabel)
+	return b.In(p.q.Zone.At(b)).Format(minuteLabel)
 }
 
 func (p *plan) result(groups map[string]*group, order []string, names nameMaps) Result {
@@ -600,7 +612,7 @@ func (p *plan) result(groups map[string]*group, order []string, names nameMaps) 
 			if !have[t] {
 				b := t
 				if p.grain == "day" {
-					b = LocalDay(t, q.Location)
+					b = q.Zone.LocalDay(t)
 				}
 				key := b.Format(time.RFC3339) + "|[]"
 				groups[key] = &group{bucket: b, agg: NewAgg()}
@@ -649,9 +661,9 @@ func (p *plan) firstBucket() time.Time {
 	case "minute":
 		return q.Start.Truncate(time.Minute)
 	case "hour":
-		return LocalHour(q.Start, q.Location)
+		return q.Zone.LocalHour(q.Start)
 	}
-	return DayStart(LocalDay(q.Start, q.Location), q.Location)
+	return q.Zone.DayStart(q.Zone.LocalDay(q.Start))
 }
 
 // caps lists the caps the property has reached, and dimension_rows when an hour of the range did.
