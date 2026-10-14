@@ -11,6 +11,11 @@ export const blog: Record<Locale, string> = { en: "/blog/", tr: "/tr/blog/", de:
 export const releases: Record<Locale, string> = { en: "/releases/", tr: "/tr/releases/", de: "/de/releases/" }
 export const contact: Record<Locale, string> = { en: "/contact/", tr: "/tr/contact/", de: "/de/contact/" }
 export const ai: Record<Locale, string> = { en: "/ai/", tr: "/tr/ai/", de: "/de/ai/" }
+export const cloudflareEmail: Record<Locale, string> = {
+  en: "/cloudflare-email/",
+  tr: "/tr/cloudflare-email/",
+  de: "/de/cloudflare-email/",
+}
 export const templates: Record<Locale, string> = { en: "/templates/", tr: "/tr/templates/", de: "/de/templates/" }
 export const template = (slug: string): Record<Locale, string> => ({
   en: `/templates/${slug}/`,
