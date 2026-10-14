@@ -283,6 +283,8 @@ type Store interface {
 	Query(ctx context.Context, q Query) (Result, error)
 	// RouteSet lists the routes of a query's range that are new or silent.
 	RouteSet(ctx context.Context, q Query, state string) ([]int32, error)
+	// RouteTimes says when routes had their first and latest request, by pattern.
+	RouteTimes(ctx context.Context, q Query, ids []int32) (map[string]RouteTimes, error)
 	// NoteReleases keeps the releases not seen before for their service and environment, writes
 	// a deploy annotation for each and returns them.
 	NoteReleases(ctx context.Context, p Property, rels []Release, zone Zone, now time.Time) ([]Release, error)

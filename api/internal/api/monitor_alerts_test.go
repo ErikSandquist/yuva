@@ -337,3 +337,41 @@ func TestMonitorAlertPushIsUrgent(t *testing.T) {
 		t.Fatalf("push payload %v", d.payload)
 	}
 }
+
+func TestMonitorNewRoutesGoByTheirFirstRequest(t *testing.T) {
+	h, _ := monitorHarness(t, false, nil)
+	tm := newTeam(t, h)
+	now := time.Date(2026, 5, 6, 12, 0, 30, 0, time.UTC)
+	h.clock.Set(now)
+	id := createAPIProperty(tm.owner, map[string]any{"name": "Late API"})
+	key := tm.apiKey(h)
+	late := time.Date(2026, 5, 5, 23, 10, 0, 0, time.UTC)
+	fresh := time.Date(2026, 5, 6, 10, 4, 0, 0, time.UTC)
+	sendRecords(key, http.StatusAccepted, id,
+		map[string]any{"method": "GET", "route": "/late", "status": 200, "duration_us": 900, "time": late.Format(time.RFC3339)},
+		map[string]any{"method": "GET", "route": "/fresh", "status": 200, "duration_us": 900, "time": fresh.Format(time.RFC3339)},
+		map[string]any{"method": "GET", "route": "/fresh", "status": 200, "duration_us": 900, "time": fresh.Add(70 * time.Minute).Format(time.RFC3339)})
+	h.flushMonitor()
+	today := map[string]any{"from": "2026-05-06", "to": "2026-05-06"}
+	rows := apiQuery(tm.owner, id, map[string]any{"metrics": []string{"requests"}, "range": today, "dimensions": []string{"route"}, "routes": "new"}).body["rows"].([]any)
+	if len(rows) != 1 {
+		t.Fatalf("new routes %v", rows)
+	}
+	r := rows[0].(map[string]any)
+	if r["dimensions"].([]any)[0] != "/fresh" || r["first_request_at"] != fresh.Format(time.RFC3339) || r["last_request_at"] != fresh.Add(70*time.Minute).Format(time.RFC3339) {
+		t.Fatalf("new route %v", r)
+	}
+	silent := apiQuery(tm.owner, id, map[string]any{"metrics": []string{"requests"}, "range": today, "dimensions": []string{"route"}, "routes": "silent"}).body["rows"].([]any)
+	if len(silent) != 1 {
+		t.Fatalf("silent routes %v", silent)
+	}
+	s := silent[0].(map[string]any)
+	if s["dimensions"].([]any)[0] != "/late" || s["first_request_at"] != late.Format(time.RFC3339) || s["last_request_at"] != late.Format(time.RFC3339) {
+		t.Fatalf("silent route %v", s)
+	}
+	yesterday := apiQuery(tm.owner, id, map[string]any{"metrics": []string{"requests"}, "range": map[string]any{"from": "2026-05-05", "to": "2026-05-05"},
+		"dimensions": []string{"route"}, "routes": "new"}).body["rows"].([]any)
+	if len(yesterday) != 1 || yesterday[0].(map[string]any)["dimensions"].([]any)[0] != "/late" {
+		t.Fatalf("new routes yesterday %v", yesterday)
+	}
+}

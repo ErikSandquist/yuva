@@ -392,8 +392,17 @@ func (s *Server) queryMonitor(ctx context.Context, prop store.AnalyticsProperty,
 	if next != "" {
 		out.NextCursor = &next
 	}
+	var times map[string]monitor.RouteTimes
+	if q.RouteState != "" {
+		if times, err = s.analytics.monitor.store.RouteTimes(ctx, q, q.Routes); err != nil {
+			return nil, err
+		}
+	}
 	for i, r := range rows {
 		out.Rows[i] = oas.AnalyticsRow{Dimensions: slices.Clone(r.Dims), Metrics: apiMetricsBody(&r.Agg, r.Minutes, q.Metrics)}
+		if t, ok := times[r.Dims[0]]; ok {
+			out.Rows[i].FirstRequestAt, out.Rows[i].LastRequestAt = new(t.First), new(t.Last)
+		}
 	}
 	if prev != nil {
 		c := mr.cmp

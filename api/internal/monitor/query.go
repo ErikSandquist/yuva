@@ -858,20 +858,7 @@ func (s *PGStore) RouteSet(ctx context.Context, q Query, state string) ([]int32,
 			return err
 		}
 		keep := func(id int32) bool { return !special(names.routes[id]) && !slices.Contains(names.hidden, id) }
-		if state == RoutesNew {
-			rows, err := tx.Query(ctx, `SELECT id FROM monitor_routes WHERE workspace_id = $1 AND property_id = $2 AND first_seen_at >= $3 AND first_seen_at < $4
-				ORDER BY id`, q.WorkspaceID, q.PropertyID, q.Start, q.End)
-			if err != nil {
-				return err
-			}
-			ids, err := pgx.CollectRows(rows, pgx.RowTo[int32])
-			if err != nil {
-				return err
-			}
-			out = slices.DeleteFunc(ids, func(id int32) bool { return !keep(id) })
-			return nil
-		}
-		if state != RoutesSilent {
+		if state != RoutesNew && state != RoutesSilent {
 			return badQuery("routes is new or silent, not %q", state)
 		}
 		base := q
@@ -897,6 +884,29 @@ func (s *PGStore) RouteSet(ctx context.Context, q Query, state string) ([]int32,
 				}
 			}
 			return ids, nil
+		}
+		if state == RoutesNew {
+			during, err := called(q.Start, q.End)
+			if err != nil {
+				return err
+			}
+			var ids []int32
+			for id := range during {
+				if keep(id) {
+					ids = append(ids, id)
+				}
+			}
+			times, err := routeTimes(ctx, tx, q, ids)
+			if err != nil {
+				return err
+			}
+			for _, id := range ids {
+				if t, ok := times[id]; ok && !t.First.Before(q.Start) {
+					out = append(out, id)
+				}
+			}
+			slices.Sort(out)
+			return nil
 		}
 		from, to := q.Previous()
 		before, err := called(from, to)
@@ -1094,4 +1104,101 @@ func maxTime(a, b time.Time) time.Time {
 		return b
 	}
 	return a
+}
+
+// RouteTimes is when a route's first and latest requests were, to the finest rows that keep them.
+type RouteTimes struct {
+	First, Last time.Time
+}
+
+// routeTimes reads each route's first and latest request from the rollups: minute rows where they
+// are kept, hour rows before them and day rows before the hours.
+func routeTimes(ctx context.Context, tx pgx.Tx, q Query, ids []int32) (map[int32]RouteTimes, error) {
+	out := map[int32]RouteTimes{}
+	if len(ids) == 0 {
+		return out, nil
+	}
+	var hoursFrom *time.Time
+	if err := tx.QueryRow(ctx, `SELECT min(hour) FROM monitor_hour WHERE workspace_id = $1 AND property_id = $2`, q.WorkspaceID, q.PropertyID).Scan(&hoursFrom); err != nil {
+		return nil, err
+	}
+	dayBefore := q.MinuteFrom
+	if hoursFrom != nil && hoursFrom.Before(dayBefore) {
+		dayBefore = *hoursFrom
+	}
+	type era struct {
+		sql, col string
+		before   time.Time
+		day      bool
+	}
+	for _, e := range []era{
+		{"monitor_minute", "minute", time.Time{}, false},
+		{"monitor_hour", "hour", q.MinuteFrom, false},
+		{"monitor_day", "day", q.Zone.LocalDay(dayBefore), true},
+	} {
+		first := "min(" + e.col + ")"
+		args := []any{q.WorkspaceID, q.PropertyID, ids}
+		if !e.before.IsZero() {
+			first = "min(" + e.col + ") FILTER (WHERE " + e.col + " < $4)"
+			args = append(args, e.before)
+		}
+		rows, err := tx.Query(ctx, "SELECT route, "+first+", max("+e.col+") FROM "+e.sql+
+			" WHERE workspace_id = $1 AND property_id = $2 AND route = ANY($3::int[]) AND requests > 0 GROUP BY route", args...)
+		if err != nil {
+			return nil, fmt.Errorf("route times: %w", err)
+		}
+		for rows.Next() {
+			var id int32
+			var f *time.Time
+			var l time.Time
+			if err := rows.Scan(&id, &f, &l); err != nil {
+				rows.Close()
+				return nil, err
+			}
+			if e.day {
+				l = q.Zone.DayStart(l)
+				if f != nil {
+					f = new(q.Zone.DayStart(*f))
+				}
+			}
+			t, seen := out[id]
+			if f != nil && (!seen || t.First.IsZero() || f.Before(t.First)) {
+				t.First = f.UTC()
+			}
+			if l.After(t.Last) {
+				t.Last = l.UTC()
+			}
+			out[id] = t
+		}
+		rows.Close()
+		if err := rows.Err(); err != nil {
+			return nil, err
+		}
+	}
+	for id, t := range out {
+		if t.First.IsZero() {
+			delete(out, id)
+		}
+	}
+	return out, nil
+}
+
+// RouteTimes says when each of a query's routes had its first and latest request, by pattern.
+func (s *PGStore) RouteTimes(ctx context.Context, q Query, ids []int32) (map[string]RouteTimes, error) {
+	out := map[string]RouteTimes{}
+	err := readOnly(ctx, s, func(tx pgx.Tx) error {
+		names, err := loadNames(ctx, tx, q.WorkspaceID, q.PropertyID)
+		if err != nil {
+			return err
+		}
+		times, err := routeTimes(ctx, tx, q, ids)
+		if err != nil {
+			return err
+		}
+		for id, t := range times {
+			out[names.routes[id]] = t
+		}
+		return nil
+	})
+	return out, err
 }
