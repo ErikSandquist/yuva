@@ -1827,8 +1827,10 @@ request. Decisions:
   `p90`, `p95`, `p99`, `avg_duration`, `max_duration`, `apdex`, `request_bytes`, `response_bytes`,
   `response_size_p50`, `response_size_p95` and `conversations`; dimensions route, method, status,
   status class, API version, environment, service, source, platform, consumer, country, app version and
-  `time:minute` (inside the minute tier, at most 1,440 buckets, labelled in the property's local time), `time:hour`, `time:day`, `time:week`,
+  `time:minute` (inside the minute tier, at most 1,440 buckets), `time:hour`, `time:day`, `time:week`,
   `time:month`. `range` also takes `15m`, `1h`, `6h` and `24h` and minute-aligned `since` and `until`.
+  Minute and hour labels are the property's local time with its UTC offset
+  (`2026-10-12T14:05+03:00`), so a repeated DST hour and a pending zone change stay apart.
   Any combination of core dimensions filters and breaks down from every tier; at most one extra
   dimension (consumer, country or app version) joins them, from hours and days (`422
   dimension_combination` otherwise). Comparisons, the 4 query slots per workspace and the cache are
