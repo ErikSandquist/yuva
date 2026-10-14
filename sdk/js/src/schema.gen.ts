@@ -13943,8 +13943,9 @@ export interface components {
             change?: number;
         };
         /**
-         * @description `unknown` until the first counted run, then `up`, or `down` once `failures_before_down`
-         *     runs in a row failed.
+         * @description `unknown` until the first counted run that succeeded or until `failures_before_down`
+         *     runs in a row failed; then `up` after a run that succeeded, or `down` once
+         *     `failures_before_down` runs in a row failed.
          * @enum {string}
          */
         MonitorCheckState: "unknown" | "up" | "down";
@@ -14024,10 +14025,11 @@ export interface components {
             at: string;
             ok: boolean;
             /**
-             * @description The check's state after the run; `unknown` when the run fell in a minute where at least
-             *     20 checks ran on the server and more than half of them failed, which points at the
-             *     server's own network, so it counts neither way; `pending` until its minute is judged,
-             *     about a minute after it closed.
+             * @description The check's state after the run (`unknown` for a failed run before the check was ever
+             *     up or down); `unknown` too for a failed run in a minute where at least 20 checks ran
+             *     on the server and more than half of them failed, which points at the server's own
+             *     network, so it counts neither way, while a run that succeeded in such a minute counts;
+             *     `pending` until its minute is judged, about a minute after it closed.
              * @enum {string}
              */
             state: "up" | "down" | "unknown" | "pending";

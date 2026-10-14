@@ -13711,8 +13711,9 @@ type MonitorCheck struct {
 	PropertyId *uuid.UUID `json:"property_id,omitempty"`
 	Service    *string    `json:"service,omitempty"`
 
-	// State `unknown` until the first counted run, then `up`, or `down` once `failures_before_down`
-	// runs in a row failed.
+	// State `unknown` until the first counted run that succeeded or until `failures_before_down`
+	// runs in a row failed; then `up` after a run that succeeded, or `down` once
+	// `failures_before_down` runs in a row failed.
 	State          MonitorCheckState `json:"state"`
 	StateSince     *time.Time        `json:"state_since,omitempty"`
 	TimeoutSeconds int               `json:"timeout_seconds"`
@@ -13860,10 +13861,11 @@ type MonitorCheckResult struct {
 	// Retried The first try failed and this is the try 20 seconds later.
 	Retried bool `json:"retried"`
 
-	// State The check's state after the run; `unknown` when the run fell in a minute where at least
-	// 20 checks ran on the server and more than half of them failed, which points at the
-	// server's own network, so it counts neither way; `pending` until its minute is judged,
-	// about a minute after it closed.
+	// State The check's state after the run (`unknown` for a failed run before the check was ever
+	// up or down); `unknown` too for a failed run in a minute where at least 20 checks ran
+	// on the server and more than half of them failed, which points at the server's own
+	// network, so it counts neither way, while a run that succeeded in such a minute counts;
+	// `pending` until its minute is judged, about a minute after it closed.
 	State MonitorCheckResultState `json:"state"`
 
 	// Status The last answer's status; 0 when none came.
@@ -13873,10 +13875,11 @@ type MonitorCheckResult struct {
 	Timings MonitorCheckTimings `json:"timings"`
 }
 
-// MonitorCheckResultState The check's state after the run; `unknown` when the run fell in a minute where at least
-// 20 checks ran on the server and more than half of them failed, which points at the
-// server's own network, so it counts neither way; `pending` until its minute is judged,
-// about a minute after it closed.
+// MonitorCheckResultState The check's state after the run (`unknown` for a failed run before the check was ever
+// up or down); `unknown` too for a failed run in a minute where at least 20 checks ran
+// on the server and more than half of them failed, which points at the server's own
+// network, so it counts neither way, while a run that succeeded in such a minute counts;
+// `pending` until its minute is judged, about a minute after it closed.
 type MonitorCheckResultState string
 
 // MonitorCheckResultList defines model for MonitorCheckResultList.
@@ -13884,8 +13887,9 @@ type MonitorCheckResultList struct {
 	Items []MonitorCheckResult `json:"items"`
 }
 
-// MonitorCheckState `unknown` until the first counted run, then `up`, or `down` once `failures_before_down`
-// runs in a row failed.
+// MonitorCheckState `unknown` until the first counted run that succeeded or until `failures_before_down`
+// runs in a row failed; then `up` after a run that succeeded, or `down` once
+// `failures_before_down` runs in a row failed.
 type MonitorCheckState string
 
 // MonitorCheckTimings Milliseconds; redirects add up their hops, `ttfb` is until the last answer's first byte and `total` until its body was read.
