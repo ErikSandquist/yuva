@@ -31,7 +31,17 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useDeleteSegment, useSaveSegment, useSegments } from "@/features/analytics/queries"
-import { OPS, PERIODS, sameFilters, todayIso, useView, type FilterOp, type Period } from "@/features/analytics/state"
+import {
+  API_PERIODS,
+  OPS,
+  PERIODS,
+  sameFilters,
+  todayIso,
+  useView,
+  type FilterOp,
+  type Kind,
+  type Period,
+} from "@/features/analytics/state"
 import { flag, useAnalyticsText, valueText, type AnalyticsText } from "@/features/analytics/text"
 import { Field } from "@/features/settings/ui"
 import { ApiError, type AnalyticsFilter, type AnalyticsSegment } from "@/lib/api"
@@ -103,10 +113,10 @@ function daysAgo(n: number) {
   return d.toISOString().slice(0, 10)
 }
 
-export function RangePicker() {
+export function RangePicker({ kind = "site" }: { kind?: Kind }) {
   const { t, i18n } = useLingui()
   const text = useAnalyticsText()
-  const { view, setRange } = useView()
+  const { view, setRange } = useView(kind)
   const [custom, setCustom] = useState(false)
   const r = view.range
   const customLabel = r.period
@@ -128,7 +138,7 @@ export function RangePicker() {
           <SelectValue />
         </SelectTrigger>
         <SelectContent className="min-w-52">
-          {PERIODS.map((p) => (
+          {(kind === "api" ? API_PERIODS : PERIODS).map((p) => (
             <SelectItem key={p} value={p}>
               {text.period[p]}
             </SelectItem>

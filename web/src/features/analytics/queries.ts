@@ -2,6 +2,7 @@ import { keepPreviousData, useInfiniteQuery, useMutation, useQuery, useQueryClie
 import { createContext, useContext } from "react"
 
 import { useAnalyticsProperties } from "@/features/analytics/properties"
+import type { Kind } from "@/features/analytics/state"
 import {
   api,
   ApiError,
@@ -119,6 +120,12 @@ export function useAnalytics(id: string, query: Query, enabled = true) {
     staleTime: 30_000,
     enabled: !!id && enabled,
   })
+}
+
+export type ApiQuery = Omit<Query, "dataset" | "compare" | "goal_id" | "segment_id" | "prop">
+
+export function useApiQuery(id: string, query: ApiQuery, enabled = true) {
+  return useAnalytics(id, { ...query, dataset: "api" }, enabled)
 }
 
 export function useAnalyticsTable(id: string, body: AnalyticsQuery) {
@@ -255,8 +262,12 @@ function useStore() {
 export function useCreateProperty() {
   const store = useStore()
   return useMutation({
-    mutationFn: (body: { name: string; domains: string[]; inbox_id?: string; timezone: string }) =>
-      unwrap(api.POST("/v1/analytics/properties", { body: { currency: "EUR", ...body } })),
+    mutationFn: (body: { kind: Kind; name: string; domains: string[]; inbox_id?: string; timezone: string }) =>
+      unwrap(
+        api.POST("/v1/analytics/properties", {
+          body: { currency: "EUR", apdex_ms: 500, monitor_hour_days: 90, ...body },
+        })
+      ),
     onSuccess: store.put,
   })
 }

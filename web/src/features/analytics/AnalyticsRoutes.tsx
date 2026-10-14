@@ -1,7 +1,7 @@
 import "@/features/analytics/i18n"
 
 import { Trans, useLingui } from "@lingui/react/macro"
-import { ChartLineIcon, PlusIcon } from "lucide-react"
+import { ChartLineIcon, PlusIcon, ServerIcon } from "lucide-react"
 import { Link, Navigate, Outlet, Route, Routes, useLocation, useNavigate, useParams } from "react-router"
 
 import { Dot, ErrorLine } from "@/components/common"
@@ -14,8 +14,10 @@ import { Controls } from "@/features/analytics/Controls"
 import { EventsView } from "@/features/analytics/Events"
 import { FunnelsView } from "@/features/analytics/Funnels"
 import { GoalsView } from "@/features/analytics/Goals"
+import { ApiOverview, ApiRoutePage, ApiRoutes, RequestsBanner } from "@/features/analytics/Monitor"
 import { InstallPropertyPage, NewPropertyPage, WaitForFirstEvent } from "@/features/analytics/NewProperty"
 import { Overview } from "@/features/analytics/Overview"
+import { useCurrentProperty } from "@/features/analytics/parts"
 import { useAnalyticsProperties } from "@/features/analytics/properties"
 import { useProperty } from "@/features/analytics/queries"
 import { Realtime } from "@/features/analytics/Realtime"
@@ -26,6 +28,7 @@ import { useViewSearch } from "@/features/analytics/state"
 import { useAnalyticsText } from "@/features/analytics/text"
 import { Segmented } from "@/components/common"
 import { useIsPhone } from "@/hooks/use-media-query"
+import type { AnalyticsProperty } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { useInboxes } from "@/lib/workspace"
 
@@ -45,6 +48,9 @@ const VIEWS = [
 ] as const
 type ViewKey = (typeof VIEWS)[number]
 
+const API_VIEWS = ["overview", "routes"] as const
+type ApiViewKey = (typeof API_VIEWS)[number]
+
 function AnalyticsHome() {
   const { canManage } = useSession()
   const phone = useIsPhone()
@@ -60,10 +66,16 @@ function AnalyticsHome() {
         </Trans>
       </p>
       {canManage && (
-        <Button className="mt-4" render={<Link to="/analytics/new" />} data-testid="analytics-home-add">
-          <PlusIcon />
-          <Trans>Add a website</Trans>
-        </Button>
+        <div className="mt-4 flex flex-wrap justify-center gap-2">
+          <Button render={<Link to="/analytics/new" />} data-testid="analytics-home-add">
+            <PlusIcon />
+            <Trans>Add a website</Trans>
+          </Button>
+          <Button variant="outline" render={<Link to="/analytics/new?kind=api" />} data-testid="analytics-home-add-api">
+            <ServerIcon />
+            <Trans>Watch an API</Trans>
+          </Button>
+        </div>
       )}
     </PaneEmpty>
   )
@@ -78,7 +90,6 @@ function PropertyLayout() {
   const search = useViewSearch(true)
   const property = useProperty(propertyId)
   const usage = useAnalyticsProperties().data?.usage
-  const inbox = (useInboxes().data ?? []).find((i) => i.id === property.data?.inbox_id)
   const last = pathname.split("/")[3] as ViewKey | undefined
   const current: ViewKey = last && VIEWS.includes(last) ? last : "overview"
   const names: Record<ViewKey, string> = {
@@ -104,28 +115,12 @@ function PropertyLayout() {
       </Pane>
     )
   }
+  if (p.kind === "api") return <ApiLayout property={p} />
+  if ((last as string | undefined) === "routes") return <Navigate to={`/analytics/${p.id}${search}`} replace />
   const controls = current !== "realtime" && current !== "settings" && current !== "retention"
   return (
     <Pane wide testId="analytics-property" className="gap-5" key={p.id}>
-      <header className="flex flex-col">
-        <PaneBack to="/analytics" label={t`Analytics`} />
-        <h1 className="min-w-0 text-page break-words" data-testid="analytics-property-name">
-          {p.name}
-        </h1>
-        <p className="mt-1 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-body text-muted-foreground">
-          {inbox && (
-            <span className="inline-flex items-center gap-1.5">
-              <Dot color={inbox.branding.color} className="size-[7px] rounded-[2px]" />
-              {inbox.name}
-            </span>
-          )}
-          <span className="min-w-0 truncate" dir="ltr">
-            {p.domains.join(", ")}
-          </span>
-          <span aria-hidden>·</span>
-          <span title={t`Days are counted in this time zone`}>{p.timezone}</span>
-        </p>
-      </header>
+      <PropertyHeader property={p} />
       {usage && <UsageBanner usage={usage} />}
       <div className="-mx-1 max-w-[calc(100%+0.5rem)] overflow-x-auto px-1 py-1">
         <Segmented
@@ -148,6 +143,71 @@ function PropertyLayout() {
   )
 }
 
+function OverviewFor() {
+  return useCurrentProperty().kind === "api" ? <ApiOverview /> : <Overview />
+}
+
+function PropertyHeader({ property: p }: { property: AnalyticsProperty }) {
+  const { t } = useLingui()
+  const inbox = (useInboxes().data ?? []).find((i) => i.id === p.inbox_id)
+  return (
+    <header className="flex flex-col">
+      <PaneBack to="/analytics" label={t`Analytics`} />
+      <h1 className="min-w-0 text-page break-words" data-testid="analytics-property-name">
+        {p.name}
+      </h1>
+      <p className="mt-1 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-body text-muted-foreground">
+        {inbox && (
+          <span className="inline-flex items-center gap-1.5">
+            <Dot color={inbox.branding.color} className="size-[7px] rounded-[2px]" />
+            {inbox.name}
+          </span>
+        )}
+        {p.kind === "api" && (
+          <span className="inline-flex items-center gap-1.5">
+            <ServerIcon className="size-3.5" />
+            <Trans>API</Trans>
+          </span>
+        )}
+        {p.domains.length > 0 && (
+          <span className="min-w-0 truncate" dir="ltr">
+            {p.domains.join(", ")}
+          </span>
+        )}
+        <span aria-hidden>·</span>
+        <span title={t`Days are counted in this time zone`}>{p.timezone}</span>
+      </p>
+    </header>
+  )
+}
+
+function ApiLayout({ property: p }: { property: AnalyticsProperty }) {
+  const { t } = useLingui()
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
+  const search = useViewSearch()
+  const usage = useAnalyticsProperties().data?.usage
+  const last = pathname.split("/")[3] as ApiViewKey | undefined
+  if (last && !API_VIEWS.includes(last)) return <Navigate to={`/analytics/${p.id}${search}`} replace />
+  const current: ApiViewKey = last ?? "overview"
+  const names: Record<ApiViewKey, string> = { overview: t`Overview`, routes: t`Routes` }
+  return (
+    <Pane wide testId="analytics-property" className="gap-5" key={p.id}>
+      <PropertyHeader property={p} />
+      {usage && <RequestsBanner usage={usage} />}
+      <div className="-mx-1 max-w-[calc(100%+0.5rem)] overflow-x-auto px-1 py-1">
+        <Segmented
+          value={current}
+          onChange={(v) => navigate(`/analytics/${p.id}${v === "overview" ? "" : `/${v}`}${search}`)}
+          label={t`Analytics views`}
+          items={API_VIEWS.map((v) => ({ value: v, label: names[v], testId: `analytics-tab-${v}` }))}
+        />
+      </div>
+      <Outlet context={{ property: p }} />
+    </Pane>
+  )
+}
+
 export default function AnalyticsRoutes() {
   return (
     <Routes>
@@ -155,7 +215,7 @@ export default function AnalyticsRoutes() {
       <Route path="new" element={<NewPropertyPage />} />
       <Route path="new/:propertyId" element={<InstallPropertyPage />} />
       <Route path=":propertyId" element={<PropertyLayout />}>
-        <Route index element={<Overview />} />
+        <Route index element={<OverviewFor />} />
         <Route path="realtime" element={<Realtime />} />
         <Route path="pages" element={<BreakdownView group="pages" />} />
         <Route path="sources" element={<BreakdownView group="sources" />} />
@@ -167,6 +227,8 @@ export default function AnalyticsRoutes() {
         <Route path="retention" element={<RetentionView />} />
         <Route path="support" element={<SupportView />} />
         <Route path="settings" element={<SettingsView />} />
+        <Route path="routes" element={<ApiRoutes />} />
+        <Route path="routes/:method/*" element={<ApiRoutePage />} />
         <Route path="*" element={<Navigate to=".." replace />} />
       </Route>
     </Routes>

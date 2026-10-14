@@ -1,7 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useMutation } from "@tanstack/react-query"
 import { DownloadIcon, HistoryIcon, UserCheckIcon } from "lucide-react"
-import { useOutletContext } from "react-router"
+import { Link, useOutletContext } from "react-router"
 
 import { ErrorLine, Notice } from "@/components/common"
 import { formatDate } from "@/components/common/text"
@@ -21,6 +21,7 @@ export type BarItem = {
   value: number
   display: string
   onClick?: () => void
+  to?: string
   ltr?: boolean
 }
 
@@ -61,7 +62,11 @@ export function BarList({
             "relative flex h-8 w-full items-center gap-3 rounded-md px-2 text-body outline-none focus-visible:ring-2 focus-visible:ring-ring"
           return (
             <li key={it.key}>
-              {it.onClick ? (
+              {it.to ? (
+                <Link to={it.to} className={cn(cls, "transition-colors hover:bg-muted")} data-testid="analytics-bar">
+                  {inner}
+                </Link>
+              ) : it.onClick ? (
                 <button
                   type="button"
                   onClick={it.onClick}

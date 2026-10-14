@@ -1,7 +1,7 @@
 import "@/features/analytics/i18n"
 
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
-import { ChartLineIcon, GaugeIcon, PlusIcon } from "lucide-react"
+import { ChartLineIcon, GaugeIcon, PlusIcon, ServerIcon } from "lucide-react"
 import { Link } from "react-router"
 
 import { Dot, ErrorLine, Notice } from "@/components/common"
@@ -47,13 +47,15 @@ export function UsageBanner({ usage, className }: { usage: AnalyticsUsage; class
 function Row({ p, now, inboxColor }: { p: AnalyticsProperty; now: number; inboxColor?: string }) {
   const { t, i18n } = useLingui()
   const search = useViewSearch()
-  const quiet = !p.last_event_at || now - Date.parse(p.last_event_at) > DAY
+  const api = p.kind === "api"
+  const quiet = !api && (!p.last_event_at || now - Date.parse(p.last_event_at) > DAY)
   const visitors = formatCompact(p.visitors_today, i18n.locale)
+  const Icon = api ? ServerIcon : ChartLineIcon
   return (
     <li>
       <ColumnLink to={`/analytics/${p.id}${search}`} testId="analytics-property">
         <span className="grid size-[34px] shrink-0 place-items-center rounded-[10px] border bg-surface text-muted-foreground">
-          <ChartLineIcon className="size-4" />
+          <Icon className="size-4" />
         </span>
         <span className="min-w-0 flex-1">
           <span className="flex items-center gap-2">
@@ -67,16 +69,22 @@ function Row({ p, now, inboxColor }: { p: AnalyticsProperty; now: number; inboxC
               />
             )}
           </span>
-          <span className="block truncate text-caption text-faint" dir="ltr">
-            {p.domains.join(", ")}
-          </span>
+          {api && p.domains.length === 0 ? (
+            <span className="block truncate text-caption text-faint">{t`API`}</span>
+          ) : (
+            <span className="block truncate text-caption text-faint" dir="ltr">
+              {p.domains.join(", ")}
+            </span>
+          )}
         </span>
-        <span className="flex shrink-0 flex-col items-end">
-          <span className="text-body font-medium tabular-nums">{visitors}</span>
-          <span className="text-caption text-faint">
-            <Plural value={p.visitors_today} one="visitor today" other="visitors today" />
+        {!api && (
+          <span className="flex shrink-0 flex-col items-end">
+            <span className="text-body font-medium tabular-nums">{visitors}</span>
+            <span className="text-caption text-faint">
+              <Plural value={p.visitors_today} one="visitor today" other="visitors today" />
+            </span>
           </span>
-        </span>
+        )}
       </ColumnLink>
     </li>
   )
@@ -119,7 +127,10 @@ export default function AnalyticsColumn() {
           </p>
           {canManage ? (
             <p>
-              <Trans>Add a website to count its visitors, pages and sources, without cookies.</Trans>
+              <Trans>
+                Add a website to count its visitors, pages and sources without cookies, or an API to count its requests
+                per route.
+              </Trans>
             </p>
           ) : (
             <p>

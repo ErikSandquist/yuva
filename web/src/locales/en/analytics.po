@@ -41,6 +41,10 @@ msgstr "{count, plural, one {Goal “{goal}” had # conversion, against {usual}
 msgid "{count} in this range, none in the compared days."
 msgstr "{count} in this range, none in the compared days."
 
+#: src/features/analytics/Monitor.tsx
+msgid "{count} of {limit} API requests counted this month. Requests over the limit are not counted until the month ends."
+msgstr "{count} of {limit} API requests counted this month. Requests over the limit are not counted until the month ends."
+
 #: src/features/analytics/Insights.tsx
 msgid "{dim} {value}: {count}, none in the compared days."
 msgstr "{dim} {value}: {count}, none in the compared days."
@@ -56,6 +60,10 @@ msgstr "{dim} {value}: {lower} rose {change}, {now} against {before}."
 #: src/features/analytics/Insights.tsx
 msgid "{dim} {value}: {metric} {now}, none in the compared days."
 msgstr "{dim} {value}: {metric} {now}, none in the compared days."
+
+#: src/features/analytics/Monitor.tsx
+msgid "{errors, plural, one {# error} other {# errors}}"
+msgstr "{errors, plural, one {# error} other {# errors}}"
 
 #: src/features/analytics/Annotations.tsx
 msgid "{kind}: {found}"
@@ -121,9 +129,21 @@ msgstr "{overall} of the visitors who reached the first step also reached the la
 msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
 msgstr "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
 
+#: src/features/analytics/Monitor.tsx
+msgid "{requests, plural, one {# request} other {# requests}}"
+msgstr "{requests, plural, one {# request} other {# requests}}"
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
+
+#: src/features/analytics/text.ts
+msgid "95 out of 100 requests took at most this long."
+msgstr "95 out of 100 requests took at most this long."
+
+#: src/features/analytics/text.ts
+msgid "99 out of 100 requests took at most this long."
+msgstr "99 out of 100 requests took at most this long."
 
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
@@ -239,8 +259,12 @@ msgid "Add a website"
 msgstr "Add a website"
 
 #: src/features/analytics/AnalyticsColumn.tsx
-msgid "Add a website to count its visitors, pages and sources, without cookies."
-msgstr "Add a website to count its visitors, pages and sources, without cookies."
+msgid "Add a website to count its visitors, pages and sources without cookies, or an API to count its requests per route."
+msgstr "Add a website to count its visitors, pages and sources without cookies, or an API to count its requests per route."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Add an API"
+msgstr "Add an API"
 
 #: src/features/analytics/NewProperty.tsx
 msgid "Add and install"
@@ -249,6 +273,14 @@ msgstr "Add and install"
 #: src/features/analytics/Annotations.tsx
 msgid "Add note"
 msgstr "Add note"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Add the middleware to your server or send records with any HTTP client. Requests show up here about 15 seconds after your server answered them."
+msgstr "Add the middleware to your server or send records with any HTTP client. Requests show up here about 15 seconds after your server answered them."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Add the middleware to your server, or send records from any language. Both need an API key with the analytics:write scope, which stays on your server."
+msgstr "Add the middleware to your server, or send records from any language. Both need an API key with the analytics:write scope, which stays on your server."
 
 #: src/features/analytics/Install.tsx
 msgid "Add the YuvaAnalytics library of the Yuva package and configure it once at launch. .yuvaScreen counts a SwiftUI screen; in UIKit, call YuvaAnalytics.screen when a screen appears. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
@@ -299,6 +331,14 @@ msgstr "All events"
 msgid "All goals"
 msgstr "All goals"
 
+#: src/features/analytics/Monitor.tsx
+msgid "All routes"
+msgstr "All routes"
+
+#: src/features/analytics/Monitor.tsx
+msgid "An hour of this range reached {max} rows of consumers, countries or app versions. New ones in that hour are counted under Other."
+msgstr "An hour of this range reached {max} rows of consumers, countries or app versions. New ones in that hour are counted under Other."
+
 #: src/features/analytics/Support.tsx
 msgid "An owner or admin can link one in the property’s settings."
 msgstr "An owner or admin can link one in the property’s settings."
@@ -324,6 +364,12 @@ msgstr "Analytics views"
 #: src/features/analytics/Sharing.tsx
 msgid "Anyone with the link sees the views you pick, read-only, without signing in."
 msgstr "Anyone with the link sees the views you pick, read-only, without signing in."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/NewProperty.tsx
+msgid "API"
+msgstr "API"
 
 #: src/features/analytics/text.ts
 msgid "App"
@@ -356,6 +402,10 @@ msgstr "Audience"
 #: src/features/analytics/SharePage.tsx
 msgid "Available until {expires}"
 msgstr "Available until {expires}"
+
+#: src/features/analytics/text.ts
+msgid "Average duration"
+msgstr "Average duration"
 
 #: src/features/analytics/Settings.tsx
 msgid "Bots"
@@ -393,6 +443,10 @@ msgstr "Browser"
 #: src/features/analytics/text.ts
 msgid "Browser version"
 msgstr "Browser version"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Busiest routes"
+msgstr "Busiest routes"
 
 #: src/features/analytics/Install.tsx
 msgid "Call it once in the browser. During server rendering it does nothing."
@@ -446,6 +500,18 @@ msgstr "City"
 #: src/features/analytics/Sharing.tsx
 msgid "Clear"
 msgstr "Clear"
+
+#: src/features/analytics/text.ts
+msgid "Client error rate"
+msgstr "Client error rate"
+
+#: src/features/analytics/text.ts
+msgid "Client errors"
+msgstr "Client errors"
+
+#: src/features/analytics/text.ts
+msgid "Client errors out of all requests."
+msgstr "Client errors out of all requests."
 
 #: src/features/analytics/Retention.tsx
 msgid "Cohorts by"
@@ -568,6 +634,10 @@ msgstr "Count my visits again"
 #: src/features/analytics/NewProperty.tsx
 msgid "Count visitors, pages, sources, places and devices without cookies and without storing IP addresses."
 msgstr "Count visitors, pages, sources, places and devices without cookies and without storing IP addresses."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Count your API’s requests, errors and response times per route. Your server sends a short record per request; no body, header, query string or IP address is kept."
+msgstr "Count your API’s requests, errors and response times per route. Your server sends a short record per request; no body, header, query string or IP address is kept."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 msgid "Count your website’s visitors"
@@ -869,9 +939,34 @@ msgstr "Enter the password you were given with the link."
 msgid "Entry page"
 msgstr "Entry page"
 
+#: src/features/analytics/text.ts
+msgid "Environment"
+msgstr "Environment"
+
 #: src/features/analytics/Goals.tsx
 msgid "equal to"
 msgstr "equal to"
+
+#: src/features/analytics/text.ts
+msgid "Error rate"
+msgstr "Error rate"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Error rates"
+msgstr "Error rates"
+
+#: src/features/analytics/Monitor.tsx
+#: src/features/analytics/text.ts
+msgid "Errors"
+msgstr "Errors"
+
+#: src/features/analytics/text.ts
+msgid "Errors out of all requests."
+msgstr "Errors out of all requests."
+
+#: src/features/analytics/Monitor.tsx
+msgid "Estimated"
+msgstr "Estimated"
 
 #: src/features/analytics/Goals.tsx
 #: src/features/analytics/text.ts
@@ -1032,6 +1127,10 @@ msgid "Five reports an hour at most. Try again later."
 msgstr "Five reports an hour at most. Try again later."
 
 #: src/features/analytics/NewProperty.tsx
+msgid "For example Fieldnote API"
+msgstr "For example Fieldnote API"
+
+#: src/features/analytics/NewProperty.tsx
 msgid "For example Fieldnote website"
 msgstr "For example Fieldnote website"
 
@@ -1082,6 +1181,10 @@ msgstr "Funnels"
 msgid "General"
 msgstr "General"
 
+#: src/features/analytics/Install.tsx
+msgid "Go middleware"
+msgstr "Go middleware"
+
 #: src/features/analytics/Funnels.tsx
 msgid "Go to goals"
 msgstr "Go to goals"
@@ -1108,6 +1211,10 @@ msgstr "Goals"
 msgid "had an address removed"
 msgstr "had an address removed"
 
+#: src/features/analytics/text.ts
+msgid "Half of the requests took at most this long."
+msgstr "Half of the requests took at most this long."
+
 #: src/features/analytics/Settings.tsx
 msgid "Health"
 msgstr "Health"
@@ -1131,6 +1238,10 @@ msgstr "Helpful share"
 #: src/features/analytics/text.ts
 msgid "Host"
 msgstr "Host"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Host names"
+msgstr "Host names"
 
 #: src/features/analytics/text.ts
 msgid "Host or app"
@@ -1224,12 +1335,24 @@ msgid "Last 12 months"
 msgstr "Last 12 months"
 
 #: src/features/analytics/text.ts
+msgid "Last 15 minutes"
+msgstr "Last 15 minutes"
+
+#: src/features/analytics/text.ts
+msgid "Last 24 hours"
+msgstr "Last 24 hours"
+
+#: src/features/analytics/text.ts
 msgid "Last 28 days"
 msgstr "Last 28 days"
 
 #: src/features/analytics/text.ts
 msgid "Last 30 days"
 msgstr "Last 30 days"
+
+#: src/features/analytics/text.ts
+msgid "Last 6 hours"
+msgstr "Last 6 hours"
 
 #: src/features/analytics/text.ts
 msgid "Last 6 months"
@@ -1252,6 +1375,10 @@ msgid "Last event: {last}"
 msgstr "Last event: {last}"
 
 #: src/features/analytics/text.ts
+msgid "Last hour"
+msgstr "Last hour"
+
+#: src/features/analytics/text.ts
 msgid "Last month"
 msgstr "Last month"
 
@@ -1266,6 +1393,10 @@ msgstr "Last page or screen"
 #: src/features/analytics/text.ts
 msgid "Last screen"
 msgstr "Last screen"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Latency"
+msgstr "Latency"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Leave empty to keep the current one"
@@ -1290,6 +1421,7 @@ msgstr "Link signed-in users to their contact"
 #: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
+#: src/features/analytics/Monitor.tsx
 #: src/features/analytics/Support.tsx
 msgid "Load more"
 msgstr "Load more"
@@ -1336,6 +1468,18 @@ msgstr "Make link"
 #: src/features/analytics/text.ts
 msgid "matches"
 msgstr "matches"
+
+#: src/features/analytics/text.ts
+msgid "Method"
+msgstr "Method"
+
+#: src/features/analytics/Install.tsx
+msgid "Middleware records every request the mux answers, with its route pattern, status and duration, and sends them in batches. It needs an <0>API key</0> with the analytics:write scope."
+msgstr "Middleware records every request the mux answers, with its route pattern, status and duration, and sends them in batches. It needs an <0>API key</0> with the analytics:write scope."
+
+#: src/features/analytics/Install.tsx
+msgid "Middleware records every request the mux answers, with its route pattern, status and duration, and sends them in batches. It needs an API key with the analytics:write scope from an owner or admin."
+msgstr "Middleware records every request the mux answers, with its route pattern, status and duration, and sends them in batches. It needs an API key with the analytics:write scope from an owner or admin."
 
 #: src/features/analytics/text.ts
 msgid "Mobile"
@@ -1497,6 +1641,18 @@ msgstr "No properties yet"
 #: src/features/analytics/Settings.tsx
 msgid "No props are tracked."
 msgstr "No props are tracked."
+
+#: src/features/analytics/Monitor.tsx
+msgid "No requests in this range."
+msgstr "No requests in this range."
+
+#: src/features/analytics/Monitor.tsx
+msgid "No requests yet"
+msgstr "No requests yet"
+
+#: src/features/analytics/text.ts
+msgid "No response"
+msgstr "No response"
 
 #: src/features/analytics/Alerts.tsx
 msgid "No scheduled reports."
@@ -1673,6 +1829,10 @@ msgstr "Operating system"
 msgid "Opt-out link"
 msgstr "Opt-out link"
 
+#: src/features/analytics/NewProperty.tsx
+msgid "Optional, one per line. The host names the API answers on, to tell properties apart."
+msgstr "Optional, one per line. The host names the API answers on, to tell properties apart."
+
 #: src/features/analytics/text.ts
 msgid "Organic search"
 msgstr "Organic search"
@@ -1688,6 +1848,10 @@ msgstr "Other"
 #: src/features/analytics/Settings.tsx
 msgid "Other drops"
 msgstr "Other drops"
+
+#: src/features/analytics/text.ts
+msgid "Other method"
+msgstr "Other method"
 
 #: src/features/analytics/Events.tsx
 msgid "Other prop"
@@ -1717,6 +1881,18 @@ msgstr "Owners and admins make funnels from goals. They show up here with each s
 #: src/features/analytics/Goals.tsx
 msgid "Owners and admins make goals. They show up here with their conversions."
 msgstr "Owners and admins make goals. They show up here with their conversions."
+
+#: src/features/analytics/text.ts
+msgid "p50"
+msgstr "p50"
+
+#: src/features/analytics/text.ts
+msgid "p95"
+msgstr "p95"
+
+#: src/features/analytics/text.ts
+msgid "p99"
+msgstr "p99"
 
 #: src/features/analytics/Goals.tsx
 #: src/features/analytics/text.ts
@@ -1816,6 +1992,7 @@ msgstr "Paying customers from Germany"
 msgid "Per 1,000 views"
 msgstr "Per 1,000 views"
 
+#: src/features/analytics/Monitor.tsx
 #: src/features/analytics/Overview.tsx
 msgid "per day"
 msgstr "per day"
@@ -1824,9 +2001,14 @@ msgstr "per day"
 msgid "Per day"
 msgstr "Per day"
 
+#: src/features/analytics/Monitor.tsx
 #: src/features/analytics/Overview.tsx
 msgid "per hour"
 msgstr "per hour"
+
+#: src/features/analytics/Monitor.tsx
+msgid "per minute"
+msgstr "per minute"
 
 #: src/features/analytics/Overview.tsx
 msgid "per week"
@@ -2016,6 +2198,35 @@ msgstr "Render the component once, in the root layout. It renders nothing; useYu
 msgid "Report"
 msgstr "Report"
 
+#: src/features/analytics/Monitor.tsx
+#: src/features/analytics/text.ts
+msgid "Requests"
+msgstr "Requests"
+
+#: src/features/analytics/text.ts
+msgid "Requests divided by the minutes of the range, up to now."
+msgstr "Requests divided by the minutes of the range, up to now."
+
+#: src/features/analytics/text.ts
+msgid "Requests per minute"
+msgstr "Requests per minute"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Requests show up in the overview about 15 seconds after your server answered them. A path without a route pattern is counted under a pattern made from it, with ids taken out."
+msgstr "Requests show up in the overview about 15 seconds after your server answered them. A path without a route pattern is counted under a pattern made from it, with ids taken out."
+
+#: src/features/analytics/text.ts
+msgid "Requests that answered with a status from 400 to 499."
+msgstr "Requests that answered with a status from 400 to 499."
+
+#: src/features/analytics/text.ts
+msgid "Requests that answered with a status from 500 to 599, or with no answer at all."
+msgstr "Requests that answered with a status from 500 to 599, or with no answer at all."
+
+#: src/features/analytics/text.ts
+msgid "Requests the API answered, or that ended without an answer."
+msgstr "Requests the API answered, or that ended without an answer."
+
 #: src/features/analytics/Settings.tsx
 msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
 msgstr "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
@@ -2049,6 +2260,14 @@ msgstr "Revoke {name}?"
 #: src/features/analytics/Sharing.tsx
 msgid "Revoked"
 msgstr "Revoked"
+
+#: src/features/analytics/text.ts
+msgid "Route"
+msgstr "Route"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Routes"
+msgstr "Routes"
 
 #: src/features/analytics/Exports.tsx
 msgid "Rows"
@@ -2210,6 +2429,10 @@ msgstr "Social"
 msgid "Some events were dropped. The reasons are below."
 msgstr "Some events were dropped. The reasons are below."
 
+#: src/features/analytics/Monitor.tsx
+msgid "Sort routes by"
+msgstr "Sort routes by"
+
 #: src/features/analytics/text.ts
 msgid "Source"
 msgstr "Source"
@@ -2225,6 +2448,18 @@ msgstr "Sources"
 #: src/features/analytics/Settings.tsx
 msgid "Start over"
 msgstr "Start over"
+
+#: src/features/analytics/text.ts
+msgid "Status"
+msgstr "Status"
+
+#: src/features/analytics/text.ts
+msgid "Status class"
+msgstr "Status class"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Status codes"
+msgstr "Status codes"
 
 #. placeholder {0}: i + 1
 #: src/features/analytics/Funnels.tsx
@@ -2304,6 +2539,10 @@ msgstr "The key stops working at once, and all visits, events and totals are del
 msgid "The last 30 days"
 msgstr "The last 30 days"
 
+#: src/features/analytics/Monitor.tsx
+msgid "The last 60 minutes"
+msgstr "The last 60 minutes"
+
 #: src/features/analytics/Sharing.tsx
 msgid "The link stops working at once and leaves the list."
 msgstr "The link stops working at once and leaves the list."
@@ -2315,6 +2554,10 @@ msgstr "The link stops working at once and stays in the list."
 #: src/features/analytics/Sharing.tsx
 msgid "The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked."
 msgstr "The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked."
+
+#: src/features/analytics/text.ts
+msgid "The mean time a request took."
+msgstr "The mean time a request took."
 
 #: src/features/analytics/Install.tsx
 msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
@@ -2352,6 +2595,10 @@ msgstr "The report could not be loaded"
 msgid "The server’s own database"
 msgstr "The server’s own database"
 
+#: src/features/analytics/Monitor.tsx
+msgid "The workspace reached {max} services. New services are counted under Other."
+msgstr "The workspace reached {max} services. New services are counted under Other."
+
 #: src/features/analytics/parts.tsx
 msgid "These filters need detailed records that are no longer kept for this range."
 msgstr "These filters need detailed records that are no longer kept for this range."
@@ -2359,6 +2606,26 @@ msgstr "These filters need detailed records that are no longer kept for this ran
 #: src/features/analytics/parts.tsx
 msgid "These filters need the detailed records, which are kept since {day}. Earlier days only have totals per page, source, place and device."
 msgstr "These filters need the detailed records, which are kept since {day}. Earlier days only have totals per page, source, place and device."
+
+#: src/features/analytics/Monitor.tsx
+msgid "This API reached {max} API versions. New versions are counted under Other."
+msgstr "This API reached {max} API versions. New versions are counted under Other."
+
+#: src/features/analytics/Monitor.tsx
+msgid "This API reached {max} app versions. New versions are counted under Other."
+msgstr "This API reached {max} app versions. New versions are counted under Other."
+
+#: src/features/analytics/Monitor.tsx
+msgid "This API reached {max} consumers. New consumers are counted under Other."
+msgstr "This API reached {max} consumers. New consumers are counted under Other."
+
+#: src/features/analytics/Monitor.tsx
+msgid "This API reached {max} environments. New environments are counted under Other."
+msgstr "This API reached {max} environments. New environments are counted under Other."
+
+#: src/features/analytics/Monitor.tsx
+msgid "This API reached {max} routes. New routes are counted under Other."
+msgstr "This API reached {max} routes. New routes are counted under Other."
 
 #: src/features/analytics/Settings.tsx
 msgid "This cannot be undone."
@@ -2407,6 +2674,10 @@ msgstr "This workspace has no inbox yet."
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
 msgstr "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
+
+#: src/features/analytics/Monitor.tsx
+msgid "This workspace reached its {limit} API requests for this month. Further requests are not counted until the month ends."
+msgstr "This workspace reached its {limit} API requests for this month. Further requests are not counted until the month ends."
 
 #: src/features/analytics/text.ts
 msgid "This year"
@@ -2496,6 +2767,10 @@ msgstr "Tracked props"
 msgid "Tracking"
 msgstr "Tracking"
 
+#: src/features/analytics/Monitor.tsx
+msgid "Traffic"
+msgstr "Traffic"
+
 #: src/features/analytics/Alerts.tsx
 msgid "Traffic drop"
 msgstr "Traffic drop"
@@ -2527,6 +2802,14 @@ msgstr "Type the property’s name to delete it and all its data."
 #: src/features/analytics/text.ts
 msgid "Unknown"
 msgstr "Unknown"
+
+#: src/features/analytics/text.ts
+msgid "Unmatched"
+msgstr "Unmatched"
+
+#: src/features/analytics/Install.tsx
+msgid "Up to 1,000 records per request, gzip allowed. Send route when your router knows the pattern, else path, and ids are taken out of it. Records left out as invalid come back in errors with their position."
+msgstr "Up to 1,000 records per request, gzip allowed. Send route when your router knows the pattern, else path, and ids are taken out of it. Records left out as invalid come back in errors with their position."
 
 #: src/features/analytics/Install.tsx
 msgid "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
@@ -2651,6 +2934,10 @@ msgstr "Waiting for events since {at}."
 msgid "Waiting for the first event"
 msgstr "Waiting for the first event"
 
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Watch an API"
+msgstr "Watch an API"
+
 #: src/features/analytics/NewProperty.tsx
 msgid "Watch it live"
 msgstr "Watch it live"
@@ -2658,6 +2945,10 @@ msgstr "Watch it live"
 #: src/features/analytics/text.ts
 msgid "Web"
 msgstr "Web"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Website or app"
+msgstr "Website or app"
 
 #: src/features/analytics/Retention.tsx
 msgid "Week {period}"
@@ -2686,6 +2977,10 @@ msgstr "What the goal's events carried, per currency. Currencies are never conve
 #: src/features/analytics/Exports.tsx
 msgid "What to export"
 msgstr "What to export"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "What to measure"
+msgstr "What to measure"
 
 #: src/features/analytics/Goals.tsx
 msgid "Where conversions come from"
@@ -2726,6 +3021,10 @@ msgstr "Your access ended. Enter the password again to keep reading."
 #: src/features/analytics/Sharing.tsx
 msgid "Your new share link"
 msgstr "Your new share link"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Your server sent one record for several successful requests, so counts are estimates."
+msgstr "Your server sent one record for several successful requests, so counts are estimates."
 
 #: src/features/analytics/Settings.tsx
 msgid "yuva.identify with a token from your backend, signed like a chat session, links the visitor’s visits to their contact. They show on the contact’s page under Recent visits. Forged or reused tokens are ignored."

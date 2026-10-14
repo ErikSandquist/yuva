@@ -88,6 +88,16 @@ export function useAnalyticsText() {
       helpful_rate: t`Helpful share`,
       discussions: t`Discussions`,
       support_rate: t`Per 1,000 views`,
+      requests: t`Requests`,
+      requests_per_minute: t`Requests per minute`,
+      errors: t`Errors`,
+      error_rate: t`Error rate`,
+      client_errors: t`Client errors`,
+      client_error_rate: t`Client error rate`,
+      p50: t`p50`,
+      p95: t`p95`,
+      p99: t`p99`,
+      avg_duration: t`Average duration`,
     } satisfies Record<AnalyticsMetric, string>,
     metricHelp: {
       visitors: t`Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again.`,
@@ -122,6 +132,16 @@ export function useAnalyticsText() {
       helpful_rate: t`Helpful ratings out of all ratings.`,
       discussions: t`Discussion threads started on the page.`,
       support_rate: t`Conversations per 1,000 views of the page.`,
+      requests: t`Requests the API answered, or that ended without an answer.`,
+      requests_per_minute: t`Requests divided by the minutes of the range, up to now.`,
+      errors: t`Requests that answered with a status from 500 to 599, or with no answer at all.`,
+      error_rate: t`Errors out of all requests.`,
+      client_errors: t`Requests that answered with a status from 400 to 499.`,
+      client_error_rate: t`Client errors out of all requests.`,
+      p50: t`Half of the requests took at most this long.`,
+      p95: t`95 out of 100 requests took at most this long.`,
+      p99: t`99 out of 100 requests took at most this long.`,
+      avg_duration: t`The mean time a request took.`,
     } satisfies Record<AnalyticsMetric, string>,
     dimension: {
       page: words.page,
@@ -151,6 +171,11 @@ export function useAnalyticsText() {
       visitor_type: t`New or returning`,
       event: t`Event`,
       prop: t`Prop`,
+      route: t`Route`,
+      method: t`Method`,
+      status: t`Status`,
+      status_class: t`Status class`,
+      environment: t`Environment`,
     } satisfies Record<AnalyticsFilterDimension, string>,
     event: {
       outbound_click: t`Outbound link`,
@@ -177,6 +202,10 @@ export function useAnalyticsText() {
       "6mo": t`Last 6 months`,
       "12mo": t`Last 12 months`,
       year: t`This year`,
+      "15m": t`Last 15 minutes`,
+      "1h": t`Last hour`,
+      "6h": t`Last 6 hours`,
+      "24h": t`Last 24 hours`,
     } satisfies Record<Period, string>,
     channel: {
       direct: t`Direct`,
@@ -198,6 +227,9 @@ export function useAnalyticsText() {
     notSet: t`(not set)`,
     direct: t`Direct / none`,
     other: t`Other`,
+    unmatched: t`Unmatched`,
+    otherMethod: t`Other method`,
+    noResponse: t`No response`,
   }
 }
 
@@ -224,8 +256,13 @@ function languageName(tag: string, locale: string) {
   }
 }
 
+export const UNMATCHED = "(unmatched)"
+
 export function valueText(text: AnalyticsText, dim: AnalyticsDimension, value: string, locale: string) {
   if (value === OTHER) return text.other
+  if (dim === "route" && value === UNMATCHED) return text.unmatched
+  if (dim === "method" && value === "_OTHER") return text.otherMethod
+  if ((dim === "status" && value === "0") || (dim === "status_class" && value === "none")) return text.noResponse
   if (value === "") {
     if (dim === "prop") return text.notSet
     if (dim === "visitor_type") return text.withoutConsent
@@ -256,7 +293,14 @@ export function valueText(text: AnalyticsText, dim: AnalyticsDimension, value: s
 }
 
 export function isPathDimension(dim: AnalyticsDimension) {
-  return dim === "page" || dim === "entry_page" || dim === "exit_page" || dim === "referrer" || dim === "hostname"
+  return (
+    dim === "route" ||
+    dim === "page" ||
+    dim === "entry_page" ||
+    dim === "exit_page" ||
+    dim === "referrer" ||
+    dim === "hostname"
+  )
 }
 
 function seconds(v: number, locale: string) {
@@ -288,9 +332,34 @@ export function formatMoney(minor: number, currency: string, digits: number, loc
   }
 }
 
+function millis(v: number, locale: string) {
+  const unit = (n: number, u: "millisecond" | "second", digits: number) =>
+    new Intl.NumberFormat(locale, {
+      style: "unit",
+      unit: u,
+      unitDisplay: "short",
+      maximumFractionDigits: digits,
+    }).format(n)
+  if (v < 10) return unit(v, "millisecond", 1)
+  if (v < 1000) return unit(v, "millisecond", 0)
+  return unit(v / 1000, "second", v < 10_000 ? 2 : 1)
+}
+
 export function formatMetric(metric: AnalyticsMetric, v: number | undefined, locale: string) {
   if (v === undefined || Number.isNaN(v)) return "–"
   switch (metric) {
+    case "error_rate":
+    case "client_error_rate":
+      return new Intl.NumberFormat(locale, { style: "percent", maximumFractionDigits: v > 0 && v < 1 ? 2 : 1 }).format(
+        v / 100
+      )
+    case "p50":
+    case "p95":
+    case "p99":
+    case "avg_duration":
+      return millis(v, locale)
+    case "requests_per_minute":
+      return new Intl.NumberFormat(locale, { maximumFractionDigits: v < 10 ? 1 : 0 }).format(v)
     case "conversion_rate":
       return new Intl.NumberFormat(locale, { style: "percent", maximumFractionDigits: 1 }).format(v / 100)
     case "bounce_rate":
@@ -317,5 +386,10 @@ export function formatCompact(v: number, locale: string) {
 }
 
 export function lowerIsBetter(metric: AnalyticsMetric) {
-  return metric === "bounce_rate" || metric === "support_rate" || metric === "ratings_down"
+  return (
+    metric === "bounce_rate" ||
+    metric === "support_rate" ||
+    metric === "ratings_down" ||
+    ["errors", "error_rate", "client_errors", "client_error_rate", "p50", "p95", "p99", "avg_duration"].includes(metric)
+  )
 }

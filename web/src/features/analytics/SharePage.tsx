@@ -25,6 +25,7 @@ import { api, ApiError, unwrap, type AnalyticsProperty, type AnalyticsShareView 
 function asProperty(token: string, p: ShareScope["property"]): AnalyticsProperty {
   return {
     id: token,
+    kind: "site",
     name: p.name,
     public_key: "",
     domains: [],
@@ -38,6 +39,8 @@ function asProperty(token: string, p: ShareScope["property"]): AnalyticsProperty
     excluded_ips: [],
     path_rules: [],
     tracked_props: [],
+    apdex_ms: 500,
+    monitor_hour_days: 90,
     visitors_today: 0,
     created_at: "",
     updated_at: "",

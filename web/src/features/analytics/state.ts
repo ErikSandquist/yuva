@@ -6,6 +6,7 @@ import type {
   AnalyticsFilter,
   AnalyticsFilterDimension,
   AnalyticsMetric,
+  AnalyticsProperty,
   AnalyticsRange,
 } from "@/lib/api"
 
@@ -27,6 +28,29 @@ export const PERIODS: Period[] = [
 ]
 
 export const DEFAULT_PERIOD: Period = "30d"
+
+export const API_PERIODS: Period[] = [
+  "15m",
+  "1h",
+  "6h",
+  "24h",
+  "today",
+  "yesterday",
+  "7d",
+  "30d",
+  "90d",
+  "month",
+  "last_month",
+  "6mo",
+  "12mo",
+]
+
+export const API_DEFAULT_PERIOD: Period = "24h"
+
+export type Kind = AnalyticsProperty["kind"]
+
+const periodsOf = (kind: Kind) => (kind === "api" ? API_PERIODS : PERIODS)
+const defaultOf = (kind: Kind) => (kind === "api" ? API_DEFAULT_PERIOD : DEFAULT_PERIOD)
 
 export const FILTER_DIMENSIONS: AnalyticsFilterDimension[] = [
   "page",
@@ -83,9 +107,9 @@ function customRange(raw: string): { from: string; to: string } | null {
   return { from, to }
 }
 
-export function parseRange(raw: string | null): AnalyticsRange {
-  if (raw && PERIODS.includes(raw as Period)) return { period: raw as Period }
-  return (raw && customRange(raw)) || { period: DEFAULT_PERIOD }
+export function parseRange(raw: string | null, kind: Kind = "site"): AnalyticsRange {
+  if (raw && periodsOf(kind).includes(raw as Period)) return { period: raw as Period }
+  return (raw && customRange(raw)) || { period: defaultOf(kind) }
 }
 
 export function parseCompare(raw: string | null): AnalyticsCompare | undefined {
@@ -155,6 +179,10 @@ export function rangeDays(range: AnalyticsRange): number {
   }
   const now = today()
   switch (range.period) {
+    case "15m":
+    case "1h":
+    case "6h":
+    case "24h":
     case "today":
     case "yesterday":
       return 1
@@ -206,11 +234,25 @@ export function sameFilters(a: AnalyticsFilter[], b: AnalyticsFilter[]) {
   return x.length === y.length && x.every((v, i) => v === y[i])
 }
 
-export function useView() {
+export function apiGrainFor(range: AnalyticsRange): AnalyticsDimension {
+  switch (range.period) {
+    case "15m":
+    case "1h":
+    case "6h":
+      return "time:minute"
+    case "24h":
+    case "today":
+    case "yesterday":
+      return "time:hour"
+  }
+  return rangeDays(range) <= 2 ? "time:hour" : "time:day"
+}
+
+export function useView(kind: Kind = "site") {
   const [params, setParams] = useSearchParams()
   const metric = params.get("metric") as View["metric"] | null
   const view: View = {
-    range: parseRange(params.get("period")),
+    range: parseRange(params.get("period"), kind),
     compare: parseCompare(params.get("compare")),
     filters: parseFilters(params.getAll("f")),
     segment: UUID.test(params.get("segment") ?? "") ? params.get("segment")! : undefined,
@@ -234,7 +276,7 @@ export function useView() {
     setRange: (range: AnalyticsRange) =>
       update((p) => {
         const v = rangeParam(range)
-        if (v === DEFAULT_PERIOD) p.delete("period")
+        if (v === defaultOf(kind)) p.delete("period")
         else p.set("period", v)
       }),
     setCompare: (compare: AnalyticsCompare | undefined) =>

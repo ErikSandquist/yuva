@@ -1,9 +1,9 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { CheckCircle2Icon } from "lucide-react"
 import { useMemo, useState } from "react"
-import { Link, Navigate, useNavigate, useParams } from "react-router"
+import { Link, Navigate, useNavigate, useParams, useSearchParams } from "react-router"
 
-import { ErrorLine, Notice } from "@/components/common"
+import { ErrorLine, Notice, Segmented } from "@/components/common"
 import { Pane, PaneBack } from "@/components/common/Column"
 import { formatDateTime } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
@@ -11,8 +11,9 @@ import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Spinner } from "@/components/ui/spinner"
 import { Textarea } from "@/components/ui/textarea"
-import { InstallSnippets } from "@/features/analytics/Install"
+import { ApiInstallSnippets, InstallSnippets } from "@/features/analytics/Install"
 import { useCreateProperty, useProperty, useWaitForFirstEvent } from "@/features/analytics/queries"
+import type { Kind } from "@/features/analytics/state"
 import { ChoiceSelect, Field, FormCard, PageHeader, Section } from "@/features/settings/ui"
 import { useSession } from "@/lib/session"
 import { useInboxes } from "@/lib/workspace"
@@ -42,8 +43,10 @@ export function NewPropertyPage() {
   const { t } = useLingui()
   const { canManage } = useSession()
   const navigate = useNavigate()
+  const [params] = useSearchParams()
   const inboxes = useInboxes().data ?? []
   const zones = useZones()
+  const [kind, setKind] = useState<Kind>(params.get("kind") === "api" ? "api" : "site")
   const [name, setName] = useState("")
   const [domains, setDomains] = useState("")
   const [inbox, setInbox] = useState(NO_INBOX)
@@ -51,21 +54,41 @@ export function NewPropertyPage() {
   const create = useCreateProperty()
   if (!canManage) return <Navigate to="/analytics" replace />
   const hosts = splitLines(domains).map(hostOnly).filter(Boolean)
+  const api = kind === "api"
   return (
     <Pane testId="analytics-new">
       <PageHeader
         back={{ to: "/analytics", label: t`Analytics` }}
-        title={<Trans>Add a website</Trans>}
+        title={api ? <Trans>Add an API</Trans> : <Trans>Add a website</Trans>}
         description={
-          <Trans>
-            Count visitors, pages, sources, places and devices without cookies and without storing IP addresses.
-          </Trans>
+          api ? (
+            <Trans>
+              Count your API’s requests, errors and response times per route. Your server sends a short record per
+              request; no body, header, query string or IP address is kept.
+            </Trans>
+          ) : (
+            <Trans>
+              Count visitors, pages, sources, places and devices without cookies and without storing IP addresses.
+            </Trans>
+          )
         }
       />
+      <div className="-mx-1 max-w-[calc(100%+0.5rem)] overflow-x-auto px-1 py-1">
+        <Segmented
+          value={kind}
+          onChange={setKind}
+          label={t`What to measure`}
+          items={[
+            { value: "site", label: t`Website or app`, testId: "analytics-kind-site" },
+            { value: "api", label: t`API`, testId: "analytics-kind-api" },
+          ]}
+        />
+      </div>
       <FormCard
         onSubmit={() =>
           create.mutate(
             {
+              kind,
               name: name.trim(),
               domains: hosts,
               inbox_id: inbox === NO_INBOX ? undefined : inbox,
@@ -80,7 +103,7 @@ export function NewPropertyPage() {
             <Button
               type="submit"
               className="ms-auto"
-              disabled={!name.trim() || hosts.length === 0 || create.isPending}
+              disabled={!name.trim() || (!api && hosts.length === 0) || create.isPending}
               data-testid="analytics-create"
             >
               <Trans>Add and install</Trans>
@@ -95,17 +118,21 @@ export function NewPropertyPage() {
             value={name}
             maxLength={100}
             onChange={(e) => setName(e.target.value)}
-            placeholder={t`For example Fieldnote website`}
+            placeholder={api ? t`For example Fieldnote API` : t`For example Fieldnote website`}
             data-testid="analytics-name"
           />
         </Field>
         <Field
-          label={<Trans>Domains</Trans>}
+          label={api ? <Trans>Host names</Trans> : <Trans>Domains</Trans>}
           htmlFor="analytics-domains"
           hint={
-            <Trans>
-              One per line. Pages on other domains cannot send events. *.example.com covers every subdomain.
-            </Trans>
+            api ? (
+              <Trans>Optional, one per line. The host names the API answers on, to tell properties apart.</Trans>
+            ) : (
+              <Trans>
+                One per line. Pages on other domains cannot send events. *.example.com covers every subdomain.
+              </Trans>
+            )
           }
         >
           <Textarea
@@ -114,7 +141,7 @@ export function NewPropertyPage() {
             rows={3}
             value={domains}
             onChange={(e) => setDomains(e.target.value)}
-            placeholder="www.example.com"
+            placeholder={api ? "api.example.com" : "www.example.com"}
             data-testid="analytics-domains"
           />
         </Field>
@@ -192,6 +219,22 @@ export function WaitForFirstEvent({ propertyId }: { propertyId: string }) {
   )
 }
 
+function ApiInstalled({ propertyId }: { propertyId: string }) {
+  return (
+    <Notice data-testid="api-install-next">
+      <p>
+        <Trans>
+          Requests show up in the overview about 15 seconds after your server answered them. A path without a route
+          pattern is counted under a pattern made from it, with ids taken out.
+        </Trans>
+      </p>
+      <Button size="sm" className="w-fit" render={<Link to={`/analytics/${propertyId}`} />}>
+        <Trans>Open the overview</Trans>
+      </Button>
+    </Notice>
+  )
+}
+
 export function InstallPropertyPage() {
   const { t } = useLingui()
   const { propertyId = "" } = useParams()
@@ -212,18 +255,25 @@ export function InstallPropertyPage() {
             back={false}
             title={<Trans>Install on {p.name}</Trans>}
             description={
-              <Trans>
-                Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on
-                the property’s domains.
-              </Trans>
+              p.kind === "api" ? (
+                <Trans>
+                  Add the middleware to your server, or send records from any language. Both need an API key with the
+                  analytics:write scope, which stays on your server.
+                </Trans>
+              ) : (
+                <Trans>
+                  Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on
+                  the property’s domains.
+                </Trans>
+              )
             }
           />
           <Section>
             <div className="flex flex-col gap-5 rounded-2xl border bg-card p-4">
-              <InstallSnippets property={p} />
+              {p.kind === "api" ? <ApiInstallSnippets property={p} /> : <InstallSnippets property={p} />}
             </div>
           </Section>
-          <WaitForFirstEvent propertyId={p.id} />
+          {p.kind === "api" ? <ApiInstalled propertyId={p.id} /> : <WaitForFirstEvent propertyId={p.id} />}
         </>
       )}
     </Pane>

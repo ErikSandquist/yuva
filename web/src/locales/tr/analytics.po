@@ -41,6 +41,10 @@ msgstr "{count, plural, one {“{goal}” hedefinde # dönüşüm oldu; önceki 
 msgid "{count} in this range, none in the compared days."
 msgstr "Bu aralıkta {count}; karşılaştırılan günlerde hiç yoktu."
 
+#: src/features/analytics/Monitor.tsx
+msgid "{count} of {limit} API requests counted this month. Requests over the limit are not counted until the month ends."
+msgstr "Bu ay {limit} API isteğinin {count} tanesi sayıldı. Sınırı aşan istekler ay bitene kadar sayılmaz."
+
 #: src/features/analytics/Insights.tsx
 msgid "{dim} {value}: {count}, none in the compared days."
 msgstr "{dim} {value}: {count}; karşılaştırılan günlerde hiç yoktu."
@@ -56,6 +60,10 @@ msgstr "{dim} {value}: {lower} {change} arttı, önce {before}, şimdi {now}."
 #: src/features/analytics/Insights.tsx
 msgid "{dim} {value}: {metric} {now}, none in the compared days."
 msgstr "{dim} {value}: {metric} {now}; karşılaştırılan günlerde hiç yoktu."
+
+#: src/features/analytics/Monitor.tsx
+msgid "{errors, plural, one {# error} other {# errors}}"
+msgstr "{errors, plural, one {# hata} other {# hata}}"
 
 #: src/features/analytics/Annotations.tsx
 msgid "{kind}: {found}"
@@ -121,9 +129,21 @@ msgstr "{from} – {to} arasında ilk adıma ulaşan ziyaretçilerin {overall} k
 msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
 msgstr "{rate, plural, one {{dim} {value}: 1.000 görüntülemede # konuşma; tüm sayfalarda {site}.} other {{dim} {value}: 1.000 görüntülemede # konuşma; tüm sayfalarda {site}.}}"
 
+#: src/features/analytics/Monitor.tsx
+msgid "{requests, plural, one {# request} other {# requests}}"
+msgstr "{requests, plural, one {# istek} other {# istek}}"
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
 msgstr "Bu ay {limit} analitik olayın {used} tanesi kullanıldı. Sınırı aşan olaylar ay bitene kadar atılır."
+
+#: src/features/analytics/text.ts
+msgid "95 out of 100 requests took at most this long."
+msgstr "100 isteğin 95’i en fazla bu kadar sürdü."
+
+#: src/features/analytics/text.ts
+msgid "99 out of 100 requests took at most this long."
+msgstr "100 isteğin 99’u en fazla bu kadar sürdü."
 
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
@@ -239,8 +259,12 @@ msgid "Add a website"
 msgstr "Web sitesi ekle"
 
 #: src/features/analytics/AnalyticsColumn.tsx
-msgid "Add a website to count its visitors, pages and sources, without cookies."
-msgstr "Ziyaretçilerini, sayfalarını ve kaynaklarını çerezsiz saymak için bir web sitesi ekleyin."
+msgid "Add a website to count its visitors, pages and sources without cookies, or an API to count its requests per route."
+msgstr "Ziyaretçilerini, sayfalarını ve kaynaklarını çerezsiz saymak için bir web sitesi, isteklerini rota başına saymak için bir API ekleyin."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Add an API"
+msgstr "API ekle"
 
 #: src/features/analytics/NewProperty.tsx
 msgid "Add and install"
@@ -249,6 +273,14 @@ msgstr "Ekle ve kur"
 #: src/features/analytics/Annotations.tsx
 msgid "Add note"
 msgstr "Not ekle"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Add the middleware to your server or send records with any HTTP client. Requests show up here about 15 seconds after your server answered them."
+msgstr "Ara katmanı sunucunuza ekleyin ya da kayıtları herhangi bir HTTP istemcisiyle gönderin. İstekler, sunucunuz yanıtladıktan yaklaşık 15 saniye sonra burada görünür."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Add the middleware to your server, or send records from any language. Both need an API key with the analytics:write scope, which stays on your server."
+msgstr "Ara katmanı sunucunuza ekleyin ya da kayıtları herhangi bir dilden gönderin. İkisi de analytics:write yetkili bir API anahtarı ister ve bu anahtar sunucunuzda kalır."
 
 #: src/features/analytics/Install.tsx
 msgid "Add the YuvaAnalytics library of the Yuva package and configure it once at launch. .yuvaScreen counts a SwiftUI screen; in UIKit, call YuvaAnalytics.screen when a screen appears. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
@@ -299,6 +331,14 @@ msgstr "Tüm olaylar"
 msgid "All goals"
 msgstr "Tüm hedefler"
 
+#: src/features/analytics/Monitor.tsx
+msgid "All routes"
+msgstr "Tüm rotalar"
+
+#: src/features/analytics/Monitor.tsx
+msgid "An hour of this range reached {max} rows of consumers, countries or app versions. New ones in that hour are counted under Other."
+msgstr "Bu aralığın bir saati {max} tüketici, ülke ya da uygulama sürümü satırına ulaştı. O saatteki yenileri Diğer altında sayılır."
+
 #: src/features/analytics/Support.tsx
 msgid "An owner or admin can link one in the property’s settings."
 msgstr "Bir sahip veya yönetici, mülkün ayarlarından bir gelen kutusu bağlayabilir."
@@ -324,6 +364,12 @@ msgstr "Analitik görünümleri"
 #: src/features/analytics/Sharing.tsx
 msgid "Anyone with the link sees the views you pick, read-only, without signing in."
 msgstr "Bağlantıya sahip herkes, seçtiğiniz görünümleri oturum açmadan ve salt okunur olarak görür."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/NewProperty.tsx
+msgid "API"
+msgstr "API"
 
 #: src/features/analytics/text.ts
 msgid "App"
@@ -356,6 +402,10 @@ msgstr "Kitle"
 #: src/features/analytics/SharePage.tsx
 msgid "Available until {expires}"
 msgstr "{expires} tarihine kadar açık"
+
+#: src/features/analytics/text.ts
+msgid "Average duration"
+msgstr "Ortalama süre"
 
 #: src/features/analytics/Settings.tsx
 msgid "Bots"
@@ -393,6 +443,10 @@ msgstr "Tarayıcı"
 #: src/features/analytics/text.ts
 msgid "Browser version"
 msgstr "Tarayıcı sürümü"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Busiest routes"
+msgstr "En yoğun rotalar"
 
 #: src/features/analytics/Install.tsx
 msgid "Call it once in the browser. During server rendering it does nothing."
@@ -446,6 +500,18 @@ msgstr "Şehir"
 #: src/features/analytics/Sharing.tsx
 msgid "Clear"
 msgstr "Temizle"
+
+#: src/features/analytics/text.ts
+msgid "Client error rate"
+msgstr "İstemci hatası oranı"
+
+#: src/features/analytics/text.ts
+msgid "Client errors"
+msgstr "İstemci hataları"
+
+#: src/features/analytics/text.ts
+msgid "Client errors out of all requests."
+msgstr "Tüm istekler içinde istemci hatalarının payı."
 
 #: src/features/analytics/Retention.tsx
 msgid "Cohorts by"
@@ -568,6 +634,10 @@ msgstr "Ziyaretlerimi yeniden say"
 #: src/features/analytics/NewProperty.tsx
 msgid "Count visitors, pages, sources, places and devices without cookies and without storing IP addresses."
 msgstr "Ziyaretçileri, sayfaları, kaynakları, konumları ve cihazları çerez kullanmadan ve IP adresi saklamadan sayın."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Count your API’s requests, errors and response times per route. Your server sends a short record per request; no body, header, query string or IP address is kept."
+msgstr "API’nizin isteklerini, hatalarını ve yanıt sürelerini rota başına sayın. Sunucunuz her istek için kısa bir kayıt gönderir; gövde, başlık, sorgu dizesi ya da IP adresi saklanmaz."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 msgid "Count your website’s visitors"
@@ -869,9 +939,34 @@ msgstr "Bağlantıyla birlikte size verilen parolayı girin."
 msgid "Entry page"
 msgstr "Giriş sayfası"
 
+#: src/features/analytics/text.ts
+msgid "Environment"
+msgstr "Ortam"
+
 #: src/features/analytics/Goals.tsx
 msgid "equal to"
 msgstr "değeri"
+
+#: src/features/analytics/text.ts
+msgid "Error rate"
+msgstr "Hata oranı"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Error rates"
+msgstr "Hata oranları"
+
+#: src/features/analytics/Monitor.tsx
+#: src/features/analytics/text.ts
+msgid "Errors"
+msgstr "Hatalar"
+
+#: src/features/analytics/text.ts
+msgid "Errors out of all requests."
+msgstr "Tüm istekler içinde hataların payı."
+
+#: src/features/analytics/Monitor.tsx
+msgid "Estimated"
+msgstr "Tahmini"
 
 #: src/features/analytics/Goals.tsx
 #: src/features/analytics/text.ts
@@ -1032,6 +1127,10 @@ msgid "Five reports an hour at most. Try again later."
 msgstr "Saatte en fazla beş rapor. Daha sonra yeniden deneyin."
 
 #: src/features/analytics/NewProperty.tsx
+msgid "For example Fieldnote API"
+msgstr "Örneğin Fieldnote API"
+
+#: src/features/analytics/NewProperty.tsx
 msgid "For example Fieldnote website"
 msgstr "Örneğin Fieldnote web sitesi"
 
@@ -1082,6 +1181,10 @@ msgstr "Huniler"
 msgid "General"
 msgstr "Genel"
 
+#: src/features/analytics/Install.tsx
+msgid "Go middleware"
+msgstr "Go ara katmanı"
+
 #: src/features/analytics/Funnels.tsx
 msgid "Go to goals"
 msgstr "Hedeflere git"
@@ -1108,6 +1211,10 @@ msgstr "Hedefler"
 msgid "had an address removed"
 msgstr "olaydan adres çıkarıldı"
 
+#: src/features/analytics/text.ts
+msgid "Half of the requests took at most this long."
+msgstr "İsteklerin yarısı en fazla bu kadar sürdü."
+
 #: src/features/analytics/Settings.tsx
 msgid "Health"
 msgstr "Durum"
@@ -1131,6 +1238,10 @@ msgstr "Yararlı oranı"
 #: src/features/analytics/text.ts
 msgid "Host"
 msgstr "Alan adı"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Host names"
+msgstr "Ana makine adları"
 
 #: src/features/analytics/text.ts
 msgid "Host or app"
@@ -1224,12 +1335,24 @@ msgid "Last 12 months"
 msgstr "Son 12 ay"
 
 #: src/features/analytics/text.ts
+msgid "Last 15 minutes"
+msgstr "Son 15 dakika"
+
+#: src/features/analytics/text.ts
+msgid "Last 24 hours"
+msgstr "Son 24 saat"
+
+#: src/features/analytics/text.ts
 msgid "Last 28 days"
 msgstr "Son 28 gün"
 
 #: src/features/analytics/text.ts
 msgid "Last 30 days"
 msgstr "Son 30 gün"
+
+#: src/features/analytics/text.ts
+msgid "Last 6 hours"
+msgstr "Son 6 saat"
 
 #: src/features/analytics/text.ts
 msgid "Last 6 months"
@@ -1252,6 +1375,10 @@ msgid "Last event: {last}"
 msgstr "Son olay: {last}"
 
 #: src/features/analytics/text.ts
+msgid "Last hour"
+msgstr "Son bir saat"
+
+#: src/features/analytics/text.ts
 msgid "Last month"
 msgstr "Geçen ay"
 
@@ -1266,6 +1393,10 @@ msgstr "Son sayfa ya da ekran"
 #: src/features/analytics/text.ts
 msgid "Last screen"
 msgstr "Son ekran"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Latency"
+msgstr "Gecikme"
 
 #: src/features/analytics/Sharing.tsx
 msgid "Leave empty to keep the current one"
@@ -1290,6 +1421,7 @@ msgstr "Oturum açan kullanıcıları kişi kayıtlarına bağla"
 #: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
+#: src/features/analytics/Monitor.tsx
 #: src/features/analytics/Support.tsx
 msgid "Load more"
 msgstr "Daha fazla yükle"
@@ -1336,6 +1468,18 @@ msgstr "Bağlantı oluştur"
 #: src/features/analytics/text.ts
 msgid "matches"
 msgstr "kalıba uyar"
+
+#: src/features/analytics/text.ts
+msgid "Method"
+msgstr "Yöntem"
+
+#: src/features/analytics/Install.tsx
+msgid "Middleware records every request the mux answers, with its route pattern, status and duration, and sends them in batches. It needs an <0>API key</0> with the analytics:write scope."
+msgstr "Middleware, mux’ın yanıtladığı her isteği rota kalıbı, durumu ve süresiyle kaydeder ve toplu olarak gönderir. analytics:write yetkili bir <0>API anahtarı</0> gerekir."
+
+#: src/features/analytics/Install.tsx
+msgid "Middleware records every request the mux answers, with its route pattern, status and duration, and sends them in batches. It needs an API key with the analytics:write scope from an owner or admin."
+msgstr "Middleware, mux’ın yanıtladığı her isteği rota kalıbı, durumu ve süresiyle kaydeder ve toplu olarak gönderir. Bir sahip ya da yöneticiden analytics:write yetkili bir API anahtarı gerekir."
 
 #: src/features/analytics/text.ts
 msgid "Mobile"
@@ -1497,6 +1641,18 @@ msgstr "Henüz mülk yok"
 #: src/features/analytics/Settings.tsx
 msgid "No props are tracked."
 msgstr "İzlenen özellik yok."
+
+#: src/features/analytics/Monitor.tsx
+msgid "No requests in this range."
+msgstr "Bu aralıkta istek yok."
+
+#: src/features/analytics/Monitor.tsx
+msgid "No requests yet"
+msgstr "Henüz istek yok"
+
+#: src/features/analytics/text.ts
+msgid "No response"
+msgstr "Yanıt yok"
 
 #: src/features/analytics/Alerts.tsx
 msgid "No scheduled reports."
@@ -1673,6 +1829,10 @@ msgstr "İşletim sistemi"
 msgid "Opt-out link"
 msgstr "Vazgeçme bağlantısı"
 
+#: src/features/analytics/NewProperty.tsx
+msgid "Optional, one per line. The host names the API answers on, to tell properties apart."
+msgstr "İsteğe bağlı, her satıra bir tane. API’nin yanıt verdiği ana makine adları; mülkleri birbirinden ayırmak için."
+
 #: src/features/analytics/text.ts
 msgid "Organic search"
 msgstr "Organik arama"
@@ -1688,6 +1848,10 @@ msgstr "Diğer"
 #: src/features/analytics/Settings.tsx
 msgid "Other drops"
 msgstr "Diğer atılanlar"
+
+#: src/features/analytics/text.ts
+msgid "Other method"
+msgstr "Diğer yöntem"
 
 #: src/features/analytics/Events.tsx
 msgid "Other prop"
@@ -1717,6 +1881,18 @@ msgstr "Sahipler ve yöneticiler hedeflerden huni oluşturur. Huniler burada her
 #: src/features/analytics/Goals.tsx
 msgid "Owners and admins make goals. They show up here with their conversions."
 msgstr "Hedefleri sahipler ve yöneticiler oluşturur. Hedefler burada dönüşümleriyle görünür."
+
+#: src/features/analytics/text.ts
+msgid "p50"
+msgstr "p50"
+
+#: src/features/analytics/text.ts
+msgid "p95"
+msgstr "p95"
+
+#: src/features/analytics/text.ts
+msgid "p99"
+msgstr "p99"
 
 #: src/features/analytics/Goals.tsx
 #: src/features/analytics/text.ts
@@ -1816,6 +1992,7 @@ msgstr "Almanya'dan ödeme yapan müşteriler"
 msgid "Per 1,000 views"
 msgstr "1.000 görüntülemede"
 
+#: src/features/analytics/Monitor.tsx
 #: src/features/analytics/Overview.tsx
 msgid "per day"
 msgstr "günlük"
@@ -1824,9 +2001,14 @@ msgstr "günlük"
 msgid "Per day"
 msgstr "Günlük"
 
+#: src/features/analytics/Monitor.tsx
 #: src/features/analytics/Overview.tsx
 msgid "per hour"
 msgstr "saatlik"
+
+#: src/features/analytics/Monitor.tsx
+msgid "per minute"
+msgstr "dakikalık"
 
 #: src/features/analytics/Overview.tsx
 msgid "per week"
@@ -2016,6 +2198,35 @@ msgstr "Bileşeni kök yerleşimde bir kez kullanın. Ekrana bir şey çizmez; a
 msgid "Report"
 msgstr "Rapor"
 
+#: src/features/analytics/Monitor.tsx
+#: src/features/analytics/text.ts
+msgid "Requests"
+msgstr "İstekler"
+
+#: src/features/analytics/text.ts
+msgid "Requests divided by the minutes of the range, up to now."
+msgstr "İsteklerin, aralığın şimdiye kadarki dakikalarına bölümü."
+
+#: src/features/analytics/text.ts
+msgid "Requests per minute"
+msgstr "Dakika başına istek"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Requests show up in the overview about 15 seconds after your server answered them. A path without a route pattern is counted under a pattern made from it, with ids taken out."
+msgstr "İstekler, sunucunuz yanıtladıktan yaklaşık 15 saniye sonra genel bakışta görünür. Rota kalıbı olmayan bir yol, kimlikleri çıkarılarak ondan üretilen bir kalıp altında sayılır."
+
+#: src/features/analytics/text.ts
+msgid "Requests that answered with a status from 400 to 499."
+msgstr "400 ile 499 arası bir durumla yanıtlanan istekler."
+
+#: src/features/analytics/text.ts
+msgid "Requests that answered with a status from 500 to 599, or with no answer at all."
+msgstr "500 ile 599 arası bir durumla yanıtlanan ya da hiç yanıtlanmayan istekler."
+
+#: src/features/analytics/text.ts
+msgid "Requests the API answered, or that ended without an answer."
+msgstr "API’nin yanıtladığı ya da yanıtsız biten istekler."
+
 #: src/features/analytics/Settings.tsx
 msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
 msgstr "Do Not Track ya da Global Privacy Control taşıyan istekler ve onay isteyen bir mülkte onaysız gelen olaylar alınır, ama ne saklanır ne de burada sayılır."
@@ -2049,6 +2260,14 @@ msgstr "{name} iptal edilsin mi?"
 #: src/features/analytics/Sharing.tsx
 msgid "Revoked"
 msgstr "İptal edildi"
+
+#: src/features/analytics/text.ts
+msgid "Route"
+msgstr "Rota"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Routes"
+msgstr "Rotalar"
 
 #: src/features/analytics/Exports.tsx
 msgid "Rows"
@@ -2210,6 +2429,10 @@ msgstr "Sosyal"
 msgid "Some events were dropped. The reasons are below."
 msgstr "Bazı olaylar atıldı. Nedenleri aşağıda."
 
+#: src/features/analytics/Monitor.tsx
+msgid "Sort routes by"
+msgstr "Rotaları sırala"
+
 #: src/features/analytics/text.ts
 msgid "Source"
 msgstr "Kaynak"
@@ -2225,6 +2448,18 @@ msgstr "Kaynaklar"
 #: src/features/analytics/Settings.tsx
 msgid "Start over"
 msgstr "Sıfırla"
+
+#: src/features/analytics/text.ts
+msgid "Status"
+msgstr "Durum"
+
+#: src/features/analytics/text.ts
+msgid "Status class"
+msgstr "Durum sınıfı"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Status codes"
+msgstr "Durum kodları"
 
 #. placeholder {0}: i + 1
 #: src/features/analytics/Funnels.tsx
@@ -2304,6 +2539,10 @@ msgstr "Anahtar hemen çalışmaz olur, tüm ziyaretler, olaylar ve toplamlar si
 msgid "The last 30 days"
 msgstr "Son 30 gün"
 
+#: src/features/analytics/Monitor.tsx
+msgid "The last 60 minutes"
+msgstr "Son 60 dakika"
+
 #: src/features/analytics/Sharing.tsx
 msgid "The link stops working at once and leaves the list."
 msgstr "Bağlantı hemen çalışmayı bırakır ve listeden kalkar."
@@ -2315,6 +2554,10 @@ msgstr "Bağlantı hemen çalışmayı bırakır ve listede kalır."
 #: src/features/analytics/Sharing.tsx
 msgid "The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked."
 msgstr "Bağlantı bu günün sonunda ({timezone} saatiyle) çalışmayı bırakır. İptal edilene kadar açık kalması için boş bırakın."
+
+#: src/features/analytics/text.ts
+msgid "The mean time a request took."
+msgstr "Bir isteğin ortalama süresi."
 
 #: src/features/analytics/Install.tsx
 msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
@@ -2352,6 +2595,10 @@ msgstr "Rapor yüklenemedi"
 msgid "The server’s own database"
 msgstr "Sunucunun kendi veritabanı"
 
+#: src/features/analytics/Monitor.tsx
+msgid "The workspace reached {max} services. New services are counted under Other."
+msgstr "Çalışma alanı {max} hizmete ulaştı. Yeni hizmetler Diğer altında sayılır."
+
 #: src/features/analytics/parts.tsx
 msgid "These filters need detailed records that are no longer kept for this range."
 msgstr "Bu filtreler, bu aralık için artık saklanmayan ayrıntılı kayıtlara ihtiyaç duyar."
@@ -2359,6 +2606,26 @@ msgstr "Bu filtreler, bu aralık için artık saklanmayan ayrıntılı kayıtlar
 #: src/features/analytics/parts.tsx
 msgid "These filters need the detailed records, which are kept since {day}. Earlier days only have totals per page, source, place and device."
 msgstr "Bu filtreler ayrıntılı kayıtlara ihtiyaç duyar; bunlar {day} tarihinden beri saklanıyor. Önceki günler için yalnızca sayfa, kaynak, konum ve cihaz başına toplamlar var."
+
+#: src/features/analytics/Monitor.tsx
+msgid "This API reached {max} API versions. New versions are counted under Other."
+msgstr "Bu API {max} API sürümüne ulaştı. Yeni sürümler Diğer altında sayılır."
+
+#: src/features/analytics/Monitor.tsx
+msgid "This API reached {max} app versions. New versions are counted under Other."
+msgstr "Bu API {max} uygulama sürümüne ulaştı. Yeni sürümler Diğer altında sayılır."
+
+#: src/features/analytics/Monitor.tsx
+msgid "This API reached {max} consumers. New consumers are counted under Other."
+msgstr "Bu API {max} tüketiciye ulaştı. Yeni tüketiciler Diğer altında sayılır."
+
+#: src/features/analytics/Monitor.tsx
+msgid "This API reached {max} environments. New environments are counted under Other."
+msgstr "Bu API {max} ortama ulaştı. Yeni ortamlar Diğer altında sayılır."
+
+#: src/features/analytics/Monitor.tsx
+msgid "This API reached {max} routes. New routes are counted under Other."
+msgstr "Bu API {max} rotaya ulaştı. Yeni rotalar Diğer altında sayılır."
 
 #: src/features/analytics/Settings.tsx
 msgid "This cannot be undone."
@@ -2407,6 +2674,10 @@ msgstr "Bu çalışma alanında henüz gelen kutusu yok."
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
 msgstr "Bu çalışma alanı bu ayki {limit} analitik olay sınırına ulaştı. Yeni olaylar ay bitene kadar atılır."
+
+#: src/features/analytics/Monitor.tsx
+msgid "This workspace reached its {limit} API requests for this month. Further requests are not counted until the month ends."
+msgstr "Bu çalışma alanı bu ayki {limit} API isteğine ulaştı. Sonraki istekler ay bitene kadar sayılmaz."
 
 #: src/features/analytics/text.ts
 msgid "This year"
@@ -2496,6 +2767,10 @@ msgstr "İzlenen özellikler"
 msgid "Tracking"
 msgstr "İzleme"
 
+#: src/features/analytics/Monitor.tsx
+msgid "Traffic"
+msgstr "Trafik"
+
 #: src/features/analytics/Alerts.tsx
 msgid "Traffic drop"
 msgstr "Trafik düşüşü"
@@ -2527,6 +2802,14 @@ msgstr "Mülkü ve tüm verilerini silmek için adını yazın."
 #: src/features/analytics/text.ts
 msgid "Unknown"
 msgstr "Bilinmiyor"
+
+#: src/features/analytics/text.ts
+msgid "Unmatched"
+msgstr "Eşleşmeyen"
+
+#: src/features/analytics/Install.tsx
+msgid "Up to 1,000 records per request, gzip allowed. Send route when your router knows the pattern, else path, and ids are taken out of it. Records left out as invalid come back in errors with their position."
+msgstr "İstek başına en fazla 1.000 kayıt, gzip kullanılabilir. Yönlendiriciniz kalıbı biliyorsa route, bilmiyorsa path gönderin; kimlikler ondan çıkarılır. Geçersiz diye dışarıda bırakılan kayıtlar errors içinde sıralarıyla döner."
 
 #: src/features/analytics/Install.tsx
 msgid "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
@@ -2651,6 +2934,10 @@ msgstr "{at} saatinden beri olaylar bekleniyor."
 msgid "Waiting for the first event"
 msgstr "İlk olay bekleniyor"
 
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Watch an API"
+msgstr "Bir API’yi izle"
+
 #: src/features/analytics/NewProperty.tsx
 msgid "Watch it live"
 msgstr "Canlı izle"
@@ -2658,6 +2945,10 @@ msgstr "Canlı izle"
 #: src/features/analytics/text.ts
 msgid "Web"
 msgstr "Web"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Website or app"
+msgstr "Web sitesi ya da uygulama"
 
 #: src/features/analytics/Retention.tsx
 msgid "Week {period}"
@@ -2686,6 +2977,10 @@ msgstr "Hedefin olaylarının taşıdığı tutar, para birimi başına. Para bi
 #: src/features/analytics/Exports.tsx
 msgid "What to export"
 msgstr "Ne dışa aktarılsın"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "What to measure"
+msgstr "Ne ölçülecek"
 
 #: src/features/analytics/Goals.tsx
 msgid "Where conversions come from"
@@ -2726,6 +3021,10 @@ msgstr "Erişiminiz sona erdi. Okumaya devam etmek için parolayı yeniden girin
 #: src/features/analytics/Sharing.tsx
 msgid "Your new share link"
 msgstr "Yeni paylaşım bağlantınız"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Your server sent one record for several successful requests, so counts are estimates."
+msgstr "Sunucunuz birkaç başarılı istek için tek kayıt gönderdi, bu yüzden sayılar tahminidir."
 
 #: src/features/analytics/Settings.tsx
 msgid "yuva.identify with a token from your backend, signed like a chat session, links the visitor’s visits to their contact. They show on the contact’s page under Recent visits. Forged or reused tokens are ignored."

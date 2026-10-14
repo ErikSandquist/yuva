@@ -4619,11 +4619,12 @@ export interface paths {
         put?: never;
         /**
          * Create an analytics property
-         * @description A website or app to measure. The answer carries its `public_key`, which pages and apps send
-         *     events with. `inbox_id` links the property to an inbox: agents of that inbox can then read
-         *     it. A workspace has at most `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties
-         *     (`403 property_limit`). A children's property (`audience: children`) cannot offer
-         *     `consent_features` or `tracked_props`.
+         * @description A website or app to measure, or with `kind: api` an API to watch. The answer carries its
+         *     `public_key`, which pages and apps send events with. `inbox_id` links the property to an
+         *     inbox: agents of that inbox can then read it. A workspace has at most
+         *     `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties (`403 property_limit`). A children's
+         *     property (`audience: children`) cannot offer `consent_features` or `tracked_props`; an API
+         *     property offers neither, and `audience` does not apply to it.
          *
          *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
          */
@@ -4834,6 +4835,52 @@ export interface paths {
          *     with `Retry-After`.
          */
         post: operations["sendAnalyticsEvents"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Send an API's request records
+         * @description The host of an API property reports the requests it served, 1 to 1,000 records a call,
+         *     with `sdk/go/analytics` (`Middleware`) or any HTTP client. The body may be sent with
+         *     `Content-Encoding: gzip`. API keys only (`403 forbidden` for members' sessions); a key
+         *     limited to inboxes reaches the properties of its inboxes. A site answers
+         *     `422 property_kind`. Scope: `analytics:write`.
+         *
+         *     A record names its route pattern (`/users/{id}`), as the router matched it. A record
+         *     that can only give its `path` gets a pattern inferred from it: the query and fragment are
+         *     cut, and segments that are numbers, UUIDs, dates, hex of 16 or more characters, other
+         *     tokens of 16 or more letters, digits, `-` and `_` with at least two digits or with both
+         *     cases and a digit, e-mail-shaped or longer than 40 characters become `{id}`. A path that
+         *     answered 404 or 405 is counted as `(unmatched)`, so scanners never make routes. The
+         *     property's `path_rules` then map a path or route onto a pattern of their own. Past 1,000
+         *     routes a property counts new ones as `(other)`; consumers (10,000), API versions (50),
+         *     environments (20) and services (100 per workspace) work the same way.
+         *
+         *     Nothing else of a request is accepted: no body, header, query string, fragment or user
+         *     agent. `ip`, when given, is shortened (IPv4 /24, IPv6 /48) and looked up for its country
+         *     right away and never kept. Records are added up per minute and hour in the server's
+         *     memory and written every 10 seconds, so a request shows in `queryAnalytics`
+         *     (`dataset: api`) within about 15 seconds.
+         *
+         *     Invalid records are left out on their own and listed in `errors`; the others are taken.
+         *     Taken but not counted: records older than 72 hours, records over the property's
+         *     `YUVA_MONITOR_RECORDS_PER_MINUTE` or the workspace's monthly cap
+         *     (`YUVA_MONITOR_MONTHLY_REQUESTS`). When the server holds as many open rows as it may
+         *     (`YUVA_MONITOR_BUFFER_KEYS`) it answers `503` with `Retry-After`.
+         */
+        post: operations["sendAnalyticsRequests"];
         delete?: never;
         options?: never;
         head?: never;
@@ -7299,8 +7346,8 @@ export interface components {
          *       Yuva. Owners and admins only; never offered to agents' tokens, refused for keys limited
          *       to inboxes.
          *     - `analytics:read`: analytics properties.
-         *     - `analytics:write`: server-side analytics events; for API keys only, never offered to
-         *       OAuth clients.
+         *     - `analytics:write`: server-side analytics events and API request records; for API keys
+         *       only, never offered to OAuth clients.
          *     - `analytics:manage`: create, change and delete analytics properties, rotate their keys,
          *       delete their data. Never offered to agents' tokens, refused for keys limited to inboxes.
          *
@@ -12704,10 +12751,20 @@ export interface components {
          */
         AnalyticsExcludedAddress: string;
         AnalyticsTrackedProp: string;
-        /** @description A website or app the workspace measures. */
+        /**
+         * @description `site` measures websites and apps (page views, events, visitors). `api` watches an API: its
+         *     host sends a record per request (`sendAnalyticsRequests`) and `dataset: api` queries them. An
+         *     API property's `domains` (0 to 50) are the API's host names and its `platforms` the apps
+         *     allowed to send app-side records (`ios`, `android`, or none); it takes no goals, funnels,
+         *     tracked props or consent features. The kind is fixed when the property is made.
+         * @enum {string}
+         */
+        AnalyticsPropertyKind: "site" | "api";
+        /** @description A website, app or API the workspace measures. */
         AnalyticsProperty: {
             /** Format: uuid */
             id: string;
+            kind: components["schemas"]["AnalyticsPropertyKind"];
             /**
              * Format: uuid
              * @description The linked inbox, whose agents can read the property; absent when none.
@@ -12743,6 +12800,16 @@ export interface components {
              */
             retention_months?: number;
             /**
+             * Format: int32
+             * @description An API's Apdex threshold T in milliseconds; a request is satisfied within T and tolerated within 4T.
+             */
+            apdex_ms: number;
+            /**
+             * Format: int32
+             * @description How many days an API's hourly rows are kept; daily rows follow `retention_months`.
+             */
+            monitor_hour_days: number;
+            /**
              * Format: int64
              * @description Distinct visitors so far today, in the property's time zone.
              */
@@ -12763,12 +12830,24 @@ export interface components {
             updated_at: string;
         };
         AnalyticsPropertyCreate: {
+            kind?: components["schemas"]["AnalyticsPropertyKind"];
             name: string;
             /** Format: uuid */
             inbox_id?: string;
+            /** @description 1 to 50 host names for a site, 0 to 50 for an API. */
             domains: components["schemas"]["AnalyticsDomain"][];
-            /** @description `[web]` when absent. */
+            /** @description At least one for a site, `[web]` when absent; for an API `ios` and `android` only, none when absent. */
             platforms?: components["schemas"]["AnalyticsPlatform"][];
+            /**
+             * Format: int32
+             * @default 500
+             */
+            apdex_ms: number;
+            /**
+             * Format: int32
+             * @default 90
+             */
+            monitor_hour_days: number;
             /** @description The linked inbox's time zone when absent, else `UTC`. */
             timezone?: string;
             /** @default EUR */
@@ -12793,8 +12872,14 @@ export interface components {
              * @description `null` unlinks the property from its inbox.
              */
             inbox_id?: string | null;
+            /** @description 1 to 50 host names for a site, 0 to 50 for an API. */
             domains?: components["schemas"]["AnalyticsDomain"][];
+            /** @description At least one for a site; for an API `ios` and `android` only. */
             platforms?: components["schemas"]["AnalyticsPlatform"][];
+            /** Format: int32 */
+            apdex_ms?: number;
+            /** Format: int32 */
+            monitor_hour_days?: number;
             timezone?: string;
             currency?: string;
             collection?: components["schemas"]["AnalyticsCollection"];
@@ -12829,6 +12914,16 @@ export interface components {
              * @description When this month's events reached the cap; later events are dropped until the month ends.
              */
             limit_reached_at?: string;
+            /**
+             * Format: int64
+             * @description API request records counted this month (`sendAnalyticsRequests`); absent when API monitoring is off.
+             */
+            requests?: number;
+            /**
+             * Format: int64
+             * @description The monthly cap on request records; absent when there is none. Records over it are not counted until the month ends.
+             */
+            requests_limit?: number;
         };
         AnalyticsPropertyList: {
             items: components["schemas"]["AnalyticsProperty"][];
@@ -12867,9 +12962,16 @@ export interface components {
          *     `ratings_down` (page ratings), `helpful_rate` (percent of ratings that are `up`),
          *     `discussions` (discussion threads started on it) and `support_rate` (conversations per
          *     1,000 page views), next to `visitors` and `pageviews`.
+         *
+         *     With `dataset: api` (an API property) only: `requests`, `requests_per_minute` (requests
+         *     per minute of the range or bucket, up to now), `errors` (status 500 to 599, or 0 when no
+         *     response was sent), `error_rate` and `client_error_rate` (percent of requests),
+         *     `client_errors` (status 400 to 499), `p50`, `p95` and `p99` (the duration in milliseconds
+         *     that this share of requests stayed within, from sketches accurate to 1.1%) and
+         *     `avg_duration` (milliseconds).
          * @enum {string}
          */
-        AnalyticsMetric: "visitors" | "visits" | "pageviews" | "views_per_visit" | "bounce_rate" | "visit_duration" | "time_on_page" | "scroll_depth" | "events" | "conversions" | "conversion_rate" | "completions" | "revenue" | "conversations" | "feedback" | "ratings_up" | "ratings_down" | "helpful_rate" | "discussions" | "support_rate";
+        AnalyticsMetric: "visitors" | "visits" | "pageviews" | "views_per_visit" | "bounce_rate" | "visit_duration" | "time_on_page" | "scroll_depth" | "events" | "conversions" | "conversion_rate" | "completions" | "revenue" | "conversations" | "feedback" | "ratings_up" | "ratings_down" | "helpful_rate" | "discussions" | "support_rate" | "requests" | "requests_per_minute" | "errors" | "error_rate" | "client_errors" | "client_error_rate" | "p50" | "p95" | "p99" | "avg_duration";
         /**
          * @description A value of a visit or page. `page` is a path that was viewed (pages are counted by path;
          *     `hostname` tells sites apart), `entry_page` and `exit_page` the first and last of a visit.
@@ -12887,9 +12989,15 @@ export interface components {
          *     for events without it: as
          *     a filter of visits they keep the visits with such an event; in an `event` or `prop`
          *     breakdown they keep the matching events.
+         *
+         *     With `dataset: api`: `route` is the route pattern (`/users/{id}`), `(unmatched)` for
+         *     requests that answered 404 or 405 without one, or `(other)` past the property's 1,000
+         *     routes; `method` an HTTP method or `_OTHER`; `status` the status code (`0` when no response
+         *     was sent); `status_class` `1xx` to `5xx`, or `none` for status 0; `environment` the record's
+         *     environment (`production` by default, `(other)` past 20).
          * @enum {string}
          */
-        AnalyticsFilterDimension: "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version" | "visitor_type" | "event" | "prop";
+        AnalyticsFilterDimension: "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version" | "visitor_type" | "event" | "prop" | "route" | "method" | "status" | "status_class" | "environment";
         /**
          * @description A filter dimension (`AnalyticsFilterDimension`), or a time grain: `time:hour` (local hours
          *     of the property's time zone; only alone, and only with `visitors`, `visits`, `pageviews` and
@@ -12898,9 +13006,14 @@ export interface components {
          *     range is present. `event` breaks custom and built-in events down by name, `prop` by the
          *     value of the event prop the query's `prop` names; either takes at most one other dimension,
          *     a time grain other than `time:hour` or a visit dimension.
+         *
+         *     With `dataset: api`, two of `route`, `method`, `status`, `status_class`, `environment` and
+         *     one grain: `time:minute` (minutes, `2026-10-12T14:05` in the property's time zone, inside
+         *     the last `YUVA_MONITOR_MINUTE_DAYS` days and at most 1,440 of them), `time:hour` (local
+         *     hours) or `time:day`.
          * @enum {string}
          */
-        AnalyticsDimension: "time:hour" | "time:day" | "time:week" | "time:month" | "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version" | "visitor_type" | "event" | "prop";
+        AnalyticsDimension: "time:minute" | "time:hour" | "time:day" | "time:week" | "time:month" | "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version" | "visitor_type" | "event" | "prop" | "route" | "method" | "status" | "status_class" | "environment";
         /**
          * @description `is` and `is_not` compare whole values, `contains` and `not_contains` parts of them (case
          *     does not matter), `matches` patterns: on paths `*` is one segment and `**` any number of
@@ -12919,11 +13032,12 @@ export interface components {
          * @description Days of the property's time zone: a `period` ending today (`today`, `yesterday`, `7d`,
          *     `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
          *     `year` are the current calendar month and year to date; `last_month` the one before), or
-         *     `from` and `to` (inclusive, at most 400 days apart).
+         *     `from` and `to` (inclusive, at most 400 days apart). With `dataset: api` a period can also
+         *     be the last `15m`, `1h`, `6h` or `24h` up to the current minute, included.
          */
         AnalyticsRange: {
             /** @enum {string} */
-            period?: "today" | "yesterday" | "7d" | "28d" | "30d" | "90d" | "6mo" | "12mo" | "month" | "last_month" | "year";
+            period?: "today" | "yesterday" | "7d" | "28d" | "30d" | "90d" | "6mo" | "12mo" | "month" | "last_month" | "year" | "15m" | "1h" | "6h" | "24h";
             /** Format: date */
             from?: string;
             /** Format: date */
@@ -12961,9 +13075,17 @@ export interface components {
          *     `support_rate` with pages of fewer than 100 page views after the others unless `order_by`
          *     says otherwise. Days of the past come from the support rollup, today and days not yet rolled
          *     up from the inbox itself.
+         *
+         *     `api` is an API property's requests (`sendAnalyticsRequests`), and the only dataset an API
+         *     property takes (`422 property_kind` otherwise, and for `api` on a site). It takes the API
+         *     metrics of `AnalyticsMetric`, the API dimensions of `AnalyticsDimension` and filters on
+         *     them, no goal, prop, segment, comparison or insights. Closed local days come from daily
+         *     rows, closed hours from hourly rows and the rest from minute rows, which processes write
+         *     every 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
+         *     Rows are ordered by `requests` unless `order_by` says otherwise.
          * @enum {string}
          */
-        AnalyticsDataset: "traffic" | "support";
+        AnalyticsDataset: "traffic" | "support" | "api";
         AnalyticsQuery: {
             dataset?: components["schemas"]["AnalyticsDataset"];
             metrics: components["schemas"]["AnalyticsMetric"][];
@@ -13044,6 +13166,26 @@ export interface components {
             discussions?: number;
             /** Format: double */
             support_rate?: number;
+            /** Format: double */
+            requests?: number;
+            /** Format: double */
+            requests_per_minute?: number;
+            /** Format: double */
+            errors?: number;
+            /** Format: double */
+            error_rate?: number;
+            /** Format: double */
+            client_errors?: number;
+            /** Format: double */
+            client_error_rate?: number;
+            /** Format: double */
+            p50?: number;
+            /** Format: double */
+            p95?: number;
+            /** Format: double */
+            p99?: number;
+            /** Format: double */
+            avg_duration?: number;
         };
         AnalyticsRevenue: {
             /** @description ISO 4217 code. */
@@ -13097,6 +13239,15 @@ export interface components {
              * @description The first day raw rows are kept for, which filters and breakdowns the rollups cannot answer need.
              */
             raw_window_from: string;
+            /** @description `dataset: api`: some requests of the range were sampled (`sample_rate`), so counts are estimates. */
+            estimated?: boolean;
+            /**
+             * @description `dataset: api`: the caps the property has reached, so new values count as `(other)`:
+             *     `routes` (1,000), `consumers` (10,000), `api_versions` (50), `app_versions` (200),
+             *     `environments` (20), `services` (100 per workspace), `dimension_rows` (an hour of the
+             *     range reached 50,000 consumer, country or app version rows).
+             */
+            caps_reached?: ("routes" | "consumers" | "api_versions" | "app_versions" | "environments" | "services" | "dimension_rows")[];
         };
         AnalyticsResult: {
             /** @description Empty when the query has no dimensions. */
@@ -13326,6 +13477,72 @@ export interface components {
             persistent_id?: string;
             /** @description An identity token as in `AnalyticsConsent.j`, with `persistent_id` and `consent: true`, on a property that offers `identify`. */
             identity_token?: string;
+        };
+        AnalyticsRequestRecords: {
+            records: components["schemas"]["AnalyticsRequestRecord"][];
+        };
+        /** @description One request an API served. Give `route`, or `path` when the router knows no pattern. */
+        AnalyticsRequestRecord: {
+            /**
+             * @description The request method; anything but the RFC 9110 methods and `PATCH` counts as `_OTHER`.
+             * @example GET
+             */
+            method: string;
+            /**
+             * @description The route pattern that matched, starting with `/`, without method or host.
+             * @example /users/{id}
+             */
+            route?: string;
+            /**
+             * @description The request path, when there is no `route`; only the pattern inferred from it is kept.
+             * @example /users/42
+             */
+            path?: string;
+            /** @description The response status, 100 to 599, or 0 when no response was sent. */
+            status: number;
+            /**
+             * Format: int64
+             * @description How long the request took, in microseconds.
+             */
+            duration_us: number;
+            /**
+             * Format: int64
+             * @description Bytes of the request body.
+             */
+            request_size?: number;
+            /**
+             * Format: int64
+             * @description Bytes of the response body.
+             */
+            response_size?: number;
+            /**
+             * Format: date-time
+             * @description When the request started; now when absent. Records older than 72 hours are not counted.
+             */
+            time?: string;
+            /** @description Who called, as you name them, such as an API key's name or a client id; never a person's address (e-mail-shaped values become `(scrubbed)`). */
+            consumer?: string;
+            api_version?: string;
+            /** @description `production` when absent. */
+            environment?: string;
+            /** @description The service that served the request. */
+            service?: string;
+            /** @description The service's release, for deploy markers. */
+            release?: string;
+            /** @description The caller's address, only to find its country; shortened on arrival, never stored. */
+            ip?: string;
+            /**
+             * @description This record stands for this many requests, for a host that sends one in N successful
+             *     requests. Only records with a status of 1 to 399 may be sampled.
+             * @default 1
+             */
+            sample_rate: number;
+        };
+        AnalyticsRequestsResult: {
+            /** @description The valid records, counted unless a rule of the operation dropped them. */
+            accepted: number;
+            /** @description The records left out as invalid, by their position in `records`. */
+            errors: components["schemas"]["AnalyticsEventError"][];
         };
         AnalyticsEventsResult: {
             /** @description The valid events, stored unless a rule of the operation dropped them. */
@@ -22180,7 +22397,8 @@ export interface operations {
             /**
              * @description `needs_raw_window`: the query needs raw rows for days that are no longer kept;
              *     `raw_window_from` is the first day it can serve. `range_too_large`: the range is longer
-             *     than 400 days.
+             *     than 400 days, or with `time:minute` more than 1,440 minutes or older than the minute
+             *     rows. `property_kind`: the dataset does not fit the property's kind.
              */
             422: {
                 headers: {
@@ -22250,6 +22468,41 @@ export interface operations {
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
+            503: components["responses"]["Problem"];
+        };
+    };
+    sendAnalyticsRequests: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description `gzip` when the body is compressed. */
+                "Content-Encoding"?: "gzip" | "identity";
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsRequestRecords"];
+            };
+        };
+        responses: {
+            /** @description Taken; counted unless one of the rules above dropped them. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsRequestsResult"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
             503: components["responses"]["Problem"];
         };
     };

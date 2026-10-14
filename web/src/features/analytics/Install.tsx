@@ -424,3 +424,105 @@ export function InstallSnippets({ property }: { property: AnalyticsProperty }) {
     </div>
   )
 }
+
+type ApiTab = "go" | "curl"
+
+export function apiSnippet(tab: ApiTab, v: { server: string; id: string }) {
+  if (tab === "go") {
+    return [
+      `// go get github.com/productdevbook/yuva/sdk/go/analytics`,
+      `import "github.com/productdevbook/yuva/sdk/go/analytics"`,
+      ``,
+      `yuva, err := analytics.New(analytics.Config{`,
+      `\tBaseURL:    "${v.server}",`,
+      `\tAPIKey:     os.Getenv("YUVA_API_KEY"), // a key with analytics:write`,
+      `\tPropertyID: "${v.id}",`,
+      `})`,
+      `if err != nil {`,
+      `\tlog.Fatal(err)`,
+      `}`,
+      `defer yuva.Close(context.Background())`,
+      ``,
+      `mux := http.NewServeMux()`,
+      `mux.HandleFunc("GET /users/{id}", getUser)`,
+      ``,
+      `// wrap the mux itself, so the route pattern it matched is recorded`,
+      `handler := yuva.Middleware(analytics.Monitor{`,
+      `\tService:     "shop",`,
+      `\tEnvironment: "production",`,
+      `})(mux)`,
+      `log.Fatal(http.ListenAndServe(":8080", handler))`,
+    ].join("\n")
+  }
+  return [
+    `curl ${v.server}/v1/analytics/properties/${v.id}/requests \\`,
+    `  -H "Authorization: Bearer $YUVA_API_KEY" \\`,
+    `  -H "Content-Type: application/json" \\`,
+    `  -d '{`,
+    `    "records": [{`,
+    `      "method": "GET",`,
+    `      "route": "/users/{id}",`,
+    `      "status": 200,`,
+    `      "duration_us": 12500`,
+    `    }]`,
+    `  }'`,
+    ``,
+    `# {"accepted": 1, "errors": []}`,
+  ].join("\n")
+}
+
+function ApiHint({ tab }: { tab: ApiTab }) {
+  const { canManage } = useSession()
+  if (tab === "curl") {
+    return (
+      <Trans>
+        Up to 1,000 records per request, gzip allowed. Send route when your router knows the pattern, else path, and ids
+        are taken out of it. Records left out as invalid come back in errors with their position.
+      </Trans>
+    )
+  }
+  return canManage ? (
+    <Trans>
+      Middleware records every request the mux answers, with its route pattern, status and duration, and sends them in
+      batches. It needs an{" "}
+      <Link to="/settings/api-keys" className="text-brand underline-offset-4 hover:underline">
+        API key
+      </Link>{" "}
+      with the analytics:write scope.
+    </Trans>
+  ) : (
+    <Trans>
+      Middleware records every request the mux answers, with its route pattern, status and duration, and sends them in
+      batches. It needs an API key with the analytics:write scope from an owner or admin.
+    </Trans>
+  )
+}
+
+export function ApiInstallSnippets({ property }: { property: AnalyticsProperty }) {
+  const { t } = useLingui()
+  const [tab, setTab] = useState<ApiTab>("go")
+  return (
+    <div className="flex min-w-0 flex-col gap-3" data-testid="api-install">
+      <div className="-mx-1 max-w-[calc(100%+0.5rem)] overflow-x-auto px-1 py-1">
+        <Segmented
+          value={tab}
+          onChange={setTab}
+          label={t`How to install`}
+          items={[
+            { value: "go", label: t`Go middleware`, testId: "install-tab-go" },
+            { value: "curl", label: "curl", testId: "install-tab-curl" },
+          ]}
+        />
+      </div>
+      <p className="text-body text-muted-foreground">
+        <ApiHint tab={tab} />
+      </p>
+      <div dir="ltr">
+        <CodeBlock
+          value={apiSnippet(tab, { server: window.location.origin, id: property.id })}
+          testId="install-snippet"
+        />
+      </div>
+    </div>
+  )
+}
