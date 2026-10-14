@@ -120,7 +120,12 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.hook("nitro:config", (config) => {
       config.virtual = {
         ...config.virtual,
-        [SERVER_MODULE]: serverModule({ nitro, server, runtimeConfig: "#imports" }),
+        [SERVER_MODULE]: serverModule({
+          nitro,
+          server,
+          runtimeConfig: "#imports",
+          assetPrefixes: [`${base}/${nuxt.options.app.buildAssetsDir.replace(/^\/+|\/+$/g, "")}/`],
+        }),
       }
     })
     if (parts.identity) addServerHandler({ route: IDENTITY_ROUTE, method: "GET", handler: runtimePath("identity") })

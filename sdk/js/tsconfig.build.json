@@ -7,5 +7,5 @@
     "rootDir": "src",
     "outDir": "dist/types"
   },
-  "include": ["src/index.ts", "src/chat.ts", "src/docs.ts", "src/subscribe.ts", "src/analytics.ts", "src/react.ts", "src/api.ts", "src/server.ts", "src/h3.ts", "src/srvx.ts", "src/hono.ts", "src/express.ts", "src/fastify.ts", "src/next.ts", "src/nuxt/module.ts", "src/nuxt/runtime/components.ts", "src/nuxt/runtime/analytics.ts", "src/nuxt/runtime/plugin.ts", "src/nitro/module.ts", "src/nitro/runtime/define.ts"]
+  "include": ["src/index.ts", "src/chat.ts", "src/docs.ts", "src/subscribe.ts", "src/analytics.ts", "src/react.ts", "src/api.ts", "src/server.ts", "src/h3.ts", "src/srvx.ts", "src/hono.ts", "src/express.ts", "src/fastify.ts", "src/next.ts", "src/next-server.d.ts", "src/nuxt/module.ts", "src/nuxt/runtime/components.ts", "src/nuxt/runtime/analytics.ts", "src/nuxt/runtime/plugin.ts", "src/nitro/module.ts", "src/nitro/runtime/define.ts"]
 }

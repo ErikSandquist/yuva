@@ -27,11 +27,6 @@ export function unref(timer: Timer): Timer {
   return timer
 }
 
-function hold(timer: Timer): void {
-  if (typeof timer === "object" && timer && "ref" in timer && typeof timer.ref === "function") timer.ref()
-  else (globalThis as { Deno?: { refTimer?(id: unknown): void } }).Deno?.refTimer?.(timer)
-}
-
 const sleep = (ms: number, held: boolean) =>
   new Promise<void>((resolve) => {
     const timer = setTimeout(resolve, ms)
@@ -81,7 +76,6 @@ export interface SenderConfig<T> {
 export interface Sender<T> {
   push(item: T): void
   run(held: boolean): Promise<Error | undefined>
-  flushed(): Promise<void>
   stop(): void
 }
 
@@ -92,7 +86,6 @@ export function createSender<T>(config: SenderConfig<T>): Sender<T> {
 
   let queue: T[] = []
   let timer: Timer | undefined
-  let waiting: { promise: Promise<void>; resolve(): void; held: boolean } | undefined
   let chain: Promise<unknown> = Promise.resolve()
 
   async function post(body: string | Uint8Array<ArrayBuffer>) {
@@ -156,26 +149,9 @@ export function createSender<T>(config: SenderConfig<T>): Sender<T> {
   }
 
   function run(held: boolean): Promise<Error | undefined> {
-    const next = chain
-      .then(() => sendAll(held))
-      .then((error) => {
-        if (queue.length === 0 && waiting) {
-          waiting.resolve()
-          waiting = undefined
-        }
-        return error
-      })
+    const next = chain.then(() => sendAll(held))
     chain = next
     return next
-  }
-
-  function arm(): void {
-    if (timer) return
-    timer = setTimeout(() => {
-      timer = undefined
-      void run(waiting?.held ?? false)
-    }, interval)
-    if (!waiting?.held) unref(timer)
   }
 
   return {
@@ -185,21 +161,18 @@ export function createSender<T>(config: SenderConfig<T>): Sender<T> {
         return
       }
       queue.push(item)
-      if (queue.length >= config.batch) void run(waiting?.held ?? false)
-      else arm()
+      if (queue.length >= config.batch) {
+        void run(false)
+      } else if (!timer) {
+        timer = unref(
+          setTimeout(() => {
+            timer = undefined
+            void run(false)
+          }, interval)
+        )
+      }
     },
     run,
-    flushed() {
-      if (queue.length === 0) return chain.then(() => undefined)
-      if (!waiting) {
-        let resolve!: () => void
-        const promise = new Promise<void>((r) => (resolve = r))
-        waiting = { promise, resolve, held: true }
-      }
-      if (timer) hold(timer)
-      else arm()
-      return waiting.promise
-    },
     stop() {
       if (timer) clearTimeout(timer)
       timer = undefined

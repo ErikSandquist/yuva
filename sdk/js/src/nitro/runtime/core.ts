@@ -55,6 +55,8 @@ export interface YuvaAdapter {
   trackRequest(event: YuvaHookEvent): Request
   onResponse(hooks: YuvaHooks, fn: (event: YuvaHookEvent) => void): void
   waitUntil(event: YuvaHookEvent): ((promise: Promise<unknown>) => void) | undefined
+  serverlessWaitUntil(event: YuvaHookEvent): ((promise: Promise<unknown>) => void) | undefined
+  isAsset(path: string): boolean
   requestInfo(event: YuvaHookEvent): YuvaRequestInfo
   onResponded(
     hooks: YuvaHooks,
@@ -141,17 +143,19 @@ export function monitorPlugin(yuva: YuvaAdapter) {
       if (!start) return
       starts.delete(event)
       const info = yuva.requestInfo(event)
+      const path = info.path.split(/[?#]/)[0]!
+      if (yuva.isAsset(path)) return
       monitor.record({
         method: info.method,
         route: info.route ? routePattern(info.route) : undefined,
-        path: info.path.split(/[?#]/)[0],
+        path,
         status,
         duration: performance.now() - start.at,
         time: start.time,
         requestSize: bytes(info.size),
         responseSize: bytes(size),
       })
-      yuva.waitUntil(event)?.(monitor.flushed())
+      yuva.serverlessWaitUntil(event)?.(monitor.flush())
     })
     nitroApp.hooks.hook("close", () => monitor.close())
   }

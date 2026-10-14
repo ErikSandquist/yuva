@@ -47,6 +47,10 @@ globals.__yuvaRuntime = runtime
 const dir = mkdtempSync(join(tmpdir(), "yuva-nitro-"))
 writeFileSync(join(dir, "yuva.mjs"), "export default globalThis.__yuvaServer\n")
 writeFileSync(
+  join(dir, "public-assets.mjs"),
+  'export const isPublicAssetURL = (id) => id === "/favicon.ico" || id.startsWith("/assets/")\n'
+)
+writeFileSync(
   join(dir, "runtime-config.mjs"),
   "export const useRuntimeConfig = () => globalThis.__yuvaRuntime.config\n"
 )
@@ -60,6 +64,8 @@ async function adapter(nitro: 2 | 3): Promise<YuvaAdapter> {
       server: join(dir, "yuva.mjs"),
       runtimeConfig: join(dir, "runtime-config.mjs"),
       h3: Bun.resolveSync("h3-v1", import.meta.dir),
+      publicAssets: join(dir, "public-assets.mjs"),
+      assetPrefixes: ["/_nuxt/"],
     })
   )
   return (await import(path)) as YuvaAdapter
@@ -292,7 +298,7 @@ for (const [major, start] of [
 }
 
 const monitored: YuvaRuntimeConfig = {
-  yuva: { monitor: { apiKey: "yuva_api_key", propertyId: "api-1", service: "shop", flushInterval: 50 } },
+  yuva: { monitor: { apiKey: "yuva_api_key", propertyId: "api-1", service: "shop", flushInterval: 60_000 } },
   public: { yuva: { server: "https://yuva.test" } },
 }
 
@@ -308,6 +314,9 @@ for (const [major, start] of [
     const res = await app.fetch(new Request("http://app.test/users/42?token=secret"), (p) => waiting.push(p))
     expect(await res.json()).toEqual({ id: "42" })
     await app.fetch(new Request("http://app.test/wp-login.php?x=1"), (p) => waiting.push(p))
+    for (const path of ["/favicon.ico", "/assets/app-4f9a2c1d8e7b6a5f.js", "/_nuxt/entry.B2x9Kq7Z.js"]) {
+      await app.fetch(new Request(`http://app.test${path}`), (p) => waiting.push(p))
+    }
     for (let i = 0; i < 100 && waiting.length < 2; i++) await Bun.sleep(5)
     expect(waiting).toHaveLength(2)
     await Promise.all(waiting)

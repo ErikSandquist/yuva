@@ -1,5 +1,13 @@
 import type { ServerPlugin, ServerRequest } from "srvx"
-import { contentLength, errorStatus, observe, started, type Monitor, type MonitorOptions } from "./server/monitor"
+import {
+  contentLength,
+  errorStatus,
+  observe,
+  serverless,
+  started,
+  type Monitor,
+  type MonitorOptions,
+} from "./server/monitor"
 
 export interface YuvaMonitorOptions extends MonitorOptions<ServerRequest> {
   route?: (request: ServerRequest) => string | null | undefined
@@ -35,7 +43,7 @@ export function yuvaMonitor(monitor: Monitor, options: YuvaMonitorOptions = {}):
           requestSize: contentLength(request.headers.get("content-length")),
           responseSize: contentLength(response?.headers.get("content-length")),
         })
-        request.waitUntil?.(monitor.flushed())
+        if (request.waitUntil && serverless(request)) request.waitUntil(monitor.flush())
       }
     })
     const close = server.close.bind(server)

@@ -596,9 +596,10 @@ sends one in `n` successful requests, each standing for `n`; `4xx`, `5xx` and st
 sent. Records go out gzip'd in batches of up to 500 every `flushInterval` (5000 ms) or as soon as a
 batch is full, holding at most `queueSize` (50,000); retries, `maxRetries`, `minBackoff` and
 `Retry-After` are as for [analytics](#server), and records the server left out reach `onError` as
-`MonitorRecordError`. The middleware hand `flushed()`, which resolves once the queued records are
-sent, to the request's `waitUntil` where the platform has one, and flush when the server closes;
-elsewhere call `monitor.close()` before the process exits. `record(record)` records one request as the
+`MonitorRecordError`. On a serverless platform (Cloudflare Workers, Vercel, Lambda and the like)
+the middleware hand `flush()` to the request's `waitUntil` after each response, so nothing waits
+for the interval; on a long-running server the queue batches by interval and is flushed when the
+server closes, or call `monitor.close()` before the process exits. `record(record)` records one request as the
 middleware do; `send(record)` queues one as it is.
 
 ### srvx
@@ -611,7 +612,8 @@ serve({ plugins: [yuvaMonitor(monitor, { route: (request) => routeOf(request) })
 ```
 
 srvx has no router: the route is `route(request)`, else the one an h3 app put on the request's
-context. `server.close()` flushes.
+context. `server.close()` flushes; `waitUntil` is used only off Node, Bun and Deno, where srvx sets it
+on every request.
 
 ### h3
 
@@ -674,7 +676,8 @@ export const GET = withYuvaMonitor(monitor, "/users/[id]", async (request, { par
 
 A route handler knows no pattern at run time, so it is the second argument, written like the folder
 (`[id]`, `[...slug]`; route groups and slots are left out). `notFound()` and `redirect()` count with
-their status. It flushes through `after()`.
+their status. Where the platform gives Next.js a `waitUntil` (Vercel), it flushes through `after()`;
+`next start` batches by interval.
 
 ## License
 

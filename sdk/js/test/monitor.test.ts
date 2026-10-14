@@ -1,4 +1,4 @@
-import { afterAll, afterEach, beforeAll, describe, expect, spyOn, test } from "bun:test"
+import { afterAll, afterEach, beforeAll, describe, expect, mock, spyOn, test } from "bun:test"
 import { GlobalRegistrator } from "@happy-dom/global-registrator"
 import { createServer, type Server } from "node:http"
 import type { AddressInfo } from "node:net"
@@ -11,7 +11,6 @@ import { yuvaMonitor as expressMonitor } from "../src/express"
 import { yuvaMonitor as fastifyMonitor } from "../src/fastify"
 import { defineYuvaMonitor } from "../src/h3"
 import { yuvaMonitor as honoMonitor } from "../src/hono"
-import { nextRoute } from "../src/next"
 import {
   AnalyticsBatchError,
   createMonitor,
@@ -21,6 +20,11 @@ import {
   type MonitorConfig,
 } from "../src/server"
 import { yuvaMonitor as srvxMonitor } from "../src/srvx"
+
+// next is not installed here: after() is faked, so a test can run the tasks Next.js would run after the response.
+const afterTasks: (() => unknown)[] = []
+mock.module("next/server", () => ({ after: (task: () => unknown) => afterTasks.push(task) }))
+const { nextRoute, withYuvaMonitor } = await import("../src/next")
 
 type Wire = Record<string, unknown>
 type Answer = { status: number; body?: string; headers?: Record<string, string> }
@@ -160,20 +164,6 @@ describe("createMonitor", () => {
     expect(refused.posts).toHaveLength(1)
   })
 
-  test("flushed() resolves once the queued records are sent", async () => {
-    const s = sink()
-    const { monitor } = monitorWith(s, { flushInterval: 20 })
-    await monitor.flushed()
-    monitor.send({ method: "GET", route: "/a", status: 200, duration: 1 })
-    await monitor.flushed()
-    expect(s.all()).toHaveLength(1)
-    monitor.send({ method: "GET", route: "/a", status: 200, duration: 1 })
-    const waiting = monitor.flushed()
-    await monitor.flush()
-    await waiting
-    expect(s.all()).toHaveLength(2)
-  })
-
   test("router patterns take one placeholder syntax", () => {
     for (const [pattern, route] of [
       ["/users/:id", "/users/{id}"],
@@ -245,7 +235,7 @@ function nodeFetch(origin: string) {
 describe("h3", () => {
   test("records the matched route and flushes through waitUntil", async () => {
     const s = sink()
-    const { monitor } = monitorWith(s, { flushInterval: 20 })
+    const { monitor } = monitorWith(s)
     const app = new H3({ silent: true })
       .use(defineYuvaMonitor({ monitor, consumer: (event) => client(event.req) }))
       .get("/users/:id", (event) => ({ id: event.context.params?.id }))
@@ -271,6 +261,15 @@ describe("h3", () => {
     expect(teapot.status).toBe(418)
     await monitor.flush()
     expect(s.all()[4]).toMatchObject({ route: "/teapot", status: 418 })
+
+    const longRunning = new Request("http://api.test/users/7")
+    Object.defineProperty(longRunning, "runtime", { value: { name: "node" } })
+    Object.defineProperty(longRunning, "waitUntil", { value: (p: Promise<unknown>) => waiting.push(p) })
+    await app.fetch(longRunning)
+    expect(waiting).toHaveLength(4)
+    expect(s.all()).toHaveLength(5)
+    await monitor.flush()
+    expect(s.all()).toHaveLength(6)
   })
 })
 
@@ -323,7 +322,7 @@ describe("srvx", () => {
 describe("hono", () => {
   test("records the handler's route and flushes through the execution context", async () => {
     const s = sink()
-    const { monitor } = monitorWith(s, { flushInterval: 20 })
+    const { monitor } = monitorWith(s)
     const api = new Hono().get("/items/:itemId", (c) => c.json({ id: c.req.param("itemId") }))
     const app = new Hono()
       .onError((_error, c) => c.text("error", 500))
@@ -421,5 +420,65 @@ describe("fastify", () => {
     const records = s.all()
     expectRecorded(records.slice(0, 4))
     expect(records[4]).toMatchObject({ route: "/api/items/{itemId}", status: 200 })
+  })
+})
+
+describe("next", () => {
+  type Context = { params: Promise<{ id: string }> }
+  const requestContext = Symbol.for("@next/request-context")
+  const globals = globalThis as Record<symbol, unknown>
+
+  afterEach(() => {
+    delete globals[requestContext]
+    afterTasks.length = 0
+  })
+
+  function handler(monitor: ReturnType<typeof createMonitor>) {
+    return withYuvaMonitor(
+      monitor,
+      "/users/[id]",
+      async (_request: Request, { params }: Context) => {
+        const { id } = await params
+        if (id === "missing") throw Object.assign(new Error("not found"), { digest: "NEXT_HTTP_ERROR_FALLBACK;404" })
+        if (id === "old")
+          throw Object.assign(new Error("redirect"), { digest: "NEXT_REDIRECT;replace;/users/new;308;" })
+        if (id === "boom") throw new Error("boom")
+        return Response.json({ id })
+      },
+      { consumer: client }
+    )
+  }
+
+  const call = (GET: ReturnType<typeof handler>, id: string, headers: Record<string, string> = {}) =>
+    GET(new Request(`http://app.test/users/${id}?token=secret`, { headers }), { params: Promise.resolve({ id }) })
+
+  test("a route handler records its route and flushes through after() on a serverless platform", async () => {
+    globals[requestContext] = { get: () => ({ waitUntil() {} }) }
+    const s = sink()
+    const { monitor } = monitorWith(s)
+    const GET = handler(monitor)
+    expect(await (await call(GET, "42", { "x-client": "acme" })).json()).toEqual({ id: "42" })
+    for (const id of ["missing", "old", "boom"]) await expect(call(GET, id)).rejects.toThrow()
+    expect(afterTasks).toHaveLength(4)
+    expect(s.all()).toHaveLength(0)
+    await Promise.all(afterTasks.map((task) => task()))
+    const records = s.all()
+    expect(records.map((r) => [r.route, r.status])).toEqual([
+      ["/users/{id}", 200],
+      ["/users/{id}", 404],
+      ["/users/{id}", 308],
+      ["/users/{id}", 500],
+    ])
+    expect(records[0]).toMatchObject({ method: "GET", consumer: "acme" })
+    expectClean(records)
+  })
+
+  test("self-hosted, records batch by interval", async () => {
+    const s = sink()
+    const { monitor } = monitorWith(s)
+    await call(handler(monitor), "42")
+    expect(afterTasks).toHaveLength(0)
+    await monitor.flush()
+    expect(s.all()).toHaveLength(1)
   })
 })

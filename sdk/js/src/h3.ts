@@ -8,7 +8,15 @@ import {
   toResponse,
 } from "h3"
 import type { ServerAnalytics, ServerEvent } from "./server/analytics"
-import { contentLength, flushOnClose, observe, started, type Monitor, type MonitorOptions } from "./server/monitor"
+import {
+  contentLength,
+  flushOnClose,
+  observe,
+  serverless,
+  started,
+  type Monitor,
+  type MonitorOptions,
+} from "./server/monitor"
 import { signIdentityToken, type IdentityClaims } from "./server/identity"
 import { verifyWebhook, WebhookVerificationError, type WebhookEvent, type WebhookEventType } from "./server/webhook"
 
@@ -125,7 +133,7 @@ export function defineYuvaMonitor({ monitor, ...options }: YuvaMonitorOptions): 
       requestSize: contentLength(event.req.headers.get("content-length")),
       responseSize: contentLength(response.headers.get("content-length")),
     })
-    if (event.req.waitUntil) event.waitUntil(monitor.flushed())
+    if (event.req.waitUntil && serverless(event.req)) event.waitUntil(monitor.flush())
     return response
   })
 }

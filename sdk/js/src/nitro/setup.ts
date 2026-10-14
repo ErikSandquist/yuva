@@ -86,18 +86,37 @@ export interface ServerModuleOptions {
   server: string | undefined
   runtimeConfig: string
   h3?: string
+  publicAssets?: string
+  assetPrefixes?: string[]
 }
 
-export function serverModule({ nitro, server, runtimeConfig, h3 = "h3" }: ServerModuleOptions): string {
+export function serverModule({
+  nitro,
+  server,
+  runtimeConfig,
+  h3 = "h3",
+  publicAssets,
+  assetPrefixes = [],
+}: ServerModuleOptions): string {
   const v3 = nitro >= 3
+  const assets = publicAssets ?? (v3 ? "#nitro/virtual/public-assets" : "#nitro-internal-virtual/public-assets")
   const lines = [
     `import { useRuntimeConfig } from ${JSON.stringify(runtimeConfig)}`,
+    `import { isPublicAssetURL } from ${JSON.stringify(assets)}`,
     ...(v3
       ? []
       : [`import { defineEventHandler, getRequestIP, getRequestURL, toWebRequest } from ${JSON.stringify(h3)}`]),
     server ? `import server from ${JSON.stringify(server)}` : "const server = {}",
     "export { server }",
     "export const config = () => useRuntimeConfig()",
+    `const assetPrefixes = ${JSON.stringify(assetPrefixes)}`,
+    "export const isAsset = (path) => {",
+    "  let id = path",
+    "  try {",
+    "    id = decodeURI(path)",
+    "  } catch {}",
+    "  return isPublicAssetURL(id) || assetPrefixes.some((prefix) => id.startsWith(prefix))",
+    "}",
     ...(v3
       ? [
           "export const defineHandler = (handler) => handler",
@@ -105,6 +124,8 @@ export function serverModule({ nitro, server, runtimeConfig, h3 = "h3" }: Server
           "export const trackRequest = (event) => event.req",
           'export const onResponse = (hooks, fn) => hooks.hook("response", (_response, event) => fn(event))',
           "export const waitUntil = (event) => (event.req.waitUntil ? (promise) => event.waitUntil(promise) : undefined)",
+          "export const serverlessWaitUntil = (event) =>",
+          '  ["node", "bun", "deno"].includes(event.req.runtime?.name) ? undefined : waitUntil(event)',
           "export const requestInfo = (event) => ({",
           "  method: event.req.method,",
           "  path: event.url.pathname,",
@@ -121,6 +142,7 @@ export function serverModule({ nitro, server, runtimeConfig, h3 = "h3" }: Server
           "  Object.assign(new Request(getRequestURL(event), { headers: event.headers }), { ip: getRequestIP(event) })",
           'export const onResponse = (hooks, fn) => hooks.hook("afterResponse", (event) => fn(event))',
           "export const waitUntil = (event) => (event.context.waitUntil ? (promise) => event.waitUntil(promise) : undefined)",
+          "export const serverlessWaitUntil = waitUntil",
           "export const requestInfo = (event) => ({",
           "  method: event.method,",
           "  path: event.path,",

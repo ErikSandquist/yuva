@@ -24,10 +24,14 @@ function handlerRoute(c: Context, self: MiddlewareHandler): string | undefined {
   return undefined
 }
 
-function waitUntil(c: Context, promise: Promise<unknown>): void {
+function waitUntil(c: Context, monitor: Monitor): void {
+  let ctx: { waitUntil(promise: Promise<unknown>): void }
   try {
-    c.executionCtx.waitUntil(promise)
-  } catch {}
+    ctx = c.executionCtx
+  } catch {
+    return
+  }
+  ctx.waitUntil(monitor.flush())
 }
 
 export function yuvaMonitor(monitor: Monitor, options: YuvaMonitorOptions = {}): MiddlewareHandler {
@@ -50,7 +54,7 @@ export function yuvaMonitor(monitor: Monitor, options: YuvaMonitorOptions = {}):
         requestSize: contentLength(c.req.header("content-length")),
         responseSize: status ? undefined : contentLength(c.res.headers.get("content-length")),
       })
-      waitUntil(c, monitor.flushed())
+      waitUntil(c, monitor)
     }
   }
   return middleware

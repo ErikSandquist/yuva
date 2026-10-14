@@ -43,7 +43,6 @@ export interface RequestRecord {
 export interface Monitor {
   send(record: RequestRecord): void
   record(record: RequestRecord): void
-  flushed(): Promise<void>
   flush(): Promise<Error | undefined>
   close(): Promise<Error | undefined>
 }
@@ -146,7 +145,6 @@ export function createMonitor(config: MonitorConfig): Monitor {
         sampleRate: weight,
       })
     },
-    flushed: () => sender.flushed(),
     flush: () => sender.run(true),
     async close() {
       if (closed) return undefined
@@ -211,6 +209,14 @@ export function observe<R>(monitor: Monitor, options: MonitorOptions<R> | undefi
   } catch (error) {
     reporters.get(monitor)?.(error instanceof Error ? error : new Error(String(error)))
   }
+}
+
+type Runtime = { runtime?: { name?: string } }
+
+// srvx gives requests a waitUntil on long-running servers too, where the queue batches by interval instead.
+export function serverless(request: Runtime): boolean {
+  const name = request.runtime?.name
+  return name !== "node" && name !== "bun" && name !== "deno"
 }
 
 export function errorStatus(error: unknown): number {

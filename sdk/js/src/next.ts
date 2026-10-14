@@ -3,6 +3,12 @@ import { contentLength, observe, started, type Monitor, type MonitorOptions } fr
 
 export type YuvaMonitorOptions = MonitorOptions<Request>
 
+type RequestContext = { get(): { waitUntil?: unknown } | undefined }
+
+// Next.js reads the platform's waitUntil from this symbol; self-hosted `next start` has none and batches by interval.
+const serverless = () =>
+  !!(globalThis as Record<symbol, RequestContext | undefined>)[Symbol.for("@next/request-context")]?.get()?.waitUntil
+
 export function nextRoute(route: string): string {
   const segments = route
     .split("/")
@@ -49,9 +55,7 @@ export function withYuvaMonitor<R extends Request, A extends unknown[]>(
         requestSize: contentLength(request.headers.get("content-length")),
         responseSize: contentLength(response?.headers.get("content-length")),
       })
-      try {
-        after(() => monitor.flushed())
-      } catch {}
+      if (serverless()) after(() => monitor.flush())
     }
   }
 }
