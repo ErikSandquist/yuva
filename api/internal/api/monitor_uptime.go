@@ -61,6 +61,9 @@ func (s *Server) uptimeRequest(ctx context.Context, ws uuid.UUID, prop *store.An
 		return ur, err
 	}
 	q.Start, q.End = start, end
+	if len(b.Metrics) == 0 {
+		return ur, errValidation("metrics must name at least one metric")
+	}
 	for _, metric := range b.Metrics {
 		if slices.Contains(q.Metrics, string(metric)) {
 			return ur, errValidation("metric " + string(metric) + " is listed twice")
