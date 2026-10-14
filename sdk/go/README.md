@@ -127,3 +127,39 @@ func signup(w http.ResponseWriter, r *http.Request) {
 Behind a proxy, set `ClientIP` to read the visitor's address the way your proxy reports it. Without
 a request, `Send` takes an `Event` with your own `VisitorKey` (a session id, never an e-mail
 address) instead of `IP` and `UserAgent`.
+
+## API monitoring
+
+For an analytics property of kind `api`, `Middleware` records every request your `net/http`
+server answers: route pattern, method, status, duration and body sizes. It never sends a body,
+header, query string or user agent. Wrap the `http.ServeMux` itself, so the pattern the mux
+matched (`GET /users/{id}` becomes `/users/{id}`) is set on the request the middleware sees; a
+request no pattern matched is sent with its path, and Yuva counts 404s and 405s without a pattern
+as `(unmatched)`. Records go out in batches of up to 500, gzip-compressed, every 5 seconds through
+the same queue and retries as events.
+
+```go
+mux := http.NewServeMux()
+mux.HandleFunc("GET /users/{id}", getUser)
+
+monitor, err := analytics.New(analytics.Config{
+	BaseURL:    "https://yuva.example.com",
+	APIKey:     os.Getenv("YUVA_API_KEY"),
+	PropertyID: os.Getenv("YUVA_API_PROPERTY"),
+})
+if err != nil {
+	return err
+}
+defer monitor.Close(context.Background())
+
+handler := monitor.Middleware(analytics.Monitor{
+	Service:  "shop-api",
+	Consumer: func(r *http.Request) string { return apiKeyName(r) },
+})(mux)
+http.ListenAndServe(":8080", handler)
+```
+
+`Route` names the pattern when your router is not a `ServeMux`. `SampleRate: 10` sends one in ten
+successful requests (status 1 to 399), each standing for ten; errors and client errors are always
+sent. `Country: true` also sends the caller's address so Yuva can count its country; it is
+shortened on arrival and never stored. `SendRecord` queues a `Record` you build yourself.

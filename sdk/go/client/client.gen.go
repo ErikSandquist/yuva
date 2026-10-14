@@ -221,6 +221,7 @@ func (e AnalyticsConsentFeature) Valid() bool {
 
 // Defines values for AnalyticsDataset.
 const (
+	AnalyticsDatasetApi     AnalyticsDataset = "api"
 	AnalyticsDatasetSupport AnalyticsDataset = "support"
 	AnalyticsDatasetTraffic AnalyticsDataset = "traffic"
 )
@@ -228,6 +229,8 @@ const (
 // Valid indicates whether the value is a known member of the AnalyticsDataset enum.
 func (e AnalyticsDataset) Valid() bool {
 	switch e {
+	case AnalyticsDatasetApi:
+		return true
 	case AnalyticsDatasetSupport:
 		return true
 	case AnalyticsDatasetTraffic:
@@ -248,11 +251,14 @@ const (
 	AnalyticsByDay            AnalyticsDimension = "time:day"
 	AnalyticsByDevice         AnalyticsDimension = "device"
 	AnalyticsByEntryPage      AnalyticsDimension = "entry_page"
+	AnalyticsByEnvironment    AnalyticsDimension = "environment"
 	AnalyticsByEvent          AnalyticsDimension = "event"
 	AnalyticsByExitPage       AnalyticsDimension = "exit_page"
 	AnalyticsByHostname       AnalyticsDimension = "hostname"
 	AnalyticsByHour           AnalyticsDimension = "time:hour"
 	AnalyticsByLanguage       AnalyticsDimension = "language"
+	AnalyticsByMethod         AnalyticsDimension = "method"
+	AnalyticsByMinute         AnalyticsDimension = "time:minute"
 	AnalyticsByMonth          AnalyticsDimension = "time:month"
 	AnalyticsByOs             AnalyticsDimension = "os"
 	AnalyticsByOsVersion      AnalyticsDimension = "os_version"
@@ -261,8 +267,11 @@ const (
 	AnalyticsByProp           AnalyticsDimension = "prop"
 	AnalyticsByReferrer       AnalyticsDimension = "referrer"
 	AnalyticsByRegion         AnalyticsDimension = "region"
+	AnalyticsByRoute          AnalyticsDimension = "route"
 	AnalyticsByScreenSize     AnalyticsDimension = "screen_size"
 	AnalyticsBySource         AnalyticsDimension = "source"
+	AnalyticsByStatus         AnalyticsDimension = "status"
+	AnalyticsByStatusClass    AnalyticsDimension = "status_class"
 	AnalyticsByUtmCampaign    AnalyticsDimension = "utm_campaign"
 	AnalyticsByUtmContent     AnalyticsDimension = "utm_content"
 	AnalyticsByUtmMedium      AnalyticsDimension = "utm_medium"
@@ -293,6 +302,8 @@ func (e AnalyticsDimension) Valid() bool {
 		return true
 	case AnalyticsByEntryPage:
 		return true
+	case AnalyticsByEnvironment:
+		return true
 	case AnalyticsByEvent:
 		return true
 	case AnalyticsByExitPage:
@@ -302,6 +313,10 @@ func (e AnalyticsDimension) Valid() bool {
 	case AnalyticsByHour:
 		return true
 	case AnalyticsByLanguage:
+		return true
+	case AnalyticsByMethod:
+		return true
+	case AnalyticsByMinute:
 		return true
 	case AnalyticsByMonth:
 		return true
@@ -319,9 +334,15 @@ func (e AnalyticsDimension) Valid() bool {
 		return true
 	case AnalyticsByRegion:
 		return true
+	case AnalyticsByRoute:
+		return true
 	case AnalyticsByScreenSize:
 		return true
 	case AnalyticsBySource:
+		return true
+	case AnalyticsByStatus:
+		return true
+	case AnalyticsByStatusClass:
 		return true
 	case AnalyticsByUtmCampaign:
 		return true
@@ -442,10 +463,12 @@ const (
 	AnalyticsDimCountry        AnalyticsFilterDimension = "country"
 	AnalyticsDimDevice         AnalyticsFilterDimension = "device"
 	AnalyticsDimEntryPage      AnalyticsFilterDimension = "entry_page"
+	AnalyticsDimEnvironment    AnalyticsFilterDimension = "environment"
 	AnalyticsDimEvent          AnalyticsFilterDimension = "event"
 	AnalyticsDimExitPage       AnalyticsFilterDimension = "exit_page"
 	AnalyticsDimHostname       AnalyticsFilterDimension = "hostname"
 	AnalyticsDimLanguage       AnalyticsFilterDimension = "language"
+	AnalyticsDimMethod         AnalyticsFilterDimension = "method"
 	AnalyticsDimOs             AnalyticsFilterDimension = "os"
 	AnalyticsDimOsVersion      AnalyticsFilterDimension = "os_version"
 	AnalyticsDimPage           AnalyticsFilterDimension = "page"
@@ -453,8 +476,11 @@ const (
 	AnalyticsDimProp           AnalyticsFilterDimension = "prop"
 	AnalyticsDimReferrer       AnalyticsFilterDimension = "referrer"
 	AnalyticsDimRegion         AnalyticsFilterDimension = "region"
+	AnalyticsDimRoute          AnalyticsFilterDimension = "route"
 	AnalyticsDimScreenSize     AnalyticsFilterDimension = "screen_size"
 	AnalyticsDimSource         AnalyticsFilterDimension = "source"
+	AnalyticsDimStatus         AnalyticsFilterDimension = "status"
+	AnalyticsDimStatusClass    AnalyticsFilterDimension = "status_class"
 	AnalyticsDimUtmCampaign    AnalyticsFilterDimension = "utm_campaign"
 	AnalyticsDimUtmContent     AnalyticsFilterDimension = "utm_content"
 	AnalyticsDimUtmMedium      AnalyticsFilterDimension = "utm_medium"
@@ -482,6 +508,8 @@ func (e AnalyticsFilterDimension) Valid() bool {
 		return true
 	case AnalyticsDimEntryPage:
 		return true
+	case AnalyticsDimEnvironment:
+		return true
 	case AnalyticsDimEvent:
 		return true
 	case AnalyticsDimExitPage:
@@ -489,6 +517,8 @@ func (e AnalyticsFilterDimension) Valid() bool {
 	case AnalyticsDimHostname:
 		return true
 	case AnalyticsDimLanguage:
+		return true
+	case AnalyticsDimMethod:
 		return true
 	case AnalyticsDimOs:
 		return true
@@ -504,9 +534,15 @@ func (e AnalyticsFilterDimension) Valid() bool {
 		return true
 	case AnalyticsDimRegion:
 		return true
+	case AnalyticsDimRoute:
+		return true
 	case AnalyticsDimScreenSize:
 		return true
 	case AnalyticsDimSource:
+		return true
+	case AnalyticsDimStatus:
+		return true
+	case AnalyticsDimStatusClass:
 		return true
 	case AnalyticsDimUtmCampaign:
 		return true
@@ -596,32 +632,48 @@ func (e AnalyticsInsightKind) Valid() bool {
 
 // Defines values for AnalyticsMetric.
 const (
-	AnalyticsMetricBounceRate     AnalyticsMetric = "bounce_rate"
-	AnalyticsMetricCompletions    AnalyticsMetric = "completions"
-	AnalyticsMetricConversations  AnalyticsMetric = "conversations"
-	AnalyticsMetricConversionRate AnalyticsMetric = "conversion_rate"
-	AnalyticsMetricConversions    AnalyticsMetric = "conversions"
-	AnalyticsMetricDiscussions    AnalyticsMetric = "discussions"
-	AnalyticsMetricEvents         AnalyticsMetric = "events"
-	AnalyticsMetricFeedback       AnalyticsMetric = "feedback"
-	AnalyticsMetricHelpfulRate    AnalyticsMetric = "helpful_rate"
-	AnalyticsMetricPageviews      AnalyticsMetric = "pageviews"
-	AnalyticsMetricRatingsDown    AnalyticsMetric = "ratings_down"
-	AnalyticsMetricRatingsUp      AnalyticsMetric = "ratings_up"
-	AnalyticsMetricRevenue        AnalyticsMetric = "revenue"
-	AnalyticsMetricScrollDepth    AnalyticsMetric = "scroll_depth"
-	AnalyticsMetricSupportRate    AnalyticsMetric = "support_rate"
-	AnalyticsMetricTimeOnPage     AnalyticsMetric = "time_on_page"
-	AnalyticsMetricViewsPerVisit  AnalyticsMetric = "views_per_visit"
-	AnalyticsMetricVisitDuration  AnalyticsMetric = "visit_duration"
-	AnalyticsMetricVisitors       AnalyticsMetric = "visitors"
-	AnalyticsMetricVisits         AnalyticsMetric = "visits"
+	AnalyticsMetricAvgDuration       AnalyticsMetric = "avg_duration"
+	AnalyticsMetricBounceRate        AnalyticsMetric = "bounce_rate"
+	AnalyticsMetricClientErrorRate   AnalyticsMetric = "client_error_rate"
+	AnalyticsMetricClientErrors      AnalyticsMetric = "client_errors"
+	AnalyticsMetricCompletions       AnalyticsMetric = "completions"
+	AnalyticsMetricConversations     AnalyticsMetric = "conversations"
+	AnalyticsMetricConversionRate    AnalyticsMetric = "conversion_rate"
+	AnalyticsMetricConversions       AnalyticsMetric = "conversions"
+	AnalyticsMetricDiscussions       AnalyticsMetric = "discussions"
+	AnalyticsMetricErrorRate         AnalyticsMetric = "error_rate"
+	AnalyticsMetricErrors            AnalyticsMetric = "errors"
+	AnalyticsMetricEvents            AnalyticsMetric = "events"
+	AnalyticsMetricFeedback          AnalyticsMetric = "feedback"
+	AnalyticsMetricHelpfulRate       AnalyticsMetric = "helpful_rate"
+	AnalyticsMetricP50               AnalyticsMetric = "p50"
+	AnalyticsMetricP95               AnalyticsMetric = "p95"
+	AnalyticsMetricP99               AnalyticsMetric = "p99"
+	AnalyticsMetricPageviews         AnalyticsMetric = "pageviews"
+	AnalyticsMetricRatingsDown       AnalyticsMetric = "ratings_down"
+	AnalyticsMetricRatingsUp         AnalyticsMetric = "ratings_up"
+	AnalyticsMetricRequests          AnalyticsMetric = "requests"
+	AnalyticsMetricRequestsPerMinute AnalyticsMetric = "requests_per_minute"
+	AnalyticsMetricRevenue           AnalyticsMetric = "revenue"
+	AnalyticsMetricScrollDepth       AnalyticsMetric = "scroll_depth"
+	AnalyticsMetricSupportRate       AnalyticsMetric = "support_rate"
+	AnalyticsMetricTimeOnPage        AnalyticsMetric = "time_on_page"
+	AnalyticsMetricViewsPerVisit     AnalyticsMetric = "views_per_visit"
+	AnalyticsMetricVisitDuration     AnalyticsMetric = "visit_duration"
+	AnalyticsMetricVisitors          AnalyticsMetric = "visitors"
+	AnalyticsMetricVisits            AnalyticsMetric = "visits"
 )
 
 // Valid indicates whether the value is a known member of the AnalyticsMetric enum.
 func (e AnalyticsMetric) Valid() bool {
 	switch e {
+	case AnalyticsMetricAvgDuration:
+		return true
 	case AnalyticsMetricBounceRate:
+		return true
+	case AnalyticsMetricClientErrorRate:
+		return true
+	case AnalyticsMetricClientErrors:
 		return true
 	case AnalyticsMetricCompletions:
 		return true
@@ -633,17 +685,31 @@ func (e AnalyticsMetric) Valid() bool {
 		return true
 	case AnalyticsMetricDiscussions:
 		return true
+	case AnalyticsMetricErrorRate:
+		return true
+	case AnalyticsMetricErrors:
+		return true
 	case AnalyticsMetricEvents:
 		return true
 	case AnalyticsMetricFeedback:
 		return true
 	case AnalyticsMetricHelpfulRate:
 		return true
+	case AnalyticsMetricP50:
+		return true
+	case AnalyticsMetricP95:
+		return true
+	case AnalyticsMetricP99:
+		return true
 	case AnalyticsMetricPageviews:
 		return true
 	case AnalyticsMetricRatingsDown:
 		return true
 	case AnalyticsMetricRatingsUp:
+		return true
+	case AnalyticsMetricRequests:
+		return true
+	case AnalyticsMetricRequestsPerMinute:
 		return true
 	case AnalyticsMetricRevenue:
 		return true
@@ -705,19 +771,41 @@ func (e AnalyticsPlatform) Valid() bool {
 	}
 }
 
+// Defines values for AnalyticsPropertyKind.
+const (
+	AnalyticsKindApi  AnalyticsPropertyKind = "api"
+	AnalyticsKindSite AnalyticsPropertyKind = "site"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsPropertyKind enum.
+func (e AnalyticsPropertyKind) Valid() bool {
+	switch e {
+	case AnalyticsKindApi:
+		return true
+	case AnalyticsKindSite:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsRangePeriod.
 const (
-	AnalyticsLast12Months AnalyticsRangePeriod = "12mo"
-	AnalyticsLast28Days   AnalyticsRangePeriod = "28d"
-	AnalyticsLast30Days   AnalyticsRangePeriod = "30d"
-	AnalyticsLast6Months  AnalyticsRangePeriod = "6mo"
-	AnalyticsLast7Days    AnalyticsRangePeriod = "7d"
-	AnalyticsLast90Days   AnalyticsRangePeriod = "90d"
-	AnalyticsLastMonth    AnalyticsRangePeriod = "last_month"
-	AnalyticsThisMonth    AnalyticsRangePeriod = "month"
-	AnalyticsThisYear     AnalyticsRangePeriod = "year"
-	AnalyticsToday        AnalyticsRangePeriod = "today"
-	AnalyticsYesterday    AnalyticsRangePeriod = "yesterday"
+	AnalyticsLast12Months  AnalyticsRangePeriod = "12mo"
+	AnalyticsLast15Minutes AnalyticsRangePeriod = "15m"
+	AnalyticsLast24Hours   AnalyticsRangePeriod = "24h"
+	AnalyticsLast28Days    AnalyticsRangePeriod = "28d"
+	AnalyticsLast30Days    AnalyticsRangePeriod = "30d"
+	AnalyticsLast6Hours    AnalyticsRangePeriod = "6h"
+	AnalyticsLast6Months   AnalyticsRangePeriod = "6mo"
+	AnalyticsLast7Days     AnalyticsRangePeriod = "7d"
+	AnalyticsLast90Days    AnalyticsRangePeriod = "90d"
+	AnalyticsLastHour      AnalyticsRangePeriod = "1h"
+	AnalyticsLastMonth     AnalyticsRangePeriod = "last_month"
+	AnalyticsThisMonth     AnalyticsRangePeriod = "month"
+	AnalyticsThisYear      AnalyticsRangePeriod = "year"
+	AnalyticsToday         AnalyticsRangePeriod = "today"
+	AnalyticsYesterday     AnalyticsRangePeriod = "yesterday"
 )
 
 // Valid indicates whether the value is a known member of the AnalyticsRangePeriod enum.
@@ -725,15 +813,23 @@ func (e AnalyticsRangePeriod) Valid() bool {
 	switch e {
 	case AnalyticsLast12Months:
 		return true
+	case AnalyticsLast15Minutes:
+		return true
+	case AnalyticsLast24Hours:
+		return true
 	case AnalyticsLast28Days:
 		return true
 	case AnalyticsLast30Days:
+		return true
+	case AnalyticsLast6Hours:
 		return true
 	case AnalyticsLast6Months:
 		return true
 	case AnalyticsLast7Days:
 		return true
 	case AnalyticsLast90Days:
+		return true
+	case AnalyticsLastHour:
 		return true
 	case AnalyticsLastMonth:
 		return true
@@ -789,6 +885,39 @@ func (e AnalyticsReportFrequency) Valid() bool {
 	case AnalyticsReportNone:
 		return true
 	case AnalyticsReportWeekly:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsResultMetaCapsReached.
+const (
+	AnalyticsCapApiVersions   AnalyticsResultMetaCapsReached = "api_versions"
+	AnalyticsCapAppVersions   AnalyticsResultMetaCapsReached = "app_versions"
+	AnalyticsCapConsumers     AnalyticsResultMetaCapsReached = "consumers"
+	AnalyticsCapDimensionRows AnalyticsResultMetaCapsReached = "dimension_rows"
+	AnalyticsCapEnvironments  AnalyticsResultMetaCapsReached = "environments"
+	AnalyticsCapRoutes        AnalyticsResultMetaCapsReached = "routes"
+	AnalyticsCapServices      AnalyticsResultMetaCapsReached = "services"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsResultMetaCapsReached enum.
+func (e AnalyticsResultMetaCapsReached) Valid() bool {
+	switch e {
+	case AnalyticsCapApiVersions:
+		return true
+	case AnalyticsCapAppVersions:
+		return true
+	case AnalyticsCapConsumers:
+		return true
+	case AnalyticsCapDimensionRows:
+		return true
+	case AnalyticsCapEnvironments:
+		return true
+	case AnalyticsCapRoutes:
+		return true
+	case AnalyticsCapServices:
 		return true
 	default:
 		return false
@@ -4500,6 +4629,24 @@ func (e QueryAnalyticsParamsFormat) Valid() bool {
 	}
 }
 
+// Defines values for SendAnalyticsRequestsParamsContentEncoding.
+const (
+	SendAnalyticsRequestsParamsContentEncodingGzip     SendAnalyticsRequestsParamsContentEncoding = "gzip"
+	SendAnalyticsRequestsParamsContentEncodingIdentity SendAnalyticsRequestsParamsContentEncoding = "identity"
+)
+
+// Valid indicates whether the value is a known member of the SendAnalyticsRequestsParamsContentEncoding enum.
+func (e SendAnalyticsRequestsParamsContentEncoding) Valid() bool {
+	switch e {
+	case SendAnalyticsRequestsParamsContentEncodingGzip:
+		return true
+	case SendAnalyticsRequestsParamsContentEncodingIdentity:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for GetAnalyticsRetentionParamsGrain.
 const (
 	AnalyticsRetentionDay   GetAnalyticsRetentionParamsGrain = "day"
@@ -4935,6 +5082,14 @@ type AnalyticsDataDeletion struct {
 // `support_rate` with pages of fewer than 100 page views after the others unless `order_by`
 // says otherwise. Days of the past come from the support rollup, today and days not yet rolled
 // up from the inbox itself.
+//
+// `api` is an API property's requests (`sendAnalyticsRequests`), and the only dataset an API
+// property takes (`422 property_kind` otherwise, and for `api` on a site). It takes the API
+// metrics of `AnalyticsMetric`, the API dimensions of `AnalyticsDimension` and filters on
+// them, no goal, prop, segment, comparison or insights. Closed local days come from daily
+// rows, closed hours from hourly rows and the rest from minute rows, which processes write
+// every 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
+// Rows are ordered by `requests` unless `order_by` says otherwise.
 type AnalyticsDataset string
 
 // AnalyticsDimension A filter dimension (`AnalyticsFilterDimension`), or a time grain: `time:hour` (local hours
@@ -4944,6 +5099,11 @@ type AnalyticsDataset string
 // range is present. `event` breaks custom and built-in events down by name, `prop` by the
 // value of the event prop the query's `prop` names; either takes at most one other dimension,
 // a time grain other than `time:hour` or a visit dimension.
+//
+// With `dataset: api`, two of `route`, `method`, `status`, `status_class`, `environment` and
+// one grain: `time:minute` (minutes, `2026-10-12T14:05` in the property's time zone, inside
+// the last `YUVA_MONITOR_MINUTE_DAYS` days and at most 1,440 of them), `time:hour` (local
+// hours) or `time:day`.
 type AnalyticsDimension string
 
 // AnalyticsDomain A host name whose pages may send events, without scheme or port: `example.com`,
@@ -5185,6 +5345,12 @@ type AnalyticsExportCreate struct {
 	// for events without it: as
 	// a filter of visits they keep the visits with such an event; in an `event` or `prop`
 	// breakdown they keep the matching events.
+	//
+	// With `dataset: api`: `route` is the route pattern (`/users/{id}`), `(unmatched)` for
+	// requests that answered 404 or 405 without one, or `(other)` past the property's 1,000
+	// routes; `method` an HTTP method or `_OTHER`; `status` the status code (`0` when no response
+	// was sent); `status_class` `1xx` to `5xx`, or `none` for status 0; `environment` the record's
+	// environment (`production` by default, `(other)` past 20).
 	Dimension *AnalyticsFilterDimension `json:"dimension,omitempty"`
 	Format    *AnalyticsExportFormat    `json:"format,omitempty"`
 	Kind      AnalyticsExportKind       `json:"kind"`
@@ -5193,7 +5359,8 @@ type AnalyticsExportCreate struct {
 	// Range Days of the property's time zone: a `period` ending today (`today`, `yesterday`, `7d`,
 	// `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
 	// `year` are the current calendar month and year to date; `last_month` the one before), or
-	// `from` and `to` (inclusive, at most 400 days apart).
+	// `from` and `to` (inclusive, at most 400 days apart). With `dataset: api` a period can also
+	// be the last `15m`, `1h`, `6h` or `24h` up to the current minute, included.
 	Range *AnalyticsRange `json:"range,omitempty"`
 }
 
@@ -5229,6 +5396,12 @@ type AnalyticsFilter struct {
 	// for events without it: as
 	// a filter of visits they keep the visits with such an event; in an `event` or `prop`
 	// breakdown they keep the matching events.
+	//
+	// With `dataset: api`: `route` is the route pattern (`/users/{id}`), `(unmatched)` for
+	// requests that answered 404 or 405 without one, or `(other)` past the property's 1,000
+	// routes; `method` an HTTP method or `_OTHER`; `status` the status code (`0` when no response
+	// was sent); `status_class` `1xx` to `5xx`, or `none` for status 0; `environment` the record's
+	// environment (`production` by default, `(other)` past 20).
 	Dimension AnalyticsFilterDimension `json:"dimension"`
 	Op        AnalyticsFilterOp        `json:"op"`
 
@@ -5256,6 +5429,12 @@ type AnalyticsFilterOp string
 // for events without it: as
 // a filter of visits they keep the visits with such an event; in an `event` or `prop`
 // breakdown they keep the matching events.
+//
+// With `dataset: api`: `route` is the route pattern (`/users/{id}`), `(unmatched)` for
+// requests that answered 404 or 405 without one, or `(other)` past the property's 1,000
+// routes; `method` an HTTP method or `_OTHER`; `status` the status code (`0` when no response
+// was sent); `status_class` `1xx` to `5xx`, or `none` for status 0; `environment` the record's
+// environment (`production` by default, `(other)` past 20).
 type AnalyticsFilterDimension string
 
 // AnalyticsFunnel defines model for AnalyticsFunnel.
@@ -5489,6 +5668,13 @@ type AnalyticsInsight struct {
 	// `ratings_down` (page ratings), `helpful_rate` (percent of ratings that are `up`),
 	// `discussions` (discussion threads started on it) and `support_rate` (conversations per
 	// 1,000 page views), next to `visitors` and `pageviews`.
+	//
+	// With `dataset: api` (an API property) only: `requests`, `requests_per_minute` (requests
+	// per minute of the range or bucket, up to now), `errors` (status 500 to 599, or 0 when no
+	// response was sent), `error_rate` and `client_error_rate` (percent of requests),
+	// `client_errors` (status 400 to 499), `p50`, `p95` and `p99` (the duration in milliseconds
+	// that this share of requests stayed within, from sketches accurate to 1.1%) and
+	// `avg_duration` (milliseconds).
 	Metric AnalyticsMetric `json:"metric"`
 
 	// Previous The comparison range's number (0 for `metric_new` and `new_value`), or the range's overall `support_rate` for a hotspot.
@@ -5521,22 +5707,39 @@ type AnalyticsInsightKind string
 // `ratings_down` (page ratings), `helpful_rate` (percent of ratings that are `up`),
 // `discussions` (discussion threads started on it) and `support_rate` (conversations per
 // 1,000 page views), next to `visitors` and `pageviews`.
+//
+// With `dataset: api` (an API property) only: `requests`, `requests_per_minute` (requests
+// per minute of the range or bucket, up to now), `errors` (status 500 to 599, or 0 when no
+// response was sent), `error_rate` and `client_error_rate` (percent of requests),
+// `client_errors` (status 400 to 499), `p50`, `p95` and `p99` (the duration in milliseconds
+// that this share of requests stayed within, from sketches accurate to 1.1%) and
+// `avg_duration` (milliseconds).
 type AnalyticsMetric string
 
 // AnalyticsMetrics The metrics the query asked for.
 type AnalyticsMetrics struct {
-	BounceRate     *float64 `json:"bounce_rate,omitempty"`
-	Completions    *float64 `json:"completions,omitempty"`
-	Conversations  *float64 `json:"conversations,omitempty"`
-	ConversionRate *float64 `json:"conversion_rate,omitempty"`
-	Conversions    *float64 `json:"conversions,omitempty"`
-	Discussions    *float64 `json:"discussions,omitempty"`
-	Events         *float64 `json:"events,omitempty"`
-	Feedback       *float64 `json:"feedback,omitempty"`
-	HelpfulRate    *float64 `json:"helpful_rate,omitempty"`
-	Pageviews      *float64 `json:"pageviews,omitempty"`
-	RatingsDown    *float64 `json:"ratings_down,omitempty"`
-	RatingsUp      *float64 `json:"ratings_up,omitempty"`
+	AvgDuration       *float64 `json:"avg_duration,omitempty"`
+	BounceRate        *float64 `json:"bounce_rate,omitempty"`
+	ClientErrorRate   *float64 `json:"client_error_rate,omitempty"`
+	ClientErrors      *float64 `json:"client_errors,omitempty"`
+	Completions       *float64 `json:"completions,omitempty"`
+	Conversations     *float64 `json:"conversations,omitempty"`
+	ConversionRate    *float64 `json:"conversion_rate,omitempty"`
+	Conversions       *float64 `json:"conversions,omitempty"`
+	Discussions       *float64 `json:"discussions,omitempty"`
+	ErrorRate         *float64 `json:"error_rate,omitempty"`
+	Errors            *float64 `json:"errors,omitempty"`
+	Events            *float64 `json:"events,omitempty"`
+	Feedback          *float64 `json:"feedback,omitempty"`
+	HelpfulRate       *float64 `json:"helpful_rate,omitempty"`
+	P50               *float64 `json:"p50,omitempty"`
+	P95               *float64 `json:"p95,omitempty"`
+	P99               *float64 `json:"p99,omitempty"`
+	Pageviews         *float64 `json:"pageviews,omitempty"`
+	RatingsDown       *float64 `json:"ratings_down,omitempty"`
+	RatingsUp         *float64 `json:"ratings_up,omitempty"`
+	Requests          *float64 `json:"requests,omitempty"`
+	RequestsPerMinute *float64 `json:"requests_per_minute,omitempty"`
 
 	// Revenue Per currency, most first.
 	Revenue       *[]AnalyticsRevenue `json:"revenue,omitempty"`
@@ -5580,6 +5783,13 @@ type AnalyticsOrder struct {
 	// `ratings_down` (page ratings), `helpful_rate` (percent of ratings that are `up`),
 	// `discussions` (discussion threads started on it) and `support_rate` (conversations per
 	// 1,000 page views), next to `visitors` and `pageviews`.
+	//
+	// With `dataset: api` (an API property) only: `requests`, `requests_per_minute` (requests
+	// per minute of the range or bucket, up to now), `errors` (status 500 to 599, or 0 when no
+	// response was sent), `error_rate` and `client_error_rate` (percent of requests),
+	// `client_errors` (status 400 to 499), `p50`, `p95` and `p99` (the duration in milliseconds
+	// that this share of requests stayed within, from sketches accurate to 1.1%) and
+	// `avg_duration` (milliseconds).
 	Metric AnalyticsMetric `json:"metric"`
 }
 
@@ -5606,8 +5816,11 @@ type AnalyticsPathRule struct {
 // apps send without an `Origin`. Server-side events (`sendAnalyticsEvents`) need no platform.
 type AnalyticsPlatform string
 
-// AnalyticsProperty A website or app the workspace measures.
+// AnalyticsProperty A website, app or API the workspace measures.
 type AnalyticsProperty struct {
+	// ApdexMs An API's Apdex threshold T in milliseconds; a request is satisfied within T and tolerated within 4T.
+	ApdexMs int32 `json:"apdex_ms"`
+
 	// Audience `children` keeps location at country level and allows no consent features or tracked props.
 	Audience AnalyticsAudience `json:"audience"`
 
@@ -5631,11 +5844,21 @@ type AnalyticsProperty struct {
 	// InboxId The linked inbox, whose agents can read the property; absent when none.
 	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
 
+	// Kind `site` measures websites and apps (page views, events, visitors). `api` watches an API: its
+	// host sends a record per request (`sendAnalyticsRequests`) and `dataset: api` queries them. An
+	// API property's `domains` (0 to 50) are the API's host names and its `platforms` the apps
+	// allowed to send app-side records (`ios`, `android`, or none); it takes no goals, funnels,
+	// tracked props or consent features. The kind is fixed when the property is made.
+	Kind AnalyticsPropertyKind `json:"kind"`
+
 	// LastEventAt When an event was last stored, to the minute.
-	LastEventAt *time.Time          `json:"last_event_at,omitempty"`
-	Name        string              `json:"name"`
-	PathRules   []AnalyticsPathRule `json:"path_rules"`
-	Platforms   []AnalyticsPlatform `json:"platforms"`
+	LastEventAt *time.Time `json:"last_event_at,omitempty"`
+
+	// MonitorHourDays How many days an API's hourly rows are kept; daily rows follow `retention_months`.
+	MonitorHourDays int32               `json:"monitor_hour_days"`
+	Name            string              `json:"name"`
+	PathRules       []AnalyticsPathRule `json:"path_rules"`
+	Platforms       []AnalyticsPlatform `json:"platforms"`
 
 	// PreviousKeyExpiresAt After a rotation, when the previous key stops working; absent when there is none.
 	PreviousKeyExpiresAt *time.Time `json:"previous_key_expires_at,omitempty"`
@@ -5659,23 +5882,35 @@ type AnalyticsProperty struct {
 
 // AnalyticsPropertyCreate defines model for AnalyticsPropertyCreate.
 type AnalyticsPropertyCreate struct {
+	ApdexMs *int32 `json:"apdex_ms,omitempty"`
+
 	// Audience `children` keeps location at country level and allows no consent features or tracked props.
 	Audience *AnalyticsAudience `json:"audience,omitempty"`
 
 	// Collection `anonymous` counts without consent: nothing is put on the visitor's device and no IP
 	// address is stored. `consent` takes an event only when it carries `c.a: 1`, which the
 	// script sends after `yuva.consent({analytics: true})`.
-	Collection      *AnalyticsCollection        `json:"collection,omitempty"`
-	ConsentFeatures *[]AnalyticsConsentFeature  `json:"consent_features,omitempty"`
-	Currency        *string                     `json:"currency,omitempty"`
-	Domains         []AnalyticsDomain           `json:"domains"`
-	ExcludedIps     *[]AnalyticsExcludedAddress `json:"excluded_ips,omitempty"`
-	ExcludedPaths   *[]AnalyticsPathPattern     `json:"excluded_paths,omitempty"`
-	InboxId         *uuid.UUID                  `json:"inbox_id,omitempty"`
-	Name            string                      `json:"name"`
-	PathRules       *[]AnalyticsPathRule        `json:"path_rules,omitempty"`
+	Collection      *AnalyticsCollection       `json:"collection,omitempty"`
+	ConsentFeatures *[]AnalyticsConsentFeature `json:"consent_features,omitempty"`
+	Currency        *string                    `json:"currency,omitempty"`
 
-	// Platforms `[web]` when absent.
+	// Domains 1 to 50 host names for a site, 0 to 50 for an API.
+	Domains       []AnalyticsDomain           `json:"domains"`
+	ExcludedIps   *[]AnalyticsExcludedAddress `json:"excluded_ips,omitempty"`
+	ExcludedPaths *[]AnalyticsPathPattern     `json:"excluded_paths,omitempty"`
+	InboxId       *uuid.UUID                  `json:"inbox_id,omitempty"`
+
+	// Kind `site` measures websites and apps (page views, events, visitors). `api` watches an API: its
+	// host sends a record per request (`sendAnalyticsRequests`) and `dataset: api` queries them. An
+	// API property's `domains` (0 to 50) are the API's host names and its `platforms` the apps
+	// allowed to send app-side records (`ios`, `android`, or none); it takes no goals, funnels,
+	// tracked props or consent features. The kind is fixed when the property is made.
+	Kind            *AnalyticsPropertyKind `json:"kind,omitempty"`
+	MonitorHourDays *int32                 `json:"monitor_hour_days,omitempty"`
+	Name            string                 `json:"name"`
+	PathRules       *[]AnalyticsPathRule   `json:"path_rules,omitempty"`
+
+	// Platforms At least one for a site, `[web]` when absent; for an API `ios` and `android` only, none when absent.
 	Platforms *[]AnalyticsPlatform `json:"platforms,omitempty"`
 
 	// RetentionMonths 25 when absent; `null` keeps rollups forever.
@@ -5691,6 +5926,13 @@ type AnalyticsPropertyDeletion struct {
 	// Name The property's name, exactly.
 	Name string `json:"name"`
 }
+
+// AnalyticsPropertyKind `site` measures websites and apps (page views, events, visitors). `api` watches an API: its
+// host sends a record per request (`sendAnalyticsRequests`) and `dataset: api` queries them. An
+// API property's `domains` (0 to 50) are the API's host names and its `platforms` the apps
+// allowed to send app-side records (`ios`, `android`, or none); it takes no goals, funnels,
+// tracked props or consent features. The kind is fixed when the property is made.
+type AnalyticsPropertyKind string
 
 // AnalyticsPropertyList defines model for AnalyticsPropertyList.
 type AnalyticsPropertyList struct {
@@ -5708,24 +5950,31 @@ type AnalyticsPropertyRef struct {
 
 // AnalyticsPropertyUpdate defines model for AnalyticsPropertyUpdate.
 type AnalyticsPropertyUpdate struct {
+	ApdexMs *int32 `json:"apdex_ms,omitempty"`
+
 	// Audience `children` keeps location at country level and allows no consent features or tracked props.
 	Audience *AnalyticsAudience `json:"audience,omitempty"`
 
 	// Collection `anonymous` counts without consent: nothing is put on the visitor's device and no IP
 	// address is stored. `consent` takes an event only when it carries `c.a: 1`, which the
 	// script sends after `yuva.consent({analytics: true})`.
-	Collection      *AnalyticsCollection        `json:"collection,omitempty"`
-	ConsentFeatures *[]AnalyticsConsentFeature  `json:"consent_features,omitempty"`
-	Currency        *string                     `json:"currency,omitempty"`
-	Domains         *[]AnalyticsDomain          `json:"domains,omitempty"`
-	ExcludedIps     *[]AnalyticsExcludedAddress `json:"excluded_ips,omitempty"`
-	ExcludedPaths   *[]AnalyticsPathPattern     `json:"excluded_paths,omitempty"`
+	Collection      *AnalyticsCollection       `json:"collection,omitempty"`
+	ConsentFeatures *[]AnalyticsConsentFeature `json:"consent_features,omitempty"`
+	Currency        *string                    `json:"currency,omitempty"`
+
+	// Domains 1 to 50 host names for a site, 0 to 50 for an API.
+	Domains       *[]AnalyticsDomain          `json:"domains,omitempty"`
+	ExcludedIps   *[]AnalyticsExcludedAddress `json:"excluded_ips,omitempty"`
+	ExcludedPaths *[]AnalyticsPathPattern     `json:"excluded_paths,omitempty"`
 
 	// InboxId `null` unlinks the property from its inbox.
-	InboxId   nullable.Nullable[uuid.UUID] `json:"inbox_id,omitempty"`
-	Name      *string                      `json:"name,omitempty"`
-	PathRules *[]AnalyticsPathRule         `json:"path_rules,omitempty"`
-	Platforms *[]AnalyticsPlatform         `json:"platforms,omitempty"`
+	InboxId         nullable.Nullable[uuid.UUID] `json:"inbox_id,omitempty"`
+	MonitorHourDays *int32                       `json:"monitor_hour_days,omitempty"`
+	Name            *string                      `json:"name,omitempty"`
+	PathRules       *[]AnalyticsPathRule         `json:"path_rules,omitempty"`
+
+	// Platforms At least one for a site; for an API `ios` and `android` only.
+	Platforms *[]AnalyticsPlatform `json:"platforms,omitempty"`
 
 	// RetentionMonths `null` keeps rollups forever.
 	RetentionMonths nullable.Nullable[int32] `json:"retention_months,omitempty"`
@@ -5753,6 +6002,14 @@ type AnalyticsQuery struct {
 	// `support_rate` with pages of fewer than 100 page views after the others unless `order_by`
 	// says otherwise. Days of the past come from the support rollup, today and days not yet rolled
 	// up from the inbox itself.
+	//
+	// `api` is an API property's requests (`sendAnalyticsRequests`), and the only dataset an API
+	// property takes (`422 property_kind` otherwise, and for `api` on a site). It takes the API
+	// metrics of `AnalyticsMetric`, the API dimensions of `AnalyticsDimension` and filters on
+	// them, no goal, prop, segment, comparison or insights. Closed local days come from daily
+	// rows, closed hours from hourly rows and the rest from minute rows, which processes write
+	// every 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
+	// Rows are ordered by `requests` unless `order_by` says otherwise.
 	Dataset    *AnalyticsDataset     `json:"dataset,omitempty"`
 	Dimensions *[]AnalyticsDimension `json:"dimensions,omitempty"`
 	Filters    *[]AnalyticsFilter    `json:"filters,omitempty"`
@@ -5780,7 +6037,8 @@ type AnalyticsQuery struct {
 	// Range Days of the property's time zone: a `period` ending today (`today`, `yesterday`, `7d`,
 	// `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
 	// `year` are the current calendar month and year to date; `last_month` the one before), or
-	// `from` and `to` (inclusive, at most 400 days apart).
+	// `from` and `to` (inclusive, at most 400 days apart). With `dataset: api` a period can also
+	// be the last `15m`, `1h`, `6h` or `24h` up to the current minute, included.
 	Range AnalyticsRange `json:"range"`
 
 	// SegmentId A saved segment of the property, whose filters are added to `filters`.
@@ -5790,7 +6048,8 @@ type AnalyticsQuery struct {
 // AnalyticsRange Days of the property's time zone: a `period` ending today (`today`, `yesterday`, `7d`,
 // `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
 // `year` are the current calendar month and year to date; `last_month` the one before), or
-// `from` and `to` (inclusive, at most 400 days apart).
+// `from` and `to` (inclusive, at most 400 days apart). With `dataset: api` a period can also
+// be the last `15m`, `1h`, `6h` or `24h` up to the current minute, included.
 type AnalyticsRange struct {
 	From   *openapi_types.Date   `json:"from,omitempty"`
 	Period *AnalyticsRangePeriod `json:"period,omitempty"`
@@ -5892,6 +6151,74 @@ type AnalyticsRealtime struct {
 // AnalyticsReportFrequency defines model for AnalyticsReportFrequency.
 type AnalyticsReportFrequency string
 
+// AnalyticsRequestRecord One request an API served. Give `route`, or `path` when the router knows no pattern.
+type AnalyticsRequestRecord struct {
+	ApiVersion *string `json:"api_version,omitempty"`
+
+	// Consumer Who called, as you name them, such as an API key's name or a client id; never a person's address (e-mail-shaped values become `(scrubbed)`).
+	Consumer *string `json:"consumer,omitempty"`
+
+	// DurationUs How long the request took, in microseconds.
+	DurationUs int64 `json:"duration_us"`
+
+	// Environment `production` when absent.
+	Environment *string `json:"environment,omitempty"`
+
+	// Ip The caller's address, only to find its country; shortened on arrival, never stored.
+	Ip *string `json:"ip,omitempty"`
+
+	// Method The request method; anything but the RFC 9110 methods and `PATCH` counts as `_OTHER`.
+	//
+	// Examples: GET
+	Method string `json:"method"`
+
+	// Path The request path, when there is no `route`; only the pattern inferred from it is kept.
+	//
+	// Examples: /users/42
+	Path *string `json:"path,omitempty"`
+
+	// Release The service's release, for deploy markers.
+	Release *string `json:"release,omitempty"`
+
+	// RequestSize Bytes of the request body.
+	RequestSize *int64 `json:"request_size,omitempty"`
+
+	// ResponseSize Bytes of the response body.
+	ResponseSize *int64 `json:"response_size,omitempty"`
+
+	// Route The route pattern that matched, starting with `/`, without method or host.
+	//
+	// Examples: /users/{id}
+	Route *string `json:"route,omitempty"`
+
+	// SampleRate This record stands for this many requests, for a host that sends one in N successful
+	// requests. Only records with a status of 1 to 399 may be sampled.
+	SampleRate *int `json:"sample_rate,omitempty"`
+
+	// Service The service that served the request.
+	Service *string `json:"service,omitempty"`
+
+	// Status The response status, 100 to 599, or 0 when no response was sent.
+	Status int `json:"status"`
+
+	// Time When the request started; now when absent. Records older than 72 hours are not counted.
+	Time *time.Time `json:"time,omitempty"`
+}
+
+// AnalyticsRequestRecords defines model for AnalyticsRequestRecords.
+type AnalyticsRequestRecords struct {
+	Records []AnalyticsRequestRecord `json:"records"`
+}
+
+// AnalyticsRequestsResult defines model for AnalyticsRequestsResult.
+type AnalyticsRequestsResult struct {
+	// Accepted The valid records, counted unless a rule of the operation dropped them.
+	Accepted int `json:"accepted"`
+
+	// Errors The records left out as invalid, by their position in `records`.
+	Errors []AnalyticsEventError `json:"errors"`
+}
+
 // AnalyticsResult defines model for AnalyticsResult.
 type AnalyticsResult struct {
 	Comparison *AnalyticsComparison `json:"comparison,omitempty"`
@@ -5912,7 +6239,15 @@ type AnalyticsResult struct {
 
 // AnalyticsResultMeta defines model for AnalyticsResultMeta.
 type AnalyticsResultMeta struct {
-	From openapi_types.Date `json:"from"`
+	// CapsReached `dataset: api`: the caps the property has reached, so new values count as `(other)`:
+	// `routes` (1,000), `consumers` (10,000), `api_versions` (50), `app_versions` (200),
+	// `environments` (20), `services` (100 per workspace), `dimension_rows` (an hour of the
+	// range reached 50,000 consumer, country or app version rows).
+	CapsReached *[]AnalyticsResultMetaCapsReached `json:"caps_reached,omitempty"`
+
+	// Estimated `dataset: api`: some requests of the range were sampled (`sample_rate`), so counts are estimates.
+	Estimated *bool              `json:"estimated,omitempty"`
+	From      openapi_types.Date `json:"from"`
 
 	// RawWindowFrom The first day raw rows are kept for, which filters and breakdowns the rollups cannot answer need.
 	RawWindowFrom openapi_types.Date            `json:"raw_window_from"`
@@ -5920,6 +6255,9 @@ type AnalyticsResultMeta struct {
 	Timezone      string                        `json:"timezone"`
 	To            openapi_types.Date            `json:"to"`
 }
+
+// AnalyticsResultMetaCapsReached defines model for AnalyticsResultMeta.CapsReached.
+type AnalyticsResultMetaCapsReached string
 
 // AnalyticsResultMetaServedFrom defines model for AnalyticsResultMeta.ServedFrom.
 type AnalyticsResultMetaServedFrom string
@@ -6248,6 +6586,12 @@ type AnalyticsUsage struct {
 
 	// Month Examples: 2026-10
 	Month string `json:"month"`
+
+	// Requests API request records counted this month (`sendAnalyticsRequests`); absent when API monitoring is off.
+	Requests *int64 `json:"requests,omitempty"`
+
+	// RequestsLimit The monthly cap on request records; absent when there is none. Records over it are not counted until the month ends.
+	RequestsLimit *int64 `json:"requests_limit,omitempty"`
 }
 
 // AnalyticsVisitPage defines model for AnalyticsVisitPage.
@@ -6349,8 +6693,8 @@ type ApiKeyList struct {
 //	    Yuva. Owners and admins only; never offered to agents' tokens, refused for keys limited
 //	    to inboxes.
 //	  - `analytics:read`: analytics properties.
-//	  - `analytics:write`: server-side analytics events; for API keys only, never offered to
-//	    OAuth clients.
+//	  - `analytics:write`: server-side analytics events and API request records; for API keys
+//	    only, never offered to OAuth clients.
 //	  - `analytics:manage`: create, change and delete analytics properties, rotate their keys,
 //	    delete their data. Never offered to agents' tokens, refused for keys limited to inboxes.
 //
@@ -14164,6 +14508,15 @@ type GetAnalyticsRealtimeParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// SendAnalyticsRequestsParams defines parameters for SendAnalyticsRequests.
+type SendAnalyticsRequestsParams struct {
+	// ContentEncoding `gzip` when the body is compressed.
+	ContentEncoding *SendAnalyticsRequestsParamsContentEncoding `json:"Content-Encoding,omitempty"`
+}
+
+// SendAnalyticsRequestsParamsContentEncoding defines parameters for SendAnalyticsRequests.
+type SendAnalyticsRequestsParamsContentEncoding string
+
 // GetAnalyticsRetentionParams defines parameters for GetAnalyticsRetention.
 type GetAnalyticsRetentionParams struct {
 	// Grain `week` when absent.
@@ -16311,6 +16664,9 @@ type UpdateAnalyticsGoalJSONRequestBody = AnalyticsGoalUpdate
 
 // QueryAnalyticsJSONRequestBody defines body for QueryAnalytics for application/json ContentType.
 type QueryAnalyticsJSONRequestBody = AnalyticsQuery
+
+// SendAnalyticsRequestsJSONRequestBody defines body for SendAnalyticsRequests for application/json ContentType.
+type SendAnalyticsRequestsJSONRequestBody = AnalyticsRequestRecords
 
 // CreateAnalyticsSegmentJSONRequestBody defines body for CreateAnalyticsSegment for application/json ContentType.
 type CreateAnalyticsSegmentJSONRequestBody = AnalyticsSegmentCreate
@@ -20912,11 +21268,12 @@ type ClientInterface interface {
 
 	// CreateAnalyticsPropertyWithBody Create an analytics property
 	//
-	// A website or app to measure. The answer carries its `public_key`, which pages and apps send
-	// events with. `inbox_id` links the property to an inbox: agents of that inbox can then read
-	// it. A workspace has at most `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties
-	// (`403 property_limit`). A children's property (`audience: children`) cannot offer
-	// `consent_features` or `tracked_props`.
+	// A website or app to measure, or with `kind: api` an API to watch. The answer carries its
+	// `public_key`, which pages and apps send events with. `inbox_id` links the property to an
+	// inbox: agents of that inbox can then read it. A workspace has at most
+	// `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties (`403 property_limit`). A children's
+	// property (`audience: children`) cannot offer `consent_features` or `tracked_props`; an API
+	// property offers neither, and `audience` does not apply to it.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -20927,11 +21284,12 @@ type ClientInterface interface {
 
 	// CreateAnalyticsProperty Create an analytics property
 	//
-	// A website or app to measure. The answer carries its `public_key`, which pages and apps send
-	// events with. `inbox_id` links the property to an inbox: agents of that inbox can then read
-	// it. A workspace has at most `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties
-	// (`403 property_limit`). A children's property (`audience: children`) cannot offer
-	// `consent_features` or `tracked_props`.
+	// A website or app to measure, or with `kind: api` an API to watch. The answer carries its
+	// `public_key`, which pages and apps send events with. `inbox_id` links the property to an
+	// inbox: agents of that inbox can then read it. A workspace has at most
+	// `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties (`403 property_limit`). A children's
+	// property (`audience: children`) cannot offer `consent_features` or `tracked_props`; an API
+	// property offers neither, and `audience` does not apply to it.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -21524,6 +21882,76 @@ type ClientInterface interface {
 	//
 	// Corresponds with GET /v1/analytics/properties/{propertyId}/realtime (the `GetAnalyticsRealtime` operationId).
 	GetAnalyticsRealtime(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsRealtimeParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SendAnalyticsRequestsWithBody Send an API's request records
+	//
+	// The host of an API property reports the requests it served, 1 to 1,000 records a call,
+	// with `sdk/go/analytics` (`Middleware`) or any HTTP client. The body may be sent with
+	// `Content-Encoding: gzip`. API keys only (`403 forbidden` for members' sessions); a key
+	// limited to inboxes reaches the properties of its inboxes. A site answers
+	// `422 property_kind`. Scope: `analytics:write`.
+	//
+	// A record names its route pattern (`/users/{id}`), as the router matched it. A record
+	// that can only give its `path` gets a pattern inferred from it: the query and fragment are
+	// cut, and segments that are numbers, UUIDs, dates, hex of 16 or more characters, other
+	// tokens of 16 or more letters, digits, `-` and `_` with at least two digits or with both
+	// cases and a digit, e-mail-shaped or longer than 40 characters become `{id}`. A path that
+	// answered 404 or 405 is counted as `(unmatched)`, so scanners never make routes. The
+	// property's `path_rules` then map a path or route onto a pattern of their own. Past 1,000
+	// routes a property counts new ones as `(other)`; consumers (10,000), API versions (50),
+	// environments (20) and services (100 per workspace) work the same way.
+	//
+	// Nothing else of a request is accepted: no body, header, query string, fragment or user
+	// agent. `ip`, when given, is shortened (IPv4 /24, IPv6 /48) and looked up for its country
+	// right away and never kept. Records are added up per minute and hour in the server's
+	// memory and written every 10 seconds, so a request shows in `queryAnalytics`
+	// (`dataset: api`) within about 15 seconds.
+	//
+	// Invalid records are left out on their own and listed in `errors`; the others are taken.
+	// Taken but not counted: records older than 72 hours, records over the property's
+	// `YUVA_MONITOR_RECORDS_PER_MINUTE` or the workspace's monthly cap
+	// (`YUVA_MONITOR_MONTHLY_REQUESTS`). When the server holds as many open rows as it may
+	// (`YUVA_MONITOR_BUFFER_KEYS`) it answers `503` with `Retry-After`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/requests (the `SendAnalyticsRequests` operationId).
+	SendAnalyticsRequestsWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *SendAnalyticsRequestsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SendAnalyticsRequests Send an API's request records
+	//
+	// The host of an API property reports the requests it served, 1 to 1,000 records a call,
+	// with `sdk/go/analytics` (`Middleware`) or any HTTP client. The body may be sent with
+	// `Content-Encoding: gzip`. API keys only (`403 forbidden` for members' sessions); a key
+	// limited to inboxes reaches the properties of its inboxes. A site answers
+	// `422 property_kind`. Scope: `analytics:write`.
+	//
+	// A record names its route pattern (`/users/{id}`), as the router matched it. A record
+	// that can only give its `path` gets a pattern inferred from it: the query and fragment are
+	// cut, and segments that are numbers, UUIDs, dates, hex of 16 or more characters, other
+	// tokens of 16 or more letters, digits, `-` and `_` with at least two digits or with both
+	// cases and a digit, e-mail-shaped or longer than 40 characters become `{id}`. A path that
+	// answered 404 or 405 is counted as `(unmatched)`, so scanners never make routes. The
+	// property's `path_rules` then map a path or route onto a pattern of their own. Past 1,000
+	// routes a property counts new ones as `(other)`; consumers (10,000), API versions (50),
+	// environments (20) and services (100 per workspace) work the same way.
+	//
+	// Nothing else of a request is accepted: no body, header, query string, fragment or user
+	// agent. `ip`, when given, is shortened (IPv4 /24, IPv6 /48) and looked up for its country
+	// right away and never kept. Records are added up per minute and hour in the server's
+	// memory and written every 10 seconds, so a request shows in `queryAnalytics`
+	// (`dataset: api`) within about 15 seconds.
+	//
+	// Invalid records are left out on their own and listed in `errors`; the others are taken.
+	// Taken but not counted: records older than 72 hours, records over the property's
+	// `YUVA_MONITOR_RECORDS_PER_MINUTE` or the workspace's monthly cap
+	// (`YUVA_MONITOR_MONTHLY_REQUESTS`). When the server holds as many open rows as it may
+	// (`YUVA_MONITOR_BUFFER_KEYS`) it answers `503` with `Retry-After`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/requests (the `SendAnalyticsRequests` operationId).
+	SendAnalyticsRequests(ctx context.Context, propertyId AnalyticsPropertyId, params *SendAnalyticsRequestsParams, body SendAnalyticsRequestsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetAnalyticsRetention How consented visitors come back
 	//
@@ -27392,11 +27820,12 @@ func (c *Client) ListAnalyticsProperties(ctx context.Context, params *ListAnalyt
 
 // CreateAnalyticsPropertyWithBody Create an analytics property
 //
-// A website or app to measure. The answer carries its `public_key`, which pages and apps send
-// events with. `inbox_id` links the property to an inbox: agents of that inbox can then read
-// it. A workspace has at most `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties
-// (`403 property_limit`). A children's property (`audience: children`) cannot offer
-// `consent_features` or `tracked_props`.
+// A website or app to measure, or with `kind: api` an API to watch. The answer carries its
+// `public_key`, which pages and apps send events with. `inbox_id` links the property to an
+// inbox: agents of that inbox can then read it. A workspace has at most
+// `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties (`403 property_limit`). A children's
+// property (`audience: children`) cannot offer `consent_features` or `tracked_props`; an API
+// property offers neither, and `audience` does not apply to it.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -27417,11 +27846,12 @@ func (c *Client) CreateAnalyticsPropertyWithBody(ctx context.Context, params *Cr
 
 // CreateAnalyticsProperty Create an analytics property
 //
-// A website or app to measure. The answer carries its `public_key`, which pages and apps send
-// events with. `inbox_id` links the property to an inbox: agents of that inbox can then read
-// it. A workspace has at most `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties
-// (`403 property_limit`). A children's property (`audience: children`) cannot offer
-// `consent_features` or `tracked_props`.
+// A website or app to measure, or with `kind: api` an API to watch. The answer carries its
+// `public_key`, which pages and apps send events with. `inbox_id` links the property to an
+// inbox: agents of that inbox can then read it. A workspace has at most
+// `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties (`403 property_limit`). A children's
+// property (`audience: children`) cannot offer `consent_features` or `tracked_props`; an API
+// property offers neither, and `audience` does not apply to it.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -28405,6 +28835,96 @@ func (c *Client) QueryAnalytics(ctx context.Context, propertyId AnalyticsPropert
 // Corresponds with GET /v1/analytics/properties/{propertyId}/realtime (the `GetAnalyticsRealtime` operationId).
 func (c *Client) GetAnalyticsRealtime(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsRealtimeParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetAnalyticsRealtimeRequest(c.Server, propertyId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// SendAnalyticsRequestsWithBody Send an API's request records
+//
+// The host of an API property reports the requests it served, 1 to 1,000 records a call,
+// with `sdk/go/analytics` (`Middleware`) or any HTTP client. The body may be sent with
+// `Content-Encoding: gzip`. API keys only (`403 forbidden` for members' sessions); a key
+// limited to inboxes reaches the properties of its inboxes. A site answers
+// `422 property_kind`. Scope: `analytics:write`.
+//
+// A record names its route pattern (`/users/{id}`), as the router matched it. A record
+// that can only give its `path` gets a pattern inferred from it: the query and fragment are
+// cut, and segments that are numbers, UUIDs, dates, hex of 16 or more characters, other
+// tokens of 16 or more letters, digits, `-` and `_` with at least two digits or with both
+// cases and a digit, e-mail-shaped or longer than 40 characters become `{id}`. A path that
+// answered 404 or 405 is counted as `(unmatched)`, so scanners never make routes. The
+// property's `path_rules` then map a path or route onto a pattern of their own. Past 1,000
+// routes a property counts new ones as `(other)`; consumers (10,000), API versions (50),
+// environments (20) and services (100 per workspace) work the same way.
+//
+// Nothing else of a request is accepted: no body, header, query string, fragment or user
+// agent. `ip`, when given, is shortened (IPv4 /24, IPv6 /48) and looked up for its country
+// right away and never kept. Records are added up per minute and hour in the server's
+// memory and written every 10 seconds, so a request shows in `queryAnalytics`
+// (`dataset: api`) within about 15 seconds.
+//
+// Invalid records are left out on their own and listed in `errors`; the others are taken.
+// Taken but not counted: records older than 72 hours, records over the property's
+// `YUVA_MONITOR_RECORDS_PER_MINUTE` or the workspace's monthly cap
+// (`YUVA_MONITOR_MONTHLY_REQUESTS`). When the server holds as many open rows as it may
+// (`YUVA_MONITOR_BUFFER_KEYS`) it answers `503` with `Retry-After`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/requests (the `SendAnalyticsRequests` operationId).
+func (c *Client) SendAnalyticsRequestsWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *SendAnalyticsRequestsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSendAnalyticsRequestsRequestWithBody(c.Server, propertyId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// SendAnalyticsRequests Send an API's request records
+//
+// The host of an API property reports the requests it served, 1 to 1,000 records a call,
+// with `sdk/go/analytics` (`Middleware`) or any HTTP client. The body may be sent with
+// `Content-Encoding: gzip`. API keys only (`403 forbidden` for members' sessions); a key
+// limited to inboxes reaches the properties of its inboxes. A site answers
+// `422 property_kind`. Scope: `analytics:write`.
+//
+// A record names its route pattern (`/users/{id}`), as the router matched it. A record
+// that can only give its `path` gets a pattern inferred from it: the query and fragment are
+// cut, and segments that are numbers, UUIDs, dates, hex of 16 or more characters, other
+// tokens of 16 or more letters, digits, `-` and `_` with at least two digits or with both
+// cases and a digit, e-mail-shaped or longer than 40 characters become `{id}`. A path that
+// answered 404 or 405 is counted as `(unmatched)`, so scanners never make routes. The
+// property's `path_rules` then map a path or route onto a pattern of their own. Past 1,000
+// routes a property counts new ones as `(other)`; consumers (10,000), API versions (50),
+// environments (20) and services (100 per workspace) work the same way.
+//
+// Nothing else of a request is accepted: no body, header, query string, fragment or user
+// agent. `ip`, when given, is shortened (IPv4 /24, IPv6 /48) and looked up for its country
+// right away and never kept. Records are added up per minute and hour in the server's
+// memory and written every 10 seconds, so a request shows in `queryAnalytics`
+// (`dataset: api`) within about 15 seconds.
+//
+// Invalid records are left out on their own and listed in `errors`; the others are taken.
+// Taken but not counted: records older than 72 hours, records over the property's
+// `YUVA_MONITOR_RECORDS_PER_MINUTE` or the workspace's monthly cap
+// (`YUVA_MONITOR_MONTHLY_REQUESTS`). When the server holds as many open rows as it may
+// (`YUVA_MONITOR_BUFFER_KEYS`) it answers `503` with `Retry-After`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/requests (the `SendAnalyticsRequests` operationId).
+func (c *Client) SendAnalyticsRequests(ctx context.Context, propertyId AnalyticsPropertyId, params *SendAnalyticsRequestsParams, body SendAnalyticsRequestsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSendAnalyticsRequestsRequest(c.Server, propertyId, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -39606,6 +40126,68 @@ func NewGetAnalyticsRealtimeRequest(server string, propertyId AnalyticsPropertyI
 			}
 
 			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewSendAnalyticsRequestsRequest calls the generic SendAnalyticsRequests builder with application/json body
+func NewSendAnalyticsRequestsRequest(server string, propertyId AnalyticsPropertyId, params *SendAnalyticsRequestsParams, body SendAnalyticsRequestsJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewSendAnalyticsRequestsRequestWithBody(server, propertyId, params, "application/json", bodyReader)
+}
+
+// NewSendAnalyticsRequestsRequestWithBody constructs an http.Request for the SendAnalyticsRequests method, with any body, and a specified content type
+func NewSendAnalyticsRequestsRequestWithBody(server string, propertyId AnalyticsPropertyId, params *SendAnalyticsRequestsParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/requests", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.ContentEncoding != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Content-Encoding", *params.ContentEncoding, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Content-Encoding", headerParam0)
 		}
 
 	}
@@ -55193,11 +55775,12 @@ type ClientWithResponsesInterface interface {
 
 	// CreateAnalyticsPropertyWithBodyWithResponse Create an analytics property
 	//
-	// A website or app to measure. The answer carries its `public_key`, which pages and apps send
-	// events with. `inbox_id` links the property to an inbox: agents of that inbox can then read
-	// it. A workspace has at most `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties
-	// (`403 property_limit`). A children's property (`audience: children`) cannot offer
-	// `consent_features` or `tracked_props`.
+	// A website or app to measure, or with `kind: api` an API to watch. The answer carries its
+	// `public_key`, which pages and apps send events with. `inbox_id` links the property to an
+	// inbox: agents of that inbox can then read it. A workspace has at most
+	// `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties (`403 property_limit`). A children's
+	// property (`audience: children`) cannot offer `consent_features` or `tracked_props`; an API
+	// property offers neither, and `audience` does not apply to it.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -55208,11 +55791,12 @@ type ClientWithResponsesInterface interface {
 
 	// CreateAnalyticsPropertyWithResponse Create an analytics property
 	//
-	// A website or app to measure. The answer carries its `public_key`, which pages and apps send
-	// events with. `inbox_id` links the property to an inbox: agents of that inbox can then read
-	// it. A workspace has at most `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties
-	// (`403 property_limit`). A children's property (`audience: children`) cannot offer
-	// `consent_features` or `tracked_props`.
+	// A website or app to measure, or with `kind: api` an API to watch. The answer carries its
+	// `public_key`, which pages and apps send events with. `inbox_id` links the property to an
+	// inbox: agents of that inbox can then read it. A workspace has at most
+	// `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties (`403 property_limit`). A children's
+	// property (`audience: children`) cannot offer `consent_features` or `tracked_props`; an API
+	// property offers neither, and `audience` does not apply to it.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -55835,6 +56419,76 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with GET /v1/analytics/properties/{propertyId}/realtime (the `GetAnalyticsRealtime` operationId).
 	GetAnalyticsRealtimeWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsRealtimeParams, reqEditors ...RequestEditorFn) (*GetAnalyticsRealtimeResponse, error)
+
+	// SendAnalyticsRequestsWithBodyWithResponse Send an API's request records
+	//
+	// The host of an API property reports the requests it served, 1 to 1,000 records a call,
+	// with `sdk/go/analytics` (`Middleware`) or any HTTP client. The body may be sent with
+	// `Content-Encoding: gzip`. API keys only (`403 forbidden` for members' sessions); a key
+	// limited to inboxes reaches the properties of its inboxes. A site answers
+	// `422 property_kind`. Scope: `analytics:write`.
+	//
+	// A record names its route pattern (`/users/{id}`), as the router matched it. A record
+	// that can only give its `path` gets a pattern inferred from it: the query and fragment are
+	// cut, and segments that are numbers, UUIDs, dates, hex of 16 or more characters, other
+	// tokens of 16 or more letters, digits, `-` and `_` with at least two digits or with both
+	// cases and a digit, e-mail-shaped or longer than 40 characters become `{id}`. A path that
+	// answered 404 or 405 is counted as `(unmatched)`, so scanners never make routes. The
+	// property's `path_rules` then map a path or route onto a pattern of their own. Past 1,000
+	// routes a property counts new ones as `(other)`; consumers (10,000), API versions (50),
+	// environments (20) and services (100 per workspace) work the same way.
+	//
+	// Nothing else of a request is accepted: no body, header, query string, fragment or user
+	// agent. `ip`, when given, is shortened (IPv4 /24, IPv6 /48) and looked up for its country
+	// right away and never kept. Records are added up per minute and hour in the server's
+	// memory and written every 10 seconds, so a request shows in `queryAnalytics`
+	// (`dataset: api`) within about 15 seconds.
+	//
+	// Invalid records are left out on their own and listed in `errors`; the others are taken.
+	// Taken but not counted: records older than 72 hours, records over the property's
+	// `YUVA_MONITOR_RECORDS_PER_MINUTE` or the workspace's monthly cap
+	// (`YUVA_MONITOR_MONTHLY_REQUESTS`). When the server holds as many open rows as it may
+	// (`YUVA_MONITOR_BUFFER_KEYS`) it answers `503` with `Retry-After`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/requests (the `SendAnalyticsRequests` operationId).
+	SendAnalyticsRequestsWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *SendAnalyticsRequestsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SendAnalyticsRequestsResponse, error)
+
+	// SendAnalyticsRequestsWithResponse Send an API's request records
+	//
+	// The host of an API property reports the requests it served, 1 to 1,000 records a call,
+	// with `sdk/go/analytics` (`Middleware`) or any HTTP client. The body may be sent with
+	// `Content-Encoding: gzip`. API keys only (`403 forbidden` for members' sessions); a key
+	// limited to inboxes reaches the properties of its inboxes. A site answers
+	// `422 property_kind`. Scope: `analytics:write`.
+	//
+	// A record names its route pattern (`/users/{id}`), as the router matched it. A record
+	// that can only give its `path` gets a pattern inferred from it: the query and fragment are
+	// cut, and segments that are numbers, UUIDs, dates, hex of 16 or more characters, other
+	// tokens of 16 or more letters, digits, `-` and `_` with at least two digits or with both
+	// cases and a digit, e-mail-shaped or longer than 40 characters become `{id}`. A path that
+	// answered 404 or 405 is counted as `(unmatched)`, so scanners never make routes. The
+	// property's `path_rules` then map a path or route onto a pattern of their own. Past 1,000
+	// routes a property counts new ones as `(other)`; consumers (10,000), API versions (50),
+	// environments (20) and services (100 per workspace) work the same way.
+	//
+	// Nothing else of a request is accepted: no body, header, query string, fragment or user
+	// agent. `ip`, when given, is shortened (IPv4 /24, IPv6 /48) and looked up for its country
+	// right away and never kept. Records are added up per minute and hour in the server's
+	// memory and written every 10 seconds, so a request shows in `queryAnalytics`
+	// (`dataset: api`) within about 15 seconds.
+	//
+	// Invalid records are left out on their own and listed in `errors`; the others are taken.
+	// Taken but not counted: records older than 72 hours, records over the property's
+	// `YUVA_MONITOR_RECORDS_PER_MINUTE` or the workspace's monthly cap
+	// (`YUVA_MONITOR_MONTHLY_REQUESTS`). When the server holds as many open rows as it may
+	// (`YUVA_MONITOR_BUFFER_KEYS`) it answers `503` with `Retry-After`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/requests (the `SendAnalyticsRequests` operationId).
+	SendAnalyticsRequestsWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *SendAnalyticsRequestsParams, body SendAnalyticsRequestsJSONRequestBody, reqEditors ...RequestEditorFn) (*SendAnalyticsRequestsResponse, error)
 
 	// GetAnalyticsRetentionWithResponse How consented visitors come back
 	//
@@ -65295,6 +65949,89 @@ func (r GetAnalyticsRealtimeResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r GetAnalyticsRealtimeResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type SendAnalyticsRequestsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON202 the response for an HTTP 202 `application/json` response
+	JSON202 *AnalyticsRequestsResult
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+	// ApplicationproblemJSON503 the response for an HTTP 503 `application/problem+json` response
+	ApplicationproblemJSON503 *Problem
+}
+
+// GetJSON202 returns the response for an HTTP 202 `application/json` response
+func (r SendAnalyticsRequestsResponse) GetJSON202() *AnalyticsRequestsResult {
+	return r.JSON202
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r SendAnalyticsRequestsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r SendAnalyticsRequestsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r SendAnalyticsRequestsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r SendAnalyticsRequestsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r SendAnalyticsRequestsResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetApplicationproblemJSON503 returns the response for an HTTP 503 `application/problem+json` response
+func (r SendAnalyticsRequestsResponse) GetApplicationproblemJSON503() *Problem {
+	return r.ApplicationproblemJSON503
+}
+
+// GetBody returns the raw response body bytes
+func (r SendAnalyticsRequestsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r SendAnalyticsRequestsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r SendAnalyticsRequestsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r SendAnalyticsRequestsResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -82250,11 +82987,12 @@ func (c *ClientWithResponses) ListAnalyticsPropertiesWithResponse(ctx context.Co
 
 // CreateAnalyticsPropertyWithBodyWithResponse Create an analytics property
 //
-// A website or app to measure. The answer carries its `public_key`, which pages and apps send
-// events with. `inbox_id` links the property to an inbox: agents of that inbox can then read
-// it. A workspace has at most `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties
-// (`403 property_limit`). A children's property (`audience: children`) cannot offer
-// `consent_features` or `tracked_props`.
+// A website or app to measure, or with `kind: api` an API to watch. The answer carries its
+// `public_key`, which pages and apps send events with. `inbox_id` links the property to an
+// inbox: agents of that inbox can then read it. A workspace has at most
+// `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties (`403 property_limit`). A children's
+// property (`audience: children`) cannot offer `consent_features` or `tracked_props`; an API
+// property offers neither, and `audience` does not apply to it.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -82271,11 +83009,12 @@ func (c *ClientWithResponses) CreateAnalyticsPropertyWithBodyWithResponse(ctx co
 
 // CreateAnalyticsPropertyWithResponse Create an analytics property
 //
-// A website or app to measure. The answer carries its `public_key`, which pages and apps send
-// events with. `inbox_id` links the property to an inbox: agents of that inbox can then read
-// it. A workspace has at most `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties
-// (`403 property_limit`). A children's property (`audience: children`) cannot offer
-// `consent_features` or `tracked_props`.
+// A website or app to measure, or with `kind: api` an API to watch. The answer carries its
+// `public_key`, which pages and apps send events with. `inbox_id` links the property to an
+// inbox: agents of that inbox can then read it. A workspace has at most
+// `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties (`403 property_limit`). A children's
+// property (`audience: children`) cannot offer `consent_features` or `tracked_props`; an API
+// property offers neither, and `audience` does not apply to it.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -83137,6 +83876,88 @@ func (c *ClientWithResponses) GetAnalyticsRealtimeWithResponse(ctx context.Conte
 		return nil, err
 	}
 	return ParseGetAnalyticsRealtimeResponse(rsp)
+}
+
+// SendAnalyticsRequestsWithBodyWithResponse Send an API's request records
+//
+// The host of an API property reports the requests it served, 1 to 1,000 records a call,
+// with `sdk/go/analytics` (`Middleware`) or any HTTP client. The body may be sent with
+// `Content-Encoding: gzip`. API keys only (`403 forbidden` for members' sessions); a key
+// limited to inboxes reaches the properties of its inboxes. A site answers
+// `422 property_kind`. Scope: `analytics:write`.
+//
+// A record names its route pattern (`/users/{id}`), as the router matched it. A record
+// that can only give its `path` gets a pattern inferred from it: the query and fragment are
+// cut, and segments that are numbers, UUIDs, dates, hex of 16 or more characters, other
+// tokens of 16 or more letters, digits, `-` and `_` with at least two digits or with both
+// cases and a digit, e-mail-shaped or longer than 40 characters become `{id}`. A path that
+// answered 404 or 405 is counted as `(unmatched)`, so scanners never make routes. The
+// property's `path_rules` then map a path or route onto a pattern of their own. Past 1,000
+// routes a property counts new ones as `(other)`; consumers (10,000), API versions (50),
+// environments (20) and services (100 per workspace) work the same way.
+//
+// Nothing else of a request is accepted: no body, header, query string, fragment or user
+// agent. `ip`, when given, is shortened (IPv4 /24, IPv6 /48) and looked up for its country
+// right away and never kept. Records are added up per minute and hour in the server's
+// memory and written every 10 seconds, so a request shows in `queryAnalytics`
+// (`dataset: api`) within about 15 seconds.
+//
+// Invalid records are left out on their own and listed in `errors`; the others are taken.
+// Taken but not counted: records older than 72 hours, records over the property's
+// `YUVA_MONITOR_RECORDS_PER_MINUTE` or the workspace's monthly cap
+// (`YUVA_MONITOR_MONTHLY_REQUESTS`). When the server holds as many open rows as it may
+// (`YUVA_MONITOR_BUFFER_KEYS`) it answers `503` with `Retry-After`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/requests (the `SendAnalyticsRequests` operationId).
+func (c *ClientWithResponses) SendAnalyticsRequestsWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *SendAnalyticsRequestsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SendAnalyticsRequestsResponse, error) {
+	rsp, err := c.SendAnalyticsRequestsWithBody(ctx, propertyId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSendAnalyticsRequestsResponse(rsp)
+}
+
+// SendAnalyticsRequestsWithResponse Send an API's request records
+//
+// The host of an API property reports the requests it served, 1 to 1,000 records a call,
+// with `sdk/go/analytics` (`Middleware`) or any HTTP client. The body may be sent with
+// `Content-Encoding: gzip`. API keys only (`403 forbidden` for members' sessions); a key
+// limited to inboxes reaches the properties of its inboxes. A site answers
+// `422 property_kind`. Scope: `analytics:write`.
+//
+// A record names its route pattern (`/users/{id}`), as the router matched it. A record
+// that can only give its `path` gets a pattern inferred from it: the query and fragment are
+// cut, and segments that are numbers, UUIDs, dates, hex of 16 or more characters, other
+// tokens of 16 or more letters, digits, `-` and `_` with at least two digits or with both
+// cases and a digit, e-mail-shaped or longer than 40 characters become `{id}`. A path that
+// answered 404 or 405 is counted as `(unmatched)`, so scanners never make routes. The
+// property's `path_rules` then map a path or route onto a pattern of their own. Past 1,000
+// routes a property counts new ones as `(other)`; consumers (10,000), API versions (50),
+// environments (20) and services (100 per workspace) work the same way.
+//
+// Nothing else of a request is accepted: no body, header, query string, fragment or user
+// agent. `ip`, when given, is shortened (IPv4 /24, IPv6 /48) and looked up for its country
+// right away and never kept. Records are added up per minute and hour in the server's
+// memory and written every 10 seconds, so a request shows in `queryAnalytics`
+// (`dataset: api`) within about 15 seconds.
+//
+// Invalid records are left out on their own and listed in `errors`; the others are taken.
+// Taken but not counted: records older than 72 hours, records over the property's
+// `YUVA_MONITOR_RECORDS_PER_MINUTE` or the workspace's monthly cap
+// (`YUVA_MONITOR_MONTHLY_REQUESTS`). When the server holds as many open rows as it may
+// (`YUVA_MONITOR_BUFFER_KEYS`) it answers `503` with `Retry-After`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/requests (the `SendAnalyticsRequests` operationId).
+func (c *ClientWithResponses) SendAnalyticsRequestsWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *SendAnalyticsRequestsParams, body SendAnalyticsRequestsJSONRequestBody, reqEditors ...RequestEditorFn) (*SendAnalyticsRequestsResponse, error) {
+	rsp, err := c.SendAnalyticsRequests(ctx, propertyId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSendAnalyticsRequestsResponse(rsp)
 }
 
 // GetAnalyticsRetentionWithResponse How consented visitors come back
@@ -93365,6 +94186,74 @@ func ParseGetAnalyticsRealtimeResponse(rsp *http.Response) (*GetAnalyticsRealtim
 			return nil, err
 		}
 		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseSendAnalyticsRequestsResponse parses an HTTP response from a SendAnalyticsRequestsWithResponse call
+func ParseSendAnalyticsRequestsResponse(rsp *http.Response) (*SendAnalyticsRequestsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &SendAnalyticsRequestsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest AnalyticsRequestsResult
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON503 = &dest
 
 	}
 

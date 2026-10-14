@@ -8,9 +8,13 @@
 // visitor's browser visit of that day; none of it is stored. Requests with `DNT: 1` or
 // `Sec-GPC: 1` are not sent at all.
 //
+// For an API property, Middleware records every request a net/http server answers (its route,
+// method, status, duration and sizes, never a body, header or query) and sends the records in
+// batches of up to 500 to `POST /v1/analytics/properties/{id}/requests` with the same key.
+//
 // Failed batches are retried with backoff (honouring `Retry-After`); a batch Yuva refuses as a
 // whole (400, 401, 403, 404) is dropped and reported to Config.OnError. Call Close before the
-// process exits so queued events are sent.
+// process exits so queued events and records are sent.
 package analytics
 
 import (
@@ -20,6 +24,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"math/rand/v2"
 	"net"
 	"net/http"
 	"strconv"
@@ -29,11 +34,13 @@ import (
 )
 
 const (
-	// MaxBatch is the most events one request carries.
-	MaxBatch = 100
+	// MaxBatch is the most events one request carries; MaxRecordBatch the most request records.
+	MaxBatch       = 100
+	MaxRecordBatch = 500
 
 	defaultInterval   = 5 * time.Second
 	defaultQueue      = 10_000
+	defaultRecords    = 50_000
 	defaultRetries    = 5
 	defaultMinBackoff = time.Second
 	maxBackoff        = time.Minute
@@ -62,6 +69,8 @@ type Config struct {
 	FlushInterval time.Duration
 	// QueueSize is how many events wait at most; 10,000 when zero. Events beyond it are dropped.
 	QueueSize int
+	// RecordQueueSize is how many request records wait at most; 50,000 when zero.
+	RecordQueueSize int
 	// MaxRetries is how often a batch is retried after a network error, 429 or 5xx; 5 when zero,
 	// none when negative.
 	MaxRetries int
@@ -159,7 +168,8 @@ func (e *EventError) Error() string {
 	return fmt.Sprintf("analytics: event %q refused: %s", e.Event.Name, e.Detail)
 }
 
-// BatchError is a batch Yuva refused as a whole, or that failed after every retry.
+// BatchError is a batch Yuva refused as a whole, or that failed after every retry; Events counts
+// its events or request records.
 type BatchError struct {
 	Status int
 	Body   string
@@ -180,11 +190,14 @@ func (e *BatchError) Unwrap() error { return e.Err }
 type Client struct {
 	cfg      Config
 	endpoint string
+	requests string
 	now      func() time.Time
 	sleep    func(context.Context, time.Duration) error
+	sample   func(n int) bool
 
 	mu      sync.Mutex
 	queue   []Event
+	records []Record
 	closed  bool
 	wake    chan struct{}
 	flushes chan chan error
@@ -206,6 +219,9 @@ func New(cfg Config) (*Client, error) {
 	if cfg.QueueSize <= 0 {
 		cfg.QueueSize = defaultQueue
 	}
+	if cfg.RecordQueueSize <= 0 {
+		cfg.RecordQueueSize = defaultRecords
+	}
 	if cfg.MaxRetries == 0 {
 		cfg.MaxRetries = defaultRetries
 	}
@@ -215,11 +231,14 @@ func New(cfg Config) (*Client, error) {
 	if cfg.ClientIP == nil {
 		cfg.ClientIP = remoteIP
 	}
+	property := strings.TrimSuffix(cfg.BaseURL, "/") + "/v1/analytics/properties/" + cfg.PropertyID
 	c := &Client{
 		cfg:      cfg,
-		endpoint: strings.TrimSuffix(cfg.BaseURL, "/") + "/v1/analytics/properties/" + cfg.PropertyID + "/events",
+		endpoint: property + "/events",
+		requests: property + "/requests",
 		now:      time.Now,
 		sleep:    sleepContext,
+		sample:   func(n int) bool { return rand.IntN(n) == 0 },
 		wake:     make(chan struct{}, 1),
 		flushes:  make(chan chan error),
 		stop:     make(chan struct{}),
@@ -385,14 +404,33 @@ func (c *Client) take() []Event {
 	return batch
 }
 
+func (c *Client) takeRecords() []Record {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	n := min(len(c.records), MaxRecordBatch)
+	batch := c.records[:n:n]
+	c.records = c.records[n:]
+	return batch
+}
+
 func (c *Client) sendAll(ctx context.Context) error {
 	var last error
 	for {
 		batch := c.take()
 		if len(batch) == 0 {
-			return last
+			break
 		}
 		if err := c.send(ctx, batch); err != nil {
+			last = err
+			c.report(err)
+		}
+	}
+	for {
+		batch := c.takeRecords()
+		if len(batch) == 0 {
+			return last
+		}
+		if err := c.sendRecords(ctx, batch); err != nil {
 			last = err
 			c.report(err)
 		}
@@ -423,47 +461,58 @@ func (c *Client) send(ctx context.Context, batch []Event) error {
 	if err != nil {
 		return &BatchError{Events: len(batch), Err: err}
 	}
+	return c.deliver(ctx, c.endpoint, body, false, len(batch), func(e int, detail string) {
+		c.report(&EventError{Event: batch[e], Detail: detail})
+	})
+}
+
+// deliver posts one batch of n items, retrying network errors, 429 and 5xx, and reports the items
+// an accepted batch left out.
+func (c *Client) deliver(ctx context.Context, endpoint string, body []byte, gzipped bool, n int, refused func(i int, detail string)) error {
 	backoff := c.cfg.MinBackoff
 	for attempt := 0; ; attempt++ {
-		status, raw, retryAfter, err := c.post(ctx, body)
+		status, raw, retryAfter, err := c.post(ctx, endpoint, body, gzipped)
 		switch {
 		case err == nil && status == http.StatusAccepted:
 			var res result
 			if json.Unmarshal(raw, &res) == nil {
 				for _, e := range res.Errors {
-					if e.Index >= 0 && e.Index < len(batch) {
-						c.report(&EventError{Event: batch[e.Index], Detail: e.Detail})
+					if e.Index >= 0 && e.Index < n {
+						refused(e.Index, e.Detail)
 					}
 				}
 			}
 			return nil
 		case err == nil && status != http.StatusTooManyRequests && status < 500:
-			return &BatchError{Status: status, Body: strings.TrimSpace(string(raw)), Events: len(batch)}
+			return &BatchError{Status: status, Body: strings.TrimSpace(string(raw)), Events: n}
 		}
 		if attempt >= c.cfg.MaxRetries || ctx.Err() != nil {
 			if err == nil {
-				return &BatchError{Status: status, Body: strings.TrimSpace(string(raw)), Events: len(batch)}
+				return &BatchError{Status: status, Body: strings.TrimSpace(string(raw)), Events: n}
 			}
-			return &BatchError{Events: len(batch), Err: err}
+			return &BatchError{Events: n, Err: err}
 		}
 		wait := backoff
 		if retryAfter > wait {
 			wait = retryAfter
 		}
 		if c.sleep(ctx, wait) != nil {
-			return &BatchError{Events: len(batch), Err: ctx.Err()}
+			return &BatchError{Events: n, Err: ctx.Err()}
 		}
 		backoff = min(backoff*2, maxBackoff)
 	}
 }
 
-func (c *Client) post(ctx context.Context, body []byte) (int, []byte, time.Duration, error) {
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.endpoint, bytes.NewReader(body))
+func (c *Client) post(ctx context.Context, endpoint string, body []byte, gzipped bool) (int, []byte, time.Duration, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, endpoint, bytes.NewReader(body))
 	if err != nil {
 		return 0, nil, 0, err
 	}
 	req.Header.Set("Authorization", "Bearer "+c.cfg.APIKey)
 	req.Header.Set("Content-Type", "application/json")
+	if gzipped {
+		req.Header.Set("Content-Encoding", "gzip")
+	}
 	res, err := c.cfg.HTTPClient.Do(req)
 	if err != nil {
 		return 0, nil, 0, err
