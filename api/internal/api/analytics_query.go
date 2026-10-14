@@ -394,6 +394,9 @@ func (s *Server) analyticsRequest(ctx context.Context, prop store.AnalyticsPrope
 		}
 		q.Goal = goalDef(g)
 	}
+	if len(b.Metrics) == 0 {
+		return ar, errValidation("metrics must name at least one metric")
+	}
 	for _, m := range b.Metrics {
 		if slices.Contains(q.Metrics, string(m)) {
 			return ar, errValidation("metric " + string(m) + " is listed twice")
