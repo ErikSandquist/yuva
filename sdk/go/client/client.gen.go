@@ -5089,7 +5089,7 @@ type AnalyticsDataDeletion struct {
 // them, no goal, prop, segment, comparison or insights. Closed local days come from daily
 // rows, closed hours from hourly rows and the rest from minute rows, which processes write
 // every 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
-// Rows are ordered by `requests` unless `order_by` says otherwise.
+// Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by `requests` unless `order_by` says otherwise.
 type AnalyticsDataset string
 
 // AnalyticsDimension A filter dimension (`AnalyticsFilterDimension`), or a time grain: `time:hour` (local hours
@@ -5872,9 +5872,13 @@ type AnalyticsProperty struct {
 	RetentionMonths *int32 `json:"retention_months,omitempty"`
 
 	// Timezone IANA time zone that defines the property's day.
-	Timezone     string                 `json:"timezone"`
-	TrackedProps []AnalyticsTrackedProp `json:"tracked_props"`
-	UpdatedAt    time.Time              `json:"updated_at"`
+	Timezone string `json:"timezone"`
+
+	// TimezoneAppliesAt An API property whose `timezone` was just changed keeps counting its hours and days in
+	// the zone before until its next local midnight, this instant; absent once the zone applies.
+	TimezoneAppliesAt *time.Time             `json:"timezone_applies_at,omitempty"`
+	TrackedProps      []AnalyticsTrackedProp `json:"tracked_props"`
+	UpdatedAt         time.Time              `json:"updated_at"`
 
 	// VisitorsToday Distinct visitors so far today, in the property's time zone.
 	VisitorsToday int64 `json:"visitors_today"`
@@ -6009,7 +6013,7 @@ type AnalyticsQuery struct {
 	// them, no goal, prop, segment, comparison or insights. Closed local days come from daily
 	// rows, closed hours from hourly rows and the rest from minute rows, which processes write
 	// every 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
-	// Rows are ordered by `requests` unless `order_by` says otherwise.
+	// Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by `requests` unless `order_by` says otherwise.
 	Dataset    *AnalyticsDataset     `json:"dataset,omitempty"`
 	Dimensions *[]AnalyticsDimension `json:"dimensions,omitempty"`
 	Filters    *[]AnalyticsFilter    `json:"filters,omitempty"`
@@ -6295,6 +6299,34 @@ type AnalyticsRevenue struct {
 
 	// Total In the currency's minor units (cents; yen for JPY).
 	Total int64 `json:"total"`
+}
+
+// AnalyticsRoute defines model for AnalyticsRoute.
+type AnalyticsRoute struct {
+	FirstSeenAt time.Time `json:"first_seen_at"`
+
+	// Hidden Left out of `dataset: api` answers.
+	Hidden bool  `json:"hidden"`
+	Id     int32 `json:"id"`
+
+	// Inferred The pattern was inferred from request paths rather than named by the host's router.
+	Inferred bool `json:"inferred"`
+
+	// LastSeenAt When a request was last counted on the route, to the minute.
+	LastSeenAt time.Time `json:"last_seen_at"`
+
+	// Pattern Examples: /users/{id}
+	Pattern string `json:"pattern"`
+}
+
+// AnalyticsRouteList defines model for AnalyticsRouteList.
+type AnalyticsRouteList struct {
+	Items []AnalyticsRoute `json:"items"`
+}
+
+// AnalyticsRouteUpdate defines model for AnalyticsRouteUpdate.
+type AnalyticsRouteUpdate struct {
+	Hidden bool `json:"hidden"`
 }
 
 // AnalyticsRow defines model for AnalyticsRow.
@@ -6592,6 +6624,9 @@ type AnalyticsUsage struct {
 
 	// RequestsLimit The monthly cap on request records; absent when there is none. Records over it are not counted until the month ends.
 	RequestsLimit *int64 `json:"requests_limit,omitempty"`
+
+	// RequestsLimitReachedAt When this month's request records reached the cap; owners get an e-mail and the operator a digest line then, once a month.
+	RequestsLimitReachedAt *time.Time `json:"requests_limit_reached_at,omitempty"`
 }
 
 // AnalyticsVisitPage defines model for AnalyticsVisitPage.
@@ -14044,6 +14079,9 @@ type AnalyticsGoalId = uuid.UUID
 // AnalyticsPropertyId defines model for AnalyticsPropertyId.
 type AnalyticsPropertyId = uuid.UUID
 
+// AnalyticsRouteId defines model for AnalyticsRouteId.
+type AnalyticsRouteId = int32
+
 // AnalyticsSegmentId defines model for AnalyticsSegmentId.
 type AnalyticsSegmentId = uuid.UUID
 
@@ -14540,6 +14578,18 @@ type RotateAnalyticsKeyParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListAnalyticsRoutesParams defines parameters for ListAnalyticsRoutes.
+type ListAnalyticsRoutesParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateAnalyticsRouteParams defines parameters for UpdateAnalyticsRoute.
+type UpdateAnalyticsRouteParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -16667,6 +16717,9 @@ type QueryAnalyticsJSONRequestBody = AnalyticsQuery
 
 // SendAnalyticsRequestsJSONRequestBody defines body for SendAnalyticsRequests for application/json ContentType.
 type SendAnalyticsRequestsJSONRequestBody = AnalyticsRequestRecords
+
+// UpdateAnalyticsRouteJSONRequestBody defines body for UpdateAnalyticsRoute for application/json ContentType.
+type UpdateAnalyticsRouteJSONRequestBody = AnalyticsRouteUpdate
 
 // CreateAnalyticsSegmentJSONRequestBody defines body for CreateAnalyticsSegment for application/json ContentType.
 type CreateAnalyticsSegmentJSONRequestBody = AnalyticsSegmentCreate
@@ -21335,7 +21388,9 @@ type ClientInterface interface {
 	//
 	// Changes the given fields. `inbox_id: null` unlinks the property from its inbox;
 	// `retention_months: null` keeps its rollups forever. A new `timezone` applies to events
-	// received from then on: finished days keep the zone they were counted in.
+	// received from then on: finished days keep the zone they were counted in. An API property
+	// counts in the new zone from the next local midnight of the zone before
+	// (`timezone_applies_at`), so no local day is cut in two.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -21348,7 +21403,9 @@ type ClientInterface interface {
 	//
 	// Changes the given fields. `inbox_id: null` unlinks the property from its inbox;
 	// `retention_months: null` keeps its rollups forever. A new `timezone` applies to events
-	// received from then on: finished days keep the zone they were counted in.
+	// received from then on: finished days keep the zone they were counted in. An API property
+	// counts in the new zone from the next local midnight of the zone before
+	// (`timezone_applies_at`), so no local day is cut in two.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -21978,6 +22035,47 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /v1/analytics/properties/{propertyId}/rotate-key (the `RotateAnalyticsKey` operationId).
 	RotateAnalyticsKey(ctx context.Context, propertyId AnalyticsPropertyId, params *RotateAnalyticsKeyParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListAnalyticsRoutes List an API property's routes
+	//
+	// Every route the property counted, by pattern: those its host named, those inferred from
+	// paths (`inferred`), and `(unmatched)` and `(other)`, which take no place under the cap of
+	// 1,000. Hidden routes
+	// (`hidden`) are left out of `queryAnalytics` with `dataset: api`; their requests are still
+	// counted, and showing a route again brings them back. A site answers `422 property_kind`.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/routes (the `ListAnalyticsRoutes` operationId).
+	ListAnalyticsRoutes(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsRoutesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateAnalyticsRouteWithBody Hide or show a route
+	//
+	// `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
+	// included, such as a health check the API's own load balancer calls; `hidden: false` shows
+	// it again. Nothing counted is deleted. To count a path under another pattern, add a
+	// property `path_rules` entry instead.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/routes/{routeId} (the `UpdateAnalyticsRoute` operationId).
+	UpdateAnalyticsRouteWithBody(ctx context.Context, propertyId AnalyticsPropertyId, routeId AnalyticsRouteId, params *UpdateAnalyticsRouteParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateAnalyticsRoute Hide or show a route
+	//
+	// `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
+	// included, such as a health check the API's own load balancer calls; `hidden: false` shows
+	// it again. Nothing counted is deleted. To count a path under another pattern, add a
+	// property `path_rules` entry instead.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/routes/{routeId} (the `UpdateAnalyticsRoute` operationId).
+	UpdateAnalyticsRoute(ctx context.Context, propertyId AnalyticsPropertyId, routeId AnalyticsRouteId, params *UpdateAnalyticsRouteParams, body UpdateAnalyticsRouteJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListAnalyticsSegments List a property's segments
 	//
@@ -27937,7 +28035,9 @@ func (c *Client) GetAnalyticsProperty(ctx context.Context, propertyId AnalyticsP
 //
 // Changes the given fields. `inbox_id: null` unlinks the property from its inbox;
 // `retention_months: null` keeps its rollups forever. A new `timezone` applies to events
-// received from then on: finished days keep the zone they were counted in.
+// received from then on: finished days keep the zone they were counted in. An API property
+// counts in the new zone from the next local midnight of the zone before
+// (`timezone_applies_at`), so no local day is cut in two.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -27960,7 +28060,9 @@ func (c *Client) UpdateAnalyticsPropertyWithBody(ctx context.Context, propertyId
 //
 // Changes the given fields. `inbox_id: null` unlinks the property from its inbox;
 // `retention_months: null` keeps its rollups forever. A new `timezone` applies to events
-// received from then on: finished days keep the zone they were counted in.
+// received from then on: finished days keep the zone they were counted in. An API property
+// counts in the new zone from the next local midnight of the zone before
+// (`timezone_applies_at`), so no local day is cut in two.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -28971,6 +29073,77 @@ func (c *Client) GetAnalyticsRetention(ctx context.Context, propertyId Analytics
 // Corresponds with POST /v1/analytics/properties/{propertyId}/rotate-key (the `RotateAnalyticsKey` operationId).
 func (c *Client) RotateAnalyticsKey(ctx context.Context, propertyId AnalyticsPropertyId, params *RotateAnalyticsKeyParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRotateAnalyticsKeyRequest(c.Server, propertyId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListAnalyticsRoutes List an API property's routes
+//
+// Every route the property counted, by pattern: those its host named, those inferred from
+// paths (`inferred`), and `(unmatched)` and `(other)`, which take no place under the cap of
+// 1,000. Hidden routes
+// (`hidden`) are left out of `queryAnalytics` with `dataset: api`; their requests are still
+// counted, and showing a route again brings them back. A site answers `422 property_kind`.
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/routes (the `ListAnalyticsRoutes` operationId).
+func (c *Client) ListAnalyticsRoutes(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsRoutesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListAnalyticsRoutesRequest(c.Server, propertyId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateAnalyticsRouteWithBody Hide or show a route
+//
+// `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
+// included, such as a health check the API's own load balancer calls; `hidden: false` shows
+// it again. Nothing counted is deleted. To count a path under another pattern, add a
+// property `path_rules` entry instead.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/routes/{routeId} (the `UpdateAnalyticsRoute` operationId).
+func (c *Client) UpdateAnalyticsRouteWithBody(ctx context.Context, propertyId AnalyticsPropertyId, routeId AnalyticsRouteId, params *UpdateAnalyticsRouteParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateAnalyticsRouteRequestWithBody(c.Server, propertyId, routeId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateAnalyticsRoute Hide or show a route
+//
+// `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
+// included, such as a health check the API's own load balancer calls; `hidden: false` shows
+// it again. Nothing counted is deleted. To count a path under another pattern, add a
+// property `path_rules` entry instead.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/routes/{routeId} (the `UpdateAnalyticsRoute` operationId).
+func (c *Client) UpdateAnalyticsRoute(ctx context.Context, propertyId AnalyticsPropertyId, routeId AnalyticsRouteId, params *UpdateAnalyticsRouteParams, body UpdateAnalyticsRouteJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateAnalyticsRouteRequest(c.Server, propertyId, routeId, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -40348,6 +40521,124 @@ func NewRotateAnalyticsKeyRequest(server string, propertyId AnalyticsPropertyId,
 			}
 
 			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListAnalyticsRoutesRequest constructs an http.Request for the ListAnalyticsRoutes method
+func NewListAnalyticsRoutesRequest(server string, propertyId AnalyticsPropertyId, params *ListAnalyticsRoutesParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/routes", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateAnalyticsRouteRequest calls the generic UpdateAnalyticsRoute builder with application/json body
+func NewUpdateAnalyticsRouteRequest(server string, propertyId AnalyticsPropertyId, routeId AnalyticsRouteId, params *UpdateAnalyticsRouteParams, body UpdateAnalyticsRouteJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateAnalyticsRouteRequestWithBody(server, propertyId, routeId, params, "application/json", bodyReader)
+}
+
+// NewUpdateAnalyticsRouteRequestWithBody constructs an http.Request for the UpdateAnalyticsRoute method, with any body, and a specified content type
+func NewUpdateAnalyticsRouteRequestWithBody(server string, propertyId AnalyticsPropertyId, routeId AnalyticsRouteId, params *UpdateAnalyticsRouteParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "routeId", routeId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int32"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/routes/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
 		}
 
 	}
@@ -55844,7 +56135,9 @@ type ClientWithResponsesInterface interface {
 	//
 	// Changes the given fields. `inbox_id: null` unlinks the property from its inbox;
 	// `retention_months: null` keeps its rollups forever. A new `timezone` applies to events
-	// received from then on: finished days keep the zone they were counted in.
+	// received from then on: finished days keep the zone they were counted in. An API property
+	// counts in the new zone from the next local midnight of the zone before
+	// (`timezone_applies_at`), so no local day is cut in two.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -55857,7 +56150,9 @@ type ClientWithResponsesInterface interface {
 	//
 	// Changes the given fields. `inbox_id: null` unlinks the property from its inbox;
 	// `retention_months: null` keeps its rollups forever. A new `timezone` applies to events
-	// received from then on: finished days keep the zone they were counted in.
+	// received from then on: finished days keep the zone they were counted in. An API property
+	// counts in the new zone from the next local midnight of the zone before
+	// (`timezone_applies_at`), so no local day is cut in two.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -56519,6 +56814,49 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /v1/analytics/properties/{propertyId}/rotate-key (the `RotateAnalyticsKey` operationId).
 	RotateAnalyticsKeyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *RotateAnalyticsKeyParams, reqEditors ...RequestEditorFn) (*RotateAnalyticsKeyResponse, error)
+
+	// ListAnalyticsRoutesWithResponse List an API property's routes
+	//
+	// Every route the property counted, by pattern: those its host named, those inferred from
+	// paths (`inferred`), and `(unmatched)` and `(other)`, which take no place under the cap of
+	// 1,000. Hidden routes
+	// (`hidden`) are left out of `queryAnalytics` with `dataset: api`; their requests are still
+	// counted, and showing a route again brings them back. A site answers `422 property_kind`.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/routes (the `ListAnalyticsRoutes` operationId).
+	ListAnalyticsRoutesWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsRoutesParams, reqEditors ...RequestEditorFn) (*ListAnalyticsRoutesResponse, error)
+
+	// UpdateAnalyticsRouteWithBodyWithResponse Hide or show a route
+	//
+	// `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
+	// included, such as a health check the API's own load balancer calls; `hidden: false` shows
+	// it again. Nothing counted is deleted. To count a path under another pattern, add a
+	// property `path_rules` entry instead.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/routes/{routeId} (the `UpdateAnalyticsRoute` operationId).
+	UpdateAnalyticsRouteWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, routeId AnalyticsRouteId, params *UpdateAnalyticsRouteParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAnalyticsRouteResponse, error)
+
+	// UpdateAnalyticsRouteWithResponse Hide or show a route
+	//
+	// `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
+	// included, such as a health check the API's own load balancer calls; `hidden: false` shows
+	// it again. Nothing counted is deleted. To count a path under another pattern, add a
+	// property `path_rules` entry instead.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/analytics/properties/{propertyId}/routes/{routeId} (the `UpdateAnalyticsRoute` operationId).
+	UpdateAnalyticsRouteWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, routeId AnalyticsRouteId, params *UpdateAnalyticsRouteParams, body UpdateAnalyticsRouteJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAnalyticsRouteResponse, error)
 
 	// ListAnalyticsSegmentsWithResponse List a property's segments
 	//
@@ -66170,6 +66508,151 @@ func (r RotateAnalyticsKeyResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r RotateAnalyticsKeyResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListAnalyticsRoutesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsRouteList
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListAnalyticsRoutesResponse) GetJSON200() *AnalyticsRouteList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListAnalyticsRoutesResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListAnalyticsRoutesResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListAnalyticsRoutesResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r ListAnalyticsRoutesResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r ListAnalyticsRoutesResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListAnalyticsRoutesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListAnalyticsRoutesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListAnalyticsRoutesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateAnalyticsRouteResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsRoute
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateAnalyticsRouteResponse) GetJSON200() *AnalyticsRoute {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateAnalyticsRouteResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateAnalyticsRouteResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateAnalyticsRouteResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateAnalyticsRouteResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r UpdateAnalyticsRouteResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateAnalyticsRouteResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateAnalyticsRouteResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateAnalyticsRouteResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateAnalyticsRouteResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -83086,7 +83569,9 @@ func (c *ClientWithResponses) GetAnalyticsPropertyWithResponse(ctx context.Conte
 //
 // Changes the given fields. `inbox_id: null` unlinks the property from its inbox;
 // `retention_months: null` keeps its rollups forever. A new `timezone` applies to events
-// received from then on: finished days keep the zone they were counted in.
+// received from then on: finished days keep the zone they were counted in. An API property
+// counts in the new zone from the next local midnight of the zone before
+// (`timezone_applies_at`), so no local day is cut in two.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -83105,7 +83590,9 @@ func (c *ClientWithResponses) UpdateAnalyticsPropertyWithBodyWithResponse(ctx co
 //
 // Changes the given fields. `inbox_id: null` unlinks the property from its inbox;
 // `retention_months: null` keeps its rollups forever. A new `timezone` applies to events
-// received from then on: finished days keep the zone they were counted in.
+// received from then on: finished days keep the zone they were counted in. An API property
+// counts in the new zone from the next local midnight of the zone before
+// (`timezone_applies_at`), so no local day is cut in two.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -84000,6 +84487,67 @@ func (c *ClientWithResponses) RotateAnalyticsKeyWithResponse(ctx context.Context
 		return nil, err
 	}
 	return ParseRotateAnalyticsKeyResponse(rsp)
+}
+
+// ListAnalyticsRoutesWithResponse List an API property's routes
+//
+// Every route the property counted, by pattern: those its host named, those inferred from
+// paths (`inferred`), and `(unmatched)` and `(other)`, which take no place under the cap of
+// 1,000. Hidden routes
+// (`hidden`) are left out of `queryAnalytics` with `dataset: api`; their requests are still
+// counted, and showing a route again brings them back. A site answers `422 property_kind`.
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/routes (the `ListAnalyticsRoutes` operationId).
+func (c *ClientWithResponses) ListAnalyticsRoutesWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsRoutesParams, reqEditors ...RequestEditorFn) (*ListAnalyticsRoutesResponse, error) {
+	rsp, err := c.ListAnalyticsRoutes(ctx, propertyId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListAnalyticsRoutesResponse(rsp)
+}
+
+// UpdateAnalyticsRouteWithBodyWithResponse Hide or show a route
+//
+// `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
+// included, such as a health check the API's own load balancer calls; `hidden: false` shows
+// it again. Nothing counted is deleted. To count a path under another pattern, add a
+// property `path_rules` entry instead.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/routes/{routeId} (the `UpdateAnalyticsRoute` operationId).
+func (c *ClientWithResponses) UpdateAnalyticsRouteWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, routeId AnalyticsRouteId, params *UpdateAnalyticsRouteParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAnalyticsRouteResponse, error) {
+	rsp, err := c.UpdateAnalyticsRouteWithBody(ctx, propertyId, routeId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateAnalyticsRouteResponse(rsp)
+}
+
+// UpdateAnalyticsRouteWithResponse Hide or show a route
+//
+// `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
+// included, such as a health check the API's own load balancer calls; `hidden: false` shows
+// it again. Nothing counted is deleted. To count a path under another pattern, add a
+// property `path_rules` entry instead.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/analytics/properties/{propertyId}/routes/{routeId} (the `UpdateAnalyticsRoute` operationId).
+func (c *ClientWithResponses) UpdateAnalyticsRouteWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, routeId AnalyticsRouteId, params *UpdateAnalyticsRouteParams, body UpdateAnalyticsRouteJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAnalyticsRouteResponse, error) {
+	rsp, err := c.UpdateAnalyticsRoute(ctx, propertyId, routeId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateAnalyticsRouteResponse(rsp)
 }
 
 // ListAnalyticsSegmentsWithResponse List a property's segments
@@ -94362,6 +94910,121 @@ func ParseRotateAnalyticsKeyResponse(rsp *http.Response) (*RotateAnalyticsKeyRes
 			return nil, err
 		}
 		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListAnalyticsRoutesResponse parses an HTTP response from a ListAnalyticsRoutesWithResponse call
+func ParseListAnalyticsRoutesResponse(rsp *http.Response) (*ListAnalyticsRoutesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListAnalyticsRoutesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsRouteList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateAnalyticsRouteResponse parses an HTTP response from a UpdateAnalyticsRouteWithResponse call
+func ParseUpdateAnalyticsRouteResponse(rsp *http.Response) (*UpdateAnalyticsRouteResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateAnalyticsRouteResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsRoute
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
 
 	}
 
