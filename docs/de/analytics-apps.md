@@ -162,6 +162,9 @@ YuvaAnalytics.track("Tapped help", interactive = false)
 Ein Prop-Wert, der weder Text noch Zahl noch Boolean ist, wird als Text gesendet. Die Regeln sind dieselben
 wie in Swift.
 
+Die Bibliotheken können auch die Aufrufe Ihrer App an ihre eigene API messen:
+[API-Monitoring aus iOS- und Android-Apps](analytics-api-apps.md).
+
 ## Einwilligung und Opt-out
 
 Beide Bibliotheken arbeiten gleich.

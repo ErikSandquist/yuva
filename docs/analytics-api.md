@@ -30,6 +30,7 @@ Pick your stack. Each sends the same records, so the numbers are the same whiche
 - [Go](analytics-api-go.md): middleware for `net/http`.
 - [Node, Bun and Deno](analytics-api-js.md): srvx, h3, Nitro, Nuxt, Hono, Express, Fastify and Next.js route handlers.
 - [OpenTelemetry](analytics-api-otel.md): any other language, with two environment variables and no Yuva code.
+- [iOS and Android apps](analytics-api-apps.md): the calls your own app makes to your API, timed on the device.
 - curl, below, for anything else.
 
 ## Send requests with curl

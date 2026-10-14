@@ -157,6 +157,9 @@ YuvaAnalytics.track("Tapped help", interactive = false)
 
 A prop value that is not text, a number or a boolean is sent as text. The rules are the same as in Swift.
 
+The libraries can also time the calls your app makes to its own API:
+[API monitoring from iOS and Android apps](analytics-api-apps.md).
+
 ## Consent and opt-out
 
 Both libraries work the same way.

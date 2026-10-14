@@ -31,6 +31,7 @@ Yığınızı seçin. Hepsi aynı kayıtları gönderir; hangisini kullanırsan�
 - [Go](analytics-api-go.md): `net/http` için ara katman.
 - [Node, Bun ve Deno](analytics-api-js.md): srvx, h3, Nitro, Nuxt, Hono, Express, Fastify ve Next.js route handler'ları.
 - [OpenTelemetry](analytics-api-otel.md): diğer tüm diller; iki ortam değişkeni, Yuva kodu yok.
+- [iOS ve Android uygulamaları](analytics-api-apps.md): uygulamanızın kendi API'nize yaptığı çağrılar, cihazda ölçülür.
 - Başka her şey için aşağıdaki curl.
 
 ## curl ile istek gönderme

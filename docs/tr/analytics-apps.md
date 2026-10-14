@@ -161,6 +161,9 @@ YuvaAnalytics.track("Tapped help", interactive = false)
 
 Metin, sayı ya da boolean olmayan bir özellik değeri metin olarak gönderilir. Kurallar Swift'tekilerle aynıdır.
 
+Kütüphaneler, uygulamanızın kendi API'sine yaptığı çağrıların süresini de ölçebilir:
+[iOS ve Android uygulamalarından API izleme](analytics-api-apps.md).
+
 ## İzin ve vazgeçme
 
 İki kütüphane de aynı çalışır.
