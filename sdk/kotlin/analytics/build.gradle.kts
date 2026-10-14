@@ -35,7 +35,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.process)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.coroutines.android)
+    compileOnly(libs.okhttp)
     testImplementation(libs.junit)
+    testImplementation(libs.okhttp)
 }
 
 afterEvaluate {

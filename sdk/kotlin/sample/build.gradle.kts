@@ -27,6 +27,7 @@ android {
         buildConfigField("String", "IDENTITY_TOKEN_URL", configValue("identityTokenUrl"))
         buildConfigField("String", "ANALYTICS_KEY", configValue("analyticsKey"))
         buildConfigField("String", "ANALYTICS_CONSENT", configValue("analyticsConsent"))
+        buildConfigField("String", "API_KEY", configValue("apiKey"))
     }
     buildFeatures {
         compose = true

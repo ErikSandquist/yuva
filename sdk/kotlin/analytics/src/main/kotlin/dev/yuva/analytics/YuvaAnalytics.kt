@@ -16,13 +16,16 @@ import java.io.File
 import java.math.BigDecimal
 import java.util.Locale
 import java.util.UUID
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.serialization.json.JsonPrimitive
+import okhttp3.Request
 
 class YuvaAnalyticsConfiguration(
     val serverUrl: String,
@@ -30,6 +33,17 @@ class YuvaAnalyticsConfiguration(
     val appId: String? = null,
     val requireConsent: Boolean = false,
     val debug: Boolean = false,
+    val requests: YuvaRequestMonitoring? = null,
+)
+
+class YuvaRequestMonitoring(
+    val key: String,
+    val hosts: List<String>,
+    val routes: List<String> = emptyList(),
+    val route: ((Request) -> String?)? = null,
+    val sendUnmatchedPaths: Boolean = false,
+    val apiVersion: String? = null,
+    val environment: String? = null,
 )
 
 class YuvaRevenue(val amount: BigDecimal, val currency: String)
@@ -49,24 +63,45 @@ object YuvaAnalytics {
     private var current: String? = null
     private var preferences: SharedPreferences? = null
     private var observing = false
+    private var hasRequests = false
+    @Volatile internal var requestMonitor: RequestMonitor? = null
+        private set
 
     fun configure(context: Context, configuration: YuvaAnalyticsConfiguration) {
         val app = context.applicationContext
         val prefs = app.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
         val newScope = CoroutineScope(SupervisorJob() + Dispatchers.IO.limitedParallelism(1))
+        val collect = configuration.serverUrl.trimEnd('/') + "/client/v1/analytics/"
+        val info = appInfo(app)
+        val optedOut = prefs.getBoolean(OPT_OUT, false)
+        val directory = File(app.noBackupFilesDir, "yuva-analytics")
+        val log: ((String) -> Unit)? = if (configuration.debug) { message -> Log.d(TAG, message) } else null
         val core = AnalyticsCore(
-            endpoint = configuration.serverUrl.trimEnd('/') + "/client/v1/analytics/" + configuration.key,
+            endpoint = collect + configuration.key,
             processKey = processKey,
-            app = appInfo(app),
+            app = info,
             home = "app://${configuration.appId ?: app.packageName}/",
             requireConsent = configuration.requireConsent,
-            optedOut = prefs.getBoolean(OPT_OUT, false),
-            queueFile = File(File(app.noBackupFilesDir, "yuva-analytics"), fileName(configuration.key)),
+            optedOut = optedOut,
+            queueFile = File(directory, fileName(configuration.key)),
             ids = PreferencesIdStore(prefs),
             transport = HttpTransport,
             scope = newScope,
-            log = if (configuration.debug) { message -> Log.d(TAG, message) } else null,
+            log = log,
         )
+        val monitoring = configuration.requests
+        val requests = monitoring?.let {
+            RequestCore(
+                endpoint = collect + it.key + "/requests",
+                app = info,
+                requireConsent = configuration.requireConsent,
+                optedOut = optedOut,
+                queueFile = File(directory, fileName(it.key + "_requests")),
+                transport = HttpTransport,
+                scope = newScope,
+                log = log,
+            )
+        }
         val channel = Channel<AnalyticsCommand>(Channel.UNLIMITED)
         val previous = synchronized(lock) {
             val old = commands to scope
@@ -74,13 +109,37 @@ object YuvaAnalytics {
             scope = newScope
             appId = configuration.appId ?: app.packageName
             preferences = prefs
+            hasRequests = requests != null
+            requestMonitor = monitoring?.let {
+                RequestMonitor(
+                    RequestMatcher(it.hosts, it.routes, it.sendUnmatchedPaths, it.apiVersion, it.environment),
+                    it.route,
+                ) { record -> channel.trySend(AnalyticsCommand.Request(record)) }
+            }
             old
         }
         previous.first?.close()
         previous.second?.cancel()
         newScope.launch {
             core.start()
-            for (command in channel) core.handle(command)
+            requests?.start()
+            for (command in channel) {
+                val done = (command as? AnalyticsCommand.Flush)?.done
+                if (done != null && requests != null) {
+                    requests.handle(AnalyticsCommand.Flush())
+                    core.handle(
+                        AnalyticsCommand.Flush {
+                            newScope.launch {
+                                requests.idle()
+                                done()
+                            }
+                        },
+                    )
+                } else {
+                    core.handle(command)
+                    requests?.handle(command)
+                }
+            }
         }
         observeLifecycle()
     }
@@ -146,6 +205,13 @@ object YuvaAnalytics {
 
     fun flush() {
         send(AnalyticsCommand.Flush())
+    }
+
+    suspend fun queuedRequests(): Int {
+        val answer = CompletableDeferred<Int>()
+        val channel = synchronized(lock) { commands.takeIf { hasRequests } } ?: return 0
+        if (channel.trySend(AnalyticsCommand.QueuedRequests { answer.complete(it) }).isFailure) return 0
+        return withTimeoutOrNull(5_000) { answer.await() } ?: 0
     }
 
     private class PreferencesIdStore(private val prefs: SharedPreferences) : PersistentIdStore {

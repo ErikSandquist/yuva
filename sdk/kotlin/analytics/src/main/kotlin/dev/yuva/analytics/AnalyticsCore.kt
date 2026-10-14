@@ -22,6 +22,8 @@ internal sealed interface AnalyticsCommand {
     data object OptIn : AnalyticsCommand
     class Flush(val done: (() -> Unit)? = null) : AnalyticsCommand
     data class Width(val width: Int) : AnalyticsCommand
+    data class Request(val record: RequestRecord) : AnalyticsCommand
+    class QueuedRequests(val reply: (Int) -> Unit) : AnalyticsCommand
 }
 
 internal class Answer(val status: Int, val retryAfter: String?)
@@ -131,6 +133,7 @@ internal class AnalyticsCore(
                 app = app.copy(width = command.width)
                 queue.updateApp(processKey) { if (it.width == null) it.copy(width = command.width) else it }
             }
+            is AnalyticsCommand.Request, is AnalyticsCommand.QueuedRequests -> Unit
         }
     }
 

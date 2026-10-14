@@ -110,6 +110,7 @@ internal fun AnalyticsScreen(onClose: () -> Unit) {
                 YuvaAnalytics.flush()
                 note("Send now")
             }, Modifier.fillMaxWidth().testTag("sample.analytics.flush")) { Text("Send now") }
+            ApiCalls()
             if (BuildConfig.ANALYTICS_CONSENT == "required") {
                 ToggleRow("Analytics consent", consent, "sample.analytics.consent") {
                     consent = it
