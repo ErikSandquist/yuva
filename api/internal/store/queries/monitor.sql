@@ -10,14 +10,15 @@ UPDATE usage_counters SET monitor_limit_reached_at = @now
 WHERE workspace_id = @workspace_id AND month = @month AND monitor_limit_reached_at IS NULL;
 
 -- name: ListMonitorRoutes :many
-SELECT id, pattern, inferred, hidden, first_seen_at, last_seen_at FROM monitor_routes
+SELECT id, pattern, inferred, hidden, apdex_ms, first_seen_at, last_seen_at FROM monitor_routes
 WHERE workspace_id = @workspace_id AND property_id = @property_id
 ORDER BY pattern;
 
--- name: SetMonitorRouteHidden :one
-UPDATE monitor_routes SET hidden = @hidden
+-- name: UpdateMonitorRoute :one
+UPDATE monitor_routes SET hidden = coalesce(sqlc.narg(hidden)::boolean, hidden),
+    apdex_ms = CASE WHEN @set_apdex::boolean THEN sqlc.narg(apdex_ms)::int ELSE apdex_ms END
 WHERE workspace_id = @workspace_id AND property_id = @property_id AND id = @id
-RETURNING id, pattern, inferred, hidden, first_seen_at, last_seen_at;
+RETURNING id, pattern, inferred, hidden, apdex_ms, first_seen_at, last_seen_at;
 
 -- name: SetWorkspaceMonitorLimit :execrows
 UPDATE workspaces SET monitor_monthly_requests = sqlc.narg(monthly_requests) WHERE id = @id AND deleted_at IS NULL;

@@ -22,13 +22,29 @@ const (
 
 	MaxMinuteBuckets = 1440
 	minuteLabel      = "2006-01-02T15:04-07:00"
+
+	RoutesNew    = "new"
+	RoutesSilent = "silent"
 )
 
-// Dims are the dimensions an API query breaks down and filters by; Metrics its metrics.
+// CoreDims break down and filter from every tier; one of ExtraDims joins only the dimensions its
+// hourly rows keep (extraWith).
 var (
-	Dims    = []string{"route", "method", "status", "status_class", "environment"}
-	Metrics = []string{"requests", "requests_per_minute", "errors", "error_rate", "client_errors", "client_error_rate", "p50", "p95", "p99", "avg_duration"}
-	Grains  = []string{"time:minute", "time:hour", "time:day"}
+	CoreDims  = []string{"route", "method", "status", "status_class", "api_version", "environment", "service", "source", "platform"}
+	ExtraDims = []string{"consumer", "country", "app_version"}
+	Dims      = slices.Concat(CoreDims, ExtraDims)
+	Metrics   = []string{"requests", "requests_per_minute", "errors", "error_rate", "client_errors", "client_error_rate", "p50", "p75", "p90", "p95", "p99",
+		"avg_duration", "max_duration", "apdex", "request_bytes", "response_bytes", "response_size_p50", "response_size_p95", "conversations"}
+	Grains = []string{"time:minute", "time:hour", "time:day", "time:week", "time:month"}
+
+	extraWith       = []string{"route", "method", "status_class"}
+	durationMetrics = []string{"p50", "p75", "p90", "p95", "p99", "apdex"}
+	sizeMetrics     = []string{"response_size_p50", "response_size_p95"}
+	extraCodes      = map[string]int16{"consumer": DimConsumer, "country": DimCountry, "app_version": DimAppVersion}
+	nameKinds       = map[string]string{"api_version": KindAPIVersion, "environment": KindEnvironment, "service": KindService, "consumer": KindConsumer,
+		"country": KindCountry, "app_version": KindAppVersion}
+	sourceNames   = map[int32]string{int32(SourceServer): "server", int32(SourceOTLP): "otlp", int32(SourceApp): "app"}
+	platformNames = map[int32]string{int32(PlatformNone): "", int32(PlatformIOS): "ios", int32(PlatformAndroid): "android"}
 )
 
 var ErrBadQuery = analytics.ErrBadQuery
@@ -36,15 +52,22 @@ var ErrBadQuery = analytics.ErrBadQuery
 // ErrMinuteRange: a time:minute query reaches past the minute rows or has too many buckets.
 var ErrMinuteRange = errors.New("time:minute serves at most 1,440 minutes within the minute rows")
 
+// ErrDimensionCombination: the query asks for dimensions that are not kept together.
+var ErrDimensionCombination = errors.New("dimension combination")
+
 func badQuery(format string, args ...any) error {
 	return fmt.Errorf("%w: %s", ErrBadQuery, fmt.Sprintf(format, args...))
+}
+
+func combination(format string, args ...any) error {
+	return fmt.Errorf("%w: %s", ErrDimensionCombination, fmt.Sprintf(format, args...))
 }
 
 type Filter = analytics.Filter
 
 // Query asks for an API property's requests of [Start, End), broken down by up to two dimensions
 // (one may be a time grain) and narrowed by filters. MinuteFrom is the first minute minute rows are
-// kept for; Days says the range is whole local days, which daily rows may answer.
+// kept for; Days says the range was given as local days, which its previous period follows.
 type Query struct {
 	WorkspaceID uuid.UUID
 	PropertyID  uuid.UUID
@@ -56,6 +79,24 @@ type Query struct {
 	Filters     []Filter
 	MinuteFrom  time.Time
 	Now         time.Time
+	// ApdexMS is the property's Apdex threshold, for routes without their own.
+	ApdexMS int64
+	// InboxID is the linked inbox whose conversations the conversations metric counts.
+	InboxID *uuid.UUID
+	// RouteState new or silent narrows the answer to Routes, and each of them gets a row.
+	RouteState string
+	Routes     []int32
+}
+
+// Previous is the period of the range's length just before it: as many local days for a range of
+// days, as many minutes otherwise.
+func (q Query) Previous() (time.Time, time.Time) {
+	if q.Days {
+		from, to := q.Zone.LocalDay(q.Start), q.Zone.LocalDay(q.End.Add(-time.Nanosecond))
+		n := int(to.Sub(from).Hours()/24) + 1
+		return q.Zone.DayStart(from.AddDate(0, 0, -n)), q.Start
+	}
+	return q.Start.Add(-q.End.Sub(q.Start)), q.Start
 }
 
 type Row struct {
@@ -63,7 +104,7 @@ type Row struct {
 	// not sort by time.
 	Start time.Time
 	Dims  []string
-	Agg  Agg
+	Agg   Agg
 	// Minutes is how many minutes of the row's range have passed, for requests_per_minute.
 	Minutes float64
 }
@@ -84,6 +125,7 @@ func (a *Agg) Metric(name string, minutes float64) float64 {
 		}
 		return round(float64(n)*100/float64(a.Requests), 2)
 	}
+	ms := func(q float64) float64 { return round(a.DurationQuantile(q)/1000, 6) }
 	switch name {
 	case "requests":
 		return float64(a.Requests)
@@ -101,16 +143,40 @@ func (a *Agg) Metric(name string, minutes float64) float64 {
 	case "client_error_rate":
 		return pct(a.ClientErrors)
 	case "p50":
-		return round(a.DurationQuantile(0.5)/1000, 6)
+		return ms(0.5)
+	case "p75":
+		return ms(0.75)
+	case "p90":
+		return ms(0.9)
 	case "p95":
-		return round(a.DurationQuantile(0.95)/1000, 6)
+		return ms(0.95)
 	case "p99":
-		return round(a.DurationQuantile(0.99)/1000, 6)
+		return ms(0.99)
 	case "avg_duration":
 		if a.Requests == 0 {
 			return 0
 		}
 		return round(float64(a.DurationSum)/float64(a.Requests)/1000, 6)
+	case "max_duration":
+		if a.Requests == 0 {
+			return 0
+		}
+		return round(float64(a.DurationMax)/1000, 6)
+	case "apdex":
+		if a.Requests == 0 {
+			return 0
+		}
+		return round((float64(a.Satisfied)+float64(a.Tolerating)/2)/float64(a.Requests), 3)
+	case "request_bytes":
+		return float64(a.RequestBytes)
+	case "response_bytes":
+		return float64(a.ResponseBytes)
+	case "response_size_p50":
+		return round(a.Sizes.Quantile(0.5), 0)
+	case "response_size_p95":
+		return round(a.Sizes.Quantile(0.95), 0)
+	case "conversations":
+		return float64(a.Conversations)
 	}
 	return 0
 }
@@ -124,13 +190,18 @@ func round(v float64, digits int) float64 {
 }
 
 type plan struct {
-	q        Query
-	grain    string
-	dims     []string
-	days     []time.Time
-	hours    []time.Time
-	minutes  [][2]time.Time
-	sketches bool
+	q     Query
+	grain string
+	dims  []string
+	// extra is the extra dimension the query reads, which the dimension tables answer.
+	extra   string
+	days    []time.Time
+	hours   []time.Time
+	minutes [][2]time.Time
+	// open counts the hours of an extra dimension query that are not folded yet.
+	open                    int
+	sketches, sizes, apdex  bool
+	conversations, onlyTime bool
 }
 
 func (p *plan) parse() error {
@@ -154,16 +225,17 @@ func (p *plan) parse() error {
 			}
 			p.dims = append(p.dims, d)
 		default:
-			return badQuery("the api dataset breaks down by %s and time:minute, time:hour or time:day, not %q", strings.Join(Dims, ", "), d)
+			return badQuery("the api dataset breaks down by %s and %s, not %q", strings.Join(Dims, ", "), strings.Join(Grains, ", "), d)
 		}
 	}
 	for _, m := range q.Metrics {
 		if !slices.Contains(Metrics, m) {
 			return badQuery("the api dataset offers %s, not %s", strings.Join(Metrics, ", "), m)
 		}
-		if m == "p50" || m == "p95" || m == "p99" {
-			p.sketches = true
-		}
+		p.sketches = p.sketches || slices.Contains(durationMetrics, m)
+		p.sizes = p.sizes || slices.Contains(sizeMetrics, m)
+		p.apdex = p.apdex || m == "apdex"
+		p.conversations = p.conversations || m == "conversations"
 	}
 	for _, f := range q.Filters {
 		if !slices.Contains(Dims, f.Dimension) {
@@ -172,6 +244,40 @@ func (p *plan) parse() error {
 		if !slices.Contains([]string{"is", "is_not", "contains", "not_contains", "matches"}, f.Op) || len(f.Values) == 0 {
 			return badQuery("the filter on %q needs an op of is, is_not, contains, not_contains or matches and at least one value", f.Dimension)
 		}
+	}
+	used := slices.Clone(p.dims)
+	for _, f := range q.Filters {
+		if !slices.Contains(used, f.Dimension) {
+			used = append(used, f.Dimension)
+		}
+	}
+	for _, d := range used {
+		if !slices.Contains(ExtraDims, d) {
+			continue
+		}
+		if p.extra != "" && p.extra != d {
+			return combination("consumer, country and app_version are kept apart: break down or filter by one of them, not %s and %s", p.extra, d)
+		}
+		p.extra = d
+	}
+	if p.extra != "" {
+		for _, d := range used {
+			if d != p.extra && !slices.Contains(extraWith, d) {
+				return combination("%s is kept by local hour with route, method and status_class only, not with %s", p.extra, d)
+			}
+		}
+		if p.grain == "minute" {
+			return combination("%s is kept by local hour: break it down by time:hour, time:day, time:week or time:month, not time:minute", p.extra)
+		}
+		if !q.Zone.LocalHour(q.Start).Equal(q.Start) || !q.Zone.LocalHour(q.End).Equal(q.End) {
+			return combination("%s is kept by local hour: give a range of whole local hours", p.extra)
+		}
+	}
+	if p.conversations && (len(p.dims) > 0 || (p.grain != "" && !slices.Contains([]string{"day", "week", "month"}, p.grain)) || len(q.Filters) > 0 || q.RouteState != "") {
+		return badQuery("conversations are counted per local day of the linked inbox: ask for them with no dimension or time:day, time:week or time:month alone, and no filter or routes")
+	}
+	if q.RouteState != "" && (len(q.Dimensions) != 1 || q.Dimensions[0] != "route") {
+		return badQuery("routes takes the dimension route alone")
 	}
 	if p.grain == "minute" && (q.Start.Before(q.MinuteFrom) || q.End.Sub(q.Start) > MaxMinuteBuckets*time.Minute) {
 		return ErrMinuteRange
@@ -185,7 +291,8 @@ type hourState struct {
 }
 
 // tiers decides where each part of the range is read from: closed days from daily rows, closed
-// hours from hourly rows, everything else from minute rows. Hours without a row had no requests.
+// hours from hourly rows, everything else from minute rows. An extra dimension has hourly rows of
+// every writer for open hours too, and no minute rows. Hours without a row had no requests.
 func (p *plan) tiers(ctx context.Context, tx pgx.Tx) error {
 	q := p.q
 	if p.grain == "minute" {
@@ -212,7 +319,7 @@ func (p *plan) tiers(ctx context.Context, tx pgx.Tx) error {
 		return err
 	}
 	byDay := map[int64]bool{}
-	if q.Days && p.grain != "hour" {
+	if p.grain != "hour" {
 		ready := map[int64]bool{}
 		days := map[int64]time.Time{}
 		for _, h := range states {
@@ -236,6 +343,15 @@ func (p *plan) tiers(ctx context.Context, tx pgx.Tx) error {
 			continue
 		}
 		end := q.Zone.HourEnd(h.hour)
+		if p.extra != "" {
+			if !h.hour.Before(q.Start) && h.hour.Before(q.End) {
+				p.hours = append(p.hours, h.hour)
+				if !h.built {
+					p.open++
+				}
+			}
+			continue
+		}
 		if h.built && !h.hour.Before(q.Start) && !end.After(q.End) {
 			p.hours = append(p.hours, h.hour)
 			continue
@@ -250,46 +366,103 @@ func (p *plan) tiers(ctx context.Context, tx pgx.Tx) error {
 	return nil
 }
 
-// names maps a property's dictionary ids to their values.
+// nameMaps maps a property's dictionary ids to their values.
 type nameMaps struct {
-	routes, envs map[int32]string
-	hidden       []int32
+	routes map[int32]string
+	hidden []int32
+	apdex  map[int32]int64
+	kinds  map[string]map[int32]string
 }
 
 func loadNames(ctx context.Context, tx pgx.Tx, ws, prop uuid.UUID) (nameMaps, error) {
-	out := nameMaps{routes: map[int32]string{}, envs: map[int32]string{}}
-	rows, err := tx.Query(ctx, `SELECT id, pattern FROM monitor_routes WHERE workspace_id = $1 AND property_id = $2`, ws, prop)
+	out := nameMaps{routes: map[int32]string{}, apdex: map[int32]int64{}, kinds: map[string]map[int32]string{}}
+	for _, kind := range nameKinds {
+		out.kinds[kind] = map[int32]string{}
+	}
+	for _, kind := range []string{KindAPIVersion, KindEnvironment, KindService} {
+		out.kinds[kind][0] = ""
+	}
+	rows, err := tx.Query(ctx, `SELECT id, pattern, hidden, apdex_ms FROM monitor_routes WHERE workspace_id = $1 AND property_id = $2 ORDER BY id`, ws, prop)
 	if err != nil {
 		return out, err
 	}
-	if err := collectNames(rows, out.routes); err != nil {
-		return out, err
-	}
-	rows, err = tx.Query(ctx, `SELECT id FROM monitor_routes WHERE workspace_id = $1 AND property_id = $2 AND hidden ORDER BY id`, ws, prop)
-	if err != nil {
-		return out, err
-	}
-	if out.hidden, err = pgx.CollectRows(rows, pgx.RowTo[int32]); err != nil {
-		return out, err
-	}
-	rows, err = tx.Query(ctx, `SELECT id, value FROM monitor_names WHERE workspace_id = $1 AND property_id = $2 AND kind = 'environment'`, ws, prop)
-	if err != nil {
-		return out, err
-	}
-	return out, collectNames(rows, out.envs)
-}
-
-func collectNames(rows pgx.Rows, into map[int32]string) error {
-	defer rows.Close()
 	for rows.Next() {
 		var id int32
-		var v string
-		if err := rows.Scan(&id, &v); err != nil {
-			return err
+		var pattern string
+		var hidden bool
+		var apdex *int32
+		if err := rows.Scan(&id, &pattern, &hidden, &apdex); err != nil {
+			rows.Close()
+			return out, err
 		}
-		into[id] = v
+		out.routes[id] = pattern
+		if hidden {
+			out.hidden = append(out.hidden, id)
+		}
+		if apdex != nil {
+			out.apdex[id] = int64(*apdex)
+		}
 	}
-	return rows.Err()
+	rows.Close()
+	if err := rows.Err(); err != nil {
+		return out, err
+	}
+	rows, err = tx.Query(ctx, `SELECT kind, id, value FROM monitor_names WHERE workspace_id = $1 AND property_id = $2`, ws, prop)
+	if err != nil {
+		return out, err
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var kind, v string
+		var id int32
+		if err := rows.Scan(&kind, &id, &v); err != nil {
+			return out, err
+		}
+		if m := out.kinds[kind]; m != nil {
+			m[id] = v
+		}
+	}
+	return out, rows.Err()
+}
+
+// domain is every value a dimension can take, by its id or code.
+func (n nameMaps) domain(d string) map[int32]string {
+	out := map[int32]string{}
+	switch d {
+	case "route":
+		return n.routes
+	case "method":
+		for code := range int16(len(methods)) {
+			out[int32(code)] = MethodName(code)
+		}
+	case "status":
+		for code := range int32(600) {
+			out[code] = strconv.Itoa(int(code))
+		}
+	case "status_class":
+		for class := range int16(6) {
+			out[int32(class)] = StatusClassName(class)
+		}
+	case "source":
+		return sourceNames
+	case "platform":
+		return platformNames
+	default:
+		return n.kinds[nameKinds[d]]
+	}
+	return out
+}
+
+func (n nameMaps) label(d string, v int32) string {
+	switch d {
+	case "status":
+		return strconv.Itoa(int(v))
+	case "method":
+		return MethodName(int16(v))
+	case "status_class":
+		return StatusClassName(int16(v))
+	}
+	return n.domain(d)[v]
 }
 
 // matches is a filter's test of one value, as the analytics filters compare: whole values, parts
@@ -339,52 +512,35 @@ func wildcard(pattern, v string) bool {
 
 func negative(op string) bool { return op == "is_not" || op == "not_contains" }
 
+// column is a dimension's expression in a core table or, with dims, a dimension table.
+func column(d string, dims bool) string {
+	switch d {
+	case "status_class":
+		if dims {
+			return "status_class::int"
+		}
+		return "(status / 100)::int"
+	case "method", "status", "source", "platform":
+		return d + "::int"
+	case "consumer", "country", "app_version":
+		return "value"
+	}
+	return d
+}
+
 // filterSQL turns the filters into conditions on ids and codes, numbering parameters from next.
-func filterSQL(fs []Filter, names nameMaps, next int) (string, []any) {
+func filterSQL(fs []Filter, names nameMaps, dims bool, next int) (string, []any) {
 	var conds []string
 	var args []any
 	for _, f := range fs {
-		var col string
 		set := []int32{}
-		switch f.Dimension {
-		case "route":
-			col = "route"
-			for id, v := range names.routes {
-				if matches(f, v) {
-					set = append(set, id)
-				}
-			}
-		case "environment":
-			col = "environment"
-			for id, v := range names.envs {
-				if matches(f, v) {
-					set = append(set, id)
-				}
-			}
-		case "method":
-			col = "method"
-			for code := range int16(len(methods)) {
-				if matches(f, MethodName(code)) {
-					set = append(set, int32(code))
-				}
-			}
-		case "status":
-			col = "status"
-			for code := range int32(600) {
-				if matches(f, strconv.Itoa(int(code))) {
-					set = append(set, code)
-				}
-			}
-		case "status_class":
-			col = "(status / 100)"
-			for class := range int16(6) {
-				if matches(f, StatusClassName(class)) {
-					set = append(set, int32(class))
-				}
+		for id, v := range names.domain(f.Dimension) {
+			if matches(f, v) {
+				set = append(set, id)
 			}
 		}
 		slices.Sort(set)
-		cond := fmt.Sprintf("%s = ANY($%d::int[])", col, next+len(args))
+		cond := fmt.Sprintf("%s = ANY($%d::int[])", column(f.Dimension, dims), next+len(args))
 		if negative(f.Op) {
 			cond = "NOT " + cond
 		}
@@ -402,7 +558,8 @@ type tier struct {
 }
 
 // bucketSQL is a tier's expression for the query's grain: instants for minutes and hours, local
-// dates for days, each in the zone that applied at the row's time. Parameters go to args.
+// dates for days, weeks and months, each in the zone that applied at the row's time. Parameters
+// go to args.
 func (p *plan) bucketSQL(t tier, args *[]any) string {
 	z := p.q.Zone
 	switch p.grain {
@@ -415,31 +572,239 @@ func (p *plan) bucketSQL(t tier, args *[]any) string {
 			}, true, args)
 		}
 		return t.timeCol
-	case "day":
-		if t.timeCol == "day" {
-			return "day::timestamp AT TIME ZONE 'UTC'"
-		}
-		return z.sql(t.timeCol, func(tz string) string {
-			return "((" + t.timeCol + " AT TIME ZONE " + tz + ")::date)::timestamp AT TIME ZONE 'UTC'"
-		}, false, args)
 	}
-	return ""
+	if t.timeCol == "day" {
+		return "day::timestamp AT TIME ZONE 'UTC'"
+	}
+	return z.sql(t.timeCol, func(tz string) string {
+		return "((" + t.timeCol + " AT TIME ZONE " + tz + ")::date)::timestamp AT TIME ZONE 'UTC'"
+	}, false, args)
 }
 
-func dimSQL(d string) string {
-	switch d {
-	case "status_class":
-		return "(status / 100)::int"
-	case "method", "status":
-		return d + "::int"
+// coarse is the week (from Monday) or month a local date is in.
+func (p *plan) coarse(day time.Time) time.Time {
+	switch p.grain {
+	case "week":
+		return day.AddDate(0, 0, -((int(day.Weekday()) + 6) % 7))
+	case "month":
+		return time.Date(day.Year(), day.Month(), 1, 0, 0, 0, 0, time.UTC)
 	}
-	return d
+	return day
 }
+
+func (p *plan) daily() bool { return p.grain == "day" || p.grain == "week" || p.grain == "month" }
 
 type group struct {
 	bucket time.Time
 	vals   []int32
 	agg    Agg
+}
+
+type groups struct {
+	m     map[string]*group
+	order []string
+}
+
+func (gs *groups) add(g *group) {
+	key := bucketKey(g.bucket, g.vals)
+	if cur := gs.m[key]; cur != nil {
+		cur.agg.Merge(&g.agg)
+		return
+	}
+	g.bucket = g.bucket.UTC()
+	gs.m[key] = g
+	gs.order = append(gs.order, key)
+}
+
+func (p *plan) tierList() []tier {
+	var tiers []tier
+	if p.extra != "" {
+		code := extraCodes[p.extra]
+		if len(p.days) > 0 {
+			tiers = append(tiers, tier{table: "monitor_dim_day", timeCol: "day", where: "day = ANY($3::date[]) AND dim = $4", args: []any{p.days, code}})
+		}
+		if len(p.hours) > 0 {
+			tiers = append(tiers, tier{table: DimHourTable, timeCol: "hour", where: "hour = ANY($3::timestamptz[]) AND dim = $4", args: []any{p.hours, code}})
+		}
+		return tiers
+	}
+	if len(p.days) > 0 {
+		tiers = append(tiers, tier{table: "monitor_day", timeCol: "day", where: "day = ANY($3::date[])", args: []any{p.days}})
+	}
+	if len(p.hours) > 0 {
+		tiers = append(tiers, tier{table: HourTable, timeCol: "hour", where: "hour = ANY($3::timestamptz[])", args: []any{p.hours}})
+	}
+	if len(p.minutes) > 0 {
+		var or []string
+		var args []any
+		for _, r := range p.minutes {
+			or = append(or, fmt.Sprintf("(minute >= $%d AND minute < $%d)", 3+len(args), 4+len(args)))
+			args = append(args, r[0], r[1])
+		}
+		tiers = append(tiers, tier{table: MinuteTable, timeCol: "minute", where: "(" + strings.Join(or, " OR ") + ")", args: args})
+	}
+	return tiers
+}
+
+// collect adds up the rows of every tier by the query's bucket and dimensions. With apdex, each
+// route's requests are counted under that route's threshold before they are added up.
+func (p *plan) collect(ctx context.Context, tx pgx.Tx, names nameMaps) (*groups, error) {
+	q := p.q
+	out := &groups{m: map[string]*group{}}
+	routeCol := slices.Index(p.dims, "route")
+	hiddenRoute := p.apdex && routeCol < 0
+	dims := p.extra != ""
+	for _, t := range p.tierList() {
+		args := append([]any{q.WorkspaceID, q.PropertyID}, t.args...)
+		var cols []string
+		if p.grain != "" {
+			cols = append(cols, p.bucketSQL(t, &args))
+		}
+		for _, d := range p.dims {
+			cols = append(cols, column(d, dims))
+		}
+		if hiddenRoute {
+			cols = append(cols, "route")
+		}
+		fsql, fargs := filterSQL(q.Filters, names, dims, len(args)+1)
+		args = append(args, fargs...)
+		if len(names.hidden) > 0 {
+			args = append(args, names.hidden)
+			fsql += fmt.Sprintf(" AND NOT route = ANY($%d::int[])", len(args))
+		}
+		if q.RouteState != "" {
+			args = append(args, append([]int32{}, q.Routes...))
+			fsql += fmt.Sprintf(" AND route = ANY($%d::int[])", len(args))
+		}
+		sel := `sum(requests)::bigint, sum(errors)::bigint, sum(client_errors)::bigint, sum(sampled)::bigint, sum(duration_sum)::bigint,
+			min(duration_min)::bigint, max(duration_max)::bigint, sum(request_bytes)::bigint, sum(response_bytes)::bigint`
+		if p.sketches {
+			sel += ", array_agg(durations)"
+		}
+		if p.sizes {
+			sel += ", array_agg(response_sizes)"
+		}
+		groupBy := " HAVING count(*) > 0"
+		if len(cols) > 0 {
+			pos := make([]string, len(cols))
+			for i := range cols {
+				pos[i] = strconv.Itoa(i + 1)
+			}
+			groupBy = " GROUP BY " + strings.Join(pos, ", ")
+			sel = strings.Join(cols, ", ") + ", " + sel
+		}
+		rows, err := tx.Query(ctx, "SELECT "+sel+" FROM "+t.table+" WHERE workspace_id = $1 AND property_id = $2 AND "+t.where+fsql+groupBy, args...)
+		if err != nil {
+			return nil, fmt.Errorf("monitor query: %w", err)
+		}
+		for rows.Next() {
+			g := &group{vals: make([]int32, len(p.dims))}
+			var dest []any
+			if p.grain != "" {
+				dest = append(dest, &g.bucket)
+			}
+			for i := range g.vals {
+				dest = append(dest, &g.vals[i])
+			}
+			var route int32
+			if hiddenRoute {
+				dest = append(dest, &route)
+			}
+			a := &g.agg
+			dest = append(dest, &a.Requests, &a.Errors, &a.ClientErrors, &a.Sampled, &a.DurationSum, &a.DurationMin, &a.DurationMax,
+				&a.RequestBytes, &a.ResponseBytes)
+			var durations, sizes [][]byte
+			if p.sketches {
+				dest = append(dest, &durations)
+			}
+			if p.sizes {
+				dest = append(dest, &sizes)
+			}
+			if err := rows.Scan(dest...); err != nil {
+				rows.Close()
+				return nil, err
+			}
+			a.Durations, a.Sizes = NewSketch(DurationScale), NewSketch(SizeScale)
+			for _, set := range []struct {
+				raw [][]byte
+				sk  *Sketch
+			}{{durations, &a.Durations}, {sizes, &a.Sizes}} {
+				for _, raw := range set.raw {
+					sk, err := DecodeSketch(raw)
+					if err != nil {
+						rows.Close()
+						return nil, err
+					}
+					set.sk.Merge(sk)
+				}
+			}
+			if p.apdex {
+				if routeCol >= 0 {
+					route = g.vals[routeCol]
+				}
+				t := q.ApdexMS
+				if ms, ok := names.apdex[route]; ok {
+					t = ms
+				}
+				sat, tol := a.Durations.ApdexCounts(t * 1000)
+				a.Satisfied, a.Tolerating = int64(sat), int64(tol)
+			}
+			if p.grain == "week" || p.grain == "month" {
+				g.bucket = p.coarse(g.bucket.UTC())
+			}
+			out.add(g)
+		}
+		rows.Close()
+		if err := rows.Err(); err != nil {
+			return nil, fmt.Errorf("monitor query: %w", err)
+		}
+	}
+	return out, nil
+}
+
+// addConversations counts the conversations the linked inbox received in the range, by the local
+// day they started on.
+func (p *plan) addConversations(ctx context.Context, tx pgx.Tx, gs *groups) error {
+	q := p.q
+	if !p.conversations || q.InboxID == nil {
+		return nil
+	}
+	args := []any{q.WorkspaceID, *q.InboxID, q.Start, q.End}
+	sel, groupBy := "count(*)", ""
+	if p.grain != "" {
+		sel, groupBy = p.bucketSQL(tier{timeCol: "created_at"}, &args)+", count(*)", " GROUP BY 1"
+	}
+	rows, err := tx.Query(ctx, `SELECT `+sel+` FROM conversations WHERE workspace_id = $1 AND inbox_id = $2 AND kind <> 'feedback' AND NOT spam
+		AND created_at >= $3 AND created_at < $4`+groupBy, args...)
+	if err != nil {
+		return fmt.Errorf("monitor conversations: %w", err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+		g := &group{agg: NewAgg()}
+		dest := []any{&g.agg.Conversations}
+		if p.grain != "" {
+			dest = []any{&g.bucket, &g.agg.Conversations}
+		}
+		if err := rows.Scan(dest...); err != nil {
+			return err
+		}
+		if g.agg.Conversations == 0 {
+			continue
+		}
+		g.bucket = p.coarse(g.bucket.UTC())
+		gs.add(g)
+	}
+	return rows.Err()
+}
+
+func readOnly(ctx context.Context, s *PGStore, fn func(tx pgx.Tx) error) error {
+	return pgx.BeginTxFunc(ctx, s.Pool, pgx.TxOptions{AccessMode: pgx.ReadOnly}, func(tx pgx.Tx) error {
+		if _, err := tx.Exec(ctx, "SET LOCAL statement_timeout = "+strconv.Itoa(int(analytics.QueryTimeout.Milliseconds()))); err != nil {
+			return err
+		}
+		return fn(tx)
+	})
 }
 
 func (s *PGStore) Query(ctx context.Context, q Query) (Result, error) {
@@ -448,10 +813,7 @@ func (s *PGStore) Query(ctx context.Context, q Query) (Result, error) {
 		return Result{}, err
 	}
 	var res Result
-	err := pgx.BeginTxFunc(ctx, s.Pool, pgx.TxOptions{AccessMode: pgx.ReadOnly}, func(tx pgx.Tx) error {
-		if _, err := tx.Exec(ctx, "SET LOCAL statement_timeout = "+strconv.Itoa(int(analytics.QueryTimeout.Milliseconds()))); err != nil {
-			return err
-		}
+	err := readOnly(ctx, s, func(tx pgx.Tx) error {
 		if err := p.tiers(ctx, tx); err != nil {
 			return err
 		}
@@ -459,117 +821,101 @@ func (s *PGStore) Query(ctx context.Context, q Query) (Result, error) {
 		if err != nil {
 			return err
 		}
-		var tiers []tier
-		if len(p.days) > 0 {
-			tiers = append(tiers, tier{table: "monitor_day", timeCol: "day", where: "day = ANY($3::date[])", args: []any{p.days}})
+		gs, err := p.collect(ctx, tx, names)
+		if err != nil {
+			return err
 		}
-		if len(p.hours) > 0 {
-			tiers = append(tiers, tier{table: "monitor_hour", timeCol: "hour", where: "hour = ANY($3::timestamptz[])", args: []any{p.hours}})
+		if err := p.addConversations(ctx, tx, gs); err != nil {
+			return err
 		}
-		if len(p.minutes) > 0 {
-			var or []string
-			var args []any
-			for _, r := range p.minutes {
-				or = append(or, fmt.Sprintf("(minute >= $%d AND minute < $%d)", 3+len(args), 4+len(args)))
-				args = append(args, r[0], r[1])
-			}
-			tiers = append(tiers, tier{table: MinuteTable, timeCol: "minute", where: "(" + strings.Join(or, " OR ") + ")", args: args})
-		}
-		groups := map[string]*group{}
-		var order []string
-		for _, t := range tiers {
-			args := append([]any{q.WorkspaceID, q.PropertyID}, t.args...)
-			var cols []string
-			if p.grain != "" {
-				cols = append(cols, p.bucketSQL(t, &args))
-			}
-			for _, d := range p.dims {
-				cols = append(cols, dimSQL(d))
-			}
-			fsql, fargs := filterSQL(q.Filters, names, len(args)+1)
-			args = append(args, fargs...)
-			if len(names.hidden) > 0 {
-				args = append(args, names.hidden)
-				fsql += fmt.Sprintf(" AND NOT route = ANY($%d::int[])", len(args))
-			}
-			sel := `sum(requests)::bigint, sum(errors)::bigint, sum(client_errors)::bigint, sum(sampled)::bigint, sum(duration_sum)::bigint,
-				min(duration_min)::bigint, max(duration_max)::bigint, sum(request_bytes)::bigint, sum(response_bytes)::bigint`
-			if p.sketches {
-				sel += ", array_agg(durations)"
-			}
-			groupBy := " HAVING count(*) > 0"
-			if len(cols) > 0 {
-				pos := make([]string, len(cols))
-				for i := range cols {
-					pos[i] = strconv.Itoa(i + 1)
-				}
-				groupBy = " GROUP BY " + strings.Join(pos, ", ")
-				sel = strings.Join(cols, ", ") + ", " + sel
-			}
-			rows, err := tx.Query(ctx, "SELECT "+sel+" FROM "+t.table+" WHERE workspace_id = $1 AND property_id = $2 AND "+t.where+fsql+groupBy, args...)
-			if err != nil {
-				return fmt.Errorf("monitor query: %w", err)
-			}
-			for rows.Next() {
-				var g group
-				g.vals = make([]int32, len(p.dims))
-				var dest []any
-				if p.grain != "" {
-					dest = append(dest, &g.bucket)
-				}
-				for i := range g.vals {
-					dest = append(dest, &g.vals[i])
-				}
-				a := &g.agg
-				dest = append(dest, &a.Requests, &a.Errors, &a.ClientErrors, &a.Sampled, &a.DurationSum, &a.DurationMin, &a.DurationMax,
-					&a.RequestBytes, &a.ResponseBytes)
-				var sketches [][]byte
-				if p.sketches {
-					dest = append(dest, &sketches)
-				}
-				if err := rows.Scan(dest...); err != nil {
-					rows.Close()
-					return err
-				}
-				a.Durations, a.Sizes = NewSketch(DurationScale), NewSketch(SizeScale)
-				for _, raw := range sketches {
-					sk, err := DecodeSketch(raw)
-					if err != nil {
-						rows.Close()
-						return err
-					}
-					a.Durations.Merge(sk)
-				}
-				key := bucketKey(g.bucket, g.vals)
-				if cur := groups[key]; cur != nil {
-					cur.agg.Merge(&g.agg)
-				} else {
-					g.bucket = g.bucket.UTC()
-					groups[key] = &g
-					order = append(order, key)
-				}
-			}
-			rows.Close()
-			if err := rows.Err(); err != nil {
-				return fmt.Errorf("monitor query: %w", err)
-			}
-		}
-		res = p.result(groups, order, names)
+		res = p.result(gs, names)
 		res.Caps, err = caps(ctx, tx, q)
 		return err
 	})
 	if err != nil {
 		return Result{}, err
 	}
+	live, folded := len(p.minutes)+p.open, len(p.days)+len(p.hours)-p.open
 	switch {
-	case len(p.minutes) == 0:
+	case live == 0:
 		res.ServedFrom = ServedRollups
-	case len(p.days) == 0 && len(p.hours) == 0:
+	case folded == 0:
 		res.ServedFrom = ServedRaw
 	default:
 		res.ServedFrom = ServedMixed
 	}
 	return res, nil
+}
+
+// RouteSet lists the routes a query with RouteState state narrows to: new ones, first seen in the
+// range, or silent ones, called in the previous period (with the query's filters) and not since
+// the range began. (unmatched), (other) and hidden routes are left out.
+func (s *PGStore) RouteSet(ctx context.Context, q Query, state string) ([]int32, error) {
+	out := []int32{}
+	err := readOnly(ctx, s, func(tx pgx.Tx) error {
+		names, err := loadNames(ctx, tx, q.WorkspaceID, q.PropertyID)
+		if err != nil {
+			return err
+		}
+		keep := func(id int32) bool { return !special(names.routes[id]) && !slices.Contains(names.hidden, id) }
+		if state == RoutesNew {
+			rows, err := tx.Query(ctx, `SELECT id FROM monitor_routes WHERE workspace_id = $1 AND property_id = $2 AND first_seen_at >= $3 AND first_seen_at < $4
+				ORDER BY id`, q.WorkspaceID, q.PropertyID, q.Start, q.End)
+			if err != nil {
+				return err
+			}
+			ids, err := pgx.CollectRows(rows, pgx.RowTo[int32])
+			if err != nil {
+				return err
+			}
+			out = slices.DeleteFunc(ids, func(id int32) bool { return !keep(id) })
+			return nil
+		}
+		if state != RoutesSilent {
+			return badQuery("routes is new or silent, not %q", state)
+		}
+		base := q
+		base.Dimensions, base.Metrics, base.RouteState, base.Routes = []string{"route"}, []string{"requests"}, "", nil
+		called := func(start, end time.Time) (map[int32]bool, error) {
+			sub := base
+			sub.Start, sub.End = start, end
+			p := &plan{q: sub}
+			if err := p.parse(); err != nil {
+				return nil, err
+			}
+			if err := p.tiers(ctx, tx); err != nil {
+				return nil, err
+			}
+			gs, err := p.collect(ctx, tx, names)
+			if err != nil {
+				return nil, err
+			}
+			ids := map[int32]bool{}
+			for _, g := range gs.m {
+				if g.agg.Requests > 0 {
+					ids[g.vals[0]] = true
+				}
+			}
+			return ids, nil
+		}
+		from, to := q.Previous()
+		before, err := called(from, to)
+		if err != nil {
+			return err
+		}
+		since, err := called(q.Start, maxTime(q.End, q.Zone.HourEnd(q.Zone.LocalHour(q.Now))))
+		if err != nil {
+			return err
+		}
+		for id := range before {
+			if !since[id] && keep(id) {
+				out = append(out, id)
+			}
+		}
+		slices.Sort(out)
+		return nil
+	})
+	return out, err
 }
 
 // passed is how many minutes of [from, to) are not in the future.
@@ -582,36 +928,42 @@ func passed(from, to, now time.Time) float64 {
 }
 
 func (p *plan) step(t time.Time) time.Time {
+	z := p.q.Zone
 	switch p.grain {
 	case "minute":
 		return t.Add(time.Minute)
 	case "hour":
-		return p.q.Zone.HourEnd(t)
+		return z.HourEnd(t)
+	case "week":
+		return z.DayStart(z.LocalDay(t).AddDate(0, 0, 7))
+	case "month":
+		return z.DayStart(z.LocalDay(t).AddDate(0, 1, 0))
 	}
-	return p.q.Zone.DayStart(p.q.Zone.LocalDay(t).AddDate(0, 0, 1))
+	return z.DayStart(z.LocalDay(t).AddDate(0, 0, 1))
 }
 
-// bucketStart is a bucket's first instant: day buckets are labelled with their local date.
+// bucketStart is a bucket's first instant: day, week and month buckets are labelled with their
+// local date.
 func (p *plan) bucketStart(b time.Time) time.Time {
-	if p.grain == "day" {
+	if p.daily() {
 		return p.q.Zone.DayStart(b)
 	}
 	return b
 }
 
 func (p *plan) label(b time.Time) string {
-	if p.grain == "day" {
+	if p.daily() {
 		return b.Format(time.DateOnly)
 	}
 	return b.In(p.q.Zone.At(b)).Format(minuteLabel)
 }
 
-func (p *plan) result(groups map[string]*group, order []string, names nameMaps) Result {
+func (p *plan) result(gs *groups, names nameMaps) Result {
 	q := p.q
 	res := Result{Totals: NewAgg(), Minutes: passed(q.Start, q.End, q.Now)}
 	if p.grain != "" && len(p.dims) == 0 {
 		have := map[int64]bool{}
-		for _, g := range groups {
+		for _, g := range gs.m {
 			have[p.bucketStart(g.bucket).UnixNano()] = true
 		}
 		for t := p.firstBucket(); t.Before(q.End); t = p.step(t) {
@@ -619,16 +971,25 @@ func (p *plan) result(groups map[string]*group, order []string, names nameMaps) 
 				continue
 			}
 			b := t.UTC()
-			if p.grain == "day" {
+			if p.daily() {
 				b = q.Zone.LocalDay(t)
 			}
-			key := bucketKey(b, nil)
-			groups[key] = &group{bucket: b, agg: NewAgg()}
-			order = append(order, key)
+			gs.add(&group{bucket: b, agg: NewAgg()})
 		}
 	}
-	for _, key := range order {
-		g := groups[key]
+	if q.RouteState != "" {
+		seen := map[int32]bool{}
+		for _, g := range gs.m {
+			seen[g.vals[0]] = true
+		}
+		for _, id := range q.Routes {
+			if !seen[id] {
+				gs.add(&group{vals: []int32{id}, agg: NewAgg()})
+			}
+		}
+	}
+	for _, key := range gs.order {
+		g := gs.m[key]
 		res.Totals.Merge(&g.agg)
 		var dims []string
 		var start time.Time
@@ -639,19 +1000,7 @@ func (p *plan) result(groups map[string]*group, order []string, names nameMaps) 
 			minutes = passed(maxTime(start, q.Start), minTime(p.step(start), q.End), q.Now)
 		}
 		for i, d := range p.dims {
-			v := g.vals[i]
-			switch d {
-			case "route":
-				dims = append(dims, names.routes[v])
-			case "environment":
-				dims = append(dims, names.envs[v])
-			case "method":
-				dims = append(dims, MethodName(int16(v)))
-			case "status":
-				dims = append(dims, strconv.Itoa(int(v)))
-			case "status_class":
-				dims = append(dims, StatusClassName(int16(v)))
-			}
+			dims = append(dims, names.label(d, g.vals[i]))
 		}
 		if p.grain != "" || len(p.dims) > 0 {
 			res.Rows = append(res.Rows, Row{Start: start, Dims: dims, Agg: g.agg, Minutes: minutes})
@@ -677,7 +1026,7 @@ func (p *plan) firstBucket() time.Time {
 	case "hour":
 		return q.Zone.LocalHour(q.Start)
 	}
-	return q.Zone.DayStart(q.Zone.LocalDay(q.Start))
+	return q.Zone.DayStart(p.coarse(q.Zone.LocalDay(q.Start)))
 }
 
 // caps lists the caps the property has reached, and dimension_rows when an hour of the range did.

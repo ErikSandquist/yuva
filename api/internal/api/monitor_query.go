@@ -23,46 +23,111 @@ import (
 
 const monitorOpenTTL = 5 * time.Second
 
+var errMonitorNoInbox = problem(http.StatusUnprocessableEntity, "no_linked_inbox",
+	"conversations need a property linked to an inbox; link one in the property's settings")
+
 var monitorPeriods = map[oas.AnalyticsRangePeriod]time.Duration{
 	oas.AnalyticsLast15Minutes: 15 * time.Minute, oas.AnalyticsLastHour: time.Hour, oas.AnalyticsLast6Hours: 6 * time.Hour,
 	oas.AnalyticsLast24Hours: 24 * time.Hour,
 }
 
-// monitorRequest is an api query checked and turned into the property's query and its page.
+// monitorRequest is an api query checked and turned into the property's query, its comparison and
+// its page.
 type monitorRequest struct {
 	q      monitor.Query
+	cmp    *monitor.Query
 	order  []analytics.Order
 	limit  int
 	offset int
 }
 
+// monitorRange is the instants a range of an api query covers and whether it was given as days.
+func monitorRange(r oas.AnalyticsRange, zone monitor.Zone, now time.Time) (time.Time, time.Time, bool, error) {
+	if r.Since != nil || r.Until != nil {
+		if r.Period != nil || r.From != nil || r.To != nil {
+			return time.Time{}, time.Time{}, false, errValidation("send range.since and range.until without period, from or to")
+		}
+		if r.Since == nil || r.Until == nil {
+			return time.Time{}, time.Time{}, false, errValidation("range.since needs range.until")
+		}
+		since, until := r.Since.UTC(), r.Until.UTC()
+		if !since.Truncate(time.Minute).Equal(since) || !until.Truncate(time.Minute).Equal(until) {
+			return time.Time{}, time.Time{}, false, errValidation("range.since and range.until fall on a whole minute")
+		}
+		if !until.After(since) {
+			return time.Time{}, time.Time{}, false, errValidation("the range ends before it starts")
+		}
+		if until.Sub(since) > maxAnalyticsRange*24*time.Hour {
+			return time.Time{}, time.Time{}, false, problem(http.StatusUnprocessableEntity, "range_too_large", "a range may span at most 400 days")
+		}
+		return since, until, false, nil
+	}
+	if r.Period != nil {
+		if d, ok := monitorPeriods[*r.Period]; ok {
+			if r.From != nil || r.To != nil {
+				return time.Time{}, time.Time{}, false, errValidation("send either range.period, or range.from and range.to")
+			}
+			end := now.Truncate(time.Minute).Add(time.Minute)
+			return end.Add(-d), end, false, nil
+		}
+	}
+	from, to, err := analyticsRange(r, zone.LocalDay(now))
+	if err != nil {
+		return time.Time{}, time.Time{}, false, err
+	}
+	return zone.DayStart(from), zone.DayStart(to.AddDate(0, 0, 1)), true, nil
+}
+
+// monitorComparison is the range an api query is compared with.
+func monitorComparison(c oas.AnalyticsCompare, q monitor.Query) (monitor.Query, error) {
+	out := q
+	z := q.Zone
+	switch c.With {
+	case oas.AnalyticsComparePrevious:
+		out.Start, out.End = q.Previous()
+	case oas.AnalyticsCompareYear:
+		if q.Days {
+			from, to := z.LocalDay(q.Start), z.LocalDay(q.End.Add(-time.Nanosecond))
+			out.Start, out.End = z.DayStart(from.AddDate(-1, 0, 0)), z.DayStart(to.AddDate(-1, 0, 1))
+		} else {
+			out.Start, out.End = q.Start.AddDate(-1, 0, 0), q.End.AddDate(-1, 0, 0)
+		}
+	case oas.AnalyticsCompareRange:
+		if c.From == nil || c.To == nil {
+			return out, errValidation("compare.with range needs compare.from and compare.to")
+		}
+		from, to, err := checkedRange(c.From.Time, c.To.Time)
+		if err != nil {
+			return out, err
+		}
+		out.Start, out.End, out.Days = z.DayStart(from), z.DayStart(to.AddDate(0, 0, 1)), true
+	default:
+		return out, errValidation("compare.with must be previous, year or range")
+	}
+	return out, nil
+}
+
 func (s *Server) monitorRequest(prop store.AnalyticsProperty, b oas.AnalyticsQuery) (monitorRequest, error) {
 	var mr monitorRequest
 	m := s.analytics.monitor
-	if b.GoalId != nil || b.Prop != nil || b.SegmentId != nil || b.Compare != nil || (b.Insights != nil && *b.Insights) {
-		return mr, errValidation("the api dataset takes no goal_id, prop, segment_id, compare or insights")
+	if b.GoalId != nil || b.Prop != nil || b.SegmentId != nil || (b.Insights != nil && *b.Insights) {
+		return mr, errValidation("the api dataset takes no goal_id, prop, segment_id or insights")
 	}
 	zone, now := monitorZone(prop.Timezone, prop.TimezoneHistory), s.now()
-	q := monitor.Query{WorkspaceID: prop.WorkspaceID, PropertyID: prop.ID, Zone: zone, Now: now,
+	q := monitor.Query{WorkspaceID: prop.WorkspaceID, PropertyID: prop.ID, Zone: zone, Now: now, ApdexMS: int64(prop.ApdexMs), InboxID: prop.InboxID,
 		MinuteFrom: monitor.LocalDay(now, time.UTC).AddDate(0, 0, 1-m.settings.MinuteDays)}
-	if d, ok := monitorPeriods[derefPeriod(b.Range.Period)]; ok && b.Range.Period != nil {
-		if b.Range.From != nil || b.Range.To != nil {
-			return mr, errValidation("send either range.period, or range.from and range.to")
-		}
-		q.End = now.Truncate(time.Minute).Add(time.Minute)
-		q.Start = q.End.Add(-d)
-	} else {
-		from, to, err := analyticsRange(b.Range, zone.LocalDay(now))
-		if err != nil {
-			return mr, err
-		}
-		q.Start, q.End, q.Days = zone.DayStart(from), zone.DayStart(to.AddDate(0, 0, 1)), true
+	var err error
+	if q.Start, q.End, q.Days, err = monitorRange(b.Range, zone, now); err != nil {
+		return mr, err
 	}
 	for _, metric := range b.Metrics {
 		if slices.Contains(q.Metrics, string(metric)) {
 			return mr, errValidation("metric " + string(metric) + " is listed twice")
 		}
 		q.Metrics = append(q.Metrics, string(metric))
+	}
+	if slices.Contains(q.Metrics, "conversations") && prop.InboxID == nil {
+		return mr, errMonitorNoInbox
 	}
 	if b.Dimensions != nil {
 		for _, d := range *b.Dimensions {
@@ -79,6 +144,9 @@ func (s *Server) monitorRequest(prop store.AnalyticsProperty, b oas.AnalyticsQue
 			}
 			q.Filters = append(q.Filters, monitor.Filter{Dimension: string(f.Dimension), Op: string(f.Op), Values: f.Values})
 		}
+	}
+	if b.Routes != nil {
+		q.RouteState = string(*b.Routes)
 	}
 	first := "requests"
 	if !slices.Contains(q.Metrics, first) && len(q.Metrics) > 0 {
@@ -110,49 +178,39 @@ func (s *Server) monitorRequest(prop store.AnalyticsProperty, b oas.AnalyticsQue
 			return mr, errValidation("cursor is not one this query returned")
 		}
 	}
+	if b.Compare != nil {
+		c, err := monitorComparison(*b.Compare, q)
+		if err != nil {
+			return mr, err
+		}
+		mr.cmp = &c
+	}
 	mr.q = q
 	return mr, nil
 }
 
-func derefPeriod(p *oas.AnalyticsRangePeriod) oas.AnalyticsRangePeriod {
-	if p == nil {
-		return ""
-	}
-	return *p
-}
-
 func monitorQueryError(err error) error {
-	if errors.Is(err, monitor.ErrMinuteRange) {
+	switch {
+	case errors.Is(err, monitor.ErrMinuteRange):
 		return problem(http.StatusUnprocessableEntity, "range_too_large", err.Error())
+	case errors.Is(err, monitor.ErrDimensionCombination):
+		return problem(http.StatusUnprocessableEntity, "dimension_combination", strings.TrimPrefix(err.Error(), monitor.ErrDimensionCombination.Error()+": "))
 	}
 	return analyticsQueryError(err)
 }
 
 func apiMetricsBody(a *monitor.Agg, minutes float64, names []string) oas.AnalyticsMetrics {
 	var m oas.AnalyticsMetrics
+	fields := map[string]**float64{
+		"requests": &m.Requests, "requests_per_minute": &m.RequestsPerMinute, "errors": &m.Errors, "error_rate": &m.ErrorRate,
+		"client_errors": &m.ClientErrors, "client_error_rate": &m.ClientErrorRate, "p50": &m.P50, "p75": &m.P75, "p90": &m.P90, "p95": &m.P95,
+		"p99": &m.P99, "avg_duration": &m.AvgDuration, "max_duration": &m.MaxDuration, "apdex": &m.Apdex, "request_bytes": &m.RequestBytes,
+		"response_bytes": &m.ResponseBytes, "response_size_p50": &m.ResponseSizeP50, "response_size_p95": &m.ResponseSizeP95,
+		"conversations": &m.Conversations,
+	}
 	for _, n := range names {
-		v := a.Metric(n, minutes)
-		switch n {
-		case "requests":
-			m.Requests = &v
-		case "requests_per_minute":
-			m.RequestsPerMinute = &v
-		case "errors":
-			m.Errors = &v
-		case "error_rate":
-			m.ErrorRate = &v
-		case "client_errors":
-			m.ClientErrors = &v
-		case "client_error_rate":
-			m.ClientErrorRate = &v
-		case "p50":
-			m.P50 = &v
-		case "p95":
-			m.P95 = &v
-		case "p99":
-			m.P99 = &v
-		case "avg_duration":
-			m.AvgDuration = &v
+		if f, ok := fields[n]; ok {
+			*f = new(a.Metric(n, minutes))
 		}
 	}
 	return m
@@ -210,6 +268,57 @@ func (s *Server) runMonitorQuery(ctx context.Context, prop store.AnalyticsProper
 	return res, nil
 }
 
+// monitorRoutes narrows a query and its comparison to the new or silent routes of its range.
+func (s *Server) monitorRoutes(ctx context.Context, prop store.AnalyticsProperty, mr *monitorRequest) error {
+	if mr.q.RouteState == "" {
+		return nil
+	}
+	if len(mr.q.Dimensions) != 1 || mr.q.Dimensions[0] != "route" {
+		return errValidation("routes takes the dimension route alone")
+	}
+	release, err := s.analytics.slots.acquire(ctx, prop.WorkspaceID)
+	if err != nil {
+		return err
+	}
+	defer release()
+	ids, err := s.analytics.monitor.store.RouteSet(ctx, mr.q, mr.q.RouteState)
+	if err != nil {
+		return monitorQueryError(err)
+	}
+	mr.q.Routes = ids
+	if mr.cmp != nil {
+		mr.cmp.RouteState, mr.cmp.Routes = mr.q.RouteState, ids
+	}
+	return nil
+}
+
+// bucketOrder numbers a result's time buckets in time order, so a comparison's rows line up with
+// the range's by position.
+func bucketOrder(rows []monitor.Row, ti int) map[string]int {
+	starts := map[string]time.Time{}
+	for _, r := range rows {
+		starts[r.Dims[ti]] = r.Start
+	}
+	labels := make([]string, 0, len(starts))
+	for l := range starts {
+		labels = append(labels, l)
+	}
+	slices.SortFunc(labels, func(a, b string) int { return starts[a].Compare(starts[b]) })
+	out := map[string]int{}
+	for i, l := range labels {
+		out[l] = i
+	}
+	return out
+}
+
+func monitorRowKey(dims []string, ti int, order map[string]int) string {
+	parts := slices.Clone(dims)
+	if ti >= 0 {
+		parts[ti] = strconv.Itoa(order[parts[ti]])
+	}
+	return strings.Join(parts, "\x1f")
+}
+
 func (s *Server) queryMonitor(ctx context.Context, prop store.AnalyticsProperty, b oas.AnalyticsQuery, csv bool) (oas.QueryAnalyticsResponseObject, error) {
 	if s.analytics.monitor == nil {
 		return nil, errNotFound
@@ -224,9 +333,20 @@ func (s *Server) queryMonitor(ctx context.Context, prop store.AnalyticsProperty,
 	if err != nil {
 		return nil, err
 	}
+	if err := s.monitorRoutes(ctx, prop, &mr); err != nil {
+		return nil, err
+	}
 	res, err := s.runMonitorQuery(ctx, prop, mr.q)
 	if err != nil {
 		return nil, err
+	}
+	var prev *monitor.Result
+	if mr.cmp != nil {
+		c, err := s.runMonitorQuery(ctx, prop, *mr.cmp)
+		if err != nil {
+			return nil, err
+		}
+		prev = &c
 	}
 	q := mr.q
 	rows := slices.Clone(res.Rows)
@@ -244,10 +364,11 @@ func (s *Server) queryMonitor(ctx context.Context, prop store.AnalyticsProperty,
 		Rows: make([]oas.AnalyticsRow, len(rows)), Totals: apiMetricsBody(&res.Totals, res.Minutes, q.Metrics),
 		Meta: oas.AnalyticsResultMeta{
 			From: openapi_types.Date{Time: q.Zone.LocalDay(q.Start)}, To: openapi_types.Date{Time: q.Zone.LocalDay(q.End.Add(-time.Nanosecond))},
-			Timezone: prop.Timezone, ServedFrom: oas.AnalyticsResultMetaServedFrom(res.ServedFrom), RawWindowFrom: openapi_types.Date{Time: q.MinuteFrom},
+			Since: new(q.Start), Until: new(q.End), Timezone: prop.Timezone, ServedFrom: oas.AnalyticsResultMetaServedFrom(res.ServedFrom),
+			RawWindowFrom: openapi_types.Date{Time: q.MinuteFrom},
 		},
 	}
-	if res.Totals.Sampled > 0 {
+	if res.Totals.Sampled > 0 || (prev != nil && prev.Totals.Sampled > 0) {
 		out.Meta.Estimated = new(true)
 	}
 	if len(res.Caps) > 0 {
@@ -262,6 +383,28 @@ func (s *Server) queryMonitor(ctx context.Context, prop store.AnalyticsProperty,
 	}
 	for i, r := range rows {
 		out.Rows[i] = oas.AnalyticsRow{Dimensions: slices.Clone(r.Dims), Metrics: apiMetricsBody(&r.Agg, r.Minutes, q.Metrics)}
+	}
+	if prev != nil {
+		c := mr.cmp
+		ti := timeIndex(q.Dimensions)
+		var cur, before map[string]int
+		if ti >= 0 {
+			cur, before = bucketOrder(res.Rows, ti), bucketOrder(prev.Rows, ti)
+		}
+		byKey := map[string]monitor.Row{}
+		for _, r := range prev.Rows {
+			byKey[monitorRowKey(r.Dims, ti, before)] = r
+		}
+		comp := oas.AnalyticsComparison{From: openapi_types.Date{Time: c.Zone.LocalDay(c.Start)}, To: openapi_types.Date{Time: c.Zone.LocalDay(c.End.Add(-time.Nanosecond))},
+			Since: new(c.Start), Until: new(c.End), Totals: apiMetricsBody(&prev.Totals, prev.Minutes, q.Metrics), Rows: make([]oas.AnalyticsRow, len(rows))}
+		for i, r := range rows {
+			m, ok := byKey[monitorRowKey(r.Dims, ti, cur)]
+			if !ok {
+				m = monitor.Row{Dims: r.Dims, Agg: monitor.NewAgg()}
+			}
+			comp.Rows[i] = oas.AnalyticsRow{Dimensions: slices.Clone(m.Dims), Metrics: apiMetricsBody(&m.Agg, m.Minutes, q.Metrics)}
+		}
+		out.Comparison = &comp
 	}
 	if csv {
 		body := analyticsCSV(q.Dimensions, q.Metrics, out.Rows)

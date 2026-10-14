@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/netip"
 	"strings"
+	"sync"
 	"time"
 	"uuid"
 
@@ -62,6 +63,7 @@ type monitorState struct {
 	store    *monitor.PGStore
 	agg      *monitor.Aggregator
 	usage    *usageCache
+	releases releaseCache
 }
 
 func (s *Server) newMonitor(d Deps) *monitorState {
@@ -293,7 +295,64 @@ func (s *Server) admitRecords(ctx context.Context, m *monitorState, prop store.A
 		return 0, err
 	}
 	count(monitor.ReasonAccepted, len(recs))
+	s.noteReleases(ctx, m, prop, recs)
 	return 0, nil
+}
+
+const maxCachedReleases = 100_000
+
+type releaseKey struct {
+	prop                          uuid.UUID
+	service, environment, release string
+}
+
+// releaseCache remembers the releases this process already wrote, so only a release it has not
+// seen asks the database.
+type releaseCache struct {
+	mu   sync.Mutex
+	seen map[releaseKey]bool
+}
+
+// noteReleases writes a deploy annotation for each release the records bring that their service
+// and environment never had; a failure only costs the marker.
+func (s *Server) noteReleases(ctx context.Context, m *monitorState, prop store.AnalyticsProperty, recs []monitor.Record) {
+	first := map[releaseKey]time.Time{}
+	c := &m.releases
+	c.mu.Lock()
+	for i := range recs {
+		r := &recs[i]
+		if r.Release == "" {
+			continue
+		}
+		k := releaseKey{prop.ID, r.Service, r.Environment, r.Release}
+		if c.seen[k] {
+			continue
+		}
+		if at, ok := first[k]; !ok || r.Time.Before(at) {
+			first[k] = r.Time
+		}
+	}
+	c.mu.Unlock()
+	if len(first) == 0 {
+		return
+	}
+	rels := make([]monitor.Release, 0, len(first))
+	for k, at := range first {
+		rels = append(rels, monitor.Release{Service: k.service, Environment: k.environment, Release: k.release, At: at})
+	}
+	if _, err := m.store.NoteReleases(ctx, monitor.Property{WorkspaceID: prop.WorkspaceID, ID: prop.ID}, rels,
+		monitorZone(prop.Timezone, prop.TimezoneHistory), s.now()); err != nil {
+		s.log.ErrorContext(ctx, "monitor releases", slog.Any("error", err))
+		return
+	}
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	if c.seen == nil || len(c.seen) > maxCachedReleases {
+		c.seen = map[releaseKey]bool{}
+	}
+	for k := range first {
+		c.seen[k] = true
+	}
 }
 
 // recordCountry is the first and only use of a record's address: it is shortened, looked up for
@@ -383,7 +442,7 @@ func (s *Server) requestRecord(r *oas.AnalyticsRequestRecord, zone monitor.Zone,
 	if out.Service, err = recordText(r.Service, 100, "service"); err != nil {
 		return out, false, err
 	}
-	if _, err = recordText(r.Release, 80, "release"); err != nil {
+	if out.Release, err = recordText(r.Release, 80, "release"); err != nil {
 		return out, false, err
 	}
 	var at time.Time

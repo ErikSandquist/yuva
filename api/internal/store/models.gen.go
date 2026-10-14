@@ -44,6 +44,10 @@ type AnalyticsAnnotation struct {
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 	AlertID     *uuid.UUID
+	At          *time.Time
+	Service     *string
+	Environment *string
+	Release     *string
 }
 
 type AnalyticsCohort struct {
@@ -1487,6 +1491,15 @@ type MonitorName struct {
 	Kind        string
 	ID          int32
 	Value       string
+	FirstSeenAt time.Time
+}
+
+type MonitorRelease struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Service     string
+	Environment string
+	Release     string
 	FirstSeenAt time.Time
 }
 

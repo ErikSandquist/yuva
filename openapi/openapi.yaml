@@ -7947,6 +7947,9 @@ paths:
             `raw_window_from` is the first day it can serve. `range_too_large`: the range is longer
             than 400 days, or with `time:minute` more than 1,440 minutes or older than the minute
             rows. `property_kind`: the dataset does not fit the property's kind.
+            `dimension_combination`: `dataset: api` asked for dimensions and filters that are not
+            kept together (`AnalyticsDataset`). `no_linked_inbox`: `conversations` on a property
+            without an inbox.
           content:
             application/problem+json:
               schema:
@@ -8201,6 +8204,8 @@ paths:
           $ref: "#/components/responses/OtlpStatus"
         "404":
           $ref: "#/components/responses/OtlpStatus"
+        "413":
+          $ref: "#/components/responses/OtlpStatus"
         "415":
           $ref: "#/components/responses/OtlpStatus"
         "422":
@@ -8247,7 +8252,8 @@ paths:
       description: |
         `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
         included, such as a health check the API's own load balancer calls; `hidden: false` shows
-        it again. Nothing counted is deleted. To count a path under another pattern, add a
+        it again. Nothing counted is deleted. `apdex_ms` sets the route's own Apdex threshold, for
+        a route that is slow by nature such as an export; `null` goes back to the property's. To count a path under another pattern, add a
         property `path_rules` entry instead.
 
         Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
@@ -21194,21 +21200,30 @@ components:
         1,000 page views), next to `visitors` and `pageviews`.
 
         With `dataset: api` (an API property) only: `requests`, `requests_per_minute` (requests
-        per minute of the range or bucket, up to now), `errors` (status 500 to 599, or 0 when no
-        response was sent), `error_rate` and `client_error_rate` (percent of requests),
-        `client_errors` (status 400 to 499), `p50`, `p95` and `p99` (the duration in milliseconds
-        that this share of requests stayed within, from sketches accurate to 1.1%) and
-        `avg_duration` (milliseconds).
+        per minute of the range or bucket, up to now: the throughput), `errors` (status 500 to 599,
+        or 0 when no response was sent), `error_rate` and `client_error_rate` (percent of
+        requests), `client_errors` (status 400 to 499), `p50`, `p75`, `p90`, `p95` and `p99` (the
+        duration in milliseconds that this share of requests stayed within, from sketches accurate
+        to 1.1%), `avg_duration` and `max_duration` (milliseconds, exact), `apdex` (0 to 1:
+        requests within T count 1, within 4T a half, T the route's `apdex_ms` or else the
+        property's, read from the same sketches), `request_bytes` and `response_bytes` (body bytes
+        added up, of the records that gave a size), `response_size_p50` and `response_size_p95`
+        (bytes, accurate to 9%) and `conversations` (conversations the property's linked inbox
+        received, by its local day; only with no dimension or a `time:day`, `time:week` or
+        `time:month` grain alone, and no filter or `routes`; `422 no_linked_inbox` without an
+        inbox).
       enum: [visitors, visits, pageviews, views_per_visit, bounce_rate, visit_duration, time_on_page, scroll_depth, events, conversions,
         conversion_rate, completions, revenue, conversations, feedback, ratings_up, ratings_down, helpful_rate, discussions, support_rate,
-        requests, requests_per_minute, errors, error_rate, client_errors, client_error_rate, p50, p95, p99, avg_duration]
+        requests, requests_per_minute, errors, error_rate, client_errors, client_error_rate, p50, p75, p90, p95, p99, avg_duration, max_duration,
+        apdex, request_bytes, response_bytes, response_size_p50, response_size_p95]
       x-enum-varnames: [AnalyticsMetricVisitors, AnalyticsMetricVisits, AnalyticsMetricPageviews, AnalyticsMetricViewsPerVisit,
         AnalyticsMetricBounceRate, AnalyticsMetricVisitDuration, AnalyticsMetricTimeOnPage, AnalyticsMetricScrollDepth, AnalyticsMetricEvents,
         AnalyticsMetricConversions, AnalyticsMetricConversionRate, AnalyticsMetricCompletions, AnalyticsMetricRevenue,
         AnalyticsMetricConversations, AnalyticsMetricFeedback, AnalyticsMetricRatingsUp, AnalyticsMetricRatingsDown, AnalyticsMetricHelpfulRate,
         AnalyticsMetricDiscussions, AnalyticsMetricSupportRate, AnalyticsMetricRequests, AnalyticsMetricRequestsPerMinute, AnalyticsMetricErrors,
-        AnalyticsMetricErrorRate, AnalyticsMetricClientErrors, AnalyticsMetricClientErrorRate, AnalyticsMetricP50, AnalyticsMetricP95,
-        AnalyticsMetricP99, AnalyticsMetricAvgDuration]
+        AnalyticsMetricErrorRate, AnalyticsMetricClientErrors, AnalyticsMetricClientErrorRate, AnalyticsMetricP50, AnalyticsMetricP75,
+        AnalyticsMetricP90, AnalyticsMetricP95, AnalyticsMetricP99, AnalyticsMetricAvgDuration, AnalyticsMetricMaxDuration, AnalyticsMetricApdex,
+        AnalyticsMetricRequestBytes, AnalyticsMetricResponseBytes, AnalyticsMetricResponseSizeP50, AnalyticsMetricResponseSizeP95]
     AnalyticsFilterDimension:
       type: string
       description: |
@@ -21229,20 +21244,27 @@ components:
         a filter of visits they keep the visits with such an event; in an `event` or `prop`
         breakdown they keep the matching events.
 
-        With `dataset: api`: `route` is the route pattern (`/users/{id}`), `(unmatched)` for
-        requests that answered 404 or 405 without one, or `(other)` past the property's 1,000
-        routes; `method` an HTTP method or `_OTHER`; `status` the status code (`0` when no response
-        was sent); `status_class` `1xx` to `5xx`, or `none` for status 0; `environment` the record's
-        environment (`production` by default, `(other)` past 20).
+        With `dataset: api` the core dimensions are `route`, the route pattern (`/users/{id}`),
+        `(unmatched)` for requests that answered 404 or 405 without one, or `(other)` past the
+        property's 1,000 routes; `method` an HTTP method or `_OTHER`; `status` the status code (`0`
+        when no response was sent); `status_class` `1xx` to `5xx`, or `none` for status 0;
+        `api_version` (`(other)` past 50); `environment` (`production` by default, `(other)` past
+        20); `service` (`(other)` past 100 per workspace); `source` `server`
+        (`sendAnalyticsRequests`), `otlp` (`exportOtlpTraces`) or `app` (`collectAnalyticsRequests`);
+        `platform` `ios` or `android` for app records. A record that gave no API version, service or
+        platform has the empty string. The extra dimensions are `consumer` (`(other)` past 10,000),
+        `country` and `app_version` (`(other)` past 200); they count only the requests that have
+        one, and each is kept by local hour with `route`, `method` and `status_class` only (see
+        `AnalyticsDataset`).
       enum: [page, entry_page, exit_page, hostname, channel, source, referrer, utm_source, utm_medium, utm_campaign, utm_term,
         utm_content, country, region, city, device, browser, browser_version, os, os_version, screen_size, language, platform, app_version,
-        visitor_type, event, prop, route, method, status, status_class, environment]
+        visitor_type, event, prop, route, method, status, status_class, environment, api_version, service, consumer]
       x-enum-varnames: [AnalyticsDimPage, AnalyticsDimEntryPage, AnalyticsDimExitPage, AnalyticsDimHostname, AnalyticsDimChannel,
         AnalyticsDimSource, AnalyticsDimReferrer, AnalyticsDimUtmSource, AnalyticsDimUtmMedium, AnalyticsDimUtmCampaign, AnalyticsDimUtmTerm,
         AnalyticsDimUtmContent, AnalyticsDimCountry, AnalyticsDimRegion, AnalyticsDimCity, AnalyticsDimDevice, AnalyticsDimBrowser,
         AnalyticsDimBrowserVersion, AnalyticsDimOs, AnalyticsDimOsVersion, AnalyticsDimScreenSize, AnalyticsDimLanguage, AnalyticsDimPlatform,
         AnalyticsDimAppVersion, AnalyticsDimVisitorType, AnalyticsDimEvent, AnalyticsDimProp, AnalyticsDimRoute, AnalyticsDimMethod,
-        AnalyticsDimStatus, AnalyticsDimStatusClass, AnalyticsDimEnvironment]
+        AnalyticsDimStatus, AnalyticsDimStatusClass, AnalyticsDimEnvironment, AnalyticsDimApiVersion, AnalyticsDimService, AnalyticsDimConsumer]
     AnalyticsDimension:
       type: string
       description: |
@@ -21254,22 +21276,25 @@ components:
         value of the event prop the query's `prop` names; either takes at most one other dimension,
         a time grain other than `time:hour` or a visit dimension.
 
-        With `dataset: api`, two of `route`, `method`, `status`, `status_class`, `environment` and
-        one grain: `time:minute` (minutes, inside the last `YUVA_MONITOR_MINUTE_DAYS` days and at
-        most 1,440 of them), `time:hour` (local hours) or `time:day`. Minute and hour values are the
-        bucket's start in the property's time zone with its UTC offset, `2026-10-12T14:05+03:00`,
-        so the hour a clock repeats in autumn and the hours around a pending zone change
-        (`timezone_applies_at`) stay apart; day values are the local date, `2026-10-12`. Every
-        bucket of the range is present when the grain is the only dimension.
+        With `dataset: api`, two of the API dimensions of `AnalyticsFilterDimension`, one of them
+        a grain at most: `time:minute` (minutes, inside the last `YUVA_MONITOR_MINUTE_DAYS` days
+        and at most 1,440 of them), `time:hour` (local hours), `time:day`, `time:week` (weeks start
+        on Monday) or `time:month`. Minute and hour values are the bucket's start in the property's
+        time zone with its UTC offset, `2026-10-12T14:05+03:00`, so the hour a clock repeats in
+        autumn and the hours around a pending zone change (`timezone_applies_at`) stay apart; day,
+        week and month values are the local date they start on, `2026-10-12`. Every bucket of the
+        range is present when the grain is the only dimension.
       enum: [time:minute, time:hour, time:day, time:week, time:month, page, entry_page, exit_page, hostname, channel, source, referrer, utm_source,
         utm_medium, utm_campaign, utm_term, utm_content, country, region, city, device, browser, browser_version, os, os_version,
-        screen_size, language, platform, app_version, visitor_type, event, prop, route, method, status, status_class, environment]
+        screen_size, language, platform, app_version, visitor_type, event, prop, route, method, status, status_class, environment, api_version,
+        service, consumer]
       x-enum-varnames: [AnalyticsByMinute, AnalyticsByHour, AnalyticsByDay, AnalyticsByWeek, AnalyticsByMonth, AnalyticsByPage, AnalyticsByEntryPage,
         AnalyticsByExitPage, AnalyticsByHostname, AnalyticsByChannel, AnalyticsBySource, AnalyticsByReferrer, AnalyticsByUtmSource,
         AnalyticsByUtmMedium, AnalyticsByUtmCampaign, AnalyticsByUtmTerm, AnalyticsByUtmContent, AnalyticsByCountry, AnalyticsByRegion,
         AnalyticsByCity, AnalyticsByDevice, AnalyticsByBrowser, AnalyticsByBrowserVersion, AnalyticsByOs, AnalyticsByOsVersion,
         AnalyticsByScreenSize, AnalyticsByLanguage, AnalyticsByPlatform, AnalyticsByAppVersion, AnalyticsByVisitorType, AnalyticsByEvent, AnalyticsByProp,
-        AnalyticsByRoute, AnalyticsByMethod, AnalyticsByStatus, AnalyticsByStatusClass, AnalyticsByEnvironment]
+        AnalyticsByRoute, AnalyticsByMethod, AnalyticsByStatus, AnalyticsByStatusClass, AnalyticsByEnvironment, AnalyticsByApiVersion,
+        AnalyticsByService, AnalyticsByConsumer]
     AnalyticsFilter:
       type: object
       description: |
@@ -21304,8 +21329,19 @@ components:
         `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
         `year` are the current calendar month and year to date; `last_month` the one before), or
         `from` and `to` (inclusive, at most 400 days apart). With `dataset: api` a period can also
-        be the last `15m`, `1h`, `6h` or `24h` up to the current minute, included.
+        be the last `15m`, `1h`, `6h` or `24h` up to the current minute, included, and the range
+        can be `since` and `until` instead: instants on a whole minute, `until` excluded, at most
+        400 days apart.
       properties:
+        since:
+          type: string
+          format: date-time
+          description: "`dataset: api`: the first minute of the range, with `until`."
+          examples: ["2026-10-12T14:05:00+03:00"]
+        until:
+          type: string
+          format: date-time
+          description: "`dataset: api`: the minute the range ends at, not included."
         period:
           type: string
           enum: [today, yesterday, 7d, 28d, 30d, 90d, 6mo, 12mo, month, last_month, year, 15m, 1h, 6h, 24h]
@@ -21322,7 +21358,9 @@ components:
       type: object
       description: |
         `previous` is the range of the same length just before, `year` the same days a year
-        earlier, `range` the days `from` to `to`.
+        earlier, `range` the days `from` to `to`. With `dataset: api` and a range of minutes
+        (`15m` to `24h`, `since` and `until`), `previous` is as many minutes just before and `year`
+        the same instants a year earlier.
       required: [with]
       properties:
         with:
@@ -21363,11 +21401,25 @@ components:
 
         `api` is an API property's requests (`sendAnalyticsRequests`), and the only dataset an API
         property takes (`422 property_kind` otherwise, and for `api` on a site). It takes the API
-        metrics of `AnalyticsMetric`, the API dimensions of `AnalyticsDimension` and filters on
-        them, no goal, prop, segment, comparison or insights. Closed local days come from daily
-        rows, closed hours from hourly rows and the rest from minute rows, which processes write
-        every 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
-        Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by `requests` unless `order_by` says otherwise.
+        metrics of `AnalyticsMetric`, the API dimensions of `AnalyticsDimension`, filters on them
+        and `compare`; no goal, prop, segment or insights. Closed local days come from daily rows,
+        closed hours from hourly rows and the rest from minute rows, which processes write every
+        10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
+        Answers that reach into open hours are cached for 5 seconds.
+
+        Any combination of the core dimensions (`route`, `method`, `status`, `status_class`,
+        `api_version`, `environment`, `service`, `source`, `platform`) breaks down and filters
+        from every tier. One extra dimension (`consumer`, `country` or `app_version`), as a
+        dimension or a filter, joins only `route`, `method`, `status_class` and the grains from
+        `time:hour` up, over a range of whole local hours (days, or `since` and `until` on the
+        hour), since it is kept by local hour with those three. Anything else answers
+        `422 dimension_combination`: two extra dimensions, an extra one with another core
+        dimension or filter, with `time:minute`, or over a range that is not whole hours.
+        Requests without a value of the extra dimension are not in its answers.
+
+        Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by
+        `requests` unless `order_by` says otherwise; slowest and most failing routes are a `route`
+        breakdown ordered by `p95` or `error_rate`.
       enum: [traffic, support, api]
       x-enum-varnames: [AnalyticsDatasetTraffic, AnalyticsDatasetSupport, AnalyticsDatasetApi]
     AnalyticsQuery:
@@ -21418,6 +21470,16 @@ components:
           $ref: "#/components/schemas/AnalyticsRange"
         compare:
           $ref: "#/components/schemas/AnalyticsCompare"
+        routes:
+          type: string
+          description: |
+            `dataset: api` with the dimension `route` alone: only `new` routes, first seen in the
+            range, or `silent` routes, called in the previous period of the range's length and
+            not since its start (with the query's filters). Every such route has a row, with zeros
+            when it had no request; `compare` with `previous` shows a silent route's numbers.
+            `(unmatched)`, `(other)` and hidden routes are never listed.
+          enum: [new, silent]
+          x-enum-varnames: [AnalyticsRoutesNew, AnalyticsRoutesSilent]
         order_by:
           type: array
           description: Time series come in time order; breakdowns by `visitors`, most first, unless this says otherwise.
@@ -21520,6 +21582,12 @@ components:
         p50:
           type: number
           format: double
+        p75:
+          type: number
+          format: double
+        p90:
+          type: number
+          format: double
         p95:
           type: number
           format: double
@@ -21527,6 +21595,24 @@ components:
           type: number
           format: double
         avg_duration:
+          type: number
+          format: double
+        max_duration:
+          type: number
+          format: double
+        apdex:
+          type: number
+          format: double
+        request_bytes:
+          type: number
+          format: double
+        response_bytes:
+          type: number
+          format: double
+        response_size_p50:
+          type: number
+          format: double
+        response_size_p95:
           type: number
           format: double
     AnalyticsRevenue:
@@ -21578,6 +21664,14 @@ components:
         to:
           type: string
           format: date
+        since:
+          type: string
+          format: date-time
+          description: "`dataset: api`: the comparison range's first instant."
+        until:
+          type: string
+          format: date-time
+          description: "`dataset: api`: the instant the comparison range ends at, not included."
         totals:
           $ref: "#/components/schemas/AnalyticsMetrics"
         rows:
@@ -21597,6 +21691,14 @@ components:
           format: date
         timezone:
           type: string
+        since:
+          type: string
+          format: date-time
+          description: "`dataset: api`: the range's first instant."
+        until:
+          type: string
+          format: date-time
+          description: "`dataset: api`: the instant the range ends at, not included."
         served_from:
           type: string
           enum: [rollups, raw, mixed]
@@ -22009,7 +22111,10 @@ components:
         release:
           type: string
           maxLength: 80
-          description: The service's release, for deploy markers.
+          description: |
+            The service's release, such as a version or commit. The first record of a release
+            not seen before for its service and environment writes a `deploy` annotation at its
+            time; at most 50 a day per property.
         ip:
           type: string
           maxLength: 100
@@ -22038,6 +22143,10 @@ components:
         hidden:
           type: boolean
           description: "Left out of `dataset: api` answers."
+        apdex_ms:
+          type: integer
+          format: int32
+          description: The route's Apdex threshold in milliseconds; absent when it uses the property's `apdex_ms`.
         first_seen_at:
           type: string
           format: date-time
@@ -22055,10 +22164,16 @@ components:
             $ref: "#/components/schemas/AnalyticsRoute"
     AnalyticsRouteUpdate:
       type: object
-      required: [hidden]
+      minProperties: 1
       properties:
         hidden:
           type: boolean
+        apdex_ms:
+          type: [integer, "null"]
+          format: int32
+          minimum: 1
+          maximum: 60000
+          description: The route's Apdex threshold in milliseconds; `null` goes back to the property's.
     AnalyticsRequestsResult:
       type: object
       required: [accepted, errors]
@@ -22684,9 +22799,13 @@ components:
           description: |
             `note` is a member's; Yuva adds `key_rotated` when the property got a new key,
             `goal_created` (with `goal_id` while the goal exists, and its name as `text`) and
-            `alert` (with `alert_id`, what the alert found as `text`).
-          enum: [note, key_rotated, goal_created, alert]
-          x-enum-varnames: [AnalyticsAnnotationNote, AnalyticsAnnotationKeyRotated, AnalyticsAnnotationGoalCreated, AnalyticsAnnotationAlert]
+            `alert` (with `alert_id`, what the alert found as `text`). An API property gets
+            `deploy` when a record brings a release not seen before for its service and
+            environment: `at` is that record's time, `text` the release, and `service`,
+            `environment` and `release` say which.
+          enum: [note, key_rotated, goal_created, alert, deploy]
+          x-enum-varnames: [AnalyticsAnnotationNote, AnalyticsAnnotationKeyRotated, AnalyticsAnnotationGoalCreated, AnalyticsAnnotationAlert,
+            AnalyticsAnnotationDeploy]
         starts_on:
           type: string
           format: date
@@ -22701,6 +22820,19 @@ components:
         alert_id:
           type: string
           format: uuid
+        at:
+          type: string
+          format: date-time
+          description: "`deploy`: when it happened, so minute and hour charts place it."
+        service:
+          type: string
+          description: "`deploy`: the service, empty when the records name none."
+        environment:
+          type: string
+          description: "`deploy`: the environment."
+        release:
+          type: string
+          description: "`deploy`: the new release."
         created_by:
           type: string
           format: uuid

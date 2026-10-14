@@ -115,7 +115,7 @@ func (q *Queries) CreateAnalyticsAlert(ctx context.Context, arg CreateAnalyticsA
 const createAnalyticsAlertAnnotation = `-- name: CreateAnalyticsAlertAnnotation :one
 INSERT INTO analytics_annotations (id, workspace_id, property_id, kind, starts_on, ends_on, text, alert_id, created_at, updated_at)
 VALUES ($1, $2, $3, 'alert', $4, $4, $5, $6, $7, $7)
-RETURNING id, workspace_id, property_id, kind, starts_on, ends_on, text, goal_id, created_by, created_at, updated_at, alert_id
+RETURNING id, workspace_id, property_id, kind, starts_on, ends_on, text, goal_id, created_by, created_at, updated_at, alert_id, at, service, environment, release
 `
 
 type CreateAnalyticsAlertAnnotationParams struct {
@@ -152,6 +152,10 @@ func (q *Queries) CreateAnalyticsAlertAnnotation(ctx context.Context, arg Create
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.AlertID,
+		&i.At,
+		&i.Service,
+		&i.Environment,
+		&i.Release,
 	)
 	return i, err
 }

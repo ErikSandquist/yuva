@@ -52,7 +52,8 @@ func zoneAppliesAt(prop store.AnalyticsProperty, now time.Time) *time.Time {
 }
 
 func routeBody(r store.ListMonitorRoutesRow) oas.AnalyticsRoute {
-	return oas.AnalyticsRoute{Id: r.ID, Pattern: r.Pattern, Inferred: r.Inferred, Hidden: r.Hidden, FirstSeenAt: r.FirstSeenAt, LastSeenAt: r.LastSeenAt}
+	return oas.AnalyticsRoute{Id: r.ID, Pattern: r.Pattern, Inferred: r.Inferred, Hidden: r.Hidden, ApdexMs: r.ApdexMs, FirstSeenAt: r.FirstSeenAt,
+		LastSeenAt: r.LastSeenAt}
 }
 
 func (s *Server) ListAnalyticsRoutes(ctx context.Context, req oas.ListAnalyticsRoutesRequestObject) (oas.ListAnalyticsRoutesResponseObject, error) {
@@ -83,7 +84,18 @@ func (s *Server) UpdateAnalyticsRoute(ctx context.Context, req oas.UpdateAnalyti
 		return nil, err
 	}
 	p := principalFrom(ctx)
-	var out store.SetMonitorRouteHiddenRow
+	arg := store.UpdateMonitorRouteParams{WorkspaceID: p.workspaceID, ID: req.RouteId, Hidden: req.Body.Hidden, SetApdex: req.Body.ApdexMs.IsSpecified()}
+	if arg.SetApdex && !req.Body.ApdexMs.IsNull() {
+		ms := req.Body.ApdexMs.MustGet()
+		if ms < 1 || ms > 60000 {
+			return nil, errValidation("apdex_ms must be 1 to 60,000 milliseconds")
+		}
+		arg.ApdexMs = &ms
+	}
+	if arg.Hidden == nil && !arg.SetApdex {
+		return nil, errValidation("give hidden or apdex_ms")
+	}
+	var out store.UpdateMonitorRouteRow
 	err := s.st.InTx(ctx, func(q *store.Queries) error {
 		prop, err := visibleProperty(ctx, q, p, req.PropertyId, true)
 		if err != nil {
@@ -95,8 +107,8 @@ func (s *Server) UpdateAnalyticsRoute(ctx context.Context, req oas.UpdateAnalyti
 		if !isAPIProperty(prop) {
 			return errAPIOnly
 		}
-		out, err = q.SetMonitorRouteHidden(ctx, store.SetMonitorRouteHiddenParams{WorkspaceID: p.workspaceID, PropertyID: prop.ID, ID: req.RouteId,
-			Hidden: req.Body.Hidden})
+		arg.PropertyID = prop.ID
+		out, err = q.UpdateMonitorRoute(ctx, arg)
 		if store.IsNotFound(err) {
 			return errRouteGone
 		}

@@ -146,16 +146,22 @@ func (s Sketch) Apdex(t int64) float64 {
 	if n == 0 {
 		return 0
 	}
-	sat, tol := float64(s.zero), 0.0
+	sat, tol := s.ApdexCounts(t)
+	return (float64(sat) + float64(tol)/2) / float64(n)
+}
+
+// ApdexCounts are the values satisfied (at most t) and tolerating (at most 4t) by their buckets.
+func (s Sketch) ApdexCounts(t int64) (sat, tol uint64) {
+	sat = s.zero
 	for _, b := range s.buckets {
 		switch v := s.value(b.index); {
 		case v <= float64(t):
-			sat += float64(b.count)
+			sat += b.count
 		case v <= 4*float64(t):
-			tol += float64(b.count)
+			tol += b.count
 		}
 	}
-	return (sat + tol/2) / float64(n)
+	return sat, tol
 }
 
 // Encode is the stored form: the scale, the zero count, the number of buckets and then each

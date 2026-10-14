@@ -89,6 +89,8 @@ type Record struct {
 	Country       string
 	AppVersion    string
 	Weight        int64
+	// Release is the service's release, for deploy markers only; rows do not keep it.
+	Release string
 }
 
 // LocalHour is the first instant of the local hour t is in: the hour starts when loc's clock last
@@ -115,7 +117,9 @@ type Property struct {
 	ID          uuid.UUID
 }
 
-// Agg is what rows add up: exact counters and the duration and response size sketches.
+// Agg is what rows add up: exact counters and the duration and response size sketches. A query
+// adds the Apdex counts of each route under its own threshold and the linked inbox's
+// conversations.
 type Agg struct {
 	Requests      int64
 	Errors        int64
@@ -128,6 +132,9 @@ type Agg struct {
 	RequestBytes  int64
 	ResponseBytes int64
 	Sizes         Sketch
+	Satisfied     int64
+	Tolerating    int64
+	Conversations int64
 }
 
 func NewAgg() Agg { return Agg{Durations: NewSketch(DurationScale), Sizes: NewSketch(SizeScale)} }
@@ -159,6 +166,7 @@ func (a *Agg) Add(r *Record) {
 }
 
 func (a *Agg) Merge(b *Agg) {
+	a.Conversations += b.Conversations
 	if b.Requests == 0 {
 		return
 	}
@@ -173,6 +181,8 @@ func (a *Agg) Merge(b *Agg) {
 	a.DurationSum += b.DurationSum
 	a.RequestBytes += b.RequestBytes
 	a.ResponseBytes += b.ResponseBytes
+	a.Satisfied += b.Satisfied
+	a.Tolerating += b.Tolerating
 	a.Durations.Merge(b.Durations)
 	a.Sizes.Merge(b.Sizes)
 }
@@ -271,4 +281,9 @@ type Store interface {
 	Write(ctx context.Context, w Write, now time.Time) (map[uuid.UUID]int64, error)
 	// Query answers one query over a property's rows.
 	Query(ctx context.Context, q Query) (Result, error)
+	// RouteSet lists the routes of a query's range that are new or silent.
+	RouteSet(ctx context.Context, q Query, state string) ([]int32, error)
+	// NoteReleases keeps the releases not seen before for their service and environment, writes
+	// a deploy annotation for each and returns them.
+	NoteReleases(ctx context.Context, p Property, rels []Release, zone Zone, now time.Time) ([]Release, error)
 }

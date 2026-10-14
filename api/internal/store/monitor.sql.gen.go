@@ -230,7 +230,7 @@ func (q *Queries) ListMonitorRollupProperties(ctx context.Context, arg ListMonit
 }
 
 const listMonitorRoutes = `-- name: ListMonitorRoutes :many
-SELECT id, pattern, inferred, hidden, first_seen_at, last_seen_at FROM monitor_routes
+SELECT id, pattern, inferred, hidden, apdex_ms, first_seen_at, last_seen_at FROM monitor_routes
 WHERE workspace_id = $1 AND property_id = $2
 ORDER BY pattern
 `
@@ -245,6 +245,7 @@ type ListMonitorRoutesRow struct {
 	Pattern     string
 	Inferred    bool
 	Hidden      bool
+	ApdexMs     *int32
 	FirstSeenAt time.Time
 	LastSeenAt  time.Time
 }
@@ -263,6 +264,7 @@ func (q *Queries) ListMonitorRoutes(ctx context.Context, arg ListMonitorRoutesPa
 			&i.Pattern,
 			&i.Inferred,
 			&i.Hidden,
+			&i.ApdexMs,
 			&i.FirstSeenAt,
 			&i.LastSeenAt,
 		); err != nil {
@@ -293,47 +295,6 @@ func (q *Queries) MarkMonitorLimitReached(ctx context.Context, arg MarkMonitorLi
 		return 0, err
 	}
 	return result.RowsAffected(), nil
-}
-
-const setMonitorRouteHidden = `-- name: SetMonitorRouteHidden :one
-UPDATE monitor_routes SET hidden = $1
-WHERE workspace_id = $2 AND property_id = $3 AND id = $4
-RETURNING id, pattern, inferred, hidden, first_seen_at, last_seen_at
-`
-
-type SetMonitorRouteHiddenParams struct {
-	Hidden      bool
-	WorkspaceID uuid.UUID
-	PropertyID  uuid.UUID
-	ID          int32
-}
-
-type SetMonitorRouteHiddenRow struct {
-	ID          int32
-	Pattern     string
-	Inferred    bool
-	Hidden      bool
-	FirstSeenAt time.Time
-	LastSeenAt  time.Time
-}
-
-func (q *Queries) SetMonitorRouteHidden(ctx context.Context, arg SetMonitorRouteHiddenParams) (SetMonitorRouteHiddenRow, error) {
-	row := q.db.QueryRow(ctx, setMonitorRouteHidden,
-		arg.Hidden,
-		arg.WorkspaceID,
-		arg.PropertyID,
-		arg.ID,
-	)
-	var i SetMonitorRouteHiddenRow
-	err := row.Scan(
-		&i.ID,
-		&i.Pattern,
-		&i.Inferred,
-		&i.Hidden,
-		&i.FirstSeenAt,
-		&i.LastSeenAt,
-	)
-	return i, err
 }
 
 const setWorkspaceMonitorLimit = `-- name: SetWorkspaceMonitorLimit :execrows
@@ -451,4 +412,52 @@ func (q *Queries) TrimMonitorRollupHours(ctx context.Context, arg TrimMonitorRol
 		return 0, err
 	}
 	return result.RowsAffected(), nil
+}
+
+const updateMonitorRoute = `-- name: UpdateMonitorRoute :one
+UPDATE monitor_routes SET hidden = coalesce($1::boolean, hidden),
+    apdex_ms = CASE WHEN $2::boolean THEN $3::int ELSE apdex_ms END
+WHERE workspace_id = $4 AND property_id = $5 AND id = $6
+RETURNING id, pattern, inferred, hidden, apdex_ms, first_seen_at, last_seen_at
+`
+
+type UpdateMonitorRouteParams struct {
+	Hidden      *bool
+	SetApdex    bool
+	ApdexMs     *int32
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	ID          int32
+}
+
+type UpdateMonitorRouteRow struct {
+	ID          int32
+	Pattern     string
+	Inferred    bool
+	Hidden      bool
+	ApdexMs     *int32
+	FirstSeenAt time.Time
+	LastSeenAt  time.Time
+}
+
+func (q *Queries) UpdateMonitorRoute(ctx context.Context, arg UpdateMonitorRouteParams) (UpdateMonitorRouteRow, error) {
+	row := q.db.QueryRow(ctx, updateMonitorRoute,
+		arg.Hidden,
+		arg.SetApdex,
+		arg.ApdexMs,
+		arg.WorkspaceID,
+		arg.PropertyID,
+		arg.ID,
+	)
+	var i UpdateMonitorRouteRow
+	err := row.Scan(
+		&i.ID,
+		&i.Pattern,
+		&i.Inferred,
+		&i.Hidden,
+		&i.ApdexMs,
+		&i.FirstSeenAt,
+		&i.LastSeenAt,
+	)
+	return i, err
 }
