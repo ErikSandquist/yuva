@@ -469,14 +469,14 @@ serve(app);
   import "useyuva/chat";
   document.querySelector("yuva-chat").setIdentityToken(async () => {
     const response = await fetch("/yuva-token", { credentials: "same-origin" });
-    return response.ok ? response.text() : null;
+    return response.ok ? (await response.json()).token : null;
   });
 </script>
 ```
 
-`defineYuvaIdentityHandler({ secret, user, ttl })` answers with a token for the claims `user(event)`
-returns, as `text/plain` with `Cache-Control: no-store`, and `401` when it returns nothing; `ttl` is
-the default for claims without their own. `defineYuvaWebhookHandler({ secret, tolerance, on })`
+`defineYuvaIdentityHandler({ secret, user, ttl })` answers `{ "token": "…" }` with a token for the
+claims `user(event)` returns, with `Cache-Control: no-store`, and `401` when it returns nothing;
+`ttl` is the default for claims without their own. `defineYuvaWebhookHandler({ secret, tolerance, on })`
 verifies the raw request with `verifyWebhook` and calls the handler for the event's `type` with the
 event typed for it; it answers `401` when the signature does not verify, `204` for a type without a
 handler, and otherwise the `Response` the handler returns or `204`. A handler that throws answers

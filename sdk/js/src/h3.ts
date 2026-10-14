@@ -39,7 +39,7 @@ export function defineYuvaIdentityHandler({
     const claims = await user(event)
     if (!claims) return new Response(null, { status: 401, headers: noStore })
     const token = await signIdentityToken(secret, { ...claims, ttl: claims.ttl ?? ttl })
-    return new Response(token, { headers: { ...noStore, "content-type": "text/plain; charset=utf-8" } })
+    return Response.json({ token }, { headers: noStore })
   })
 }
 
