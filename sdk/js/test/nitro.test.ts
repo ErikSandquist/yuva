@@ -10,6 +10,7 @@ import { createApp, createRouter, defineEventHandler, toNodeListener } from "h3-
 import {
   analyticsPlugin,
   identityHandler,
+  monitorPlugin,
   webhookHandler,
   type YuvaAdapter,
   type YuvaRuntimeConfig,
@@ -84,9 +85,11 @@ interface App {
 type Track = (event: TestEvent) => void
 const signup: Track = (event) => (event.context.yuva as YuvaContext | undefined)?.track({ name: "Signup" })
 
-async function nitro3(yuva: YuvaAdapter): Promise<App> {
+type Plugin = typeof analyticsPlugin
+
+async function nitro3(yuva: YuvaAdapter, plugins: Plugin[] = [analyticsPlugin]): Promise<App> {
   const hooks = hookable()
-  analyticsPlugin(yuva)({ hooks })
+  for (const plugin of plugins) plugin(yuva)({ hooks })
   const app = new H3({
     onRequest: (event) => hooks.callHook("request", event),
     onResponse: (response, event) => hooks.callHook("response", response, event),
@@ -97,6 +100,7 @@ async function nitro3(yuva: YuvaAdapter): Promise<App> {
       signup(event as unknown as TestEvent)
       return "ok"
     })
+    .get("/users/:id", (event) => ({ id: event.context.params?.id }))
   return {
     fetch(request, waitUntil) {
       if (waitUntil) Object.defineProperty(request, "waitUntil", { value: waitUntil })
@@ -106,9 +110,9 @@ async function nitro3(yuva: YuvaAdapter): Promise<App> {
   }
 }
 
-async function nitro2(yuva: YuvaAdapter): Promise<App> {
+async function nitro2(yuva: YuvaAdapter, plugins: Plugin[] = [analyticsPlugin]): Promise<App> {
   const hooks = hookable()
-  analyticsPlugin(yuva)({ hooks })
+  for (const plugin of plugins) plugin(yuva)({ hooks })
   let waitUntil: ((promise: Promise<unknown>) => void) | undefined
   const app = createApp({
     onRequest: async (event) => {
@@ -127,6 +131,10 @@ async function nitro2(yuva: YuvaAdapter): Promise<App> {
         signup(event as unknown as TestEvent)
         return "ok"
       })
+    )
+    .get(
+      "/users/:id",
+      defineEventHandler((event) => ({ id: event.context.params?.id }))
     )
   app.use(router)
   const listener: Server = createServer(toNodeListener(app))
@@ -147,6 +155,7 @@ async function nitro2(yuva: YuvaAdapter): Promise<App> {
 }
 
 const sent: { url: string; body: { events: Record<string, unknown>[] } }[] = []
+const records: Record<string, unknown>[] = []
 
 // happy-dom replaces WritableStream, and h3 v1 pipes web responses into one on the node server.
 const domWritableStream = globalThis.WritableStream
@@ -156,6 +165,12 @@ beforeAll(() => {
   globalThis.fetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
     const url = String(input instanceof Request ? input.url : input)
     if (!url.startsWith("https://yuva.test/")) return realFetch(input, init)
+    if (url === "https://yuva.test/v1/analytics/properties/api-1/requests") {
+      records.push(
+        ...JSON.parse(new TextDecoder().decode(Bun.gunzipSync(init!.body as Uint8Array<ArrayBuffer>))).records
+      )
+      return new Response(`{"accepted": 1, "errors": []}`, { status: 202 })
+    }
     sent.push({ url, body: JSON.parse(init!.body as string) })
     return new Response(`{"accepted": 1, "errors": []}`, { status: 202 })
   }) as typeof fetch
@@ -276,10 +291,49 @@ for (const [major, start] of [
   })
 }
 
+const monitored: YuvaRuntimeConfig = {
+  yuva: { monitor: { apiKey: "yuva_api_key", propertyId: "api-1", service: "shop", flushInterval: 50 } },
+  public: { yuva: { server: "https://yuva.test" } },
+}
+
+for (const [major, start] of [
+  [2, nitro2],
+  [3, nitro3],
+] as const) {
+  test(`nitro v${major} monitoring records every request with its matched route`, async () => {
+    runtime.config = monitored
+    records.length = 0
+    const app = await start(await adapter(major), [monitorPlugin])
+    const waiting: Promise<unknown>[] = []
+    const res = await app.fetch(new Request("http://app.test/users/42?token=secret"), (p) => waiting.push(p))
+    expect(await res.json()).toEqual({ id: "42" })
+    await app.fetch(new Request("http://app.test/wp-login.php?x=1"), (p) => waiting.push(p))
+    for (let i = 0; i < 100 && waiting.length < 2; i++) await Bun.sleep(5)
+    expect(waiting).toHaveLength(2)
+    await Promise.all(waiting)
+    await app.fetch(new Request("http://app.test/users/7"))
+    await Bun.sleep(10)
+    expect(records).toHaveLength(2)
+    await app.close()
+    expect(records).toHaveLength(3)
+    expect(records[0]).toMatchObject({ method: "GET", route: "/users/{id}", status: 200, service: "shop" })
+    expect(records[1]).toMatchObject({ method: "GET", path: "/wp-login.php", status: 404 })
+    expect(records[1]!.route).toBeUndefined()
+    expect(records[2]).toMatchObject({ route: "/users/{id}", status: 200 })
+    expect(JSON.stringify(records)).not.toContain("?")
+    for (const r of records) expect(r.duration_us).toBeGreaterThanOrEqual(0)
+  })
+}
+
 describe("build-time setup", () => {
   test("a part is on when its secret is in the config or the build environment", () => {
     const config = serverRuntimeConfig(undefined, { identitySecret: "yuva_is_x" })
-    expect(serverParts(config, {}, "NUXT_")).toEqual({ identity: true, webhook: false, analytics: false })
+    expect(serverParts(config, {}, "NUXT_")).toEqual({
+      identity: true,
+      webhook: false,
+      analytics: false,
+      monitor: false,
+    })
     expect(
       serverParts(
         config,
@@ -287,14 +341,17 @@ describe("build-time setup", () => {
           NUXT_YUVA_WEBHOOK_SECRET: "whsec_x",
           NUXT_YUVA_ANALYTICS_API_KEY: "k",
           NUXT_YUVA_ANALYTICS_PROPERTY_ID: "p",
+          NUXT_YUVA_MONITOR_API_KEY: "k",
+          NUXT_YUVA_MONITOR_PROPERTY_ID: "m",
         },
         "NUXT_"
       )
-    ).toEqual({ identity: true, webhook: true, analytics: true })
+    ).toEqual({ identity: true, webhook: true, analytics: true, monitor: true })
     expect(serverParts(serverRuntimeConfig(undefined, {}), { NUXT_YUVA_IDENTITY_SECRET: "x" }, "NITRO_")).toEqual({
       identity: false,
       webhook: false,
       analytics: false,
+      monitor: false,
     })
   })
 
@@ -305,6 +362,15 @@ describe("build-time setup", () => {
       identitySecret: "yuva_is_option",
       webhookSecret: "whsec_config",
       analytics: { apiKey: "", propertyId: "" },
+      monitor: {
+        apiKey: "",
+        propertyId: "",
+        environment: "",
+        service: "",
+        release: "",
+        sampleRate: 1,
+        flushInterval: 5000,
+      },
     })
   })
 })

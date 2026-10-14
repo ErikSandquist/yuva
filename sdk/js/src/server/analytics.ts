@@ -1,15 +1,11 @@
 import type { components } from "../schema.gen"
+import { AnalyticsBatchError, createSender } from "./sender"
+
+export { AnalyticsBatchError }
 
 type WireEvent = components["schemas"]["AnalyticsServerEvent"]
-type EventsResult = components["schemas"]["AnalyticsEventsResult"]
 
 export const MAX_BATCH = 100
-
-const defaultInterval = 5_000
-const defaultQueue = 10_000
-const defaultRetries = 5
-const defaultMinBackoff = 1_000
-const maxBackoff = 60_000
 
 export interface ServerAnalyticsConfig {
   server: string
@@ -62,25 +58,6 @@ export class AnalyticsEventError extends Error {
   }
 }
 
-export class AnalyticsBatchError extends Error {
-  readonly status: number
-  readonly body: string
-  readonly events: number
-
-  constructor(events: number, status: number, body: string, cause?: unknown) {
-    super(
-      cause === undefined
-        ? `analytics: ${events} events not sent: ${status} ${body}`
-        : `analytics: ${events} events not sent: ${cause instanceof Error ? cause.message : String(cause)}`,
-      cause === undefined ? undefined : { cause }
-    )
-    this.name = "AnalyticsBatchError"
-    this.status = status
-    this.body = body
-    this.events = events
-  }
-}
-
 const QUEUE_FULL = "analytics: the queue is full; event dropped"
 const CLOSED = "analytics: client closed"
 
@@ -120,119 +97,38 @@ const socketIP = (request: Request) => {
   return typeof ip === "string" ? ip : undefined
 }
 
-type Timer = ReturnType<typeof setTimeout>
-
-function unref(timer: Timer): Timer {
-  if (typeof timer === "object" && timer && "unref" in timer && typeof timer.unref === "function") timer.unref()
-  else (globalThis as { Deno?: { unrefTimer?(id: unknown): void } }).Deno?.unrefTimer?.(timer)
-  return timer
-}
-
-const sleep = (ms: number, hold: boolean) =>
-  new Promise<void>((resolve) => {
-    const timer = setTimeout(resolve, ms)
-    if (!hold) unref(timer)
-  })
-
 export function createAnalytics(config: ServerAnalyticsConfig): ServerAnalytics {
   if (!config.server || !config.apiKey || !config.propertyId) {
     throw new Error("analytics: server, apiKey and propertyId are required")
   }
-  const endpoint = `${config.server.replace(/\/+$/, "")}/v1/analytics/properties/${encodeURIComponent(config.propertyId)}/events`
-  const interval = config.flushInterval && config.flushInterval > 0 ? config.flushInterval : defaultInterval
-  const queueSize = config.queueSize && config.queueSize > 0 ? config.queueSize : defaultQueue
-  const maxRetries = config.maxRetries || defaultRetries
-  const minBackoff = config.minBackoff && config.minBackoff > 0 ? config.minBackoff : defaultMinBackoff
   const clientIP = config.clientIP ?? socketIP
-
-  let queue: ServerEvent[] = []
   let closed = false
-  let timer: Timer | undefined
-  let chain: Promise<unknown> = Promise.resolve()
-
   const report = (error: Error) => {
     try {
       config.onError?.(error)
     } catch {}
   }
-
-  async function post(body: string) {
-    const res = await (config.fetch ?? fetch)(endpoint, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${config.apiKey}`, "Content-Type": "application/json" },
-      body,
-    })
-    const raw = (await res.text()).slice(0, 64 << 10).trim()
-    const seconds = Number(res.headers.get("retry-after"))
-    return { status: res.status, raw, retryAfter: Number.isInteger(seconds) && seconds > 0 ? seconds * 1000 : 0 }
-  }
-
-  async function sendBatch(batch: ServerEvent[], hold: boolean): Promise<Error | undefined> {
-    const body = JSON.stringify({ events: batch.map(wire) })
-    let backoff = minBackoff
-    for (let attempt = 0; ; attempt++) {
-      const res = await post(body).catch((error: unknown) => ({ error }))
-      if (!("error" in res)) {
-        if (res.status === 202) {
-          try {
-            const result = JSON.parse(res.raw) as EventsResult
-            for (const { index, detail } of result.errors ?? []) {
-              const event = batch[index]
-              if (event) report(new AnalyticsEventError(event, detail))
-            }
-          } catch {}
-          return undefined
-        }
-        if (res.status !== 429 && res.status < 500) return new AnalyticsBatchError(batch.length, res.status, res.raw)
-      }
-      if (attempt >= maxRetries) {
-        return "error" in res
-          ? new AnalyticsBatchError(batch.length, 0, "", res.error)
-          : new AnalyticsBatchError(batch.length, res.status, res.raw)
-      }
-      await sleep(Math.max(backoff, "error" in res ? 0 : res.retryAfter), hold)
-      backoff = Math.min(backoff * 2, maxBackoff)
-    }
-  }
-
-  async function sendAll(hold: boolean): Promise<Error | undefined> {
-    let last: Error | undefined
-    for (;;) {
-      const batch = queue.slice(0, MAX_BATCH)
-      queue = queue.slice(batch.length)
-      if (batch.length === 0) return last
-      const error = await sendBatch(batch, hold)
-      if (error) {
-        last = error
-        report(error)
-      }
-    }
-  }
-
-  const run = (hold: boolean): Promise<Error | undefined> => {
-    const next = chain.then(() => sendAll(hold))
-    chain = next
-    return next
-  }
+  const sender = createSender<ServerEvent>({
+    endpoint: `${config.server.replace(/\/+$/, "")}/v1/analytics/properties/${encodeURIComponent(config.propertyId)}/events`,
+    apiKey: config.apiKey,
+    fetch: config.fetch,
+    key: "events",
+    batch: MAX_BATCH,
+    gzip: false,
+    flushInterval: config.flushInterval,
+    queueSize: config.queueSize && config.queueSize > 0 ? config.queueSize : 10_000,
+    maxRetries: config.maxRetries,
+    minBackoff: config.minBackoff,
+    full: QUEUE_FULL,
+    wire,
+    refused: (event, detail) => new AnalyticsEventError(event, detail),
+    report,
+  })
 
   function send(event: ServerEvent): void {
     if (!event.name || !event.url) throw new Error("analytics: an event needs a name and a url")
     if (closed) throw new Error(CLOSED)
-    if (queue.length >= queueSize) {
-      report(new Error(QUEUE_FULL))
-      return
-    }
-    queue.push({ ...event, time: event.time ?? new Date() })
-    if (queue.length >= MAX_BATCH) {
-      void run(false)
-    } else if (!timer) {
-      timer = unref(
-        setTimeout(() => {
-          timer = undefined
-          void run(false)
-        }, interval)
-      )
-    }
+    sender.push({ ...event, time: event.time ?? new Date() })
   }
 
   function track(request: Request, event: ServerEvent): void {
@@ -256,13 +152,12 @@ export function createAnalytics(config: ServerAnalyticsConfig): ServerAnalytics 
   return {
     track,
     send,
-    flush: () => run(true),
+    flush: () => sender.run(true),
     async close() {
       if (closed) return undefined
       closed = true
-      if (timer) clearTimeout(timer)
-      timer = undefined
-      return run(true)
+      sender.stop()
+      return sender.run(true)
     },
   }
 }

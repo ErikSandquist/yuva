@@ -5,8 +5,10 @@ import {
   type EventHandlerWithFetch,
   type H3Event,
   type Middleware,
+  toResponse,
 } from "h3"
 import type { ServerAnalytics, ServerEvent } from "./server/analytics"
+import { contentLength, flushOnClose, observe, started, type Monitor, type MonitorOptions } from "./server/monitor"
 import { signIdentityToken, type IdentityClaims } from "./server/identity"
 import { verifyWebhook, WebhookVerificationError, type WebhookEvent, type WebhookEventType } from "./server/webhook"
 
@@ -96,5 +98,34 @@ export function defineYuvaAnalytics({ analytics }: YuvaAnalyticsOptions): Middle
         event.waitUntil(analytics.flush())
       }
     }
+  })
+}
+
+export interface YuvaMonitorOptions extends MonitorOptions<H3Event> {
+  monitor: Monitor
+}
+
+export function defineYuvaMonitor({ monitor, ...options }: YuvaMonitorOptions): Middleware {
+  return defineMiddleware(async (event, next) => {
+    const start = started()
+    flushOnClose(event.runtime?.node?.req.socket?.server, monitor)
+    let result: unknown
+    try {
+      result = next()
+    } catch (error) {
+      result = Promise.reject(error)
+    }
+    const response = await toResponse(result, event, { ...event.app?.config, onResponse: undefined })
+    observe(monitor, options, event, {
+      ...start,
+      method: event.req.method,
+      route: event.context.matchedRoute?.route,
+      path: event.url.pathname,
+      status: response.status,
+      requestSize: contentLength(event.req.headers.get("content-length")),
+      responseSize: contentLength(response.headers.get("content-length")),
+    })
+    if (event.req.waitUntil) event.waitUntil(monitor.flushed())
+    return response
   })
 }

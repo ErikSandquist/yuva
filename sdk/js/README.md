@@ -13,7 +13,8 @@ JavaScript SDK for [Yuva](https://github.com/productdevbook/yuva), open-source c
 | `useyuva/nuxt` | A Nuxt module: `YuvaChat`, `YuvaPageFeedback`, `YuvaDiscussions` and `YuvaSubscribe` components, configured once in `nuxt.config`, and the identity and webhook routes on the server. |
 | `useyuva/nitro` | A Nitro v3 module serving `/_yuva/identity` and `/_yuva/webhook` and sending server-side analytics; `defineYuvaServer` from `useyuva/nitro/runtime`. |
 | `useyuva/api` | A typed `/v1` client for backends (API key), generated from the OpenAPI contract. |
-| `useyuva/server` | `signIdentityToken`, `verifyWebhook` and `createAnalytics` for backends. Web Crypto and `fetch` only: Node 22+, Bun, Deno, workers, srvx. |
+| `useyuva/server` | `signIdentityToken`, `verifyWebhook`, `createAnalytics` and `createMonitor` for backends. Web Crypto and `fetch` only: Node 22+, Bun, Deno, workers, srvx. |
+| `useyuva/srvx`, `useyuva/hono`, `useyuva/express`, `useyuva/fastify`, `useyuva/next` | [API monitoring](#api-monitoring) middleware for each framework (`useyuva/h3` has one too). The framework is an optional peer. |
 
 ```sh
 npm install useyuva
@@ -299,6 +300,8 @@ NUXT_YUVA_IDENTITY_SECRET=yuva_is_…   # at build and at runtime
 NUXT_YUVA_WEBHOOK_SECRET=whsec_…
 NUXT_YUVA_ANALYTICS_API_KEY=yuva_…
 NUXT_YUVA_ANALYTICS_PROPERTY_ID=…
+NUXT_YUVA_MONITOR_API_KEY=yuva_…      # API monitoring
+NUXT_YUVA_MONITOR_PROPERTY_ID=…
 ```
 
 With an identity secret, the module serves `GET /_yuva/identity` (the [h3](#h3) identity handler for
@@ -308,7 +311,8 @@ verifies the request and calls `webhooks[type]` like `defineYuvaWebhookHandler`.
 key (`analytics:write`) and property id, `event.context.yuva.track(event)` sends server-side events
 to `yuva.server` (or `NUXT_YUVA_SERVER`), flushed through `waitUntil` after the request where the
 platform has one and when Nitro closes. The secrets are the options `identitySecret`,
-`webhookSecret`, `analytics.apiKey` and `analytics.propertyId` or the variables above; they go only
+`webhookSecret`, `analytics.apiKey`, `analytics.propertyId`, `monitor.apiKey` and `monitor.propertyId`
+or the variables above; they go only
 into the server runtime config (`useRuntimeConfig().yuva`), never into the public one. A route is
 added only when its secret is known at build time, from `nuxt.config` or the environment; a secret
 that is only in the build environment is not written into the build, so set it at runtime too. A
@@ -554,11 +558,123 @@ export default defineYuvaServer({
 ```
 
 The variables are `NITRO_YUVA_IDENTITY_SECRET`, `NITRO_YUVA_WEBHOOK_SECRET`,
-`NITRO_YUVA_ANALYTICS_API_KEY`, `NITRO_YUVA_ANALYTICS_PROPERTY_ID` and `NITRO_YUVA_SERVER` (the Yuva
-server analytics goes to), or `yuva({ identitySecret, webhookSecret, analytics: { apiKey, propertyId }, server })`
-from `useyuva/nitro` in `modules`; routes, `track` and the build-time rule are as in [Nuxt](#nuxt).
+`NITRO_YUVA_ANALYTICS_API_KEY`, `NITRO_YUVA_ANALYTICS_PROPERTY_ID`, `NITRO_YUVA_MONITOR_API_KEY`,
+`NITRO_YUVA_MONITOR_PROPERTY_ID` and `NITRO_YUVA_SERVER` (the Yuva server analytics goes to), or
+`yuva({ identitySecret, webhookSecret, analytics: { apiKey, propertyId }, monitor: { apiKey, propertyId }, server })`
+from `useyuva/nitro` in `modules`; routes, `track`, monitoring and the build-time rule are as in [Nuxt](#nuxt).
 `yuva.ts` is read from `serverDir`, or the root without one. The page asks for the token as in the
 h3 example, at `/_yuva/identity`.
+
+## API monitoring
+
+Request volume, errors and latency per route for an analytics property of kind `api`, with an API
+key that has `analytics:write`:
+
+```ts
+// monitor.ts
+import { createMonitor } from "useyuva/server";
+
+export const monitor = createMonitor({
+  server: "https://support.example.com",
+  apiKey: process.env.YUVA_API_KEY!,
+  propertyId: process.env.YUVA_API_PROPERTY!,
+  service: "shop",
+});
+```
+
+Each middleware below records a request's method, the route pattern its router matched (written
+`/users/{id}` whatever the router's syntax: `:id`, `[id]` and `**:path` become `{id}` and
+`{path...}`), status (0 when no response was sent), duration in microseconds, body sizes from
+`Content-Length` and start time; never a body, header, query string or address. A request no route
+matched sends its path, from which Yuva infers a pattern and counts `404` and `405` as
+`(unmatched)`. Every middleware takes `consumer(request)` and `apiVersion(request)`, naming who called
+(an API key's name or a client id, never a person's address); the country is counted only when you
+pass `clientIP(request)`, and the address is never stored.
+
+`environment` (`production` when unset), `service` and `release` go on every record. `sampleRate: n`
+sends one in `n` successful requests, each standing for `n`; `4xx`, `5xx` and status 0 are always
+sent. Records go out gzip'd in batches of up to 500 every `flushInterval` (5000 ms) or as soon as a
+batch is full, holding at most `queueSize` (50,000); retries, `maxRetries`, `minBackoff` and
+`Retry-After` are as for [analytics](#server), and records the server left out reach `onError` as
+`MonitorRecordError`. The middleware hand `flushed()`, which resolves once the queued records are
+sent, to the request's `waitUntil` where the platform has one, and flush when the server closes;
+elsewhere call `monitor.close()` before the process exits. `record(record)` records one request as the
+middleware do; `send(record)` queues one as it is.
+
+### srvx
+
+```ts
+import { serve } from "srvx";
+import { yuvaMonitor } from "useyuva/srvx";
+
+serve({ plugins: [yuvaMonitor(monitor, { route: (request) => routeOf(request) })], fetch: app.fetch });
+```
+
+srvx has no router: the route is `route(request)`, else the one an h3 app put on the request's
+context. `server.close()` flushes.
+
+### h3
+
+```ts
+import { defineYuvaMonitor } from "useyuva/h3";
+
+const app = new H3().use(defineYuvaMonitor({ monitor })).get("/users/:id", getUser);
+```
+
+Use it first, before other middleware; the route is `event.context.matchedRoute`.
+
+### Hono
+
+```ts
+import { yuvaMonitor } from "useyuva/hono";
+
+const app = new Hono().use(yuvaMonitor(monitor)).get("/users/:id", getUser);
+```
+
+The route is the path of the handler that answered (`matchedRoutes` from `hono/route`), sub-apps
+included. On Cloudflare Workers it flushes through `executionCtx.waitUntil`, on `@hono/node-server`
+when the server closes.
+
+### Express
+
+```ts
+import { yuvaMonitor } from "useyuva/express";
+
+app.use(yuvaMonitor(monitor));
+app.get("/users/:id", getUser);
+```
+
+The route is `req.baseUrl` and `req.route.path`; for a router mounted on a pattern, `req.baseUrl` is
+the path it matched, whose ids Yuva turns into `{id}`. A connection closed before the response is
+status 0. The HTTP server's `close` flushes.
+
+### Fastify
+
+```ts
+import { yuvaMonitor } from "useyuva/fastify";
+
+await app.register(yuvaMonitor(monitor));
+app.get("/users/:id", getUser);
+```
+
+The route is `request.routeOptions.url`, for every route of the app, prefixed plugins included.
+`app.close()` flushes.
+
+### Next.js
+
+```ts
+// app/users/[id]/route.ts
+import { withYuvaMonitor } from "useyuva/next";
+import { monitor } from "@/monitor";
+
+export const GET = withYuvaMonitor(monitor, "/users/[id]", async (request, { params }) => {
+  return Response.json(await findUser((await params).id));
+});
+```
+
+A route handler knows no pattern at run time, so it is the second argument, written like the folder
+(`[id]`, `[...slug]`; route groups and slots are left out). `notFound()` and `redirect()` count with
+their status. It flushes through `after()`.
 
 ## License
 

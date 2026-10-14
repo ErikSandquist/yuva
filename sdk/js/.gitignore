@@ -1,1 +1,3 @@
 src/locales/*/*.ts
+test/next-app/.next/
+test/next-app/next-env.d.ts

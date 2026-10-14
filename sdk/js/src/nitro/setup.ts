@@ -1,9 +1,9 @@
 import { existsSync } from "node:fs"
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
-import type { YuvaServerRuntimeConfig } from "./runtime/core"
+import type { YuvaMonitorRuntimeConfig, YuvaServerRuntimeConfig } from "./runtime/core"
 
-export type { YuvaServerRuntimeConfig }
+export type { YuvaMonitorRuntimeConfig, YuvaServerRuntimeConfig }
 
 export const IDENTITY_ROUTE = "/_yuva/identity"
 export const WEBHOOK_ROUTE = "/_yuva/webhook"
@@ -13,18 +13,25 @@ export interface YuvaServerOptions {
   identitySecret?: string
   webhookSecret?: string
   analytics?: { apiKey?: string; propertyId?: string }
+  monitor?: YuvaMonitorRuntimeConfig
 }
 
 export interface YuvaServerParts {
   identity: boolean
   webhook: boolean
   analytics: boolean
+  monitor: boolean
 }
 
 export function serverRuntimeConfig(
   current: YuvaServerRuntimeConfig | undefined,
   options: YuvaServerOptions & { server?: string }
-): Required<Omit<YuvaServerRuntimeConfig, "analytics">> & { analytics: { apiKey: string; propertyId: string } } {
+): Required<Omit<YuvaServerRuntimeConfig, "analytics" | "monitor">> & {
+  analytics: { apiKey: string; propertyId: string }
+  monitor: Required<YuvaMonitorRuntimeConfig>
+} {
+  const monitor = (key: "apiKey" | "propertyId" | "environment" | "service" | "release") =>
+    current?.monitor?.[key] || options.monitor?.[key] || ""
   return {
     ...current,
     server: current?.server || options.server || "",
@@ -34,6 +41,15 @@ export function serverRuntimeConfig(
       ...current?.analytics,
       apiKey: current?.analytics?.apiKey || options.analytics?.apiKey || "",
       propertyId: current?.analytics?.propertyId || options.analytics?.propertyId || "",
+    },
+    monitor: {
+      apiKey: monitor("apiKey"),
+      propertyId: monitor("propertyId"),
+      environment: monitor("environment"),
+      service: monitor("service"),
+      release: monitor("release"),
+      sampleRate: current?.monitor?.sampleRate || options.monitor?.sampleRate || 1,
+      flushInterval: current?.monitor?.flushInterval || options.monitor?.flushInterval || 5000,
     },
   }
 }
@@ -49,6 +65,7 @@ export function serverParts(
     webhook: set(config.webhookSecret, "WEBHOOK_SECRET"),
     analytics:
       set(config.analytics?.apiKey, "ANALYTICS_API_KEY") && set(config.analytics?.propertyId, "ANALYTICS_PROPERTY_ID"),
+    monitor: set(config.monitor?.apiKey, "MONITOR_API_KEY") && set(config.monitor?.propertyId, "MONITOR_PROPERTY_ID"),
   }
 }
 
@@ -60,7 +77,7 @@ export function findServerFile(dir: string): string | undefined {
   return undefined
 }
 
-export function runtimePath(name: "identity" | "webhook" | "plugin"): string {
+export function runtimePath(name: "identity" | "webhook" | "plugin" | "monitor"): string {
   return fileURLToPath(new URL(`./runtime/${name}.js`, import.meta.url))
 }
 
@@ -88,6 +105,14 @@ export function serverModule({ nitro, server, runtimeConfig, h3 = "h3" }: Server
           "export const trackRequest = (event) => event.req",
           'export const onResponse = (hooks, fn) => hooks.hook("response", (_response, event) => fn(event))',
           "export const waitUntil = (event) => (event.req.waitUntil ? (promise) => event.waitUntil(promise) : undefined)",
+          "export const requestInfo = (event) => ({",
+          "  method: event.req.method,",
+          "  path: event.url.pathname,",
+          "  route: event.context.matchedRoute?.route,",
+          '  size: event.req.headers.get("content-length"),',
+          "})",
+          "export const onResponded = (hooks, fn) =>",
+          '  hooks.hook("response", (response, event) => fn(event, response.status, response.headers.get("content-length")))',
         ]
       : [
           "export const defineHandler = defineEventHandler",
@@ -96,6 +121,14 @@ export function serverModule({ nitro, server, runtimeConfig, h3 = "h3" }: Server
           "  Object.assign(new Request(getRequestURL(event), { headers: event.headers }), { ip: getRequestIP(event) })",
           'export const onResponse = (hooks, fn) => hooks.hook("afterResponse", (event) => fn(event))',
           "export const waitUntil = (event) => (event.context.waitUntil ? (promise) => event.waitUntil(promise) : undefined)",
+          "export const requestInfo = (event) => ({",
+          "  method: event.method,",
+          "  path: event.path,",
+          "  route: event.context.matchedRoute?.path,",
+          '  size: event.headers.get("content-length"),',
+          "})",
+          "export const onResponded = (hooks, fn) =>",
+          '  hooks.hook("afterResponse", (event) => fn(event, event.node.res.statusCode, event.node.res.getHeader("content-length")))',
         ]),
   ]
   return `${lines.join("\n")}\n`

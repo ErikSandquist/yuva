@@ -69,6 +69,11 @@ const entries = [
   "src/api.ts",
   "src/server.ts",
   "src/h3.ts",
+  "src/srvx.ts",
+  "src/hono.ts",
+  "src/express.ts",
+  "src/fastify.ts",
+  "src/next.ts",
 ]
 check(
   await Bun.build({
@@ -80,7 +85,10 @@ check(
     splitting: true,
     minify: { syntax: true, whitespace: true },
     naming: { chunk: "[name]-[hash].js" },
-    external: [...Object.keys(pkg.dependencies), ...Object.keys(pkg.peerDependencies)],
+    external: [...Object.keys(pkg.dependencies), ...Object.keys(pkg.peerDependencies)].flatMap((name) => [
+      name,
+      `${name}/*`,
+    ]),
     define: { "process.env.NODE_ENV": '"production"' },
     plugins: [linguiMacro],
   })
@@ -102,6 +110,7 @@ const transpiled = [
   "nitro/runtime/identity",
   "nitro/runtime/webhook",
   "nitro/runtime/plugin",
+  "nitro/runtime/monitor",
 ]
 for (const name of transpiled) {
   const code = transpiler.transformSync(await Bun.file(`src/${name}.ts`).text())
@@ -141,6 +150,11 @@ for (const name of [
   "esm/api.js",
   "esm/server.js",
   "esm/h3.js",
+  "esm/srvx.js",
+  "esm/hono.js",
+  "esm/express.js",
+  "esm/fastify.js",
+  "esm/next.js",
   "esm/nuxt/module.js",
   "esm/nuxt/runtime/components.js",
   "esm/nuxt/runtime/analytics.js",

@@ -20,6 +20,7 @@ import {
   serverParts,
   serverRuntimeConfig,
   WEBHOOK_ROUTE,
+  type YuvaMonitorRuntimeConfig,
   type YuvaServerRuntimeConfig,
 } from "../nitro/setup"
 
@@ -38,6 +39,7 @@ export interface ModuleOptions {
   analytics?: AnalyticsModuleOptions
   identitySecret?: string
   webhookSecret?: string
+  monitor?: YuvaMonitorRuntimeConfig
 }
 
 export interface PublicModuleConfig {
@@ -79,6 +81,7 @@ export default defineNuxtModule<ModuleOptions>({
       identitySecret: options.identitySecret,
       webhookSecret: options.webhookSecret,
       analytics: { apiKey, propertyId },
+      monitor: options.monitor,
     })
     const parts = serverParts(secrets, process.env, "NUXT_")
 
@@ -106,7 +109,7 @@ export default defineNuxtModule<ModuleOptions>({
     addServerImports([{ name: "defineYuvaServer", from: "useyuva/nitro/runtime" }])
     addTypeTemplate({ filename: "types/useyuva-server.d.ts", getContents: () => serverTypes }, { nitro: true })
 
-    if (!parts.identity && !parts.webhook && !parts.analytics) return
+    if (!parts.identity && !parts.webhook && !parts.analytics && !parts.monitor) return
     nuxt.options.runtimeConfig.yuva = secrets
 
     const server = findServerFile(nuxt.options.serverDir)
@@ -123,5 +126,6 @@ export default defineNuxtModule<ModuleOptions>({
     if (parts.identity) addServerHandler({ route: IDENTITY_ROUTE, method: "GET", handler: runtimePath("identity") })
     if (parts.webhook) addServerHandler({ route: WEBHOOK_ROUTE, method: "POST", handler: runtimePath("webhook") })
     if (parts.analytics) addServerPlugin(runtimePath("plugin"))
+    if (parts.monitor) addServerPlugin(runtimePath("monitor"))
   },
 })

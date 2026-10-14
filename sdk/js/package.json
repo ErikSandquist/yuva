@@ -1,7 +1,7 @@
 {
   "name": "useyuva",
   "version": "0.0.13",
-  "description": "Yuva for the web: a headless client for contacts, the <yuva-chat> element, documentation page feedback and discussions, the <yuva-subscribe> mailing list form, cookieless web analytics, React hooks, a Nuxt module, a typed /v1 client and server helpers for identity tokens, webhooks and server-side analytics.",
+  "description": "Yuva for the web: a headless client for contacts, the <yuva-chat> element, documentation page feedback and discussions, the <yuva-subscribe> mailing list form, cookieless web analytics, React hooks, a Nuxt module, a typed /v1 client and server helpers for identity tokens, webhooks, server-side analytics and API monitoring.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -19,7 +19,11 @@
     "nuxt",
     "nitro",
     "newsletter",
-    "analytics"
+    "analytics",
+    "api-monitoring",
+    "hono",
+    "express",
+    "fastify"
   ],
   "type": "module",
   "sideEffects": [
@@ -69,6 +73,26 @@
     "./h3": {
       "types": "./dist/types/h3.d.ts",
       "default": "./dist/esm/h3.js"
+    },
+    "./srvx": {
+      "types": "./dist/types/srvx.d.ts",
+      "default": "./dist/esm/srvx.js"
+    },
+    "./hono": {
+      "types": "./dist/types/hono.d.ts",
+      "default": "./dist/esm/hono.js"
+    },
+    "./express": {
+      "types": "./dist/types/express.d.ts",
+      "default": "./dist/esm/express.js"
+    },
+    "./fastify": {
+      "types": "./dist/types/fastify.d.ts",
+      "default": "./dist/esm/fastify.js"
+    },
+    "./next": {
+      "types": "./dist/types/next.d.ts",
+      "default": "./dist/esm/next.js"
     },
     "./nuxt": {
       "types": "./dist/types/nuxt/module.d.ts",
@@ -122,18 +146,38 @@
   },
   "peerDependencies": {
     "@nuxt/kit": ">=3.15.0",
+    "express": "^4.17.0 || ^5.0.0",
+    "fastify": "^5.0.0",
     "h3": "^2.0.0",
+    "hono": "^4.8.0",
+    "next": ">=15.1.0",
     "react": ">=18",
+    "srvx": "^1.0.0",
     "vue": ">=3.5.0"
   },
   "peerDependenciesMeta": {
     "@nuxt/kit": {
       "optional": true
     },
+    "express": {
+      "optional": true
+    },
+    "fastify": {
+      "optional": true
+    },
     "h3": {
       "optional": true
     },
+    "hono": {
+      "optional": true
+    },
+    "next": {
+      "optional": true
+    },
     "react": {
+      "optional": true
+    },
+    "srvx": {
       "optional": true
     },
     "vue": {
@@ -149,16 +193,22 @@
     "@nuxt/kit": "4.6.1",
     "@nuxt/schema": "4.6.1",
     "@types/bun": "^1.4.2",
+    "@types/express": "5.0.6",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
+    "express": "5.2.1",
+    "fastify": "5.12.5",
     "h3": "2.0.2",
     "h3-v1": "npm:h3@1.15.11",
     "happy-dom": "^20.14.5",
+    "hono": "4.13.13",
+    "next": "16.3.8",
     "nitro": "3.0.260903-beta",
     "oxfmt": "0.72.0",
     "oxlint": "1.87.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "srvx": "1.0.5",
     "typescript": "^7.0.2",
     "vue": "3.5.43"
   }

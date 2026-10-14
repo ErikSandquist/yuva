@@ -23,7 +23,7 @@ export function yuva(options: YuvaNitroOptions = {}): NitroModule {
       const config = serverRuntimeConfig(nitro.options.runtimeConfig.yuva, options)
       nitro.options.runtimeConfig.yuva = config
       const parts = serverParts(config, process.env, "NITRO_")
-      if (!parts.identity && !parts.webhook && !parts.analytics) return
+      if (!parts.identity && !parts.webhook && !parts.analytics && !parts.monitor) return
 
       const dir = nitro.options.serverDir
         ? resolve(nitro.options.rootDir, nitro.options.serverDir)
@@ -41,6 +41,7 @@ export function yuva(options: YuvaNitroOptions = {}): NitroModule {
       if (parts.webhook)
         nitro.options.handlers.push({ route: WEBHOOK_ROUTE, method: "POST", handler: runtimePath("webhook") })
       if (parts.analytics) nitro.options.plugins.push(runtimePath("plugin"))
+      if (parts.monitor) nitro.options.plugins.push(runtimePath("monitor"))
     },
   }
 }

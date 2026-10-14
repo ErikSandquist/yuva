@@ -19,3 +19,13 @@ export {
   type ServerAnalyticsConfig,
   type ServerEvent,
 } from "./server/analytics"
+export {
+  createMonitor,
+  MAX_RECORD_BATCH,
+  MonitorRecordError,
+  routePattern,
+  type Monitor,
+  type MonitorConfig,
+  type MonitorOptions,
+  type RequestRecord,
+} from "./server/monitor"

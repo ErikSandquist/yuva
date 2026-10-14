@@ -1,5 +1,7 @@
 import {
   createAnalytics,
+  createMonitor,
+  routePattern,
   signIdentityToken,
   verifyWebhook,
   WebhookVerificationError,
@@ -12,6 +14,24 @@ export interface YuvaServerRuntimeConfig {
   identitySecret?: string
   webhookSecret?: string
   analytics?: { apiKey?: string; propertyId?: string }
+  monitor?: YuvaMonitorRuntimeConfig
+}
+
+export interface YuvaMonitorRuntimeConfig {
+  apiKey?: string
+  propertyId?: string
+  environment?: string
+  service?: string
+  release?: string
+  sampleRate?: number
+  flushInterval?: number
+}
+
+export interface YuvaRequestInfo {
+  method: string
+  path: string
+  route?: string
+  size?: string | null
 }
 
 export interface YuvaRuntimeConfig {
@@ -35,6 +55,11 @@ export interface YuvaAdapter {
   trackRequest(event: YuvaHookEvent): Request
   onResponse(hooks: YuvaHooks, fn: (event: YuvaHookEvent) => void): void
   waitUntil(event: YuvaHookEvent): ((promise: Promise<unknown>) => void) | undefined
+  requestInfo(event: YuvaHookEvent): YuvaRequestInfo
+  onResponded(
+    hooks: YuvaHooks,
+    fn: (event: YuvaHookEvent, status: number, size: string | number | string[] | null | undefined) => void
+  ): void
 }
 
 const noStore = { "cache-control": "no-store" }
@@ -69,11 +94,14 @@ export function webhookHandler(yuva: YuvaAdapter): unknown {
   })
 }
 
+const yuvaServer = (config: YuvaRuntimeConfig) =>
+  config.yuva?.server || config.public?.yuva?.analytics?.server || config.public?.yuva?.server
+
 export function analyticsPlugin(yuva: YuvaAdapter) {
   return (nitroApp: { hooks: YuvaHooks }): void => {
     const config = yuva.config()
     const { apiKey, propertyId } = config.yuva?.analytics ?? {}
-    const server = config.yuva?.server || config.public?.yuva?.analytics?.server || config.public?.yuva?.server
+    const server = yuvaServer(config)
     if (!apiKey || !propertyId || !server) return
     const analytics = createAnalytics({ server, apiKey, propertyId })
     const tracked = new WeakSet<YuvaHookEvent>()
@@ -89,5 +117,42 @@ export function analyticsPlugin(yuva: YuvaAdapter) {
       if (tracked.has(event)) yuva.waitUntil(event)?.(analytics.flush())
     })
     nitroApp.hooks.hook("close", () => analytics.close())
+  }
+}
+
+const bytes = (value: string | number | string[] | null | undefined) => {
+  const n = typeof value === "number" ? value : typeof value === "string" && value ? Number(value) : Number.NaN
+  return Number.isInteger(n) && n >= 0 ? n : undefined
+}
+
+export function monitorPlugin(yuva: YuvaAdapter) {
+  return (nitroApp: { hooks: YuvaHooks }): void => {
+    const config = yuva.config()
+    const { apiKey, propertyId, ...options } = config.yuva?.monitor ?? {}
+    const server = yuvaServer(config)
+    if (!apiKey || !propertyId || !server) return
+    const monitor = createMonitor({ ...options, server, apiKey, propertyId })
+    const starts = new WeakMap<YuvaHookEvent, { time: Date; at: number }>()
+    nitroApp.hooks.hook("request", (event: YuvaHookEvent) => {
+      starts.set(event, { time: new Date(), at: performance.now() })
+    })
+    yuva.onResponded(nitroApp.hooks, (event, status, size) => {
+      const start = starts.get(event)
+      if (!start) return
+      starts.delete(event)
+      const info = yuva.requestInfo(event)
+      monitor.record({
+        method: info.method,
+        route: info.route ? routePattern(info.route) : undefined,
+        path: info.path.split(/[?#]/)[0],
+        status,
+        duration: performance.now() - start.at,
+        time: start.time,
+        requestSize: bytes(info.size),
+        responseSize: bytes(size),
+      })
+      yuva.waitUntil(event)?.(monitor.flushed())
+    })
+    nitroApp.hooks.hook("close", () => monitor.close())
   }
 }
