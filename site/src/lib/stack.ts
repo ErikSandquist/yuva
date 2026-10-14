@@ -1,9 +1,10 @@
 import {
   siAstro,
   siDocker,
+  siFirebase,
   siGo,
-  siH3,
   siKotlin,
+  siMinio,
   siModelcontextprotocol,
   siNextdotjs,
   siNuxt,
@@ -13,7 +14,7 @@ import {
   siSwift,
   siVuedotjs,
 } from "simple-icons"
-import { nitroMark } from "@/lib/marks"
+import { h3Mark, nitroMark } from "@/lib/marks"
 import { ai, cloudflareEmail, doc, docsPath, type Locale } from "@/lib/routes"
 
 export interface StackItem {
@@ -33,7 +34,7 @@ export const stack: StackItem[] = [
   { name: "Vue", path: siVuedotjs.path, href: docs("analytics/") },
   { name: "Nuxt", path: siNuxt.path, href: docs("analytics/#nuxt") },
   { name: "Nitro", path: nitroMark, viewBox: "0 0 40 40", href: same(doc("examples/nitro")) },
-  { name: "h3", path: siH3.path, href: same(doc("sdk/js/README.md#server")) },
+  { name: "h3", path: h3Mark, viewBox: "0 0 264 264", href: same(doc("sdk/js/README.md#server")) },
   { name: "shadcn/ui", path: siShadcnui.path, href: docs("documentation-pages/#shadcnui") },
   { name: "Astro", path: siAstro.path, href: docs("analytics/") },
   { name: "Swift", path: siSwift.path, href: docs("mobile/#2-ios") },
@@ -41,8 +42,11 @@ export const stack: StackItem[] = [
   { name: "Go", path: siGo.path, href: docs("analytics-server/#go") },
   { name: "Amazon SES", href: docs("email/") },
   { name: "Postmark", href: docs("email/") },
-  { name: "S3 · R2 · MinIO", href: docs("configuration/") },
-  { name: "APNs · FCM", href: docs("mobile/") },
+  { name: "Amazon S3", href: docs("configuration/") },
+  { name: "Cloudflare R2", href: docs("configuration/") },
+  { name: "MinIO", path: siMinio.path, href: docs("configuration/") },
+  { name: "APNs", href: docs("mobile/") },
+  { name: "Firebase Cloud Messaging", path: siFirebase.path, href: docs("mobile/") },
   { name: "Docker", path: siDocker.path, href: docs("install/") },
   { name: "OpenAPI", path: siOpenapiinitiative.path, href: docs("api/") },
   { name: "MCP", path: siModelcontextprotocol.path, href: ai },
