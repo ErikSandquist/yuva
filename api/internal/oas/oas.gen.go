@@ -1096,19 +1096,28 @@ func (e AnalyticsRetentionGrain) Valid() bool {
 
 // Defines values for AnalyticsShareView.
 const (
-	AnalyticsShareDevices   AnalyticsShareView = "devices"
-	AnalyticsShareEvents    AnalyticsShareView = "events"
-	AnalyticsShareGoals     AnalyticsShareView = "goals"
-	AnalyticsShareLocations AnalyticsShareView = "locations"
-	AnalyticsShareOverview  AnalyticsShareView = "overview"
-	AnalyticsSharePages     AnalyticsShareView = "pages"
-	AnalyticsShareRealtime  AnalyticsShareView = "realtime"
-	AnalyticsShareSources   AnalyticsShareView = "sources"
+	AnalyticsShareAPIConsumers AnalyticsShareView = "api_consumers"
+	AnalyticsShareAPIOverview  AnalyticsShareView = "api_overview"
+	AnalyticsShareAPIRoutes    AnalyticsShareView = "api_routes"
+	AnalyticsShareDevices      AnalyticsShareView = "devices"
+	AnalyticsShareEvents       AnalyticsShareView = "events"
+	AnalyticsShareGoals        AnalyticsShareView = "goals"
+	AnalyticsShareLocations    AnalyticsShareView = "locations"
+	AnalyticsShareOverview     AnalyticsShareView = "overview"
+	AnalyticsSharePages        AnalyticsShareView = "pages"
+	AnalyticsShareRealtime     AnalyticsShareView = "realtime"
+	AnalyticsShareSources      AnalyticsShareView = "sources"
 )
 
 // Valid indicates whether the value is a known member of the AnalyticsShareView enum.
 func (e AnalyticsShareView) Valid() bool {
 	switch e {
+	case AnalyticsShareAPIConsumers:
+		return true
+	case AnalyticsShareAPIOverview:
+		return true
+	case AnalyticsShareAPIRoutes:
+		return true
 	case AnalyticsShareDevices:
 		return true
 	case AnalyticsShareEvents:
@@ -5428,6 +5437,23 @@ type AnalyticsConsentA int
 // these features.
 type AnalyticsConsentFeature string
 
+// AnalyticsConsumer defines model for AnalyticsConsumer.
+type AnalyticsConsumer struct {
+	FirstSeenAt time.Time `json:"first_seen_at"`
+	Id          int32     `json:"id"`
+
+	// Name The `consumer` the records named.
+	Name string `json:"name"`
+}
+
+// AnalyticsConsumerPage defines model for AnalyticsConsumerPage.
+type AnalyticsConsumerPage struct {
+	Items []AnalyticsConsumer `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
 // AnalyticsContactVisit One visit, described as its first event saw it, as the dimensions of `AnalyticsFilterDimension` name its values.
 type AnalyticsContactVisit struct {
 	AppVersion string    `json:"app_version"`
@@ -5727,6 +5753,48 @@ type AnalyticsExport struct {
 	// CreatedBy The member who asked for it; absent for API keys and removed members.
 	CreatedBy *uuid.UUID `json:"created_by,omitempty"`
 
+	// Dataset `traffic` (default) counts visits, page views and events. `support` counts, per page and
+	// day, what the property's linked inbox received from its pages: conversations started on a
+	// page, page feedback, page ratings and discussion threads, next to the page's `pageviews`
+	// and `visitors`. Pages are joined by host and path only; no visitor is ever joined to a
+	// contact or conversation. It takes the dimensions `page`, `hostname` and `time:day`,
+	// `time:week` or `time:month` (a page or host and a grain at most), filters on `page` and
+	// `hostname`, no goal, prop or segment, and answers `422 no_linked_inbox` for a property
+	// without an inbox. Rows are the pages (or hosts) with any support in the range, ordered by
+	// `support_rate` with pages of fewer than 100 page views after the others unless `order_by`
+	// says otherwise. Days of the past come from the support rollup, today and days not yet rolled
+	// up from the inbox itself.
+	//
+	// `api` is an API property's requests (`sendAnalyticsRequests`), and the only dataset an API
+	// property takes (`422 property_kind` otherwise, and for `api` on a site). It takes the API
+	// metrics of `AnalyticsMetric`, the API dimensions of `AnalyticsDimension`, filters on them
+	// and `compare`; no goal, prop, segment or insights. Closed local days come from daily rows,
+	// closed hours from hourly rows and the rest from minute rows, which processes write every
+	// 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
+	// Answers that reach into open hours are cached for 5 seconds.
+	//
+	// Any combination of the core dimensions (`route`, `method`, `status`, `status_class`,
+	// `api_version`, `environment`, `service`, `source`, `platform`) breaks down and filters
+	// from every tier. One extra dimension (`consumer`, `country` or `app_version`), as a
+	// dimension or a filter, joins only `route`, `method`, `status_class` and the grains from
+	// `time:hour` up, over a range of whole local hours (days, or `since` and `until` on the
+	// hour), since it is kept by local hour with those three. Anything else answers
+	// `422 dimension_combination`: two extra dimensions, an extra one with another core
+	// dimension or filter, with `time:minute`, or over a range that is not whole hours.
+	// Requests without a value of the extra dimension are not in its answers.
+	//
+	// Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by
+	// `requests` unless `order_by` says otherwise; slowest and most failing routes are a `route`
+	// breakdown ordered by `p95` or `error_rate`.
+	//
+	// `uptime` is the runs of uptime checks (`MonitorCheck`): on a property (of either kind) its
+	// checks, on `queryMonitoring` every check of the workspace. It takes the uptime metrics of
+	// `AnalyticsMetric`, the dimension `check` and a grain, filters on `check` (`is`, `is_not`),
+	// the ranges of the `api` dataset (counted in UTC) and `compare`. Days whose runs were folded
+	// come from daily rows, the rest from the runs, which are kept `YUVA_MONITOR_CHECK_DAYS` days.
+	// Checks are probes, not consumers, so their requests never enter the `api` dataset.
+	Dataset AnalyticsDataset `json:"dataset"`
+
 	// Error Why a `failed` export failed: `too_large`, `needs_raw_window`, `invalid_query` (with the
 	// reason after a colon) or `internal`.
 	Error *string `json:"error,omitempty"`
@@ -5756,10 +5824,58 @@ type AnalyticsExport struct {
 // AnalyticsExportStatus defines model for AnalyticsExport.Status.
 type AnalyticsExportStatus string
 
-// AnalyticsExportCreate `view` takes `query` (its own range; `compare`, `limit` and `cursor` are ignored); `daily`
-// and `raw` take `range`, `daily` also an optional `dimension` other than `event` and `prop`.
-// `format` is `csv` by default, and must be `ndjson` for `raw`.
+// AnalyticsExportCreate `view` takes `query` (its own range and `dataset`; `compare`, `limit` and `cursor` are
+// ignored); `daily` and `raw` take `range`, `daily` also an optional `dimension` and
+// `dataset`. `format` is `csv` by default, and must be `ndjson` for `raw`.
+//
+// `dataset` of a `daily` export is `traffic` (the default on a site) or `uptime` on a site,
+// `api` (the default on an API property) or `uptime` on an API property; `support` is not
+// exported daily. A traffic `dimension` is one other than `event` and `prop`, an `api` one
+// any API dimension, an `uptime` one `check`. An API property has no `raw` export, because it
+// keeps no row per request (`422 property_kind`).
 type AnalyticsExportCreate struct {
+	// Dataset `traffic` (default) counts visits, page views and events. `support` counts, per page and
+	// day, what the property's linked inbox received from its pages: conversations started on a
+	// page, page feedback, page ratings and discussion threads, next to the page's `pageviews`
+	// and `visitors`. Pages are joined by host and path only; no visitor is ever joined to a
+	// contact or conversation. It takes the dimensions `page`, `hostname` and `time:day`,
+	// `time:week` or `time:month` (a page or host and a grain at most), filters on `page` and
+	// `hostname`, no goal, prop or segment, and answers `422 no_linked_inbox` for a property
+	// without an inbox. Rows are the pages (or hosts) with any support in the range, ordered by
+	// `support_rate` with pages of fewer than 100 page views after the others unless `order_by`
+	// says otherwise. Days of the past come from the support rollup, today and days not yet rolled
+	// up from the inbox itself.
+	//
+	// `api` is an API property's requests (`sendAnalyticsRequests`), and the only dataset an API
+	// property takes (`422 property_kind` otherwise, and for `api` on a site). It takes the API
+	// metrics of `AnalyticsMetric`, the API dimensions of `AnalyticsDimension`, filters on them
+	// and `compare`; no goal, prop, segment or insights. Closed local days come from daily rows,
+	// closed hours from hourly rows and the rest from minute rows, which processes write every
+	// 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
+	// Answers that reach into open hours are cached for 5 seconds.
+	//
+	// Any combination of the core dimensions (`route`, `method`, `status`, `status_class`,
+	// `api_version`, `environment`, `service`, `source`, `platform`) breaks down and filters
+	// from every tier. One extra dimension (`consumer`, `country` or `app_version`), as a
+	// dimension or a filter, joins only `route`, `method`, `status_class` and the grains from
+	// `time:hour` up, over a range of whole local hours (days, or `since` and `until` on the
+	// hour), since it is kept by local hour with those three. Anything else answers
+	// `422 dimension_combination`: two extra dimensions, an extra one with another core
+	// dimension or filter, with `time:minute`, or over a range that is not whole hours.
+	// Requests without a value of the extra dimension are not in its answers.
+	//
+	// Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by
+	// `requests` unless `order_by` says otherwise; slowest and most failing routes are a `route`
+	// breakdown ordered by `p95` or `error_rate`.
+	//
+	// `uptime` is the runs of uptime checks (`MonitorCheck`): on a property (of either kind) its
+	// checks, on `queryMonitoring` every check of the workspace. It takes the uptime metrics of
+	// `AnalyticsMetric`, the dimension `check` and a grain, filters on `check` (`is`, `is_not`),
+	// the ranges of the `api` dataset (counted in UTC) and `compare`. Days whose runs were folded
+	// come from daily rows, the rest from the runs, which are kept `YUVA_MONITOR_CHECK_DAYS` days.
+	// Checks are probes, not consumers, so their requests never enter the `api` dataset.
+	Dataset *AnalyticsDataset `json:"dataset,omitempty"`
+
 	// Dimension A value of a visit or page. `page` is a path that was viewed (pages are counted by path;
 	// `hostname` tells sites apart), `entry_page` and `exit_page` the first and last of a visit.
 	// `channel` is one of `direct`, `organic_search`, `paid_search`, `social`, `paid_social`,
@@ -7165,8 +7281,12 @@ type AnalyticsShareUpdate struct {
 	Views    *[]AnalyticsShareView     `json:"views,omitempty"`
 }
 
-// AnalyticsShareView A part of the property's report a share link shows: `overview` (totals and the chart),
-// `realtime`, `pages`, `sources`, `locations`, `devices`, `events`, `goals`.
+// AnalyticsShareView A part of the property's report a share link shows. A site's: `overview` (totals and the
+// chart), `realtime`, `pages`, `sources`, `locations`, `devices`, `events`, `goals`. An API
+// property's: `api_overview` (totals, the charts and the breakdowns by status, status class,
+// environment, service, API version, source, platform, country and app version),
+// `api_routes` (routes and methods, new and silent routes) and `api_consumers` (consumer
+// names). Each kind takes only its own views (`422 property_kind`).
 type AnalyticsShareView string
 
 // AnalyticsSharedPage With `password_required` and no valid access token only that field is present; otherwise
@@ -7183,17 +7303,25 @@ type AnalyticsSharedPage struct {
 	PasswordRequired bool                     `json:"password_required"`
 	Property         *AnalyticsSharedProperty `json:"property,omitempty"`
 
-	// RawWindowFrom The first day queries that need raw rows can serve.
+	// RawWindowFrom The first day queries that need raw rows can serve; for an API property the first
+	// UTC day of the minute rows, which `time:minute` needs.
 	RawWindowFrom *openapi_types.Date   `json:"raw_window_from,omitempty"`
 	Views         *[]AnalyticsShareView `json:"views,omitempty"`
 }
 
 // AnalyticsSharedProperty defines model for AnalyticsSharedProperty.
 type AnalyticsSharedProperty struct {
-	Currency  string              `json:"currency"`
-	Name      string              `json:"name"`
-	Platforms []AnalyticsPlatform `json:"platforms"`
-	Timezone  string              `json:"timezone"`
+	Currency string `json:"currency"`
+
+	// Kind `site` measures websites and apps (page views, events, visitors). `api` watches an API: its
+	// host sends a record per request (`sendAnalyticsRequests`) and `dataset: api` queries them. An
+	// API property's `domains` (0 to 50) are the API's host names and its `platforms` the apps
+	// allowed to send app-side records (`ios`, `android`, or none); it takes no goals, funnels,
+	// tracked props or consent features. The kind is fixed when the property is made.
+	Kind      AnalyticsPropertyKind `json:"kind"`
+	Name      string                `json:"name"`
+	Platforms []AnalyticsPlatform   `json:"platforms"`
+	Timezone  string                `json:"timezone"`
 }
 
 // AnalyticsSubscription defines model for AnalyticsSubscription.
@@ -15275,6 +15403,9 @@ type WorkspaceUpdate struct {
 // AnalyticsAnnotationId defines model for AnalyticsAnnotationId.
 type AnalyticsAnnotationId = uuid.UUID
 
+// AnalyticsConsumerId defines model for AnalyticsConsumerId.
+type AnalyticsConsumerId = int32
+
 // AnalyticsExportId defines model for AnalyticsExportId.
 type AnalyticsExportId = uuid.UUID
 
@@ -15616,6 +15747,26 @@ type DeleteAnalyticsAnnotationParams struct {
 
 // UpdateAnalyticsAnnotationParams defines parameters for UpdateAnalyticsAnnotation.
 type UpdateAnalyticsAnnotationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListAnalyticsConsumersParams defines parameters for ListAnalyticsConsumers.
+type ListAnalyticsConsumersParams struct {
+	Q *string `form:"q,omitempty" json:"q,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteAnalyticsConsumerParams defines parameters for DeleteAnalyticsConsumer.
+type DeleteAnalyticsConsumerParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -21693,6 +21844,12 @@ type ServerInterface interface {
 	// UpdateAnalyticsAnnotation Update an annotation
 	// (PATCH /v1/analytics/properties/{propertyId}/annotations/{annotationId})
 	UpdateAnalyticsAnnotation(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, annotationId AnalyticsAnnotationId, params UpdateAnalyticsAnnotationParams)
+	// ListAnalyticsConsumers List an API property's consumers
+	// (GET /v1/analytics/properties/{propertyId}/consumers)
+	ListAnalyticsConsumers(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params ListAnalyticsConsumersParams)
+	// DeleteAnalyticsConsumer Erase a consumer
+	// (DELETE /v1/analytics/properties/{propertyId}/consumers/{consumerId})
+	DeleteAnalyticsConsumer(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, consumerId AnalyticsConsumerId, params DeleteAnalyticsConsumerParams)
 	// DeleteAnalyticsData Delete a property's collected data
 	// (POST /v1/analytics/properties/{propertyId}/delete-data)
 	DeleteAnalyticsData(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params DeleteAnalyticsDataParams)
@@ -24541,6 +24698,154 @@ func (siw *ServerInterfaceWrapper) UpdateAnalyticsAnnotation(w http.ResponseWrit
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.UpdateAnalyticsAnnotation(w, r, propertyId, annotationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListAnalyticsConsumers operation middleware
+func (siw *ServerInterfaceWrapper) ListAnalyticsConsumers(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListAnalyticsConsumersParams
+
+	// ------------- Optional query parameter "q" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "q", r.URL.Query(), &params.Q, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "q"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "q", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListAnalyticsConsumers(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteAnalyticsConsumer operation middleware
+func (siw *ServerInterfaceWrapper) DeleteAnalyticsConsumer(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "consumerId" -------------
+	var consumerId AnalyticsConsumerId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "consumerId", r.PathValue("consumerId"), &consumerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "integer", Format: "int32", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "consumerId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteAnalyticsConsumerParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteAnalyticsConsumer(w, r, propertyId, consumerId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -40314,6 +40619,8 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/requests", wrapper.SendAnalyticsRequests)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/routes", wrapper.ListAnalyticsRoutes)
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/routes/{routeId}", wrapper.UpdateAnalyticsRoute)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/consumers", wrapper.ListAnalyticsConsumers)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/consumers/{consumerId}", wrapper.DeleteAnalyticsConsumer)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/retention", wrapper.GetAnalyticsRetention)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/visitors/{persistentId}", wrapper.DeleteAnalyticsVisitor)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/health", wrapper.GetAnalyticsHealth)
@@ -46495,6 +46802,191 @@ func (response UpdateAnalyticsAnnotation404ApplicationProblemPlusJSONResponse) V
 	return err
 }
 
+type ListAnalyticsConsumersRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     ListAnalyticsConsumersParams
+}
+
+type ListAnalyticsConsumersResponseObject interface {
+	VisitListAnalyticsConsumersResponse(w http.ResponseWriter) error
+}
+
+type ListAnalyticsConsumers200JSONResponse AnalyticsConsumerPage
+
+func (response ListAnalyticsConsumers200JSONResponse) VisitListAnalyticsConsumersResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsConsumers400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListAnalyticsConsumers400ApplicationProblemPlusJSONResponse) VisitListAnalyticsConsumersResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsConsumers401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListAnalyticsConsumers401ApplicationProblemPlusJSONResponse) VisitListAnalyticsConsumersResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsConsumers403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListAnalyticsConsumers403ApplicationProblemPlusJSONResponse) VisitListAnalyticsConsumersResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsConsumers404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListAnalyticsConsumers404ApplicationProblemPlusJSONResponse) VisitListAnalyticsConsumersResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsConsumers422ApplicationProblemPlusJSONResponse Problem
+
+func (response ListAnalyticsConsumers422ApplicationProblemPlusJSONResponse) VisitListAnalyticsConsumersResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsConsumerRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	ConsumerId AnalyticsConsumerId `json:"consumerId"`
+	Params     DeleteAnalyticsConsumerParams
+}
+
+type DeleteAnalyticsConsumerResponseObject interface {
+	VisitDeleteAnalyticsConsumerResponse(w http.ResponseWriter) error
+}
+
+type DeleteAnalyticsConsumer204Response struct {
+}
+
+func (response DeleteAnalyticsConsumer204Response) VisitDeleteAnalyticsConsumerResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteAnalyticsConsumer400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteAnalyticsConsumer400ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsConsumerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsConsumer401ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteAnalyticsConsumer401ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsConsumerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsConsumer403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteAnalyticsConsumer403ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsConsumerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsConsumer404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteAnalyticsConsumer404ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsConsumerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsConsumer422ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteAnalyticsConsumer422ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsConsumerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type DeleteAnalyticsDataRequestObject struct {
 	PropertyId AnalyticsPropertyId `json:"propertyId"`
 	Params     DeleteAnalyticsDataParams
@@ -49125,6 +49617,20 @@ func (response CreateAnalyticsShare404ApplicationProblemPlusJSONResponse) VisitC
 	return err
 }
 
+type CreateAnalyticsShare422ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateAnalyticsShare422ApplicationProblemPlusJSONResponse) VisitCreateAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type DeleteAnalyticsShareRequestObject struct {
 	PropertyId AnalyticsPropertyId `json:"propertyId"`
 	ShareId    AnalyticsShareId    `json:"shareId"`
@@ -49280,6 +49786,20 @@ func (response UpdateAnalyticsShare409ApplicationProblemPlusJSONResponse) VisitU
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsShare422ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateAnalyticsShare422ApplicationProblemPlusJSONResponse) VisitUpdateAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -67567,6 +68087,12 @@ type StrictServerInterface interface {
 	// UpdateAnalyticsAnnotation Update an annotation
 	// (PATCH /v1/analytics/properties/{propertyId}/annotations/{annotationId})
 	UpdateAnalyticsAnnotation(ctx context.Context, request UpdateAnalyticsAnnotationRequestObject) (UpdateAnalyticsAnnotationResponseObject, error)
+	// ListAnalyticsConsumers List an API property's consumers
+	// (GET /v1/analytics/properties/{propertyId}/consumers)
+	ListAnalyticsConsumers(ctx context.Context, request ListAnalyticsConsumersRequestObject) (ListAnalyticsConsumersResponseObject, error)
+	// DeleteAnalyticsConsumer Erase a consumer
+	// (DELETE /v1/analytics/properties/{propertyId}/consumers/{consumerId})
+	DeleteAnalyticsConsumer(ctx context.Context, request DeleteAnalyticsConsumerRequestObject) (DeleteAnalyticsConsumerResponseObject, error)
 	// DeleteAnalyticsData Delete a property's collected data
 	// (POST /v1/analytics/properties/{propertyId}/delete-data)
 	DeleteAnalyticsData(ctx context.Context, request DeleteAnalyticsDataRequestObject) (DeleteAnalyticsDataResponseObject, error)
@@ -70118,6 +70644,61 @@ func (sh *strictHandler) UpdateAnalyticsAnnotation(w http.ResponseWriter, r *htt
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(UpdateAnalyticsAnnotationResponseObject); ok {
 		if err := validResponse.VisitUpdateAnalyticsAnnotationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListAnalyticsConsumers operation middleware
+func (sh *strictHandler) ListAnalyticsConsumers(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params ListAnalyticsConsumersParams) {
+	var request ListAnalyticsConsumersRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListAnalyticsConsumers(ctx, request.(ListAnalyticsConsumersRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListAnalyticsConsumers")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListAnalyticsConsumersResponseObject); ok {
+		if err := validResponse.VisitListAnalyticsConsumersResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteAnalyticsConsumer operation middleware
+func (sh *strictHandler) DeleteAnalyticsConsumer(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, consumerId AnalyticsConsumerId, params DeleteAnalyticsConsumerParams) {
+	var request DeleteAnalyticsConsumerRequestObject
+
+	request.PropertyId = propertyId
+	request.ConsumerId = consumerId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteAnalyticsConsumer(ctx, request.(DeleteAnalyticsConsumerRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteAnalyticsConsumer")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteAnalyticsConsumerResponseObject); ok {
+		if err := validResponse.VisitDeleteAnalyticsConsumerResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

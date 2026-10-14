@@ -30,6 +30,24 @@ func (q *Queries) BumpAnalyticsRollupVersion(ctx context.Context, arg BumpAnalyt
 	return rollup_version, err
 }
 
+const deleteMonitorConsumerRows = `-- name: DeleteMonitorConsumerRows :exec
+WITH h AS (DELETE FROM monitor_dim_hour WHERE monitor_dim_hour.workspace_id = $1 AND monitor_dim_hour.property_id = $2
+               AND monitor_dim_hour.dim = 1 AND monitor_dim_hour.value = $3::int)
+DELETE FROM monitor_dim_day WHERE monitor_dim_day.workspace_id = $1 AND monitor_dim_day.property_id = $2
+    AND monitor_dim_day.dim = 1 AND monitor_dim_day.value = $3::int
+`
+
+type DeleteMonitorConsumerRowsParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	ConsumerID  int32
+}
+
+func (q *Queries) DeleteMonitorConsumerRows(ctx context.Context, arg DeleteMonitorConsumerRowsParams) error {
+	_, err := q.db.Exec(ctx, deleteMonitorConsumerRows, arg.WorkspaceID, arg.PropertyID, arg.ConsumerID)
+	return err
+}
+
 const deleteMonitorMinutes = `-- name: DeleteMonitorMinutes :execrows
 DELETE FROM monitor_minute WHERE (tableoid, ctid) IN (
     SELECT t.tableoid, t.ctid FROM monitor_minute t
@@ -130,6 +148,52 @@ func (q *Queries) DeleteOldMonitorIngestStats(ctx context.Context, arg DeleteOld
 	return result.RowsAffected(), nil
 }
 
+const eraseMonitorConsumerName = `-- name: EraseMonitorConsumerName :exec
+UPDATE monitor_names SET value = NULL, erased_at = $1
+WHERE workspace_id = $2 AND property_id = $3 AND kind = 'consumer' AND id = $4
+`
+
+type EraseMonitorConsumerNameParams struct {
+	Now         *time.Time
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	ID          int32
+}
+
+func (q *Queries) EraseMonitorConsumerName(ctx context.Context, arg EraseMonitorConsumerNameParams) error {
+	_, err := q.db.Exec(ctx, eraseMonitorConsumerName,
+		arg.Now,
+		arg.WorkspaceID,
+		arg.PropertyID,
+		arg.ID,
+	)
+	return err
+}
+
+const getMonitorConsumerForUpdate = `-- name: GetMonitorConsumerForUpdate :one
+SELECT id, value::text AS name FROM monitor_names
+WHERE workspace_id = $1 AND property_id = $2 AND kind = 'consumer' AND id = $3 AND value IS NOT NULL
+FOR UPDATE
+`
+
+type GetMonitorConsumerForUpdateParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	ID          int32
+}
+
+type GetMonitorConsumerForUpdateRow struct {
+	ID   int32
+	Name string
+}
+
+func (q *Queries) GetMonitorConsumerForUpdate(ctx context.Context, arg GetMonitorConsumerForUpdateParams) (GetMonitorConsumerForUpdateRow, error) {
+	row := q.db.QueryRow(ctx, getMonitorConsumerForUpdate, arg.WorkspaceID, arg.PropertyID, arg.ID)
+	var i GetMonitorConsumerForUpdateRow
+	err := row.Scan(&i.ID, &i.Name)
+	return i, err
+}
+
 const getMonitorUsage = `-- name: GetMonitorUsage :one
 SELECT w.monitor_monthly_requests AS monthly_limit,
        coalesce(u.monitor_requests, 0)::bigint AS requests,
@@ -154,6 +218,55 @@ func (q *Queries) GetMonitorUsage(ctx context.Context, arg GetMonitorUsageParams
 	var i GetMonitorUsageRow
 	err := row.Scan(&i.MonthlyLimit, &i.Requests, &i.LimitReachedAt)
 	return i, err
+}
+
+const listMonitorConsumers = `-- name: ListMonitorConsumers :many
+SELECT id, value::text AS name, first_seen_at FROM monitor_names
+WHERE workspace_id = $1 AND property_id = $2 AND kind = 'consumer' AND value IS NOT NULL AND value <> '(other)'
+  AND ($3::text IS NULL OR strpos(lower(value), lower($3::text)) > 0)
+  AND ($4::text IS NULL OR value > $4::text COLLATE "C")
+ORDER BY value
+LIMIT $5
+`
+
+type ListMonitorConsumersParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Search      *string
+	After       *string
+	MaxRows     int32
+}
+
+type ListMonitorConsumersRow struct {
+	ID          int32
+	Name        string
+	FirstSeenAt time.Time
+}
+
+func (q *Queries) ListMonitorConsumers(ctx context.Context, arg ListMonitorConsumersParams) ([]ListMonitorConsumersRow, error) {
+	rows, err := q.db.Query(ctx, listMonitorConsumers,
+		arg.WorkspaceID,
+		arg.PropertyID,
+		arg.Search,
+		arg.After,
+		arg.MaxRows,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListMonitorConsumersRow
+	for rows.Next() {
+		var i ListMonitorConsumersRow
+		if err := rows.Scan(&i.ID, &i.Name, &i.FirstSeenAt); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 const listMonitorRetention = `-- name: ListMonitorRetention :many

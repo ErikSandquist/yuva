@@ -407,7 +407,7 @@ func loadNames(ctx context.Context, tx pgx.Tx, ws, prop uuid.UUID) (nameMaps, er
 	if err := rows.Err(); err != nil {
 		return out, err
 	}
-	rows, err = tx.Query(ctx, `SELECT kind, id, value FROM monitor_names WHERE workspace_id = $1 AND property_id = $2`, ws, prop)
+	rows, err = tx.Query(ctx, `SELECT kind, id, value FROM monitor_names WHERE workspace_id = $1 AND property_id = $2 AND value IS NOT NULL`, ws, prop)
 	if err != nil {
 		return out, err
 	}
@@ -805,6 +805,11 @@ func readOnly(ctx context.Context, s *PGStore, fn func(tx pgx.Tx) error) error {
 		}
 		return fn(tx)
 	})
+}
+
+// Check refuses what the store would refuse of q before it reads a row.
+func (q Query) Check() error {
+	return (&plan{q: q}).parse()
 }
 
 func (s *PGStore) Query(ctx context.Context, q Query) (Result, error) {

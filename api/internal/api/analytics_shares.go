@@ -20,6 +20,7 @@ import (
 
 	openapi_types "github.com/oapi-codegen/runtime/types"
 
+	"github.com/productdevbook/yuva/api/internal/monitor"
 	"github.com/productdevbook/yuva/api/internal/oas"
 	"github.com/productdevbook/yuva/api/internal/store"
 	"github.com/productdevbook/yuva/api/internal/ui"
@@ -66,6 +67,17 @@ var shareViewDims = map[oas.AnalyticsShareView][]string{
 	oas.AnalyticsShareDevices:   {"device", "browser", "browser_version", "os", "os_version", "screen_size", "language", "platform", "app_version"},
 	oas.AnalyticsShareEvents:    {"event", "prop"},
 }
+
+// apiShareViewDims are the same for an API property's views; consumer names come only with
+// api_consumers.
+var apiShareViewDims = map[oas.AnalyticsShareView][]string{
+	oas.AnalyticsShareAPIOverview:  {"status", "status_class", "environment", "service", "api_version", "source", "platform", "country", "app_version"},
+	oas.AnalyticsShareAPIRoutes:    {"route", "method"},
+	oas.AnalyticsShareAPIConsumers: {"consumer"},
+}
+
+var errShareViewKind = problem(http.StatusUnprocessableEntity, "property_kind",
+	"a site shares overview, realtime, pages, sources, locations, devices, events and goals; an API property api_overview, api_routes and api_consumers")
 
 var goalMetrics = []oas.AnalyticsMetric{oas.AnalyticsMetricConversions, oas.AnalyticsMetricConversionRate, oas.AnalyticsMetricCompletions}
 
@@ -139,7 +151,7 @@ func embedOrigins(in []oas.AnalyticsEmbedOrigin) ([]string, error) {
 	return out, nil
 }
 
-func shareViews(in []oas.AnalyticsShareView) ([]string, error) {
+func shareViews(in []oas.AnalyticsShareView, prop store.AnalyticsProperty) ([]string, error) {
 	if len(in) == 0 {
 		return nil, errValidation("views must name at least one view")
 	}
@@ -147,6 +159,9 @@ func shareViews(in []oas.AnalyticsShareView) ([]string, error) {
 	for _, v := range in {
 		if !v.Valid() {
 			return nil, errValidation("unknown view " + strconv.Quote(string(v)))
+		}
+		if _, api := apiShareViewDims[v]; api != isAPIProperty(prop) {
+			return nil, errShareViewKind
 		}
 		if !slices.Contains(out, string(v)) {
 			out = append(out, string(v))
@@ -215,10 +230,6 @@ func (s *Server) CreateAnalyticsShare(ctx context.Context, req oas.CreateAnalyti
 	if err != nil {
 		return nil, err
 	}
-	views, err := shareViews(b.Views)
-	if err != nil {
-		return nil, err
-	}
 	origins := []string{}
 	if b.EmbedOrigins != nil {
 		if origins, err = embedOrigins(*b.EmbedOrigins); err != nil {
@@ -240,6 +251,10 @@ func (s *Server) CreateAnalyticsShare(ctx context.Context, req oas.CreateAnalyti
 	var out store.AnalyticsShare
 	err = s.st.InTx(ctx, func(q *store.Queries) error {
 		prop, err := visibleProperty(ctx, q, p, req.PropertyId, true)
+		if err != nil {
+			return err
+		}
+		views, err := shareViews(b.Views, prop)
 		if err != nil {
 			return err
 		}
@@ -295,7 +310,7 @@ func (s *Server) UpdateAnalyticsShare(ctx context.Context, req oas.UpdateAnalyti
 			}
 		}
 		if b.Views != nil {
-			if cur.Views, err = shareViews(*b.Views); err != nil {
+			if cur.Views, err = shareViews(*b.Views, prop); err != nil {
 				return err
 			}
 		}
@@ -489,8 +504,12 @@ func (s *Server) GetSharedAnalytics(ctx context.Context, req oas.GetSharedAnalyt
 	}
 	out := oas.AnalyticsSharedPage{
 		PasswordRequired: false, Name: &sh.Name, ExpiresAt: sh.ExpiresAt,
-		Property: &oas.AnalyticsSharedProperty{Name: prop.Name, Timezone: prop.Timezone, Currency: prop.Currency, Platforms: make([]oas.AnalyticsPlatform, len(prop.Platforms))},
+		Property: &oas.AnalyticsSharedProperty{Name: prop.Name, Kind: oas.AnalyticsPropertyKind(prop.Kind), Timezone: prop.Timezone, Currency: prop.Currency,
+			Platforms: make([]oas.AnalyticsPlatform, len(prop.Platforms))},
 		RawWindowFrom: &openapi_types.Date{Time: s.rawFrom()},
+	}
+	if m := s.analytics.monitor; m != nil && isAPIProperty(prop) {
+		out.RawWindowFrom = &openapi_types.Date{Time: monitor.LocalDay(now, time.UTC).AddDate(0, 0, 1-m.settings.MinuteDays)}
 	}
 	for i, v := range prop.Platforms {
 		out.Property.Platforms[i] = oas.AnalyticsPlatform(v)
@@ -511,7 +530,7 @@ func (s *Server) GetSharedAnalytics(ctx context.Context, req oas.GetSharedAnalyt
 		}
 		out.Goals = &gs
 	}
-	if shareHas(sh, oas.AnalyticsShareLocations) {
+	if shareHas(sh, oas.AnalyticsShareLocations) || shareHas(sh, oas.AnalyticsShareAPIOverview) {
 		out.Geoip = new(s.geoIPBody())
 	}
 	return oas.GetSharedAnalytics200JSONResponse(out), nil
@@ -548,14 +567,18 @@ func shareAllows(sh store.AnalyticsShare, b oas.AnalyticsQuery) error {
 	if b.SegmentId != nil {
 		return errValidation("a share link cannot use saved segments; send filters instead")
 	}
-	if b.Dataset != nil && *b.Dataset == oas.AnalyticsDatasetSupport {
+	if b.Dataset != nil && (*b.Dataset == oas.AnalyticsDatasetSupport || *b.Dataset == oas.AnalyticsDatasetUptime) {
 		return errViewNotShared
+	}
+	viewDims := shareViewDims
+	if apiShare(sh) {
+		viewDims = apiShareViewDims
 	}
 	allowed := func(dim string) bool {
 		if strings.HasPrefix(dim, "time:") {
 			return true
 		}
-		for v, dims := range shareViewDims {
+		for v, dims := range viewDims {
 			if shareHas(sh, v) && slices.Contains(dims, dim) {
 				return true
 			}
@@ -575,6 +598,18 @@ func shareAllows(sh store.AnalyticsShare, b oas.AnalyticsQuery) error {
 				return errViewNotShared
 			}
 		}
+	}
+	if apiShare(sh) {
+		if b.Routes != nil && !shareHas(sh, oas.AnalyticsShareAPIRoutes) {
+			return errViewNotShared
+		}
+		if slices.Contains(b.Metrics, oas.AnalyticsMetricConversations) {
+			return errViewNotShared
+		}
+		if b.OrderBy != nil && slices.ContainsFunc(*b.OrderBy, func(o oas.AnalyticsOrder) bool { return o.Metric == oas.AnalyticsMetricConversations }) {
+			return errViewNotShared
+		}
+		return nil
 	}
 	metricAllowed := func(m oas.AnalyticsMetric) bool {
 		switch {
@@ -605,13 +640,35 @@ func shareAllows(sh store.AnalyticsShare, b oas.AnalyticsQuery) error {
 	return nil
 }
 
+// apiShare tells an API property's link by its views, which are of one kind only.
+func apiShare(sh store.AnalyticsShare) bool {
+	return slices.ContainsFunc(sh.Views, func(v string) bool {
+		_, ok := apiShareViewDims[oas.AnalyticsShareView(v)]
+		return ok
+	})
+}
+
 func (s *Server) QuerySharedAnalytics(ctx context.Context, req oas.QuerySharedAnalyticsRequestObject) (oas.QuerySharedAnalyticsResponseObject, error) {
 	sh, prop, _, err := s.openShare(ctx, req.Token, true)
 	if err != nil {
 		return nil, err
 	}
+	if apiShare(sh) != isAPIProperty(prop) {
+		return nil, errViewNotShared
+	}
 	if err := shareAllows(sh, *req.Body); err != nil {
 		return nil, err
+	}
+	if isAPIProperty(prop) {
+		mr, err := s.checkedMonitorRequest(prop, *req.Body)
+		if err != nil {
+			return nil, err
+		}
+		out, err := s.monitorResult(ctx, prop, mr, false)
+		if err != nil {
+			return nil, err
+		}
+		return oas.QuerySharedAnalytics200JSONResponse(out), nil
 	}
 	ar, err := s.analyticsRequest(ctx, prop, *req.Body)
 	if err != nil {

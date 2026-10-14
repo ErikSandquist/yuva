@@ -1600,8 +1600,9 @@ type MonitorName struct {
 	PropertyID  uuid.UUID
 	Kind        string
 	ID          int32
-	Value       string
+	Value       *string
 	FirstSeenAt time.Time
+	ErasedAt    *time.Time
 }
 
 type MonitorRelease struct {

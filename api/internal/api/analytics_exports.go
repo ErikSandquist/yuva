@@ -18,6 +18,7 @@ import (
 
 	"github.com/productdevbook/yuva/api/internal/analytics"
 	"github.com/productdevbook/yuva/api/internal/jobs"
+	"github.com/productdevbook/yuva/api/internal/monitor"
 	"github.com/productdevbook/yuva/api/internal/oas"
 	"github.com/productdevbook/yuva/api/internal/storage"
 	"github.com/productdevbook/yuva/api/internal/store"
@@ -46,11 +47,30 @@ var dailyExportMetrics = []oas.AnalyticsMetric{
 	oas.AnalyticsMetricBounceRate, oas.AnalyticsMetricVisitDuration, oas.AnalyticsMetricTimeOnPage, oas.AnalyticsMetricScrollDepth,
 }
 
+var apiDailyExportMetrics = []oas.AnalyticsMetric{
+	oas.AnalyticsMetricRequests, oas.AnalyticsMetricErrors, oas.AnalyticsMetricErrorRate, oas.AnalyticsMetricClientErrors,
+	oas.AnalyticsMetricClientErrorRate, oas.AnalyticsMetricP50, oas.AnalyticsMetricP95, oas.AnalyticsMetricP99, oas.AnalyticsMetricAvgDuration,
+	oas.AnalyticsMetricApdex, oas.AnalyticsMetricRequestBytes, oas.AnalyticsMetricResponseBytes,
+}
+
+var uptimeDailyExportMetrics = []oas.AnalyticsMetric{
+	oas.AnalyticsMetricRuns, oas.AnalyticsMetricFailures, oas.AnalyticsMetricUptime, oas.AnalyticsMetricDowntime,
+	oas.AnalyticsMetricResponseTimeP50, oas.AnalyticsMetricResponseTimeP95, oas.AnalyticsMetricResponseTimeP99, oas.AnalyticsMetricAvgResponseTime,
+}
+
+var errNoRawExport = problem(http.StatusUnprocessableEntity, "property_kind", "an API property keeps no row per request, so it has no raw export; export view or daily")
+
 // exportParams is what a queued export needs besides its row: a view's query with its range fixed
-// when it was asked for, or a daily export's dimension.
+// when it was asked for, or a daily export's dimension. An api or uptime export of either kind
+// keeps its query, with its range fixed as instants.
 type exportParams struct {
 	Query     *oas.AnalyticsQuery `json:"query,omitempty"`
 	Dimension string              `json:"dimension,omitempty"`
+	Dataset   string              `json:"dataset,omitempty"`
+}
+
+func monitorDataset(d string) bool {
+	return d == string(oas.AnalyticsDatasetApi) || d == string(oas.AnalyticsDatasetUptime)
 }
 
 // AnalyticsExportArgs writes one export's file.
@@ -95,8 +115,14 @@ func exportFileName(ex store.AnalyticsExport) string {
 }
 
 func exportBody(ex store.AnalyticsExport) oas.AnalyticsExport {
+	var params exportParams
+	_ = json.Unmarshal(ex.Params, &params)
+	dataset := oas.AnalyticsDatasetTraffic
+	if params.Dataset != "" {
+		dataset = oas.AnalyticsDataset(params.Dataset)
+	}
 	out := oas.AnalyticsExport{
-		Id: ex.ID, PropertyId: ex.PropertyID, Kind: oas.AnalyticsExportKind(ex.Kind), Format: oas.AnalyticsExportFormat(ex.Format),
+		Id: ex.ID, PropertyId: ex.PropertyID, Kind: oas.AnalyticsExportKind(ex.Kind), Dataset: dataset, Format: oas.AnalyticsExportFormat(ex.Format),
 		Status: oas.AnalyticsExportStatus(ex.Status), From: openapi_types.Date{Time: ex.FromDay}, To: openapi_types.Date{Time: ex.ToDay},
 		Progress: int(ex.Progress), Rows: ex.Rows, SizeBytes: ex.SizeBytes, Error: ex.Error, CreatedBy: ex.CreatedBy,
 		CreatedAt: ex.CreatedAt, FinishedAt: ex.FinishedAt, ExpiresAt: ex.ExpiresAt,
@@ -126,6 +152,31 @@ func (s *Server) CreateAnalyticsExport(ctx context.Context, req oas.CreateAnalyt
 	prop, err := visibleProperty(ctx, s.st.Queries, p, req.PropertyId, false)
 	if err != nil {
 		return nil, err
+	}
+	dataset := oas.AnalyticsDatasetTraffic
+	if isAPIProperty(prop) {
+		dataset = oas.AnalyticsDatasetApi
+	}
+	switch {
+	case b.Kind == oas.AnalyticsExportView && b.Query != nil && b.Query.Dataset != nil:
+		dataset = *b.Query.Dataset
+	case b.Kind != oas.AnalyticsExportView && b.Dataset != nil:
+		if b.Kind == oas.AnalyticsExportRaw && *b.Dataset != oas.AnalyticsDatasetTraffic {
+			return nil, errValidation("raw exports are of the traffic dataset")
+		}
+		dataset = *b.Dataset
+	}
+	if b.Kind == oas.AnalyticsExportRaw && isAPIProperty(prop) {
+		return nil, errNoRawExport
+	}
+	if monitorDataset(string(dataset)) {
+		return s.createMonitorExport(ctx, p, prop, b, dataset, format)
+	}
+	if isAPIProperty(prop) {
+		return nil, errSiteOnly
+	}
+	if b.Kind == oas.AnalyticsExportDaily && dataset == oas.AnalyticsDatasetSupport {
+		return nil, errValidation("the support dataset is exported as a view, not daily")
 	}
 	if b.Kind == oas.AnalyticsExportRaw {
 		if err := mayExportRaw(p); err != nil {
@@ -180,8 +231,14 @@ func (s *Server) CreateAnalyticsExport(ctx context.Context, req oas.CreateAnalyt
 			}
 		}
 	}
+	return s.queueExport(ctx, p, prop, b.Kind, format, params, from, to)
+}
+
+// queueExport stores an export and queues its job, three unfinished ones at most per workspace.
+func (s *Server) queueExport(ctx context.Context, p principal, prop store.AnalyticsProperty, kind oas.AnalyticsExportKind, format oas.AnalyticsExportFormat,
+	params exportParams, from, to time.Time) (oas.CreateAnalyticsExportResponseObject, error) {
 	var out store.AnalyticsExport
-	err = s.st.InTxRaw(ctx, func(tx pgx.Tx, q *store.Queries) error {
+	err := s.st.InTxRaw(ctx, func(tx pgx.Tx, q *store.Queries) error {
 		now := s.now()
 		n, err := q.CountUnfinishedAnalyticsExports(ctx, store.CountUnfinishedAnalyticsExportsParams{WorkspaceID: p.workspaceID, Now: now})
 		if err != nil {
@@ -191,7 +248,7 @@ func (s *Server) CreateAnalyticsExport(ctx context.Context, req oas.CreateAnalyt
 			return errExportsBusy
 		}
 		out, err = q.CreateAnalyticsExport(ctx, store.CreateAnalyticsExportParams{
-			ID: newID(), WorkspaceID: p.workspaceID, PropertyID: prop.ID, Kind: string(b.Kind), Format: string(format),
+			ID: newID(), WorkspaceID: p.workspaceID, PropertyID: prop.ID, Kind: string(kind), Format: string(format),
 			Params: mustJSON(params), FromDay: from, ToDay: to, CreatedBy: p.memberRef(), Now: now, ExpiresAt: now.Add(analyticsExportTTL),
 		})
 		if err != nil {
@@ -204,6 +261,65 @@ func (s *Server) CreateAnalyticsExport(ctx context.Context, req oas.CreateAnalyt
 		return nil, err
 	}
 	return oas.CreateAnalyticsExport202JSONResponse(exportBody(out)), nil
+}
+
+// createMonitorExport checks an api or uptime export as the query would be checked and keeps the
+// query with its range fixed as instants, so a period such as 24h means the hours it meant when
+// the export was asked for.
+func (s *Server) createMonitorExport(ctx context.Context, p principal, prop store.AnalyticsProperty, b *oas.AnalyticsExportCreate,
+	dataset oas.AnalyticsDataset, format oas.AnalyticsExportFormat) (oas.CreateAnalyticsExportResponseObject, error) {
+	if _, err := s.monitorOn(); err != nil {
+		return nil, err
+	}
+	var q oas.AnalyticsQuery
+	switch b.Kind {
+	case oas.AnalyticsExportView:
+		if b.Query == nil || b.Range != nil || b.Dimension != nil || b.Dataset != nil {
+			return nil, errValidation("a view export takes query, with its own range and dataset")
+		}
+		q = *b.Query
+		q.Compare, q.Limit, q.Cursor = nil, nil, nil
+	default:
+		if b.Range == nil || b.Query != nil {
+			return nil, errValidation("daily exports take range, not query")
+		}
+		dims := []oas.AnalyticsDimension{oas.AnalyticsByDay}
+		if b.Dimension != nil {
+			dims = append(dims, oas.AnalyticsDimension(*b.Dimension))
+		}
+		q = oas.AnalyticsQuery{Range: *b.Range, Dimensions: &dims, Metrics: apiDailyExportMetrics}
+		if dataset == oas.AnalyticsDatasetUptime {
+			q.Metrics = uptimeDailyExportMetrics
+		}
+	}
+	q.Dataset = &dataset
+	var start, end time.Time
+	var zone monitor.Zone
+	if dataset == oas.AnalyticsDatasetApi {
+		mr, err := s.checkedMonitorRequest(prop, q)
+		if err != nil {
+			return nil, err
+		}
+		if err := mr.q.Check(); err != nil {
+			return nil, monitorQueryError(err)
+		}
+		start, end, zone = mr.q.Start, mr.q.End, mr.q.Zone
+	} else {
+		ur, err := s.uptimeRequest(ctx, prop.WorkspaceID, &prop, q)
+		if err != nil {
+			return nil, err
+		}
+		if err := ur.q.Check(); err != nil {
+			return nil, monitorQueryError(err)
+		}
+		start, end, zone = ur.q.Start, ur.q.End, monitor.FixedZone(time.UTC)
+	}
+	q.Range = oas.AnalyticsRange{Since: new(start), Until: new(end)}
+	params := exportParams{Query: &q, Dataset: string(dataset)}
+	if b.Dimension != nil {
+		params.Dimension = string(*b.Dimension)
+	}
+	return s.queueExport(ctx, p, prop, b.Kind, format, params, zone.LocalDay(start), zone.LocalDay(end.Add(-time.Nanosecond)))
 }
 
 func (s *Server) ListAnalyticsExports(ctx context.Context, req oas.ListAnalyticsExportsRequestObject) (oas.ListAnalyticsExportsResponseObject, error) {
@@ -341,7 +457,7 @@ func exportFailure(err error) string {
 		switch e.Code {
 		case "needs_raw_window", "range_too_large":
 			return e.Code
-		case "validation_failed", "not_found":
+		case "validation_failed", "not_found", "dimension_combination", "property_kind":
 			return "invalid_query: " + e.Detail
 		}
 	}
@@ -419,6 +535,9 @@ func (s *Server) writeAnalyticsExport(ctx context.Context, prop store.AnalyticsP
 	if ex.Kind == string(oas.AnalyticsExportRaw) {
 		return s.writeRawExport(ctx, prop, ex, w)
 	}
+	if monitorDataset(params.Dataset) {
+		return s.writeMonitorExport(ctx, prop, ex, params, w)
+	}
 	q := oas.AnalyticsQuery{Range: oas.AnalyticsRange{From: &openapi_types.Date{Time: ex.FromDay}, To: &openapi_types.Date{Time: ex.ToDay}}}
 	if ex.Kind == string(oas.AnalyticsExportView) {
 		if params.Query == nil {
@@ -440,19 +559,55 @@ func (s *Server) writeAnalyticsExport(ctx context.Context, prop store.AnalyticsP
 	if err != nil {
 		return 0, err
 	}
-	if ex.Format == string(oas.AnalyticsExportCSV) {
-		return int64(len(res.Rows)), writeAnalyticsCSV(w, ar.q.Dimensions, ar.q.Metrics, res.Rows)
+	return writeExportRows(w, ex.Format, ar.q.Dimensions, ar.q.Metrics, res.Rows)
+}
+
+// writeMonitorExport writes every row of an api or uptime export's query.
+func (s *Server) writeMonitorExport(ctx context.Context, prop store.AnalyticsProperty, ex store.AnalyticsExport, params exportParams, w io.Writer) (int64, error) {
+	if params.Query == nil {
+		return 0, errValidation("the export has no query")
+	}
+	if params.Dataset == string(oas.AnalyticsDatasetApi) {
+		mr, err := s.checkedMonitorRequest(prop, *params.Query)
+		if err != nil {
+			return 0, err
+		}
+		res, err := s.monitorResult(ctx, prop, mr, true)
+		if err != nil {
+			return 0, err
+		}
+		return writeExportRows(w, ex.Format, mr.q.Dimensions, mr.q.Metrics, res.Rows)
+	}
+	ur, err := s.uptimeRequest(ctx, prop.WorkspaceID, &prop, *params.Query)
+	if err != nil {
+		return 0, err
+	}
+	res, err := s.uptimeResult(ctx, ur, true)
+	if err != nil {
+		return 0, err
+	}
+	return writeExportRows(w, ex.Format, ur.q.Dimensions, ur.q.Metrics, res.Rows)
+}
+
+// writeExportRows writes rows as CSV, the header first, or as one JSON object per row named by
+// its dimensions and metrics.
+func writeExportRows(w io.Writer, format string, dims, metrics []string, rows []oas.AnalyticsRow) (int64, error) {
+	if format == string(oas.AnalyticsExportCSV) {
+		return int64(len(rows)), writeAnalyticsCSV(w, dims, metrics, rows)
 	}
 	enc := json.NewEncoder(w)
 	enc.SetEscapeHTML(false)
-	for _, r := range res.Rows {
+	for _, r := range rows {
 		raw, _ := json.Marshal(r.Metrics)
 		line := map[string]any{}
 		_ = json.Unmarshal(raw, &line)
-		for i, d := range ar.q.Dimensions {
+		for i, d := range dims {
 			if i < len(r.Dimensions) {
 				line[d] = r.Dimensions[i]
 			}
+		}
+		if r.FirstRequestAt != nil {
+			line["first_request_at"], line["last_request_at"] = *r.FirstRequestAt, r.LastRequestAt
 		}
 		if r.Country != nil {
 			line["country"] = *r.Country
@@ -464,7 +619,7 @@ func (s *Server) writeAnalyticsExport(ctx context.Context, prop store.AnalyticsP
 			return 0, err
 		}
 	}
-	return int64(len(res.Rows)), nil
+	return int64(len(rows)), nil
 }
 
 type rawExportLine struct {

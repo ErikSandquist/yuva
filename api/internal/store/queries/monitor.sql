@@ -94,3 +94,26 @@ DELETE FROM monitor_rollup_hours WHERE monitor_rollup_hours.workspace_id = @work
 UPDATE analytics_properties SET rollup_version = rollup_version + 1
 WHERE workspace_id = @workspace_id AND id = @id AND deleted_at IS NULL
 RETURNING rollup_version;
+
+-- name: ListMonitorConsumers :many
+SELECT id, value::text AS name, first_seen_at FROM monitor_names
+WHERE workspace_id = @workspace_id AND property_id = @property_id AND kind = 'consumer' AND value IS NOT NULL AND value <> '(other)'
+  AND (sqlc.narg(search)::text IS NULL OR strpos(lower(value), lower(sqlc.narg(search)::text)) > 0)
+  AND (sqlc.narg(after)::text IS NULL OR value > sqlc.narg(after)::text COLLATE "C")
+ORDER BY value
+LIMIT @max_rows;
+
+-- name: GetMonitorConsumerForUpdate :one
+SELECT id, value::text AS name FROM monitor_names
+WHERE workspace_id = @workspace_id AND property_id = @property_id AND kind = 'consumer' AND id = @id AND value IS NOT NULL
+FOR UPDATE;
+
+-- name: EraseMonitorConsumerName :exec
+UPDATE monitor_names SET value = NULL, erased_at = @now
+WHERE workspace_id = @workspace_id AND property_id = @property_id AND kind = 'consumer' AND id = @id;
+
+-- name: DeleteMonitorConsumerRows :exec
+WITH h AS (DELETE FROM monitor_dim_hour WHERE monitor_dim_hour.workspace_id = @workspace_id AND monitor_dim_hour.property_id = @property_id
+               AND monitor_dim_hour.dim = 1 AND monitor_dim_hour.value = @consumer_id::int)
+DELETE FROM monitor_dim_day WHERE monitor_dim_day.workspace_id = @workspace_id AND monitor_dim_day.property_id = @property_id
+    AND monitor_dim_day.dim = 1 AND monitor_dim_day.value = @consumer_id::int;

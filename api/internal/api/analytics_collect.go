@@ -19,6 +19,7 @@ import (
 
 	"github.com/productdevbook/yuva/api/internal/analytics"
 	"github.com/productdevbook/yuva/api/internal/mail"
+	"github.com/productdevbook/yuva/api/internal/monitor"
 	"github.com/productdevbook/yuva/api/internal/oas"
 	"github.com/productdevbook/yuva/api/internal/realtime"
 	"github.com/productdevbook/yuva/api/internal/store"
@@ -191,9 +192,15 @@ func (a *analyticsState) invalidated(payload string) {
 		}
 		return
 	}
-	if id, err := uuid.Parse(target); err == nil {
-		a.forget(id)
+	target, erased, _ := strings.Cut(target, monitorEraseMark)
+	id, err := uuid.Parse(target)
+	if err != nil {
+		return
 	}
+	if n, err := strconv.ParseInt(erased, 10, 32); err == nil && a.monitor != nil {
+		a.monitor.agg.EraseDim(id, monitor.DimConsumer, int32(n))
+	}
+	a.forget(id)
 }
 
 // RunAnalytics writes collected events and request rows until ctx ends and then drains what is

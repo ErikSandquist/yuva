@@ -86,6 +86,7 @@ func (s *Server) addMonitorWorkers(workers *river.Workers) {
 	river.AddWorker(workers, &monitorCheckWorker{s: s})
 	river.AddWorker(workers, &monitorChecksDueWorker{s: s})
 	river.AddWorker(workers, &monitorAlertsWorker{s: s})
+	river.AddWorker(workers, &monitorEraseWorker{s: s})
 }
 
 // QueueDueMonitorChecks takes the due checks of every workspace, moves each one's next run on by

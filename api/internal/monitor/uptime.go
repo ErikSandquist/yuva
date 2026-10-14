@@ -262,6 +262,11 @@ func (p *uptimePlan) parse() error {
 	return nil
 }
 
+// Check refuses what the store would refuse of q before it reads a row.
+func (q UptimeQuery) Check() error {
+	return (&uptimePlan{q: q}).parse()
+}
+
 func (p *uptimePlan) daily() bool { return p.grain == "day" || p.grain == "week" || p.grain == "month" }
 
 func (p *uptimePlan) bucketSQL(col string) string {

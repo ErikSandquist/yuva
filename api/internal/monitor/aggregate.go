@@ -513,6 +513,21 @@ func (a *Aggregator) drain() {
 // Forget drops what the aggregator knows of a property's names, after it was deleted or changed.
 func (a *Aggregator) Forget(propertyID uuid.UUID) { a.names.forget(propertyID) }
 
+// EraseDim drops the open rows of one value of an extra dimension, an erased consumer, so they are
+// not written again, and the property's names.
+func (a *Aggregator) EraseDim(propertyID uuid.UUID, dim int16, value int32) {
+	a.names.forget(propertyID)
+	a.mu.Lock()
+	defer a.mu.Unlock()
+	for _, m := range []map[dimCellKey]*cell{a.dims, a.lateDims} {
+		for k := range m {
+			if k.prop == propertyID && k.key.Dim == dim && k.key.Value == value {
+				delete(m, k)
+			}
+		}
+	}
+}
+
 type nameKey struct {
 	kind, value string
 }

@@ -328,31 +328,56 @@ func monitorRowKey(dims []string, ti int, order map[string]int) string {
 }
 
 func (s *Server) queryMonitor(ctx context.Context, prop store.AnalyticsProperty, b oas.AnalyticsQuery, csv bool) (oas.QueryAnalyticsResponseObject, error) {
-	if s.analytics.monitor == nil {
-		return nil, errNotFound
-	}
-	if !isAPIProperty(prop) {
-		return nil, errAPIOnly
-	}
-	if b.Dataset == nil || *b.Dataset != oas.AnalyticsDatasetApi {
-		return nil, errSiteOnly
-	}
-	mr, err := s.monitorRequest(prop, b)
+	mr, err := s.checkedMonitorRequest(prop, b)
 	if err != nil {
 		return nil, err
 	}
-	if err := s.monitorRoutes(ctx, prop, &mr); err != nil {
+	out, err := s.monitorResult(ctx, prop, mr, false)
+	if err != nil {
 		return nil, err
+	}
+	if csv {
+		body := analyticsCSV(mr.q.Dimensions, mr.q.Metrics, out.Rows)
+		name := `attachment; filename="api-` + out.Meta.From.Format(time.DateOnly) + `-` + out.Meta.To.Format(time.DateOnly) + `.csv"`
+		return oas.QueryAnalytics200TextcsvResponse{Body: bytes.NewReader(body), ContentLength: int64(len(body)),
+			Headers: oas.QueryAnalytics200ResponseHeaders{ContentDisposition: &name}}, nil
+	}
+	return oas.QueryAnalytics200JSONResponse{Body: out}, nil
+}
+
+// checkedMonitorRequest is monitorRequest for an API property's api query, refused for anything
+// else.
+func (s *Server) checkedMonitorRequest(prop store.AnalyticsProperty, b oas.AnalyticsQuery) (monitorRequest, error) {
+	if s.analytics.monitor == nil {
+		return monitorRequest{}, errNotFound
+	}
+	if !isAPIProperty(prop) {
+		return monitorRequest{}, errAPIOnly
+	}
+	if b.Dataset == nil || *b.Dataset != oas.AnalyticsDatasetApi {
+		return monitorRequest{}, errSiteOnly
+	}
+	return s.monitorRequest(prop, b)
+}
+
+// monitorResult answers a checked api query: one page with its comparison, or with all every row
+// and no comparison.
+func (s *Server) monitorResult(ctx context.Context, prop store.AnalyticsProperty, mr monitorRequest, all bool) (oas.AnalyticsResult, error) {
+	if all {
+		mr.cmp = nil
+	}
+	if err := s.monitorRoutes(ctx, prop, &mr); err != nil {
+		return oas.AnalyticsResult{}, err
 	}
 	res, err := s.runMonitorQuery(ctx, prop, mr.q)
 	if err != nil {
-		return nil, err
+		return oas.AnalyticsResult{}, err
 	}
 	var prev *monitor.Result
 	if mr.cmp != nil {
 		c, err := s.runMonitorQuery(ctx, prop, *mr.cmp)
 		if err != nil {
-			return nil, err
+			return oas.AnalyticsResult{}, err
 		}
 		prev = &c
 	}
@@ -360,7 +385,7 @@ func (s *Server) queryMonitor(ctx context.Context, prop store.AnalyticsProperty,
 	rows := slices.Clone(res.Rows)
 	sortMonitorRows(rows, q.Dimensions, mr.order)
 	next := ""
-	if !timeOnly(q.Dimensions) {
+	if !timeOnly(q.Dimensions) && !all {
 		offset := min(mr.offset, len(rows))
 		end := min(offset+mr.limit, len(rows))
 		if end < len(rows) {
@@ -395,7 +420,7 @@ func (s *Server) queryMonitor(ctx context.Context, prop store.AnalyticsProperty,
 	var times map[string]monitor.RouteTimes
 	if q.RouteState != "" {
 		if times, err = s.analytics.monitor.store.RouteTimes(ctx, q, q.Routes); err != nil {
-			return nil, err
+			return oas.AnalyticsResult{}, err
 		}
 	}
 	for i, r := range rows {
@@ -426,11 +451,5 @@ func (s *Server) queryMonitor(ctx context.Context, prop store.AnalyticsProperty,
 		}
 		out.Comparison = &comp
 	}
-	if csv {
-		body := analyticsCSV(q.Dimensions, q.Metrics, out.Rows)
-		name := `attachment; filename="api-` + out.Meta.From.Format(time.DateOnly) + `-` + out.Meta.To.Format(time.DateOnly) + `.csv"`
-		return oas.QueryAnalytics200TextcsvResponse{Body: bytes.NewReader(body), ContentLength: int64(len(body)),
-			Headers: oas.QueryAnalytics200ResponseHeaders{ContentDisposition: &name}}, nil
-	}
-	return oas.QueryAnalytics200JSONResponse{Body: out}, nil
+	return out, nil
 }

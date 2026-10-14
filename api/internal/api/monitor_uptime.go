@@ -183,6 +183,15 @@ func (s *Server) queryUptime(ctx context.Context, ws uuid.UUID, prop *store.Anal
 	if err != nil {
 		return oas.AnalyticsResult{}, err
 	}
+	return s.uptimeResult(ctx, ur, false)
+}
+
+// uptimeResult answers a checked uptime query: one page with its comparison, or with all every
+// row and no comparison.
+func (s *Server) uptimeResult(ctx context.Context, ur uptimeRequest, all bool) (oas.AnalyticsResult, error) {
+	if all {
+		ur.cmp = nil
+	}
 	res, err := s.runUptimeQuery(ctx, ur.q)
 	if err != nil {
 		return oas.AnalyticsResult{}, err
@@ -199,7 +208,7 @@ func (s *Server) queryUptime(ctx context.Context, ws uuid.UUID, prop *store.Anal
 	rows := slices.Clone(res.Rows)
 	sortUptimeRows(rows, q.Dimensions, ur.order)
 	next := ""
-	if !timeOnly(q.Dimensions) {
+	if !timeOnly(q.Dimensions) && !all {
 		offset := min(ur.offset, len(rows))
 		end := min(offset+ur.limit, len(rows))
 		if end < len(rows) {

@@ -8308,6 +8308,77 @@ paths:
           $ref: "#/components/responses/Problem"
         "422":
           $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/consumers:
+    get:
+      operationId: listAnalyticsConsumers
+      summary: List an API property's consumers
+      description: |
+        The consumers the property counted (the `consumer` of its records), by name, with the id
+        `deleteAnalyticsConsumer` takes. `q` keeps the names that contain it, without regard to
+        case. `(other)`, where requests past the cap of 10,000 consumers are counted, is not
+        listed. A site answers `422 property_kind`.
+
+        Scope: `analytics:read`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+        - name: q
+          in: query
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 100
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of consumers, by name.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsConsumerPage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/consumers/{consumerId}:
+    delete:
+      operationId: deleteAnalyticsConsumer
+      summary: Erase a consumer
+      description: |
+        For an erasure request about a consumer: deletes the consumer's hourly and daily rows in
+        every tier and its name, at once and again two minutes later for what processes were still
+        adding up in memory. Totals keep the consumer's requests, since the core rows never knew
+        who sent them; `consumer` breakdowns and filters no longer show it. Its id is not used
+        again; records that name the consumer later count under a new id. Export files made
+        before keep it until they expire. `(other)` cannot be erased (`400 validation_failed`).
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+        - $ref: "#/components/parameters/AnalyticsConsumerId"
+      responses:
+        "204":
+          description: The consumer is erased.
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
   /v1/analytics/properties/{propertyId}/retention:
     get:
       operationId: getAnalyticsRetention
@@ -9146,7 +9217,9 @@ paths:
         again: the answer carries the `token` and the `url` once. `expires_at` ends the link;
         `embed_origins` lists the sites whose pages may show it in an iframe (the share page's
         `frame-ancestors`); without them no other site can frame it. A property has at most 50
-        links (`403 share_limit`).
+        links (`403 share_limit`). A site takes the site views and an API property the `api_`
+        views of `AnalyticsShareView` (`422 property_kind` otherwise); an API link shows consumer
+        names only with `api_consumers`.
 
         Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
       tags: [analytics]
@@ -9175,6 +9248,8 @@ paths:
           $ref: "#/components/responses/Problem"
         "404":
           $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
   /v1/analytics/properties/{propertyId}/shares/{shareId}:
     patch:
       operationId: updateAnalyticsShare
@@ -9182,7 +9257,8 @@ paths:
       description: |
         Changes the given fields; the token stays. A new `password` (or `password: null`, which
         removes it) ends every viewer's unlocked access at once. `expires_at: null` keeps the link
-        until it is revoked. A revoked link cannot be changed (`409 share_revoked`).
+        until it is revoked. A revoked link cannot be changed (`409 share_revoked`). `views` follow
+        the property's kind as on `createAnalyticsShare` (`422 property_kind`).
 
         Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
       tags: [analytics]
@@ -9212,6 +9288,8 @@ paths:
         "404":
           $ref: "#/components/responses/Problem"
         "409":
+          $ref: "#/components/responses/Problem"
+        "422":
           $ref: "#/components/responses/Problem"
     delete:
       operationId: deleteAnalyticsShare
@@ -9296,10 +9374,14 @@ paths:
         days (`expires_at`) and then deleted.
 
         - `view`: the rows of one `query` (as `queryAnalytics` answers it, every row, no
-          comparison), CSV or NDJSON.
-        - `daily`: one row per day of `range` (at most 400 days) with visitors, visits, page views,
-          views per visit, bounce rate, visit duration, time on page and scroll depth, broken down
-          by `dimension` when given, CSV or NDJSON.
+          comparison), CSV or NDJSON, of any dataset but `support`. A range of the `api` and
+          `uptime` datasets given as a period (`24h`, `7d`) is fixed when the export is asked for.
+        - `daily`: one row per day of `range` (at most 400 days), broken down by `dimension` when
+          given, CSV or NDJSON. Traffic rows carry visitors, visits, page views, views per visit,
+          bounce rate, visit duration, time on page and scroll depth; `api` rows (local days)
+          requests, errors, error rate, client errors, client error rate, p50, p95, p99, average
+          duration, Apdex, request bytes and response bytes; `uptime` rows (UTC days) runs,
+          failures, uptime, downtime, response time p50, p95 and p99 and average response time.
         - `raw`: every stored event of `range` (at most 31 days, inside the raw window of
           `YUVA_ANALYTICS_RAW_DAYS`, else `422 needs_raw_window`) with its visit's description, as
           NDJSON only (`AnalyticsRawEvent`). It carries no visitor hash, salt, address, contact or
@@ -9339,7 +9421,10 @@ paths:
         "404":
           $ref: "#/components/responses/Problem"
         "422":
-          description: "`needs_raw_window` or `range_too_large`: the range cannot be exported."
+          description: |
+            `needs_raw_window` or `range_too_large`: the range cannot be exported;
+            `property_kind`: the dataset or a `raw` export does not suit the property's kind;
+            `dimension_combination`: as on `queryAnalytics`.
           content:
             application/problem+json:
               schema:
@@ -11312,8 +11397,8 @@ paths:
         A link with a password answers only `password_required: true` until the request carries
         an access token from `unlockSharedAnalytics` as `Authorization: Bearer yuva_sa_…`; then,
         like a link without a password, it answers the views it may show, the property's name,
-        time zone and currency, the raw window, its goals (with the `goals` view) and the GeoIP
-        attribution to show next to locations.
+        kind, time zone and currency, the raw window, its goals (with the `goals` view) and the
+        GeoIP attribution to show next to locations (with `locations` or `api_overview`).
 
         The share page itself is served with `Content-Security-Policy: frame-ancestors` set to the
         link's `embed_origins` (`'none'` without them, an unknown, revoked or expired link included),
@@ -11388,7 +11473,15 @@ paths:
         `browser_version`, `os`, `os_version`, `screen_size`, `language`, `platform` and
         `app_version` with `devices`; `event`, `prop` and the `events` metric with `events`; a
         `goal_id` of the property and the goal metrics with `goals`. Dimensions and filters outside
-        them answer `403 view_not_shared`; `segment_id` is refused (`400`).
+        them answer `403 view_not_shared`; `segment_id` is refused (`400`), and so are the
+        `support` and `uptime` datasets (`403 view_not_shared`).
+
+        An API property's link takes `dataset: api` only, with totals and time grains with any
+        view; `status`, `status_class`, `environment`, `service`, `api_version`, `source`,
+        `platform`, `country` and `app_version` with `api_overview`; `route`, `method` and
+        `routes` (new and silent routes) with `api_routes`; `consumer`, as a dimension or a
+        filter, with `api_consumers` only, so a link without it never shows a consumer's name.
+        The `conversations` metric is the linked inbox's and is not shared.
 
         A link with a password needs its access token (`401 share_password_required`). Answers are
         cached like `queryAnalytics` and count towards the workspace's four concurrent queries.
@@ -12475,6 +12568,15 @@ components:
       in: path
       required: true
       description: A route's `id` from `listAnalyticsRoutes`.
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+    AnalyticsConsumerId:
+      name: consumerId
+      in: path
+      required: true
+      description: A consumer's `id` from `listAnalyticsConsumers`.
       schema:
         type: integer
         format: int32
@@ -23356,6 +23458,30 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/AnalyticsRoute"
+    AnalyticsConsumer:
+      type: object
+      required: [id, name, first_seen_at]
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+          description: The `consumer` the records named.
+        first_seen_at:
+          type: string
+          format: date-time
+    AnalyticsConsumerPage:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsConsumer"
+        next_cursor:
+          type: string
+          description: Absent on the last page.
     AnalyticsRouteUpdate:
       type: object
       minProperties: 1
@@ -24234,11 +24360,16 @@ components:
     AnalyticsShareView:
       type: string
       description: |
-        A part of the property's report a share link shows: `overview` (totals and the chart),
-        `realtime`, `pages`, `sources`, `locations`, `devices`, `events`, `goals`.
-      enum: [overview, realtime, pages, sources, locations, devices, events, goals]
+        A part of the property's report a share link shows. A site's: `overview` (totals and the
+        chart), `realtime`, `pages`, `sources`, `locations`, `devices`, `events`, `goals`. An API
+        property's: `api_overview` (totals, the charts and the breakdowns by status, status class,
+        environment, service, API version, source, platform, country and app version),
+        `api_routes` (routes and methods, new and silent routes) and `api_consumers` (consumer
+        names). Each kind takes only its own views (`422 property_kind`).
+      enum: [overview, realtime, pages, sources, locations, devices, events, goals, api_overview, api_routes, api_consumers]
       x-enum-varnames: [AnalyticsShareOverview, AnalyticsShareRealtime, AnalyticsSharePages, AnalyticsShareSources, AnalyticsShareLocations,
-        AnalyticsShareDevices, AnalyticsShareEvents, AnalyticsShareGoals]
+        AnalyticsShareDevices, AnalyticsShareEvents, AnalyticsShareGoals, AnalyticsShareAPIOverview, AnalyticsShareAPIRoutes,
+        AnalyticsShareAPIConsumers]
     AnalyticsEmbedOrigin:
       type: string
       description: |
@@ -24390,10 +24521,12 @@ components:
           format: date-time
     AnalyticsSharedProperty:
       type: object
-      required: [name, timezone, currency, platforms]
+      required: [name, kind, timezone, currency, platforms]
       properties:
         name:
           type: string
+        kind:
+          $ref: "#/components/schemas/AnalyticsPropertyKind"
         timezone:
           type: string
         currency:
@@ -24426,7 +24559,9 @@ components:
         raw_window_from:
           type: string
           format: date
-          description: The first day queries that need raw rows can serve.
+          description: |
+            The first day queries that need raw rows can serve; for an API property the first
+            UTC day of the minute rows, which `time:minute` needs.
         goals:
           type: array
           description: With the `goals` view, the property's goals.
@@ -24456,13 +24591,21 @@ components:
           $ref: "#/components/schemas/AnalyticsRange"
         dimension:
           $ref: "#/components/schemas/AnalyticsFilterDimension"
+        dataset:
+          $ref: "#/components/schemas/AnalyticsDataset"
       description: |
-        `view` takes `query` (its own range; `compare`, `limit` and `cursor` are ignored); `daily`
-        and `raw` take `range`, `daily` also an optional `dimension` other than `event` and `prop`.
-        `format` is `csv` by default, and must be `ndjson` for `raw`.
+        `view` takes `query` (its own range and `dataset`; `compare`, `limit` and `cursor` are
+        ignored); `daily` and `raw` take `range`, `daily` also an optional `dimension` and
+        `dataset`. `format` is `csv` by default, and must be `ndjson` for `raw`.
+
+        `dataset` of a `daily` export is `traffic` (the default on a site) or `uptime` on a site,
+        `api` (the default on an API property) or `uptime` on an API property; `support` is not
+        exported daily. A traffic `dimension` is one other than `event` and `prop`, an `api` one
+        any API dimension, an `uptime` one `check`. An API property has no `raw` export, because it
+        keeps no row per request (`422 property_kind`).
     AnalyticsExport:
       type: object
-      required: [id, property_id, kind, format, status, from, to, progress, rows, size_bytes, created_at, expires_at]
+      required: [id, property_id, kind, dataset, format, status, from, to, progress, rows, size_bytes, created_at, expires_at]
       properties:
         id:
           type: string
@@ -24472,6 +24615,8 @@ components:
           format: uuid
         kind:
           $ref: "#/components/schemas/AnalyticsExportKind"
+        dataset:
+          $ref: "#/components/schemas/AnalyticsDataset"
         format:
           $ref: "#/components/schemas/AnalyticsExportFormat"
         status:
