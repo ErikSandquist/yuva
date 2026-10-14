@@ -4889,6 +4889,61 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/otlp/{propertyId}/v1/traces": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Export OpenTelemetry traces of an API
+         * @description The OTLP/HTTP traces endpoint of an API property, so any service instrumented with
+         *     OpenTelemetry reports its requests without Yuva code. Point the exporter at it with
+         *     `OTEL_EXPORTER_OTLP_ENDPOINT=<public URL>/otlp/<property id>` (or
+         *     `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` set to this whole URL) and
+         *     `OTEL_EXPORTER_OTLP_HEADERS=Authorization=Bearer <API key>`. API keys only (`403 forbidden`
+         *     for members' sessions and OAuth tokens); a key limited to inboxes reaches the properties of
+         *     its inboxes. A site answers `422 property_kind`. Scope: `analytics:write`.
+         *
+         *     The body is an `ExportTraceServiceRequest` in binary protobuf
+         *     (`Content-Type: application/x-protobuf`) or OTLP/JSON (`application/json`), as it is or
+         *     with `Content-Encoding: gzip`, at most 8 MiB either way; any other type answers `415`. The
+         *     answer has the request's type.
+         *
+         *     Only spans of kind `SERVER` with `http.request.method` count, one request each; other spans
+         *     (clients, internal work, gRPC servers) are skipped without being rejected. A span is read as
+         *     a request record of `sendAnalyticsRequests`, with the same checks, route inference and
+         *     caps:
+         *     - `http.request.method`, `http.route` (the route; without it, `url.path` is used for
+         *       inference only), `http.response.status_code` (0 when absent), end minus start as the
+         *       duration, start as the time, `http.request.body.size` and `http.response.body.size` when
+         *       present, `client.address` for the country only, `yuva.consumer` and `yuva.api_version`.
+         *     - Resource: `service.name` as the service, `deployment.environment.name` (or the older
+         *       `deployment.environment`) as the environment, `service.version` as the release.
+         *     - A span stands for the adjusted count of its tracestate's `ot=th` sampling threshold
+         *       (OpenTelemetry probability sampling; `th:8` counts 2, `th:c` 4) and for 1 without one,
+         *       so a head-sampling exporter undercounts unless it records thresholds; export every
+         *       server span to Yuva. A threshold of more than 1 in 10,000 makes the span invalid.
+         *
+         *     `200` with an `ExportTraceServiceResponse`: its `partial_success` counts the spans left out
+         *     as invalid and gives the first reason, and is unset when there were none. Spans older than
+         *     72 hours and spans over the workspace's monthly cap are taken but not counted, as for
+         *     `sendAnalyticsRequests`. `429` with `Retry-After` when the property's or the key's
+         *     `YUVA_MONITOR_RECORDS_PER_MINUTE` takes none of the spans (when it takes some, the rest are
+         *     dropped and counted as `rate`), `503` with `Retry-After` when the server holds as many
+         *     open rows as it may: both are worth retrying. Errors carry a `google.rpc.Status` in the
+         *     request's encoding whose message starts with the problem code (`insufficient_scope: …`).
+         */
+        post: operations["exportOtlpTraces"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/analytics/properties/{propertyId}/routes": {
         parameters: {
             query?: never;
@@ -6390,6 +6445,44 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/client/v1/analytics/{key}/requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Send an app's calls to its own API
+         * @description Called by the Swift and Kotlin SDKs with an API property's public key, once the host app
+         *     turned on timing its calls to its own API: up to 100 records, at most 64 KiB. Apps send
+         *     without an `Origin`; a request with one answers `403 origin_not_allowed`, and so does a
+         *     property whose `platforms` hold neither `ios` nor `android`. `a.platform` must be one of
+         *     the property's `platforms` (`403 platform_not_allowed`). A site's key or an unknown key
+         *     answers `404`.
+         *
+         *     Records are counted like `sendAnalyticsRequests` records with source `app`, the platform
+         *     and `a.version` as the app version; they carry no consumer, service or address, and their
+         *     country comes from the connecting address, shortened and dropped at once. On a property
+         *     whose `collection` is `consent`, only records with `c.a: 1` count, exactly as app events;
+         *     a request with `Sec-GPC: 1` or `DNT: 1` counts none. Both still answer `202`.
+         *
+         *     A body that is not JSON, has no `a` or holds 0 or more than 100 records answers `400`; an
+         *     invalid record is dropped on its own and counted as `invalid` in the property's ingest
+         *     stats. One shortened address may send 600 records a minute to a property
+         *     (`429 rate_limited` with `Retry-After`); records over the property's per-minute limit or
+         *     the workspace's monthly cap are taken but not counted. When the server holds as many open
+         *     rows as it may it answers `503` with `Retry-After`.
+         */
+        post: operations["collectAnalyticsRequests"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/client/v1/analytics-shares/{token}": {
         parameters: {
             query?: never;
@@ -7399,8 +7492,8 @@ export interface components {
          *       Yuva. Owners and admins only; never offered to agents' tokens, refused for keys limited
          *       to inboxes.
          *     - `analytics:read`: analytics properties.
-         *     - `analytics:write`: server-side analytics events and API request records; for API keys
-         *       only, never offered to OAuth clients.
+         *     - `analytics:write`: server-side analytics events, API request records and OTLP traces;
+         *       for API keys only, never offered to OAuth clients.
          *     - `analytics:manage`: create, change and delete analytics properties, rotate their keys,
          *       delete their data. Never offered to agents' tokens, refused for keys limited to inboxes.
          *
@@ -13634,6 +13727,112 @@ export interface components {
             /** @description The records left out as invalid, by their position in `records`. */
             errors: components["schemas"]["AnalyticsEventError"][];
         };
+        /** @description Up to 100 calls an app made to its own API. */
+        AnalyticsAppRequests: {
+            a: components["schemas"]["AnalyticsApp"];
+            records: components["schemas"]["AnalyticsAppRequestRecord"][];
+        };
+        /**
+         * @description One call the app made to its own API, timed on the device. The fields mean what they mean in
+         *     `AnalyticsRequestRecord`; give `route`, from the app's own mapping of its API's paths, or
+         *     `path` for a pattern to be inferred.
+         */
+        AnalyticsAppRequestRecord: {
+            /** @example GET */
+            method: string;
+            /** @example /users/{id} */
+            route?: string;
+            /** @example /users/42 */
+            path?: string;
+            /** @description The response status, or 0 when no response arrived (a timeout or no network). */
+            status: number;
+            /**
+             * Format: int64
+             * @description From sending the request to the end of the response, in microseconds.
+             */
+            duration_us: number;
+            /** Format: int64 */
+            request_size?: number;
+            /** Format: int64 */
+            response_size?: number;
+            /**
+             * Format: date-time
+             * @description When the call started; queued records keep it. Records older than 72 hours are not counted.
+             */
+            time?: string;
+            api_version?: string;
+            /** @description The API's environment the app called, `production` when absent. */
+            environment?: string;
+            /** @description On a `consent` property, `{"a": 1}` once the user agreed to analytics, exactly as on app events. */
+            c?: {
+                /** @enum {integer} */
+                a?: 0 | 1;
+            };
+        };
+        /**
+         * @description `opentelemetry.proto.collector.trace.v1.ExportTraceServiceRequest` in OTLP/JSON, reduced to
+         *     the fields Yuva reads; every other field is accepted and ignored. 64-bit numbers may be
+         *     strings or numbers, `kind` a number or its enum name.
+         */
+        OtlpExportTraceServiceRequest: {
+            resourceSpans?: {
+                resource?: {
+                    attributes?: components["schemas"]["OtlpKeyValue"][];
+                };
+                scopeSpans?: {
+                    spans?: components["schemas"]["OtlpSpan"][];
+                }[];
+            }[];
+        };
+        OtlpSpan: {
+            /**
+             * @description The W3C tracestate; its `ot=th` threshold weighs the span.
+             * @example ot=th:c
+             */
+            traceState?: string;
+            /**
+             * @description `2` (`SPAN_KIND_SERVER`) counts; other kinds are skipped.
+             * @example 2
+             */
+            kind?: unknown;
+            /** @example 1791806401000000000 */
+            startTimeUnixNano?: string;
+            /** @example 1791806401012500000 */
+            endTimeUnixNano?: string;
+            attributes?: components["schemas"]["OtlpKeyValue"][];
+        };
+        OtlpKeyValue: {
+            /** @example http.route */
+            key?: string;
+            value?: {
+                stringValue?: string;
+                /** @description A 64-bit integer, as a string or a number. */
+                intValue?: string;
+                doubleValue?: number;
+            };
+        };
+        /** @description `ExportTraceServiceResponse` in OTLP/JSON: `{}` when every span was valid. */
+        OtlpExportTraceServiceResponse: {
+            partialSuccess?: {
+                /**
+                 * @description The spans left out as invalid, as a 64-bit integer in a string.
+                 * @example 1
+                 */
+                rejectedSpans?: string;
+                /** @description The first invalid span's reason. */
+                errorMessage?: string;
+            };
+        };
+        /** @description `google.rpc.Status` in OTLP/JSON. */
+        OtlpStatus: {
+            /**
+             * Format: int32
+             * @description The gRPC status code, such as 3 (invalid argument), 7 (permission denied) or 14 (unavailable).
+             */
+            code: number;
+            /** @example insufficient_scope: the API key or token lacks the scope analytics:write */
+            message: string;
+        };
         AnalyticsEventsResult: {
             /** @description The valid events, stored unless a rule of the operation dropped them. */
             accepted: number;
@@ -15162,6 +15361,18 @@ export interface components {
             };
             content: {
                 "application/problem+json": components["schemas"]["Problem"];
+            };
+        };
+        /** @description An OTLP error, in the request's encoding (JSON when the request's type was refused). */
+        OtlpStatus: {
+            headers: {
+                /** @description `429` and `503`: seconds to wait before trying again. */
+                "Retry-After"?: number;
+                [name: string]: unknown;
+            };
+            content: {
+                "application/x-protobuf": string;
+                "application/json": components["schemas"]["OtlpStatus"];
             };
         };
         /** @description The export file was refused or is incomplete; `reason` or `missing_parts` say why. */
@@ -22598,6 +22809,45 @@ export interface operations {
             503: components["responses"]["Problem"];
         };
     };
+    exportOtlpTraces: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description `gzip` when the body is compressed. */
+                "Content-Encoding"?: "gzip" | "identity";
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/x-protobuf": string;
+                "application/json": components["schemas"]["OtlpExportTraceServiceRequest"];
+            };
+        };
+        responses: {
+            /** @description Taken; counted unless one of the rules above dropped them. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/x-protobuf": string;
+                    "application/json": components["schemas"]["OtlpExportTraceServiceResponse"];
+                };
+            };
+            400: components["responses"]["OtlpStatus"];
+            401: components["responses"]["OtlpStatus"];
+            403: components["responses"]["OtlpStatus"];
+            404: components["responses"]["OtlpStatus"];
+            415: components["responses"]["OtlpStatus"];
+            422: components["responses"]["OtlpStatus"];
+            429: components["responses"]["OtlpStatus"];
+            503: components["responses"]["OtlpStatus"];
+        };
+    };
     listAnalyticsRoutes: {
         parameters: {
             query?: never;
@@ -24784,6 +25034,37 @@ export interface operations {
         };
         responses: {
             /** @description Taken; stored unless one of the rules above dropped it. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            413: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+            503: components["responses"]["Problem"];
+        };
+    };
+    collectAnalyticsRequests: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The API property's public key, `yuva_ak_…`. */
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsAppRequests"];
+            };
+        };
+        responses: {
+            /** @description Taken; counted unless one of the rules above dropped them. */
             202: {
                 headers: {
                     [name: string]: unknown;

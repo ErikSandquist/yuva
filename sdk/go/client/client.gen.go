@@ -126,6 +126,24 @@ func (e AnalyticsAppPlatform) Valid() bool {
 	}
 }
 
+// Defines values for AnalyticsAppRequestRecordCA.
+const (
+	AnalyticsAppRequestRecordCAN0 AnalyticsAppRequestRecordCA = 0
+	AnalyticsAppRequestRecordCAN1 AnalyticsAppRequestRecordCA = 1
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsAppRequestRecordCA enum.
+func (e AnalyticsAppRequestRecordCA) Valid() bool {
+	switch e {
+	case AnalyticsAppRequestRecordCAN0:
+		return true
+	case AnalyticsAppRequestRecordCAN1:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsAudience.
 const (
 	AnalyticsAudienceChildren AnalyticsAudience = "children"
@@ -185,16 +203,16 @@ func (e AnalyticsCompareWith) Valid() bool {
 
 // Defines values for AnalyticsConsentA.
 const (
-	N0 AnalyticsConsentA = 0
-	N1 AnalyticsConsentA = 1
+	AnalyticsConsentAN0 AnalyticsConsentA = 0
+	AnalyticsConsentAN1 AnalyticsConsentA = 1
 )
 
 // Valid indicates whether the value is a known member of the AnalyticsConsentA enum.
 func (e AnalyticsConsentA) Valid() bool {
 	switch e {
-	case N0:
+	case AnalyticsConsentAN0:
 		return true
-	case N1:
+	case AnalyticsConsentAN1:
 		return true
 	default:
 		return false
@@ -4575,6 +4593,24 @@ func (e ListClientMessagesParamsOrder) Valid() bool {
 	}
 }
 
+// Defines values for ExportOtlpTracesParamsContentEncoding.
+const (
+	ExportOtlpTracesParamsContentEncodingGzip     ExportOtlpTracesParamsContentEncoding = "gzip"
+	ExportOtlpTracesParamsContentEncodingIdentity ExportOtlpTracesParamsContentEncoding = "identity"
+)
+
+// Valid indicates whether the value is a known member of the ExportOtlpTracesParamsContentEncoding enum.
+func (e ExportOtlpTracesParamsContentEncoding) Valid() bool {
+	switch e {
+	case ExportOtlpTracesParamsContentEncodingGzip:
+		return true
+	case ExportOtlpTracesParamsContentEncodingIdentity:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for GetAnalyticsFunnelReportParamsPeriod.
 const (
 	AnalyticsFunnelLast28Days GetAnalyticsFunnelReportParamsPeriod = "28d"
@@ -4940,6 +4976,52 @@ type AnalyticsAppDevice string
 
 // AnalyticsAppPlatform defines model for AnalyticsApp.Platform.
 type AnalyticsAppPlatform string
+
+// AnalyticsAppRequestRecord One call the app made to its own API, timed on the device. The fields mean what they mean in
+// `AnalyticsRequestRecord`; give `route`, from the app's own mapping of its API's paths, or
+// `path` for a pattern to be inferred.
+type AnalyticsAppRequestRecord struct {
+	ApiVersion *string `json:"api_version,omitempty"`
+
+	// C On a `consent` property, `{"a": 1}` once the user agreed to analytics, exactly as on app events.
+	C *struct {
+		A *AnalyticsAppRequestRecordCA `json:"a,omitempty"`
+	} `json:"c,omitempty"`
+
+	// DurationUs From sending the request to the end of the response, in microseconds.
+	DurationUs int64 `json:"duration_us"`
+
+	// Environment The API's environment the app called, `production` when absent.
+	Environment *string `json:"environment,omitempty"`
+
+	// Method Examples: GET
+	Method string `json:"method"`
+
+	// Path Examples: /users/42
+	Path         *string `json:"path,omitempty"`
+	RequestSize  *int64  `json:"request_size,omitempty"`
+	ResponseSize *int64  `json:"response_size,omitempty"`
+
+	// Route Examples: /users/{id}
+	Route *string `json:"route,omitempty"`
+
+	// Status The response status, or 0 when no response arrived (a timeout or no network).
+	Status int `json:"status"`
+
+	// Time When the call started; queued records keep it. Records older than 72 hours are not counted.
+	Time *time.Time `json:"time,omitempty"`
+}
+
+// AnalyticsAppRequestRecordCA defines model for AnalyticsAppRequestRecord.C.A.
+type AnalyticsAppRequestRecordCA int
+
+// AnalyticsAppRequests Up to 100 calls an app made to its own API.
+type AnalyticsAppRequests struct {
+	// A Apps only, required there: the app that sent the events, describing a visit it starts.
+	// Nothing here identifies a device.
+	A       AnalyticsApp                `json:"a"`
+	Records []AnalyticsAppRequestRecord `json:"records"`
+}
 
 // AnalyticsAudience `children` keeps location at country level and allows no consent features or tracked props.
 type AnalyticsAudience string
@@ -6731,8 +6813,8 @@ type ApiKeyList struct {
 //	    Yuva. Owners and admins only; never offered to agents' tokens, refused for keys limited
 //	    to inboxes.
 //	  - `analytics:read`: analytics properties.
-//	  - `analytics:write`: server-side analytics events and API request records; for API keys
-//	    only, never offered to OAuth clients.
+//	  - `analytics:write`: server-side analytics events, API request records and OTLP traces;
+//	    for API keys only, never offered to OAuth clients.
 //	  - `analytics:manage`: create, change and delete analytics properties, rotate their keys,
 //	    delete their data. Never offered to agents' tokens, refused for keys limited to inboxes.
 //
@@ -12909,6 +12991,76 @@ type OAuthWorkspaceChoice struct {
 // Examples: https://www.example.com
 type Origin = string
 
+// OtlpExportTraceServiceRequest `opentelemetry.proto.collector.trace.v1.ExportTraceServiceRequest` in OTLP/JSON, reduced to
+// the fields Yuva reads; every other field is accepted and ignored. 64-bit numbers may be
+// strings or numbers, `kind` a number or its enum name.
+type OtlpExportTraceServiceRequest struct {
+	ResourceSpans *[]struct {
+		Resource *struct {
+			Attributes *[]OtlpKeyValue `json:"attributes,omitempty"`
+		} `json:"resource,omitempty"`
+		ScopeSpans *[]struct {
+			Spans *[]OtlpSpan `json:"spans,omitempty"`
+		} `json:"scopeSpans,omitempty"`
+	} `json:"resourceSpans,omitempty"`
+}
+
+// OtlpExportTraceServiceResponse `ExportTraceServiceResponse` in OTLP/JSON: `{}` when every span was valid.
+type OtlpExportTraceServiceResponse struct {
+	PartialSuccess *struct {
+		// ErrorMessage The first invalid span's reason.
+		ErrorMessage *string `json:"errorMessage,omitempty"`
+
+		// RejectedSpans The spans left out as invalid, as a 64-bit integer in a string.
+		//
+		// Examples: 1
+		RejectedSpans *string `json:"rejectedSpans,omitempty"`
+	} `json:"partialSuccess,omitempty"`
+}
+
+// OtlpKeyValue defines model for OtlpKeyValue.
+type OtlpKeyValue struct {
+	// Key Examples: http.route
+	Key   *string `json:"key,omitempty"`
+	Value *struct {
+		DoubleValue *float32 `json:"doubleValue,omitempty"`
+
+		// IntValue A 64-bit integer, as a string or a number.
+		IntValue    *string `json:"intValue,omitempty"`
+		StringValue *string `json:"stringValue,omitempty"`
+	} `json:"value,omitempty"`
+}
+
+// OtlpSpan defines model for OtlpSpan.
+type OtlpSpan struct {
+	Attributes *[]OtlpKeyValue `json:"attributes,omitempty"`
+
+	// EndTimeUnixNano Examples: 1791806401012500000
+	EndTimeUnixNano *string `json:"endTimeUnixNano,omitempty"`
+
+	// Kind `2` (`SPAN_KIND_SERVER`) counts; other kinds are skipped.
+	//
+	// Examples: 2
+	Kind interface{} `json:"kind,omitempty"`
+
+	// StartTimeUnixNano Examples: 1791806401000000000
+	StartTimeUnixNano *string `json:"startTimeUnixNano,omitempty"`
+
+	// TraceState The W3C tracestate; its `ot=th` threshold weighs the span.
+	//
+	// Examples: ot=th:c
+	TraceState *string `json:"traceState,omitempty"`
+}
+
+// OtlpStatus `google.rpc.Status` in OTLP/JSON.
+type OtlpStatus struct {
+	// Code The gRPC status code, such as 3 (invalid argument), 7 (permission denied) or 14 (unavailable).
+	Code int32 `json:"code"`
+
+	// Message Examples: insufficient_scope: the API key or token lacks the scope analytics:write
+	Message string `json:"message"`
+}
+
 // PageRating defines model for PageRating.
 type PageRating string
 
@@ -14306,6 +14458,15 @@ type SubscribeClientParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 }
+
+// ExportOtlpTracesParams defines parameters for ExportOtlpTraces.
+type ExportOtlpTracesParams struct {
+	// ContentEncoding `gzip` when the body is compressed.
+	ContentEncoding *ExportOtlpTracesParamsContentEncoding `json:"Content-Encoding,omitempty"`
+}
+
+// ExportOtlpTracesParamsContentEncoding defines parameters for ExportOtlpTraces.
+type ExportOtlpTracesParamsContentEncoding string
 
 // ListReaderDiscussionsParams defines parameters for ListReaderDiscussions.
 type ListReaderDiscussionsParams struct {
@@ -16616,6 +16777,9 @@ type CollectAnalyticsJSONRequestBody = AnalyticsBatch
 // CollectAnalyticsTextRequestBody defines body for CollectAnalytics for text/plain ContentType.
 type CollectAnalyticsTextRequestBody = AnalyticsBatch
 
+// CollectAnalyticsRequestsJSONRequestBody defines body for CollectAnalyticsRequests for application/json ContentType.
+type CollectAnalyticsRequestsJSONRequestBody = AnalyticsAppRequests
+
 // CreatePageRatingJSONRequestBody defines body for CreatePageRating for application/json ContentType.
 type CreatePageRatingJSONRequestBody = PageRatingCreate
 
@@ -16669,6 +16833,9 @@ type CreateClientSessionJSONRequestBody = ClientSessionCreate
 
 // SubscribeClientJSONRequestBody defines body for SubscribeClient for application/json ContentType.
 type SubscribeClientJSONRequestBody = ClientSubscriptionPut
+
+// ExportOtlpTracesJSONRequestBody defines body for ExportOtlpTraces for application/json ContentType.
+type ExportOtlpTracesJSONRequestBody = OtlpExportTraceServiceRequest
 
 // UpdateReaderAccountJSONRequestBody defines body for UpdateReaderAccount for application/json ContentType.
 type UpdateReaderAccountJSONRequestBody = ReaderAccountUpdate
@@ -20443,6 +20610,60 @@ type ClientInterface interface {
 	// Corresponds with POST /client/v1/analytics/{key} (the `CollectAnalytics` operationId).
 	CollectAnalyticsWithTextBody(ctx context.Context, key string, body CollectAnalyticsTextRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// CollectAnalyticsRequestsWithBody Send an app's calls to its own API
+	//
+	// Called by the Swift and Kotlin SDKs with an API property's public key, once the host app
+	// turned on timing its calls to its own API: up to 100 records, at most 64 KiB. Apps send
+	// without an `Origin`; a request with one answers `403 origin_not_allowed`, and so does a
+	// property whose `platforms` hold neither `ios` nor `android`. `a.platform` must be one of
+	// the property's `platforms` (`403 platform_not_allowed`). A site's key or an unknown key
+	// answers `404`.
+	//
+	// Records are counted like `sendAnalyticsRequests` records with source `app`, the platform
+	// and `a.version` as the app version; they carry no consumer, service or address, and their
+	// country comes from the connecting address, shortened and dropped at once. On a property
+	// whose `collection` is `consent`, only records with `c.a: 1` count, exactly as app events;
+	// a request with `Sec-GPC: 1` or `DNT: 1` counts none. Both still answer `202`.
+	//
+	// A body that is not JSON, has no `a` or holds 0 or more than 100 records answers `400`; an
+	// invalid record is dropped on its own and counted as `invalid` in the property's ingest
+	// stats. One shortened address may send 600 records a minute to a property
+	// (`429 rate_limited` with `Retry-After`); records over the property's per-minute limit or
+	// the workspace's monthly cap are taken but not counted. When the server holds as many open
+	// rows as it may it answers `503` with `Retry-After`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /client/v1/analytics/{key}/requests (the `CollectAnalyticsRequests` operationId).
+	CollectAnalyticsRequestsWithBody(ctx context.Context, key string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CollectAnalyticsRequests Send an app's calls to its own API
+	//
+	// Called by the Swift and Kotlin SDKs with an API property's public key, once the host app
+	// turned on timing its calls to its own API: up to 100 records, at most 64 KiB. Apps send
+	// without an `Origin`; a request with one answers `403 origin_not_allowed`, and so does a
+	// property whose `platforms` hold neither `ios` nor `android`. `a.platform` must be one of
+	// the property's `platforms` (`403 platform_not_allowed`). A site's key or an unknown key
+	// answers `404`.
+	//
+	// Records are counted like `sendAnalyticsRequests` records with source `app`, the platform
+	// and `a.version` as the app version; they carry no consumer, service or address, and their
+	// country comes from the connecting address, shortened and dropped at once. On a property
+	// whose `collection` is `consent`, only records with `c.a: 1` count, exactly as app events;
+	// a request with `Sec-GPC: 1` or `DNT: 1` counts none. Both still answer `202`.
+	//
+	// A body that is not JSON, has no `a` or holds 0 or more than 100 records answers `400`; an
+	// invalid record is dropped on its own and counted as `invalid` in the property's ingest
+	// stats. One shortened address may send 600 records a minute to a property
+	// (`429 rate_limited` with `Retry-After`); records over the property's per-minute limit or
+	// the workspace's monthly cap are taken but not counted. When the server holds as many open
+	// rows as it may it answers `503` with `Retry-After`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /client/v1/analytics/{key}/requests (the `CollectAnalyticsRequests` operationId).
+	CollectAnalyticsRequests(ctx context.Context, key string, body CollectAnalyticsRequestsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// DownloadClientAttachment Download an attachment
 	//
 	// An attachment of a message (not a note) in one of the contact's conversations, served as a
@@ -21168,6 +21389,94 @@ type ClientInterface interface {
 	//
 	// Corresponds with GET /healthz (the `GetHealthz` operationId).
 	GetHealthz(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ExportOtlpTracesWithBody Export OpenTelemetry traces of an API
+	//
+	// The OTLP/HTTP traces endpoint of an API property, so any service instrumented with
+	// OpenTelemetry reports its requests without Yuva code. Point the exporter at it with
+	// `OTEL_EXPORTER_OTLP_ENDPOINT=<public URL>/otlp/<property id>` (or
+	// `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` set to this whole URL) and
+	// `OTEL_EXPORTER_OTLP_HEADERS=Authorization=Bearer <API key>`. API keys only (`403 forbidden`
+	// for members' sessions and OAuth tokens); a key limited to inboxes reaches the properties of
+	// its inboxes. A site answers `422 property_kind`. Scope: `analytics:write`.
+	//
+	// The body is an `ExportTraceServiceRequest` in binary protobuf
+	// (`Content-Type: application/x-protobuf`) or OTLP/JSON (`application/json`), as it is or
+	// with `Content-Encoding: gzip`, at most 8 MiB either way; any other type answers `415`. The
+	// answer has the request's type.
+	//
+	// Only spans of kind `SERVER` with `http.request.method` count, one request each; other spans
+	// (clients, internal work, gRPC servers) are skipped without being rejected. A span is read as
+	// a request record of `sendAnalyticsRequests`, with the same checks, route inference and
+	// caps:
+	// - `http.request.method`, `http.route` (the route; without it, `url.path` is used for
+	//   inference only), `http.response.status_code` (0 when absent), end minus start as the
+	//   duration, start as the time, `http.request.body.size` and `http.response.body.size` when
+	//   present, `client.address` for the country only, `yuva.consumer` and `yuva.api_version`.
+	// - Resource: `service.name` as the service, `deployment.environment.name` (or the older
+	//   `deployment.environment`) as the environment, `service.version` as the release.
+	// - A span stands for the adjusted count of its tracestate's `ot=th` sampling threshold
+	//   (OpenTelemetry probability sampling; `th:8` counts 2, `th:c` 4) and for 1 without one,
+	//   so a head-sampling exporter undercounts unless it records thresholds; export every
+	//   server span to Yuva. A threshold of more than 1 in 10,000 makes the span invalid.
+	//
+	// `200` with an `ExportTraceServiceResponse`: its `partial_success` counts the spans left out
+	// as invalid and gives the first reason, and is unset when there were none. Spans older than
+	// 72 hours and spans over the workspace's monthly cap are taken but not counted, as for
+	// `sendAnalyticsRequests`. `429` with `Retry-After` when the property's or the key's
+	// `YUVA_MONITOR_RECORDS_PER_MINUTE` takes none of the spans (when it takes some, the rest are
+	// dropped and counted as `rate`), `503` with `Retry-After` when the server holds as many
+	// open rows as it may: both are worth retrying. Errors carry a `google.rpc.Status` in the
+	// request's encoding whose message starts with the problem code (`insufficient_scope: …`).
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /otlp/{propertyId}/v1/traces (the `ExportOtlpTraces` operationId).
+	ExportOtlpTracesWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *ExportOtlpTracesParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ExportOtlpTraces Export OpenTelemetry traces of an API
+	//
+	// The OTLP/HTTP traces endpoint of an API property, so any service instrumented with
+	// OpenTelemetry reports its requests without Yuva code. Point the exporter at it with
+	// `OTEL_EXPORTER_OTLP_ENDPOINT=<public URL>/otlp/<property id>` (or
+	// `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` set to this whole URL) and
+	// `OTEL_EXPORTER_OTLP_HEADERS=Authorization=Bearer <API key>`. API keys only (`403 forbidden`
+	// for members' sessions and OAuth tokens); a key limited to inboxes reaches the properties of
+	// its inboxes. A site answers `422 property_kind`. Scope: `analytics:write`.
+	//
+	// The body is an `ExportTraceServiceRequest` in binary protobuf
+	// (`Content-Type: application/x-protobuf`) or OTLP/JSON (`application/json`), as it is or
+	// with `Content-Encoding: gzip`, at most 8 MiB either way; any other type answers `415`. The
+	// answer has the request's type.
+	//
+	// Only spans of kind `SERVER` with `http.request.method` count, one request each; other spans
+	// (clients, internal work, gRPC servers) are skipped without being rejected. A span is read as
+	// a request record of `sendAnalyticsRequests`, with the same checks, route inference and
+	// caps:
+	// - `http.request.method`, `http.route` (the route; without it, `url.path` is used for
+	//   inference only), `http.response.status_code` (0 when absent), end minus start as the
+	//   duration, start as the time, `http.request.body.size` and `http.response.body.size` when
+	//   present, `client.address` for the country only, `yuva.consumer` and `yuva.api_version`.
+	// - Resource: `service.name` as the service, `deployment.environment.name` (or the older
+	//   `deployment.environment`) as the environment, `service.version` as the release.
+	// - A span stands for the adjusted count of its tracestate's `ot=th` sampling threshold
+	//   (OpenTelemetry probability sampling; `th:8` counts 2, `th:c` 4) and for 1 without one,
+	//   so a head-sampling exporter undercounts unless it records thresholds; export every
+	//   server span to Yuva. A threshold of more than 1 in 10,000 makes the span invalid.
+	//
+	// `200` with an `ExportTraceServiceResponse`: its `partial_success` counts the spans left out
+	// as invalid and gives the first reason, and is unset when there were none. Spans older than
+	// 72 hours and spans over the workspace's monthly cap are taken but not counted, as for
+	// `sendAnalyticsRequests`. `429` with `Retry-After` when the property's or the key's
+	// `YUVA_MONITOR_RECORDS_PER_MINUTE` takes none of the spans (when it takes some, the rest are
+	// dropped and counted as `rate`), `503` with `Retry-After` when the server holds as many
+	// open rows as it may: both are worth retrying. Errors carry a `google.rpc.Status` in the
+	// request's encoding whose message starts with the problem code (`insufficient_scope: …`).
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /otlp/{propertyId}/v1/traces (the `ExportOtlpTraces` operationId).
+	ExportOtlpTraces(ctx context.Context, propertyId AnalyticsPropertyId, params *ExportOtlpTracesParams, body ExportOtlpTracesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetReadyz Readiness
 	//
@@ -26410,6 +26719,80 @@ func (c *Client) CollectAnalyticsWithTextBody(ctx context.Context, key string, b
 	return c.Client.Do(req)
 }
 
+// CollectAnalyticsRequestsWithBody Send an app's calls to its own API
+//
+// Called by the Swift and Kotlin SDKs with an API property's public key, once the host app
+// turned on timing its calls to its own API: up to 100 records, at most 64 KiB. Apps send
+// without an `Origin`; a request with one answers `403 origin_not_allowed`, and so does a
+// property whose `platforms` hold neither `ios` nor `android`. `a.platform` must be one of
+// the property's `platforms` (`403 platform_not_allowed`). A site's key or an unknown key
+// answers `404`.
+//
+// Records are counted like `sendAnalyticsRequests` records with source `app`, the platform
+// and `a.version` as the app version; they carry no consumer, service or address, and their
+// country comes from the connecting address, shortened and dropped at once. On a property
+// whose `collection` is `consent`, only records with `c.a: 1` count, exactly as app events;
+// a request with `Sec-GPC: 1` or `DNT: 1` counts none. Both still answer `202`.
+//
+// A body that is not JSON, has no `a` or holds 0 or more than 100 records answers `400`; an
+// invalid record is dropped on its own and counted as `invalid` in the property's ingest
+// stats. One shortened address may send 600 records a minute to a property
+// (`429 rate_limited` with `Retry-After`); records over the property's per-minute limit or
+// the workspace's monthly cap are taken but not counted. When the server holds as many open
+// rows as it may it answers `503` with `Retry-After`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /client/v1/analytics/{key}/requests (the `CollectAnalyticsRequests` operationId).
+func (c *Client) CollectAnalyticsRequestsWithBody(ctx context.Context, key string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCollectAnalyticsRequestsRequestWithBody(c.Server, key, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CollectAnalyticsRequests Send an app's calls to its own API
+//
+// Called by the Swift and Kotlin SDKs with an API property's public key, once the host app
+// turned on timing its calls to its own API: up to 100 records, at most 64 KiB. Apps send
+// without an `Origin`; a request with one answers `403 origin_not_allowed`, and so does a
+// property whose `platforms` hold neither `ios` nor `android`. `a.platform` must be one of
+// the property's `platforms` (`403 platform_not_allowed`). A site's key or an unknown key
+// answers `404`.
+//
+// Records are counted like `sendAnalyticsRequests` records with source `app`, the platform
+// and `a.version` as the app version; they carry no consumer, service or address, and their
+// country comes from the connecting address, shortened and dropped at once. On a property
+// whose `collection` is `consent`, only records with `c.a: 1` count, exactly as app events;
+// a request with `Sec-GPC: 1` or `DNT: 1` counts none. Both still answer `202`.
+//
+// A body that is not JSON, has no `a` or holds 0 or more than 100 records answers `400`; an
+// invalid record is dropped on its own and counted as `invalid` in the property's ingest
+// stats. One shortened address may send 600 records a minute to a property
+// (`429 rate_limited` with `Retry-After`); records over the property's per-minute limit or
+// the workspace's monthly cap are taken but not counted. When the server holds as many open
+// rows as it may it answers `503` with `Retry-After`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /client/v1/analytics/{key}/requests (the `CollectAnalyticsRequests` operationId).
+func (c *Client) CollectAnalyticsRequests(ctx context.Context, key string, body CollectAnalyticsRequestsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCollectAnalyticsRequestsRequest(c.Server, key, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // DownloadClientAttachment Download an attachment
 //
 // An attachment of a message (not a note) in one of the contact's conversations, served as a
@@ -27626,6 +28009,114 @@ func (c *Client) SubscribeClient(ctx context.Context, listId ListId, params *Sub
 // Corresponds with GET /healthz (the `GetHealthz` operationId).
 func (c *Client) GetHealthz(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetHealthzRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ExportOtlpTracesWithBody Export OpenTelemetry traces of an API
+//
+// The OTLP/HTTP traces endpoint of an API property, so any service instrumented with
+// OpenTelemetry reports its requests without Yuva code. Point the exporter at it with
+// `OTEL_EXPORTER_OTLP_ENDPOINT=<public URL>/otlp/<property id>` (or
+// `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` set to this whole URL) and
+// `OTEL_EXPORTER_OTLP_HEADERS=Authorization=Bearer <API key>`. API keys only (`403 forbidden`
+// for members' sessions and OAuth tokens); a key limited to inboxes reaches the properties of
+// its inboxes. A site answers `422 property_kind`. Scope: `analytics:write`.
+//
+// The body is an `ExportTraceServiceRequest` in binary protobuf
+// (`Content-Type: application/x-protobuf`) or OTLP/JSON (`application/json`), as it is or
+// with `Content-Encoding: gzip`, at most 8 MiB either way; any other type answers `415`. The
+// answer has the request's type.
+//
+// Only spans of kind `SERVER` with `http.request.method` count, one request each; other spans
+// (clients, internal work, gRPC servers) are skipped without being rejected. A span is read as
+// a request record of `sendAnalyticsRequests`, with the same checks, route inference and
+// caps:
+//   - `http.request.method`, `http.route` (the route; without it, `url.path` is used for
+//     inference only), `http.response.status_code` (0 when absent), end minus start as the
+//     duration, start as the time, `http.request.body.size` and `http.response.body.size` when
+//     present, `client.address` for the country only, `yuva.consumer` and `yuva.api_version`.
+//   - Resource: `service.name` as the service, `deployment.environment.name` (or the older
+//     `deployment.environment`) as the environment, `service.version` as the release.
+//   - A span stands for the adjusted count of its tracestate's `ot=th` sampling threshold
+//     (OpenTelemetry probability sampling; `th:8` counts 2, `th:c` 4) and for 1 without one,
+//     so a head-sampling exporter undercounts unless it records thresholds; export every
+//     server span to Yuva. A threshold of more than 1 in 10,000 makes the span invalid.
+//
+// `200` with an `ExportTraceServiceResponse`: its `partial_success` counts the spans left out
+// as invalid and gives the first reason, and is unset when there were none. Spans older than
+// 72 hours and spans over the workspace's monthly cap are taken but not counted, as for
+// `sendAnalyticsRequests`. `429` with `Retry-After` when the property's or the key's
+// `YUVA_MONITOR_RECORDS_PER_MINUTE` takes none of the spans (when it takes some, the rest are
+// dropped and counted as `rate`), `503` with `Retry-After` when the server holds as many
+// open rows as it may: both are worth retrying. Errors carry a `google.rpc.Status` in the
+// request's encoding whose message starts with the problem code (`insufficient_scope: …`).
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /otlp/{propertyId}/v1/traces (the `ExportOtlpTraces` operationId).
+func (c *Client) ExportOtlpTracesWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *ExportOtlpTracesParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewExportOtlpTracesRequestWithBody(c.Server, propertyId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ExportOtlpTraces Export OpenTelemetry traces of an API
+//
+// The OTLP/HTTP traces endpoint of an API property, so any service instrumented with
+// OpenTelemetry reports its requests without Yuva code. Point the exporter at it with
+// `OTEL_EXPORTER_OTLP_ENDPOINT=<public URL>/otlp/<property id>` (or
+// `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` set to this whole URL) and
+// `OTEL_EXPORTER_OTLP_HEADERS=Authorization=Bearer <API key>`. API keys only (`403 forbidden`
+// for members' sessions and OAuth tokens); a key limited to inboxes reaches the properties of
+// its inboxes. A site answers `422 property_kind`. Scope: `analytics:write`.
+//
+// The body is an `ExportTraceServiceRequest` in binary protobuf
+// (`Content-Type: application/x-protobuf`) or OTLP/JSON (`application/json`), as it is or
+// with `Content-Encoding: gzip`, at most 8 MiB either way; any other type answers `415`. The
+// answer has the request's type.
+//
+// Only spans of kind `SERVER` with `http.request.method` count, one request each; other spans
+// (clients, internal work, gRPC servers) are skipped without being rejected. A span is read as
+// a request record of `sendAnalyticsRequests`, with the same checks, route inference and
+// caps:
+//   - `http.request.method`, `http.route` (the route; without it, `url.path` is used for
+//     inference only), `http.response.status_code` (0 when absent), end minus start as the
+//     duration, start as the time, `http.request.body.size` and `http.response.body.size` when
+//     present, `client.address` for the country only, `yuva.consumer` and `yuva.api_version`.
+//   - Resource: `service.name` as the service, `deployment.environment.name` (or the older
+//     `deployment.environment`) as the environment, `service.version` as the release.
+//   - A span stands for the adjusted count of its tracestate's `ot=th` sampling threshold
+//     (OpenTelemetry probability sampling; `th:8` counts 2, `th:c` 4) and for 1 without one,
+//     so a head-sampling exporter undercounts unless it records thresholds; export every
+//     server span to Yuva. A threshold of more than 1 in 10,000 makes the span invalid.
+//
+// `200` with an `ExportTraceServiceResponse`: its `partial_success` counts the spans left out
+// as invalid and gives the first reason, and is unset when there were none. Spans older than
+// 72 hours and spans over the workspace's monthly cap are taken but not counted, as for
+// `sendAnalyticsRequests`. `429` with `Retry-After` when the property's or the key's
+// `YUVA_MONITOR_RECORDS_PER_MINUTE` takes none of the spans (when it takes some, the rest are
+// dropped and counted as `rate`), `503` with `Retry-After` when the server holds as many
+// open rows as it may: both are worth retrying. Errors carry a `google.rpc.Status` in the
+// request's encoding whose message starts with the problem code (`insufficient_scope: …`).
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /otlp/{propertyId}/v1/traces (the `ExportOtlpTraces` operationId).
+func (c *Client) ExportOtlpTraces(ctx context.Context, propertyId AnalyticsPropertyId, params *ExportOtlpTracesParams, body ExportOtlpTracesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewExportOtlpTracesRequest(c.Server, propertyId, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -36412,6 +36903,53 @@ func NewCollectAnalyticsRequestWithBody(server string, key string, contentType s
 	return req, nil
 }
 
+// NewCollectAnalyticsRequestsRequest calls the generic CollectAnalyticsRequests builder with application/json body
+func NewCollectAnalyticsRequestsRequest(server string, key string, body CollectAnalyticsRequestsJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCollectAnalyticsRequestsRequestWithBody(server, key, "application/json", bodyReader)
+}
+
+// NewCollectAnalyticsRequestsRequestWithBody constructs an http.Request for the CollectAnalyticsRequests method, with any body, and a specified content type
+func NewCollectAnalyticsRequestsRequestWithBody(server string, key string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "key", key, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/analytics/%s/requests", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewDownloadClientAttachmentRequest constructs an http.Request for the DownloadClientAttachment method
 func NewDownloadClientAttachmentRequest(server string, attachmentId AttachmentId) (*http.Request, error) {
 	var err error
@@ -37991,6 +38529,68 @@ func NewGetHealthzRequest(server string) (*http.Request, error) {
 	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
 	if err != nil {
 		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewExportOtlpTracesRequest calls the generic ExportOtlpTraces builder with application/json body
+func NewExportOtlpTracesRequest(server string, propertyId AnalyticsPropertyId, params *ExportOtlpTracesParams, body ExportOtlpTracesJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewExportOtlpTracesRequestWithBody(server, propertyId, params, "application/json", bodyReader)
+}
+
+// NewExportOtlpTracesRequestWithBody constructs an http.Request for the ExportOtlpTraces method, with any body, and a specified content type
+func NewExportOtlpTracesRequestWithBody(server string, propertyId AnalyticsPropertyId, params *ExportOtlpTracesParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/otlp/%s/v1/traces", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.ContentEncoding != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Content-Encoding", *params.ContentEncoding, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Content-Encoding", headerParam0)
+		}
+
 	}
 
 	return req, nil
@@ -55134,6 +55734,60 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /client/v1/analytics/{key} (the `CollectAnalytics` operationId).
 	CollectAnalyticsWithTextBodyWithResponse(ctx context.Context, key string, body CollectAnalyticsTextRequestBody, reqEditors ...RequestEditorFn) (*CollectAnalyticsResponse, error)
 
+	// CollectAnalyticsRequestsWithBodyWithResponse Send an app's calls to its own API
+	//
+	// Called by the Swift and Kotlin SDKs with an API property's public key, once the host app
+	// turned on timing its calls to its own API: up to 100 records, at most 64 KiB. Apps send
+	// without an `Origin`; a request with one answers `403 origin_not_allowed`, and so does a
+	// property whose `platforms` hold neither `ios` nor `android`. `a.platform` must be one of
+	// the property's `platforms` (`403 platform_not_allowed`). A site's key or an unknown key
+	// answers `404`.
+	//
+	// Records are counted like `sendAnalyticsRequests` records with source `app`, the platform
+	// and `a.version` as the app version; they carry no consumer, service or address, and their
+	// country comes from the connecting address, shortened and dropped at once. On a property
+	// whose `collection` is `consent`, only records with `c.a: 1` count, exactly as app events;
+	// a request with `Sec-GPC: 1` or `DNT: 1` counts none. Both still answer `202`.
+	//
+	// A body that is not JSON, has no `a` or holds 0 or more than 100 records answers `400`; an
+	// invalid record is dropped on its own and counted as `invalid` in the property's ingest
+	// stats. One shortened address may send 600 records a minute to a property
+	// (`429 rate_limited` with `Retry-After`); records over the property's per-minute limit or
+	// the workspace's monthly cap are taken but not counted. When the server holds as many open
+	// rows as it may it answers `503` with `Retry-After`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /client/v1/analytics/{key}/requests (the `CollectAnalyticsRequests` operationId).
+	CollectAnalyticsRequestsWithBodyWithResponse(ctx context.Context, key string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CollectAnalyticsRequestsResponse, error)
+
+	// CollectAnalyticsRequestsWithResponse Send an app's calls to its own API
+	//
+	// Called by the Swift and Kotlin SDKs with an API property's public key, once the host app
+	// turned on timing its calls to its own API: up to 100 records, at most 64 KiB. Apps send
+	// without an `Origin`; a request with one answers `403 origin_not_allowed`, and so does a
+	// property whose `platforms` hold neither `ios` nor `android`. `a.platform` must be one of
+	// the property's `platforms` (`403 platform_not_allowed`). A site's key or an unknown key
+	// answers `404`.
+	//
+	// Records are counted like `sendAnalyticsRequests` records with source `app`, the platform
+	// and `a.version` as the app version; they carry no consumer, service or address, and their
+	// country comes from the connecting address, shortened and dropped at once. On a property
+	// whose `collection` is `consent`, only records with `c.a: 1` count, exactly as app events;
+	// a request with `Sec-GPC: 1` or `DNT: 1` counts none. Both still answer `202`.
+	//
+	// A body that is not JSON, has no `a` or holds 0 or more than 100 records answers `400`; an
+	// invalid record is dropped on its own and counted as `invalid` in the property's ingest
+	// stats. One shortened address may send 600 records a minute to a property
+	// (`429 rate_limited` with `Retry-After`); records over the property's per-minute limit or
+	// the workspace's monthly cap are taken but not counted. When the server holds as many open
+	// rows as it may it answers `503` with `Retry-After`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /client/v1/analytics/{key}/requests (the `CollectAnalyticsRequests` operationId).
+	CollectAnalyticsRequestsWithResponse(ctx context.Context, key string, body CollectAnalyticsRequestsJSONRequestBody, reqEditors ...RequestEditorFn) (*CollectAnalyticsRequestsResponse, error)
+
 	// DownloadClientAttachmentWithResponse Download an attachment
 	//
 	// An attachment of a message (not a note) in one of the contact's conversations, served as a
@@ -55899,6 +56553,94 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with GET /healthz (the `GetHealthz` operationId).
 	GetHealthzWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetHealthzResponse, error)
+
+	// ExportOtlpTracesWithBodyWithResponse Export OpenTelemetry traces of an API
+	//
+	// The OTLP/HTTP traces endpoint of an API property, so any service instrumented with
+	// OpenTelemetry reports its requests without Yuva code. Point the exporter at it with
+	// `OTEL_EXPORTER_OTLP_ENDPOINT=<public URL>/otlp/<property id>` (or
+	// `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` set to this whole URL) and
+	// `OTEL_EXPORTER_OTLP_HEADERS=Authorization=Bearer <API key>`. API keys only (`403 forbidden`
+	// for members' sessions and OAuth tokens); a key limited to inboxes reaches the properties of
+	// its inboxes. A site answers `422 property_kind`. Scope: `analytics:write`.
+	//
+	// The body is an `ExportTraceServiceRequest` in binary protobuf
+	// (`Content-Type: application/x-protobuf`) or OTLP/JSON (`application/json`), as it is or
+	// with `Content-Encoding: gzip`, at most 8 MiB either way; any other type answers `415`. The
+	// answer has the request's type.
+	//
+	// Only spans of kind `SERVER` with `http.request.method` count, one request each; other spans
+	// (clients, internal work, gRPC servers) are skipped without being rejected. A span is read as
+	// a request record of `sendAnalyticsRequests`, with the same checks, route inference and
+	// caps:
+	// - `http.request.method`, `http.route` (the route; without it, `url.path` is used for
+	//   inference only), `http.response.status_code` (0 when absent), end minus start as the
+	//   duration, start as the time, `http.request.body.size` and `http.response.body.size` when
+	//   present, `client.address` for the country only, `yuva.consumer` and `yuva.api_version`.
+	// - Resource: `service.name` as the service, `deployment.environment.name` (or the older
+	//   `deployment.environment`) as the environment, `service.version` as the release.
+	// - A span stands for the adjusted count of its tracestate's `ot=th` sampling threshold
+	//   (OpenTelemetry probability sampling; `th:8` counts 2, `th:c` 4) and for 1 without one,
+	//   so a head-sampling exporter undercounts unless it records thresholds; export every
+	//   server span to Yuva. A threshold of more than 1 in 10,000 makes the span invalid.
+	//
+	// `200` with an `ExportTraceServiceResponse`: its `partial_success` counts the spans left out
+	// as invalid and gives the first reason, and is unset when there were none. Spans older than
+	// 72 hours and spans over the workspace's monthly cap are taken but not counted, as for
+	// `sendAnalyticsRequests`. `429` with `Retry-After` when the property's or the key's
+	// `YUVA_MONITOR_RECORDS_PER_MINUTE` takes none of the spans (when it takes some, the rest are
+	// dropped and counted as `rate`), `503` with `Retry-After` when the server holds as many
+	// open rows as it may: both are worth retrying. Errors carry a `google.rpc.Status` in the
+	// request's encoding whose message starts with the problem code (`insufficient_scope: …`).
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /otlp/{propertyId}/v1/traces (the `ExportOtlpTraces` operationId).
+	ExportOtlpTracesWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ExportOtlpTracesParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ExportOtlpTracesResponse, error)
+
+	// ExportOtlpTracesWithResponse Export OpenTelemetry traces of an API
+	//
+	// The OTLP/HTTP traces endpoint of an API property, so any service instrumented with
+	// OpenTelemetry reports its requests without Yuva code. Point the exporter at it with
+	// `OTEL_EXPORTER_OTLP_ENDPOINT=<public URL>/otlp/<property id>` (or
+	// `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` set to this whole URL) and
+	// `OTEL_EXPORTER_OTLP_HEADERS=Authorization=Bearer <API key>`. API keys only (`403 forbidden`
+	// for members' sessions and OAuth tokens); a key limited to inboxes reaches the properties of
+	// its inboxes. A site answers `422 property_kind`. Scope: `analytics:write`.
+	//
+	// The body is an `ExportTraceServiceRequest` in binary protobuf
+	// (`Content-Type: application/x-protobuf`) or OTLP/JSON (`application/json`), as it is or
+	// with `Content-Encoding: gzip`, at most 8 MiB either way; any other type answers `415`. The
+	// answer has the request's type.
+	//
+	// Only spans of kind `SERVER` with `http.request.method` count, one request each; other spans
+	// (clients, internal work, gRPC servers) are skipped without being rejected. A span is read as
+	// a request record of `sendAnalyticsRequests`, with the same checks, route inference and
+	// caps:
+	// - `http.request.method`, `http.route` (the route; without it, `url.path` is used for
+	//   inference only), `http.response.status_code` (0 when absent), end minus start as the
+	//   duration, start as the time, `http.request.body.size` and `http.response.body.size` when
+	//   present, `client.address` for the country only, `yuva.consumer` and `yuva.api_version`.
+	// - Resource: `service.name` as the service, `deployment.environment.name` (or the older
+	//   `deployment.environment`) as the environment, `service.version` as the release.
+	// - A span stands for the adjusted count of its tracestate's `ot=th` sampling threshold
+	//   (OpenTelemetry probability sampling; `th:8` counts 2, `th:c` 4) and for 1 without one,
+	//   so a head-sampling exporter undercounts unless it records thresholds; export every
+	//   server span to Yuva. A threshold of more than 1 in 10,000 makes the span invalid.
+	//
+	// `200` with an `ExportTraceServiceResponse`: its `partial_success` counts the spans left out
+	// as invalid and gives the first reason, and is unset when there were none. Spans older than
+	// 72 hours and spans over the workspace's monthly cap are taken but not counted, as for
+	// `sendAnalyticsRequests`. `429` with `Retry-After` when the property's or the key's
+	// `YUVA_MONITOR_RECORDS_PER_MINUTE` takes none of the spans (when it takes some, the rest are
+	// dropped and counted as `rate`), `503` with `Retry-After` when the server holds as many
+	// open rows as it may: both are worth retrying. Errors carry a `google.rpc.Status` in the
+	// request's encoding whose message starts with the problem code (`insufficient_scope: …`).
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /otlp/{propertyId}/v1/traces (the `ExportOtlpTraces` operationId).
+	ExportOtlpTracesWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ExportOtlpTracesParams, body ExportOtlpTracesJSONRequestBody, reqEditors ...RequestEditorFn) (*ExportOtlpTracesResponse, error)
 
 	// GetReadyzWithResponse Readiness
 	//
@@ -61517,6 +62259,82 @@ func (r CollectAnalyticsResponse) ContentType() string {
 	return ""
 }
 
+type CollectAnalyticsRequestsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON413 the response for an HTTP 413 `application/problem+json` response
+	ApplicationproblemJSON413 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+	// ApplicationproblemJSON503 the response for an HTTP 503 `application/problem+json` response
+	ApplicationproblemJSON503 *Problem
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CollectAnalyticsRequestsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CollectAnalyticsRequestsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CollectAnalyticsRequestsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON413 returns the response for an HTTP 413 `application/problem+json` response
+func (r CollectAnalyticsRequestsResponse) GetApplicationproblemJSON413() *Problem {
+	return r.ApplicationproblemJSON413
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r CollectAnalyticsRequestsResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetApplicationproblemJSON503 returns the response for an HTTP 503 `application/problem+json` response
+func (r CollectAnalyticsRequestsResponse) GetApplicationproblemJSON503() *Problem {
+	return r.ApplicationproblemJSON503
+}
+
+// GetBody returns the raw response body bytes
+func (r CollectAnalyticsRequestsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CollectAnalyticsRequestsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CollectAnalyticsRequestsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CollectAnalyticsRequestsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 // DownloadClientAttachmentResponse200Headers the declared response headers of an HTTP 200 response for DownloadClientAttachment
 type DownloadClientAttachmentResponse200Headers struct {
 	ContentDisposition  *string
@@ -63822,6 +64640,159 @@ func (r GetHealthzResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r GetHealthzResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// ExportOtlpTracesResponse400Headers the declared response headers of an HTTP 400 response for ExportOtlpTraces
+type ExportOtlpTracesResponse400Headers struct {
+	RetryAfter *int
+}
+
+// ExportOtlpTracesResponse401Headers the declared response headers of an HTTP 401 response for ExportOtlpTraces
+type ExportOtlpTracesResponse401Headers struct {
+	RetryAfter *int
+}
+
+// ExportOtlpTracesResponse403Headers the declared response headers of an HTTP 403 response for ExportOtlpTraces
+type ExportOtlpTracesResponse403Headers struct {
+	RetryAfter *int
+}
+
+// ExportOtlpTracesResponse404Headers the declared response headers of an HTTP 404 response for ExportOtlpTraces
+type ExportOtlpTracesResponse404Headers struct {
+	RetryAfter *int
+}
+
+// ExportOtlpTracesResponse415Headers the declared response headers of an HTTP 415 response for ExportOtlpTraces
+type ExportOtlpTracesResponse415Headers struct {
+	RetryAfter *int
+}
+
+// ExportOtlpTracesResponse422Headers the declared response headers of an HTTP 422 response for ExportOtlpTraces
+type ExportOtlpTracesResponse422Headers struct {
+	RetryAfter *int
+}
+
+// ExportOtlpTracesResponse429Headers the declared response headers of an HTTP 429 response for ExportOtlpTraces
+type ExportOtlpTracesResponse429Headers struct {
+	RetryAfter *int
+}
+
+// ExportOtlpTracesResponse503Headers the declared response headers of an HTTP 503 response for ExportOtlpTraces
+type ExportOtlpTracesResponse503Headers struct {
+	RetryAfter *int
+}
+
+type ExportOtlpTracesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *OtlpExportTraceServiceResponse
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *OtlpStatus
+	// JSON401 the response for an HTTP 401 `application/json` response
+	JSON401 *OtlpStatus
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *OtlpStatus
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *OtlpStatus
+	// JSON415 the response for an HTTP 415 `application/json` response
+	JSON415 *OtlpStatus
+	// JSON422 the response for an HTTP 422 `application/json` response
+	JSON422 *OtlpStatus
+	// JSON429 the response for an HTTP 429 `application/json` response
+	JSON429 *OtlpStatus
+	// JSON503 the response for an HTTP 503 `application/json` response
+	JSON503 *OtlpStatus
+	// Headers400 the parsed response headers for an HTTP 400 response
+	Headers400 *ExportOtlpTracesResponse400Headers
+	// Headers401 the parsed response headers for an HTTP 401 response
+	Headers401 *ExportOtlpTracesResponse401Headers
+	// Headers403 the parsed response headers for an HTTP 403 response
+	Headers403 *ExportOtlpTracesResponse403Headers
+	// Headers404 the parsed response headers for an HTTP 404 response
+	Headers404 *ExportOtlpTracesResponse404Headers
+	// Headers415 the parsed response headers for an HTTP 415 response
+	Headers415 *ExportOtlpTracesResponse415Headers
+	// Headers422 the parsed response headers for an HTTP 422 response
+	Headers422 *ExportOtlpTracesResponse422Headers
+	// Headers429 the parsed response headers for an HTTP 429 response
+	Headers429 *ExportOtlpTracesResponse429Headers
+	// Headers503 the parsed response headers for an HTTP 503 response
+	Headers503 *ExportOtlpTracesResponse503Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ExportOtlpTracesResponse) GetJSON200() *OtlpExportTraceServiceResponse {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r ExportOtlpTracesResponse) GetJSON400() *OtlpStatus {
+	return r.JSON400
+}
+
+// GetJSON401 returns the response for an HTTP 401 `application/json` response
+func (r ExportOtlpTracesResponse) GetJSON401() *OtlpStatus {
+	return r.JSON401
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ExportOtlpTracesResponse) GetJSON403() *OtlpStatus {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r ExportOtlpTracesResponse) GetJSON404() *OtlpStatus {
+	return r.JSON404
+}
+
+// GetJSON415 returns the response for an HTTP 415 `application/json` response
+func (r ExportOtlpTracesResponse) GetJSON415() *OtlpStatus {
+	return r.JSON415
+}
+
+// GetJSON422 returns the response for an HTTP 422 `application/json` response
+func (r ExportOtlpTracesResponse) GetJSON422() *OtlpStatus {
+	return r.JSON422
+}
+
+// GetJSON429 returns the response for an HTTP 429 `application/json` response
+func (r ExportOtlpTracesResponse) GetJSON429() *OtlpStatus {
+	return r.JSON429
+}
+
+// GetJSON503 returns the response for an HTTP 503 `application/json` response
+func (r ExportOtlpTracesResponse) GetJSON503() *OtlpStatus {
+	return r.JSON503
+}
+
+// GetBody returns the raw response body bytes
+func (r ExportOtlpTracesResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ExportOtlpTracesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ExportOtlpTracesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ExportOtlpTracesResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -82160,6 +83131,72 @@ func (c *ClientWithResponses) CollectAnalyticsWithTextBodyWithResponse(ctx conte
 	return ParseCollectAnalyticsResponse(rsp)
 }
 
+// CollectAnalyticsRequestsWithBodyWithResponse Send an app's calls to its own API
+//
+// Called by the Swift and Kotlin SDKs with an API property's public key, once the host app
+// turned on timing its calls to its own API: up to 100 records, at most 64 KiB. Apps send
+// without an `Origin`; a request with one answers `403 origin_not_allowed`, and so does a
+// property whose `platforms` hold neither `ios` nor `android`. `a.platform` must be one of
+// the property's `platforms` (`403 platform_not_allowed`). A site's key or an unknown key
+// answers `404`.
+//
+// Records are counted like `sendAnalyticsRequests` records with source `app`, the platform
+// and `a.version` as the app version; they carry no consumer, service or address, and their
+// country comes from the connecting address, shortened and dropped at once. On a property
+// whose `collection` is `consent`, only records with `c.a: 1` count, exactly as app events;
+// a request with `Sec-GPC: 1` or `DNT: 1` counts none. Both still answer `202`.
+//
+// A body that is not JSON, has no `a` or holds 0 or more than 100 records answers `400`; an
+// invalid record is dropped on its own and counted as `invalid` in the property's ingest
+// stats. One shortened address may send 600 records a minute to a property
+// (`429 rate_limited` with `Retry-After`); records over the property's per-minute limit or
+// the workspace's monthly cap are taken but not counted. When the server holds as many open
+// rows as it may it answers `503` with `Retry-After`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /client/v1/analytics/{key}/requests (the `CollectAnalyticsRequests` operationId).
+func (c *ClientWithResponses) CollectAnalyticsRequestsWithBodyWithResponse(ctx context.Context, key string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CollectAnalyticsRequestsResponse, error) {
+	rsp, err := c.CollectAnalyticsRequestsWithBody(ctx, key, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCollectAnalyticsRequestsResponse(rsp)
+}
+
+// CollectAnalyticsRequestsWithResponse Send an app's calls to its own API
+//
+// Called by the Swift and Kotlin SDKs with an API property's public key, once the host app
+// turned on timing its calls to its own API: up to 100 records, at most 64 KiB. Apps send
+// without an `Origin`; a request with one answers `403 origin_not_allowed`, and so does a
+// property whose `platforms` hold neither `ios` nor `android`. `a.platform` must be one of
+// the property's `platforms` (`403 platform_not_allowed`). A site's key or an unknown key
+// answers `404`.
+//
+// Records are counted like `sendAnalyticsRequests` records with source `app`, the platform
+// and `a.version` as the app version; they carry no consumer, service or address, and their
+// country comes from the connecting address, shortened and dropped at once. On a property
+// whose `collection` is `consent`, only records with `c.a: 1` count, exactly as app events;
+// a request with `Sec-GPC: 1` or `DNT: 1` counts none. Both still answer `202`.
+//
+// A body that is not JSON, has no `a` or holds 0 or more than 100 records answers `400`; an
+// invalid record is dropped on its own and counted as `invalid` in the property's ingest
+// stats. One shortened address may send 600 records a minute to a property
+// (`429 rate_limited` with `Retry-After`); records over the property's per-minute limit or
+// the workspace's monthly cap are taken but not counted. When the server holds as many open
+// rows as it may it answers `503` with `Retry-After`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /client/v1/analytics/{key}/requests (the `CollectAnalyticsRequests` operationId).
+func (c *ClientWithResponses) CollectAnalyticsRequestsWithResponse(ctx context.Context, key string, body CollectAnalyticsRequestsJSONRequestBody, reqEditors ...RequestEditorFn) (*CollectAnalyticsRequestsResponse, error) {
+	rsp, err := c.CollectAnalyticsRequests(ctx, key, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCollectAnalyticsRequestsResponse(rsp)
+}
+
 // DownloadClientAttachmentWithResponse Download an attachment
 //
 // An attachment of a message (not a note) in one of the contact's conversations, served as a
@@ -83224,6 +84261,106 @@ func (c *ClientWithResponses) GetHealthzWithResponse(ctx context.Context, reqEdi
 		return nil, err
 	}
 	return ParseGetHealthzResponse(rsp)
+}
+
+// ExportOtlpTracesWithBodyWithResponse Export OpenTelemetry traces of an API
+//
+// The OTLP/HTTP traces endpoint of an API property, so any service instrumented with
+// OpenTelemetry reports its requests without Yuva code. Point the exporter at it with
+// `OTEL_EXPORTER_OTLP_ENDPOINT=<public URL>/otlp/<property id>` (or
+// `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` set to this whole URL) and
+// `OTEL_EXPORTER_OTLP_HEADERS=Authorization=Bearer <API key>`. API keys only (`403 forbidden`
+// for members' sessions and OAuth tokens); a key limited to inboxes reaches the properties of
+// its inboxes. A site answers `422 property_kind`. Scope: `analytics:write`.
+//
+// The body is an `ExportTraceServiceRequest` in binary protobuf
+// (`Content-Type: application/x-protobuf`) or OTLP/JSON (`application/json`), as it is or
+// with `Content-Encoding: gzip`, at most 8 MiB either way; any other type answers `415`. The
+// answer has the request's type.
+//
+// Only spans of kind `SERVER` with `http.request.method` count, one request each; other spans
+// (clients, internal work, gRPC servers) are skipped without being rejected. A span is read as
+// a request record of `sendAnalyticsRequests`, with the same checks, route inference and
+// caps:
+//   - `http.request.method`, `http.route` (the route; without it, `url.path` is used for
+//     inference only), `http.response.status_code` (0 when absent), end minus start as the
+//     duration, start as the time, `http.request.body.size` and `http.response.body.size` when
+//     present, `client.address` for the country only, `yuva.consumer` and `yuva.api_version`.
+//   - Resource: `service.name` as the service, `deployment.environment.name` (or the older
+//     `deployment.environment`) as the environment, `service.version` as the release.
+//   - A span stands for the adjusted count of its tracestate's `ot=th` sampling threshold
+//     (OpenTelemetry probability sampling; `th:8` counts 2, `th:c` 4) and for 1 without one,
+//     so a head-sampling exporter undercounts unless it records thresholds; export every
+//     server span to Yuva. A threshold of more than 1 in 10,000 makes the span invalid.
+//
+// `200` with an `ExportTraceServiceResponse`: its `partial_success` counts the spans left out
+// as invalid and gives the first reason, and is unset when there were none. Spans older than
+// 72 hours and spans over the workspace's monthly cap are taken but not counted, as for
+// `sendAnalyticsRequests`. `429` with `Retry-After` when the property's or the key's
+// `YUVA_MONITOR_RECORDS_PER_MINUTE` takes none of the spans (when it takes some, the rest are
+// dropped and counted as `rate`), `503` with `Retry-After` when the server holds as many
+// open rows as it may: both are worth retrying. Errors carry a `google.rpc.Status` in the
+// request's encoding whose message starts with the problem code (`insufficient_scope: …`).
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /otlp/{propertyId}/v1/traces (the `ExportOtlpTraces` operationId).
+func (c *ClientWithResponses) ExportOtlpTracesWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ExportOtlpTracesParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ExportOtlpTracesResponse, error) {
+	rsp, err := c.ExportOtlpTracesWithBody(ctx, propertyId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseExportOtlpTracesResponse(rsp)
+}
+
+// ExportOtlpTracesWithResponse Export OpenTelemetry traces of an API
+//
+// The OTLP/HTTP traces endpoint of an API property, so any service instrumented with
+// OpenTelemetry reports its requests without Yuva code. Point the exporter at it with
+// `OTEL_EXPORTER_OTLP_ENDPOINT=<public URL>/otlp/<property id>` (or
+// `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` set to this whole URL) and
+// `OTEL_EXPORTER_OTLP_HEADERS=Authorization=Bearer <API key>`. API keys only (`403 forbidden`
+// for members' sessions and OAuth tokens); a key limited to inboxes reaches the properties of
+// its inboxes. A site answers `422 property_kind`. Scope: `analytics:write`.
+//
+// The body is an `ExportTraceServiceRequest` in binary protobuf
+// (`Content-Type: application/x-protobuf`) or OTLP/JSON (`application/json`), as it is or
+// with `Content-Encoding: gzip`, at most 8 MiB either way; any other type answers `415`. The
+// answer has the request's type.
+//
+// Only spans of kind `SERVER` with `http.request.method` count, one request each; other spans
+// (clients, internal work, gRPC servers) are skipped without being rejected. A span is read as
+// a request record of `sendAnalyticsRequests`, with the same checks, route inference and
+// caps:
+//   - `http.request.method`, `http.route` (the route; without it, `url.path` is used for
+//     inference only), `http.response.status_code` (0 when absent), end minus start as the
+//     duration, start as the time, `http.request.body.size` and `http.response.body.size` when
+//     present, `client.address` for the country only, `yuva.consumer` and `yuva.api_version`.
+//   - Resource: `service.name` as the service, `deployment.environment.name` (or the older
+//     `deployment.environment`) as the environment, `service.version` as the release.
+//   - A span stands for the adjusted count of its tracestate's `ot=th` sampling threshold
+//     (OpenTelemetry probability sampling; `th:8` counts 2, `th:c` 4) and for 1 without one,
+//     so a head-sampling exporter undercounts unless it records thresholds; export every
+//     server span to Yuva. A threshold of more than 1 in 10,000 makes the span invalid.
+//
+// `200` with an `ExportTraceServiceResponse`: its `partial_success` counts the spans left out
+// as invalid and gives the first reason, and is unset when there were none. Spans older than
+// 72 hours and spans over the workspace's monthly cap are taken but not counted, as for
+// `sendAnalyticsRequests`. `429` with `Retry-After` when the property's or the key's
+// `YUVA_MONITOR_RECORDS_PER_MINUTE` takes none of the spans (when it takes some, the rest are
+// dropped and counted as `rate`), `503` with `Retry-After` when the server holds as many
+// open rows as it may: both are worth retrying. Errors carry a `google.rpc.Status` in the
+// request's encoding whose message starts with the problem code (`insufficient_scope: …`).
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /otlp/{propertyId}/v1/traces (the `ExportOtlpTraces` operationId).
+func (c *ClientWithResponses) ExportOtlpTracesWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ExportOtlpTracesParams, body ExportOtlpTracesJSONRequestBody, reqEditors ...RequestEditorFn) (*ExportOtlpTracesResponse, error) {
+	rsp, err := c.ExportOtlpTraces(ctx, propertyId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseExportOtlpTracesResponse(rsp)
 }
 
 // GetReadyzWithResponse Readiness
@@ -90966,6 +92103,70 @@ func ParseCollectAnalyticsResponse(rsp *http.Response) (*CollectAnalyticsRespons
 	return response, nil
 }
 
+// ParseCollectAnalyticsRequestsResponse parses an HTTP response from a CollectAnalyticsRequestsWithResponse call
+func ParseCollectAnalyticsRequestsResponse(rsp *http.Response) (*CollectAnalyticsRequestsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CollectAnalyticsRequestsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 202:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 413:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON413 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseDownloadClientAttachmentResponse parses an HTTP response from a DownloadClientAttachmentWithResponse call
 func ParseDownloadClientAttachmentResponse(rsp *http.Response) (*DownloadClientAttachmentResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -92801,6 +94002,198 @@ func ParseGetHealthzResponse(rsp *http.Response) (*GetHealthzResponse, error) {
 		}
 		response.JSON200 = &dest
 
+	}
+
+	return response, nil
+}
+
+// ParseExportOtlpTracesResponse parses an HTTP response from a ExportOtlpTracesWithResponse call
+func ParseExportOtlpTracesResponse(rsp *http.Response) (*ExportOtlpTracesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ExportOtlpTracesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest OtlpExportTraceServiceResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest OtlpStatus
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest OtlpStatus
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest OtlpStatus
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest OtlpStatus
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 415:
+		var dest OtlpStatus
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON415 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest OtlpStatus
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest OtlpStatus
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON429 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest OtlpStatus
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	case rsp.StatusCode == 200:
+	// Content-type (application/x-protobuf) unsupported
+
+	case rsp.StatusCode == 400:
+	// Content-type (application/x-protobuf) unsupported
+
+	case rsp.StatusCode == 401:
+	// Content-type (application/x-protobuf) unsupported
+
+	case rsp.StatusCode == 403:
+	// Content-type (application/x-protobuf) unsupported
+
+	case rsp.StatusCode == 404:
+	// Content-type (application/x-protobuf) unsupported
+
+	case rsp.StatusCode == 415:
+	// Content-type (application/x-protobuf) unsupported
+
+	case rsp.StatusCode == 422:
+	// Content-type (application/x-protobuf) unsupported
+
+	case rsp.StatusCode == 429:
+	// Content-type (application/x-protobuf) unsupported
+
+	case rsp.StatusCode == 503:
+		// Content-type (application/x-protobuf) unsupported
+
+	}
+
+	switch {
+	case rsp.StatusCode == 400:
+		var headers ExportOtlpTracesResponse400Headers
+		if values := rsp.Header.Values("Retry-After"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "Retry-After", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.RetryAfter = &value
+		}
+		response.Headers400 = &headers
+	case rsp.StatusCode == 401:
+		var headers ExportOtlpTracesResponse401Headers
+		if values := rsp.Header.Values("Retry-After"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "Retry-After", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.RetryAfter = &value
+		}
+		response.Headers401 = &headers
+	case rsp.StatusCode == 403:
+		var headers ExportOtlpTracesResponse403Headers
+		if values := rsp.Header.Values("Retry-After"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "Retry-After", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.RetryAfter = &value
+		}
+		response.Headers403 = &headers
+	case rsp.StatusCode == 404:
+		var headers ExportOtlpTracesResponse404Headers
+		if values := rsp.Header.Values("Retry-After"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "Retry-After", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.RetryAfter = &value
+		}
+		response.Headers404 = &headers
+	case rsp.StatusCode == 415:
+		var headers ExportOtlpTracesResponse415Headers
+		if values := rsp.Header.Values("Retry-After"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "Retry-After", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.RetryAfter = &value
+		}
+		response.Headers415 = &headers
+	case rsp.StatusCode == 422:
+		var headers ExportOtlpTracesResponse422Headers
+		if values := rsp.Header.Values("Retry-After"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "Retry-After", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.RetryAfter = &value
+		}
+		response.Headers422 = &headers
+	case rsp.StatusCode == 429:
+		var headers ExportOtlpTracesResponse429Headers
+		if values := rsp.Header.Values("Retry-After"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "Retry-After", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.RetryAfter = &value
+		}
+		response.Headers429 = &headers
+	case rsp.StatusCode == 503:
+		var headers ExportOtlpTracesResponse503Headers
+		if values := rsp.Header.Values("Retry-After"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "Retry-After", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.RetryAfter = &value
+		}
+		response.Headers503 = &headers
 	}
 
 	return response, nil
