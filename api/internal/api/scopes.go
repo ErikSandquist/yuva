@@ -250,6 +250,20 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"DeleteAnalyticsExport":     {oas.AnalyticsRead},
 	"DownloadAnalyticsExport":   {oas.AnalyticsRead},
 	"ListAnalyticsAlerts":       {oas.AnalyticsRead},
+
+	"ListMonitorChecks":       {oas.AnalyticsRead},
+	"GetMonitorCheck":         {oas.AnalyticsRead},
+	"ListMonitorCheckResults": {oas.AnalyticsRead},
+	"CreateMonitorCheck":      {oas.AnalyticsManage},
+	"UpdateMonitorCheck":      {oas.AnalyticsManage},
+	"DeleteMonitorCheck":      {oas.AnalyticsManage},
+	"QueryMonitoring":         {oas.AnalyticsRead},
+	"ListMonitorAlertRules":   {oas.AnalyticsRead},
+	"GetMonitorAlertRule":     {oas.AnalyticsRead},
+	"CreateMonitorAlertRule":  {oas.AnalyticsManage},
+	"UpdateMonitorAlertRule":  {oas.AnalyticsManage},
+	"DeleteMonitorAlertRule":  {oas.AnalyticsManage},
+	"ListMonitorAlerts":       {oas.AnalyticsRead},
 }
 
 func errInsufficientScope(scope oas.ApiKeyScope) *apiError {

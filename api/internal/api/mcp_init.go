@@ -53,6 +53,9 @@ var setupIntegrations = []setupIntegration{
 		How:     "an app channel in the inbox settings, then the YuvaKit or Kotlin SDK", Guide: docsBase + "mobile/"},
 	{ID: "app_analytics", Title: "Analytics in apps", What: "Screens, events and revenue from iOS and Android apps, without device or advertising ids.",
 		Signals: "an iOS or Android app", How: "turn on the platform in the property, then the YuvaAnalytics or yuva-analytics library", Scope: "analytics:manage", Guide: docsBase + "analytics-apps/"},
+	{ID: "api_monitoring", Title: "API monitoring", What: "Requests, errors and latency per route and consumer of the project's own API, uptime checks and alerts by e-mail, push and webhook, without a row per request.",
+		Signals: "a backend that serves an HTTP API (net/http, chi, Echo, Express, Fastify, Hono, Nitro, Next.js route handlers), an OpenTelemetry SDK, or Datadog, New Relic, Sentry performance or an uptime service to replace",
+		How:     "the setup_api_monitoring prompt: create_property with kind api, the Go middleware, useyuva/server or OTLP, then uptime_checks and monitoring_alerts", Scope: "analytics:manage", Guide: docsBase + "analytics-api/"},
 	{ID: "server_events", Title: "Server-side events", What: "Sign-ups, payments and renewals that only the backend sees.",
 		Signals: "a backend that handles sign-up, checkout or billing (Stripe, Paddle, Polar, LemonSqueezy webhooks)",
 		How:     "an API key with analytics:write on the server, or the Go package", Guide: docsBase + "analytics-server/"},
@@ -78,6 +81,7 @@ type setupInbox struct {
 
 type setupProperty struct {
 	ID        uuid.UUID  `json:"id"`
+	Kind      string     `json:"kind" jsonschema:"site, or api for an API watched by API monitoring"`
 	Name      string     `json:"name"`
 	Domains   []string   `json:"domains"`
 	Platforms []string   `json:"platforms"`
@@ -181,7 +185,7 @@ func (c *mcpCall) setupState(ctx context.Context) (setupStateOut, error) {
 			return out, err
 		}
 		for _, p := range res.(oas.ListAnalyticsProperties200JSONResponse).Items {
-			sp := setupProperty{ID: p.Id, Name: p.Name, Domains: []string{}, Platforms: []string{}, InboxID: p.InboxId}
+			sp := setupProperty{ID: p.Id, Kind: string(p.Kind), Name: p.Name, Domains: []string{}, Platforms: []string{}, InboxID: p.InboxId}
 			for _, d := range p.Domains {
 				sp.Domains = append(sp.Domains, string(d))
 			}

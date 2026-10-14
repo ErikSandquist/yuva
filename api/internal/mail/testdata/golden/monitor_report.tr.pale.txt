@@ -1,0 +1,24 @@
+Shop API: haftalık API raporunuz
+
+Shop API, Haftalık rapor, 2026-10-05 – 2026-10-11 (değişimler bir önceki haftaya göre)
+
+İstekler: 1,204,330 (+8%)
+Hata oranı: 0.4% (−20%)
+İstemci hatası oranı: 3.1%
+p95: 182 ms (+5%)
+
+En yavaş rotalar:
+  /exports/{id}: 2,410 ms
+
+En çok hata veren rotalar:
+  /orders/{id}: 412 · 1.9%
+
+Çalışma kontrolleri:
+  Health: 99.9%
+
+Uyarılar: Bu dönemde 1 uyarı tetiklendi.
+  5xx rate above 5%: 2026-10-08 14:05
+
+Analitiği aç: https://yuva.example.com/analytics/1
+
+Bu raporu Shop API için seçtiğiniz için alıyorsunuz. Değiştirin veya durdurun: https://yuva.example.com/analytics/1/settings

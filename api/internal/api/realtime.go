@@ -322,6 +322,19 @@ func (f *eventFilter) allows(ctx context.Context, q *store.Queries, e realtime.E
 		if e.InboxID == nil {
 			return f.p.seesAllInboxes(), nil
 		}
+	case eventMonitorAlert:
+		if requireScope(f.p, oas.AnalyticsRead) != nil {
+			return false, nil
+		}
+		if e.InboxID == nil {
+			var d struct {
+				Property *struct{} `json:"property"`
+			}
+			if err := json.Unmarshal(e.Data, &d); err != nil {
+				return false, err
+			}
+			return d.Property == nil || f.p.seesAllInboxes(), nil
+		}
 	case eventMigrationUpdated, eventMigrationProgress, eventMigrationForwardingConfirmation:
 		return requireMigrationManager(f.p) == nil && requireScope(f.p, oas.MigrationsManage) == nil, nil
 	case realtime.Typing:

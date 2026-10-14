@@ -262,6 +262,27 @@ tags:
       `getAnalyticsRealtime`, and how collection is doing (accepted and dropped events, the GeoIP
       database) from `getAnalyticsHealth`. Locations come from the shortened address; children's
       properties keep only the country.
+  - name: monitoring
+    description: |
+      Uptime checks and alerts of API monitoring. An uptime check (`MonitorCheck`) calls an
+      `http` or `https` URL from the server on an interval and records whether it answered as
+      expected, with its timings and certificate; its numbers are the `uptime` dataset of
+      `queryMonitoring`, and of `queryAnalytics` for the checks of a property. Alert rules
+      (`MonitorAlertRule`) watch a property's requests or the checks, and open and resolve alerts
+      (`MonitorAlert`) every minute, with a `monitor.alert` event and webhook, an annotation, e-mail
+      and Web Push.
+
+      The server calls only public addresses: a check's URL, every address its host resolves to on
+      every run and every redirect hop are refused when they are loopback, private, link-local,
+      CGNAT, multicast or reserved, or a cloud metadata address. A request is made to the address
+      that was checked, with `User-Agent: Yuva-Uptime/<version>`, no cookies and no body, and at
+      most 64 KiB of the answer is read. `YUVA_MONITOR_ALLOW_PRIVATE=true` lets a self-hosted server
+      call private and loopback addresses; link-local and metadata addresses stay refused.
+
+      Every member reads checks, check rules and their alerts; rules on a property follow the
+      property's visibility. Owners, admins and API keys without an inbox limit manage them. Keys and
+      OAuth tokens need `analytics:read` or `analytics:manage`. `YUVA_MONITOR=off` (or
+      `YUVA_ANALYTICS=off`) removes these endpoints.
   - name: realtime
     description: Live workspace events over WebSocket, and the same events as a feed to poll.
   - name: client
@@ -7690,7 +7711,9 @@ paths:
         inbox: agents of that inbox can then read it. A workspace has at most
         `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties (`403 property_limit`). A children's
         property (`audience: children`) cannot offer `consent_features` or `tracked_props`; an API
-        property offers neither, and `audience` does not apply to it.
+        property offers neither, and `audience` does not apply to it. A new API property gets one
+        alert rule (`createMonitorAlertRule`): `error_rate` above 5% over 5 minutes with at least 20
+        requests, sent to the member who created it.
 
         Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
       tags: [analytics]
@@ -8996,6 +9019,11 @@ paths:
         member's address: plain numbers, no images, nothing that tracks opening or clicks. Alerts
         are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
         session only; the member must see the property.
+
+        An API property's report gives its requests, error and client error rates and p95 against
+        the period before, its slowest and most failing routes, the uptime of its checks and the
+        alerts of the period. Its alerts are rules (`createMonitorAlertRule`), so `alerts` does not
+        apply to it.
       tags: [analytics]
       parameters:
         - $ref: "#/components/parameters/WorkspaceHeader"
@@ -9408,6 +9436,481 @@ paths:
         "404":
           $ref: "#/components/responses/Problem"
         "409":
+          $ref: "#/components/responses/Problem"
+  /v1/monitoring/checks:
+    get:
+      operationId: listMonitorChecks
+      summary: List uptime checks
+      description: |
+        The workspace's uptime checks by name, each with its state and last result. Every member
+        sees every check. `property_id` narrows the list to the checks of one property.
+
+        Scope: `analytics:read`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - name: property_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: The checks.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorCheckList"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createMonitorCheck
+      summary: Create an uptime check
+      description: |
+        Starts calling a URL from the server on an interval (`MonitorCheckCreate`). The URL is
+        refused (`422 refused_address`) when it names credentials, `localhost`, or an address the
+        server will not call: loopback, private, link-local, CGNAT, multicast and reserved
+        addresses, and cloud metadata addresses. A host name is resolved when the check is saved
+        and again on every run, and refused when any of its addresses is one of those.
+        `YUVA_MONITOR_ALLOW_PRIVATE=true` lets a self-hosted server call private and loopback
+        addresses; link-local and metadata addresses are refused even then.
+
+        A workspace has at most `YUVA_MONITOR_CHECKS` checks (500, or 50 on a server with open
+        sign-up; `403 check_limit`) and at most 10 on one host (`403 host_limit`). The interval is
+        at least `YUVA_MONITOR_MIN_INTERVAL` (30 s, or 60 s with open sign-up). A member who creates
+        a check gets an alert rule of kind `check_state` for it, sent to them.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MonitorCheckCreate"
+      responses:
+        "201":
+          description: The check; its first run is due now.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorCheck"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+  /v1/monitoring/checks/{checkId}:
+    get:
+      operationId: getMonitorCheck
+      summary: Get an uptime check
+      description: |
+        Scope: `analytics:read`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MonitorCheckId"
+      responses:
+        "200":
+          description: The check.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorCheck"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: updateMonitorCheck
+      summary: Update an uptime check
+      description: |
+        Changes the given fields; the check is checked whole afterwards, as when it was created.
+        `headers` replaces every header, values included. A changed URL, method or interval runs
+        the check next right away; `paused: true` stops running it and `false` runs it now.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MonitorCheckId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MonitorCheckUpdate"
+      responses:
+        "200":
+          description: The check.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorCheck"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteMonitorCheck
+      summary: Delete an uptime check
+      description: |
+        Deletes the check with its results, its daily rows, the alert rules that name it and their
+        alerts.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MonitorCheckId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/monitoring/checks/{checkId}/results:
+    get:
+      operationId: listMonitorCheckResults
+      summary: List a check's runs
+      description: |
+        The check's counted runs, newest first, with their timings: a run that failed was tried
+        again after 20 seconds, and only that second try is listed (`retried`). Runs are kept
+        `YUVA_MONITOR_CHECK_DAYS` days (30); older days are in the `uptime` dataset of
+        `queryMonitoring`. With `before`, older runs.
+
+        Scope: `analytics:read`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MonitorCheckId"
+        - name: before
+          in: query
+          description: "`at` of the last run of the previous page."
+          schema:
+            type: string
+            format: date-time
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 500
+            default: 100
+      responses:
+        "200":
+          description: The runs.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorCheckResultList"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/monitoring/query:
+    post:
+      operationId: queryMonitoring
+      summary: Query the workspace's uptime checks
+      description: |
+        The query operation of `queryAnalytics` over every uptime check of the workspace, with
+        `dataset: uptime` (`AnalyticsDataset`): the same body and answer, and the same numbers as
+        `queryAnalytics` on a property gives for that property's checks. Every member may call it.
+
+        Scope: `analytics:read`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - name: format
+          in: query
+          description: "`json` (the default) or `csv`."
+          schema:
+            type: string
+            enum: [json, csv]
+            x-enum-varnames: [MonitoringFormatJSON, MonitoringFormatCSV]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyticsQuery"
+      responses:
+        "200":
+          description: The numbers.
+          headers:
+            Content-Disposition:
+              description: With `format=csv`, an attachment file name.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsResult"
+            text/csv:
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "422":
+          description: "`range_too_large`, `property_kind` (a dataset other than `uptime`), as for `queryAnalytics`."
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsRangeProblem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /v1/monitoring/alert-rules:
+    get:
+      operationId: listMonitorAlertRules
+      summary: List alert rules
+      description: |
+        The workspace's API monitoring alert rules, oldest first: those on a property the caller
+        can see, and every rule on checks. `property_id` and `check_id` narrow the list.
+
+        Scope: `analytics:read`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - name: property_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: check_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: The rules.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorAlertRuleList"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createMonitorAlertRule
+      summary: Create an alert rule
+      description: |
+        A rule the `monitor_alerts` job checks every minute over the minutes that closed
+        (`MonitorAlertRuleKind`). An alert is open per rule and key (the rule's subject, or each
+        route or check it covers) while its condition holds: it fires once, and resolves once when
+        the value has been back inside the threshold with a 10% margin for a whole window. Both
+        write a `monitor.alert` event and webhook, an annotation on the property, and reach the
+        rule's `recipients` by e-mail and Web Push. A workspace has at most 200 rules
+        (`403 rule_limit`).
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MonitorAlertRuleCreate"
+      responses:
+        "201":
+          description: The rule.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorAlertRule"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+  /v1/monitoring/alert-rules/{ruleId}:
+    get:
+      operationId: getMonitorAlertRule
+      summary: Get an alert rule
+      description: |
+        Scope: `analytics:read`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MonitorAlertRuleId"
+      responses:
+        "200":
+          description: The rule.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorAlertRule"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: updateMonitorAlertRule
+      summary: Update an alert rule
+      description: |
+        Changes the given fields; the rule is checked whole afterwards. Its kind and subject
+        (`property_id`, `route`, `service`, `check_id`) stay. A changed threshold or window applies
+        from the next minute, to open alerts too; `enabled: false` resolves the rule's open alerts
+        without telling anyone.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MonitorAlertRuleId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MonitorAlertRuleUpdate"
+      responses:
+        "200":
+          description: The rule.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorAlertRule"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteMonitorAlertRule
+      summary: Delete an alert rule
+      description: |
+        Deletes the rule and its alerts; their annotations stay.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MonitorAlertRuleId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/monitoring/alerts:
+    get:
+      operationId: listMonitorAlerts
+      summary: List alerts
+      description: |
+        Alerts the rules raised, newest first, at most `limit`: open ones (`state: firing`) and
+        resolved ones, of the rules the caller can see (`listMonitorAlertRules`). Resolved alerts
+        are kept 400 days. With `before`, older ones.
+
+        Scope: `analytics:read`.
+      tags: [monitoring]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - name: state
+          in: query
+          description: "`firing` or `resolved`; both when absent."
+          schema:
+            $ref: "#/components/schemas/MonitorAlertState"
+        - name: property_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: check_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: rule_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: before
+          in: query
+          description: "`fired_at` of the last alert of the previous page."
+          schema:
+            type: string
+            format: date-time
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+      responses:
+        "200":
+          description: The alerts.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitorAlertList"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
           $ref: "#/components/responses/Problem"
   /v1/realtime:
     get:
@@ -11713,6 +12216,29 @@ webhooks:
       responses:
         "200":
           description: Any 2xx answer counts as delivered.
+  monitor.alert:
+    post:
+      operationId: webhookMonitorAlert
+      summary: An API monitoring alert fired or resolved
+      description: |
+        Once when an alert of a rule (`MonitorAlertRuleKind`) fires and once when it resolves,
+        `data.alert.state` saying which. Endpoints of an inbox get the alerts of properties linked to
+        that inbox.
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookMonitorAlertPayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
 components:
   securitySchemes:
     session:
@@ -11962,6 +12488,20 @@ components:
         format: uuid
     AnalyticsSegmentId:
       name: segmentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    MonitorCheckId:
+      name: checkId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    MonitorAlertRuleId:
+      name: ruleId
       in: path
       required: true
       schema:
@@ -12900,8 +13440,11 @@ components:
       properties:
         event:
           type: string
-          description: What caused it (see the `notifications` tag), or `test`.
-          enum: [new_live_conversation, new_async_conversation, message_in_my_conversation, message_in_unassigned_conversation, assigned_to_me, mentioned, test]
+          description: What caused it (see the `notifications` tag), `monitor_alert` (an API monitoring alert fired or resolved, `url` its rule's page), or `test`.
+          enum: [new_live_conversation, new_async_conversation, message_in_my_conversation, message_in_unassigned_conversation, assigned_to_me, mentioned, test,
+            monitor_alert]
+          x-enum-varnames: [NewLiveConversation, NewAsyncConversation, MessageInMyConversation, MessageInUnassignedConversation, AssignedToMe, Mentioned,
+            Test, PushMonitorAlert]
         title:
           type: string
           description: The inbox name and the contact's name.
@@ -13839,7 +14382,7 @@ components:
           format: int64
     WebhookEventType:
       type: string
-      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted, discussion.created, discussion.post_created, discussion.answered, discussion.updated, subscription.created, subscription.updated, broadcast.updated, analytics.alert]
+      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted, discussion.created, discussion.post_created, discussion.answered, discussion.updated, subscription.created, subscription.updated, broadcast.updated, analytics.alert, monitor.alert]
     WebhookEndpoint:
       type: object
       required: [id, url, description, events, include_notes, enabled, created_at, updated_at]
@@ -17280,6 +17823,7 @@ components:
         - $ref: "#/components/schemas/BroadcastEvent"
         - $ref: "#/components/schemas/MigrationEvent"
         - $ref: "#/components/schemas/AnalyticsAlertEvent"
+        - $ref: "#/components/schemas/MonitorAlertEvent"
       discriminator:
         propertyName: type
         mapping:
@@ -17309,6 +17853,7 @@ components:
           broadcast.updated: "#/components/schemas/BroadcastEvent"
           migration.updated: "#/components/schemas/MigrationEvent"
           analytics.alert: "#/components/schemas/AnalyticsAlertEvent"
+          monitor.alert: "#/components/schemas/MonitorAlertEvent"
     EventPage:
       type: object
       required: [events, next, has_more]
@@ -17354,6 +17899,7 @@ components:
         - $ref: "#/components/schemas/BroadcastEvent"
         - $ref: "#/components/schemas/MigrationEvent"
         - $ref: "#/components/schemas/AnalyticsAlertEvent"
+        - $ref: "#/components/schemas/MonitorAlertEvent"
         - $ref: "#/components/schemas/MigrationProgressEvent"
         - $ref: "#/components/schemas/MigrationForwardingConfirmationEvent"
         - $ref: "#/components/schemas/BroadcastProgressEvent"
@@ -17394,6 +17940,7 @@ components:
           broadcast.updated: "#/components/schemas/BroadcastEvent"
           migration.updated: "#/components/schemas/MigrationEvent"
           analytics.alert: "#/components/schemas/AnalyticsAlertEvent"
+          monitor.alert: "#/components/schemas/MonitorAlertEvent"
           migration.progress: "#/components/schemas/MigrationProgressEvent"
           migration.forwarding_confirmation: "#/components/schemas/MigrationForwardingConfirmationEvent"
           broadcast.progress: "#/components/schemas/BroadcastProgressEvent"
@@ -21215,10 +21762,20 @@ components:
         `metrics.latency_bands`, 20 bands whose upper bounds `meta.latency_band_bounds` lists;
         the same bands for every range, read exactly from the duration sketches; it cannot order
         rows).
+
+        With `dataset: uptime` only: `runs` (counted runs), `failures` (failed runs), `up` (checks
+        whose last counted run of the range or bucket succeeded), `uptime` (percent of the
+        monitored time the check was not down, each run standing for its interval), `downtime`
+        (seconds down), `response_time_p50`, `response_time_p95` and `response_time_p99` (the total
+        time of runs that got an answer, in milliseconds, from sketches accurate to 1.1%),
+        `avg_response_time` and `ttfb` (milliseconds) and `cert_days_left` (the fewest days until a
+        certificate expires, by each check's last run that had one). Runs recorded `unknown`
+        count in none of them.
       enum: [visitors, visits, pageviews, views_per_visit, bounce_rate, visit_duration, time_on_page, scroll_depth, events, conversions,
         conversion_rate, completions, revenue, conversations, feedback, ratings_up, ratings_down, helpful_rate, discussions, support_rate,
         requests, requests_per_minute, errors, error_rate, client_errors, client_error_rate, p50, p75, p90, p95, p99, avg_duration, max_duration,
-        apdex, request_bytes, response_bytes, response_size_p50, response_size_p95, latency_bands]
+        apdex, request_bytes, response_bytes, response_size_p50, response_size_p95, latency_bands, runs, failures, up, uptime, downtime,
+        response_time_p50, response_time_p95, response_time_p99, avg_response_time, ttfb, cert_days_left]
       x-enum-varnames: [AnalyticsMetricVisitors, AnalyticsMetricVisits, AnalyticsMetricPageviews, AnalyticsMetricViewsPerVisit,
         AnalyticsMetricBounceRate, AnalyticsMetricVisitDuration, AnalyticsMetricTimeOnPage, AnalyticsMetricScrollDepth, AnalyticsMetricEvents,
         AnalyticsMetricConversions, AnalyticsMetricConversionRate, AnalyticsMetricCompletions, AnalyticsMetricRevenue,
@@ -21227,7 +21784,9 @@ components:
         AnalyticsMetricErrorRate, AnalyticsMetricClientErrors, AnalyticsMetricClientErrorRate, AnalyticsMetricP50, AnalyticsMetricP75,
         AnalyticsMetricP90, AnalyticsMetricP95, AnalyticsMetricP99, AnalyticsMetricAvgDuration, AnalyticsMetricMaxDuration, AnalyticsMetricApdex,
         AnalyticsMetricRequestBytes, AnalyticsMetricResponseBytes, AnalyticsMetricResponseSizeP50, AnalyticsMetricResponseSizeP95,
-        AnalyticsMetricLatencyBands]
+        AnalyticsMetricLatencyBands, AnalyticsMetricRuns, AnalyticsMetricFailures, AnalyticsMetricUp, AnalyticsMetricUptime, AnalyticsMetricDowntime,
+        AnalyticsMetricResponseTimeP50, AnalyticsMetricResponseTimeP95, AnalyticsMetricResponseTimeP99, AnalyticsMetricAvgResponseTime,
+        AnalyticsMetricTtfb, AnalyticsMetricCertDaysLeft]
     AnalyticsFilterDimension:
       type: string
       description: |
@@ -21260,15 +21819,18 @@ components:
         `country` and `app_version` (`(other)` past 200); they count only the requests that have
         one, and each is kept by local hour with `route`, `method` and `status_class` only (see
         `AnalyticsDataset`).
+
+        With `dataset: uptime` the dimension is `check`, an uptime check's id.
       enum: [page, entry_page, exit_page, hostname, channel, source, referrer, utm_source, utm_medium, utm_campaign, utm_term,
         utm_content, country, region, city, device, browser, browser_version, os, os_version, screen_size, language, platform, app_version,
-        visitor_type, event, prop, route, method, status, status_class, environment, api_version, service, consumer]
+        visitor_type, event, prop, route, method, status, status_class, environment, api_version, service, consumer, check]
       x-enum-varnames: [AnalyticsDimPage, AnalyticsDimEntryPage, AnalyticsDimExitPage, AnalyticsDimHostname, AnalyticsDimChannel,
         AnalyticsDimSource, AnalyticsDimReferrer, AnalyticsDimUtmSource, AnalyticsDimUtmMedium, AnalyticsDimUtmCampaign, AnalyticsDimUtmTerm,
         AnalyticsDimUtmContent, AnalyticsDimCountry, AnalyticsDimRegion, AnalyticsDimCity, AnalyticsDimDevice, AnalyticsDimBrowser,
         AnalyticsDimBrowserVersion, AnalyticsDimOs, AnalyticsDimOsVersion, AnalyticsDimScreenSize, AnalyticsDimLanguage, AnalyticsDimPlatform,
         AnalyticsDimAppVersion, AnalyticsDimVisitorType, AnalyticsDimEvent, AnalyticsDimProp, AnalyticsDimRoute, AnalyticsDimMethod,
-        AnalyticsDimStatus, AnalyticsDimStatusClass, AnalyticsDimEnvironment, AnalyticsDimApiVersion, AnalyticsDimService, AnalyticsDimConsumer]
+        AnalyticsDimStatus, AnalyticsDimStatusClass, AnalyticsDimEnvironment, AnalyticsDimApiVersion, AnalyticsDimService, AnalyticsDimConsumer,
+        AnalyticsDimCheck]
     AnalyticsDimension:
       type: string
       description: |
@@ -21288,17 +21850,22 @@ components:
         autumn and the hours around a pending zone change (`timezone_applies_at`) stay apart; day,
         week and month values are the local date they start on, `2026-10-12`. Every bucket of the
         range is present when the grain is the only dimension.
+
+        With `dataset: uptime`, `check` and a grain at most, each of them once: `time:minute` and
+        `time:hour` inside the runs kept (`YUVA_MONITOR_CHECK_DAYS`, at most 1,440 minutes),
+        `time:day`, `time:week` and `time:month` for any range. Its buckets are UTC, labelled like the
+        API dataset's (`2026-10-12T14:05+00:00`, `2026-10-12`).
       enum: [time:minute, time:hour, time:day, time:week, time:month, page, entry_page, exit_page, hostname, channel, source, referrer, utm_source,
         utm_medium, utm_campaign, utm_term, utm_content, country, region, city, device, browser, browser_version, os, os_version,
         screen_size, language, platform, app_version, visitor_type, event, prop, route, method, status, status_class, environment, api_version,
-        service, consumer]
+        service, consumer, check]
       x-enum-varnames: [AnalyticsByMinute, AnalyticsByHour, AnalyticsByDay, AnalyticsByWeek, AnalyticsByMonth, AnalyticsByPage, AnalyticsByEntryPage,
         AnalyticsByExitPage, AnalyticsByHostname, AnalyticsByChannel, AnalyticsBySource, AnalyticsByReferrer, AnalyticsByUtmSource,
         AnalyticsByUtmMedium, AnalyticsByUtmCampaign, AnalyticsByUtmTerm, AnalyticsByUtmContent, AnalyticsByCountry, AnalyticsByRegion,
         AnalyticsByCity, AnalyticsByDevice, AnalyticsByBrowser, AnalyticsByBrowserVersion, AnalyticsByOs, AnalyticsByOsVersion,
         AnalyticsByScreenSize, AnalyticsByLanguage, AnalyticsByPlatform, AnalyticsByAppVersion, AnalyticsByVisitorType, AnalyticsByEvent, AnalyticsByProp,
         AnalyticsByRoute, AnalyticsByMethod, AnalyticsByStatus, AnalyticsByStatusClass, AnalyticsByEnvironment, AnalyticsByApiVersion,
-        AnalyticsByService, AnalyticsByConsumer]
+        AnalyticsByService, AnalyticsByConsumer, AnalyticsByCheck]
     AnalyticsFilter:
       type: object
       description: |
@@ -21424,8 +21991,15 @@ components:
         Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by
         `requests` unless `order_by` says otherwise; slowest and most failing routes are a `route`
         breakdown ordered by `p95` or `error_rate`.
-      enum: [traffic, support, api]
-      x-enum-varnames: [AnalyticsDatasetTraffic, AnalyticsDatasetSupport, AnalyticsDatasetApi]
+
+        `uptime` is the runs of uptime checks (`MonitorCheck`): on a property (of either kind) its
+        checks, on `queryMonitoring` every check of the workspace. It takes the uptime metrics of
+        `AnalyticsMetric`, the dimension `check` and a grain, filters on `check` (`is`, `is_not`),
+        the ranges of the `api` dataset (counted in UTC) and `compare`. Days whose runs were folded
+        come from daily rows, the rest from the runs, which are kept `YUVA_MONITOR_CHECK_DAYS` days.
+        Checks are probes, not consumers, so their requests never enter the `api` dataset.
+      enum: [traffic, support, api, uptime]
+      x-enum-varnames: [AnalyticsDatasetTraffic, AnalyticsDatasetSupport, AnalyticsDatasetApi, AnalyticsDatasetUptime]
     AnalyticsQuery:
       type: object
       required: [metrics, range]
@@ -21617,6 +22191,39 @@ components:
           type: number
           format: double
         response_size_p95:
+          type: number
+          format: double
+        runs:
+          type: number
+          format: double
+        failures:
+          type: number
+          format: double
+        up:
+          type: number
+          format: double
+        uptime:
+          type: number
+          format: double
+        downtime:
+          type: number
+          format: double
+        response_time_p50:
+          type: number
+          format: double
+        response_time_p95:
+          type: number
+          format: double
+        response_time_p99:
+          type: number
+          format: double
+        avg_response_time:
+          type: number
+          format: double
+        ttfb:
+          type: number
+          format: double
+        cert_days_left:
           type: number
           format: double
         latency_bands:
@@ -21814,6 +22421,554 @@ components:
           type: number
           format: double
           description: The change in percent of `previous`, one decimal; only for `metric_change`, `row_change` and `support_hotspot`.
+    MonitorCheckState:
+      type: string
+      description: |
+        `unknown` until the first counted run, then `up`, or `down` once `failures_before_down`
+        runs in a row failed.
+      enum: [unknown, up, down]
+      x-enum-varnames: [MonitorCheckUnknown, MonitorCheckUp, MonitorCheckDown]
+    MonitorCheckMethod:
+      type: string
+      enum: [GET, HEAD]
+      x-enum-varnames: [MonitorCheckGet, MonitorCheckHead]
+    MonitorCheckHeader:
+      type: object
+      required: [name, value]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          pattern: "^[!#$%&'*+.^_`|~0-9A-Za-z-]+$"
+          description: |
+            A request header, such as `Authorization`. `Host`, `Cookie`, `Content-Length`,
+            `Transfer-Encoding`, `Connection`, `Upgrade`, `TE`, `Trailer` and `Proxy-*` cannot
+            be set.
+        value:
+          type: string
+          maxLength: 2000
+          description: Kept encrypted under the server's master key and never returned.
+    MonitorCheckFields:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        url:
+          type: string
+          maxLength: 2000
+          description: An `http` or `https` URL without credentials.
+          examples: ["https://api.example.com/healthz"]
+        method:
+          $ref: "#/components/schemas/MonitorCheckMethod"
+        headers:
+          type: array
+          maxItems: 5
+          items:
+            $ref: "#/components/schemas/MonitorCheckHeader"
+        expected_statuses:
+          type: array
+          maxItems: 20
+          description: The status codes that count as up, from 200 to 399; any status from 200 to 399 when empty.
+          items:
+            type: integer
+            minimum: 200
+            maximum: 399
+        keyword:
+          type:
+            - string
+            - "null"
+          minLength: 1
+          maxLength: 200
+          description: Text the first 64 KiB of the answer must contain (or, with `keyword_absent`, must not); `GET` only.
+        keyword_absent:
+          type: boolean
+        timeout_seconds:
+          type: integer
+          minimum: 1
+          maximum: 30
+        interval_seconds:
+          type: integer
+          minimum: 30
+          maximum: 86400
+          description: At least `YUVA_MONITOR_MIN_INTERVAL` (`422 interval_too_short`).
+        failures_before_down:
+          type: integer
+          minimum: 1
+          maximum: 10
+          description: Failed runs in a row before the check is down; each failed run was already tried again after 20 seconds.
+        cert_warning_days:
+          type: integer
+          minimum: 1
+          maximum: 90
+          description: An `https` check's certificate expiring within this many days raises `certificate` alerts.
+        max_redirects:
+          type: integer
+          minimum: 0
+          maximum: 5
+          description: Redirects followed; every hop goes through the same address checks. `0` judges the redirect's own status.
+        service:
+          type:
+            - string
+            - "null"
+          minLength: 1
+          maxLength: 100
+          description: The service the check watches, by the name its records and spans give.
+        property_id:
+          type:
+            - string
+            - "null"
+          format: uuid
+          description: The property whose `uptime` dataset and reports include the check.
+        paused:
+          type: boolean
+    MonitorCheckCreate:
+      allOf:
+        - $ref: "#/components/schemas/MonitorCheckFields"
+        - type: object
+          required: [name, url]
+          description: |
+            Defaults: `GET`, statuses 200 to 399, a 10 second timeout, an interval of 60 seconds (or
+            `YUVA_MONITOR_MIN_INTERVAL` when longer), down after 2 failed runs, a certificate warning
+            14 days ahead and up to 5 redirects.
+    MonitorCheckUpdate:
+      allOf:
+        - $ref: "#/components/schemas/MonitorCheckFields"
+        - type: object
+          minProperties: 1
+    MonitorCheckTimings:
+      type: object
+      description: Milliseconds; redirects add up their hops, `ttfb` is until the last answer's first byte and `total` until its body was read.
+      required: [dns, connect, tls, ttfb, total]
+      properties:
+        dns:
+          type: number
+          format: double
+        connect:
+          type: number
+          format: double
+        tls:
+          type: number
+          format: double
+        ttfb:
+          type: number
+          format: double
+        total:
+          type: number
+          format: double
+    MonitorCheckError:
+      type: string
+      description: |
+        Why a run failed: `dns` (the name did not resolve), `refused_address` (it resolved, or a
+        redirect led, to an address the server will not call), `connect`, `tls` (the handshake or
+        the certificate failed), `timeout`, `status` (a status not in `expected_statuses`),
+        `keyword`, `redirects` (more than `max_redirects`, or a redirect to a URL that is not
+        allowed), `other`.
+      enum: [dns, refused_address, connect, tls, timeout, status, keyword, redirects, other]
+      x-enum-varnames: [MonitorErrorDNS, MonitorErrorRefusedAddress, MonitorErrorConnect, MonitorErrorTLS, MonitorErrorTimeout, MonitorErrorStatus,
+        MonitorErrorKeyword, MonitorErrorRedirects, MonitorErrorOther]
+    MonitorCheckResult:
+      type: object
+      required: [at, ok, state, status, retried, redirects, timings]
+      properties:
+        at:
+          type: string
+          format: date-time
+          description: When the counted try started.
+        ok:
+          type: boolean
+        state:
+          type: string
+          description: |
+            The check's state after the run; `unknown` when the run fell in a minute where at least
+            20 checks ran on the server and more than half of them failed, which points at the
+            server's own network, so it counts neither way; `pending` until its minute is judged,
+            about a minute after it closed.
+          enum: [up, down, unknown, pending]
+          x-enum-varnames: [MonitorResultUp, MonitorResultDown, MonitorResultUnknown, MonitorResultPending]
+        status:
+          type: integer
+          description: The last answer's status; 0 when none came.
+        error:
+          $ref: "#/components/schemas/MonitorCheckError"
+        detail:
+          type: string
+          description: What went wrong, for members; at most 200 characters.
+        retried:
+          type: boolean
+          description: The first try failed and this is the try 20 seconds later.
+        redirects:
+          type: integer
+        timings:
+          $ref: "#/components/schemas/MonitorCheckTimings"
+        cert_days_left:
+          type: integer
+          description: "`https`: whole days until the server's certificate expires."
+    MonitorCheckResultList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/MonitorCheckResult"
+    MonitorCheck:
+      type: object
+      required: [id, name, url, method, header_names, expected_statuses, keyword_absent, timeout_seconds, interval_seconds, failures_before_down,
+        cert_warning_days, max_redirects, paused, state, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        url:
+          type: string
+        method:
+          $ref: "#/components/schemas/MonitorCheckMethod"
+        header_names:
+          type: array
+          description: The headers the check sends; their values are never returned.
+          items:
+            type: string
+        expected_statuses:
+          type: array
+          items:
+            type: integer
+        keyword:
+          type: string
+        keyword_absent:
+          type: boolean
+        timeout_seconds:
+          type: integer
+        interval_seconds:
+          type: integer
+        failures_before_down:
+          type: integer
+        cert_warning_days:
+          type: integer
+        max_redirects:
+          type: integer
+        service:
+          type: string
+        property_id:
+          type: string
+          format: uuid
+        paused:
+          type: boolean
+        state:
+          $ref: "#/components/schemas/MonitorCheckState"
+        state_since:
+          type: string
+          format: date-time
+        last_result:
+          $ref: "#/components/schemas/MonitorCheckResult"
+        next_run_at:
+          type: string
+          format: date-time
+          description: Absent while paused.
+        cert_expires_at:
+          type: string
+          format: date-time
+          description: "`https`: when the certificate of the last answer expires."
+        created_by:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    MonitorCheckList:
+      type: object
+      required: [items, limit, host_limit]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/MonitorCheck"
+        limit:
+          type: integer
+          description: The workspace's checks at most (`YUVA_MONITOR_CHECKS`).
+        host_limit:
+          type: integer
+          description: Checks on one host at most.
+        min_interval_seconds:
+          type: integer
+          description: The shortest interval this server allows (`YUVA_MONITOR_MIN_INTERVAL`).
+    MonitorAlertRuleKind:
+      type: string
+      description: |
+        On a property's requests (`property_id` required, narrowed by `route` or `service`), over
+        the last `window_minutes` closed minutes with at least `min_requests`:
+        - `error_rate` and `client_error_rate`: percent of requests with status 500 to 599 (or none),
+          or 400 to 499, above `threshold`.
+        - `p95`, `p99`: that percentile of the duration in milliseconds above `threshold`.
+        - `apdex`: the Apdex score below `threshold` (0 to 1).
+        - `spike` and `drop`: requests of the last 15 closed minutes at least three times, or at
+          most half, the same 15 minutes averaged over the 7 days before, when that average is at
+          least 50 requests; no `threshold` or window.
+        - `silent`: a route (`route`, or each route of the property) that averaged at least one
+          request a minute over the day before had none for 15 minutes.
+
+        On uptime checks (`check_id`, or every check of `property_id`, or every check of the
+        workspace):
+        - `check_state`: the check is down.
+        - `certificate`: the check's certificate expires within `threshold` days (the check's
+          `cert_warning_days` when absent).
+
+        An alert resolves once its value has been back inside the threshold with a 10% margin
+        (below 90% of it; for `apdex` above it by a tenth of the distance to 1; for `spike`
+        below 2.7 times, for `drop` above 0.55 times the average) over a whole window that began
+        after it fired, or the window has fewer than `min_requests`; a silent route once it was
+        called again; a check once it is up, or its certificate is renewed.
+      enum: [error_rate, client_error_rate, p95, p99, apdex, spike, drop, silent, check_state, certificate]
+      x-enum-varnames: [MonitorRuleErrorRate, MonitorRuleClientErrorRate, MonitorRuleP95, MonitorRuleP99, MonitorRuleApdex, MonitorRuleSpike,
+        MonitorRuleDrop, MonitorRuleSilent, MonitorRuleCheckState, MonitorRuleCertificate]
+    MonitorAlertRuleFields:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Named after its kind and subject when absent.
+        threshold:
+          type:
+            - number
+            - "null"
+          format: double
+          description: Percent for the rates, milliseconds for `p95` and `p99`, 0 to 1 for `apdex`, days for `certificate`.
+        window_minutes:
+          type: integer
+          minimum: 5
+          maximum: 60
+          description: The metric rules' window; 5 when absent.
+        min_requests:
+          type: integer
+          minimum: 1
+          maximum: 1000000
+          description: The fewest requests a window needs to be judged; 20 when absent.
+        recipients:
+          type: array
+          maxItems: 20
+          description: Members who get each alert by e-mail and Web Push; they must see the rule's property.
+          items:
+            type: string
+            format: uuid
+        enabled:
+          type: boolean
+    MonitorAlertRuleCreate:
+      allOf:
+        - $ref: "#/components/schemas/MonitorAlertRuleFields"
+        - type: object
+          required: [kind]
+          properties:
+            kind:
+              $ref: "#/components/schemas/MonitorAlertRuleKind"
+            property_id:
+              type: string
+              format: uuid
+            route:
+              type: string
+              minLength: 1
+              maxLength: 300
+              description: A route pattern of the property, as `listAnalyticsRoutes` lists it.
+            service:
+              type: string
+              minLength: 1
+              maxLength: 100
+            check_id:
+              type: string
+              format: uuid
+    MonitorAlertRuleUpdate:
+      allOf:
+        - $ref: "#/components/schemas/MonitorAlertRuleFields"
+        - type: object
+          minProperties: 1
+    MonitorAlertRule:
+      type: object
+      required: [id, name, kind, window_minutes, min_requests, recipients, enabled, firing, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        kind:
+          $ref: "#/components/schemas/MonitorAlertRuleKind"
+        property_id:
+          type: string
+          format: uuid
+        route:
+          type: string
+        service:
+          type: string
+        check_id:
+          type: string
+          format: uuid
+        threshold:
+          type: number
+          format: double
+        window_minutes:
+          type: integer
+        min_requests:
+          type: integer
+        recipients:
+          type: array
+          items:
+            type: string
+            format: uuid
+        enabled:
+          type: boolean
+        firing:
+          type: integer
+          description: The rule's open alerts.
+        created_by:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    MonitorAlertRuleList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/MonitorAlertRule"
+    MonitorAlertState:
+      type: string
+      enum: [firing, resolved]
+      x-enum-varnames: [MonitorAlertFiring, MonitorAlertResolved]
+    MonitorAlert:
+      type: object
+      required: [id, rule_id, rule_name, kind, key, state, value, text, fired_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        rule_id:
+          type: string
+          format: uuid
+        rule_name:
+          type: string
+        kind:
+          $ref: "#/components/schemas/MonitorAlertRuleKind"
+        key:
+          type: string
+          description: What the alert is about within its rule; empty for a rule's whole subject, a route pattern for `silent`, a check id for check rules.
+        state:
+          $ref: "#/components/schemas/MonitorAlertState"
+        property_id:
+          type: string
+          format: uuid
+        route:
+          type: string
+        service:
+          type: string
+        check_id:
+          type: string
+          format: uuid
+        value:
+          type: number
+          format: double
+          description: The value when it fired; requests of the 15 minutes for `spike` and `drop`, days left for `certificate`, 1 for a check that is down.
+        threshold:
+          type: number
+          format: double
+        baseline:
+          type: number
+          format: double
+          description: "`spike` and `drop`: the average it was compared with; `silent`: requests a minute over the day before."
+        resolved_value:
+          type: number
+          format: double
+        window_minutes:
+          type: integer
+        text:
+          type: string
+          description: What was found, in English, as on the annotation.
+        fired_at:
+          type: string
+          format: date-time
+          description: The end of the window that fired it.
+        resolved_at:
+          type: string
+          format: date-time
+        annotation_id:
+          type: string
+          format: uuid
+    MonitorAlertList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/MonitorAlert"
+    MonitorCheckRef:
+      type: object
+      required: [id, name, url]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        url:
+          type: string
+    MonitorAlertEventData:
+      type: object
+      required: [alert]
+      properties:
+        alert:
+          $ref: "#/components/schemas/MonitorAlert"
+        property:
+          $ref: "#/components/schemas/AnalyticsPropertyRef"
+        check:
+          $ref: "#/components/schemas/MonitorCheckRef"
+    MonitorAlertEvent:
+      type: object
+      description: |
+        `monitor.alert`: an alert fired (`alert.state: firing`) or resolved (`resolved`); each
+        happens once per alert. Delivered to callers who hold `analytics:read` and can see the
+        rule: `inbox_id` is the linked inbox of the alert's property; alerts on checks without a
+        property reach every member.
+      required: [id, type, workspace_id, created_at, data]
+      properties:
+        id:
+          type: integer
+          format: int64
+        type:
+          type: string
+          enum: [monitor.alert]
+        workspace_id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          $ref: "#/components/schemas/MonitorAlertEventData"
+    WebhookMonitorAlertPayload:
+      allOf:
+        - $ref: "#/components/schemas/WebhookPayloadBase"
+        - type: object
+          required: [data]
+          properties:
+            data:
+              $ref: "#/components/schemas/MonitorAlertEventData"
     AnalyticsRangeProblem:
       allOf:
         - $ref: "#/components/schemas/Problem"

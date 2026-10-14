@@ -1,0 +1,25 @@
+{{.Property}}: your {{if .Monthly}}monthly{{else}}weekly{{end}} API report
+
+{{.Property}}, {{if .Monthly}}Monthly{{else}}Weekly{{end}} report, {{.From}} to {{.To}}{{if or .Requests.Change .P95.Change}} (changes against the {{if .Monthly}}month{{else}}week{{end}} before){{end}}
+
+Requests: {{.Requests.Value}}{{with .Requests.Change}} ({{.}}){{end}}
+Error rate: {{.ErrorRate.Value}}{{with .ErrorRate.Change}} ({{.}}){{end}}
+Client error rate: {{.ClientErrorRate.Value}}{{with .ClientErrorRate.Change}} ({{.}}){{end}}
+p95: {{.P95.Value}}{{with .P95.Change}} ({{.}}){{end}}
+{{if .Slowest}}
+Slowest routes:
+{{range .Slowest}}  {{.Name}}: {{.Value}}{{with .Change}} ({{.}}){{end}}
+{{end}}{{end}}{{if .Failing}}
+Most failing routes:
+{{range .Failing}}  {{.Name}}: {{.Value}}{{with .Change}} ({{.}}){{end}}
+{{end}}{{end}}{{if .Checks}}
+Uptime checks:
+{{range .Checks}}  {{.Name}}: {{.Value}}{{with .Change}} ({{.}}){{end}}
+{{end}}{{end}}
+Alerts: {{if .Alerts}}{{.AlertCount}} alerts fired in the period.
+{{range .Alerts}}  {{.Name}}: {{.Value}}
+{{end}}{{else}}No alerts fired in the period.
+{{end}}
+Open Analytics: {{.URL}}
+
+You get this report because you chose it for {{.Property}}. Change or stop it: {{.SettingsURL}}

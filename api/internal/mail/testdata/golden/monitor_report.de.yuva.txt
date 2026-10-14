@@ -1,0 +1,24 @@
+Shop API: Ihr wöchentlicher API-Bericht
+
+Shop API, Wöchentlicher Bericht, 2026-10-05 bis 2026-10-11 (Veränderungen gegenüber der Woche davor)
+
+Anfragen: 1,204,330 (+8%)
+Fehlerquote: 0.4% (−20%)
+Quote der Client-Fehler: 3.1%
+p95: 182 ms (+5%)
+
+Langsamste Routen:
+  /exports/{id}: 2,410 ms
+
+Routen mit den meisten Fehlern:
+  /orders/{id}: 412 · 1.9%
+
+Verfügbarkeitsprüfungen:
+  Health: 99.9%
+
+Warnungen: Im Zeitraum wurden 1 Warnungen ausgelöst.
+  5xx rate above 5%: 2026-10-08 14:05
+
+Analytics öffnen: https://yuva.example.com/analytics/1
+
+Sie erhalten diesen Bericht, weil Sie ihn für Shop API gewählt haben. Ändern oder abbestellen: https://yuva.example.com/analytics/1/settings

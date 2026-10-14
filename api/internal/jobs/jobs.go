@@ -63,9 +63,19 @@ const (
 	AnalyticsReportsInterval    = time.Hour
 )
 
-// New starts no migration workers when migrationWorkers is 0, and no analytics workers or analytics
-// periodic jobs when analyticsWorkers is 0.
-func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorkers, migrationWorkers, analyticsWorkers int, register ...func(*river.Workers)) (*river.Client[pgx.Tx], error) {
+// MonitoringQueue holds uptime checks and the monitoring alerts, so slow endpoints never delay
+// rollups or mail.
+const MonitoringQueue = "monitoring"
+
+const (
+	MonitorChecksDueInterval = 10 * time.Second
+	MonitorAlertsInterval    = time.Minute
+)
+
+// New starts no migration workers when migrationWorkers is 0, no analytics workers or analytics
+// periodic jobs when analyticsWorkers is 0, and no monitoring workers or their periodic jobs when
+// monitorWorkers is 0.
+func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorkers, migrationWorkers, analyticsWorkers, monitorWorkers int, register ...func(*river.Workers)) (*river.Client[pgx.Tx], error) {
 	if broadcastWorkers < 1 {
 		broadcastWorkers = 2
 	}
@@ -75,6 +85,9 @@ func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorker
 	}
 	if analyticsWorkers > 0 {
 		queues[AnalyticsQueue] = river.QueueConfig{MaxWorkers: analyticsWorkers}
+	}
+	if monitorWorkers > 0 {
+		queues[MonitoringQueue] = river.QueueConfig{MaxWorkers: monitorWorkers}
 	}
 	workers := river.NewWorkers()
 	river.AddWorker(workers, &EventCleanupWorker{Queries: q, Now: time.Now})
@@ -125,6 +138,17 @@ func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorker
 			river.NewPeriodicJob(river.PeriodicInterval(AnalyticsReportsInterval), func() (river.JobArgs, *river.InsertOpts) {
 				return AnalyticsReportsArgs{}, onAnalytics
 			}, &river.PeriodicJobOpts{ID: "analytics_reports", RunOnStart: true}),
+		)
+	}
+	if monitorWorkers > 0 {
+		onMonitoring := &river.InsertOpts{Queue: MonitoringQueue}
+		periodic = append(periodic,
+			river.NewPeriodicJob(river.PeriodicInterval(MonitorChecksDueInterval), func() (river.JobArgs, *river.InsertOpts) {
+				return MonitorChecksDueArgs{}, onMonitoring
+			}, &river.PeriodicJobOpts{ID: "monitor_checks_due", RunOnStart: true}),
+			river.NewPeriodicJob(river.PeriodicInterval(MonitorAlertsInterval), func() (river.JobArgs, *river.InsertOpts) {
+				return MonitorAlertsArgs{}, onMonitoring
+			}, &river.PeriodicJobOpts{ID: "monitor_alerts"}),
 		)
 	}
 	return river.NewClient(riverpgxv5.New(pool), &river.Config{
@@ -247,3 +271,15 @@ func (AnalyticsAlertsArgs) Kind() string { return "analytics_alerts" }
 type AnalyticsReportsArgs struct{}
 
 func (AnalyticsReportsArgs) Kind() string { return "analytics_reports" }
+
+// MonitorChecksDueArgs is worked by the api package: it queues the uptime checks that are due and
+// judges the runs of the minutes that closed.
+type MonitorChecksDueArgs struct{}
+
+func (MonitorChecksDueArgs) Kind() string { return "monitor_checks_due" }
+
+// MonitorAlertsArgs is worked by the api package: it applies the monitoring alert rules to the
+// minutes that closed.
+type MonitorAlertsArgs struct{}
+
+func (MonitorAlertsArgs) Kind() string { return "monitor_alerts" }

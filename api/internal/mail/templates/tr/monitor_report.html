@@ -1,0 +1,36 @@
+{{template "heading" (print .Property)}}
+<p class="y-muted" style="margin:0 0 16px 0;font-size:13px;color:#71717a;">{{if .Monthly}}Aylık{{else}}Haftalık{{end}} rapor, {{.From}} – {{.To}}{{if or .Requests.Change .P95.Change}}; değişimler bir önceki {{if .Monthly}}aya{{else}}haftaya{{end}} göre{{end}}</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 20px 0;">
+<tr><td class="y-text" style="padding:6px 0;border-bottom:1px solid #e4e4e7;">İstekler</td><td class="y-text" align="right" style="padding:6px 0;border-bottom:1px solid #e4e4e7;"><strong>{{.Requests.Value}}</strong>{{with .Requests.Change}} <span class="y-muted" style="color:#71717a;">{{.}}</span>{{end}}</td></tr>
+<tr><td class="y-text" style="padding:6px 0;border-bottom:1px solid #e4e4e7;">Hata oranı</td><td class="y-text" align="right" style="padding:6px 0;border-bottom:1px solid #e4e4e7;"><strong>{{.ErrorRate.Value}}</strong>{{with .ErrorRate.Change}} <span class="y-muted" style="color:#71717a;">{{.}}</span>{{end}}</td></tr>
+<tr><td class="y-text" style="padding:6px 0;border-bottom:1px solid #e4e4e7;">İstemci hatası oranı</td><td class="y-text" align="right" style="padding:6px 0;border-bottom:1px solid #e4e4e7;"><strong>{{.ClientErrorRate.Value}}</strong>{{with .ClientErrorRate.Change}} <span class="y-muted" style="color:#71717a;">{{.}}</span>{{end}}</td></tr>
+<tr><td class="y-text" style="padding:6px 0;border-bottom:1px solid #e4e4e7;">p95</td><td class="y-text" align="right" style="padding:6px 0;border-bottom:1px solid #e4e4e7;"><strong>{{.P95.Value}}</strong>{{with .P95.Change}} <span class="y-muted" style="color:#71717a;">{{.}}</span>{{end}}</td></tr>
+</table>
+{{- if .Slowest}}
+<p style="margin:0 0 4px 0;font-weight:600;">En yavaş rotalar</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 20px 0;">
+{{range .Slowest}}{{template "monitor_report.row" .}}{{end}}
+</table>
+{{- end}}
+{{- if .Failing}}
+<p style="margin:0 0 4px 0;font-weight:600;">En çok hata veren rotalar</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 20px 0;">
+{{range .Failing}}{{template "monitor_report.row" .}}{{end}}
+</table>
+{{- end}}
+{{- if .Checks}}
+<p style="margin:0 0 4px 0;font-weight:600;">Çalışma kontrolleri</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 20px 0;">
+{{range .Checks}}{{template "monitor_report.row" .}}{{end}}
+</table>
+{{- end}}
+<p style="margin:0 0 4px 0;font-weight:600;">Uyarılar</p>
+<p style="margin:0 0 16px 0;">{{if .Alerts}}Bu dönemde {{.AlertCount}} uyarı tetiklendi.{{else}}Bu dönemde hiç uyarı tetiklenmedi.{{end}}</p>
+{{- if .Alerts}}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 20px 0;">
+{{range .Alerts}}{{template "monitor_report.row" .}}{{end}}
+</table>
+{{- end}}
+{{template "button" (button .URL "Analitiği aç")}}
+{{define "monitor_report.footer"}}Bu raporu {{.Property}} için seçtiğiniz için alıyorsunuz. <a href="{{.SettingsURL}}" target="_blank" style="color:#71717a;text-decoration:underline;">Değiştirin veya durdurun</a>{{end}}
+{{define "monitor_report.row"}}<tr><td class="y-text" dir="auto" style="padding:4px 12px 4px 0;border-bottom:1px solid #e4e4e7;word-break:break-all;">{{.Name}}</td><td class="y-text" align="right" style="padding:4px 0;border-bottom:1px solid #e4e4e7;white-space:nowrap;">{{.Value}}{{with .Change}} <span class="y-muted" style="color:#71717a;">{{.}}</span>{{end}}</td></tr>{{end}}

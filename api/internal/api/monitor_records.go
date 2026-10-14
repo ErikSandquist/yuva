@@ -5,6 +5,7 @@ import (
 	"context"
 	"errors"
 	"log/slog"
+	"net"
 	"net/http"
 	"net/netip"
 	"strings"
@@ -16,6 +17,7 @@ import (
 	"github.com/productdevbook/yuva/api/internal/monitor"
 	"github.com/productdevbook/yuva/api/internal/oas"
 	"github.com/productdevbook/yuva/api/internal/store"
+	"github.com/productdevbook/yuva/api/internal/webhook"
 )
 
 const (
@@ -26,6 +28,9 @@ const (
 	defaultMonitorBufferKeys       = 200_000
 	defaultMonitorMinuteDays       = 8
 	monitorBusyRetry               = 10
+	defaultMonitorChecks           = 500
+	defaultMonitorMinInterval      = 30 * time.Second
+	defaultMonitorCheckDays        = 30
 )
 
 var (
@@ -43,6 +48,15 @@ type MonitorSettings struct {
 	RecordsPerMinute int
 	BufferKeys       int
 	MinuteDays       int
+	// Checks caps a workspace's uptime checks, MinInterval is their shortest interval and CheckDays
+	// how long their runs are kept; AllowPrivate lets them call private and loopback addresses.
+	Checks       int
+	MinInterval  time.Duration
+	CheckDays    int
+	AllowPrivate bool
+	// Resolver and Connect replace the uptime runner's name lookups and connections; for tests.
+	Resolver webhook.Resolver
+	Connect  func(ctx context.Context, network, address string) (net.Conn, error)
 }
 
 func monitorSettings(m MonitorSettings) MonitorSettings {
@@ -55,6 +69,15 @@ func monitorSettings(m MonitorSettings) MonitorSettings {
 	if m.MinuteDays <= 0 {
 		m.MinuteDays = defaultMonitorMinuteDays
 	}
+	if m.Checks <= 0 {
+		m.Checks = defaultMonitorChecks
+	}
+	if m.MinInterval <= 0 {
+		m.MinInterval = defaultMonitorMinInterval
+	}
+	if m.CheckDays <= 0 {
+		m.CheckDays = defaultMonitorCheckDays
+	}
 	return m
 }
 
@@ -64,14 +87,22 @@ type monitorState struct {
 	agg      *monitor.Aggregator
 	usage    *usageCache
 	releases releaseCache
+	prober   *monitor.Prober
+	resolver webhook.Resolver
+	parts    sync.Map
 }
 
 func (s *Server) newMonitor(d Deps) *monitorState {
 	set := monitorSettings(d.Analytics.Monitor)
 	st := &monitor.PGStore{Pool: d.Store.Pool}
+	resolver := set.Resolver
+	if resolver == nil {
+		resolver = net.DefaultResolver
+	}
 	return &monitorState{
-		settings: set, store: st, usage: &usageCache{m: map[uuid.UUID]*usageEntry{}},
-		agg: &monitor.Aggregator{Store: st, Log: s.log, Now: s.now, MaxKeys: set.BufferKeys, AfterFlush: s.afterMonitorFlush},
+		settings: set, store: st, usage: &usageCache{m: map[uuid.UUID]*usageEntry{}}, resolver: resolver,
+		prober: monitor.NewProber(set.AllowPrivate, resolver, set.Connect),
+		agg:    &monitor.Aggregator{Store: st, Log: s.log, Now: s.now, MaxKeys: set.BufferKeys, AfterFlush: s.afterMonitorFlush},
 	}
 }
 

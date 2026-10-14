@@ -1,0 +1,7 @@
+Alert: 5xx rate above 5%
+
+The error rate of Shop API (/orders/{id}) was 7.4% over the last 5 minutes, past 5.0%.
+
+Open: https://yuva.example.com/analytics/1/alerts
+
+You get this e-mail because you are a recipient of the rule 5xx rate above 5%. Change the rule: https://yuva.example.com/analytics/1/alerts

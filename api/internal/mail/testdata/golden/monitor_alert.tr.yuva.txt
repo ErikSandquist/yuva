@@ -1,0 +1,7 @@
+Uyarı: 5xx rate above 5%
+
+Shop API (/orders/{id}) hata oranı son 5 dakikada 7.4% oldu ve 5.0% sınırını aştı.
+
+Aç: https://yuva.example.com/analytics/1/alerts
+
+Bu e-postayı 5xx rate above 5% kuralının alıcılarından biri olduğunuz için alıyorsunuz. Kuralı değiştirin: https://yuva.example.com/analytics/1/alerts

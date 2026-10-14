@@ -1,0 +1,25 @@
+{{.Property}}: {{if .Monthly}}aylık{{else}}haftalık{{end}} API raporunuz
+
+{{.Property}}, {{if .Monthly}}Aylık{{else}}Haftalık{{end}} rapor, {{.From}} – {{.To}}{{if or .Requests.Change .P95.Change}} (değişimler bir önceki {{if .Monthly}}aya{{else}}haftaya{{end}} göre){{end}}
+
+İstekler: {{.Requests.Value}}{{with .Requests.Change}} ({{.}}){{end}}
+Hata oranı: {{.ErrorRate.Value}}{{with .ErrorRate.Change}} ({{.}}){{end}}
+İstemci hatası oranı: {{.ClientErrorRate.Value}}{{with .ClientErrorRate.Change}} ({{.}}){{end}}
+p95: {{.P95.Value}}{{with .P95.Change}} ({{.}}){{end}}
+{{if .Slowest}}
+En yavaş rotalar:
+{{range .Slowest}}  {{.Name}}: {{.Value}}{{with .Change}} ({{.}}){{end}}
+{{end}}{{end}}{{if .Failing}}
+En çok hata veren rotalar:
+{{range .Failing}}  {{.Name}}: {{.Value}}{{with .Change}} ({{.}}){{end}}
+{{end}}{{end}}{{if .Checks}}
+Çalışma kontrolleri:
+{{range .Checks}}  {{.Name}}: {{.Value}}{{with .Change}} ({{.}}){{end}}
+{{end}}{{end}}
+Uyarılar: {{if .Alerts}}Bu dönemde {{.AlertCount}} uyarı tetiklendi.
+{{range .Alerts}}  {{.Name}}: {{.Value}}
+{{end}}{{else}}Bu dönemde hiç uyarı tetiklenmedi.
+{{end}}
+Analitiği aç: {{.URL}}
+
+Bu raporu {{.Property}} için seçtiğiniz için alıyorsunuz. Değiştirin veya durdurun: {{.SettingsURL}}

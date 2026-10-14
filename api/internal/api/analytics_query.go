@@ -334,6 +334,9 @@ func (s *Server) QueryAnalytics(ctx context.Context, req oas.QueryAnalyticsReque
 	if err != nil {
 		return nil, err
 	}
+	if req.Body.Dataset != nil && *req.Body.Dataset == oas.AnalyticsDatasetUptime {
+		return s.queryPropertyUptime(ctx, prop, *req.Body, req.Params.Format != nil && *req.Params.Format == oas.AnalyticsFormatCSV)
+	}
 	if isAPIProperty(prop) || (req.Body.Dataset != nil && *req.Body.Dataset == oas.AnalyticsDatasetApi) {
 		return s.queryMonitor(ctx, prop, *req.Body, req.Params.Format != nil && *req.Params.Format == oas.AnalyticsFormatCSV)
 	}

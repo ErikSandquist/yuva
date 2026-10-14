@@ -101,6 +101,9 @@ func (s *Server) UpdateAnalyticsSubscription(ctx context.Context, req oas.Update
 		}
 		report = string(*b.Report)
 	}
+	if b.Alerts != nil && len(*b.Alerts) > 0 && isAPIProperty(prop) {
+		return nil, errValidation("an API property's alerts are rules (POST /v1/monitoring/alert-rules), not subscription alerts")
+	}
 	if b.Alerts != nil {
 		alerts = []string{}
 		for _, a := range *b.Alerts {
@@ -284,6 +287,12 @@ func (s *Server) panelPropertyURL(ws, propertyID uuid.UUID, view string) string 
 // renderAnalyticsReport builds a report mail of the days from to: plain text and HTML without
 // images, and links to the panel only.
 func (s *Server) renderAnalyticsReport(ctx context.Context, prop store.AnalyticsProperty, freq string, from, to time.Time, locale string) (mail.Message, error) {
+	if isAPIProperty(prop) {
+		if s.analytics.monitor == nil {
+			return mail.Message{}, errNotFound
+		}
+		return s.renderMonitorReport(ctx, prop, freq, from, to, locale)
+	}
 	base := analytics.Query{WorkspaceID: prop.WorkspaceID, PropertyID: prop.ID, Timezone: prop.Timezone, From: from, To: to, RawFrom: s.rawFrom()}
 	n := int(to.Sub(from).Hours()/24) + 1
 	prev := base

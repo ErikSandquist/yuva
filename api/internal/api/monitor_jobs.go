@@ -111,6 +111,18 @@ func (s *Server) maintainMonitor(ctx context.Context, today time.Time) error {
 	if len(dropped) > 0 {
 		s.log.InfoContext(ctx, "monitor partitions dropped", slog.Int("count", len(dropped)))
 	}
+	if err := s.maintainMonitorChecks(ctx, today); err != nil {
+		return err
+	}
+	ids, err := s.st.ListMonitorWorkspaceIDs(ctx)
+	if err != nil {
+		return err
+	}
+	for _, ws := range ids {
+		if err := s.trimMonitorChecks(ctx, ws, today); err != nil {
+			return err
+		}
+	}
 	return nil
 }
 

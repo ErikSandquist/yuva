@@ -1,0 +1,36 @@
+{{template "heading" (print .Property)}}
+<p class="y-muted" style="margin:0 0 16px 0;font-size:13px;color:#71717a;">{{if .Monthly}}Monatlicher{{else}}Wöchentlicher{{end}} Bericht, {{.From}} bis {{.To}}{{if or .Requests.Change .P95.Change}}; Veränderungen gegenüber {{if .Monthly}}dem Monat{{else}}der Woche{{end}} davor{{end}}</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 20px 0;">
+<tr><td class="y-text" style="padding:6px 0;border-bottom:1px solid #e4e4e7;">Anfragen</td><td class="y-text" align="right" style="padding:6px 0;border-bottom:1px solid #e4e4e7;"><strong>{{.Requests.Value}}</strong>{{with .Requests.Change}} <span class="y-muted" style="color:#71717a;">{{.}}</span>{{end}}</td></tr>
+<tr><td class="y-text" style="padding:6px 0;border-bottom:1px solid #e4e4e7;">Fehlerquote</td><td class="y-text" align="right" style="padding:6px 0;border-bottom:1px solid #e4e4e7;"><strong>{{.ErrorRate.Value}}</strong>{{with .ErrorRate.Change}} <span class="y-muted" style="color:#71717a;">{{.}}</span>{{end}}</td></tr>
+<tr><td class="y-text" style="padding:6px 0;border-bottom:1px solid #e4e4e7;">Quote der Client-Fehler</td><td class="y-text" align="right" style="padding:6px 0;border-bottom:1px solid #e4e4e7;"><strong>{{.ClientErrorRate.Value}}</strong>{{with .ClientErrorRate.Change}} <span class="y-muted" style="color:#71717a;">{{.}}</span>{{end}}</td></tr>
+<tr><td class="y-text" style="padding:6px 0;border-bottom:1px solid #e4e4e7;">p95</td><td class="y-text" align="right" style="padding:6px 0;border-bottom:1px solid #e4e4e7;"><strong>{{.P95.Value}}</strong>{{with .P95.Change}} <span class="y-muted" style="color:#71717a;">{{.}}</span>{{end}}</td></tr>
+</table>
+{{- if .Slowest}}
+<p style="margin:0 0 4px 0;font-weight:600;">Langsamste Routen</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 20px 0;">
+{{range .Slowest}}{{template "monitor_report.row" .}}{{end}}
+</table>
+{{- end}}
+{{- if .Failing}}
+<p style="margin:0 0 4px 0;font-weight:600;">Routen mit den meisten Fehlern</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 20px 0;">
+{{range .Failing}}{{template "monitor_report.row" .}}{{end}}
+</table>
+{{- end}}
+{{- if .Checks}}
+<p style="margin:0 0 4px 0;font-weight:600;">Verfügbarkeitsprüfungen</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 20px 0;">
+{{range .Checks}}{{template "monitor_report.row" .}}{{end}}
+</table>
+{{- end}}
+<p style="margin:0 0 4px 0;font-weight:600;">Warnungen</p>
+<p style="margin:0 0 16px 0;">{{if .Alerts}}Im Zeitraum wurden {{.AlertCount}} Warnungen ausgelöst.{{else}}Im Zeitraum wurde keine Warnung ausgelöst.{{end}}</p>
+{{- if .Alerts}}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 20px 0;">
+{{range .Alerts}}{{template "monitor_report.row" .}}{{end}}
+</table>
+{{- end}}
+{{template "button" (button .URL "Analytics öffnen")}}
+{{define "monitor_report.footer"}}Sie erhalten diesen Bericht, weil Sie ihn für {{.Property}} gewählt haben. <a href="{{.SettingsURL}}" target="_blank" style="color:#71717a;text-decoration:underline;">Ändern oder abbestellen</a>{{end}}
+{{define "monitor_report.row"}}<tr><td class="y-text" dir="auto" style="padding:4px 12px 4px 0;border-bottom:1px solid #e4e4e7;word-break:break-all;">{{.Name}}</td><td class="y-text" align="right" style="padding:4px 0;border-bottom:1px solid #e4e4e7;white-space:nowrap;">{{.Value}}{{with .Change}} <span class="y-muted" style="color:#71717a;">{{.}}</span>{{end}}</td></tr>{{end}}

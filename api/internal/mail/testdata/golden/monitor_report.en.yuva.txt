@@ -1,0 +1,24 @@
+Shop API: your weekly API report
+
+Shop API, Weekly report, 2026-10-05 to 2026-10-11 (changes against the week before)
+
+Requests: 1,204,330 (+8%)
+Error rate: 0.4% (−20%)
+Client error rate: 3.1%
+p95: 182 ms (+5%)
+
+Slowest routes:
+  /exports/{id}: 2,410 ms
+
+Most failing routes:
+  /orders/{id}: 412 · 1.9%
+
+Uptime checks:
+  Health: 99.9%
+
+Alerts: 1 alerts fired in the period.
+  5xx rate above 5%: 2026-10-08 14:05
+
+Open Analytics: https://yuva.example.com/analytics/1
+
+You get this report because you chose it for Shop API. Change or stop it: https://yuva.example.com/analytics/1/settings

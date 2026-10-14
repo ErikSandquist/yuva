@@ -1356,6 +1356,116 @@ type MigrationUploadPart struct {
 	CreatedAt   time.Time
 }
 
+type MonitorAlert struct {
+	ID            uuid.UUID
+	WorkspaceID   uuid.UUID
+	RuleID        uuid.UUID
+	Key           string
+	Kind          string
+	PropertyID    *uuid.UUID
+	CheckID       *uuid.UUID
+	Value         float64
+	Threshold     *float64
+	Baseline      *float64
+	ResolvedValue *float64
+	WindowMinutes int32
+	Text          string
+	FiredAt       time.Time
+	ResolvedAt    *time.Time
+	AnnotationID  *uuid.UUID
+	CreatedAt     time.Time
+}
+
+type MonitorAlertRule struct {
+	ID            uuid.UUID
+	WorkspaceID   uuid.UUID
+	Name          string
+	Kind          string
+	PropertyID    *uuid.UUID
+	Route         *string
+	Service       *string
+	CheckID       *uuid.UUID
+	Threshold     *float64
+	WindowMinutes int32
+	MinRequests   int32
+	Recipients    []uuid.UUID
+	Enabled       bool
+	CreatedBy     *uuid.UUID
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
+}
+
+type MonitorCheck struct {
+	ID                 uuid.UUID
+	WorkspaceID        uuid.UUID
+	PropertyID         *uuid.UUID
+	Name               string
+	Url                string
+	Host               string
+	Method             string
+	Headers            []byte
+	ExpectedStatuses   []int32
+	Keyword            *string
+	KeywordAbsent      bool
+	TimeoutSeconds     int32
+	IntervalSeconds    int32
+	FailuresBeforeDown int32
+	CertWarningDays    int32
+	MaxRedirects       int32
+	Service            *string
+	Paused             bool
+	State              string
+	StateSince         *time.Time
+	FailuresInRow      int32
+	NextRunAt          time.Time
+	LastRunAt          *time.Time
+	CertExpiresAt      *time.Time
+	FoldedUntil        *time.Time
+	CreatedBy          *uuid.UUID
+	CreatedAt          time.Time
+	UpdatedAt          time.Time
+}
+
+type MonitorCheckDay struct {
+	WorkspaceID      uuid.UUID
+	CheckID          uuid.UUID
+	Day              time.Time
+	Runs             int64
+	Failures         int64
+	Unknown          int64
+	MonitoredSeconds int64
+	DownSeconds      int64
+	Answered         int64
+	TotalSumUs       int64
+	TtfbSumUs        int64
+	Durations        []byte
+	LastAt           *time.Time
+	LastOk           *bool
+	CertAt           *time.Time
+	CertDaysLeft     *int32
+}
+
+type MonitorCheckResult struct {
+	WorkspaceID  uuid.UUID
+	CheckID      uuid.UUID
+	At           time.Time
+	Ok           bool
+	State        *string
+	Status       int32
+	Error        *string
+	Detail       *string
+	Retried      bool
+	Redirects    int32
+	DnsUs        int64
+	ConnectUs    int64
+	TlsUs        int64
+	TtfbUs       int64
+	TotalUs      int64
+	Answered     bool
+	CertDaysLeft *int32
+	Seconds      int32
+}
+
 type MonitorDay struct {
 	WorkspaceID   uuid.UUID
 	PropertyID    uuid.UUID

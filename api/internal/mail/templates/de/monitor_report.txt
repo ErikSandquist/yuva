@@ -1,0 +1,25 @@
+{{.Property}}: Ihr {{if .Monthly}}monatlicher{{else}}wöchentlicher{{end}} API-Bericht
+
+{{.Property}}, {{if .Monthly}}Monatlicher{{else}}Wöchentlicher{{end}} Bericht, {{.From}} bis {{.To}}{{if or .Requests.Change .P95.Change}} (Veränderungen gegenüber {{if .Monthly}}dem Monat{{else}}der Woche{{end}} davor){{end}}
+
+Anfragen: {{.Requests.Value}}{{with .Requests.Change}} ({{.}}){{end}}
+Fehlerquote: {{.ErrorRate.Value}}{{with .ErrorRate.Change}} ({{.}}){{end}}
+Quote der Client-Fehler: {{.ClientErrorRate.Value}}{{with .ClientErrorRate.Change}} ({{.}}){{end}}
+p95: {{.P95.Value}}{{with .P95.Change}} ({{.}}){{end}}
+{{if .Slowest}}
+Langsamste Routen:
+{{range .Slowest}}  {{.Name}}: {{.Value}}{{with .Change}} ({{.}}){{end}}
+{{end}}{{end}}{{if .Failing}}
+Routen mit den meisten Fehlern:
+{{range .Failing}}  {{.Name}}: {{.Value}}{{with .Change}} ({{.}}){{end}}
+{{end}}{{end}}{{if .Checks}}
+Verfügbarkeitsprüfungen:
+{{range .Checks}}  {{.Name}}: {{.Value}}{{with .Change}} ({{.}}){{end}}
+{{end}}{{end}}
+Warnungen: {{if .Alerts}}Im Zeitraum wurden {{.AlertCount}} Warnungen ausgelöst.
+{{range .Alerts}}  {{.Name}}: {{.Value}}
+{{end}}{{else}}Im Zeitraum wurde keine Warnung ausgelöst.
+{{end}}
+Analytics öffnen: {{.URL}}
+
+Sie erhalten diesen Bericht, weil Sie ihn für {{.Property}} gewählt haben. Ändern oder abbestellen: {{.SettingsURL}}

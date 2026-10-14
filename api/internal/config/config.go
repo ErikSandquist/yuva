@@ -139,6 +139,13 @@ type Monitor struct {
 	RecordsPerMinute int
 	BufferKeys       int
 	MinuteDays       int
+	// Checks caps each workspace's uptime checks; MinInterval is their shortest interval and
+	// Workers how many run at once in this process (0 runs none here). CheckDays keeps their runs.
+	Checks       int
+	MinInterval  time.Duration
+	Workers      int
+	AllowPrivate bool
+	CheckDays    int
 }
 
 type VAPID struct {
@@ -440,6 +447,25 @@ func (c *Config) loadMonitor() error {
 	}
 	if m.MinuteDays, err = strconv.Atoi(env("YUVA_MONITOR_MINUTE_DAYS", "8")); err != nil || m.MinuteDays < 2 || m.MinuteDays > 31 {
 		return errors.New("YUVA_MONITOR_MINUTE_DAYS must be 2 to 31 days")
+	}
+	checks, interval := "500", "30s"
+	if c.SignupOpen {
+		checks, interval = "50", "60s"
+	}
+	if m.Checks, err = strconv.Atoi(env("YUVA_MONITOR_CHECKS", checks)); err != nil || m.Checks < 1 {
+		return errors.New("YUVA_MONITOR_CHECKS must be a positive number of checks")
+	}
+	if m.MinInterval, err = time.ParseDuration(env("YUVA_MONITOR_MIN_INTERVAL", interval)); err != nil || m.MinInterval < 30*time.Second || m.MinInterval > 24*time.Hour {
+		return errors.New("YUVA_MONITOR_MIN_INTERVAL must be a duration from 30s to 24h, such as 60s")
+	}
+	if m.Workers, err = strconv.Atoi(env("YUVA_MONITOR_WORKERS", "8")); err != nil || m.Workers < 0 {
+		return errors.New("YUVA_MONITOR_WORKERS must be a number of workers, 0 for none in this process")
+	}
+	if m.AllowPrivate, err = boolEnv("YUVA_MONITOR_ALLOW_PRIVATE", false); err != nil {
+		return err
+	}
+	if m.CheckDays, err = strconv.Atoi(env("YUVA_MONITOR_CHECK_DAYS", "30")); err != nil || m.CheckDays < 2 || m.CheckDays > 90 {
+		return errors.New("YUVA_MONITOR_CHECK_DAYS must be 2 to 90 days")
 	}
 	return nil
 }

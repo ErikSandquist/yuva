@@ -267,6 +267,9 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 	if cfg.WebhookAllowPrivate {
 		log.Warn("YUVA_WEBHOOK_ALLOW_PRIVATE is set; webhooks may reach private and loopback addresses")
 	}
+	if cfg.Analytics.Monitor.AllowPrivate {
+		log.Warn("YUVA_MONITOR_ALLOW_PRIVATE is set; uptime checks may call private and loopback addresses")
+	}
 	if cfg.MigrationAllowPrivate {
 		log.Warn("YUVA_MIGRATION_ALLOW_PRIVATE is set; migrations may connect to mail servers on private and loopback addresses")
 	}
@@ -288,7 +291,11 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 	if cfg.Analytics.On {
 		analyticsWorkers = cfg.Analytics.Workers
 	}
-	queue, err := jobs.New(st.Pool, st.Queries, log, cfg.BroadcastWorkers, cfg.MigrationWorkers, analyticsWorkers, srv.AddWorkers)
+	monitorWorkers := 0
+	if cfg.Analytics.On && cfg.Analytics.Monitor.On {
+		monitorWorkers = cfg.Analytics.Monitor.Workers
+	}
+	queue, err := jobs.New(st.Pool, st.Queries, log, cfg.BroadcastWorkers, cfg.MigrationWorkers, analyticsWorkers, monitorWorkers, srv.AddWorkers)
 	if err != nil {
 		return fmt.Errorf("job queue: %w", err)
 	}
@@ -336,7 +343,8 @@ func analyticsSettings(cfg config.Config) api.AnalyticsSettings {
 		PropertyEventsPerMinute: a.PropertyEventsPerMinute, PropertiesPerWorkspace: a.PropertiesPerWorkspace,
 		RawDays: a.RawDays, RollupTop: a.RollupTop, GeoIP: a.GeoIP, GeoIPDir: a.GeoIPDir, GeoIPFile: a.GeoIPFile,
 		Monitor: api.MonitorSettings{Off: !a.Monitor.On, MonthlyRequests: a.Monitor.MonthlyRequests, RecordsPerMinute: a.Monitor.RecordsPerMinute,
-			BufferKeys: a.Monitor.BufferKeys, MinuteDays: a.Monitor.MinuteDays},
+			BufferKeys: a.Monitor.BufferKeys, MinuteDays: a.Monitor.MinuteDays, Checks: a.Monitor.Checks, MinInterval: a.Monitor.MinInterval,
+			AllowPrivate: a.Monitor.AllowPrivate, CheckDays: a.Monitor.CheckDays},
 	}
 }
 

@@ -129,7 +129,9 @@ type Resolver interface {
 type Client struct {
 	AllowPrivate bool
 	Resolver     Resolver
-	http         *http.Client
+	// Connect opens the connection to an address that passed the checks; nil is a net.Dialer.
+	Connect func(ctx context.Context, network, address string) (net.Conn, error)
+	http    *http.Client
 }
 
 func NewClient(allowPrivate bool, r Resolver) *Client {
@@ -141,7 +143,7 @@ func NewClient(allowPrivate bool, r Resolver) *Client {
 		Timeout: Timeout,
 		Transport: &http.Transport{
 			Proxy:                  nil,
-			DialContext:            c.dial,
+			DialContext:            c.DialContext,
 			DisableKeepAlives:      true,
 			TLSHandshakeTimeout:    Timeout,
 			ResponseHeaderTimeout:  Timeout,
@@ -155,7 +157,10 @@ func NewClient(allowPrivate bool, r Resolver) *Client {
 // Do sends a request through the same address checks, without redirects.
 func (c *Client) Do(req *http.Request) (*http.Response, error) { return c.http.Do(req) }
 
-func (c *Client) dial(ctx context.Context, network, addr string) (net.Conn, error) {
+// DialContext resolves addr's host once, refuses it when any address is blocked (unless
+// AllowPrivate) or never allowed, and connects to the resolved addresses only, so a name cannot
+// resolve to another address between the check and the connection.
+func (c *Client) DialContext(ctx context.Context, network, addr string) (net.Conn, error) {
 	host, port, err := net.SplitHostPort(addr)
 	if err != nil {
 		return nil, err
@@ -178,10 +183,14 @@ func (c *Client) dial(ctx context.Context, network, addr string) (net.Conn, erro
 			return nil, fmt.Errorf("%w %s for %s", ErrRefusedAddress, ip.Unmap(), host)
 		}
 	}
-	d := net.Dialer{Timeout: Timeout}
+	connect := c.Connect
+	if connect == nil {
+		d := net.Dialer{Timeout: Timeout}
+		connect = d.DialContext
+	}
 	var last error
 	for _, ip := range ips {
-		conn, err := d.DialContext(ctx, network, netip.AddrPortFrom(ip.Unmap(), uint16(p)).String())
+		conn, err := connect(ctx, network, netip.AddrPortFrom(ip.Unmap(), uint16(p)).String())
 		if err == nil {
 			return conn, nil
 		}

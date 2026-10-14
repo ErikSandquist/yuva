@@ -186,7 +186,8 @@ func (s *Server) purgeWorkspaceAnalytics(ctx context.Context, ws uuid.UUID, dead
 			return false, err
 		}
 	}
-	return true, nil
+	_, err = s.st.DeleteWorkspaceMonitorCheckResults(ctx, ws)
+	return err == nil, err
 }
 
 const (
@@ -372,6 +373,7 @@ func (s *Server) addAnalyticsWorkers(workers *river.Workers) {
 	river.AddWorker(workers, &analyticsAlertsWorker{s: s})
 	river.AddWorker(workers, &analyticsReportsWorker{s: s})
 	river.AddWorker(workers, &monitorRollupWorker{s: s})
+	s.addMonitorWorkers(workers)
 }
 
 // rawFrom is the oldest day whose raw rows the partitions job keeps.

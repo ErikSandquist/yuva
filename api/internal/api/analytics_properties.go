@@ -526,6 +526,10 @@ func (s *Server) CreateAnalyticsProperty(ctx context.Context, req oas.CreateAnal
 			TrackedProps: nonNil(f.trackedProps), RetentionMonths: f.retention, VisitorKey: s.secrets.Seal(analytics.NewSalt(), analyticsSecretContext(p.workspaceID, id)),
 			CreatedBy: createdBy, Now: s.now(),
 		})
+		if err != nil || f.kind != string(oas.AnalyticsKindApi) {
+			return err
+		}
+		_, err = q.CreateMonitorAlertRule(ctx, defaultAPIRule(p.workspaceID, out.ID, createdBy, s.now()))
 		return err
 	})
 	if err != nil {

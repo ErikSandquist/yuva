@@ -196,6 +196,8 @@ func monitorQueryError(err error) error {
 	switch {
 	case errors.Is(err, monitor.ErrMinuteRange):
 		return problem(http.StatusUnprocessableEntity, "range_too_large", err.Error())
+	case errors.Is(err, monitor.ErrRunsRange):
+		return problem(http.StatusUnprocessableEntity, "range_too_large", strings.TrimPrefix(err.Error(), monitor.ErrRunsRange.Error()+": "))
 	case errors.Is(err, monitor.ErrDimensionCombination):
 		return problem(http.StatusUnprocessableEntity, "dimension_combination", strings.TrimPrefix(err.Error(), monitor.ErrDimensionCombination.Error()+": "))
 	}
