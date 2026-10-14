@@ -614,6 +614,10 @@ msgstr "{share} helpful"
 msgid "{size} · pick another file"
 msgstr "{size} · pick another file"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "{subject} is down"
+msgstr "{subject} is down"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "{subscribed} subscribed"
@@ -1254,6 +1258,10 @@ msgstr "Alerts when the certificate expires within this many days."
 msgid "All"
 msgstr "All"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "all checks"
+msgstr "all checks"
+
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
 msgstr "All imports"
@@ -1507,6 +1515,10 @@ msgstr "Answer cleared"
 msgid "Answered"
 msgstr "Answered"
 
+#: src/features/monitoring/CheckPage.tsx
+msgid "Answered {status}, which is not one of the expected statuses"
+msgstr "Answered {status}, which is not one of the expected statuses"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Answering"
 msgstr "Answering"
@@ -1538,6 +1550,10 @@ msgstr "Anything using this key stops working at once."
 #: src/features/monitoring/text.ts
 msgid "Apdex"
 msgstr "Apdex"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Apdex below {th} on {subject}"
+msgstr "Apdex below {th} on {subject}"
 
 #: src/features/monitoring/Alerts.tsx
 msgid "Apdex was {v}, below {th}."
@@ -2118,6 +2134,10 @@ msgstr "Cc: {cc}"
 msgid "Certificate expiring"
 msgstr "Certificate expiring"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "Certificate of {subject} expiring"
+msgstr "Certificate of {subject} expiring"
+
 #: src/features/monitoring/CheckForm.tsx
 msgid "Certificate warning, in days"
 msgstr "Certificate warning, in days"
@@ -2335,6 +2355,10 @@ msgstr "clicked a link, roughly"
 #: src/features/monitoring/text.ts
 msgid "Client error rate"
 msgstr "Client error rate"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Client error rate above {th} on {subject}"
+msgstr "Client error rate above {th} on {subject}"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Client identifier"
@@ -3646,6 +3670,10 @@ msgstr "Error or answer"
 #: src/features/monitoring/text.ts
 msgid "Error rate"
 msgstr "Error rate"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Error rate above {th} on {subject}"
+msgstr "Error rate above {th} on {subject}"
 
 #: src/features/settings/webhooks/WebhookDialog.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
@@ -5599,6 +5627,7 @@ msgstr "Moderated"
 msgid "Monday"
 msgstr "Monday"
 
+#: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/monitoring/CheckForm.tsx
@@ -6002,6 +6031,10 @@ msgstr "no answer"
 #: src/features/monitoring/text.ts
 msgid "No answer in time"
 msgstr "No answer in time"
+
+#: src/features/monitoring/CheckPage.tsx
+msgid "No answer within {timeout} seconds"
+msgstr "No answer within {timeout} seconds"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "No API keys yet."
@@ -7148,9 +7181,17 @@ msgstr "Owners and admins see every inbox; members see the inboxes they are give
 msgid "Owners and admins write and send broadcasts. You see the broadcasts of your inboxes, so you know what a reply answers."
 msgstr "Owners and admins write and send broadcasts. You see the broadcasts of your inboxes, so you know what a reply answers."
 
+#: src/features/monitoring/Alerts.tsx
+msgid "p95 above {th} on {subject}"
+msgstr "p95 above {th} on {subject}"
+
 #: src/features/monitoring/text.ts
 msgid "p95 latency"
 msgstr "p95 latency"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "p99 above {th} on {subject}"
+msgstr "p99 above {th} on {subject}"
 
 #: src/features/monitoring/text.ts
 msgid "p99 latency"
@@ -9095,6 +9136,10 @@ msgstr "Signing"
 msgid "Signing secret"
 msgstr "Signing secret"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "Silent routes on {subject}"
+msgstr "Silent routes on {subject}"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Since"
 msgstr "Since"
@@ -10801,9 +10846,17 @@ msgstr "tr, en-GB"
 msgid "Traffic drop"
 msgstr "Traffic drop"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "Traffic drop on {subject}"
+msgstr "Traffic drop on {subject}"
+
 #: src/features/monitoring/text.ts
 msgid "Traffic spike"
 msgstr "Traffic spike"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Traffic spike on {subject}"
+msgstr "Traffic spike on {subject}"
 
 #: src/features/migrations/parts.tsx
 msgid "Trash"

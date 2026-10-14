@@ -3,7 +3,7 @@ import { ArrowDownIcon, ArrowLeftIcon, EyeIcon, EyeOffIcon } from "lucide-react"
 import { useState } from "react"
 import { Link, useParams, useSearchParams } from "react-router"
 
-import { ErrorLine, Notice, Segmented } from "@/components/common"
+import { ErrorLine, Notice, ScrollRow, Segmented } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { formatDateTime } from "@/components/common/text"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -403,9 +403,9 @@ function AllRoutes() {
   return (
     <>
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="-mx-1 max-w-[calc(100%+0.5rem)] overflow-x-auto px-1 py-1">
+        <ScrollRow>
           <SortPicker sort={sort} />
-        </div>
+        </ScrollRow>
         <CsvButton testId="analytics-csv" run={() => downloadCsv(property.id, body, `${property.name}-routes`)} />
       </div>
       {blocked ? (
@@ -613,7 +613,7 @@ export function ApiRoutes() {
     <WhenRequests>
       <section className="flex flex-col gap-3" data-testid="api-routes">
         <ApiControls compare={false} />
-        <div className="-mx-1 max-w-[calc(100%+0.5rem)] overflow-x-auto px-1 py-1">
+        <ScrollRow>
           <Segmented
             value={list}
             onChange={(v) =>
@@ -634,7 +634,7 @@ export function ApiRoutes() {
               testId: `api-routes-list-${v}`,
             }))}
           />
-        </div>
+        </ScrollRow>
         {list === "all" ? <AllRoutes /> : <ChangedRoutes list={list} />}
       </section>
     </WhenRequests>
@@ -674,9 +674,9 @@ export function ApiConsumers() {
           </Trans>
         </p>
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="-mx-1 max-w-[calc(100%+0.5rem)] overflow-x-auto px-1 py-1">
+          <ScrollRow>
             <SortPicker sort={sort} />
-          </div>
+          </ScrollRow>
           {!blocked && (
             <CsvButton
               testId="analytics-csv"

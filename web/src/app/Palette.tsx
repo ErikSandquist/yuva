@@ -99,7 +99,14 @@ function useItems(open: boolean): Item[] {
     go(t`Discussion posts waiting for approval`, "/docs/discussions/queue")
     go(t`Broadcasts`, "/broadcasts", keyLabel(SHORTCUTS.broadcasts))
     if (analytics) go(t`Analytics`, "/analytics", keyLabel(SHORTCUTS.analytics))
-    if (monitoring) go(t`Uptime checks`, "/monitoring", keyLabel(SHORTCUTS.monitoring))
+    if (monitoring)
+      list.push({
+        group: t`Go to`,
+        label: t`Monitoring`,
+        hint: t`Uptime checks`,
+        keys: keyLabel(SHORTCUTS.monitoring),
+        run: () => navigate("/monitoring"),
+      })
     go(t`Mailing lists`, "/broadcasts/lists")
     go(t`E-mail designs`, "/broadcasts/designs")
     go(t`Settings`, "/settings", [mod, ","])

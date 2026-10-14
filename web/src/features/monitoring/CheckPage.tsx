@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Link, useNavigate, useParams } from "react-router"
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 
-import { ErrorBoundary, ErrorLine, Segmented, useConfirm } from "@/components/common"
+import { ErrorBoundary, ErrorLine, ScrollRow, Segmented, useConfirm } from "@/components/common"
 import { Pane, PaneBack } from "@/components/common/Column"
 import { formatDateTime } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
@@ -268,7 +268,26 @@ function CertDays({ days }: { days: number }) {
   )
 }
 
-function Runs({ checkId }: { checkId: string }) {
+function RunError({ r, timeout }: { r: MonitorCheckResult; timeout: number }) {
+  const text = useMonitoringText()
+  const status = r.status
+  switch (r.error) {
+    case "status":
+      return status ? (
+        <Trans>Answered {status}, which is not one of the expected statuses</Trans>
+      ) : (
+        <>{text.error.status}</>
+      )
+    case "timeout":
+      return <Trans>No answer within {timeout} seconds</Trans>
+    case undefined:
+      return <span dir="auto">{r.detail}</span>
+    default:
+      return text.error[r.error] ? <>{text.error[r.error]}</> : <span dir="auto">{r.detail}</span>
+  }
+}
+
+function Runs({ checkId, timeout }: { checkId: string; timeout: number }) {
   const { i18n } = useLingui()
   const text = useMonitoringText()
   const results = useCheckResults(checkId)
@@ -314,7 +333,13 @@ function Runs({ checkId }: { checkId: string }) {
                         <span
                           className={cn(
                             "size-2 rounded-full",
-                            r.ok ? "bg-success" : r.state === "unknown" ? "bg-warning" : "bg-destructive"
+                            r.ok
+                              ? "bg-success"
+                              : r.state === "unknown"
+                                ? "bg-warning"
+                                : r.state === "pending"
+                                  ? "bg-muted-foreground/50"
+                                  : "bg-destructive"
                           )}
                           aria-hidden
                         />
@@ -327,10 +352,9 @@ function Runs({ checkId }: { checkId: string }) {
                         )}
                         {r.cert_days_left !== undefined && <CertDays days={r.cert_days_left} />}
                       </span>
-                      {!r.ok && r.error && (
+                      {!r.ok && (r.error || r.detail) && (
                         <span className="text-small text-destructive">
-                          {text.error[r.error]}
-                          {r.detail && <span className="text-muted-foreground" dir="auto">{` · ${r.detail}`}</span>}
+                          <RunError r={r} timeout={timeout} />
                         </span>
                       )}
                     </span>
@@ -465,29 +489,32 @@ export function CheckView({ check, back }: { check: MonitorCheck; back?: React.R
     <div className="flex flex-col gap-5" data-testid="check-page">
       <header className="flex flex-col gap-1">
         {back}
-        <div className="flex flex-wrap items-start gap-3">
-          <div className="flex min-w-0 flex-1 flex-col">
-            <h1 className="flex min-w-0 items-center gap-2.5 text-page break-words" data-testid="check-name">
-              <StateDot state={check.state} paused={check.paused} className="size-3" />
-              {check.name}
+        <div className="flex flex-wrap items-start gap-3 phone:flex-col">
+          <div className="flex min-w-0 flex-1 flex-col phone:w-full">
+            <h1
+              className="flex min-w-0 items-start gap-2.5 text-page [overflow-wrap:anywhere]"
+              data-testid="check-name"
+            >
+              <StateDot state={check.state} paused={check.paused} className="mt-[0.6em] size-3" />
+              <span className="min-w-0">{check.name}</span>
             </h1>
-            <p className="mt-1 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-body text-muted-foreground">
+            <p className="mt-1 flex min-w-0 flex-wrap items-baseline gap-x-2 text-body text-muted-foreground">
               <span className="font-medium text-foreground" data-testid="check-state">
                 <StateText check={check} />
               </span>
               {since && !check.paused && <span className="tabular-nums">{t`since ${since}`}</span>}
-              <span aria-hidden>·</span>
-              <span className="min-w-0 truncate font-mono text-small" dir="ltr">
-                {check.method} {check.url}
-              </span>
-              <span aria-hidden>·</span>
+            </p>
+            <p className="mt-0.5 min-w-0 font-mono text-small break-all text-muted-foreground" dir="ltr">
+              {check.method} {check.url}
+            </p>
+            <p className="mt-0.5 flex min-w-0 flex-wrap items-baseline gap-x-2 text-small text-faint">
               <span>{t`every ${every}`}</span>
               {property && (
                 <>
                   <span aria-hidden>·</span>
                   <Link
                     to={`/analytics/${property.id}/uptime`}
-                    className="text-brand underline-offset-4 hover:underline"
+                    className="min-w-0 truncate text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
                   >
                     {property.name}
                   </Link>
@@ -533,14 +560,14 @@ export function CheckView({ check, back }: { check: MonitorCheck; back?: React.R
         </div>
         <ErrorLine error={save.error ?? remove.error} />
       </header>
-      <div className="-mx-1 max-w-[calc(100%+0.5rem)] overflow-x-auto px-1 py-1">
+      <ScrollRow>
         <Segmented
           value={span}
           onChange={setSpan}
           label={t`Range`}
           items={(Object.keys(spans) as Span[]).map((s) => ({ value: s, label: spans[s] }))}
         />
-      </div>
+      </ScrollRow>
       <Guarded>
         <Figures filters={filters} span={span} https={https} />
       </Guarded>
@@ -549,7 +576,7 @@ export function CheckView({ check, back }: { check: MonitorCheck; back?: React.R
       </Guarded>
       <div className="grid gap-4 md:grid-cols-[2fr_1fr]">
         <Guarded>
-          <Runs checkId={check.id} />
+          <Runs checkId={check.id} timeout={check.timeout_seconds} />
         </Guarded>
         <Guarded>
           <StateHistory checkId={check.id} />

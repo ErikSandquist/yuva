@@ -614,6 +614,10 @@ msgstr "{share} yararlı"
 msgid "{size} · pick another file"
 msgstr "{size} · başka bir dosya seçin"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "{subject} is down"
+msgstr "{subject} çalışmıyor"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "{subscribed} subscribed"
@@ -1254,6 +1258,10 @@ msgstr "Sertifikanın bitmesine bu kadar gün kaldığında uyarır."
 msgid "All"
 msgstr "Tümü"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "all checks"
+msgstr "tüm denetimler"
+
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
 msgstr "Tüm içe aktarmalar"
@@ -1507,6 +1515,10 @@ msgstr "Kabul edilen yanıt kaldırıldı"
 msgid "Answered"
 msgstr "Yanıtlandı"
 
+#: src/features/monitoring/CheckPage.tsx
+msgid "Answered {status}, which is not one of the expected statuses"
+msgstr "{status} ile yanıt verdi; bu beklenen durum kodlarından biri değil"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Answering"
 msgstr "Yanıtlarken"
@@ -1538,6 +1550,10 @@ msgstr "Bu anahtarı kullanan her şey hemen çalışmayı durdurur."
 #: src/features/monitoring/text.ts
 msgid "Apdex"
 msgstr "Apdex"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Apdex below {th} on {subject}"
+msgstr "{subject} için Apdex {th} altında"
 
 #: src/features/monitoring/Alerts.tsx
 msgid "Apdex was {v}, below {th}."
@@ -2118,6 +2134,10 @@ msgstr "Bilgi: {cc}"
 msgid "Certificate expiring"
 msgstr "Sertifika bitiyor"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "Certificate of {subject} expiring"
+msgstr "{subject} sertifikası bitiyor"
+
 #: src/features/monitoring/CheckForm.tsx
 msgid "Certificate warning, in days"
 msgstr "Sertifika uyarısı, gün"
@@ -2335,6 +2355,10 @@ msgstr "bir bağlantıya tıkladı, yaklaşık"
 #: src/features/monitoring/text.ts
 msgid "Client error rate"
 msgstr "İstemci hatası oranı"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Client error rate above {th} on {subject}"
+msgstr "{subject} için istemci hatası oranı {th} üzerinde"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Client identifier"
@@ -3646,6 +3670,10 @@ msgstr "Hata veya yanıt"
 #: src/features/monitoring/text.ts
 msgid "Error rate"
 msgstr "Hata oranı"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Error rate above {th} on {subject}"
+msgstr "{subject} için hata oranı {th} üzerinde"
 
 #: src/features/settings/webhooks/WebhookDialog.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
@@ -5599,6 +5627,7 @@ msgstr "Denetimli"
 msgid "Monday"
 msgstr "Pazartesi"
 
+#: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/monitoring/CheckForm.tsx
@@ -6002,6 +6031,10 @@ msgstr "yanıt yok"
 #: src/features/monitoring/text.ts
 msgid "No answer in time"
 msgstr "Zamanında yanıt gelmedi"
+
+#: src/features/monitoring/CheckPage.tsx
+msgid "No answer within {timeout} seconds"
+msgstr "{timeout} saniye içinde yanıt gelmedi"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "No API keys yet."
@@ -7148,9 +7181,17 @@ msgstr "Sahipler ve yöneticiler her gelen kutusunu görür; üyeler sadece kend
 msgid "Owners and admins write and send broadcasts. You see the broadcasts of your inboxes, so you know what a reply answers."
 msgstr "Bültenleri sahipler ve yöneticiler yazıp gönderir. Bir yanıtın neye cevap verdiğini bilmeniz için gelen kutularınızın bültenlerini görürsünüz."
 
+#: src/features/monitoring/Alerts.tsx
+msgid "p95 above {th} on {subject}"
+msgstr "{subject} için p95 {th} üzerinde"
+
 #: src/features/monitoring/text.ts
 msgid "p95 latency"
 msgstr "p95 gecikme"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "p99 above {th} on {subject}"
+msgstr "{subject} için p99 {th} üzerinde"
 
 #: src/features/monitoring/text.ts
 msgid "p99 latency"
@@ -9095,6 +9136,10 @@ msgstr "İmzalıyor"
 msgid "Signing secret"
 msgstr "İmzalama anahtarı"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "Silent routes on {subject}"
+msgstr "{subject} için sessiz rotalar"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Since"
 msgstr "Başlangıç"
@@ -10801,9 +10846,17 @@ msgstr "tr, en-GB"
 msgid "Traffic drop"
 msgstr "Trafik düşüşü"
 
+#: src/features/monitoring/Alerts.tsx
+msgid "Traffic drop on {subject}"
+msgstr "{subject} için trafik düşüşü"
+
 #: src/features/monitoring/text.ts
 msgid "Traffic spike"
 msgstr "Trafik sıçraması"
+
+#: src/features/monitoring/Alerts.tsx
+msgid "Traffic spike on {subject}"
+msgstr "{subject} için trafik sıçraması"
 
 #: src/features/migrations/parts.tsx
 msgid "Trash"

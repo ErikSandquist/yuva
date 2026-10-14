@@ -3,7 +3,7 @@ import { ClockIcon, EyeIcon } from "lucide-react"
 import { useState } from "react"
 import { useSearchParams } from "react-router"
 
-import { ErrorLine, Notice, Segmented } from "@/components/common"
+import { ErrorLine, Notice, ScrollRow, Segmented } from "@/components/common"
 import { formatDateTime } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -300,7 +300,7 @@ export function ApiSettingsView() {
   }
   return (
     <div className="flex flex-col gap-5" data-testid="analytics-settings">
-      <div className="-mx-1 max-w-[calc(100%+0.5rem)] overflow-x-auto px-1 py-1">
+      <ScrollRow>
         <Segmented
           value={tab}
           onChange={(v) =>
@@ -317,7 +317,7 @@ export function ApiSettingsView() {
           label={t`Settings`}
           items={tabs.map((v) => ({ value: v, label: names[v], testId: `settings-tab-${v}` }))}
         />
-      </div>
+      </ScrollRow>
       {tab === "general" && <General p={p} />}
       {tab === "routes" && (
         <div className="flex flex-col gap-6">

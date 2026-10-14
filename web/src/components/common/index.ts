@@ -18,6 +18,7 @@ export {
   VisitorAvatar,
 } from "@/components/common/Avatar"
 export { SecretDialog } from "@/components/common/SecretDialog"
+export { ScrollRow } from "@/components/common/ScrollRow"
 export { Segmented } from "@/components/common/Segmented"
 export { TypeToConfirmDialog } from "@/components/common/TypeToConfirmDialog"
 export { TypingDots } from "@/components/common/TypingDots"

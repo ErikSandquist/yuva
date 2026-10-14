@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Switch } from "@/components/ui/switch"
+import { useAnalyticsProperties } from "@/features/analytics/properties"
 import { useApiRoutes } from "@/features/analytics/queries"
 import {
   useAlertRules,
@@ -67,6 +68,71 @@ function useSubject() {
     const service = x.service
     if (service) return t`Service ${service}`
     return t`The whole API`
+  }
+}
+
+const AUTO_NAMES = [
+  /^Error rate above /,
+  /^Client error rate above /,
+  /^p9[59] above /,
+  /^Apdex below /,
+  /^Traffic (spike|drop) on /,
+  /^Silent routes on /,
+  / is down$/,
+  /^Certificate of .* expiring$/,
+]
+
+type Titled = {
+  kind: MonitorAlertRuleKind
+  property_id?: string
+  route?: string
+  service?: string
+  check_id?: string
+  key?: string
+  threshold?: number
+}
+
+function useTitle() {
+  const { t } = useLingui()
+  const value = useValue()
+  const checks = new Map((useChecks().data?.items ?? []).map((c) => [c.id, c.name]))
+  const properties = new Map((useAnalyticsProperties().data?.items ?? []).map((p) => [p.id, p.name]))
+  return (x: Titled, name: string) => {
+    if (!AUTO_NAMES.some((re) => re.test(name))) return name
+    const prop = x.property_id ? (properties.get(x.property_id) ?? "") : ""
+    const check = x.check_id ?? (isCheckKind(x.kind) && x.key ? x.key : undefined)
+    const route = x.route ?? (x.kind === "silent" && x.key ? x.key : undefined)
+    const service = x.service
+    const subject = check
+      ? (checks.get(check) ?? t`A deleted check`)
+      : prop && route
+        ? `${prop} ${route}`
+        : prop && service
+          ? `${prop} (${service})`
+          : prop || t`all checks`
+    const th = value(x.kind, x.threshold)
+    switch (x.kind) {
+      case "error_rate":
+        return t`Error rate above ${th} on ${subject}`
+      case "client_error_rate":
+        return t`Client error rate above ${th} on ${subject}`
+      case "p95":
+        return t`p95 above ${th} on ${subject}`
+      case "p99":
+        return t`p99 above ${th} on ${subject}`
+      case "apdex":
+        return t`Apdex below ${th} on ${subject}`
+      case "spike":
+        return t`Traffic spike on ${subject}`
+      case "drop":
+        return t`Traffic drop on ${subject}`
+      case "silent":
+        return t`Silent routes on ${subject}`
+      case "check_state":
+        return t`${subject} is down`
+      case "certificate":
+        return t`Certificate of ${subject} expiring`
+    }
   }
 }
 
@@ -340,6 +406,7 @@ export function AlertRules({ scope, api = false }: { scope: RuleScope; api?: boo
   const subject = useSubject()
   const { canManage } = useSession()
   const rules = useAlertRules(scope)
+  const title = useTitle()
   const remove = useDeleteRule()
   const [ask, confirm] = useConfirm()
   const [editing, setEditing] = useState<MonitorAlertRule | "new" | null>(null)
@@ -377,7 +444,7 @@ export function AlertRules({ scope, api = false }: { scope: RuleScope; api?: boo
                 </span>
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                   <span className="flex flex-wrap items-baseline gap-x-2">
-                    <span className="text-body font-medium break-words">{r.name}</span>
+                    <span className="text-body font-medium break-words">{title(r, r.name)}</span>
                     <span className="text-caption text-faint">{text.kind[r.kind]}</span>
                     {r.firing > 0 && (
                       <span className="rounded-full bg-destructive/10 px-2 text-caption font-medium text-destructive">
@@ -411,7 +478,7 @@ export function AlertRules({ scope, api = false }: { scope: RuleScope; api?: boo
                       aria-label={t`Delete`}
                       onClick={() =>
                         ask({
-                          title: <RuleTitle name={r.name} />,
+                          title: <RuleTitle name={title(r, r.name)} />,
                           description: <Trans>Its alerts go too. The notes on the charts stay.</Trans>,
                           confirm: <Trans>Delete rule</Trans>,
                           run: () => remove.mutate(r.id),
@@ -517,6 +584,7 @@ export function AlertHistory({ scope }: { scope: RuleScope }) {
   const text = useMonitoringText()
   const subject = useSubject()
   const alerts = useMonitorAlerts(scope)
+  const title = useTitle()
   const items = alerts.data?.pages.flatMap((x) => x.items) ?? []
   return (
     <Section
@@ -550,7 +618,7 @@ export function AlertHistory({ scope }: { scope: RuleScope }) {
                   </span>
                   <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                     <span className="flex flex-wrap items-baseline gap-x-2">
-                      <span className="text-body font-medium break-words">{a.rule_name}</span>
+                      <span className="text-body font-medium break-words">{title(a, a.rule_name)}</span>
                       <span className={cn("text-caption font-medium", firing ? "text-destructive" : "text-success")}>
                         {firing ? <Trans>Firing</Trans> : <Trans>Resolved</Trans>}
                       </span>

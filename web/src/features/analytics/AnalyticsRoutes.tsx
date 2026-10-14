@@ -4,7 +4,7 @@ import { Trans, useLingui } from "@lingui/react/macro"
 import { ChartLineIcon, PlusIcon, ServerIcon } from "lucide-react"
 import { Link, Navigate, Outlet, Route, Routes, useLocation, useNavigate, useParams } from "react-router"
 
-import { Dot, ErrorLine } from "@/components/common"
+import { Dot, ErrorLine, ScrollRow } from "@/components/common"
 import { Pane, PaneBack, PaneEmpty } from "@/components/common/Column"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -128,14 +128,14 @@ function PropertyLayout() {
     <Pane wide testId="analytics-property" className="gap-5" key={p.id}>
       <PropertyHeader property={p} />
       {usage && <UsageBanner usage={usage} />}
-      <div className="-mx-1 max-w-[calc(100%+0.5rem)] overflow-x-auto px-1 py-1">
+      <ScrollRow>
         <Segmented
           value={current}
           onChange={(v) => navigate(`/analytics/${p.id}${v === "overview" ? "" : `/${v}`}${search}`)}
           label={t`Analytics views`}
           items={VIEWS.map((v) => ({ value: v, label: names[v], testId: `analytics-tab-${v}` }))}
         />
-      </div>
+      </ScrollRow>
       {!p.first_event_at && current !== "settings" && <WaitForFirstEvent propertyId={p.id} />}
       {controls && (
         <Controls
@@ -221,14 +221,14 @@ function ApiLayout({ property: p }: { property: AnalyticsProperty }) {
     <Pane wide testId="analytics-property" className="gap-5" key={p.id}>
       <PropertyHeader property={p} />
       {usage && <RequestsBanner usage={usage} />}
-      <div className="-mx-1 max-w-[calc(100%+0.5rem)] overflow-x-auto px-1 py-1">
+      <ScrollRow>
         <Segmented
           value={current}
           onChange={(v) => navigate(`/analytics/${p.id}${v === "overview" ? "" : `/${v}`}${search}`)}
           label={t`Analytics views`}
           items={API_VIEWS.map((v) => ({ value: v, label: names[v], testId: `analytics-tab-${v}` }))}
         />
-      </div>
+      </ScrollRow>
       <Outlet context={{ property: p }} />
     </Pane>
   )
