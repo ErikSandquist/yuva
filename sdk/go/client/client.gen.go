@@ -245,6 +245,7 @@ const (
 	AnalyticsDatasetApi     AnalyticsDataset = "api"
 	AnalyticsDatasetSupport AnalyticsDataset = "support"
 	AnalyticsDatasetTraffic AnalyticsDataset = "traffic"
+	AnalyticsDatasetUptime  AnalyticsDataset = "uptime"
 )
 
 // Valid indicates whether the value is a known member of the AnalyticsDataset enum.
@@ -255,6 +256,8 @@ func (e AnalyticsDataset) Valid() bool {
 	case AnalyticsDatasetSupport:
 		return true
 	case AnalyticsDatasetTraffic:
+		return true
+	case AnalyticsDatasetUptime:
 		return true
 	default:
 		return false
@@ -268,6 +271,7 @@ const (
 	AnalyticsByBrowser        AnalyticsDimension = "browser"
 	AnalyticsByBrowserVersion AnalyticsDimension = "browser_version"
 	AnalyticsByChannel        AnalyticsDimension = "channel"
+	AnalyticsByCheck          AnalyticsDimension = "check"
 	AnalyticsByCity           AnalyticsDimension = "city"
 	AnalyticsByConsumer       AnalyticsDimension = "consumer"
 	AnalyticsByCountry        AnalyticsDimension = "country"
@@ -317,6 +321,8 @@ func (e AnalyticsDimension) Valid() bool {
 	case AnalyticsByBrowserVersion:
 		return true
 	case AnalyticsByChannel:
+		return true
+	case AnalyticsByCheck:
 		return true
 	case AnalyticsByCity:
 		return true
@@ -490,6 +496,7 @@ const (
 	AnalyticsDimBrowser        AnalyticsFilterDimension = "browser"
 	AnalyticsDimBrowserVersion AnalyticsFilterDimension = "browser_version"
 	AnalyticsDimChannel        AnalyticsFilterDimension = "channel"
+	AnalyticsDimCheck          AnalyticsFilterDimension = "check"
 	AnalyticsDimCity           AnalyticsFilterDimension = "city"
 	AnalyticsDimConsumer       AnalyticsFilterDimension = "consumer"
 	AnalyticsDimCountry        AnalyticsFilterDimension = "country"
@@ -534,6 +541,8 @@ func (e AnalyticsFilterDimension) Valid() bool {
 	case AnalyticsDimBrowserVersion:
 		return true
 	case AnalyticsDimChannel:
+		return true
+	case AnalyticsDimCheck:
 		return true
 	case AnalyticsDimCity:
 		return true
@@ -673,7 +682,9 @@ func (e AnalyticsInsightKind) Valid() bool {
 const (
 	AnalyticsMetricApdex             AnalyticsMetric = "apdex"
 	AnalyticsMetricAvgDuration       AnalyticsMetric = "avg_duration"
+	AnalyticsMetricAvgResponseTime   AnalyticsMetric = "avg_response_time"
 	AnalyticsMetricBounceRate        AnalyticsMetric = "bounce_rate"
+	AnalyticsMetricCertDaysLeft      AnalyticsMetric = "cert_days_left"
 	AnalyticsMetricClientErrorRate   AnalyticsMetric = "client_error_rate"
 	AnalyticsMetricClientErrors      AnalyticsMetric = "client_errors"
 	AnalyticsMetricCompletions       AnalyticsMetric = "completions"
@@ -681,9 +692,11 @@ const (
 	AnalyticsMetricConversionRate    AnalyticsMetric = "conversion_rate"
 	AnalyticsMetricConversions       AnalyticsMetric = "conversions"
 	AnalyticsMetricDiscussions       AnalyticsMetric = "discussions"
+	AnalyticsMetricDowntime          AnalyticsMetric = "downtime"
 	AnalyticsMetricErrorRate         AnalyticsMetric = "error_rate"
 	AnalyticsMetricErrors            AnalyticsMetric = "errors"
 	AnalyticsMetricEvents            AnalyticsMetric = "events"
+	AnalyticsMetricFailures          AnalyticsMetric = "failures"
 	AnalyticsMetricFeedback          AnalyticsMetric = "feedback"
 	AnalyticsMetricHelpfulRate       AnalyticsMetric = "helpful_rate"
 	AnalyticsMetricLatencyBands      AnalyticsMetric = "latency_bands"
@@ -702,10 +715,17 @@ const (
 	AnalyticsMetricResponseBytes     AnalyticsMetric = "response_bytes"
 	AnalyticsMetricResponseSizeP50   AnalyticsMetric = "response_size_p50"
 	AnalyticsMetricResponseSizeP95   AnalyticsMetric = "response_size_p95"
+	AnalyticsMetricResponseTimeP50   AnalyticsMetric = "response_time_p50"
+	AnalyticsMetricResponseTimeP95   AnalyticsMetric = "response_time_p95"
+	AnalyticsMetricResponseTimeP99   AnalyticsMetric = "response_time_p99"
 	AnalyticsMetricRevenue           AnalyticsMetric = "revenue"
+	AnalyticsMetricRuns              AnalyticsMetric = "runs"
 	AnalyticsMetricScrollDepth       AnalyticsMetric = "scroll_depth"
 	AnalyticsMetricSupportRate       AnalyticsMetric = "support_rate"
 	AnalyticsMetricTimeOnPage        AnalyticsMetric = "time_on_page"
+	AnalyticsMetricTtfb              AnalyticsMetric = "ttfb"
+	AnalyticsMetricUp                AnalyticsMetric = "up"
+	AnalyticsMetricUptime            AnalyticsMetric = "uptime"
 	AnalyticsMetricViewsPerVisit     AnalyticsMetric = "views_per_visit"
 	AnalyticsMetricVisitDuration     AnalyticsMetric = "visit_duration"
 	AnalyticsMetricVisitors          AnalyticsMetric = "visitors"
@@ -719,7 +739,11 @@ func (e AnalyticsMetric) Valid() bool {
 		return true
 	case AnalyticsMetricAvgDuration:
 		return true
+	case AnalyticsMetricAvgResponseTime:
+		return true
 	case AnalyticsMetricBounceRate:
+		return true
+	case AnalyticsMetricCertDaysLeft:
 		return true
 	case AnalyticsMetricClientErrorRate:
 		return true
@@ -735,11 +759,15 @@ func (e AnalyticsMetric) Valid() bool {
 		return true
 	case AnalyticsMetricDiscussions:
 		return true
+	case AnalyticsMetricDowntime:
+		return true
 	case AnalyticsMetricErrorRate:
 		return true
 	case AnalyticsMetricErrors:
 		return true
 	case AnalyticsMetricEvents:
+		return true
+	case AnalyticsMetricFailures:
 		return true
 	case AnalyticsMetricFeedback:
 		return true
@@ -777,13 +805,27 @@ func (e AnalyticsMetric) Valid() bool {
 		return true
 	case AnalyticsMetricResponseSizeP95:
 		return true
+	case AnalyticsMetricResponseTimeP50:
+		return true
+	case AnalyticsMetricResponseTimeP95:
+		return true
+	case AnalyticsMetricResponseTimeP99:
+		return true
 	case AnalyticsMetricRevenue:
+		return true
+	case AnalyticsMetricRuns:
 		return true
 	case AnalyticsMetricScrollDepth:
 		return true
 	case AnalyticsMetricSupportRate:
 		return true
 	case AnalyticsMetricTimeOnPage:
+		return true
+	case AnalyticsMetricTtfb:
+		return true
+	case AnalyticsMetricUp:
+		return true
+	case AnalyticsMetricUptime:
 		return true
 	case AnalyticsMetricViewsPerVisit:
 		return true
@@ -3993,6 +4035,183 @@ func (e MigrationTls) Valid() bool {
 	}
 }
 
+// Defines values for MonitorAlertEventType.
+const (
+	MonitorAlertEventTypeMonitorAlert MonitorAlertEventType = "monitor.alert"
+)
+
+// Valid indicates whether the value is a known member of the MonitorAlertEventType enum.
+func (e MonitorAlertEventType) Valid() bool {
+	switch e {
+	case MonitorAlertEventTypeMonitorAlert:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MonitorAlertRuleKind.
+const (
+	MonitorRuleApdex           MonitorAlertRuleKind = "apdex"
+	MonitorRuleCertificate     MonitorAlertRuleKind = "certificate"
+	MonitorRuleCheckState      MonitorAlertRuleKind = "check_state"
+	MonitorRuleClientErrorRate MonitorAlertRuleKind = "client_error_rate"
+	MonitorRuleDrop            MonitorAlertRuleKind = "drop"
+	MonitorRuleErrorRate       MonitorAlertRuleKind = "error_rate"
+	MonitorRuleP95             MonitorAlertRuleKind = "p95"
+	MonitorRuleP99             MonitorAlertRuleKind = "p99"
+	MonitorRuleSilent          MonitorAlertRuleKind = "silent"
+	MonitorRuleSpike           MonitorAlertRuleKind = "spike"
+)
+
+// Valid indicates whether the value is a known member of the MonitorAlertRuleKind enum.
+func (e MonitorAlertRuleKind) Valid() bool {
+	switch e {
+	case MonitorRuleApdex:
+		return true
+	case MonitorRuleCertificate:
+		return true
+	case MonitorRuleCheckState:
+		return true
+	case MonitorRuleClientErrorRate:
+		return true
+	case MonitorRuleDrop:
+		return true
+	case MonitorRuleErrorRate:
+		return true
+	case MonitorRuleP95:
+		return true
+	case MonitorRuleP99:
+		return true
+	case MonitorRuleSilent:
+		return true
+	case MonitorRuleSpike:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MonitorAlertState.
+const (
+	MonitorAlertFiring   MonitorAlertState = "firing"
+	MonitorAlertResolved MonitorAlertState = "resolved"
+)
+
+// Valid indicates whether the value is a known member of the MonitorAlertState enum.
+func (e MonitorAlertState) Valid() bool {
+	switch e {
+	case MonitorAlertFiring:
+		return true
+	case MonitorAlertResolved:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MonitorCheckError.
+const (
+	MonitorErrorConnect        MonitorCheckError = "connect"
+	MonitorErrorDNS            MonitorCheckError = "dns"
+	MonitorErrorKeyword        MonitorCheckError = "keyword"
+	MonitorErrorOther          MonitorCheckError = "other"
+	MonitorErrorRedirects      MonitorCheckError = "redirects"
+	MonitorErrorRefusedAddress MonitorCheckError = "refused_address"
+	MonitorErrorStatus         MonitorCheckError = "status"
+	MonitorErrorTLS            MonitorCheckError = "tls"
+	MonitorErrorTimeout        MonitorCheckError = "timeout"
+)
+
+// Valid indicates whether the value is a known member of the MonitorCheckError enum.
+func (e MonitorCheckError) Valid() bool {
+	switch e {
+	case MonitorErrorConnect:
+		return true
+	case MonitorErrorDNS:
+		return true
+	case MonitorErrorKeyword:
+		return true
+	case MonitorErrorOther:
+		return true
+	case MonitorErrorRedirects:
+		return true
+	case MonitorErrorRefusedAddress:
+		return true
+	case MonitorErrorStatus:
+		return true
+	case MonitorErrorTLS:
+		return true
+	case MonitorErrorTimeout:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MonitorCheckMethod.
+const (
+	MonitorCheckGet  MonitorCheckMethod = "GET"
+	MonitorCheckHead MonitorCheckMethod = "HEAD"
+)
+
+// Valid indicates whether the value is a known member of the MonitorCheckMethod enum.
+func (e MonitorCheckMethod) Valid() bool {
+	switch e {
+	case MonitorCheckGet:
+		return true
+	case MonitorCheckHead:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MonitorCheckResultState.
+const (
+	MonitorResultDown    MonitorCheckResultState = "down"
+	MonitorResultPending MonitorCheckResultState = "pending"
+	MonitorResultUnknown MonitorCheckResultState = "unknown"
+	MonitorResultUp      MonitorCheckResultState = "up"
+)
+
+// Valid indicates whether the value is a known member of the MonitorCheckResultState enum.
+func (e MonitorCheckResultState) Valid() bool {
+	switch e {
+	case MonitorResultDown:
+		return true
+	case MonitorResultPending:
+		return true
+	case MonitorResultUnknown:
+		return true
+	case MonitorResultUp:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MonitorCheckState.
+const (
+	MonitorCheckDown    MonitorCheckState = "down"
+	MonitorCheckUnknown MonitorCheckState = "unknown"
+	MonitorCheckUp      MonitorCheckState = "up"
+)
+
+// Valid indicates whether the value is a known member of the MonitorCheckState enum.
+func (e MonitorCheckState) Valid() bool {
+	switch e {
+	case MonitorCheckDown:
+		return true
+	case MonitorCheckUnknown:
+		return true
+	case MonitorCheckUp:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for OAuthClientMetadataGrantTypes.
 const (
 	OAuthClientMetadataGrantTypesAuthorizationCode OAuthClientMetadataGrantTypes = "authorization_code"
@@ -4160,6 +4379,7 @@ const (
 	MessageInUnassignedConversation PushNotificationEvent = "message_in_unassigned_conversation"
 	NewAsyncConversation            PushNotificationEvent = "new_async_conversation"
 	NewLiveConversation             PushNotificationEvent = "new_live_conversation"
+	PushMonitorAlert                PushNotificationEvent = "monitor_alert"
 	Test                            PushNotificationEvent = "test"
 )
 
@@ -4177,6 +4397,8 @@ func (e PushNotificationEvent) Valid() bool {
 	case NewAsyncConversation:
 		return true
 	case NewLiveConversation:
+		return true
+	case PushMonitorAlert:
 		return true
 	case Test:
 		return true
@@ -4521,6 +4743,7 @@ const (
 	WebhookEventTypeDraftUpdated          WebhookEventType = "draft.updated"
 	WebhookEventTypeFeedbackCreated       WebhookEventType = "feedback.created"
 	WebhookEventTypeMessageCreated        WebhookEventType = "message.created"
+	WebhookEventTypeMonitorAlert          WebhookEventType = "monitor.alert"
 	WebhookEventTypeSubscriptionCreated   WebhookEventType = "subscription.created"
 	WebhookEventTypeSubscriptionUpdated   WebhookEventType = "subscription.updated"
 )
@@ -4559,6 +4782,8 @@ func (e WebhookEventType) Valid() bool {
 	case WebhookEventTypeFeedbackCreated:
 		return true
 	case WebhookEventTypeMessageCreated:
+		return true
+	case WebhookEventTypeMonitorAlert:
 		return true
 	case WebhookEventTypeSubscriptionCreated:
 		return true
@@ -4875,6 +5100,24 @@ func (e GetMailingListGrowthParamsDays) Valid() bool {
 	case N30:
 		return true
 	case N90:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for QueryMonitoringParamsFormat.
+const (
+	MonitoringFormatCSV  QueryMonitoringParamsFormat = "csv"
+	MonitoringFormatJSON QueryMonitoringParamsFormat = "json"
+)
+
+// Valid indicates whether the value is a known member of the QueryMonitoringParamsFormat enum.
+func (e QueryMonitoringParamsFormat) Valid() bool {
+	switch e {
+	case MonitoringFormatCSV:
+		return true
+	case MonitoringFormatJSON:
 		return true
 	default:
 		return false
@@ -5278,6 +5521,13 @@ type AnalyticsDataDeletion struct {
 // Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by
 // `requests` unless `order_by` says otherwise; slowest and most failing routes are a `route`
 // breakdown ordered by `p95` or `error_rate`.
+//
+// `uptime` is the runs of uptime checks (`MonitorCheck`): on a property (of either kind) its
+// checks, on `queryMonitoring` every check of the workspace. It takes the uptime metrics of
+// `AnalyticsMetric`, the dimension `check` and a grain, filters on `check` (`is`, `is_not`),
+// the ranges of the `api` dataset (counted in UTC) and `compare`. Days whose runs were folded
+// come from daily rows, the rest from the runs, which are kept `YUVA_MONITOR_CHECK_DAYS` days.
+// Checks are probes, not consumers, so their requests never enter the `api` dataset.
 type AnalyticsDataset string
 
 // AnalyticsDimension A filter dimension (`AnalyticsFilterDimension`), or a time grain: `time:hour` (local hours
@@ -5296,6 +5546,11 @@ type AnalyticsDataset string
 // autumn and the hours around a pending zone change (`timezone_applies_at`) stay apart; day,
 // week and month values are the local date they start on, `2026-10-12`. Every bucket of the
 // range is present when the grain is the only dimension.
+//
+// With `dataset: uptime`, `check` and a grain at most, each of them once: `time:minute` and
+// `time:hour` inside the runs kept (`YUVA_MONITOR_CHECK_DAYS`, at most 1,440 minutes),
+// `time:day`, `time:week` and `time:month` for any range. Its buckets are UTC, labelled like the
+// API dataset's (`2026-10-12T14:05+00:00`, `2026-10-12`).
 type AnalyticsDimension string
 
 // AnalyticsDomain A host name whose pages may send events, without scheme or port: `example.com`,
@@ -5550,6 +5805,8 @@ type AnalyticsExportCreate struct {
 	// `country` and `app_version` (`(other)` past 200); they count only the requests that have
 	// one, and each is kept by local hour with `route`, `method` and `status_class` only (see
 	// `AnalyticsDataset`).
+	//
+	// With `dataset: uptime` the dimension is `check`, an uptime check's id.
 	Dimension *AnalyticsFilterDimension `json:"dimension,omitempty"`
 	Format    *AnalyticsExportFormat    `json:"format,omitempty"`
 	Kind      AnalyticsExportKind       `json:"kind"`
@@ -5610,6 +5867,8 @@ type AnalyticsFilter struct {
 	// `country` and `app_version` (`(other)` past 200); they count only the requests that have
 	// one, and each is kept by local hour with `route`, `method` and `status_class` only (see
 	// `AnalyticsDataset`).
+	//
+	// With `dataset: uptime` the dimension is `check`, an uptime check's id.
 	Dimension AnalyticsFilterDimension `json:"dimension"`
 	Op        AnalyticsFilterOp        `json:"op"`
 
@@ -5650,6 +5909,8 @@ type AnalyticsFilterOp string
 // `country` and `app_version` (`(other)` past 200); they count only the requests that have
 // one, and each is kept by local hour with `route`, `method` and `status_class` only (see
 // `AnalyticsDataset`).
+//
+// With `dataset: uptime` the dimension is `check`, an uptime check's id.
 type AnalyticsFilterDimension string
 
 // AnalyticsFunnel defines model for AnalyticsFunnel.
@@ -5900,6 +6161,15 @@ type AnalyticsInsight struct {
 	// `metrics.latency_bands`, 20 bands whose upper bounds `meta.latency_band_bounds` lists;
 	// the same bands for every range, read exactly from the duration sketches; it cannot order
 	// rows).
+	//
+	// With `dataset: uptime` only: `runs` (counted runs), `failures` (failed runs), `up` (checks
+	// whose last counted run of the range or bucket succeeded), `uptime` (percent of the
+	// monitored time the check was not down, each run standing for its interval), `downtime`
+	// (seconds down), `response_time_p50`, `response_time_p95` and `response_time_p99` (the total
+	// time of runs that got an answer, in milliseconds, from sketches accurate to 1.1%),
+	// `avg_response_time` and `ttfb` (milliseconds) and `cert_days_left` (the fewest days until a
+	// certificate expires, by each check's last run that had one). Runs recorded `unknown`
+	// count in none of them.
 	Metric AnalyticsMetric `json:"metric"`
 
 	// Previous The comparison range's number (0 for `metric_new` and `new_value`), or the range's overall `support_rate` for a hotspot.
@@ -5949,13 +6219,24 @@ type AnalyticsInsightKind string
 // `metrics.latency_bands`, 20 bands whose upper bounds `meta.latency_band_bounds` lists;
 // the same bands for every range, read exactly from the duration sketches; it cannot order
 // rows).
+//
+// With `dataset: uptime` only: `runs` (counted runs), `failures` (failed runs), `up` (checks
+// whose last counted run of the range or bucket succeeded), `uptime` (percent of the
+// monitored time the check was not down, each run standing for its interval), `downtime`
+// (seconds down), `response_time_p50`, `response_time_p95` and `response_time_p99` (the total
+// time of runs that got an answer, in milliseconds, from sketches accurate to 1.1%),
+// `avg_response_time` and `ttfb` (milliseconds) and `cert_days_left` (the fewest days until a
+// certificate expires, by each check's last run that had one). Runs recorded `unknown`
+// count in none of them.
 type AnalyticsMetric string
 
 // AnalyticsMetrics The metrics the query asked for.
 type AnalyticsMetrics struct {
 	Apdex           *float64 `json:"apdex,omitempty"`
 	AvgDuration     *float64 `json:"avg_duration,omitempty"`
+	AvgResponseTime *float64 `json:"avg_response_time,omitempty"`
 	BounceRate      *float64 `json:"bounce_rate,omitempty"`
+	CertDaysLeft    *float64 `json:"cert_days_left,omitempty"`
 	ClientErrorRate *float64 `json:"client_error_rate,omitempty"`
 	ClientErrors    *float64 `json:"client_errors,omitempty"`
 	Completions     *float64 `json:"completions,omitempty"`
@@ -5963,9 +6244,11 @@ type AnalyticsMetrics struct {
 	ConversionRate  *float64 `json:"conversion_rate,omitempty"`
 	Conversions     *float64 `json:"conversions,omitempty"`
 	Discussions     *float64 `json:"discussions,omitempty"`
+	Downtime        *float64 `json:"downtime,omitempty"`
 	ErrorRate       *float64 `json:"error_rate,omitempty"`
 	Errors          *float64 `json:"errors,omitempty"`
 	Events          *float64 `json:"events,omitempty"`
+	Failures        *float64 `json:"failures,omitempty"`
 	Feedback        *float64 `json:"feedback,omitempty"`
 	HelpfulRate     *float64 `json:"helpful_rate,omitempty"`
 
@@ -5988,12 +6271,19 @@ type AnalyticsMetrics struct {
 	ResponseBytes     *float64 `json:"response_bytes,omitempty"`
 	ResponseSizeP50   *float64 `json:"response_size_p50,omitempty"`
 	ResponseSizeP95   *float64 `json:"response_size_p95,omitempty"`
+	ResponseTimeP50   *float64 `json:"response_time_p50,omitempty"`
+	ResponseTimeP95   *float64 `json:"response_time_p95,omitempty"`
+	ResponseTimeP99   *float64 `json:"response_time_p99,omitempty"`
 
 	// Revenue Per currency, most first.
 	Revenue       *[]AnalyticsRevenue `json:"revenue,omitempty"`
+	Runs          *float64            `json:"runs,omitempty"`
 	ScrollDepth   *float64            `json:"scroll_depth,omitempty"`
 	SupportRate   *float64            `json:"support_rate,omitempty"`
 	TimeOnPage    *float64            `json:"time_on_page,omitempty"`
+	Ttfb          *float64            `json:"ttfb,omitempty"`
+	Up            *float64            `json:"up,omitempty"`
+	Uptime        *float64            `json:"uptime,omitempty"`
 	ViewsPerVisit *float64            `json:"views_per_visit,omitempty"`
 	VisitDuration *float64            `json:"visit_duration,omitempty"`
 	Visitors      *float64            `json:"visitors,omitempty"`
@@ -6048,6 +6338,15 @@ type AnalyticsOrder struct {
 	// `metrics.latency_bands`, 20 bands whose upper bounds `meta.latency_band_bounds` lists;
 	// the same bands for every range, read exactly from the duration sketches; it cannot order
 	// rows).
+	//
+	// With `dataset: uptime` only: `runs` (counted runs), `failures` (failed runs), `up` (checks
+	// whose last counted run of the range or bucket succeeded), `uptime` (percent of the
+	// monitored time the check was not down, each run standing for its interval), `downtime`
+	// (seconds down), `response_time_p50`, `response_time_p95` and `response_time_p99` (the total
+	// time of runs that got an answer, in milliseconds, from sketches accurate to 1.1%),
+	// `avg_response_time` and `ttfb` (milliseconds) and `cert_days_left` (the fewest days until a
+	// certificate expires, by each check's last run that had one). Runs recorded `unknown`
+	// count in none of them.
 	Metric AnalyticsMetric `json:"metric"`
 }
 
@@ -6288,6 +6587,13 @@ type AnalyticsQuery struct {
 	// Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by
 	// `requests` unless `order_by` says otherwise; slowest and most failing routes are a `route`
 	// breakdown ordered by `p95` or `error_rate`.
+	//
+	// `uptime` is the runs of uptime checks (`MonitorCheck`): on a property (of either kind) its
+	// checks, on `queryMonitoring` every check of the workspace. It takes the uptime metrics of
+	// `AnalyticsMetric`, the dimension `check` and a grain, filters on `check` (`is`, `is_not`),
+	// the ranges of the `api` dataset (counted in UTC) and `compare`. Days whose runs were folded
+	// come from daily rows, the rest from the runs, which are kept `YUVA_MONITOR_CHECK_DAYS` days.
+	// Checks are probes, not consumers, so their requests never enter the `api` dataset.
 	Dataset    *AnalyticsDataset     `json:"dataset,omitempty"`
 	Dimensions *[]AnalyticsDimension `json:"dimensions,omitempty"`
 	Filters    *[]AnalyticsFilter    `json:"filters,omitempty"`
@@ -12983,6 +13289,512 @@ type MigrationUploadPartInput struct {
 	Sha256 string `json:"sha256"`
 }
 
+// MonitorAlert defines model for MonitorAlert.
+type MonitorAlert struct {
+	AnnotationId *uuid.UUID `json:"annotation_id,omitempty"`
+
+	// Baseline `spike` and `drop`: the average it was compared with; `silent`: requests a minute over the day before.
+	Baseline *float64   `json:"baseline,omitempty"`
+	CheckId  *uuid.UUID `json:"check_id,omitempty"`
+
+	// FiredAt The end of the window that fired it.
+	FiredAt time.Time `json:"fired_at"`
+	Id      uuid.UUID `json:"id"`
+
+	// Key What the alert is about within its rule; empty for a rule's whole subject, a route pattern for `silent`, a check id for check rules.
+	Key string `json:"key"`
+
+	// Kind On a property's requests (`property_id` required, narrowed by `route` or `service`), over
+	// the last `window_minutes` closed minutes with at least `min_requests`:
+	// - `error_rate` and `client_error_rate`: percent of requests with status 500 to 599 (or none),
+	//   or 400 to 499, above `threshold`.
+	// - `p95`, `p99`: that percentile of the duration in milliseconds above `threshold`.
+	// - `apdex`: the Apdex score below `threshold` (0 to 1).
+	// - `spike` and `drop`: requests of the last 15 closed minutes at least three times, or at
+	//   most half, the same 15 minutes averaged over the 7 days before, when that average is at
+	//   least 50 requests; no `threshold` or window.
+	// - `silent`: a route (`route`, or each route of the property) that averaged at least one
+	//   request a minute over the day before had none for 15 minutes.
+	//
+	// On uptime checks (`check_id`, or every check of `property_id`, or every check of the
+	// workspace):
+	// - `check_state`: the check is down.
+	// - `certificate`: the check's certificate expires within `threshold` days (the check's
+	//   `cert_warning_days` when absent).
+	//
+	// An alert resolves once its value has been back inside the threshold with a 10% margin
+	// (below 90% of it; for `apdex` above it by a tenth of the distance to 1; for `spike`
+	// below 2.7 times, for `drop` above 0.55 times the average) over a whole window that began
+	// after it fired, or the window has fewer than `min_requests`; a silent route once it was
+	// called again; a check once it is up, or its certificate is renewed.
+	Kind          MonitorAlertRuleKind `json:"kind"`
+	PropertyId    *uuid.UUID           `json:"property_id,omitempty"`
+	ResolvedAt    *time.Time           `json:"resolved_at,omitempty"`
+	ResolvedValue *float64             `json:"resolved_value,omitempty"`
+	Route         *string              `json:"route,omitempty"`
+	RuleId        uuid.UUID            `json:"rule_id"`
+	RuleName      string               `json:"rule_name"`
+	Service       *string              `json:"service,omitempty"`
+	State         MonitorAlertState    `json:"state"`
+
+	// Text What was found, in English, as on the annotation.
+	Text      string   `json:"text"`
+	Threshold *float64 `json:"threshold,omitempty"`
+
+	// Value The value when it fired; requests of the 15 minutes for `spike` and `drop`, days left for `certificate`, 1 for a check that is down.
+	Value         float64 `json:"value"`
+	WindowMinutes *int    `json:"window_minutes,omitempty"`
+}
+
+// MonitorAlertEvent `monitor.alert`: an alert fired (`alert.state: firing`) or resolved (`resolved`); each
+// happens once per alert. Delivered to callers who hold `analytics:read` and can see the
+// rule: `inbox_id` is the linked inbox of the alert's property; alerts on checks without a
+// property reach every member.
+type MonitorAlertEvent struct {
+	CreatedAt   time.Time             `json:"created_at"`
+	Data        MonitorAlertEventData `json:"data"`
+	Id          int64                 `json:"id"`
+	InboxId     *uuid.UUID            `json:"inbox_id,omitempty"`
+	Type        MonitorAlertEventType `json:"type"`
+	WorkspaceId uuid.UUID             `json:"workspace_id"`
+}
+
+// MonitorAlertEventType defines model for MonitorAlertEvent.Type.
+type MonitorAlertEventType string
+
+// MonitorAlertEventData defines model for MonitorAlertEventData.
+type MonitorAlertEventData struct {
+	Alert    MonitorAlert          `json:"alert"`
+	Check    *MonitorCheckRef      `json:"check,omitempty"`
+	Property *AnalyticsPropertyRef `json:"property,omitempty"`
+}
+
+// MonitorAlertList defines model for MonitorAlertList.
+type MonitorAlertList struct {
+	Items []MonitorAlert `json:"items"`
+}
+
+// MonitorAlertRule defines model for MonitorAlertRule.
+type MonitorAlertRule struct {
+	CheckId   *uuid.UUID `json:"check_id,omitempty"`
+	CreatedAt time.Time  `json:"created_at"`
+	CreatedBy *uuid.UUID `json:"created_by,omitempty"`
+	Enabled   bool       `json:"enabled"`
+
+	// Firing The rule's open alerts.
+	Firing int       `json:"firing"`
+	Id     uuid.UUID `json:"id"`
+
+	// Kind On a property's requests (`property_id` required, narrowed by `route` or `service`), over
+	// the last `window_minutes` closed minutes with at least `min_requests`:
+	// - `error_rate` and `client_error_rate`: percent of requests with status 500 to 599 (or none),
+	//   or 400 to 499, above `threshold`.
+	// - `p95`, `p99`: that percentile of the duration in milliseconds above `threshold`.
+	// - `apdex`: the Apdex score below `threshold` (0 to 1).
+	// - `spike` and `drop`: requests of the last 15 closed minutes at least three times, or at
+	//   most half, the same 15 minutes averaged over the 7 days before, when that average is at
+	//   least 50 requests; no `threshold` or window.
+	// - `silent`: a route (`route`, or each route of the property) that averaged at least one
+	//   request a minute over the day before had none for 15 minutes.
+	//
+	// On uptime checks (`check_id`, or every check of `property_id`, or every check of the
+	// workspace):
+	// - `check_state`: the check is down.
+	// - `certificate`: the check's certificate expires within `threshold` days (the check's
+	//   `cert_warning_days` when absent).
+	//
+	// An alert resolves once its value has been back inside the threshold with a 10% margin
+	// (below 90% of it; for `apdex` above it by a tenth of the distance to 1; for `spike`
+	// below 2.7 times, for `drop` above 0.55 times the average) over a whole window that began
+	// after it fired, or the window has fewer than `min_requests`; a silent route once it was
+	// called again; a check once it is up, or its certificate is renewed.
+	Kind          MonitorAlertRuleKind `json:"kind"`
+	MinRequests   int                  `json:"min_requests"`
+	Name          string               `json:"name"`
+	PropertyId    *uuid.UUID           `json:"property_id,omitempty"`
+	Recipients    []uuid.UUID          `json:"recipients"`
+	Route         *string              `json:"route,omitempty"`
+	Service       *string              `json:"service,omitempty"`
+	Threshold     *float64             `json:"threshold,omitempty"`
+	UpdatedAt     time.Time            `json:"updated_at"`
+	WindowMinutes int                  `json:"window_minutes"`
+}
+
+// MonitorAlertRuleCreate defines model for MonitorAlertRuleCreate.
+type MonitorAlertRuleCreate struct {
+	CheckId *uuid.UUID `json:"check_id,omitempty"`
+	Enabled *bool      `json:"enabled,omitempty"`
+
+	// Kind On a property's requests (`property_id` required, narrowed by `route` or `service`), over
+	// the last `window_minutes` closed minutes with at least `min_requests`:
+	// - `error_rate` and `client_error_rate`: percent of requests with status 500 to 599 (or none),
+	//   or 400 to 499, above `threshold`.
+	// - `p95`, `p99`: that percentile of the duration in milliseconds above `threshold`.
+	// - `apdex`: the Apdex score below `threshold` (0 to 1).
+	// - `spike` and `drop`: requests of the last 15 closed minutes at least three times, or at
+	//   most half, the same 15 minutes averaged over the 7 days before, when that average is at
+	//   least 50 requests; no `threshold` or window.
+	// - `silent`: a route (`route`, or each route of the property) that averaged at least one
+	//   request a minute over the day before had none for 15 minutes.
+	//
+	// On uptime checks (`check_id`, or every check of `property_id`, or every check of the
+	// workspace):
+	// - `check_state`: the check is down.
+	// - `certificate`: the check's certificate expires within `threshold` days (the check's
+	//   `cert_warning_days` when absent).
+	//
+	// An alert resolves once its value has been back inside the threshold with a 10% margin
+	// (below 90% of it; for `apdex` above it by a tenth of the distance to 1; for `spike`
+	// below 2.7 times, for `drop` above 0.55 times the average) over a whole window that began
+	// after it fired, or the window has fewer than `min_requests`; a silent route once it was
+	// called again; a check once it is up, or its certificate is renewed.
+	Kind MonitorAlertRuleKind `json:"kind"`
+
+	// MinRequests The fewest requests a window needs to be judged; 20 when absent.
+	MinRequests *int `json:"min_requests,omitempty"`
+
+	// Name Named after its kind and subject when absent.
+	Name       *string    `json:"name,omitempty"`
+	PropertyId *uuid.UUID `json:"property_id,omitempty"`
+
+	// Recipients Members who get each alert by e-mail and Web Push; they must see the rule's property.
+	Recipients *[]uuid.UUID `json:"recipients,omitempty"`
+
+	// Route A route pattern of the property, as `listAnalyticsRoutes` lists it.
+	Route   *string `json:"route,omitempty"`
+	Service *string `json:"service,omitempty"`
+
+	// Threshold Percent for the rates, milliseconds for `p95` and `p99`, 0 to 1 for `apdex`, days for `certificate`.
+	Threshold nullable.Nullable[float64] `json:"threshold,omitempty"`
+
+	// WindowMinutes The metric rules' window; 5 when absent.
+	WindowMinutes *int `json:"window_minutes,omitempty"`
+}
+
+// MonitorAlertRuleFields defines model for MonitorAlertRuleFields.
+type MonitorAlertRuleFields struct {
+	Enabled *bool `json:"enabled,omitempty"`
+
+	// MinRequests The fewest requests a window needs to be judged; 20 when absent.
+	MinRequests *int `json:"min_requests,omitempty"`
+
+	// Name Named after its kind and subject when absent.
+	Name *string `json:"name,omitempty"`
+
+	// Recipients Members who get each alert by e-mail and Web Push; they must see the rule's property.
+	Recipients *[]uuid.UUID `json:"recipients,omitempty"`
+
+	// Threshold Percent for the rates, milliseconds for `p95` and `p99`, 0 to 1 for `apdex`, days for `certificate`.
+	Threshold nullable.Nullable[float64] `json:"threshold,omitempty"`
+
+	// WindowMinutes The metric rules' window; 5 when absent.
+	WindowMinutes *int `json:"window_minutes,omitempty"`
+}
+
+// MonitorAlertRuleKind On a property's requests (`property_id` required, narrowed by `route` or `service`), over
+// the last `window_minutes` closed minutes with at least `min_requests`:
+//   - `error_rate` and `client_error_rate`: percent of requests with status 500 to 599 (or none),
+//     or 400 to 499, above `threshold`.
+//   - `p95`, `p99`: that percentile of the duration in milliseconds above `threshold`.
+//   - `apdex`: the Apdex score below `threshold` (0 to 1).
+//   - `spike` and `drop`: requests of the last 15 closed minutes at least three times, or at
+//     most half, the same 15 minutes averaged over the 7 days before, when that average is at
+//     least 50 requests; no `threshold` or window.
+//   - `silent`: a route (`route`, or each route of the property) that averaged at least one
+//     request a minute over the day before had none for 15 minutes.
+//
+// On uptime checks (`check_id`, or every check of `property_id`, or every check of the
+// workspace):
+//   - `check_state`: the check is down.
+//   - `certificate`: the check's certificate expires within `threshold` days (the check's
+//     `cert_warning_days` when absent).
+//
+// An alert resolves once its value has been back inside the threshold with a 10% margin
+// (below 90% of it; for `apdex` above it by a tenth of the distance to 1; for `spike`
+// below 2.7 times, for `drop` above 0.55 times the average) over a whole window that began
+// after it fired, or the window has fewer than `min_requests`; a silent route once it was
+// called again; a check once it is up, or its certificate is renewed.
+type MonitorAlertRuleKind string
+
+// MonitorAlertRuleList defines model for MonitorAlertRuleList.
+type MonitorAlertRuleList struct {
+	Items []MonitorAlertRule `json:"items"`
+}
+
+// MonitorAlertRuleUpdate defines model for MonitorAlertRuleUpdate.
+type MonitorAlertRuleUpdate struct {
+	Enabled *bool `json:"enabled,omitempty"`
+
+	// MinRequests The fewest requests a window needs to be judged; 20 when absent.
+	MinRequests *int `json:"min_requests,omitempty"`
+
+	// Name Named after its kind and subject when absent.
+	Name *string `json:"name,omitempty"`
+
+	// Recipients Members who get each alert by e-mail and Web Push; they must see the rule's property.
+	Recipients *[]uuid.UUID `json:"recipients,omitempty"`
+
+	// Threshold Percent for the rates, milliseconds for `p95` and `p99`, 0 to 1 for `apdex`, days for `certificate`.
+	Threshold nullable.Nullable[float64] `json:"threshold,omitempty"`
+
+	// WindowMinutes The metric rules' window; 5 when absent.
+	WindowMinutes *int `json:"window_minutes,omitempty"`
+}
+
+// MonitorAlertState defines model for MonitorAlertState.
+type MonitorAlertState string
+
+// MonitorCheck defines model for MonitorCheck.
+type MonitorCheck struct {
+	// CertExpiresAt `https`: when the certificate of the last answer expires.
+	CertExpiresAt      *time.Time `json:"cert_expires_at,omitempty"`
+	CertWarningDays    int        `json:"cert_warning_days"`
+	CreatedAt          time.Time  `json:"created_at"`
+	CreatedBy          *uuid.UUID `json:"created_by,omitempty"`
+	ExpectedStatuses   []int      `json:"expected_statuses"`
+	FailuresBeforeDown int        `json:"failures_before_down"`
+
+	// HeaderNames The headers the check sends; their values are never returned.
+	HeaderNames     []string            `json:"header_names"`
+	Id              uuid.UUID           `json:"id"`
+	IntervalSeconds int                 `json:"interval_seconds"`
+	Keyword         *string             `json:"keyword,omitempty"`
+	KeywordAbsent   bool                `json:"keyword_absent"`
+	LastResult      *MonitorCheckResult `json:"last_result,omitempty"`
+	MaxRedirects    int                 `json:"max_redirects"`
+	Method          MonitorCheckMethod  `json:"method"`
+	Name            string              `json:"name"`
+
+	// NextRunAt Absent while paused.
+	NextRunAt  *time.Time `json:"next_run_at,omitempty"`
+	Paused     bool       `json:"paused"`
+	PropertyId *uuid.UUID `json:"property_id,omitempty"`
+	Service    *string    `json:"service,omitempty"`
+
+	// State `unknown` until the first counted run, then `up`, or `down` once `failures_before_down`
+	// runs in a row failed.
+	State          MonitorCheckState `json:"state"`
+	StateSince     *time.Time        `json:"state_since,omitempty"`
+	TimeoutSeconds int               `json:"timeout_seconds"`
+	UpdatedAt      time.Time         `json:"updated_at"`
+	Url            string            `json:"url"`
+}
+
+// MonitorCheckCreate defines model for MonitorCheckCreate.
+type MonitorCheckCreate struct {
+	// CertWarningDays An `https` check's certificate expiring within this many days raises `certificate` alerts.
+	CertWarningDays *int `json:"cert_warning_days,omitempty"`
+
+	// ExpectedStatuses The status codes that count as up, from 200 to 399; any status from 200 to 399 when empty.
+	ExpectedStatuses *[]int `json:"expected_statuses,omitempty"`
+
+	// FailuresBeforeDown Failed runs in a row before the check is down; each failed run was already tried again after 20 seconds.
+	FailuresBeforeDown *int                  `json:"failures_before_down,omitempty"`
+	Headers            *[]MonitorCheckHeader `json:"headers,omitempty"`
+
+	// IntervalSeconds At least `YUVA_MONITOR_MIN_INTERVAL` (`422 interval_too_short`).
+	IntervalSeconds *int `json:"interval_seconds,omitempty"`
+
+	// Keyword Text the first 64 KiB of the answer must contain (or, with `keyword_absent`, must not); `GET` only.
+	Keyword       nullable.Nullable[string] `json:"keyword,omitempty"`
+	KeywordAbsent *bool                     `json:"keyword_absent,omitempty"`
+
+	// MaxRedirects Redirects followed; every hop goes through the same address checks. `0` judges the redirect's own status.
+	MaxRedirects *int                `json:"max_redirects,omitempty"`
+	Method       *MonitorCheckMethod `json:"method,omitempty"`
+	Name         string              `json:"name"`
+	Paused       *bool               `json:"paused,omitempty"`
+
+	// PropertyId The property whose `uptime` dataset and reports include the check.
+	PropertyId nullable.Nullable[uuid.UUID] `json:"property_id,omitempty"`
+
+	// Service The service the check watches, by the name its records and spans give.
+	Service        nullable.Nullable[string] `json:"service,omitempty"`
+	TimeoutSeconds *int                      `json:"timeout_seconds,omitempty"`
+
+	// Url An `http` or `https` URL without credentials.
+	//
+	// Examples: https://api.example.com/healthz
+	Url string `json:"url"`
+}
+
+// MonitorCheckError Why a run failed: `dns` (the name did not resolve), `refused_address` (it resolved, or a
+// redirect led, to an address the server will not call), `connect`, `tls` (the handshake or
+// the certificate failed), `timeout`, `status` (a status not in `expected_statuses`),
+// `keyword`, `redirects` (more than `max_redirects`, or a redirect to a URL that is not
+// allowed), `other`.
+type MonitorCheckError string
+
+// MonitorCheckFields defines model for MonitorCheckFields.
+type MonitorCheckFields struct {
+	// CertWarningDays An `https` check's certificate expiring within this many days raises `certificate` alerts.
+	CertWarningDays *int `json:"cert_warning_days,omitempty"`
+
+	// ExpectedStatuses The status codes that count as up, from 200 to 399; any status from 200 to 399 when empty.
+	ExpectedStatuses *[]int `json:"expected_statuses,omitempty"`
+
+	// FailuresBeforeDown Failed runs in a row before the check is down; each failed run was already tried again after 20 seconds.
+	FailuresBeforeDown *int                  `json:"failures_before_down,omitempty"`
+	Headers            *[]MonitorCheckHeader `json:"headers,omitempty"`
+
+	// IntervalSeconds At least `YUVA_MONITOR_MIN_INTERVAL` (`422 interval_too_short`).
+	IntervalSeconds *int `json:"interval_seconds,omitempty"`
+
+	// Keyword Text the first 64 KiB of the answer must contain (or, with `keyword_absent`, must not); `GET` only.
+	Keyword       nullable.Nullable[string] `json:"keyword,omitempty"`
+	KeywordAbsent *bool                     `json:"keyword_absent,omitempty"`
+
+	// MaxRedirects Redirects followed; every hop goes through the same address checks. `0` judges the redirect's own status.
+	MaxRedirects *int                `json:"max_redirects,omitempty"`
+	Method       *MonitorCheckMethod `json:"method,omitempty"`
+	Name         *string             `json:"name,omitempty"`
+	Paused       *bool               `json:"paused,omitempty"`
+
+	// PropertyId The property whose `uptime` dataset and reports include the check.
+	PropertyId nullable.Nullable[uuid.UUID] `json:"property_id,omitempty"`
+
+	// Service The service the check watches, by the name its records and spans give.
+	Service        nullable.Nullable[string] `json:"service,omitempty"`
+	TimeoutSeconds *int                      `json:"timeout_seconds,omitempty"`
+
+	// Url An `http` or `https` URL without credentials.
+	//
+	// Examples: https://api.example.com/healthz
+	Url *string `json:"url,omitempty"`
+}
+
+// MonitorCheckHeader defines model for MonitorCheckHeader.
+type MonitorCheckHeader struct {
+	// Name A request header, such as `Authorization`. `Host`, `Cookie`, `Content-Length`,
+	// `Transfer-Encoding`, `Connection`, `Upgrade`, `TE`, `Trailer` and `Proxy-*` cannot
+	// be set.
+	Name string `json:"name"`
+
+	// Value Kept encrypted under the server's master key and never returned.
+	Value string `json:"value"`
+}
+
+// MonitorCheckList defines model for MonitorCheckList.
+type MonitorCheckList struct {
+	// HostLimit Checks on one host at most.
+	HostLimit int            `json:"host_limit"`
+	Items     []MonitorCheck `json:"items"`
+
+	// Limit The workspace's checks at most (`YUVA_MONITOR_CHECKS`).
+	Limit int `json:"limit"`
+
+	// MinIntervalSeconds The shortest interval this server allows (`YUVA_MONITOR_MIN_INTERVAL`).
+	MinIntervalSeconds *int `json:"min_interval_seconds,omitempty"`
+}
+
+// MonitorCheckMethod defines model for MonitorCheckMethod.
+type MonitorCheckMethod string
+
+// MonitorCheckRef defines model for MonitorCheckRef.
+type MonitorCheckRef struct {
+	Id   uuid.UUID `json:"id"`
+	Name string    `json:"name"`
+	Url  string    `json:"url"`
+}
+
+// MonitorCheckResult defines model for MonitorCheckResult.
+type MonitorCheckResult struct {
+	// At When the counted try started.
+	At time.Time `json:"at"`
+
+	// CertDaysLeft `https`: whole days until the server's certificate expires.
+	CertDaysLeft *int `json:"cert_days_left,omitempty"`
+
+	// Detail What went wrong, for members; at most 200 characters.
+	Detail *string `json:"detail,omitempty"`
+
+	// Error Why a run failed: `dns` (the name did not resolve), `refused_address` (it resolved, or a
+	// redirect led, to an address the server will not call), `connect`, `tls` (the handshake or
+	// the certificate failed), `timeout`, `status` (a status not in `expected_statuses`),
+	// `keyword`, `redirects` (more than `max_redirects`, or a redirect to a URL that is not
+	// allowed), `other`.
+	Error     *MonitorCheckError `json:"error,omitempty"`
+	Ok        bool               `json:"ok"`
+	Redirects int                `json:"redirects"`
+
+	// Retried The first try failed and this is the try 20 seconds later.
+	Retried bool `json:"retried"`
+
+	// State The check's state after the run; `unknown` when the run fell in a minute where at least
+	// 20 checks ran on the server and more than half of them failed, which points at the
+	// server's own network, so it counts neither way; `pending` until its minute is judged,
+	// about a minute after it closed.
+	State MonitorCheckResultState `json:"state"`
+
+	// Status The last answer's status; 0 when none came.
+	Status int `json:"status"`
+
+	// Timings Milliseconds; redirects add up their hops, `ttfb` is until the last answer's first byte and `total` until its body was read.
+	Timings MonitorCheckTimings `json:"timings"`
+}
+
+// MonitorCheckResultState The check's state after the run; `unknown` when the run fell in a minute where at least
+// 20 checks ran on the server and more than half of them failed, which points at the
+// server's own network, so it counts neither way; `pending` until its minute is judged,
+// about a minute after it closed.
+type MonitorCheckResultState string
+
+// MonitorCheckResultList defines model for MonitorCheckResultList.
+type MonitorCheckResultList struct {
+	Items []MonitorCheckResult `json:"items"`
+}
+
+// MonitorCheckState `unknown` until the first counted run, then `up`, or `down` once `failures_before_down`
+// runs in a row failed.
+type MonitorCheckState string
+
+// MonitorCheckTimings Milliseconds; redirects add up their hops, `ttfb` is until the last answer's first byte and `total` until its body was read.
+type MonitorCheckTimings struct {
+	Connect float64 `json:"connect"`
+	Dns     float64 `json:"dns"`
+	Tls     float64 `json:"tls"`
+	Total   float64 `json:"total"`
+	Ttfb    float64 `json:"ttfb"`
+}
+
+// MonitorCheckUpdate defines model for MonitorCheckUpdate.
+type MonitorCheckUpdate struct {
+	// CertWarningDays An `https` check's certificate expiring within this many days raises `certificate` alerts.
+	CertWarningDays *int `json:"cert_warning_days,omitempty"`
+
+	// ExpectedStatuses The status codes that count as up, from 200 to 399; any status from 200 to 399 when empty.
+	ExpectedStatuses *[]int `json:"expected_statuses,omitempty"`
+
+	// FailuresBeforeDown Failed runs in a row before the check is down; each failed run was already tried again after 20 seconds.
+	FailuresBeforeDown *int                  `json:"failures_before_down,omitempty"`
+	Headers            *[]MonitorCheckHeader `json:"headers,omitempty"`
+
+	// IntervalSeconds At least `YUVA_MONITOR_MIN_INTERVAL` (`422 interval_too_short`).
+	IntervalSeconds *int `json:"interval_seconds,omitempty"`
+
+	// Keyword Text the first 64 KiB of the answer must contain (or, with `keyword_absent`, must not); `GET` only.
+	Keyword       nullable.Nullable[string] `json:"keyword,omitempty"`
+	KeywordAbsent *bool                     `json:"keyword_absent,omitempty"`
+
+	// MaxRedirects Redirects followed; every hop goes through the same address checks. `0` judges the redirect's own status.
+	MaxRedirects *int                `json:"max_redirects,omitempty"`
+	Method       *MonitorCheckMethod `json:"method,omitempty"`
+	Name         *string             `json:"name,omitempty"`
+	Paused       *bool               `json:"paused,omitempty"`
+
+	// PropertyId The property whose `uptime` dataset and reports include the check.
+	PropertyId nullable.Nullable[uuid.UUID] `json:"property_id,omitempty"`
+
+	// Service The service the check watches, by the name its records and spans give.
+	Service        nullable.Nullable[string] `json:"service,omitempty"`
+	TimeoutSeconds *int                      `json:"timeout_seconds,omitempty"`
+
+	// Url An `http` or `https` URL without credentials.
+	//
+	// Examples: https://api.example.com/healthz
+	Url *string `json:"url,omitempty"`
+}
+
 // NotificationChannels defines model for NotificationChannels.
 type NotificationChannels struct {
 	// Email An e-mail when it is still unread after `email_delay_minutes`.
@@ -13404,7 +14216,7 @@ type PushNotification struct {
 	Body           string     `json:"body"`
 	ConversationId *uuid.UUID `json:"conversation_id,omitempty"`
 
-	// Event What caused it (see the `notifications` tag), or `test`.
+	// Event What caused it (see the `notifications` tag), `monitor_alert` (an API monitoring alert fired or resolved, `url` its rule's page), or `test`.
 	Event   PushNotificationEvent `json:"event"`
 	InboxId *uuid.UUID            `json:"inbox_id,omitempty"`
 
@@ -13425,7 +14237,7 @@ type PushNotification struct {
 	WorkspaceId *uuid.UUID `json:"workspace_id,omitempty"`
 }
 
-// PushNotificationEvent What caused it (see the `notifications` tag), or `test`.
+// PushNotificationEvent What caused it (see the `notifications` tag), `monitor_alert` (an API monitoring alert fired or resolved, `url` its rule's page), or `test`.
 type PushNotificationEvent string
 
 // PushSubscription defines model for PushSubscription.
@@ -14348,6 +15160,19 @@ type WebhookMessagePayload struct {
 	WorkspaceId uuid.UUID        `json:"workspace_id"`
 }
 
+// WebhookMonitorAlertPayload defines model for WebhookMonitorAlertPayload.
+type WebhookMonitorAlertPayload struct {
+	Data MonitorAlertEventData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
+}
+
 // WebhookPayloadBase Standard Webhooks payload envelope.
 type WebhookPayloadBase struct {
 	// InboxId The conversation's inbox; absent for contact events.
@@ -14564,6 +15389,12 @@ type MessageId = uuid.UUID
 
 // MigrationId defines model for MigrationId.
 type MigrationId = uuid.UUID
+
+// MonitorAlertRuleId defines model for MonitorAlertRuleId.
+type MonitorAlertRuleId = uuid.UUID
+
+// MonitorCheckId defines model for MonitorCheckId.
+type MonitorCheckId = uuid.UUID
 
 // OAuthGrantId defines model for OAuthGrantId.
 type OAuthGrantId = uuid.UUID
@@ -16603,6 +17434,115 @@ type UploadMigrationPartParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListMonitorAlertRulesParams defines parameters for ListMonitorAlertRules.
+type ListMonitorAlertRulesParams struct {
+	PropertyId *uuid.UUID `form:"property_id,omitempty" json:"property_id,omitempty"`
+	CheckId    *uuid.UUID `form:"check_id,omitempty" json:"check_id,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateMonitorAlertRuleParams defines parameters for CreateMonitorAlertRule.
+type CreateMonitorAlertRuleParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteMonitorAlertRuleParams defines parameters for DeleteMonitorAlertRule.
+type DeleteMonitorAlertRuleParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetMonitorAlertRuleParams defines parameters for GetMonitorAlertRule.
+type GetMonitorAlertRuleParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateMonitorAlertRuleParams defines parameters for UpdateMonitorAlertRule.
+type UpdateMonitorAlertRuleParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListMonitorAlertsParams defines parameters for ListMonitorAlerts.
+type ListMonitorAlertsParams struct {
+	// State `firing` or `resolved`; both when absent.
+	State      *MonitorAlertState `form:"state,omitempty" json:"state,omitempty"`
+	PropertyId *uuid.UUID         `form:"property_id,omitempty" json:"property_id,omitempty"`
+	CheckId    *uuid.UUID         `form:"check_id,omitempty" json:"check_id,omitempty"`
+	RuleId     *uuid.UUID         `form:"rule_id,omitempty" json:"rule_id,omitempty"`
+
+	// Before `fired_at` of the last alert of the previous page.
+	Before *time.Time `form:"before,omitempty" json:"before,omitempty"`
+	Limit  *int       `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListMonitorChecksParams defines parameters for ListMonitorChecks.
+type ListMonitorChecksParams struct {
+	PropertyId *uuid.UUID `form:"property_id,omitempty" json:"property_id,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateMonitorCheckParams defines parameters for CreateMonitorCheck.
+type CreateMonitorCheckParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteMonitorCheckParams defines parameters for DeleteMonitorCheck.
+type DeleteMonitorCheckParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetMonitorCheckParams defines parameters for GetMonitorCheck.
+type GetMonitorCheckParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateMonitorCheckParams defines parameters for UpdateMonitorCheck.
+type UpdateMonitorCheckParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListMonitorCheckResultsParams defines parameters for ListMonitorCheckResults.
+type ListMonitorCheckResultsParams struct {
+	// Before `at` of the last run of the previous page.
+	Before *time.Time `form:"before,omitempty" json:"before,omitempty"`
+	Limit  *int       `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// QueryMonitoringParams defines parameters for QueryMonitoring.
+type QueryMonitoringParams struct {
+	// Format `json` (the default) or `csv`.
+	Format *QueryMonitoringParamsFormat `form:"format,omitempty" json:"format,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// QueryMonitoringParamsFormat defines parameters for QueryMonitoring.
+type QueryMonitoringParamsFormat string
+
 // ListOAuthGrantsParams defines parameters for ListOAuthGrants.
 type ListOAuthGrantsParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
@@ -16957,6 +17897,20 @@ type WebhookFeedbackCreatedParams struct {
 
 // WebhookMessageCreatedParams defines parameters for WebhookMessageCreated.
 type WebhookMessageCreatedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookMonitorAlertParams defines parameters for WebhookMonitorAlert.
+type WebhookMonitorAlertParams struct {
 	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
 	WebhookId WebhookIdHeader `json:"webhook-id"`
 
@@ -17339,6 +18293,21 @@ type CompleteMigrationUploadJSONRequestBody = MigrationUploadComplete
 // UploadMigrationPartMultipartRequestBody defines body for UploadMigrationPart for multipart/form-data ContentType.
 type UploadMigrationPartMultipartRequestBody = MigrationUploadPartInput
 
+// CreateMonitorAlertRuleJSONRequestBody defines body for CreateMonitorAlertRule for application/json ContentType.
+type CreateMonitorAlertRuleJSONRequestBody = MonitorAlertRuleCreate
+
+// UpdateMonitorAlertRuleJSONRequestBody defines body for UpdateMonitorAlertRule for application/json ContentType.
+type UpdateMonitorAlertRuleJSONRequestBody = MonitorAlertRuleUpdate
+
+// CreateMonitorCheckJSONRequestBody defines body for CreateMonitorCheck for application/json ContentType.
+type CreateMonitorCheckJSONRequestBody = MonitorCheckCreate
+
+// UpdateMonitorCheckJSONRequestBody defines body for UpdateMonitorCheck for application/json ContentType.
+type UpdateMonitorCheckJSONRequestBody = MonitorCheckUpdate
+
+// QueryMonitoringJSONRequestBody defines body for QueryMonitoring for application/json ContentType.
+type QueryMonitoringJSONRequestBody = AnalyticsQuery
+
 // ApproveOAuthRequestJSONRequestBody defines body for ApproveOAuthRequest for application/json ContentType.
 type ApproveOAuthRequestJSONRequestBody = OAuthApproval
 
@@ -17407,6 +18376,9 @@ type WebhookFeedbackCreatedJSONRequestBody = WebhookFeedbackPayload
 
 // WebhookMessageCreatedJSONRequestBody defines body for WebhookMessageCreated for application/json ContentType.
 type WebhookMessageCreatedJSONRequestBody = WebhookMessagePayload
+
+// WebhookMonitorAlertJSONRequestBody defines body for WebhookMonitorAlert for application/json ContentType.
+type WebhookMonitorAlertJSONRequestBody = WebhookMonitorAlertPayload
 
 // WebhookSubscriptionCreatedJSONRequestBody defines body for WebhookSubscriptionCreated for application/json ContentType.
 type WebhookSubscriptionCreatedJSONRequestBody = WebhookSubscriptionPayload
@@ -19550,6 +20522,32 @@ func (t *RealtimeMessage) MergeAnalyticsAlertEvent(v AnalyticsAlertEvent) error 
 	return err
 }
 
+// AsMonitorAlertEvent returns the union data inside the RealtimeMessage as a MonitorAlertEvent
+func (t RealtimeMessage) AsMonitorAlertEvent() (MonitorAlertEvent, error) {
+	var body MonitorAlertEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromMonitorAlertEvent overwrites any union data inside the RealtimeMessage as the provided MonitorAlertEvent
+func (t *RealtimeMessage) FromMonitorAlertEvent(v MonitorAlertEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeMonitorAlertEvent performs a merge with any union data inside the RealtimeMessage, using the provided MonitorAlertEvent
+func (t *RealtimeMessage) MergeMonitorAlertEvent(v MonitorAlertEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsMigrationProgressEvent returns the union data inside the RealtimeMessage as a MigrationProgressEvent
 func (t RealtimeMessage) AsMigrationProgressEvent() (MigrationProgressEvent, error) {
 	var body MigrationProgressEvent
@@ -19912,6 +20910,8 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsMigrationProgressEvent()
 	case "migration.updated":
 		return t.AsMigrationEvent()
+	case "monitor.alert":
+		return t.AsMonitorAlertEvent()
 	case "ready":
 		return t.AsRealtimeReady()
 	case "resync_required":
@@ -20433,6 +21433,32 @@ func (t *StoredEvent) MergeAnalyticsAlertEvent(v AnalyticsAlertEvent) error {
 	return err
 }
 
+// AsMonitorAlertEvent returns the union data inside the StoredEvent as a MonitorAlertEvent
+func (t StoredEvent) AsMonitorAlertEvent() (MonitorAlertEvent, error) {
+	var body MonitorAlertEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromMonitorAlertEvent overwrites any union data inside the StoredEvent as the provided MonitorAlertEvent
+func (t *StoredEvent) FromMonitorAlertEvent(v MonitorAlertEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeMonitorAlertEvent performs a merge with any union data inside the StoredEvent, using the provided MonitorAlertEvent
+func (t *StoredEvent) MergeMonitorAlertEvent(v MonitorAlertEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 func (t StoredEvent) Discriminator() (string, error) {
 	var discriminator struct {
 		Discriminator string `json:"type"`
@@ -20495,6 +21521,8 @@ func (t StoredEvent) ValueByDiscriminator() (interface{}, error) {
 		return t.AsMessageUpdatedEvent()
 	case "migration.updated":
 		return t.AsMigrationEvent()
+	case "monitor.alert":
+		return t.AsMonitorAlertEvent()
 	case "subscription.created":
 		return t.AsSubscriptionEvent()
 	case "subscription.updated":
@@ -21880,7 +22908,9 @@ type ClientInterface interface {
 	// inbox: agents of that inbox can then read it. A workspace has at most
 	// `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties (`403 property_limit`). A children's
 	// property (`audience: children`) cannot offer `consent_features` or `tracked_props`; an API
-	// property offers neither, and `audience` does not apply to it.
+	// property offers neither, and `audience` does not apply to it. A new API property gets one
+	// alert rule (`createMonitorAlertRule`): `error_rate` above 5% over 5 minutes with at least 20
+	// requests, sent to the member who created it.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -21896,7 +22926,9 @@ type ClientInterface interface {
 	// inbox: agents of that inbox can then read it. A workspace has at most
 	// `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties (`403 property_limit`). A children's
 	// property (`audience: children`) cannot offer `consent_features` or `tracked_props`; an API
-	// property offers neither, and `audience` does not apply to it.
+	// property offers neither, and `audience` does not apply to it. A new API property gets one
+	// alert rule (`createMonitorAlertRule`): `error_rate` above 5% over 5 minutes with at least 20
+	// requests, sent to the member who created it.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -22805,6 +23837,11 @@ type ClientInterface interface {
 	// are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
 	// session only; the member must see the property.
 	//
+	// An API property's report gives its requests, error and client error rates and p95 against
+	// the period before, its slowest and most failing routes, the uptime of its checks and the
+	// alerts of the period. Its alerts are rules (`createMonitorAlertRule`), so `alerts` does not
+	// apply to it.
+	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with PUT /v1/analytics/properties/{propertyId}/subscription (the `UpdateAnalyticsSubscription` operationId).
@@ -22817,6 +23854,11 @@ type ClientInterface interface {
 	// member's address: plain numbers, no images, nothing that tracks opening or clicks. Alerts
 	// are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
 	// session only; the member must see the property.
+	//
+	// An API property's report gives its requests, error and client error rates and p95 against
+	// the period before, its slowest and most failing routes, the uptime of its checks and the
+	// alerts of the period. Its alerts are rules (`createMonitorAlertRule`), so `alerts` does not
+	// apply to it.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -26244,6 +27286,240 @@ type ClientInterface interface {
 	// Corresponds with POST /v1/migrations/{migrationId}/upload/parts/{part} (the `UploadMigrationPart` operationId).
 	UploadMigrationPartWithBody(ctx context.Context, migrationId MigrationId, part int32, params *UploadMigrationPartParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListMonitorAlertRules List alert rules
+	//
+	// The workspace's API monitoring alert rules, oldest first: those on a property the caller
+	// can see, and every rule on checks. `property_id` and `check_id` narrow the list.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with GET /v1/monitoring/alert-rules (the `ListMonitorAlertRules` operationId).
+	ListMonitorAlertRules(ctx context.Context, params *ListMonitorAlertRulesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateMonitorAlertRuleWithBody Create an alert rule
+	//
+	// A rule the `monitor_alerts` job checks every minute over the minutes that closed
+	// (`MonitorAlertRuleKind`). An alert is open per rule and key (the rule's subject, or each
+	// route or check it covers) while its condition holds: it fires once, and resolves once when
+	// the value has been back inside the threshold with a 10% margin for a whole window. Both
+	// write a `monitor.alert` event and webhook, an annotation on the property, and reach the
+	// rule's `recipients` by e-mail and Web Push. A workspace has at most 200 rules
+	// (`403 rule_limit`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/monitoring/alert-rules (the `CreateMonitorAlertRule` operationId).
+	CreateMonitorAlertRuleWithBody(ctx context.Context, params *CreateMonitorAlertRuleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateMonitorAlertRule Create an alert rule
+	//
+	// A rule the `monitor_alerts` job checks every minute over the minutes that closed
+	// (`MonitorAlertRuleKind`). An alert is open per rule and key (the rule's subject, or each
+	// route or check it covers) while its condition holds: it fires once, and resolves once when
+	// the value has been back inside the threshold with a 10% margin for a whole window. Both
+	// write a `monitor.alert` event and webhook, an annotation on the property, and reach the
+	// rule's `recipients` by e-mail and Web Push. A workspace has at most 200 rules
+	// (`403 rule_limit`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/monitoring/alert-rules (the `CreateMonitorAlertRule` operationId).
+	CreateMonitorAlertRule(ctx context.Context, params *CreateMonitorAlertRuleParams, body CreateMonitorAlertRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteMonitorAlertRule Delete an alert rule
+	//
+	// Deletes the rule and its alerts; their annotations stay.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Corresponds with DELETE /v1/monitoring/alert-rules/{ruleId} (the `DeleteMonitorAlertRule` operationId).
+	DeleteMonitorAlertRule(ctx context.Context, ruleId MonitorAlertRuleId, params *DeleteMonitorAlertRuleParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetMonitorAlertRule Get an alert rule
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with GET /v1/monitoring/alert-rules/{ruleId} (the `GetMonitorAlertRule` operationId).
+	GetMonitorAlertRule(ctx context.Context, ruleId MonitorAlertRuleId, params *GetMonitorAlertRuleParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateMonitorAlertRuleWithBody Update an alert rule
+	//
+	// Changes the given fields; the rule is checked whole afterwards. Its kind and subject
+	// (`property_id`, `route`, `service`, `check_id`) stay. A changed threshold or window applies
+	// from the next minute, to open alerts too; `enabled: false` resolves the rule's open alerts
+	// without telling anyone.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/monitoring/alert-rules/{ruleId} (the `UpdateMonitorAlertRule` operationId).
+	UpdateMonitorAlertRuleWithBody(ctx context.Context, ruleId MonitorAlertRuleId, params *UpdateMonitorAlertRuleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateMonitorAlertRule Update an alert rule
+	//
+	// Changes the given fields; the rule is checked whole afterwards. Its kind and subject
+	// (`property_id`, `route`, `service`, `check_id`) stay. A changed threshold or window applies
+	// from the next minute, to open alerts too; `enabled: false` resolves the rule's open alerts
+	// without telling anyone.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/monitoring/alert-rules/{ruleId} (the `UpdateMonitorAlertRule` operationId).
+	UpdateMonitorAlertRule(ctx context.Context, ruleId MonitorAlertRuleId, params *UpdateMonitorAlertRuleParams, body UpdateMonitorAlertRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListMonitorAlerts List alerts
+	//
+	// Alerts the rules raised, newest first, at most `limit`: open ones (`state: firing`) and
+	// resolved ones, of the rules the caller can see (`listMonitorAlertRules`). Resolved alerts
+	// are kept 400 days. With `before`, older ones.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with GET /v1/monitoring/alerts (the `ListMonitorAlerts` operationId).
+	ListMonitorAlerts(ctx context.Context, params *ListMonitorAlertsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListMonitorChecks List uptime checks
+	//
+	// The workspace's uptime checks by name, each with its state and last result. Every member
+	// sees every check. `property_id` narrows the list to the checks of one property.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with GET /v1/monitoring/checks (the `ListMonitorChecks` operationId).
+	ListMonitorChecks(ctx context.Context, params *ListMonitorChecksParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateMonitorCheckWithBody Create an uptime check
+	//
+	// Starts calling a URL from the server on an interval (`MonitorCheckCreate`). The URL is
+	// refused (`422 refused_address`) when it names credentials, `localhost`, or an address the
+	// server will not call: loopback, private, link-local, CGNAT, multicast and reserved
+	// addresses, and cloud metadata addresses. A host name is resolved when the check is saved
+	// and again on every run, and refused when any of its addresses is one of those.
+	// `YUVA_MONITOR_ALLOW_PRIVATE=true` lets a self-hosted server call private and loopback
+	// addresses; link-local and metadata addresses are refused even then.
+	//
+	// A workspace has at most `YUVA_MONITOR_CHECKS` checks (500, or 50 on a server with open
+	// sign-up; `403 check_limit`) and at most 10 on one host (`403 host_limit`). The interval is
+	// at least `YUVA_MONITOR_MIN_INTERVAL` (30 s, or 60 s with open sign-up). A member who creates
+	// a check gets an alert rule of kind `check_state` for it, sent to them.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/monitoring/checks (the `CreateMonitorCheck` operationId).
+	CreateMonitorCheckWithBody(ctx context.Context, params *CreateMonitorCheckParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateMonitorCheck Create an uptime check
+	//
+	// Starts calling a URL from the server on an interval (`MonitorCheckCreate`). The URL is
+	// refused (`422 refused_address`) when it names credentials, `localhost`, or an address the
+	// server will not call: loopback, private, link-local, CGNAT, multicast and reserved
+	// addresses, and cloud metadata addresses. A host name is resolved when the check is saved
+	// and again on every run, and refused when any of its addresses is one of those.
+	// `YUVA_MONITOR_ALLOW_PRIVATE=true` lets a self-hosted server call private and loopback
+	// addresses; link-local and metadata addresses are refused even then.
+	//
+	// A workspace has at most `YUVA_MONITOR_CHECKS` checks (500, or 50 on a server with open
+	// sign-up; `403 check_limit`) and at most 10 on one host (`403 host_limit`). The interval is
+	// at least `YUVA_MONITOR_MIN_INTERVAL` (30 s, or 60 s with open sign-up). A member who creates
+	// a check gets an alert rule of kind `check_state` for it, sent to them.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/monitoring/checks (the `CreateMonitorCheck` operationId).
+	CreateMonitorCheck(ctx context.Context, params *CreateMonitorCheckParams, body CreateMonitorCheckJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteMonitorCheck Delete an uptime check
+	//
+	// Deletes the check with its results, its daily rows, the alert rules that name it and their
+	// alerts.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Corresponds with DELETE /v1/monitoring/checks/{checkId} (the `DeleteMonitorCheck` operationId).
+	DeleteMonitorCheck(ctx context.Context, checkId MonitorCheckId, params *DeleteMonitorCheckParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetMonitorCheck Get an uptime check
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with GET /v1/monitoring/checks/{checkId} (the `GetMonitorCheck` operationId).
+	GetMonitorCheck(ctx context.Context, checkId MonitorCheckId, params *GetMonitorCheckParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateMonitorCheckWithBody Update an uptime check
+	//
+	// Changes the given fields; the check is checked whole afterwards, as when it was created.
+	// `headers` replaces every header, values included. A changed URL, method or interval runs
+	// the check next right away; `paused: true` stops running it and `false` runs it now.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/monitoring/checks/{checkId} (the `UpdateMonitorCheck` operationId).
+	UpdateMonitorCheckWithBody(ctx context.Context, checkId MonitorCheckId, params *UpdateMonitorCheckParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateMonitorCheck Update an uptime check
+	//
+	// Changes the given fields; the check is checked whole afterwards, as when it was created.
+	// `headers` replaces every header, values included. A changed URL, method or interval runs
+	// the check next right away; `paused: true` stops running it and `false` runs it now.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/monitoring/checks/{checkId} (the `UpdateMonitorCheck` operationId).
+	UpdateMonitorCheck(ctx context.Context, checkId MonitorCheckId, params *UpdateMonitorCheckParams, body UpdateMonitorCheckJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListMonitorCheckResults List a check's runs
+	//
+	// The check's counted runs, newest first, with their timings: a run that failed was tried
+	// again after 20 seconds, and only that second try is listed (`retried`). Runs are kept
+	// `YUVA_MONITOR_CHECK_DAYS` days (30); older days are in the `uptime` dataset of
+	// `queryMonitoring`. With `before`, older runs.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with GET /v1/monitoring/checks/{checkId}/results (the `ListMonitorCheckResults` operationId).
+	ListMonitorCheckResults(ctx context.Context, checkId MonitorCheckId, params *ListMonitorCheckResultsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// QueryMonitoringWithBody Query the workspace's uptime checks
+	//
+	// The query operation of `queryAnalytics` over every uptime check of the workspace, with
+	// `dataset: uptime` (`AnalyticsDataset`): the same body and answer, and the same numbers as
+	// `queryAnalytics` on a property gives for that property's checks. Every member may call it.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/monitoring/query (the `QueryMonitoring` operationId).
+	QueryMonitoringWithBody(ctx context.Context, params *QueryMonitoringParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// QueryMonitoring Query the workspace's uptime checks
+	//
+	// The query operation of `queryAnalytics` over every uptime check of the workspace, with
+	// `dataset: uptime` (`AnalyticsDataset`): the same body and answer, and the same numbers as
+	// `queryAnalytics` on a property gives for that property's checks. Every member may call it.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/monitoring/query (the `QueryMonitoring` operationId).
+	QueryMonitoring(ctx context.Context, params *QueryMonitoringParams, body QueryMonitoringJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListOAuthGrants List connected apps
 	//
 	// With a member session. A member sees their own grants in the workspace; owners and admins
@@ -28671,7 +29947,9 @@ func (c *Client) ListAnalyticsProperties(ctx context.Context, params *ListAnalyt
 // inbox: agents of that inbox can then read it. A workspace has at most
 // `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties (`403 property_limit`). A children's
 // property (`audience: children`) cannot offer `consent_features` or `tracked_props`; an API
-// property offers neither, and `audience` does not apply to it.
+// property offers neither, and `audience` does not apply to it. A new API property gets one
+// alert rule (`createMonitorAlertRule`): `error_rate` above 5% over 5 minutes with at least 20
+// requests, sent to the member who created it.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -28697,7 +29975,9 @@ func (c *Client) CreateAnalyticsPropertyWithBody(ctx context.Context, params *Cr
 // inbox: agents of that inbox can then read it. A workspace has at most
 // `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties (`403 property_limit`). A children's
 // property (`audience: children`) cannot offer `consent_features` or `tracked_props`; an API
-// property offers neither, and `audience` does not apply to it.
+// property offers neither, and `audience` does not apply to it. A new API property gets one
+// alert rule (`createMonitorAlertRule`): `error_rate` above 5% over 5 minutes with at least 20
+// requests, sent to the member who created it.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -30216,6 +31496,11 @@ func (c *Client) GetAnalyticsSubscription(ctx context.Context, propertyId Analyt
 // are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
 // session only; the member must see the property.
 //
+// An API property's report gives its requests, error and client error rates and p95 against
+// the period before, its slowest and most failing routes, the uptime of its checks and the
+// alerts of the period. Its alerts are rules (`createMonitorAlertRule`), so `alerts` does not
+// apply to it.
+//
 // Takes any type of body and a specified content type.
 //
 // Corresponds with PUT /v1/analytics/properties/{propertyId}/subscription (the `UpdateAnalyticsSubscription` operationId).
@@ -30238,6 +31523,11 @@ func (c *Client) UpdateAnalyticsSubscriptionWithBody(ctx context.Context, proper
 // member's address: plain numbers, no images, nothing that tracks opening or clicks. Alerts
 // are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
 // session only; the member must see the property.
+//
+// An API property's report gives its requests, error and client error rates and p95 against
+// the period before, its slowest and most failing routes, the uptime of its checks and the
+// alerts of the period. Its alerts are rules (`createMonitorAlertRule`), so `alerts` does not
+// apply to it.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -36245,6 +37535,420 @@ func (c *Client) CompleteMigrationUpload(ctx context.Context, migrationId Migrat
 // Corresponds with POST /v1/migrations/{migrationId}/upload/parts/{part} (the `UploadMigrationPart` operationId).
 func (c *Client) UploadMigrationPartWithBody(ctx context.Context, migrationId MigrationId, part int32, params *UploadMigrationPartParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUploadMigrationPartRequestWithBody(c.Server, migrationId, part, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListMonitorAlertRules List alert rules
+//
+// The workspace's API monitoring alert rules, oldest first: those on a property the caller
+// can see, and every rule on checks. `property_id` and `check_id` narrow the list.
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with GET /v1/monitoring/alert-rules (the `ListMonitorAlertRules` operationId).
+func (c *Client) ListMonitorAlertRules(ctx context.Context, params *ListMonitorAlertRulesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListMonitorAlertRulesRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateMonitorAlertRuleWithBody Create an alert rule
+//
+// A rule the `monitor_alerts` job checks every minute over the minutes that closed
+// (`MonitorAlertRuleKind`). An alert is open per rule and key (the rule's subject, or each
+// route or check it covers) while its condition holds: it fires once, and resolves once when
+// the value has been back inside the threshold with a 10% margin for a whole window. Both
+// write a `monitor.alert` event and webhook, an annotation on the property, and reach the
+// rule's `recipients` by e-mail and Web Push. A workspace has at most 200 rules
+// (`403 rule_limit`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/monitoring/alert-rules (the `CreateMonitorAlertRule` operationId).
+func (c *Client) CreateMonitorAlertRuleWithBody(ctx context.Context, params *CreateMonitorAlertRuleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateMonitorAlertRuleRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateMonitorAlertRule Create an alert rule
+//
+// A rule the `monitor_alerts` job checks every minute over the minutes that closed
+// (`MonitorAlertRuleKind`). An alert is open per rule and key (the rule's subject, or each
+// route or check it covers) while its condition holds: it fires once, and resolves once when
+// the value has been back inside the threshold with a 10% margin for a whole window. Both
+// write a `monitor.alert` event and webhook, an annotation on the property, and reach the
+// rule's `recipients` by e-mail and Web Push. A workspace has at most 200 rules
+// (`403 rule_limit`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/monitoring/alert-rules (the `CreateMonitorAlertRule` operationId).
+func (c *Client) CreateMonitorAlertRule(ctx context.Context, params *CreateMonitorAlertRuleParams, body CreateMonitorAlertRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateMonitorAlertRuleRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteMonitorAlertRule Delete an alert rule
+//
+// Deletes the rule and its alerts; their annotations stay.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Corresponds with DELETE /v1/monitoring/alert-rules/{ruleId} (the `DeleteMonitorAlertRule` operationId).
+func (c *Client) DeleteMonitorAlertRule(ctx context.Context, ruleId MonitorAlertRuleId, params *DeleteMonitorAlertRuleParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteMonitorAlertRuleRequest(c.Server, ruleId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetMonitorAlertRule Get an alert rule
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with GET /v1/monitoring/alert-rules/{ruleId} (the `GetMonitorAlertRule` operationId).
+func (c *Client) GetMonitorAlertRule(ctx context.Context, ruleId MonitorAlertRuleId, params *GetMonitorAlertRuleParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetMonitorAlertRuleRequest(c.Server, ruleId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateMonitorAlertRuleWithBody Update an alert rule
+//
+// Changes the given fields; the rule is checked whole afterwards. Its kind and subject
+// (`property_id`, `route`, `service`, `check_id`) stay. A changed threshold or window applies
+// from the next minute, to open alerts too; `enabled: false` resolves the rule's open alerts
+// without telling anyone.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/monitoring/alert-rules/{ruleId} (the `UpdateMonitorAlertRule` operationId).
+func (c *Client) UpdateMonitorAlertRuleWithBody(ctx context.Context, ruleId MonitorAlertRuleId, params *UpdateMonitorAlertRuleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateMonitorAlertRuleRequestWithBody(c.Server, ruleId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateMonitorAlertRule Update an alert rule
+//
+// Changes the given fields; the rule is checked whole afterwards. Its kind and subject
+// (`property_id`, `route`, `service`, `check_id`) stay. A changed threshold or window applies
+// from the next minute, to open alerts too; `enabled: false` resolves the rule's open alerts
+// without telling anyone.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/monitoring/alert-rules/{ruleId} (the `UpdateMonitorAlertRule` operationId).
+func (c *Client) UpdateMonitorAlertRule(ctx context.Context, ruleId MonitorAlertRuleId, params *UpdateMonitorAlertRuleParams, body UpdateMonitorAlertRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateMonitorAlertRuleRequest(c.Server, ruleId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListMonitorAlerts List alerts
+//
+// Alerts the rules raised, newest first, at most `limit`: open ones (`state: firing`) and
+// resolved ones, of the rules the caller can see (`listMonitorAlertRules`). Resolved alerts
+// are kept 400 days. With `before`, older ones.
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with GET /v1/monitoring/alerts (the `ListMonitorAlerts` operationId).
+func (c *Client) ListMonitorAlerts(ctx context.Context, params *ListMonitorAlertsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListMonitorAlertsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListMonitorChecks List uptime checks
+//
+// The workspace's uptime checks by name, each with its state and last result. Every member
+// sees every check. `property_id` narrows the list to the checks of one property.
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with GET /v1/monitoring/checks (the `ListMonitorChecks` operationId).
+func (c *Client) ListMonitorChecks(ctx context.Context, params *ListMonitorChecksParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListMonitorChecksRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateMonitorCheckWithBody Create an uptime check
+//
+// Starts calling a URL from the server on an interval (`MonitorCheckCreate`). The URL is
+// refused (`422 refused_address`) when it names credentials, `localhost`, or an address the
+// server will not call: loopback, private, link-local, CGNAT, multicast and reserved
+// addresses, and cloud metadata addresses. A host name is resolved when the check is saved
+// and again on every run, and refused when any of its addresses is one of those.
+// `YUVA_MONITOR_ALLOW_PRIVATE=true` lets a self-hosted server call private and loopback
+// addresses; link-local and metadata addresses are refused even then.
+//
+// A workspace has at most `YUVA_MONITOR_CHECKS` checks (500, or 50 on a server with open
+// sign-up; `403 check_limit`) and at most 10 on one host (`403 host_limit`). The interval is
+// at least `YUVA_MONITOR_MIN_INTERVAL` (30 s, or 60 s with open sign-up). A member who creates
+// a check gets an alert rule of kind `check_state` for it, sent to them.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/monitoring/checks (the `CreateMonitorCheck` operationId).
+func (c *Client) CreateMonitorCheckWithBody(ctx context.Context, params *CreateMonitorCheckParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateMonitorCheckRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateMonitorCheck Create an uptime check
+//
+// Starts calling a URL from the server on an interval (`MonitorCheckCreate`). The URL is
+// refused (`422 refused_address`) when it names credentials, `localhost`, or an address the
+// server will not call: loopback, private, link-local, CGNAT, multicast and reserved
+// addresses, and cloud metadata addresses. A host name is resolved when the check is saved
+// and again on every run, and refused when any of its addresses is one of those.
+// `YUVA_MONITOR_ALLOW_PRIVATE=true` lets a self-hosted server call private and loopback
+// addresses; link-local and metadata addresses are refused even then.
+//
+// A workspace has at most `YUVA_MONITOR_CHECKS` checks (500, or 50 on a server with open
+// sign-up; `403 check_limit`) and at most 10 on one host (`403 host_limit`). The interval is
+// at least `YUVA_MONITOR_MIN_INTERVAL` (30 s, or 60 s with open sign-up). A member who creates
+// a check gets an alert rule of kind `check_state` for it, sent to them.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/monitoring/checks (the `CreateMonitorCheck` operationId).
+func (c *Client) CreateMonitorCheck(ctx context.Context, params *CreateMonitorCheckParams, body CreateMonitorCheckJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateMonitorCheckRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteMonitorCheck Delete an uptime check
+//
+// Deletes the check with its results, its daily rows, the alert rules that name it and their
+// alerts.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Corresponds with DELETE /v1/monitoring/checks/{checkId} (the `DeleteMonitorCheck` operationId).
+func (c *Client) DeleteMonitorCheck(ctx context.Context, checkId MonitorCheckId, params *DeleteMonitorCheckParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteMonitorCheckRequest(c.Server, checkId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetMonitorCheck Get an uptime check
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with GET /v1/monitoring/checks/{checkId} (the `GetMonitorCheck` operationId).
+func (c *Client) GetMonitorCheck(ctx context.Context, checkId MonitorCheckId, params *GetMonitorCheckParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetMonitorCheckRequest(c.Server, checkId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateMonitorCheckWithBody Update an uptime check
+//
+// Changes the given fields; the check is checked whole afterwards, as when it was created.
+// `headers` replaces every header, values included. A changed URL, method or interval runs
+// the check next right away; `paused: true` stops running it and `false` runs it now.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/monitoring/checks/{checkId} (the `UpdateMonitorCheck` operationId).
+func (c *Client) UpdateMonitorCheckWithBody(ctx context.Context, checkId MonitorCheckId, params *UpdateMonitorCheckParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateMonitorCheckRequestWithBody(c.Server, checkId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateMonitorCheck Update an uptime check
+//
+// Changes the given fields; the check is checked whole afterwards, as when it was created.
+// `headers` replaces every header, values included. A changed URL, method or interval runs
+// the check next right away; `paused: true` stops running it and `false` runs it now.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/monitoring/checks/{checkId} (the `UpdateMonitorCheck` operationId).
+func (c *Client) UpdateMonitorCheck(ctx context.Context, checkId MonitorCheckId, params *UpdateMonitorCheckParams, body UpdateMonitorCheckJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateMonitorCheckRequest(c.Server, checkId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListMonitorCheckResults List a check's runs
+//
+// The check's counted runs, newest first, with their timings: a run that failed was tried
+// again after 20 seconds, and only that second try is listed (`retried`). Runs are kept
+// `YUVA_MONITOR_CHECK_DAYS` days (30); older days are in the `uptime` dataset of
+// `queryMonitoring`. With `before`, older runs.
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with GET /v1/monitoring/checks/{checkId}/results (the `ListMonitorCheckResults` operationId).
+func (c *Client) ListMonitorCheckResults(ctx context.Context, checkId MonitorCheckId, params *ListMonitorCheckResultsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListMonitorCheckResultsRequest(c.Server, checkId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// QueryMonitoringWithBody Query the workspace's uptime checks
+//
+// The query operation of `queryAnalytics` over every uptime check of the workspace, with
+// `dataset: uptime` (`AnalyticsDataset`): the same body and answer, and the same numbers as
+// `queryAnalytics` on a property gives for that property's checks. Every member may call it.
+//
+// Scope: `analytics:read`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/monitoring/query (the `QueryMonitoring` operationId).
+func (c *Client) QueryMonitoringWithBody(ctx context.Context, params *QueryMonitoringParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewQueryMonitoringRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// QueryMonitoring Query the workspace's uptime checks
+//
+// The query operation of `queryAnalytics` over every uptime check of the workspace, with
+// `dataset: uptime` (`AnalyticsDataset`): the same body and answer, and the same numbers as
+// `queryAnalytics` on a property gives for that property's checks. Every member may call it.
+//
+// Scope: `analytics:read`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/monitoring/query (the `QueryMonitoring` operationId).
+func (c *Client) QueryMonitoring(ctx context.Context, params *QueryMonitoringParams, body QueryMonitoringJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewQueryMonitoringRequest(c.Server, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -54381,6 +56085,907 @@ func NewUploadMigrationPartRequestWithBody(server string, migrationId MigrationI
 	return req, nil
 }
 
+// NewListMonitorAlertRulesRequest constructs an http.Request for the ListMonitorAlertRules method
+func NewListMonitorAlertRulesRequest(server string, params *ListMonitorAlertRulesParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/monitoring/alert-rules")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.PropertyId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "property_id", *params.PropertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.CheckId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "check_id", *params.CheckId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateMonitorAlertRuleRequest calls the generic CreateMonitorAlertRule builder with application/json body
+func NewCreateMonitorAlertRuleRequest(server string, params *CreateMonitorAlertRuleParams, body CreateMonitorAlertRuleJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateMonitorAlertRuleRequestWithBody(server, params, "application/json", bodyReader)
+}
+
+// NewCreateMonitorAlertRuleRequestWithBody constructs an http.Request for the CreateMonitorAlertRule method, with any body, and a specified content type
+func NewCreateMonitorAlertRuleRequestWithBody(server string, params *CreateMonitorAlertRuleParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/monitoring/alert-rules")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteMonitorAlertRuleRequest constructs an http.Request for the DeleteMonitorAlertRule method
+func NewDeleteMonitorAlertRuleRequest(server string, ruleId MonitorAlertRuleId, params *DeleteMonitorAlertRuleParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleId", ruleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/monitoring/alert-rules/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetMonitorAlertRuleRequest constructs an http.Request for the GetMonitorAlertRule method
+func NewGetMonitorAlertRuleRequest(server string, ruleId MonitorAlertRuleId, params *GetMonitorAlertRuleParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleId", ruleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/monitoring/alert-rules/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateMonitorAlertRuleRequest calls the generic UpdateMonitorAlertRule builder with application/json body
+func NewUpdateMonitorAlertRuleRequest(server string, ruleId MonitorAlertRuleId, params *UpdateMonitorAlertRuleParams, body UpdateMonitorAlertRuleJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateMonitorAlertRuleRequestWithBody(server, ruleId, params, "application/json", bodyReader)
+}
+
+// NewUpdateMonitorAlertRuleRequestWithBody constructs an http.Request for the UpdateMonitorAlertRule method, with any body, and a specified content type
+func NewUpdateMonitorAlertRuleRequestWithBody(server string, ruleId MonitorAlertRuleId, params *UpdateMonitorAlertRuleParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleId", ruleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/monitoring/alert-rules/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListMonitorAlertsRequest constructs an http.Request for the ListMonitorAlerts method
+func NewListMonitorAlertsRequest(server string, params *ListMonitorAlertsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/monitoring/alerts")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.State != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "state", *params.State, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PropertyId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "property_id", *params.PropertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.CheckId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "check_id", *params.CheckId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.RuleId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "rule_id", *params.RuleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Before != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "before", *params.Before, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date-time"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListMonitorChecksRequest constructs an http.Request for the ListMonitorChecks method
+func NewListMonitorChecksRequest(server string, params *ListMonitorChecksParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/monitoring/checks")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.PropertyId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "property_id", *params.PropertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateMonitorCheckRequest calls the generic CreateMonitorCheck builder with application/json body
+func NewCreateMonitorCheckRequest(server string, params *CreateMonitorCheckParams, body CreateMonitorCheckJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateMonitorCheckRequestWithBody(server, params, "application/json", bodyReader)
+}
+
+// NewCreateMonitorCheckRequestWithBody constructs an http.Request for the CreateMonitorCheck method, with any body, and a specified content type
+func NewCreateMonitorCheckRequestWithBody(server string, params *CreateMonitorCheckParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/monitoring/checks")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteMonitorCheckRequest constructs an http.Request for the DeleteMonitorCheck method
+func NewDeleteMonitorCheckRequest(server string, checkId MonitorCheckId, params *DeleteMonitorCheckParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "checkId", checkId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/monitoring/checks/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetMonitorCheckRequest constructs an http.Request for the GetMonitorCheck method
+func NewGetMonitorCheckRequest(server string, checkId MonitorCheckId, params *GetMonitorCheckParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "checkId", checkId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/monitoring/checks/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateMonitorCheckRequest calls the generic UpdateMonitorCheck builder with application/json body
+func NewUpdateMonitorCheckRequest(server string, checkId MonitorCheckId, params *UpdateMonitorCheckParams, body UpdateMonitorCheckJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateMonitorCheckRequestWithBody(server, checkId, params, "application/json", bodyReader)
+}
+
+// NewUpdateMonitorCheckRequestWithBody constructs an http.Request for the UpdateMonitorCheck method, with any body, and a specified content type
+func NewUpdateMonitorCheckRequestWithBody(server string, checkId MonitorCheckId, params *UpdateMonitorCheckParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "checkId", checkId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/monitoring/checks/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListMonitorCheckResultsRequest constructs an http.Request for the ListMonitorCheckResults method
+func NewListMonitorCheckResultsRequest(server string, checkId MonitorCheckId, params *ListMonitorCheckResultsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "checkId", checkId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/monitoring/checks/%s/results", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Before != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "before", *params.Before, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date-time"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewQueryMonitoringRequest calls the generic QueryMonitoring builder with application/json body
+func NewQueryMonitoringRequest(server string, params *QueryMonitoringParams, body QueryMonitoringJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewQueryMonitoringRequestWithBody(server, params, "application/json", bodyReader)
+}
+
+// NewQueryMonitoringRequestWithBody constructs an http.Request for the QueryMonitoring method, with any body, and a specified content type
+func NewQueryMonitoringRequestWithBody(server string, params *QueryMonitoringParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/monitoring/query")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Format != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "format", *params.Format, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewListOAuthGrantsRequest constructs an http.Request for the ListOAuthGrants method
 func NewListOAuthGrantsRequest(server string, params *ListOAuthGrantsParams) (*http.Request, error) {
 	var err error
@@ -57082,7 +59687,9 @@ type ClientWithResponsesInterface interface {
 	// inbox: agents of that inbox can then read it. A workspace has at most
 	// `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties (`403 property_limit`). A children's
 	// property (`audience: children`) cannot offer `consent_features` or `tracked_props`; an API
-	// property offers neither, and `audience` does not apply to it.
+	// property offers neither, and `audience` does not apply to it. A new API property gets one
+	// alert rule (`createMonitorAlertRule`): `error_rate` above 5% over 5 minutes with at least 20
+	// requests, sent to the member who created it.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -57098,7 +59705,9 @@ type ClientWithResponsesInterface interface {
 	// inbox: agents of that inbox can then read it. A workspace has at most
 	// `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties (`403 property_limit`). A children's
 	// property (`audience: children`) cannot offer `consent_features` or `tracked_props`; an API
-	// property offers neither, and `audience` does not apply to it.
+	// property offers neither, and `audience` does not apply to it. A new API property gets one
+	// alert rule (`createMonitorAlertRule`): `error_rate` above 5% over 5 minutes with at least 20
+	// requests, sent to the member who created it.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 	//
@@ -58055,6 +60664,11 @@ type ClientWithResponsesInterface interface {
 	// are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
 	// session only; the member must see the property.
 	//
+	// An API property's report gives its requests, error and client error rates and p95 against
+	// the period before, its slowest and most failing routes, the uptime of its checks and the
+	// alerts of the period. Its alerts are rules (`createMonitorAlertRule`), so `alerts` does not
+	// apply to it.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /v1/analytics/properties/{propertyId}/subscription (the `UpdateAnalyticsSubscription` operationId).
@@ -58067,6 +60681,11 @@ type ClientWithResponsesInterface interface {
 	// member's address: plain numbers, no images, nothing that tracks opening or clicks. Alerts
 	// are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
 	// session only; the member must see the property.
+	//
+	// An API property's report gives its requests, error and client error rates and p95 against
+	// the period before, its slowest and most failing routes, the uptime of its checks and the
+	// alerts of the period. Its alerts are rules (`createMonitorAlertRule`), so `alerts` does not
+	// apply to it.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -61751,6 +64370,256 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /v1/migrations/{migrationId}/upload/parts/{part} (the `UploadMigrationPart` operationId).
 	UploadMigrationPartWithBodyWithResponse(ctx context.Context, migrationId MigrationId, part int32, params *UploadMigrationPartParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadMigrationPartResponse, error)
+
+	// ListMonitorAlertRulesWithResponse List alert rules
+	//
+	// The workspace's API monitoring alert rules, oldest first: those on a property the caller
+	// can see, and every rule on checks. `property_id` and `check_id` narrow the list.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/monitoring/alert-rules (the `ListMonitorAlertRules` operationId).
+	ListMonitorAlertRulesWithResponse(ctx context.Context, params *ListMonitorAlertRulesParams, reqEditors ...RequestEditorFn) (*ListMonitorAlertRulesResponse, error)
+
+	// CreateMonitorAlertRuleWithBodyWithResponse Create an alert rule
+	//
+	// A rule the `monitor_alerts` job checks every minute over the minutes that closed
+	// (`MonitorAlertRuleKind`). An alert is open per rule and key (the rule's subject, or each
+	// route or check it covers) while its condition holds: it fires once, and resolves once when
+	// the value has been back inside the threshold with a 10% margin for a whole window. Both
+	// write a `monitor.alert` event and webhook, an annotation on the property, and reach the
+	// rule's `recipients` by e-mail and Web Push. A workspace has at most 200 rules
+	// (`403 rule_limit`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/monitoring/alert-rules (the `CreateMonitorAlertRule` operationId).
+	CreateMonitorAlertRuleWithBodyWithResponse(ctx context.Context, params *CreateMonitorAlertRuleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateMonitorAlertRuleResponse, error)
+
+	// CreateMonitorAlertRuleWithResponse Create an alert rule
+	//
+	// A rule the `monitor_alerts` job checks every minute over the minutes that closed
+	// (`MonitorAlertRuleKind`). An alert is open per rule and key (the rule's subject, or each
+	// route or check it covers) while its condition holds: it fires once, and resolves once when
+	// the value has been back inside the threshold with a 10% margin for a whole window. Both
+	// write a `monitor.alert` event and webhook, an annotation on the property, and reach the
+	// rule's `recipients` by e-mail and Web Push. A workspace has at most 200 rules
+	// (`403 rule_limit`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/monitoring/alert-rules (the `CreateMonitorAlertRule` operationId).
+	CreateMonitorAlertRuleWithResponse(ctx context.Context, params *CreateMonitorAlertRuleParams, body CreateMonitorAlertRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateMonitorAlertRuleResponse, error)
+
+	// DeleteMonitorAlertRuleWithResponse Delete an alert rule
+	//
+	// Deletes the rule and its alerts; their annotations stay.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/monitoring/alert-rules/{ruleId} (the `DeleteMonitorAlertRule` operationId).
+	DeleteMonitorAlertRuleWithResponse(ctx context.Context, ruleId MonitorAlertRuleId, params *DeleteMonitorAlertRuleParams, reqEditors ...RequestEditorFn) (*DeleteMonitorAlertRuleResponse, error)
+
+	// GetMonitorAlertRuleWithResponse Get an alert rule
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/monitoring/alert-rules/{ruleId} (the `GetMonitorAlertRule` operationId).
+	GetMonitorAlertRuleWithResponse(ctx context.Context, ruleId MonitorAlertRuleId, params *GetMonitorAlertRuleParams, reqEditors ...RequestEditorFn) (*GetMonitorAlertRuleResponse, error)
+
+	// UpdateMonitorAlertRuleWithBodyWithResponse Update an alert rule
+	//
+	// Changes the given fields; the rule is checked whole afterwards. Its kind and subject
+	// (`property_id`, `route`, `service`, `check_id`) stay. A changed threshold or window applies
+	// from the next minute, to open alerts too; `enabled: false` resolves the rule's open alerts
+	// without telling anyone.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/monitoring/alert-rules/{ruleId} (the `UpdateMonitorAlertRule` operationId).
+	UpdateMonitorAlertRuleWithBodyWithResponse(ctx context.Context, ruleId MonitorAlertRuleId, params *UpdateMonitorAlertRuleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateMonitorAlertRuleResponse, error)
+
+	// UpdateMonitorAlertRuleWithResponse Update an alert rule
+	//
+	// Changes the given fields; the rule is checked whole afterwards. Its kind and subject
+	// (`property_id`, `route`, `service`, `check_id`) stay. A changed threshold or window applies
+	// from the next minute, to open alerts too; `enabled: false` resolves the rule's open alerts
+	// without telling anyone.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/monitoring/alert-rules/{ruleId} (the `UpdateMonitorAlertRule` operationId).
+	UpdateMonitorAlertRuleWithResponse(ctx context.Context, ruleId MonitorAlertRuleId, params *UpdateMonitorAlertRuleParams, body UpdateMonitorAlertRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateMonitorAlertRuleResponse, error)
+
+	// ListMonitorAlertsWithResponse List alerts
+	//
+	// Alerts the rules raised, newest first, at most `limit`: open ones (`state: firing`) and
+	// resolved ones, of the rules the caller can see (`listMonitorAlertRules`). Resolved alerts
+	// are kept 400 days. With `before`, older ones.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/monitoring/alerts (the `ListMonitorAlerts` operationId).
+	ListMonitorAlertsWithResponse(ctx context.Context, params *ListMonitorAlertsParams, reqEditors ...RequestEditorFn) (*ListMonitorAlertsResponse, error)
+
+	// ListMonitorChecksWithResponse List uptime checks
+	//
+	// The workspace's uptime checks by name, each with its state and last result. Every member
+	// sees every check. `property_id` narrows the list to the checks of one property.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/monitoring/checks (the `ListMonitorChecks` operationId).
+	ListMonitorChecksWithResponse(ctx context.Context, params *ListMonitorChecksParams, reqEditors ...RequestEditorFn) (*ListMonitorChecksResponse, error)
+
+	// CreateMonitorCheckWithBodyWithResponse Create an uptime check
+	//
+	// Starts calling a URL from the server on an interval (`MonitorCheckCreate`). The URL is
+	// refused (`422 refused_address`) when it names credentials, `localhost`, or an address the
+	// server will not call: loopback, private, link-local, CGNAT, multicast and reserved
+	// addresses, and cloud metadata addresses. A host name is resolved when the check is saved
+	// and again on every run, and refused when any of its addresses is one of those.
+	// `YUVA_MONITOR_ALLOW_PRIVATE=true` lets a self-hosted server call private and loopback
+	// addresses; link-local and metadata addresses are refused even then.
+	//
+	// A workspace has at most `YUVA_MONITOR_CHECKS` checks (500, or 50 on a server with open
+	// sign-up; `403 check_limit`) and at most 10 on one host (`403 host_limit`). The interval is
+	// at least `YUVA_MONITOR_MIN_INTERVAL` (30 s, or 60 s with open sign-up). A member who creates
+	// a check gets an alert rule of kind `check_state` for it, sent to them.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/monitoring/checks (the `CreateMonitorCheck` operationId).
+	CreateMonitorCheckWithBodyWithResponse(ctx context.Context, params *CreateMonitorCheckParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateMonitorCheckResponse, error)
+
+	// CreateMonitorCheckWithResponse Create an uptime check
+	//
+	// Starts calling a URL from the server on an interval (`MonitorCheckCreate`). The URL is
+	// refused (`422 refused_address`) when it names credentials, `localhost`, or an address the
+	// server will not call: loopback, private, link-local, CGNAT, multicast and reserved
+	// addresses, and cloud metadata addresses. A host name is resolved when the check is saved
+	// and again on every run, and refused when any of its addresses is one of those.
+	// `YUVA_MONITOR_ALLOW_PRIVATE=true` lets a self-hosted server call private and loopback
+	// addresses; link-local and metadata addresses are refused even then.
+	//
+	// A workspace has at most `YUVA_MONITOR_CHECKS` checks (500, or 50 on a server with open
+	// sign-up; `403 check_limit`) and at most 10 on one host (`403 host_limit`). The interval is
+	// at least `YUVA_MONITOR_MIN_INTERVAL` (30 s, or 60 s with open sign-up). A member who creates
+	// a check gets an alert rule of kind `check_state` for it, sent to them.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/monitoring/checks (the `CreateMonitorCheck` operationId).
+	CreateMonitorCheckWithResponse(ctx context.Context, params *CreateMonitorCheckParams, body CreateMonitorCheckJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateMonitorCheckResponse, error)
+
+	// DeleteMonitorCheckWithResponse Delete an uptime check
+	//
+	// Deletes the check with its results, its daily rows, the alert rules that name it and their
+	// alerts.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/monitoring/checks/{checkId} (the `DeleteMonitorCheck` operationId).
+	DeleteMonitorCheckWithResponse(ctx context.Context, checkId MonitorCheckId, params *DeleteMonitorCheckParams, reqEditors ...RequestEditorFn) (*DeleteMonitorCheckResponse, error)
+
+	// GetMonitorCheckWithResponse Get an uptime check
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/monitoring/checks/{checkId} (the `GetMonitorCheck` operationId).
+	GetMonitorCheckWithResponse(ctx context.Context, checkId MonitorCheckId, params *GetMonitorCheckParams, reqEditors ...RequestEditorFn) (*GetMonitorCheckResponse, error)
+
+	// UpdateMonitorCheckWithBodyWithResponse Update an uptime check
+	//
+	// Changes the given fields; the check is checked whole afterwards, as when it was created.
+	// `headers` replaces every header, values included. A changed URL, method or interval runs
+	// the check next right away; `paused: true` stops running it and `false` runs it now.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/monitoring/checks/{checkId} (the `UpdateMonitorCheck` operationId).
+	UpdateMonitorCheckWithBodyWithResponse(ctx context.Context, checkId MonitorCheckId, params *UpdateMonitorCheckParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateMonitorCheckResponse, error)
+
+	// UpdateMonitorCheckWithResponse Update an uptime check
+	//
+	// Changes the given fields; the check is checked whole afterwards, as when it was created.
+	// `headers` replaces every header, values included. A changed URL, method or interval runs
+	// the check next right away; `paused: true` stops running it and `false` runs it now.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/monitoring/checks/{checkId} (the `UpdateMonitorCheck` operationId).
+	UpdateMonitorCheckWithResponse(ctx context.Context, checkId MonitorCheckId, params *UpdateMonitorCheckParams, body UpdateMonitorCheckJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateMonitorCheckResponse, error)
+
+	// ListMonitorCheckResultsWithResponse List a check's runs
+	//
+	// The check's counted runs, newest first, with their timings: a run that failed was tried
+	// again after 20 seconds, and only that second try is listed (`retried`). Runs are kept
+	// `YUVA_MONITOR_CHECK_DAYS` days (30); older days are in the `uptime` dataset of
+	// `queryMonitoring`. With `before`, older runs.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/monitoring/checks/{checkId}/results (the `ListMonitorCheckResults` operationId).
+	ListMonitorCheckResultsWithResponse(ctx context.Context, checkId MonitorCheckId, params *ListMonitorCheckResultsParams, reqEditors ...RequestEditorFn) (*ListMonitorCheckResultsResponse, error)
+
+	// QueryMonitoringWithBodyWithResponse Query the workspace's uptime checks
+	//
+	// The query operation of `queryAnalytics` over every uptime check of the workspace, with
+	// `dataset: uptime` (`AnalyticsDataset`): the same body and answer, and the same numbers as
+	// `queryAnalytics` on a property gives for that property's checks. Every member may call it.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/monitoring/query (the `QueryMonitoring` operationId).
+	QueryMonitoringWithBodyWithResponse(ctx context.Context, params *QueryMonitoringParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*QueryMonitoringResponse, error)
+
+	// QueryMonitoringWithResponse Query the workspace's uptime checks
+	//
+	// The query operation of `queryAnalytics` over every uptime check of the workspace, with
+	// `dataset: uptime` (`AnalyticsDataset`): the same body and answer, and the same numbers as
+	// `queryAnalytics` on a property gives for that property's checks. Every member may call it.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/monitoring/query (the `QueryMonitoring` operationId).
+	QueryMonitoringWithResponse(ctx context.Context, params *QueryMonitoringParams, body QueryMonitoringJSONRequestBody, reqEditors ...RequestEditorFn) (*QueryMonitoringResponse, error)
 
 	// ListOAuthGrantsWithResponse List connected apps
 	//
@@ -81620,6 +84489,910 @@ func (r UploadMigrationPartResponse) ContentType() string {
 	return ""
 }
 
+type ListMonitorAlertRulesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *MonitorAlertRuleList
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListMonitorAlertRulesResponse) GetJSON200() *MonitorAlertRuleList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListMonitorAlertRulesResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListMonitorAlertRulesResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListMonitorAlertRulesResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListMonitorAlertRulesResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListMonitorAlertRulesResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListMonitorAlertRulesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListMonitorAlertRulesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListMonitorAlertRulesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateMonitorAlertRuleResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *MonitorAlertRule
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateMonitorAlertRuleResponse) GetJSON201() *MonitorAlertRule {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateMonitorAlertRuleResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateMonitorAlertRuleResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateMonitorAlertRuleResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateMonitorAlertRuleResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r CreateMonitorAlertRuleResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateMonitorAlertRuleResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateMonitorAlertRuleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateMonitorAlertRuleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateMonitorAlertRuleResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteMonitorAlertRuleResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteMonitorAlertRuleResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteMonitorAlertRuleResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteMonitorAlertRuleResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteMonitorAlertRuleResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteMonitorAlertRuleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteMonitorAlertRuleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteMonitorAlertRuleResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetMonitorAlertRuleResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *MonitorAlertRule
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetMonitorAlertRuleResponse) GetJSON200() *MonitorAlertRule {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetMonitorAlertRuleResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetMonitorAlertRuleResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetMonitorAlertRuleResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetMonitorAlertRuleResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetMonitorAlertRuleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetMonitorAlertRuleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetMonitorAlertRuleResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateMonitorAlertRuleResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *MonitorAlertRule
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateMonitorAlertRuleResponse) GetJSON200() *MonitorAlertRule {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateMonitorAlertRuleResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateMonitorAlertRuleResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateMonitorAlertRuleResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateMonitorAlertRuleResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r UpdateMonitorAlertRuleResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateMonitorAlertRuleResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateMonitorAlertRuleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateMonitorAlertRuleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateMonitorAlertRuleResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListMonitorAlertsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *MonitorAlertList
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListMonitorAlertsResponse) GetJSON200() *MonitorAlertList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListMonitorAlertsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListMonitorAlertsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListMonitorAlertsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListMonitorAlertsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListMonitorAlertsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListMonitorAlertsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListMonitorAlertsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListMonitorAlertsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListMonitorChecksResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *MonitorCheckList
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListMonitorChecksResponse) GetJSON200() *MonitorCheckList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListMonitorChecksResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListMonitorChecksResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListMonitorChecksResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListMonitorChecksResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListMonitorChecksResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListMonitorChecksResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListMonitorChecksResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListMonitorChecksResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateMonitorCheckResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *MonitorCheck
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateMonitorCheckResponse) GetJSON201() *MonitorCheck {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateMonitorCheckResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateMonitorCheckResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateMonitorCheckResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateMonitorCheckResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r CreateMonitorCheckResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateMonitorCheckResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateMonitorCheckResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateMonitorCheckResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateMonitorCheckResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteMonitorCheckResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteMonitorCheckResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteMonitorCheckResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteMonitorCheckResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteMonitorCheckResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteMonitorCheckResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteMonitorCheckResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteMonitorCheckResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetMonitorCheckResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *MonitorCheck
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetMonitorCheckResponse) GetJSON200() *MonitorCheck {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetMonitorCheckResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetMonitorCheckResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetMonitorCheckResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetMonitorCheckResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetMonitorCheckResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetMonitorCheckResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetMonitorCheckResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateMonitorCheckResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *MonitorCheck
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateMonitorCheckResponse) GetJSON200() *MonitorCheck {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateMonitorCheckResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateMonitorCheckResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateMonitorCheckResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateMonitorCheckResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r UpdateMonitorCheckResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateMonitorCheckResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateMonitorCheckResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateMonitorCheckResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateMonitorCheckResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListMonitorCheckResultsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *MonitorCheckResultList
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListMonitorCheckResultsResponse) GetJSON200() *MonitorCheckResultList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListMonitorCheckResultsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListMonitorCheckResultsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListMonitorCheckResultsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListMonitorCheckResultsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListMonitorCheckResultsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListMonitorCheckResultsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListMonitorCheckResultsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListMonitorCheckResultsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// QueryMonitoringResponse200Headers the declared response headers of an HTTP 200 response for QueryMonitoring
+type QueryMonitoringResponse200Headers struct {
+	ContentDisposition *string
+}
+
+type QueryMonitoringResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsResult
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *AnalyticsRangeProblem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *QueryMonitoringResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r QueryMonitoringResponse) GetJSON200() *AnalyticsResult {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r QueryMonitoringResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r QueryMonitoringResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r QueryMonitoringResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r QueryMonitoringResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r QueryMonitoringResponse) GetApplicationproblemJSON422() *AnalyticsRangeProblem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r QueryMonitoringResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r QueryMonitoringResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r QueryMonitoringResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r QueryMonitoringResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r QueryMonitoringResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ListOAuthGrantsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -84907,7 +88680,9 @@ func (c *ClientWithResponses) ListAnalyticsPropertiesWithResponse(ctx context.Co
 // inbox: agents of that inbox can then read it. A workspace has at most
 // `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties (`403 property_limit`). A children's
 // property (`audience: children`) cannot offer `consent_features` or `tracked_props`; an API
-// property offers neither, and `audience` does not apply to it.
+// property offers neither, and `audience` does not apply to it. A new API property gets one
+// alert rule (`createMonitorAlertRule`): `error_rate` above 5% over 5 minutes with at least 20
+// requests, sent to the member who created it.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -84929,7 +88704,9 @@ func (c *ClientWithResponses) CreateAnalyticsPropertyWithBodyWithResponse(ctx co
 // inbox: agents of that inbox can then read it. A workspace has at most
 // `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties (`403 property_limit`). A children's
 // property (`audience: children`) cannot offer `consent_features` or `tracked_props`; an API
-// property offers neither, and `audience` does not apply to it.
+// property offers neither, and `audience` does not apply to it. A new API property gets one
+// alert rule (`createMonitorAlertRule`): `error_rate` above 5% over 5 minutes with at least 20
+// requests, sent to the member who created it.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
 //
@@ -86252,6 +90029,11 @@ func (c *ClientWithResponses) GetAnalyticsSubscriptionWithResponse(ctx context.C
 // are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
 // session only; the member must see the property.
 //
+// An API property's report gives its requests, error and client error rates and p95 against
+// the period before, its slowest and most failing routes, the uptime of its checks and the
+// alerts of the period. Its alerts are rules (`createMonitorAlertRule`), so `alerts` does not
+// apply to it.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /v1/analytics/properties/{propertyId}/subscription (the `UpdateAnalyticsSubscription` operationId).
@@ -86270,6 +90052,11 @@ func (c *ClientWithResponses) UpdateAnalyticsSubscriptionWithBodyWithResponse(ct
 // member's address: plain numbers, no images, nothing that tracks opening or clicks. Alerts
 // are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
 // session only; the member must see the property.
+//
+// An API property's report gives its requests, error and client error rates and p95 against
+// the period before, its slowest and most failing routes, the uptime of its checks and the
+// alerts of the period. Its alerts are rules (`createMonitorAlertRule`), so `alerts` does not
+// apply to it.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -91507,6 +95294,364 @@ func (c *ClientWithResponses) UploadMigrationPartWithBodyWithResponse(ctx contex
 		return nil, err
 	}
 	return ParseUploadMigrationPartResponse(rsp)
+}
+
+// ListMonitorAlertRulesWithResponse List alert rules
+//
+// The workspace's API monitoring alert rules, oldest first: those on a property the caller
+// can see, and every rule on checks. `property_id` and `check_id` narrow the list.
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/monitoring/alert-rules (the `ListMonitorAlertRules` operationId).
+func (c *ClientWithResponses) ListMonitorAlertRulesWithResponse(ctx context.Context, params *ListMonitorAlertRulesParams, reqEditors ...RequestEditorFn) (*ListMonitorAlertRulesResponse, error) {
+	rsp, err := c.ListMonitorAlertRules(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListMonitorAlertRulesResponse(rsp)
+}
+
+// CreateMonitorAlertRuleWithBodyWithResponse Create an alert rule
+//
+// A rule the `monitor_alerts` job checks every minute over the minutes that closed
+// (`MonitorAlertRuleKind`). An alert is open per rule and key (the rule's subject, or each
+// route or check it covers) while its condition holds: it fires once, and resolves once when
+// the value has been back inside the threshold with a 10% margin for a whole window. Both
+// write a `monitor.alert` event and webhook, an annotation on the property, and reach the
+// rule's `recipients` by e-mail and Web Push. A workspace has at most 200 rules
+// (`403 rule_limit`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/monitoring/alert-rules (the `CreateMonitorAlertRule` operationId).
+func (c *ClientWithResponses) CreateMonitorAlertRuleWithBodyWithResponse(ctx context.Context, params *CreateMonitorAlertRuleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateMonitorAlertRuleResponse, error) {
+	rsp, err := c.CreateMonitorAlertRuleWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateMonitorAlertRuleResponse(rsp)
+}
+
+// CreateMonitorAlertRuleWithResponse Create an alert rule
+//
+// A rule the `monitor_alerts` job checks every minute over the minutes that closed
+// (`MonitorAlertRuleKind`). An alert is open per rule and key (the rule's subject, or each
+// route or check it covers) while its condition holds: it fires once, and resolves once when
+// the value has been back inside the threshold with a 10% margin for a whole window. Both
+// write a `monitor.alert` event and webhook, an annotation on the property, and reach the
+// rule's `recipients` by e-mail and Web Push. A workspace has at most 200 rules
+// (`403 rule_limit`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/monitoring/alert-rules (the `CreateMonitorAlertRule` operationId).
+func (c *ClientWithResponses) CreateMonitorAlertRuleWithResponse(ctx context.Context, params *CreateMonitorAlertRuleParams, body CreateMonitorAlertRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateMonitorAlertRuleResponse, error) {
+	rsp, err := c.CreateMonitorAlertRule(ctx, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateMonitorAlertRuleResponse(rsp)
+}
+
+// DeleteMonitorAlertRuleWithResponse Delete an alert rule
+//
+// Deletes the rule and its alerts; their annotations stay.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/monitoring/alert-rules/{ruleId} (the `DeleteMonitorAlertRule` operationId).
+func (c *ClientWithResponses) DeleteMonitorAlertRuleWithResponse(ctx context.Context, ruleId MonitorAlertRuleId, params *DeleteMonitorAlertRuleParams, reqEditors ...RequestEditorFn) (*DeleteMonitorAlertRuleResponse, error) {
+	rsp, err := c.DeleteMonitorAlertRule(ctx, ruleId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteMonitorAlertRuleResponse(rsp)
+}
+
+// GetMonitorAlertRuleWithResponse Get an alert rule
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/monitoring/alert-rules/{ruleId} (the `GetMonitorAlertRule` operationId).
+func (c *ClientWithResponses) GetMonitorAlertRuleWithResponse(ctx context.Context, ruleId MonitorAlertRuleId, params *GetMonitorAlertRuleParams, reqEditors ...RequestEditorFn) (*GetMonitorAlertRuleResponse, error) {
+	rsp, err := c.GetMonitorAlertRule(ctx, ruleId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetMonitorAlertRuleResponse(rsp)
+}
+
+// UpdateMonitorAlertRuleWithBodyWithResponse Update an alert rule
+//
+// Changes the given fields; the rule is checked whole afterwards. Its kind and subject
+// (`property_id`, `route`, `service`, `check_id`) stay. A changed threshold or window applies
+// from the next minute, to open alerts too; `enabled: false` resolves the rule's open alerts
+// without telling anyone.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/monitoring/alert-rules/{ruleId} (the `UpdateMonitorAlertRule` operationId).
+func (c *ClientWithResponses) UpdateMonitorAlertRuleWithBodyWithResponse(ctx context.Context, ruleId MonitorAlertRuleId, params *UpdateMonitorAlertRuleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateMonitorAlertRuleResponse, error) {
+	rsp, err := c.UpdateMonitorAlertRuleWithBody(ctx, ruleId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateMonitorAlertRuleResponse(rsp)
+}
+
+// UpdateMonitorAlertRuleWithResponse Update an alert rule
+//
+// Changes the given fields; the rule is checked whole afterwards. Its kind and subject
+// (`property_id`, `route`, `service`, `check_id`) stay. A changed threshold or window applies
+// from the next minute, to open alerts too; `enabled: false` resolves the rule's open alerts
+// without telling anyone.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/monitoring/alert-rules/{ruleId} (the `UpdateMonitorAlertRule` operationId).
+func (c *ClientWithResponses) UpdateMonitorAlertRuleWithResponse(ctx context.Context, ruleId MonitorAlertRuleId, params *UpdateMonitorAlertRuleParams, body UpdateMonitorAlertRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateMonitorAlertRuleResponse, error) {
+	rsp, err := c.UpdateMonitorAlertRule(ctx, ruleId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateMonitorAlertRuleResponse(rsp)
+}
+
+// ListMonitorAlertsWithResponse List alerts
+//
+// Alerts the rules raised, newest first, at most `limit`: open ones (`state: firing`) and
+// resolved ones, of the rules the caller can see (`listMonitorAlertRules`). Resolved alerts
+// are kept 400 days. With `before`, older ones.
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/monitoring/alerts (the `ListMonitorAlerts` operationId).
+func (c *ClientWithResponses) ListMonitorAlertsWithResponse(ctx context.Context, params *ListMonitorAlertsParams, reqEditors ...RequestEditorFn) (*ListMonitorAlertsResponse, error) {
+	rsp, err := c.ListMonitorAlerts(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListMonitorAlertsResponse(rsp)
+}
+
+// ListMonitorChecksWithResponse List uptime checks
+//
+// The workspace's uptime checks by name, each with its state and last result. Every member
+// sees every check. `property_id` narrows the list to the checks of one property.
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/monitoring/checks (the `ListMonitorChecks` operationId).
+func (c *ClientWithResponses) ListMonitorChecksWithResponse(ctx context.Context, params *ListMonitorChecksParams, reqEditors ...RequestEditorFn) (*ListMonitorChecksResponse, error) {
+	rsp, err := c.ListMonitorChecks(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListMonitorChecksResponse(rsp)
+}
+
+// CreateMonitorCheckWithBodyWithResponse Create an uptime check
+//
+// Starts calling a URL from the server on an interval (`MonitorCheckCreate`). The URL is
+// refused (`422 refused_address`) when it names credentials, `localhost`, or an address the
+// server will not call: loopback, private, link-local, CGNAT, multicast and reserved
+// addresses, and cloud metadata addresses. A host name is resolved when the check is saved
+// and again on every run, and refused when any of its addresses is one of those.
+// `YUVA_MONITOR_ALLOW_PRIVATE=true` lets a self-hosted server call private and loopback
+// addresses; link-local and metadata addresses are refused even then.
+//
+// A workspace has at most `YUVA_MONITOR_CHECKS` checks (500, or 50 on a server with open
+// sign-up; `403 check_limit`) and at most 10 on one host (`403 host_limit`). The interval is
+// at least `YUVA_MONITOR_MIN_INTERVAL` (30 s, or 60 s with open sign-up). A member who creates
+// a check gets an alert rule of kind `check_state` for it, sent to them.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/monitoring/checks (the `CreateMonitorCheck` operationId).
+func (c *ClientWithResponses) CreateMonitorCheckWithBodyWithResponse(ctx context.Context, params *CreateMonitorCheckParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateMonitorCheckResponse, error) {
+	rsp, err := c.CreateMonitorCheckWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateMonitorCheckResponse(rsp)
+}
+
+// CreateMonitorCheckWithResponse Create an uptime check
+//
+// Starts calling a URL from the server on an interval (`MonitorCheckCreate`). The URL is
+// refused (`422 refused_address`) when it names credentials, `localhost`, or an address the
+// server will not call: loopback, private, link-local, CGNAT, multicast and reserved
+// addresses, and cloud metadata addresses. A host name is resolved when the check is saved
+// and again on every run, and refused when any of its addresses is one of those.
+// `YUVA_MONITOR_ALLOW_PRIVATE=true` lets a self-hosted server call private and loopback
+// addresses; link-local and metadata addresses are refused even then.
+//
+// A workspace has at most `YUVA_MONITOR_CHECKS` checks (500, or 50 on a server with open
+// sign-up; `403 check_limit`) and at most 10 on one host (`403 host_limit`). The interval is
+// at least `YUVA_MONITOR_MIN_INTERVAL` (30 s, or 60 s with open sign-up). A member who creates
+// a check gets an alert rule of kind `check_state` for it, sent to them.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/monitoring/checks (the `CreateMonitorCheck` operationId).
+func (c *ClientWithResponses) CreateMonitorCheckWithResponse(ctx context.Context, params *CreateMonitorCheckParams, body CreateMonitorCheckJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateMonitorCheckResponse, error) {
+	rsp, err := c.CreateMonitorCheck(ctx, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateMonitorCheckResponse(rsp)
+}
+
+// DeleteMonitorCheckWithResponse Delete an uptime check
+//
+// Deletes the check with its results, its daily rows, the alert rules that name it and their
+// alerts.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/monitoring/checks/{checkId} (the `DeleteMonitorCheck` operationId).
+func (c *ClientWithResponses) DeleteMonitorCheckWithResponse(ctx context.Context, checkId MonitorCheckId, params *DeleteMonitorCheckParams, reqEditors ...RequestEditorFn) (*DeleteMonitorCheckResponse, error) {
+	rsp, err := c.DeleteMonitorCheck(ctx, checkId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteMonitorCheckResponse(rsp)
+}
+
+// GetMonitorCheckWithResponse Get an uptime check
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/monitoring/checks/{checkId} (the `GetMonitorCheck` operationId).
+func (c *ClientWithResponses) GetMonitorCheckWithResponse(ctx context.Context, checkId MonitorCheckId, params *GetMonitorCheckParams, reqEditors ...RequestEditorFn) (*GetMonitorCheckResponse, error) {
+	rsp, err := c.GetMonitorCheck(ctx, checkId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetMonitorCheckResponse(rsp)
+}
+
+// UpdateMonitorCheckWithBodyWithResponse Update an uptime check
+//
+// Changes the given fields; the check is checked whole afterwards, as when it was created.
+// `headers` replaces every header, values included. A changed URL, method or interval runs
+// the check next right away; `paused: true` stops running it and `false` runs it now.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/monitoring/checks/{checkId} (the `UpdateMonitorCheck` operationId).
+func (c *ClientWithResponses) UpdateMonitorCheckWithBodyWithResponse(ctx context.Context, checkId MonitorCheckId, params *UpdateMonitorCheckParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateMonitorCheckResponse, error) {
+	rsp, err := c.UpdateMonitorCheckWithBody(ctx, checkId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateMonitorCheckResponse(rsp)
+}
+
+// UpdateMonitorCheckWithResponse Update an uptime check
+//
+// Changes the given fields; the check is checked whole afterwards, as when it was created.
+// `headers` replaces every header, values included. A changed URL, method or interval runs
+// the check next right away; `paused: true` stops running it and `false` runs it now.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/monitoring/checks/{checkId} (the `UpdateMonitorCheck` operationId).
+func (c *ClientWithResponses) UpdateMonitorCheckWithResponse(ctx context.Context, checkId MonitorCheckId, params *UpdateMonitorCheckParams, body UpdateMonitorCheckJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateMonitorCheckResponse, error) {
+	rsp, err := c.UpdateMonitorCheck(ctx, checkId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateMonitorCheckResponse(rsp)
+}
+
+// ListMonitorCheckResultsWithResponse List a check's runs
+//
+// The check's counted runs, newest first, with their timings: a run that failed was tried
+// again after 20 seconds, and only that second try is listed (`retried`). Runs are kept
+// `YUVA_MONITOR_CHECK_DAYS` days (30); older days are in the `uptime` dataset of
+// `queryMonitoring`. With `before`, older runs.
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/monitoring/checks/{checkId}/results (the `ListMonitorCheckResults` operationId).
+func (c *ClientWithResponses) ListMonitorCheckResultsWithResponse(ctx context.Context, checkId MonitorCheckId, params *ListMonitorCheckResultsParams, reqEditors ...RequestEditorFn) (*ListMonitorCheckResultsResponse, error) {
+	rsp, err := c.ListMonitorCheckResults(ctx, checkId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListMonitorCheckResultsResponse(rsp)
+}
+
+// QueryMonitoringWithBodyWithResponse Query the workspace's uptime checks
+//
+// The query operation of `queryAnalytics` over every uptime check of the workspace, with
+// `dataset: uptime` (`AnalyticsDataset`): the same body and answer, and the same numbers as
+// `queryAnalytics` on a property gives for that property's checks. Every member may call it.
+//
+// Scope: `analytics:read`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/monitoring/query (the `QueryMonitoring` operationId).
+func (c *ClientWithResponses) QueryMonitoringWithBodyWithResponse(ctx context.Context, params *QueryMonitoringParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*QueryMonitoringResponse, error) {
+	rsp, err := c.QueryMonitoringWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseQueryMonitoringResponse(rsp)
+}
+
+// QueryMonitoringWithResponse Query the workspace's uptime checks
+//
+// The query operation of `queryAnalytics` over every uptime check of the workspace, with
+// `dataset: uptime` (`AnalyticsDataset`): the same body and answer, and the same numbers as
+// `queryAnalytics` on a property gives for that property's checks. Every member may call it.
+//
+// Scope: `analytics:read`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/monitoring/query (the `QueryMonitoring` operationId).
+func (c *ClientWithResponses) QueryMonitoringWithResponse(ctx context.Context, params *QueryMonitoringParams, body QueryMonitoringJSONRequestBody, reqEditors ...RequestEditorFn) (*QueryMonitoringResponse, error) {
+	rsp, err := c.QueryMonitoring(ctx, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseQueryMonitoringResponse(rsp)
 }
 
 // ListOAuthGrantsWithResponse List connected apps
@@ -107533,6 +111678,730 @@ func ParseUploadMigrationPartResponse(rsp *http.Response) (*UploadMigrationPartR
 	return response, nil
 }
 
+// ParseListMonitorAlertRulesResponse parses an HTTP response from a ListMonitorAlertRulesWithResponse call
+func ParseListMonitorAlertRulesResponse(rsp *http.Response) (*ListMonitorAlertRulesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListMonitorAlertRulesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MonitorAlertRuleList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateMonitorAlertRuleResponse parses an HTTP response from a CreateMonitorAlertRuleWithResponse call
+func ParseCreateMonitorAlertRuleResponse(rsp *http.Response) (*CreateMonitorAlertRuleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateMonitorAlertRuleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest MonitorAlertRule
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteMonitorAlertRuleResponse parses an HTTP response from a DeleteMonitorAlertRuleWithResponse call
+func ParseDeleteMonitorAlertRuleResponse(rsp *http.Response) (*DeleteMonitorAlertRuleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteMonitorAlertRuleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetMonitorAlertRuleResponse parses an HTTP response from a GetMonitorAlertRuleWithResponse call
+func ParseGetMonitorAlertRuleResponse(rsp *http.Response) (*GetMonitorAlertRuleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetMonitorAlertRuleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MonitorAlertRule
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateMonitorAlertRuleResponse parses an HTTP response from a UpdateMonitorAlertRuleWithResponse call
+func ParseUpdateMonitorAlertRuleResponse(rsp *http.Response) (*UpdateMonitorAlertRuleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateMonitorAlertRuleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MonitorAlertRule
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListMonitorAlertsResponse parses an HTTP response from a ListMonitorAlertsWithResponse call
+func ParseListMonitorAlertsResponse(rsp *http.Response) (*ListMonitorAlertsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListMonitorAlertsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MonitorAlertList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListMonitorChecksResponse parses an HTTP response from a ListMonitorChecksWithResponse call
+func ParseListMonitorChecksResponse(rsp *http.Response) (*ListMonitorChecksResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListMonitorChecksResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MonitorCheckList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateMonitorCheckResponse parses an HTTP response from a CreateMonitorCheckWithResponse call
+func ParseCreateMonitorCheckResponse(rsp *http.Response) (*CreateMonitorCheckResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateMonitorCheckResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest MonitorCheck
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteMonitorCheckResponse parses an HTTP response from a DeleteMonitorCheckWithResponse call
+func ParseDeleteMonitorCheckResponse(rsp *http.Response) (*DeleteMonitorCheckResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteMonitorCheckResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetMonitorCheckResponse parses an HTTP response from a GetMonitorCheckWithResponse call
+func ParseGetMonitorCheckResponse(rsp *http.Response) (*GetMonitorCheckResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetMonitorCheckResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MonitorCheck
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateMonitorCheckResponse parses an HTTP response from a UpdateMonitorCheckWithResponse call
+func ParseUpdateMonitorCheckResponse(rsp *http.Response) (*UpdateMonitorCheckResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateMonitorCheckResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MonitorCheck
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListMonitorCheckResultsResponse parses an HTTP response from a ListMonitorCheckResultsWithResponse call
+func ParseListMonitorCheckResultsResponse(rsp *http.Response) (*ListMonitorCheckResultsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListMonitorCheckResultsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MonitorCheckResultList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseQueryMonitoringResponse parses an HTTP response from a QueryMonitoringWithResponse call
+func ParseQueryMonitoringResponse(rsp *http.Response) (*QueryMonitoringResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &QueryMonitoringResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsResult
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest AnalyticsRangeProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	case rsp.StatusCode == 200:
+		// Content-type (text/csv) unsupported
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers QueryMonitoringResponse200Headers
+		if values := rsp.Header.Values("Content-Disposition"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Content-Disposition", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.ContentDisposition = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
 // ParseListOAuthGrantsResponse parses an HTTP response from a ListOAuthGrantsWithResponse call
 func ParseListOAuthGrantsResponse(rsp *http.Response) (*ListOAuthGrantsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -108809,6 +113678,11 @@ type WebhookInitiatorInterface interface {
 
 	WebhookMessageCreated(ctx context.Context, targetURL string, params *WebhookMessageCreatedParams, body WebhookMessageCreatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// WebhookMonitorAlertWithBody fires the monitor.alert webhook with any body
+	WebhookMonitorAlertWithBody(ctx context.Context, targetURL string, params *WebhookMonitorAlertParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	WebhookMonitorAlert(ctx context.Context, targetURL string, params *WebhookMonitorAlertParams, body WebhookMonitorAlertJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// WebhookSubscriptionCreatedWithBody fires the subscription.created webhook with any body
 	WebhookSubscriptionCreatedWithBody(ctx context.Context, targetURL string, params *WebhookSubscriptionCreatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -109194,6 +114068,30 @@ func (p *WebhookInitiator) WebhookMessageCreatedWithBody(ctx context.Context, ta
 
 func (p *WebhookInitiator) WebhookMessageCreated(ctx context.Context, targetURL string, params *WebhookMessageCreatedParams, body WebhookMessageCreatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewWebhookMessageCreatedWebhookRequest(targetURL, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookMonitorAlertWithBody(ctx context.Context, targetURL string, params *WebhookMonitorAlertParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookMonitorAlertWebhookRequestWithBody(targetURL, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookMonitorAlert(ctx context.Context, targetURL string, params *WebhookMonitorAlertParams, body WebhookMonitorAlertJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookMonitorAlertWebhookRequest(targetURL, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -110180,6 +115078,67 @@ func NewWebhookMessageCreatedWebhookRequest(targetURL string, params *WebhookMes
 
 // NewWebhookMessageCreatedWebhookRequestWithBody builds a POST request for the message.created webhook with any body
 func NewWebhookMessageCreatedWebhookRequestWithBody(targetURL string, params *WebhookMessageCreatedParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+	_ = err
+
+	reqURL, err := url.Parse(targetURL)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, reqURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "webhook-id", params.WebhookId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-id", headerParam0)
+
+		var headerParam1 string
+
+		headerParam1, err = runtime.StyleParamWithOptions("simple", false, "webhook-timestamp", params.WebhookTimestamp, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-timestamp", headerParam1)
+
+		var headerParam2 string
+
+		headerParam2, err = runtime.StyleParamWithOptions("simple", false, "webhook-signature", params.WebhookSignature, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-signature", headerParam2)
+
+	}
+	return req, nil
+}
+
+// NewWebhookMonitorAlertWebhookRequest builds a application/json POST request for the monitor.alert webhook
+func NewWebhookMonitorAlertWebhookRequest(targetURL string, params *WebhookMonitorAlertParams, body WebhookMonitorAlertJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewWebhookMonitorAlertWebhookRequestWithBody(targetURL, params, "application/json", bodyReader)
+}
+
+// NewWebhookMonitorAlertWebhookRequestWithBody builds a POST request for the monitor.alert webhook with any body
+func NewWebhookMonitorAlertWebhookRequestWithBody(targetURL string, params *WebhookMonitorAlertParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 	_ = err
 

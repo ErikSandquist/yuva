@@ -4624,7 +4624,9 @@ export interface paths {
          *     inbox: agents of that inbox can then read it. A workspace has at most
          *     `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties (`403 property_limit`). A children's
          *     property (`audience: children`) cannot offer `consent_features` or `tracked_props`; an API
-         *     property offers neither, and `audience` does not apply to it.
+         *     property offers neither, and `audience` does not apply to it. A new API property gets one
+         *     alert rule (`createMonitorAlertRule`): `error_rate` above 5% over 5 minutes with at least 20
+         *     requests, sent to the member who created it.
          *
          *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
          */
@@ -5362,6 +5364,11 @@ export interface paths {
          *     member's address: plain numbers, no images, nothing that tracks opening or clicks. Alerts
          *     are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
          *     session only; the member must see the property.
+         *
+         *     An API property's report gives its requests, error and client error rates and p95 against
+         *     the period before, its slowest and most failing routes, the uptime of its checks and the
+         *     alerts of the period. Its alerts are rules (`createMonitorAlertRule`), so `alerts` does not
+         *     apply to it.
          */
         put: operations["updateAnalyticsSubscription"];
         post?: never;
@@ -5597,6 +5604,224 @@ export interface paths {
          *     Scope: `analytics:read`; `analytics:manage` for `raw`.
          */
         get: operations["downloadAnalyticsExport"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/monitoring/checks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List uptime checks
+         * @description The workspace's uptime checks by name, each with its state and last result. Every member
+         *     sees every check. `property_id` narrows the list to the checks of one property.
+         *
+         *     Scope: `analytics:read`.
+         */
+        get: operations["listMonitorChecks"];
+        put?: never;
+        /**
+         * Create an uptime check
+         * @description Starts calling a URL from the server on an interval (`MonitorCheckCreate`). The URL is
+         *     refused (`422 refused_address`) when it names credentials, `localhost`, or an address the
+         *     server will not call: loopback, private, link-local, CGNAT, multicast and reserved
+         *     addresses, and cloud metadata addresses. A host name is resolved when the check is saved
+         *     and again on every run, and refused when any of its addresses is one of those.
+         *     `YUVA_MONITOR_ALLOW_PRIVATE=true` lets a self-hosted server call private and loopback
+         *     addresses; link-local and metadata addresses are refused even then.
+         *
+         *     A workspace has at most `YUVA_MONITOR_CHECKS` checks (500, or 50 on a server with open
+         *     sign-up; `403 check_limit`) and at most 10 on one host (`403 host_limit`). The interval is
+         *     at least `YUVA_MONITOR_MIN_INTERVAL` (30 s, or 60 s with open sign-up). A member who creates
+         *     a check gets an alert rule of kind `check_state` for it, sent to them.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        post: operations["createMonitorCheck"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/monitoring/checks/{checkId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get an uptime check
+         * @description Scope: `analytics:read`.
+         */
+        get: operations["getMonitorCheck"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete an uptime check
+         * @description Deletes the check with its results, its daily rows, the alert rules that name it and their
+         *     alerts.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        delete: operations["deleteMonitorCheck"];
+        options?: never;
+        head?: never;
+        /**
+         * Update an uptime check
+         * @description Changes the given fields; the check is checked whole afterwards, as when it was created.
+         *     `headers` replaces every header, values included. A changed URL, method or interval runs
+         *     the check next right away; `paused: true` stops running it and `false` runs it now.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        patch: operations["updateMonitorCheck"];
+        trace?: never;
+    };
+    "/v1/monitoring/checks/{checkId}/results": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a check's runs
+         * @description The check's counted runs, newest first, with their timings: a run that failed was tried
+         *     again after 20 seconds, and only that second try is listed (`retried`). Runs are kept
+         *     `YUVA_MONITOR_CHECK_DAYS` days (30); older days are in the `uptime` dataset of
+         *     `queryMonitoring`. With `before`, older runs.
+         *
+         *     Scope: `analytics:read`.
+         */
+        get: operations["listMonitorCheckResults"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/monitoring/query": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Query the workspace's uptime checks
+         * @description The query operation of `queryAnalytics` over every uptime check of the workspace, with
+         *     `dataset: uptime` (`AnalyticsDataset`): the same body and answer, and the same numbers as
+         *     `queryAnalytics` on a property gives for that property's checks. Every member may call it.
+         *
+         *     Scope: `analytics:read`.
+         */
+        post: operations["queryMonitoring"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/monitoring/alert-rules": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List alert rules
+         * @description The workspace's API monitoring alert rules, oldest first: those on a property the caller
+         *     can see, and every rule on checks. `property_id` and `check_id` narrow the list.
+         *
+         *     Scope: `analytics:read`.
+         */
+        get: operations["listMonitorAlertRules"];
+        put?: never;
+        /**
+         * Create an alert rule
+         * @description A rule the `monitor_alerts` job checks every minute over the minutes that closed
+         *     (`MonitorAlertRuleKind`). An alert is open per rule and key (the rule's subject, or each
+         *     route or check it covers) while its condition holds: it fires once, and resolves once when
+         *     the value has been back inside the threshold with a 10% margin for a whole window. Both
+         *     write a `monitor.alert` event and webhook, an annotation on the property, and reach the
+         *     rule's `recipients` by e-mail and Web Push. A workspace has at most 200 rules
+         *     (`403 rule_limit`).
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        post: operations["createMonitorAlertRule"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/monitoring/alert-rules/{ruleId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get an alert rule
+         * @description Scope: `analytics:read`.
+         */
+        get: operations["getMonitorAlertRule"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete an alert rule
+         * @description Deletes the rule and its alerts; their annotations stay.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        delete: operations["deleteMonitorAlertRule"];
+        options?: never;
+        head?: never;
+        /**
+         * Update an alert rule
+         * @description Changes the given fields; the rule is checked whole afterwards. Its kind and subject
+         *     (`property_id`, `route`, `service`, `check_id`) stay. A changed threshold or window applies
+         *     from the next minute, to open alerts too; `enabled: false` resolves the rule's open alerts
+         *     without telling anyone.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        patch: operations["updateMonitorAlertRule"];
+        trace?: never;
+    };
+    "/v1/monitoring/alerts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List alerts
+         * @description Alerts the rules raised, newest first, at most `limit`: open ones (`state: firing`) and
+         *     resolved ones, of the rules the caller can see (`listMonitorAlertRules`). Resolved alerts
+         *     are kept 400 days. With `before`, older ones.
+         *
+         *     Scope: `analytics:read`.
+         */
+        get: operations["listMonitorAlerts"];
         put?: never;
         post?: never;
         delete?: never;
@@ -7239,6 +7464,28 @@ export interface webhooks {
         patch?: never;
         trace?: never;
     };
+    "monitor.alert": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * An API monitoring alert fired or resolved
+         * @description Once when an alert of a rule (`MonitorAlertRuleKind`) fires and once when it resolves,
+         *     `data.alert.state` saying which. Endpoints of an inbox get the alerts of properties linked to
+         *     that inbox.
+         */
+        post: operations["webhookMonitorAlert"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export interface components {
     schemas: {
@@ -7681,10 +7928,10 @@ export interface components {
          */
         PushNotification: {
             /**
-             * @description What caused it (see the `notifications` tag), or `test`.
+             * @description What caused it (see the `notifications` tag), `monitor_alert` (an API monitoring alert fired or resolved, `url` its rule's page), or `test`.
              * @enum {string}
              */
-            event: "new_live_conversation" | "new_async_conversation" | "message_in_my_conversation" | "message_in_unassigned_conversation" | "assigned_to_me" | "mentioned" | "test";
+            event: "new_live_conversation" | "new_async_conversation" | "message_in_my_conversation" | "message_in_unassigned_conversation" | "assigned_to_me" | "mentioned" | "test" | "monitor_alert";
             /**
              * @description The inbox name and the contact's name.
              * @example Support · Ayşe Yılmaz
@@ -8291,7 +8538,7 @@ export interface components {
             count: number;
         };
         /** @enum {string} */
-        WebhookEventType: "conversation.created" | "conversation.updated" | "conversation.rated" | "message.created" | "feedback.created" | "contact.updated" | "contact.deleted" | "draft.created" | "draft.updated" | "draft.deleted" | "discussion.created" | "discussion.post_created" | "discussion.answered" | "discussion.updated" | "subscription.created" | "subscription.updated" | "broadcast.updated" | "analytics.alert";
+        WebhookEventType: "conversation.created" | "conversation.updated" | "conversation.rated" | "message.created" | "feedback.created" | "contact.updated" | "contact.deleted" | "draft.created" | "draft.updated" | "draft.deleted" | "discussion.created" | "discussion.post_created" | "discussion.answered" | "discussion.updated" | "subscription.created" | "subscription.updated" | "broadcast.updated" | "analytics.alert" | "monitor.alert";
         WebhookEndpoint: {
             /** Format: uuid */
             id: string;
@@ -10712,7 +10959,7 @@ export interface components {
             type: "resync_required";
         };
         /** @description An event as `GET /v1/events` returns it, told apart by `type`; the same objects realtime and webhooks carry. */
-        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"];
+        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["MonitorAlertEvent"];
         EventPage: {
             events: components["schemas"]["StoredEvent"][];
             /**
@@ -10731,7 +10978,7 @@ export interface components {
             id: number;
         };
         /** @description One server message on `/v1/realtime`, told apart by `type`. */
-        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["MigrationProgressEvent"] | components["schemas"]["MigrationForwardingConfirmationEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
+        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["AnalyticsAlertEvent"] | components["schemas"]["MonitorAlertEvent"] | components["schemas"]["MigrationProgressEvent"] | components["schemas"]["MigrationForwardingConfirmationEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
         /**
          * @description `auto`: available in `live` inboxes while connected to `/v1/realtime` within business
          *     hours. `away`: never shown as available.
@@ -13142,9 +13389,18 @@ export interface components {
          *     `metrics.latency_bands`, 20 bands whose upper bounds `meta.latency_band_bounds` lists;
          *     the same bands for every range, read exactly from the duration sketches; it cannot order
          *     rows).
+         *
+         *     With `dataset: uptime` only: `runs` (counted runs), `failures` (failed runs), `up` (checks
+         *     whose last counted run of the range or bucket succeeded), `uptime` (percent of the
+         *     monitored time the check was not down, each run standing for its interval), `downtime`
+         *     (seconds down), `response_time_p50`, `response_time_p95` and `response_time_p99` (the total
+         *     time of runs that got an answer, in milliseconds, from sketches accurate to 1.1%),
+         *     `avg_response_time` and `ttfb` (milliseconds) and `cert_days_left` (the fewest days until a
+         *     certificate expires, by each check's last run that had one). Runs recorded `unknown`
+         *     count in none of them.
          * @enum {string}
          */
-        AnalyticsMetric: "visitors" | "visits" | "pageviews" | "views_per_visit" | "bounce_rate" | "visit_duration" | "time_on_page" | "scroll_depth" | "events" | "conversions" | "conversion_rate" | "completions" | "revenue" | "conversations" | "feedback" | "ratings_up" | "ratings_down" | "helpful_rate" | "discussions" | "support_rate" | "requests" | "requests_per_minute" | "errors" | "error_rate" | "client_errors" | "client_error_rate" | "p50" | "p75" | "p90" | "p95" | "p99" | "avg_duration" | "max_duration" | "apdex" | "request_bytes" | "response_bytes" | "response_size_p50" | "response_size_p95" | "latency_bands";
+        AnalyticsMetric: "visitors" | "visits" | "pageviews" | "views_per_visit" | "bounce_rate" | "visit_duration" | "time_on_page" | "scroll_depth" | "events" | "conversions" | "conversion_rate" | "completions" | "revenue" | "conversations" | "feedback" | "ratings_up" | "ratings_down" | "helpful_rate" | "discussions" | "support_rate" | "requests" | "requests_per_minute" | "errors" | "error_rate" | "client_errors" | "client_error_rate" | "p50" | "p75" | "p90" | "p95" | "p99" | "avg_duration" | "max_duration" | "apdex" | "request_bytes" | "response_bytes" | "response_size_p50" | "response_size_p95" | "latency_bands" | "runs" | "failures" | "up" | "uptime" | "downtime" | "response_time_p50" | "response_time_p95" | "response_time_p99" | "avg_response_time" | "ttfb" | "cert_days_left";
         /**
          * @description A value of a visit or page. `page` is a path that was viewed (pages are counted by path;
          *     `hostname` tells sites apart), `entry_page` and `exit_page` the first and last of a visit.
@@ -13175,9 +13431,11 @@ export interface components {
          *     `country` and `app_version` (`(other)` past 200); they count only the requests that have
          *     one, and each is kept by local hour with `route`, `method` and `status_class` only (see
          *     `AnalyticsDataset`).
+         *
+         *     With `dataset: uptime` the dimension is `check`, an uptime check's id.
          * @enum {string}
          */
-        AnalyticsFilterDimension: "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version" | "visitor_type" | "event" | "prop" | "route" | "method" | "status" | "status_class" | "environment" | "api_version" | "service" | "consumer";
+        AnalyticsFilterDimension: "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version" | "visitor_type" | "event" | "prop" | "route" | "method" | "status" | "status_class" | "environment" | "api_version" | "service" | "consumer" | "check";
         /**
          * @description A filter dimension (`AnalyticsFilterDimension`), or a time grain: `time:hour` (local hours
          *     of the property's time zone; only alone, and only with `visitors`, `visits`, `pageviews` and
@@ -13195,9 +13453,14 @@ export interface components {
          *     autumn and the hours around a pending zone change (`timezone_applies_at`) stay apart; day,
          *     week and month values are the local date they start on, `2026-10-12`. Every bucket of the
          *     range is present when the grain is the only dimension.
+         *
+         *     With `dataset: uptime`, `check` and a grain at most, each of them once: `time:minute` and
+         *     `time:hour` inside the runs kept (`YUVA_MONITOR_CHECK_DAYS`, at most 1,440 minutes),
+         *     `time:day`, `time:week` and `time:month` for any range. Its buckets are UTC, labelled like the
+         *     API dataset's (`2026-10-12T14:05+00:00`, `2026-10-12`).
          * @enum {string}
          */
-        AnalyticsDimension: "time:minute" | "time:hour" | "time:day" | "time:week" | "time:month" | "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version" | "visitor_type" | "event" | "prop" | "route" | "method" | "status" | "status_class" | "environment" | "api_version" | "service" | "consumer";
+        AnalyticsDimension: "time:minute" | "time:hour" | "time:day" | "time:week" | "time:month" | "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version" | "visitor_type" | "event" | "prop" | "route" | "method" | "status" | "status_class" | "environment" | "api_version" | "service" | "consumer" | "check";
         /**
          * @description `is` and `is_not` compare whole values, `contains` and `not_contains` parts of them (case
          *     does not matter), `matches` patterns: on paths `*` is one segment and `**` any number of
@@ -13296,9 +13559,16 @@ export interface components {
          *     Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by
          *     `requests` unless `order_by` says otherwise; slowest and most failing routes are a `route`
          *     breakdown ordered by `p95` or `error_rate`.
+         *
+         *     `uptime` is the runs of uptime checks (`MonitorCheck`): on a property (of either kind) its
+         *     checks, on `queryMonitoring` every check of the workspace. It takes the uptime metrics of
+         *     `AnalyticsMetric`, the dimension `check` and a grain, filters on `check` (`is`, `is_not`),
+         *     the ranges of the `api` dataset (counted in UTC) and `compare`. Days whose runs were folded
+         *     come from daily rows, the rest from the runs, which are kept `YUVA_MONITOR_CHECK_DAYS` days.
+         *     Checks are probes, not consumers, so their requests never enter the `api` dataset.
          * @enum {string}
          */
-        AnalyticsDataset: "traffic" | "support" | "api";
+        AnalyticsDataset: "traffic" | "support" | "api" | "uptime";
         AnalyticsQuery: {
             dataset?: components["schemas"]["AnalyticsDataset"];
             metrics: components["schemas"]["AnalyticsMetric"][];
@@ -13424,6 +13694,28 @@ export interface components {
             response_size_p50?: number;
             /** Format: double */
             response_size_p95?: number;
+            /** Format: double */
+            runs?: number;
+            /** Format: double */
+            failures?: number;
+            /** Format: double */
+            up?: number;
+            /** Format: double */
+            uptime?: number;
+            /** Format: double */
+            downtime?: number;
+            /** Format: double */
+            response_time_p50?: number;
+            /** Format: double */
+            response_time_p95?: number;
+            /** Format: double */
+            response_time_p99?: number;
+            /** Format: double */
+            avg_response_time?: number;
+            /** Format: double */
+            ttfb?: number;
+            /** Format: double */
+            cert_days_left?: number;
             /**
              * @description Requests per duration band, fastest first: band 0 holds the requests of at most
              *     `meta.latency_band_bounds[0]` microseconds, band i those above bound i-1 up to bound i,
@@ -13568,6 +13860,327 @@ export interface components {
              * @description The change in percent of `previous`, one decimal; only for `metric_change`, `row_change` and `support_hotspot`.
              */
             change?: number;
+        };
+        /**
+         * @description `unknown` until the first counted run, then `up`, or `down` once `failures_before_down`
+         *     runs in a row failed.
+         * @enum {string}
+         */
+        MonitorCheckState: "unknown" | "up" | "down";
+        /** @enum {string} */
+        MonitorCheckMethod: "GET" | "HEAD";
+        MonitorCheckHeader: {
+            /**
+             * @description A request header, such as `Authorization`. `Host`, `Cookie`, `Content-Length`,
+             *     `Transfer-Encoding`, `Connection`, `Upgrade`, `TE`, `Trailer` and `Proxy-*` cannot
+             *     be set.
+             */
+            name: string;
+            /** @description Kept encrypted under the server's master key and never returned. */
+            value: string;
+        };
+        MonitorCheckFields: {
+            name?: string;
+            /**
+             * @description An `http` or `https` URL without credentials.
+             * @example https://api.example.com/healthz
+             */
+            url?: string;
+            method?: components["schemas"]["MonitorCheckMethod"];
+            headers?: components["schemas"]["MonitorCheckHeader"][];
+            /** @description The status codes that count as up, from 200 to 399; any status from 200 to 399 when empty. */
+            expected_statuses?: number[];
+            /** @description Text the first 64 KiB of the answer must contain (or, with `keyword_absent`, must not); `GET` only. */
+            keyword?: string | null;
+            keyword_absent?: boolean;
+            timeout_seconds?: number;
+            /** @description At least `YUVA_MONITOR_MIN_INTERVAL` (`422 interval_too_short`). */
+            interval_seconds?: number;
+            /** @description Failed runs in a row before the check is down; each failed run was already tried again after 20 seconds. */
+            failures_before_down?: number;
+            /** @description An `https` check's certificate expiring within this many days raises `certificate` alerts. */
+            cert_warning_days?: number;
+            /** @description Redirects followed; every hop goes through the same address checks. `0` judges the redirect's own status. */
+            max_redirects?: number;
+            /** @description The service the check watches, by the name its records and spans give. */
+            service?: string | null;
+            /**
+             * Format: uuid
+             * @description The property whose `uptime` dataset and reports include the check.
+             */
+            property_id?: string | null;
+            paused?: boolean;
+        };
+        MonitorCheckCreate: components["schemas"]["MonitorCheckFields"] & Record<string, never>;
+        MonitorCheckUpdate: components["schemas"]["MonitorCheckFields"] & Record<string, never>;
+        /** @description Milliseconds; redirects add up their hops, `ttfb` is until the last answer's first byte and `total` until its body was read. */
+        MonitorCheckTimings: {
+            /** Format: double */
+            dns: number;
+            /** Format: double */
+            connect: number;
+            /** Format: double */
+            tls: number;
+            /** Format: double */
+            ttfb: number;
+            /** Format: double */
+            total: number;
+        };
+        /**
+         * @description Why a run failed: `dns` (the name did not resolve), `refused_address` (it resolved, or a
+         *     redirect led, to an address the server will not call), `connect`, `tls` (the handshake or
+         *     the certificate failed), `timeout`, `status` (a status not in `expected_statuses`),
+         *     `keyword`, `redirects` (more than `max_redirects`, or a redirect to a URL that is not
+         *     allowed), `other`.
+         * @enum {string}
+         */
+        MonitorCheckError: "dns" | "refused_address" | "connect" | "tls" | "timeout" | "status" | "keyword" | "redirects" | "other";
+        MonitorCheckResult: {
+            /**
+             * Format: date-time
+             * @description When the counted try started.
+             */
+            at: string;
+            ok: boolean;
+            /**
+             * @description The check's state after the run; `unknown` when the run fell in a minute where at least
+             *     20 checks ran on the server and more than half of them failed, which points at the
+             *     server's own network, so it counts neither way; `pending` until its minute is judged,
+             *     about a minute after it closed.
+             * @enum {string}
+             */
+            state: "up" | "down" | "unknown" | "pending";
+            /** @description The last answer's status; 0 when none came. */
+            status: number;
+            error?: components["schemas"]["MonitorCheckError"];
+            /** @description What went wrong, for members; at most 200 characters. */
+            detail?: string;
+            /** @description The first try failed and this is the try 20 seconds later. */
+            retried: boolean;
+            redirects: number;
+            timings: components["schemas"]["MonitorCheckTimings"];
+            /** @description `https`: whole days until the server's certificate expires. */
+            cert_days_left?: number;
+        };
+        MonitorCheckResultList: {
+            items: components["schemas"]["MonitorCheckResult"][];
+        };
+        MonitorCheck: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            url: string;
+            method: components["schemas"]["MonitorCheckMethod"];
+            /** @description The headers the check sends; their values are never returned. */
+            header_names: string[];
+            expected_statuses: number[];
+            keyword?: string;
+            keyword_absent: boolean;
+            timeout_seconds: number;
+            interval_seconds: number;
+            failures_before_down: number;
+            cert_warning_days: number;
+            max_redirects: number;
+            service?: string;
+            /** Format: uuid */
+            property_id?: string;
+            paused: boolean;
+            state: components["schemas"]["MonitorCheckState"];
+            /** Format: date-time */
+            state_since?: string;
+            last_result?: components["schemas"]["MonitorCheckResult"];
+            /**
+             * Format: date-time
+             * @description Absent while paused.
+             */
+            next_run_at?: string;
+            /**
+             * Format: date-time
+             * @description `https`: when the certificate of the last answer expires.
+             */
+            cert_expires_at?: string;
+            /** Format: uuid */
+            created_by?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        MonitorCheckList: {
+            items: components["schemas"]["MonitorCheck"][];
+            /** @description The workspace's checks at most (`YUVA_MONITOR_CHECKS`). */
+            limit: number;
+            /** @description Checks on one host at most. */
+            host_limit: number;
+            /** @description The shortest interval this server allows (`YUVA_MONITOR_MIN_INTERVAL`). */
+            min_interval_seconds?: number;
+        };
+        /**
+         * @description On a property's requests (`property_id` required, narrowed by `route` or `service`), over
+         *     the last `window_minutes` closed minutes with at least `min_requests`:
+         *     - `error_rate` and `client_error_rate`: percent of requests with status 500 to 599 (or none),
+         *       or 400 to 499, above `threshold`.
+         *     - `p95`, `p99`: that percentile of the duration in milliseconds above `threshold`.
+         *     - `apdex`: the Apdex score below `threshold` (0 to 1).
+         *     - `spike` and `drop`: requests of the last 15 closed minutes at least three times, or at
+         *       most half, the same 15 minutes averaged over the 7 days before, when that average is at
+         *       least 50 requests; no `threshold` or window.
+         *     - `silent`: a route (`route`, or each route of the property) that averaged at least one
+         *       request a minute over the day before had none for 15 minutes.
+         *
+         *     On uptime checks (`check_id`, or every check of `property_id`, or every check of the
+         *     workspace):
+         *     - `check_state`: the check is down.
+         *     - `certificate`: the check's certificate expires within `threshold` days (the check's
+         *       `cert_warning_days` when absent).
+         *
+         *     An alert resolves once its value has been back inside the threshold with a 10% margin
+         *     (below 90% of it; for `apdex` above it by a tenth of the distance to 1; for `spike`
+         *     below 2.7 times, for `drop` above 0.55 times the average) over a whole window that began
+         *     after it fired, or the window has fewer than `min_requests`; a silent route once it was
+         *     called again; a check once it is up, or its certificate is renewed.
+         * @enum {string}
+         */
+        MonitorAlertRuleKind: "error_rate" | "client_error_rate" | "p95" | "p99" | "apdex" | "spike" | "drop" | "silent" | "check_state" | "certificate";
+        MonitorAlertRuleFields: {
+            /** @description Named after its kind and subject when absent. */
+            name?: string;
+            /**
+             * Format: double
+             * @description Percent for the rates, milliseconds for `p95` and `p99`, 0 to 1 for `apdex`, days for `certificate`.
+             */
+            threshold?: number | null;
+            /** @description The metric rules' window; 5 when absent. */
+            window_minutes?: number;
+            /** @description The fewest requests a window needs to be judged; 20 when absent. */
+            min_requests?: number;
+            /** @description Members who get each alert by e-mail and Web Push; they must see the rule's property. */
+            recipients?: string[];
+            enabled?: boolean;
+        };
+        MonitorAlertRuleCreate: components["schemas"]["MonitorAlertRuleFields"] & {
+            kind: components["schemas"]["MonitorAlertRuleKind"];
+            /** Format: uuid */
+            property_id?: string;
+            /** @description A route pattern of the property, as `listAnalyticsRoutes` lists it. */
+            route?: string;
+            service?: string;
+            /** Format: uuid */
+            check_id?: string;
+        };
+        MonitorAlertRuleUpdate: components["schemas"]["MonitorAlertRuleFields"] & Record<string, never>;
+        MonitorAlertRule: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            kind: components["schemas"]["MonitorAlertRuleKind"];
+            /** Format: uuid */
+            property_id?: string;
+            route?: string;
+            service?: string;
+            /** Format: uuid */
+            check_id?: string;
+            /** Format: double */
+            threshold?: number;
+            window_minutes: number;
+            min_requests: number;
+            recipients: string[];
+            enabled: boolean;
+            /** @description The rule's open alerts. */
+            firing: number;
+            /** Format: uuid */
+            created_by?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        MonitorAlertRuleList: {
+            items: components["schemas"]["MonitorAlertRule"][];
+        };
+        /** @enum {string} */
+        MonitorAlertState: "firing" | "resolved";
+        MonitorAlert: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            rule_id: string;
+            rule_name: string;
+            kind: components["schemas"]["MonitorAlertRuleKind"];
+            /** @description What the alert is about within its rule; empty for a rule's whole subject, a route pattern for `silent`, a check id for check rules. */
+            key: string;
+            state: components["schemas"]["MonitorAlertState"];
+            /** Format: uuid */
+            property_id?: string;
+            route?: string;
+            service?: string;
+            /** Format: uuid */
+            check_id?: string;
+            /**
+             * Format: double
+             * @description The value when it fired; requests of the 15 minutes for `spike` and `drop`, days left for `certificate`, 1 for a check that is down.
+             */
+            value: number;
+            /** Format: double */
+            threshold?: number;
+            /**
+             * Format: double
+             * @description `spike` and `drop`: the average it was compared with; `silent`: requests a minute over the day before.
+             */
+            baseline?: number;
+            /** Format: double */
+            resolved_value?: number;
+            window_minutes?: number;
+            /** @description What was found, in English, as on the annotation. */
+            text: string;
+            /**
+             * Format: date-time
+             * @description The end of the window that fired it.
+             */
+            fired_at: string;
+            /** Format: date-time */
+            resolved_at?: string;
+            /** Format: uuid */
+            annotation_id?: string;
+        };
+        MonitorAlertList: {
+            items: components["schemas"]["MonitorAlert"][];
+        };
+        MonitorCheckRef: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            url: string;
+        };
+        MonitorAlertEventData: {
+            alert: components["schemas"]["MonitorAlert"];
+            property?: components["schemas"]["AnalyticsPropertyRef"];
+            check?: components["schemas"]["MonitorCheckRef"];
+        };
+        /**
+         * @description `monitor.alert`: an alert fired (`alert.state: firing`) or resolved (`resolved`); each
+         *     happens once per alert. Delivered to callers who hold `analytics:read` and can see the
+         *     rule: `inbox_id` is the linked inbox of the alert's property; alerts on checks without a
+         *     property reach every member.
+         */
+        MonitorAlertEvent: {
+            /** Format: int64 */
+            id: number;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "monitor.alert";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id?: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["MonitorAlertEventData"];
+        };
+        WebhookMonitorAlertPayload: components["schemas"]["WebhookPayloadBase"] & {
+            data: components["schemas"]["MonitorAlertEventData"];
         };
         AnalyticsRangeProblem: components["schemas"]["Problem"] & {
             /** Format: date */
@@ -15601,6 +16214,8 @@ export interface components {
         AnalyticsRouteId: number;
         AnalyticsFunnelId: string;
         AnalyticsSegmentId: string;
+        MonitorCheckId: string;
+        MonitorAlertRuleId: string;
         AnalyticsShareId: string;
         AnalyticsExportId: string;
         /** @description The share link's token, `yuva_sh_…`. */
@@ -24153,6 +24768,425 @@ export interface operations {
             409: components["responses"]["Problem"];
         };
     };
+    listMonitorChecks: {
+        parameters: {
+            query?: {
+                property_id?: string;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The checks. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MonitorCheckList"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createMonitorCheck: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MonitorCheckCreate"];
+            };
+        };
+        responses: {
+            /** @description The check; its first run is due now. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MonitorCheck"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    getMonitorCheck: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                checkId: components["parameters"]["MonitorCheckId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The check. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MonitorCheck"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteMonitorCheck: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                checkId: components["parameters"]["MonitorCheckId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateMonitorCheck: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                checkId: components["parameters"]["MonitorCheckId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MonitorCheckUpdate"];
+            };
+        };
+        responses: {
+            /** @description The check. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MonitorCheck"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    listMonitorCheckResults: {
+        parameters: {
+            query?: {
+                /** @description `at` of the last run of the previous page. */
+                before?: string;
+                limit?: number;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                checkId: components["parameters"]["MonitorCheckId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The runs. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MonitorCheckResultList"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    queryMonitoring: {
+        parameters: {
+            query?: {
+                /** @description `json` (the default) or `csv`. */
+                format?: "json" | "csv";
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsQuery"];
+            };
+        };
+        responses: {
+            /** @description The numbers. */
+            200: {
+                headers: {
+                    /** @description With `format=csv`, an attachment file name. */
+                    "Content-Disposition"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsResult"];
+                    "text/csv": string;
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            /** @description `range_too_large`, `property_kind` (a dataset other than `uptime`), as for `queryAnalytics`. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AnalyticsRangeProblem"];
+                };
+            };
+            429: components["responses"]["Problem"];
+        };
+    };
+    listMonitorAlertRules: {
+        parameters: {
+            query?: {
+                property_id?: string;
+                check_id?: string;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The rules. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MonitorAlertRuleList"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createMonitorAlertRule: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MonitorAlertRuleCreate"];
+            };
+        };
+        responses: {
+            /** @description The rule. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MonitorAlertRule"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    getMonitorAlertRule: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                ruleId: components["parameters"]["MonitorAlertRuleId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The rule. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MonitorAlertRule"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteMonitorAlertRule: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                ruleId: components["parameters"]["MonitorAlertRuleId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateMonitorAlertRule: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                ruleId: components["parameters"]["MonitorAlertRuleId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MonitorAlertRuleUpdate"];
+            };
+        };
+        responses: {
+            /** @description The rule. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MonitorAlertRule"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    listMonitorAlerts: {
+        parameters: {
+            query?: {
+                /** @description `firing` or `resolved`; both when absent. */
+                state?: components["schemas"]["MonitorAlertState"];
+                property_id?: string;
+                check_id?: string;
+                rule_id?: string;
+                /** @description `fired_at` of the last alert of the previous page. */
+                before?: string;
+                limit?: number;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The alerts. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MonitorAlertList"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
     realtime: {
         parameters: {
             query?: {
@@ -26242,6 +27276,39 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["WebhookAnalyticsAlertPayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookMonitorAlert: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookMonitorAlertPayload"];
             };
         };
         responses: {
