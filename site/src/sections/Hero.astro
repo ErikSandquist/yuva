@@ -80,8 +80,8 @@ const dot = "size-1.5 shrink-0 rounded-full bg-ink-faint"
                 class="inline-flex h-7 items-center gap-1.5 rounded-full border border-rule px-2.5 text-xs text-ink-soft transition-colors hover:border-rule-strong hover:text-ink sm:h-8 sm:text-[0.8rem]"
               >
                 {item.path && (
-                  <svg viewBox="0 0 24 24" class="size-3.5 shrink-0 fill-current" aria-hidden="true">
-                    <path d={item.path} />
+                  <svg viewBox={item.viewBox ?? "0 0 24 24"} class="size-3.5 shrink-0 fill-current" aria-hidden="true">
+                    <path d={item.path} fill-rule={item.viewBox ? "evenodd" : undefined} />
                   </svg>
                 )}
                 {item.name}
