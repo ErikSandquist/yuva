@@ -149,18 +149,18 @@ curl https://support.example.com/v1/analytics/properties/PROPERTY_ID/query \
 
 | | |
 |---|---|
-| Metrikler | `requests`, `requests_per_minute`, `errors`, `error_rate`, `client_errors`, `client_error_rate`, `p50`, `p95`, `p99`, `avg_duration`. Oranlar yüzde, süreler milisaniyedir. Yüzdelikler %1,1 doğrulukla verilir. |
-| Boyutlar ve filtreler | `route`, `method`, `status`, `status_class` (`2xx`, `3xx`, `4xx`, `5xx`; `0` durumu için `none`), `environment`; en çok iki boyut, biri zaman aralığı olabilir. |
-| Zaman aralıkları | `time:minute`, `time:hour`, `time:day`. Dakikalar ve saatler özelliğin yerel saatindedir. |
-| Aralık | Geçerli dakikaya kadar `15m`, `1h`, `6h`, `24h`; ya da `today`, `7d`, `30d` ve diğer dönemler; ya da `from` ve `to`. |
+| Metrikler | `requests`, `requests_per_minute`, `errors`, `error_rate`, `client_errors`, `client_error_rate`, `p50`, `p75`, `p90`, `p95`, `p99`, `avg_duration`, `max_duration`, `apdex`, boyutlar ve daha fazlası; bkz. [API izlemeyi çözümleme](analytics-api-analysis.md). Oranlar yüzde, süreler milisaniyedir. Yüzdelikler %1,1 doğrulukla verilir. |
+| Boyutlar ve filtreler | `route`, `method`, `status`, `status_class` (`2xx`, `3xx`, `4xx`, `5xx`; `0` durumu için `none`), `environment`, `api_version`, `service`, `source`, `platform` ve sınırlarla `consumer`, `country` ve `app_version`; en çok iki boyut, biri zaman aralığı olabilir. |
+| Zaman aralıkları | `time:minute`, `time:hour`, `time:day`, `time:week`, `time:month`. Dakikalar ve saatler özelliğin yerel saatindedir. |
+| Aralık | Geçerli dakikaya kadar `15m`, `1h`, `6h`, `24h`; ya da `today`, `7d`, `30d` ve diğer dönemler; ya da `from` ve `to`, ya da `since` ve `until`. |
 
 `time:minute`, [`YUVA_MONITOR_MINUTE_DAYS`](configuration.md#api-izleme) gün (varsayılan 8) geriye gider ve en çok
 1.440 dakika döndürür; daha uzun ya da daha eski aralık `422 range_too_large` ile reddedilir. Saatlik sayılar
 özelliğin `monitor_hour_days` değeri kadar (varsayılan 90, 7 ile 400 arası), günlük sayılar özelliğin
 `retention_months` değeri kadar saklanır. `sample_rate` 1'den büyük gönderilen kayıtlara dayanan yanıtta
 `meta.estimated: true` bulunur. Bir web sitesi özelliğinde `dataset: api` ve bir API özelliğinde bu alanı
-vermeyen sorgu `422 property_kind` yanıtlar. API sorgusu `goal_id`, `prop`, `segment_id`, `compare` ya da
-`insights` almaz.
+vermeyen sorgu `422 property_kind` yanıtlar. API sorgusu `goal_id`, `prop`, `segment_id` ya da
+`insights` almaz; `compare` çalışır.
 
 Bir kayıt sorguda yaklaşık 15 saniye içinde görünür.
 

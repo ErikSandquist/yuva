@@ -30,6 +30,7 @@ const groups = [
       "analytics-api-js",
       "analytics-api-otel",
       "analytics-api-apps",
+      "analytics-api-analysis",
       "analytics-sharing",
       "analytics-support",
       "analytics-consent",

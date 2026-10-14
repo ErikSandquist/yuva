@@ -151,18 +151,18 @@ curl https://support.example.com/v1/analytics/properties/PROPERTY_ID/query \
 
 | | |
 |---|---|
-| Metriken | `requests`, `requests_per_minute`, `errors`, `error_rate`, `client_errors`, `client_error_rate`, `p50`, `p95`, `p99`, `avg_duration`. Raten sind Prozent, Dauern Millisekunden. Die Perzentile sind auf 1,1 % genau. |
-| Dimensionen und Filter | `route`, `method`, `status`, `status_class` (`2xx`, `3xx`, `4xx`, `5xx`, oder `none` für Status `0`), `environment`; höchstens zwei Dimensionen, eine davon darf eine Zeitauflösung sein. |
-| Zeitauflösungen | `time:minute`, `time:hour`, `time:day`. Minuten und Stunden gelten in der Ortszeit der Property. |
-| Zeitraum | `15m`, `1h`, `6h`, `24h` bis zur aktuellen Minute, oder `today`, `7d`, `30d` und die anderen Zeiträume, oder `from` und `to`. |
+| Metriken | `requests`, `requests_per_minute`, `errors`, `error_rate`, `client_errors`, `client_error_rate`, `p50`, `p75`, `p90`, `p95`, `p99`, `avg_duration`, `max_duration`, `apdex`, Größen und mehr; siehe [API-Monitoring auswerten](analytics-api-analysis.md). Raten sind Prozent, Dauern Millisekunden. Die Perzentile sind auf 1,1 % genau. |
+| Dimensionen und Filter | `route`, `method`, `status`, `status_class` (`2xx`, `3xx`, `4xx`, `5xx`, oder `none` für Status `0`), `environment`, `api_version`, `service`, `source`, `platform` und, mit Grenzen, `consumer`, `country` und `app_version`; höchstens zwei Dimensionen, eine davon darf eine Zeitauflösung sein. |
+| Zeitauflösungen | `time:minute`, `time:hour`, `time:day`, `time:week`, `time:month`. Minuten und Stunden gelten in der Ortszeit der Property. |
+| Zeitraum | `15m`, `1h`, `6h`, `24h` bis zur aktuellen Minute, oder `today`, `7d`, `30d` und die anderen Zeiträume, oder `from` und `to`, oder `since` und `until`. |
 
 `time:minute` reicht [`YUVA_MONITOR_MINUTE_DAYS`](configuration.md#api-monitoring) Tage zurück (standardmäßig 8) und
 liefert höchstens 1.440 Minuten; ein längerer oder älterer Zeitraum wird mit `422 range_too_large` abgelehnt.
 Stundenwerte werden für `monitor_hour_days` der Property aufbewahrt (standardmäßig 90, 7 bis 400), Tageswerte so
 lange wie ihre `retention_months`. Eine Antwort, die auf mit `sample_rate` über 1 gesendeten Records beruht, hat
 `meta.estimated: true`. `dataset: api` bei einer Website-Property und eine Abfrage ohne dieses Feld bei einer
-API-Property antworten mit `422 property_kind`. Eine API-Abfrage nimmt kein `goal_id`, `prop`, `segment_id`,
-`compare` und kein `insights`.
+API-Property antworten mit `422 property_kind`. Eine API-Abfrage nimmt kein `goal_id`, `prop`, `segment_id`
+und kein `insights`; `compare` funktioniert.
 
 Ein Record erscheint innerhalb von etwa 15 Sekunden in einer Abfrage.
 

@@ -148,18 +148,17 @@ curl https://support.example.com/v1/analytics/properties/PROPERTY_ID/query \
 
 | | |
 |---|---|
-| Metrics | `requests`, `requests_per_minute`, `errors`, `error_rate`, `client_errors`, `client_error_rate`, `p50`, `p95`, `p99`, `avg_duration`. Rates are percent, durations milliseconds. The percentiles are accurate to 1.1%. |
-| Dimensions and filters | `route`, `method`, `status`, `status_class` (`2xx`, `3xx`, `4xx`, `5xx`, or `none` for status `0`), `environment`; at most two dimensions, one of them may be a time grain. |
-| Time grains | `time:minute`, `time:hour`, `time:day`. Minutes and hours are in the property's local time. |
-| Range | `15m`, `1h`, `6h`, `24h` up to the current minute, or `today`, `7d`, `30d` and the other periods, or `from` and `to`. |
+| Metrics | `requests`, `requests_per_minute`, `errors`, `error_rate`, `client_errors`, `client_error_rate`, `p50`, `p75`, `p90`, `p95`, `p99`, `avg_duration`, `max_duration`, `apdex`, sizes and more; see [Analyze API monitoring](analytics-api-analysis.md). Rates are percent, durations milliseconds. The percentiles are accurate to 1.1%. |
+| Dimensions and filters | `route`, `method`, `status`, `status_class` (`2xx`, `3xx`, `4xx`, `5xx`, or `none` for status `0`), `environment`, `api_version`, `service`, `source`, `platform` and, within limits, `consumer`, `country` and `app_version`; at most two dimensions, one of them may be a time grain. |
+| Time grains | `time:minute`, `time:hour`, `time:day`, `time:week`, `time:month`. Minutes and hours are in the property's local time. |
+| Range | `15m`, `1h`, `6h`, `24h` up to the current minute, or `today`, `7d`, `30d` and the other periods, or `from` and `to`, or `since` and `until`. |
 
 `time:minute` reaches back [`YUVA_MONITOR_MINUTE_DAYS`](configuration.md#api-monitoring) days (8 by default) and
 returns at most 1,440 minutes; a longer or older range is refused with `422 range_too_large`. Hourly numbers are
 kept for the property's `monitor_hour_days` (90 by default, 7 to 400), daily numbers as long as the property's
 `retention_months`. An answer that rests on records sent with `sample_rate` above 1 has `meta.estimated: true`.
 `dataset: api` on a site property, and a query without it on an API property, answer `422 property_kind`. An API
-query takes no `goal_id`, `prop`, `segment_id`, `compare` or
-`insights`.
+query takes no `goal_id`, `prop`, `segment_id` or `insights`; `compare` works.
 
 A record shows up in a query within about 15 seconds.
 
