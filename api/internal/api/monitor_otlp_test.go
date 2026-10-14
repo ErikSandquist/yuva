@@ -148,6 +148,7 @@ func TestOTLPExportsCountLikeRecords(t *testing.T) {
 	viaProto := createAPIProperty(tm.owner, map[string]any{"name": "Protobuf"})
 	viaJSON := createAPIProperty(tm.owner, map[string]any{"name": "JSON"})
 	viaRecords := createAPIProperty(tm.owner, map[string]any{"name": "Records"})
+	viaOld := createAPIProperty(tm.owner, map[string]any{"name": "Semantic conventions 1.20"})
 	backend := tm.apiKey(h)
 
 	pb := exportOTLP(h, backend.bearer, viaProto, "application/x-protobuf", gzipped(otlpFixture(t, "traces.pb")), map[string]string{"Content-Encoding": "gzip"})
@@ -169,6 +170,10 @@ func TestOTLPExportsCountLikeRecords(t *testing.T) {
 		answer.PartialSuccess.RejectedSpans != "1" || !strings.Contains(answer.PartialSuccess.ErrorMessage, "status must be 100 to 599") {
 		t.Fatalf("JSON export: %d %s", js.status, js.body)
 	}
+	if old := exportOTLP(h, backend.bearer, viaOld, "application/x-protobuf", otlpFixture(t, "traces-semconv-1.20.pb"), nil); old.status != http.StatusOK ||
+		protoFields(t, protoFields(t, old.body)[1].([]byte))[1] != uint64(1) {
+		t.Fatalf("1.20 conventions export: %d %q", old.status, old.body)
+	}
 	recs := sendRecords(backend, http.StatusAccepted, viaRecords, fixtureRecords()...)
 	if recs.body["accepted"].(float64) != 7 || len(recs.body["errors"].([]any)) != 1 {
 		t.Fatalf("records %s", recs.raw)
@@ -179,7 +184,7 @@ func TestOTLPExportsCountLikeRecords(t *testing.T) {
 	if n := h.count("SELECT sum(m.sampled)::int FROM monitor_minute m JOIN monitor_routes r ON r.property_id = m.property_id AND r.id = m.route WHERE m.workspace_id = $1 AND m.property_id = $2 AND r.pattern = '/health'", tm.ws, viaProto); n != 6 {
 		t.Fatalf("sampled spans weigh %d, want 2 + 4", n)
 	}
-	for name, id := range map[string]string{"protobuf": viaProto, "JSON": viaJSON} {
+	for name, id := range map[string]string{"protobuf": viaProto, "JSON": viaJSON, "1.20 conventions": viaOld} {
 		if got := rollupPrint(h, tm.ws, id); got != want {
 			t.Fatalf("%s rollups differ from the records endpoint's:\n%s\nwant\n%s", name, got, want)
 		}

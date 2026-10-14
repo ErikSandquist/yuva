@@ -6,6 +6,7 @@ package otlp
 import (
 	"encoding/json"
 	"math"
+	"net/url"
 	"strconv"
 	"strings"
 )
@@ -36,10 +37,16 @@ type Span struct {
 	APIVersion    string
 	RequestSize   int64
 	ResponseSize  int64
+	// ranks says which name each field was read from, so a newer name wins whatever the order.
+	ranks [fieldCount]int8
 }
 
 func newSpan(res *Resource) Span {
-	return Span{Resource: res, Status: -1, RequestSize: -1, ResponseSize: -1}
+	s := Span{Resource: res, Status: -1, RequestSize: -1, ResponseSize: -1}
+	for i := range s.ranks {
+		s.ranks[i] = math.MaxInt8
+	}
+	return s
 }
 
 // value is an attribute's AnyValue of a kind the fields above can use.
@@ -92,38 +99,93 @@ func resourceAttr(res *Resource, key string, v value) {
 	}
 }
 
-// spanKeys are the span attributes read; every other attribute is skipped undecoded.
-var spanKeys = map[string]bool{
-	"http.request.method": true, "http.route": true, "url.path": true, "http.response.status_code": true, "client.address": true,
-	"http.request.body.size": true, "http.response.body.size": true, "yuva.consumer": true, "yuva.api_version": true,
+type spanField int8
+
+const (
+	fieldMethod spanField = iota
+	fieldRoute
+	fieldPath
+	fieldStatus
+	fieldClient
+	fieldRequestSize
+	fieldResponseSize
+	fieldConsumer
+	fieldAPIVersion
+	fieldCount
+)
+
+type spanKey struct {
+	field spanField
+	rank  int8
+}
+
+// spanKeys are the span attributes read, every other one is skipped undecoded: the current HTTP
+// semantic conventions first, then the names of 1.20 and before, which many deployed SDKs and
+// auto-instrumentations still send.
+var spanKeys = map[string]spanKey{
+	"http.request.method": {fieldMethod, 0}, "http.method": {fieldMethod, 1},
+	"http.route": {fieldRoute, 0},
+	"url.path":   {fieldPath, 0}, "http.target": {fieldPath, 1}, "http.url": {fieldPath, 2},
+	"http.response.status_code": {fieldStatus, 0}, "http.status_code": {fieldStatus, 1},
+	"client.address": {fieldClient, 0}, "http.client_ip": {fieldClient, 1}, "net.sock.peer.addr": {fieldClient, 2}, "net.peer.ip": {fieldClient, 3},
+	"http.request.body.size": {fieldRequestSize, 0}, "http.request_content_length": {fieldRequestSize, 1},
+	"http.response.body.size": {fieldResponseSize, 0}, "http.response_content_length": {fieldResponseSize, 1},
+	"yuva.consumer": {fieldConsumer, 0}, "yuva.api_version": {fieldAPIVersion, 0},
 }
 
 func spanAttr(s *Span, key string, v value) {
-	size := func(dst *int64) {
-		if n, ok := v.integer(); ok {
-			*dst = n
+	k, ok := spanKeys[key]
+	if !ok || k.rank >= s.ranks[k.field] {
+		return
+	}
+	text := func(dst *string, val string) {
+		if val != "" {
+			*dst, s.ranks[k.field] = val, k.rank
 		}
 	}
-	switch key {
-	case "http.request.method":
-		s.Method = v.text()
-	case "http.route":
-		s.Route = v.text()
-	case "url.path":
-		s.Path = v.text()
-	case "http.response.status_code":
-		size(&s.Status)
-	case "client.address":
-		s.ClientAddress = v.text()
-	case "http.request.body.size":
-		size(&s.RequestSize)
-	case "http.response.body.size":
-		size(&s.ResponseSize)
-	case "yuva.consumer":
-		s.Consumer = v.text()
-	case "yuva.api_version":
-		s.APIVersion = v.text()
+	number := func(dst *int64) {
+		if n, ok := v.integer(); ok {
+			*dst, s.ranks[k.field] = n, k.rank
+		}
 	}
+	switch k.field {
+	case fieldMethod:
+		text(&s.Method, v.text())
+	case fieldRoute:
+		text(&s.Route, v.text())
+	case fieldPath:
+		text(&s.Path, attrPath(key, v.text()))
+	case fieldStatus:
+		number(&s.Status)
+	case fieldClient:
+		text(&s.ClientAddress, v.text())
+	case fieldRequestSize:
+		number(&s.RequestSize)
+	case fieldResponseSize:
+		number(&s.ResponseSize)
+	case fieldConsumer:
+		text(&s.Consumer, v.text())
+	case fieldAPIVersion:
+		text(&s.APIVersion, v.text())
+	}
+}
+
+// attrPath is the path of url.path, of the older http.target without its query, or of the older
+// full http.url.
+func attrPath(key, v string) string {
+	switch key {
+	case "http.target":
+		if i := strings.IndexAny(v, "?#"); i >= 0 {
+			v = v[:i]
+		}
+	case "http.url":
+		u, err := url.Parse(v)
+		if err != nil {
+			return ""
+		}
+		v = u.EscapedPath()
+	}
+	return v
 }
 
 // AdjustedCount is how many spans a span stands for under OpenTelemetry probability sampling:

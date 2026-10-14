@@ -10,15 +10,17 @@ import (
 	"google.golang.org/protobuf/encoding/protowire"
 )
 
+func otlpFile(t *testing.T, name string) []byte {
+	t.Helper()
+	b, err := os.ReadFile("testdata/" + name)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return b
+}
+
 func TestFixturesDecodeAlike(t *testing.T) {
-	pb, err := os.ReadFile("testdata/traces.pb")
-	if err != nil {
-		t.Fatal(err)
-	}
-	js, err := os.ReadFile("testdata/traces.json")
-	if err != nil {
-		t.Fatal(err)
-	}
+	pb, js := otlpFile(t, "traces.pb"), otlpFile(t, "traces.json")
 	fromPB, err := DecodeProto(pb)
 	if err != nil {
 		t.Fatal(err)
@@ -42,6 +44,53 @@ func TestFixturesDecodeAlike(t *testing.T) {
 	}
 	if grpc := fromPB[7]; grpc.Method != "" || grpc.Status != -1 {
 		t.Fatalf("gRPC span %+v", grpc)
+	}
+}
+
+func withoutRanks(spans []Span) []Span {
+	out := make([]Span, len(spans))
+	for i, s := range spans {
+		s.ranks = [fieldCount]int8{}
+		out[i] = s
+	}
+	return out
+}
+
+func TestSemconv120FixtureReadsAsTheCurrentOne(t *testing.T) {
+	current, err := DecodeProto(otlpFile(t, "traces.pb"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	old, err := DecodeProto(otlpFile(t, "traces-semconv-1.20.pb"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !reflect.DeepEqual(withoutRanks(old), withoutRanks(current)) {
+		t.Fatalf("the 1.20 conventions read differently:\n%+v\n%+v", old, current)
+	}
+	if old[1].ClientAddress != "2001:db8:1::7" || old[2].ClientAddress != "198.51.100.20" || old[3].Path != "/files/0f8fad5b-d9cb-469f-a165-70867728950e" {
+		t.Fatalf("old client addresses and paths %+v", old[:4])
+	}
+}
+
+func TestNewerNamesWinWhateverTheOrder(t *testing.T) {
+	body := `{"resourceSpans":[{"resource":{"attributes":[{"key":"deployment.environment","value":{"stringValue":"old"}},
+		{"key":"deployment.environment.name","value":{"stringValue":"new"}}]},
+		"scopeSpans":[{"spans":[{"kind":2,"startTimeUnixNano":"1","endTimeUnixNano":"2","attributes":[
+		{"key":"http.method","value":{"stringValue":"POST"}},{"key":"http.request.method","value":{"stringValue":"GET"}},
+		{"key":"http.status_code","value":{"intValue":"500"}},{"key":"http.response.status_code","value":{"intValue":"200"}},
+		{"key":"net.peer.ip","value":{"stringValue":"10.0.0.1"}},{"key":"client.address","value":{"stringValue":"203.0.113.7"}},
+		{"key":"http.url","value":{"stringValue":"https://h/old?x"}},{"key":"http.target","value":{"stringValue":"/target?q=1#f"}},
+		{"key":"http.response_content_length","value":{"intValue":"9"}},{"key":"http.response.body.size","value":{"intValue":"7"}},
+		{"key":"http.request_content_length","value":{"intValue":"3"}}]}]}]}]}`
+	spans, err := DecodeJSON([]byte(body))
+	if err != nil {
+		t.Fatal(err)
+	}
+	s := spans[0]
+	if s.Resource.Environment != "new" || s.Method != "GET" || s.Status != 200 || s.ClientAddress != "203.0.113.7" || s.Path != "/target" ||
+		s.ResponseSize != 7 || s.RequestSize != 3 {
+		t.Fatalf("span %+v", s)
 	}
 }
 

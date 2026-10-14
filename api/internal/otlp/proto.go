@@ -150,7 +150,7 @@ func protoSpan(b []byte, res *Resource) (Span, bool, error) {
 		return s, false, err
 	}
 	for _, kv := range attrs {
-		if err := keyValue(kv, func(k string) bool { return spanKeys[k] }, func(k string, v value) { spanAttr(&s, k, v) }); err != nil {
+		if err := keyValue(kv, func(k string) bool { _, ok := spanKeys[k]; return ok }, func(k string, v value) { spanAttr(&s, k, v) }); err != nil {
 			return s, false, err
 		}
 	}

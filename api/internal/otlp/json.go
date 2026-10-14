@@ -85,7 +85,7 @@ func DecodeJSON(b []byte) ([]Span, error) {
 					return nil, err
 				}
 				for _, kv := range js.Attributes {
-					if spanKeys[kv.Key] {
+					if _, ok := spanKeys[kv.Key]; ok {
 						spanAttr(&s, kv.Key, kv.value())
 					}
 				}
