@@ -260,3 +260,53 @@ without joining any visitor to a contact; Claude Code answers a traffic question
 a share link shows only its views; after consent and identify a contact's page lists their visits and
 without consent it never does; another workspace sees none of it; the load test meets the targets at
 10M events a month.
+
+## M16 — API monitoring
+
+Status: planned; umbrella issue #63, decisions in `architecture.md` › API monitoring (M16). Ships in
+eight steps; M16.1 first, then M16.2, M16.3 and M16.5 in parallel, then M16.4 and M16.6 (after M16.3),
+then M16.7 (after M16.4) and M16.8 (after M16.7). The web SDK server helpers (#60, #61, #62) come
+before M16.2.
+
+- **M16.1 Record and count:** API properties, the batched records endpoint, route inference and caps,
+  in-memory minute and hour aggregation, mergeable duration sketches, minute, hour and day tiers with
+  their folds, the `net/http` middleware in `sdk/go/analytics`, the API overview, routes and route
+  page, usage and limits, the guide.
+- **M16.2 Every API stack:** OTLP/HTTP traces (protobuf and JSON), middleware on `useyuva/server` for
+  srvx, h3, Nitro and Nuxt, Hono, Express, Fastify and Next.js, app-side records from the Swift and
+  Kotlin modules with their store privacy answers, a guide per stack.
+- **M16.3 Full analysis:** every core dimension and one extra dimension (consumer, country, app
+  version) as breakdown and filter, comparisons, Apdex, throughput, new and silent routes, response
+  sizes, consumers, deploy markers.
+- **M16.4 Alerts, uptime, reports, MCP:** alert rules that fire and resolve once, uptime checks from the
+  server behind the address checks, the `uptime` dataset, weekly and monthly API reports,
+  conversations next to errors, MCP tools.
+- **M16.5 Sharing, export, retention:** share links for API views, CSV and NDJSON exports of the
+  `api` and `uptime` datasets, per-tier retention, consumer erasure.
+- **M16.6 Dashboards:** dashboard documents with variables, panels and thresholds over every dataset,
+  the editor, starter dashboards, import and export, dashboard share links, the Prometheus-compatible
+  endpoint for Grafana.
+- **M16.7 Service health:** services, dependencies and instances from pushed or pulled health reports,
+  state from reports, checks and the API's own errors, state history, automatic incidents and their
+  alerts, health helpers in `sdk/go` and `useyuva/server`.
+- **M16.8 Status pages:** server-rendered pages without JavaScript, components and groups, incidents
+  and maintenance with updates, 90-day uptime, subscribers through a mailing list, feeds, JSON, badge
+  and embed, custom domains verified by CNAME and TXT, certificates by ACME or by the operator's proxy.
+
+Accept: a Go service with the middleware, the same API on h3, Nitro, Hono and Express, and an
+OpenTelemetry-instrumented service show identical routes and counts within a minute, with error rates
+equal to the requests sent and p50, p95 and p99 within 1.1% of the exact values, from minute rows and,
+the next day, from folded days with the same numbers; a raw path with an id never becomes a route and
+404 probes stay in `(unmatched)`; Postgres holds no row per request and no IP address; a key without
+`analytics:write` gets `403`; app-side records from the Swift and Kotlin samples appear next to the
+server's for the same route and are not sent before consent on a consent-mode property; a route pushed
+past its error-rate threshold raises one alert and one resolution, by e-mail, push and webhook; an
+uptime check against a stopped endpoint alerts, and one aimed at a private or metadata address is
+refused; stopping a sample service's dependency turns it degraded or down, opens one incident, turns
+its component on a status page at `status.<test domain>` (CNAME and TXT verified, HTTPS with a
+certificate the server obtained from a test ACME directory) degraded and mails a confirmed subscriber
+once, and resolving it updates the page, the feeds, the badge and the JSON; the page works with
+JavaScript off; a dashboard and Grafana with the Yuva data source draw the same series as the fixed
+views; an export matches the panel; Claude Code answers "which routes are failing" through the MCP
+tools; another workspace sees none of it; the load test meets the targets at 300M records a month on
+one property with 500 routes and 5,000 consumers.

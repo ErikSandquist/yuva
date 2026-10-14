@@ -79,8 +79,9 @@ panel (embedded SPA) ─────────► /v1 + WS ──────�
 - Go, `net/http`, OpenAPI 3.1 contract in `openapi/openapi.yaml`, strict server generated with
   oapi-codegen. Postgres through pgx and sqlc; goose migrations.
 - Background work on River (Postgres-backed queue): outbound e-mail, webhooks, notification
-  fan-out, attachment cleanup, retention, and migrations on their own `migrations` queue (see
-  "Moving to Yuva").
+  fan-out, attachment cleanup, retention, migrations on their own `migrations` queue (see
+  "Moving to Yuva"), and uptime checks, health pulls and certificate orders on their own `monitoring`
+  queue (see "API monitoring").
 - Realtime: WebSocket (`coder/websocket`). Every change that members see live writes a row to
   `events` in the same transaction, last, under a per-workspace advisory lock, so event ids within
   a workspace follow commit order; the transaction's `NOTIFY` carries the id. One listener per
@@ -118,6 +119,10 @@ panel (embedded SPA) ─────────► /v1 + WS ──────�
 | `/client/v1` | widget, mobile SDKs | channel public key + contact session, or a reader token on the discussion endpoints |
 | `/client/v1/analytics/{key}` | the analytics script, `useyuva/analytics`, the mobile analytics modules | an analytics property's public key; browsers only from the property's domains |
 | `/v1/analytics/shared/{token}` | read-only analytics shares | a share token (and its password session) |
+| `/otlp/{propertyId}/v1/traces` | OpenTelemetry exporters of host APIs | workspace API key with `analytics:write` (Bearer) |
+| `/prometheus/api/v1/*` | Grafana and other Prometheus clients | workspace API key with `analytics:read` (Bearer) |
+| `/status/{slug}/`, verified status page hosts | visitors of public status pages | none; a page password or a member session for private pages |
+| `/.well-known/acme-challenge/{token}` | the ACME certificate authority (`YUVA_STATUS_TLS=acme`) | none; answers only tokens of pending orders |
 | `/ingress/email` | edge Worker, MTAs | HMAC signature over the raw message |
 | `/ingress/ses` | SES bounce and complaint notifications via SNS | SNS signature |
 | `/s/{token}`, `/m/{token}`, `/c/{token}`, `/i/{token}` | people who receive list and broadcast mail | a token sealed under the master key; an image token |
@@ -1696,6 +1701,320 @@ in six steps (M15.1–M15.6 in the roadmap). Decisions:
   no record id of any workspace leaves the browser. A load balancer's sticky cookie must skip the
   script and `/client/v1/analytics/`, or the promise of nothing on the device breaks.
 
+### API monitoring (M16)
+
+A workspace watches its own APIs and services, written in any language: request volume, errors and
+latency per route and consumer, uptime checks, the health of each service and its dependencies,
+alerts, dashboards and public status pages. Plan in the M16 umbrella issue #63; it ships in eight
+steps (M16.1–M16.8 in the roadmap). It counts requests, never visitors, and keeps no row per
+request. Decisions:
+
+- **An API is an analytics property.** `analytics_properties.kind` is `site` (every M15 property) or
+  `api`, fixed at creation. An API property keeps the property's inbox link, access rules, time zone,
+  `retention_months`, public key (for app-side records only), key scopes (`analytics:read`, `write`,
+  `manage`), annotations, shares, exports, report subscriptions and the one query operation, so every
+  M15 table that hangs off a property works for an API without a parallel table. Its `domains` (0–50)
+  are the API's hostnames, its `platforms` the apps allowed to send app-side records (`ios`,
+  `android`, or none); it takes no goals, props, funnels or consent features, and `audience` does not
+  apply. New columns: `apdex_ms` (500) and `monitor_hour_days` (90). The collection endpoint and the
+  site views refuse an API property; the API endpoints refuse a site.
+- **A record.** Method (the RFC 9110 methods and `PATCH`, else `_OTHER`), route, status (100–599, or 0
+  when no response was sent), duration (microseconds), request and response size, time, and optionally
+  `consumer` (1–100 characters, chosen by the host: an API key's name or a client id, never a person's
+  address; e-mail-shaped values become `(scrubbed)`), `api_version` (≤ 40), `environment` (≤ 40,
+  `production` by default), `service` (≤ 100), `release` (≤ 80, only for deploy markers), `ip` (only
+  to find the country) and `sample_rate` (1–10,000, 1 by default). No body, header, query string,
+  fragment, user agent or address is accepted or kept. 5xx and 0 are errors, 4xx client errors; both
+  rates are shown.
+- **Routes, never raw paths.** A record names its route pattern (`/users/{id}`: `r.Pattern` from
+  `http.ServeMux`, the framework's router, OpenTelemetry `http.route`). When it can only give `path`,
+  ingest infers a pattern: segments that are numbers, UUIDs, dates, hex or base64url of 16 or more
+  characters, e-mail-shaped or longer than 40 characters become `{id}`, and `?`, `#` and what follows
+  are cut first. A record without a pattern that answered 404 or 405 goes to `(unmatched)`, so scanners
+  never create routes. `monitor_routes` marks inferred patterns; members hide a route or map inferred
+  ones onto a pattern of their own (route rules, applied at ingest from then on). Caps per property:
+  1,000 routes, 10,000 consumers, 50 API versions, 200 app versions, 20 environments; 100 services per
+  workspace. A value past its cap is counted as `(other)` and the panel says which cap was reached.
+- **Percentiles from mergeable sketches.** Durations go into a sparse log-bucketed histogram with base
+  2^(1/32) (the bucket layout of an OpenTelemetry exponential histogram at scale 5), so a reported
+  percentile is within 1.1% of the exact value; sizes into one at scale 2 (within 9%). A sketch is a
+  `bytea` of varint (bucket index delta, count) pairs with its scale, stored next to exact `requests`,
+  `errors`, `client_errors`, sum, minimum and maximum columns. Merging adds counts per bucket, so it is
+  exact and associative: a day's p99 folded from 1,440 minutes is the p99 of that day's records to the
+  bucket width, which t-digest-style sketches do not promise. Sketches are merged in Go (ingest, folds,
+  queries); SQL sums the counters and never opens a sketch. No Postgres extension. Apdex (satisfied at
+  most T, tolerating at most 4T, T the route's or the property's `apdex_ms`) and the latency heatmap
+  read the same buckets.
+- **Storage: no row per request.** Each process aggregates records in memory into the open minute of
+  their core key and the open hour of each extra dimension. Every 10 seconds it upserts its cumulative
+  totals under its own random `writer` id, replacing its previous upsert rather than adding to it, so
+  processes never contend for a row and a repeated flush changes nothing; a bucket is flushed a last
+  time 2 minutes after it ends and leaves memory. Records for a bucket already gone (at most 72 hours
+  old, as for M15) are written under a fresh writer and mark their hour and day dirty. Shutdown flushes
+  everything, as the analytics flusher drains. The core key is (environment, service, route, method,
+  status, API version, source, platform); the extra dimensions are consumer, country and app version,
+  each kept with route, method and status class. Tables, all with `workspace_id`:
+  - `monitor_minute`: core rows by UTC minute, partitioned by day and kept `YUVA_MONITOR_MINUTE_DAYS`
+    (8: today and a 7-day alert baseline); partitions are made by the aggregator and made and dropped
+    by the `analytics_partitions` job under the same advisory lock as M15's raw partitions.
+  - `monitor_hour`, `monitor_dim_hour`: by the property's local hour, partitioned by month, kept the
+    property's `monitor_hour_days` (7–400).
+  - `monitor_day`, `monitor_dim_day`: by local day, kept `retention_months`.
+  Hours are local, so 24 of them (23 or 25 at a DST change) make the property's day in every time zone,
+  half-hour offsets included; a time zone change applies from the next local day. The `monitor_rollup`
+  job on the `analytics` queue folds a closed hour's minute rows into one row per key, compacts its
+  dimension rows to one writer, and folds finished local days, tracked in `monitor_rollup_hours`
+  (built, dirty) like `analytics_rollup_days`. Queries read folded rows for closed hours and minute and
+  writer rows for open ones. An hour holds at most 50,000 dimension rows per property; later new
+  combinations of that hour count as `(other)` and the hour is marked capped. Dictionaries give the
+  rollups integer ids: `monitor_routes` (pattern, inferred, hidden, `apdex_ms`, first and last seen)
+  and `monitor_names` (consumers, API versions, app versions, environments, countries per property).
+- **Sampling.** Off by default: records are aggregated on arrival, so cost grows with distinct keys, not
+  with requests. An SDK may sample successful requests (`sampleRate`), never 4xx, 5xx or failed ones;
+  a record carries its weight, counters and buckets add it, and `sampled` keeps the weighted requests
+  of each row, so views, exports and the Prometheus endpoint mark a range that holds any as estimated.
+  An OTLP span weighs the adjusted count of its tracestate `ot=th` threshold (OpenTelemetry's
+  probability sampling, still a Development spec) and 1 without one, so a head-sampled exporter
+  undercounts; the guide says to export every server span to Yuva.
+- **Ingest.**
+  - `POST /v1/analytics/properties/{id}/requests` (`analytics:write`): 1–1,000 records, gzip
+    accepted, `202` with `accepted` and per-record `errors`, like server events; only a body or
+    authentication problem refuses the request.
+  - `POST /otlp/{propertyId}/v1/traces`: OTLP/HTTP, so an exporter needs only
+    `OTEL_EXPORTER_OTLP_ENDPOINT=<server>/otlp/<property id>` and
+    `OTEL_EXPORTER_OTLP_HEADERS=Authorization=Bearer <key with analytics:write>`. Binary protobuf and
+    JSON by `Content-Type`, gzip, as the OTLP specification requires; the few fields used are read with
+    `protowire` (already in the module graph), so no OTLP module is added. Only `SERVER` spans count:
+    `http.request.method`, `http.route`, `http.response.status_code`, end minus start, `url.path` for
+    inference only, `client.address` for the country, `http.request.body.size` and
+    `http.response.body.size` when present; resource `service.name`, `deployment.environment.name`
+    (or the older `deployment.environment`), `service.version` as the release and `service.instance.id`;
+    span attributes `yuva.consumer` and `yuva.api_version`. Other spans are ignored. The answer is `200`
+    with an `ExportTraceServiceResponse` whose `partial_success` counts invalid spans, or `429`/`503`
+    with `Retry-After`.
+  - App-side: `POST /client/v1/analytics/{key}/requests` from the Swift and Kotlin modules, a batch of
+    up to 100 records with `a.platform` in the property's `platforms` and `a.app_version`; source
+    `app`, no consumer, sent only under the property's `collection` rules exactly like app events.
+  - On every path the address is shortened and looked up for the country only (no region or city) in
+    the first function that sees it, then dropped. Limits per property
+    (`YUVA_MONITOR_RECORDS_PER_MINUTE`, 600,000) and per key; in-memory keys per process are capped
+    (`YUVA_MONITOR_BUFFER_KEYS`, 200,000; full answers `503`). `monitor_ingest_stats` counts accepted,
+    invalid, rate, over_limit and buffer per property and day.
+- **SDKs (M16.2).** `sdk/go/analytics` gets `Middleware` for `net/http`: it wraps the mux and reads
+  `r.Pattern` after the handler ran (`ServeMux` sets it on the same request), without its method and
+  host, or a `Route func(*http.Request) string`; batches of 500 or every 5 seconds through the existing
+  queue and backoff. `useyuva/server` gets `createMonitor` with middleware for srvx, h3, Nitro and Nuxt,
+  Hono, Express, Fastify and Next.js route handlers, each taking the pattern from its router and flushing
+  through `waitUntil` or the server's close hook. Swift `YuvaAnalytics` and Kotlin `yuva-analytics`
+  time the host's calls to its own API (`URLSession` and OkHttp interceptors) with routes from a
+  host-supplied mapping, off until the host turns it on; the privacy manifest adds
+  `NSPrivacyCollectedDataTypePerformanceData` (not linked, no tracking, purposes analytics and app
+  functionality) and the data safety guide adds "App info and performance › Diagnostics".
+- **Analysis (M16.3).** The query operation takes `dataset: api` with metrics `requests`,
+  `requests_per_minute`, `errors`, `error_rate`, `client_errors`, `client_error_rate`, `p50`, `p75`,
+  `p90`, `p95`, `p99`, `avg_duration`, `max_duration`, `apdex`, `request_bytes`, `response_bytes`,
+  `response_size_p50`, `response_size_p95` and `conversations`; dimensions route, method, status,
+  status class, API version, environment, service, source, platform, consumer, country, app version and
+  `time:minute` (inside the minute tier, at most 1,440 buckets), `time:hour`, `time:day`, `time:week`,
+  `time:month`. `range` also takes `15m`, `1h`, `6h` and `24h` and minute-aligned `since` and `until`.
+  Any combination of core dimensions filters and breaks down from every tier; at most one extra
+  dimension (consumer, country or app version) joins them, from hours and days (`422
+  dimension_combination` otherwise). Comparisons, the 4 query slots per workspace and the cache are
+  M15's. New routes are first seen in the range, silent routes were called in the previous period and
+  not since. A new `release` per service and environment writes a `deploy` annotation, which gains a
+  time (`at`) so minute charts place it; Yuva's own annotations stay read-only.
+- **Uptime checks (M16.4).** `monitor_checks`: name, `http` or `https` URL without credentials, `GET`
+  or `HEAD`, up to 5 headers (values sealed under the master key), expected statuses (200–399), an
+  optional keyword the first 64 KiB must or must not contain, timeout (1–30 s, 10), interval (30 s to
+  24 h; at least `YUVA_MONITOR_MIN_INTERVAL`, 60 s with `YUVA_SIGNUP=open`, else 30 s), failures in a
+  row before down (2), certificate warning days (14), up to 5 redirects, an optional service and
+  property. The `monitor_checks_due` job (every 10 s) takes due checks with `FOR UPDATE SKIP LOCKED`,
+  moves `next_run_at` and queues one `monitor_check` job per run, unique by check and slot, on the
+  `monitoring` queue (`YUVA_MONITOR_WORKERS`, 8), so slow endpoints never delay rollups or mail. Requests
+  go through the webhook client's dialer: resolved once, refused on loopback, private, link-local,
+  CGNAT, multicast and reserved addresses, connected to the resolved address only, every redirect hop
+  checked again; `User-Agent: Yuva-Uptime/<version>`, no cookies, no body sent, at most 64 KiB read;
+  DNS, connect, TLS, first-byte and total times recorded. `YUVA_MONITOR_ALLOW_PRIVATE=true` lets checks
+  and health pulls reach private addresses (internal services of a self-hosted install); link-local and
+  cloud metadata addresses are refused even then. A failed run is tried again after 20 s before it
+  counts. When at least 20 checks run in a minute and more than half of them fail, that minute's
+  failures are recorded `unknown`, since Yuva's own network is the likelier fault. Checks are their own
+  `uptime` dataset (`up`, `uptime`, `response_time` percentiles, `ttfb`, certificate days left), not a
+  source of API records, because a probe is not a consumer and would skew a route's numbers. Results go
+  to `monitor_check_results` (partitioned by day, `YUVA_MONITOR_CHECK_DAYS`, 30) and fold into
+  `monitor_check_days` (runs, failures, down seconds, a response-time sketch; 400 days). Caps per
+  workspace: `YUVA_MONITOR_CHECKS` (50 with open sign-up, else 500), and at most 10 checks on one host.
+- **Alerts and reports (M16.4).** `monitor_alert_rules` per property, route, service or check: error
+  rate, client error rate, p95, p99 or Apdex past a threshold over a window (5–60 minutes, with at least
+  `min_requests`, 20); traffic spike or drop (the last 15 closed minutes at 3× or at most half of the
+  same 15 minutes averaged over the 7 days before, with a baseline of at least 50 requests); a route
+  going silent (none for 15 minutes after averaging one a minute over the previous day); a check or
+  service changing state; a certificate inside its warning days. The `monitor_alerts` job runs every
+  minute over closed minutes. An alert is one row per (rule, key) while open: it fires once when the
+  condition holds and resolves once when the value has been back inside the threshold with a 10% margin
+  for a whole window. Both write a `monitor.alert` stored event and webhook (`state`
+  `firing` or `resolved`) and an annotation, and reach the rule's member recipients by e-mail and Web
+  Push (urgency `high`, the alert as `Topic`, a one-hour TTL); M15's one-shot `analytics_alerts` stay as
+  they are, because these open and close. A new API property gets one rule: 5xx rate at 5% over 5
+  minutes, sent to its creator. Weekly and monthly reports use `analytics_subscriptions` and the
+  `analytics_reports` job with an API template (requests, error rates, p95, slowest and most failing
+  routes, uptime, incidents). Support in aggregate: a property linked to an inbox gets `conversations`
+  per local day of the inbox next to its errors, by time only; no request is ever joined to a person or
+  a conversation.
+- **Sharing, export and retention (M16.5).** Share links of an API property list the views
+  `api_overview`, `api_routes` and `api_consumers` (consumer names only when listed) with M15's tokens,
+  passwords, expiry, embedding and limits. Exports `view` and `daily` take `dataset: api` and `uptime`
+  in CSV or NDJSON; there is no `raw` export because there are no raw rows. Retention: minutes 8 days
+  (server-wide, partitions dropped), hours `monitor_hour_days`, days and dimension days
+  `retention_months`, check results 30 days, check days, state changes and service history 400 days;
+  `DELETE …/consumers/{id}` erases a consumer's rows and name. Deleting a property, a service or a
+  check deletes its rows; workspace `retention_days` does not apply.
+- **Dashboards (M16.6).** `monitor_dashboards` belong to the workspace: name, a JSON document
+  (`MonitorDashboardDocument`, `schema: 1`: a default time range, auto-refresh off or 30 s to 15 min,
+  up to 10 variables of kind property, route, consumer, environment, service or custom, and up to 50
+  panels on a 24-column grid, each with up to 5 queries, a type (time series, bar, table, stat, gauge,
+  latency heatmap, health, text), unit, decimals, legend and thresholds) and a `version` for concurrent
+  edits, as `email_designs` do. A panel query is the query operation's own body (any dataset: traffic,
+  support, api, uptime, health) with a property or `$property`, and `$variable` values substituted into
+  filters, so a panel and the fixed views can never disagree. Text panels are Markdown rendered by
+  goldmark and cleaned by bluemonday. A threshold on an `api`, `uptime` or `health` metric becomes an
+  alert rule in one step. Dashboards are in `/v1`, imported and exported as the document; starter
+  dashboards for an API, a website and an app are documents shipped in the binary. Dashboard share
+  links reuse `analytics_shares` with `dashboard_id` in place of `property_id` (exactly one is set);
+  such a link fixes the variable values it may show and reads only the properties its panels named
+  when it was made.
+- **Prometheus-compatible endpoint (M16.6).** `/prometheus/api/v1/` `query`, `query_range`, `labels`,
+  `label/{name}/values`, `series` and `status/buildinfo`, GET or form POST, Prometheus's JSON answers,
+  for a key with `analytics:read` (Grafana sends it as an `Authorization` header). Series are gauges per
+  step: `yuva_api_requests`, `yuva_api_requests_per_second`, `yuva_api_errors`, `yuva_api_error_ratio`,
+  `yuva_api_duration_seconds{quantile="…"}` (any quantile), `yuva_api_apdex`, `yuva_uptime_up`,
+  `yuva_uptime_response_seconds{quantile="…"}`, `yuva_service_state` (0 healthy, 1 degraded, 2 down),
+  `yuva_web_visitors`, `yuva_web_pageviews`; labels are the query dimensions plus `property`. The PromQL
+  subset is selectors with `=`, `!=`, `=~` and `!~`; `sum`, `avg`, `min`, `max` and `count` `by` or
+  `without`; `topk` and `bottomk`; arithmetic with number literals and between two vectors with the same
+  labels; number literals alone (so data-source tests pass). It compiles to one query, so aggregating a
+  duration series merges its sketches (`max by (route)` of the p95 is the route's p95, not the largest
+  of several) and the label rules of the query layer apply. No range vectors, `rate`, `increase`,
+  `histogram_quantile`, offsets or subqueries: rollups are per-step amounts, not counters; anything else
+  answers `400` `bad_data`. Steps are at least 60 s and are rounded up to the tier the range allows; at
+  most 11,000 points per series.
+- **Service health (M16.7).** `monitor_services` (name and environment unique in the workspace,
+  optional API property, `push` or `pull` with a health URL and interval of 30 s to 10 min, a
+  silence timeout of 1 minute to 1 day, 3 intervals by default, version, state since) with
+  `monitor_dependencies` (name, kind `database`, `cache`, `queue`, `http` or `other`, critical or not,
+  last latency; 50 per service) and `monitor_instances` (instance id, version, last report; 200 per
+  service, gone after 24 hours of silence). A service is made by its first health report, by a
+  pull service a member adds, or by the first record or span that names it. Reports are pushed to
+  `POST /v1/monitoring/health` (`analytics:write`: service, environment, version, instance, status,
+  checks with name, kind, status, latency, critical and a message of at most 200 characters shown to
+  members only, never on a status page) or pulled through the uptime runner and its address checks; a
+  pulled endpoint answers `application/health+json` (the IETF draft health check format), Spring Boot
+  Actuator's `status` and `components`, or anything else, judged by its status code. State per
+  dependency and service is `healthy`, `degraded` or `down` (`unknown` before a first report): a
+  critical dependency down makes the service down, a non-critical one degraded; no report within the
+  silence timeout makes it down; a linked check that is down makes it down; the linked property's 5xx
+  rate (5% by default, at least 20 requests) or p95 (a threshold per service) over 5 minutes makes it
+  degraded. Recovery needs two healthy evaluations in a row. The `monitor_states` job (every 30 s) and
+  every report evaluate; each change writes `monitor_state_changes` (subject, state, reason, time; 400
+  days), from which history and uptime per day are computed. `monitor_health_hours` keeps reports and
+  a latency sketch per dependency and UTC hour for 90 days. A service turning degraded or down opens one
+  automatic incident (one open per service), and 5 minutes healthy resolves it; state-change rules of
+  M16.4 alert on both. `sdk/go/health` and `useyuva/server` `createHealth` register checks with
+  timeouts, serve `application/health+json` and push reports; OTLP resource attributes name the
+  service for OTLP senders.
+- **Incidents.** `monitor_incidents` (origin `auto` or `manual`, kind `incident` or `maintenance`,
+  title, state `investigating`, `identified`, `monitoring` or `resolved`, impact, affected services,
+  dependencies and checks, start, end, scheduled window, `published`) with `monitor_incident_updates`
+  (state, text of at most 5,000 characters, author, whether it notified subscribers). Automatic ones are
+  private until a member publishes them or the status page publishes automatically. During a
+  maintenance window its components show maintenance, and their state changes are recorded without
+  alerts or automatic incidents. `monitor.incident` is a stored event and webhook type.
+- **Status pages (M16.8).** `status_pages`: a slug (unique on the server; the default address is
+  `/status/{slug}/` on the Yuva server), name, logo (an uploaded image as in M13), accent colours for
+  light and dark, theme, languages (en, tr, de) with a default, time zone, visibility `public`,
+  `password` (argon2id, unlocking sets a 12-hour signed `HttpOnly` cookie on that host, the only cookie
+  a status page sets) or `members` (default address only, through the panel session), groups of
+  components (a service, dependency or check with a public name; components not listed stay private),
+  manual state overrides, `auto_publish`, and the inbox and e-mail channel that mail subscribers. The
+  page is rendered by the server with `html/template` and the server's en, tr and de catalogs, without
+  JavaScript: one inline stylesheet under a nonce, light and dark through `prefers-color-scheme`, every
+  state given in text as well as colour, `Accept-Language` or `?lang=` picking the language. It shows
+  each component's state, 90 days of uptime bars, response time for components backed by a check,
+  open incidents with their updates, maintenance and a history. A snapshot per page is rebuilt on any
+  change and every 60 s, so a view is a memory read; answers carry `Cache-Control: public, max-age=30`
+  and an ETag; no cookie, script, analytics or address in the request log. Next to the page (under
+  `/status/{slug}/` at the default address) the server serves
+  `/status.json` (state, components, open incidents and maintenance; `Access-Control-Allow-Origin: *`),
+  `/feed.rss`, `/feed.atom`, `/badge.svg`, `/embed` (the only path that may be framed) and
+  `/subscribe`.
+- **Custom domains.** `status_page_domains` (hostname unique on the server, page, token, state
+  `pending`, `verified` or `failed`, checks, certificate state; 5 per page). A domain is verified when
+  it points at `YUVA_STATUS_CNAME` (the host of `YUVA_PUBLIC_URL` by default) by CNAME, or by A and
+  AAAA records equal to that host's for an apex, and `_yuva-status.<hostname>` has a TXT record with
+  the domain's token. The TXT record ties the domain to its workspace, so a CNAME left behind after a
+  workspace moves away cannot be claimed by another workspace on the same server. The `status_domains`
+  job checks pending domains every 5 minutes for 7 days and verified ones hourly; one whose records
+  have been gone for 72 hours is no longer served and its certificate is deleted. A request to a
+  verified host reaches only that page's paths, never the panel or the API.
+  `YUVA_STATUS_TLS` chooses how certificates come about:
+  - `proxy` (default): the operator's proxy terminates TLS and forwards the host; `GET
+    /status-domains/check?domain=<host>` answers `200` for a verified domain and `404` otherwise, which
+    is the contract of Caddy's on-demand TLS `ask` endpoint.
+  - `acme`: the server also listens on `YUVA_STATUS_TLS_ADDR` (`:8443`) for TLS and serves verified
+    status hostnames only, by SNI, with no default certificate. Certificates come from
+    `YUVA_ACME_DIRECTORY` (Let's Encrypt by default; `YUVA_ACME_EMAIL` optional) through
+    `golang.org/x/crypto/acme`, already a dependency. A `status_cert` job, queued by verification and
+    unique per hostname, orders the certificate; a TLS handshake never starts an order, so an unknown
+    name cannot spend the server's rate limits. HTTP-01 challenges are kept in `acme_challenges` and
+    answered at `/.well-known/acme-challenge/{token}` on the main listener for any host, so whichever
+    process the operator's port 80 reaches answers. Keys are ECDSA P-256, sealed under the master key in
+    `tls_certificates`, kept in each process's memory and reloaded on `NOTIFY`. Renewal starts at
+    two-thirds of a certificate's lifetime (Let's Encrypt's default lifetime falls to 64 days in
+    February 2027 and 45 in February 2028, and `x/crypto/acme` has no renewal-information support);
+    failures back off 1, 6 and 24 hours, under Let's Encrypt's 5 failed authorizations per hostname an
+    hour. The ACME account key is in `acme_accounts`, sealed.
+- **Subscribers.** E-mail subscribers are a mailing list of the page's inbox, made with the page (not
+  public, not commercial), so double opt-in, consent events, the `/s/` and `/m/` pages, one-click
+  unsubscribe, suppression and opt-outs are M13's. The page's form is a plain POST with a sealed form
+  token, a honeypot and M13's per-address limits, and gives the same answer for every address. A notice
+  is a broadcast of kind `status` built from a fixed server template (the update, affected components,
+  a link) and sent by `broadcast_send` through the page's e-mail channel: it skips the design and review
+  steps but keeps suppression, the hosted approval gate and the daily cap. Members choose per update
+  whether it notifies (on by default for a new incident and its resolution). RSS 2.0 and Atom list
+  published incidents and maintenance. There are no public webhook subscriptions, because a form that
+  makes the server call any address is an SSRF and abuse amplifier; workspace webhooks get
+  `monitor.incident`.
+- **Panel, API, MCP.** An API property opens Overview (requests, error rates and p95 over time, the
+  last 60 minutes by minute), Routes, a route's page (history, status codes, consumers, heatmap),
+  Consumers, Uptime, Alerts and Settings in the Analytics rail section; Dashboards sit at the top of that
+  section; a Monitoring section holds Services, Uptime checks, Incidents and Status pages. Owners,
+  admins and keys with `analytics:manage` manage properties, checks, services, dashboards and status
+  pages; agents read the API properties of their inboxes; services, checks, incidents and status pages
+  are readable by every member. MCP adds tools for slow and failing routes, a route's history, a
+  consumer's errors, alert state, service health and incidents, takes the new datasets in the query
+  tool, adds a `setup_api_monitoring` prompt and an entry in `get_setup_state`; consumer names are
+  `customer_content`.
+- **Law.** Server-side records and OTLP spans read nothing from anyone's device, so ePrivacy Art. 5(3)
+  and PECR do not apply to them; the only value that can be personal data is `consumer`, which the host
+  chooses (the guide says to use accounts or API clients, and e-mail-shaped values are scrubbed), kept
+  in dimension rollups and erasable per consumer, for the host's legitimate interest in the security
+  and performance of its service (GDPR Recital 49, KVKK Art. 5(2)(f)). Countries are kept, addresses
+  never. App-side records leave the device, so they follow the property's `collection` and the app's
+  opt-out exactly like app events and are off until the host enables them. Status page subscribers are
+  M13 consent. CCPA and LGPD: nothing is sold or shared; no record concerns a child as such.
+- **Hosting and scale.** `usage_counters.monitor_requests` and `YUVA_MONITOR_MONTHLY_REQUESTS` (per
+  workspace; unset: 10,000,000 with `YUVA_SIGNUP=open`, else no limit; operator override `yuva workspace
+  monitor-limit`), separate from analytics events because request volume is orders of magnitude above
+  page views. `YUVA_MONITOR=off` removes M16; `YUVA_ANALYTICS=off` removes both. The query layer sits
+  behind a `monitor.Store` interface as analytics does. Writes and rows grow with distinct keys per
+  minute and hour, not with requests: Postgres carries about 50,000 open core keys and 500,000 open
+  dimension keys across the server (about 5,000 and 50,000 row writes a second from the 10-second
+  upserts, HOT updates on `fillfactor 70` tables), and one process decodes tens of thousands of
+  records a second. It stops scaling when a single property needs more distinct combinations than the
+  caps allow (thousands of routes times thousands of consumers per hour) or the open keys across the
+  server pass those numbers; then a column store goes behind the `Store` interface without a contract
+  change. Uptime checks run from the server's one location.
+
 ### Storage
 
 Attachments and raw e-mails in S3-compatible storage (R2, S3, MinIO) or on local disk for a
@@ -1752,6 +2071,12 @@ now; per-channel limits can narrow them later.
   (25); salts are deleted two hours after their day. Members delete a property's data for a range or in
   full; a property, a consented visitor, a contact with linked visits and a deleted workspace take their
   analytics rows with them. Workspace `retention_days` does not apply to analytics.
+- API monitoring keeps no row per request and no address: minute rows 8 days
+  (`YUVA_MONITOR_MINUTE_DAYS`), hours the property's `monitor_hour_days` (90), days its
+  `retention_months` (25); check results 30 days, check days, state changes and service history 400
+  days. A consumer's rows and name are erased with `DELETE …/consumers/{id}`; a property, service,
+  check, status page or deleted workspace takes its rows with it. Status page subscribers are mailing
+  list subscriptions and follow M13's rules. Workspace `retention_days` does not apply.
 - Nothing is sent to third parties except what a channel is configured to send (SMTP, webhooks);
   the monthly GeoIP download from DB-IP fetches a file and sends nothing about anyone.
 
@@ -1802,6 +2127,21 @@ now; per-channel limits can narrow them later.
     rows of that day, are created by the flusher (yesterday to the day after tomorrow in UTC when it starts, and any day it
     is about to write that has none) and by the `analytics_partitions` job, which also drops them;
     every other read, write and delete of those tables filters by `workspace_id`.
+  - API monitoring ingest names a property id that its API key must belong to, and app-side records
+    name the property's public key like analytics collection. A status page request finds its page by
+    `status_pages.slug` or `status_page_domains.hostname` (unique across the server), the Caddy `ask`
+    check reads `status_page_domains` by hostname, the TLS listener finds `tls_certificates` by
+    hostname, and `/.well-known/acme-challenge/` reads `acme_challenges` by token, all before the
+    workspace is known; everything after those lookups is scoped by the workspace they returned.
+    `acme_accounts` belongs to the server, not to a workspace. Whole day partitions of
+    `monitor_minute` and `monitor_check_results` and month partitions of `monitor_hour` and
+    `monitor_dim_hour` hold every workspace's rows and are made and dropped by the aggregator and the
+    `analytics_partitions` job; `monitor_checks_due`, `monitor_alerts`, `monitor_states` and
+    `status_domains` list due work across workspaces, and every read, write and delete after that
+    filters by `workspace_id`.
+
+Server (`api/`), the River bullet gains: "uptime checks, health pulls and certificate orders on their
+own `monitoring` queue (see "API monitoring")".
   - A forwarding address names only its token: ingress finds the channel by
     `email_channels.forward_token` (unique across the server), like an address. A migration probe is
     recognised by its HMAC before the channel's workspace matters.
