@@ -1,16 +1,22 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
-import { ArrowDownIcon, ArrowLeftIcon, GaugeIcon, LayersIcon, SigmaIcon } from "lucide-react"
+import { ArrowDownIcon, ArrowLeftIcon, EyeIcon, EyeOffIcon, GaugeIcon, LayersIcon, SigmaIcon } from "lucide-react"
 import { Link, useParams, useSearchParams } from "react-router"
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
 
-import { Notice, Segmented } from "@/components/common"
+import { ErrorLine, Notice, Segmented, toast } from "@/components/common"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { RangePicker } from "@/features/analytics/Controls"
 import { ApiInstallSnippets } from "@/features/analytics/Install"
 import { BarList, CsvButton, Panel, PanelProblem, QueryProblem, useCurrentProperty } from "@/features/analytics/parts"
-import { downloadCsv, useAnalyticsTable, useApiQuery } from "@/features/analytics/queries"
+import {
+  downloadCsv,
+  useAnalyticsTable,
+  useApiQuery,
+  useApiRoutes,
+  useSetRouteHidden,
+} from "@/features/analytics/queries"
 import { apiGrainFor, useView, useViewSearch } from "@/features/analytics/state"
 import {
   formatCompact,
@@ -21,7 +27,15 @@ import {
   valueText,
   type NumMetric,
 } from "@/features/analytics/text"
-import type { AnalyticsDimension, AnalyticsFilter, AnalyticsQuery, AnalyticsResult, AnalyticsUsage } from "@/lib/api"
+import type {
+  AnalyticsDimension,
+  AnalyticsFilter,
+  AnalyticsQuery,
+  AnalyticsResult,
+  AnalyticsRoute,
+  AnalyticsUsage,
+} from "@/lib/api"
+import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 
 type Cap = NonNullable<AnalyticsResult["meta"]["caps_reached"]>[number]
@@ -55,7 +69,7 @@ export function RequestsBanner({ usage }: { usage: AnalyticsUsage }) {
   if (!cap) return null
   const fmt = new Intl.NumberFormat(i18n.locale)
   const limit = fmt.format(cap)
-  if (used >= cap) {
+  if (usage.requests_limit_reached_at || used >= cap) {
     return (
       <Notice tone="danger" icon={GaugeIcon} data-testid="api-requests-cap-reached">
         <Trans>
@@ -412,7 +426,20 @@ function MethodTag({ method }: { method: string }) {
   )
 }
 
-function RouteName({ method, route }: { method?: string; route: string }) {
+export function InferredTag() {
+  const { t } = useLingui()
+  return (
+    <span
+      className="inline-flex shrink-0 items-center rounded-full bg-muted px-1.5 text-caption text-muted-foreground"
+      title={t`Made from request paths, with ids taken out. Your router did not name this pattern.`}
+      data-testid="api-route-inferred"
+    >
+      <Trans>inferred</Trans>
+    </span>
+  )
+}
+
+function RouteName({ method, route, inferred }: { method?: string; route: string; inferred?: boolean }) {
   const { i18n } = useLingui()
   const text = useAnalyticsText()
   const plain = route.startsWith("/")
@@ -422,7 +449,54 @@ function RouteName({ method, route }: { method?: string; route: string }) {
       <span className={cn("min-w-0 truncate", plain && "font-mono text-small")} dir={plain ? "ltr" : undefined}>
         {valueText(text, "route", route, i18n.locale)}
       </span>
+      {inferred && <InferredTag />}
     </span>
+  )
+}
+
+function useRouteIndex(propertyId: string) {
+  const routes = useApiRoutes(propertyId)
+  return new Map((routes.data ?? []).map((r) => [r.pattern, r]))
+}
+
+function useHideRoute(propertyId: string) {
+  const { t, i18n } = useLingui()
+  const text = useAnalyticsText()
+  const set = useSetRouteHidden(propertyId)
+  return {
+    error: set.error,
+    pending: set.isPending,
+    run: (r: AnalyticsRoute, hidden: boolean) =>
+      set.mutate(
+        { routeId: r.id, hidden },
+        {
+          onSuccess: () => {
+            if (!hidden) return
+            const name = valueText(text, "route", r.pattern, i18n.locale)
+            toast(t`${name} is hidden from every view.`, () => set.mutate({ routeId: r.id, hidden: false }))
+          },
+        }
+      ),
+  }
+}
+
+function HideRouteButton({ route, propertyId }: { route?: AnalyticsRoute; propertyId: string }) {
+  const { t } = useLingui()
+  const hide = useHideRoute(propertyId)
+  if (!route) return null
+  return (
+    <Button
+      type="button"
+      variant="ghost"
+      size="icon-sm"
+      disabled={hide.pending}
+      onClick={() => hide.run(route, true)}
+      aria-label={t`Hide route`}
+      title={t`Hide this route, with all its methods, from every view`}
+      data-testid="api-hide-route"
+    >
+      <EyeOffIcon />
+    </Button>
   )
 }
 
@@ -585,6 +659,9 @@ export function ApiRoutes() {
   const meta = table.data?.pages[0]?.meta
   const phoneMetric = SORTS[sort].metric
   const names: Record<Sort, string> = { traffic: t`Traffic`, errors: t`Errors`, latency: t`Latency` }
+  const { canManage } = useSession()
+  const index = useRouteIndex(property.id)
+  const cols = TABLE.length + (canManage ? 2 : 1)
   return (
     <WhenRequests>
       <section className="flex flex-col gap-3" data-testid="api-routes">
@@ -637,24 +714,30 @@ export function ApiRoutes() {
                     </span>
                   </th>
                 ))}
+                {canManage && (
+                  <th className="w-11">
+                    <span className="sr-only">{t`Actions`}</span>
+                  </th>
+                )}
               </tr>
             </thead>
             <tbody className="divide-y">
               {table.isPending ? (
                 <tr>
-                  <td colSpan={TABLE.length + 1} className="p-4">
+                  <td colSpan={cols} className="p-4">
                     <Skeleton className="h-24 w-full" />
                   </td>
                 </tr>
               ) : rows.length === 0 ? (
                 <tr>
-                  <td colSpan={TABLE.length + 1} className="px-4 py-6 text-faint">
+                  <td colSpan={cols} className="px-4 py-6 text-faint">
                     <Trans>No requests in this range.</Trans>
                   </td>
                 </tr>
               ) : (
                 rows.map((r, i) => {
                   const [route = "", method = ""] = r.dimensions
+                  const info = index.get(route)
                   return (
                     <tr key={`${method} ${route} ${i}`} className="hover:bg-muted/50" data-testid="api-route-row">
                       <td className="px-4 py-2">
@@ -665,7 +748,7 @@ export function ApiRoutes() {
                             to={`${routePath(property.id, method, route)}${search}`}
                             className="block max-w-full rounded outline-none hover:text-brand focus-visible:ring-2 focus-visible:ring-ring"
                           >
-                            <RouteName method={method} route={route} />
+                            <RouteName method={method} route={route} inferred={info?.inferred} />
                           </Link>
                         )}
                       </td>
@@ -677,6 +760,11 @@ export function ApiRoutes() {
                           {formatMetric(m, num(r.metrics, m), i18n.locale)}
                         </td>
                       ))}
+                      {canManage && (
+                        <td className="py-1 pe-2 text-end">
+                          {route !== OTHER && <HideRouteButton route={info} propertyId={property.id} />}
+                        </td>
+                      )}
                     </tr>
                   )
                 })
@@ -763,6 +851,9 @@ export function ApiRoutePage() {
   const { method = "", "*": tail = "" } = useParams()
   const route = tail.startsWith("(") ? tail : `/${tail}`
   const filters = routeFilters(route, method)
+  const { canManage } = useSession()
+  const info = useRouteIndex(property.id).get(route)
+  const hide = useHideRoute(property.id)
   return (
     <div className="flex flex-col gap-4" data-testid="api-route">
       <header className="flex flex-col gap-1">
@@ -774,10 +865,48 @@ export function ApiRoutePage() {
           <ArrowLeftIcon className="size-3.5 rtl:rotate-180" />
           <Trans>All routes</Trans>
         </Link>
-        <h2 className="text-title" data-testid="api-route-name">
-          <RouteName method={method} route={route} />
-        </h2>
+        <div className="flex min-w-0 flex-wrap items-center gap-2">
+          <h2 className="min-w-0 flex-1 text-title" data-testid="api-route-name">
+            <RouteName method={method} route={route} inferred={info?.inferred} />
+          </h2>
+          {canManage && info && !info.hidden && (
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={hide.pending}
+              onClick={() => hide.run(info, true)}
+              data-testid="api-hide-route"
+            >
+              <EyeOffIcon />
+              <Trans>Hide route</Trans>
+            </Button>
+          )}
+        </div>
+        <ErrorLine error={hide.error} />
       </header>
+      {info?.hidden && (
+        <Notice icon={EyeOffIcon} data-testid="api-route-hidden">
+          <p>
+            <Trans>
+              This route is hidden: it is left out of every number and list, with all its methods. Its requests are
+              still counted.
+            </Trans>
+          </p>
+          {canManage && (
+            <Button
+              size="sm"
+              variant="outline"
+              className="w-fit"
+              disabled={hide.pending}
+              onClick={() => hide.run(info, false)}
+              data-testid="api-show-route"
+            >
+              <EyeIcon />
+              <Trans>Show it again</Trans>
+            </Button>
+          )}
+        </Notice>
+      )}
       <Kpis filters={filters} testId="api-route-kpis" />
       <Charts filters={filters} />
       <div className="grid gap-4 md:grid-cols-2">

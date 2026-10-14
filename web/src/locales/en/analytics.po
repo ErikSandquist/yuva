@@ -45,6 +45,10 @@ msgstr "{count} in this range, none in the compared days."
 msgid "{count} of {limit} API requests counted this month. Requests over the limit are not counted until the month ends."
 msgstr "{count} of {limit} API requests counted this month. Requests over the limit are not counted until the month ends."
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "{current} applies from {applies}. Until then hours and days are still counted in the time zone before."
+msgstr "{current} applies from {applies}. Until then hours and days are still counted in the time zone before."
+
 #: src/features/analytics/Insights.tsx
 msgid "{dim} {value}: {count}, none in the compared days."
 msgstr "{dim} {value}: {count}, none in the compared days."
@@ -117,6 +121,10 @@ msgstr "{n, plural, one {# visitor} other {# visitors}}"
 msgid "{n} payments, {avg} on average"
 msgstr "{n} payments, {avg} on average"
 
+#: src/features/analytics/Monitor.tsx
+msgid "{name} is hidden from every view."
+msgstr "{name} is hidden from every view."
+
 #: src/features/analytics/Install.tsx
 msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
 msgstr "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
@@ -144,6 +152,10 @@ msgstr "95 out of 100 requests took at most this long."
 #: src/features/analytics/text.ts
 msgid "99 out of 100 requests took at most this long."
 msgstr "99 out of 100 requests took at most this long."
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "A change applies from the next midnight, so no day is cut in two."
+msgstr "A change applies from the next midnight, so no day is cut in two."
 
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
@@ -233,6 +245,10 @@ msgstr "A visitor's page views without a gap of 30 minutes, within one day."
 msgid "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
 msgstr "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
 
+#: src/features/analytics/Monitor.tsx
+msgid "Actions"
+msgstr "Actions"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Active"
 msgstr "Active"
@@ -306,6 +322,7 @@ msgstr "against the period before"
 msgid "Agents of the inbox can then see this property’s numbers too."
 msgstr "Agents of the inbox can then see this property’s numbers too."
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Agents of this inbox can see the numbers."
@@ -364,6 +381,10 @@ msgstr "Analytics views"
 #: src/features/analytics/Sharing.tsx
 msgid "Anyone with the link sees the views you pick, read-only, without signing in."
 msgstr "Anyone with the link sees the views you pick, read-only, without signing in."
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Apdex threshold"
+msgstr "Apdex threshold"
 
 #: src/features/analytics/AnalyticsColumn.tsx
 #: src/features/analytics/AnalyticsRoutes.tsx
@@ -687,6 +708,7 @@ msgstr "Custom range"
 msgid "Custom range…"
 msgstr "Custom range…"
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Data"
 msgstr "Data"
@@ -719,6 +741,10 @@ msgstr "Days are counted in this time zone"
 #: src/features/analytics/Settings.tsx
 msgid "Days are in the property’s time zone. Their totals are counted again without them."
 msgstr "Days are in the property’s time zone. Their totals are counted again without them."
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Days the counts per hour are kept. Daily counts are kept as long as the property’s data."
+msgstr "Days the counts per hour are kept. Daily counts are kept as long as the property’s data."
 
 #: src/features/analytics/Settings.tsx
 msgid "Days waiting to be summed up"
@@ -1157,6 +1183,14 @@ msgstr "Format"
 msgid "From"
 msgstr "From"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "From 1 to 60,000."
+msgstr "From 1 to 60,000."
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "From 7 to 400 days."
+msgstr "From 7 to 400 days."
+
 #: src/features/analytics/Settings.tsx
 msgid "From a site that is not one of the domains, or from an app whose platform is not turned on."
 msgstr "From a site that is not one of the domains, or from an app whose platform is not turned on."
@@ -1177,6 +1211,7 @@ msgstr "Funnel"
 msgid "Funnels"
 msgstr "Funnels"
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Settings.tsx
 msgid "General"
 msgstr "General"
@@ -1235,10 +1270,27 @@ msgstr "Helpful ratings out of all ratings."
 msgid "Helpful share"
 msgstr "Helpful share"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "Hidden routes"
+msgstr "Hidden routes"
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Hidden routes are left out of every number and list, such as a health check your load balancer calls. Their requests are still counted, so showing one again brings them back."
+msgstr "Hidden routes are left out of every number and list, such as a health check your load balancer calls. Their requests are still counted, so showing one again brings them back."
+
+#: src/features/analytics/Monitor.tsx
+msgid "Hide route"
+msgstr "Hide route"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Hide this route, with all its methods, from every view"
+msgstr "Hide this route, with all its methods, from every view"
+
 #: src/features/analytics/text.ts
 msgid "Host"
 msgstr "Host"
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/NewProperty.tsx
 msgid "Host names"
 msgstr "Host names"
@@ -1246,6 +1298,10 @@ msgstr "Host names"
 #: src/features/analytics/text.ts
 msgid "Host or app"
 msgstr "Host or app"
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Hourly detail"
+msgstr "Hourly detail"
 
 #: src/features/analytics/Install.tsx
 msgid "How to install"
@@ -1259,12 +1315,22 @@ msgstr "How to send events"
 msgid "I saved it"
 msgstr "I saved it"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "In milliseconds. A request is satisfied within it and tolerated within four times it."
+msgstr "In milliseconds. A request is satisfied within it and tolerated within four times it."
+
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
 #: src/features/analytics/Support.tsx
 msgid "Inbox"
 msgstr "Inbox"
 
+#: src/features/analytics/Monitor.tsx
+msgid "inferred"
+msgstr "inferred"
+
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Install"
 msgstr "Install"
@@ -1390,6 +1456,10 @@ msgstr "last opened {viewed}"
 msgid "Last page or screen"
 msgstr "Last page or screen"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "Last request {seen}"
+msgstr "Last request {seen}"
+
 #: src/features/analytics/text.ts
 msgid "Last screen"
 msgstr "Last screen"
@@ -1444,6 +1514,10 @@ msgstr "Made {created}"
 #: src/features/analytics/Sharing.tsx
 msgid "Made {created} by {by}"
 msgstr "Made {created} by {by}"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Made from request paths, with ids taken out. Your router did not name this pattern."
+msgstr "Made from request paths, with ids taken out. Your router did not name this pattern."
 
 #: src/features/analytics/Settings.tsx
 msgid "Make a new key"
@@ -1509,6 +1583,7 @@ msgstr "Move down"
 msgid "Move up"
 msgstr "Move up"
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Controls.tsx
 #: src/features/analytics/Funnels.tsx
 #: src/features/analytics/Goals.tsx
@@ -1634,6 +1709,10 @@ msgstr "No funnels yet"
 msgid "No goals yet"
 msgstr "No goals yet"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "No hidden routes. Hide one from the Routes view."
+msgstr "No hidden routes. Hide one from the Routes view."
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "No properties yet"
 msgstr "No properties yet"
@@ -1690,6 +1769,7 @@ msgstr "None yet"
 msgid "None, every visit counts."
 msgstr "None, every visit counts."
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
 msgid "None, owners and admins only"
@@ -1829,6 +1909,7 @@ msgstr "Operating system"
 msgid "Opt-out link"
 msgstr "Opt-out link"
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/NewProperty.tsx
 msgid "Optional, one per line. The host names the API answers on, to tell properties apart."
 msgstr "Optional, one per line. The host names the API answers on, to tell properties apart."
@@ -1976,9 +2057,14 @@ msgstr "Password"
 msgid "Past alerts"
 msgstr "Past alerts"
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Path rules"
 msgstr "Path rules"
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Paths or routes that match a pattern are counted under the route you name, from now on. Use them when your server sends paths and a pattern made from them is not the one you want."
+msgstr "Paths or routes that match a pattern are counted under the route you name, from now on. Use them when your server sends paths and a pattern made from them is not the one you want."
 
 #: src/features/analytics/Settings.tsx
 msgid "Pattern"
@@ -2145,6 +2231,10 @@ msgstr "Rebuilt every hour, last at {builtAt}."
 msgid "Rebuilt every hour."
 msgstr "Rebuilt every hour."
 
+#: src/features/analytics/Settings.tsx
+msgid "Records sent for it are refused from then on, and all its request counts are deleted. This cannot be undone."
+msgstr "Records sent for it are refused from then on, and all its request counts are deleted. This cannot be undone."
+
 #: src/features/analytics/text.ts
 msgid "Referral"
 msgstr "Referral"
@@ -2266,6 +2356,7 @@ msgid "Route"
 msgstr "Route"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/ApiSettings.tsx
 msgid "Routes"
 msgstr "Routes"
 
@@ -2375,6 +2466,7 @@ msgid "Server busy"
 msgstr "Server busy"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "Settings"
@@ -2391,6 +2483,7 @@ msgstr "Shared with Yuva"
 msgid "Sharing"
 msgstr "Sharing"
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Controls.tsx
 #: src/features/analytics/Events.tsx
 msgid "Show"
@@ -2400,6 +2493,10 @@ msgstr "Show"
 #: src/features/analytics/parts.tsx
 msgid "Show from {day}"
 msgstr "Show from {day}"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Show it again"
+msgstr "Show it again"
 
 #: src/features/analytics/Events.tsx
 msgid "Show its props"
@@ -2667,6 +2764,10 @@ msgstr "This range cannot be exported. Pick a shorter one, or one inside the det
 msgid "This report has a password"
 msgstr "This report has a password"
 
+#: src/features/analytics/Monitor.tsx
+msgid "This route is hidden: it is left out of every number and list, with all its methods. Its requests are still counted."
+msgstr "This route is hidden: it is left out of every number and list, with all its methods. Its requests are still counted."
+
 #: src/features/analytics/Support.tsx
 msgid "This workspace has no inbox yet."
 msgstr "This workspace has no inbox yet."
@@ -2699,6 +2800,7 @@ msgstr "Time on page"
 msgid "Time the page was visible and in focus, per view."
 msgstr "Time the page was visible and in focus, per view."
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Time zone"

@@ -248,7 +248,13 @@ function General({ p }: { p: AnalyticsProperty }) {
   )
 }
 
-function RuleRows({ rules, onChange }: { rules: AnalyticsPathRule[]; onChange: (r: AnalyticsPathRule[]) => void }) {
+export function RuleRows({
+  rules,
+  onChange,
+}: {
+  rules: AnalyticsPathRule[]
+  onChange: (r: AnalyticsPathRule[]) => void
+}) {
   const { t } = useLingui()
   return (
     <div className="flex flex-col gap-2">
@@ -938,16 +944,12 @@ function TestEvents({ p }: { p: AnalyticsProperty }) {
 
 function Data({ p }: { p: AnalyticsProperty }) {
   const { i18n } = useLingui()
-  const navigate = useNavigate()
   const deleteData = useDeleteData(p.id)
-  const deleteProperty = useDeleteProperty(p.id)
   const [ask, dialog] = useConfirm()
   const [from, setFrom] = useState(todayIso())
   const [to, setTo] = useState(todayIso())
-  const [removing, setRemoving] = useState(false)
   const span =
     from && to ? `${formatDate(`${from}T12:00:00Z`, i18n.locale)} – ${formatDate(`${to}T12:00:00Z`, i18n.locale)}` : ""
-  const mismatch = deleteProperty.error instanceof ApiError && deleteProperty.error.code === "confirmation_mismatch"
   return (
     <div className="flex flex-col gap-6">
       <Section
@@ -1010,12 +1012,32 @@ function Data({ p }: { p: AnalyticsProperty }) {
           <ErrorLine error={deleteData.error} />
         </Card>
       </Section>
+      <DeletePropertySection p={p} />
+      {dialog}
+    </div>
+  )
+}
+
+export function DeletePropertySection({ p }: { p: AnalyticsProperty }) {
+  const navigate = useNavigate()
+  const deleteProperty = useDeleteProperty(p.id)
+  const [removing, setRemoving] = useState(false)
+  const mismatch = deleteProperty.error instanceof ApiError && deleteProperty.error.code === "confirmation_mismatch"
+  return (
+    <>
       <Section title={<Trans>Delete the property</Trans>}>
         <Card tone="danger">
           <p className="text-body text-muted-foreground">
-            <Trans>
-              The key stops working at once, and all visits, events and totals are deleted. This cannot be undone.
-            </Trans>
+            {p.kind === "api" ? (
+              <Trans>
+                Records sent for it are refused from then on, and all its request counts are deleted. This cannot be
+                undone.
+              </Trans>
+            ) : (
+              <Trans>
+                The key stops working at once, and all visits, events and totals are deleted. This cannot be undone.
+              </Trans>
+            )}
           </p>
           <Button
             variant="destructive"
@@ -1055,8 +1077,7 @@ function Data({ p }: { p: AnalyticsProperty }) {
           })
         }
       />
-      {dialog}
-    </div>
+    </>
   )
 }
 

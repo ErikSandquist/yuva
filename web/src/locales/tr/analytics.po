@@ -45,6 +45,10 @@ msgstr "Bu aralıkta {count}; karşılaştırılan günlerde hiç yoktu."
 msgid "{count} of {limit} API requests counted this month. Requests over the limit are not counted until the month ends."
 msgstr "Bu ay {limit} API isteğinin {count} tanesi sayıldı. Sınırı aşan istekler ay bitene kadar sayılmaz."
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "{current} applies from {applies}. Until then hours and days are still counted in the time zone before."
+msgstr "{current}, {applies} itibarıyla geçerli olur. O zamana kadar saatler ve günler önceki saat diliminde sayılmaya devam eder."
+
 #: src/features/analytics/Insights.tsx
 msgid "{dim} {value}: {count}, none in the compared days."
 msgstr "{dim} {value}: {count}; karşılaştırılan günlerde hiç yoktu."
@@ -117,6 +121,10 @@ msgstr "{n, plural, one {# ziyaretçi} other {# ziyaretçi}}"
 msgid "{n} payments, {avg} on average"
 msgstr "{n} ödeme, ortalama {avg}"
 
+#: src/features/analytics/Monitor.tsx
+msgid "{name} is hidden from every view."
+msgstr "{name} tüm görünümlerden gizlendi."
+
 #: src/features/analytics/Install.tsx
 msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
 msgstr "{name} bu mülkün platformlarından biri değil, bu yüzden sunucu uygulamanın olaylarını reddediyor. Bir sahip ya da yönetici açabilir."
@@ -144,6 +152,10 @@ msgstr "100 isteğin 95’i en fazla bu kadar sürdü."
 #: src/features/analytics/text.ts
 msgid "99 out of 100 requests took at most this long."
 msgstr "100 isteğin 99’u en fazla bu kadar sürdü."
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "A change applies from the next midnight, so no day is cut in two."
+msgstr "Değişiklik bir sonraki gece yarısından itibaren geçerli olur, böylece hiçbir gün ikiye bölünmez."
 
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
@@ -233,6 +245,10 @@ msgstr "Bir ziyaretçinin aynı gün içinde, aralarında 30 dakikadan uzun boş
 msgid "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
 msgstr "Bir ziyaretçinin aynı gün içinde, aralarında 30 dakikadan uzun boşluk olmayan ekran görüntülemeleri. Uygulama her açıldığında yeni bir ziyaret başlar."
 
+#: src/features/analytics/Monitor.tsx
+msgid "Actions"
+msgstr "İşlemler"
+
 #: src/features/analytics/Sharing.tsx
 msgid "Active"
 msgstr "Etkin"
@@ -306,6 +322,7 @@ msgstr "önceki döneme göre"
 msgid "Agents of the inbox can then see this property’s numbers too."
 msgstr "Ardından gelen kutusunun temsilcileri de bu mülkün rakamlarını görebilir."
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Agents of this inbox can see the numbers."
@@ -364,6 +381,10 @@ msgstr "Analitik görünümleri"
 #: src/features/analytics/Sharing.tsx
 msgid "Anyone with the link sees the views you pick, read-only, without signing in."
 msgstr "Bağlantıya sahip herkes, seçtiğiniz görünümleri oturum açmadan ve salt okunur olarak görür."
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Apdex threshold"
+msgstr "Apdex eşiği"
 
 #: src/features/analytics/AnalyticsColumn.tsx
 #: src/features/analytics/AnalyticsRoutes.tsx
@@ -687,6 +708,7 @@ msgstr "Özel aralık"
 msgid "Custom range…"
 msgstr "Özel aralık…"
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Data"
 msgstr "Veriler"
@@ -719,6 +741,10 @@ msgstr "Günler bu saat dilimine göre sayılır"
 #: src/features/analytics/Settings.tsx
 msgid "Days are in the property’s time zone. Their totals are counted again without them."
 msgstr "Günler mülkün saat dilimine göredir. Toplamlar bu günler olmadan yeniden hesaplanır."
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Days the counts per hour are kept. Daily counts are kept as long as the property’s data."
+msgstr "Saatlik sayıların saklandığı gün sayısı. Günlük sayılar mülkün verileri kadar saklanır."
 
 #: src/features/analytics/Settings.tsx
 msgid "Days waiting to be summed up"
@@ -1157,6 +1183,14 @@ msgstr "Biçim"
 msgid "From"
 msgstr "Başlangıç"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "From 1 to 60,000."
+msgstr "1 ile 60.000 arası."
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "From 7 to 400 days."
+msgstr "7 ile 400 gün arası."
+
 #: src/features/analytics/Settings.tsx
 msgid "From a site that is not one of the domains, or from an app whose platform is not turned on."
 msgstr "Alan adlarından biri olmayan bir siteden ya da platformu açık olmayan bir uygulamadan."
@@ -1177,6 +1211,7 @@ msgstr "Huni"
 msgid "Funnels"
 msgstr "Huniler"
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Settings.tsx
 msgid "General"
 msgstr "Genel"
@@ -1235,10 +1270,27 @@ msgstr "Tüm değerlendirmeler içinde yararlı olanların payı."
 msgid "Helpful share"
 msgstr "Yararlı oranı"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "Hidden routes"
+msgstr "Gizli rotalar"
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Hidden routes are left out of every number and list, such as a health check your load balancer calls. Their requests are still counted, so showing one again brings them back."
+msgstr "Gizli rotalar, yük dengeleyicinizin çağırdığı bir sağlık denetimi gibi, tüm sayılardan ve listelerden çıkarılır. İstekleri yine de sayılır, bu yüzden bir rotayı yeniden gösterdiğinizde sayıları geri gelir."
+
+#: src/features/analytics/Monitor.tsx
+msgid "Hide route"
+msgstr "Rotayı gizle"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Hide this route, with all its methods, from every view"
+msgstr "Bu rotayı tüm yöntemleriyle birlikte her görünümden gizle"
+
 #: src/features/analytics/text.ts
 msgid "Host"
 msgstr "Alan adı"
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/NewProperty.tsx
 msgid "Host names"
 msgstr "Ana makine adları"
@@ -1246,6 +1298,10 @@ msgstr "Ana makine adları"
 #: src/features/analytics/text.ts
 msgid "Host or app"
 msgstr "Alan adı ya da uygulama"
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Hourly detail"
+msgstr "Saatlik ayrıntı"
 
 #: src/features/analytics/Install.tsx
 msgid "How to install"
@@ -1259,12 +1315,22 @@ msgstr "Olaylar nasıl gönderilir"
 msgid "I saved it"
 msgstr "Kaydettim"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "In milliseconds. A request is satisfied within it and tolerated within four times it."
+msgstr "Milisaniye cinsinden. Bu süre içindeki bir istek tatmin edici, dört katı içindeki bir istek kabul edilebilir sayılır."
+
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
 #: src/features/analytics/Support.tsx
 msgid "Inbox"
 msgstr "Gelen kutusu"
 
+#: src/features/analytics/Monitor.tsx
+msgid "inferred"
+msgstr "çıkarsanmış"
+
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Install"
 msgstr "Kurulum"
@@ -1390,6 +1456,10 @@ msgstr "son açılış {viewed}"
 msgid "Last page or screen"
 msgstr "Son sayfa ya da ekran"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "Last request {seen}"
+msgstr "Son istek {seen}"
+
 #: src/features/analytics/text.ts
 msgid "Last screen"
 msgstr "Son ekran"
@@ -1444,6 +1514,10 @@ msgstr "{created} tarihinde oluşturuldu"
 #: src/features/analytics/Sharing.tsx
 msgid "Made {created} by {by}"
 msgstr "{created} tarihinde {by} oluşturdu"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Made from request paths, with ids taken out. Your router did not name this pattern."
+msgstr "İstek yollarından, kimlikler çıkarılarak üretildi. Bu kalıbı yönlendiriciniz adlandırmadı."
 
 #: src/features/analytics/Settings.tsx
 msgid "Make a new key"
@@ -1509,6 +1583,7 @@ msgstr "Aşağı taşı"
 msgid "Move up"
 msgstr "Yukarı taşı"
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Controls.tsx
 #: src/features/analytics/Funnels.tsx
 #: src/features/analytics/Goals.tsx
@@ -1634,6 +1709,10 @@ msgstr "Henüz huni yok"
 msgid "No goals yet"
 msgstr "Henüz hedef yok"
 
+#: src/features/analytics/ApiSettings.tsx
+msgid "No hidden routes. Hide one from the Routes view."
+msgstr "Gizli rota yok. Rotalar görünümünden bir rotayı gizleyebilirsiniz."
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "No properties yet"
 msgstr "Henüz mülk yok"
@@ -1690,6 +1769,7 @@ msgstr "Henüz yok"
 msgid "None, every visit counts."
 msgstr "Yok, her ziyaret sayılır."
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
 msgid "None, owners and admins only"
@@ -1829,6 +1909,7 @@ msgstr "İşletim sistemi"
 msgid "Opt-out link"
 msgstr "Vazgeçme bağlantısı"
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/NewProperty.tsx
 msgid "Optional, one per line. The host names the API answers on, to tell properties apart."
 msgstr "İsteğe bağlı, her satıra bir tane. API’nin yanıt verdiği ana makine adları; mülkleri birbirinden ayırmak için."
@@ -1976,9 +2057,14 @@ msgstr "Parola"
 msgid "Past alerts"
 msgstr "Geçmiş uyarılar"
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Path rules"
 msgstr "Yol kuralları"
+
+#: src/features/analytics/ApiSettings.tsx
+msgid "Paths or routes that match a pattern are counted under the route you name, from now on. Use them when your server sends paths and a pattern made from them is not the one you want."
+msgstr "Bir kalıpla eşleşen yollar ya da rotalar bundan sonra adını verdiğiniz rota altında sayılır. Sunucunuz yol gönderiyorsa ve bunlardan üretilen kalıp istediğiniz değilse kullanın."
 
 #: src/features/analytics/Settings.tsx
 msgid "Pattern"
@@ -2145,6 +2231,10 @@ msgstr "Her saat yeniden hesaplanır, son olarak {builtAt}."
 msgid "Rebuilt every hour."
 msgstr "Her saat yeniden hesaplanır."
 
+#: src/features/analytics/Settings.tsx
+msgid "Records sent for it are refused from then on, and all its request counts are deleted. This cannot be undone."
+msgstr "Bundan sonra ona gönderilen kayıtlar reddedilir ve tüm istek sayıları silinir. Bu işlem geri alınamaz."
+
 #: src/features/analytics/text.ts
 msgid "Referral"
 msgstr "Yönlendirme"
@@ -2266,6 +2356,7 @@ msgid "Route"
 msgstr "Rota"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/ApiSettings.tsx
 msgid "Routes"
 msgstr "Rotalar"
 
@@ -2375,6 +2466,7 @@ msgid "Server busy"
 msgstr "Sunucu meşgul"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Settings"
 msgstr "Ayarlar"
@@ -2391,6 +2483,7 @@ msgstr "Yuva ile paylaşıldı"
 msgid "Sharing"
 msgstr "Paylaşım"
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/Controls.tsx
 #: src/features/analytics/Events.tsx
 msgid "Show"
@@ -2400,6 +2493,10 @@ msgstr "Göster"
 #: src/features/analytics/parts.tsx
 msgid "Show from {day}"
 msgstr "{day} tarihinden itibaren göster"
+
+#: src/features/analytics/Monitor.tsx
+msgid "Show it again"
+msgstr "Yeniden göster"
 
 #: src/features/analytics/Events.tsx
 msgid "Show its props"
@@ -2667,6 +2764,10 @@ msgstr "Bu aralık dışa aktarılamaz. Daha kısa ya da ayrıntılı kayıtlar�
 msgid "This report has a password"
 msgstr "Bu rapor parolalı"
 
+#: src/features/analytics/Monitor.tsx
+msgid "This route is hidden: it is left out of every number and list, with all its methods. Its requests are still counted."
+msgstr "Bu rota gizli: tüm yöntemleriyle birlikte her sayıdan ve listeden çıkarılır. İstekleri yine de sayılır."
+
 #: src/features/analytics/Support.tsx
 msgid "This workspace has no inbox yet."
 msgstr "Bu çalışma alanında henüz gelen kutusu yok."
@@ -2699,6 +2800,7 @@ msgstr "Sayfada geçen süre"
 msgid "Time the page was visible and in focus, per view."
 msgstr "Görüntüleme başına sayfanın görünür ve odakta kaldığı süre."
 
+#: src/features/analytics/ApiSettings.tsx
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Time zone"

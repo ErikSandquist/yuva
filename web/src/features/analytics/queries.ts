@@ -128,6 +128,33 @@ export function useApiQuery(id: string, query: ApiQuery, enabled = true) {
   return useAnalytics(id, { ...query, dataset: "api" }, enabled)
 }
 
+export function useApiRoutes(id: string, enabled = true) {
+  const base = useDataKey(id)
+  return useQuery({
+    queryKey: [...base, "routes"],
+    queryFn: () =>
+      unwrap(api.GET("/v1/analytics/properties/{propertyId}/routes", { params: { path: { propertyId: id } } })),
+    select: (d) => d.items,
+    staleTime: 60_000,
+    enabled,
+  })
+}
+
+export function useSetRouteHidden(id: string) {
+  const qc = useQueryClient()
+  const base = useDataKey(id)
+  return useMutation({
+    mutationFn: ({ routeId, hidden }: { routeId: number; hidden: boolean }) =>
+      unwrap(
+        api.PATCH("/v1/analytics/properties/{propertyId}/routes/{routeId}", {
+          params: { path: { propertyId: id, routeId } },
+          body: { hidden },
+        })
+      ),
+    onSuccess: () => void qc.invalidateQueries({ queryKey: base }),
+  })
+}
+
 export function useAnalyticsTable(id: string, body: AnalyticsQuery) {
   const share = useShare()
   const base = useDataKey(id)

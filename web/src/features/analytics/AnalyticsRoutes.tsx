@@ -14,6 +14,7 @@ import { Controls } from "@/features/analytics/Controls"
 import { EventsView } from "@/features/analytics/Events"
 import { FunnelsView } from "@/features/analytics/Funnels"
 import { GoalsView } from "@/features/analytics/Goals"
+import { ApiSettingsView } from "@/features/analytics/ApiSettings"
 import { ApiOverview, ApiRoutePage, ApiRoutes, RequestsBanner } from "@/features/analytics/Monitor"
 import { InstallPropertyPage, NewPropertyPage, WaitForFirstEvent } from "@/features/analytics/NewProperty"
 import { Overview } from "@/features/analytics/Overview"
@@ -48,7 +49,7 @@ const VIEWS = [
 ] as const
 type ViewKey = (typeof VIEWS)[number]
 
-const API_VIEWS = ["overview", "routes"] as const
+const API_VIEWS = ["overview", "routes", "settings"] as const
 type ApiViewKey = (typeof API_VIEWS)[number]
 
 function AnalyticsHome() {
@@ -143,6 +144,10 @@ function PropertyLayout() {
   )
 }
 
+function SettingsFor() {
+  return useCurrentProperty().kind === "api" ? <ApiSettingsView /> : <SettingsView />
+}
+
 function OverviewFor() {
   return useCurrentProperty().kind === "api" ? <ApiOverview /> : <Overview />
 }
@@ -190,7 +195,11 @@ function ApiLayout({ property: p }: { property: AnalyticsProperty }) {
   const last = pathname.split("/")[3] as ApiViewKey | undefined
   if (last && !API_VIEWS.includes(last)) return <Navigate to={`/analytics/${p.id}${search}`} replace />
   const current: ApiViewKey = last ?? "overview"
-  const names: Record<ApiViewKey, string> = { overview: t`Overview`, routes: t`Routes` }
+  const names: Record<ApiViewKey, string> = {
+    overview: t`Overview`,
+    routes: t`Routes`,
+    settings: t`Settings`,
+  }
   return (
     <Pane wide testId="analytics-property" className="gap-5" key={p.id}>
       <PropertyHeader property={p} />
@@ -226,7 +235,7 @@ export default function AnalyticsRoutes() {
         <Route path="funnels" element={<FunnelsView />} />
         <Route path="retention" element={<RetentionView />} />
         <Route path="support" element={<SupportView />} />
-        <Route path="settings" element={<SettingsView />} />
+        <Route path="settings" element={<SettingsFor />} />
         <Route path="routes" element={<ApiRoutes />} />
         <Route path="routes/:method/*" element={<ApiRoutePage />} />
         <Route path="*" element={<Navigate to=".." replace />} />
