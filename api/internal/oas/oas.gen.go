@@ -688,6 +688,7 @@ const (
 	AnalyticsMetricEvents            AnalyticsMetric = "events"
 	AnalyticsMetricFeedback          AnalyticsMetric = "feedback"
 	AnalyticsMetricHelpfulRate       AnalyticsMetric = "helpful_rate"
+	AnalyticsMetricLatencyBands      AnalyticsMetric = "latency_bands"
 	AnalyticsMetricMaxDuration       AnalyticsMetric = "max_duration"
 	AnalyticsMetricP50               AnalyticsMetric = "p50"
 	AnalyticsMetricP75               AnalyticsMetric = "p75"
@@ -745,6 +746,8 @@ func (e AnalyticsMetric) Valid() bool {
 	case AnalyticsMetricFeedback:
 		return true
 	case AnalyticsMetricHelpfulRate:
+		return true
+	case AnalyticsMetricLatencyBands:
 		return true
 	case AnalyticsMetricMaxDuration:
 		return true
@@ -5874,10 +5877,13 @@ type AnalyticsInsight struct {
 	// requests within T count 1, within 4T a half, T the route's `apdex_ms` or else the
 	// property's, read from the same sketches), `request_bytes` and `response_bytes` (body bytes
 	// added up, of the records that gave a size), `response_size_p50` and `response_size_p95`
-	// (bytes, accurate to 9%) and `conversations` (conversations the property's linked inbox
+	// (bytes, accurate to 9%), `conversations` (conversations the property's linked inbox
 	// received, by its local day; only with no dimension or a `time:day`, `time:week` or
 	// `time:month` grain alone, and no filter or `routes`; `422 no_linked_inbox` without an
-	// inbox).
+	// inbox) and `latency_bands` (the latency heatmap: requests per duration band in
+	// `metrics.latency_bands`, 20 bands whose upper bounds `meta.latency_band_bounds` lists;
+	// the same bands for every range, read exactly from the duration sketches; it cannot order
+	// rows).
 	Metric AnalyticsMetric `json:"metric"`
 
 	// Previous The comparison range's number (0 for `metric_new` and `new_value`), or the range's overall `support_rate` for a hotspot.
@@ -5920,29 +5926,37 @@ type AnalyticsInsightKind string
 // requests within T count 1, within 4T a half, T the route's `apdex_ms` or else the
 // property's, read from the same sketches), `request_bytes` and `response_bytes` (body bytes
 // added up, of the records that gave a size), `response_size_p50` and `response_size_p95`
-// (bytes, accurate to 9%) and `conversations` (conversations the property's linked inbox
+// (bytes, accurate to 9%), `conversations` (conversations the property's linked inbox
 // received, by its local day; only with no dimension or a `time:day`, `time:week` or
 // `time:month` grain alone, and no filter or `routes`; `422 no_linked_inbox` without an
-// inbox).
+// inbox) and `latency_bands` (the latency heatmap: requests per duration band in
+// `metrics.latency_bands`, 20 bands whose upper bounds `meta.latency_band_bounds` lists;
+// the same bands for every range, read exactly from the duration sketches; it cannot order
+// rows).
 type AnalyticsMetric string
 
 // AnalyticsMetrics The metrics the query asked for.
 type AnalyticsMetrics struct {
-	Apdex             *float64 `json:"apdex,omitempty"`
-	AvgDuration       *float64 `json:"avg_duration,omitempty"`
-	BounceRate        *float64 `json:"bounce_rate,omitempty"`
-	ClientErrorRate   *float64 `json:"client_error_rate,omitempty"`
-	ClientErrors      *float64 `json:"client_errors,omitempty"`
-	Completions       *float64 `json:"completions,omitempty"`
-	Conversations     *float64 `json:"conversations,omitempty"`
-	ConversionRate    *float64 `json:"conversion_rate,omitempty"`
-	Conversions       *float64 `json:"conversions,omitempty"`
-	Discussions       *float64 `json:"discussions,omitempty"`
-	ErrorRate         *float64 `json:"error_rate,omitempty"`
-	Errors            *float64 `json:"errors,omitempty"`
-	Events            *float64 `json:"events,omitempty"`
-	Feedback          *float64 `json:"feedback,omitempty"`
-	HelpfulRate       *float64 `json:"helpful_rate,omitempty"`
+	Apdex           *float64 `json:"apdex,omitempty"`
+	AvgDuration     *float64 `json:"avg_duration,omitempty"`
+	BounceRate      *float64 `json:"bounce_rate,omitempty"`
+	ClientErrorRate *float64 `json:"client_error_rate,omitempty"`
+	ClientErrors    *float64 `json:"client_errors,omitempty"`
+	Completions     *float64 `json:"completions,omitempty"`
+	Conversations   *float64 `json:"conversations,omitempty"`
+	ConversionRate  *float64 `json:"conversion_rate,omitempty"`
+	Conversions     *float64 `json:"conversions,omitempty"`
+	Discussions     *float64 `json:"discussions,omitempty"`
+	ErrorRate       *float64 `json:"error_rate,omitempty"`
+	Errors          *float64 `json:"errors,omitempty"`
+	Events          *float64 `json:"events,omitempty"`
+	Feedback        *float64 `json:"feedback,omitempty"`
+	HelpfulRate     *float64 `json:"helpful_rate,omitempty"`
+
+	// LatencyBands Requests per duration band, fastest first: band 0 holds the requests of at most
+	// `meta.latency_band_bounds[0]` microseconds, band i those above bound i-1 up to bound i,
+	// and the last band those above the last bound. They add up to `requests`.
+	LatencyBands      *[]int64 `json:"latency_bands,omitempty"`
 	MaxDuration       *float64 `json:"max_duration,omitempty"`
 	P50               *float64 `json:"p50,omitempty"`
 	P75               *float64 `json:"p75,omitempty"`
@@ -6011,10 +6025,13 @@ type AnalyticsOrder struct {
 	// requests within T count 1, within 4T a half, T the route's `apdex_ms` or else the
 	// property's, read from the same sketches), `request_bytes` and `response_bytes` (body bytes
 	// added up, of the records that gave a size), `response_size_p50` and `response_size_p95`
-	// (bytes, accurate to 9%) and `conversations` (conversations the property's linked inbox
+	// (bytes, accurate to 9%), `conversations` (conversations the property's linked inbox
 	// received, by its local day; only with no dimension or a `time:day`, `time:week` or
 	// `time:month` grain alone, and no filter or `routes`; `422 no_linked_inbox` without an
-	// inbox).
+	// inbox) and `latency_bands` (the latency heatmap: requests per duration band in
+	// `metrics.latency_bands`, 20 bands whose upper bounds `meta.latency_band_bounds` lists;
+	// the same bands for every range, read exactly from the duration sketches; it cannot order
+	// rows).
 	Metric AnalyticsMetric `json:"metric"`
 }
 
@@ -6273,7 +6290,7 @@ type AnalyticsQuery struct {
 	Limit   *int              `json:"limit,omitempty"`
 	Metrics []AnalyticsMetric `json:"metrics"`
 
-	// OrderBy Time series come in time order; breakdowns by `visitors`, most first, unless this says otherwise.
+	// OrderBy Time series come in time order; breakdowns by `visitors`, most first, unless this says otherwise. `revenue` and `latency_bands` cannot order rows.
 	OrderBy *[]AnalyticsOrder `json:"order_by,omitempty"`
 
 	// Prop The event prop key a `prop` dimension breaks down by.
@@ -6521,6 +6538,11 @@ type AnalyticsResultMeta struct {
 	// Estimated `dataset: api`: some requests of the range were sampled (`sample_rate`), so counts are estimates.
 	Estimated *bool              `json:"estimated,omitempty"`
 	From      openapi_types.Date `json:"from"`
+
+	// LatencyBandBounds With `latency_bands`: the upper bounds of the first 19 bands in microseconds, powers of
+	// two from 256 µs to about 67 s (2^8 to 2^26), the same in every answer. A duration
+	// sketch's buckets end on these bounds, so each request is counted in its band exactly.
+	LatencyBandBounds *[]int64 `json:"latency_band_bounds,omitempty"`
 
 	// RawWindowFrom The first day raw rows are kept for, which filters and breakdowns the rollups cannot answer need.
 	RawWindowFrom openapi_types.Date            `json:"raw_window_from"`

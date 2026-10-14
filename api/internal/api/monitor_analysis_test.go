@@ -534,7 +534,93 @@ func TestMonitorAnalysisMatchesTheFixture(t *testing.T) {
 			}
 		}
 	}
+	heatmap := func(tier string) {
+		t.Helper()
+		for _, c := range []struct {
+			dims    []string
+			filters []map[string]any
+			key     func(fx) string
+			keep    func(fx) bool
+		}{
+			{[]string{"time:hour"}, []map[string]any{{"dimension": "environment", "op": "is", "values": []string{"staging"}}},
+				func(r fx) string { return r.at.In(time.FixedZone("", 3*3600)).Format("2006-01-02T15:00-07:00") },
+				func(r fx) bool { return r.value("environment") == "staging" }},
+			{[]string{"consumer"}, nil, func(r fx) string { return r.consumer }, func(r fx) bool { return r.consumer != "" }},
+		} {
+			body := map[string]any{"metrics": []string{"requests", "latency_bands"}, "range": day, "dimensions": c.dims}
+			if c.filters != nil {
+				body["filters"] = c.filters
+			}
+			res := apiQuery(ct.owner, id, body)
+			if b := res.body["meta"].(map[string]any)["latency_band_bounds"].([]any); len(b) != 19 || b[0].(float64) != 256 || b[18].(float64) != 1<<26 {
+				t.Fatalf("%s: band bounds %v", tier, b)
+			}
+			want := map[string][]float64{}
+			total := make([]float64, 20)
+			for _, r := range today {
+				if !c.keep(r) {
+					continue
+				}
+				k := c.key(r)
+				if want[k] == nil {
+					want[k] = make([]float64, 20)
+				}
+				want[k][fxBand(r.durUS)] += float64(r.weight)
+				total[fxBand(r.durUS)] += float64(r.weight)
+			}
+			got := map[string][]float64{}
+			for _, row := range res.body["rows"].([]any) {
+				m := row.(map[string]any)
+				var bands []float64
+				sum := 0.0
+				for _, v := range m["metrics"].(map[string]any)["latency_bands"].([]any) {
+					bands, sum = append(bands, v.(float64)), sum+v.(float64)
+				}
+				if sum != m["metrics"].(map[string]any)["requests"].(float64) {
+					t.Fatalf("%s %v: bands add up to %v, not requests: %s", tier, c.dims, sum, res.raw)
+				}
+				if sum > 0 {
+					got[m["dimensions"].([]any)[0].(string)] = bands
+				}
+			}
+			if fmt.Sprint(got) != fmt.Sprint(want) {
+				t.Fatalf("%s %v heatmap\n%v\ncounted\n%v", tier, c.dims, got, want)
+			}
+			var tb []float64
+			for _, v := range totals(res)["latency_bands"].([]any) {
+				tb = append(tb, v.(float64))
+			}
+			if !slices.Equal(tb, total) {
+				t.Fatalf("%s %v total bands %v, counted %v", tier, c.dims, tb, total)
+			}
+		}
+	}
 	every("minute rows")
+	heatmap("minute rows")
+	ct.owner.expectProblem(http.StatusBadRequest, "validation_failed", "POST", "/v1/analytics/properties/"+id+"/query",
+		map[string]any{"dataset": "api", "metrics": []string{"latency_bands"}, "range": day, "dimensions": []string{"route"},
+			"order_by": []map[string]any{{"metric": "latency_bands"}}})
+	site, _ := createProperty(ct.owner, map[string]any{"name": "Site", "domains": []string{"example.com"}})
+	ct.owner.expectProblem(http.StatusBadRequest, "validation_failed", "POST", "/v1/analytics/properties/"+site+"/query",
+		map[string]any{"metrics": []string{"latency_bands"}, "range": day})
+	csv := ct.owner.do("POST", "/v1/analytics/properties/"+id+"/query?format=csv", map[string]any{"dataset": "api", "metrics": []string{"requests", "latency_bands"},
+		"range": day, "dimensions": []string{"route"}, "filters": []map[string]any{{"dimension": "route", "op": "is", "values": []string{"/health"}}}})
+	var health []float64
+	for _, r := range today {
+		if r.route == "/health" {
+			if health == nil {
+				health = make([]float64, 20)
+			}
+			health[fxBand(r.durUS)] += float64(r.weight)
+		}
+	}
+	var cells []string
+	for _, v := range health {
+		cells = append(cells, strconv.FormatFloat(v, 'f', -1, 64))
+	}
+	if want := `"route","requests","latency_bands"` + "\r\n" + `"/health","` + strconv.FormatInt(totalOfRoute(today, "/health"), 10) + `","` + strings.Join(cells, " ") + "\"\r\n"; csv.status != http.StatusOK || string(csv.raw) != want {
+		t.Fatalf("csv %d %q, want %q", csv.status, csv.raw, want)
+	}
 
 	for _, c := range []struct {
 		body map[string]any
@@ -759,6 +845,7 @@ func TestMonitorAnalysisMatchesTheFixture(t *testing.T) {
 	}
 	today = slices.Concat(today, today[:40])
 	every("folded days")
+	heatmap("folded days")
 	if r := apiQuery(ct.owner, id, map[string]any{"metrics": []string{"requests"}, "range": day, "dimensions": []string{"consumer"}}); served(r) != "rollups" {
 		t.Fatalf("an extra dimension of folded days is served from %s", served(r))
 	}
@@ -787,4 +874,23 @@ func totalOf(recs []fx) int64 {
 		n += r.weight
 	}
 	return n
+}
+
+func totalOfRoute(recs []fx, route string) int64 {
+	var n int64
+	for _, r := range recs {
+		if r.route == route {
+			n += r.weight
+		}
+	}
+	return n
+}
+
+func fxBand(us int64) int {
+	for n := 8; n <= 26; n++ {
+		if us <= 1<<n {
+			return n - 8
+		}
+	}
+	return 19
 }

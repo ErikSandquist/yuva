@@ -180,3 +180,39 @@ func TestApdex(t *testing.T) {
 		t.Fatal("an empty sketch has no apdex")
 	}
 }
+
+func band(v int64) int {
+	for i, b := range BandBounds() {
+		if v <= b {
+			return i
+		}
+	}
+	return len(BandBounds())
+}
+
+func TestSketchBandsAreExact(t *testing.T) {
+	r := rand.New(rand.NewPCG(5, 6))
+	values := durations(r, 50_000)
+	for n := 7; n <= 27; n++ {
+		values = append(values, int64(1)<<n, int64(1)<<n+1, int64(1)<<n-1)
+	}
+	values = append(values, 1, 2, 3, 1<<40)
+	for _, scale := range []int8{DurationScale, SizeScale, 0} {
+		sk := NewSketch(scale)
+		want := make([]int64, len(BandBounds())+1)
+		for _, v := range values {
+			sk.Add(v, 2)
+			want[band(v)] += 2
+		}
+		decoded, err := DecodeSketch(sk.Encode())
+		if err != nil {
+			t.Fatal(err)
+		}
+		if got := decoded.Bands(); !slices.Equal(got, want) {
+			t.Fatalf("scale %d: bands %v, counted %v", scale, got, want)
+		}
+	}
+	if b := BandBounds(); len(b) != 19 || b[0] != 256 || b[18] != 1<<26 {
+		t.Fatalf("bounds %v", b)
+	}
+}

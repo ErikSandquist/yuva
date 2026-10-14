@@ -164,6 +164,41 @@ func (s Sketch) ApdexCounts(t int64) (sat, tol uint64) {
 	return sat, tol
 }
 
+// Latency bands end on powers of two of microseconds, from 2^firstBand to 2^lastBand, and the
+// last band has no end. A bucket of any scale ends on such a power or lies inside one band, so a
+// sketch's band counts are exact.
+const (
+	firstBand = 8
+	lastBand  = 26
+)
+
+// BandBounds are the upper bounds of every band but the last, in microseconds.
+func BandBounds() []int64 {
+	out := make([]int64, 0, lastBand-firstBand+1)
+	for n := firstBand; n <= lastBand; n++ {
+		out = append(out, int64(1)<<n)
+	}
+	return out
+}
+
+// Bands counts the values per latency band: bucket i ends at 2^((i+1)/2^scale), so it lies in
+// the band of the first power of two at or above that end.
+func (s Sketch) Bands() []int64 {
+	out := make([]int64, lastBand-firstBand+2)
+	out[0] = int64(s.zero)
+	per := int64(1) << max(s.scale, 0)
+	for _, b := range s.buckets {
+		end := int64(b.index) + 1
+		n := end / per
+		if end%per != 0 && end > 0 {
+			n++
+		}
+		band := min(max(n-firstBand, 0), int64(len(out)-1))
+		out[band] += int64(b.count)
+	}
+	return out
+}
+
 // Encode is the stored form: the scale, the zero count, the number of buckets and then each
 // bucket's index (as a delta from the one before) and count, all varints.
 func (s Sketch) Encode() []byte {

@@ -34,11 +34,11 @@ var (
 	ExtraDims = []string{"consumer", "country", "app_version"}
 	Dims      = slices.Concat(CoreDims, ExtraDims)
 	Metrics   = []string{"requests", "requests_per_minute", "errors", "error_rate", "client_errors", "client_error_rate", "p50", "p75", "p90", "p95", "p99",
-		"avg_duration", "max_duration", "apdex", "request_bytes", "response_bytes", "response_size_p50", "response_size_p95", "conversations"}
+		"avg_duration", "max_duration", "apdex", "request_bytes", "response_bytes", "response_size_p50", "response_size_p95", "conversations", "latency_bands"}
 	Grains = []string{"time:minute", "time:hour", "time:day", "time:week", "time:month"}
 
 	extraWith       = []string{"route", "method", "status_class"}
-	durationMetrics = []string{"p50", "p75", "p90", "p95", "p99", "apdex"}
+	durationMetrics = []string{"p50", "p75", "p90", "p95", "p99", "apdex", "latency_bands"}
 	sizeMetrics     = []string{"response_size_p50", "response_size_p95"}
 	extraCodes      = map[string]int16{"consumer": DimConsumer, "country": DimCountry, "app_version": DimAppVersion}
 	nameKinds       = map[string]string{"api_version": KindAPIVersion, "environment": KindEnvironment, "service": KindService, "consumer": KindConsumer,

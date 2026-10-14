@@ -649,10 +649,24 @@ func writeAnalyticsCSV(w io.Writer, dims, metrics []string, rows []oas.Analytics
 			cells = append(cells, derefString(r.Country), derefString(r.Region))
 		}
 		raw, _ := json.Marshal(r.Metrics)
-		var m map[string]float64
+		var m map[string]json.RawMessage
 		_ = json.Unmarshal(raw, &m)
 		for _, name := range metrics {
-			cells = append(cells, strconv.FormatFloat(m[name], 'f', -1, 64))
+			var v float64
+			if err := json.Unmarshal(m[name], &v); err == nil {
+				cells = append(cells, strconv.FormatFloat(v, 'f', -1, 64))
+				continue
+			}
+			var list []float64
+			if err := json.Unmarshal(m[name], &list); err != nil {
+				cells = append(cells, "0")
+				continue
+			}
+			parts := make([]string, len(list))
+			for i, x := range list {
+				parts[i] = strconv.FormatFloat(x, 'f', -1, 64)
+			}
+			cells = append(cells, strings.Join(parts, " "))
 		}
 		if err := write(cells); err != nil {
 			return err

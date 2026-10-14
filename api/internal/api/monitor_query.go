@@ -159,6 +159,9 @@ func (s *Server) monitorRequest(prop store.AnalyticsProperty, b oas.AnalyticsQue
 			if !slices.Contains(monitor.Metrics, string(o.Metric)) {
 				return mr, errValidation("the api dataset orders by its own metrics, not " + string(o.Metric))
 			}
+			if o.Metric == oas.AnalyticsMetricLatencyBands {
+				return mr, errValidation("rows cannot be ordered by latency_bands, which is a count per band")
+			}
 			mr.order = append(mr.order, analytics.Order{Metric: string(o.Metric), Desc: o.Dir == nil || *o.Dir == oas.AnalyticsDesc})
 		}
 	}
@@ -211,6 +214,9 @@ func apiMetricsBody(a *monitor.Agg, minutes float64, names []string) oas.Analyti
 	for _, n := range names {
 		if f, ok := fields[n]; ok {
 			*f = new(a.Metric(n, minutes))
+		}
+		if n == "latency_bands" {
+			m.LatencyBands = new(a.Durations.Bands())
 		}
 	}
 	return m
@@ -367,6 +373,9 @@ func (s *Server) queryMonitor(ctx context.Context, prop store.AnalyticsProperty,
 			Since: new(q.Start), Until: new(q.End), Timezone: prop.Timezone, ServedFrom: oas.AnalyticsResultMetaServedFrom(res.ServedFrom),
 			RawWindowFrom: openapi_types.Date{Time: q.MinuteFrom},
 		},
+	}
+	if slices.Contains(q.Metrics, "latency_bands") {
+		out.Meta.LatencyBandBounds = new(monitor.BandBounds())
 	}
 	if res.Totals.Sampled > 0 || (prev != nil && prev.Totals.Sampled > 0) {
 		out.Meta.Estimated = new(true)
