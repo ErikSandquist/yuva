@@ -4664,7 +4664,9 @@ export interface paths {
          * Update an analytics property
          * @description Changes the given fields. `inbox_id: null` unlinks the property from its inbox;
          *     `retention_months: null` keeps its rollups forever. A new `timezone` applies to events
-         *     received from then on: finished days keep the zone they were counted in.
+         *     received from then on: finished days keep the zone they were counted in. An API property
+         *     counts in the new zone from the next local midnight of the zone before
+         *     (`timezone_applies_at`), so no local day is cut in two.
          *
          *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
          */
@@ -4885,6 +4887,57 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/routes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List an API property's routes
+         * @description Every route the property counted, by pattern: those its host named, those inferred from
+         *     paths (`inferred`), and `(unmatched)` and `(other)`, which take no place under the cap of
+         *     1,000. Hidden routes
+         *     (`hidden`) are left out of `queryAnalytics` with `dataset: api`; their requests are still
+         *     counted, and showing a route again brings them back. A site answers `422 property_kind`.
+         *
+         *     Scope: `analytics:read`.
+         */
+        get: operations["listAnalyticsRoutes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/routes/{routeId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Hide or show a route
+         * @description `hidden: true` leaves the route out of every `dataset: api` answer from now on, totals
+         *     included, such as a health check the API's own load balancer calls; `hidden: false` shows
+         *     it again. Nothing counted is deleted. To count a path under another pattern, add a
+         *     property `path_rules` entry instead.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        patch: operations["updateAnalyticsRoute"];
         trace?: never;
     };
     "/v1/analytics/properties/{propertyId}/retention": {
@@ -12785,6 +12838,12 @@ export interface components {
             platforms: components["schemas"]["AnalyticsPlatform"][];
             /** @description IANA time zone that defines the property's day. */
             timezone: string;
+            /**
+             * Format: date-time
+             * @description An API property whose `timezone` was just changed keeps counting its hours and days in
+             *     the zone before until its next local midnight, this instant; absent once the zone applies.
+             */
+            timezone_applies_at?: string;
             /** @description ISO 4217 code revenue is reported in. */
             currency: string;
             collection: components["schemas"]["AnalyticsCollection"];
@@ -12924,6 +12983,11 @@ export interface components {
              * @description The monthly cap on request records; absent when there is none. Records over it are not counted until the month ends.
              */
             requests_limit?: number;
+            /**
+             * Format: date-time
+             * @description When this month's request records reached the cap; owners get an e-mail and the operator a digest line then, once a month.
+             */
+            requests_limit_reached_at?: string;
         };
         AnalyticsPropertyList: {
             items: components["schemas"]["AnalyticsProperty"][];
@@ -13082,7 +13146,7 @@ export interface components {
          *     them, no goal, prop, segment, comparison or insights. Closed local days come from daily
          *     rows, closed hours from hourly rows and the rest from minute rows, which processes write
          *     every 10 seconds; `meta.served_from` is `rollups` when only daily and hourly rows answered.
-         *     Rows are ordered by `requests` unless `order_by` says otherwise.
+         *     Hidden routes (`updateAnalyticsRoute`) are left out of rows and totals. Rows are ordered by `requests` unless `order_by` says otherwise.
          * @enum {string}
          */
         AnalyticsDataset: "traffic" | "support" | "api";
@@ -13537,6 +13601,29 @@ export interface components {
              * @default 1
              */
             sample_rate: number;
+        };
+        AnalyticsRoute: {
+            /** Format: int32 */
+            id: number;
+            /** @example /users/{id} */
+            pattern: string;
+            /** @description The pattern was inferred from request paths rather than named by the host's router. */
+            inferred: boolean;
+            /** @description Left out of `dataset: api` answers. */
+            hidden: boolean;
+            /** Format: date-time */
+            first_seen_at: string;
+            /**
+             * Format: date-time
+             * @description When a request was last counted on the route, to the minute.
+             */
+            last_seen_at: string;
+        };
+        AnalyticsRouteList: {
+            items: components["schemas"]["AnalyticsRoute"][];
+        };
+        AnalyticsRouteUpdate: {
+            hidden: boolean;
         };
         AnalyticsRequestsResult: {
             /** @description The valid records, counted unless a rule of the operation dropped them. */
@@ -15158,6 +15245,8 @@ export interface components {
         ChannelKey: string;
         AnalyticsPropertyId: string;
         AnalyticsGoalId: string;
+        /** @description A route's `id` from `listAnalyticsRoutes`. */
+        AnalyticsRouteId: number;
         AnalyticsFunnelId: string;
         AnalyticsSegmentId: string;
         AnalyticsShareId: string;
@@ -22504,6 +22593,71 @@ export interface operations {
             404: components["responses"]["Problem"];
             422: components["responses"]["Problem"];
             503: components["responses"]["Problem"];
+        };
+    };
+    listAnalyticsRoutes: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The routes, by pattern. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsRouteList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    updateAnalyticsRoute: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+                /** @description A route's `id` from `listAnalyticsRoutes`. */
+                routeId: components["parameters"]["AnalyticsRouteId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsRouteUpdate"];
+            };
+        };
+        responses: {
+            /** @description The route. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsRoute"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
         };
     };
     getAnalyticsRetention: {
