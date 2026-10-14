@@ -36,7 +36,7 @@ import (
 
 const maxBodyBytes = 8 << 20
 
-var apiPrefixes = []string{"/v1/", "/client/v1/", "/ingress/", "/.well-known/", emailImagePathPrefix, emailTemplatesPathPrefix, clickPathPrefix}
+var apiPrefixes = []string{"/v1/", "/client/v1/", otlpPrefix, "/ingress/", "/.well-known/", emailImagePathPrefix, emailTemplatesPathPrefix, clickPathPrefix}
 
 var apiPaths = []string{"/v1", "/client/v1", "/healthz", "/readyz", "/oauth/register", "/oauth/authorize", "/oauth/token", "/oauth/revoke", "/mcp", signInCallbackPath}
 
@@ -326,6 +326,8 @@ func (s *Server) Handler() http.Handler {
 	mux.HandleFunc("GET /client/v1/realtime", s.serveClientRealtime)
 	if s.analytics != nil {
 		mux.HandleFunc("POST "+analyticsPrefix+"{key}", s.serveAnalyticsCollect)
+		mux.HandleFunc("POST "+analyticsPrefix+"{key}"+requestsSuffix, s.serveAppRequests)
+		mux.HandleFunc("POST "+otlpPrefix+"{propertyId}/v1/traces", s.serveOTLPTraces)
 	}
 	mux.HandleFunc("POST /ingress/email", s.serveIngressEmail)
 	mux.HandleFunc("POST /ingress/ses", s.serveIngressSES)

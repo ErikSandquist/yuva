@@ -128,6 +128,24 @@ func (e AnalyticsAppPlatform) Valid() bool {
 	}
 }
 
+// Defines values for AnalyticsAppRequestRecordCA.
+const (
+	AnalyticsAppRequestRecordCAN0 AnalyticsAppRequestRecordCA = 0
+	AnalyticsAppRequestRecordCAN1 AnalyticsAppRequestRecordCA = 1
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsAppRequestRecordCA enum.
+func (e AnalyticsAppRequestRecordCA) Valid() bool {
+	switch e {
+	case AnalyticsAppRequestRecordCAN0:
+		return true
+	case AnalyticsAppRequestRecordCAN1:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsAudience.
 const (
 	AnalyticsAudienceChildren AnalyticsAudience = "children"
@@ -187,16 +205,16 @@ func (e AnalyticsCompareWith) Valid() bool {
 
 // Defines values for AnalyticsConsentA.
 const (
-	N0 AnalyticsConsentA = 0
-	N1 AnalyticsConsentA = 1
+	AnalyticsConsentAN0 AnalyticsConsentA = 0
+	AnalyticsConsentAN1 AnalyticsConsentA = 1
 )
 
 // Valid indicates whether the value is a known member of the AnalyticsConsentA enum.
 func (e AnalyticsConsentA) Valid() bool {
 	switch e {
-	case N0:
+	case AnalyticsConsentAN0:
 		return true
-	case N1:
+	case AnalyticsConsentAN1:
 		return true
 	default:
 		return false
@@ -4943,6 +4961,52 @@ type AnalyticsAppDevice string
 // AnalyticsAppPlatform defines model for AnalyticsApp.Platform.
 type AnalyticsAppPlatform string
 
+// AnalyticsAppRequestRecord One call the app made to its own API, timed on the device. The fields mean what they mean in
+// `AnalyticsRequestRecord`; give `route`, from the app's own mapping of its API's paths, or
+// `path` for a pattern to be inferred.
+type AnalyticsAppRequestRecord struct {
+	ApiVersion *string `json:"api_version,omitempty"`
+
+	// C On a `consent` property, `{"a": 1}` once the user agreed to analytics, exactly as on app events.
+	C *struct {
+		A *AnalyticsAppRequestRecordCA `json:"a,omitempty"`
+	} `json:"c,omitempty"`
+
+	// DurationUs From sending the request to the end of the response, in microseconds.
+	DurationUs int64 `json:"duration_us"`
+
+	// Environment The API's environment the app called, `production` when absent.
+	Environment *string `json:"environment,omitempty"`
+
+	// Method Examples: GET
+	Method string `json:"method"`
+
+	// Path Examples: /users/42
+	Path         *string `json:"path,omitempty"`
+	RequestSize  *int64  `json:"request_size,omitempty"`
+	ResponseSize *int64  `json:"response_size,omitempty"`
+
+	// Route Examples: /users/{id}
+	Route *string `json:"route,omitempty"`
+
+	// Status The response status, or 0 when no response arrived (a timeout or no network).
+	Status int `json:"status"`
+
+	// Time When the call started; queued records keep it. Records older than 72 hours are not counted.
+	Time *time.Time `json:"time,omitempty"`
+}
+
+// AnalyticsAppRequestRecordCA defines model for AnalyticsAppRequestRecord.C.A.
+type AnalyticsAppRequestRecordCA int
+
+// AnalyticsAppRequests Up to 100 calls an app made to its own API.
+type AnalyticsAppRequests struct {
+	// A Apps only, required there: the app that sent the events, describing a visit it starts.
+	// Nothing here identifies a device.
+	A       AnalyticsApp                `json:"a"`
+	Records []AnalyticsAppRequestRecord `json:"records"`
+}
+
 // AnalyticsAudience `children` keeps location at country level and allows no consent features or tracked props.
 type AnalyticsAudience string
 
@@ -6733,8 +6797,8 @@ type ApiKeyList struct {
 //	    Yuva. Owners and admins only; never offered to agents' tokens, refused for keys limited
 //	    to inboxes.
 //	  - `analytics:read`: analytics properties.
-//	  - `analytics:write`: server-side analytics events and API request records; for API keys
-//	    only, never offered to OAuth clients.
+//	  - `analytics:write`: server-side analytics events, API request records and OTLP traces;
+//	    for API keys only, never offered to OAuth clients.
 //	  - `analytics:manage`: create, change and delete analytics properties, rotate their keys,
 //	    delete their data. Never offered to agents' tokens, refused for keys limited to inboxes.
 //
@@ -12910,6 +12974,76 @@ type OAuthWorkspaceChoice struct {
 //
 // Examples: https://www.example.com
 type Origin = string
+
+// OtlpExportTraceServiceRequest `opentelemetry.proto.collector.trace.v1.ExportTraceServiceRequest` in OTLP/JSON, reduced to
+// the fields Yuva reads; every other field is accepted and ignored. 64-bit numbers may be
+// strings or numbers, `kind` a number or its enum name.
+type OtlpExportTraceServiceRequest struct {
+	ResourceSpans *[]struct {
+		Resource *struct {
+			Attributes *[]OtlpKeyValue `json:"attributes,omitempty"`
+		} `json:"resource,omitempty"`
+		ScopeSpans *[]struct {
+			Spans *[]OtlpSpan `json:"spans,omitempty"`
+		} `json:"scopeSpans,omitempty"`
+	} `json:"resourceSpans,omitempty"`
+}
+
+// OtlpExportTraceServiceResponse `ExportTraceServiceResponse` in OTLP/JSON: `{}` when every span was valid.
+type OtlpExportTraceServiceResponse struct {
+	PartialSuccess *struct {
+		// ErrorMessage The first invalid span's reason.
+		ErrorMessage *string `json:"errorMessage,omitempty"`
+
+		// RejectedSpans The spans left out as invalid, as a 64-bit integer in a string.
+		//
+		// Examples: 1
+		RejectedSpans *string `json:"rejectedSpans,omitempty"`
+	} `json:"partialSuccess,omitempty"`
+}
+
+// OtlpKeyValue defines model for OtlpKeyValue.
+type OtlpKeyValue struct {
+	// Key Examples: http.route
+	Key   *string `json:"key,omitempty"`
+	Value *struct {
+		DoubleValue *float32 `json:"doubleValue,omitempty"`
+
+		// IntValue A 64-bit integer, as a string or a number.
+		IntValue    *string `json:"intValue,omitempty"`
+		StringValue *string `json:"stringValue,omitempty"`
+	} `json:"value,omitempty"`
+}
+
+// OtlpSpan defines model for OtlpSpan.
+type OtlpSpan struct {
+	Attributes *[]OtlpKeyValue `json:"attributes,omitempty"`
+
+	// EndTimeUnixNano Examples: 1791806401012500000
+	EndTimeUnixNano *string `json:"endTimeUnixNano,omitempty"`
+
+	// Kind `2` (`SPAN_KIND_SERVER`) counts; other kinds are skipped.
+	//
+	// Examples: 2
+	Kind interface{} `json:"kind,omitempty"`
+
+	// StartTimeUnixNano Examples: 1791806401000000000
+	StartTimeUnixNano *string `json:"startTimeUnixNano,omitempty"`
+
+	// TraceState The W3C tracestate; its `ot=th` threshold weighs the span.
+	//
+	// Examples: ot=th:c
+	TraceState *string `json:"traceState,omitempty"`
+}
+
+// OtlpStatus `google.rpc.Status` in OTLP/JSON.
+type OtlpStatus struct {
+	// Code The gRPC status code, such as 3 (invalid argument), 7 (permission denied) or 14 (unavailable).
+	Code int32 `json:"code"`
+
+	// Message Examples: insufficient_scope: the API key or token lacks the scope analytics:write
+	Message string `json:"message"`
+}
 
 // PageRating defines model for PageRating.
 type PageRating string
@@ -39884,6 +40018,21 @@ type EmailDesignProblemApplicationProblemPlusJSONResponse EmailDesignProblem
 type IngressRejectionJSONResponse IngressRejection
 
 type MigrationFileProblemApplicationProblemPlusJSONResponse MigrationFileProblem
+
+type OtlpStatusResponseHeaders struct {
+	RetryAfter *int
+}
+type OtlpStatusJSONResponse struct {
+	Body OtlpStatus
+
+	Headers OtlpStatusResponseHeaders
+}
+type OtlpStatusApplicationxProtobufResponse struct {
+	Body io.Reader
+
+	Headers       OtlpStatusResponseHeaders
+	ContentLength int64
+}
 
 type ProblemApplicationProblemPlusJSONResponse Problem
 

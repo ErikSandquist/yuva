@@ -240,40 +240,60 @@ func (s *Server) SendAnalyticsRequests(ctx context.Context, req oas.SendAnalytic
 	}
 	count(monitor.ReasonInvalid, len(out.Errors))
 	count(monitor.ReasonLate, late)
-	if len(recs) == 0 {
-		return oas.SendAnalyticsRequests202JSONResponse(out), nil
+	if _, err := s.admitRecords(ctx, m, prop, keyRecordsLimit(p), recs, now, count); err != nil {
+		return nil, err
 	}
+	return oas.SendAnalyticsRequests202JSONResponse(out), nil
+}
+
+func keyRecordsLimit(p principal) string { return "mk:" + p.keyID.String() }
+
+// admitRecords takes the checked records that fit the property's per-minute limit and the one
+// under limitKey (none when empty), then the workspace's monthly cap, and adds them up; the others
+// are counted by their reason. wait is set when the limits refused the first record, so none was
+// taken.
+func (s *Server) admitRecords(ctx context.Context, m *monitorState, prop store.AnalyticsProperty, limitKey string, recs []monitor.Record, now time.Time,
+	count func(reason string, n int)) (wait time.Duration, err error) {
+	if len(recs) == 0 {
+		return 0, nil
+	}
+	perMinute := limit{m.settings.RecordsPerMinute, time.Minute}
 	taken := 0
 	for range recs {
-		if !s.analytics.limits.allow("m:"+prop.ID.String(), limit{m.settings.RecordsPerMinute, time.Minute}, now) ||
-			!s.analytics.limits.allow("mk:"+p.keyID.String(), limit{m.settings.RecordsPerMinute, time.Minute}, now) {
+		ok, w := s.analytics.limits.allowWait("m:"+prop.ID.String(), perMinute, now)
+		if ok && limitKey != "" {
+			ok, w = s.analytics.limits.allowWait(limitKey, perMinute, now)
+		}
+		if !ok {
+			if taken == 0 {
+				wait = w
+			}
 			break
 		}
 		taken++
 	}
 	count(monitor.ReasonRate, len(recs)-taken)
-	recs = recs[:taken]
-	if len(recs) == 0 {
-		return oas.SendAnalyticsRequests202JSONResponse(out), nil
+	if recs = recs[:taken]; len(recs) == 0 {
+		return wait, nil
 	}
 	fit, err := s.takeMonitorUsage(ctx, prop.WorkspaceID, len(recs), now)
 	if err != nil {
-		return nil, err
+		return 0, err
 	}
 	count(monitor.ReasonOverLimit, len(recs)-fit)
 	if recs = recs[:fit]; len(recs) == 0 {
-		return oas.SendAnalyticsRequests202JSONResponse(out), nil
+		return 0, nil
 	}
 	if err := m.agg.Add(ctx, monitor.Property{WorkspaceID: prop.WorkspaceID, ID: prop.ID}, recs); err != nil {
 		if errors.Is(err, monitor.ErrFull) {
 			count(monitor.ReasonBuffer, len(recs))
-			return nil, errMonitorBusy
+			return 0, errMonitorBusy
 		}
 		s.log.ErrorContext(ctx, "monitor records", slog.Any("error", err))
-		return nil, err
+		return 0, err
 	}
 	count(monitor.ReasonAccepted, len(recs))
-	return oas.SendAnalyticsRequests202JSONResponse(out), nil
+	return 0, nil
 }
 
 // recordCountry is the first and only use of a record's address: it is shortened, looked up for

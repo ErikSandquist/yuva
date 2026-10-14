@@ -494,7 +494,7 @@ func (s *Server) analyticsCORS(w http.ResponseWriter, r *http.Request, next http
 		w.Header().Set("Access-Control-Allow-Origin", raw)
 		w.Header().Set("Access-Control-Expose-Headers", "Retry-After")
 	}
-	key := strings.TrimPrefix(r.URL.Path, analyticsPrefix)
+	key, records := strings.CutSuffix(strings.TrimPrefix(r.URL.Path, analyticsPrefix), requestsSuffix)
 	if key == "" || strings.Contains(key, "/") || len(key) > 200 {
 		writeProblem(w, errNotFound)
 		return
@@ -505,12 +505,16 @@ func (s *Server) analyticsCORS(w http.ResponseWriter, r *http.Request, next http
 		writeProblem(w, errInternal)
 		return
 	}
-	if cp == nil || isAPIProperty(cp.prop) {
+	if cp == nil || isAPIProperty(cp.prop) != records {
 		writeProblem(w, errNotFound)
 		return
 	}
 	if raw == "" && r.Method == http.MethodPost && cp.apps() {
 		next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), analyticsPropertyKey, cp)))
+		return
+	}
+	if records {
+		writeProblem(w, errPropertyOrigin)
 		return
 	}
 	host := ""
