@@ -269,7 +269,8 @@ A website linked to an inbox also shows the support its pages lead to, with insi
 [Support and traffic](analytics-support.md).
 
 The same property counts your iOS and Android apps ([Analytics in apps](analytics-apps.md)) and events your backend
-sends ([Server-side events](analytics-server.md)).
+sends ([Server-side events](analytics-server.md)). A property of kind `api` counts the requests of your own API
+instead: [API monitoring](analytics-api.md).
 
 **Channels** sort where a visit came from: Direct, Organic search, Paid search, Social, Paid social,
 E-mail, Referral, **AI assistants** (visits from ChatGPT and other assistants) and Internal.

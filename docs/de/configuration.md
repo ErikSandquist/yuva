@@ -169,6 +169,24 @@ Die Befehle laufen wie unter [Operator-Befehle](operations.md#operator-befehle):
 | `analytics geoip-update` | Lädt die DB-IP-Lite-Datenbank dieses Monats nach `YUVA_GEOIP_DIR`, sofern sie nicht schon dort liegt, und gibt die zu nennende Quelle aus. Mit `file` prüft er Ihre Datei. |
 | `workspace analytics-limit --workspace <ws> <events\|0>` | Setzt die Events pro Monat des Workspaces; `0` hebt das Limit auf. |
 
+## API-Monitoring
+
+[Ihre API im Blick](analytics-api.md). Teil von Analytics: `YUVA_ANALYTICS=off` schaltet es ebenfalls ab.
+
+| Variable | Standard | Bedeutung |
+|---|---|---|
+| `YUVA_MONITOR` | `on` | `off` entfernt API-Properties, ihre Request-Records und Abfragen. |
+| `YUVA_MONITOR_MONTHLY_REQUESTS` | `10000000` bei `YUVA_SIGNUP=open`, sonst `0` | Request-Records, die ein Workspace pro UTC-Monat senden darf; weitere werden bis zum Monatsende nicht gezählt. `0` ist keine Grenze. Pro Workspace überschreibt `yuva workspace monitor-limit` den Wert. |
+| `YUVA_MONITOR_RECORDS_PER_MINUTE` | `600000` | Request-Records, die eine API-Property und ein API-Schlüssel pro Minute senden dürfen; weitere werden nicht gezählt. Mindestens 1. |
+| `YUVA_MONITOR_BUFFER_KEYS` | `200000` | Offene Zeilen, die ein Prozess hält, bevor er sie schreibt (alle 10 Sekunden). Sind so viele offen, antwortet der Endpunkt mit `503` und `Retry-After`. Mindestens 1000. |
+| `YUVA_MONITOR_MINUTE_DAYS` | `8` | Tage, die die Minutenwerte aufbewahrt werden, von 2 bis 31; `time:minute`-Abfragen reichen so weit zurück. |
+
+Der Befehl, ausgeführt wie in [Operator-Befehle](operations.md#operator-befehle):
+
+| Befehl | Was er tut |
+|---|---|
+| `workspace monitor-limit --workspace <ws> <requests\|0>` | Setzt die Request-Records des Workspace pro Monat; `0` entfernt die Grenze. |
+
 ## Chat
 
 | Variable | Standard | Bedeutung |

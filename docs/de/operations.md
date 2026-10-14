@@ -87,6 +87,7 @@ Befehle, die eine ID oder ein Secret ausgeben, schreiben nur das auf stdout.
 | `workspace broadcasts limit --workspace <ws> --daily <n>` | Setzt die Empfänger pro UTC-Tag des Workspaces; `0` hebt das Limit auf. |
 | `workspace broadcasts show --workspace <ws>` | Gibt Status, Limit, 30-Tage-Raten und die letzten Broadcasts aus. |
 | `analytics property create\|list`, `analytics geoip-update`, `workspace analytics-limit` | Websites für [Analytics](analytics.md), seine Standortdatenbank und das monatliche Event-Limit eines Workspaces ([Konfiguration](configuration.md#analytics)). |
+| `workspace monitor-limit` | Monatliche Grenze eines Workspace für Request-Records des [API-Monitorings](analytics-api.md) ([Konfiguration](configuration.md#api-monitoring)). |
 | `person delete --email <address> --yes` | Löscht das Konto einer Person. Abgelehnt, solange sie einziger Inhaber eines Workspaces ist. |
 | `ingest-email --to <address> [--from <address>]` | Stellt eine Rohnachricht von stdin zu ([E-Mail](email.md#beliebiger-mta-yuva-ingest-email)). |
 | `vapid-keys` | Gibt ein neues Web-Push-Schlüsselpaar aus. Braucht keine Datenbank. |

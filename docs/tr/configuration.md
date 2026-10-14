@@ -168,6 +168,24 @@ Komutlar, [Operatör komutları](operations.md#operatör-komutları) bölümünd
 | `analytics geoip-update` | Bu ayın DB-IP Lite veritabanını, orada değilse `YUVA_GEOIP_DIR` içine indirir ve verilmesi gereken atfı yazdırır. `file` ile dosyanızı denetler. |
 | `workspace analytics-limit --workspace <ws> <events\|0>` | Çalışma alanının aylık olay sayısını belirler; `0` sınırı kaldırır. |
 
+## API izleme
+
+[API'nizi izleyin](analytics-api.md). Analitiğin parçasıdır: `YUVA_ANALYTICS=off` bunu da kapatır.
+
+| Değişken | Varsayılan | Anlamı |
+|---|---|---|
+| `YUVA_MONITOR` | `on` | `off`, API özelliklerini, istek kayıtlarını ve sorgularını kaldırır. |
+| `YUVA_MONITOR_MONTHLY_REQUESTS` | `YUVA_SIGNUP=open` ise `10000000`, değilse `0` | Bir çalışma alanının UTC ayı başına gönderebileceği istek kaydı sayısı; fazlası ay bitene kadar sayılmaz. `0` sınır yok demektir. Çalışma alanı başına `yuva workspace monitor-limit` bunu geçersiz kılar. |
+| `YUVA_MONITOR_RECORDS_PER_MINUTE` | `600000` | Bir API özelliğinin ve bir API anahtarının dakikada gönderebileceği istek kaydı sayısı; fazlası sayılmaz. En az 1. |
+| `YUVA_MONITOR_BUFFER_KEYS` | `200000` | Bir işlemin yazmadan önce (10 saniyede bir) tuttuğu açık satır sayısı. O kadar satır açıkken uç nokta `Retry-After` ile `503` yanıtlar. En az 1000. |
+| `YUVA_MONITOR_MINUTE_DAYS` | `8` | Dakika başına sayıların saklandığı gün sayısı, 2 ile 31 arası; `time:minute` sorguları o kadar geriye gider. |
+
+Komut, [Operatör komutları](operations.md#operatör-komutları) gibi çalıştırılır:
+
+| Komut | Ne yapar |
+|---|---|
+| `workspace monitor-limit --workspace <ws> <requests\|0>` | Çalışma alanının aylık istek kaydı sınırını ayarlar; `0` sınırı kaldırır. |
+
 ## Sohbet
 
 | Değişken | Varsayılan | Anlamı |

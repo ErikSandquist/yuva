@@ -271,7 +271,8 @@ Bir gelen kutusuna bağlı web sitesi ayrıca sayfalarının ne kadar destek do�
 raporlarıyla gösterir: [Destek ve trafik](analytics-support.md).
 
 Aynı özellik iOS ve Android uygulamalarınızı ([Uygulamalarda analitik](analytics-apps.md)) ve arka ucunuzun
-gönderdiği olayları ([Sunucu tarafı olaylar](analytics-server.md)) da sayar.
+gönderdiği olayları ([Sunucu tarafı olaylar](analytics-server.md)) da sayar. `api` türündeki bir özellik ise kendi
+API'nizin isteklerini sayar: [API izleme](analytics-api.md).
 
 **Kanallar** bir ziyaretin nereden geldiğini ayırır: Doğrudan, Organik arama, Ücretli arama, Sosyal,
 Ücretli sosyal, E-posta, Yönlendirme, **Yapay zekâ asistanları** (ChatGPT ve benzeri asistanlardan gelen

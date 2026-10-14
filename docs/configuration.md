@@ -166,6 +166,24 @@ The commands, run as in [Operator commands](operations.md#operator-commands):
 | `analytics geoip-update` | Downloads this month's DB-IP Lite database into `YUVA_GEOIP_DIR` unless it is there, and prints the credit to give. With `file`, checks your file. |
 | `workspace analytics-limit --workspace <ws> <events\|0>` | Sets the workspace's events per month; `0` removes the limit. |
 
+## API monitoring
+
+[Watching your API](analytics-api.md). Part of analytics: `YUVA_ANALYTICS=off` turns it off too.
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `YUVA_MONITOR` | `on` | `off` removes API properties and their request records and queries. |
+| `YUVA_MONITOR_MONTHLY_REQUESTS` | `10000000` when `YUVA_SIGNUP=open`, else `0` | Request records one workspace may send per UTC month; more are not counted until the month ends. `0` is no limit. Per workspace, `yuva workspace monitor-limit` overrides it. |
+| `YUVA_MONITOR_RECORDS_PER_MINUTE` | `600000` | Request records one API property, and one API key, may send per minute; more are not counted. At least 1. |
+| `YUVA_MONITOR_BUFFER_KEYS` | `200000` | Open rows one process holds before writing them (every 10 seconds). With that many open, the endpoint answers `503` with `Retry-After`. At least 1000. |
+| `YUVA_MONITOR_MINUTE_DAYS` | `8` | Days the per-minute numbers are kept, from 2 to 31; `time:minute` queries reach back that far. |
+
+The command, run as in [Operator commands](operations.md#operator-commands):
+
+| Command | What it does |
+|---|---|
+| `workspace monitor-limit --workspace <ws> <requests\|0>` | Sets the workspace's request records per month; `0` removes the limit. |
+
 ## Chat
 
 | Variable | Default | Meaning |

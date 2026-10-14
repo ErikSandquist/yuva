@@ -114,7 +114,7 @@ Ein Aufruf ohne den nötigen Scope antwortet mit `403 insufficient_scope`.
 | `workspace:manage` | Workspace-Einstellungen und Nutzung |
 | `migrations:manage` | [Ein Postfach zu Yuva umziehen](migrate.md): erkennen, anlegen, verbinden, scannen, starten, abschließen, importierten Verlauf entfernen. Nie für Agents oder auf Posteingänge beschränkte Keys. |
 | `analytics:read` | [Analytics](analytics.md#api): Properties, Zahlen, Realtime, Health |
-| `analytics:write` | [Serverseitige Events](analytics-server.md) senden (`POST /v1/analytics/properties/{propertyId}/events`). Nur API-Keys, OAuth-Clients nie angeboten. |
+| `analytics:write` | [Serverseitige Events](analytics-server.md) senden (`POST /v1/analytics/properties/{propertyId}/events`) und [API-Request-Records](analytics-api.md) (`POST /v1/analytics/properties/{propertyId}/requests`). Nur API-Keys, OAuth-Clients nie angeboten. |
 | `analytics:manage` | Properties anlegen, ändern und löschen, ihre Schlüssel erneuern, ihre Daten löschen. Nie für Agents oder auf Posteingänge beschränkte Keys. |
 | `feedback:write` | `POST /v1/feedback` |
 

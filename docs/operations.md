@@ -83,6 +83,7 @@ Commands that print an id or a secret write only that to stdout.
 | `workspace broadcasts limit --workspace <ws> --daily <n>` | Sets the workspace's recipients per UTC day; `0` removes the limit. |
 | `workspace broadcasts show --workspace <ws>` | Prints its status, limit, 30-day rates and latest broadcasts. |
 | `analytics property create\|list`, `analytics geoip-update`, `workspace analytics-limit` | Websites for [Analytics](analytics.md), its location database and a workspace's monthly event limit ([Configuration](configuration.md#analytics)). |
+| `workspace monitor-limit` | A workspace's monthly limit of [API monitoring](analytics-api.md) request records ([Configuration](configuration.md#api-monitoring)). |
 | `person delete --email <address> --yes` | Deletes a person's account. Refused while they are a workspace's only owner. |
 | `ingest-email --to <address> [--from <address>]` | Delivers a raw message from stdin ([E-mail](email.md#any-mta-yuva-ingest-email)). |
 | `vapid-keys` | Prints a new Web Push key pair. Needs no database. |

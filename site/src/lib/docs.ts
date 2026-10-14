@@ -25,6 +25,7 @@ const groups = [
       "analytics-events",
       "analytics-apps",
       "analytics-server",
+      "analytics-api",
       "analytics-sharing",
       "analytics-support",
       "analytics-consent",

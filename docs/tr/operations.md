@@ -84,6 +84,7 @@ Bir id ya da gizli anahtar yazdıran komutlar stdout'a yalnızca onu yazar.
 | `workspace broadcasts limit --workspace <ws> --daily <n>` | Çalışma alanının UTC günü başına alıcı sayısını belirler; `0` sınırı kaldırır. |
 | `workspace broadcasts show --workspace <ws>` | Durumunu, sınırını, 30 günlük oranlarını ve son bültenlerini yazdırır. |
 | `analytics property create\|list`, `analytics geoip-update`, `workspace analytics-limit` | [Analitik](analytics.md) için web siteleri, konum veritabanı ve bir çalışma alanının aylık olay sınırı ([Yapılandırma](configuration.md#analitik)). |
+| `workspace monitor-limit` | Bir çalışma alanının [API izleme](analytics-api.md) istek kaydı aylık sınırı ([Yapılandırma](configuration.md#api-izleme)). |
 | `person delete --email <address> --yes` | Bir kullanıcının hesabını siler. Bir çalışma alanının tek sahibiyse reddedilir. |
 | `ingest-email --to <address> [--from <address>]` | stdin'den gelen ham bir mesajı teslim eder ([E-posta](email.md#herhangi-bir-mta-yuva-ingest-email)). |
 | `vapid-keys` | Yeni bir Web Push anahtar çifti yazdırır. Veritabanı gerektirmez. |

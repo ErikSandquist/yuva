@@ -270,7 +270,8 @@ Eine mit einem Posteingang verknüpfte Website zeigt außerdem, wie viel Support
 Alerts und E-Mail-Berichten: [Support und Traffic](analytics-support.md).
 
 Dieselbe Property zählt auch Ihre iOS- und Android-Apps ([Analytics in Apps](analytics-apps.md)) und die Events,
-die Ihr Backend sendet ([Serverseitige Events](analytics-server.md)).
+die Ihr Backend sendet ([Serverseitige Events](analytics-server.md)). Eine Property der Art `api` zählt stattdessen
+die Requests Ihrer eigenen API: [API-Monitoring](analytics-api.md).
 
 **Channels** ordnen ein, woher ein Besuch kam: Direct, Organic search, Paid search, Social, Paid social,
 E-mail, Referral, **AI assistants** (Besuche von ChatGPT und anderen Assistenten) und Internal.
