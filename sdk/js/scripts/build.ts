@@ -67,6 +67,7 @@ const entries = [
   "src/analytics.ts",
   "src/react.ts",
   "src/api.ts",
+  "src/server.ts",
 ]
 check(
   await Bun.build({
@@ -124,6 +125,7 @@ for (const name of [
   "esm/analytics.js",
   "esm/react.js",
   "esm/api.js",
+  "esm/server.js",
   "esm/nuxt/module.js",
   "esm/nuxt/runtime/components.js",
   "esm/nuxt/runtime/analytics.js",

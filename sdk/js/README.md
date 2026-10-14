@@ -12,6 +12,7 @@ JavaScript SDK for [Yuva](https://github.com/productdevbook/yuva), open-source c
 | `useyuva/react` | `YuvaProvider`, `useConversations`, `useMessages`, `YuvaAnalytics`, `useYuvaAnalytics`. React 18+ is an optional peer. |
 | `useyuva/nuxt` | A Nuxt module: `YuvaChat`, `YuvaPageFeedback`, `YuvaDiscussions` and `YuvaSubscribe` components, configured once in `nuxt.config`. |
 | `useyuva/api` | A typed `/v1` client for backends (API key), generated from the OpenAPI contract. |
+| `useyuva/server` | `signIdentityToken`, `verifyWebhook` and `createAnalytics` for backends. Web Crypto and `fetch` only: Node 22+, Bun, Deno, workers, srvx. |
 
 ```sh
 npm install useyuva
@@ -317,6 +318,99 @@ const { data, error } = await api.GET("/v1/inboxes");
 
 Built on [openapi-fetch](https://openapi-ts.dev/openapi-fetch/); paths, parameters and bodies are
 typed from the contract. Keep API keys on the server.
+
+## Server
+
+For your backend: sign identity tokens, verify webhooks and send server-side analytics events. It
+uses only Web Crypto, `Request` and `fetch`, so it runs on Node, Bun, Deno and workers, and directly
+under [srvx](https://srvx.h3.dev):
+
+```ts
+import { serve } from "srvx";
+import { createAnalytics, signIdentityToken, verifyWebhook, WebhookVerificationError } from "useyuva/server";
+
+const analytics = createAnalytics({
+  server: "https://support.example.com",
+  apiKey: process.env.YUVA_API_KEY!, // analytics:write
+  propertyId: process.env.YUVA_ANALYTICS_PROPERTY!,
+  onError: (error) => console.warn("yuva analytics", error),
+});
+
+serve({
+  async fetch(request) {
+    const { pathname } = new URL(request.url);
+    if (pathname === "/yuva-token") {
+      const user = await currentUser(request); // your session
+      const token = await signIdentityToken(process.env.YUVA_IDENTITY_SECRET!, {
+        subject: user.id, // required: your user id
+        email: user.email,
+        emailVerified: user.emailConfirmed, // only then does Yuva match the address to a contact
+        name: user.name,
+        attrs: { plan: user.plan },
+      });
+      return Response.json({ token });
+    }
+    if (pathname === "/webhooks/yuva" && request.method === "POST") {
+      try {
+        const event = await verifyWebhook(process.env.YUVA_WEBHOOK_SECRET!, request);
+        // Ignore a webhook-id you have already handled; Yuva retries until it gets a 2xx.
+        if (event.type === "message.created" && !event.data.contact?.online) {
+          // send your push notification
+        }
+        return new Response(null, { status: 204 });
+      } catch (error) {
+        if (error instanceof WebhookVerificationError) return new Response("bad signature", { status: 401 });
+        throw error;
+      }
+    }
+    if (pathname === "/signup" && request.method === "POST") {
+      // ...
+      analytics.track(request, { name: "Signup", props: { plan: "pro" }, revenue: { amount: "29.90", currency: "EUR" } });
+      request.waitUntil?.(analytics.flush());
+      return Response.redirect(new URL("/welcome", request.url), 303);
+    }
+    return new Response("Not found", { status: 404 });
+  },
+});
+```
+
+`signIdentityToken(secret, claims)` returns the HS256 token the widget and the mobile SDKs exchange
+for a contact session, signed with the inbox's identity secret (shown once when the inbox is created
+or its secret is rotated). Claims: `subject` (1 to 200 characters), `email`, `emailVerified`, `name`,
+`locale`, `attrs` (at most 16 KiB as JSON), `id` (the `jti`: Yuva then accepts the token only once),
+`issuedAt` and `ttl` in seconds (300 by default, at most 600). Sign a new one whenever the page or
+app starts a session.
+
+`verifyWebhook(secret, request, { tolerance })` checks the [Standard Webhooks](https://www.standardwebhooks.com)
+signature over the raw body with the endpoint's `whsec_…` secret and returns the parsed event, typed
+by its `type`. It throws a `WebhookVerificationError` (`code`: `invalid_secret`, `missing_headers`,
+`invalid_timestamp`, `timestamp_too_old`, `timestamp_too_new`, `invalid_signature`) when no
+signature matches or `webhook-timestamp` is more than `tolerance` seconds (300 by default) from now.
+During a secret rotation either secret verifies. When the body is already read,
+`verifyWebhookBody(secret, headers, bytes, options)` does the same; `signWebhook(secret, id, time, body)`
+signs a request for testing a handler.
+
+`createAnalytics({ server, apiKey, propertyId })` reports events only your backend sees, such as a
+signup or a payment, to an analytics property with an API key that has the `analytics:write` scope.
+`track(request, event)` forwards the visitor's address, `User-Agent`, `Sec-CH-UA-Platform`,
+`Sec-CH-UA-Mobile` and `Accept-Language` (never stored by Yuva), so the event counts as the same
+visitor as their browser that day, and takes the URL and referrer from the request when the event
+leaves them out; requests with `DNT: 1` or `Sec-GPC: 1` send nothing. `send(event)` queues an event
+as it is, such as one with your own `visitorKey` (a session id, never an e-mail address) instead of
+`ip` and `userAgent`. Both throw for an event without a name or URL and after `close()`.
+
+The visitor's address is read only from `request.ip`, which srvx sets from the connection. Behind a
+proxy, or on a runtime that does not set it, pass `clientIP: (request) => …` returning the address
+your proxy reports, such as `request.headers.get("cf-connecting-ip")` on Cloudflare Workers; a
+forwarded header is trustworthy only when your own proxy sets it.
+
+Events are sent in batches of up to 100 every `flushInterval` (5000 ms) or as soon as a batch is
+full, holding at most `queueSize` (10,000) events. Network errors, `429` and `5xx` are retried
+`maxRetries` times (5) with a backoff from `minBackoff` (1000 ms) doubling up to a minute, never
+sooner than `Retry-After`. Dropped events, refused batches (`AnalyticsBatchError`) and events the
+server left out (`AnalyticsEventError`) go to `onError`. The timers never keep a process alive:
+`flush()` sends what is queued and resolves to the last batch error, if any, without rejecting, so
+it can go to `waitUntil`; `close()` flushes and stops the client before the process exits.
 
 ## License
 
