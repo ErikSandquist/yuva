@@ -2493,6 +2493,36 @@ func (e HealthStatus) Valid() bool {
 	}
 }
 
+// Defines values for HomeSetupItemId.
+const (
+	HomeSetupItemIdAnalytics  HomeSetupItemId = "analytics"
+	HomeSetupItemIdApp        HomeSetupItemId = "app"
+	HomeSetupItemIdChat       HomeSetupItemId = "chat"
+	HomeSetupItemIdDocs       HomeSetupItemId = "docs"
+	HomeSetupItemIdEmail      HomeSetupItemId = "email"
+	HomeSetupItemIdNewsletter HomeSetupItemId = "newsletter"
+)
+
+// Valid indicates whether the value is a known member of the HomeSetupItemId enum.
+func (e HomeSetupItemId) Valid() bool {
+	switch e {
+	case HomeSetupItemIdAnalytics:
+		return true
+	case HomeSetupItemIdApp:
+		return true
+	case HomeSetupItemIdChat:
+		return true
+	case HomeSetupItemIdDocs:
+		return true
+	case HomeSetupItemIdEmail:
+		return true
+	case HomeSetupItemIdNewsletter:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for HostedLimit.
 const (
 	LimitMigrationMaxActive      HostedLimit = "YUVA_MIGRATION_MAX_ACTIVE"
@@ -10059,6 +10089,122 @@ type Health struct {
 // HealthStatus defines model for Health.Status.
 type HealthStatus string
 
+// Home The Home blocks; a block the member may not see is absent.
+type Home struct {
+	Analytics  *HomeAnalytics  `json:"analytics,omitempty"`
+	Broadcasts *HomeBroadcasts `json:"broadcasts,omitempty"`
+	Inbox      HomeInbox       `json:"inbox"`
+	Setup      *HomeSetup      `json:"setup,omitempty"`
+}
+
+// HomeAnalytics defines model for HomeAnalytics.
+type HomeAnalytics struct {
+	Properties []HomeProperty `json:"properties"`
+}
+
+// HomeBroadcast The broadcast that finished sending last; absent when none has.
+type HomeBroadcast struct {
+	// ClickTracking Whether links were tracked; `clicked` stays `0` without it.
+	ClickTracking bool      `json:"click_tracking"`
+	Clicked       int64     `json:"clicked"`
+	Id            uuid.UUID `json:"id"`
+	InboxId       uuid.UUID `json:"inbox_id"`
+	Name          string    `json:"name"`
+	Recipients    int64     `json:"recipients"`
+	Replied       int64     `json:"replied"`
+	Sent          int64     `json:"sent"`
+
+	// SentAt When sending finished.
+	SentAt  time.Time `json:"sent_at"`
+	Subject string    `json:"subject"`
+}
+
+// HomeBroadcasts defines model for HomeBroadcasts.
+type HomeBroadcasts struct {
+	// LastSent The broadcast that finished sending last; absent when none has.
+	LastSent *HomeBroadcast `json:"last_sent,omitempty"`
+}
+
+// HomeContact defines model for HomeContact.
+type HomeContact struct {
+	// Email The contact's first address, when it has one.
+	Email *openapi_types.Email `json:"email,omitempty"`
+	Id    uuid.UUID            `json:"id"`
+
+	// Name Empty when the contact has no name.
+	Name string `json:"name"`
+}
+
+// HomeDay defines model for HomeDay.
+type HomeDay struct {
+	Day      openapi_types.Date `json:"day"`
+	Visitors int64              `json:"visitors"`
+}
+
+// HomeInbox defines model for HomeInbox.
+type HomeInbox struct {
+	// OldestWaiting The open conversation that has waited longest; absent when none waits.
+	OldestWaiting *HomeWaitingConversation `json:"oldest_waiting,omitempty"`
+
+	// Open Open conversations, spam left out (`all` in the conversation counts).
+	Open       int64 `json:"open"`
+	Unassigned int64 `json:"unassigned"`
+
+	// Waiting Open conversations whose contact waits for a reply.
+	Waiting int64 `json:"waiting"`
+}
+
+// HomeProperty defines model for HomeProperty.
+type HomeProperty struct {
+	// Days Visitors per local day, the last seven days, oldest first; the last one is today.
+	Days      []HomeDay           `json:"days"`
+	Domains   []AnalyticsDomain   `json:"domains"`
+	Id        uuid.UUID           `json:"id"`
+	InboxId   *uuid.UUID          `json:"inbox_id,omitempty"`
+	Name      string              `json:"name"`
+	Platforms []AnalyticsPlatform `json:"platforms"`
+
+	// RealtimeVisitors Distinct visitors in the last 30 minutes.
+	RealtimeVisitors int64 `json:"realtime_visitors"`
+
+	// Timezone IANA time zone that defines the property's day.
+	Timezone string `json:"timezone"`
+
+	// VisitorsToday Distinct visitors so far today, in the property's time zone.
+	VisitorsToday int64 `json:"visitors_today"`
+}
+
+// HomeSetup defines model for HomeSetup.
+type HomeSetup struct {
+	// Items One item per part of the setup hub, in this order: `chat` (live chat channels),
+	// `email` (e-mail channels), `app` (app channels), `docs` (chat channels that
+	// documentation pages have used: ratings, feedback or discussions), `analytics`
+	// (properties; only when the server collects analytics) and `newsletter` (mailing
+	// lists that are not archived). An item is `done` when its `count` is above zero.
+	Items []HomeSetupItem `json:"items"`
+}
+
+// HomeSetupItem defines model for HomeSetupItem.
+type HomeSetupItem struct {
+	Count int64           `json:"count"`
+	Done  bool            `json:"done"`
+	Id    HomeSetupItemId `json:"id"`
+}
+
+// HomeSetupItemId defines model for HomeSetupItem.Id.
+type HomeSetupItemId string
+
+// HomeWaitingConversation The open conversation that has waited longest; absent when none waits.
+type HomeWaitingConversation struct {
+	Contact HomeContact `json:"contact"`
+	Id      uuid.UUID   `json:"id"`
+	InboxId uuid.UUID   `json:"inbox_id"`
+
+	// Since The contact's first message after the last reply.
+	Since   time.Time `json:"since"`
+	Subject string    `json:"subject"`
+}
+
 // HostedLimit `hosted_limit` only: the server limit that was reached, named by the operator's setting.
 // `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
 // the workspace already runs as many migrations at a time as the server allows;
@@ -15215,6 +15361,12 @@ type GetLatestEventParams struct {
 type CreateFeedbackParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+}
+
+// GetHomeParams defines parameters for GetHome.
+type GetHomeParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
 // ListInboxesParams defines parameters for ListInboxes.
@@ -23589,6 +23741,30 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /v1/feedback (the `CreateFeedback` operationId).
 	CreateFeedback(ctx context.Context, params *CreateFeedbackParams, body CreateFeedbackJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetHome Everything the workspace has today, in one answer
+	//
+	// The panel's Home page in one request, for the calling member and only what they may see.
+	// Member sessions only (API keys and OAuth tokens answer `403 member_session_required`).
+	// Every block is read from the counters and rollups the server keeps; none of it spends the
+	// workspace's analytics query slots.
+	//
+	// - `inbox` (every member): open, unassigned and waiting conversations in the inboxes the
+	//   member can see, counted as `GET /v1/conversations/counts` counts them (spam left out),
+	//   and the conversation that has waited longest. A conversation waits while the contact's
+	//   last message has no reply from a member or bot after it; `since` is the contact's first
+	//   message after the last reply.
+	// - `analytics` (when the server collects analytics): the properties the member can see, as
+	//   `GET /v1/analytics/properties` lists them, each with visitors today, visitors in the last
+	//   30 minutes (as `GET /v1/analytics/properties/{id}/realtime` counts them) and visitors per
+	//   local day for the last seven days. Left out for an agent who can see no property.
+	// - `broadcasts` (when the server sends broadcasts): the last sent broadcast of the inboxes
+	//   the member can see. There is no open tracking, so there are no opens.
+	// - `setup` (owners and admins): the setup checklist, built from the same state as the MCP
+	//   `get_setup_state` tool.
+	//
+	// Corresponds with GET /v1/home (the `GetHome` operationId).
+	GetHome(ctx context.Context, params *GetHomeParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListInboxes List inboxes
 	//
@@ -32080,6 +32256,40 @@ func (c *Client) CreateFeedbackWithBody(ctx context.Context, params *CreateFeedb
 // Corresponds with POST /v1/feedback (the `CreateFeedback` operationId).
 func (c *Client) CreateFeedback(ctx context.Context, params *CreateFeedbackParams, body CreateFeedbackJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateFeedbackRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetHome Everything the workspace has today, in one answer
+//
+// The panel's Home page in one request, for the calling member and only what they may see.
+// Member sessions only (API keys and OAuth tokens answer `403 member_session_required`).
+// Every block is read from the counters and rollups the server keeps; none of it spends the
+// workspace's analytics query slots.
+//
+//   - `inbox` (every member): open, unassigned and waiting conversations in the inboxes the
+//     member can see, counted as `GET /v1/conversations/counts` counts them (spam left out),
+//     and the conversation that has waited longest. A conversation waits while the contact's
+//     last message has no reply from a member or bot after it; `since` is the contact's first
+//     message after the last reply.
+//   - `analytics` (when the server collects analytics): the properties the member can see, as
+//     `GET /v1/analytics/properties` lists them, each with visitors today, visitors in the last
+//     30 minutes (as `GET /v1/analytics/properties/{id}/realtime` counts them) and visitors per
+//     local day for the last seven days. Left out for an agent who can see no property.
+//   - `broadcasts` (when the server sends broadcasts): the last sent broadcast of the inboxes
+//     the member can see. There is no open tracking, so there are no opens.
+//   - `setup` (owners and admins): the setup checklist, built from the same state as the MCP
+//     `get_setup_state` tool.
+//
+// Corresponds with GET /v1/home (the `GetHome` operationId).
+func (c *Client) GetHome(ctx context.Context, params *GetHomeParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetHomeRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -47602,6 +47812,48 @@ func NewCreateFeedbackRequestWithBody(server string, params *CreateFeedbackParam
 	return req, nil
 }
 
+// NewGetHomeRequest constructs an http.Request for the GetHome method
+func NewGetHomeRequest(server string, params *GetHomeParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/home")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewListInboxesRequest constructs an http.Request for the ListInboxes method
 func NewListInboxesRequest(server string, params *ListInboxesParams) (*http.Request, error) {
 	var err error
@@ -58056,6 +58308,32 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /v1/feedback (the `CreateFeedback` operationId).
 	CreateFeedbackWithResponse(ctx context.Context, params *CreateFeedbackParams, body CreateFeedbackJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateFeedbackResponse, error)
+
+	// GetHomeWithResponse Everything the workspace has today, in one answer
+	//
+	// The panel's Home page in one request, for the calling member and only what they may see.
+	// Member sessions only (API keys and OAuth tokens answer `403 member_session_required`).
+	// Every block is read from the counters and rollups the server keeps; none of it spends the
+	// workspace's analytics query slots.
+	//
+	// - `inbox` (every member): open, unassigned and waiting conversations in the inboxes the
+	//   member can see, counted as `GET /v1/conversations/counts` counts them (spam left out),
+	//   and the conversation that has waited longest. A conversation waits while the contact's
+	//   last message has no reply from a member or bot after it; `since` is the contact's first
+	//   message after the last reply.
+	// - `analytics` (when the server collects analytics): the properties the member can see, as
+	//   `GET /v1/analytics/properties` lists them, each with visitors today, visitors in the last
+	//   30 minutes (as `GET /v1/analytics/properties/{id}/realtime` counts them) and visitors per
+	//   local day for the last seven days. Left out for an agent who can see no property.
+	// - `broadcasts` (when the server sends broadcasts): the last sent broadcast of the inboxes
+	//   the member can see. There is no open tracking, so there are no opens.
+	// - `setup` (owners and admins): the setup checklist, built from the same state as the MCP
+	//   `get_setup_state` tool.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/home (the `GetHome` operationId).
+	GetHomeWithResponse(ctx context.Context, params *GetHomeParams, reqEditors ...RequestEditorFn) (*GetHomeResponse, error)
 
 	// ListInboxesWithResponse List inboxes
 	//
@@ -73330,6 +73608,61 @@ func (r CreateFeedbackResponse) ContentType() string {
 	return ""
 }
 
+type GetHomeResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Home
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetHomeResponse) GetJSON200() *Home {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetHomeResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetHomeResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r GetHomeResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetHomeResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetHomeResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetHomeResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ListInboxesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -86324,6 +86657,38 @@ func (c *ClientWithResponses) CreateFeedbackWithResponse(ctx context.Context, pa
 		return nil, err
 	}
 	return ParseCreateFeedbackResponse(rsp)
+}
+
+// GetHomeWithResponse Everything the workspace has today, in one answer
+//
+// The panel's Home page in one request, for the calling member and only what they may see.
+// Member sessions only (API keys and OAuth tokens answer `403 member_session_required`).
+// Every block is read from the counters and rollups the server keeps; none of it spends the
+// workspace's analytics query slots.
+//
+//   - `inbox` (every member): open, unassigned and waiting conversations in the inboxes the
+//     member can see, counted as `GET /v1/conversations/counts` counts them (spam left out),
+//     and the conversation that has waited longest. A conversation waits while the contact's
+//     last message has no reply from a member or bot after it; `since` is the contact's first
+//     message after the last reply.
+//   - `analytics` (when the server collects analytics): the properties the member can see, as
+//     `GET /v1/analytics/properties` lists them, each with visitors today, visitors in the last
+//     30 minutes (as `GET /v1/analytics/properties/{id}/realtime` counts them) and visitors per
+//     local day for the last seven days. Left out for an agent who can see no property.
+//   - `broadcasts` (when the server sends broadcasts): the last sent broadcast of the inboxes
+//     the member can see. There is no open tracking, so there are no opens.
+//   - `setup` (owners and admins): the setup checklist, built from the same state as the MCP
+//     `get_setup_state` tool.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/home (the `GetHome` operationId).
+func (c *ClientWithResponses) GetHomeWithResponse(ctx context.Context, params *GetHomeParams, reqEditors ...RequestEditorFn) (*GetHomeResponse, error) {
+	rsp, err := c.GetHome(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetHomeResponse(rsp)
 }
 
 // ListInboxesWithResponse List inboxes
@@ -99687,6 +100052,46 @@ func ParseCreateFeedbackResponse(rsp *http.Response) (*CreateFeedbackResponse, e
 			return nil, err
 		}
 		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetHomeResponse parses an HTTP response from a GetHomeWithResponse call
+func ParseGetHomeResponse(rsp *http.Response) (*GetHomeResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetHomeResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Home
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
 
 	}
 

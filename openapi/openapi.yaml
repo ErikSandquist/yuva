@@ -2797,6 +2797,43 @@ paths:
           $ref: "#/components/responses/Problem"
         "403":
           $ref: "#/components/responses/Problem"
+  /v1/home:
+    get:
+      operationId: getHome
+      summary: Everything the workspace has today, in one answer
+      description: |
+        The panel's Home page in one request, for the calling member and only what they may see.
+        Member sessions only (API keys and OAuth tokens answer `403 member_session_required`).
+        Every block is read from the counters and rollups the server keeps; none of it spends the
+        workspace's analytics query slots.
+
+        - `inbox` (every member): open, unassigned and waiting conversations in the inboxes the
+          member can see, counted as `GET /v1/conversations/counts` counts them (spam left out),
+          and the conversation that has waited longest. A conversation waits while the contact's
+          last message has no reply from a member or bot after it; `since` is the contact's first
+          message after the last reply.
+        - `analytics` (when the server collects analytics): the properties the member can see, as
+          `GET /v1/analytics/properties` lists them, each with visitors today, visitors in the last
+          30 minutes (as `GET /v1/analytics/properties/{id}/realtime` counts them) and visitors per
+          local day for the last seven days. Left out for an agent who can see no property.
+        - `broadcasts` (when the server sends broadcasts): the last sent broadcast of the inboxes
+          the member can see. There is no open tracking, so there are no opens.
+        - `setup` (owners and admins): the setup checklist, built from the same state as the MCP
+          `get_setup_state` tool.
+      tags: [workspace]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      responses:
+        "200":
+          description: The Home blocks the member may see.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Home"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
   /v1/stats:
     get:
       operationId: getStats
@@ -14450,6 +14487,188 @@ components:
           description: Per label id.
           items:
             $ref: "#/components/schemas/CountByID"
+    Home:
+      type: object
+      description: The Home blocks; a block the member may not see is absent.
+      required: [inbox]
+      properties:
+        inbox:
+          $ref: "#/components/schemas/HomeInbox"
+        analytics:
+          $ref: "#/components/schemas/HomeAnalytics"
+        broadcasts:
+          $ref: "#/components/schemas/HomeBroadcasts"
+        setup:
+          $ref: "#/components/schemas/HomeSetup"
+    HomeInbox:
+      type: object
+      required: [open, unassigned, waiting]
+      properties:
+        open:
+          type: integer
+          format: int64
+          description: Open conversations, spam left out (`all` in the conversation counts).
+        unassigned:
+          type: integer
+          format: int64
+        waiting:
+          type: integer
+          format: int64
+          description: Open conversations whose contact waits for a reply.
+        oldest_waiting:
+          $ref: "#/components/schemas/HomeWaitingConversation"
+    HomeWaitingConversation:
+      type: object
+      description: The open conversation that has waited longest; absent when none waits.
+      required: [id, inbox_id, subject, contact, since]
+      properties:
+        id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        subject:
+          type: string
+        contact:
+          $ref: "#/components/schemas/HomeContact"
+        since:
+          type: string
+          format: date-time
+          description: The contact's first message after the last reply.
+    HomeContact:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          description: Empty when the contact has no name.
+        email:
+          type: string
+          format: email
+          description: The contact's first address, when it has one.
+    HomeAnalytics:
+      type: object
+      required: [properties]
+      properties:
+        properties:
+          type: array
+          items:
+            $ref: "#/components/schemas/HomeProperty"
+    HomeProperty:
+      type: object
+      required: [id, name, domains, platforms, timezone, visitors_today, realtime_visitors, days]
+      properties:
+        id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        domains:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsDomain"
+        platforms:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsPlatform"
+        timezone:
+          type: string
+          description: IANA time zone that defines the property's day.
+        visitors_today:
+          type: integer
+          format: int64
+          description: Distinct visitors so far today, in the property's time zone.
+        realtime_visitors:
+          type: integer
+          format: int64
+          description: Distinct visitors in the last 30 minutes.
+        days:
+          type: array
+          description: Visitors per local day, the last seven days, oldest first; the last one is today.
+          items:
+            $ref: "#/components/schemas/HomeDay"
+    HomeDay:
+      type: object
+      required: [day, visitors]
+      properties:
+        day:
+          type: string
+          format: date
+        visitors:
+          type: integer
+          format: int64
+    HomeBroadcasts:
+      type: object
+      properties:
+        last_sent:
+          $ref: "#/components/schemas/HomeBroadcast"
+    HomeBroadcast:
+      type: object
+      description: The broadcast that finished sending last; absent when none has.
+      required: [id, inbox_id, name, subject, sent_at, click_tracking, recipients, sent, clicked, replied]
+      properties:
+        id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        subject:
+          type: string
+        sent_at:
+          type: string
+          format: date-time
+          description: When sending finished.
+        click_tracking:
+          type: boolean
+          description: Whether links were tracked; `clicked` stays `0` without it.
+        recipients:
+          type: integer
+          format: int64
+        sent:
+          type: integer
+          format: int64
+        clicked:
+          type: integer
+          format: int64
+        replied:
+          type: integer
+          format: int64
+    HomeSetup:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          description: |
+            One item per part of the setup hub, in this order: `chat` (live chat channels),
+            `email` (e-mail channels), `app` (app channels), `docs` (chat channels that
+            documentation pages have used: ratings, feedback or discussions), `analytics`
+            (properties; only when the server collects analytics) and `newsletter` (mailing
+            lists that are not archived). An item is `done` when its `count` is above zero.
+          items:
+            $ref: "#/components/schemas/HomeSetupItem"
+    HomeSetupItem:
+      type: object
+      required: [id, done, count]
+      properties:
+        id:
+          type: string
+          enum: [chat, email, app, docs, analytics, newsletter]
+        done:
+          type: boolean
+        count:
+          type: integer
+          format: int64
     ConversationReadCreate:
       type: object
       properties:

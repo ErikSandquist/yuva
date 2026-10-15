@@ -171,6 +171,8 @@ type Store interface {
 	Query(ctx context.Context, q Query) (Result, error)
 	// Realtime is a property's last 30 minutes.
 	Realtime(ctx context.Context, workspaceID, propertyID uuid.UUID, loc *time.Location, now time.Time) (Realtime, error)
+	// Home is each property's visitors per day of the last week and in the realtime window.
+	Home(ctx context.Context, workspaceID uuid.UUID, props []HomeProperty, rawFrom, now time.Time) (map[uuid.UUID]HomeVisitors, error)
 	// Funnel counts the visitors and visits that went through the steps in order within a visit.
 	Funnel(ctx context.Context, workspaceID, propertyID uuid.UUID, from, to time.Time, steps []Goal) ([]FunnelStep, error)
 	// RawEvents calls fn with every event of a property's day that is not a bot's, in time order.

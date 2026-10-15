@@ -13,7 +13,6 @@ import (
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 
-	"github.com/productdevbook/yuva/api/internal/oas"
 	"github.com/productdevbook/yuva/api/internal/store"
 )
 
@@ -155,50 +154,53 @@ func (c *mcpCall) setupState(ctx context.Context) (setupStateOut, error) {
 		out.NotVisible = append(out.NotVisible, what)
 		return true
 	}
-	if !hidden("ListInboxes", "inboxes") {
-		res, err := c.s.ListInboxes(ctx, oas.ListInboxesRequestObject{})
-		if err != nil {
-			return out, err
-		}
-		channels := !hidden("ListChannels", "channels")
-		for _, in := range res.(oas.ListInboxes200JSONResponse).Items {
-			si := setupInbox{ID: in.Id, Name: in.Name}
-			if channels {
-				chs, err := c.s.ListChannels(ctx, oas.ListChannelsRequestObject{InboxId: in.Id})
-				if err != nil {
-					return out, err
-				}
-				for _, ch := range chs.(oas.ListChannels200JSONResponse).Items {
-					si.Channels = append(si.Channels, channelOut(ch))
-				}
-			}
-			out.Inboxes = append(out.Inboxes, si)
+	var want setupWant
+	if want.inboxes = !hidden("ListInboxes", "inboxes"); want.inboxes {
+		want.channels = !hidden("ListChannels", "channels")
+	}
+	want.properties = c.s.analytics != nil && !hidden("ListAnalyticsProperties", "analytics properties")
+	want.lists = !hidden("ListMailingLists", "mailing lists")
+	parts, err := c.s.setupParts(ctx, c.p, want)
+	if err != nil {
+		return out, err
+	}
+	var ids []uuid.UUID
+	for _, chs := range parts.channels {
+		for _, ch := range chs {
+			ids = append(ids, ch.ID)
 		}
 	}
-	if c.s.analytics != nil && !hidden("ListAnalyticsProperties", "analytics properties") {
-		res, err := c.s.ListAnalyticsProperties(ctx, oas.ListAnalyticsPropertiesRequestObject{})
-		if err != nil {
+	var emails map[uuid.UUID]store.EmailChannel
+	var chats map[uuid.UUID]store.ChatChannel
+	if want.channels {
+		if emails, err = emailChannelsByID(ctx, c.s.st.Queries, c.p.workspaceID, ids); err != nil {
 			return out, err
 		}
-		for _, p := range res.(oas.ListAnalyticsProperties200JSONResponse).Items {
-			sp := setupProperty{ID: p.Id, Name: p.Name, Domains: []string{}, Platforms: []string{}, InboxID: p.InboxId}
-			for _, d := range p.Domains {
-				sp.Domains = append(sp.Domains, string(d))
-			}
-			for _, pl := range p.Platforms {
-				sp.Platforms = append(sp.Platforms, string(pl))
-			}
-			out.Properties = append(out.Properties, sp)
+		if chats, err = chatChannelsByID(ctx, c.s.st.Queries, c.p.workspaceID, ids); err != nil {
+			return out, err
 		}
 	}
-	if !hidden("ListMailingLists", "mailing lists") {
-		res, err := c.s.ListMailingLists(ctx, oas.ListMailingListsRequestObject{Params: oas.ListMailingListsParams{Limit: new(oas.Limit(100))}})
-		if err != nil {
-			return out, err
+	for _, in := range parts.inboxes {
+		si := setupInbox{ID: in.ID, Name: in.Name}
+		for _, ch := range parts.channels[in.ID] {
+			var e *store.EmailChannel
+			if v, ok := emails[ch.ID]; ok {
+				e = &v
+			}
+			var chat *store.ChatChannel
+			if v, ok := chats[ch.ID]; ok {
+				chat = &v
+			}
+			row := store.Channel{ID: ch.ID, WorkspaceID: c.p.workspaceID, InboxID: in.ID, Kind: ch.Kind, Name: ch.Name, CreatedAt: ch.CreatedAt}
+			si.Channels = append(si.Channels, channelOut(c.s.channelBody(row, e, chat)))
 		}
-		for _, l := range res.(oas.ListMailingLists200JSONResponse).Items {
-			out.Lists = append(out.Lists, setupList{ID: l.Id, Name: l.Name, InboxID: l.InboxId})
-		}
+		out.Inboxes = append(out.Inboxes, si)
+	}
+	for _, p := range parts.properties {
+		out.Properties = append(out.Properties, setupProperty{ID: p.ID, Name: p.Name, Domains: nonNil(p.Domains), Platforms: nonNil(p.Platforms), InboxID: p.InboxID})
+	}
+	for _, l := range parts.lists[:min(len(parts.lists), maxPageSize)] {
+		out.Lists = append(out.Lists, setupList{ID: l.ID, Name: l.Name, InboxID: *l.InboxID})
 	}
 	return out, nil
 }

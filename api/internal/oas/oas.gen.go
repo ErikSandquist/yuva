@@ -2495,6 +2495,36 @@ func (e HealthStatus) Valid() bool {
 	}
 }
 
+// Defines values for HomeSetupItemId.
+const (
+	HomeSetupItemIdAnalytics  HomeSetupItemId = "analytics"
+	HomeSetupItemIdApp        HomeSetupItemId = "app"
+	HomeSetupItemIdChat       HomeSetupItemId = "chat"
+	HomeSetupItemIdDocs       HomeSetupItemId = "docs"
+	HomeSetupItemIdEmail      HomeSetupItemId = "email"
+	HomeSetupItemIdNewsletter HomeSetupItemId = "newsletter"
+)
+
+// Valid indicates whether the value is a known member of the HomeSetupItemId enum.
+func (e HomeSetupItemId) Valid() bool {
+	switch e {
+	case HomeSetupItemIdAnalytics:
+		return true
+	case HomeSetupItemIdApp:
+		return true
+	case HomeSetupItemIdChat:
+		return true
+	case HomeSetupItemIdDocs:
+		return true
+	case HomeSetupItemIdEmail:
+		return true
+	case HomeSetupItemIdNewsletter:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for HostedLimit.
 const (
 	LimitMigrationMaxActive      HostedLimit = "YUVA_MIGRATION_MAX_ACTIVE"
@@ -10061,6 +10091,122 @@ type Health struct {
 // HealthStatus defines model for Health.Status.
 type HealthStatus string
 
+// Home The Home blocks; a block the member may not see is absent.
+type Home struct {
+	Analytics  *HomeAnalytics  `json:"analytics,omitempty"`
+	Broadcasts *HomeBroadcasts `json:"broadcasts,omitempty"`
+	Inbox      HomeInbox       `json:"inbox"`
+	Setup      *HomeSetup      `json:"setup,omitempty"`
+}
+
+// HomeAnalytics defines model for HomeAnalytics.
+type HomeAnalytics struct {
+	Properties []HomeProperty `json:"properties"`
+}
+
+// HomeBroadcast The broadcast that finished sending last; absent when none has.
+type HomeBroadcast struct {
+	// ClickTracking Whether links were tracked; `clicked` stays `0` without it.
+	ClickTracking bool      `json:"click_tracking"`
+	Clicked       int64     `json:"clicked"`
+	Id            uuid.UUID `json:"id"`
+	InboxId       uuid.UUID `json:"inbox_id"`
+	Name          string    `json:"name"`
+	Recipients    int64     `json:"recipients"`
+	Replied       int64     `json:"replied"`
+	Sent          int64     `json:"sent"`
+
+	// SentAt When sending finished.
+	SentAt  time.Time `json:"sent_at"`
+	Subject string    `json:"subject"`
+}
+
+// HomeBroadcasts defines model for HomeBroadcasts.
+type HomeBroadcasts struct {
+	// LastSent The broadcast that finished sending last; absent when none has.
+	LastSent *HomeBroadcast `json:"last_sent,omitempty"`
+}
+
+// HomeContact defines model for HomeContact.
+type HomeContact struct {
+	// Email The contact's first address, when it has one.
+	Email *openapi_types.Email `json:"email,omitempty"`
+	Id    uuid.UUID            `json:"id"`
+
+	// Name Empty when the contact has no name.
+	Name string `json:"name"`
+}
+
+// HomeDay defines model for HomeDay.
+type HomeDay struct {
+	Day      openapi_types.Date `json:"day"`
+	Visitors int64              `json:"visitors"`
+}
+
+// HomeInbox defines model for HomeInbox.
+type HomeInbox struct {
+	// OldestWaiting The open conversation that has waited longest; absent when none waits.
+	OldestWaiting *HomeWaitingConversation `json:"oldest_waiting,omitempty"`
+
+	// Open Open conversations, spam left out (`all` in the conversation counts).
+	Open       int64 `json:"open"`
+	Unassigned int64 `json:"unassigned"`
+
+	// Waiting Open conversations whose contact waits for a reply.
+	Waiting int64 `json:"waiting"`
+}
+
+// HomeProperty defines model for HomeProperty.
+type HomeProperty struct {
+	// Days Visitors per local day, the last seven days, oldest first; the last one is today.
+	Days      []HomeDay           `json:"days"`
+	Domains   []AnalyticsDomain   `json:"domains"`
+	Id        uuid.UUID           `json:"id"`
+	InboxId   *uuid.UUID          `json:"inbox_id,omitempty"`
+	Name      string              `json:"name"`
+	Platforms []AnalyticsPlatform `json:"platforms"`
+
+	// RealtimeVisitors Distinct visitors in the last 30 minutes.
+	RealtimeVisitors int64 `json:"realtime_visitors"`
+
+	// Timezone IANA time zone that defines the property's day.
+	Timezone string `json:"timezone"`
+
+	// VisitorsToday Distinct visitors so far today, in the property's time zone.
+	VisitorsToday int64 `json:"visitors_today"`
+}
+
+// HomeSetup defines model for HomeSetup.
+type HomeSetup struct {
+	// Items One item per part of the setup hub, in this order: `chat` (live chat channels),
+	// `email` (e-mail channels), `app` (app channels), `docs` (chat channels that
+	// documentation pages have used: ratings, feedback or discussions), `analytics`
+	// (properties; only when the server collects analytics) and `newsletter` (mailing
+	// lists that are not archived). An item is `done` when its `count` is above zero.
+	Items []HomeSetupItem `json:"items"`
+}
+
+// HomeSetupItem defines model for HomeSetupItem.
+type HomeSetupItem struct {
+	Count int64           `json:"count"`
+	Done  bool            `json:"done"`
+	Id    HomeSetupItemId `json:"id"`
+}
+
+// HomeSetupItemId defines model for HomeSetupItem.Id.
+type HomeSetupItemId string
+
+// HomeWaitingConversation The open conversation that has waited longest; absent when none waits.
+type HomeWaitingConversation struct {
+	Contact HomeContact `json:"contact"`
+	Id      uuid.UUID   `json:"id"`
+	InboxId uuid.UUID   `json:"inbox_id"`
+
+	// Since The contact's first message after the last reply.
+	Since   time.Time `json:"since"`
+	Subject string    `json:"subject"`
+}
+
 // HostedLimit `hosted_limit` only: the server limit that was reached, named by the operator's setting.
 // `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
 // the workspace already runs as many migrations at a time as the server allows;
@@ -15219,6 +15365,12 @@ type CreateFeedbackParams struct {
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 }
 
+// GetHomeParams defines parameters for GetHome.
+type GetHomeParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // ListInboxesParams defines parameters for ListInboxes.
 type ListInboxesParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
@@ -20292,6 +20444,9 @@ type ServerInterface interface {
 	// CreateFeedback Post feedback for a host app's user
 	// (POST /v1/feedback)
 	CreateFeedback(w http.ResponseWriter, r *http.Request, params CreateFeedbackParams)
+	// GetHome Everything the workspace has today, in one answer
+	// (GET /v1/home)
+	GetHome(w http.ResponseWriter, r *http.Request, params GetHomeParams)
 	// ListInboxes List inboxes
 	// (GET /v1/inboxes)
 	ListInboxes(w http.ResponseWriter, r *http.Request, params ListInboxesParams)
@@ -31307,6 +31462,47 @@ func (siw *ServerInterfaceWrapper) CreateFeedback(w http.ResponseWriter, r *http
 	handler.ServeHTTP(w, r)
 }
 
+// GetHome operation middleware
+func (siw *ServerInterfaceWrapper) GetHome(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetHomeParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetHome(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // ListInboxes operation middleware
 func (siw *ServerInterfaceWrapper) ListInboxes(w http.ResponseWriter, r *http.Request) {
 
@@ -37347,6 +37543,7 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/conversations", wrapper.ListConversations)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/conversations", wrapper.CreateConversation)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/conversations/counts", wrapper.GetConversationCounts)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/home", wrapper.GetHome)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/stats", wrapper.GetStats)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/conversations/bulk", wrapper.BulkUpdateConversations)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/conversations/{conversationId}", wrapper.GetConversation)
@@ -54653,6 +54850,58 @@ func (response CreateFeedback404ApplicationProblemPlusJSONResponse) VisitCreateF
 	return err
 }
 
+type GetHomeRequestObject struct {
+	Params GetHomeParams
+}
+
+type GetHomeResponseObject interface {
+	VisitGetHomeResponse(w http.ResponseWriter) error
+}
+
+type GetHome200JSONResponse Home
+
+func (response GetHome200JSONResponse) VisitGetHomeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetHome401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetHome401ApplicationProblemPlusJSONResponse) VisitGetHomeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetHome403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetHome403ApplicationProblemPlusJSONResponse) VisitGetHomeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type ListInboxesRequestObject struct {
 	Params ListInboxesParams
 }
@@ -63653,6 +63902,9 @@ type StrictServerInterface interface {
 	// CreateFeedback Post feedback for a host app's user
 	// (POST /v1/feedback)
 	CreateFeedback(ctx context.Context, request CreateFeedbackRequestObject) (CreateFeedbackResponseObject, error)
+	// GetHome Everything the workspace has today, in one answer
+	// (GET /v1/home)
+	GetHome(ctx context.Context, request GetHomeRequestObject) (GetHomeResponseObject, error)
 	// ListInboxes List inboxes
 	// (GET /v1/inboxes)
 	ListInboxes(ctx context.Context, request ListInboxesRequestObject) (ListInboxesResponseObject, error)
@@ -69838,6 +70090,32 @@ func (sh *strictHandler) CreateFeedback(w http.ResponseWriter, r *http.Request, 
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(CreateFeedbackResponseObject); ok {
 		if err := validResponse.VisitCreateFeedbackResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetHome operation middleware
+func (sh *strictHandler) GetHome(w http.ResponseWriter, r *http.Request, params GetHomeParams) {
+	var request GetHomeRequestObject
+
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetHome(ctx, request.(GetHomeRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetHome")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetHomeResponseObject); ok {
+		if err := validResponse.VisitGetHomeResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
