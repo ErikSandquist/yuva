@@ -815,8 +815,8 @@ remote images, http(s)):
   for the site's name and address, creates a chat channel named after it with that origin and
   anonymous visitors allowed, and shows the elements for plain HTML, Nuxt and Fumadocs/React filled
   with this server's URL and the channel key, with a link to the guide; the inbox settings start
-  the same flow for another docs site. It opens on its own while the workspace has no conversation (it can be put
-  off; that is remembered per workspace on the device), and adding an inbox later uses the same page.
+  the same flow for another docs site. Home's checklist links to it (it no longer opens on its own), and adding an
+  inbox later uses the same page (`/setup/new`).
 - Connect an assistant (Settings › Connected apps): one page per client (Claude, Claude Code, Codex,
   ChatGPT, Cursor, VS Code, other MCP clients) with the server's own `/mcp` URL, a copyable command
   or config, install links where the client has them, and the steps; a new grant shows up there live.
