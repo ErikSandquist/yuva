@@ -107,9 +107,31 @@ support.example.com {
 ```
 
 Öffnen Sie `YUVA_PUBLIC_URL`, geben Sie Ihre Adresse ein und melden Sie sich mit dem Code aus der
-E-Mail an. Ohne SMTP steht der Code in `docker compose logs yuva`. Laden Sie dann Ihr Team ein,
-legen Sie einen Posteingang an und richten Sie [E-Mail](email.md), das [Web-Widget](widget.md)
-oder die [Mobile-SDKs](mobile.md) ein.
+E-Mail an. Ohne SMTP steht der Code in `docker compose logs yuva`.
+
+### 6. Einrichten, was Sie brauchen
+
+Die erste Inhaberin oder der erste Inhaber landet auf **Home** (`/`), das zeigt, was noch nicht
+eingerichtet ist. Öffnen Sie aus dieser Liste **Set up Yuva** (`/setup`). Es hat sechs Karten; wählen
+Sie die, die Sie wollen. Jede dauert ein paar Minuten, und Sie können jederzeit zurückkommen:
+
+| Karte | Was sie tut | Anleitung |
+|---|---|---|
+| Website chat | Chat auf Ihrer Website | [Web-Widget](widget.md) |
+| E-mail | Eine Support-Adresse, die zu Unterhaltungen wird | [E-Mail](email.md) |
+| Mobile app | Chat in Ihrer App | [Mobile-SDKs](mobile.md) |
+| Documentation site | Bewertungen, Feedback und Diskussionen in Ihrer Dokumentation | [Dokumentationsseiten](documentation-pages.md) |
+| Analytics | Besucher einer Website oder App, ohne Cookies | [Analytics](analytics.md) |
+| Newsletter | Eine Mailingliste mit Anmeldeformularen | [Listen](lists.md) |
+
+Eine eingerichtete Karte zeigt, wie viele Sie haben, und öffnet den Ort, an dem Sie sie ändern. Yuva
+öffnet die Einrichtung nicht von selbst; **Do this later** bringt Sie dorthin zurück, wo Sie waren.
+Laden Sie danach Ihr Team ein.
+
+Inhaber und Admins öffnen Home unter `/` (Kürzel `g h`): der Posteingang heute, jede Website und App
+mit den Besuchern heute, in den letzten 30 Minuten und über sieben Tage, der letzte Broadcast und die
+Einrichtungsliste. Agents öffnen den Posteingang unter `/`; er liegt auch unter `/conversations`.
+Die Abkürzung zur Analytics-Einrichtung, `/analytics/new`, funktioniert weiterhin.
 
 ## Kubernetes mit Helm
 

@@ -107,9 +107,30 @@ support.example.com {
 ```
 
 `YUVA_PUBLIC_URL` adresini açın, e-posta adresinizi girin ve gelen e-postadaki kodla giriş yapın.
-SMTP yoksa kod `docker compose logs yuva` çıktısındadır. Sonra ekibinizi davet edin, bir gelen
-kutusu oluşturun ve [e-posta](email.md), [web widget'ı](widget.md) ya da
-[mobil SDK'ları](mobile.md) kurun.
+SMTP yoksa kod `docker compose logs yuva` çıktısındadır.
+
+### 6. İhtiyacınız olanı kurun
+
+İlk sahip **Ana sayfa**'ya (`/`) düşer; orada henüz kurulmayanlar listelenir. Bu listeden
+**Yuva'yı kur** sayfasını (`/setup`) açın. Altı kart vardır; istediklerinizi seçin, her biri birkaç
+dakika sürer ve istediğiniz zaman geri dönebilirsiniz:
+
+| Kart | Ne yapar | Rehber |
+|---|---|---|
+| Web sitesi sohbeti | Web sitenizde sohbet | [Web widget'ı](widget.md) |
+| E-posta | Konuşmaya dönüşen bir destek adresi | [E-posta](email.md) |
+| Mobil uygulama | Uygulamanızın içinde sohbet | [Mobil SDK'lar](mobile.md) |
+| Dokümantasyon sitesi | Dokümantasyonunuzda puanlama, geri bildirim ve tartışma | [Dokümantasyon sayfaları](documentation-pages.md) |
+| Analitik | Bir web sitesinin ya da uygulamanın ziyaretçileri, çerezsiz | [Analitik](analytics.md) |
+| Bülten | Abonelik formlu bir posta listesi | [Listeler](lists.md) |
+
+Kurulmuş bir kart kaç tane olduğunu gösterir ve değiştireceğiniz yeri açar. Yuva kurulumu kendiliğinden
+açmaz; **Sonra yaparım** sizi bulunduğunuz yere döndürür. Sonra ekibinizi davet edin.
+
+Sahipler ve yöneticiler Ana sayfa'yı `/` adresinde açar (kısayol `g h`): bugünün gelen kutusu, her
+web sitesi ve uygulama için bugünkü, son 30 dakikadaki ve yedi günlük ziyaretçiler, son bülten ve kurulum
+listesi. Temsilciler `/` adresinde gelen kutusunu açar; gelen kutusu `/conversations` adresindedir de.
+Analitik kurulumunun kısayolu `/analytics/new` hâlâ çalışır.
 
 ## Helm ile Kubernetes
 

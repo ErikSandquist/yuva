@@ -106,8 +106,30 @@ support.example.com {
 ```
 
 Open `YUVA_PUBLIC_URL`, enter your address and sign in with the code from the e-mail. Without SMTP
-the code is in `docker compose logs yuva`. Then invite your team, create an inbox, and set up
-[e-mail](email.md), the [web widget](widget.md) or the [mobile SDKs](mobile.md).
+the code is in `docker compose logs yuva`.
+
+### 6. Set up what you need
+
+The first owner lands on **Home** (`/`), which shows what is not set up yet. Open **Set up Yuva**
+(`/setup`) from that list. It has six cards; pick the ones you want, each takes a few minutes, and
+you can come back at any time:
+
+| Card | What it does | Guide |
+|---|---|---|
+| Website chat | Chat on your website | [Web widget](widget.md) |
+| E-mail | A support address that becomes conversations | [E-mail](email.md) |
+| Mobile app | Chat inside your app | [Mobile SDKs](mobile.md) |
+| Documentation site | Ratings, feedback and discussions on your docs | [Documentation pages](documentation-pages.md) |
+| Analytics | Visitors of a website or app, without cookies | [Analytics](analytics.md) |
+| Newsletter | A mailing list with subscribe forms | [Lists](lists.md) |
+
+A card that is set up shows how many you have and opens the place where you change it. Yuva does not
+open the setup by itself; **Do this later** returns you to where you were. Then invite your team.
+
+Owners and admins open Home at `/` (shortcut `g h`): the inbox today, each website and app with its
+visitors today, in the last 30 minutes and over seven days, the last broadcast and the setup list.
+Agents open the inbox at `/`; the inbox is also at `/conversations`. A shortcut to the analytics setup,
+`/analytics/new`, still works.
 
 ## Kubernetes with Helm
 
