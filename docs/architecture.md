@@ -769,6 +769,17 @@ that allows only its own scripts, connections and workers, no framing (`frame-an
 no plugins; inline styles and any http(s) image stay allowed for the sandboxed e-mail frame, which
 inherits the policy. Every response carries `X-Content-Type-Options: nosniff`.
 
+Home and setup (M17): owners and admins open `/` on Home, agents on the inbox; the managers' inbox
+lives at `/conversations`. Home is one request, `GET /v1/home`: inbox counts and the oldest waiting
+conversation, visitors today, in the last 30 minutes and per day for seven days for each property the
+member may see, the last sent broadcast's recipients, opens and clicks, and the setup checklist. It is
+read from the counters and rollups the server already keeps, so it spends none of the workspace's
+analytics query slots; blocks the member may not see are left out. The checklist is the same setup
+state the MCP `get_setup_state` tool returns. `/setup` is one hub of cards (live chat, e-mail, mobile
+app, documentation pages, analytics, newsletter); a card that is set up links to its place, one that
+is not runs its flow inside the setup layout, and `/analytics/new` opens the same analytics flow. The
+panel no longer jumps to `/setup` on its own; Home shows what is left.
+
 E-mail HTML has two views, both in a sandboxed `srcdoc` iframe under a CSP of its own (no
 scripts, no forms, images only from `data:`, the server's attachments and, once the member allows
 remote images, http(s)):

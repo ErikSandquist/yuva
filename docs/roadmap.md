@@ -260,3 +260,16 @@ without joining any visitor to a contact; Claude Code answers a traffic question
 a share link shows only its views; after consent and identify a contact's page lists their visits and
 without consent it never does; another workspace sees none of it; the load test meets the targets at
 10M events a month.
+
+## M17 — Home and one setup
+
+Status: planned; issue #74, decisions in `architecture.md` › Panel (`web/`) › Home and setup (M17).
+
+- `GET /v1/home` with inbox counts, visitors per property (today, last 30 minutes, seven days), the
+  last broadcast and the setup checklist shared with `get_setup_state`.
+- `/setup` as one hub of six cards with done states; the analytics and newsletter flows inside it.
+- Home at `/` for owners and admins, the inbox at `/conversations`; agents keep the inbox at `/`.
+
+Accept: a new workspace's owner lands on Home, sets up chat and analytics from `/setup` and sees both
+turn done; Home shows the inbox counts, each site's visitors and the last broadcast from one request;
+an agent opens the inbox at `/` and never sees an inbox or property they may not see.
