@@ -651,7 +651,7 @@ export function ChatList({
             )}
           </InputGroupAddon>
         </InputGroup>
-        <InboxPicker className="max-w-36" />
+        <InboxPicker className="max-w-44" />
       </div>
       <div
         className="flex shrink-0 flex-wrap gap-1.5 px-3 pb-2.5"

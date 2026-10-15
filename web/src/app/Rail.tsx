@@ -228,7 +228,10 @@ export function TabBar() {
             <e.icon className="size-5" />
             <Badge n={e.badge ?? 0} id={e.key} className="-top-1 end-auto start-[calc(50%+6px)]" />
           </span>
-          <span aria-hidden className={cn("font-medium whitespace-nowrap", e.key !== view && "invisible")}>
+          <span
+            aria-hidden
+            className={cn("font-medium whitespace-nowrap", e.key !== view && "invisible max-w-full overflow-hidden")}
+          >
             {e.label}
           </span>
         </button>

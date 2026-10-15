@@ -61,14 +61,14 @@ function InboxBlock({ inbox }: { inbox: Home["inbox"] }) {
           <Rows>
             <LinkRow to={`/conversations/${w.id}`} value={<Trans>for {waited}</Trans>} testId="home-oldest-waiting">
               <ContactAvatar id={w.contact.id} name={name} className="size-8 shrink-0" />
-              <RowText
-                title={
+              <div className="min-w-0 flex-1">
+                <p className="text-body break-words">
                   <Trans>
                     Waiting longest: <span className="font-medium">{name}</span>
                   </Trans>
-                }
-                detail={w.subject || undefined}
-              />
+                </p>
+                {w.subject && <p className="mt-px text-small break-words text-faint">{w.subject}</p>}
+              </div>
             </LinkRow>
           </Rows>
         ) : (
