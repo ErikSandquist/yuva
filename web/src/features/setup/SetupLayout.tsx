@@ -6,7 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router"
 import { YuvaMark } from "@/components/common"
 import { LanguageMenu } from "@/components/common/LanguageMenu"
 import { Button } from "@/components/ui/button"
-import { putOff, type SetupState } from "@/features/setup/setup"
+import type { SetupState } from "@/features/setup/setup"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
@@ -52,7 +52,7 @@ export function SetupLayout({
   back,
   children,
 }: {
-  step: number
+  step?: number
   steps?: string[]
   stepsLabel?: string
   leave?: React.ReactNode
@@ -67,13 +67,10 @@ export function SetupLayout({
   const navigate = useNavigate()
   const location = useLocation()
   const state = (location.state ?? {}) as SetupState
-  const { workspaceId: ws, membership } = useSession()
+  const { membership } = useSession()
   const wide = useMediaQuery("(min-width: 1024px)")
   const [shown, setShown] = useState(false)
-  const later = () => {
-    if (!state.back) putOff(ws)
-    navigate(state.back ?? "/", { replace: true })
-  }
+  const later = () => navigate(state.back ?? "/", { replace: true })
   return (
     <div className="grid min-h-svh bg-background lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]" data-testid="setup">
       <div className="flex min-w-0 flex-col px-5 sm:px-8">
@@ -86,7 +83,8 @@ export function SetupLayout({
             <LanguageMenu />
             {leave !== undefined
               ? leave
-              : step < names.length && (
+              : step !== undefined &&
+                step < names.length && (
                   <Button variant="ghost" size="sm" onClick={later} data-testid="setup-later">
                     {state.back ? <Trans>Cancel</Trans> : <Trans>Do this later</Trans>}
                   </Button>
@@ -106,7 +104,7 @@ export function SetupLayout({
                 <Trans>Back</Trans>
               </Link>
             )}
-            <Progress step={step} names={names} label={stepsLabel ?? t`Setup steps`} />
+            {step !== undefined && <Progress step={step} names={names} label={stepsLabel ?? t`Setup steps`} />}
             {children}
             {!wide && (
               <section className="mt-10 border-t pt-4" aria-label={t`Preview`}>

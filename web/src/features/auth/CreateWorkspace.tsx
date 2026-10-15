@@ -209,5 +209,5 @@ export function NewWorkspacePage() {
   const signup = useSignup()
   if (signup === "invite") return <Navigate to="/" replace />
   if (!signup) return <div className="min-h-svh bg-background" />
-  return <CreateWorkspace me={me} back="/" onCreated={(id) => switchWorkspace(id, "/setup")} />
+  return <CreateWorkspace me={me} back="/" onCreated={(id) => switchWorkspace(id, "/")} />
 }

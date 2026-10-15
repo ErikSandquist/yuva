@@ -325,6 +325,29 @@ export function PhoneMock({ name, color, waiting }: { name: string; color: strin
   )
 }
 
+export function SubscribeMock({ name, description, color }: { name: string; description?: string; color: string }) {
+  const { t } = useLingui()
+  return (
+    <div className={cn("w-full max-w-[22rem] rounded-2xl border bg-card p-5", lift)} aria-hidden="true">
+      <p className="truncate font-medium">{name || t`Product news`}</p>
+      <p className="mt-1 line-clamp-2 text-small text-muted-foreground">
+        {description || t`One e-mail a month about what is new.`}
+      </p>
+      <div className="mt-4 flex gap-2">
+        <span className="flex h-9 min-w-0 flex-1 items-center truncate rounded-lg border px-3 text-small text-faint">
+          lina@example.org
+        </span>
+        <span
+          className="flex h-9 shrink-0 items-center rounded-lg px-3.5 text-small font-medium text-white"
+          style={{ background: color }}
+        >
+          <Trans>Subscribe</Trans>
+        </span>
+      </div>
+    </div>
+  )
+}
+
 export function KindPreview({
   kind,
   name,

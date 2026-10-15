@@ -468,7 +468,7 @@ function ListHeader() {
             <DropdownMenuShortcut>{mod} ,</DropdownMenuShortcut>
           </DropdownMenuItem>
           {canManage && (
-            <DropdownMenuItem onClick={() => navigate("/setup")}>
+            <DropdownMenuItem onClick={() => navigate("/setup/new")}>
               <InboxIcon />
               <Trans>Add an inbox</Trans>
             </DropdownMenuItem>

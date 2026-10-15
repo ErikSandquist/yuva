@@ -6,6 +6,7 @@ import {
   BookUserIcon,
   BotIcon,
   ChartLineIcon,
+  HouseIcon,
   MegaphoneIcon,
   MessagesSquareIcon,
   SettingsIcon,
@@ -13,13 +14,14 @@ import {
 } from "lucide-react"
 import { useLocation, useNavigate } from "react-router"
 
-import { isChats, sectionOf, type Section } from "@/app/shell"
+import { inboxRoot, isChats, sectionOf, type Section } from "@/app/shell"
 import { UserMenu } from "@/app/UserMenu"
 import { mod, SHORTCUTS, keyLabel } from "@/components/common/ShortcutSheet"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { useAnalyticsVisible } from "@/features/analytics/properties"
 import { useConversations, useDrafts, useMentions } from "@/features/inbox/queries"
 import { setRailView, useRailView } from "@/features/inbox/railView"
+import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 
 type Entry = {
@@ -42,7 +44,9 @@ function useEntries(): Entry[] {
   const unseen = Number(useMentions().data?.pages[0]?.unseen ?? 0)
   const drafts = Number(useDrafts({}).data?.pages[0]?.total ?? 0)
   const analytics = useAnalyticsVisible()
+  const { canManage } = useSession()
   const entries: Entry[] = [
+    ...(canManage ? [{ key: "home" as const, label: t`Home`, icon: HouseIcon, shortcut: SHORTCUTS.home }] : []),
     {
       key: "conversations",
       label: t`Conversations`,
@@ -78,20 +82,23 @@ function useEntries(): Entry[] {
 }
 
 export function useSection() {
-  return sectionOf(useLocation().pathname, useRailView())
+  return sectionOf(useLocation().pathname, useRailView(), useSession().canManage)
 }
 
 export function useGo() {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const section = useSection()
+  const { canManage } = useSession()
   return (key: Section) => {
-    if (key === "mentions") {
+    if (key === "home") {
+      if (pathname !== "/") navigate("/")
+    } else if (key === "mentions") {
       setRailView(key)
       if (pathname !== "/mentions") navigate("/mentions")
     } else if (key === "conversations" || key === "assistants") {
       setRailView(key)
-      if (!isChats(pathname)) navigate("/")
+      if (!isChats(pathname, canManage)) navigate(inboxRoot(canManage))
     } else if (section !== key) {
       navigate(`/${key}`)
     }

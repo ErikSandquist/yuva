@@ -273,15 +273,7 @@ export function ListFields({
   )
 }
 
-export function NewListDialog({
-  inboxId,
-  onClose,
-  onCreated,
-}: {
-  inboxId: string
-  onClose: () => void
-  onCreated: (l: MailingList) => void
-}) {
+export function useNewList(inboxId: string, onCreated: (l: MailingList) => void) {
   const inboxes = useInboxes().data ?? []
   const setList = useSetList()
   const [values, setValues] = useState<ListValues>(() => ({
@@ -312,6 +304,26 @@ export function NewListDialog({
       onCreated(l)
     },
   })
+  const onChange = ({ channel_id, ...patch }: Partial<ListValues>) => {
+    if (channel_id !== undefined) setPicked(patch.inbox_id ? null : channel_id)
+    setValues((v) => ({ ...v, ...patch }))
+  }
+  const submit = () => {
+    if (values.name.trim() && values.inbox_id) create.mutate()
+  }
+  return { values: { ...values, channel_id: sender }, onChange, channels, sender, create, submit }
+}
+
+export function NewListDialog({
+  inboxId,
+  onClose,
+  onCreated,
+}: {
+  inboxId: string
+  onClose: () => void
+  onCreated: (l: MailingList) => void
+}) {
+  const { values, onChange, channels, sender, create, submit } = useNewList(inboxId, onCreated)
   return (
     <Dialog open onOpenChange={(o) => !o && onClose()}>
       <DialogContent className="max-h-[90svh] p-0 sm:max-w-lg" data-testid="list-dialog">
@@ -319,7 +331,7 @@ export function NewListDialog({
           className="flex min-w-0 flex-col"
           onSubmit={(e) => {
             e.preventDefault()
-            if (values.name.trim() && values.inbox_id) create.mutate()
+            submit()
           }}
         >
           <div className="flex flex-col gap-5 p-6">
@@ -333,15 +345,7 @@ export function NewListDialog({
                 </Trans>
               </DialogDescription>
             </DialogHeader>
-            <ListFields
-              values={{ ...values, channel_id: sender }}
-              onChange={({ channel_id, ...patch }) => {
-                if (channel_id !== undefined) setPicked(patch.inbox_id ? null : channel_id)
-                setValues((v) => ({ ...v, ...patch }))
-              }}
-              creating
-              error={create.error}
-            />
+            <ListFields values={values} onChange={onChange} creating error={create.error} />
             {channels && !sender && <SenderMissing inboxId={values.inbox_id} />}
             <ErrorLine error={create.error} />
           </div>

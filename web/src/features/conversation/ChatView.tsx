@@ -26,6 +26,7 @@ import {
   useContactName,
   VisitorAvatar,
 } from "@/components/common"
+import { inboxRoot } from "@/app/shell"
 import { keyLabel, SHORTCUTS } from "@/components/common/ShortcutSheet"
 import { useEnumText, useErrorText } from "@/components/common/text"
 import { Alert } from "@/components/ui/alert"
@@ -103,6 +104,7 @@ function BackButton({ onBack }: { onBack?: () => void }) {
 
 export function ChatView(props: Props) {
   const errorText = useErrorText()
+  const { canManage } = useSession()
   const conversation = useConversation(props.id)
   const c = conversation.data
   const contact = useContact(c?.contact_id)
@@ -137,7 +139,7 @@ export function ChatView(props: Props) {
         )}
         <EmptyState icon={SearchXIcon} title={<Trans>This conversation is not available</Trans>}>
           <p>{errorText(conversation.error ?? new ApiError(404))}</p>
-          <Button variant="outline" size="sm" className="mt-4" render={<Link to="/" />}>
+          <Button variant="outline" size="sm" className="mt-4" render={<Link to={inboxRoot(canManage)} />}>
             <Trans>Back to the list</Trans>
           </Button>
         </EmptyState>
@@ -159,7 +161,7 @@ function Loaded({
   const { t } = useLingui()
   const text = useEnumText()
   const errorText = useErrorText()
-  const { membership } = useSession()
+  const { membership, canManage } = useSession()
   const me = membership.member_id
   const members = useMemberMap()
   const labels = useLabels().data ?? []
@@ -306,7 +308,7 @@ function Loaded({
   const markUnread = () => {
     marked.current = lastId ?? null
     listActions.markUnread(c.id)
-    navigate("/")
+    navigate(inboxRoot(canManage))
   }
   const openFind = () => {
     setFinding(true)

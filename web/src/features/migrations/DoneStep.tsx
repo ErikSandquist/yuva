@@ -10,6 +10,7 @@ import {
 } from "lucide-react"
 import { Link, useNavigate } from "react-router"
 
+import { inboxRoot } from "@/app/shell"
 import { ErrorLine, Notice, ProgressBar } from "@/components/common"
 import { formatDateTime } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
@@ -21,11 +22,13 @@ import { isHelpdesk, isPersonalMicrosoft, useGuides } from "@/features/migration
 import { WizardLayout } from "@/features/migrations/Wizard"
 import { StepHeader } from "@/features/setup/SetupLayout"
 import type { Migration, MigrationPreset } from "@/lib/api"
+import { useSession } from "@/lib/session"
 
 export function DoneStep({ m, preset }: { m: Migration; preset: MigrationPreset }) {
   const { t, i18n } = useLingui()
   const num = useNumber()
   const navigate = useNavigate()
+  const { canManage } = useSession()
   const [, setInbox] = useInboxFilter()
   const guide = useGuides()[m.preset]
   const ask = useMigrationConfirms(m)
@@ -44,7 +47,7 @@ export function DoneStep({ m, preset }: { m: Migration; preset: MigrationPreset 
   const fileDeletedAt = m.upload?.deleted_at ? formatDateTime(m.upload.deleted_at, i18n.locale) : ""
   const openInbox = () => {
     if (m.inbox_id) setInbox(m.inbox_id)
-    navigate("/")
+    navigate(inboxRoot(canManage))
   }
   return (
     <WizardLayout step="done" m={m} preset={preset}>

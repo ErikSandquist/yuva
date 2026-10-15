@@ -18,6 +18,7 @@ export {
 } from "@/components/common/Avatar"
 export { SecretDialog } from "@/components/common/SecretDialog"
 export { Segmented } from "@/components/common/Segmented"
+export { Sparkline } from "@/components/common/Sparkline"
 export { TypeToConfirmDialog } from "@/components/common/TypeToConfirmDialog"
 export { TypingDots } from "@/components/common/TypingDots"
 export { useConfirm } from "@/components/common/ConfirmDialog"

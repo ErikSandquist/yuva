@@ -149,6 +149,7 @@ function refreshCounts(qc: QueryClient, ws: string) {
       void qc.invalidateQueries({ queryKey: keys.counts(ws) })
       void qc.invalidateQueries({ queryKey: keys.stats(ws) })
       void qc.invalidateQueries({ queryKey: keys.docs(ws) })
+      void qc.invalidateQueries({ queryKey: keys.home(ws) })
     }, 400)
   )
 }
@@ -162,6 +163,7 @@ function refreshLists(qc: QueryClient, ws: string) {
     setTimeout(() => {
       listTimers.delete(ws)
       void qc.invalidateQueries({ queryKey: keys.lists(ws) })
+      void qc.invalidateQueries({ queryKey: keys.home(ws) })
     }, 400)
   )
 }
@@ -333,6 +335,7 @@ function refreshBroadcasts(qc: QueryClient, ws: string, id: string) {
       void qc.invalidateQueries({ queryKey: keys.broadcastReview(ws, id) })
       void qc.invalidateQueries({ queryKey: keys.broadcastReport(ws, id) })
       void qc.invalidateQueries({ queryKey: [...keys.broadcasts(ws), "deliveries", id] })
+      void qc.invalidateQueries({ queryKey: keys.home(ws) })
     }, 400)
   )
 }

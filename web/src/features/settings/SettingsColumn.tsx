@@ -145,7 +145,7 @@ export function SettingsColumn() {
           </NavRow>
         ))}
         {canManage && (
-          <NavRow to="/setup" state={{ back: "/settings" }} testId="add-inbox">
+          <NavRow to="/setup/new" state={{ back: "/settings" }} testId="add-inbox">
             <RowIcon>
               <PlusIcon />
             </RowIcon>

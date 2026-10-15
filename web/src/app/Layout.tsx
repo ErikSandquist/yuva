@@ -2,7 +2,7 @@ import { lazy, Suspense, useCallback, useEffect } from "react"
 import { Outlet, useLocation, useMatch, useNavigate } from "react-router"
 
 import { Rail, TabBar, useSection } from "@/app/Rail"
-import { isSectionHome } from "@/app/shell"
+import { isInboxRoot, isSectionHome } from "@/app/shell"
 import { BroadcastsColumn } from "@/features/broadcasts/BroadcastsColumn"
 import { ContactsColumn } from "@/features/contact/ContactsColumn"
 import { DocsColumn } from "@/features/docs/DocsColumn"
@@ -13,6 +13,7 @@ import { ReportsColumn } from "@/features/reports/ReportsColumn"
 import { SettingsColumn } from "@/features/settings/SettingsColumn"
 import { TeamColumn } from "@/features/team/TeamColumn"
 import { useIsPhone } from "@/hooks/use-media-query"
+import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 
 const AnalyticsColumn = lazy(() => import("@/features/analytics/AnalyticsColumn"))
@@ -47,18 +48,31 @@ function LeftColumn({ keepList }: { keepList: boolean }) {
   )
 }
 
-function useMentionsView(pathname: string) {
+function useMentionsView(pathname: string, manager: boolean) {
   const view = useRailView()
   useEffect(() => {
     if (pathname === "/mentions") setRailView("mentions")
-    else if (pathname === "/" && view === "mentions") setRailView("conversations")
-  }, [pathname, view])
+    else if (isInboxRoot(pathname, manager) && view === "mentions") setRailView("conversations")
+  }, [pathname, view, manager])
 }
 
 export function Layout() {
   const phone = useIsPhone()
   const { pathname } = useLocation()
-  useMentionsView(pathname)
+  const { canManage } = useSession()
+  const section = useSection()
+  useMentionsView(pathname, canManage)
+  if (section === "home") {
+    return (
+      <div className={cn("flex h-svh min-h-0", phone && "flex-col")} data-testid="shell">
+        {!phone && <Rail />}
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+          <Outlet />
+        </div>
+        {phone && <TabBar />}
+      </div>
+    )
+  }
   if (phone) {
     if (!isSectionHome(pathname)) {
       return (

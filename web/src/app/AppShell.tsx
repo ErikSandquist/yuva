@@ -4,13 +4,12 @@ import { Outlet, useLocation, useNavigate } from "react-router"
 import { ConnectionBanner } from "@/app/ConnectionBanner"
 import { Palette } from "@/app/Palette"
 import { useGo } from "@/app/Rail"
-import { isChats, ShellContext } from "@/app/shell"
+import { inboxRoot, isChats, ShellContext } from "@/app/shell"
 import { Toaster } from "@/components/common"
 import { SHORTCUTS, ShortcutSheet } from "@/components/common/ShortcutSheet"
 import { focusListSearch } from "@/features/inbox/listSearch"
 import { useCounts } from "@/features/inbox/queries"
 import { useAnalyticsVisible } from "@/features/analytics/properties"
-import { useOpenSetup } from "@/features/setup/setup"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { useRegisterPushOnStart } from "@/lib/push"
 import { useRealtime } from "@/lib/realtime"
@@ -26,13 +25,12 @@ function Title() {
 }
 
 export function AppShell() {
-  const { workspaceId, membership } = useSession()
+  const { workspaceId, membership, canManage } = useSession()
   const navigate = useNavigate()
   const [shortcuts, setShortcuts] = useState(false)
   const [palette, setPalette] = useState(false)
   useRealtime(workspaceId, membership.member_id)
   useRegisterPushOnStart()
-  useOpenSetup()
 
   const shell = useMemo(
     () => ({
@@ -43,7 +41,7 @@ export function AppShell() {
   )
 
   const { pathname } = useLocation()
-  const chats = isChats(pathname)
+  const chats = isChats(pathname, canManage)
   const go = useGo()
   const analytics = useAnalyticsVisible()
   useHotkeys({
@@ -56,9 +54,10 @@ export function AppShell() {
         pathname.startsWith("/broadcasts/") &&
         document.querySelector<HTMLInputElement>("[data-testid=subscribers-search]")
       if (subscribers) return subscribers.focus()
-      if (!chats) navigate("/")
+      if (!chats) navigate(inboxRoot(canManage))
       focusListSearch()
     },
+    [SHORTCUTS.home]: () => canManage && go("home"),
     [SHORTCUTS.contacts]: () => go("contacts"),
     [SHORTCUTS.conversations]: () => go("conversations"),
     [SHORTCUTS.team]: () => go("team"),
@@ -92,7 +91,7 @@ export function AppShell() {
         <Outlet />
       </div>
       <Palette open={palette} onOpenChange={setPalette} />
-      <ShortcutSheet open={shortcuts} onOpenChange={setShortcuts} />
+      <ShortcutSheet open={shortcuts} onOpenChange={setShortcuts} home={canManage} />
       <Toaster />
       <ConnectionBanner />
     </ShellContext.Provider>

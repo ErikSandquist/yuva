@@ -309,13 +309,16 @@ msgstr "An owner or admin can turn on the persistent id in the consent features.
 
 #: src/features/analytics/AnalyticsColumn.tsx
 #: src/features/analytics/AnalyticsRoutes.tsx
-#: src/features/analytics/NewProperty.tsx
 msgid "Analytics"
 msgstr "Analytics"
 
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "Analytics properties"
 msgstr "Analytics properties"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Analytics steps"
+msgstr "Analytics steps"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 msgid "Analytics views"
@@ -1023,6 +1026,10 @@ msgstr "First page or screen"
 msgid "First screen"
 msgstr "First screen"
 
+#: src/features/analytics/NewProperty.tsx
+msgid "First visit"
+msgstr "First visit"
+
 #: src/features/analytics/Retention.tsx
 msgid "First week"
 msgstr "First week"
@@ -1128,6 +1135,10 @@ msgstr "Helpful ratings out of all ratings."
 msgid "Helpful share"
 msgstr "Helpful share"
 
+#: src/features/analytics/NewProperty.tsx
+msgid "Home shows each website and app like this: visitors today, in the last 30 minutes and this week."
+msgstr "Home shows each website and app like this: visitors today, in the last 30 minutes and this week."
+
 #: src/features/analytics/text.ts
 msgid "Host"
 msgstr "Host"
@@ -1154,6 +1165,7 @@ msgstr "I saved it"
 msgid "Inbox"
 msgstr "Inbox"
 
+#: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Install"
 msgstr "Install"
@@ -2658,6 +2670,10 @@ msgstr "Watch it live"
 #: src/features/analytics/text.ts
 msgid "Web"
 msgstr "Web"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Website or app"
+msgstr "Website or app"
 
 #: src/features/analytics/Retention.tsx
 msgid "Week {period}"

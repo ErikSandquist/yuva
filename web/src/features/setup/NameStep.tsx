@@ -12,14 +12,14 @@ import { LANGS } from "@/features/settings/inboxes/InboxPage"
 import { slugify } from "@/features/settings/inboxes/slugify"
 import { ChoiceSelect, Field } from "@/features/settings/ui"
 import { ChatMock, DEFAULT_COLOR, PreviewCaption } from "@/features/setup/previews"
-import { browserLanguage, browserTimeZone, type SetupState } from "@/features/setup/setup"
+import { browserLanguage, browserTimeZone, type SetupKind, type SetupState } from "@/features/setup/setup"
 import { SetupLayout, StepHeader } from "@/features/setup/SetupLayout"
 import { api, ApiError, unwrap } from "@/lib/api"
 import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
 import { timeZones } from "@/lib/utils"
 
-export function NameStep() {
+export function NameStep({ kind }: { kind?: SetupKind }) {
   const { t, i18n } = useLingui()
   const qc = useQueryClient()
   const navigate = useNavigate()
@@ -51,7 +51,9 @@ export function NameStep() {
     onSuccess: (r) => {
       void qc.invalidateQueries({ queryKey: keys.inboxes(ws) })
       qc.setQueryData([...keys.inboxes(ws), r.inbox.id], r.inbox)
-      navigate(`/setup/${r.inbox.id}`, { state: { ...state, secret: r.identity_secret } satisfies SetupState })
+      navigate(kind ? `/setup/${r.inbox.id}/add/${kind}` : `/setup/${r.inbox.id}`, {
+        state: { ...state, secret: r.identity_secret } satisfies SetupState,
+      })
     },
   })
   return (

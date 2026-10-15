@@ -1,10 +1,11 @@
+import "@/features/analytics/i18n"
+
 import { Trans, useLingui } from "@lingui/react/macro"
-import { CheckCircle2Icon } from "lucide-react"
+import { ArrowRightIcon, CheckCircle2Icon } from "lucide-react"
 import { useMemo, useState } from "react"
-import { Link, Navigate, useNavigate, useParams } from "react-router"
+import { Link, Navigate, useLocation, useNavigate, useParams } from "react-router"
 
 import { ErrorLine, Notice } from "@/components/common"
-import { Pane, PaneBack } from "@/components/common/Column"
 import { formatDateTime } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -13,7 +14,11 @@ import { Spinner } from "@/components/ui/spinner"
 import { Textarea } from "@/components/ui/textarea"
 import { InstallSnippets } from "@/features/analytics/Install"
 import { useCreateProperty, useProperty, useWaitForFirstEvent } from "@/features/analytics/queries"
-import { ChoiceSelect, Field, FormCard, PageHeader, Section } from "@/features/settings/ui"
+import { PropertyCard } from "@/features/home/PropertyCard"
+import { ChoiceSelect, Field } from "@/features/settings/ui"
+import { PreviewCaption } from "@/features/setup/previews"
+import type { SetupState } from "@/features/setup/setup"
+import { SetupLayout, StepHeader } from "@/features/setup/SetupLayout"
 import { useSession } from "@/lib/session"
 import { useInboxes } from "@/lib/workspace"
 import { timeZones } from "@/lib/utils"
@@ -38,10 +43,27 @@ export function useZones() {
   return useMemo(() => timeZones(), [])
 }
 
-export function NewPropertyPage() {
+function useSteps() {
   const { t } = useLingui()
-  const { canManage } = useSession()
+  return [t`Website or app`, t`Install`, t`First visit`]
+}
+
+function Preview({ name, host }: { name: string; host: string }) {
+  return (
+    <>
+      <PropertyCard example name={name || "Fieldnote"} host={host || "www.example.com"} />
+      <PreviewCaption>
+        <Trans>Home shows each website and app like this: visitors today, in the last 30 minutes and this week.</Trans>
+      </PreviewCaption>
+    </>
+  )
+}
+
+function NewPropertyStep() {
+  const { t } = useLingui()
   const navigate = useNavigate()
+  const state = (useLocation().state ?? {}) as SetupState
+  const steps = useSteps()
   const inboxes = useInboxes().data ?? []
   const zones = useZones()
   const [name, setName] = useState("")
@@ -49,21 +71,23 @@ export function NewPropertyPage() {
   const [inbox, setInbox] = useState(NO_INBOX)
   const [zone, setZone] = useState(() => Intl.DateTimeFormat().resolvedOptions().timeZone)
   const create = useCreateProperty()
-  if (!canManage) return <Navigate to="/analytics" replace />
   const hosts = splitLines(domains).map(hostOnly).filter(Boolean)
   return (
-    <Pane testId="analytics-new">
-      <PageHeader
-        back={{ to: "/analytics", label: t`Analytics` }}
-        title={<Trans>Add a website</Trans>}
-        description={
-          <Trans>
-            Count visitors, pages, sources, places and devices without cookies and without storing IP addresses.
-          </Trans>
-        }
-      />
-      <FormCard
-        onSubmit={() =>
+    <SetupLayout
+      step={1}
+      steps={steps}
+      stepsLabel={t`Analytics steps`}
+      preview={<Preview name={name} host={hosts[0] ?? ""} />}
+    >
+      <StepHeader title={<Trans>Add a website</Trans>}>
+        <Trans>
+          Count visitors, pages, sources, places and devices without cookies and without storing IP addresses.
+        </Trans>
+      </StepHeader>
+      <form
+        className="flex flex-col gap-6"
+        onSubmit={(e) => {
+          e.preventDefault()
           create.mutate(
             {
               name: name.trim(),
@@ -71,22 +95,10 @@ export function NewPropertyPage() {
               inbox_id: inbox === NO_INBOX ? undefined : inbox,
               timezone: zones.includes(zone) ? zone : "UTC",
             },
-            { onSuccess: (p) => navigate(`/analytics/new/${p.id}`, { replace: true }) }
+            { onSuccess: (p) => navigate(`/setup/analytics/${p.id}`, { replace: true, state }) }
           )
-        }
-        footer={
-          <>
-            <ErrorLine error={create.error} className="min-w-0 flex-1" />
-            <Button
-              type="submit"
-              className="ms-auto"
-              disabled={!name.trim() || hosts.length === 0 || create.isPending}
-              data-testid="analytics-create"
-            >
-              <Trans>Add and install</Trans>
-            </Button>
-          </>
-        }
+        }}
+        data-testid="analytics-new"
       >
         <Field label={<Trans>Name</Trans>} htmlFor="analytics-name">
           <Input
@@ -146,8 +158,19 @@ export function NewPropertyPage() {
             </datalist>
           </Field>
         </div>
-      </FormCard>
-    </Pane>
+        <ErrorLine error={create.error} />
+        <Button
+          type="submit"
+          size="lg"
+          className="self-start"
+          disabled={!name.trim() || hosts.length === 0 || create.isPending}
+          data-testid="analytics-create"
+        >
+          <Trans>Add and install</Trans>
+          <ArrowRightIcon className="rtl:rotate-180" />
+        </Button>
+      </form>
+    </SetupLayout>
   )
 }
 
@@ -192,14 +215,20 @@ export function WaitForFirstEvent({ propertyId }: { propertyId: string }) {
   )
 }
 
-export function InstallPropertyPage() {
+function InstallPropertyStep({ propertyId }: { propertyId: string }) {
   const { t } = useLingui()
-  const { propertyId = "" } = useParams()
+  const steps = useSteps()
   const property = useProperty(propertyId)
   const p = property.data
+  const wait = useWaitForFirstEvent(propertyId, !!p && !p.first_event_at)
+  const arrived = !!(p?.first_event_at ?? wait.data?.first_event_at)
   return (
-    <Pane testId="analytics-install-page">
-      <PaneBack to="/analytics" label={t`Analytics`} always />
+    <SetupLayout
+      step={arrived ? 3 : 2}
+      steps={steps}
+      stepsLabel={t`Analytics steps`}
+      preview={<Preview name={p?.name ?? ""} host={p?.domains[0] ?? ""} />}
+    >
       {!p ? (
         property.error ? (
           <ErrorLine error={property.error} />
@@ -207,25 +236,24 @@ export function InstallPropertyPage() {
           <Skeleton className="h-48 rounded-2xl" />
         )
       ) : (
-        <>
-          <PageHeader
-            back={false}
-            title={<Trans>Install on {p.name}</Trans>}
-            description={
-              <Trans>
-                Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on
-                the property’s domains.
-              </Trans>
-            }
-          />
-          <Section>
-            <div className="flex flex-col gap-5 rounded-2xl border bg-card p-4">
-              <InstallSnippets property={p} />
-            </div>
-          </Section>
+        <div className="flex flex-col gap-6" data-testid="analytics-install-page">
+          <StepHeader title={<Trans>Install on {p.name}</Trans>}>
+            <Trans>
+              Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the
+              property’s domains.
+            </Trans>
+          </StepHeader>
+          <InstallSnippets property={p} />
           <WaitForFirstEvent propertyId={p.id} />
-        </>
+        </div>
       )}
-    </Pane>
+    </SetupLayout>
   )
+}
+
+export default function AnalyticsSetup() {
+  const { canManage } = useSession()
+  const { propertyId } = useParams()
+  if (!canManage) return <Navigate to="/" replace />
+  return propertyId ? <InstallPropertyStep key={propertyId} propertyId={propertyId} /> : <NewPropertyStep />
 }

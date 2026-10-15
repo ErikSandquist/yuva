@@ -134,8 +134,7 @@ export function Gate() {
   if (!me.data) return <Navigate to={signInPath(location.pathname, location.search)} replace />
   if (me.data.memberships.length === 0) {
     if (version.isPending) return <div className="min-h-svh bg-background" />
-    if (version.data?.signup === "open")
-      return <CreateWorkspace me={me.data} onCreated={(id) => onSwitch(id, "/setup")} />
+    if (version.data?.signup === "open") return <CreateWorkspace me={me.data} onCreated={(id) => onSwitch(id, "/")} />
     return <NoWorkspace email={me.data.person.email} />
   }
   const membership = pickMembership(me.data, linkedMember ? linked : chosen)

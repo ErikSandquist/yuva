@@ -14,7 +14,7 @@ import { Controls } from "@/features/analytics/Controls"
 import { EventsView } from "@/features/analytics/Events"
 import { FunnelsView } from "@/features/analytics/Funnels"
 import { GoalsView } from "@/features/analytics/Goals"
-import { InstallPropertyPage, NewPropertyPage, WaitForFirstEvent } from "@/features/analytics/NewProperty"
+import { WaitForFirstEvent } from "@/features/analytics/NewProperty"
 import { Overview } from "@/features/analytics/Overview"
 import { useAnalyticsProperties } from "@/features/analytics/properties"
 import { useProperty } from "@/features/analytics/queries"
@@ -26,6 +26,7 @@ import { useViewSearch } from "@/features/analytics/state"
 import { useAnalyticsText } from "@/features/analytics/text"
 import { Segmented } from "@/components/common"
 import { useIsPhone } from "@/hooks/use-media-query"
+import type { SetupState } from "@/features/setup/setup"
 import { useSession } from "@/lib/session"
 import { useInboxes } from "@/lib/workspace"
 
@@ -148,12 +149,23 @@ function PropertyLayout() {
   )
 }
 
+function ToSetup() {
+  const { propertyId } = useParams()
+  return (
+    <Navigate
+      to={propertyId ? `/setup/analytics/${propertyId}` : "/setup/analytics"}
+      state={{ back: "/analytics" } satisfies SetupState}
+      replace
+    />
+  )
+}
+
 export default function AnalyticsRoutes() {
   return (
     <Routes>
       <Route index element={<AnalyticsHome />} />
-      <Route path="new" element={<NewPropertyPage />} />
-      <Route path="new/:propertyId" element={<InstallPropertyPage />} />
+      <Route path="new" element={<ToSetup />} />
+      <Route path="new/:propertyId" element={<ToSetup />} />
       <Route path=":propertyId" element={<PropertyLayout />}>
         <Route index element={<Overview />} />
         <Route path="realtime" element={<Realtime />} />

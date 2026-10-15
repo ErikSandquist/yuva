@@ -309,13 +309,16 @@ msgstr "Bir sahip ya da yönetici, izin özelliklerinden kalıcı kimliği açab
 
 #: src/features/analytics/AnalyticsColumn.tsx
 #: src/features/analytics/AnalyticsRoutes.tsx
-#: src/features/analytics/NewProperty.tsx
 msgid "Analytics"
 msgstr "Analitik"
 
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "Analytics properties"
 msgstr "Analitik mülkleri"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Analytics steps"
+msgstr "Analitik adımları"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 msgid "Analytics views"
@@ -1023,6 +1026,10 @@ msgstr "İlk sayfa ya da ekran"
 msgid "First screen"
 msgstr "İlk ekran"
 
+#: src/features/analytics/NewProperty.tsx
+msgid "First visit"
+msgstr "İlk ziyaret"
+
 #: src/features/analytics/Retention.tsx
 msgid "First week"
 msgstr "İlk hafta"
@@ -1128,6 +1135,10 @@ msgstr "Tüm değerlendirmeler içinde yararlı olanların payı."
 msgid "Helpful share"
 msgstr "Yararlı oranı"
 
+#: src/features/analytics/NewProperty.tsx
+msgid "Home shows each website and app like this: visitors today, in the last 30 minutes and this week."
+msgstr "Ana sayfa her web sitesini ve uygulamayı böyle gösterir: bugünkü, son 30 dakikadaki ve bu haftaki ziyaretçiler."
+
 #: src/features/analytics/text.ts
 msgid "Host"
 msgstr "Alan adı"
@@ -1154,6 +1165,7 @@ msgstr "Kaydettim"
 msgid "Inbox"
 msgstr "Gelen kutusu"
 
+#: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Install"
 msgstr "Kurulum"
@@ -2658,6 +2670,10 @@ msgstr "Canlı izle"
 #: src/features/analytics/text.ts
 msgid "Web"
 msgstr "Web"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Website or app"
+msgstr "Web sitesi ya da uygulama"
 
 #: src/features/analytics/Retention.tsx
 msgid "Week {period}"

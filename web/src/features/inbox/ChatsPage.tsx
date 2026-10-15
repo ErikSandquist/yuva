@@ -3,6 +3,7 @@ import { CheckIcon, MessagesSquareIcon } from "lucide-react"
 import { useCallback, useState } from "react"
 import { useNavigate, useParams } from "react-router"
 
+import { inboxRoot } from "@/app/shell"
 import { formatDuration } from "@/components/common/text"
 import { ContactPanel } from "@/features/contact/ContactSheet"
 import { ChatView } from "@/features/conversation/ChatView"
@@ -12,6 +13,7 @@ import { useCounts, useStats } from "@/features/inbox/queries"
 import { useRailView } from "@/features/inbox/railView"
 import { useIsPhone, useMediaQuery } from "@/hooks/use-media-query"
 import { useViewing } from "@/lib/realtime"
+import { useSession } from "@/lib/session"
 
 const PANEL_KEY = "contact-panel"
 
@@ -106,7 +108,8 @@ export function ChatsPage() {
   const phone = useIsPhone()
   const roomy = useMediaQuery("(min-width: 1200px)")
   const [panel, setPanel] = usePanel()
-  const back = useRailView() === "mentions" ? "/mentions" : "/"
+  const { canManage } = useSession()
+  const back = useRailView() === "mentions" ? "/mentions" : inboxRoot(canManage)
   const id = conversationId ?? null
   const contactId = useConversation(id ?? undefined).data?.contact_id
   useViewing(id ?? undefined)

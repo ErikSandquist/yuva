@@ -356,6 +356,14 @@ msgstr "{inboxName} gelen kutusunda henüz {address} için bir e-posta kanalı y
 msgid "{incoming} received, {outgoing} sent"
 msgstr "{incoming} gelen, {outgoing} giden"
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "{listName} is ready"
+msgstr "{listName} hazır"
+
+#: src/features/home/PropertyCard.tsx
+msgid "{liveText} in the last 30 minutes"
+msgstr "son 30 dakikada {liveText}"
+
 #: src/features/conversation/ConversationStatus.tsx
 msgid "{minutes, plural, one {Waiting for # minute} other {Waiting for # minutes}}"
 msgstr "{minutes, plural, one {# dakikadır bekliyor} other {# dakikadır bekliyor}}"
@@ -364,6 +372,22 @@ msgstr "{minutes, plural, one {# dakikadır bekliyor} other {# dakikadır bekliy
 msgid "{mxDomain} has no MX record, so replies to broadcasts cannot arrive. Publish the MX records of your mail service."
 msgstr "{mxDomain} alan adının MX kaydı yok, bu yüzden bültenlere gelen yanıtlar ulaşamaz. E-posta hizmetinizin MX kayıtlarını ekleyin."
 
+#: src/features/setup/SetupHub.tsx
+msgid "{n, plural, one {# app} other {# apps}}"
+msgstr "{n, plural, one {# uygulama} other {# uygulama}}"
+
+#: src/features/setup/SetupHub.tsx
+msgid "{n, plural, one {# documentation site} other {# documentation sites}}"
+msgstr "{n, plural, one {# dokümantasyon sitesi} other {# dokümantasyon sitesi}}"
+
+#: src/features/setup/SetupHub.tsx
+msgid "{n, plural, one {# e-mail address} other {# e-mail addresses}}"
+msgstr "{n, plural, one {# e-posta adresi} other {# e-posta adresi}}"
+
+#: src/features/setup/SetupHub.tsx
+msgid "{n, plural, one {# mailing list} other {# mailing lists}}"
+msgstr "{n, plural, one {# e-posta listesi} other {# e-posta listesi}}"
+
 #: src/features/conversation/History.tsx
 msgid "{n, plural, one {# other conversation} other {# other conversations}}"
 msgstr "{n, plural, one {# diğer konuşma} other {# diğer konuşma}}"
@@ -371,6 +395,14 @@ msgstr "{n, plural, one {# diğer konuşma} other {# diğer konuşma}}"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "{n, plural, one {# person} other {# people}}"
 msgstr "{n, plural, one {# kişi} other {# kişi}}"
+
+#: src/features/setup/SetupHub.tsx
+msgid "{n, plural, one {# website chat} other {# website chats}}"
+msgstr "{n, plural, one {# web sitesi sohbeti} other {# web sitesi sohbeti}}"
+
+#: src/features/setup/SetupHub.tsx
+msgid "{n, plural, one {# website or app} other {# websites and apps}}"
+msgstr "{n, plural, one {# web sitesi ya da uygulama} other {# web sitesi ve uygulama}}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "{n} attempts"
@@ -422,6 +454,10 @@ msgstr "{name} da şu an yanıt yazıyor."
 msgid "{name} is typing…"
 msgstr "{name} yazıyor…"
 
+#: src/features/setup/SetupHub.tsx
+msgid "{name} news"
+msgstr "{name} haberleri"
+
 #: src/features/conversation/Collision.tsx
 msgid "{name} replied before you."
 msgstr "{name} senden önce yanıtladı."
@@ -430,6 +466,10 @@ msgstr "{name} senden önce yanıtladı."
 #: src/features/inbox/SidePanels.tsx
 msgid "{name} via {via}"
 msgstr "{name} ({via} ile)"
+
+#: src/features/setup/SetupHub.tsx
+msgid "{name} website"
+msgstr "{name} web sitesi"
 
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "{names} will be notified"
@@ -857,6 +897,14 @@ msgstr "Açma isteği uyandıran bir satır"
 msgid "A mailing list holds the people who agreed to get your broadcasts. They join on a subscribe form on your site, or your team adds them and records how they agreed. Every step is kept as proof of consent, and everyone can leave with one click."
 msgstr "E-posta listesi, bültenlerinizi almayı kabul eden kişileri tutar. Kişiler sitenizdeki abonelik formundan katılır ya da ekibiniz onları, nasıl izin verdiklerini kaydederek ekler. Her adım izin kanıtı olarak saklanır ve herkes tek tıkla ayrılabilir."
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "A mailing list sends in an inbox’s name, through its e-mail channel. Set up e-mail first, then come back here for the list."
+msgstr "E-posta listesi bir gelen kutusunun adıyla, onun e-posta kanalı üzerinden gönderir. Önce e-postayı kurun, sonra liste için buraya dönün."
+
+#: src/features/setup/SetupHub.tsx
+msgid "A mailing list with subscribe forms, for your broadcasts"
+msgstr "Bültenleriniz için abonelik formlu bir e-posta listesi"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "Yedek metni olmayan bir birleştirme alanı bazı alıcılarda boş kalacak. Bir yedek metin ekleyin."
@@ -864,6 +912,10 @@ msgstr "Yedek metni olmayan bir birleştirme alanı bazı alıcılarda boş kala
 #: src/components/common/text.ts
 msgid "A message was added"
 msgstr "Bir mesaj eklendi"
+
+#: src/features/setup/StartStep.tsx
+msgid "A new product"
+msgstr "Yeni bir ürün"
 
 #: src/components/common/ServiceWorkerBridge.tsx
 msgid "A new version of Yuva is ready."
@@ -1032,6 +1084,10 @@ msgstr "{listName} listesine abone ekle"
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "Add a website chat in the inbox settings"
 msgstr "Gelen kutusu ayarlarından bir web sitesi sohbeti ekleyin"
+
+#: src/features/home/HomePage.tsx
+msgid "Add a website or app"
+msgstr "Web sitesi ya da uygulama ekle"
 
 #: src/app/Palette.tsx
 msgid "Add an analytics property"
@@ -1353,6 +1409,7 @@ msgstr "Bir yükleme yarıda kaldı: {count} parça ({size}) zaten sunucuda."
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/setup/SetupHub.tsx
 msgid "Analytics"
 msgstr "Analitik"
 
@@ -1726,6 +1783,10 @@ msgstr "Sütunlara dön"
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Back to draft"
 msgstr "Taslağa dön"
+
+#: src/features/setup/NewsletterStep.tsx
+msgid "Back to setup"
+msgstr "Kuruluma dön"
 
 #: src/features/conversation/ChatView.tsx
 msgid "Back to the list"
@@ -2166,6 +2227,10 @@ msgstr "Tıklama sayımı"
 msgid "Click tracking"
 msgstr "Tıklama sayımı"
 
+#: src/features/home/HomePage.tsx
+msgid "clicked"
+msgstr "tıkladı"
+
 #: src/features/broadcasts/Report.tsx
 msgid "Clicked"
 msgstr "Tıkladı"
@@ -2173,6 +2238,10 @@ msgstr "Tıkladı"
 #: src/features/broadcasts/Report.tsx
 msgid "clicked a link, roughly"
 msgstr "bir bağlantıya tıkladı, yaklaşık"
+
+#: src/features/home/HomePage.tsx
+msgid "clicks not tracked"
+msgstr "tıklamalar sayılmadı"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Client identifier"
@@ -2186,6 +2255,7 @@ msgstr "İstemci gizli anahtarı"
 #: src/components/ui/sheet.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/migrations/Wizard.tsx
+#: src/features/setup/SetupHub.tsx
 msgid "Close"
 msgstr "Kapat"
 
@@ -2317,6 +2387,10 @@ msgstr "Dosyayı içe aktarmak için onayı doğrulayın."
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Confirm the warning and select <0>Create as a plugin</0>. ChatGPT registers itself with this server."
 msgstr "Uyarıyı onaylayıp <0>Create as a plugin</0> seçeneğini seçin. ChatGPT kendini bu sunucuya kaydeder."
+
+#: src/features/setup/NewsletterStep.tsx
+msgid "Confirmation and welcome mails, and every broadcast to the list, go out from this address."
+msgstr "Onay ve hoş geldin e-postaları ile listeye giden her bülten bu adresten çıkar."
 
 #: src/features/broadcasts/ListPage.tsx
 msgid "Confirmation asked"
@@ -2693,6 +2767,7 @@ msgid "Create key"
 msgstr "Anahtar oluştur"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/setup/NewsletterStep.tsx
 msgid "Create list"
 msgstr "Listeyi oluştur"
 
@@ -2742,6 +2817,7 @@ msgid "Custom domain still shows as unverified"
 msgstr "Özel alan adı hâlâ doğrulanmamış görünüyor"
 
 #: src/features/setup/ChannelStep.tsx
+#: src/features/setup/SetupHub.tsx
 msgid "Customers keep writing to the address they know."
 msgstr "Müşteriler bildikleri adrese yazmaya devam eder."
 
@@ -3107,6 +3183,7 @@ msgstr "DNS, yukarıdaki adda henüz bu anahtarla yanıt vermiyor. Kaydı ekleyi
 msgid "Do not both write."
 msgstr "İkiniz birden yazmayın."
 
+#: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Do this later"
 msgstr "Sonra yaparım"
@@ -3143,6 +3220,8 @@ msgstr "Sunucu tarafında oluşturmayla çalışıyor mu?"
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
+#: src/features/setup/NewsletterStep.tsx
+#: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Done"
 msgstr "Bitti"
@@ -3307,6 +3386,10 @@ msgstr "Canlı gelen e-postalarda olduğu gibi her mesajın özgün kaynağı sa
 #: src/features/setup/InstallStep.tsx
 msgid "Each new e-mail starts a conversation; replies continue it."
 msgstr "Her yeni e-posta bir konuşma başlatır; yanıtlar aynı konuşmada sürer."
+
+#: src/features/setup/StartStep.tsx
+msgid "Each product or brand has its own inbox. Add it to one you have, or start a new one."
+msgstr "Her ürünün ya da markanın kendi gelen kutusu olur. Var olanlardan birine ekleyin ya da yenisini açın."
 
 #: src/features/broadcasts/Report.tsx
 msgid "Each reply is a conversation in the inbox. The first 50 are listed here."
@@ -3480,6 +3563,10 @@ msgstr "Tüm adımlar geçti."
 msgid "Every type"
 msgstr "Tüm türler"
 
+#: src/features/setup/SetupHub.tsx
+msgid "Every website and app shows its visitors on Home and in Analytics."
+msgstr "Her web sitesi ve uygulama, ziyaretçilerini Ana sayfa’da ve Analitik’te gösterir."
+
 #: src/features/inbox/ChatsPage.tsx
 msgid "Everyone has been answered."
 msgstr "Herkes yanıtlandı."
@@ -3511,6 +3598,10 @@ msgstr "Aşağıdakilerin tümü {sourceName} kişisinden {targetName} kişisine
 #: src/features/settings/workspace/DeleteWorkspace.tsx
 msgid "Everything in this workspace is deleted for every member, and its widgets, apps, e-mail addresses and API keys stop working immediately."
 msgstr "Bu çalışma alanındaki her şey tüm üyeler için silinir; widget'ları, uygulamaları, e-posta adresleri ve API anahtarları hemen çalışmaz olur."
+
+#: src/features/setup/SetupHub.tsx
+msgid "Everything is set up. Open any part to change it, or add another from its settings."
+msgstr "Her şey kurulu. Değiştirmek için herhangi birini açın ya da ayarlarından bir tane daha ekleyin."
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Everywhere"
@@ -3689,6 +3780,10 @@ msgstr "ilk yanıt {first}"
 msgid "First rows of the file"
 msgstr "Dosyanın ilk satırları"
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "First, an e-mail address"
+msgstr "Önce bir e-posta adresi"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Fix it"
 msgstr "Düzelt"
@@ -3722,6 +3817,10 @@ msgstr "Takip edilenler"
 #: src/features/migrations/SwitchStep.tsx
 msgid "For {0}, received {when}. Enter it in Gmail's forwarding settings, or open the link."
 msgstr "{0} için, {when} geldi. Gmail'in yönlendirme ayarlarına girin ya da bağlantıyı açın."
+
+#: src/features/home/HomePage.tsx
+msgid "for {waited}"
+msgstr "{waited} süredir"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "For a client that only starts local programs, use the <0>yuva mcp stdio</0> bridge from the setup guide."
@@ -3927,6 +4026,10 @@ msgstr "Kodu göster"
 msgid "Get the snippets"
 msgstr "Kodları al"
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "Get the subscribe form"
+msgstr "Abonelik formunu al"
+
 #: src/features/settings/channels/email/ForwardingAddressField.tsx
 msgid "Give the channel a new forwarding address?"
 msgstr "Kanala yeni bir yönlendirme adresi verilsin mi?"
@@ -4091,6 +4194,12 @@ msgstr "Geçmiş aktarıldı. Siz {address} adresinin e-postalarını Yuva'ya y�
 #: src/features/migrations/text.ts
 msgid "History removed"
 msgstr "Geçmiş kaldırıldı"
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Home"
+msgstr "Ana sayfa"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How did they agree?"
@@ -4371,6 +4480,10 @@ msgstr "Gelen kutusu rengi"
 msgid "Inbox for {name}"
 msgstr "{name} için gelen kutusu"
 
+#: src/features/home/HomePage.tsx
+msgid "Inbox today"
+msgstr "Bugün gelen kutusu"
+
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -4502,6 +4615,10 @@ msgstr "Artık yok ya da görme izniniz yok."
 #: src/features/contact/ContactDetails.tsx
 msgid "It opens assigned to you; write the first message there."
 msgstr "Sana atanmış olarak açılır; ilk mesajı orada yaz."
+
+#: src/features/setup/NewsletterStep.tsx
+msgid "It sends through {address}."
+msgstr "{address} üzerinden gönderir."
 
 #: src/features/setup/WaitStep.tsx
 msgid "It shows up here as soon as it reaches Yuva."
@@ -4671,6 +4788,10 @@ msgstr "Bu sunucunun tek mesaj sınırından büyük"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "Last attempt"
 msgstr "Son deneme"
+
+#: src/features/home/HomePage.tsx
+msgid "Last broadcast"
+msgstr "Son bülten"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Last name"
@@ -4956,6 +5077,10 @@ msgstr "Posta kutuları"
 #: src/features/migrations/text.ts
 msgid "Maildir in a zip"
 msgstr "Zip içinde Maildir"
+
+#: src/features/setup/NewsletterStep.tsx
+msgid "Mailing list"
+msgstr "E-posta listesi"
 
 #: src/app/Palette.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
@@ -5583,9 +5708,17 @@ msgstr "Önce en yeni konuşmalar. Bu sayfayı kapatabilirsiniz; üyeler bu sır
 msgid "Newest first. Finished deliveries are kept for 7 days."
 msgstr "En yenisi başta. Tamamlanan gönderimler 7 gün saklanır."
 
+#: src/features/setup/SetupHub.tsx
+msgid "Newsletter"
+msgstr "Bülten"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Newsletter checkbox on the checkout page of our shop, 2023 to 2026"
 msgstr "Mağazamızın ödeme sayfasındaki bülten kutucuğu, 2023–2026"
+
+#: src/features/setup/NewsletterStep.tsx
+msgid "Newsletter steps"
+msgstr "Bülten adımları"
 
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Next attempt"
@@ -5642,6 +5775,10 @@ msgstr "Henüz deneme yok."
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "No attempts yet."
 msgstr "Henüz deneme yok."
+
+#: src/features/home/HomePage.tsx
+msgid "No broadcast has gone out yet. When one has, its recipients, clicks and replies show up here."
+msgstr "Henüz hiç bülten gönderilmedi. Gönderildiğinde alıcıları, tıklamaları ve yanıtları burada görünür."
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "No broadcasts yet"
@@ -5813,6 +5950,10 @@ msgstr "Son 90 günde bildirim yok."
 msgid "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
 msgstr "Henüz kimse bir notta sizden bahsetmedi. Bir ekip arkadaşı @ ve adınızı yazdığında not burada görünür."
 
+#: src/features/home/HomePage.tsx
+msgid "No open conversations. New ones show up here and in the inbox as they arrive."
+msgstr "Açık konuşma yok. Yenileri geldikçe burada ve gelen kutusunda görünür."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Eşleşen başka kişi yok."
@@ -5900,6 +6041,10 @@ msgstr "Son değişiklikten beri deneme gönderilmedi."
 msgid "No visits from this campaign yet."
 msgstr "Bu kampanyadan henüz ziyaret yok."
 
+#: src/features/home/HomePage.tsx
+msgid "No website or app is counted yet. Add one to see its visitors here every day, without cookies."
+msgstr "Henüz sayılan bir web sitesi ya da uygulama yok. Ziyaretçilerini her gün, çerez kullanmadan burada görmek için bir tane ekleyin."
+
 #: src/features/broadcasts/Import.tsx
 msgid "No welcome mail is sent. Each new address waits for confirmation and joins after clicking the link in the mail."
 msgstr "Hoş geldin e-postası gönderilmez. Her yeni adres onay bekler ve e-postadaki bağlantıya tıklayınca katılır."
@@ -5923,6 +6068,10 @@ msgstr "Alıcı listesinde henüz kimse yok."
 #: src/features/broadcasts/Import.tsx
 msgid "Nobody is subscribed yet: each new address gets the list’s confirmation mail, spread over days by the daily sending limit, and joins only after clicking it."
 msgstr "Henüz kimse abone olmaz: her yeni adres, günlük gönderim sınırına göre günlere yayılarak listenin onay e-postasını alır ve ancak bağlantıya tıklayınca katılır."
+
+#: src/features/home/HomePage.tsx
+msgid "Nobody is waiting for a reply. Everyone who wrote has an answer."
+msgstr "Yanıt bekleyen kimse yok. Yazan herkes yanıtını aldı."
 
 #: src/features/broadcasts/Growth.tsx
 msgid "Nobody joined or left in this window."
@@ -6034,6 +6183,10 @@ msgstr "Doğru değil mi? Sağlayıcınızı seçin"
 #: src/features/migrations/ConnectStep.tsx
 msgid "Not run"
 msgstr "Çalıştırılmadı"
+
+#: src/features/home/HomePage.tsx
+msgid "Not set up yet"
+msgstr "Henüz kurulmayanlar"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Not shown"
@@ -6275,6 +6428,7 @@ msgid "Once a test message arrives, Yuva waits {hours} hours. If nothing reaches
 msgstr "Deneme e-postası ulaştıktan sonra Yuva {hours} saat bekler. Bu sürede yalnızca eski posta kutusuna ulaşan bir şey olmazsa taşıma kendiliğinden biter. Dilerseniz kendiniz de bitirebilirsiniz."
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/setup/previews.tsx
 msgid "One e-mail a month about what is new."
 msgstr "Yeniliklerle ilgili ayda bir e-posta."
 
@@ -6407,6 +6561,10 @@ msgstr "Yalnızca panel bu tarayıcıda açıkken. Uzaktayken yalnızca size ata
 msgid "Only your team sees it."
 msgstr "Yalnızca ekibiniz görür."
 
+#: src/features/home/HomePage.tsx
+msgid "open"
+msgstr "açık"
+
 #: src/components/common/text.ts
 #: src/features/account/AccountPage.tsx
 #: src/features/contact/ContactDetails.tsx
@@ -6442,6 +6600,10 @@ msgstr "Hesap güvenliğini aç"
 msgid "Open Account security in your Yahoo account."
 msgstr "Yahoo hesabınızda Hesap güvenliği'ni açın."
 
+#: src/features/home/HomePage.tsx
+msgid "Open analytics"
+msgstr "Analitiği aç"
+
 #: src/features/migrations/text.ts
 msgid "Open App passwords"
 msgstr "Uygulama şifrelerini aç"
@@ -6458,6 +6620,10 @@ msgstr "App registrations sayfasını aç"
 #: src/features/migrations/DoneStep.tsx
 msgid "Open Apps and services"
 msgstr "Uygulamalar ve hizmetler sayfasını aç"
+
+#: src/features/home/HomePage.tsx
+msgid "Open broadcasts"
+msgstr "Bültenleri aç"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open ChatGPT plugins"
@@ -6525,6 +6691,10 @@ msgstr "Sayfayı aç"
 msgid "Open Privacy & Security"
 msgstr "Gizlilik ve Güvenlik'i aç"
 
+#: src/features/home/HomePage.tsx
+msgid "Open setup"
+msgstr "Kurulumu aç"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the broadcast"
 msgstr "Bülteni aç"
@@ -6546,6 +6716,7 @@ msgstr "Tasarımı aç"
 msgid "Open the discussion"
 msgstr "Tartışmayı aç"
 
+#: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
 msgid "Open the inbox"
 msgstr "Gelen kutusunu aç"
@@ -6844,6 +7015,14 @@ msgstr "Bekleyen gönderimler de onunla birlikte silinir."
 msgid "People join a list on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "Kişiler listeye abonelik formundan katılır ya da izinleriyle eklenir. Bültenler listelere gönderilir."
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
+msgstr "Kişiler listeye abonelik formundan katılır ya da izinleriyle eklenir. Bültenler listelere gider."
+
+#: src/features/setup/SetupHub.tsx
+msgid "People subscribe on your site; broadcasts go to the list."
+msgstr "Kişiler sitenizden abone olur; bültenler listeye gider."
+
 #: src/features/settings/channels/app/AppFields.tsx
 #: src/features/setup/AddChannelStep.tsx
 msgid "People who are not signed in to your app can write without an identity token from your backend."
@@ -6862,6 +7041,7 @@ msgid "People who sign up on a form confirm by clicking a link in a mail before 
 msgstr "Formdan kaydolan kişiler, abone olmadan önce bir e-postadaki bağlantıya tıklayarak onaylar."
 
 #: src/features/setup/ChannelStep.tsx
+#: src/features/setup/SetupHub.tsx
 msgid "People write from inside your app, signed in as themselves."
 msgstr "Kullanıcılar uygulamanızın içinden, kendi hesaplarıyla yazar."
 
@@ -7015,6 +7195,10 @@ msgstr "<0>{workspace}</0> çalışma alanını seçin, yetkileri gözden geçir
 msgid "Pick what to bring and how far back to go. The scan lists the tickets to show exactly what will be imported; nothing is imported yet."
 msgstr "Neyin getirileceğini ve ne kadar geriye gidileceğini seçin. Tarama, tam olarak neyin içe aktarılacağını göstermek için talepleri listeler; henüz hiçbir şey içe aktarılmaz."
 
+#: src/features/setup/SetupHub.tsx
+msgid "Pick what you want to use. Each part takes a few minutes, and you can come back here at any time."
+msgstr "Kullanmak istediklerinizi seçin. Her biri birkaç dakika sürer ve buraya istediğiniz zaman dönebilirsiniz."
+
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Pin to the top"
@@ -7119,6 +7303,7 @@ msgid "Product name"
 msgstr "Ürün adı"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/setup/previews.tsx
 msgid "Product news"
 msgstr "Ürün haberleri"
 
@@ -7182,6 +7367,10 @@ msgstr "Yalnızca anlık"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Push: {label}"
 msgstr "Anlık bildirim: {label}"
+
+#: src/features/setup/NewsletterStep.tsx
+msgid "Put its subscribe form on your site, or add people who agreed to hear from you."
+msgstr "Abonelik formunu sitenize koyun ya da sizden haber almayı kabul etmiş kişileri ekleyin."
 
 #: src/features/setup/InstallStep.tsx
 msgid "Put the SDK's conversations view behind a Help button in your app, then send a message from it."
@@ -7304,6 +7493,7 @@ msgid "Reader"
 msgstr "Okuyucu"
 
 #: src/features/setup/ChannelStep.tsx
+#: src/features/setup/SetupHub.tsx
 msgid "Readers rate each page, send feedback and discuss it in public; you answer and moderate here."
 msgstr "Okuyucular her sayfayı puanlar, geri bildirim gönderir ve herkese açık tartışır; siz burada yanıtlar ve denetlersiniz."
 
@@ -7359,6 +7549,10 @@ msgstr "Son etkinlik"
 #: src/features/contact/ContactPage.tsx
 msgid "Recent visits"
 msgstr "Son ziyaretler"
+
+#: src/features/home/HomePage.tsx
+msgid "recipients"
+msgstr "alıcı"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
@@ -7525,6 +7719,7 @@ msgid "Replace"
 msgstr "Değiştir"
 
 #: src/features/broadcasts/Report.tsx
+#: src/features/home/HomePage.tsx
 msgid "replied"
 msgstr "yanıtladı"
 
@@ -8212,6 +8407,7 @@ msgid "sends through {0}"
 msgstr "{0} üzerinden gönderir"
 
 #: src/features/broadcasts/Report.tsx
+#: src/features/home/HomePage.tsx
 msgid "sent"
 msgstr "gönderildi"
 
@@ -8234,6 +8430,10 @@ msgstr "Gönderildi"
 #: src/features/migrations/MapStep.tsx
 msgid "Sent {count} messages from this address"
 msgstr "Bu adresten {count} mesaj gönderilmiş"
+
+#: src/features/home/HomePage.tsx
+msgid "Sent {sentAt}"
+msgstr "Gönderildi: {sentAt}"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Sent {sentAt}. Waiting for it to arrive…"
@@ -8288,6 +8488,15 @@ msgstr "Sunucu ayarları"
 msgid "Server URL"
 msgstr "Sunucu adresi"
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "Set up e-mail"
+msgstr "E-postayı kur"
+
+#: src/app/Palette.tsx
+#: src/features/setup/SetupHub.tsx
+msgid "Set up Yuva"
+msgstr "Yuva’yı kur"
+
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -8307,6 +8516,10 @@ msgstr "Ayarlar ({mod},)"
 #: src/features/settings/channels/ChannelDialog.tsx
 msgid "Settings (JSON)"
 msgstr "Ayarlar (JSON)"
+
+#: src/features/home/HomePage.tsx
+msgid "Setup"
+msgstr "Kurulum"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Setup guide"
@@ -8762,6 +8975,10 @@ msgstr "Sunucuyu başlatın. VS Code, Yuva'da oturum açmak için izin ister ve 
 msgid "Start with one. You can add the others later in the inbox settings."
 msgstr "Biriyle başlayın. Diğerlerini sonra gelen kutusu ayarlarından ekleyebilirsiniz."
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "Start your mailing list"
+msgstr "E-posta listenizi başlatın"
+
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Started"
 msgstr "Başladı"
@@ -8859,6 +9076,10 @@ msgstr "Alt alan adı bulunamadı"
 #: src/features/setup/previews.tsx
 msgid "Subject"
 msgstr "Konu"
+
+#: src/features/setup/previews.tsx
+msgid "Subscribe"
+msgstr "Abone ol"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/FormSnippets.tsx
@@ -9372,6 +9593,10 @@ msgstr "Son teslim edilebilirlik denetimi düzeltilecek bir şey buldu."
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
 msgstr "Yasalar her pazarlama e-postasının kimin gönderdiğini ve ona nasıl ulaşılacağını belirtmesini ister (Ticari İletişim ve Ticari Elektronik İletiler Hakkında Yönetmelik, CAN-SPAM, CASL). Yuva bu bilgileri bu gelen kutusundan giden her bültenin altbilgisine koyar; ilk bültenden önce doldurun."
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "The list has no e-mail channel to send through yet. Set up e-mail with an SMTP account, then pick it in the list settings."
+msgstr "Listenin gönderebileceği bir e-posta kanalı henüz yok. SMTP hesabıyla e-postayı kurun, sonra liste ayarlarından seçin."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "The list sends in this inbox's name, and replies to its mail land there."
 msgstr "Liste bu gelen kutusunun adıyla gönderir; e-postalarına gelen yanıtlar da buraya düşer."
@@ -9606,6 +9831,10 @@ msgstr "Durum değiştirilemedi. Tekrar deneyin."
 msgid "The subject"
 msgstr "Konu"
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "The subscribe form shows the list’s name and description."
+msgstr "Abonelik formu listenin adını ve açıklamasını gösterir."
+
 #: src/app/TeamMenu.tsx
 msgid "The team today"
 msgstr "Bugün ekip"
@@ -9739,6 +9968,10 @@ msgstr "Bu {provider} hesabının planında, Yuva'nın okumak için kullandığ�
 msgid "This address got as many confirmation mails as allowed for now. Try again tomorrow."
 msgstr "Bu adres şimdilik izin verilen sayıda onay e-postası aldı. Yarın yeniden deneyin."
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "This address has no SMTP account yet. Add one in the inbox settings before the first broadcast."
+msgstr "Bu adresin henüz SMTP hesabı yok. İlk bültenden önce gelen kutusu ayarlarından ekleyin."
+
 #: src/features/settings/webhooks/WebhookDialog.tsx
 msgid "This address is private, loopback or link-local. Webhooks only reach public servers."
 msgstr "Bu adres özel, yerel (loopback) veya bağlantı-yerel bir adres. Webhook'lar yalnızca herkese açık sunuculara ulaşır."
@@ -9832,6 +10065,10 @@ msgstr "Bu hedef bir huninin adımı. Önce onu huniden çıkarın ya da huniyi 
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox already has a list with this name."
 msgstr "Bu gelen kutusunda bu adla bir liste zaten var."
+
+#: src/features/setup/NewsletterStep.tsx
+msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with an SMTP account is picked in its settings."
+msgstr "Bu gelen kutusunda henüz gönderebilen bir e-posta kanalı yok. Listeyi şimdi oluşturabilirsiniz; ayarlarından SMTP hesaplı bir e-posta kanalı seçildiğinde gönderir."
 
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
@@ -10120,6 +10357,10 @@ msgstr "Bugün saat {at}"
 msgid "Today since midnight, over the inboxes you can see."
 msgstr "Bugün gece yarısından beri, görebildiğiniz gelen kutularında."
 
+#: src/features/home/HomePage.tsx
+msgid "Today, across the inboxes, websites and apps you can see."
+msgstr "Bugün, görebildiğiniz gelen kutularında, web sitelerinde ve uygulamalarda."
+
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Tokens signed with the current secret stop working at once."
 msgstr "Mevcut anahtarla imzalanmış belirteçler hemen geçersiz olur."
@@ -10242,6 +10483,10 @@ msgstr "yazıyor…"
 msgid "Unanswered"
 msgstr "Yanıtsız"
 
+#: src/features/home/HomePage.tsx
+msgid "unassigned"
+msgstr "atanmamış"
+
 #: src/features/inbox/ChatList.tsx
 msgid "Unassigned"
 msgstr "Atanmamış"
@@ -10313,6 +10558,7 @@ msgstr "Kilit açıldı"
 #: src/features/contact/ContactSearch.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/contact/MergeContactDialog.tsx
+#: src/features/home/HomePage.tsx
 msgid "Unnamed contact"
 msgstr "Adsız kişi"
 
@@ -10611,7 +10857,20 @@ msgstr "Ziyaretçiler"
 msgid "Visitors can chat without an identity token from your backend."
 msgstr "Ziyaretçiler, sunucunuzdan bir kimlik belirteci olmadan da sohbet edebilir."
 
+#: src/features/home/PropertyCard.tsx
+msgid "Visitors in the last seven days: {series}"
+msgstr "Son yedi günün ziyaretçileri: {series}"
+
+#: src/features/setup/SetupHub.tsx
+msgid "Visitors of your website or app, without cookies"
+msgstr "Web sitenizin ya da uygulamanızın ziyaretçileri, çerezsiz"
+
+#: src/features/home/PropertyCard.tsx
+msgid "visitors today"
+msgstr "bugünkü ziyaretçi"
+
 #: src/features/setup/ChannelStep.tsx
+#: src/features/setup/SetupHub.tsx
 msgid "Visitors write from any page of your site; you answer here, live."
 msgstr "Ziyaretçiler sitenizin her sayfasından yazar; siz buradan anında yanıtlarsınız."
 
@@ -10635,6 +10894,10 @@ msgstr "Bekleyen"
 #: src/features/migrations/CopyStep.tsx
 msgid "Waiting for {provider}'s limit; continues at {waiting}."
 msgstr "Bekliyor: {provider} sınırı, {waiting} itibarıyla devam edecek."
+
+#: src/features/home/HomePage.tsx
+msgid "waiting for a reply"
+msgstr "yanıt bekliyor"
 
 #: src/features/docs/DocsPages.tsx
 msgid "waiting for approval"
@@ -10681,6 +10944,10 @@ msgstr "Sunucu yöneticisi bekleniyor"
 #: src/features/migrations/parts.tsx
 msgid "Waiting for the provider's limit; continues at {time}."
 msgstr "Sağlayıcının sınırı bekleniyor; {time} itibarıyla devam edecek."
+
+#: src/features/home/HomePage.tsx
+msgid "Waiting longest: <0>{name}</0>"
+msgstr "En uzun bekleyen: <0>{name}</0>"
 
 #: src/features/setup/previews.tsx
 msgid "Was this page helpful?"
@@ -10741,6 +11008,10 @@ msgstr "Web sitesi sohbeti"
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "Website chat channel"
 msgstr "Web sitesi sohbeti kanalı"
+
+#: src/features/home/HomePage.tsx
+msgid "Websites and apps"
+msgstr "Web siteleri ve uygulamalar"
 
 #: src/components/common/text.ts
 msgid "Wednesday"
@@ -10898,6 +11169,10 @@ msgstr "Hangi uygulamalarda kullanılacak?"
 msgid "Which documentation site?"
 msgstr "Hangi dokümantasyon sitesi?"
 
+#: src/features/setup/StartStep.tsx
+msgid "Which product is it for?"
+msgstr "Hangi ürün için?"
+
 #: src/features/setup/AddChannelStep.tsx
 msgid "Which sites will show the chat?"
 msgstr "Sohbet hangi sitelerde görünecek?"
@@ -10949,6 +11224,10 @@ msgstr "{name} ilgileniyor"
 #: src/features/setup/InstallStep.tsx
 msgid "With Cloudflare Email Routing, deploy the Email Worker from edge/ of the Yuva repository and add a routing rule for the address with the action Send to a Worker. Any other mail server can post each message, signed with YUVA_INGRESS_SECRET, to:"
 msgstr "Cloudflare Email Routing kullanıyorsanız Yuva deposundaki edge/ klasöründen Email Worker'ı yayınlayın ve bu adres için eylemi Send to a Worker olan bir yönlendirme kuralı ekleyin. Başka bir posta sunucusu da her iletiyi YUVA_INGRESS_SECRET ile imzalayıp şu adrese gönderebilir:"
+
+#: src/features/setup/StartStep.tsx
+msgid "With its own name, language and time zone"
+msgstr "Kendi adı, dili ve saat dilimiyle"
 
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "with notes"
@@ -11021,6 +11300,10 @@ msgstr "Çalışma alanı üyeleri"
 #: src/features/auth/CreateWorkspace.tsx
 msgid "Workspace name"
 msgstr "Çalışma alanı adı"
+
+#: src/features/home/HomePage.tsx
+msgid "Write a broadcast"
+msgstr "Bülten yaz"
 
 #: src/features/setup/previews.tsx
 msgid "Write a message…"

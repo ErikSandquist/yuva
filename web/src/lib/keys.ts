@@ -55,6 +55,7 @@ export const keys = {
   conversations: (ws: string, f: ConversationFilters) => ["ws", ws, "conversations", f] as const,
   counts: (ws: string) => ["ws", ws, "counts"] as const,
   stats: (ws: string) => ["ws", ws, "stats"] as const,
+  home: (ws: string) => ["ws", ws, "home"] as const,
   conversation: (ws: string, id: string) => ["ws", ws, "conversation", id] as const,
   messages: (ws: string, id: string) => ["ws", ws, "messages", id] as const,
   messageEmail: (ws: string, id: string) => ["ws", ws, "message-email", id] as const,

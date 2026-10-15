@@ -1560,6 +1560,43 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/home": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Everything the workspace has today, in one answer
+         * @description The panel's Home page in one request, for the calling member and only what they may see.
+         *     Member sessions only (API keys and OAuth tokens answer `403 member_session_required`).
+         *     Every block is read from the counters and rollups the server keeps; none of it spends the
+         *     workspace's analytics query slots.
+         *
+         *     - `inbox` (every member): open, unassigned and waiting conversations in the inboxes the
+         *       member can see, counted as `GET /v1/conversations/counts` counts them (spam left out),
+         *       and the conversation that has waited longest. A conversation waits while the contact's
+         *       last message has no reply from a member or bot after it; `since` is the contact's first
+         *       message after the last reply.
+         *     - `analytics` (when the server collects analytics): the properties the member can see, as
+         *       `GET /v1/analytics/properties` lists them, each with visitors today, visitors in the last
+         *       30 minutes (as `GET /v1/analytics/properties/{id}/realtime` counts them) and visitors per
+         *       local day for the last seven days. Left out for an agent who can see no property.
+         *     - `broadcasts` (when the server sends broadcasts): the last sent broadcast of the inboxes
+         *       the member can see. There is no open tracking, so there are no opens.
+         *     - `setup` (owners and admins): the setup checklist, built from the same state as the MCP
+         *       `get_setup_state` tool.
+         */
+        get: operations["getHome"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/stats": {
         parameters: {
             query?: never;
@@ -8685,6 +8722,129 @@ export interface components {
             assignees: components["schemas"]["CountByID"][];
             /** @description Per label id. */
             labels: components["schemas"]["CountByID"][];
+        };
+        /** @description The Home blocks; a block the member may not see is absent. */
+        Home: {
+            inbox: components["schemas"]["HomeInbox"];
+            analytics?: components["schemas"]["HomeAnalytics"];
+            broadcasts?: components["schemas"]["HomeBroadcasts"];
+            setup?: components["schemas"]["HomeSetup"];
+        };
+        HomeInbox: {
+            /**
+             * Format: int64
+             * @description Open conversations, spam left out (`all` in the conversation counts).
+             */
+            open: number;
+            /** Format: int64 */
+            unassigned: number;
+            /**
+             * Format: int64
+             * @description Open conversations whose contact waits for a reply.
+             */
+            waiting: number;
+            oldest_waiting?: components["schemas"]["HomeWaitingConversation"];
+        };
+        /** @description The open conversation that has waited longest; absent when none waits. */
+        HomeWaitingConversation: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            subject: string;
+            contact: components["schemas"]["HomeContact"];
+            /**
+             * Format: date-time
+             * @description The contact's first message after the last reply.
+             */
+            since: string;
+        };
+        HomeContact: {
+            /** Format: uuid */
+            id: string;
+            /** @description Empty when the contact has no name. */
+            name: string;
+            /**
+             * Format: email
+             * @description The contact's first address, when it has one.
+             */
+            email?: string;
+        };
+        HomeAnalytics: {
+            properties: components["schemas"]["HomeProperty"][];
+        };
+        HomeProperty: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            inbox_id?: string;
+            name: string;
+            domains: components["schemas"]["AnalyticsDomain"][];
+            platforms: components["schemas"]["AnalyticsPlatform"][];
+            /** @description IANA time zone that defines the property's day. */
+            timezone: string;
+            /**
+             * Format: int64
+             * @description Distinct visitors so far today, in the property's time zone.
+             */
+            visitors_today: number;
+            /**
+             * Format: int64
+             * @description Distinct visitors in the last 30 minutes.
+             */
+            realtime_visitors: number;
+            /** @description Visitors per local day, the last seven days, oldest first; the last one is today. */
+            days: components["schemas"]["HomeDay"][];
+        };
+        HomeDay: {
+            /** Format: date */
+            day: string;
+            /** Format: int64 */
+            visitors: number;
+        };
+        HomeBroadcasts: {
+            last_sent?: components["schemas"]["HomeBroadcast"];
+        };
+        /** @description The broadcast that finished sending last; absent when none has. */
+        HomeBroadcast: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            name: string;
+            subject: string;
+            /**
+             * Format: date-time
+             * @description When sending finished.
+             */
+            sent_at: string;
+            /** @description Whether links were tracked; `clicked` stays `0` without it. */
+            click_tracking: boolean;
+            /** Format: int64 */
+            recipients: number;
+            /** Format: int64 */
+            sent: number;
+            /** Format: int64 */
+            clicked: number;
+            /** Format: int64 */
+            replied: number;
+        };
+        HomeSetup: {
+            /**
+             * @description One item per part of the setup hub, in this order: `chat` (live chat channels),
+             *     `email` (e-mail channels), `app` (app channels), `docs` (chat channels that
+             *     documentation pages have used: ratings, feedback or discussions), `analytics`
+             *     (properties; only when the server collects analytics) and `newsletter` (mailing
+             *     lists that are not archived). An item is `done` when its `count` is above zero.
+             */
+            items: components["schemas"]["HomeSetupItem"][];
+        };
+        HomeSetupItem: {
+            /** @enum {string} */
+            id: "chat" | "email" | "app" | "docs" | "analytics" | "newsletter";
+            done: boolean;
+            /** Format: int64 */
+            count: number;
         };
         ConversationReadCreate: {
             /**
@@ -17469,6 +17629,31 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ConversationCounts"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+        };
+    };
+    getHome: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The Home blocks the member may see. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Home"];
                 };
             };
             401: components["responses"]["Problem"];

@@ -4,24 +4,40 @@ import { AddChannelStep } from "@/features/setup/AddChannelStep"
 import { ChannelStep } from "@/features/setup/ChannelStep"
 import { InstallStep } from "@/features/setup/InstallStep"
 import { NameStep } from "@/features/setup/NameStep"
+import { NewsletterStep } from "@/features/setup/NewsletterStep"
 import { SETUP_KINDS, type SetupKind } from "@/features/setup/setup"
+import { SetupHub } from "@/features/setup/SetupHub"
+import { StartStep } from "@/features/setup/StartStep"
 import { WaitStep } from "@/features/setup/WaitStep"
 import { useSession } from "@/lib/session"
 
-export function SetupPage({ wait }: { wait?: boolean }) {
+type Flow = "hub" | "new" | "start" | "newsletter" | "wait"
+
+function isKind(kind: string | undefined): kind is SetupKind {
+  return SETUP_KINDS.includes(kind as SetupKind)
+}
+
+export function SetupPage({ flow }: { flow?: Flow }) {
   const { canManage } = useSession()
-  const { inboxId, channelId, kind } = useParams()
+  const { inboxId, channelId, kind, listId } = useParams()
   if (!canManage) return <Navigate to="/" replace />
+  if (flow === "hub") return <SetupHub />
+  if (flow === "newsletter") return <NewsletterStep key={listId ?? ""} listId={listId} />
+  if (flow === "start") return isKind(kind) ? <StartStep key={kind} kind={kind} /> : <Navigate to="/setup" replace />
+  if (flow === "new") {
+    if (kind !== undefined && !isKind(kind)) return <Navigate to="/setup/new" replace />
+    return <NameStep key={kind ?? ""} kind={kind} />
+  }
   if (inboxId && kind) {
-    if (!SETUP_KINDS.includes(kind as SetupKind)) return <Navigate to={`/setup/${inboxId}`} replace />
-    return <AddChannelStep key={kind} inboxId={inboxId} kind={kind as SetupKind} />
+    if (!isKind(kind)) return <Navigate to={`/setup/${inboxId}`} replace />
+    return <AddChannelStep key={kind} inboxId={inboxId} kind={kind} />
   }
   if (inboxId && channelId)
-    return wait ? (
+    return flow === "wait" ? (
       <WaitStep inboxId={inboxId} channelId={channelId} />
     ) : (
       <InstallStep inboxId={inboxId} channelId={channelId} />
     )
   if (inboxId) return <ChannelStep inboxId={inboxId} />
-  return <NameStep />
+  return <Navigate to="/setup" replace />
 }

@@ -3,7 +3,7 @@ import { Trans, useLingui } from "@lingui/react/macro"
 import { useMemo, useState } from "react"
 import { useLocation, useNavigate } from "react-router"
 
-import { isChats, useShell } from "@/app/shell"
+import { inboxRoot, isChats, useShell } from "@/app/shell"
 import { Kbd } from "@/components/common"
 import { keyLabel, mod, SHORTCUTS } from "@/components/common/ShortcutSheet"
 import { useEnumText } from "@/components/common/text"
@@ -87,10 +87,11 @@ function useItems(open: boolean): Item[] {
       label: t`Search conversations`,
       keys: [SHORTCUTS.search],
       run: () => {
-        if (!isChats(pathname)) navigate("/")
+        if (!isChats(pathname, canManage)) navigate(inboxRoot(canManage))
         focusListSearch()
       },
     })
+    if (canManage) go(t`Home`, "/", keyLabel(SHORTCUTS.home))
     go(t`Contacts`, "/contacts", keyLabel(SHORTCUTS.contacts))
     go(t`Docs`, "/docs", keyLabel(SHORTCUTS.docs))
     go(t`Discussions`, "/docs/discussions")
@@ -109,8 +110,9 @@ function useItems(open: boolean): Item[] {
     go(t`Connected apps`, "/settings/connected-apps")
     for (const i of inboxes) go(t`${i.name} settings`, `/settings/inboxes/${i.id}`)
     if (canManage) {
-      go(t`Add an inbox`, "/setup")
-      if (analytics) go(t`Add an analytics property`, "/analytics/new")
+      go(t`Set up Yuva`, "/setup")
+      go(t`Add an inbox`, "/setup/new")
+      if (analytics) go(t`Add an analytics property`, "/setup/analytics")
       go(t`API keys`, "/settings/api-keys")
       go(t`Webhooks`, "/settings/webhooks")
       go(t`Workspace`, "/settings/workspace")
@@ -158,6 +160,7 @@ function PaletteBody({ open, onOpenChange }: PaletteProps) {
   const { t } = useLingui()
   const navigate = useNavigate()
   const { pathname } = useLocation()
+  const { canManage } = useSession()
   const [q, setQ] = useState("")
   const all = useItems(open)
   const groups = useMemo(() => {
@@ -228,7 +231,7 @@ function PaletteBody({ open, onOpenChange }: PaletteProps) {
                   label: "",
                   run: () => {
                     setListQuery(search)
-                    if (!isChats(pathname)) navigate("/")
+                    if (!isChats(pathname, canManage)) navigate(inboxRoot(canManage))
                   },
                 })
               }

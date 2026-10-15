@@ -15,6 +15,7 @@ import { DocsHome, DocsOverview, DocsPagePane } from "@/features/docs/DocsPages"
 import { DiscussionsPane } from "@/features/docs/discussions/DiscussionsPane"
 import { QueuePane } from "@/features/docs/discussions/QueuePane"
 import { ThreadPane } from "@/features/docs/discussions/ThreadPane"
+import { HomePage } from "@/features/home/HomePage"
 import { ChatsPage } from "@/features/inbox/ChatsPage"
 import { MigrationsPage } from "@/features/migrations/MigrationsPage"
 import { MigrationPage, NewMigrationPage } from "@/features/migrations/Wizard"
@@ -39,14 +40,21 @@ import { WorkspacePage } from "@/features/settings/workspace/WorkspacePage"
 import { SetupPage } from "@/features/setup/SetupPage"
 import { MemberPage } from "@/features/team/MemberPage"
 import { TeamHome } from "@/features/team/TeamColumn"
+import { useSession } from "@/lib/session"
 
 const GalleryPage = lazy(() => import("@/features/designs/GalleryPage"))
 const DesignerPage = lazy(() => import("@/features/designs/designer/DesignerPage"))
 const AnalyticsRoutes = lazy(() => import("@/features/analytics/AnalyticsRoutes"))
 const SharePage = lazy(() => import("@/features/analytics/SharePage"))
+const AnalyticsSetup = lazy(() => import("@/features/analytics/NewProperty"))
 
 function Loading() {
   return <div className="flex-1 bg-background" data-testid="route-loading" />
+}
+
+function IndexPage() {
+  const { canManage } = useSession()
+  return canManage ? <HomePage /> : <ChatsPage />
 }
 
 export function AppRoutes() {
@@ -66,11 +74,27 @@ export function AppRoutes() {
       />
       <Route element={<Gate />}>
         <Route path="workspaces/new" element={<NewWorkspacePage />} />
-        <Route path="setup" element={<SetupPage />} />
+        <Route path="setup" element={<SetupPage flow="hub" />} />
+        <Route path="setup/new" element={<SetupPage flow="new" />} />
+        <Route path="setup/new/:kind" element={<SetupPage flow="new" />} />
+        <Route path="setup/start/:kind" element={<SetupPage flow="start" />} />
+        <Route path="setup/newsletter" element={<SetupPage flow="newsletter" />} />
+        <Route path="setup/newsletter/:listId" element={<SetupPage flow="newsletter" />} />
+        {["setup/analytics", "setup/analytics/:propertyId"].map((path) => (
+          <Route
+            key={path}
+            path={path}
+            element={
+              <Suspense fallback={<Loading />}>
+                <AnalyticsSetup />
+              </Suspense>
+            }
+          />
+        ))}
         <Route path="setup/:inboxId" element={<SetupPage />} />
         <Route path="setup/:inboxId/add/:kind" element={<SetupPage />} />
         <Route path="setup/:inboxId/:channelId" element={<SetupPage />} />
-        <Route path="setup/:inboxId/:channelId/wait" element={<SetupPage wait />} />
+        <Route path="setup/:inboxId/:channelId/wait" element={<SetupPage flow="wait" />} />
         <Route path="migrations/new" element={<NewMigrationPage />} />
         <Route path="migrations/:migrationId" element={<MigrationPage />} />
         <Route path="migrations/:migrationId/:step" element={<MigrationPage />} />
@@ -83,7 +107,8 @@ export function AppRoutes() {
           }
         />
         <Route element={<Layout />}>
-          <Route index element={<ChatsPage />} />
+          <Route index element={<IndexPage />} />
+          <Route path="conversations" element={<ChatsPage />} />
           <Route path="conversations/:conversationId" element={<ChatsPage />} />
           <Route path="mentions" element={<ChatsPage />} />
           <Route path="contacts" element={<ContactsHome />} />
