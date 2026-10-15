@@ -770,9 +770,12 @@ no plugins; inline styles and any http(s) image stay allowed for the sandboxed e
 inherits the policy. Every response carries `X-Content-Type-Options: nosniff`.
 
 Home and setup (M17): owners and admins open `/` on Home, agents on the inbox; the managers' inbox
-lives at `/conversations`. Home is one request, `GET /v1/home`: inbox counts and the oldest waiting
-conversation, visitors today, in the last 30 minutes and per day for seven days for each property the
-member may see, the last sent broadcast's recipients, opens and clicks, and the setup checklist. It is
+lives at `/conversations`. Home is one request, `GET /v1/home` (member sessions only): inbox counts
+and the oldest waiting conversation (open, not spam, with a contact message after the last reply from
+a member or bot; notes and automatic replies are not replies), visitors today, in the last 30 minutes
+and per day for seven days for each property the member may see, the last sent broadcast's
+recipients, sent, clicked and replied (there is no open tracking), and, for owners and admins, the
+setup checklist. Five queries whatever the workspace's size. It is
 read from the counters and rollups the server already keeps, so it spends none of the workspace's
 analytics query slots; blocks the member may not see are left out. The checklist is the same setup
 state the MCP `get_setup_state` tool returns. `/setup` is one hub of cards (live chat, e-mail, mobile
