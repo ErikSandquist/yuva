@@ -13,7 +13,11 @@ import (
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/riverqueue/river"
 	"github.com/yuin/goldmark"
+	"github.com/yuin/goldmark/ast"
 	"github.com/yuin/goldmark/extension"
+	"github.com/yuin/goldmark/parser"
+	"github.com/yuin/goldmark/text"
+	"github.com/yuin/goldmark/util"
 
 	"github.com/productdevbook/yuva/api/internal/oas"
 	"github.com/productdevbook/yuva/api/internal/store"
@@ -53,7 +57,56 @@ var (
 	errNotAnswerable       = errValidation("the answer must be a published reply to the thread itself")
 )
 
-var markdown = goldmark.New(goldmark.WithExtensions(extension.Table, extension.Strikethrough, extension.Linkify))
+var markdown = goldmark.New(
+	goldmark.WithExtensions(extension.Table, extension.Strikethrough, extension.Linkify),
+	goldmark.WithParserOptions(parser.WithASTTransformers(util.Prioritized(imagesAsLinks{}, 100))),
+)
+
+// imagesAsLinks turns every image into a link to it, so opening a post never fetches a URL its
+// author chose.
+type imagesAsLinks struct{}
+
+func (imagesAsLinks) Transform(doc *ast.Document, _ text.Reader, _ parser.Context) {
+	var images []*ast.Image
+	_ = ast.Walk(doc, func(n ast.Node, entering bool) (ast.WalkStatus, error) {
+		if img, ok := n.(*ast.Image); ok && entering {
+			images = append(images, img)
+		}
+		return ast.WalkContinue, nil
+	})
+	for _, img := range images {
+		parent := img.Parent()
+		if insideLink(img) {
+			for c := img.FirstChild(); c != nil; {
+				next := c.NextSibling()
+				parent.InsertBefore(parent, img, c)
+				c = next
+			}
+			parent.RemoveChild(parent, img)
+			continue
+		}
+		link := ast.NewLink()
+		link.Destination, link.Title = img.Destination, img.Title
+		for c := img.FirstChild(); c != nil; {
+			next := c.NextSibling()
+			link.AppendChild(link, c)
+			c = next
+		}
+		if !link.HasChildren() {
+			link.AppendChild(link, ast.NewString(img.Destination))
+		}
+		parent.ReplaceChild(parent, img, link)
+	}
+}
+
+func insideLink(n ast.Node) bool {
+	for p := n.Parent(); p != nil; p = p.Parent() {
+		if _, ok := p.(*ast.Link); ok {
+			return true
+		}
+	}
+	return false
+}
 
 var discussionHTML = func() *bluemonday.Policy {
 	p := bluemonday.UGCPolicy()
@@ -71,7 +124,7 @@ func renderMarkdown(src string) string {
 	}
 	var buf bytes.Buffer
 	if err := markdown.Convert([]byte(src), &buf); err != nil {
-		return discussionHTML.Sanitize("<p>" + src + "</p>")
+		return "<p>" + html.EscapeString(src) + "</p>"
 	}
 	return discussionHTML.Sanitize(buf.String())
 }
