@@ -33,7 +33,7 @@ import {
   useAnalyticsText,
   type NumMetric,
 } from "@/features/analytics/text"
-import type { AnalyticsDimension, AnalyticsFilterDimension, AnalyticsMetric } from "@/lib/api"
+import type { AnalyticsFilterDimension, AnalyticsMetric } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
 export function Change({ now, before, metric }: { now?: number; before?: number; metric: AnalyticsMetric }) {
@@ -111,8 +111,9 @@ function Kpis() {
   )
 }
 
-function bucketDate(grain: AnalyticsDimension, v: string) {
-  return new Date(grain === "time:hour" ? `${v}:00Z` : `${v}T00:00:00Z`)
+function bucketLabel(format: Intl.DateTimeFormat, v: string) {
+  const d = new Date(v.includes("T") ? `${v}:00Z` : `${v}T00:00:00Z`)
+  return Number.isNaN(d.getTime()) ? v : format.format(d)
 }
 
 export function TimeChart({ metric: fixed, goalId }: { metric?: NumMetric; goalId?: string }) {
@@ -188,7 +189,7 @@ export function TimeChart({ metric: fixed, goalId }: { metric?: NumMetric; goalI
               tickMargin={8}
               minTickGap={28}
               interval="preserveStartEnd"
-              tickFormatter={(v) => tick.format(bucketDate(grain, String(v)))}
+              tickFormatter={(v) => bucketLabel(tick, String(v))}
             />
             <YAxis
               tickLine={false}
@@ -201,7 +202,7 @@ export function TimeChart({ metric: fixed, goalId }: { metric?: NumMetric; goalI
               cursor={false}
               content={
                 <ChartTooltipContent
-                  labelFormatter={(_, p) => (p?.[0] ? long.format(bucketDate(grain, String(p[0].payload.at))) : "")}
+                  labelFormatter={(_, p) => (p?.[0] ? bucketLabel(long, String(p[0].payload.at)) : "")}
                   formatter={(value, name, item) => (
                     <div className="flex w-full items-center gap-2">
                       <span
@@ -212,7 +213,7 @@ export function TimeChart({ metric: fixed, goalId }: { metric?: NumMetric; goalI
                       />
                       <span className="flex-1 text-muted-foreground">
                         {name === "previous" && item.payload.previousAt
-                          ? long.format(bucketDate(grain, String(item.payload.previousAt)))
+                          ? bucketLabel(long, String(item.payload.previousAt))
                           : config[String(name)]?.label}
                       </span>
                       <span className="font-mono font-medium text-foreground tabular-nums">
