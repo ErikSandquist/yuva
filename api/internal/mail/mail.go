@@ -232,6 +232,9 @@ func (a Async) Send(ctx context.Context, m Message) error {
 type SMTP struct{ Config config.SMTP }
 
 func (s SMTP) Send(ctx context.Context, m Message) error {
+	if err := checkHeaders(m); err != nil {
+		return err
+	}
 	from, err := mail.ParseAddress(s.Config.From)
 	if err != nil {
 		return fmt.Errorf("smtp from: %w", err)
@@ -282,6 +285,15 @@ func (s SMTP) Send(ctx context.Context, m Message) error {
 		return err
 	}
 	return c.Quit()
+}
+
+func checkHeaders(m Message) error {
+	for name, v := range map[string]string{"To": m.To, "List-Unsubscribe": m.Unsubscribe} {
+		if strings.ContainsFunc(v, func(r rune) bool { return r < 0x20 || r == 0x7f }) {
+			return fmt.Errorf("mail: %s has a control character", name)
+		}
+	}
+	return nil
 }
 
 func compose(from *mail.Address, m Message) []byte {

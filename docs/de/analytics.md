@@ -316,8 +316,8 @@ verworfenen Event wird nur die Zahl gespeichert.
 
 ## Limits auf gehosteten Servern
 
-Auf einem Server mit offener Registrierung darf jeder Workspace im Monat 1.000.000 Events zählen, sofern der
-Operator kein anderes [Limit](configuration.md#analytics) gesetzt hat. Events darüber werden verworfen, bis
+Jeder Workspace darf im Monat 1.000.000 Events zählen, sofern der Operator kein anderes oder kein
+[Limit](configuration.md#analytics) gesetzt hat. Events darüber werden verworfen, bis
 der Monat endet, und das Panel sagt es. Eine Adresse darf an eine Website höchstens 120 Events pro Minute
 senden.
 

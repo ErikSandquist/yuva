@@ -96,7 +96,7 @@ Default types: `image/png,image/jpeg,image/gif,image/webp,image/heic,application
 | `YUVA_INGRESS_SECRET` | unset | Signs requests to `/ingress/email`; the Email Worker uses the same value. Unset, that endpoint refuses all mail. |
 | `YUVA_INGRESS_ACCEPT_V1` | `false` | Also accepts the old `v1` signature, until you redeploy an older Email Worker. |
 | `YUVA_INGRESS_ACCEPT_V2` | `true` | Also accepts the old `v2` signature, whose message is read before it is authenticated. Set `false` once every Email Worker signs `v3`; that closes advisory GHSA-jfvx-vc82-56f7. |
-| `YUVA_INGRESS_AUTHSERV_ID` | unset | Authserv-id of your receiving mail server, e.g. `mx.cloudflare.net`. Needed to use DMARC results. |
+| `YUVA_INGRESS_AUTHSERV_ID` | unset | Authserv-id of your receiving mail server, e.g. `mx.cloudflare.net`. Needed to use DMARC results; without it every inbound message is stored with DMARC `unknown` and the server warns at startup. |
 | `YUVA_INGRESS_MAX_CONCURRENT` | `8` | Messages `/ingress/email` handles at once per process; more get `503`. |
 | `YUVA_SES_TOPIC_ARNS` | unset | SNS topic ARNs whose SES bounces and complaints `/ingress/ses` accepts. |
 | `YUVA_EMAIL_SENDER_HOURLY_CAP` | `500` | Inbound e-mails one sender may send to a workspace per hour; more are refused (`429`). |
@@ -143,7 +143,7 @@ a request over one is refused with `422 hosted_limit` naming it.
 | `YUVA_ANALYTICS_BUFFER` | `50000` | Events one process holds before writing them (they are written every second). A full buffer answers `503`. At least 100. |
 | `YUVA_ANALYTICS_VISIT_CACHE` | `200000` | Visits one process keeps in memory to tell new visits from running ones. At least 1000. |
 | `YUVA_ANALYTICS_SALT_GRACE` | `2h` | How long a day's salt survives after the day ends, for late events. Up to `6h`. |
-| `YUVA_ANALYTICS_MONTHLY_EVENTS` | `1000000` when `YUVA_SIGNUP=open`, else `0` | Events one workspace may count per UTC month; more are dropped until the month ends. `0` is no limit. Per workspace, [`yuva workspace analytics-limit`](operations.md#operator-commands) overrides it. |
+| `YUVA_ANALYTICS_MONTHLY_EVENTS` | `1000000` | Events one workspace may count per UTC month; more are dropped until the month ends. `0` is no limit, and the server warns at startup when it is set.  Per workspace, [`yuva workspace analytics-limit`](operations.md#operator-commands) overrides it. |
 | `YUVA_ANALYTICS_PROPERTY_EVENTS_PER_MINUTE` | `60000` | Events one website may send per minute; more are dropped. |
 | `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` | `50` | Websites one workspace may have; more are refused (`403 property_limit`). |
 | `YUVA_ANALYTICS_RAW_DAYS` | `90` | Days the detailed visits and events are kept, from 7 to 400. Older days keep only their daily totals. |

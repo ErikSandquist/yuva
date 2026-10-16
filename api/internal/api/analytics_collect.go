@@ -471,8 +471,6 @@ func (s *Server) analyticsCORS(w http.ResponseWriter, r *http.Request, next http
 	raw := r.Header.Get("Origin")
 	if raw != "" {
 		w.Header().Add("Vary", "Origin")
-		w.Header().Set("Access-Control-Allow-Origin", raw)
-		w.Header().Set("Access-Control-Expose-Headers", "Retry-After")
 	}
 	key := strings.TrimPrefix(r.URL.Path, analyticsPrefix)
 	if key == "" || strings.Contains(key, "/") || len(key) > 200 {
@@ -506,6 +504,8 @@ func (s *Server) analyticsCORS(w http.ResponseWriter, r *http.Request, next http
 		writeProblem(w, errPropertyOrigin)
 		return
 	}
+	w.Header().Set("Access-Control-Allow-Origin", raw)
+	w.Header().Set("Access-Control-Expose-Headers", "Retry-After")
 	if r.Method == http.MethodOptions {
 		w.Header().Set("Access-Control-Allow-Methods", "POST")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")

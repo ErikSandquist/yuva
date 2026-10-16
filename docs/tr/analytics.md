@@ -315,8 +315,8 @@ gösterir. Atılan bir olaydan sayısı dışında hiçbir şey saklanmaz.
 
 ## Barındırılan sunucularda sınırlar
 
-Kaydı herkese açık bir sunucuda her çalışma alanı ayda 1.000.000 olay sayabilir; operatör başka bir
-[sınır](configuration.md#analitik) belirlemediyse. Sınırı aşan olaylar ay bitene kadar atılır ve panel bunu
+Her çalışma alanı ayda 1.000.000 olay sayabilir; operatör başka bir sınır ya da sınırsız
+[ayar](configuration.md#analitik) belirlemediyse. Sınırı aşan olaylar ay bitene kadar atılır ve panel bunu
 söyler. Bir adres bir web sitesine dakikada en fazla 120 olay gönderebilir.
 
 ## API

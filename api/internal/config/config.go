@@ -114,8 +114,7 @@ type Analytics struct {
 	// VisitCache is how many visitors' current visits are kept in memory.
 	VisitCache int
 	SaltGrace  time.Duration
-	// MonthlyEvents caps each workspace's events a month; 0 is no limit. A server with open
-	// sign-up defaults to 1,000,000.
+	// MonthlyEvents caps each workspace's events a month; 0 is no limit. The default is 1,000,000.
 	MonthlyEvents           int64
 	PropertyEventsPerMinute int
 	PropertiesPerWorkspace  int
@@ -374,11 +373,7 @@ func (c *Config) loadAnalytics() error {
 	if a.SaltGrace, err = time.ParseDuration(env("YUVA_ANALYTICS_SALT_GRACE", "2h")); err != nil || a.SaltGrace <= 0 || a.SaltGrace > 6*time.Hour {
 		return errors.New("YUVA_ANALYTICS_SALT_GRACE must be a positive duration of at most 6h, such as 2h")
 	}
-	def := "0"
-	if c.SignupOpen {
-		def = "1000000"
-	}
-	if a.MonthlyEvents, err = strconv.ParseInt(env("YUVA_ANALYTICS_MONTHLY_EVENTS", def), 10, 64); err != nil || a.MonthlyEvents < 0 {
+	if a.MonthlyEvents, err = strconv.ParseInt(env("YUVA_ANALYTICS_MONTHLY_EVENTS", "1000000"), 10, 64); err != nil || a.MonthlyEvents < 0 {
 		return errors.New("YUVA_ANALYTICS_MONTHLY_EVENTS must be a number of events, 0 for no limit")
 	}
 	if a.PropertyEventsPerMinute, err = strconv.Atoi(env("YUVA_ANALYTICS_PROPERTY_EVENTS_PER_MINUTE", "60000")); err != nil || a.PropertyEventsPerMinute < 1 {

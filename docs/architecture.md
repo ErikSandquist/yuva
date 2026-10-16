@@ -1711,7 +1711,7 @@ in six steps (M15.1–M15.6 in the roadmap). Decisions:
   after M15 without named scopes, never to existing keys. Analytics writes no stored event per page view;
   `analytics.alert` is a stored event and webhook type.
 - **Hosting.** `usage_counters.analytics_events`; `YUVA_ANALYTICS_MONTHLY_EVENTS` (per workspace;
-  unset: 1,000,000 with `YUVA_SIGNUP=open`, else no limit; operator overrides with `yuva workspace
+  unset: 1,000,000, `0` is no limit and warns at startup; operator overrides with `yuva workspace
   analytics-limit`), per-property and per-address ingest limits, 4 concurrent queries per workspace;
   `YUVA_ANALYTICS=off` removes the feature. The script and endpoint keep their names
   (`/yuva-analytics.js`, `/client/v1/analytics/`); the docs teach serving both from the site's own domain

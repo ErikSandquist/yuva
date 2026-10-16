@@ -171,13 +171,19 @@ func TestAnalyticsCollectionPrivacy(t *testing.T) {
 		if r.status != c.status || r.str("code") != c.code {
 			t.Fatalf("%s %s: %d %s", c.origin, c.page, r.status, r.raw)
 		}
-		if c.origin != "" && r.header.Get("Access-Control-Allow-Origin") != c.origin {
-			t.Fatalf("refusal without CORS headers: %v", r.header)
+		wantACAO := ""
+		if c.code == "page_not_allowed" {
+			wantACAO = c.origin
+		}
+		if got := r.header.Get("Access-Control-Allow-Origin"); got != wantACAO {
+			t.Fatalf("%s %s: Access-Control-Allow-Origin %q, want %q", c.origin, c.page, got, wantACAO)
 		}
 	}
 	ok(collect(h, key, collectReq{origin: "https://docs.example.org", ip: "198.51.100.3", body: pageview("https://docs.example.org/start")}))
 	if r := collect(h, "yuva_ak_unknown", collectReq{origin: "https://example.com", ip: "198.51.100.3", body: pageview("https://example.com/")}); r.status != http.StatusNotFound {
 		t.Fatalf("unknown key: %d", r.status)
+	} else if r.header.Get("Access-Control-Allow-Origin") != "" {
+		t.Fatalf("unknown key reflects the origin: %v", r.header)
 	}
 	if r := collect(h, key, collectReq{origin: "https://example.com", ip: "198.51.100.3", body: map[string]any{"n": "yuva_signup", "u": "https://example.com/"}}); r.status != http.StatusBadRequest {
 		t.Fatalf("reserved event name: %d", r.status)

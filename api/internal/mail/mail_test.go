@@ -267,6 +267,19 @@ func TestSMTPSendsMultipartAlternative(t *testing.T) {
 	}
 }
 
+func TestSMTPRefusesControlCharactersInHeaders(t *testing.T) {
+	s := mail.SMTP{Config: config.SMTP{Host: "127.0.0.1", Port: 1, TLS: "none", From: "Yuva <yuva@example.com>"}}
+	for _, m := range []mail.Message{
+		{To: "a@example.com\r\nBcc: b@example.com", Subject: "s", Text: "t"},
+		{To: "a@example.com", Subject: "s", Text: "t", Unsubscribe: "https://example.com/u\r\nX-Evil: 1"},
+		{To: "a@example.com\x00", Subject: "s", Text: "t"},
+	} {
+		if err := s.Send(context.Background(), m); err == nil || !strings.Contains(err.Error(), "control character") {
+			t.Errorf("%q %q: %v", m.To, m.Unsubscribe, err)
+		}
+	}
+}
+
 func fakeSMTP(ln net.Listener, got chan<- []byte) {
 	conn, err := ln.Accept()
 	if err != nil {

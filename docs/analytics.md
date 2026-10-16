@@ -313,8 +313,8 @@ nothing is kept but its count.
 
 ## Limits on hosted servers
 
-On a server with open sign-up each workspace may count 1,000,000 events a month, unless the operator
-set another [limit](configuration.md#analytics). Events over it are dropped until the month ends, and the
+Each workspace may count 1,000,000 events a month, unless the operator set another or no
+[limit](configuration.md#analytics). Events over it are dropped until the month ends, and the
 panel says so. One address may send 120 events a minute to a website.
 
 ## API

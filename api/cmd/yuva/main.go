@@ -275,6 +275,9 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 	if !cfg.Analytics.On {
 		log.Info("YUVA_ANALYTICS is off; analytics endpoints, the script and collection are not served")
 	}
+	if cfg.Analytics.On && cfg.Analytics.MonthlyEvents == 0 {
+		log.Warn("YUVA_ANALYTICS_MONTHLY_EVENTS is 0; a workspace without its own limit has no cap on analytics events")
+	}
 	if cfg.IngressAcceptV1 {
 		log.Warn("YUVA_INGRESS_ACCEPT_V1 is set; /ingress/email accepts v1 signatures, which do not cover the envelope sender")
 	}
@@ -282,7 +285,7 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 		log.Warn("YUVA_INGRESS_ACCEPT_V2 is on; /ingress/email accepts v2 signatures, whose body is read before it is authenticated. Set it to false once every Email Worker signs v3")
 	}
 	if cfg.IngressSecret != "" && cfg.IngressAuthservID == "" {
-		log.Warn("YUVA_INGRESS_AUTHSERV_ID is not set; DMARC results of inbound mail are stored but not used")
+		log.Warn("YUVA_INGRESS_AUTHSERV_ID is not set; DMARC is treated as unknown for all inbound mail: nothing is marked spam, a forged sender can join an existing thread, and abuse reports and mailbox cutover are not accepted")
 	}
 	analyticsWorkers := 0
 	if cfg.Analytics.On {

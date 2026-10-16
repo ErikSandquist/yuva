@@ -97,7 +97,7 @@ Varsayılan türler: `image/png,image/jpeg,image/gif,image/webp,image/heic,appli
 | `YUVA_INGRESS_SECRET` | atanmamış | `/ingress/email` isteklerini imzalar; Email Worker aynı değeri kullanır. Atanmamışsa bu uç nokta tüm e-postaları reddeder. |
 | `YUVA_INGRESS_ACCEPT_V1` | `false` | Eski bir Email Worker'ı yeniden deploy edene kadar eski `v1` imzasını da kabul eder. |
 | `YUVA_INGRESS_ACCEPT_V2` | `true` | Eski `v2` imzasını da kabul eder; bu imzada e-posta doğrulanmadan önce okunur. Bütün Email Worker'lar `v3` ile imzaladığında `false` yapın; bu, GHSA-jfvx-vc82-56f7 duyurusundaki açığı kapatır. |
-| `YUVA_INGRESS_AUTHSERV_ID` | atanmamış | E-postayı alan sunucunuzun authserv-id'si, ör. `mx.cloudflare.net`. DMARC sonuçlarının kullanılması için gerekir. |
+| `YUVA_INGRESS_AUTHSERV_ID` | atanmamış | E-postayı alan sunucunuzun authserv-id'si, ör. `mx.cloudflare.net`. DMARC sonuçlarının kullanılması için gerekir; yoksa her gelen ileti DMARC `unknown` ile saklanır ve sunucu açılışta uyarı verir. |
 | `YUVA_INGRESS_MAX_CONCURRENT` | `8` | `/ingress/email`'in süreç başına aynı anda işlediği mesaj sayısı; fazlası `503` alır. |
 | `YUVA_SES_TOPIC_ARNS` | atanmamış | `/ingress/ses`'in SES geri dönme (bounce) ve şikâyet bildirimlerini kabul ettiği SNS topic ARN'leri. |
 | `YUVA_EMAIL_SENDER_HOURLY_CAP` | `500` | Bir göndericinin bir çalışma alanına saatte gönderebileceği e-posta sayısı; fazlası reddedilir (`429`). |
@@ -144,7 +144,7 @@ sunucular içindir; birini aşan bir istek adı belirtilerek `422 hosted_limit` 
 | `YUVA_ANALYTICS_BUFFER` | `50000` | Bir sürecin yazmadan önce bellekte tuttuğu olay sayısı (saniyede bir yazılır). Dolu bir arabellek `503` döner. En az 100. |
 | `YUVA_ANALYTICS_VISIT_CACHE` | `200000` | Bir sürecin sürmekte olan ziyaretleri yenilerinden ayırmak için bellekte tuttuğu ziyaret sayısı. En az 1000. |
 | `YUVA_ANALYTICS_SALT_GRACE` | `2h` | Bir günün tuzunun, geç gelen olaylar için gün bittikten sonra ne kadar yaşadığı. En çok `6h`. |
-| `YUVA_ANALYTICS_MONTHLY_EVENTS` | `YUVA_SIGNUP=open` ise `1000000`, değilse `0` | Bir çalışma alanının UTC ayı başına sayabileceği olay; fazlası ay bitene kadar atılır. `0` sınırsız demektir. [`yuva workspace analytics-limit`](operations.md#operatör-komutları) bunu çalışma alanı başına değiştirir. |
+| `YUVA_ANALYTICS_MONTHLY_EVENTS` | `1000000` | Bir çalışma alanının UTC ayı başına sayabileceği olay; fazlası ay bitene kadar atılır. `0` sınırsız demektir ve ayarlandığında sunucu açılışta uyarı verir. [`yuva workspace analytics-limit`](operations.md#operatör-komutları) bunu çalışma alanı başına değiştirir. |
 | `YUVA_ANALYTICS_PROPERTY_EVENTS_PER_MINUTE` | `60000` | Bir web sitesinin dakikada gönderebileceği olay; fazlası atılır. |
 | `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` | `50` | Bir çalışma alanının sahip olabileceği web sitesi; fazlası reddedilir (`403 property_limit`). |
 | `YUVA_ANALYTICS_RAW_DAYS` | `90` | Ayrıntılı ziyaret ve olayların saklandığı gün sayısı, 7 ile 400 arası. Daha eski günlerde yalnızca günlük toplamlar kalır. |

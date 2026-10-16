@@ -97,7 +97,7 @@ Standardtypen: `image/png,image/jpeg,image/gif,image/webp,image/heic,application
 | `YUVA_INGRESS_SECRET` | nicht gesetzt | Signiert Anfragen an `/ingress/email`; der Email Worker verwendet denselben Wert. Ohne Wert lehnt dieser Endpunkt jede E-Mail ab. |
 | `YUVA_INGRESS_ACCEPT_V1` | `false` | Akzeptiert zusätzlich die alte `v1`-Signatur, bis Sie einen älteren Email Worker neu deployen. |
 | `YUVA_INGRESS_ACCEPT_V2` | `true` | Akzeptiert zusätzlich die alte `v2`-Signatur, bei der die Nachricht vor der Prüfung gelesen wird. Setzen Sie `false`, sobald jeder Email Worker mit `v3` signiert; das schließt Advisory GHSA-jfvx-vc82-56f7. |
-| `YUVA_INGRESS_AUTHSERV_ID` | nicht gesetzt | Authserv-ID Ihres empfangenden Mailservers, z. B. `mx.cloudflare.net`. Nötig, damit DMARC-Ergebnisse genutzt werden. |
+| `YUVA_INGRESS_AUTHSERV_ID` | nicht gesetzt | Authserv-ID Ihres empfangenden Mailservers, z. B. `mx.cloudflare.net`. Nötig, damit DMARC-Ergebnisse genutzt werden; ohne sie wird jede eingehende Nachricht mit DMARC `unknown` gespeichert und der Server warnt beim Start. |
 | `YUVA_INGRESS_MAX_CONCURRENT` | `8` | Nachrichten, die `/ingress/email` pro Prozess gleichzeitig verarbeitet; weitere erhalten `503`. |
 | `YUVA_SES_TOPIC_ARNS` | nicht gesetzt | SNS-Topic-ARNs, deren SES-Bounces und -Beschwerden `/ingress/ses` annimmt. |
 | `YUVA_EMAIL_SENDER_HOURLY_CAP` | `500` | Eingehende E-Mails, die ein Absender pro Stunde an einen Workspace senden darf; weitere werden abgelehnt (`429`). |
@@ -145,7 +145,7 @@ Einstellung nennt.
 | `YUVA_ANALYTICS_BUFFER` | `50000` | Events, die ein Prozess hält, bevor er sie schreibt (geschrieben wird jede Sekunde). Ein voller Puffer antwortet mit `503`. Mindestens 100. |
 | `YUVA_ANALYTICS_VISIT_CACHE` | `200000` | Besuche, die ein Prozess im Speicher hält, um laufende von neuen Besuchen zu unterscheiden. Mindestens 1000. |
 | `YUVA_ANALYTICS_SALT_GRACE` | `2h` | Wie lange der Salt eines Tages nach dessen Ende für verspätete Events weiterlebt. Höchstens `6h`. |
-| `YUVA_ANALYTICS_MONTHLY_EVENTS` | `1000000` bei `YUVA_SIGNUP=open`, sonst `0` | Events, die ein Workspace pro UTC-Monat zählen darf; mehr werden verworfen, bis der Monat endet. `0` heißt kein Limit. [`yuva workspace analytics-limit`](operations.md#operator-befehle) überschreibt es je Workspace. |
+| `YUVA_ANALYTICS_MONTHLY_EVENTS` | `1000000` | Events, die ein Workspace pro UTC-Monat zählen darf; mehr werden verworfen, bis der Monat endet. `0` heißt kein Limit; der Server warnt dann beim Start. [`yuva workspace analytics-limit`](operations.md#operator-befehle) überschreibt es je Workspace. |
 | `YUVA_ANALYTICS_PROPERTY_EVENTS_PER_MINUTE` | `60000` | Events, die eine Website pro Minute senden darf; mehr werden verworfen. |
 | `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` | `50` | Websites, die ein Workspace haben darf; weitere werden abgelehnt (`403 property_limit`). |
 | `YUVA_ANALYTICS_RAW_DAYS` | `90` | Tage, die die detaillierten Besuche und Events aufbewahrt werden, von 7 bis 400. Ältere Tage behalten nur ihre Tagessummen. |
