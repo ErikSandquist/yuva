@@ -3,7 +3,8 @@ import { docsCopy } from "@/copy/docs"
 import { i18nFor } from "@/i18n"
 import Base from "@/layouts/Base.astro"
 import { href, neighbours, nav } from "@/lib/docs"
-import { docsPath, type Locale } from "@/lib/routes"
+import { headerCopy } from "@/copy/header"
+import { APP_URL, bcp47, docsPath, languageName, links, locales, type Locale } from "@/lib/routes"
 import ThemeToggle from "@/ui/ThemeToggle.astro"
 import DocsHeader from "@/layouts/DocsHeader.astro"
 import Cross from "@/ui/Cross.astro"
@@ -42,6 +43,7 @@ const {
   home = false,
 } = Astro.props
 const t = docsCopy(i18nFor(locale))
+const h = headerCopy(i18nFor(locale), locale)
 const groups = await nav(locale)
 const { prev, next } = await neighbours(slug, locale)
 const toc = headings.filter((h) => h.depth === 2 || h.depth === 3)
@@ -83,7 +85,35 @@ const strip = "relative flex h-11 items-center gap-2 border-b border-rule px-5 t
           </svg>
         </summary>
         <div class="absolute inset-x-0 top-full z-40 max-h-[70svh] overflow-y-auto border-b border-rule bg-paper p-3 shadow-paper">
-          <ThemeToggle locale={locale} class="mb-3 ms-2 sm:hidden" />
+          <div class="mb-3 grid gap-3 border-b border-rule px-2 pb-3 md:hidden">
+            <ThemeToggle locale={locale} class="justify-self-start" />
+            <p class="flex flex-wrap gap-x-4 gap-y-2 text-sm">
+              {locales
+                .filter((l) => l !== locale)
+                .map((l) => (
+                  <a class="text-ink-soft hover:text-ink" href={docsPath(rel)[l]} hreflang={l} lang={bcp47[l]}>
+                    {languageName(l)}
+                  </a>
+                ))}
+              <a class="text-ink-soft hover:text-ink" href={links.repo}>
+                GitHub
+              </a>
+            </p>
+            <div class="grid grid-cols-2 gap-3">
+              <a
+                class="inline-flex h-10 items-center justify-center rounded-full border border-rule-strong text-sm font-medium"
+                href={APP_URL}
+              >
+                {h.logIn}
+              </a>
+              <a
+                class="inline-flex h-10 items-center justify-center rounded-full bg-signal text-sm font-medium text-white"
+                href={`${APP_URL}/?signup=1`}
+              >
+                {h.startFree}
+              </a>
+            </div>
+          </div>
           <DocsNav locale={locale} groups={groups} slug={slug} label={t.documentation} />
         </div>
       </details>

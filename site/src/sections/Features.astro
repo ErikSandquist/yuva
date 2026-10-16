@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { t, shots: s, previews } = Astro.props
-const row = "grid items-center gap-10 lg:grid-cols-2 lg:gap-16"
+const row = "grid items-center gap-10 lg:gap-16"
 const link = "mt-6 inline-flex text-sm font-medium text-brand hover:underline"
 ---
 
@@ -27,17 +27,28 @@ const link = "mt-6 inline-flex text-sm font-medium text-brand hover:underline"
       index={String(i + 1).padStart(2, "0")}
       label={f.title}
     >
-      <div class:list={[row, !f.shot && "lg:grid-cols-1"]}>
+      <div class:list={[row, f.shot && "lg:grid-cols-2"]}>
         <div class:list={["min-w-0", f.shot && flip && "lg:order-2"]}>
           <SectionHead title={f.title} lead={f.body} id={`${f.id}-title`} />
-          <ul class="mt-8 grid max-w-xl gap-3 text-sm">
-            {f.points.map((p) => (
-              <li class="flex gap-3 border-t border-rule pt-3">
-                <span class="w-2/5 shrink-0 font-semibold tracking-tight">{p.term}</span>
-                <span class="text-ink-soft">{p.text}</span>
-              </li>
-            ))}
-          </ul>
+          {f.shot ? (
+            <ul class="mt-8 grid max-w-xl gap-3 text-sm">
+              {f.points.map((p) => (
+                <li class="flex gap-3 border-t border-rule pt-3">
+                  <span class="w-2/5 shrink-0 font-semibold tracking-tight">{p.term}</span>
+                  <span class="text-ink-soft">{p.text}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <ul class="mt-10 grid border-t border-rule sm:grid-cols-3">
+              {f.points.map((p) => (
+                <li class="border-b border-rule py-4 text-sm sm:border-b-0 sm:border-s sm:px-6 sm:first:border-s-0 sm:first:ps-0 sm:last:pe-0">
+                  <span class="block font-semibold tracking-tight">{p.term}</span>
+                  <span class="mt-1 block text-ink-soft">{p.text}</span>
+                </li>
+              ))}
+            </ul>
+          )}
           <a class={link} href={f.href}>
             {f.link ?? t.guide} →
           </a>
@@ -55,7 +66,6 @@ const link = "mt-6 inline-flex text-sm font-medium text-brand hover:underline"
               alt={alt}
               widths={[640, 960, 1280]}
               sizes="(min-width: 1024px) 520px, calc(100vw - 40px)"
-              crop={{ x: 0.45, y: 0.08, w: 0.55, h: 0.6 }}
             />
           </div>
         )}

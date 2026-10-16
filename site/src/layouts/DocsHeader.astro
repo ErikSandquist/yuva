@@ -24,7 +24,7 @@ const tab =
   "relative flex h-14 items-center text-sm text-ink-soft transition-colors hover:text-ink aria-[current=page]:font-medium aria-[current=page]:text-ink aria-[current=page]:after:absolute aria-[current=page]:after:inset-x-0 aria-[current=page]:after:-bottom-px aria-[current=page]:after:h-0.5 aria-[current=page]:after:bg-signal"
 ---
 
-<header class="sticky top-0 z-50 border-b border-rule bg-paper/90 backdrop-blur-lg">
+<header class="sticky top-0 z-50 border-b border-rule before:absolute before:inset-0 before:-z-10 before:bg-paper/90 before:backdrop-blur-lg">
   <div class="flex h-14 items-stretch">
     <div
       class:list={[
@@ -55,13 +55,13 @@ const tab =
         <span class="md:hidden">
           <DocsSearch locale={locale} compact />
         </span>
-        <ThemeToggle locale={locale} class="hidden sm:inline-flex" />
-        <LangMenu locale={locale} paths={paths} class="hidden sm:block" />
+        <ThemeToggle locale={locale} class="hidden md:inline-flex" />
+        <LangMenu locale={locale} paths={paths} class="hidden md:block" />
         <a class="hidden text-sm text-ink-soft hover:text-ink lg:block" href={home[locale]}>
           {t.backToSite} ↗
         </a>
         <a
-          class="grid size-9 place-items-center rounded-md text-ink-soft hover:bg-paper-deep hover:text-ink"
+          class="hidden size-9 place-items-center rounded-md text-ink-soft hover:bg-paper-deep hover:text-ink md:grid"
           href={links.repo}
           aria-label="GitHub"
         >
