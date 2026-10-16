@@ -36,6 +36,7 @@ var (
 	errImageFileTooBig = problem(http.StatusRequestEntityTooLarge, "file_too_large", "an image upload is at most 10 MiB")
 	errImageQuota      = problem(http.StatusConflict, "image_quota", "the workspace's e-mail images would exceed the server's limit")
 	errImageSent       = problem(http.StatusConflict, "image_sent", "a sent broadcast used this image; delete it with force=true and mail already delivered shows a broken image")
+	limitImageUpload   = limit{30, time.Minute}
 	imageToken         = regexp.MustCompile(`^[a-z2-7]{26}$`)
 	iconFile           = regexp.MustCompile(`^[a-z]+-(dark|light|brand)\.png$`)
 	tokenEncoding      = base32.StdEncoding.WithPadding(base32.NoPadding)
@@ -120,6 +121,9 @@ func (s *Server) storeEmailImage(ctx context.Context, q *store.Queries, p princi
 func (s *Server) UploadEmailImage(ctx context.Context, req oas.UploadEmailImageRequestObject) (oas.UploadEmailImageResponseObject, error) {
 	p := principalFrom(ctx)
 	if err := requireManagerOrKey(p); err != nil {
+		return nil, err
+	}
+	if err := s.rateLimit(rateCheck{"email-image-upload:" + p.workspaceID.String(), limitImageUpload}); err != nil {
 		return nil, err
 	}
 	var data []byte

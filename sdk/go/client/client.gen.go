@@ -22626,9 +22626,10 @@ type ClientInterface interface {
 	//
 	// Every consent event of the contact's subscriptions to the lists the caller can see, oldest
 	// first, in the rows of `exportListConsent`: for answering a data subject's access request
-	// (GDPR Art. 15, KVKK Art. 11).
+	// (GDPR Art. 15, KVKK Art. 11). The rows carry IP addresses and user agents, so agents are
+	// refused with `403 forbidden`.
 	//
-	// Scopes: `contacts:read` and `lists:read`.
+	// Owners, admins and API keys. Scopes: `contacts:read` and `lists:read`.
 	//
 	// Corresponds with GET /v1/contacts/{contactId}/consent (the `ExportContactConsent` operationId).
 	ExportContactConsent(ctx context.Context, contactId ContactId, params *ExportContactConsentParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -23625,7 +23626,8 @@ type ClientInterface interface {
 	// (`422 image_too_large`).
 	//
 	// The same image uploaded again answers `200` with the existing one. `409 image_quota` when
-	// the workspace's images would exceed the server's limit.
+	// the workspace's images would exceed the server's limit. A workspace can upload 30 images a
+	// minute; more are refused with `429 rate_limited` and `Retry-After`.
 	//
 	// Owners, admins and API keys. Scope: `broadcasts:write`.
 	//
@@ -24114,7 +24116,8 @@ type ClientInterface interface {
 	// agreed or refused from then on. Pending subscriptions are left out. Check the rows against
 	// your own records before uploading; only commercial lists need registering.
 	//
-	// Scope: `lists:read`.
+	// The rows carry IP addresses and user agents, so agents are refused with `403 forbidden`.
+	// Owners, admins and API keys. Scope: `lists:read`.
 	//
 	// Corresponds with GET /v1/lists/{listId}/consent-export (the `ExportListConsent` operationId).
 	ExportListConsent(ctx context.Context, listId ListId, params *ExportListConsentParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -24330,7 +24333,10 @@ type ClientInterface interface {
 
 	// GetSubscription A subscription with its consent events
 	//
-	// Scope: `lists:read`.
+	// The events carry the subscriber's IP address and user agent and the acting member or key,
+	// so agents are refused with `403 forbidden`.
+	//
+	// Owners, admins and API keys. Scope: `lists:read`.
 	//
 	// Corresponds with GET /v1/lists/{listId}/subscriptions/{subscriptionId} (the `GetSubscription` operationId).
 	GetSubscription(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *GetSubscriptionParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -30346,9 +30352,10 @@ func (c *Client) UpdateContact(ctx context.Context, contactId ContactId, params 
 //
 // Every consent event of the contact's subscriptions to the lists the caller can see, oldest
 // first, in the rows of `exportListConsent`: for answering a data subject's access request
-// (GDPR Art. 15, KVKK Art. 11).
+// (GDPR Art. 15, KVKK Art. 11). The rows carry IP addresses and user agents, so agents are
+// refused with `403 forbidden`.
 //
-// Scopes: `contacts:read` and `lists:read`.
+// Owners, admins and API keys. Scopes: `contacts:read` and `lists:read`.
 //
 // Corresponds with GET /v1/contacts/{contactId}/consent (the `ExportContactConsent` operationId).
 func (c *Client) ExportContactConsent(ctx context.Context, contactId ContactId, params *ExportContactConsentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -32075,7 +32082,8 @@ func (c *Client) ListEmailImages(ctx context.Context, params *ListEmailImagesPar
 // (`422 image_too_large`).
 //
 // The same image uploaded again answers `200` with the existing one. `409 image_quota` when
-// the workspace's images would exceed the server's limit.
+// the workspace's images would exceed the server's limit. A workspace can upload 30 images a
+// minute; more are refused with `429 rate_limited` and `Retry-After`.
 //
 // Owners, admins and API keys. Scope: `broadcasts:write`.
 //
@@ -32964,7 +32972,8 @@ func (c *Client) UpdateMailingList(ctx context.Context, listId ListId, params *U
 // agreed or refused from then on. Pending subscriptions are left out. Check the rows against
 // your own records before uploading; only commercial lists need registering.
 //
-// Scope: `lists:read`.
+// The rows carry IP addresses and user agents, so agents are refused with `403 forbidden`.
+// Owners, admins and API keys. Scope: `lists:read`.
 //
 // Corresponds with GET /v1/lists/{listId}/consent-export (the `ExportListConsent` operationId).
 func (c *Client) ExportListConsent(ctx context.Context, listId ListId, params *ExportListConsentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -33320,7 +33329,10 @@ func (c *Client) DeleteSubscription(ctx context.Context, listId ListId, subscrip
 
 // GetSubscription A subscription with its consent events
 //
-// Scope: `lists:read`.
+// The events carry the subscriber's IP address and user agent and the acting member or key,
+// so agents are refused with `403 forbidden`.
+//
+// Owners, admins and API keys. Scope: `lists:read`.
 //
 // Corresponds with GET /v1/lists/{listId}/subscriptions/{subscriptionId} (the `GetSubscription` operationId).
 func (c *Client) GetSubscription(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *GetSubscriptionParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -57129,9 +57141,10 @@ type ClientWithResponsesInterface interface {
 	//
 	// Every consent event of the contact's subscriptions to the lists the caller can see, oldest
 	// first, in the rows of `exportListConsent`: for answering a data subject's access request
-	// (GDPR Art. 15, KVKK Art. 11).
+	// (GDPR Art. 15, KVKK Art. 11). The rows carry IP addresses and user agents, so agents are
+	// refused with `403 forbidden`.
 	//
-	// Scopes: `contacts:read` and `lists:read`.
+	// Owners, admins and API keys. Scopes: `contacts:read` and `lists:read`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -58194,7 +58207,8 @@ type ClientWithResponsesInterface interface {
 	// (`422 image_too_large`).
 	//
 	// The same image uploaded again answers `200` with the existing one. `409 image_quota` when
-	// the workspace's images would exceed the server's limit.
+	// the workspace's images would exceed the server's limit. A workspace can upload 30 images a
+	// minute; more are refused with `429 rate_limited` and `Retry-After`.
 	//
 	// Owners, admins and API keys. Scope: `broadcasts:write`.
 	//
@@ -58725,7 +58739,8 @@ type ClientWithResponsesInterface interface {
 	// agreed or refused from then on. Pending subscriptions are left out. Check the rows against
 	// your own records before uploading; only commercial lists need registering.
 	//
-	// Scope: `lists:read`.
+	// The rows carry IP addresses and user agents, so agents are refused with `403 forbidden`.
+	// Owners, admins and API keys. Scope: `lists:read`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -58959,7 +58974,10 @@ type ClientWithResponsesInterface interface {
 
 	// GetSubscriptionWithResponse A subscription with its consent events
 	//
-	// Scope: `lists:read`.
+	// The events carry the subscriber's IP address and user agent and the acting member or key,
+	// so agents are refused with `403 forbidden`.
+	//
+	// Owners, admins and API keys. Scope: `lists:read`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -73150,6 +73168,8 @@ type UploadEmailImageResponse struct {
 	ApplicationproblemJSON415 *Problem
 	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
 	ApplicationproblemJSON422 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -73195,6 +73215,11 @@ func (r UploadEmailImageResponse) GetApplicationproblemJSON415() *Problem {
 // GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
 func (r UploadEmailImageResponse) GetApplicationproblemJSON422() *Problem {
 	return r.ApplicationproblemJSON422
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r UploadEmailImageResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
 }
 
 // GetBody returns the raw response body bytes
@@ -85006,9 +85031,10 @@ func (c *ClientWithResponses) UpdateContactWithResponse(ctx context.Context, con
 //
 // Every consent event of the contact's subscriptions to the lists the caller can see, oldest
 // first, in the rows of `exportListConsent`: for answering a data subject's access request
-// (GDPR Art. 15, KVKK Art. 11).
+// (GDPR Art. 15, KVKK Art. 11). The rows carry IP addresses and user agents, so agents are
+// refused with `403 forbidden`.
 //
-// Scopes: `contacts:read` and `lists:read`.
+// Owners, admins and API keys. Scopes: `contacts:read` and `lists:read`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -86509,7 +86535,8 @@ func (c *ClientWithResponses) ListEmailImagesWithResponse(ctx context.Context, p
 // (`422 image_too_large`).
 //
 // The same image uploaded again answers `200` with the existing one. `409 image_quota` when
-// the workspace's images would exceed the server's limit.
+// the workspace's images would exceed the server's limit. A workspace can upload 30 images a
+// minute; more are refused with `429 rate_limited` and `Retry-After`.
 //
 // Owners, admins and API keys. Scope: `broadcasts:write`.
 //
@@ -87280,7 +87307,8 @@ func (c *ClientWithResponses) UpdateMailingListWithResponse(ctx context.Context,
 // agreed or refused from then on. Pending subscriptions are left out. Check the rows against
 // your own records before uploading; only commercial lists need registering.
 //
-// Scope: `lists:read`.
+// The rows carry IP addresses and user agents, so agents are refused with `403 forbidden`.
+// Owners, admins and API keys. Scope: `lists:read`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -87598,7 +87626,10 @@ func (c *ClientWithResponses) DeleteSubscriptionWithResponse(ctx context.Context
 
 // GetSubscriptionWithResponse A subscription with its consent events
 //
-// Scope: `lists:read`.
+// The events carry the subscriber's IP address and user agent and the acting member or key,
+// so agents are refused with `403 forbidden`.
+//
+// Owners, admins and API keys. Scope: `lists:read`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -99770,6 +99801,13 @@ func ParseUploadEmailImageResponse(rsp *http.Response) (*UploadEmailImageRespons
 			return nil, err
 		}
 		response.ApplicationproblemJSON422 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
 
 	}
 

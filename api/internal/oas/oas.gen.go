@@ -54387,6 +54387,20 @@ func (response UploadEmailImage422ApplicationProblemPlusJSONResponse) VisitUploa
 	return err
 }
 
+type UploadEmailImage429ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadEmailImage429ApplicationProblemPlusJSONResponse) VisitUploadEmailImageResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type DeleteEmailImageRequestObject struct {
 	ImageId ImageId `json:"imageId"`
 	Params  DeleteEmailImageParams

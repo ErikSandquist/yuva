@@ -703,6 +703,9 @@ func (s *Server) GetSubscription(ctx context.Context, req oas.GetSubscriptionReq
 	if err != nil {
 		return nil, err
 	}
+	if err := requireManagerOrKey(p); err != nil {
+		return nil, err
+	}
 	body, err := oneSubscription(ctx, s.st.Queries, sub)
 	if err != nil {
 		return nil, err
@@ -890,6 +893,9 @@ func (s *Server) ExportListConsent(ctx context.Context, req oas.ExportListConsen
 	if err != nil {
 		return nil, err
 	}
+	if err := requireManagerOrKey(p); err != nil {
+		return nil, err
+	}
 	if req.Params.Format != nil && !req.Params.Format.Valid() {
 		return nil, errValidation("format must be csv, json or iys")
 	}
@@ -911,6 +917,9 @@ func (s *Server) ExportListConsent(ctx context.Context, req oas.ExportListConsen
 
 func (s *Server) ExportContactConsent(ctx context.Context, req oas.ExportContactConsentRequestObject) (oas.ExportContactConsentResponseObject, error) {
 	p := principalFrom(ctx)
+	if err := requireManagerOrKey(p); err != nil {
+		return nil, err
+	}
 	if err := s.contactForConsent(ctx, p, req.ContactId); err != nil {
 		return nil, err
 	}

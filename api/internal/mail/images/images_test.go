@@ -10,7 +10,10 @@ import (
 	"image/jpeg"
 	"image/png"
 	"os"
+	"sync"
+	"sync/atomic"
 	"testing"
+	"time"
 )
 
 func pngOf(t *testing.T, w, h int, alpha bool) []byte {
@@ -201,5 +204,54 @@ func TestSameUploadSameHash(t *testing.T) {
 	r2, _ := Normalize(b)
 	if r1.SHA256 != r2.SHA256 {
 		t.Error("normalising is not deterministic")
+	}
+}
+
+func TestPixelBudgetHoldsBackUntilReleased(t *testing.T) {
+	b := newPixelBudget(100)
+	b.acquire(60)
+	var got atomic.Bool
+	done := make(chan struct{})
+	go func() {
+		b.acquire(60)
+		got.Store(true)
+		close(done)
+	}()
+	time.Sleep(50 * time.Millisecond)
+	if got.Load() {
+		t.Fatal("second acquire passed while the budget was spent")
+	}
+	b.release(60)
+	select {
+	case <-done:
+	case <-time.After(2 * time.Second):
+		t.Fatal("second acquire never passed after release")
+	}
+}
+
+func TestNormalizeReleasesItsPixels(t *testing.T) {
+	old := budget
+	budget = newPixelBudget(2 * 200 * 100)
+	defer func() { budget = old }()
+	src := pngOf(t, 200, 100, false)
+	var wg sync.WaitGroup
+	for range 8 {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			if _, err := Normalize(src); err != nil {
+				t.Error(err)
+			}
+		}()
+	}
+	wg.Wait()
+	if budget.free != 2*200*100 {
+		t.Fatalf("budget left at %d", budget.free)
+	}
+	if _, err := Normalize([]byte("GIF89a")); err == nil {
+		t.Fatal("truncated GIF accepted")
+	}
+	if budget.free != 2*200*100 {
+		t.Fatalf("budget left at %d after a refusal", budget.free)
 	}
 }

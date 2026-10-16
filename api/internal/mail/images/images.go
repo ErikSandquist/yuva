@@ -13,6 +13,7 @@ import (
 	"image/jpeg"
 	"image/png"
 	"net/http"
+	"sync"
 
 	"golang.org/x/image/draw"
 	"golang.org/x/image/webp"
@@ -26,6 +27,7 @@ const (
 	maxSide        = 8000
 	maxPixels      = 40_000_000
 	maxGIFPixels   = 50_000_000
+	maxInFlight    = 80_000_000
 	jpegQuality    = 85
 )
 
@@ -34,6 +36,38 @@ var (
 	ErrTooLarge = errors.New("images: the image is too large")
 	ErrGIFWide  = errors.New("images: GIFs must be at most 1,200 pixels wide")
 )
+
+// budget caps the pixels being decoded at once in this process: a decode costs several bytes per
+// pixel, so parallel uploads would otherwise add their peaks together.
+var budget = newPixelBudget(maxInFlight)
+
+type pixelBudget struct {
+	mu   sync.Mutex
+	cond *sync.Cond
+	free int
+}
+
+func newPixelBudget(n int) *pixelBudget {
+	b := &pixelBudget{free: n}
+	b.cond = sync.NewCond(&b.mu)
+	return b
+}
+
+func (b *pixelBudget) acquire(n int) {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	for b.free < n {
+		b.cond.Wait()
+	}
+	b.free -= n
+}
+
+func (b *pixelBudget) release(n int) {
+	b.mu.Lock()
+	b.free += n
+	b.mu.Unlock()
+	b.cond.Broadcast()
+}
 
 type Result struct {
 	Data          []byte
@@ -70,6 +104,9 @@ func Normalize(b []byte) (Result, error) {
 	if ct == "image/gif" {
 		return keepGIF(b, cfg)
 	}
+	cost := cfg.Width * cfg.Height
+	budget.acquire(cost)
+	defer budget.release(cost)
 	var img image.Image
 	switch ct {
 	case "image/png":
@@ -171,6 +208,8 @@ func keepGIF(b []byte, cfg image.Config) (Result, error) {
 	if px > maxGIFPixels {
 		return Result{}, ErrTooLarge
 	}
+	budget.acquire(px)
+	defer budget.release(px)
 	if _, err := gif.DecodeAll(bytes.NewReader(b)); err != nil {
 		return Result{}, ErrType
 	}

@@ -1492,9 +1492,10 @@ export interface paths {
          * Export a contact's consent records
          * @description Every consent event of the contact's subscriptions to the lists the caller can see, oldest
          *     first, in the rows of `exportListConsent`: for answering a data subject's access request
-         *     (GDPR Art. 15, KVKK Art. 11).
+         *     (GDPR Art. 15, KVKK Art. 11). The rows carry IP addresses and user agents, so agents are
+         *     refused with `403 forbidden`.
          *
-         *     Scopes: `contacts:read` and `lists:read`.
+         *     Owners, admins and API keys. Scopes: `contacts:read` and `lists:read`.
          */
         get: operations["exportContactConsent"];
         put?: never;
@@ -2665,7 +2666,10 @@ export interface paths {
         };
         /**
          * A subscription with its consent events
-         * @description Scope: `lists:read`.
+         * @description The events carry the subscriber's IP address and user agent and the acting member or key,
+         *     so agents are refused with `403 forbidden`.
+         *
+         *     Owners, admins and API keys. Scope: `lists:read`.
          */
         get: operations["getSubscription"];
         put?: never;
@@ -2739,7 +2743,8 @@ export interface paths {
          *     agreed or refused from then on. Pending subscriptions are left out. Check the rows against
          *     your own records before uploading; only commercial lists need registering.
          *
-         *     Scope: `lists:read`.
+         *     The rows carry IP addresses and user agents, so agents are refused with `403 forbidden`.
+         *     Owners, admins and API keys. Scope: `lists:read`.
          */
         get: operations["exportListConsent"];
         put?: never;
@@ -3161,7 +3166,8 @@ export interface paths {
          *     (`422 image_too_large`).
          *
          *     The same image uploaded again answers `200` with the existing one. `409 image_quota` when
-         *     the workspace's images would exceed the server's limit.
+         *     the workspace's images would exceed the server's limit. A workspace can upload 30 images a
+         *     minute; more are refused with `429 rate_limited` and `Retry-After`.
          *
          *     Owners, admins and API keys. Scope: `broadcasts:write`.
          */
@@ -20246,6 +20252,7 @@ export interface operations {
             413: components["responses"]["Problem"];
             415: components["responses"]["Problem"];
             422: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
         };
     };
     deleteEmailImage: {
