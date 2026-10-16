@@ -57,6 +57,14 @@ Email-Routing-Adresse): Sie gehen dann dorthin.
 Ein älterer Email Worker signiert mit `v1`, was der Server ablehnt. Deployen Sie ihn neu, oder setzen
 Sie bis dahin `YUVA_INGRESS_ACCEPT_V1=true`.
 
+Der Email Worker signiert mit `v3`, was der Server prüft, bevor er die Nachricht liest. Früher
+deployte Worker signieren mit `v2`; das wird weiter akzeptiert, solange `YUVA_INGRESS_ACCEPT_V2` an
+ist (vorerst der Standard). Bei `v2` wird die Nachricht gelesen, bevor feststeht, dass sie echt ist,
+sodass jeder den Server unsignierte Uploads puffern lassen kann (Advisory GHSA-jfvx-vc82-56f7).
+Deployen Sie den Worker neu und setzen Sie dann `YUVA_INGRESS_ACCEPT_V2=false`. Ein Proxy vor der
+API muss `Content-Length` an `/ingress/email` weitergeben: `v3` lehnt einen Body in Chunks
+(chunked) ab.
+
 ### Beliebiger MTA: `yuva ingest-email`
 
 Ein MTA, der an einen Befehl zustellt, leitet die Rohnachricht hinein:
@@ -191,6 +199,7 @@ yuva channel create-email --workspace Example --inbox support --name "Everything
 | Neue Unterhaltungen pro Absender und Kanal | 20 pro Stunde; weitere E-Mails landen in seiner neuesten Unterhaltung |
 | Eingehende E-Mails pro Absender und Workspace | `YUVA_EMAIL_SENDER_HOURLY_CAP`, 500 pro Stunde; weitere werden abgelehnt |
 | Gleichzeitig verarbeitete Nachrichten | `YUVA_INGRESS_MAX_CONCURRENT`, 8; weitere erhalten `503` |
+| Zeit zum Senden des Nachrichteninhalts | 30 Sekunden; langsamere Uploads erhalten `503` |
 | Wartezeit des Workers auf Yuva | 20 Sekunden |
 
 ### Exit-Codes von `ingest-email`

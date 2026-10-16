@@ -96,6 +96,7 @@ Standardtypen: `image/png,image/jpeg,image/gif,image/webp,image/heic,application
 |---|---|---|
 | `YUVA_INGRESS_SECRET` | nicht gesetzt | Signiert Anfragen an `/ingress/email`; der Email Worker verwendet denselben Wert. Ohne Wert lehnt dieser Endpunkt jede E-Mail ab. |
 | `YUVA_INGRESS_ACCEPT_V1` | `false` | Akzeptiert zusätzlich die alte `v1`-Signatur, bis Sie einen älteren Email Worker neu deployen. |
+| `YUVA_INGRESS_ACCEPT_V2` | `true` | Akzeptiert zusätzlich die alte `v2`-Signatur, bei der die Nachricht vor der Prüfung gelesen wird. Setzen Sie `false`, sobald jeder Email Worker mit `v3` signiert; das schließt Advisory GHSA-jfvx-vc82-56f7. |
 | `YUVA_INGRESS_AUTHSERV_ID` | nicht gesetzt | Authserv-ID Ihres empfangenden Mailservers, z. B. `mx.cloudflare.net`. Nötig, damit DMARC-Ergebnisse genutzt werden. |
 | `YUVA_INGRESS_MAX_CONCURRENT` | `8` | Nachrichten, die `/ingress/email` pro Prozess gleichzeitig verarbeitet; weitere erhalten `503`. |
 | `YUVA_SES_TOPIC_ARNS` | nicht gesetzt | SNS-Topic-ARNs, deren SES-Bounces und -Beschwerden `/ingress/ses` annimmt. |

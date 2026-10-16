@@ -9,6 +9,7 @@ import (
 	"log/slog"
 	"mime"
 	"net/http"
+	"os"
 	"slices"
 	"strconv"
 	"strings"
@@ -23,11 +24,12 @@ import (
 )
 
 const (
-	MaxIngressBytes          = 25 << 20
-	newConversationsPerHour  = 20
-	defaultSenderHourlyCap   = 500
-	maxFullHTMLBytes         = 2 << 20
-	defaultIngestConcurrency = 8
+	MaxIngressBytes           = 25 << 20
+	newConversationsPerHour   = 20
+	defaultSenderHourlyCap    = 500
+	maxFullHTMLBytes          = 2 << 20
+	defaultIngestConcurrency  = 8
+	defaultIngressReadTimeout = 30 * time.Second
 )
 
 type IngestError struct {
@@ -84,7 +86,8 @@ func (s *Server) serveIngressEmail(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	to, from := r.Header.Get("X-Yuva-Envelope-To"), r.Header.Get("X-Yuva-Envelope-From")
-	check, err := email.StartIngress(s.ingress.Secret, r.Header.Get("X-Yuva-Timestamp"), to, from, r.Header.Get("X-Yuva-Signature"), s.now(), s.ingress.AcceptV1)
+	legacy := email.Legacy{V1: s.ingress.AcceptV1, V2: s.ingress.AcceptV2}
+	check, err := email.StartIngress(s.ingress.Secret, r.Header.Get("X-Yuva-Timestamp"), to, from, r.Header.Get("X-Yuva-Signature"), r.ContentLength, s.now(), legacy)
 	switch {
 	case errors.Is(err, email.ErrStaleTimestamp):
 		writeIngestError(w, errIngestStale)
@@ -100,10 +103,22 @@ func (s *Server) serveIngressEmail(w http.ResponseWriter, r *http.Request) {
 		writeIngestError(w, errIngestBusy)
 		return
 	}
+	readTimeout := s.ingress.ReadTimeout
+	if readTimeout <= 0 {
+		readTimeout = defaultIngressReadTimeout
+	}
+	rc := http.NewResponseController(w)
+	_ = rc.SetReadDeadline(time.Now().Add(readTimeout))
 	body, err := io.ReadAll(io.TeeReader(io.LimitReader(r.Body, MaxIngressBytes+1), check))
+	// An expired deadline would cancel the request context once the server reads ahead for the next request.
+	_ = rc.SetReadDeadline(time.Time{})
 	var tooBig *http.MaxBytesError
 	if errors.As(err, &tooBig) || len(body) > MaxIngressBytes {
 		writeIngestError(w, errIngestTooLarge)
+		return
+	}
+	if errors.Is(err, os.ErrDeadlineExceeded) {
+		writeIngestError(w, errIngestUnavailable)
 		return
 	}
 	if err != nil {

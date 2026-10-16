@@ -54,6 +54,13 @@ When Yuva is down or busy, the sender retries later. To keep such mail, deploy w
 An older Email Worker signs with `v1`, which the server refuses. Redeploy it, or set
 `YUVA_INGRESS_ACCEPT_V1=true` until you do.
 
+The Email Worker signs with `v3`, which the server checks before it reads the message. Workers
+deployed before it sign with `v2`, which is still accepted while `YUVA_INGRESS_ACCEPT_V2` is on (the
+default for now). With `v2` the message is read before it is known to be genuine, so anyone can
+make the server buffer unsigned uploads (advisory GHSA-jfvx-vc82-56f7). Redeploy the Worker, then
+set `YUVA_INGRESS_ACCEPT_V2=false`. A proxy in front of the API must pass `Content-Length` on to
+`/ingress/email`: `v3` refuses a chunked body.
+
 ### Any MTA: `yuva ingest-email`
 
 An MTA that delivers to a command pipes the raw message in:
@@ -179,6 +186,7 @@ yuva channel create-email --workspace Example --inbox support --name "Everything
 | New conversations per sender and channel | 20 per hour; more mail joins their latest conversation |
 | Inbound mails per sender and workspace | `YUVA_EMAIL_SENDER_HOURLY_CAP`, 500 per hour; more are refused |
 | Messages processed at once | `YUVA_INGRESS_MAX_CONCURRENT`, 8; more get `503` |
+| Time to send the message body | 30 seconds; slower uploads get `503` |
 | Worker wait for Yuva | 20 seconds |
 
 ### `ingest-email` exit codes

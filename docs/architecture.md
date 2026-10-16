@@ -526,12 +526,16 @@ Inbound:
 1. A Cloudflare Email Worker (`edge/`) receives mail for the support addresses and POSTs the raw
    message with the envelope recipient and sender to `/ingress/email`, signed with HMAC-SHA256
    under `YUVA_INGRESS_SECRET` (one per install; the request format is in `edge/README.md`). The
-   `v2` signature covers the timestamp, both envelope addresses and the body; the older `v1`, which
-   leaves the envelope sender out, is accepted only with `YUVA_INGRESS_ACCEPT_V1`, and then the
-   envelope sender is not trusted (an empty one marks nothing as a delivery report or automatic).
-   The signature headers and the timestamp (within 5 minutes) are checked before the body is read,
-   and the MAC while it is read; at most `YUVA_INGRESS_MAX_CONCURRENT` (8) messages are processed
-   at once per process, more are answered 503. A Message-ID already stored for the channel is
+   `v3` signature carries two MACs: one over the timestamp, both envelope addresses and the
+   `Content-Length`, checked with the timestamp (within 5 minutes) before a byte of the body is
+   read, so an unauthenticated request never makes the server buffer a body; and one that adds the
+   body, checked once it is read. The body must arrive within 30 seconds. The older `v2`, a single
+   MAC over the timestamp, both envelope addresses and the body, is accepted while
+   `YUVA_INGRESS_ACCEPT_V2` is on (the default until Workers have moved to `v3`); the oldest `v1`,
+   which leaves the envelope sender out, only with `YUVA_INGRESS_ACCEPT_V1`, and then the envelope
+   sender is not trusted (an empty one marks nothing as a delivery report or automatic). At most
+   `YUVA_INGRESS_MAX_CONCURRENT` (8) messages are processed at once per process, counted from the
+   signature header check, before the body is read; more are answered 503. A Message-ID already stored for the channel is
    accepted again without a second copy. When the server cannot be reached (5xx, network error, no answer within 20
    seconds) the Worker forwards the message to an optional fallback address (`FALLBACK_FORWARD`, a
    verified Email Routing destination) instead of failing the delivery; refusals (4xx) still

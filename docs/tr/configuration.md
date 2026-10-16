@@ -96,6 +96,7 @@ Varsayılan türler: `image/png,image/jpeg,image/gif,image/webp,image/heic,appli
 |---|---|---|
 | `YUVA_INGRESS_SECRET` | atanmamış | `/ingress/email` isteklerini imzalar; Email Worker aynı değeri kullanır. Atanmamışsa bu uç nokta tüm e-postaları reddeder. |
 | `YUVA_INGRESS_ACCEPT_V1` | `false` | Eski bir Email Worker'ı yeniden deploy edene kadar eski `v1` imzasını da kabul eder. |
+| `YUVA_INGRESS_ACCEPT_V2` | `true` | Eski `v2` imzasını da kabul eder; bu imzada e-posta doğrulanmadan önce okunur. Bütün Email Worker'lar `v3` ile imzaladığında `false` yapın; bu, GHSA-jfvx-vc82-56f7 duyurusundaki açığı kapatır. |
 | `YUVA_INGRESS_AUTHSERV_ID` | atanmamış | E-postayı alan sunucunuzun authserv-id'si, ör. `mx.cloudflare.net`. DMARC sonuçlarının kullanılması için gerekir. |
 | `YUVA_INGRESS_MAX_CONCURRENT` | `8` | `/ingress/email`'in süreç başına aynı anda işlediği mesaj sayısı; fazlası `503` alır. |
 | `YUVA_SES_TOPIC_ARNS` | atanmamış | `/ingress/ses`'in SES geri dönme (bounce) ve şikâyet bildirimlerini kabul ettiği SNS topic ARN'leri. |

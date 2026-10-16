@@ -286,10 +286,10 @@ func TestIngressSignatureAndRefusals(t *testing.T) {
 		t.Fatalf("bad signature: %d %v", r.status, r.body)
 	}
 	r = h.ingest(et.address, raw, func(req *http.Request) {
-		req.Header.Set("X-Yuva-Signature", strings.Replace(req.Header.Get("X-Yuva-Signature"), "v2=", "v3=", 1))
+		req.Header.Set("X-Yuva-Signature", strings.Replace(req.Header.Get("X-Yuva-Signature"), "v3=", "v4=", 1))
 	})
 	if r.status != http.StatusUnauthorized {
-		t.Fatalf("v3 prefix: %d", r.status)
+		t.Fatalf("unknown version: %d", r.status)
 	}
 	r = h.ingest(et.address, raw, func(req *http.Request) {
 		req.Header.Set("X-Yuva-Signature", email.SignV1(testIngressSecret, req.Header.Get("X-Yuva-Timestamp"), et.address, raw))

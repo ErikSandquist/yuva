@@ -278,6 +278,9 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 	if cfg.IngressAcceptV1 {
 		log.Warn("YUVA_INGRESS_ACCEPT_V1 is set; /ingress/email accepts v1 signatures, which do not cover the envelope sender")
 	}
+	if cfg.IngressSecret != "" && cfg.IngressAcceptV2 {
+		log.Warn("YUVA_INGRESS_ACCEPT_V2 is on; /ingress/email accepts v2 signatures, whose body is read before it is authenticated. Set it to false once every Email Worker signs v3")
+	}
 	if cfg.IngressSecret != "" && cfg.IngressAuthservID == "" {
 		log.Warn("YUVA_INGRESS_AUTHSERV_ID is not set; DMARC results of inbound mail are stored but not used")
 	}
@@ -434,7 +437,7 @@ const (
 func ingressSettings(cfg config.Config) api.IngressSettings {
 	out := api.IngressSettings{
 		Secret: cfg.IngressSecret, SESTopicARNs: cfg.SESTopicARNs, SenderHourlyCap: cfg.EmailSenderHourlyCap,
-		AcceptV1: cfg.IngressAcceptV1, AuthservID: cfg.IngressAuthservID, MaxConcurrent: cfg.IngressMaxConcurrent,
+		AcceptV1: cfg.IngressAcceptV1, AcceptV2: cfg.IngressAcceptV2, AuthservID: cfg.IngressAuthservID, MaxConcurrent: cfg.IngressMaxConcurrent,
 		ForwardingDomain: cfg.ForwardingDomain,
 	}
 	if a, err := netmail.ParseAddress(cfg.SMTP.From); err == nil {

@@ -2,17 +2,20 @@ package api_test
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"io"
 	"net/http"
 	"net/http/httptest"
 	"strconv"
+	"strings"
 	"sync/atomic"
 	"testing"
 	"time"
 
 	"github.com/productdevbook/yuva/api/internal/api"
 	"github.com/productdevbook/yuva/api/internal/email"
+	"github.com/productdevbook/yuva/api/internal/storage"
 )
 
 type countingBody struct{ read atomic.Int64 }
@@ -56,6 +59,15 @@ func TestIngressRefusesBeforeReadingTheBody(t *testing.T) {
 			r.Header.Set("X-Yuva-Signature", email.SignV1(testIngressSecret, r.Header.Get("X-Yuva-Timestamp"), et.address, raw))
 		}, http.StatusUnauthorized, "bad_signature"},
 		"declared too large": {func(r *http.Request) { r.ContentLength = api.MaxIngressBytes + 1 }, http.StatusRequestEntityTooLarge, "too_large"},
+		"v3 forged header MAC": {func(r *http.Request) {
+			sig := r.Header.Get("X-Yuva-Signature")
+			r.Header.Set("X-Yuva-Signature", "v3="+strings.Repeat("0", 64)+sig[67:])
+		}, http.StatusUnauthorized, "bad_signature"},
+		"v3 other Content-Length": {func(r *http.Request) { r.ContentLength-- }, http.StatusUnauthorized, "bad_signature"},
+		"v3 no Content-Length":    {func(r *http.Request) { r.ContentLength = -1 }, http.StatusUnauthorized, "bad_signature"},
+		"v2 not accepted": {func(r *http.Request) {
+			r.Header.Set("X-Yuva-Signature", email.SignV2(testIngressSecret, r.Header.Get("X-Yuva-Timestamp"), et.address, "bounce@example.net", raw))
+		}, http.StatusUnauthorized, "bad_signature"},
 	} {
 		req := h.ingressRequest(et.address, "bounce@example.net", raw)
 		body := &countingBody{}
@@ -70,36 +82,148 @@ func TestIngressRefusesBeforeReadingTheBody(t *testing.T) {
 	}
 }
 
+// gatedStorage holds every raw message write after hold until release is closed.
+type gatedStorage struct {
+	storage.Storage
+	held    chan struct{}
+	release chan struct{}
+	armed   atomic.Bool
+}
+
+func (g *gatedStorage) Put(ctx context.Context, key string, r io.Reader, size int64, ct string) error {
+	if strings.Contains(key, "/raw/") && g.armed.CompareAndSwap(true, false) {
+		g.held <- struct{}{}
+		<-g.release
+	}
+	return g.Storage.Put(ctx, key, r, size, ct)
+}
+
 func TestIngressConcurrencyCap(t *testing.T) {
-	h := newHarnessWith(t, func(d *api.Deps) { d.Ingress.MaxConcurrent = 1 })
+	gate := &gatedStorage{held: make(chan struct{}), release: make(chan struct{})}
+	h := newHarnessWith(t, func(d *api.Deps) {
+		d.Ingress.MaxConcurrent = 1
+		gate.Storage = d.Storage
+		d.Storage = gate
+	})
 	et := newEmailTeam(t, h, false)
 	raw := buildMail(mailOpts{from: "cust@example.net", to: et.address, subject: "Hi", messageID: newMessageID(), body: "Hello"})
 
-	pr, pw := io.Pipe()
-	slow := h.ingressRequest(et.address, "bounce@example.net", raw)
-	slow.Body, slow.ContentLength = pr, int64(len(raw))
+	gate.armed.Store(true)
 	done := make(chan int, 1)
 	go func() {
-		status, _ := serveIngress(h, slow)
+		status, _ := serveIngress(h, h.ingressRequest(et.address, "bounce@example.net", raw))
 		done <- status
 	}()
-	if _, err := pw.Write(raw[:10]); err != nil {
-		t.Fatal(err)
-	}
+	<-gate.held
 
 	second := buildMail(mailOpts{from: "other@example.net", to: et.address, subject: "Hi", messageID: newMessageID(), body: "Hello"})
 	if r := h.ingest(et.address, second, nil); r.status != http.StatusServiceUnavailable || r.str("code") != "unavailable" {
 		t.Fatalf("over the cap: %d %v", r.status, r.body)
 	}
-	if _, err := pw.Write(raw[10:]); err != nil {
-		t.Fatal(err)
-	}
-	_ = pw.Close()
+	close(gate.release)
 	if status := <-done; status != http.StatusAccepted {
 		t.Fatalf("held request: %d", status)
 	}
 	if r := h.ingest(et.address, second, nil); r.status != http.StatusAccepted {
 		t.Fatalf("after the slot is free: %d %v", r.status, r.body)
+	}
+}
+
+func TestIngressForgedV3HoldsNoSlot(t *testing.T) {
+	h := newHarnessWith(t, func(d *api.Deps) { d.Ingress.MaxConcurrent = 1 })
+	et := newEmailTeam(t, h, false)
+	raw := buildMail(mailOpts{from: "cust@example.net", to: et.address, subject: "Hi", messageID: newMessageID(), body: "Hello"})
+
+	pr, pw := io.Pipe()
+	defer pw.Close()
+	forged := h.ingressRequest(et.address, "bounce@example.net", raw)
+	sig := forged.Header.Get("X-Yuva-Signature")
+	forged.Header.Set("X-Yuva-Signature", "v3="+strings.Repeat("0", 64)+sig[67:])
+	forged.Body, forged.ContentLength = pr, api.MaxIngressBytes
+	done := make(chan int, 1)
+	go func() {
+		status, _ := serveIngress(h, forged)
+		done <- status
+	}()
+	select {
+	case status := <-done:
+		if status != http.StatusUnauthorized {
+			t.Fatalf("forged v3: %d", status)
+		}
+	case <-time.After(5 * time.Second):
+		t.Fatal("a forged v3 request waited for its body")
+	}
+	if r := h.ingest(et.address, raw, nil); r.status != http.StatusAccepted {
+		t.Fatalf("signed mail after a forged v3: %d %v", r.status, r.body)
+	}
+}
+
+func TestIngressReadDeadlineFreesSlowV2Slot(t *testing.T) {
+	h := newHarnessWith(t, func(d *api.Deps) {
+		d.Ingress.MaxConcurrent, d.Ingress.AcceptV2, d.Ingress.ReadTimeout = 1, true, 500*time.Millisecond
+	})
+	et := newEmailTeam(t, h, false)
+	raw := buildMail(mailOpts{from: "cust@example.net", to: et.address, subject: "Hi", messageID: newMessageID(), body: "Hello"})
+
+	pr, pw := io.Pipe()
+	defer pw.Close()
+	slow := h.ingressRequest(et.address, "bounce@example.net", raw)
+	slow.Header.Set("X-Yuva-Signature", "v2="+strings.Repeat("0", 64))
+	slow.Body, slow.ContentLength = pr, -1
+	done := make(chan ingressResult, 1)
+	go func() {
+		res, err := http.DefaultClient.Do(slow)
+		if err != nil {
+			done <- ingressResult{}
+			return
+		}
+		defer res.Body.Close()
+		out := ingressResult{status: res.StatusCode}
+		_ = json.NewDecoder(res.Body).Decode(&out.body)
+		done <- out
+	}()
+	if _, err := pw.Write(raw[:10]); err != nil {
+		t.Fatal(err)
+	}
+
+	if r := h.ingest(et.address, raw, nil); r.status != http.StatusServiceUnavailable || r.str("code") != "unavailable" {
+		t.Fatalf("while a v2 body holds the slot: %d %v", r.status, r.body)
+	}
+	select {
+	case r := <-done:
+		if r.status != http.StatusServiceUnavailable || r.str("code") != "unavailable" {
+			t.Fatalf("slow v2 body: %d %v", r.status, r.body)
+		}
+	case <-time.After(10 * time.Second):
+		t.Fatal("the read deadline did not end a slow v2 body")
+	}
+	if r := h.ingest(et.address, raw, nil); r.status != http.StatusAccepted {
+		t.Fatalf("after the deadline freed the slot: %d %v", r.status, r.body)
+	}
+}
+
+func TestIngressSignatureVersions(t *testing.T) {
+	signV2 := func(req *http.Request) {
+		raw, _ := io.ReadAll(req.Body)
+		req.Body = io.NopCloser(bytes.NewReader(raw))
+		req.Header.Set("X-Yuva-Signature", email.SignV2(testIngressSecret, req.Header.Get("X-Yuva-Timestamp"), req.Header.Get("X-Yuva-Envelope-To"), req.Header.Get("X-Yuva-Envelope-From"), raw))
+	}
+	for _, acceptV2 := range []bool{false, true} {
+		h := newHarnessWith(t, func(d *api.Deps) { d.Ingress.AcceptV2 = acceptV2 })
+		et := newEmailTeam(t, h, false)
+		mail := func() []byte {
+			return buildMail(mailOpts{from: "cust@example.net", to: et.address, subject: "Hi", messageID: newMessageID(), body: "Hello"})
+		}
+		if r := h.ingest(et.address, mail(), nil); r.status != http.StatusAccepted || !strings.HasPrefix(h.ingressRequest(et.address, "", nil).Header.Get("X-Yuva-Signature"), "v3=") {
+			t.Fatalf("v3 (accept v2 %v): %d %v", acceptV2, r.status, r.body)
+		}
+		r := h.ingest(et.address, mail(), signV2)
+		if acceptV2 && r.status != http.StatusAccepted {
+			t.Fatalf("v2 accepted by setting: %d %v", r.status, r.body)
+		}
+		if !acceptV2 && (r.status != http.StatusUnauthorized || r.str("code") != "bad_signature") {
+			t.Fatalf("v2 without the setting: %d %v", r.status, r.body)
+		}
 	}
 }
 

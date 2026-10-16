@@ -152,11 +152,16 @@ type IngressSettings struct {
 	OwnAddresses []string
 	// AcceptV1 accepts the deprecated v1 signature, which leaves the envelope sender unsigned.
 	AcceptV1 bool
+	// AcceptV2 accepts the deprecated v2 signature, whose body is read before the request is
+	// known to be genuine.
+	AcceptV2 bool
 	// AuthservID is the authserv-id of the receiving server whose Authentication-Results are
 	// trusted; without it DMARC verdicts are stored but not used.
 	AuthservID string
 	// MaxConcurrent caps messages processed at once; more are answered 503. 0 means 8.
 	MaxConcurrent int
+	// ReadTimeout bounds the time a request may take to send its body; 0 means 30 seconds.
+	ReadTimeout time.Duration
 	// ForwardingDomain gives every e-mail channel the address <forward token>@ForwardingDomain
 	// (YUVA_FORWARDING_DOMAIN); empty for none.
 	ForwardingDomain string

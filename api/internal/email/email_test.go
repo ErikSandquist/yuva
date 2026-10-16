@@ -20,68 +20,110 @@ func TestVerifyIngressMatchesEdgeWorker(t *testing.T) {
 		t.Skip("edge fixture not present:", err)
 	}
 	const (
-		sig      = "v2=317d9bc511a3882d471ab816c963a77c7efea5fc8c83f43916ed701e14e83646"
+		sig      = "v3=030fa7a29619d4fa2308498f6bd5b13023cd8cbe584e9b41be84ed12a5d12d5e.22758eeb92666698fa0a2ab612236bb2c5d8e8b486c0dd78f9ddf9771f1618be"
+		sigV2    = "v2=317d9bc511a3882d471ab816c963a77c7efea5fc8c83f43916ed701e14e83646"
 		sigV1    = "v1=2a6b3a29c5330e504f6ab4b1fb4a2c2c43900fa6a54f29f12425a8ccf0c6046a"
 		ts       = "1791364364"
 		to, from = "support@example.com", "customer@example.org"
 	)
 	at := time.Unix(1791364364, 0)
-	verify := func(secret, ts, to, from, sig string, at time.Time, acceptV1 bool) error {
-		_, err := email.VerifyIngress(secret, ts, to, from, sig, raw, at, acceptV1)
+	none, all := email.Legacy{}, email.Legacy{V1: true, V2: true}
+	verify := func(secret, ts, to, from, sig string, at time.Time, legacy email.Legacy) error {
+		_, err := email.VerifyIngress(secret, ts, to, from, sig, raw, at, legacy)
 		return err
 	}
-	if err := verify("test-secret", ts, to, from, sig, at.Add(time.Minute), false); err != nil {
+	start := func(sig string, length int64, legacy email.Legacy) error {
+		_, err := email.StartIngress("test-secret", ts, to, from, sig, length, at, legacy)
+		return err
+	}
+	if err := verify("test-secret", ts, to, from, sig, at.Add(time.Minute), none); err != nil {
 		t.Fatalf("edge signature rejected: %v", err)
 	}
 	if got := email.Sign("test-secret", ts, to, from, raw); got != sig {
 		t.Fatalf("Sign = %s", got)
 	}
+	if got := email.SignV2("test-secret", ts, to, from, raw); got != sigV2 {
+		t.Fatalf("SignV2 = %s", got)
+	}
 	if got := email.SignV1("test-secret", ts, to, raw); got != sigV1 {
 		t.Fatalf("SignV1 = %s", got)
 	}
-	if err := verify("test-secret", ts, to, "attacker@example.net", sig, at, false); err != email.ErrBadSignature {
-		t.Fatalf("envelope sender not covered: %v", err)
+	for _, s := range []string{sig, sigV2} {
+		if err := verify("test-secret", ts, to, "attacker@example.net", s, at, all); err != email.ErrBadSignature {
+			t.Fatalf("%.2s: envelope sender not covered: %v", s, err)
+		}
+		if err := verify("test-secret", ts, to, "", s, at, all); err != email.ErrBadSignature {
+			t.Fatalf("%.2s: emptied envelope sender accepted: %v", s, err)
+		}
 	}
-	if err := verify("test-secret", ts, to, "", sig, at, false); err != email.ErrBadSignature {
-		t.Fatalf("emptied envelope sender accepted: %v", err)
+	if err := verify("test-secret", ts, to, from, sigV2, at, none); err != email.ErrBadSignature {
+		t.Fatalf("v2 accepted without the deprecation switch: %v", err)
 	}
-	if err := verify("test-secret", ts, to, from, sigV1, at, false); err != email.ErrBadSignature {
+	if err := verify("test-secret", ts, to, from, sigV2, at, email.Legacy{V2: true}); err != nil {
+		t.Fatalf("v2 with the switch: %v", err)
+	}
+	if err := verify("test-secret", ts, to, from, sigV1, at, email.Legacy{V2: true}); err != email.ErrBadSignature {
 		t.Fatalf("v1 accepted without the deprecation switch: %v", err)
 	}
-	c, err := email.VerifyIngress("test-secret", ts, to, "anything", sigV1, raw, at, true)
+	c, err := email.VerifyIngress("test-secret", ts, to, "anything", sigV1, raw, at, email.Legacy{V1: true})
 	if err != nil || !c.V1() {
 		t.Fatalf("v1 with the switch: %v", err)
 	}
-	if err := verify("test-secret", ts, to, from, "v3="+sig[3:], at, true); err != email.ErrBadSignature {
+	if err := verify("test-secret", ts, to, from, "v4="+sigV2[3:], at, all); err != email.ErrBadSignature {
 		t.Fatalf("unknown version: %v", err)
 	}
-	if err := verify("test-secret", ts, to, from, sig, at.Add(6*time.Minute), false); err != email.ErrStaleTimestamp {
+	if err := verify("test-secret", ts, to, from, sig, at.Add(6*time.Minute), none); err != email.ErrStaleTimestamp {
 		t.Fatalf("replay outside the window: %v", err)
 	}
-	if err := verify("test-secret", ts, to, from, sig, at.Add(-6*time.Minute), false); err != email.ErrStaleTimestamp {
+	if err := verify("test-secret", ts, to, from, sig, at.Add(-6*time.Minute), none); err != email.ErrStaleTimestamp {
 		t.Fatalf("timestamp from the future: %v", err)
 	}
-	if err := verify("other", ts, to, from, sig, at, false); err != email.ErrBadSignature {
+	if err := verify("other", ts, to, from, sig, at, none); err != email.ErrBadSignature {
 		t.Fatalf("wrong secret: %v", err)
 	}
-	if err := verify("test-secret", ts, to, from, "v2=zz", at, false); err != email.ErrBadSignature {
-		t.Fatalf("malformed signature: %v", err)
+	for _, bad := range []string{"v2=zz", "v3=zz", "v3=" + sigV2[3:], "v3=" + sig[3:67] + ".zz"} {
+		if err := verify("test-secret", ts, to, from, bad, at, all); err != email.ErrBadSignature {
+			t.Fatalf("malformed signature %q: %v", bad, err)
+		}
 	}
-	if _, err := email.StartIngress("test-secret", ts, to, from, sig, at.Add(time.Hour), false); err != email.ErrStaleTimestamp {
+	if _, err := email.StartIngress("test-secret", ts, to, from, sig, int64(len(raw)), at.Add(time.Hour), none); err != email.ErrStaleTimestamp {
 		t.Fatalf("stale timestamp must fail before the body: %v", err)
 	}
-	if _, err := email.StartIngress("test-secret", "", to, from, sig, at, false); err != email.ErrBadSignature {
+	if _, err := email.StartIngress("test-secret", "", to, from, sig, int64(len(raw)), at, none); err != email.ErrBadSignature {
 		t.Fatalf("missing timestamp must fail before the body: %v", err)
 	}
-	streamed, err := email.StartIngress("test-secret", ts, to, from, sig, at, false)
-	if err != nil {
-		t.Fatal(err)
+	forged := "v3=" + strings.Repeat("0", 64) + sig[67:]
+	if err := start(forged, int64(len(raw)), none); err != email.ErrBadSignature {
+		t.Fatalf("forged v3 header MAC must fail before the body: %v", err)
 	}
-	for chunk := range slices.Chunk(raw, 7) {
-		_, _ = streamed.Write(chunk)
+	if _, err := email.StartIngress("test-secret", ts, to, from, forged, int64(len(raw)), at.Add(time.Hour), none); err != email.ErrBadSignature {
+		t.Fatalf("forged v3 with a stale timestamp must be a bad signature: %v", err)
 	}
-	if err := streamed.Verify(); err != nil {
-		t.Fatalf("streamed body: %v", err)
+	if err := start(sig, int64(len(raw))+1, none); err != email.ErrBadSignature {
+		t.Fatalf("v3 with another Content-Length must fail before the body: %v", err)
+	}
+	if err := start(sig, -1, none); err != email.ErrBadSignature {
+		t.Fatalf("v3 without Content-Length must fail before the body: %v", err)
+	}
+	if err := start(sigV2, -1, none); err != email.ErrBadSignature {
+		t.Fatalf("v2 without the switch must fail before the body: %v", err)
+	}
+	for _, s := range []string{sig, sigV2} {
+		streamed, err := email.StartIngress("test-secret", ts, to, from, s, int64(len(raw)), at, all)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for chunk := range slices.Chunk(raw, 7) {
+			_, _ = streamed.Write(chunk)
+		}
+		if err := streamed.Verify(); err != nil {
+			t.Fatalf("%.2s: streamed body: %v", s, err)
+		}
+	}
+	tampered := bytes.Clone(raw)
+	tampered[len(tampered)-2] ^= 1
+	if _, err := email.VerifyIngress("test-secret", ts, to, from, sig, tampered, at, none); err != email.ErrBadSignature {
+		t.Fatalf("v3 body MAC does not cover the body: %v", err)
 	}
 }
 

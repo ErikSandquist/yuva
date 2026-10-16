@@ -48,6 +48,7 @@ type Config struct {
 
 	IngressSecret        string
 	IngressAcceptV1      bool
+	IngressAcceptV2      bool
 	IngressAuthservID    string
 	IngressMaxConcurrent int
 	SESTopicARNs         []string
@@ -280,6 +281,9 @@ func Load(version string) (Config, error) {
 		return c, err
 	}
 	if c.IngressAcceptV1, err = boolEnv("YUVA_INGRESS_ACCEPT_V1", false); err != nil {
+		return c, err
+	}
+	if c.IngressAcceptV2, err = boolEnv("YUVA_INGRESS_ACCEPT_V2", true); err != nil {
 		return c, err
 	}
 	if c.IngressMaxConcurrent, err = strconv.Atoi(env("YUVA_INGRESS_MAX_CONCURRENT", "8")); err != nil || c.IngressMaxConcurrent < 1 {

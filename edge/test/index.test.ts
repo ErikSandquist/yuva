@@ -55,7 +55,7 @@ describe("email handler", () => {
     expect(call.headers.get("X-Yuva-Envelope-From")).toBe("customer@example.org")
     expect(call.headers.get("X-Yuva-Timestamp")).toBe("1791364364")
     expect(call.headers.get("X-Yuva-Signature")).toBe(
-      "v2=317d9bc511a3882d471ab816c963a77c7efea5fc8c83f43916ed701e14e83646"
+      "v3=030fa7a29619d4fa2308498f6bd5b13023cd8cbe584e9b41be84ed12a5d12d5e.22758eeb92666698fa0a2ab612236bb2c5d8e8b486c0dd78f9ddf9771f1618be"
     )
   })
 
@@ -65,13 +65,27 @@ describe("email handler", () => {
     const [call] = calls
 
     const { createHmac } = await import("node:crypto")
-    const expected = createHmac("sha256", env.INGRESS_SECRET)
-      .update(
-        `${call.headers.get("X-Yuva-Timestamp")}.${call.headers.get("X-Yuva-Envelope-To")}.${call.headers.get("X-Yuva-Envelope-From")}.`
-      )
-      .update(call.body)
-      .digest("hex")
-    expect(call.headers.get("X-Yuva-Signature")).toBe(`v2=${expected}`)
+    const head = [
+      "v3",
+      call.headers.get("X-Yuva-Timestamp"),
+      call.headers.get("X-Yuva-Envelope-To"),
+      call.headers.get("X-Yuva-Envelope-From"),
+      call.body.length,
+    ].join("\n")
+    const headMAC = createHmac("sha256", env.INGRESS_SECRET).update(head).digest("hex")
+    const bodyMAC = createHmac("sha256", env.INGRESS_SECRET).update(`${head}\n`).update(call.body).digest("hex")
+    expect(call.headers.get("X-Yuva-Signature")).toBe(`v3=${headMAC}.${bodyMAC}`)
+  })
+
+  test("the head MAC covers the body length", async () => {
+    const calls = serve(() => new Response(null, { status: 202 }))
+    await handleEmail(message().msg, env, now)
+    const longer = message()
+    ;(longer.msg as { raw: ReadableStream }).raw = new Blob([raw, new Uint8Array([0x0a])]).stream()
+    await handleEmail(longer.msg, env, now)
+
+    const head = (call: Captured) => call.headers.get("X-Yuva-Signature")?.split(".")[0]
+    expect(head(calls[1])).not.toBe(head(calls[0]))
   })
 
   test("the signature covers the envelope sender", async () => {

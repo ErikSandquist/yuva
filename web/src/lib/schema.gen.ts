@@ -2456,8 +2456,9 @@ export interface paths {
          *     from the public (its author no longer sees it either). On the opening post this approves or
          *     hides the whole thread. Approving a reply notifies the thread's followers.
          *
-         *     `body` (and `title` on the opening post) edits a post the calling member wrote; other
-         *     posts answer `403 forbidden`. Member sessions only.
+         *     `state` needs an owner or admin; an agent answers `403 forbidden`. `body` (and `title` on
+         *     the opening post) edits a post the calling member wrote, any role; other posts answer
+         *     `403 forbidden`. Member sessions only.
          */
         patch: operations["updateDiscussionPost"];
         trace?: never;
@@ -2475,8 +2476,8 @@ export interface paths {
          * Mark a post as spam
          * @description Hides the post (the thread, for an opening post) and every post of its author in the
          *     workspace still waiting for approval, and makes the author's later posts wait for a member
-         *     whatever the channel's setting. A member's post answers `400 validation_failed`.
-         *     Member sessions only.
+         *     whatever the channel's setting. A member's post answers `400 validation_failed`. Needs an
+         *     owner or admin; an agent answers `403 forbidden`. Member sessions only.
          */
         post: operations["markDiscussionPostSpam"];
         delete?: never;
@@ -6487,17 +6488,25 @@ export interface paths {
         /**
          * Receive an e-mail
          * @description Called by the edge Email Worker or any MTA with the raw message and its envelope. The
-         *     signature is `v2=` and the lowercase hex HMAC-SHA256, keyed with the server's
-         *     `YUVA_INGRESS_SECRET`, over
-         *     `<X-Yuva-Timestamp>.<X-Yuva-Envelope-To>.<X-Yuva-Envelope-From>.<raw body>` (an empty
-         *     envelope sender leaves its place empty). The deprecated `v1=`, over
-         *     `<X-Yuva-Timestamp>.<X-Yuva-Envelope-To>.<raw body>`, is accepted only when
-         *     `YUVA_INGRESS_ACCEPT_V1` is set, and then the envelope sender is not trusted (it never marks
-         *     a delivery report or automatic mail). The headers and the timestamp, which must be within 5
-         *     minutes of the server's clock, are checked before the body is read. A message with a
-         *     Message-ID seen before on the same channel is accepted again without being stored twice.
-         *     At most `YUVA_INGRESS_MAX_CONCURRENT` messages are processed at once; more are answered
-         *     `503 unavailable`.
+         *     signature is `v3=<head MAC>.<body MAC>`, both lowercase hex HMAC-SHA256 keyed with the
+         *     server's `YUVA_INGRESS_SECRET`. The head MAC covers
+         *     `v3\n<X-Yuva-Timestamp>\n<X-Yuva-Envelope-To>\n<X-Yuva-Envelope-From>\n<Content-Length>`
+         *     (fields joined by a newline, the length in decimal without leading zeros, an empty envelope
+         *     sender leaving its place empty); the body MAC covers the same text, a newline and the raw
+         *     body. `Content-Length` is required. The headers, the timestamp, which must be within 5
+         *     minutes of the server's clock, and the head MAC are checked before the body is read; the
+         *     body must arrive within 30 seconds.
+         *
+         *     The deprecated `v2=`, the hex HMAC over
+         *     `<X-Yuva-Timestamp>.<X-Yuva-Envelope-To>.<X-Yuva-Envelope-From>.<raw body>`, is accepted
+         *     while `YUVA_INGRESS_ACCEPT_V2` is on (the default for now); its body is read before it is
+         *     authenticated. The deprecated `v1=`, over `<X-Yuva-Timestamp>.<X-Yuva-Envelope-To>.<raw body>`,
+         *     is accepted only when `YUVA_INGRESS_ACCEPT_V1` is set, and then the envelope sender is not
+         *     trusted (it never marks a delivery report or automatic mail). A version that is not accepted
+         *     is refused before the body is read. A message with a Message-ID seen before on the same
+         *     channel is accepted again without being stored twice. At most `YUVA_INGRESS_MAX_CONCURRENT`
+         *     messages are processed at once, counted from the signature header check, before the body is
+         *     read; more are answered `503 unavailable` without the body being read.
          *
          *     The recipient selects the channel: its exact address, then `local@` for `local+tag@`, then
          *     the domain's catch-all channel (`*@domain`). Volume never bounces mail: a sender over the
@@ -24737,6 +24746,8 @@ export interface operations {
                 /** @description Unix time in seconds. */
                 "X-Yuva-Timestamp": string;
                 "X-Yuva-Signature": string;
+                /** @description The body length in bytes; covered by the `v3` head MAC. */
+                "Content-Length": number;
             };
             path?: never;
             cookie?: never;

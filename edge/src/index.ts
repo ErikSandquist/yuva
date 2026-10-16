@@ -8,6 +8,10 @@ export const INGRESS_TIMEOUT_MS = 20_000
 
 const encoder = new TextEncoder()
 
+function hex(mac: ArrayBuffer): string {
+  return Array.from(new Uint8Array(mac), (b) => b.toString(16).padStart(2, "0")).join("")
+}
+
 export async function sign(
   secret: string,
   timestamp: string,
@@ -18,12 +22,14 @@ export async function sign(
   const key = await crypto.subtle.importKey("raw", encoder.encode(secret), { name: "HMAC", hash: "SHA-256" }, false, [
     "sign",
   ])
-  const prefix = encoder.encode(`${timestamp}.${envelopeTo}.${envelopeFrom}.`)
-  const data = new Uint8Array(prefix.length + body.length)
-  data.set(prefix, 0)
-  data.set(body, prefix.length)
-  const mac = new Uint8Array(await crypto.subtle.sign("HMAC", key, data))
-  return Array.from(mac, (b) => b.toString(16).padStart(2, "0")).join("")
+  const head = encoder.encode(`v3\n${timestamp}\n${envelopeTo}\n${envelopeFrom}\n${body.length}`)
+  const data = new Uint8Array(head.length + 1 + body.length)
+  data.set(head, 0)
+  data[head.length] = 0x0a
+  data.set(body, head.length + 1)
+  const headMAC = await crypto.subtle.sign("HMAC", key, head)
+  const bodyMAC = await crypto.subtle.sign("HMAC", key, data)
+  return `v3=${hex(headMAC)}.${hex(bodyMAC)}`
 }
 
 async function rejectReason(res: Response): Promise<string> {
@@ -48,7 +54,7 @@ async function deliver(message: ForwardableEmailMessage, env: Env, now: () => nu
       "X-Yuva-Envelope-To": message.to,
       "X-Yuva-Envelope-From": message.from,
       "X-Yuva-Timestamp": timestamp,
-      "X-Yuva-Signature": `v2=${signature}`,
+      "X-Yuva-Signature": signature,
     },
     body,
     signal: AbortSignal.timeout(INGRESS_TIMEOUT_MS),

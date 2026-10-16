@@ -57,6 +57,14 @@ e-posta oraya gider.
 Eski bir Email Worker `v1` ile imzalar ve sunucu bunu reddeder. Worker'ı yeniden deploy edin ya da o
 zamana kadar `YUVA_INGRESS_ACCEPT_V1=true` atayın.
 
+Email Worker `v3` ile imzalar; sunucu bu imzayı e-postayı okumadan önce denetler. Bundan önce deploy
+edilen Worker'lar `v2` ile imzalar; `YUVA_INGRESS_ACCEPT_V2` açık olduğu sürece (şimdilik varsayılan)
+bu imza da kabul edilir. `v2` ile e-posta, gerçek olduğu anlaşılmadan önce okunur; bu yüzden herkes
+sunucuya imzasız yüklemeler biriktirtebilir (GHSA-jfvx-vc82-56f7 duyurusu). Worker'ı yeniden deploy
+edin, ardından `YUVA_INGRESS_ACCEPT_V2=false` atayın. API'nin önündeki bir proxy `/ingress/email`
+isteklerinde `Content-Length` başlığını korumalıdır: `v3`, parça parça (chunked) gönderilen gövdeyi
+reddeder.
+
 ### Herhangi bir MTA: `yuva ingest-email`
 
 Bir komuta teslim edebilen MTA, ham mesajı pipe ile verir:
@@ -187,6 +195,7 @@ yuva channel create-email --workspace Example --inbox support --name "Everything
 | Gönderici ve kanal başına yeni konuşma | Saatte 20; fazlası göndericinin son konuşmasına eklenir |
 | Gönderici ve çalışma alanı başına gelen e-posta | `YUVA_EMAIL_SENDER_HOURLY_CAP`, saatte 500; fazlası reddedilir |
 | Aynı anda işlenen mesaj | `YUVA_INGRESS_MAX_CONCURRENT`, 8; fazlası `503` alır |
+| Mesaj gövdesini gönderme süresi | 30 saniye; daha yavaş gönderimler `503` alır |
 | Worker'ın Yuva'yı bekleme süresi | 20 saniye |
 
 ### `ingest-email` çıkış kodları

@@ -42,29 +42,37 @@ Content-Type: message/rfc822
 X-Yuva-Envelope-To: <envelope recipient (RCPT TO)>
 X-Yuva-Envelope-From: <envelope sender (MAIL FROM)>
 X-Yuva-Timestamp: <Unix time in seconds, decimal>
-X-Yuva-Signature: v2=<hex>
+Content-Length: <body length in bytes>
+X-Yuva-Signature: v3=<head MAC>.<body MAC>
 
 <raw RFC 5322 message, bytes exactly as received>
 ```
 
-Signature: lowercase hex of HMAC-SHA256, keyed with `INGRESS_SECRET` (its UTF-8 bytes), over
+Both MACs are lowercase hex of HMAC-SHA256, keyed with `INGRESS_SECRET` (its UTF-8 bytes). The
+head MAC covers these fields joined by a newline (`\n`), which no header value can contain:
 
 ```
-<X-Yuva-Timestamp> "." <X-Yuva-Envelope-To> "." <X-Yuva-Envelope-From> "." <raw body bytes>
+"v3" \n <X-Yuva-Timestamp> \n <X-Yuva-Envelope-To> \n <X-Yuva-Envelope-From> \n <Content-Length>
 ```
 
-An empty envelope sender (a bounce's null reverse-path) leaves its place empty: `<ts>.<to>..<body>`.
-The header values are used exactly as sent. The prefix is UTF-8; the body is not re-encoded. The
+The body MAC covers the same text, one more `\n` and the raw body bytes. `Content-Length` is the
+decimal byte count without leading zeros and must be sent (no chunked upload); the body must arrive
+within 30 seconds. An empty envelope sender (a bounce's null reverse-path) leaves its place empty.
+The header values are used exactly as sent. The text is UTF-8; the body is not re-encoded. The
 server
 
-- refuses a missing or malformed signature or timestamp, and a timestamp more than 5 minutes from
-  its own clock, before it reads the body;
-- recomputes the HMAC over the bytes it receives and compares in constant time;
-- treats any prefix other than `v2=` as invalid. `v1=`, the deprecated version over
+- refuses a missing or malformed signature or timestamp, a timestamp more than 5 minutes from its
+  own clock, a missing `Content-Length` and a head MAC that does not match, before it reads a byte
+  of the body;
+- recomputes the body MAC over the bytes it receives and compares in constant time;
+- treats any prefix other than `v3=` as invalid, except two deprecated versions. `v2=`, one MAC
+  over `<X-Yuva-Timestamp> "." <X-Yuva-Envelope-To> "." <X-Yuva-Envelope-From> "." <raw body bytes>`,
+  is accepted while the server sets `YUVA_INGRESS_ACCEPT_V2=true` (its default for now); the server
+  has to read such a body before it knows the request is genuine. `v1=`, over
   `<X-Yuva-Timestamp> "." <X-Yuva-Envelope-To> "." <raw body bytes>` without the envelope sender, is
   accepted only while the server sets `YUVA_INGRESS_ACCEPT_V1=true`, and then the envelope sender is
-  not trusted (an empty one does not make the message a delivery report). This Worker signs `v2`;
-  redeploy a Worker that still signs `v1`.
+  not trusted (an empty one does not make the message a delivery report). This Worker signs `v3`;
+  redeploy a Worker that still signs `v1` or `v2`, then set `YUVA_INGRESS_ACCEPT_V2=false`.
 
 Responses:
 
