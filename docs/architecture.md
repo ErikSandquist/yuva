@@ -622,9 +622,11 @@ per contact within a set interval; the greeting is a `system` message with
 Bounces: an inbound delivery report (`multipart/report; report-type=delivery-status`) to a channel
 address counts only when its envelope sender is empty (the null reverse-path RFC 5321 §4.5.5
 requires of delivery reports), it names a message we sent from that workspace (its Message-ID in the
-returned headers, `In-Reply-To` or `References`) and a `Final-Recipient` that was a recipient of
-that message; then it fails the message and marks the permanently failed recipients
-undeliverable. Anything else is stored as an ordinary automatic mail from its sender and changes
+returned headers, `In-Reply-To` or `References`) that went to exactly one address, its
+`Final-Recipient` is that address, and no other stored mail that refers to that Message-ID went to,
+came from or was copied to another address (otherwise someone else holds the Message-ID and could
+name it); then it fails the message and marks the recipient undeliverable. An ARF complaint about
+transactional mail follows the same one-recipient rule. Anything else is stored as an ordinary automatic mail from its sender and changes
 nothing; a blocked sender is refused before the report is looked at. Amazon SES bounces and
 complaints arrive at `/ingress/ses` through SNS: the SNS signature is checked against the AWS
 certificate, only topics listed in `YUVA_SES_TOPIC_ARNS` are accepted, a subscription is confirmed

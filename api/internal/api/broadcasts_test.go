@@ -547,6 +547,12 @@ func TestBroadcastBouncesAndComplaints(t *testing.T) {
 	if d := deliveryOf(t, bt.owner, id, "arf@example.org"); d["state"] != "sent" {
 		t.Fatalf("an untrusted report counted: %v", d)
 	}
+	if r := h.ingest(address, arfMail("fbl@mailbox.example", address, arfID, "dsn@example.org"), nil); r.str("status") == "bounce" {
+		t.Fatalf("a report naming another recipient counted: %v", r.body)
+	}
+	if d := deliveryOf(t, bt.owner, id, "arf@example.org"); d["state"] != "sent" {
+		t.Fatalf("a report naming another recipient counted: %v", d)
+	}
 	if r := h.ingest(address, arfMail("fbl@mailbox.example", address, arfID, "arf@example.org"), nil); r.str("status") != "bounce" {
 		t.Fatalf("arf: %v", r.body)
 	}

@@ -829,6 +829,78 @@ func TestBounceDSN(t *testing.T) {
 	}
 }
 
+func TestReportsCountOnlyForTheirRecipient(t *testing.T) {
+	h := newHarness(t)
+	et := newEmailTeam(t, h, false)
+	answer := func(from string, headers map[string]string) (conv, headerID string) {
+		r := h.ingest(et.address, buildMail(mailOpts{from: from, to: et.address, subject: "Q", messageID: newMessageID(), body: "Q?", headers: headers}), nil)
+		conv = r.str("conversation_id")
+		out := et.owner.expect(http.StatusCreated, "POST", "/v1/conversations/"+conv+"/messages", map[string]any{"kind": "message", "body": "A."})
+		h.sendQueued(t, et.ws, out.str("id"))
+		return conv, lastOf(messages(et.owner, conv), "message")["email"].(map[string]any)["message_id"].(string)
+	}
+	undeliverable := func(conv string) []any {
+		contactID := et.owner.expect(http.StatusOK, "GET", "/v1/conversations/"+conv, nil).str("contact_id")
+		return et.owner.expect(http.StatusOK, "GET", "/v1/contacts/"+contactID, nil).body["undeliverable"].([]any)
+	}
+
+	victim := unique("victim") + "@example.net"
+	victimConv, victimID := answer(victim, nil)
+	other := unique("other") + "@example.org"
+	otherConv, otherID := answer(other, map[string]string{"In-Reply-To": "<" + victimID + ">", "References": "<" + victimID + ">"})
+	if otherConv == victimConv {
+		t.Fatal("another contact's mail joined the conversation")
+	}
+
+	if r := h.ingestFrom(et.address, "", dsnMail(et.address, victimID, victim, "5.1.1"), nil); r.str("status") == "bounce" {
+		t.Fatalf("a delivery report about mail whose Message-ID another address was given counted: %v", r.body)
+	}
+	if r := h.ingestFrom(et.address, "", dsnMail(et.address, otherID, victim, "5.1.1"), nil); r.str("status") == "bounce" {
+		t.Fatalf("a delivery report naming someone the mail did not go to counted: %v", r.body)
+	}
+	for _, rcpt := range []string{"", victim} {
+		if r := h.ingest(et.address, arfMail("fbl@mailbox.example", et.address, "<"+victimID+">", rcpt), nil); r.str("status") == "bounce" {
+			t.Fatalf("a feedback report (Original-Rcpt-To %q) about mail whose Message-ID another address was given counted: %v", rcpt, r.body)
+		}
+	}
+	if und := undeliverable(victimConv); len(und) != 0 {
+		t.Fatalf("forged reports suppressed the victim: %v", und)
+	}
+	if d := lastOf(messages(et.owner, victimConv), "message")["delivery"].(map[string]any); d["state"] == "failed" {
+		t.Fatalf("a forged report failed the victim's message: %v", d)
+	}
+
+	if r := h.ingestFrom(et.address, "", dsnMail(et.address, otherID, other, "5.1.1"), nil); r.str("status") != "bounce" {
+		t.Fatalf("genuine delivery report: %v", r.body)
+	}
+	if und := undeliverable(otherConv); len(und) != 1 || und[0].(map[string]any)["reason"] != "bounce" {
+		t.Fatalf("genuine delivery report did not suppress its recipient: %v", und)
+	}
+
+	third := unique("third") + "@example.com"
+	thirdConv, thirdID := answer(third, nil)
+	refs := "Subject: Undelivered Mail Returned to Sender\r\nIn-Reply-To: <" + thirdID + ">\r\nReferences: <" + thirdID + ">\r\n"
+	forged := strings.Replace(string(dsnMail(et.address, thirdID, victim, "5.1.1")), "Subject: Undelivered Mail Returned to Sender\r\n", refs, 1)
+	if r := h.ingestFrom(et.address, "", []byte(forged), nil); r.str("status") == "bounce" {
+		t.Fatalf("a delivery report naming someone the mail did not go to counted: %v", r.body)
+	}
+	if r := h.ingest(et.address, arfMail("fbl@mailbox.example", et.address, "<"+thirdID+">", victim), nil); r.str("status") == "bounce" {
+		t.Fatalf("a feedback report naming someone the mail did not go to counted: %v", r.body)
+	}
+	if und := undeliverable(thirdConv); len(und) != 0 {
+		t.Fatalf("a mismatched feedback report suppressed the recipient: %v", und)
+	}
+	if r := h.ingest(et.address, arfMail("fbl@mailbox.example", et.address, "<"+thirdID+">", ""), nil); r.str("status") != "bounce" {
+		t.Fatalf("genuine feedback report: %v", r.body)
+	}
+	if und := undeliverable(thirdConv); len(und) != 1 || und[0].(map[string]any)["reason"] != "complaint" {
+		t.Fatalf("genuine feedback report did not suppress its recipient: %v", und)
+	}
+	if und := undeliverable(victimConv); len(und) != 0 {
+		t.Fatalf("reports suppressed the victim: %v", und)
+	}
+}
+
 type snsSigner struct {
 	key     *rsa.PrivateKey
 	certURL string

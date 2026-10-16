@@ -110,10 +110,22 @@ UPDATE message_emails SET relay_message_id = @relay_message_id
 WHERE workspace_id = @workspace_id AND message_id = @message_id AND direction = 'out';
 
 -- name: FindOutboundEmailByHeader :one
-SELECT e.message_id, e.conversation_id, e.to_addresses FROM message_emails e
+SELECT e.message_id, e.conversation_id, e.header_message_id, e.relay_message_id, e.to_addresses, e.cc_addresses FROM message_emails e
 WHERE e.workspace_id = @workspace_id AND e.direction = 'out' AND e.imported_at IS NULL
   AND (e.header_message_id = @header_message_id OR e.relay_message_id = @header_message_id)
 LIMIT 1;
+
+-- Automatic mail is left out so that a refused, stored report cannot block the genuine one.
+-- name: MessageIDSharedBeyond :one
+SELECT EXISTS (
+  SELECT 1 FROM message_emails e
+  WHERE e.workspace_id = @workspace_id
+    AND (e.in_reply_to = ANY(@ids::text[]) OR e.references_ids && @ids::text[])
+    AND CASE WHEN e.direction = 'out'
+      THEN e.to_addresses <> ARRAY[@email::text] OR cardinality(e.cc_addresses) > 0
+      ELSE NOT e.auto AND (e.from_address <> @email::text OR cardinality(e.to_addresses) > 1 OR cardinality(e.cc_addresses) > 0)
+    END
+)::bool AS shared;
 
 -- SES reports name only our Message-ID, so the message is found before the workspace is known
 -- (see "Hosting for others later" in docs/architecture.md).

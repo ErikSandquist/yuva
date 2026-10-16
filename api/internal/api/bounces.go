@@ -84,8 +84,8 @@ func (s *Server) recordBounce(ctx context.Context, ws uuid.UUID, messageID *uuid
 	})
 }
 
-// applyDSN handles a delivery report only when it names a message we sent from this workspace and
-// reports a recipient of that message; anything else is not ours to act on and handled is false.
+// applyDSN handles a delivery report only when it names a message we sent from this workspace to the
+// one address it reports; anything else is not ours to act on and handled is false.
 func (s *Server) applyDSN(ctx context.Context, ch store.FindEmailChannelByAddressRow, m *email.Message) (IngestResult, bool, error) {
 	var sent *store.FindOutboundEmailByHeaderRow
 	for _, id := range slices.Concat([]string{m.Bounce.OriginalMessageID}, m.InReplyTo, m.References) {
@@ -108,21 +108,43 @@ func (s *Server) applyDSN(ctx context.Context, ch store.FindEmailChannelByAddres
 	if len(failed) == 0 {
 		return IngestResult{Status: IngestDropped}, true, nil
 	}
-	recipients := make([]bounced, 0, len(failed))
-	for _, r := range failed {
-		if !slices.Contains(sent.ToAddresses, r.Email) {
-			continue
-		}
-		detail := strings.TrimSpace(r.Status + " " + r.Diagnostic)
-		recipients = append(recipients, bounced{email: r.Email, reason: suppressBounce, detail: detail, permanent: r.Permanent()})
-	}
-	if len(recipients) == 0 {
+	to := soleRecipient(*sent)
+	i := slices.IndexFunc(failed, func(r email.BounceRecipient) bool { return to != "" && r.Email == to })
+	if i < 0 {
 		return IngestResult{}, false, nil
 	}
+	if ok, err := s.reportConcerns(ctx, ch.WorkspaceID, to, sent.HeaderMessageID, sent.RelayMessageID); err != nil || !ok {
+		return IngestResult{}, false, err
+	}
+	r := failed[i]
+	recipients := []bounced{{email: to, reason: suppressBounce, detail: strings.TrimSpace(r.Status + " " + r.Diagnostic), permanent: r.Permanent()}}
 	if err := s.recordBounce(ctx, ch.WorkspaceID, &sent.MessageID, recipients, true); err != nil {
 		return IngestResult{}, false, err
 	}
 	return IngestResult{Status: IngestBounce, ConversationID: &sent.ConversationID, MessageID: &sent.MessageID}, true, nil
+}
+
+func soleRecipient(sent store.FindOutboundEmailByHeaderRow) string {
+	if len(sent.ToAddresses) != 1 || len(sent.CcAddresses) != 0 {
+		return ""
+	}
+	return sent.ToAddresses[0]
+}
+
+// Anyone given a Message-ID can name it in a report, so only its sole holder's reports count.
+func (s *Server) reportConcerns(ctx context.Context, ws uuid.UUID, addr, headerID string, relayID *string) (bool, error) {
+	ids := []string{headerID}
+	if relayID != nil && *relayID != "" {
+		ids = append(ids, *relayID)
+	}
+	shared, err := s.st.MessageIDSharedBeyond(ctx, store.MessageIDSharedBeyondParams{WorkspaceID: ws, Ids: ids, Email: addr})
+	if err != nil {
+		return false, err
+	}
+	if shared {
+		s.log.InfoContext(ctx, "report about mail whose Message-ID others were given", slog.String("message_id", headerID))
+	}
+	return !shared, nil
 }
 
 type certCache struct {
@@ -346,11 +368,16 @@ func (s *Server) applyBroadcastDSN(ctx context.Context, ch store.FindEmailChanne
 			return IngestResult{}, false, err
 		}
 		for _, r := range m.Bounce.Failed() {
-			if r.Email == d.Email && r.Permanent() {
-				if err := s.deliveryFeedback(ctx, d, false, strings.TrimSpace(r.Status+" "+r.Diagnostic)); err != nil {
-					return IngestResult{}, false, err
-				}
+			if r.Email != d.Email || !r.Permanent() {
+				continue
 			}
+			if ok, err := s.reportConcerns(ctx, ch.WorkspaceID, d.Email, d.HeaderMessageID, d.RelayMessageID); err != nil || !ok {
+				return IngestResult{}, false, err
+			}
+			if err := s.deliveryFeedback(ctx, d, false, strings.TrimSpace(r.Status+" "+r.Diagnostic)); err != nil {
+				return IngestResult{}, false, err
+			}
+			break
 		}
 		return IngestResult{Status: IngestBounce}, true, nil
 	}

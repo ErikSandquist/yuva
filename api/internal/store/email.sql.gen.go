@@ -665,7 +665,7 @@ func (q *Queries) FindOutboundEmailAnyWorkspace(ctx context.Context, headerMessa
 }
 
 const findOutboundEmailByHeader = `-- name: FindOutboundEmailByHeader :one
-SELECT e.message_id, e.conversation_id, e.to_addresses FROM message_emails e
+SELECT e.message_id, e.conversation_id, e.header_message_id, e.relay_message_id, e.to_addresses, e.cc_addresses FROM message_emails e
 WHERE e.workspace_id = $1 AND e.direction = 'out' AND e.imported_at IS NULL
   AND (e.header_message_id = $2 OR e.relay_message_id = $2)
 LIMIT 1
@@ -677,15 +677,25 @@ type FindOutboundEmailByHeaderParams struct {
 }
 
 type FindOutboundEmailByHeaderRow struct {
-	MessageID      uuid.UUID
-	ConversationID uuid.UUID
-	ToAddresses    []string
+	MessageID       uuid.UUID
+	ConversationID  uuid.UUID
+	HeaderMessageID string
+	RelayMessageID  *string
+	ToAddresses     []string
+	CcAddresses     []string
 }
 
 func (q *Queries) FindOutboundEmailByHeader(ctx context.Context, arg FindOutboundEmailByHeaderParams) (FindOutboundEmailByHeaderRow, error) {
 	row := q.db.QueryRow(ctx, findOutboundEmailByHeader, arg.WorkspaceID, arg.HeaderMessageID)
 	var i FindOutboundEmailByHeaderRow
-	err := row.Scan(&i.MessageID, &i.ConversationID, &i.ToAddresses)
+	err := row.Scan(
+		&i.MessageID,
+		&i.ConversationID,
+		&i.HeaderMessageID,
+		&i.RelayMessageID,
+		&i.ToAddresses,
+		&i.CcAddresses,
+	)
 	return i, err
 }
 
@@ -1269,6 +1279,32 @@ func (q *Queries) ListMessageEmails(ctx context.Context, arg ListMessageEmailsPa
 		return nil, err
 	}
 	return items, nil
+}
+
+const messageIDSharedBeyond = `-- name: MessageIDSharedBeyond :one
+SELECT EXISTS (
+  SELECT 1 FROM message_emails e
+  WHERE e.workspace_id = $1
+    AND (e.in_reply_to = ANY($2::text[]) OR e.references_ids && $2::text[])
+    AND CASE WHEN e.direction = 'out'
+      THEN e.to_addresses <> ARRAY[$3::text] OR cardinality(e.cc_addresses) > 0
+      ELSE NOT e.auto AND (e.from_address <> $3::text OR cardinality(e.to_addresses) > 1 OR cardinality(e.cc_addresses) > 0)
+    END
+)::bool AS shared
+`
+
+type MessageIDSharedBeyondParams struct {
+	WorkspaceID uuid.UUID
+	Ids         []string
+	Email       string
+}
+
+// Automatic mail is left out so that a refused, stored report cannot block the genuine one.
+func (q *Queries) MessageIDSharedBeyond(ctx context.Context, arg MessageIDSharedBeyondParams) (bool, error) {
+	row := q.db.QueryRow(ctx, messageIDSharedBeyond, arg.WorkspaceID, arg.Ids, arg.Email)
+	var shared bool
+	err := row.Scan(&shared)
+	return shared, err
 }
 
 const rotateForwardToken = `-- name: RotateForwardToken :one

@@ -388,7 +388,7 @@ func (s *Server) unsubscribedThrough(ctx context.Context, q *store.Queries, ws, 
 
 // applyFeedbackReport handles an ARF abuse report (RFC 5965) that reached a channel: only from a
 // sender whose DMARC result the receiving server vouches for, and only for mail we sent from this
-// workspace.
+// workspace to one address that alone was given its Message-ID.
 func (s *Server) applyFeedbackReport(ctx context.Context, ch store.FindEmailChannelByAddressRow, m *email.Message) (IngestResult, bool, error) {
 	f := m.Feedback
 	if f == nil || !f.Complaint() || f.OriginalMessageID == "" || email.TrustedDMARC(m.AuthResults, s.ingress.AuthservID) != email.DMARCPass {
@@ -396,6 +396,12 @@ func (s *Server) applyFeedbackReport(ctx context.Context, ch store.FindEmailChan
 	}
 	d, err := s.st.FindBroadcastDeliveryByHeader(ctx, store.FindBroadcastDeliveryByHeaderParams{WorkspaceID: ch.WorkspaceID, HeaderMessageID: f.OriginalMessageID})
 	if err == nil {
+		if f.OriginalRcptTo != "" && f.OriginalRcptTo != d.Email {
+			return IngestResult{}, false, nil
+		}
+		if ok, err := s.reportConcerns(ctx, ch.WorkspaceID, d.Email, d.HeaderMessageID, d.RelayMessageID); err != nil || !ok {
+			return IngestResult{}, false, err
+		}
 		if err := s.deliveryFeedback(ctx, d, true, "feedback report: "+f.Type); err != nil {
 			return IngestResult{}, false, err
 		}
@@ -411,15 +417,14 @@ func (s *Server) applyFeedbackReport(ctx context.Context, ch store.FindEmailChan
 	if err != nil {
 		return IngestResult{}, false, err
 	}
-	var recipients []bounced
-	for _, to := range sent.ToAddresses {
-		if f.OriginalRcptTo == "" || f.OriginalRcptTo == to {
-			recipients = append(recipients, bounced{email: to, reason: suppressComplaint, permanent: true, detail: "feedback report: " + f.Type})
-		}
-	}
-	if len(recipients) == 0 {
+	to := soleRecipient(sent)
+	if to == "" || (f.OriginalRcptTo != "" && f.OriginalRcptTo != to) {
 		return IngestResult{}, false, nil
 	}
+	if ok, err := s.reportConcerns(ctx, ch.WorkspaceID, to, sent.HeaderMessageID, sent.RelayMessageID); err != nil || !ok {
+		return IngestResult{}, false, err
+	}
+	recipients := []bounced{{email: to, reason: suppressComplaint, permanent: true, detail: "feedback report: " + f.Type}}
 	if err := s.recordBounce(ctx, ch.WorkspaceID, &sent.MessageID, recipients, false); err != nil {
 		return IngestResult{}, false, err
 	}
