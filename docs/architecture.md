@@ -597,7 +597,12 @@ Inbound:
 5. Spam: the receiving server's verdict (the topmost `Authentication-Results`) is stored and
    shown, and its DMARC result is used only when the header's authserv-id is
    `YUVA_INGRESS_AUTHSERV_ID` (`mx.cloudflare.net` behind Cloudflare Email Routing); any other
-   header could have come with the message, so without a match DMARC is `unknown`. A new
+   header could have come with the message, so without a match DMARC is `unknown`. A sender can
+   also write a header with the trusted authserv-id, and the receiver need not remove it (RFC 8601
+   §5 is a SHOULD and Cloudflare does not document doing it), so when more than one header carries
+   that id DMARC is `fail` if any of them fails and `unknown` otherwise, and a deliverability probe
+   reads as untrusted. This needs nothing from the MTA beyond putting its own header on top; the
+   edge Worker cannot do better, since it sees the same headers and observes no verdict itself. A new
    conversation whose first mail fails DMARC is flagged `spam`, which keeps it out of
    lists and counts (they have a spam view) and away from automatic replies; contacts can be
    blocked.

@@ -418,7 +418,7 @@ func (s *Server) ingestToChannel(ctx context.Context, ch store.FindEmailChannelB
 	if m.AuthResults != "" {
 		authResults = &m.AuthResults
 	}
-	dmarc := email.TrustedDMARC(m.AuthResults, s.ingress.AuthservID)
+	dmarc := email.TrustedDMARC(m.AllAuthResults, s.ingress.AuthservID)
 	spam := dmarc == email.DMARCFail
 	rawSize := int64(len(raw))
 

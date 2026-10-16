@@ -25,7 +25,7 @@ func TestTrustedAuthPrefersMailFromSPF(t *testing.T) {
 		{"helo alone", "mx.example.net; " + helo, "none", "a1.smtp.example.org"},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			v, ok := email.TrustedAuth(tc.header, "mx.example.net")
+			v, ok := email.TrustedAuth([]string{tc.header}, "mx.example.net")
 			if !ok {
 				t.Fatal("not trusted")
 			}

@@ -79,6 +79,9 @@ The `reason` is shown to the original sender in the bounce, so it must not leak 
 Inbound messages are at most 25 MiB (Cloudflare Email Routing limit); the server should accept at
 least that.
 
-Cloudflare Email Routing adds an `Authentication-Results` header with the authserv-id
-`mx.cloudflare.net` on top of the message the Worker receives. Set `YUVA_INGRESS_AUTHSERV_ID` to that
-value on the server so its DMARC verdict is used; any other `Authentication-Results` is ignored.
+Set `YUVA_INGRESS_AUTHSERV_ID` to `mx.cloudflare.net`, the authserv-id of Cloudflare Email Routing,
+so the server uses the DMARC verdict of the topmost `Authentication-Results` when it carries that id;
+any other `Authentication-Results` is ignored. Cloudflare does not document removing a header with
+its own authserv-id that the sender put into the message, so when more than one carries it the server
+believes only a `fail` among them. A message that reaches the Worker without Cloudflare's own header
+would be judged by its sender's; the Worker forwards the bytes as received and does not change this.

@@ -95,10 +95,59 @@ func TestTrustedDMARC(t *testing.T) {
 		{"mx.cloudflare.net; dmarc=fail", "", email.DMARCUnknown},
 		{"", "mx.cloudflare.net", email.DMARCUnknown},
 	} {
-		if got := email.TrustedDMARC(tc.header, tc.id); got != tc.want {
+		if got := email.TrustedDMARC([]string{tc.header}, tc.id); got != tc.want {
 			t.Errorf("TrustedDMARC(%q, %q) = %q, want %q", tc.header, tc.id, got, tc.want)
 		}
 	}
+	if got := email.TrustedDMARC(nil, "mx.cloudflare.net"); got != email.DMARCUnknown {
+		t.Errorf("no header: %q", got)
+	}
+}
+
+func TestTrustedDMARCWithAForgedHeaderOfTheTrustedID(t *testing.T) {
+	const (
+		id         = "mx.cloudflare.net"
+		forged     = "mx.cloudflare.net; spf=pass; dkim=pass header.d=example.net; dmarc=pass header.from=example.net"
+		genuine    = "mx.cloudflare.net; spf=fail smtp.mailfrom=example.net; dkim=none; dmarc=fail (p=reject) header.from=example.net"
+		genuineOK  = "mx.cloudflare.net; dkim=pass header.d=example.net; dmarc=pass header.from=example.net"
+		senderSide = "mx.example.org; dmarc=pass header.from=example.net"
+	)
+	for _, tc := range []struct {
+		name    string
+		headers []string
+		want    string
+	}{
+		{"forged above a failing genuine", []string{forged, genuine}, email.DMARCFail},
+		{"forged below a failing genuine", []string{genuine, forged}, email.DMARCFail},
+		{"forged above a passing genuine", []string{forged, genuineOK}, email.DMARCUnknown},
+		{"forged below a passing genuine", []string{genuineOK, forged}, email.DMARCUnknown},
+		{"another receiver's header below", []string{genuineOK, senderSide}, email.DMARCPass},
+		{"trusted id only below another", []string{senderSide, genuineOK}, email.DMARCUnknown},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			m, err := email.Parse([]byte(headersInOrder(tc.headers) + "From: a@example.net\r\nTo: b@example.com\r\nSubject: x\r\n\r\nbody\r\n"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if m.AuthResults != tc.headers[0] {
+				t.Fatalf("stored %q, want the topmost %q", m.AuthResults, tc.headers[0])
+			}
+			if got := email.TrustedDMARC(m.AllAuthResults, id); got != tc.want {
+				t.Fatalf("TrustedDMARC = %q, want %q", got, tc.want)
+			}
+			if _, ok := email.TrustedAuth(m.AllAuthResults, id); ok != (tc.want == email.DMARCPass) {
+				t.Fatalf("TrustedAuth ok = %v", ok)
+			}
+		})
+	}
+}
+
+func headersInOrder(values []string) string {
+	var b strings.Builder
+	for _, v := range values {
+		b.WriteString("Authentication-Results: " + v + "\r\n")
+	}
+	return b.String()
 }
 
 func TestBuildHeaders(t *testing.T) {

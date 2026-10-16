@@ -96,7 +96,9 @@ yuva      unix  -       n       n       -       -       pipe
 Senden Sie die Rohnachricht per POST an `/ingress/email`, signiert mit `YUVA_INGRESS_SECRET`. Das
 Format steht in [edge/README.md](../../edge/README.md#ingress-contract). Setzen Sie
 `YUVA_INGRESS_AUTHSERV_ID` auf die Authserv-ID, die Ihr MTA in `Authentication-Results` schreibt,
-sonst wird DMARC nicht genutzt.
+sonst wird DMARC nicht genutzt. Ihr MTA muss jeder Nachricht, die er weitergibt, oben ein eigenes
+`Authentication-Results` voranstellen: Yuva liest das oberste, eine Nachricht ohne den Header Ihres
+MTA würde also nach einem Header beurteilt, den ihr Absender geschrieben hat.
 
 ## Weiterleitungsadresse
 
@@ -179,7 +181,7 @@ yuva channel create-email --workspace Example --inbox support --name "Everything
 | Kanal | Der Kanal des Envelope-Empfängers; `local+tag@domain` fällt auf `local@domain` zurück. Unbekannte Adressen werden abgewiesen. |
 | Threading | Über `In-Reply-To` und `References`; alles andere beginnt eine neue Unterhaltung. Eine Antwort öffnet die Unterhaltung wieder. |
 | Automatische E-Mails | Abwesenheitsnotizen, Massen-E-Mails und Zustellberichte werden gespeichert, aber nie beantwortet. E-Mails von Yuvas eigenen Adressen werden verworfen. |
-| DMARC | Nur mit `YUVA_INGRESS_AUTHSERV_ID` genutzt. Eine neue Unterhaltung, die durchfällt, wird als Spam markiert; eine Antwort, die durchfällt, beginnt eine neue. |
+| DMARC | Nur mit `YUVA_INGRESS_AUTHSERV_ID` genutzt, aus dem obersten `Authentication-Results`, wenn es diese Authserv-ID trägt. Tragen mehrere Header sie, hat der Absender einen hinzugefügt: ein `fail` darunter zählt, ein `pass` nicht. Eine neue Unterhaltung, die durchfällt, wird als Spam markiert; eine Antwort, die durchfällt, beginnt eine neue. |
 
 ### Grenzen
 

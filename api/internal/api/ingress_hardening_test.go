@@ -158,6 +158,30 @@ func TestIngressTrustsOnlyTheConfiguredAuthservID(t *testing.T) {
 	}
 }
 
+func TestIngressForgedHeaderOfTheTrustedAuthservID(t *testing.T) {
+	h := newHarness(t)
+	et := newEmailTeam(t, h, false)
+	forged := testAuthservID + "; spf=pass; dkim=pass header.d=example.net; dmarc=pass header.from=example.net"
+	genuine := testAuthservID + "; spf=fail smtp.mailfrom=example.net; dkim=none; dmarc=fail (p=reject) header.from=example.net"
+	for _, tc := range []struct{ name, top, below string }{
+		{"forged above", forged, genuine},
+		{"forged below", genuine, forged},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			raw := append([]byte("Authentication-Results: "+tc.top+"\r\n"), buildMail(mailOpts{
+				from: unique("spoof") + "@example.net", to: et.address, subject: "Hi", messageID: newMessageID(), body: "x",
+				headers: map[string]string{"Authentication-Results": tc.below},
+			})...)
+			r := h.ingest(et.address, raw, nil)
+			c := et.owner.expect(http.StatusOK, "GET", "/v1/conversations/"+r.str("conversation_id"), nil)
+			m := lastOf(messages(et.owner, r.str("conversation_id")), "message")
+			if c.body["spam"] != true || m["email"].(map[string]any)["dmarc"] != "fail" {
+				t.Fatalf("forged dmarc=pass used: spam %v, %v", c.body["spam"], m["email"])
+			}
+		})
+	}
+}
+
 func TestDMARCFailingReplyOpensSpamConversation(t *testing.T) {
 	h := newHarness(t)
 	et := newEmailTeam(t, h, false)

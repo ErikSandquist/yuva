@@ -391,7 +391,7 @@ func (s *Server) unsubscribedThrough(ctx context.Context, q *store.Queries, ws, 
 // workspace to one address that alone was given its Message-ID.
 func (s *Server) applyFeedbackReport(ctx context.Context, ch store.FindEmailChannelByAddressRow, m *email.Message) (IngestResult, bool, error) {
 	f := m.Feedback
-	if f == nil || !f.Complaint() || f.OriginalMessageID == "" || email.TrustedDMARC(m.AuthResults, s.ingress.AuthservID) != email.DMARCPass {
+	if f == nil || !f.Complaint() || f.OriginalMessageID == "" || email.TrustedDMARC(m.AllAuthResults, s.ingress.AuthservID) != email.DMARCPass {
 		return IngestResult{}, false, nil
 	}
 	d, err := s.st.FindBroadcastDeliveryByHeader(ctx, store.FindBroadcastDeliveryByHeaderParams{WorkspaceID: ch.WorkspaceID, HeaderMessageID: f.OriginalMessageID})

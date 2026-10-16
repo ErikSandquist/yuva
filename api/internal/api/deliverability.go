@@ -530,7 +530,7 @@ func authStatus(v string) oas.AuthStatus {
 // readProbe judges a probe from the trusted Authentication-Results and the DKIM signatures it
 // carries; ok is false when the results cannot be trusted.
 func readProbe(m *email.Message, authservID string) (probeAuth, bool) {
-	v, ok := email.TrustedAuth(m.AuthResults, authservID)
+	v, ok := email.TrustedAuth(m.AllAuthResults, authservID)
 	if !ok {
 		return probeAuth{}, false
 	}

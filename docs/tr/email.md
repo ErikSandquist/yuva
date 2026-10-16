@@ -96,7 +96,9 @@ yuva      unix  -       n       n       -       -       pipe
 Ham mesajı `YUVA_INGRESS_SECRET` ile imzalayarak `/ingress/email` adresine POST edin. Biçim
 [edge/README.md](../../edge/README.md#ingress-contract) dosyasında. `YUVA_INGRESS_AUTHSERV_ID`
 değerini MTA'nızın `Authentication-Results` başlığına yazdığı authserv-id olarak atayın; yoksa DMARC
-kullanılmaz.
+kullanılmaz. MTA'nız ilettiği her mesajın en üstüne kendi `Authentication-Results` başlığını
+eklemelidir: Yuva en üsttekini okur, bu yüzden MTA'nın başlık eklemediği bir mesaj, göndericinin
+yazdığı bir başlıkla değerlendirilir.
 
 ## Yönlendirme adresi
 
@@ -175,7 +177,7 @@ yuva channel create-email --workspace Example --inbox support --name "Everything
 | Kanal | Zarf alıcısının kanalı; `local+tag@domain` bulunamazsa `local@domain`'e düşer. Bilinmeyen adresler reddedilir. |
 | Zincirleme | `In-Reply-To` ve `References` ile; diğer her şey yeni konuşma başlatır. Bir yanıt konuşmayı yeniden açar. |
 | Otomatik e-posta | Otomatik yanıtlar, toplu e-postalar ve teslim raporları saklanır, asla yanıtlanmaz. Yuva'nın kendi adreslerinden gelen e-posta atılır. |
-| DMARC | Yalnızca `YUVA_INGRESS_AUTHSERV_ID` ile kullanılır. DMARC'tan geçemeyen yeni bir konuşma spam olarak işaretlenir; geçemeyen bir yanıt yeni konuşma başlatır. |
+| DMARC | Yalnızca `YUVA_INGRESS_AUTHSERV_ID` ile, en üstteki `Authentication-Results` bu authserv-id'yi taşıyorsa ondan kullanılır. Bu kimliği taşıyan birden çok başlık, göndericinin birini eklediğini gösterir: aralarındaki bir `fail` sayılır, bir `pass` sayılmaz. DMARC'tan geçemeyen yeni bir konuşma spam olarak işaretlenir; geçemeyen bir yanıt yeni konuşma başlatır. |
 
 ### Sınırlar
 

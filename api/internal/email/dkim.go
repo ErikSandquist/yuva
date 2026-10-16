@@ -170,14 +170,15 @@ type DKIMVerdict struct {
 
 var arComment = regexp.MustCompile(`\([^()]*\)`)
 
-// TrustedAuth reads the topmost Authentication-Results only when its authserv-id is authservID,
-// as TrustedDMARC does; ok is false otherwise.
-func TrustedAuth(authResults, authservID string) (AuthVerdict, bool) {
+// TrustedAuth reads the topmost of a message's Authentication-Results only when its authserv-id is
+// authservID and no other one carries that id; ok is false otherwise.
+func TrustedAuth(authResults []string, authservID string) (AuthVerdict, bool) {
 	var v AuthVerdict
-	if authservID == "" || !strings.EqualFold(AuthservID(authResults), authservID) {
+	trusted, ok := trustedAuthResults(authResults, authservID)
+	if !ok || len(trusted) != 1 {
 		return v, false
 	}
-	clean := authResults
+	clean := trusted[0]
 	for {
 		next := arComment.ReplaceAllString(clean, " ")
 		if next == clean {

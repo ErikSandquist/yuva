@@ -41,6 +41,7 @@ type Message struct {
 	Bounce      *Bounce
 	Feedback    *Feedback
 
+	AllAuthResults []string
 	DKIMSignatures []string
 	Probe          string
 	MigrationProbe string
@@ -87,8 +88,11 @@ func Parse(raw []byte) (*Message, error) {
 			m.Headers[h] = v
 		}
 	}
-	if ar := env.GetHeaderValues("Authentication-Results"); len(ar) > 0 {
-		m.AuthResults = strings.TrimSpace(ar[0])
+	for _, ar := range env.GetHeaderValues("Authentication-Results") {
+		m.AllAuthResults = append(m.AllAuthResults, strings.TrimSpace(ar))
+	}
+	if len(m.AllAuthResults) > 0 {
+		m.AuthResults = m.AllAuthResults[0]
 	}
 	m.DKIMSignatures = env.GetHeaderValues("DKIM-Signature")
 	m.Probe = strings.TrimSpace(env.GetHeader(ProbeHeader))
@@ -146,13 +150,34 @@ func attachments(env *enmime.Envelope) []Attachment {
 }
 
 // TrustedDMARC is the DMARC verdict of the topmost Authentication-Results only when its authserv-id
-// is authservID, the receiving server Yuva trusts: a header with any other id may have come with the
-// message itself.
-func TrustedDMARC(authResults, authservID string) string {
-	if authservID == "" || !strings.EqualFold(AuthservID(authResults), authservID) {
+// is authservID; when several carry that id a sender added one, so only a fail among them counts.
+func TrustedDMARC(authResults []string, authservID string) string {
+	trusted, ok := trustedAuthResults(authResults, authservID)
+	if !ok {
 		return DMARCUnknown
 	}
-	return DMARCResult(authResults)
+	if len(trusted) == 1 {
+		return DMARCResult(trusted[0])
+	}
+	for _, ar := range trusted {
+		if DMARCResult(ar) == DMARCFail {
+			return DMARCFail
+		}
+	}
+	return DMARCUnknown
+}
+
+func trustedAuthResults(authResults []string, authservID string) ([]string, bool) {
+	if authservID == "" || len(authResults) == 0 || !strings.EqualFold(AuthservID(authResults[0]), authservID) {
+		return nil, false
+	}
+	var out []string
+	for _, ar := range authResults {
+		if strings.EqualFold(AuthservID(ar), authservID) {
+			out = append(out, ar)
+		}
+	}
+	return out, true
 }
 
 // AuthservID is the authserv-id that starts an Authentication-Results value (RFC 8601).
