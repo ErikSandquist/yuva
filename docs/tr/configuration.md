@@ -38,7 +38,7 @@ virgülle ayrılır. Boolean değerler `true`/`false`, `1`/`0` ve `t`/`f` kabul 
 | `YUVA_LISTEN_ADDR` | `:8080` | Metrikler dışındaki her şey için HTTP adresi. |
 | `YUVA_METRICS_ADDR` | `:9090` | Prometheus adresi (`GET /metrics`). Dışarı açmayın. `off` ya da boş değer kapatır. |
 | `YUVA_CLIENT_IP_HEADER` | atanmamış | Vekil sunucunuzun istemci IP'sini yazdığı başlık, ör. `X-Real-IP`; hız sınırları için. `X-Forwarded-For` gibi bir listede, `YUVA_TRUSTED_PROXIES` içinde olmayan en sağdaki adres sayılır. |
-| `YUVA_TRUSTED_PROXIES` | atanmamış | Vekil sunucularınızın adresleri ya da CIDR aralıkları, ör. `10.0.0.0/8`. Atanırsa istemci IP başlığı yalnızca onlardan okunur. |
+| `YUVA_TRUSTED_PROXIES` | atanmamış | Vekil sunucularınızın adresleri ya da CIDR aralıkları, ör. `10.0.0.0/8`. Atanırsa istemci IP başlığı yalnızca onlardan okunur. Analitik toplayıcı ziyaretçinin `X-Forwarded-For` halkasını yalnızca bu adreslerden okur ve bunlardan biri olmayan en sağdaki girdiyi alır; atanmamışsa bağlanan adresi kullanır. |
 | `YUVA_COOKIE_SECURE` | `YUVA_PUBLIC_URL` `https` ise `true` | Oturum çerezini `Secure` olarak işaretler. |
 | `YUVA_MCP` | `on` | `off`, MCP uç noktası `/mcp`'yi kapatır (`404` döner). OAuth açık kalır. |
 | `YUVA_PANEL` | `on` | `off`, panelin ve OAuth onay sayfasının sunulmasını durdurur; API anahtarları çalışmaya devam eder. |

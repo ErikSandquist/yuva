@@ -13,6 +13,7 @@ import (
 	"net/http"
 	"net/http/cookiejar"
 	"net/http/httptest"
+	"net/netip"
 	"os"
 	"regexp"
 	"strings"
@@ -198,7 +199,7 @@ func newHarnessWith(t *testing.T, configure func(*api.Deps)) *harness {
 		Version:  "test",
 		Mailer:   h.mail,
 		WebAuthn: wa,
-		Auth:     api.AuthSettings{PublicURL: testOrigin, ClientIPHeader: "X-Forwarded-For", CodeReplyDelay: time.Millisecond},
+		Auth:     api.AuthSettings{PublicURL: testOrigin, ClientIPHeader: "X-Forwarded-For", TrustedProxies: []netip.Prefix{netip.MustParsePrefix("127.0.0.1/32"), netip.MustParsePrefix("::1/128")}, CodeReplyDelay: time.Millisecond},
 		Now:      h.clock.Now,
 		Secrets:  key,
 		Storage:  objects,

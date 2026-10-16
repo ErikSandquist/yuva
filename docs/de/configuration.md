@@ -39,7 +39,7 @@ und `t`/`f`.
 | `YUVA_LISTEN_ADDR` | `:8080` | HTTP-Adresse für alles außer Metriken. |
 | `YUVA_METRICS_ADDR` | `:9090` | Prometheus-Adresse (`GET /metrics`). Halten Sie sie privat. `off` oder ein leerer Wert schaltet sie ab. |
 | `YUVA_CLIENT_IP_HEADER` | nicht gesetzt | Header, in den Ihr Proxy die Client-IP schreibt, z. B. `X-Real-IP`, für Rate Limits. In einer Liste wie `X-Forwarded-For` zählt die Adresse ganz rechts, die nicht in `YUVA_TRUSTED_PROXIES` steht. |
-| `YUVA_TRUSTED_PROXIES` | nicht gesetzt | Adressen oder CIDR-Bereiche Ihrer Proxys, z. B. `10.0.0.0/8`. Dann wird der Client-IP-Header nur von ihnen gelesen. |
+| `YUVA_TRUSTED_PROXIES` | nicht gesetzt | Adressen oder CIDR-Bereiche Ihrer Proxys, z. B. `10.0.0.0/8`. Dann wird der Client-IP-Header nur von ihnen gelesen. Der Analytics-Collector liest den `X-Forwarded-For`-Eintrag des Besuchers nur von diesen Adressen und nimmt den rechtesten Eintrag, der keine davon ist; nicht gesetzt, nutzt er die verbindende Adresse. |
 | `YUVA_COOKIE_SECURE` | `true`, wenn `YUVA_PUBLIC_URL` `https` ist | Markiert das Sitzungs-Cookie als `Secure`. |
 | `YUVA_MCP` | `on` | `off` schaltet den MCP-Endpunkt `/mcp` ab (er antwortet mit `404`). OAuth bleibt an. |
 | `YUVA_PANEL` | `on` | `off` liefert das Panel und die OAuth-Zustimmung nicht mehr aus; API-Schlüssel funktionieren weiter. |

@@ -174,7 +174,9 @@ kendi sitenizden sunarsanız bu ziyaretçiler de sayılır. İki şeyi bilin:
 - Yuva sunucunuz ziyaretçiyi değil, vekil sunucuyu görür. Vekil sunucunun ziyaretçinin adresini
   `X-Forwarded-For` başlığında göndermesini sağlayın; aşağıdaki örnekler bunu yapar. Yoksa her ziyaretçi
   vekil sunucu gibi görünür: hepsi tek kişi olarak sayılır ve adres başına dakikada 120 olay sınırı hepsine
-  birlikte uygulanır.
+  birlikte uygulanır. Sunucu bu başlığa yalnızca `YUVA_TRUSTED_PROXIES` içinde listelenen adreslerden
+  güvenir ([yapılandırma](configuration.md)): vekil sunucunuzun adresini oraya yazın. Başka herkesten ve
+  ayar boşken bağlanan adres kullanılır, başlık yok sayılır.
 
 **nginx**, sitenizin `server` bloğunda:
 

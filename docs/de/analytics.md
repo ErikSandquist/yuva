@@ -174,6 +174,9 @@ eigenen Website aus, werden auch diese Besucher gezählt. Zwei Dinge sind zu bea
 - Ihr Yuva-Server sieht den Proxy, nicht den Besucher. Lassen Sie den Proxy die Adresse des Besuchers im Header
   `X-Forwarded-For` senden, wie es die Beispiele unten tun. Ohne ihn sieht jeder Besucher wie der Proxy aus: alle
   werden als einer gezählt, und das Limit von 120 Events pro Minute und Adresse gilt für alle zusammen.
+  Der Server glaubt diesem Header nur von Adressen, die in `YUVA_TRUSTED_PROXIES` stehen
+  ([Konfiguration](configuration.md)): tragen Sie dort die Adresse Ihres Proxys ein. Von allen anderen und
+  bei leerer Einstellung gilt die verbindende Adresse, der Header wird ignoriert.
 
 **nginx**, im `server`-Block Ihrer Website:
 

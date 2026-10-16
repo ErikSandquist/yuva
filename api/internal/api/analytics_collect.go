@@ -905,16 +905,14 @@ func (s *Server) takeAnalytics(ctx context.Context, cp *cachedProperty, now time
 
 var sharedAddressSpace = netip.MustParsePrefix("100.64.0.0/10")
 
-// visitorIP is the connecting address, or the visitor's address in front of it when the connecting
-// address is the site's own proxy for the script and collect endpoint (X-Forwarded-For). Hosted
-// customers cannot configure trusted proxies; a forged entry only moves the sender's own events.
+// visitorIP is the connecting address. Only when that address is one of the trusted proxies does the
+// visitor's address in front of it count: the rightmost X-Forwarded-For hop that is not a trusted
+// proxy, if it is a public address. With no trusted proxies configured nobody is believed.
 func (s *Server) visitorIP(r *http.Request) string {
-	conn := s.clientIP(r)
-	c, err := netip.ParseAddr(conn)
-	if err != nil {
-		return conn
+	peer := peerAddr(r)
+	if !s.trusted(peer) {
+		return peer
 	}
-	c = c.Unmap()
 	var hops []string
 	for _, v := range r.Header.Values("X-Forwarded-For") {
 		for h := range strings.SplitSeq(v, ",") {
@@ -923,28 +921,31 @@ func (s *Server) visitorIP(r *http.Request) string {
 			}
 		}
 	}
-	if len(hops) == 0 {
-		return conn
-	}
-	pick := hops[0]
+	pick := ""
 	for i := len(hops) - 1; i >= 0; i-- {
-		if a, err := netip.ParseAddr(hops[i]); err == nil && a.Unmap() == c {
-			if i == 0 {
-				return conn
-			}
-			pick = hops[i-1]
+		if pick = hops[i]; !s.trusted(pick) {
 			break
 		}
 	}
-	a, err := netip.ParseAddr(pick)
+	if a, ok := publicAddr(pick); ok && !s.trusted(pick) {
+		return a
+	}
+	if a, ok := publicAddr(s.clientIP(r)); ok {
+		return a
+	}
+	return peer
+}
+
+func publicAddr(v string) (string, bool) {
+	a, err := netip.ParseAddr(v)
 	if err != nil {
-		return conn
+		return "", false
 	}
 	a = a.Unmap()
 	if a.Zone() != "" || !a.IsGlobalUnicast() || a.IsPrivate() || sharedAddressSpace.Contains(a) {
-		return conn
+		return "", false
 	}
-	return a.String()
+	return a.String(), true
 }
 
 // visitInfo describes a new visit: its source and channel, its location from the shortened address

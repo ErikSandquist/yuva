@@ -38,7 +38,7 @@ An empty variable means unset and takes the default, except for `YUVA_METRICS_AD
 | `YUVA_LISTEN_ADDR` | `:8080` | HTTP address for everything except metrics. |
 | `YUVA_METRICS_ADDR` | `:9090` | Prometheus address (`GET /metrics`). Keep it private. `off` or an empty value turns it off. |
 | `YUVA_CLIENT_IP_HEADER` | unset | Header your proxy writes the client IP into, e.g. `X-Real-IP`, for rate limits. In a list like `X-Forwarded-For`, the rightmost address not in `YUVA_TRUSTED_PROXIES` counts. |
-| `YUVA_TRUSTED_PROXIES` | unset | Addresses or CIDR ranges of your proxies, e.g. `10.0.0.0/8`. Then the client IP header is read only from them. |
+| `YUVA_TRUSTED_PROXIES` | unset | Addresses or CIDR ranges of your proxies, e.g. `10.0.0.0/8`. Then the client IP header is read only from them. The analytics collector reads the visitor's `X-Forwarded-For` hop only from these addresses, taking the rightmost entry that is not one of them; unset, it uses the connecting address. |
 | `YUVA_COOKIE_SECURE` | `true` when `YUVA_PUBLIC_URL` is `https` | Marks the session cookie `Secure`. |
 | `YUVA_MCP` | `on` | `off` turns off the MCP endpoint `/mcp` (it answers `404`). OAuth stays on. |
 | `YUVA_PANEL` | `on` | `off` stops serving the panel and OAuth consent; API keys keep working. |

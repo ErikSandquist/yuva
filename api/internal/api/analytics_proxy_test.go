@@ -2,8 +2,10 @@ package api_test
 
 import (
 	"context"
+	"fmt"
 	"log/slog"
 	"net/http"
+	"net/netip"
 	"strings"
 	"testing"
 
@@ -12,10 +14,13 @@ import (
 
 func TestAnalyticsCollectBehindSiteProxy(t *testing.T) {
 	logs := &lockedBuffer{}
-	h := newHarnessWith(t, func(d *api.Deps) { d.Log = slog.New(slog.NewJSONHandler(logs, nil)) })
+	const proxy = "198.51.100.50"
+	h := newHarnessWith(t, func(d *api.Deps) {
+		d.Log = slog.New(slog.NewJSONHandler(logs, nil))
+		d.Auth.TrustedProxies = append(d.Auth.TrustedProxies, netip.MustParsePrefix(proxy+"/32"))
+	})
 	tm := newTeam(t, h)
 	ctx := context.Background()
-	const proxy = "198.51.100.50"
 	send := func(key, ip, page string) {
 		t.Helper()
 		if r := collect(h, key, collectReq{origin: "https://example.com", ip: ip, body: pageview("https://example.com" + page)}); r.status != http.StatusAccepted {
@@ -57,7 +62,7 @@ func TestAnalyticsCollectBehindSiteProxy(t *testing.T) {
 	if n := visits(direct); n != 2 {
 		t.Fatalf("direct requests: %d visits", n)
 	}
-	if n := visits(ignored); n != 1 {
+	if n := visits(ignored); n != 2 {
 		t.Fatalf("private or malformed forwarded addresses: %d visits", n)
 	}
 	if n := h.count("SELECT count(*) FROM analytics_events WHERE workspace_id = $1 AND property_id = $2", tm.ws, ignored); n != 8 {
@@ -92,5 +97,21 @@ func TestAnalyticsCollectBehindSiteProxy(t *testing.T) {
 	}
 	if m := testAddresses.FindString(logs.String()); m != "" {
 		t.Fatalf("the log holds an address: %s", m)
+	}
+}
+
+func TestAnalyticsCollectIgnoresForgedForwardedFor(t *testing.T) {
+	h := newHarnessWith(t, func(d *api.Deps) { d.Auth.TrustedProxies = nil })
+	tm := newTeam(t, h)
+	id, key := createProperty(tm.owner, map[string]any{"name": "Forged", "domains": []string{"example.com"}, "timezone": "UTC"})
+	for i := range 20 {
+		ip := fmt.Sprintf("203.0.113.%d", i+1)
+		if r := collect(h, key, collectReq{origin: "https://example.com", ip: ip, body: pageview("https://example.com/")}); r.status != http.StatusAccepted {
+			t.Fatalf("%s: status %d: %s", ip, r.status, r.raw)
+		}
+	}
+	h.flushAnalytics()
+	if n := h.count("SELECT count(*) FROM analytics_visits WHERE workspace_id = $1 AND property_id = $2", tm.ws, id); n != 1 {
+		t.Fatalf("rotating forged addresses made %d visitors, want the one socket address", n)
 	}
 }

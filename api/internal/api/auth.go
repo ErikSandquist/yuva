@@ -491,15 +491,20 @@ func (s *Server) trusted(v string) bool {
 	return false
 }
 
+func peerAddr(r *http.Request) string {
+	peer, _, err := net.SplitHostPort(r.RemoteAddr)
+	if err != nil {
+		return r.RemoteAddr
+	}
+	return peer
+}
+
 // clientIP is the TCP peer, or with a client IP header the rightmost address in it that is not
 // one of the trusted proxies: proxies append to X-Forwarded-For, so everything left of the hop
 // our own proxy added is whatever the client sent. With trusted proxies configured, the header
 // counts only when the peer is one of them.
 func (s *Server) clientIP(r *http.Request) string {
-	peer, _, err := net.SplitHostPort(r.RemoteAddr)
-	if err != nil {
-		peer = r.RemoteAddr
-	}
+	peer := peerAddr(r)
 	if s.auth.ClientIPHeader == "" || (len(s.auth.TrustedProxies) > 0 && !s.trusted(peer)) {
 		return peer
 	}

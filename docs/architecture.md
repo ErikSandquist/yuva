@@ -1561,10 +1561,10 @@ in six steps (M15.1–M15.6 in the roadmap). Decisions:
 - **Collection.** `POST /client/v1/analytics/{key}` (one event, or up to 100 for apps), a plain handler
   outside the strict server; `text/plain` JSON so browsers send no preflight; its CORS branch matches the
   `Origin` host against the property's domains; no cookie, no session, request logs without addresses.
-  It takes the visitor's address from the `X-Forwarded-For` entry that a site's own proxy for the
-  script and endpoint puts in front of the connecting address (a valid public address only, otherwise
-  the connecting address); a spoofed one only skews that property's own counts, and the per-property
-  limit still applies.
+  It takes the visitor's address from `X-Forwarded-For` only when the connecting address is one of
+  `YUVA_TRUSTED_PROXIES` (empty trusts nobody): the rightmost entry that is not a trusted proxy, if it
+  is a public address, otherwise the connecting address. A direct client's header is ignored, so rate
+  limits, GeoIP and the excluded-IP check cannot be steered by forged entries.
   Host backends send `POST /v1/analytics/properties/{id}/events` with `analytics:write`, forwarding the
   visitor's IP and user agent (never stored) or their own visitor key. Ingest scrubs e-mail-shaped
   values, keeps only UTM keys of the query string, parses the user agent (`medama-io/go-useragent`), looks
