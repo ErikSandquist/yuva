@@ -23143,8 +23143,9 @@ type ClientInterface interface {
 	// from the public (its author no longer sees it either). On the opening post this approves or
 	// hides the whole thread. Approving a reply notifies the thread's followers.
 	//
-	// `body` (and `title` on the opening post) edits a post the calling member wrote; other
-	// posts answer `403 forbidden`. Member sessions only.
+	// `state` needs an owner or admin; an agent answers `403 forbidden`. `body` (and `title` on
+	// the opening post) edits a post the calling member wrote, any role; other posts answer
+	// `403 forbidden`. Member sessions only.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -23157,8 +23158,9 @@ type ClientInterface interface {
 	// from the public (its author no longer sees it either). On the opening post this approves or
 	// hides the whole thread. Approving a reply notifies the thread's followers.
 	//
-	// `body` (and `title` on the opening post) edits a post the calling member wrote; other
-	// posts answer `403 forbidden`. Member sessions only.
+	// `state` needs an owner or admin; an agent answers `403 forbidden`. `body` (and `title` on
+	// the opening post) edits a post the calling member wrote, any role; other posts answer
+	// `403 forbidden`. Member sessions only.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -23169,8 +23171,8 @@ type ClientInterface interface {
 	//
 	// Hides the post (the thread, for an opening post) and every post of its author in the
 	// workspace still waiting for approval, and makes the author's later posts wait for a member
-	// whatever the channel's setting. A member's post answers `400 validation_failed`.
-	// Member sessions only.
+	// whatever the channel's setting. A member's post answers `400 validation_failed`. Needs an
+	// owner or admin; an agent answers `403 forbidden`. Member sessions only.
 	//
 	// Corresponds with POST /v1/discussion-posts/{postId}/spam (the `MarkDiscussionPostSpam` operationId).
 	MarkDiscussionPostSpam(ctx context.Context, postId DiscussionPostId, params *MarkDiscussionPostSpamParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -31217,8 +31219,9 @@ func (c *Client) DeleteDiscussionPost(ctx context.Context, postId DiscussionPost
 // from the public (its author no longer sees it either). On the opening post this approves or
 // hides the whole thread. Approving a reply notifies the thread's followers.
 //
-// `body` (and `title` on the opening post) edits a post the calling member wrote; other
-// posts answer `403 forbidden`. Member sessions only.
+// `state` needs an owner or admin; an agent answers `403 forbidden`. `body` (and `title` on
+// the opening post) edits a post the calling member wrote, any role; other posts answer
+// `403 forbidden`. Member sessions only.
 //
 // Takes any type of body and a specified content type.
 //
@@ -31241,8 +31244,9 @@ func (c *Client) UpdateDiscussionPostWithBody(ctx context.Context, postId Discus
 // from the public (its author no longer sees it either). On the opening post this approves or
 // hides the whole thread. Approving a reply notifies the thread's followers.
 //
-// `body` (and `title` on the opening post) edits a post the calling member wrote; other
-// posts answer `403 forbidden`. Member sessions only.
+// `state` needs an owner or admin; an agent answers `403 forbidden`. `body` (and `title` on
+// the opening post) edits a post the calling member wrote, any role; other posts answer
+// `403 forbidden`. Member sessions only.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -31263,8 +31267,8 @@ func (c *Client) UpdateDiscussionPost(ctx context.Context, postId DiscussionPost
 //
 // Hides the post (the thread, for an opening post) and every post of its author in the
 // workspace still waiting for approval, and makes the author's later posts wait for a member
-// whatever the channel's setting. A member's post answers `400 validation_failed`.
-// Member sessions only.
+// whatever the channel's setting. A member's post answers `400 validation_failed`. Needs an
+// owner or admin; an agent answers `403 forbidden`. Member sessions only.
 //
 // Corresponds with POST /v1/discussion-posts/{postId}/spam (the `MarkDiscussionPostSpam` operationId).
 func (c *Client) MarkDiscussionPostSpam(ctx context.Context, postId DiscussionPostId, params *MarkDiscussionPostSpamParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -57666,8 +57670,9 @@ type ClientWithResponsesInterface interface {
 	// from the public (its author no longer sees it either). On the opening post this approves or
 	// hides the whole thread. Approving a reply notifies the thread's followers.
 	//
-	// `body` (and `title` on the opening post) edits a post the calling member wrote; other
-	// posts answer `403 forbidden`. Member sessions only.
+	// `state` needs an owner or admin; an agent answers `403 forbidden`. `body` (and `title` on
+	// the opening post) edits a post the calling member wrote, any role; other posts answer
+	// `403 forbidden`. Member sessions only.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -57680,8 +57685,9 @@ type ClientWithResponsesInterface interface {
 	// from the public (its author no longer sees it either). On the opening post this approves or
 	// hides the whole thread. Approving a reply notifies the thread's followers.
 	//
-	// `body` (and `title` on the opening post) edits a post the calling member wrote; other
-	// posts answer `403 forbidden`. Member sessions only.
+	// `state` needs an owner or admin; an agent answers `403 forbidden`. `body` (and `title` on
+	// the opening post) edits a post the calling member wrote, any role; other posts answer
+	// `403 forbidden`. Member sessions only.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -57692,8 +57698,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Hides the post (the thread, for an opening post) and every post of its author in the
 	// workspace still waiting for approval, and makes the author's later posts wait for a member
-	// whatever the channel's setting. A member's post answers `400 validation_failed`.
-	// Member sessions only.
+	// whatever the channel's setting. A member's post answers `400 validation_failed`. Needs an
+	// owner or admin; an agent answers `403 forbidden`. Member sessions only.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -85746,8 +85752,9 @@ func (c *ClientWithResponses) DeleteDiscussionPostWithResponse(ctx context.Conte
 // from the public (its author no longer sees it either). On the opening post this approves or
 // hides the whole thread. Approving a reply notifies the thread's followers.
 //
-// `body` (and `title` on the opening post) edits a post the calling member wrote; other
-// posts answer `403 forbidden`. Member sessions only.
+// `state` needs an owner or admin; an agent answers `403 forbidden`. `body` (and `title` on
+// the opening post) edits a post the calling member wrote, any role; other posts answer
+// `403 forbidden`. Member sessions only.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -85766,8 +85773,9 @@ func (c *ClientWithResponses) UpdateDiscussionPostWithBodyWithResponse(ctx conte
 // from the public (its author no longer sees it either). On the opening post this approves or
 // hides the whole thread. Approving a reply notifies the thread's followers.
 //
-// `body` (and `title` on the opening post) edits a post the calling member wrote; other
-// posts answer `403 forbidden`. Member sessions only.
+// `state` needs an owner or admin; an agent answers `403 forbidden`. `body` (and `title` on
+// the opening post) edits a post the calling member wrote, any role; other posts answer
+// `403 forbidden`. Member sessions only.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -85784,8 +85792,8 @@ func (c *ClientWithResponses) UpdateDiscussionPostWithResponse(ctx context.Conte
 //
 // Hides the post (the thread, for an opening post) and every post of its author in the
 // workspace still waiting for approval, and makes the author's later posts wait for a member
-// whatever the channel's setting. A member's post answers `400 validation_failed`.
-// Member sessions only.
+// whatever the channel's setting. A member's post answers `400 validation_failed`. Needs an
+// owner or admin; an agent answers `403 forbidden`. Member sessions only.
 //
 // Returns a wrapper object for the known response body format(s).
 //
