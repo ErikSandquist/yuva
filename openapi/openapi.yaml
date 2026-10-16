@@ -107,7 +107,8 @@ tags:
     description: |
       Public discussions on documentation pages, for the team: threads, replies, the moderation
       queue, accepted answers, and turning a private conversation into a thread. Reading needs
-      `conversations:read`; writing and moderating need a member session. Threads in inboxes the
+      `conversations:read`; writing needs a member session; approving, hiding and marking spam
+      need an owner or admin. Threads in inboxes the
       caller cannot see answer `404`.
   - name: account
     description: |
@@ -4278,8 +4279,9 @@ paths:
         from the public (its author no longer sees it either). On the opening post this approves or
         hides the whole thread. Approving a reply notifies the thread's followers.
 
-        `body` (and `title` on the opening post) edits a post the calling member wrote; other
-        posts answer `403 forbidden`. Member sessions only.
+        `state` needs an owner or admin; an agent answers `403 forbidden`. `body` (and `title` on
+        the opening post) edits a post the calling member wrote, any role; other posts answer
+        `403 forbidden`. Member sessions only.
       tags: [discussions]
       parameters:
         - $ref: "#/components/parameters/WorkspaceHeader"
@@ -4331,8 +4333,8 @@ paths:
       description: |
         Hides the post (the thread, for an opening post) and every post of its author in the
         workspace still waiting for approval, and makes the author's later posts wait for a member
-        whatever the channel's setting. A member's post answers `400 validation_failed`.
-        Member sessions only.
+        whatever the channel's setting. A member's post answers `400 validation_failed`. Needs an
+        owner or admin; an agent answers `403 forbidden`. Member sessions only.
       tags: [discussions]
       parameters:
         - $ref: "#/components/parameters/WorkspaceHeader"

@@ -112,7 +112,12 @@ func TestDiscussionAccessAndModeration(t *testing.T) {
 		t.Fatalf("reader contact %s", c.raw)
 	}
 
-	ct.agent.expect(http.StatusOK, "PATCH", "/v1/discussion-posts/"+opening, map[string]any{"state": "published"})
+	ct.agent.expectProblem(http.StatusForbidden, "forbidden", "PATCH", "/v1/discussion-posts/"+opening, map[string]any{"state": "published"})
+	ct.agent.expectProblem(http.StatusForbidden, "forbidden", "PATCH", "/v1/discussion-posts/"+opening, map[string]any{"state": "published", "body": "x"})
+	if got := items(ct.agent.expect(http.StatusOK, "GET", "/v1/discussion-posts?state=pending", nil)); len(got) != 1 {
+		t.Fatalf("an agent's refused approval changed the queue: %v", got)
+	}
+	ct.owner.expect(http.StatusOK, "PATCH", "/v1/discussion-posts/"+opening, map[string]any{"state": "published"})
 	r := public.expect(http.StatusOK, "GET", list, nil)
 	if got := items(r); len(got) != 1 || r.header.Get("Cache-Control") != "public, max-age=60" || got[0]["author"].(map[string]any)["name"] != "Ada Lovelace" {
 		t.Fatalf("approved thread %s %v", r.raw, r.header)
@@ -139,7 +144,12 @@ func TestDiscussionAccessAndModeration(t *testing.T) {
 	if got := bob.site.expect(http.StatusOK, "GET", "/client/v1/channels/"+ct.key+"/discussions/"+id, nil).body["posts"].([]any); len(got) != 2 {
 		t.Fatalf("the author does not see their pending reply: %v", got)
 	}
-	ct.agent.expect(http.StatusOK, "POST", "/v1/discussion-posts/"+bobPost.str("id")+"/spam", nil)
+	ct.agent.expectProblem(http.StatusForbidden, "forbidden", "POST", "/v1/discussion-posts/"+bobPost.str("id")+"/spam", nil)
+	ct.agent.expectProblem(http.StatusForbidden, "forbidden", "PATCH", "/v1/discussion-posts/"+bobPost.str("id"), map[string]any{"state": "hidden"})
+	if got := items(ct.owner.expect(http.StatusOK, "GET", "/v1/discussion-posts?state=pending", nil)); len(got) != 1 || got[0]["post"].(map[string]any)["id"] != bobPost.str("id") {
+		t.Fatalf("an agent's refused moderation changed the post: %v", got)
+	}
+	ct.owner.expect(http.StatusOK, "POST", "/v1/discussion-posts/"+bobPost.str("id")+"/spam", nil)
 	again := bob.site.expect(http.StatusCreated, "POST", "/client/v1/discussions/"+id+"/posts", map[string]any{"body": "Spam again"})
 	ct.owner.expect(http.StatusOK, "PATCH", "/v1/channels/"+ct.channel, map[string]any{"chat": map[string]any{"allowed_origins": []string{ct.origin}, "allow_anonymous": true, "discussions": "open"}})
 	if again.str("state") != "pending" || bob.site.expect(http.StatusCreated, "POST", "/client/v1/discussions/"+id+"/posts", map[string]any{"body": "x"}).str("state") != "pending" {
@@ -166,10 +176,13 @@ func TestDiscussionAccessAndModeration(t *testing.T) {
 	if a := ada.site.expect(http.StatusOK, "PUT", "/client/v1/discussions/"+id+"/answer", map[string]any{"post_id": ans.str("id")}); a.str("answer_post_id") != ans.str("id") {
 		t.Fatalf("accept %s", a.raw)
 	}
+	ct.agent.expectProblem(http.StatusForbidden, "forbidden", "PATCH", "/v1/discussion-posts/"+ans.str("id"), map[string]any{"state": "hidden"})
 	detail := public.expect(http.StatusOK, "GET", "/client/v1/channels/"+ct.key+"/discussions/"+id, nil)
 	if first := detail.body["posts"].([]any)[0].(map[string]any); first["id"] != ans.str("id") || first["accepted"] != true || first["votes"] != 1.0 {
 		t.Fatalf("accepted answer first %s", detail.raw)
 	}
+	ct.owner.expect(http.StatusOK, "PATCH", "/v1/discussion-posts/"+nested.str("id"), map[string]any{"state": "hidden"})
+	ct.owner.expect(http.StatusOK, "PATCH", "/v1/discussion-posts/"+nested.str("id"), map[string]any{"state": "published"})
 
 	ct.agent.expect(http.StatusOK, "PATCH", "/v1/discussions/"+id, map[string]any{"locked": true})
 	ada.site.expectProblem(http.StatusForbidden, "discussion_locked", "POST", "/client/v1/discussions/"+id+"/posts", map[string]any{"body": "x"})

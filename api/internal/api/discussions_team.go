@@ -365,6 +365,11 @@ func (s *Server) UpdateDiscussionPost(ctx context.Context, req oas.UpdateDiscuss
 	if b.State != nil && !b.State.Valid() {
 		return nil, errValidation("state must be published or hidden")
 	}
+	if b.State != nil {
+		if err := requireManagerOrKey(p); err != nil {
+			return nil, err
+		}
+	}
 	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, events *eventBatch) error {
 		t, post, err := teamPost(ctx, q, p, req.PostId)
 		if err != nil {
@@ -423,6 +428,9 @@ func (s *Server) DeleteDiscussionPost(ctx context.Context, req oas.DeleteDiscuss
 
 func (s *Server) MarkDiscussionPostSpam(ctx context.Context, req oas.MarkDiscussionPostSpamRequestObject) (oas.MarkDiscussionPostSpamResponseObject, error) {
 	p := principalFrom(ctx)
+	if err := requireManagerOrKey(p); err != nil {
+		return nil, err
+	}
 	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, events *eventBatch) error {
 		t, post, err := teamPost(ctx, q, p, req.PostId)
 		if err != nil {
