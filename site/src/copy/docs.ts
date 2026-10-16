@@ -25,11 +25,16 @@ export function docsCopy(i18n: I18n) {
     edit: i18n._(msg`Edit this page on GitHub`),
     previous: i18n._(msg`Previous`),
     next: i18n._(msg`Next`),
+    introduction: i18n._(msg`Introduction`),
+    menu: i18n._(msg`Menu`),
     groups: {
       start: i18n._(msg`Get started`),
       channels: i18n._(msg`Channels`),
+      broadcasts: i18n._(msg`Broadcasts`),
+      analytics: i18n._(msg`Analytics`),
       migrate: i18n._(msg`Move to Yuva`),
-      integrate: i18n._(msg`Integrate`),
+      developers: i18n._(msg`Developers`),
+      selfhost: i18n._(msg`Self-hosting`),
       project: i18n._(msg`Project`),
       more: i18n._(msg`More`),
     },
@@ -38,28 +43,12 @@ export function docsCopy(i18n: I18n) {
     home: {
       title: i18n._(msg`Yuva documentation`),
       description: i18n._(
-        msg`Install, configure and integrate Yuva: e-mail, the web widget, the mobile SDKs, identity tokens, webhooks and the API reference.`
+        msg`Every Yuva guide in one place: install, channels, broadcasts, analytics, moving a mailbox in, the developer tools and the API reference.`
       ),
-      heading: i18n._(msg`Everything to run and build on Yuva.`),
+      heading: i18n._(msg`Yuva documentation`),
       lead: i18n._(
-        msg`Install the server, connect your channels and integrate the widget, the mobile SDKs and the API. Written for the version on the main branch.`
+        msg`Yuva brings e-mail, live chat and in-app messages from your customers into one inbox for your team. Start with Get started; every guide is listed below.`
       ),
-      popular: i18n._(msg`Popular`),
-      quickStart: i18n._(msg`Quick start`),
-      steps: {
-        start: {
-          title: i18n._(msg`Run Yuva`),
-          body: i18n._(msg`One Docker image and Postgres, from compose file to the first owner.`),
-        },
-        channels: {
-          title: i18n._(msg`Connect your channels`),
-          body: i18n._(msg`Your support e-mail, live chat on your sites and messages inside your apps, in one inbox.`),
-        },
-        integrate: {
-          title: i18n._(msg`Integrate with your backend`),
-          body: i18n._(msg`Let your users write as themselves, react to events and automate the rest with the API.`),
-        },
-      } as Record<string, { title: string; body: string }>,
     },
     api: {
       description: i18n._(msg`Every Yuva endpoint and webhook event, generated from the OpenAPI 3.1 contract.`),

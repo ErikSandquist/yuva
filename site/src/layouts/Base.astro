@@ -63,6 +63,45 @@ const preload = locale === "tr" ? [geistLatin, geistLatinExt] : [geistLatin]
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
+    <script is:inline>
+      ;(function () {
+        var key = "yuva.theme"
+        var root = document.documentElement
+        function read() {
+          try {
+            var c = localStorage.getItem(key)
+            if (c === "light" || c === "dark") return c
+          } catch (e) {}
+          return "system"
+        }
+        function apply(choice) {
+          if (choice === "system") root.removeAttribute("data-theme")
+          else root.setAttribute("data-theme", choice)
+          var dark = choice === "dark" || (choice === "system" && matchMedia("(prefers-color-scheme: dark)").matches)
+          document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+            var own = (m.getAttribute("media") || "").indexOf("dark") > -1 ? "#09090b" : "#ffffff"
+            m.setAttribute("content", choice === "system" ? own : dark ? "#09090b" : "#ffffff")
+          })
+          document.querySelectorAll("[data-theme-choice]").forEach(function (b) {
+            b.setAttribute("aria-pressed", String(b.getAttribute("data-theme-choice") === choice))
+          })
+        }
+        apply(read())
+        document.addEventListener("DOMContentLoaded", function () {
+          apply(read())
+        })
+        document.addEventListener("click", function (e) {
+          var b = e.target instanceof Element ? e.target.closest("[data-theme-choice]") : null
+          if (!b) return
+          var choice = b.getAttribute("data-theme-choice")
+          try {
+            if (choice === "system") localStorage.removeItem(key)
+            else localStorage.setItem(key, choice)
+          } catch (e) {}
+          apply(choice)
+        })
+      })()
+    </script>
     {preload.map((href) => (
       <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
     ))}
@@ -103,11 +142,19 @@ const preload = locale === "tr" ? [geistLatin, geistLatinExt] : [geistLatin]
     >
       {i18n._(msg`Skip to content`)}
     </a>
-    {!bare && <Header locale={locale} paths={paths} wide={wide} />}
-    <main id="main">
-      <slot />
-    </main>
-    {!bare && <Footer locale={locale} paths={paths} wide={wide} />}
+    {bare ? (
+      <main id="main">
+        <slot />
+      </main>
+    ) : (
+      <div class="overflow-x-clip">
+        <Header locale={locale} paths={paths} wide={wide} />
+        <main id="main" class:list={[!wide && "mx-auto max-w-6xl border-x border-rule"]}>
+          <slot />
+        </main>
+        <Footer locale={locale} paths={paths} wide={wide} />
+      </div>
+    )}
     <script is:inline src="https://app.useyuva.com/yuva.js" async></script>
     <yuva-chat channel="yuva_pk_OZ33Z-rvQRImHtjRS8PbtBQS" server="https://app.useyuva.com" locale={locale}></yuva-chat>
   </body>

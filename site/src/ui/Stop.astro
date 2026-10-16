@@ -1,22 +1,58 @@
 ---
+import Cross from "@/ui/Cross.astro"
+
 interface Props {
   id?: string
-  labelledby: string
+  labelledby?: string
   tone?: "paper" | "deep" | "night"
+  index?: string
+  label?: string
+  flush?: boolean
+  headed?: boolean
   class?: string
 }
 
-const { id, labelledby, tone = "paper" } = Astro.props
+const { id, labelledby, tone = "paper", index, label, flush = false, headed = false } = Astro.props
 const tones = {
   paper: "",
-  deep: "border-y border-rule bg-paper-deep",
-  night:
-    "bg-night text-ink [--ink:#fafafa] [--ink-soft:#a1a1aa] [--ink-faint:#8a8a93] [--rule:#27272a] [--rule-strong:#3f3f46] [--sheet:#131316] [--paper:#09090b] [--paper-deep:#0f0f12] [--brand:#ff8a5c] [--brand-wash:#2a140c]",
+  deep: "bg-paper-deep",
+  night: "bg-night",
 }
+const night =
+  "text-ink [--ink:#fafafa] [--ink-soft:#a1a1aa] [--ink-faint:#8a8a93] [--rule:#27272a] [--rule-strong:#3f3f46] [--sheet:#131316] [--paper:#09090b] [--paper-deep:#0f0f12] [--brand:#ff8a5c] [--brand-wash:#2a140c]"
 ---
 
-<section id={id} aria-labelledby={labelledby} class:list={["scroll-mt-16", tones[tone], Astro.props.class]}>
-  <div class="mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-28">
-    <slot />
+<section
+  id={id}
+  aria-labelledby={labelledby}
+  class:list={[
+    "relative scroll-mt-16 before:absolute before:-inset-x-[100vw] before:top-0 before:h-px before:bg-rule",
+    tones[tone],
+    Astro.props.class,
+  ]}
+>
+  <Cross class="-start-[6px] -top-[5px]" />
+  <Cross class="-end-[6px] -top-[5px]" />
+  <div class:list={[tone === "night" && night]}>
+    {(index || label) && (
+      <div class="flex items-baseline gap-3 border-b border-rule px-5 py-3 sm:px-8">
+        {index && (
+          <span class="font-mono text-xs text-brand" aria-hidden="true">
+            {index}
+          </span>
+        )}
+        {label &&
+          (headed ? (
+            <h2 id={labelledby} class="text-sm font-medium">
+              {label}
+            </h2>
+          ) : (
+            <p class="text-sm font-medium">{label}</p>
+          ))}
+      </div>
+    )}
+    <div class:list={[!flush && "px-5 py-16 sm:px-8 lg:py-24"]}>
+      <slot />
+    </div>
   </div>
 </section>

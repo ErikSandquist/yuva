@@ -13,7 +13,7 @@ const { title, size = "lg" } = Astro.props
 <div
   class:list={[
     "flex aspect-[1200/630] flex-col justify-between overflow-hidden bg-[radial-gradient(120%_120%_at_100%_0%,#3a1a10,#09090b_62%)] text-white",
-    size === "lg" ? "rounded-3xl p-7 sm:p-10" : "rounded-2xl p-5",
+    size === "lg" ? "p-7 sm:p-10" : "p-5",
     Astro.props.class,
   ]}
   aria-hidden="true"

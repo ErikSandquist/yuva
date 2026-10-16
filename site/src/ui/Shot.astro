@@ -34,31 +34,40 @@ const shift = crop
   : undefined
 ---
 
-<picture class:list={["block", Astro.props.class, crop && "overflow-hidden"]} style={frame}>
-  {small && sd && (
-    <source
-      media={`${narrow} and (prefers-color-scheme: dark)`}
-      srcset={sd.srcSet.attribute}
-      sizes={small.sizes}
-      width={sw}
-      height={sh}
-      type="image/webp"
+{[
+  { dark: false, src: l, small: sl, smallImg: small?.light },
+  ...(d ? [{ dark: true, src: d, small: sd, smallImg: small?.dark }] : []),
+].map((v) => (
+  <picture
+    class:list={[
+      "block",
+      Astro.props.class,
+      crop && "overflow-hidden",
+      d && (v.dark ? "theme-dark-only" : "theme-light-only"),
+    ]}
+    style={frame}
+  >
+    {small && v.small && (
+      <source
+        media={narrow}
+        srcset={v.small.srcSet.attribute}
+        sizes={small.sizes}
+        width={sw}
+        height={sh}
+        type="image/webp"
+      />
+    )}
+    <source srcset={v.src.srcSet.attribute} sizes={sizes} type="image/webp" />
+    <img
+      class="block h-auto w-full"
+      src={v.src.src}
+      alt={alt}
+      width={largest}
+      height={height}
+      loading={eager && !v.dark ? "eager" : "lazy"}
+      decoding={eager && !v.dark ? "sync" : "async"}
+      fetchpriority={eager && !v.dark ? "high" : "auto"}
+      style={shift}
     />
-  )}
-  {small && sl && (
-    <source media={narrow} srcset={sl.srcSet.attribute} sizes={small.sizes} width={sw} height={sh} type="image/webp" />
-  )}
-  {d && <source media="(prefers-color-scheme: dark)" srcset={d.srcSet.attribute} sizes={sizes} type="image/webp" />}
-  <source srcset={l.srcSet.attribute} sizes={sizes} type="image/webp" />
-  <img
-    class="block h-auto w-full"
-    src={l.src}
-    alt={alt}
-    width={largest}
-    height={height}
-    loading={eager ? "eager" : "lazy"}
-    decoding={eager ? "sync" : "async"}
-    fetchpriority={eager ? "high" : "auto"}
-    style={shift}
-  />
-</picture>
+  </picture>
+))}

@@ -2,25 +2,21 @@ import { execFileSync } from "node:child_process"
 import { getCollection, type CollectionEntry } from "astro:content"
 import { docsCopy } from "@/copy/docs"
 import { i18nFor } from "@/i18n"
+import type { IconName } from "./icons"
 import { defaultLocale, docsRoot, locales, REPO, type Locale } from "./routes"
 
 export type Doc = CollectionEntry<"docs">
 export type NavItem = { slug: string; title: string; rel: string; children?: NavItem[] }
-export type NavGroup = { key: string; title: string; items: NavItem[] }
+export type NavGroup = { key: string; title: string; icon: IconName; items: NavItem[] }
 
 const groups = [
-  { key: "start", slugs: ["install", "configuration", "operations", "analytics-dpa"] },
+  { key: "start", icon: "flag", slugs: ["install"] },
+  { key: "channels", icon: "mail", slugs: ["email", "widget", "mobile", "documentation-pages"] },
+  { key: "broadcasts", icon: "send", slugs: ["lists", "importing", "designs", "broadcasts", "deliverability"] },
   {
-    key: "channels",
+    key: "analytics",
+    icon: "chart",
     slugs: [
-      "email",
-      "widget",
-      "documentation-pages",
-      "lists",
-      "importing",
-      "designs",
-      "broadcasts",
-      "deliverability",
       "analytics",
       "analytics-events",
       "analytics-apps",
@@ -29,11 +25,12 @@ const groups = [
       "analytics-support",
       "analytics-consent",
       "analytics-privacy",
-      "mobile",
+      "analytics-dpa",
     ],
   },
   {
     key: "migrate",
+    icon: "download",
     slugs: [
       "migrate",
       "migrate-gmail",
@@ -54,8 +51,9 @@ const groups = [
       "migrate-operators",
     ],
   },
-  { key: "integrate", slugs: ["identity", "webhooks", "headless", "mcp", "api"] },
-  { key: "project", slugs: ["architecture", "roadmap"] },
+  { key: "developers", icon: "code", slugs: ["identity", "webhooks", "headless", "mcp", "api"] },
+  { key: "selfhost", icon: "server", slugs: ["configuration", "operations"] },
+  { key: "project", icon: "book", slugs: ["architecture", "roadmap"] },
 ] as const
 
 export const docRel = (slug: string) => (slug === "api" ? "api/" : `${slug}/`)
@@ -157,10 +155,14 @@ export async function nav(locale: Locale): Promise<NavGroup[]> {
   return [
     ...groups.map((g) => ({
       key: g.key,
+      icon: g.icon,
       title: t.groups[g.key],
-      items: g.slugs.filter((slug) => slug === "api" || all.has(slug)).map(item),
+      items: [
+        ...(g.key === "start" ? [{ slug: "index", title: t.introduction, rel: "" }] : []),
+        ...g.slugs.filter((slug) => slug === "api" || all.has(slug)).map(item),
+      ],
     })),
-    ...(rest.length ? [{ key: "more", title: t.groups.more, items: rest.map(item) }] : []),
+    ...(rest.length ? [{ key: "more", icon: "note" as const, title: t.groups.more, items: rest.map(item) }] : []),
   ]
 }
 

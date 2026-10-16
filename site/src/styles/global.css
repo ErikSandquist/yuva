@@ -1,7 +1,16 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-@custom-variant dark (@media (prefers-color-scheme: dark));
+@custom-variant dark {
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme]), :root:not([data-theme]) *) {
+      @slot;
+    }
+  }
+}
 
 @theme inline {
   --color-paper: var(--paper);
@@ -48,8 +57,29 @@
   --night: #09090b;
 }
 
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #09090b;
+  --paper-deep: #0f0f12;
+  --sheet: #121216;
+  --ink: #fafafa;
+  --ink-soft: #a1a1aa;
+  --ink-faint: #8a8a93;
+  --rule: #1f1f23;
+  --rule-strong: #2e2e34;
+  --brand: #ff8a5c;
+  --brand-bright: #f26b3a;
+  --brand-wash: #2a140c;
+  --moss: #4ade80;
+  --night: #050506;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     --paper: #09090b;
     --paper-deep: #0f0f12;
     --sheet: #121216;
@@ -89,10 +119,32 @@
   background-color: transparent !important;
 }
 
+[data-theme="dark"] .astro-code,
+[data-theme="dark"] .astro-code span {
+  color: var(--shiki-dark) !important;
+}
+
 @media (prefers-color-scheme: dark) {
-  .astro-code,
-  .astro-code span {
+  :root:not([data-theme]) .astro-code,
+  :root:not([data-theme]) .astro-code span {
     color: var(--shiki-dark) !important;
+  }
+}
+
+[data-theme="dark"] .theme-light-only,
+[data-theme="light"] .theme-dark-only {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .theme-light-only {
+    display: none;
+  }
+}
+
+@media not (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .theme-dark-only {
+    display: none;
   }
 }
 

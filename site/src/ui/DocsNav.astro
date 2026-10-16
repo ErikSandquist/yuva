@@ -1,0 +1,58 @@
+---
+import { href, type NavGroup } from "@/lib/docs"
+import type { Locale } from "@/lib/routes"
+import Icon from "@/ui/Icon.astro"
+
+interface Props {
+  locale: Locale
+  groups: NavGroup[]
+  slug: string
+  label: string
+}
+
+const { locale, groups, slug, label } = Astro.props
+const link =
+  "-ms-px block border-s border-transparent py-1 ps-3 pe-2 text-[13px] leading-5 text-ink-soft transition-colors hover:border-rule-strong hover:text-ink aria-[current=page]:border-signal aria-[current=page]:bg-brand-wash aria-[current=page]:font-medium aria-[current=page]:text-brand"
+---
+
+<nav class="grid gap-1" aria-label={label}>
+  {groups.map((g) => {
+    const inside = g.items.some((i) => i.slug === slug)
+    return (
+      <details class="group/nav">
+        <summary class="flex cursor-pointer list-none items-center gap-2.5 rounded-md px-1.5 py-1.5 text-sm font-medium transition-colors select-none hover:bg-paper-deep [&::-webkit-details-marker]:hidden">
+          <span
+            class:list={[
+              "grid size-6 shrink-0 place-items-center rounded-md border",
+              inside ? "border-brand/30 bg-brand-wash text-brand" : "border-rule text-ink-soft",
+            ]}
+          >
+            <Icon name={g.icon} class="size-3.5" />
+          </span>
+          <span class="flex-1">{g.title}</span>
+          <svg
+            class="size-3.5 text-ink-faint transition-transform group-open/nav:rotate-90 rtl:-scale-x-100 rtl:group-open/nav:-rotate-90"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="m6 4 4 4-4 4" />
+          </svg>
+        </summary>
+        <ul class="mt-0.5 mb-2 ms-[1.1rem] border-s border-rule">
+          {g.items.map((c) => (
+            <li>
+              <a class={link} href={href(locale, c.rel)} aria-current={c.slug === slug ? "page" : undefined}>
+                {c.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </details>
+    )
+  })}
+</nav>

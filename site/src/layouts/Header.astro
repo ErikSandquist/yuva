@@ -1,8 +1,11 @@
 ---
 import { headerCopy } from "@/copy/header"
 import { i18nFor } from "@/i18n"
-import { bcp47, brand, brandAssets, home, languageName, links, locales, type Locale } from "@/lib/routes"
+import { APP_URL, bcp47, brand, brandAssets, home, languageName, links, locales, type Locale } from "@/lib/routes"
+import Icon from "@/ui/Icon.astro"
+import Cross from "@/ui/Cross.astro"
 import GitHubIcon from "@/ui/GitHubIcon.astro"
+import ThemeToggle from "@/ui/ThemeToggle.astro"
 import LangMenu from "@/ui/LangMenu.astro"
 import Logo from "@/ui/Logo.astro"
 
@@ -14,20 +17,19 @@ interface Props {
 
 const { locale, paths, wide = false } = Astro.props
 const t = headerCopy(i18nFor(locale), locale)
-const appUrl = import.meta.env.PUBLIC_APP_URL
-const link =
-  "text-sm text-ink-soft transition-colors hover:text-ink aria-[current=page]:font-medium aria-[current=page]:text-ink"
-const path = Astro.url.pathname
-const current = (href: string) => (href.startsWith("/") && path.startsWith(href) ? "page" : undefined)
 const item =
   "flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-start text-sm outline-none hover:bg-paper-deep focus-visible:bg-paper-deep"
 ---
 
-<header
-  class="sticky top-0 z-50 border-b border-transparent bg-paper/80 backdrop-blur-lg transition-colors duration-300 data-scrolled:border-rule"
-  data-header
->
-  <div class:list={["mx-auto flex h-16 items-center gap-10 px-5 sm:px-8", wide ? "max-w-none lg:px-6" : "max-w-6xl"]}>
+<header class="sticky top-0 z-50 border-b border-rule bg-paper/80 backdrop-blur-lg">
+  <div
+    class:list={[
+      "relative mx-auto flex h-16 items-center gap-4 px-5 sm:px-8 lg:gap-8",
+      wide ? "max-w-none lg:px-6" : "max-w-6xl border-x border-rule",
+    ]}
+  >
+    {!wide && <Cross class="-start-[6px] -bottom-[6px]" />}
+    {!wide && <Cross class="-end-[6px] -bottom-[6px]" />}
     <a class="flex shrink-0 items-center gap-2.5" href={home[locale]} aria-label={t.home} data-logo>
       <Logo size={26} />
       <span class="text-[1.02rem] font-semibold tracking-tight">Yuva</span>
@@ -72,30 +74,89 @@ const item =
       </a>
     </div>
 
-    <nav class="hidden items-center gap-7 md:flex" aria-label={t.sections}>
-      {t.nav.map((n) => (
-        <a class={link} href={n.href} aria-current={current(n.href)}>
-          {n.label}
-        </a>
-      ))}
+    <nav class="hidden items-center gap-1 lg:flex" aria-label={t.sections} data-nav>
+      <ul class="flex items-center gap-1">
+        {t.groups.map((g) => (
+          <li class="relative" data-nav-item>
+            <button
+              type="button"
+              class="inline-flex h-9 cursor-pointer items-center gap-1 rounded-md px-3 text-sm text-ink-soft transition-colors hover:bg-paper-deep hover:text-ink aria-expanded:bg-paper-deep aria-expanded:text-ink"
+              aria-expanded="false"
+              aria-controls={`menu-${g.id}`}
+              data-nav-trigger
+            >
+              {g.label}
+              <svg
+                class="size-3 text-ink-faint transition-transform [[aria-expanded=true]>&]:rotate-180"
+                viewBox="0 0 12 12"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="m3 4.5 3 3 3-3" />
+              </svg>
+            </button>
+            <div
+              id={`menu-${g.id}`}
+              hidden
+              class:list={["absolute start-0 top-full z-[60] pt-2", g.cols === 2 ? "w-[34rem]" : "w-80"]}
+            >
+              <ul
+                class:list={[
+                  "grid gap-1 rounded-md border border-rule bg-sheet p-2 shadow-[0_16px_40px_-12px_rgb(15_23_42/0.28)]",
+                  g.cols === 2 && "grid-cols-2",
+                ]}
+              >
+                {g.items.map((i) => (
+                  <li>
+                    <a
+                      class="flex items-start gap-3 rounded-md p-2.5 outline-none transition-colors hover:bg-paper-deep focus-visible:bg-paper-deep"
+                      href={i.href}
+                    >
+                      <span class="grid size-8 shrink-0 place-items-center rounded-md border border-rule text-brand">
+                        <Icon name={i.icon} class="size-4" />
+                      </span>
+                      <span class="min-w-0">
+                        <span class="block text-sm font-medium">{i.title}</span>
+                        <span class="mt-0.5 block text-[0.8rem] leading-snug text-ink-soft">{i.body}</span>
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))}
+      </ul>
     </nav>
 
-    <div class="ms-auto flex items-center gap-5">
-      <LangMenu locale={locale} paths={paths} class="hidden sm:block" />
-      {appUrl && (
-        <a class:list={[link, "hidden sm:block"]} href={appUrl}>
-          {t.signIn}
-        </a>
-      )}
+    <div class="ms-auto flex items-center gap-3 lg:gap-4">
+      <ThemeToggle locale={locale} />
+      <LangMenu locale={locale} paths={paths} class="hidden lg:block" />
       <a
-        class="inline-flex h-9 items-center gap-2 rounded-full border border-rule-strong px-3.5 text-sm font-medium transition-colors hover:border-ink/40 hover:bg-paper-deep"
+        class="hidden size-8 place-items-center rounded-md text-ink-soft hover:bg-paper-deep hover:text-ink lg:grid"
         href={links.repo}
+        aria-label="GitHub"
       >
-        <GitHubIcon size={15} />
-        <span class="max-[379px]:sr-only">GitHub</span>
+        <GitHubIcon size={16} />
+      </a>
+      <a
+        class="hidden h-9 items-center rounded-full px-3 text-sm font-medium text-ink-soft transition-colors hover:bg-paper-deep hover:text-ink lg:inline-flex"
+        href={APP_URL}
+      >
+        {t.logIn}
+      </a>
+      <a
+        class="hidden h-9 items-center rounded-full bg-signal px-4 text-sm font-medium text-white transition-colors hover:bg-signal/90 lg:inline-flex"
+        href={`${APP_URL}/?signup=1`}
+      >
+        {t.startFree}
       </a>
 
-      <details class="group md:hidden" data-menu>
+      <details class="group lg:hidden" data-menu>
         <summary
           class="-me-2 grid size-9 cursor-pointer list-none place-content-center gap-[5px] rounded-md [&::-webkit-details-marker]:hidden"
           aria-label={t.menu}
@@ -103,16 +164,41 @@ const item =
           <span class="h-[1.5px] w-4 rounded-full bg-ink transition duration-200 group-open:translate-y-[3.25px] group-open:rotate-45"></span>
           <span class="h-[1.5px] w-4 rounded-full bg-ink transition duration-200 group-open:-translate-y-[3.25px] group-open:-rotate-45"></span>
         </summary>
-        <div class="fixed inset-x-0 top-16 border-b border-rule bg-paper px-5 pb-6 sm:px-8">
+        <div class="fixed inset-x-0 top-16 bottom-0 flex flex-col overflow-y-auto bg-paper px-5 pb-6 sm:px-8">
           <nav class="grid" aria-label={t.sections}>
-            {t.nav.map((n) => (
-              <a
-                class="border-b border-rule py-3.5 text-base aria-[current=page]:font-semibold"
-                href={n.href}
-                aria-current={current(n.href)}
-              >
-                {n.label}
-              </a>
+            {t.groups.map((g) => (
+              <details class="group/sec border-b border-rule">
+                <summary class="flex cursor-pointer list-none items-center justify-between py-3.5 text-base font-medium [&::-webkit-details-marker]:hidden">
+                  {g.label}
+                  <svg
+                    class="size-4 text-ink-faint transition-transform group-open/sec:rotate-180"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="m3 4.5 3 3 3-3" />
+                  </svg>
+                </summary>
+                <ul class="grid gap-1 pb-3">
+                  {g.items.map((i) => (
+                    <li>
+                      <a class="flex items-start gap-3 rounded-md p-2.5 hover:bg-paper-deep" href={i.href}>
+                        <span class="grid size-8 shrink-0 place-items-center rounded-md border border-rule text-brand">
+                          <Icon name={i.icon} class="size-4" />
+                        </span>
+                        <span class="min-w-0">
+                          <span class="block text-sm font-medium">{i.title}</span>
+                          <span class="mt-0.5 block text-[0.8rem] leading-snug text-ink-soft">{i.body}</span>
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </details>
             ))}
             {locales
               .filter((l) => l !== locale)
@@ -121,12 +207,21 @@ const item =
                   {languageName(l)}
                 </a>
               ))}
-            {appUrl && (
-              <a class="border-b border-rule py-3.5 text-base" href={appUrl}>
-                {t.signIn}
-              </a>
-            )}
           </nav>
+          <div class="mt-auto grid grid-cols-2 gap-3 pt-6">
+            <a
+              class="inline-flex h-11 items-center justify-center rounded-full border border-rule-strong text-sm font-medium"
+              href={APP_URL}
+            >
+              {t.logIn}
+            </a>
+            <a
+              class="inline-flex h-11 items-center justify-center rounded-full bg-signal text-sm font-medium text-white"
+              href={`${APP_URL}/?signup=1`}
+            >
+              {t.startFree}
+            </a>
+          </div>
         </div>
       </details>
     </div>
@@ -134,12 +229,6 @@ const item =
 </header>
 
 <script>
-  const header = document.querySelector<HTMLElement>("[data-header]")
-  if (header) {
-    const update = () => header.toggleAttribute("data-scrolled", window.scrollY > 4)
-    update()
-    window.addEventListener("scroll", update, { passive: true })
-  }
   const logo = document.querySelector<HTMLElement>("[data-logo]")
   const menu = document.querySelector<HTMLElement>("[data-logo-menu]")
   if (logo && menu) {
@@ -194,5 +283,60 @@ const item =
     d.addEventListener("click", (e) => {
       if ((e.target as HTMLElement).closest("nav a")) d.open = false
     })
+  })
+
+  const items = [...document.querySelectorAll<HTMLElement>("[data-nav-item]")]
+  const parts = (item: HTMLElement) => ({
+    trigger: item.querySelector<HTMLButtonElement>("[data-nav-trigger]")!,
+    panel: item.querySelector<HTMLElement>("[id^='menu-']")!,
+  })
+  const setOpen = (item: HTMLElement, open: boolean) => {
+    const { trigger, panel } = parts(item)
+    trigger.setAttribute("aria-expanded", String(open))
+    panel.hidden = !open
+  }
+  const closeAll = (except?: HTMLElement) => items.forEach((i) => i !== except && setOpen(i, false))
+  const canHover = window.matchMedia("(hover: hover)")
+  const timers = new Map<HTMLElement, number>()
+  items.forEach((item) => {
+    const { trigger, panel } = parts(item)
+    trigger.addEventListener("click", () => {
+      const open = trigger.getAttribute("aria-expanded") !== "true"
+      closeAll(item)
+      setOpen(item, open)
+    })
+    trigger.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown") {
+        e.preventDefault()
+        closeAll(item)
+        setOpen(item, true)
+        panel.querySelector<HTMLElement>("a")?.focus()
+      }
+    })
+    item.addEventListener("pointerenter", (e) => {
+      if (e.pointerType !== "mouse" || !canHover.matches) return
+      clearTimeout(timers.get(item))
+      closeAll(item)
+      setOpen(item, true)
+    })
+    item.addEventListener("pointerleave", (e) => {
+      if (e.pointerType !== "mouse") return
+      timers.set(
+        item,
+        window.setTimeout(() => setOpen(item, false), 150)
+      )
+    })
+    item.addEventListener("focusout", (e) => {
+      if (!item.contains(e.relatedTarget as Node | null)) setOpen(item, false)
+    })
+    item.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        setOpen(item, false)
+        trigger.focus()
+      }
+    })
+  })
+  document.addEventListener("pointerdown", (e) => {
+    if (!(e.target as HTMLElement).closest("[data-nav-item]")) closeAll()
   })
 </script>

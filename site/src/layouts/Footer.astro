@@ -14,6 +14,8 @@ import {
   templates,
   type Locale,
 } from "@/lib/routes"
+import Cross from "@/ui/Cross.astro"
+import ThemeToggle from "@/ui/ThemeToggle.astro"
 import LangMenu from "@/ui/LangMenu.astro"
 import Logo from "@/ui/Logo.astro"
 
@@ -60,9 +62,13 @@ const columns = [
 const link = "text-ink-soft transition-colors hover:text-ink"
 ---
 
-<footer class="border-t border-rule">
-  <div class:list={["mx-auto px-5 py-14 text-sm sm:px-8", wide ? "max-w-none lg:px-6" : "max-w-6xl"]}>
-    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+<footer class="border-t border-rule text-sm">
+  <div class:list={["relative mx-auto", wide ? "max-w-none" : "max-w-6xl border-x border-rule"]}>
+    {!wide && <Cross class="-start-[6px] -top-[6px]" />}
+    {!wide && <Cross class="-end-[6px] -top-[6px]" />}
+    <div
+      class:list={["grid gap-10 px-5 py-14 sm:grid-cols-2 sm:px-8 lg:grid-cols-[1.4fr_1fr_1fr_1fr]", wide && "lg:px-6"]}
+    >
       <div>
         <a class="inline-flex items-center gap-2.5" href={home[locale]}>
           <Logo size={24} />
@@ -88,11 +94,19 @@ const link = "text-ink-soft transition-colors hover:text-ink"
         </nav>
       ))}
     </div>
-    <div class="mt-12 flex flex-col gap-3 border-t border-rule pt-6 text-ink-faint sm:flex-row sm:items-center sm:justify-between">
+    <div
+      class:list={[
+        "flex flex-col gap-3 border-t border-rule px-5 py-6 text-ink-faint sm:flex-row sm:items-center sm:justify-between sm:px-8",
+        wide && "lg:px-6",
+      ]}
+    >
       <p>
         {i18n._(msg`Server and panel under AGPL-3.0, SDKs and API contract under MIT.`)} © {year} productdevbook
       </p>
-      <LangMenu locale={locale} paths={paths} up />
+      <div class="flex items-center gap-3">
+        <ThemeToggle locale={locale} />
+        <LangMenu locale={locale} paths={paths} up />
+      </div>
     </div>
   </div>
 </footer>

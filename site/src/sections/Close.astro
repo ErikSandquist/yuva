@@ -1,6 +1,7 @@
 ---
 import type { HomeCopy } from "@/copy/home"
 import StartCards from "@/ui/StartCards.astro"
+import Stop from "@/ui/Stop.astro"
 
 interface Props {
   t: HomeCopy["close"]
@@ -10,8 +11,8 @@ interface Props {
 const { t, hero } = Astro.props
 ---
 
-<section class="mx-auto max-w-6xl px-5 py-24 sm:px-8" aria-labelledby="close-title">
-  <div class="grid items-center gap-10 rounded-3xl bg-paper-deep p-7 sm:p-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-16">
+<Stop labelledby="close-title">
+  <div class="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-16">
     <div>
       <h2 id="close-title" class="text-[clamp(2rem,1.4rem+2vw,3rem)] leading-[1.08] font-semibold tracking-[-0.03em]">
         {t.title}
@@ -20,4 +21,4 @@ const { t, hero } = Astro.props
     </div>
     <StartCards t={hero} />
   </div>
-</section>
+</Stop>

@@ -3,17 +3,11 @@ import { homeCopy } from "@/copy/home"
 import { i18nFor } from "@/i18n"
 import Base from "@/layouts/Base.astro"
 import { quickStart } from "@/lib/docs"
-import { absolute, home, links, VERSION, type Locale } from "@/lib/routes"
-import Channels from "@/sections/Channels.astro"
+import { absolute, home, links, template, VERSION, type Locale } from "@/lib/routes"
 import Close from "@/sections/Close.astro"
-import Developers from "@/sections/Developers.astro"
-import Faq from "@/sections/Faq.astro"
+import Features from "@/sections/Features.astro"
 import Hero from "@/sections/Hero.astro"
-import How from "@/sections/How.astro"
-import More from "@/sections/More.astro"
-import Panel from "@/sections/Panel.astro"
-import SelfHost from "@/sections/SelfHost.astro"
-import Trust from "@/sections/Trust.astro"
+import { available, previewImage, templates } from "@/lib/templates"
 import { shots } from "@/lib/shots"
 
 interface Props {
@@ -22,6 +16,15 @@ interface Props {
 
 const { locale } = Astro.props
 const c = homeCopy(i18nFor(locale), await quickStart(locale))
+
+const picks = ["welcome", "newsletter", "product-update"]
+const previews = templates()
+  .filter((x) => picks.includes(x.slug))
+  .sort((a, b) => picks.indexOf(a.slug) - picks.indexOf(b.slug))
+  .map((x) => {
+    const l = available(x, locale) ? locale : "en"
+    return { name: x.name[locale], src: previewImage(x.slug, l), href: template(x.slug)[locale] }
+  })
 
 const jsonLd = [
   {
@@ -41,14 +44,7 @@ const jsonLd = [
 ---
 
 <Base locale={locale} title={c.meta.title} description={c.meta.description} jsonLd={jsonLd}>
-  <Hero t={c.hero} shots={shots(locale)} locale={locale} />
-  <Channels t={c.channels} shots={shots(locale)} />
-  <How t={c.how} />
-  <Panel t={c.panel} shots={shots(locale)} />
-  <More t={c.more} shots={shots(locale)} />
-  <Developers t={c.developers} />
-  <SelfHost t={c.host} />
-  <Trust security={c.trust} open={c.open} />
-  <Faq t={c.faq} />
+  <Hero t={c.hero} shots={shots(locale)} locale={locale} alts={c.features.alts} />
+  <Features t={c.features} shots={shots(locale)} previews={previews} />
   <Close t={c.close} hero={c.hero} />
 </Base>

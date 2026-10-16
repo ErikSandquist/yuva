@@ -1,0 +1,38 @@
+---
+import { msg } from "@lingui/core/macro"
+import { i18nFor } from "@/i18n"
+import type { Locale } from "@/lib/routes"
+import Lucide from "@/ui/Lucide.astro"
+
+interface Props {
+  locale: Locale
+  class?: string
+}
+
+const { locale } = Astro.props
+const i18n = i18nFor(locale)
+const choices = [
+  { value: "light", label: i18n._(msg`Light theme`), icon: "sun" },
+  { value: "dark", label: i18n._(msg`Dark theme`), icon: "moon" },
+  { value: "system", label: i18n._(msg`Match the system theme`), icon: "monitor" },
+] as const
+---
+
+<div
+  role="group"
+  aria-label={i18n._(msg`Theme`)}
+  class:list={["inline-flex items-center rounded-full border border-rule p-0.5", Astro.props.class]}
+>
+  {choices.map((c) => (
+    <button
+      type="button"
+      data-theme-choice={c.value}
+      aria-pressed={c.value === "system" ? "true" : "false"}
+      aria-label={c.label}
+      title={c.label}
+      class="grid size-7 cursor-pointer place-items-center rounded-full text-ink-faint transition-colors hover:text-ink aria-pressed:bg-paper-deep aria-pressed:text-ink"
+    >
+      <Lucide name={c.icon} class="size-3.5" />
+    </button>
+  ))}
+</div>

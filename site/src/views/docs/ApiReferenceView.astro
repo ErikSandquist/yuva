@@ -50,7 +50,8 @@ const config = {
     var el = document.getElementById("yuva-api-reference")
     var config = JSON.parse(el.dataset.config)
     var dark = window.matchMedia("(prefers-color-scheme: dark)")
-    config.forceDarkModeState = dark.matches ? "dark" : "light"
+    var chosen = document.documentElement.dataset.theme
+    config.forceDarkModeState = (chosen || (dark.matches ? "dark" : "light")) === "dark" ? "dark" : "light"
     window.Scalar.createApiReference(el, config)
   })()
 </script>

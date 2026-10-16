@@ -13,5 +13,11 @@ export const paths = {
   network:
     "M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14ZM3 10h14M10 3c2 2 2.8 4.3 2.8 7S12 15 10 17c-2-2-2.8-4.3-2.8-7S8 5 10 3ZM3.5 3.5l13 13",
   trash: "M3.5 5.5h13M8 5.5V3.5h4v2M5 5.5l.8 11a1 1 0 0 0 1 1h6.4a1 1 0 0 0 1-1l.8-11M8.5 9v5M11.5 9v5",
+  flag: "M5 17.5v-14M5 4h9.5L13 7l1.5 3H5",
+  mail: "M3 5h14v10.5H3zM3.5 5.5 10 11l6.5-5.5",
+  chat: "M3.5 4h13v9H9.5l-3.5 3.5V13h-2.5z",
+  code: "M7 6 3 10l4 4M13 6l4 4-4 4M11.5 4l-3 12",
+  server: "M3.5 4h13v5h-13zM3.5 11h13v5h-13zM6.5 6.5h.01M6.5 13.5h.01",
+  book: "M4 3.5h9.5a1.5 1.5 0 0 1 1.5 1.5v11.5H6A2 2 0 0 1 4 14.5zM4 14.5a2 2 0 0 1 2-2h9",
 }
 export type IconName = keyof typeof paths
