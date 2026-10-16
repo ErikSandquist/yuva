@@ -637,7 +637,7 @@ func (q *Queries) GetPersonReaderSettings(ctx context.Context, id uuid.UUID) (bo
 }
 
 const getReaderTokenByHash = `-- name: GetReaderTokenByHash :one
-SELECT t.id, t.workspace_id, t.channel_id, t.person_id, t.expires_at FROM reader_tokens t
+SELECT t.id, t.workspace_id, t.channel_id, t.person_id, t.origin, t.expires_at FROM reader_tokens t
 JOIN sessions s ON s.id = t.session_id
 JOIN workspaces w ON w.id = t.workspace_id
 WHERE t.token_hash = $1 AND t.expires_at > $2 AND s.expires_at > $2 AND w.deleted_at IS NULL
@@ -653,6 +653,7 @@ type GetReaderTokenByHashRow struct {
 	WorkspaceID uuid.UUID
 	ChannelID   uuid.UUID
 	PersonID    uuid.UUID
+	Origin      string
 	ExpiresAt   time.Time
 }
 
@@ -664,6 +665,7 @@ func (q *Queries) GetReaderTokenByHash(ctx context.Context, arg GetReaderTokenBy
 		&i.WorkspaceID,
 		&i.ChannelID,
 		&i.PersonID,
+		&i.Origin,
 		&i.ExpiresAt,
 	)
 	return i, err

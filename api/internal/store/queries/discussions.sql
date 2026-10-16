@@ -253,7 +253,7 @@ INSERT INTO reader_tokens (id, workspace_id, channel_id, person_id, session_id, 
 VALUES (@id, @workspace_id, @channel_id, @person_id, @session_id, @token_hash, @origin, @now, @expires_at);
 
 -- name: GetReaderTokenByHash :one
-SELECT t.id, t.workspace_id, t.channel_id, t.person_id, t.expires_at FROM reader_tokens t
+SELECT t.id, t.workspace_id, t.channel_id, t.person_id, t.origin, t.expires_at FROM reader_tokens t
 JOIN sessions s ON s.id = t.session_id
 JOIN workspaces w ON w.id = t.workspace_id
 WHERE t.token_hash = @token_hash AND t.expires_at > @now AND s.expires_at > @now AND w.deleted_at IS NULL;

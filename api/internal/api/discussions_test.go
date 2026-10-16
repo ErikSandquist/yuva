@@ -329,3 +329,18 @@ func TestRefusedReaderWriteLeavesNoContact(t *testing.T) {
 		t.Fatalf("an accepted write made %d contacts", n)
 	}
 }
+
+func TestReaderTokenBoundToItsOrigin(t *testing.T) {
+	h := newHarness(t)
+	ct := newChatTeam(t, h, "live", true)
+	second := "https://" + unique("second") + ".example"
+	ct.owner.expect(http.StatusOK, "PATCH", "/v1/channels/"+ct.channel, map[string]any{"chat": map[string]any{"allowed_origins": []string{ct.origin, second}, "discussions": "open"}})
+	ada := newReader(h, ct, "Ada")
+	list := "/client/v1/channels/" + ct.key + "/discussions?page="
+	ada.site.expect(http.StatusOK, "GET", list+url.QueryEscape(ct.origin+"/x"), nil)
+
+	elsewhere := h.client()
+	elsewhere.origin, elsewhere.bearer = second, ada.token
+	elsewhere.expectProblem(http.StatusUnauthorized, "unauthenticated", "GET", list+url.QueryEscape(second+"/x"), nil)
+	elsewhere.expectProblem(http.StatusUnauthorized, "unauthenticated", "POST", "/client/v1/discussions", map[string]any{"page_url": second + "/x", "title": "Hello there", "body": "x"})
+}

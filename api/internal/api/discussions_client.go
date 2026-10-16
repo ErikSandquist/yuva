@@ -68,6 +68,9 @@ func (s *Server) resolveDiscussant(ctx context.Context, token string) (*discussa
 	if !s.originAllowedFor(originFrom(ctx), ch.Kind, ch.AllowedOrigins) {
 		return nil, errOriginRefused
 	}
+	if originFrom(ctx) != tok.Origin {
+		return nil, errContactUnauthenticated
+	}
 	inbox, err := s.st.GetChannel(ctx, store.GetChannelParams{WorkspaceID: tok.WorkspaceID, ID: tok.ChannelID})
 	if err != nil {
 		return nil, err
