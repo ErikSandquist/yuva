@@ -181,7 +181,8 @@ SELECT coalesce(EXISTS (SELECT 1 FROM conversations cv JOIN inbox_viewers iv
     OR EXISTS (SELECT 1 FROM contact_external_ids x JOIN inbox_viewers iv
                ON iv.workspace_id = x.workspace_id AND iv.inbox_id = x.inbox_id AND iv.viewer_id = $1
                WHERE x.workspace_id = $2 AND x.contact_id = $3)
-    OR (NOT EXISTS (SELECT 1 FROM conversations cv WHERE cv.workspace_id = $2 AND cv.contact_id = $3)
+    OR (EXISTS (SELECT 1 FROM contacts ct WHERE ct.workspace_id = $2 AND ct.id = $3 AND ct.created_by = $1)
+        AND NOT EXISTS (SELECT 1 FROM conversations cv WHERE cv.workspace_id = $2 AND cv.contact_id = $3)
         AND NOT EXISTS (SELECT 1 FROM contact_external_ids x WHERE x.workspace_id = $2 AND x.contact_id = $3)), false)::bool
     AS visible
 `
@@ -200,8 +201,8 @@ func (q *Queries) ContactVisibleToViewer(ctx context.Context, arg ContactVisible
 }
 
 const createContact = `-- name: CreateContact :one
-INSERT INTO contacts (id, workspace_id, name, attributes, blocked, created_at, updated_at)
-VALUES ($1, $2, $3, $4, $5, $6, $6)
+INSERT INTO contacts (id, workspace_id, name, attributes, blocked, created_by, created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $7)
 RETURNING id, workspace_id, name, attributes, blocked, created_at, updated_at, locale, typed_email
 `
 
@@ -211,6 +212,7 @@ type CreateContactParams struct {
 	Name        string
 	Attributes  []byte
 	Blocked     bool
+	CreatedBy   *uuid.UUID
 	Now         time.Time
 }
 
@@ -233,6 +235,7 @@ func (q *Queries) CreateContact(ctx context.Context, arg CreateContactParams) (C
 		arg.Name,
 		arg.Attributes,
 		arg.Blocked,
+		arg.CreatedBy,
 		arg.Now,
 	)
 	var i CreateContactRow
@@ -568,7 +571,8 @@ WHERE c.workspace_id = $1
    OR EXISTS (SELECT 1 FROM contact_external_ids x JOIN inbox_viewers iv
               ON iv.workspace_id = x.workspace_id AND iv.inbox_id = x.inbox_id AND iv.viewer_id = $2::uuid
               WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id)
-   OR (NOT EXISTS (SELECT 1 FROM conversations cv WHERE cv.workspace_id = c.workspace_id AND cv.contact_id = c.id)
+   OR (c.created_by = $2::uuid
+       AND NOT EXISTS (SELECT 1 FROM conversations cv WHERE cv.workspace_id = c.workspace_id AND cv.contact_id = c.id)
        AND NOT EXISTS (SELECT 1 FROM contact_external_ids x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id))))
   AND ($3::text IS NULL OR c.search @@ websearch_to_tsquery('simple', translate($3::text, 'İı', 'ii')))
   AND ($4::text IS NULL OR ($4::text = 'known') = (
@@ -660,7 +664,8 @@ WHERE c.workspace_id = $1
    OR EXISTS (SELECT 1 FROM contact_external_ids x JOIN inbox_viewers iv
               ON iv.workspace_id = x.workspace_id AND iv.inbox_id = x.inbox_id AND iv.viewer_id = $2::uuid
               WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id)
-   OR (NOT EXISTS (SELECT 1 FROM conversations cv WHERE cv.workspace_id = c.workspace_id AND cv.contact_id = c.id)
+   OR (c.created_by = $2::uuid
+       AND NOT EXISTS (SELECT 1 FROM conversations cv WHERE cv.workspace_id = c.workspace_id AND cv.contact_id = c.id)
        AND NOT EXISTS (SELECT 1 FROM contact_external_ids x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id))))
   AND ($3::text IS NULL OR c.search @@ websearch_to_tsquery('simple', translate($3::text, 'İı', 'ii')))
   AND ($4::text IS NULL OR ($4::text = 'known') = (

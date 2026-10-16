@@ -531,7 +531,7 @@ func (s *Server) subscriber(ctx context.Context, q *store.Queries, p principal, 
 		if attrs == nil {
 			attrs = []byte("{}")
 		}
-		c, err := q.CreateContact(ctx, store.CreateContactParams{ID: newID(), WorkspaceID: ws, Name: name, Attributes: attrs, Now: s.now()})
+		c, err := q.CreateContact(ctx, store.CreateContactParams{ID: newID(), WorkspaceID: ws, Name: name, Attributes: attrs, CreatedBy: p.creator(), Now: s.now()})
 		if err != nil {
 			return uuid.Nil(), "", false, err
 		}

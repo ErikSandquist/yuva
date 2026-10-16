@@ -1,6 +1,6 @@
 -- name: CreateContact :one
-INSERT INTO contacts (id, workspace_id, name, attributes, blocked, created_at, updated_at)
-VALUES (@id, @workspace_id, @name, @attributes, @blocked, @now, @now)
+INSERT INTO contacts (id, workspace_id, name, attributes, blocked, created_by, created_at, updated_at)
+VALUES (@id, @workspace_id, @name, @attributes, @blocked, sqlc.narg(created_by), @now, @now)
 RETURNING id, workspace_id, name, attributes, blocked, created_at, updated_at, locale, typed_email;
 
 -- name: GetContact :one
@@ -40,7 +40,8 @@ WHERE c.workspace_id = @workspace_id
    OR EXISTS (SELECT 1 FROM contact_external_ids x JOIN inbox_viewers iv
               ON iv.workspace_id = x.workspace_id AND iv.inbox_id = x.inbox_id AND iv.viewer_id = sqlc.narg(viewer_id)::uuid
               WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id)
-   OR (NOT EXISTS (SELECT 1 FROM conversations cv WHERE cv.workspace_id = c.workspace_id AND cv.contact_id = c.id)
+   OR (c.created_by = sqlc.narg(viewer_id)::uuid
+       AND NOT EXISTS (SELECT 1 FROM conversations cv WHERE cv.workspace_id = c.workspace_id AND cv.contact_id = c.id)
        AND NOT EXISTS (SELECT 1 FROM contact_external_ids x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id))))
   AND (sqlc.narg(q)::text IS NULL OR c.search @@ websearch_to_tsquery('simple', translate(sqlc.narg(q)::text, 'İı', 'ii')))
   AND (sqlc.narg(kind)::text IS NULL OR (sqlc.narg(kind)::text = 'known') = (
@@ -69,7 +70,8 @@ WHERE c.workspace_id = @workspace_id
    OR EXISTS (SELECT 1 FROM contact_external_ids x JOIN inbox_viewers iv
               ON iv.workspace_id = x.workspace_id AND iv.inbox_id = x.inbox_id AND iv.viewer_id = sqlc.narg(viewer_id)::uuid
               WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id)
-   OR (NOT EXISTS (SELECT 1 FROM conversations cv WHERE cv.workspace_id = c.workspace_id AND cv.contact_id = c.id)
+   OR (c.created_by = sqlc.narg(viewer_id)::uuid
+       AND NOT EXISTS (SELECT 1 FROM conversations cv WHERE cv.workspace_id = c.workspace_id AND cv.contact_id = c.id)
        AND NOT EXISTS (SELECT 1 FROM contact_external_ids x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id))))
   AND (sqlc.narg(q)::text IS NULL OR c.search @@ websearch_to_tsquery('simple', translate(sqlc.narg(q)::text, 'İı', 'ii')))
   AND (sqlc.narg(kind)::text IS NULL OR (sqlc.narg(kind)::text = 'known') = (
@@ -177,7 +179,8 @@ SELECT coalesce(EXISTS (SELECT 1 FROM conversations cv JOIN inbox_viewers iv
     OR EXISTS (SELECT 1 FROM contact_external_ids x JOIN inbox_viewers iv
                ON iv.workspace_id = x.workspace_id AND iv.inbox_id = x.inbox_id AND iv.viewer_id = @viewer_id
                WHERE x.workspace_id = @workspace_id AND x.contact_id = @contact_id)
-    OR (NOT EXISTS (SELECT 1 FROM conversations cv WHERE cv.workspace_id = @workspace_id AND cv.contact_id = @contact_id)
+    OR (EXISTS (SELECT 1 FROM contacts ct WHERE ct.workspace_id = @workspace_id AND ct.id = @contact_id AND ct.created_by = @viewer_id)
+        AND NOT EXISTS (SELECT 1 FROM conversations cv WHERE cv.workspace_id = @workspace_id AND cv.contact_id = @contact_id)
         AND NOT EXISTS (SELECT 1 FROM contact_external_ids x WHERE x.workspace_id = @workspace_id AND x.contact_id = @contact_id)), false)::bool
     AS visible;
 

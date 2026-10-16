@@ -622,6 +622,7 @@ type Contact struct {
 	PersonID             *uuid.UUID
 	DiscussionsBlockedAt *time.Time
 	MigrationID          *uuid.UUID
+	CreatedBy            *uuid.UUID
 }
 
 type ContactEmail struct {

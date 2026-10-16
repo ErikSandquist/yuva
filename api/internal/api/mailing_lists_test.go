@@ -589,3 +589,17 @@ func TestSubscriptionConsentRequired(t *testing.T) {
 		t.Fatalf("%d mails sent without consent", len(mails))
 	}
 }
+
+func TestSubscriberContactRecordsCreator(t *testing.T) {
+	h := newHarness(t)
+	lt := newListTeam(t, h)
+	member := lt.owner.expect(http.StatusOK, "GET", "/v1/me", nil).body["memberships"].([]any)[0].(map[string]any)["member_id"].(string)
+	addr := unique("creator") + "@example.org"
+	lt.owner.expect(http.StatusCreated, "POST", "/v1/lists/"+lt.list+"/subscriptions", map[string]any{"email": addr, "consent": map[string]any{"confirmed": true}})
+	var by *string
+	if err := h.st.Pool.QueryRow(context.Background(),
+		"SELECT c.created_by::text FROM contacts c JOIN contact_emails e ON e.workspace_id = c.workspace_id AND e.contact_id = c.id WHERE e.workspace_id = $1 AND e.email = $2",
+		lt.ws, addr).Scan(&by); err != nil || by == nil || *by != member {
+		t.Fatalf("created_by %v, %v; want %s", by, err, member)
+	}
+}

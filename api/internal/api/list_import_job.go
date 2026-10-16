@@ -633,6 +633,11 @@ func (s *Server) importBatch(ctx context.Context, q *store.Queries, events *even
 		}
 	}
 	p := principal{workspaceID: ws}
+	if imp.ApiKeyID != nil {
+		p.keyID = *imp.ApiKeyID
+	} else if imp.MemberID != nil {
+		p.memberID = *imp.MemberID
+	}
 	var refused struct {
 		rows    []int32
 		emails  []string

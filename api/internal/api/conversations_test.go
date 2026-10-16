@@ -382,6 +382,7 @@ func TestAgentContactScope(t *testing.T) {
 	mine := tm.owner.expect(http.StatusCreated, "POST", "/v1/contacts", map[string]any{
 		"name": "Mine", "external_ids": []map[string]any{{"inbox_id": tm.inbox, "external_id": "a-1"}},
 	}).str("id")
+	tm.conversation(tm.owner) // gives the agent a reason to see tm.contact: a contact with no conversation is hidden from agents
 	a := tm.agent
 
 	a.expectProblem(http.StatusNotFound, "not_found", "GET", "/v1/contacts/"+victim, nil)
@@ -418,4 +419,33 @@ func TestAgentContactScope(t *testing.T) {
 	a.expectProblem(http.StatusForbidden, "forbidden", "PATCH", "/v1/contacts/"+mine, map[string]any{"emails": []string{unique("x") + "@example.com"}})
 	a.expect(http.StatusOK, "PATCH", "/v1/contacts/"+tm.contact, map[string]any{"name": "Renamed", "emails": []string{"ayse@example.com"}})
 	tm.owner.expect(http.StatusOK, "PATCH", "/v1/contacts/"+victim, map[string]any{"name": "Owner can"})
+}
+
+func TestOrphanContactVisibility(t *testing.T) {
+	h := newHarness(t)
+	tm := newTeam(t, h)
+	orphan := tm.owner.expect(http.StatusCreated, "POST", "/v1/contacts", map[string]any{"name": "Orphan"}).str("id")
+	a := tm.agent
+
+	a.expectProblem(http.StatusNotFound, "not_found", "GET", "/v1/contacts/"+orphan, nil)
+	a.expectProblem(http.StatusNotFound, "not_found", "PATCH", "/v1/contacts/"+orphan, map[string]any{"name": "x"})
+	a.expectProblem(http.StatusForbidden, "forbidden", "DELETE", "/v1/contacts/"+orphan, nil)
+	a.expectProblem(http.StatusNotFound, "not_found", "GET", "/v1/contacts/"+orphan+"/presence", nil)
+	for _, it := range a.expect(http.StatusOK, "GET", "/v1/contacts?limit=100", nil).body["items"].([]any) {
+		if it.(map[string]any)["id"].(string) == orphan {
+			t.Fatal("agent without grants lists an orphan contact")
+		}
+	}
+	tm.owner.expect(http.StatusOK, "GET", "/v1/contacts/"+orphan, nil)
+	tm.owner.expect(http.StatusOK, "PATCH", "/v1/contacts/"+orphan, map[string]any{"name": "Owner can"})
+
+	tm.owner.expect(http.StatusNoContent, "PUT", "/v1/inboxes/"+tm.inbox+"/members/"+tm.agentID, nil)
+	a.expectProblem(http.StatusNotFound, "not_found", "GET", "/v1/contacts/"+orphan, nil)
+
+	mine := a.expect(http.StatusCreated, "POST", "/v1/contacts", map[string]any{"name": "Mine", "emails": []string{unique("m") + "@example.com"}}).str("id")
+	a.expect(http.StatusOK, "GET", "/v1/contacts/"+mine, nil)
+	a.expect(http.StatusOK, "PATCH", "/v1/contacts/"+mine, map[string]any{"name": "Mine again"})
+	a.expect(http.StatusCreated, "POST", "/v1/conversations", map[string]any{"inbox_id": tm.inbox, "contact_id": mine, "subject": "hello"})
+	a.expect(http.StatusOK, "GET", "/v1/contacts/"+mine, nil)
+	tm.owner.expect(http.StatusOK, "GET", "/v1/contacts/"+mine, nil)
 }

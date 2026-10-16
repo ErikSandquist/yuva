@@ -149,7 +149,7 @@ func contactAttributes(a *oas.Attributes) ([]byte, error) {
 }
 
 // visibleContact refuses an agent a contact that has conversations or external ids only in inboxes
-// the agent cannot access.
+// the agent cannot access. A contact with neither is visible to the agent who created it.
 func visibleContact(ctx context.Context, q *store.Queries, p principal, id uuid.UUID) error {
 	if p.seesAllInboxes() {
 		return nil
@@ -423,7 +423,7 @@ func (s *Server) CreateContact(ctx context.Context, req oas.CreateContactRequest
 			return err
 		}
 		r, err := q.CreateContact(ctx, store.CreateContactParams{
-			ID: newID(), WorkspaceID: p.workspaceID, Name: in.name, Attributes: in.attributes, Blocked: in.blocked, Now: s.now(),
+			ID: newID(), WorkspaceID: p.workspaceID, Name: in.name, Attributes: in.attributes, Blocked: in.blocked, CreatedBy: p.creator(), Now: s.now(),
 		})
 		if err != nil {
 			return err

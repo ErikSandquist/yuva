@@ -88,7 +88,8 @@ tags:
   - name: contacts
     description: |
       The people writing in. Agents see only contacts with a conversation or external id in an
-      inbox they can access, or in no inbox at all (others answer `404`); they set external ids
+      inbox they can access, and contacts with neither that they created themselves (others
+      answer `404`, so owners and admins alone see the rest); they set external ids
       only in their inboxes, keeping the contact's ids in other inboxes, and change `emails` only
       of contacts that appear in no other inbox (`403 forbidden`).
   - name: conversations

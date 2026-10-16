@@ -187,6 +187,15 @@ func (p principal) viewerID() uuid.UUID {
 	return p.memberID
 }
 
+// creator names the caller on rows it creates, nil when nobody is behind the call.
+func (p principal) creator() *uuid.UUID {
+	id := p.viewerID()
+	if id == uuid.Nil() {
+		return nil
+	}
+	return &id
+}
+
 type ctxKey int
 
 const (
