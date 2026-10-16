@@ -9,9 +9,11 @@ import { listLink, useContactSubscriptions } from "@/features/broadcasts/queries
 import { StateTag } from "@/features/broadcasts/SubscriberSheet"
 import { api } from "@/lib/api"
 import { saveDownload } from "@/lib/download"
+import { useSession } from "@/lib/session"
 
 export function ContactSubscriptions({ contactId }: { contactId: string }) {
   const { i18n } = useLingui()
+  const { canManage } = useSession()
   const subs = useContactSubscriptions(contactId)
   const items = subs.data ?? []
   return (
@@ -48,7 +50,7 @@ export function ContactSubscriptions({ contactId }: { contactId: string }) {
           ))}
         </ul>
       )}
-      {items.length > 0 && (
+      {canManage && items.length > 0 && (
         <>
           <p className="text-caption text-faint">
             <Trans>Their consent records, for a request about what you hold on them:</Trans>

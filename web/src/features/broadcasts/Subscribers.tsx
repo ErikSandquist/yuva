@@ -157,7 +157,12 @@ export function Subscribers({ list }: { list: MailingList }) {
         )}
         <ErrorLine error={subs.error} className="px-4 pb-3" />
       </Card>
-      <SubscriberSheet listId={list.id} subscriptionId={open} onClose={() => setOpen(null)} />
+      <SubscriberSheet
+        listId={list.id}
+        subscriptionId={open}
+        row={items.find((s) => s.id === open)}
+        onClose={() => setOpen(null)}
+      />
       {adding && (
         <AddSubscriberDialog
           list={list}

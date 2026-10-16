@@ -13,6 +13,7 @@ import { ListExport, ListSettings } from "@/features/broadcasts/ListSettings"
 import { listLink, useList } from "@/features/broadcasts/queries"
 import { Subscribers } from "@/features/broadcasts/Subscribers"
 import type { MailingList } from "@/lib/api"
+import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
 
@@ -52,6 +53,7 @@ export function ListPage() {
   const { listId = "" } = useParams()
   const [params, setParams] = useSearchParams()
   const list = useList(listId)
+  const { canManage } = useSession()
   const inbox = (useInboxes().data ?? []).find((i) => i.id === list.data?.inbox_id)
   const raw = params.get("tab")
   const tab: Tab = TABS.includes(raw as Tab) ? (raw as Tab) : "subscribers"
@@ -128,7 +130,11 @@ export function ListPage() {
           value={tab}
           onChange={(v) => setParams(v === "subscribers" ? {} : { tab: v }, { replace: true })}
           label={t`List`}
-          items={TABS.map((v) => ({ value: v, label: names[v], testId: `list-tab-${v}` }))}
+          items={TABS.filter((v) => v !== "export" || canManage).map((v) => ({
+            value: v,
+            label: names[v],
+            testId: `list-tab-${v}`,
+          }))}
         />
       </div>
       {tab === "subscribers" && <Subscribers list={l} />}
@@ -136,7 +142,7 @@ export function ListPage() {
       {tab === "growth" && <Growth list={l} />}
       {tab === "form" && <FormSnippets list={l} />}
       {tab === "settings" && <ListSettings key={l.updated_at} list={l} />}
-      {tab === "export" && <ListExport list={l} />}
+      {tab === "export" && canManage && <ListExport list={l} />}
     </Pane>
   )
 }

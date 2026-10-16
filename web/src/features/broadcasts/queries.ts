@@ -81,7 +81,7 @@ export function useSubscriptions(listId: string, state: SubscriptionState | "", 
   })
 }
 
-export function useSubscription(listId: string, id: string | null) {
+export function useSubscription(listId: string, id: string | null, enabled = true) {
   const { workspaceId: ws } = useSession()
   return useQuery({
     queryKey: keys.subscription(ws, listId, id ?? ""),
@@ -91,7 +91,7 @@ export function useSubscription(listId: string, id: string | null) {
           params: { path: { listId, subscriptionId: id! } },
         })
       ),
-    enabled: !!id,
+    enabled: !!id && enabled,
   })
 }
 

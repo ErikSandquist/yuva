@@ -9,7 +9,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "
 import { Skeleton } from "@/components/ui/skeleton"
 import { useRefreshList, useSubscription } from "@/features/broadcasts/queries"
 import { StatusTag } from "@/features/settings/ui"
-import { api, unwrap, type ConsentEvent, type SubscriptionState } from "@/lib/api"
+import { api, unwrap, type ConsentEvent, type Subscription, type SubscriptionState } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { useMemberMap } from "@/lib/workspace"
 
@@ -91,10 +91,12 @@ function EventItem({ e }: { e: ConsentEvent }) {
 export function SubscriberSheet({
   listId,
   subscriptionId,
+  row,
   onClose,
 }: {
   listId: string
   subscriptionId: string | null
+  row?: Subscription
   onClose: () => void
 }) {
   const { t, i18n } = useLingui()
@@ -102,7 +104,7 @@ export function SubscriberSheet({
   const { canManage } = useSession()
   const refresh = useRefreshList(listId)
   const [confirm, confirmDialog] = useConfirm()
-  const sub = useSubscription(listId, subscriptionId)
+  const sub = useSubscription(listId, subscriptionId, canManage)
   const path = { params: { path: { listId, subscriptionId: subscriptionId ?? "" } } }
   const resend = useMutation({
     mutationFn: () => unwrap(api.POST("/v1/lists/{listId}/subscriptions/{subscriptionId}/confirmation", path)),
@@ -130,7 +132,7 @@ export function SubscriberSheet({
     },
   })
   const reset = () => [resend, unsubscribe, remove].forEach((m) => m.reset())
-  const s = sub.data
+  const s: (Subscription & { events?: ConsentEvent[] }) | undefined = canManage ? sub.data : row
   const dates: [string, string | undefined][] = s
     ? [
         [t`Added`, s.created_at],
@@ -167,7 +169,7 @@ export function SubscriberSheet({
             )}
           </SheetDescription>
         </SheetHeader>
-        {sub.isPending ? (
+        {canManage && sub.isPending ? (
           <div className="flex flex-col gap-3 p-5">
             <Skeleton className="h-6 w-40" />
             <Skeleton className="h-40 w-full" />
@@ -232,22 +234,24 @@ export function SubscriberSheet({
               </div>
             )}
             <ErrorLine error={resend.error ?? unsubscribe.error ?? remove.error} className="text-small" />
-            <section className="flex flex-col gap-3">
-              <h3 className="text-body font-medium">
-                <Trans>Consent record</Trans>
-              </h3>
-              {s.events.length === 0 ? (
-                <p className="text-body text-muted-foreground">
-                  <Trans>No events recorded.</Trans>
-                </p>
-              ) : (
-                <ol className="border-s ps-0" data-testid="consent-events">
-                  {s.events.map((e) => (
-                    <EventItem key={e.id} e={e} />
-                  ))}
-                </ol>
-              )}
-            </section>
+            {s.events && (
+              <section className="flex flex-col gap-3">
+                <h3 className="text-body font-medium">
+                  <Trans>Consent record</Trans>
+                </h3>
+                {s.events.length === 0 ? (
+                  <p className="text-body text-muted-foreground">
+                    <Trans>No events recorded.</Trans>
+                  </p>
+                ) : (
+                  <ol className="border-s ps-0" data-testid="consent-events">
+                    {s.events.map((e) => (
+                      <EventItem key={e.id} e={e} />
+                    ))}
+                  </ol>
+                )}
+              </section>
+            )}
             {canManage && (
               <div className="mt-auto border-t pt-4">
                 <Button
