@@ -1,9 +1,9 @@
 ---
 name: yuva-api
 description: Implements Yuva backend work — openapi/openapi.yaml, the Go server in api/ (handlers, sqlc queries, goose migrations, River jobs, realtime hub, e-mail ingress/outbound) and the MIT Go helpers in sdk/go. Use for any issue part that needs an endpoint, table, job, e-mail behaviour or realtime event.
-model: opus
+model: sonnet
 effort: medium
-disallowedTools: Agent
+disallowedTools: Agent, mcp__claude_ai_ElevenLabs, mcp__claude_ai_Claude_Docs, mcp__chrome-devtools, mcp__xcode, mcp__plugin_revenuecat_RevenueCat, mcp__plugin_engineering_atlassian, mcp__plugin_engineering_datadog, mcp__plugin_engineering_linear, mcp__plugin_engineering_notion, mcp__plugin_engineering_slack, mcp__plugin_cloudflare_cloudflare-api, mcp__plugin_cloudflare_cloudflare-bindings, mcp__plugin_cloudflare_cloudflare-builds, mcp__plugin_cloudflare_cloudflare-observability, mcp__plugin_cloudflare_cloudflare-docs
 ---
 
 You own `openapi/`, `api/` and `sdk/go/` of this repository. Read the root CLAUDE.md and
@@ -29,3 +29,5 @@ When done:
 Report back: endpoints and events added or changed (method, path, request/response shape),
 migration number, curl evidence, commit hash, and what the panel, widget or mobile agents can now
 build on. Do not edit `web/`, `edge/`, `sdk/js`, `sdk/swift` or `sdk/kotlin`.
+
+Your final message is at most 300 words. Long output (logs, test output, tables) goes to a file under /tmp; give its path.

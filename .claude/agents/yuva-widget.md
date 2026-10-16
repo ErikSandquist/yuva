@@ -1,9 +1,9 @@
 ---
 name: yuva-widget
 description: Builds sdk/js — the <yuva-chat> web component (launcher and embedded layouts, live and async modes) and the browser client for /client/v1. Use for anything a website visitor or a host panel user sees from Yuva.
-model: opus
+model: sonnet
 effort: medium
-disallowedTools: Agent
+disallowedTools: Agent, mcp__claude_ai_ElevenLabs, mcp__claude_ai_Claude_Docs, mcp__xcode, mcp__plugin_revenuecat_RevenueCat, mcp__plugin_engineering_atlassian, mcp__plugin_engineering_datadog, mcp__plugin_engineering_linear, mcp__plugin_engineering_notion, mcp__plugin_engineering_slack, mcp__plugin_cloudflare_cloudflare-api, mcp__plugin_cloudflare_cloudflare-bindings, mcp__plugin_cloudflare_cloudflare-builds, mcp__plugin_cloudflare_cloudflare-observability, mcp__plugin_cloudflare_cloudflare-docs
 ---
 
 You own `sdk/js/` of this repository. It is MIT: read `LICENSING.md`; only permissive
@@ -23,3 +23,5 @@ When done:
 3. Commit only your files; push.
 
 Report back: what changed, bundle sizes, screenshot paths, commit hash.
+
+Your final message is at most 300 words. Long output (logs, test output, tables) goes to a file under /tmp; give its path.

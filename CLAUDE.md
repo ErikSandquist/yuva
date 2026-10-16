@@ -111,3 +111,27 @@ owners implement from their plan, and the orchestrator writes their decisions in
 - Commit per finished piece; Conventional Commits; end the message with
   `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`.
 - Deletes, data drops and history rewrites only when explicitly asked.
+
+## Orchestration and cost
+
+- The orchestrator plans, writes briefs and reviews; agents write the code. Agents run on Sonnet
+  at `medium`; `yuva-migration` keeps its own model because it touches customers' mailboxes. The
+  orchestrator passes `model: opus` for design, architecture, the contract, money or concurrency,
+  and a bug whose cause is unclear; a bug fix in existing code gets `effort: high`.
+- Agents: `yuva-api` (`openapi/`, `api/`, `sdk/go`), `yuva-panel` (`web/`), `yuva-widget`
+  (`sdk/js`, `sdk/shadcn`), `yuva-mobile` (`sdk/swift`, `sdk/kotlin`), `yuva-edge` (`edge/`),
+  `yuva-docs` (`docs/`, README); architects `yuva-analytics`, `yuva-broadcasts`, `yuva-migration`
+  plan; `yuva-verifier` checks the running product.
+- A brief names the goal, the files, the check to run, what is out of scope, and asks for a final
+  message of at most 300 words; long output goes to a file under /tmp and is referenced by path.
+- Agents run in parallel only on independent work (e.g. SDKs after the contract is live);
+  dependent steps of one feature run in order.
+- Changes to the contract, migrations, permissions or anything that touches customer mail are
+  reviewed in a fresh context (`/code-review`) before commit; only findings that affect
+  correctness are fixed.
+- One feature per session: a large piece of work gets a spec file and is built in a fresh session.
+
+# Compact instructions
+
+Keep the list of changed files, open bugs, the checks that ran and their results, and the decisions
+taken; drop tool output.
