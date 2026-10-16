@@ -37,6 +37,34 @@ document.querySelector("yuva-chat").setIdentityToken(async () => {
 Geben Sie für anonyme Besucher `null` zurück. Rufen Sie die Methode nach der Anmeldung erneut auf und
 nach der Abmeldung `signOut()`.
 
+## Was das Widget speichert
+
+Das Widget hält seine Sitzung im `localStorage` Ihrer Seite, damit die Unterhaltung eines Besuchers
+ein Neuladen übersteht. Alles gehört zum Origin Ihrer Seite.
+
+| Schlüssel | Inhalt |
+|---|---|
+| `yuva:<channel>` | Das Sitzungs-Token mit Ablauf, die anonyme Besucher-ID und der Zustand des Launchers. |
+| `yuva:reader:<server> <channel>` | Das Leser-Token, nachdem sich ein Leser auf einer Dokumentationsseite angemeldet hat. |
+
+Die Token sind zufällige Zeichenfolgen, die Yuva nur als Hash speichert und jederzeit beenden kann. Da
+der Speicher zu Ihrem Origin gehört, kann ein in Ihre Seite eingeschleustes Skript (XSS) sie lesen und
+als dieser Besucher handeln, bis das Token abläuft oder beendet wird. Was Sie tun können:
+
+- **Abmelden.** `signOut()` beendet die Sitzung auf dem Server und entfernt sie aus dem Speicher;
+  Besucher-ID und Launcher-Zustand bleiben. `readerSignOut()` beendet das Leser-Token und leert dessen
+  Schlüssel. Rufen Sie beide auf, wenn sich Ihr Nutzer aus Ihrer App abmeldet.
+- **Identitäts-Token nutzen** für angemeldete Nutzer. Ein von Ihrem Backend signiertes
+  [kurzlebiges Token](identity.md) belegt, wer der Nutzer ist; die gespeicherte Sitzung ist dann nicht
+  das Einzige, was für ihn bürgt.
+- **Eine Content Security Policy senden**, die `script-src` auf vertrauenswürdige Quellen beschränkt;
+  sie ist der wichtigste Schutz gegen eingeschleuste Skripte.
+- **Das Token aus `localStorage` heraushalten**, wenn Sie eine eigene Oberfläche bauen:
+  `createYuvaClient()` nimmt eine Option `storage` an, ein beliebiges Objekt mit `getItem` und
+  `setItem`, etwa eines, das `sessionStorage` umschließt oder die Werte im Speicher hält. Das Element
+  `<yuva-chat>` hat diese Option nicht und nutzt immer `localStorage`; ist `localStorage` nicht
+  verfügbar, wird der Arbeitsspeicher genutzt.
+
 ## Fehlersuche
 
 - **Nichts erscheint**: Die Origin der Seite ist nicht erlaubt (die Konsole nennt sie), oder der

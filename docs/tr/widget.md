@@ -35,6 +35,34 @@ document.querySelector("yuva-chat").setIdentityToken(async () => {
 Anonim ziyaretçiler için `null` döndürün. Giriş yapıldıktan sonra yeniden çağırın, çıkış yapıldıktan
 sonra `signOut()` çağırın.
 
+## Widget neleri saklar
+
+Widget oturumunu sayfanızın `localStorage` alanında tutar; böylece ziyaretçinin konuşması sayfa
+yenilenince kaybolmaz. Her şey sayfanızın origin'ine bağlıdır.
+
+| Anahtar | İçerik |
+|---|---|
+| `yuva:<channel>` | Oturum token'ı ve süresi, anonim ziyaretçi kimliği ve düğmenin durumu. |
+| `yuva:reader:<server> <channel>` | Bir okuyucu dokümantasyon sayfasında oturum açtıktan sonra okuyucu token'ı. |
+
+Token'lar rastgele metinlerdir; Yuva onları yalnızca özetlenmiş olarak saklar ve istediği an
+sonlandırabilir. Depolama sizin origin'inize ait olduğundan sayfanıza enjekte edilen bir betik (XSS)
+onları okuyabilir ve token'ın süresi dolana ya da sonlandırılana kadar o ziyaretçi gibi davranabilir.
+Yapabilecekleriniz:
+
+- **Oturumu kapatın.** `signOut()` oturumu sunucuda sonlandırır ve depolamadan siler; ziyaretçi kimliği
+  ile düğme durumu kalır. `readerSignOut()` okuyucu token'ını sonlandırır ve anahtarını temizler.
+  Kullanıcınız uygulamanızdan çıkarken ikisini de çağırın.
+- **Oturum açmış kullanıcılar için kimlik token'ı kullanın.** Backend'inizin imzaladığı
+  [kısa ömürlü bir token](identity.md) kullanıcının kim olduğunu kanıtlar; saklanan oturum tek güvence
+  olmaz.
+- **Content Security Policy gönderin** ve `script-src` değerini güvendiğiniz kaynaklarla sınırlayın;
+  enjekte edilen betiklere karşı asıl korumadır.
+- **Kendi arayüzünüzü yazıyorsanız token'ı `localStorage` dışında tutun.** `createYuvaClient()` bir
+  `storage` seçeneği alır: `getItem` ve `setItem` olan herhangi bir nesne, örneğin `sessionStorage`'ı
+  saran ya da değerleri bellekte tutan biri. `<yuva-chat>` öğesinde böyle bir seçenek yoktur ve her
+  zaman `localStorage` kullanır; `localStorage` yoksa bellek kullanılır.
+
 ## Sorun giderme
 
 - **Hiçbir şey görünmüyor**: sayfanın origin'ine izin verilmemiş (konsol adını yazar) ya da anahtar

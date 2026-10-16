@@ -34,6 +34,32 @@ document.querySelector("yuva-chat").setIdentityToken(async () => {
 
 Return `null` for anonymous visitors. Call it again after sign-in, and `signOut()` after sign-out.
 
+## What the widget stores
+
+The widget keeps its session in your page's `localStorage`, so a visitor's conversation survives a
+reload. Everything is scoped to your page's origin.
+
+| Key | Holds |
+|---|---|
+| `yuva:<channel>` | The session token and its expiry, the anonymous visitor id and the launcher state. |
+| `yuva:reader:<server> <channel>` | The reader token, after a reader signs in on a documentation page. |
+
+The tokens are random strings that Yuva stores only hashed and can end at any time. Because the
+storage belongs to your origin, a script injected into your page (XSS) can read them and act as that
+visitor until the token expires or is ended. What you can do:
+
+- **Sign out.** `signOut()` ends the session on the server and removes it from storage; the visitor id
+  and launcher state stay. `readerSignOut()` ends the reader token and clears its key. Call them when
+  your user signs out of your app.
+- **Use identity tokens** for signed-in users. A [short-lived token](identity.md) signed by your
+  backend proves who the user is, so the stored session is not the only thing that vouches for them.
+- **Send a Content Security Policy** that limits `script-src` to sources you trust; it is the main
+  protection against injected scripts.
+- **Keep the token out of `localStorage`** when you build your own UI: `createYuvaClient()` takes a
+  `storage` option, any object with `getItem` and `setItem`, for example one that wraps
+  `sessionStorage` or keeps the values in memory. The `<yuva-chat>` element has no such option and
+  always uses `localStorage`; if `localStorage` is unavailable, memory is used.
+
 ## Troubleshooting
 
 - **Nothing appears**: the page's origin is not allowed (the console names it), or the key is wrong.
