@@ -521,6 +521,18 @@ func TestPushSubscriptionsAPI(t *testing.T) {
 	if again.str("id") != b.id || again.str("user_agent") != "Renamed" || again.body["current"] != true {
 		t.Fatalf("re-registering did not update: %s", again.raw)
 	}
+	taken := map[string]any{"endpoint": fake.srv.URL + b.path, "keys": b.keys(), "user_agent": "Thief"}
+	nt.agent.expectProblem(http.StatusConflict, "push_endpoint_taken", "POST", "/v1/me/push-subscriptions", taken)
+	other.owner.expectProblem(http.StatusConflict, "push_endpoint_taken", "POST", "/v1/me/push-subscriptions", taken)
+	for _, c := range []*client{nt.agent, other.owner} {
+		if items := c.expect(http.StatusOK, "GET", "/v1/me/push-subscriptions", nil).body["items"].([]any); len(items) != 0 {
+			t.Fatalf("a refused registration left a row: %v", items)
+		}
+	}
+	if kept := nt.owner.expect(http.StatusOK, "GET", "/v1/me/push-subscriptions", nil).body["items"].([]any); len(kept) != 1 ||
+		kept[0].(map[string]any)["id"] != b.id || kept[0].(map[string]any)["user_agent"] != "Renamed" {
+		t.Fatalf("the owner's row changed: %v", kept)
+	}
 	list := nt.owner.expect(http.StatusOK, "GET", "/v1/me/push-subscriptions", nil).body["items"].([]any)
 	if len(list) != 1 || list[0].(map[string]any)["endpoint"] != fake.srv.URL+b.path {
 		t.Fatalf("list %v", list)
@@ -574,6 +586,12 @@ func TestPushSubscriptionsAPI(t *testing.T) {
 	if list := nt.owner.expect(http.StatusOK, "GET", "/v1/me/push-subscriptions", nil).body["items"].([]any); len(list) != 0 {
 		t.Fatalf("sign-out kept the subscription: %v", list)
 	}
+
+	handover := nt.agent.expect(http.StatusCreated, "POST", "/v1/me/push-subscriptions", taken)
+	if handover.str("id") == b.id || handover.str("user_agent") != "Thief" {
+		t.Fatalf("a freed endpoint was not registered anew: %s", handover.raw)
+	}
+	nt.agent.expect(http.StatusNoContent, "DELETE", "/v1/me/push-subscriptions/"+handover.str("id"), nil)
 
 	b2 := fake.subscribe(nt.owner)
 	nt.owner.expect(http.StatusNoContent, "DELETE", "/v1/me/push-subscriptions/"+b2.id, nil)

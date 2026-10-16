@@ -44,9 +44,10 @@ WHERE workspace_id = @workspace_id AND viewing_conversation_id = @conversation_i
 -- name: UpsertPushSubscription :one
 INSERT INTO push_subscriptions (id, person_id, session_id, endpoint, p256dh, auth, user_agent, created_at, updated_at)
 VALUES (@id, @person_id, @session_id, @endpoint, @p256dh, @auth, @user_agent, @now, @now)
-ON CONFLICT (endpoint) DO UPDATE SET person_id = excluded.person_id, session_id = excluded.session_id,
+ON CONFLICT (endpoint) DO UPDATE SET session_id = excluded.session_id,
     p256dh = excluded.p256dh, auth = excluded.auth, user_agent = excluded.user_agent, updated_at = excluded.updated_at,
     last_failure_at = NULL, last_error = NULL
+WHERE push_subscriptions.person_id = excluded.person_id
 RETURNING *;
 
 -- name: CountOtherPushSubscriptions :one

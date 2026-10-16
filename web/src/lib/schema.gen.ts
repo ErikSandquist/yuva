@@ -302,10 +302,12 @@ export interface paths {
         /**
          * Register a push subscription
          * @description Saves the browser's `PushSubscription` (`subscription.toJSON()`) for the current session.
-         *     Registering an endpoint that is already saved updates it and moves it to this session and
-         *     person, so call it on every panel start while notification permission is granted. The
-         *     endpoint must be an `https` URL on a public address. At most 20 subscriptions per person.
-         *     404 `push_disabled` when the server has no VAPID keys.
+         *     Registering an endpoint the caller already saved updates it and moves it to this session,
+         *     so call it on every panel start while notification permission is granted. An endpoint
+         *     saved by another person is never taken over: 409 `push_endpoint_taken`. Signing out or
+         *     removing the subscription frees the endpoint. The endpoint must be an `https` URL on a
+         *     public address. At most 20 subscriptions per person. 404 `push_disabled` when the server
+         *     has no VAPID keys.
          */
         post: operations["createPushSubscription"];
         delete?: never;
@@ -15556,6 +15558,7 @@ export interface operations {
             400: components["responses"]["Problem"];
             401: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
         };
     };
     deletePushSubscription: {

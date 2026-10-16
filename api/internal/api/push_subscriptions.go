@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"log/slog"
+	"net/http"
 	"net/url"
 	"strings"
 	"time"
@@ -25,6 +26,8 @@ const (
 	pushAttemptTimeout   = 30 * time.Second
 	testPushTTL          = 10 * time.Minute
 )
+
+var errPushEndpointTaken = problem(http.StatusConflict, "push_endpoint_taken", "this push endpoint is registered by another person; they must sign out or turn push off on this browser first")
 
 var errPushEndpoint = errValidation("endpoint must be an https URL on a public address")
 
@@ -98,6 +101,9 @@ func (s *Server) CreatePushSubscription(ctx context.Context, req oas.CreatePushS
 			ID: newID(), PersonID: p.personID, SessionID: p.sessionID, Endpoint: u.String(),
 			P256dh: b.Keys.P256dh, Auth: b.Keys.Auth, UserAgent: agent, Now: s.now(),
 		})
+		if store.IsNotFound(err) {
+			return errPushEndpointTaken
+		}
 		return err
 	})
 	if err != nil {

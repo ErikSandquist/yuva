@@ -24541,10 +24541,12 @@ type ClientInterface interface {
 	// CreatePushSubscriptionWithBody Register a push subscription
 	//
 	// Saves the browser's `PushSubscription` (`subscription.toJSON()`) for the current session.
-	// Registering an endpoint that is already saved updates it and moves it to this session and
-	// person, so call it on every panel start while notification permission is granted. The
-	// endpoint must be an `https` URL on a public address. At most 20 subscriptions per person.
-	// 404 `push_disabled` when the server has no VAPID keys.
+	// Registering an endpoint the caller already saved updates it and moves it to this session,
+	// so call it on every panel start while notification permission is granted. An endpoint
+	// saved by another person is never taken over: 409 `push_endpoint_taken`. Signing out or
+	// removing the subscription frees the endpoint. The endpoint must be an `https` URL on a
+	// public address. At most 20 subscriptions per person. 404 `push_disabled` when the server
+	// has no VAPID keys.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -24554,10 +24556,12 @@ type ClientInterface interface {
 	// CreatePushSubscription Register a push subscription
 	//
 	// Saves the browser's `PushSubscription` (`subscription.toJSON()`) for the current session.
-	// Registering an endpoint that is already saved updates it and moves it to this session and
-	// person, so call it on every panel start while notification permission is granted. The
-	// endpoint must be an `https` URL on a public address. At most 20 subscriptions per person.
-	// 404 `push_disabled` when the server has no VAPID keys.
+	// Registering an endpoint the caller already saved updates it and moves it to this session,
+	// so call it on every panel start while notification permission is granted. An endpoint
+	// saved by another person is never taken over: 409 `push_endpoint_taken`. Signing out or
+	// removing the subscription frees the endpoint. The endpoint must be an `https` URL on a
+	// public address. At most 20 subscriptions per person. 404 `push_disabled` when the server
+	// has no VAPID keys.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -33747,10 +33751,12 @@ func (c *Client) ListPushSubscriptions(ctx context.Context, reqEditors ...Reques
 // CreatePushSubscriptionWithBody Register a push subscription
 //
 // Saves the browser's `PushSubscription` (`subscription.toJSON()`) for the current session.
-// Registering an endpoint that is already saved updates it and moves it to this session and
-// person, so call it on every panel start while notification permission is granted. The
-// endpoint must be an `https` URL on a public address. At most 20 subscriptions per person.
-// 404 `push_disabled` when the server has no VAPID keys.
+// Registering an endpoint the caller already saved updates it and moves it to this session,
+// so call it on every panel start while notification permission is granted. An endpoint
+// saved by another person is never taken over: 409 `push_endpoint_taken`. Signing out or
+// removing the subscription frees the endpoint. The endpoint must be an `https` URL on a
+// public address. At most 20 subscriptions per person. 404 `push_disabled` when the server
+// has no VAPID keys.
 //
 // Takes any type of body and a specified content type.
 //
@@ -33770,10 +33776,12 @@ func (c *Client) CreatePushSubscriptionWithBody(ctx context.Context, contentType
 // CreatePushSubscription Register a push subscription
 //
 // Saves the browser's `PushSubscription` (`subscription.toJSON()`) for the current session.
-// Registering an endpoint that is already saved updates it and moves it to this session and
-// person, so call it on every panel start while notification permission is granted. The
-// endpoint must be an `https` URL on a public address. At most 20 subscriptions per person.
-// 404 `push_disabled` when the server has no VAPID keys.
+// Registering an endpoint the caller already saved updates it and moves it to this session,
+// so call it on every panel start while notification permission is granted. An endpoint
+// saved by another person is never taken over: 409 `push_endpoint_taken`. Signing out or
+// removing the subscription frees the endpoint. The endpoint must be an `https` URL on a
+// public address. At most 20 subscriptions per person. 404 `push_disabled` when the server
+// has no VAPID keys.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -59182,10 +59190,12 @@ type ClientWithResponsesInterface interface {
 	// CreatePushSubscriptionWithBodyWithResponse Register a push subscription
 	//
 	// Saves the browser's `PushSubscription` (`subscription.toJSON()`) for the current session.
-	// Registering an endpoint that is already saved updates it and moves it to this session and
-	// person, so call it on every panel start while notification permission is granted. The
-	// endpoint must be an `https` URL on a public address. At most 20 subscriptions per person.
-	// 404 `push_disabled` when the server has no VAPID keys.
+	// Registering an endpoint the caller already saved updates it and moves it to this session,
+	// so call it on every panel start while notification permission is granted. An endpoint
+	// saved by another person is never taken over: 409 `push_endpoint_taken`. Signing out or
+	// removing the subscription frees the endpoint. The endpoint must be an `https` URL on a
+	// public address. At most 20 subscriptions per person. 404 `push_disabled` when the server
+	// has no VAPID keys.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -59195,10 +59205,12 @@ type ClientWithResponsesInterface interface {
 	// CreatePushSubscriptionWithResponse Register a push subscription
 	//
 	// Saves the browser's `PushSubscription` (`subscription.toJSON()`) for the current session.
-	// Registering an endpoint that is already saved updates it and moves it to this session and
-	// person, so call it on every panel start while notification permission is granted. The
-	// endpoint must be an `https` URL on a public address. At most 20 subscriptions per person.
-	// 404 `push_disabled` when the server has no VAPID keys.
+	// Registering an endpoint the caller already saved updates it and moves it to this session,
+	// so call it on every panel start while notification permission is granted. An endpoint
+	// saved by another person is never taken over: 409 `push_endpoint_taken`. Signing out or
+	// removing the subscription frees the endpoint. The endpoint must be an `https` URL on a
+	// public address. At most 20 subscriptions per person. 404 `push_disabled` when the server
+	// has no VAPID keys.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -76933,6 +76945,8 @@ type CreatePushSubscriptionResponse struct {
 	ApplicationproblemJSON401 *Problem
 	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
 	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
@@ -76953,6 +76967,11 @@ func (r CreatePushSubscriptionResponse) GetApplicationproblemJSON401() *Problem 
 // GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
 func (r CreatePushSubscriptionResponse) GetApplicationproblemJSON404() *Problem {
 	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CreatePushSubscriptionResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
 }
 
 // GetBody returns the raw response body bytes
@@ -87942,10 +87961,12 @@ func (c *ClientWithResponses) ListPushSubscriptionsWithResponse(ctx context.Cont
 // CreatePushSubscriptionWithBodyWithResponse Register a push subscription
 //
 // Saves the browser's `PushSubscription` (`subscription.toJSON()`) for the current session.
-// Registering an endpoint that is already saved updates it and moves it to this session and
-// person, so call it on every panel start while notification permission is granted. The
-// endpoint must be an `https` URL on a public address. At most 20 subscriptions per person.
-// 404 `push_disabled` when the server has no VAPID keys.
+// Registering an endpoint the caller already saved updates it and moves it to this session,
+// so call it on every panel start while notification permission is granted. An endpoint
+// saved by another person is never taken over: 409 `push_endpoint_taken`. Signing out or
+// removing the subscription frees the endpoint. The endpoint must be an `https` URL on a
+// public address. At most 20 subscriptions per person. 404 `push_disabled` when the server
+// has no VAPID keys.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -87961,10 +87982,12 @@ func (c *ClientWithResponses) CreatePushSubscriptionWithBodyWithResponse(ctx con
 // CreatePushSubscriptionWithResponse Register a push subscription
 //
 // Saves the browser's `PushSubscription` (`subscription.toJSON()`) for the current session.
-// Registering an endpoint that is already saved updates it and moves it to this session and
-// person, so call it on every panel start while notification permission is granted. The
-// endpoint must be an `https` URL on a public address. At most 20 subscriptions per person.
-// 404 `push_disabled` when the server has no VAPID keys.
+// Registering an endpoint the caller already saved updates it and moves it to this session,
+// so call it on every panel start while notification permission is granted. An endpoint
+// saved by another person is never taken over: 409 `push_endpoint_taken`. Signing out or
+// removing the subscription frees the endpoint. The endpoint must be an `https` URL on a
+// public address. At most 20 subscriptions per person. 404 `push_disabled` when the server
+// has no VAPID keys.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -102692,6 +102715,13 @@ func ParseCreatePushSubscriptionResponse(rsp *http.Response) (*CreatePushSubscri
 			return nil, err
 		}
 		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
 
 	}
 
