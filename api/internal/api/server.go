@@ -433,7 +433,7 @@ func (s *Server) writeError(w http.ResponseWriter, r *http.Request, err error) {
 		writeProblem(w, e)
 		return
 	}
-	s.log.ErrorContext(r.Context(), "handler failed", slog.String("path", r.URL.Path), slog.Any("error", err))
+	s.log.ErrorContext(r.Context(), "handler failed", slog.String("path", loggedPath(r.URL.Path)), slog.Any("error", err))
 	writeProblem(w, errInternal)
 }
 
@@ -486,7 +486,7 @@ func (s *Server) recoverer(next http.Handler) http.Handler {
 				if v == http.ErrAbortHandler {
 					panic(v)
 				}
-				s.log.ErrorContext(r.Context(), "panic", slog.Any("value", v), slog.String("path", r.URL.Path))
+				s.log.ErrorContext(r.Context(), "panic", slog.Any("value", v), slog.String("path", loggedPath(r.URL.Path)))
 				writeProblem(w, errInternal)
 			}
 		}()
@@ -494,9 +494,14 @@ func (s *Server) recoverer(next http.Handler) http.Handler {
 	})
 }
 
-// loggedPath leaves share link tokens out of the request log: anyone holding one can read the link.
+var tokenPathPrefixes = []string{
+	sharePagePrefix, shareClientPrefix, confirmPathPrefix, managePathPrefix,
+	clickPathPrefix, ratingPathPrefix, unsubscribePathPrefix, emailImagePathPrefix,
+}
+
+// loggedPath leaves bearer tokens out of logs: anyone holding one can use the link.
 func loggedPath(p string) string {
-	for _, prefix := range []string{sharePagePrefix, shareClientPrefix} {
+	for _, prefix := range tokenPathPrefixes {
 		if rest, ok := strings.CutPrefix(p, prefix); ok {
 			_, tail, _ := strings.Cut(rest, "/")
 			if tail != "" {
