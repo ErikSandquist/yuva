@@ -174,12 +174,8 @@ func (s *Server) resolveContact(ctx context.Context, token string) (contactPrinc
 	}, nil
 }
 
-// websocketToken reads the session token from the `token` query parameter or from a
-// `yuva.token.<token>` subprotocol, since browsers cannot set headers on a WebSocket.
+// websocketToken reads the session token from a `yuva.token.<token>` subprotocol, since browsers cannot set headers on a WebSocket.
 func websocketToken(r *http.Request) string {
-	if t := r.URL.Query().Get("token"); t != "" {
-		return t
-	}
 	for _, h := range r.Header.Values("Sec-WebSocket-Protocol") {
 		for _, p := range strings.Split(h, ",") {
 			if t, ok := strings.CutPrefix(strings.TrimSpace(p), wsTokenProtocolStart); ok {

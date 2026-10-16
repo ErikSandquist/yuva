@@ -62,6 +62,10 @@ func (s *Server) serveClientRealtime(w http.ResponseWriter, r *http.Request) {
 		}
 		resumeFrom = &id
 	}
+	if r.URL.Query().Has("token") {
+		writeProblem(w, errContactUnauthenticated)
+		return
+	}
 	token := websocketToken(r)
 	cp, err := s.resolveContact(r.Context(), token)
 	if err != nil {

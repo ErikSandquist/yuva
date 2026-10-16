@@ -193,3 +193,5 @@ The commands, run as in [Operator commands](operations.md#operator-commands):
 
 The version the server reports (`GET /v1/version`) is set at build time with the Docker build
 argument `VERSION`. It is not an environment variable.
+
+`GET /v1/version` needs no sign-in. It reveals only the server version and whether sign-up is open (`signup`).

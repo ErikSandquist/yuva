@@ -239,7 +239,7 @@ var errNotPublished = errors.New("not published")
 func (g *GeoIP) fetch(ctx context.Context, url, name string) error {
 	client := g.Client
 	if client == nil {
-		client = &http.Client{Timeout: 10 * time.Minute}
+		client = &http.Client{Timeout: 10 * time.Minute, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}
 	}
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {

@@ -640,6 +640,9 @@ func TestClientRealtimeFiltering(t *testing.T) {
 	if _, status, err := dialContact(h, "yuva_cs_nope", ct.origin, ""); err == nil || status != http.StatusUnauthorized {
 		t.Fatalf("socket with a bad token: %d %v", status, err)
 	}
+	if _, status, err := dialContact(h, cs.token, ct.origin, "?token="+cs.token); err == nil || status != http.StatusUnauthorized {
+		t.Fatalf("socket with the token in the query: %d %v", status, err)
+	}
 	members := ct.agent.dial("")
 	members.ready()
 	ws, _, err := dialContact(h, cs.token, ct.origin, "")

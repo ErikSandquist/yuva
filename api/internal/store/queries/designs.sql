@@ -103,6 +103,9 @@ LIMIT @lim;
 -- name: ListEmailImagesByIDs :many
 SELECT * FROM email_images WHERE workspace_id = @workspace_id AND id = ANY(@ids::uuid[]);
 
+-- name: LockEmailImageQuota :exec
+SELECT pg_advisory_xact_lock(hashtextextended('yuva_email_images:' || sqlc.arg(workspace_id)::uuid::text, 0));
+
 -- name: SumEmailImageBytes :one
 SELECT coalesce(sum(size_bytes), 0)::bigint FROM email_images WHERE workspace_id = @workspace_id;
 

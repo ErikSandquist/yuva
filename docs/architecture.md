@@ -368,6 +368,7 @@ ignored (claude.ai lists `jwt-bearer`), and registration answers with the two Yu
   only; `<YUVA_PUBLIC_URL>` gives one for `/v1`, `/v1/realtime` and `/mcp` (the member apps). A
   trailing `/` is ignored. A `/mcp`-only token on `/v1` gets `401 token_wrong_resource`; an expired
   one `401 token_expired`.
+  Accepting a `/v1` token at `/mcp` is intentional: MCP acts as the member with the same scopes.
 - Scopes are the API key scopes. A token acts as its member: what the member's role and inbox access
   allow, narrowed by the granted scopes, never more. A member who leaves or is removed loses every
   grant. Management scopes a member's role cannot use are not offered on the consent page: agents

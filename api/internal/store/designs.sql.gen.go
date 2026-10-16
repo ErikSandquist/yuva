@@ -754,6 +754,15 @@ func (q *Queries) LockEmailImage(ctx context.Context, arg LockEmailImageParams) 
 	return i, err
 }
 
+const lockEmailImageQuota = `-- name: LockEmailImageQuota :exec
+SELECT pg_advisory_xact_lock(hashtextextended('yuva_email_images:' || $1::uuid::text, 0))
+`
+
+func (q *Queries) LockEmailImageQuota(ctx context.Context, workspaceID uuid.UUID) error {
+	_, err := q.db.Exec(ctx, lockEmailImageQuota, workspaceID)
+	return err
+}
+
 const markEmailImagesSent = `-- name: MarkEmailImagesSent :exec
 UPDATE email_images SET sent_at = $1
 WHERE workspace_id = $2 AND id = ANY($3::uuid[]) AND sent_at IS NULL

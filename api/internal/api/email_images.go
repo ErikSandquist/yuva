@@ -81,6 +81,9 @@ func (s *Server) storeEmailImage(ctx context.Context, q *store.Queries, p princi
 		return store.EmailImage{}, false, err
 	}
 	if s.imagesMax > 0 {
+		if err := q.LockEmailImageQuota(ctx, p.workspaceID); err != nil {
+			return store.EmailImage{}, false, err
+		}
 		used, err := q.SumEmailImageBytes(ctx, p.workspaceID)
 		if err != nil {
 			return store.EmailImage{}, false, err

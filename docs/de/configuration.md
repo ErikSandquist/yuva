@@ -196,3 +196,5 @@ Die Befehle laufen wie unter [Operator-Befehle](operations.md#operator-befehle):
 
 Die Version, die der Server meldet (`GET /v1/version`), wird beim Build mit dem Docker-Build-Argument
 `VERSION` festgelegt. Sie ist keine Umgebungsvariable.
+
+`GET /v1/version` erfordert keine Anmeldung. Sie verrät nur die Serverversion und ob die Registrierung offen ist (`signup`).

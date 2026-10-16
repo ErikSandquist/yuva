@@ -195,3 +195,5 @@ Komutlar, [Operatör komutları](operations.md#operatör-komutları) bölümünd
 
 Sunucunun bildirdiği sürüm (`GET /v1/version`), derleme sırasında Docker build argümanı `VERSION`
 ile belirlenir. Ortam değişkeni değildir.
+
+`GET /v1/version` oturum gerektirmez. Yalnızca sunucu sürümünü ve kaydın açık olup olmadığını (`signup`) gösterir.
