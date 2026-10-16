@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, writeFileSync } from "node:fs"
+import { chmodSync, existsSync, readFileSync, writeFileSync } from "node:fs"
 import { createInterface } from "node:readline/promises"
 import { createYuvaClient, type ClientMessage, type YuvaStorage } from "useyuva"
 
@@ -17,7 +17,8 @@ const storage: YuvaStorage = {
   },
   setItem: (key, value) => {
     const all = existsSync(stateFile) ? (JSON.parse(readFileSync(stateFile, "utf8")) as Record<string, string>) : {}
-    writeFileSync(stateFile, JSON.stringify({ ...all, [key]: value }))
+    writeFileSync(stateFile, JSON.stringify({ ...all, [key]: value }), { mode: 0o600 })
+    chmodSync(stateFile, 0o600)
   },
 }
 
