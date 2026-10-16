@@ -278,4 +278,6 @@ and run:
 docker build -f deploy/Dockerfile --build-arg VERSION=0.0.17 -t ghcr.io/productdevbook/yuva:0.0.17 .
 ```
 
-`deploy/compose.yaml` in the repository is for development only. Do not run it in production.
+`deploy/compose.yaml` in the repository is for development only. Do not run it in production. It
+publishes every port on `127.0.0.1` only, and the server refuses its fixed, public secrets (master key,
+ingress secret, VAPID private key) when `YUVA_PUBLIC_URL` is not `localhost` or a loopback address.

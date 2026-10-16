@@ -280,4 +280,6 @@ derlemek için sürüm etiketini checkout edip şunu çalıştırın:
 docker build -f deploy/Dockerfile --build-arg VERSION=0.0.17 -t ghcr.io/productdevbook/yuva:0.0.17 .
 ```
 
-Depodaki `deploy/compose.yaml` yalnızca geliştirme içindir. Production'da çalıştırmayın.
+Depodaki `deploy/compose.yaml` yalnızca geliştirme içindir. Production'da çalıştırmayın. Tüm portları
+yalnızca `127.0.0.1` üzerinde yayınlar; `YUVA_PUBLIC_URL` `localhost` ya da bir loopback adresi değilse
+sunucu onun sabit, herkese açık sırlarını (ana anahtar, ingress sırrı, VAPID özel anahtarı) reddeder.

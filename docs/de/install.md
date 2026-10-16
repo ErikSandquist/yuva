@@ -284,4 +284,6 @@ docker build -f deploy/Dockerfile --build-arg VERSION=0.0.17 -t ghcr.io/productd
 ```
 
 `deploy/compose.yaml` im Repository ist nur für die Entwicklung gedacht. Betreiben Sie es nicht in
-Produktion.
+Produktion. Es veröffentlicht alle Ports nur auf `127.0.0.1`, und der Server lehnt dessen feste,
+öffentliche Geheimnisse (Master-Key, Ingress-Secret, privater VAPID-Schlüssel) ab, wenn
+`YUVA_PUBLIC_URL` nicht `localhost` oder eine Loopback-Adresse ist.

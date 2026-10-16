@@ -315,6 +315,9 @@ func Load(version string) (Config, error) {
 	if err := c.loadVAPID(); err != nil {
 		return c, err
 	}
+	if err := c.rejectDevSecrets(public.Hostname()); err != nil {
+		return c, err
+	}
 	if err := c.loadMigrations(); err != nil {
 		return c, err
 	}
@@ -495,6 +498,33 @@ func (c *Config) loadVAPID() error {
 	}
 	if !strings.HasPrefix(v.Subject, "mailto:") && !strings.HasPrefix(v.Subject, "https://") {
 		return fmt.Errorf("YUVA_VAPID_SUBJECT must start with mailto: or https://, got %q", v.Subject)
+	}
+	return nil
+}
+
+// The values deploy/compose.yaml falls back to; they are public, so only a loopback instance may use them.
+var devSecrets = map[string]string{
+	"YUVA_MASTER_KEY":        "eXV2YS1kZXYtb25seS1tYXN0ZXIta2V5LTMyYnl0ZXM=",
+	"YUVA_INGRESS_SECRET":    "yuva-dev-only-ingress-secret",
+	"YUVA_VAPID_PRIVATE_KEY": "151tODJ-wlzzEOSc3wpPlKPbCSxI8fEO8P6IKs-EPeg",
+}
+
+func (c Config) rejectDevSecrets(host string) error {
+	if host == "localhost" || strings.HasSuffix(host, ".localhost") {
+		return nil
+	}
+	if ip, err := netip.ParseAddr(host); err == nil && ip.IsLoopback() {
+		return nil
+	}
+	set := map[string]string{
+		"YUVA_MASTER_KEY":        c.MasterKey,
+		"YUVA_INGRESS_SECRET":    c.IngressSecret,
+		"YUVA_VAPID_PRIVATE_KEY": c.VAPID.PrivateKey,
+	}
+	for name, known := range devSecrets {
+		if strings.TrimSpace(set[name]) == known {
+			return fmt.Errorf("%s is the public development value from deploy/compose.yaml; generate your own (see docs/install.md) or serve from localhost", name)
+		}
 	}
 	return nil
 }
