@@ -12,9 +12,11 @@ import { useAudienceCount, useReview, useUpdateBroadcast } from "@/features/broa
 import { senderState, type SenderState } from "@/features/broadcasts/BroadcastParts"
 import { DesignPicker } from "@/features/broadcasts/DesignPicker"
 import { useInboxChannels, useLists } from "@/features/broadcasts/queries"
+import { hasPace, PaceFields, paceInvalid, paceOf, paceTextOf, type PaceText } from "@/features/broadcasts/Pace"
 import { ReviewPanel, type Spot } from "@/features/broadcasts/ReviewPanel"
 import { TestSend, type useTestSend } from "@/features/broadcasts/TestSend"
 import { useDesign } from "@/features/designs/queries"
+import { formatDuration } from "@/components/common/text"
 import { Card, Field, Section, ToggleRow } from "@/features/settings/ui"
 import type { Broadcast, BroadcastUpdate, Channel } from "@/lib/api"
 import { cn } from "@/lib/utils"
@@ -35,6 +37,8 @@ type Draft = {
   click_tracking: boolean
   utm: boolean
   utm_campaign: string
+  pace_on: boolean
+  pace: PaceText
 }
 
 function draftOf(b: Broadcast): Draft {
@@ -48,6 +52,8 @@ function draftOf(b: Broadcast): Draft {
     click_tracking: b.click_tracking,
     utm: b.utm,
     utm_campaign: b.utm_campaign,
+    pace_on: hasPace(b.pace),
+    pace: paceTextOf(b.pace),
   }
 }
 
@@ -284,7 +290,7 @@ export function Composer({
   confirming: boolean
   setConfirming: (on: boolean) => void
 }) {
-  const { t } = useLingui()
+  const { t, i18n } = useLingui()
   const [d, setD] = useState<Draft>(() => draftOf(b))
   const auto = useAutosave(b.id)
   const count = useAudienceCount(b, true)
@@ -303,6 +309,8 @@ export function Composer({
     el?.scrollIntoView({ block: "start", behavior: "smooth" })
     el?.querySelector<HTMLElement>("input, button, [role=combobox]")?.focus({ preventScroll: true })
   }
+  const paceSecs = d.pace_on && hasPace(paceOf(d.pace)) ? review.data?.duration_seconds : undefined
+  const paceDuration = paceSecs === undefined ? "" : formatDuration(paceSecs, i18n.locale)
   const merge = '{{ contact.first_name | "there" }}'
   const campaignBad = !CAMPAIGN.test(d.utm_campaign)
   return (
@@ -504,6 +512,48 @@ export function Composer({
                   data-testid="broadcast-utm-campaign"
                 />
               </Field>
+            )}
+          </Card>
+        </Section>
+        <Section title={<Trans>Sending pace</Trans>}>
+          <Card id="broadcast-pace">
+            <ToggleRow
+              title={<Trans>Limit the pace</Trans>}
+              hint={
+                <Trans>
+                  Off sends as fast as the channel and the workspace’s daily limit allow. On spreads the mails evenly,
+                  so no 60 minutes, 24 hours or 30 days get more than you set.
+                </Trans>
+              }
+            >
+              <Switch
+                checked={d.pace_on}
+                disabled={readOnly}
+                onCheckedChange={(on) =>
+                  on
+                    ? setD((x) => ({ ...x, pace_on: true }))
+                    : set({ pace_on: false, pace: paceTextOf(undefined) }, { pace: {} }, 0)
+                }
+                aria-label={t`Limit the pace`}
+                data-testid="broadcast-pace-on"
+              />
+            </ToggleRow>
+            {d.pace_on && (
+              <>
+                <PaceFields
+                  value={d.pace}
+                  disabled={readOnly}
+                  rate={channel?.email?.broadcast_rate}
+                  onChange={(pace) =>
+                    set({ pace }, paceInvalid(pace) || !hasPace(paceOf(pace)) ? {} : { pace: paceOf(pace) })
+                  }
+                />
+                {paceSecs !== undefined && (
+                  <p className="text-small text-muted-foreground" data-testid="broadcast-pace-duration">
+                    <Trans>At this pace, sending takes about {paceDuration}.</Trans>
+                  </p>
+                )}
+              </>
             )}
           </Card>
         </Section>

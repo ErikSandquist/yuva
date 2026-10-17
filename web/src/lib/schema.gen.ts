@@ -3224,8 +3224,9 @@ export interface paths {
          * @description A draft of an inbox. `channel_id` names the inbox's e-mail channel that sends it: one with
          *     an SMTP account and an address to send from (`409 email_channel_required`). The audience
          *     names up to 10 lists of the same inbox, up to 10 attribute conditions and the contact
-         *     languages to keep. Everything can be changed while the broadcast is a draft; the review
-         *     (`GET .../review`) says what is still missing before it can be scheduled.
+         *     languages to keep. `pace` sets its own pace (`BroadcastPace`). Everything can be changed
+         *     while the broadcast is a draft; the review (`GET .../review`) says what is still missing
+         *     before it can be scheduled.
          *
          *     Owners, admins and API keys. Scope: `broadcasts:write`. With `YUVA_BROADCASTS=off` every
          *     broadcast write answers `403 broadcasts_disabled`.
@@ -3265,7 +3266,11 @@ export interface paths {
         /**
          * Change a draft
          * @description Changes the given fields of a draft (`409 not_draft` otherwise). `channel_id: null` and
-         *     `design_id: null` clear them; `audience` replaces the whole audience.
+         *     `design_id: null` clear them; `audience` replaces the whole audience; `pace` replaces the
+         *     whole pace and `{}` removes it. While the broadcast is scheduled, preparing, sending or
+         *     paused, `pace` alone can still change (`409 invalid_state` once it finished); it applies to
+         *     the next mail, and `409 pace_too_slow` (with `days`, the estimate) refuses a pace under which
+         *     the mail still to go out would take more than 365 days.
          *
          *     Owners, admins and API keys. Scope: `broadcasts:write`.
          */
@@ -3313,9 +3318,10 @@ export interface paths {
          *     `audience_nonempty`, `merge_fields` (no field without a fallback is empty for anyone),
          *     `html_size` (at most 102 KB, where Gmail clips; a warning above 90 KB), `images_alt`
          *     (warning), `links` (warning for `http:` links), `subject` (1 to 300 characters; a warning
-         *     above 80), `daily_cap` (warning when the send will take more than one day),
-         *     `test_sent` (warning when no test went out since the last change) and `click_tracking`
-         *     (warning: links point at the server's link domain).
+         *     above 80), `daily_cap` (warning when the send will take more than one day), `pace`
+         *     (blocking when sending at the broadcast's pace, or the channel's rate if slower, would
+         *     take more than 365 days), `test_sent` (warning when no test went out since the last change)
+         *     and `click_tracking` (warning: links point at the server's link domain).
          *
          *     Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
          */
@@ -7063,7 +7069,8 @@ export interface webhooks {
         /**
          * A broadcast changed state
          * @description Scheduled, back to draft, preparing, sending (started or resumed), paused (with
-         *     `pause_reason`), sent, cancelled or failed; `previous_state` is the state before. Endpoints
+         *     `pause_reason`), sent, cancelled or failed; `previous_state` is the state before. A pace
+         *     change of a broadcast that is no longer a draft comes without `previous_state`. Endpoints
          *     of an inbox get the broadcasts of that inbox.
          */
         post: operations["webhookBroadcastUpdated"];
@@ -11362,8 +11369,15 @@ export interface components {
             /**
              * Format: date-time
              * @description The workspace's daily limit is reached; sending continues at this time (the next 00:00 UTC).
+             *     The broadcast's own pace shows in `pace_next_at`.
              */
             waiting_until?: string;
+            pace?: components["schemas"]["BroadcastPace"];
+            /**
+             * Format: date-time
+             * @description While sending with at least a minute between mails: the earliest time the next mail may go out.
+             */
+            pace_next_at?: string;
             /** Format: date-time */
             started_at?: string;
             /** Format: date-time */
@@ -11412,6 +11426,7 @@ export interface components {
             utm?: boolean;
             /** @description Lowercase letters, digits, `-`, `_` and `.`; made from `name` when absent at creation. */
             utm_campaign?: string;
+            pace?: components["schemas"]["BroadcastPace"];
         };
         BroadcastUpdate: {
             /** Format: uuid */
@@ -11427,6 +11442,26 @@ export interface components {
             utm?: boolean;
             /** @description Lowercase letters, digits, `-`, `_` and `.`; made from `name` when absent at creation. */
             utm_campaign?: string;
+            /** @description Replaces the whole pace; `{}` removes it. */
+            pace?: components["schemas"]["BroadcastPace"];
+        };
+        /**
+         * @description The broadcast's own pace, below the channel's `broadcast_rate` and the workspace's daily limit:
+         *     at most `per_hour` mails in any 60 minutes, `per_day` in any 24 hours and `per_month` in any
+         *     30 days. Mails are spaced evenly at the gap of the tightest one (3,600 / `per_hour`,
+         *     86,400 / `per_day` or 2,592,000 / `per_month` seconds). Every SMTP attempt counts, retries
+         *     included; skipped recipients do not. An empty object is no pace.
+         */
+        BroadcastPace: {
+            /** Format: int32 */
+            per_hour?: number;
+            /** Format: int32 */
+            per_day?: number;
+            /**
+             * Format: int32
+             * @description Any 30 days, not a calendar month.
+             */
+            per_month?: number;
         };
         BroadcastPage: {
             items: components["schemas"]["Broadcast"][];
@@ -11472,7 +11507,7 @@ export interface components {
             by_list: components["schemas"]["BroadcastListCount"][];
         };
         /** @enum {string} */
-        BroadcastReviewKey: "sender_identity" | "sender_ready" | "approval" | "design" | "audience_nonempty" | "merge_fields" | "html_size" | "images_alt" | "links" | "subject" | "deliverability" | "daily_cap" | "test_sent" | "click_tracking";
+        BroadcastReviewKey: "sender_identity" | "sender_ready" | "approval" | "design" | "audience_nonempty" | "merge_fields" | "html_size" | "images_alt" | "links" | "subject" | "deliverability" | "daily_cap" | "pace" | "test_sent" | "click_tracking";
         /** @enum {string} */
         BroadcastReviewStatus: "ok" | "warning" | "blocking";
         BroadcastReviewItem: {
@@ -11496,6 +11531,12 @@ export interface components {
              * @description How many UTC days sending takes under the workspace's daily limit; absent without a limit.
              */
             days?: number;
+            /**
+             * Format: int64
+             * @description About how long sending takes from its start: the slowest of the pace, the channel's rate and
+             *     the workspace's daily limit (as if no other broadcast used it). Absent when nobody would get it.
+             */
+            duration_seconds?: number;
             items: components["schemas"]["BroadcastReviewItem"][];
         };
         BroadcastProblem: components["schemas"]["Problem"] & {
@@ -11654,7 +11695,7 @@ export interface components {
             previous_state?: components["schemas"]["BroadcastState"];
         };
         /**
-         * @description `broadcast.updated`: the broadcast changed state. Delivered to callers who hold
+         * @description `broadcast.updated`: the broadcast changed state or its pace. Delivered to callers who hold
          *     `broadcasts:read` and can see its inbox.
          */
         BroadcastEvent: {
@@ -11680,6 +11721,11 @@ export interface components {
             counts: components["schemas"]["BroadcastCounts"];
             /** Format: date-time */
             waiting_until?: string;
+            /**
+             * Format: date-time
+             * @description While sending with at least a minute between mails: the earliest time the next mail may go out.
+             */
+            pace_next_at?: string;
         };
         /**
          * @description `broadcast.progress`, on `/v1/realtime` only: the counts of a preparing or sending broadcast,

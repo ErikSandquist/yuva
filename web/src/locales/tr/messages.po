@@ -404,9 +404,17 @@ msgstr "{n, plural, one {# web sitesi sohbeti} other {# web sitesi sohbeti}}"
 msgid "{n, plural, one {# website or app} other {# websites and apps}}"
 msgstr "{n, plural, one {# web sitesi ya da uygulama} other {# web sitesi ve uygulama}}"
 
+#: src/features/broadcasts/Pace.tsx
+msgid "{n} a day"
+msgstr "günde {n}"
+
 #: src/features/settings/webhooks/parts.tsx
 msgid "{n} attempts"
 msgstr "{n} deneme"
+
+#: src/features/broadcasts/Pace.tsx
+msgid "{n} in 30 days"
+msgstr "30 günde {n}"
 
 #: src/app/UserMenu.tsx
 msgid "{name} · {statusText}"
@@ -596,6 +604,10 @@ msgstr "dakikada {rate} · yaklaşık {left} kaldı"
 #: src/features/broadcasts/Composer.tsx
 msgid "{rate} mails a second"
 msgstr "saniyede {rate} e-posta"
+
+#: src/features/broadcasts/BroadcastPage.tsx
+msgid "{rate} mails a second · one every {every}"
+msgstr "Saniyede {rate} posta · {every} arayla bir"
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "{recipients} recipients"
@@ -997,6 +1009,10 @@ msgstr "Son mesajı bu aralıkta olan bir yazışma bütünüyle alınır."
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "Kullanıcı adı TLS ya da STARTTLS ister: parola hiçbir zaman şifresiz gönderilmez."
+
+#: src/features/broadcasts/Pace.tsx
+msgid "A whole number from 1 to 10,000,000"
+msgstr "1 ile 10.000.000 arasında bir tam sayı"
 
 #: src/features/auth/CreateWorkspace.tsx
 msgid "A workspace holds your team, inboxes and conversations. You are its owner and can invite others later."
@@ -1548,6 +1564,10 @@ msgstr "Görünüm"
 msgid "Application (client) ID"
 msgstr "Application (client) ID"
 
+#: src/features/broadcasts/Pace.tsx
+msgid "Applies to the next mail."
+msgstr "Bir sonraki postadan itibaren geçerli olur."
+
 #: src/features/docs/discussions/QueuePane.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Approve"
@@ -1597,6 +1617,10 @@ msgstr "{name} olarak, {when} tarihinden beri"
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "As above ({current})"
 msgstr "Yukarıdaki gibi ({current})"
+
+#: src/features/broadcasts/Pace.tsx
+msgid "As fast as allowed"
+msgstr "İzin verilen en yüksek hızda"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Ask everyone to confirm again"
@@ -1681,6 +1705,10 @@ msgstr "Asistanlar, bekleyen {drafts} taslak"
 msgid "Async"
 msgstr "Eşzamansız"
 
+#: src/features/broadcasts/Pace.tsx
+msgid "At most {n} an hour"
+msgstr "Saatte en çok {n}"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "At most once per contact every (hours)"
 msgstr "Her kişiye en fazla şu kadar saatte bir"
@@ -1688,6 +1716,18 @@ msgstr "Her kişiye en fazla şu kadar saatte bir"
 #: src/features/account/AccountPage.tsx
 msgid "At most one e-mail per discussion every few minutes, with the new replies and answers. Notifications here stay on."
 msgstr "Her tartışma için birkaç dakikada en fazla bir e-posta, yeni yanıtlar ve kabul edilen yanıtla birlikte. Buradaki bildirimler açık kalır."
+
+#: src/components/common/text.ts
+msgid "At that pace the mail still to go out would take more than 365 days. Choose a faster pace."
+msgstr "Bu hızla gönderilmeyi bekleyen postalar 365 günden uzun sürerdi. Daha yüksek bir hız seçin."
+
+#: src/features/broadcasts/Composer.tsx
+msgid "At this pace, sending takes about {paceDuration}."
+msgstr "Bu hızla gönderim yaklaşık {paceDuration} sürer."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "At this pace, sending would take about {paceDays} days. A broadcast may take at most 365 days: raise the pace or send to fewer people."
+msgstr "Bu hızla gönderim yaklaşık {paceDays} gün sürerdi. Bir bülten en çok 365 gün sürebilir: hızı artırın ya da daha az kişiye gönderin."
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -1968,6 +2008,7 @@ msgstr "Her abone için ayrı bülten planlayabilir miyim?"
 #: src/features/account/ConnectPage.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
+#: src/features/broadcasts/Pace.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/messages/Thread.tsx
@@ -2061,6 +2102,10 @@ msgstr "Bilgi: {cc}"
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "Adresi değiştir"
+
+#: src/features/broadcasts/BroadcastPage.tsx
+msgid "Change pace"
+msgstr "Hızı değiştir"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Change that forwarding to the address below, so the mail of {address} reaches Yuva instead of {provider}."
@@ -4876,6 +4921,10 @@ msgstr "Açık"
 msgid "Light appearance"
 msgstr "Açık tema"
 
+#: src/features/broadcasts/Composer.tsx
+msgid "Limit the pace"
+msgstr "Hızı sınırla"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Link for your Microsoft 365 admin"
 msgstr "Microsoft 365 yöneticiniz için bağlantı"
@@ -5728,6 +5777,10 @@ msgstr "Sonraki deneme"
 msgid "next attempt {when}"
 msgstr "sonraki deneme {when}"
 
+#: src/features/broadcasts/BroadcastParts.tsx
+msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
+msgstr "Sonraki posta {local} ({utc} UTC), bu bültenin hızına göre."
+
 #: src/features/migrations/UploadStep.tsx
 msgid "Next, choose what to bring. The scan reads the file once."
 msgstr "Şimdi neyin getirileceğini seçin. Tarama dosyayı bir kez okur."
@@ -5913,6 +5966,10 @@ msgstr "Henüz etiket yok"
 #: src/features/conversation/HeaderActions.tsx
 msgid "No labels yet. Add them in settings."
 msgstr "Henüz etiket yok. Ayarlardan ekleyebilirsiniz."
+
+#: src/features/broadcasts/Pace.tsx
+msgid "No limit"
+msgstr "Sınırsız"
 
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "No locked discussions."
@@ -6356,6 +6413,10 @@ msgstr "Varsayılan olarak kapalı. Açıkken her bağlantı önce bu sunucunun 
 msgid "Off for this device."
 msgstr "Bu cihazda kapalı."
 
+#: src/features/broadcasts/Composer.tsx
+msgid "Off sends as fast as the channel and the workspace’s daily limit allow. On spreads the mails evenly, so no 60 minutes, 24 hours or 30 days get more than you set."
+msgstr "Kapalıyken kanalın ve çalışma alanının günlük sınırının izin verdiği hızda gönderir. Açıkken postaları eşit aralıklarla dağıtır; hiçbir 60 dakikaya, 24 saate ya da 30 güne belirlediğinizden fazlası düşmez."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "Offered on subscribe forms and the preference page. Private lists are filled by the team and the API."
 msgstr "Abonelik formlarında ve tercih sayfasında sunulur. Özel listeleri ekip ve API doldurur."
@@ -6435,6 +6496,10 @@ msgstr "Yeniliklerle ilgili ayda bir e-posta."
 #: src/features/auth/AuthLayout.tsx
 msgid "One inbox"
 msgstr "Tek gelen kutusu"
+
+#: src/features/broadcasts/Pace.tsx
+msgid "One mail every {every}"
+msgstr "{every} arayla bir posta"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "One per line, 1 to 20. Only pages on these origins can use the widget."
@@ -7045,6 +7110,14 @@ msgstr "Formdan kaydolan kişiler, abone olmadan önce bir e-postadaki bağlant�
 msgid "People write from inside your app, signed in as themselves."
 msgstr "Kullanıcılar uygulamanızın içinden, kendi hesaplarıyla yazar."
 
+#: src/features/broadcasts/Pace.tsx
+msgid "Per day"
+msgstr "Günde"
+
+#: src/features/broadcasts/Pace.tsx
+msgid "Per hour"
+msgstr "Saatte"
+
 #: src/features/broadcasts/Report.tsx
 msgid "Per hour for the first three days, then per day. Replies count people who answered; automatic replies are left out."
 msgstr "İlk üç gün saatlik, sonra günlük. Yanıtlar cevap veren kişileri sayar; otomatik yanıtlar sayılmaz."
@@ -7052,6 +7125,10 @@ msgstr "İlk üç gün saatlik, sonra günlük. Yanıtlar cevap veren kişileri 
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Per inbox"
 msgstr "Gelen kutusuna göre"
+
+#: src/features/broadcasts/Pace.tsx
+msgid "Per month (30 days)"
+msgstr "Ayda (30 gün)"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Permission to send"
@@ -8012,6 +8089,7 @@ msgid "Saturday"
 msgstr "Cumartesi"
 
 #: src/features/account/AccountPage.tsx
+#: src/features/broadcasts/Pace.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
@@ -8371,6 +8449,16 @@ msgstr "Gönderen kanal"
 #: src/components/common/text.ts
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "Gönderim çoktan başladı. Bunun yerine duraklatın ya da iptal edin."
+
+#: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Composer.tsx
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "Sending pace"
+msgstr "Gönderim hızı"
+
+#: src/features/broadcasts/Pace.tsx
+msgid "Sending pace of “{name}”"
+msgstr "“{name}” için gönderim hızı"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Sending stopped and cannot go on, for example because its channel was removed."
@@ -9340,6 +9428,10 @@ msgstr "Kanal henüz gönderemiyor. Bir SMTP hesabına ve gönderen adresine iht
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "The channel name when empty."
 msgstr "Boşsa kanal adı kullanılır."
+
+#: src/features/broadcasts/Pace.tsx
+msgid "The channel’s {rate} mails a second and the workspace’s daily limit still apply."
+msgstr "Kanalın saniyede {rate} postalık hızı ve çalışma alanının günlük sınırı yine geçerlidir."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The channel’s deliverability was never checked. Run the check before the first broadcast."

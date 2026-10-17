@@ -288,6 +288,8 @@ export function useErrorText() {
     if (err.code === "not_pending") return t`This subscription is no longer waiting for confirmation.`
     if (err.code === "broadcast_active") return t`Cancel the broadcast before deleting it.`
     if (err.code === "not_draft") return t`This broadcast is no longer a draft, so it cannot be changed.`
+    if (err.code === "pace_too_slow")
+      return t`At that pace the mail still to go out would take more than 365 days. Choose a faster pace.`
     if (err.code === "review_failed") return t`The review found something that blocks sending. Fix the red items first.`
     if (err.code === "audience_changed")
       return t`The number of recipients changed since you looked. Check the new count and confirm again.`

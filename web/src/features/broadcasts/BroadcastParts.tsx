@@ -113,6 +113,22 @@ export function WaitingLine({ until }: { until: string }) {
   )
 }
 
+export function PaceLine({ at }: { at: string }) {
+  const { i18n } = useLingui()
+  const local = formatDateTime(at, i18n.locale)
+  const utc = utcLine(at, i18n.locale)
+  return (
+    <p className="flex items-start gap-1.5 text-body text-muted-foreground" data-testid="broadcast-pace-next">
+      <ClockIcon className="mt-0.5 size-4 shrink-0 text-faint" />
+      <span>
+        <Trans>
+          Next mail on {local} ({utc} UTC), at this broadcast’s pace.
+        </Trans>
+      </span>
+    </p>
+  )
+}
+
 export function useBroadcastsStatus(): WorkspaceBroadcasts | undefined {
   return useSession().membership.workspace.broadcasts
 }

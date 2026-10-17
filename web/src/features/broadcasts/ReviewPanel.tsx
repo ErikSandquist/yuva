@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
 import { problemOf, useSchedule } from "@/features/broadcasts/broadcastQueries"
+import { paceGap } from "@/features/broadcasts/Pace"
 import { useBroadcastsStatus, useNumber, utcLine } from "@/features/broadcasts/BroadcastParts"
 import { designLink } from "@/features/designs/queries"
 import { channelLink, isChecking, useDeliverability } from "@/features/settings/channels/email/deliverability"
@@ -26,7 +27,7 @@ import type { Broadcast, BroadcastReview, BroadcastReviewItem, BroadcastReviewKe
 import { ApiError } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
-export type Spot = "sender" | "audience" | "content" | "options" | "test"
+export type Spot = "sender" | "audience" | "content" | "options" | "pace" | "test"
 
 type Fix = { spot: Spot } | { to: string }
 
@@ -44,6 +45,7 @@ const ORDER: BroadcastReviewKey[] = [
   "images_alt",
   "click_tracking",
   "daily_cap",
+  "pace",
   "test_sent",
 ]
 
@@ -77,6 +79,7 @@ function useItemText(b: Broadcast, review: BroadcastReview) {
   const status = useBroadcastsStatus()
   const size = review.html_bytes !== undefined ? formatBytes(review.html_bytes, i18n.locale) : ""
   const days = review.days ?? 0
+  const paceDays = Math.ceil((paceGap(b.pace) * Math.max(0, review.recipients - 1)) / 86400)
   const titles: Record<BroadcastReviewKey, string> = {
     sender_identity: t`Sender details for the footer`,
     sender_ready: t`Sending channel`,
@@ -90,6 +93,7 @@ function useItemText(b: Broadcast, review: BroadcastReview) {
     links: t`Links`,
     subject: t`Subject`,
     daily_cap: t`Daily limit`,
+    pace: t`Sending pace`,
     test_sent: t`Test mail`,
     click_tracking: t`Click tracking`,
   }
@@ -128,6 +132,10 @@ function useItemText(b: Broadcast, review: BroadcastReview) {
           : t`Inboxes cut off subjects longer than 80 characters.`
       case "daily_cap":
         return days > 1 ? t`Under the workspace’s daily limit, sending takes ${days} days.` : null
+      case "pace":
+        return blocking
+          ? t`At this pace, sending would take about ${paceDays} days. A broadcast may take at most 365 days: raise the pace or send to fewer people.`
+          : null
       case "test_sent":
         return t`No test went out since the last change.`
       case "click_tracking":
@@ -161,6 +169,8 @@ function fixOf(b: Broadcast, key: BroadcastReviewKey): Fix | null {
       return { spot: "options" }
     case "test_sent":
       return { spot: "test" }
+    case "pace":
+      return { spot: "pace" }
     case "daily_cap":
       return null
   }

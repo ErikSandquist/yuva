@@ -404,9 +404,17 @@ msgstr "{n, plural, one {# website chat} other {# website chats}}"
 msgid "{n, plural, one {# website or app} other {# websites and apps}}"
 msgstr "{n, plural, one {# website or app} other {# websites and apps}}"
 
+#: src/features/broadcasts/Pace.tsx
+msgid "{n} a day"
+msgstr "{n} a day"
+
 #: src/features/settings/webhooks/parts.tsx
 msgid "{n} attempts"
 msgstr "{n} attempts"
+
+#: src/features/broadcasts/Pace.tsx
+msgid "{n} in 30 days"
+msgstr "{n} in 30 days"
 
 #: src/app/UserMenu.tsx
 msgid "{name} · {statusText}"
@@ -596,6 +604,10 @@ msgstr "{rate} a minute · about {left} left"
 #: src/features/broadcasts/Composer.tsx
 msgid "{rate} mails a second"
 msgstr "{rate} mails a second"
+
+#: src/features/broadcasts/BroadcastPage.tsx
+msgid "{rate} mails a second · one every {every}"
+msgstr "{rate} mails a second · one every {every}"
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "{recipients} recipients"
@@ -997,6 +1009,10 @@ msgstr "A thread is taken whole when its last message is in the range."
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "A username needs TLS or STARTTLS: the password is never sent unencrypted."
+
+#: src/features/broadcasts/Pace.tsx
+msgid "A whole number from 1 to 10,000,000"
+msgstr "A whole number from 1 to 10,000,000"
 
 #: src/features/auth/CreateWorkspace.tsx
 msgid "A workspace holds your team, inboxes and conversations. You are its owner and can invite others later."
@@ -1548,6 +1564,10 @@ msgstr "Appearance"
 msgid "Application (client) ID"
 msgstr "Application (client) ID"
 
+#: src/features/broadcasts/Pace.tsx
+msgid "Applies to the next mail."
+msgstr "Applies to the next mail."
+
 #: src/features/docs/discussions/QueuePane.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Approve"
@@ -1597,6 +1617,10 @@ msgstr "As {name}, since {when}"
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "As above ({current})"
 msgstr "As above ({current})"
+
+#: src/features/broadcasts/Pace.tsx
+msgid "As fast as allowed"
+msgstr "As fast as allowed"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Ask everyone to confirm again"
@@ -1681,6 +1705,10 @@ msgstr "Assistants, {drafts} drafts waiting"
 msgid "Async"
 msgstr "Async"
 
+#: src/features/broadcasts/Pace.tsx
+msgid "At most {n} an hour"
+msgstr "At most {n} an hour"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "At most once per contact every (hours)"
 msgstr "At most once per contact every (hours)"
@@ -1688,6 +1716,18 @@ msgstr "At most once per contact every (hours)"
 #: src/features/account/AccountPage.tsx
 msgid "At most one e-mail per discussion every few minutes, with the new replies and answers. Notifications here stay on."
 msgstr "At most one e-mail per discussion every few minutes, with the new replies and answers. Notifications here stay on."
+
+#: src/components/common/text.ts
+msgid "At that pace the mail still to go out would take more than 365 days. Choose a faster pace."
+msgstr "At that pace the mail still to go out would take more than 365 days. Choose a faster pace."
+
+#: src/features/broadcasts/Composer.tsx
+msgid "At this pace, sending takes about {paceDuration}."
+msgstr "At this pace, sending takes about {paceDuration}."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "At this pace, sending would take about {paceDays} days. A broadcast may take at most 365 days: raise the pace or send to fewer people."
+msgstr "At this pace, sending would take about {paceDays} days. A broadcast may take at most 365 days: raise the pace or send to fewer people."
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
@@ -1968,6 +2008,7 @@ msgstr "Can I schedule a newsletter for each subscriber?"
 #: src/features/account/ConnectPage.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
+#: src/features/broadcasts/Pace.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/messages/Thread.tsx
@@ -2061,6 +2102,10 @@ msgstr "Cc: {cc}"
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "Change address"
+
+#: src/features/broadcasts/BroadcastPage.tsx
+msgid "Change pace"
+msgstr "Change pace"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Change that forwarding to the address below, so the mail of {address} reaches Yuva instead of {provider}."
@@ -4876,6 +4921,10 @@ msgstr "Light"
 msgid "Light appearance"
 msgstr "Light appearance"
 
+#: src/features/broadcasts/Composer.tsx
+msgid "Limit the pace"
+msgstr "Limit the pace"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Link for your Microsoft 365 admin"
 msgstr "Link for your Microsoft 365 admin"
@@ -5728,6 +5777,10 @@ msgstr "Next attempt"
 msgid "next attempt {when}"
 msgstr "next attempt {when}"
 
+#: src/features/broadcasts/BroadcastParts.tsx
+msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
+msgstr "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
+
 #: src/features/migrations/UploadStep.tsx
 msgid "Next, choose what to bring. The scan reads the file once."
 msgstr "Next, choose what to bring. The scan reads the file once."
@@ -5913,6 +5966,10 @@ msgstr "No labels yet"
 #: src/features/conversation/HeaderActions.tsx
 msgid "No labels yet. Add them in settings."
 msgstr "No labels yet. Add them in settings."
+
+#: src/features/broadcasts/Pace.tsx
+msgid "No limit"
+msgstr "No limit"
 
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "No locked discussions."
@@ -6356,6 +6413,10 @@ msgstr "Off by default. When on, every link goes through this server’s link do
 msgid "Off for this device."
 msgstr "Off for this device."
 
+#: src/features/broadcasts/Composer.tsx
+msgid "Off sends as fast as the channel and the workspace’s daily limit allow. On spreads the mails evenly, so no 60 minutes, 24 hours or 30 days get more than you set."
+msgstr "Off sends as fast as the channel and the workspace’s daily limit allow. On spreads the mails evenly, so no 60 minutes, 24 hours or 30 days get more than you set."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "Offered on subscribe forms and the preference page. Private lists are filled by the team and the API."
 msgstr "Offered on subscribe forms and the preference page. Private lists are filled by the team and the API."
@@ -6435,6 +6496,10 @@ msgstr "One e-mail a month about what is new."
 #: src/features/auth/AuthLayout.tsx
 msgid "One inbox"
 msgstr "One inbox"
+
+#: src/features/broadcasts/Pace.tsx
+msgid "One mail every {every}"
+msgstr "One mail every {every}"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "One per line, 1 to 20. Only pages on these origins can use the widget."
@@ -7045,6 +7110,14 @@ msgstr "People who sign up on a form confirm by clicking a link in a mail before
 msgid "People write from inside your app, signed in as themselves."
 msgstr "People write from inside your app, signed in as themselves."
 
+#: src/features/broadcasts/Pace.tsx
+msgid "Per day"
+msgstr "Per day"
+
+#: src/features/broadcasts/Pace.tsx
+msgid "Per hour"
+msgstr "Per hour"
+
 #: src/features/broadcasts/Report.tsx
 msgid "Per hour for the first three days, then per day. Replies count people who answered; automatic replies are left out."
 msgstr "Per hour for the first three days, then per day. Replies count people who answered; automatic replies are left out."
@@ -7052,6 +7125,10 @@ msgstr "Per hour for the first three days, then per day. Replies count people wh
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Per inbox"
 msgstr "Per inbox"
+
+#: src/features/broadcasts/Pace.tsx
+msgid "Per month (30 days)"
+msgstr "Per month (30 days)"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Permission to send"
@@ -8012,6 +8089,7 @@ msgid "Saturday"
 msgstr "Saturday"
 
 #: src/features/account/AccountPage.tsx
+#: src/features/broadcasts/Pace.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
@@ -8371,6 +8449,16 @@ msgstr "Sending channel"
 #: src/components/common/text.ts
 msgid "Sending has already started. Pause or cancel it instead."
 msgstr "Sending has already started. Pause or cancel it instead."
+
+#: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Composer.tsx
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "Sending pace"
+msgstr "Sending pace"
+
+#: src/features/broadcasts/Pace.tsx
+msgid "Sending pace of “{name}”"
+msgstr "Sending pace of “{name}”"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Sending stopped and cannot go on, for example because its channel was removed."
@@ -9340,6 +9428,10 @@ msgstr "The channel cannot send yet. It needs an SMTP account and an address to 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "The channel name when empty."
 msgstr "The channel name when empty."
+
+#: src/features/broadcasts/Pace.tsx
+msgid "The channel’s {rate} mails a second and the workspace’s daily limit still apply."
+msgstr "The channel’s {rate} mails a second and the workspace’s daily limit still apply."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The channel’s deliverability was never checked. Run the check before the first broadcast."

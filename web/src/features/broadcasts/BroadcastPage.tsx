@@ -2,6 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro"
 import {
   CalendarClockIcon,
   CircleAlertIcon,
+  GaugeIcon,
   LoaderIcon,
   MegaphoneIcon,
   PauseIcon,
@@ -16,7 +17,7 @@ import { Link, useNavigate, useParams, useSearchParams } from "react-router"
 import { Dot, ErrorLine, Notice, Segmented, useConfirm } from "@/components/common"
 import { Pane, PaneBack, PaneEmpty } from "@/components/common/Column"
 import { BROADCAST_KEYS, keyLabel } from "@/components/common/ShortcutSheet"
-import { formatDateTime, useEnumText } from "@/components/common/text"
+import { formatDateTime, formatDuration, useEnumText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import {
@@ -36,12 +37,14 @@ import {
   StatusNotice,
   useNumber,
   utcLine,
+  PaceLine,
   WaitingLine,
 } from "@/features/broadcasts/BroadcastParts"
 import { Composer } from "@/features/broadcasts/Composer"
 import { DesignThumb } from "@/features/broadcasts/DesignPicker"
 import { useInboxChannels, useLists } from "@/features/broadcasts/queries"
 import { Deliveries, Report } from "@/features/broadcasts/Report"
+import { paceGap, PaceDialog, usePaceSummary } from "@/features/broadcasts/Pace"
 import { useTestSend } from "@/features/broadcasts/TestSend"
 import { designLink } from "@/features/designs/queries"
 import { Card, Section } from "@/features/settings/ui"
@@ -137,6 +140,28 @@ function Actions({
   )
 }
 
+function ChangePace({ b }: { b: Broadcast }) {
+  const { canManage } = useSession()
+  const [open, setOpen] = useState(false)
+  const rate = useInboxChannels(b.inbox_id).data?.find((c) => c.id === b.channel_id)?.email?.broadcast_rate
+  if (!canManage) return null
+  return (
+    <>
+      <Button
+        variant="outline"
+        size="sm"
+        className="w-fit"
+        onClick={() => setOpen(true)}
+        data-testid="broadcast-pace-change"
+      >
+        <GaugeIcon />
+        <Trans>Change pace</Trans>
+      </Button>
+      {open && <PaceDialog b={b} rate={rate} onClose={() => setOpen(false)} />}
+    </>
+  )
+}
+
 function Scheduled({ b }: { b: Broadcast }) {
   const { i18n } = useLingui()
   if (!b.scheduled_at) return null
@@ -160,6 +185,7 @@ function Scheduled({ b }: { b: Broadcast }) {
           </p>
         </div>
       </div>
+      <ChangePace b={b} />
     </Card>
   )
 }
@@ -175,10 +201,15 @@ function Sending({ b, at }: { b: Broadcast; at: number }) {
   const sent = num(done)
   const all = num(total)
   const prepared = num(b.counts.prepared ?? 0)
+  const gap = paceGap(b.pace)
+  const per = rate ? Math.max(1 / rate, gap) : 0
+  const next = b.pace_next_at ? Date.parse(b.pace_next_at) : 0
+  const start = gap > 0 && next > at ? next : at
   const end =
     b.state === "sending" && rate && left > 0 && !b.waiting_until
-      ? formatDateTime(new Date(at + (left / rate) * 1000).toISOString(), i18n.locale)
+      ? formatDateTime(new Date(start + (left - (start > at ? 1 : 0)) * per * 1000).toISOString(), i18n.locale)
       : null
+  const every = gap > 0 ? formatDuration(gap, i18n.locale) : ""
   const reason = b.pause_reason
   return (
     <Card data-testid="broadcast-sending">
@@ -194,7 +225,7 @@ function Sending({ b, at }: { b: Broadcast; at: number }) {
             )}
           </p>
           <p className="text-small text-faint">
-            {rate ? t`${rate} mails a second` : null}
+            {rate ? (every ? t`${rate} mails a second · one every ${every}` : t`${rate} mails a second`) : null}
             {end && (
               <>
                 {" · "}
@@ -206,6 +237,8 @@ function Sending({ b, at }: { b: Broadcast; at: number }) {
         <ProgressBar b={b} className="h-2" />
       </div>
       {b.waiting_until && <WaitingLine until={b.waiting_until} />}
+      {b.state === "sending" && b.pace_next_at && next > at && <PaceLine at={b.pace_next_at} />}
+      <ChangePace b={b} />
       {b.state === "paused" && reason && (
         <Notice tone={reason === "member" ? "info" : "warning"} icon={PauseIcon} data-testid="broadcast-pause-reason">
           <p>{text.pauseReason[reason]}</p>
@@ -230,6 +263,7 @@ function Summary({ b }: { b: Broadcast }) {
   const lists = new Map(
     (useLists(b.inbox_id, false).data?.pages.flatMap((p) => p.items) ?? []).map((l) => [l.id, l.name])
   )
+  const paceSummary = usePaceSummary()
   const members = useMemberMap()
   const by = b.scheduled_by ? members.get(b.scheduled_by) : undefined
   const rows: [string, React.ReactNode][] = [
@@ -240,6 +274,7 @@ function Summary({ b }: { b: Broadcast }) {
   ]
   if (b.audience.conditions.length) rows.push([t`Conditions`, String(b.audience.conditions.length)])
   if (b.audience.locales.length) rows.push([t`Languages`, b.audience.locales.join(", ")])
+  rows.push([t`Sending pace`, paceSummary(b.pace)])
   rows.push([t`Click counting`, b.click_tracking ? t`On` : t`Off`])
   rows.push([
     t`Campaign in links`,
