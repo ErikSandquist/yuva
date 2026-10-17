@@ -241,7 +241,7 @@ only. Checked with Starlight 0.42, VitePress 1.6 and Docusaurus 3.10.
 |---|---|
 | `channel` | The chat channel's public key (`yuva_pk_…`). Required. |
 | `server` | Yuva server URL. Defaults to the origin `yuva-docs.js` was loaded from. |
-| `locale` | `en`, `tr` or `de`. Defaults to the browser's language, else English. |
+| `locale` | One of the 47 [languages](widget.md#languages), such as `en`, `tr`, `de`, `pt-BR` or `ar`. Defaults to the browser's language; a language Yuva does not have falls back to English. |
 | `dir` | `ltr` or `rtl`. Defaults to the locale's direction. |
 | `identity-token` | A signed identity token. `setIdentityToken` is usually better. |
 | `page` | The page's URL. Defaults to the current URL; client-side navigation is followed. |

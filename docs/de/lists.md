@@ -173,7 +173,7 @@ ist keine Rechtsberatung.
 | `button-text` | Beschriftung der Schaltfläche. |
 | `consent` | Ihr eigener Einwilligungssatz. Er wird so gespeichert, wie er angezeigt wurde. |
 | `privacy-url` | Link zu Ihrer Datenschutzerklärung, neben dem Kästchen angezeigt. |
-| `locale`, `dir` | `en`, `tr` oder `de`; `ltr` oder `rtl`. |
+| `locale`, `dir` | Eine der 47 Widget-Sprachen (`en`, `tr`, `de`, `pt-BR`, `ar`, ...; siehe [Web-Widget](widget.md#sprachen)); `ltr` oder `rtl`. |
 | `identity-token` | Eine Token-Zeichenkette; meist ist `setIdentityToken` besser. |
 
 Gestalten Sie es mit `--yuva-accent`, `--yuva-on-accent`, `--yuva-radius`, `--yuva-font` und

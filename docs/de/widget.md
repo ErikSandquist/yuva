@@ -81,10 +81,14 @@ als dieser Besucher handeln, bis das Token abläuft oder beendet wird. Was Sie t
 | `channel` | Der öffentliche Schlüssel des Chat-Kanals. Pflicht. |
 | `server` | URL des Yuva-Servers. Standard ist die Herkunft von `yuva.js`. |
 | `layout` | `launcher` (Standard) oder `embedded` für einen Verlauf in Ihrer Seite; geben Sie ihm eine Höhe. |
-| `locale` | `en`, `tr` oder `de`. Standard ist die Sprache des Browsers, sonst Englisch. |
+| `locale` | Eine der [47 Sprachen](#sprachen), etwa `en`, `tr`, `de`, `pt-BR` oder `ar`. Standard ist die Sprache des Browsers; eine Sprache, die Yuva nicht hat, fällt auf Englisch zurück. |
 | `dir` | `ltr` oder `rtl`. Standard ist die Schreibrichtung der Sprache. |
 | `identity-token` | Ein Token als String; `setIdentityToken` ist meist besser. |
 | `open` | Vorhanden: Das Fenster ist offen. |
+
+### Sprachen
+
+Das Widget spricht 47 Sprachen: `en`, `tr`, `de`, `fr`, `fr-CA`, `es`, `es-MX`, `pt-BR`, `pt-PT`, `it`, `nl`, `sv`, `da`, `nb`, `fi`, `pl`, `cs`, `sk`, `sl`, `hr`, `hu`, `ro`, `ca`, `ja`, `ko`, `zh-Hans`, `zh-Hant`, `ru`, `uk`, `el`, `id`, `ms`, `ar`, `he`, `ur`, `hi`, `bn`, `mr`, `pa`, `gu`, `or`, `kn`, `ml`, `ta`, `te`, `th`, `vi`. Arabisch, Hebräisch und Urdu werden von rechts nach links gesetzt. Ein Tag wie `pt-BR`, `zh-TW` oder `es-AR` wählt die nächstliegende davon; `no` und `nn` nutzen `nb`. Eine Sprache, die nicht in der Liste steht, fällt auf Englisch zurück.
 
 ### Methoden und Ereignisse
 

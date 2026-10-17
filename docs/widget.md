@@ -74,10 +74,14 @@ visitor until the token expires or is ended. What you can do:
 | `channel` | The chat channel's public key. Required. |
 | `server` | Yuva server URL. Defaults to where `yuva.js` came from. |
 | `layout` | `launcher` (default) or `embedded`, for a thread inside your page; give it a height. |
-| `locale` | `en`, `tr` or `de`. Defaults to the browser's language, then English. |
+| `locale` | One of the 47 [languages](#languages), such as `en`, `tr`, `de`, `pt-BR` or `ar`. Defaults to the browser's language; a language Yuva does not have falls back to English. |
 | `dir` | `ltr` or `rtl`. Defaults to the locale's direction. |
 | `identity-token` | A token string; `setIdentityToken` is usually better. |
 | `open` | Present: the panel is open. |
+
+### Languages
+
+The widget speaks 47 languages: `en`, `tr`, `de`, `fr`, `fr-CA`, `es`, `es-MX`, `pt-BR`, `pt-PT`, `it`, `nl`, `sv`, `da`, `nb`, `fi`, `pl`, `cs`, `sk`, `sl`, `hr`, `hu`, `ro`, `ca`, `ja`, `ko`, `zh-Hans`, `zh-Hant`, `ru`, `uk`, `el`, `id`, `ms`, `ar`, `he`, `ur`, `hi`, `bn`, `mr`, `pa`, `gu`, `or`, `kn`, `ml`, `ta`, `te`, `th`, `vi`. Arabic, Hebrew and Urdu lay out right to left. A tag such as `pt-BR`, `zh-TW` or `es-AR` picks the closest of these; `no` and `nn` use `nb`. A language not in the list falls back to English.
 
 ### Methods and events
 

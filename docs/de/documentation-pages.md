@@ -252,7 +252,7 @@ die Elemente nur im Browser. Geprüft mit Starlight 0.42, VitePress 1.6 und Docu
 |---|---|
 | `channel` | Der öffentliche Schlüssel des Chat-Kanals (`yuva_pk_…`). Pflicht. |
 | `server` | URL des Yuva-Servers. Standard ist die Origin, von der `yuva-docs.js` geladen wurde. |
-| `locale` | `en`, `tr` oder `de`. Standard ist die Sprache des Browsers, sonst Englisch. |
+| `locale` | Eine der [47 Sprachen](widget.md#sprachen), etwa `en`, `tr`, `de`, `pt-BR` oder `ar`. Standard ist die Sprache des Browsers; eine Sprache, die Yuva nicht hat, fällt auf Englisch zurück. |
 | `dir` | `ltr` oder `rtl`. Standard ist die Schreibrichtung der Sprache. |
 | `identity-token` | Ein signiertes Identitäts-Token. `setIdentityToken` ist meist besser. |
 | `page` | Die URL der Seite. Standard ist die aktuelle URL; clientseitige Navigation wird verfolgt. |

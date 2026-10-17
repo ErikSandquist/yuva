@@ -246,7 +246,7 @@ kaydederler. Starlight 0.42, VitePress 1.6 ve Docusaurus 3.10 ile denetlendi.
 |---|---|
 | `channel` | Sohbet kanalının genel anahtarı (`yuva_pk_…`). Zorunlu. |
 | `server` | Yuva sunucusunun adresi. Varsayılan, `yuva-docs.js`'nin yüklendiği origin. |
-| `locale` | `en`, `tr` ya da `de`. Varsayılan tarayıcının dili, o da yoksa İngilizce. |
+| `locale` | [47 dilden](widget.md#diller) biri; örneğin `en`, `tr`, `de`, `pt-BR` ya da `ar`. Varsayılan tarayıcının dili; Yuva'da olmayan bir dil İngilizceye döner. |
 | `dir` | `ltr` ya da `rtl`. Varsayılan, dilin yazım yönü. |
 | `identity-token` | İmzalı bir kimlik token'ı. Genellikle `setIdentityToken` daha iyidir. |
 | `page` | Sayfanın URL'si. Varsayılan o anki URL; istemci tarafı gezinme izlenir. |

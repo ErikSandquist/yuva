@@ -78,10 +78,14 @@ Yapabilecekleriniz:
 | `channel` | Sohbet kanalının genel anahtarı. Zorunlu. |
 | `server` | Yuva sunucusunun adresi. Varsayılan, `yuva.js`'nin yüklendiği yer. |
 | `layout` | `launcher` (varsayılan) ya da sayfanızın içinde bir akış için `embedded`; ona bir yükseklik verin. |
-| `locale` | `en`, `tr` ya da `de`. Varsayılan tarayıcının dili, o da yoksa İngilizce. |
+| `locale` | [47 dilden](#diller) biri; örneğin `en`, `tr`, `de`, `pt-BR` ya da `ar`. Varsayılan tarayıcının dili; Yuva'da olmayan bir dil İngilizceye döner. |
 | `dir` | `ltr` ya da `rtl`. Varsayılan, dilin yazım yönü. |
 | `identity-token` | Bir token metni; genellikle `setIdentityToken` daha iyidir. |
 | `open` | Varsa panel açıktır. |
+
+### Diller
+
+Pencere 47 dil konuşur: `en`, `tr`, `de`, `fr`, `fr-CA`, `es`, `es-MX`, `pt-BR`, `pt-PT`, `it`, `nl`, `sv`, `da`, `nb`, `fi`, `pl`, `cs`, `sk`, `sl`, `hr`, `hu`, `ro`, `ca`, `ja`, `ko`, `zh-Hans`, `zh-Hant`, `ru`, `uk`, `el`, `id`, `ms`, `ar`, `he`, `ur`, `hi`, `bn`, `mr`, `pa`, `gu`, `or`, `kn`, `ml`, `ta`, `te`, `th`, `vi`. Arapça, İbranice ve Urduca sağdan sola dizilir. `pt-BR`, `zh-TW` ya da `es-AR` gibi bir etiket bunlardan en yakınını seçer; `no` ve `nn` için `nb` kullanılır. Listede olmayan bir dil İngilizceye döner.
 
 ### Metotlar ve olaylar
 
