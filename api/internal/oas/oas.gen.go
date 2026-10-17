@@ -1193,6 +1193,7 @@ const (
 	BroadcastReviewKeyImagesAlt        BroadcastReviewKey = "images_alt"
 	BroadcastReviewKeyLinks            BroadcastReviewKey = "links"
 	BroadcastReviewKeyMergeFields      BroadcastReviewKey = "merge_fields"
+	BroadcastReviewKeyPace             BroadcastReviewKey = "pace"
 	BroadcastReviewKeySenderIdentity   BroadcastReviewKey = "sender_identity"
 	BroadcastReviewKeySenderReady      BroadcastReviewKey = "sender_ready"
 	BroadcastReviewKeySubject          BroadcastReviewKey = "subject"
@@ -1221,6 +1222,8 @@ func (e BroadcastReviewKey) Valid() bool {
 	case BroadcastReviewKeyLinks:
 		return true
 	case BroadcastReviewKeyMergeFields:
+		return true
+	case BroadcastReviewKeyPace:
 		return true
 	case BroadcastReviewKeySenderIdentity:
 		return true
@@ -6493,6 +6496,16 @@ type Broadcast struct {
 	// Name Shown to the team only.
 	Name string `json:"name"`
 
+	// Pace The broadcast's own pace, below the channel's `broadcast_rate` and the workspace's daily limit:
+	// at most `per_hour` mails in any 60 minutes, `per_day` in any 24 hours and `per_month` in any
+	// 30 days. Mails are spaced evenly at the gap of the tightest one (3,600 / `per_hour`,
+	// 86,400 / `per_day` or 2,592,000 / `per_month` seconds). Every SMTP attempt counts, retries
+	// included; skipped recipients do not. An empty object is no pace.
+	Pace *BroadcastPace `json:"pace,omitempty"`
+
+	// PaceNextAt While sending with at least a minute between mails: the earliest time the next mail may go out.
+	PaceNextAt *time.Time `json:"pace_next_at,omitempty"`
+
 	// PauseReason `member`: someone paused it. `bounce_rate`: 5% or more of the mails sent since it started
 	// or was resumed bounced (after at least 200). `complaint_rate`: 0.3% or more were reported as
 	// spam (after at least 1,000). `sender_error`: the SMTP server refused the account, its TLS or
@@ -6534,6 +6547,7 @@ type Broadcast struct {
 	UtmCampaign string `json:"utm_campaign"`
 
 	// WaitingUntil The workspace's daily limit is reached; sending continues at this time (the next 00:00 UTC).
+	// The broadcast's own pace shows in `pace_next_at`.
 	WaitingUntil *time.Time `json:"waiting_until,omitempty"`
 }
 
@@ -6659,8 +6673,15 @@ type BroadcastCreate struct {
 	DesignId      *uuid.UUID              `json:"design_id,omitempty"`
 	InboxId       uuid.UUID               `json:"inbox_id"`
 	Name          string                  `json:"name"`
-	Preheader     *string                 `json:"preheader,omitempty"`
-	Subject       *string                 `json:"subject,omitempty"`
+
+	// Pace The broadcast's own pace, below the channel's `broadcast_rate` and the workspace's daily limit:
+	// at most `per_hour` mails in any 60 minutes, `per_day` in any 24 hours and `per_month` in any
+	// 30 days. Mails are spaced evenly at the gap of the tightest one (3,600 / `per_hour`,
+	// 86,400 / `per_day` or 2,592,000 / `per_month` seconds). Every SMTP attempt counts, retries
+	// included; skipped recipients do not. An empty object is no pace.
+	Pace      *BroadcastPace `json:"pace,omitempty"`
+	Preheader *string        `json:"preheader,omitempty"`
+	Subject   *string        `json:"subject,omitempty"`
 
 	// Utm On when absent at creation.
 	Utm *bool `json:"utm,omitempty"`
@@ -6715,7 +6736,7 @@ type BroadcastDeliveryPage struct {
 // was cancelled.
 type BroadcastDeliveryState string
 
-// BroadcastEvent `broadcast.updated`: the broadcast changed state. Delivered to callers who hold
+// BroadcastEvent `broadcast.updated`: the broadcast changed state or its pace. Delivered to callers who hold
 // `broadcasts:read` and can see its inbox.
 type BroadcastEvent struct {
 	CreatedAt   time.Time          `json:"created_at"`
@@ -6743,6 +6764,19 @@ type BroadcastEventData struct {
 type BroadcastListCount struct {
 	ListId     uuid.UUID `json:"list_id"`
 	Recipients int64     `json:"recipients"`
+}
+
+// BroadcastPace The broadcast's own pace, below the channel's `broadcast_rate` and the workspace's daily limit:
+// at most `per_hour` mails in any 60 minutes, `per_day` in any 24 hours and `per_month` in any
+// 30 days. Mails are spaced evenly at the gap of the tightest one (3,600 / `per_hour`,
+// 86,400 / `per_day` or 2,592,000 / `per_month` seconds). Every SMTP attempt counts, retries
+// included; skipped recipients do not. An empty object is no pace.
+type BroadcastPace struct {
+	PerDay  *int32 `json:"per_day,omitempty"`
+	PerHour *int32 `json:"per_hour,omitempty"`
+
+	// PerMonth Any 30 days, not a calendar month.
+	PerMonth *int32 `json:"per_month,omitempty"`
 }
 
 // BroadcastPage defines model for BroadcastPage.
@@ -6801,6 +6835,9 @@ type BroadcastProgress struct {
 	// only).
 	Counts BroadcastCounts `json:"counts"`
 	Id     uuid.UUID       `json:"id"`
+
+	// PaceNextAt While sending with at least a minute between mails: the earliest time the next mail may go out.
+	PaceNextAt *time.Time `json:"pace_next_at,omitempty"`
 
 	// State `draft` → `scheduled` (until `scheduled_at`) → `preparing` (taking the audience) →
 	// `sending` → `sent`. `paused` stops sending until resumed; `cancelled` ends it for good;
@@ -6898,9 +6935,13 @@ type BroadcastReportReply struct {
 // BroadcastReview defines model for BroadcastReview.
 type BroadcastReview struct {
 	// Days How many UTC days sending takes under the workspace's daily limit; absent without a limit.
-	Days      *int32                `json:"days,omitempty"`
-	HtmlBytes *int32                `json:"html_bytes,omitempty"`
-	Items     []BroadcastReviewItem `json:"items"`
+	Days *int32 `json:"days,omitempty"`
+
+	// DurationSeconds About how long sending takes from its start: the slowest of the pace, the channel's rate and
+	// the workspace's daily limit (as if no other broadcast used it). Absent when nobody would get it.
+	DurationSeconds *int64                `json:"duration_seconds,omitempty"`
+	HtmlBytes       *int32                `json:"html_bytes,omitempty"`
+	Items           []BroadcastReviewItem `json:"items"`
 
 	// Ready No item is `blocking`.
 	Ready bool `json:"ready"`
@@ -6964,8 +7005,11 @@ type BroadcastUpdate struct {
 	ClickTracking *bool                        `json:"click_tracking,omitempty"`
 	DesignId      nullable.Nullable[uuid.UUID] `json:"design_id,omitempty"`
 	Name          *string                      `json:"name,omitempty"`
-	Preheader     *string                      `json:"preheader,omitempty"`
-	Subject       *string                      `json:"subject,omitempty"`
+
+	// Pace Replaces the whole pace; `{}` removes it.
+	Pace      *BroadcastPace `json:"pace,omitempty"`
+	Preheader *string        `json:"preheader,omitempty"`
+	Subject   *string        `json:"subject,omitempty"`
 
 	// Utm On when absent at creation.
 	Utm *bool `json:"utm,omitempty"`

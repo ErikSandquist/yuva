@@ -797,6 +797,13 @@ func (s *Server) SendBroadcasts(ctx context.Context, ws, channelID uuid.UUID, bu
 				return 0, err
 			}
 		}
+		gap := paceGap(*b)
+		switch {
+		case gap > batchTime:
+			size = 1
+		case gap > 0:
+			size = min(size, int32(batchTime/gap)+1)
+		}
 		ch, err := s.st.GetEmailChannel(ctx, store.GetEmailChannelParams{WorkspaceID: ws, ChannelID: channelID})
 		if store.IsNotFound(err) {
 			if err := s.failBroadcast(ctx, ws, b.ID, "the broadcast's e-mail channel was removed"); err != nil {
@@ -823,6 +830,10 @@ func (s *Server) SendBroadcasts(ctx context.Context, ws, channelID uuid.UUID, bu
 				continue
 			}
 			deferred[b.ID] = qd.NextAttempt
+			continue
+		}
+		if gap > 0 && b.PaceNextAt != nil && b.PaceNextAt.After(now) {
+			deferred[b.ID] = paceWake(*b.PaceNextAt, now)
 			continue
 		}
 		doc, _, err := s.broadcastDocument(ctx, s.st.Queries, *b)
@@ -869,41 +880,56 @@ func (s *Server) SendBroadcasts(ctx context.Context, ws, channelID uuid.UUID, bu
 			sessCfg, sessSent, sessStart = r.cfg, 0, time.Now()
 		}
 		pace := time.Duration(float64(time.Second) / (float64(ch.BroadcastRate) * paceFactor))
-		results, stop, rejects := s.sendBatch(ctx, r, sess, due, pace, &paceFactor, &sessSent)
+		results, stop, rejects := s.sendBatch(ctx, r, sess, due, pace, gap, &paceFactor, &sessSent)
 		if stop == stopBroken {
 			closeSession()
 		}
 		if err := s.commitBatch(ctx, *b, results, rejects); err != nil {
 			return 0, err
 		}
+		if stop == stopPace {
+			cur, err := s.st.GetBroadcast(ctx, store.GetBroadcastParams{WorkspaceID: ws, ID: b.ID})
+			if err != nil {
+				return 0, err
+			}
+			now := s.now()
+			deferred[b.ID] = now.Add(time.Second)
+			if cur.PaceNextAt != nil && cur.PaceNextAt.After(now) {
+				deferred[b.ID] = paceWake(*cur.PaceNextAt, now)
+			}
+		}
 	}
+}
+
+// paceWake is when to look at a broadcast waiting for its next slot again: at the slot, but within
+// 5 minutes, so a changed pace applies soon and the channel's job never sleeps through it.
+func paceWake(next, now time.Time) time.Time {
+	if latest := now.Add(paceSnoozeAtMost); next.After(latest) {
+		return latest
+	}
+	return next
 }
 
 const (
 	stopNone = iota
 	stopState
 	stopBroken
+	stopPace
 )
 
 // sendBatch sends due mail one by one, re-reading the broadcast's state before each, so pausing or
 // cancelling takes effect within the batch. A batch ends after 50 mails or 5 seconds, so counters
 // move even at a slow pace.
-func (s *Server) sendBatch(ctx context.Context, r *bcRenderer, sess email.Session, due []store.BroadcastDelivery, pace time.Duration, paceFactor *float64, sessSent *int) ([]deliveryResult, int, int) {
+func (s *Server) sendBatch(ctx context.Context, r *bcRenderer, sess email.Session, due []store.BroadcastDelivery, pace, gap time.Duration, paceFactor *float64, sessSent *int) ([]deliveryResult, int, int) {
 	ws := r.b.WorkspaceID
 	lists := parseAudience(r.b.Audience).ListIDs
 	var out []deliveryResult
 	rejects := 0
 	until := time.Now().Add(batchTime)
+	attempted := false
 	for i, d := range due {
 		if i > 0 && time.Now().After(until) {
 			return out, stopNone, rejects
-		}
-		if i > 0 && pace > 0 {
-			select {
-			case <-ctx.Done():
-				return out, stopState, rejects
-			case <-time.After(pace):
-			}
 		}
 		cur, err := s.st.GetBroadcast(ctx, store.GetBroadcastParams{WorkspaceID: ws, ID: r.b.ID})
 		if err != nil || cur.State != bcSending {
@@ -952,6 +978,27 @@ func (s *Server) sendBatch(ctx context.Context, r *bcRenderer, sess email.Sessio
 			out = append(out, res)
 			continue
 		}
+		if wait := max(pace, gap); attempted && wait > 0 {
+			select {
+			case <-ctx.Done():
+				return out, stopState, rejects
+			case <-time.After(wait):
+			}
+			cur, err = s.st.GetBroadcast(ctx, store.GetBroadcastParams{WorkspaceID: ws, ID: r.b.ID})
+			if err != nil || cur.State != bcSending {
+				return out, stopState, rejects
+			}
+		}
+		if gap > 0 {
+			n, err := s.st.ClaimBroadcastPaceSlot(ctx, store.ClaimBroadcastPaceSlotParams{WorkspaceID: ws, ID: r.b.ID, Now: s.now()})
+			if err != nil {
+				return out, stopState, rejects
+			}
+			if n == 0 {
+				return out, stopPace, rejects
+			}
+		}
+		attempted = true
 		sendCtx, cancel := context.WithTimeout(ctx, time.Minute)
 		relayID, err := sess.Send(sendCtx, r.from, []string{d.Email}, raw)
 		cancel()

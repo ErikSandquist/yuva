@@ -495,6 +495,10 @@ type Broadcast struct {
 	UpdatedAt          time.Time
 	Utm                bool
 	UtmCampaign        string
+	PacePerHour        *int32
+	PacePerDay         *int32
+	PacePerMonth       *int32
+	PaceNextAt         *time.Time
 }
 
 type BroadcastClick struct {

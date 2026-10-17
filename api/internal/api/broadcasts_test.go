@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"math"
 	"net/http"
 	"net/mail"
 	"net/textproto"
@@ -19,6 +20,7 @@ import (
 
 	"github.com/productdevbook/yuva/api/internal/api"
 	"github.com/productdevbook/yuva/api/internal/email"
+	"github.com/productdevbook/yuva/api/internal/store"
 )
 
 // broadcastSender records sent mail like smtpCapture and lets a test refuse addresses or act in the
@@ -817,5 +819,327 @@ func TestBroadcastsOffAndClickTracking(t *testing.T) {
 	ot.owner.expectProblem(http.StatusForbidden, "broadcasts_disabled", "POST", "/v1/broadcasts", map[string]any{"inbox_id": ot.chatInbox, "name": "x"})
 	if m := ot.owner.expect(http.StatusOK, "GET", "/v1/workspace", nil).body["broadcasts"].(map[string]any)["mode"]; m != "off" {
 		t.Fatalf("mode: %v", m)
+	}
+}
+
+func timeOf(t *testing.T, v any) time.Time {
+	t.Helper()
+	s, _ := v.(string)
+	at, err := time.Parse(time.RFC3339Nano, s)
+	if err != nil {
+		t.Fatalf("not a time: %v", v)
+	}
+	return at
+}
+
+func reviewItem(review map[string]any, key string) map[string]any {
+	for _, it := range review["items"].([]any) {
+		if m := it.(map[string]any); m["key"] == key {
+			return m
+		}
+	}
+	return nil
+}
+
+func broadcastEvents(t *testing.T, bt broadcastTeam, id string) []map[string]any {
+	t.Helper()
+	var out []map[string]any
+	for _, e := range bt.owner.expect(http.StatusOK, "GET", "/v1/events?after=0&limit=500", nil).body["events"].([]any) {
+		ev := e.(map[string]any)
+		if ev["type"] == "broadcast.updated" && ev["data"].(map[string]any)["broadcast"].(map[string]any)["id"] == id {
+			out = append(out, ev["data"].(map[string]any))
+		}
+	}
+	return out
+}
+
+func TestBroadcastPaceSpacesMail(t *testing.T) {
+	h, bs := newBroadcastHarness(t, nil)
+	bt := newBroadcastTeam(t, h, bs)
+	bt.subscribe(t, "p1@example.org", "p2@example.org", "p3@example.org", "p4@example.org")
+	id := bt.draft(t, map[string]any{"pace": map[string]any{"per_hour": 2}})
+	review := bt.owner.expect(http.StatusOK, "GET", "/v1/broadcasts/"+id+"/review", nil).body
+	if it := reviewItem(review, "pace"); it["status"] != "ok" || review["duration_seconds"] != float64(3*1800) {
+		t.Fatalf("review: %v", review)
+	}
+	bt.schedule(t, id)
+	t0 := h.clock.Now()
+	wait := bt.run(t)
+	b := bt.get(t, id)
+	if bs.count() != 1 || len(bs.to("p1@example.org")) != 1 || b["state"] != "sending" {
+		t.Fatalf("first mail: %d %v", bs.count(), b)
+	}
+	if p := b["pace"].(map[string]any); p["per_hour"] != float64(2) || len(p) != 1 {
+		t.Fatalf("pace: %v", b["pace"])
+	}
+	if next := timeOf(t, b["pace_next_at"]); !next.Equal(t0.Add(30 * time.Minute).Truncate(time.Microsecond)) {
+		t.Fatalf("pace_next_at %v, want %v", next, t0.Add(30*time.Minute))
+	}
+	if b["waiting_until"] != nil || wait <= 0 || wait > 5*time.Minute {
+		t.Fatalf("wait %v, waiting_until %v", wait, b["waiting_until"])
+	}
+	bt.run(t)
+	h.clock.Advance(29 * time.Minute)
+	bt.run(t)
+	if bs.count() != 1 {
+		t.Fatalf("a mail went out before its slot: %d", bs.count())
+	}
+	h.clock.Advance(time.Minute)
+	bt.run(t)
+	if bs.count() != 2 || len(bs.to("p2@example.org")) != 1 {
+		t.Fatalf("second mail at +30 min: %d", bs.count())
+	}
+	sub := bt.subscription(t, "p3@example.org")
+	bt.owner.expect(http.StatusOK, "PATCH", "/v1/lists/"+bt.list+"/subscriptions/"+sub["id"].(string), map[string]any{"state": "unsubscribed"})
+	h.clock.Advance(29 * time.Minute)
+	bt.run(t)
+	if bs.count() != 2 {
+		t.Fatalf("a mail went out before its slot: %d", bs.count())
+	}
+	h.clock.Advance(time.Minute)
+	if wait := bt.run(t); wait >= 0 {
+		t.Fatalf("send left work: %v", wait)
+	}
+	b = bt.get(t, id)
+	c := counts(b)
+	if bs.count() != 3 || len(bs.to("p4@example.org")) != 1 || b["state"] != "sent" || c["sent"] != float64(3) ||
+		c["skipped"].(map[string]any)["unsubscribed"] != float64(1) || b["pace_next_at"] != nil {
+		t.Fatalf("the unsubscribed recipient took a slot or the send did not finish: %d %v", bs.count(), b)
+	}
+	at := func(addr string) time.Time { return timeOf(t, deliveryOf(t, bt.owner, id, addr)["sent_at"]) }
+	if at("p2@example.org").Sub(at("p1@example.org")) < 30*time.Minute || at("p4@example.org").Sub(at("p2@example.org")) < 30*time.Minute {
+		t.Fatalf("spacing: %v %v %v", at("p1@example.org"), at("p2@example.org"), at("p4@example.org"))
+	}
+}
+
+func TestBroadcastPaceBuildFailureTakesNoSlot(t *testing.T) {
+	h, bs := newBroadcastHarness(t, nil)
+	bt := newBroadcastTeam(t, h, bs)
+	bt.subscribe(t, "big@example.org", "ok@example.org")
+	if _, err := h.st.Pool.Exec(context.Background(), `UPDATE contacts SET attributes = jsonb_build_object('bio', repeat('y', 100000)) WHERE workspace_id = $1 AND id = (SELECT contact_id FROM contact_emails WHERE workspace_id = $1 AND email = 'big@example.org')`, bt.ws); err != nil {
+		t.Fatal(err)
+	}
+	var blocks []map[string]any
+	for i := 0; i < 6; i++ {
+		blocks = append(blocks, map[string]any{"id": fmt.Sprintf("t%d", i), "type": "text", "html": "<p>{{ contact.attributes.bio | \"none\" }}</p>"})
+	}
+	wide := bt.owner.expect(http.StatusCreated, "POST", "/v1/email-designs", map[string]any{"name": "Wide", "document": designDoc(blocks...)}).str("id")
+	id := bt.draft(t, map[string]any{"design_id": wide, "pace": map[string]any{"per_hour": 2}})
+	bt.schedule(t, id)
+	bt.run(t)
+	b := bt.get(t, id)
+	c := counts(b)
+	if bs.count() != 1 || len(bs.to("ok@example.org")) != 1 || b["state"] != "sent" || c["failed"] != float64(1) || c["sent"] != float64(1) {
+		t.Fatalf("a mail that could not be built took the slot: %d %v", bs.count(), b)
+	}
+}
+
+func TestBroadcastPaceSkippedRecipientsDoNotWait(t *testing.T) {
+	h, bs := newBroadcastHarness(t, nil)
+	bt := newBroadcastTeam(t, h, bs)
+	bt.subscribe(t, "w1@example.org", "w2@example.org", "w3@example.org", "w4@example.org")
+	id := bt.draft(t, map[string]any{"pace": map[string]any{"per_hour": 1800}})
+	bt.schedule(t, id)
+	bt.run(t)
+	if bs.count() != 1 {
+		t.Fatalf("first run: %d", bs.count())
+	}
+	for _, addr := range []string{"w2@example.org", "w3@example.org"} {
+		sub := bt.subscription(t, addr)
+		bt.owner.expect(http.StatusOK, "PATCH", "/v1/lists/"+bt.list+"/subscriptions/"+sub["id"].(string), map[string]any{"state": "unsubscribed"})
+	}
+	h.clock.Advance(2 * time.Second)
+	start := time.Now()
+	bt.run(t)
+	if took := time.Since(start); took > time.Second {
+		t.Fatalf("skipped recipients made the batch wait %v", took)
+	}
+	c := counts(bt.get(t, id))
+	if bs.count() != 2 || c["skipped"].(map[string]any)["unsubscribed"] != float64(2) {
+		t.Fatalf("second run: %d %v", bs.count(), c)
+	}
+}
+
+func TestBroadcastPaceSlotClaimIsExclusive(t *testing.T) {
+	h, bs := newBroadcastHarness(t, nil)
+	bt := newBroadcastTeam(t, h, bs)
+	id := uuid.MustParse(bt.draft(t, map[string]any{"pace": map[string]any{"per_hour": 10}}))
+	ws := uuid.MustParse(bt.ws)
+	ctx := context.Background()
+	if _, err := h.st.Pool.Exec(ctx, `UPDATE broadcasts SET state = 'sending' WHERE workspace_id = $1 AND id = $2`, ws, id); err != nil {
+		t.Fatal(err)
+	}
+	for round := 0; round < 20; round++ {
+		if _, err := h.st.Pool.Exec(ctx, `UPDATE broadcasts SET pace_next_at = NULL WHERE workspace_id = $1 AND id = $2`, ws, id); err != nil {
+			t.Fatal(err)
+		}
+		now := h.clock.Now()
+		var wg sync.WaitGroup
+		var mu sync.Mutex
+		won := int64(0)
+		start := make(chan struct{})
+		for range 2 {
+			wg.Go(func() {
+				<-start
+				n, err := h.st.ClaimBroadcastPaceSlot(ctx, store.ClaimBroadcastPaceSlotParams{WorkspaceID: ws, ID: id, Now: now})
+				if err != nil {
+					t.Error(err)
+				}
+				mu.Lock()
+				won += n
+				mu.Unlock()
+			})
+		}
+		close(start)
+		wg.Wait()
+		if won != 1 {
+			t.Fatalf("round %d: %d claims won the same slot", round, won)
+		}
+	}
+	var next time.Time
+	if err := h.st.Pool.QueryRow(ctx, `SELECT pace_next_at FROM broadcasts WHERE workspace_id = $1 AND id = $2`, ws, id).Scan(&next); err != nil {
+		t.Fatal(err)
+	}
+	if want := h.clock.Now().Add(6 * time.Minute); next.Sub(want).Abs() > time.Millisecond {
+		t.Fatalf("next slot %v, want %v", next, want)
+	}
+	other := newBroadcastTeam(t, h, bs)
+	if n, err := h.st.ClaimBroadcastPaceSlot(ctx, store.ClaimBroadcastPaceSlotParams{WorkspaceID: uuid.MustParse(other.ws), ID: id, Now: h.clock.Now().Add(time.Hour)}); err != nil || n != 0 {
+		t.Fatalf("another workspace claimed the slot: %d %v", n, err)
+	}
+}
+
+func TestBroadcastPaceChanges(t *testing.T) {
+	h, bs := newBroadcastHarness(t, nil)
+	bt := newBroadcastTeam(t, h, bs)
+	path := func(id string) string { return "/v1/broadcasts/" + id }
+	for _, bad := range []map[string]any{{"per_hour": 0}, {"per_day": 10000001}, {"per_month": -1}} {
+		bt.owner.expectProblem(http.StatusBadRequest, "validation_failed", "POST", "/v1/broadcasts", map[string]any{
+			"inbox_id": bt.chatInbox, "name": "Bad pace", "pace": bad,
+		})
+	}
+	id := bt.draft(t, map[string]any{"pace": map[string]any{"per_day": 100}})
+	if p := bt.get(t, id)["pace"].(map[string]any); p["per_day"] != float64(100) {
+		t.Fatalf("created pace: %v", p)
+	}
+	b := bt.owner.expect(http.StatusOK, "PATCH", path(id), map[string]any{"pace": map[string]any{"per_hour": 10, "per_month": 1000}, "name": "Paced"}).body
+	if p := b["pace"].(map[string]any); b["name"] != "Paced" || p["per_hour"] != float64(10) || p["per_month"] != float64(1000) || p["per_day"] != nil {
+		t.Fatalf("draft pace replaced: %v", b)
+	}
+	bt.owner.expectProblem(http.StatusBadRequest, "validation_failed", "PATCH", path(id), map[string]any{"pace": map[string]any{"per_hour": 0}})
+	bt.owner.expectProblem(http.StatusBadRequest, "validation_failed", "PATCH", path(id), map[string]any{"pace": map[string]any{"per_month": 10000001}})
+	if b := bt.owner.expect(http.StatusOK, "PATCH", path(id), map[string]any{"pace": map[string]any{}}).body; b["pace"] != nil {
+		t.Fatalf("pace {} kept the pace: %v", b)
+	}
+	if ev := broadcastEvents(t, bt, id); len(ev) != 0 {
+		t.Fatalf("a draft's changes emitted events: %v", ev)
+	}
+
+	bt.subscribeMany(t, "q", 15)
+	bt.owner.expect(http.StatusOK, "PATCH", path(id), map[string]any{"pace": map[string]any{"per_hour": 1}})
+	bt.schedule(t, id)
+	if b := bt.owner.expect(http.StatusOK, "PATCH", path(id), map[string]any{"pace": map[string]any{"per_hour": 1, "per_day": 24}}).body; b["state"] != "scheduled" || b["pace"].(map[string]any)["per_day"] != float64(24) {
+		t.Fatalf("pace of a scheduled broadcast: %v", b)
+	}
+	t0 := h.clock.Now()
+	bt.run(t)
+	if bs.count() != 1 {
+		t.Fatalf("first mail: %d", bs.count())
+	}
+	if next := timeOf(t, bt.get(t, id)["pace_next_at"]); !next.Equal(t0.Add(time.Hour).Truncate(time.Microsecond)) {
+		t.Fatalf("pace_next_at %v", next)
+	}
+	b = bt.owner.expect(http.StatusOK, "PATCH", path(id), map[string]any{"pace": map[string]any{"per_hour": 2}}).body
+	if next := timeOf(t, b["pace_next_at"]); !next.Equal(t0.Add(30*time.Minute).Truncate(time.Microsecond)) || b["state"] != "sending" {
+		t.Fatalf("the next slot did not move to the last mail plus the new gap: %v", b)
+	}
+	ev := broadcastEvents(t, bt, id)
+	last := ev[len(ev)-1]
+	if last["previous_state"] != nil || last["broadcast"].(map[string]any)["pace"].(map[string]any)["per_hour"] != float64(2) {
+		t.Fatalf("broadcast.updated for the pace change: %v", last)
+	}
+	bt.owner.expectProblem(http.StatusConflict, "not_draft", "PATCH", path(id), map[string]any{"pace": map[string]any{"per_hour": 3}, "name": "x"})
+	bt.owner.expectProblem(http.StatusConflict, "not_draft", "PATCH", path(id), map[string]any{"pace": map[string]any{"per_hour": 3}, "channel_id": nil})
+	r := bt.owner.expect(http.StatusConflict, "PATCH", path(id), map[string]any{"pace": map[string]any{"per_month": 1}})
+	if r.str("code") != "pace_too_slow" || r.body["days"] != float64(13*30) {
+		t.Fatalf("pace_too_slow: %s", r.raw)
+	}
+	if p := bt.get(t, id)["pace"].(map[string]any); p["per_hour"] != float64(2) {
+		t.Fatalf("a refused pace was stored: %v", p)
+	}
+	bt.owner.expectProblem(http.StatusBadRequest, "validation_failed", "PATCH", path(id), map[string]any{"pace": map[string]any{"per_hour": 0}})
+	b = bt.owner.expect(http.StatusOK, "PATCH", path(id), map[string]any{"pace": map[string]any{}}).body
+	if b["pace"] != nil || b["pace_next_at"] != nil {
+		t.Fatalf("pace {} while sending: %v", b)
+	}
+	if wait := bt.run(t); wait >= 0 {
+		t.Fatalf("send left work after the pace was removed: %v", wait)
+	}
+	if b := bt.get(t, id); b["state"] != "sent" || bs.count() != 15 {
+		t.Fatalf("after removing the pace: %d %v", bs.count(), b)
+	}
+	bt.owner.expectProblem(http.StatusConflict, "invalid_state", "PATCH", path(id), map[string]any{"pace": map[string]any{"per_hour": 2}})
+	bt.owner.expectProblem(http.StatusConflict, "not_draft", "PATCH", path(id), map[string]any{"name": "x"})
+}
+
+func TestBroadcastPaceReview(t *testing.T) {
+	h, bs := newBroadcastHarness(t, func(d *api.Deps) { d.Broadcasts.DailyRecipients = 100 })
+	bt := newBroadcastTeam(t, h, bs)
+	bt.subscribeMany(t, "r", 15)
+	id := bt.draft(t, map[string]any{"pace": map[string]any{"per_month": 1}})
+	review := bt.owner.expect(http.StatusOK, "GET", "/v1/broadcasts/"+id+"/review", nil).body
+	it := reviewItem(review, "pace")
+	if it["status"] != "blocking" || !strings.Contains(it["detail"].(string), "about 420 days") || review["ready"] != false ||
+		review["duration_seconds"] != float64(14*30*86400) {
+		t.Fatalf("review above 365 days: %v", review)
+	}
+	r := bt.owner.expect(http.StatusConflict, "POST", "/v1/broadcasts/"+id+"/schedule", nil)
+	if r.str("code") != "review_failed" || !strings.Contains(string(r.raw), `"pace"`) {
+		t.Fatalf("schedule: %s", r.raw)
+	}
+	bt.owner.expect(http.StatusOK, "PATCH", "/v1/broadcasts/"+id, map[string]any{"pace": map[string]any{"per_month": 15}})
+	review = bt.owner.expect(http.StatusOK, "GET", "/v1/broadcasts/"+id+"/review", nil).body
+	if it := reviewItem(review, "pace"); it["status"] != "ok" || it["detail"] != "about 28 days" || review["duration_seconds"] != float64(14*2*86400) {
+		t.Fatalf("review under 365 days: %v", review)
+	}
+
+	bt.subscribeMany(t, "s", 235)
+	bt.owner.expect(http.StatusOK, "PATCH", "/v1/broadcasts/"+id, map[string]any{"pace": map[string]any{}})
+	review = bt.owner.expect(http.StatusOK, "GET", "/v1/broadcasts/"+id+"/review", nil).body
+	now := h.clock.Now()
+	next := time.Date(now.UTC().Year(), now.UTC().Month(), now.UTC().Day()+1, 0, 0, 0, 0, time.UTC)
+	want := math.Ceil(next.Sub(now).Seconds() + 86400)
+	if review["days"] != float64(3) || review["duration_seconds"] != want || reviewItem(review, "pace")["status"] != "ok" {
+		t.Fatalf("duration under the daily limit: %v, want %v", review, want)
+	}
+}
+
+func TestBroadcastPaceAndDailyLimit(t *testing.T) {
+	h, bs := newBroadcastHarness(t, func(d *api.Deps) { d.Broadcasts.DailyRecipients = 2 })
+	now := h.clock.Now().UTC()
+	h.clock.Advance(time.Date(now.Year(), now.Month(), now.Day()+1, 0, 10, 0, 0, time.UTC).Sub(now))
+	bt := newBroadcastTeam(t, h, bs)
+	bt.subscribe(t, "d1@example.org", "d2@example.org", "d3@example.org")
+	id := bt.draft(t, map[string]any{"pace": map[string]any{"per_hour": 60}})
+	bt.schedule(t, id)
+	bt.run(t)
+	h.clock.Advance(time.Minute)
+	bt.run(t)
+	if bs.count() != 2 {
+		t.Fatalf("two mails a minute apart: %d", bs.count())
+	}
+	slot := h.clock.Now().Add(time.Minute).Truncate(time.Microsecond)
+	h.clock.Advance(time.Minute)
+	bt.run(t)
+	b := bt.get(t, id)
+	if bs.count() != 2 || b["waiting_until"] == nil || !timeOf(t, b["pace_next_at"]).Equal(slot) {
+		t.Fatalf("daily limit with a pace: %d %v", bs.count(), b)
+	}
+	h.clock.Advance(24 * time.Hour)
+	if wait := bt.run(t); wait >= 0 {
+		t.Fatalf("send left work: %v", wait)
+	}
+	if b := bt.get(t, id); bs.count() != 3 || b["state"] != "sent" || b["waiting_until"] != nil {
+		t.Fatalf("next day: %d %v", bs.count(), b)
 	}
 }

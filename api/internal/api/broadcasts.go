@@ -4,7 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
+	"math"
 	"net/http"
+	"reflect"
 	"regexp"
 	"slices"
 	"strings"
@@ -46,6 +49,11 @@ const (
 	hostedBroadcastLimit   = 1000
 	testsPerHour           = 20
 	subjectWarnRunes       = 80
+	maxPaceDuration        = 365 * 24 * time.Hour
+	maxPace                = 10_000_000
+	paceMonth              = 30 * 24 * time.Hour
+	paceShownFrom          = time.Minute
+	paceSnoozeAtMost       = 5 * time.Minute
 )
 
 var (
@@ -66,6 +74,106 @@ var (
 	errInvalidApprovalState = problem(http.StatusConflict, "invalid_state", "the workspace does not need an approval now")
 	attributeName           = regexp.MustCompile(`^[A-Za-z0-9_.-]{1,64}$`)
 )
+
+func errPaceTooSlow(days int64) *apiError {
+	e := problem(http.StatusConflict, "pace_too_slow", "at this pace the mail still to go out would take more than 365 days")
+	e.Extra = map[string]any{"days": days}
+	return e
+}
+
+type bcPace struct{ hour, day, month *int32 }
+
+func paceOf(b store.Broadcast) bcPace {
+	return bcPace{hour: b.PacePerHour, day: b.PacePerDay, month: b.PacePerMonth}
+}
+
+func (p bcPace) set() bool { return p.hour != nil || p.day != nil || p.month != nil }
+
+// gap is the least time between two mails of the broadcast; ClaimBroadcastPaceSlot computes the same.
+func (p bcPace) gap() time.Duration {
+	var g time.Duration
+	for _, w := range []struct {
+		n   *int32
+		per time.Duration
+	}{{p.hour, time.Hour}, {p.day, 24 * time.Hour}, {p.month, paceMonth}} {
+		if w.n != nil && *w.n > 0 {
+			g = max(g, w.per/time.Duration(*w.n))
+		}
+	}
+	return g
+}
+
+func (p bcPace) body() *oas.BroadcastPace {
+	if !p.set() {
+		return nil
+	}
+	return &oas.BroadcastPace{PerHour: p.hour, PerDay: p.day, PerMonth: p.month}
+}
+
+func paceGap(b store.Broadcast) time.Duration { return paceOf(b).gap() }
+
+func paceNextShown(b store.Broadcast) *time.Time {
+	if b.State != bcSending || b.PaceNextAt == nil || paceGap(b) < paceShownFrom {
+		return nil
+	}
+	return b.PaceNextAt
+}
+
+func checkPace(in *oas.BroadcastPace) (bcPace, error) {
+	if in == nil {
+		return bcPace{}, nil
+	}
+	for _, f := range []struct {
+		name string
+		v    *int32
+	}{{"per_hour", in.PerHour}, {"per_day", in.PerDay}, {"per_month", in.PerMonth}} {
+		if f.v != nil && (*f.v < 1 || *f.v > maxPace) {
+			return bcPace{}, errValidation("pace." + f.name + " must be a whole number from 1 to 10,000,000")
+		}
+	}
+	return bcPace{hour: in.PerHour, day: in.PerDay, month: in.PerMonth}, nil
+}
+
+func paceSeconds(n int64, gap time.Duration, rate int32) float64 {
+	if n <= 1 {
+		return 0
+	}
+	return float64(n-1) * max(gap, time.Second/time.Duration(rate)).Seconds()
+}
+
+func (s *Server) channelRate(ctx context.Context, q *store.Queries, ws uuid.UUID, channelID *uuid.UUID) (int32, error) {
+	if channelID == nil {
+		return defaultBroadcastRate, nil
+	}
+	ch, err := q.GetEmailChannel(ctx, store.GetEmailChannelParams{WorkspaceID: ws, ChannelID: *channelID})
+	switch {
+	case store.IsNotFound(err), err == nil && ch.BroadcastRate <= 0:
+		return defaultBroadcastRate, nil
+	case err != nil:
+		return 0, err
+	}
+	return ch.BroadcastRate, nil
+}
+
+func daysOf(secs float64) int64 { return int64(math.Ceil(secs / 86400)) }
+
+func aboutDuration(secs float64) string {
+	unit := func(n int64, one string) string {
+		if n == 1 {
+			return "1 " + one
+		}
+		return fmt.Sprintf("%d %ss", n, one)
+	}
+	switch {
+	case secs < 90:
+		return unit(int64(math.Ceil(secs)), "second")
+	case secs < 90*60:
+		return unit(int64(math.Round(secs/60)), "minute")
+	case secs < 48*3600:
+		return unit(int64(math.Round(secs/3600)), "hour")
+	}
+	return unit(daysOf(secs), "day")
+}
 
 // BroadcastSettings are the server's broadcast rules (YUVA_BROADCASTS,
 // YUVA_BROADCAST_DAILY_RECIPIENTS, YUVA_MAIL_LINK_URL).
@@ -169,6 +277,8 @@ func broadcastBody(b store.Broadcast) oas.Broadcast {
 	if b.State == bcDraft {
 		out.DesignVersion = nil
 	}
+	out.Pace = paceOf(b).body()
+	out.PaceNextAt = paceNextShown(b)
 	return out
 }
 
@@ -484,6 +594,10 @@ func (s *Server) CreateBroadcast(ctx context.Context, req oas.CreateBroadcastReq
 			return nil, err
 		}
 	}
+	pace, err := checkPace(b.Pace)
+	if err != nil {
+		return nil, err
+	}
 	var out store.Broadcast
 	err = s.inTx(ctx, p.workspaceID, func(q *store.Queries, events *eventBatch) error {
 		if s.broadcastMode() == broadcastsApproval {
@@ -512,7 +626,8 @@ func (s *Server) CreateBroadcast(ctx context.Context, req oas.CreateBroadcastReq
 		out, err = q.CreateBroadcast(ctx, store.CreateBroadcastParams{
 			ID: id, WorkspaceID: p.workspaceID, InboxID: in.ID, ChannelID: b.ChannelId, Name: name, Subject: subject,
 			Preheader: preheader, DesignID: b.DesignId, Audience: mustJSON(aud), ClickTracking: boolOr(b.ClickTracking, false),
-			Utm: boolOr(b.Utm, true), UtmCampaign: campaign, CreatedBy: p.memberRef(), Now: s.now(),
+			Utm: boolOr(b.Utm, true), UtmCampaign: campaign, CreatedBy: p.memberRef(), PacePerHour: pace.hour,
+			PacePerDay: pace.day, PacePerMonth: pace.month, Now: s.now(),
 		})
 		return err
 	})
@@ -556,7 +671,25 @@ func (s *Server) UpdateBroadcast(ctx context.Context, req oas.UpdateBroadcastReq
 			return err
 		}
 		if b.State != bcDraft {
-			return errBroadcastNotDraft
+			if body.Pace == nil || !reflect.DeepEqual(*body, oas.BroadcastUpdate{Pace: body.Pace}) {
+				return errBroadcastNotDraft
+			}
+			if !activeBroadcast(b.State) {
+				return errBroadcastState
+			}
+			pace, err := checkPace(body.Pace)
+			if err != nil {
+				return err
+			}
+			if out, err = s.changePace(ctx, q, b, pace); err != nil {
+				return err
+			}
+			emitBroadcast(events, out, "")
+			return nil
+		}
+		pace, err := checkPace(body.Pace)
+		if err != nil {
+			return err
 		}
 		if body.Name != nil {
 			if b.Name, err = trimmed(*body.Name, 1, 200, "name"); err != nil {
@@ -611,13 +744,46 @@ func (s *Server) UpdateBroadcast(ctx context.Context, req oas.UpdateBroadcastReq
 				return err
 			}
 		}
-		out, err = s.saveBroadcast(ctx, q, b)
+		if out, err = s.saveBroadcast(ctx, q, b); err != nil || body.Pace == nil {
+			return err
+		}
+		out, err = q.SetBroadcastPace(ctx, store.SetBroadcastPaceParams{
+			WorkspaceID: b.WorkspaceID, ID: b.ID, PerHour: pace.hour, PerDay: pace.day, PerMonth: pace.month, Now: s.now(),
+		})
 		return err
 	})
 	if err != nil {
 		return nil, err
 	}
 	return oas.UpdateBroadcast200JSONResponse(broadcastBody(out)), nil
+}
+
+func (s *Server) changePace(ctx context.Context, q *store.Queries, b store.Broadcast, pace bcPace) (store.Broadcast, error) {
+	oldGap, newGap := paceGap(b), pace.gap()
+	if newGap > 0 {
+		remaining := parseCounts(b.Counts).Queued
+		if !b.SnapshotDone {
+			count, err := s.countAudience(ctx, q, b, nil)
+			if err != nil {
+				return b, err
+			}
+			remaining = count.Recipients
+		}
+		rate, err := s.channelRate(ctx, q, b.WorkspaceID, b.ChannelID)
+		if err != nil {
+			return b, err
+		}
+		if secs := paceSeconds(remaining, newGap, rate); secs > maxPaceDuration.Seconds() {
+			return b, errPaceTooSlow(daysOf(secs))
+		}
+	}
+	var next *time.Time
+	if newGap > 0 && b.PaceNextAt != nil {
+		next = new(b.PaceNextAt.Add(newGap - oldGap))
+	}
+	return q.SetBroadcastPace(ctx, store.SetBroadcastPaceParams{
+		WorkspaceID: b.WorkspaceID, ID: b.ID, PerHour: pace.hour, PerDay: pace.day, PerMonth: pace.month, NextAt: next, Now: s.now(),
+	})
 }
 
 func (s *Server) DeleteBroadcast(ctx context.Context, req oas.DeleteBroadcastRequestObject) (oas.DeleteBroadcastResponseObject, error) {
@@ -903,5 +1069,6 @@ func (s *Server) broadcastProgress(ctx context.Context, b store.Broadcast) {
 	inbox := b.InboxID
 	s.signal(ctx, realtime.Event{Type: eventBroadcastProgress, WorkspaceID: b.WorkspaceID, InboxID: &inbox, Data: mustJSON(oas.BroadcastProgress{
 		Id: b.ID, State: oas.BroadcastState(b.State), Counts: parseCounts(b.Counts).body(b.State), WaitingUntil: b.WaitingUntil,
+		PaceNextAt: paceNextShown(b),
 	})})
 }

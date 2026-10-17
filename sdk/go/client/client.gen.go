@@ -1191,6 +1191,7 @@ const (
 	BroadcastReviewKeyImagesAlt        BroadcastReviewKey = "images_alt"
 	BroadcastReviewKeyLinks            BroadcastReviewKey = "links"
 	BroadcastReviewKeyMergeFields      BroadcastReviewKey = "merge_fields"
+	BroadcastReviewKeyPace             BroadcastReviewKey = "pace"
 	BroadcastReviewKeySenderIdentity   BroadcastReviewKey = "sender_identity"
 	BroadcastReviewKeySenderReady      BroadcastReviewKey = "sender_ready"
 	BroadcastReviewKeySubject          BroadcastReviewKey = "subject"
@@ -1219,6 +1220,8 @@ func (e BroadcastReviewKey) Valid() bool {
 	case BroadcastReviewKeyLinks:
 		return true
 	case BroadcastReviewKeyMergeFields:
+		return true
+	case BroadcastReviewKeyPace:
 		return true
 	case BroadcastReviewKeySenderIdentity:
 		return true
@@ -6491,6 +6494,16 @@ type Broadcast struct {
 	// Name Shown to the team only.
 	Name string `json:"name"`
 
+	// Pace The broadcast's own pace, below the channel's `broadcast_rate` and the workspace's daily limit:
+	// at most `per_hour` mails in any 60 minutes, `per_day` in any 24 hours and `per_month` in any
+	// 30 days. Mails are spaced evenly at the gap of the tightest one (3,600 / `per_hour`,
+	// 86,400 / `per_day` or 2,592,000 / `per_month` seconds). Every SMTP attempt counts, retries
+	// included; skipped recipients do not. An empty object is no pace.
+	Pace *BroadcastPace `json:"pace,omitempty"`
+
+	// PaceNextAt While sending with at least a minute between mails: the earliest time the next mail may go out.
+	PaceNextAt *time.Time `json:"pace_next_at,omitempty"`
+
 	// PauseReason `member`: someone paused it. `bounce_rate`: 5% or more of the mails sent since it started
 	// or was resumed bounced (after at least 200). `complaint_rate`: 0.3% or more were reported as
 	// spam (after at least 1,000). `sender_error`: the SMTP server refused the account, its TLS or
@@ -6532,6 +6545,7 @@ type Broadcast struct {
 	UtmCampaign string `json:"utm_campaign"`
 
 	// WaitingUntil The workspace's daily limit is reached; sending continues at this time (the next 00:00 UTC).
+	// The broadcast's own pace shows in `pace_next_at`.
 	WaitingUntil *time.Time `json:"waiting_until,omitempty"`
 }
 
@@ -6657,8 +6671,15 @@ type BroadcastCreate struct {
 	DesignId      *uuid.UUID              `json:"design_id,omitempty"`
 	InboxId       uuid.UUID               `json:"inbox_id"`
 	Name          string                  `json:"name"`
-	Preheader     *string                 `json:"preheader,omitempty"`
-	Subject       *string                 `json:"subject,omitempty"`
+
+	// Pace The broadcast's own pace, below the channel's `broadcast_rate` and the workspace's daily limit:
+	// at most `per_hour` mails in any 60 minutes, `per_day` in any 24 hours and `per_month` in any
+	// 30 days. Mails are spaced evenly at the gap of the tightest one (3,600 / `per_hour`,
+	// 86,400 / `per_day` or 2,592,000 / `per_month` seconds). Every SMTP attempt counts, retries
+	// included; skipped recipients do not. An empty object is no pace.
+	Pace      *BroadcastPace `json:"pace,omitempty"`
+	Preheader *string        `json:"preheader,omitempty"`
+	Subject   *string        `json:"subject,omitempty"`
 
 	// Utm On when absent at creation.
 	Utm *bool `json:"utm,omitempty"`
@@ -6713,7 +6734,7 @@ type BroadcastDeliveryPage struct {
 // was cancelled.
 type BroadcastDeliveryState string
 
-// BroadcastEvent `broadcast.updated`: the broadcast changed state. Delivered to callers who hold
+// BroadcastEvent `broadcast.updated`: the broadcast changed state or its pace. Delivered to callers who hold
 // `broadcasts:read` and can see its inbox.
 type BroadcastEvent struct {
 	CreatedAt   time.Time          `json:"created_at"`
@@ -6741,6 +6762,19 @@ type BroadcastEventData struct {
 type BroadcastListCount struct {
 	ListId     uuid.UUID `json:"list_id"`
 	Recipients int64     `json:"recipients"`
+}
+
+// BroadcastPace The broadcast's own pace, below the channel's `broadcast_rate` and the workspace's daily limit:
+// at most `per_hour` mails in any 60 minutes, `per_day` in any 24 hours and `per_month` in any
+// 30 days. Mails are spaced evenly at the gap of the tightest one (3,600 / `per_hour`,
+// 86,400 / `per_day` or 2,592,000 / `per_month` seconds). Every SMTP attempt counts, retries
+// included; skipped recipients do not. An empty object is no pace.
+type BroadcastPace struct {
+	PerDay  *int32 `json:"per_day,omitempty"`
+	PerHour *int32 `json:"per_hour,omitempty"`
+
+	// PerMonth Any 30 days, not a calendar month.
+	PerMonth *int32 `json:"per_month,omitempty"`
 }
 
 // BroadcastPage defines model for BroadcastPage.
@@ -6799,6 +6833,9 @@ type BroadcastProgress struct {
 	// only).
 	Counts BroadcastCounts `json:"counts"`
 	Id     uuid.UUID       `json:"id"`
+
+	// PaceNextAt While sending with at least a minute between mails: the earliest time the next mail may go out.
+	PaceNextAt *time.Time `json:"pace_next_at,omitempty"`
 
 	// State `draft` → `scheduled` (until `scheduled_at`) → `preparing` (taking the audience) →
 	// `sending` → `sent`. `paused` stops sending until resumed; `cancelled` ends it for good;
@@ -6896,9 +6933,13 @@ type BroadcastReportReply struct {
 // BroadcastReview defines model for BroadcastReview.
 type BroadcastReview struct {
 	// Days How many UTC days sending takes under the workspace's daily limit; absent without a limit.
-	Days      *int32                `json:"days,omitempty"`
-	HtmlBytes *int32                `json:"html_bytes,omitempty"`
-	Items     []BroadcastReviewItem `json:"items"`
+	Days *int32 `json:"days,omitempty"`
+
+	// DurationSeconds About how long sending takes from its start: the slowest of the pace, the channel's rate and
+	// the workspace's daily limit (as if no other broadcast used it). Absent when nobody would get it.
+	DurationSeconds *int64                `json:"duration_seconds,omitempty"`
+	HtmlBytes       *int32                `json:"html_bytes,omitempty"`
+	Items           []BroadcastReviewItem `json:"items"`
 
 	// Ready No item is `blocking`.
 	Ready bool `json:"ready"`
@@ -6962,8 +7003,11 @@ type BroadcastUpdate struct {
 	ClickTracking *bool                        `json:"click_tracking,omitempty"`
 	DesignId      nullable.Nullable[uuid.UUID] `json:"design_id,omitempty"`
 	Name          *string                      `json:"name,omitempty"`
-	Preheader     *string                      `json:"preheader,omitempty"`
-	Subject       *string                      `json:"subject,omitempty"`
+
+	// Pace Replaces the whole pace; `{}` removes it.
+	Pace      *BroadcastPace `json:"pace,omitempty"`
+	Preheader *string        `json:"preheader,omitempty"`
+	Subject   *string        `json:"subject,omitempty"`
 
 	// Utm On when absent at creation.
 	Utm *bool `json:"utm,omitempty"`
@@ -22080,8 +22124,9 @@ type ClientInterface interface {
 	// A draft of an inbox. `channel_id` names the inbox's e-mail channel that sends it: one with
 	// an SMTP account and an address to send from (`409 email_channel_required`). The audience
 	// names up to 10 lists of the same inbox, up to 10 attribute conditions and the contact
-	// languages to keep. Everything can be changed while the broadcast is a draft; the review
-	// (`GET .../review`) says what is still missing before it can be scheduled.
+	// languages to keep. `pace` sets its own pace (`BroadcastPace`). Everything can be changed
+	// while the broadcast is a draft; the review (`GET .../review`) says what is still missing
+	// before it can be scheduled.
 	//
 	// Owners, admins and API keys. Scope: `broadcasts:write`. With `YUVA_BROADCASTS=off` every
 	// broadcast write answers `403 broadcasts_disabled`.
@@ -22096,8 +22141,9 @@ type ClientInterface interface {
 	// A draft of an inbox. `channel_id` names the inbox's e-mail channel that sends it: one with
 	// an SMTP account and an address to send from (`409 email_channel_required`). The audience
 	// names up to 10 lists of the same inbox, up to 10 attribute conditions and the contact
-	// languages to keep. Everything can be changed while the broadcast is a draft; the review
-	// (`GET .../review`) says what is still missing before it can be scheduled.
+	// languages to keep. `pace` sets its own pace (`BroadcastPace`). Everything can be changed
+	// while the broadcast is a draft; the review (`GET .../review`) says what is still missing
+	// before it can be scheduled.
 	//
 	// Owners, admins and API keys. Scope: `broadcasts:write`. With `YUVA_BROADCASTS=off` every
 	// broadcast write answers `403 broadcasts_disabled`.
@@ -22128,7 +22174,11 @@ type ClientInterface interface {
 	// UpdateBroadcastWithBody Change a draft
 	//
 	// Changes the given fields of a draft (`409 not_draft` otherwise). `channel_id: null` and
-	// `design_id: null` clear them; `audience` replaces the whole audience.
+	// `design_id: null` clear them; `audience` replaces the whole audience; `pace` replaces the
+	// whole pace and `{}` removes it. While the broadcast is scheduled, preparing, sending or
+	// paused, `pace` alone can still change (`409 invalid_state` once it finished); it applies to
+	// the next mail, and `409 pace_too_slow` (with `days`, the estimate) refuses a pace under which
+	// the mail still to go out would take more than 365 days.
 	//
 	// Owners, admins and API keys. Scope: `broadcasts:write`.
 	//
@@ -22140,7 +22190,11 @@ type ClientInterface interface {
 	// UpdateBroadcast Change a draft
 	//
 	// Changes the given fields of a draft (`409 not_draft` otherwise). `channel_id: null` and
-	// `design_id: null` clear them; `audience` replaces the whole audience.
+	// `design_id: null` clear them; `audience` replaces the whole audience; `pace` replaces the
+	// whole pace and `{}` removes it. While the broadcast is scheduled, preparing, sending or
+	// paused, `pace` alone can still change (`409 invalid_state` once it finished); it applies to
+	// the next mail, and `409 pace_too_slow` (with `days`, the estimate) refuses a pace under which
+	// the mail still to go out would take more than 365 days.
 	//
 	// Owners, admins and API keys. Scope: `broadcasts:write`.
 	//
@@ -22225,9 +22279,10 @@ type ClientInterface interface {
 	// `audience_nonempty`, `merge_fields` (no field without a fallback is empty for anyone),
 	// `html_size` (at most 102 KB, where Gmail clips; a warning above 90 KB), `images_alt`
 	// (warning), `links` (warning for `http:` links), `subject` (1 to 300 characters; a warning
-	// above 80), `daily_cap` (warning when the send will take more than one day),
-	// `test_sent` (warning when no test went out since the last change) and `click_tracking`
-	// (warning: links point at the server's link domain).
+	// above 80), `daily_cap` (warning when the send will take more than one day), `pace`
+	// (blocking when sending at the broadcast's pace, or the channel's rate if slower, would
+	// take more than 365 days), `test_sent` (warning when no test went out since the last change)
+	// and `click_tracking` (warning: links point at the server's link domain).
 	//
 	// Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
 	//
@@ -29366,8 +29421,9 @@ func (c *Client) ListBroadcasts(ctx context.Context, params *ListBroadcastsParam
 // A draft of an inbox. `channel_id` names the inbox's e-mail channel that sends it: one with
 // an SMTP account and an address to send from (`409 email_channel_required`). The audience
 // names up to 10 lists of the same inbox, up to 10 attribute conditions and the contact
-// languages to keep. Everything can be changed while the broadcast is a draft; the review
-// (`GET .../review`) says what is still missing before it can be scheduled.
+// languages to keep. `pace` sets its own pace (`BroadcastPace`). Everything can be changed
+// while the broadcast is a draft; the review (`GET .../review`) says what is still missing
+// before it can be scheduled.
 //
 // Owners, admins and API keys. Scope: `broadcasts:write`. With `YUVA_BROADCASTS=off` every
 // broadcast write answers `403 broadcasts_disabled`.
@@ -29392,8 +29448,9 @@ func (c *Client) CreateBroadcastWithBody(ctx context.Context, params *CreateBroa
 // A draft of an inbox. `channel_id` names the inbox's e-mail channel that sends it: one with
 // an SMTP account and an address to send from (`409 email_channel_required`). The audience
 // names up to 10 lists of the same inbox, up to 10 attribute conditions and the contact
-// languages to keep. Everything can be changed while the broadcast is a draft; the review
-// (`GET .../review`) says what is still missing before it can be scheduled.
+// languages to keep. `pace` sets its own pace (`BroadcastPace`). Everything can be changed
+// while the broadcast is a draft; the review (`GET .../review`) says what is still missing
+// before it can be scheduled.
 //
 // Owners, admins and API keys. Scope: `broadcasts:write`. With `YUVA_BROADCASTS=off` every
 // broadcast write answers `403 broadcasts_disabled`.
@@ -29454,7 +29511,11 @@ func (c *Client) GetBroadcast(ctx context.Context, broadcastId BroadcastId, para
 // UpdateBroadcastWithBody Change a draft
 //
 // Changes the given fields of a draft (`409 not_draft` otherwise). `channel_id: null` and
-// `design_id: null` clear them; `audience` replaces the whole audience.
+// `design_id: null` clear them; `audience` replaces the whole audience; `pace` replaces the
+// whole pace and `{}` removes it. While the broadcast is scheduled, preparing, sending or
+// paused, `pace` alone can still change (`409 invalid_state` once it finished); it applies to
+// the next mail, and `409 pace_too_slow` (with `days`, the estimate) refuses a pace under which
+// the mail still to go out would take more than 365 days.
 //
 // Owners, admins and API keys. Scope: `broadcasts:write`.
 //
@@ -29476,7 +29537,11 @@ func (c *Client) UpdateBroadcastWithBody(ctx context.Context, broadcastId Broadc
 // UpdateBroadcast Change a draft
 //
 // Changes the given fields of a draft (`409 not_draft` otherwise). `channel_id: null` and
-// `design_id: null` clear them; `audience` replaces the whole audience.
+// `design_id: null` clear them; `audience` replaces the whole audience; `pace` replaces the
+// whole pace and `{}` removes it. While the broadcast is scheduled, preparing, sending or
+// paused, `pace` alone can still change (`409 invalid_state` once it finished); it applies to
+// the next mail, and `409 pace_too_slow` (with `days`, the estimate) refuses a pace under which
+// the mail still to go out would take more than 365 days.
 //
 // Owners, admins and API keys. Scope: `broadcasts:write`.
 //
@@ -29631,9 +29696,10 @@ func (c *Client) ResumeBroadcast(ctx context.Context, broadcastId BroadcastId, p
 // `audience_nonempty`, `merge_fields` (no field without a fallback is empty for anyone),
 // `html_size` (at most 102 KB, where Gmail clips; a warning above 90 KB), `images_alt`
 // (warning), `links` (warning for `http:` links), `subject` (1 to 300 characters; a warning
-// above 80), `daily_cap` (warning when the send will take more than one day),
-// `test_sent` (warning when no test went out since the last change) and `click_tracking`
-// (warning: links point at the server's link domain).
+// above 80), `daily_cap` (warning when the send will take more than one day), `pace`
+// (blocking when sending at the broadcast's pace, or the channel's rate if slower, would
+// take more than 365 days), `test_sent` (warning when no test went out since the last change)
+// and `click_tracking` (warning: links point at the server's link domain).
 //
 // Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
 //
@@ -56547,8 +56613,9 @@ type ClientWithResponsesInterface interface {
 	// A draft of an inbox. `channel_id` names the inbox's e-mail channel that sends it: one with
 	// an SMTP account and an address to send from (`409 email_channel_required`). The audience
 	// names up to 10 lists of the same inbox, up to 10 attribute conditions and the contact
-	// languages to keep. Everything can be changed while the broadcast is a draft; the review
-	// (`GET .../review`) says what is still missing before it can be scheduled.
+	// languages to keep. `pace` sets its own pace (`BroadcastPace`). Everything can be changed
+	// while the broadcast is a draft; the review (`GET .../review`) says what is still missing
+	// before it can be scheduled.
 	//
 	// Owners, admins and API keys. Scope: `broadcasts:write`. With `YUVA_BROADCASTS=off` every
 	// broadcast write answers `403 broadcasts_disabled`.
@@ -56563,8 +56630,9 @@ type ClientWithResponsesInterface interface {
 	// A draft of an inbox. `channel_id` names the inbox's e-mail channel that sends it: one with
 	// an SMTP account and an address to send from (`409 email_channel_required`). The audience
 	// names up to 10 lists of the same inbox, up to 10 attribute conditions and the contact
-	// languages to keep. Everything can be changed while the broadcast is a draft; the review
-	// (`GET .../review`) says what is still missing before it can be scheduled.
+	// languages to keep. `pace` sets its own pace (`BroadcastPace`). Everything can be changed
+	// while the broadcast is a draft; the review (`GET .../review`) says what is still missing
+	// before it can be scheduled.
 	//
 	// Owners, admins and API keys. Scope: `broadcasts:write`. With `YUVA_BROADCASTS=off` every
 	// broadcast write answers `403 broadcasts_disabled`.
@@ -56599,7 +56667,11 @@ type ClientWithResponsesInterface interface {
 	// UpdateBroadcastWithBodyWithResponse Change a draft
 	//
 	// Changes the given fields of a draft (`409 not_draft` otherwise). `channel_id: null` and
-	// `design_id: null` clear them; `audience` replaces the whole audience.
+	// `design_id: null` clear them; `audience` replaces the whole audience; `pace` replaces the
+	// whole pace and `{}` removes it. While the broadcast is scheduled, preparing, sending or
+	// paused, `pace` alone can still change (`409 invalid_state` once it finished); it applies to
+	// the next mail, and `409 pace_too_slow` (with `days`, the estimate) refuses a pace under which
+	// the mail still to go out would take more than 365 days.
 	//
 	// Owners, admins and API keys. Scope: `broadcasts:write`.
 	//
@@ -56611,7 +56683,11 @@ type ClientWithResponsesInterface interface {
 	// UpdateBroadcastWithResponse Change a draft
 	//
 	// Changes the given fields of a draft (`409 not_draft` otherwise). `channel_id: null` and
-	// `design_id: null` clear them; `audience` replaces the whole audience.
+	// `design_id: null` clear them; `audience` replaces the whole audience; `pace` replaces the
+	// whole pace and `{}` removes it. While the broadcast is scheduled, preparing, sending or
+	// paused, `pace` alone can still change (`409 invalid_state` once it finished); it applies to
+	// the next mail, and `409 pace_too_slow` (with `days`, the estimate) refuses a pace under which
+	// the mail still to go out would take more than 365 days.
 	//
 	// Owners, admins and API keys. Scope: `broadcasts:write`.
 	//
@@ -56708,9 +56784,10 @@ type ClientWithResponsesInterface interface {
 	// `audience_nonempty`, `merge_fields` (no field without a fallback is empty for anyone),
 	// `html_size` (at most 102 KB, where Gmail clips; a warning above 90 KB), `images_alt`
 	// (warning), `links` (warning for `http:` links), `subject` (1 to 300 characters; a warning
-	// above 80), `daily_cap` (warning when the send will take more than one day),
-	// `test_sent` (warning when no test went out since the last change) and `click_tracking`
-	// (warning: links point at the server's link domain).
+	// above 80), `daily_cap` (warning when the send will take more than one day), `pace`
+	// (blocking when sending at the broadcast's pace, or the channel's rate if slower, would
+	// take more than 365 days), `test_sent` (warning when no test went out since the last change)
+	// and `click_tracking` (warning: links point at the server's link domain).
 	//
 	// Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
 	//
@@ -84173,8 +84250,9 @@ func (c *ClientWithResponses) ListBroadcastsWithResponse(ctx context.Context, pa
 // A draft of an inbox. `channel_id` names the inbox's e-mail channel that sends it: one with
 // an SMTP account and an address to send from (`409 email_channel_required`). The audience
 // names up to 10 lists of the same inbox, up to 10 attribute conditions and the contact
-// languages to keep. Everything can be changed while the broadcast is a draft; the review
-// (`GET .../review`) says what is still missing before it can be scheduled.
+// languages to keep. `pace` sets its own pace (`BroadcastPace`). Everything can be changed
+// while the broadcast is a draft; the review (`GET .../review`) says what is still missing
+// before it can be scheduled.
 //
 // Owners, admins and API keys. Scope: `broadcasts:write`. With `YUVA_BROADCASTS=off` every
 // broadcast write answers `403 broadcasts_disabled`.
@@ -84195,8 +84273,9 @@ func (c *ClientWithResponses) CreateBroadcastWithBodyWithResponse(ctx context.Co
 // A draft of an inbox. `channel_id` names the inbox's e-mail channel that sends it: one with
 // an SMTP account and an address to send from (`409 email_channel_required`). The audience
 // names up to 10 lists of the same inbox, up to 10 attribute conditions and the contact
-// languages to keep. Everything can be changed while the broadcast is a draft; the review
-// (`GET .../review`) says what is still missing before it can be scheduled.
+// languages to keep. `pace` sets its own pace (`BroadcastPace`). Everything can be changed
+// while the broadcast is a draft; the review (`GET .../review`) says what is still missing
+// before it can be scheduled.
 //
 // Owners, admins and API keys. Scope: `broadcasts:write`. With `YUVA_BROADCASTS=off` every
 // broadcast write answers `403 broadcasts_disabled`.
@@ -84249,7 +84328,11 @@ func (c *ClientWithResponses) GetBroadcastWithResponse(ctx context.Context, broa
 // UpdateBroadcastWithBodyWithResponse Change a draft
 //
 // Changes the given fields of a draft (`409 not_draft` otherwise). `channel_id: null` and
-// `design_id: null` clear them; `audience` replaces the whole audience.
+// `design_id: null` clear them; `audience` replaces the whole audience; `pace` replaces the
+// whole pace and `{}` removes it. While the broadcast is scheduled, preparing, sending or
+// paused, `pace` alone can still change (`409 invalid_state` once it finished); it applies to
+// the next mail, and `409 pace_too_slow` (with `days`, the estimate) refuses a pace under which
+// the mail still to go out would take more than 365 days.
 //
 // Owners, admins and API keys. Scope: `broadcasts:write`.
 //
@@ -84267,7 +84350,11 @@ func (c *ClientWithResponses) UpdateBroadcastWithBodyWithResponse(ctx context.Co
 // UpdateBroadcastWithResponse Change a draft
 //
 // Changes the given fields of a draft (`409 not_draft` otherwise). `channel_id: null` and
-// `design_id: null` clear them; `audience` replaces the whole audience.
+// `design_id: null` clear them; `audience` replaces the whole audience; `pace` replaces the
+// whole pace and `{}` removes it. While the broadcast is scheduled, preparing, sending or
+// paused, `pace` alone can still change (`409 invalid_state` once it finished); it applies to
+// the next mail, and `409 pace_too_slow` (with `days`, the estimate) refuses a pace under which
+// the mail still to go out would take more than 365 days.
 //
 // Owners, admins and API keys. Scope: `broadcasts:write`.
 //
@@ -84406,9 +84493,10 @@ func (c *ClientWithResponses) ResumeBroadcastWithResponse(ctx context.Context, b
 // `audience_nonempty`, `merge_fields` (no field without a fallback is empty for anyone),
 // `html_size` (at most 102 KB, where Gmail clips; a warning above 90 KB), `images_alt`
 // (warning), `links` (warning for `http:` links), `subject` (1 to 300 characters; a warning
-// above 80), `daily_cap` (warning when the send will take more than one day),
-// `test_sent` (warning when no test went out since the last change) and `click_tracking`
-// (warning: links point at the server's link domain).
+// above 80), `daily_cap` (warning when the send will take more than one day), `pace`
+// (blocking when sending at the broadcast's pace, or the channel's rate if slower, would
+// take more than 365 days), `test_sent` (warning when no test went out since the last change)
+// and `click_tracking` (warning: links point at the server's link domain).
 //
 // Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
 //

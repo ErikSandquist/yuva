@@ -179,8 +179,8 @@ workspace or another reader is visible.
 
 ## M13 — Broadcasts and e-mail designs
 
-Status: done and deployed on 2026-10-12 (all five steps, #26–#30); umbrella issue #25, decisions in
-`architecture.md` › Broadcasts and e-mail designs (M13).
+Status: M13.1–M13.5 done and deployed on 2026-10-12 (#26–#30); M13.6 in progress (#91). Umbrella issue
+#25, decisions in `architecture.md` › Broadcasts and e-mail designs (M13).
 
 - **M13.1 Lists and subscribing:** mailing lists with recorded consent and double opt-in,
   `<yuva-subscribe>` (HTML, React, Nuxt, shadcn), unsubscribe and preference pages with one-click, an API
@@ -195,6 +195,9 @@ Status: done and deployed on 2026-10-12 (all five steps, #26–#30); umbrella is
   check by probe; optional DKIM signing by Yuva.
 - **M13.5 Reach:** the template gallery on the website with "Use this template", MCP tools and prompts,
   subscriptions in the mobile SDKs, the İYS export.
+- **M13.6 Pace:** a broadcast's own pace, at most so many mails an hour, a day and in 30 days, spread
+  evenly below the channel's rate and the workspace's daily limit; set in the composer, changed while it
+  runs, checked by the review (at most 365 days), in the API and MCP.
 
 Accept: a visitor subscribes through `<yuva-subscribe>` and confirms; a member designs a newsletter from a
 gallery template, sends a test and schedules it to the list; the deliverability check on one of our own
@@ -203,6 +206,8 @@ WebKit and Chromium renders match the preview, in light and dark; one recipient 
 an out-of-office reply is not; another unsubscribes with one click and gets no further broadcast; a bounce
 suppresses the address and a complaint unsubscribes it; a hosted workspace cannot send before approval;
 another workspace sees none of it.
+A broadcast with a pace of 60 an hour sends one mail a minute to Mailpit, shows when its next mail goes
+out, and goes on at the channel's rate within five minutes of removing the pace.
 
 ## M14 — Move to Yuva
 

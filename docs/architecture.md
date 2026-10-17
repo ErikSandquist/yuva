@@ -1317,6 +1317,23 @@ Decisions:
   pause the broadcast (`sender_error`, the SMTP answer in `state_detail`). Test sends: 20 mails an hour
   per workspace; their unsubscribe link names no list and its page says it was a test. Progress reaches
   `/v1/realtime` as `broadcast.progress` (counts, not stored, at most every 5 seconds).
+- **Pace.** A broadcast may have its own pace (`pace`: `per_hour`, `per_day`, `per_month`, each optional,
+  1 to 10,000,000), set when it is created, on a draft, and alone while it is scheduled, preparing,
+  sending or paused (`409 invalid_state` once finished); a change applies to the next mail. Windows are
+  rolling (any 60 minutes, 24 hours, 30 days), so no time zone applies, and the sender spaces mails
+  evenly at the tightest gap (3,600 / `per_hour`, 86,400 / `per_day`, 2,592,000 / `per_month` seconds),
+  which keeps every window within its limit without bursts. The channel's `broadcast_rate` and the
+  workspace's daily limit stay upper bounds: the pace only slows sending. Before each mail of a paced
+  broadcast the sender claims the slot with one conditional update of `broadcasts.pace_next_at` (taken
+  when `<= now`, then set to `now + gap` from the row's current pace), so two pods or a rescued job never
+  send two mails in one slot; every SMTP attempt takes a slot, skipped recipients none. A wait longer
+  than a batch ends the batch and snoozes the channel's job until the slot, at most 5 minutes, so other
+  broadcasts of the channel keep sending and a changed pace applies within 5 minutes. Pausing keeps the
+  next slot (no catch-up burst on resume); changing the pace moves it to the last mail plus the new gap.
+  `pace_next_at` is shown while sending with a gap of at least a minute; `waiting_until` stays the daily
+  limit's. A send may take at most 365 days at its pace: the review's `pace` item blocks above that and
+  `PATCH` refuses such a pace on a started broadcast (`409 pace_too_slow`); the review's
+  `duration_seconds` estimates the whole send from the pace, the channel's rate and the daily limit.
 - **Headers.** `Message-ID` `<delivery token.random@sending domain>` (the conversation shape, so loop
   protection is unchanged), `List-Unsubscribe`, `List-Unsubscribe-Post`, `List-Id`, `Feedback-ID`
   (`broadcast:list:workspace:yuvabroadcast`), `X-Auto-Response-Suppress: OOF, AutoReply`; no

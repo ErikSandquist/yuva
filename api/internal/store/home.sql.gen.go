@@ -84,7 +84,7 @@ func (q *Queries) HomeInbox(ctx context.Context, arg HomeInboxParams) (HomeInbox
 }
 
 const homeLastBroadcast = `-- name: HomeLastBroadcast :one
-SELECT id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, design_version, document, audience, click_tracking, state, pause_reason, state_detail, scheduled_at, waiting_until, started_at, resumed_at, finished_at, last_test_at, snapshot_after, snapshot_done, sender_failing_since, counts, created_by, scheduled_by, scheduled_by_key, created_at, updated_at, utm, utm_campaign FROM broadcasts b
+SELECT id, workspace_id, inbox_id, channel_id, name, subject, preheader, design_id, design_version, document, audience, click_tracking, state, pause_reason, state_detail, scheduled_at, waiting_until, started_at, resumed_at, finished_at, last_test_at, snapshot_after, snapshot_done, sender_failing_since, counts, created_by, scheduled_by, scheduled_by_key, created_at, updated_at, utm, utm_campaign, pace_per_hour, pace_per_day, pace_per_month, pace_next_at FROM broadcasts b
 WHERE b.workspace_id = $1 AND b.state = 'sent'
   AND ($2::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
@@ -135,6 +135,10 @@ func (q *Queries) HomeLastBroadcast(ctx context.Context, arg HomeLastBroadcastPa
 		&i.UpdatedAt,
 		&i.Utm,
 		&i.UtmCampaign,
+		&i.PacePerHour,
+		&i.PacePerDay,
+		&i.PacePerMonth,
+		&i.PaceNextAt,
 	)
 	return i, err
 }

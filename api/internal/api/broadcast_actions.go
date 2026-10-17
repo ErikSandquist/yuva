@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"html"
+	"math"
 	"net/http"
 	"slices"
 	"strconv"
@@ -186,16 +187,37 @@ func (s *Server) reviewBroadcast(ctx context.Context, q *store.Queries, b store.
 	if err != nil {
 		return out, err
 	}
-	if limit > 0 && count.Recipients > limit-sent {
-		left := count.Recipients - max(limit-sent, 0)
+	n := count.Recipients
+	var dailySecs float64
+	if limit > 0 && n > limit-sent {
+		left := n - max(limit-sent, 0)
 		days := int32(1 + (left+limit-1)/limit)
 		out.Days = &days
+		now := s.now()
+		dailySecs = nextUTCMidnight(now).Sub(now).Seconds() + float64(days-2)*86400
 		l.add(oas.BroadcastReviewKeyDailyCap, oas.ReviewWarning, fmt.Sprintf("the workspace sends to at most %d recipients a day; sending takes %d days", limit, days))
 	} else {
 		if limit > 0 {
 			out.Days = new(int32(1))
 		}
 		l.add(oas.BroadcastReviewKeyDailyCap, oas.ReviewOk, "")
+	}
+	rate, err := s.channelRate(ctx, q, ws, b.ChannelID)
+	if err != nil {
+		return out, err
+	}
+	gap := paceGap(b)
+	secs := paceSeconds(n, gap, rate)
+	if n > 0 {
+		out.DurationSeconds = new(int64(math.Ceil(max(secs, dailySecs))))
+	}
+	switch {
+	case gap == 0 || secs == 0:
+		l.add(oas.BroadcastReviewKeyPace, oas.ReviewOk, "")
+	case secs > maxPaceDuration.Seconds():
+		l.add(oas.BroadcastReviewKeyPace, oas.ReviewBlocking, fmt.Sprintf("at this pace sending would take about %d days; a broadcast may take at most 365", daysOf(secs)))
+	default:
+		l.add(oas.BroadcastReviewKeyPace, oas.ReviewOk, "about "+aboutDuration(secs))
 	}
 	changed := b.UpdatedAt
 	if row != nil && row.UpdatedAt.After(changed) {

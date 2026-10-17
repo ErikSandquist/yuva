@@ -203,6 +203,8 @@ type mcpBroadcast struct {
 	StartedAt     *time.Time              `json:"started_at,omitempty"`
 	FinishedAt    *time.Time              `json:"finished_at,omitempty"`
 	LastTestAt    *time.Time              `json:"last_test_at,omitempty"`
+	Pace          *oas.BroadcastPace      `json:"pace,omitempty" jsonschema:"its own pace: at most per_hour mails in any 60 minutes, per_day in any 24 hours, per_month in any 30 days"`
+	PaceNextAt    *time.Time              `json:"pace_next_at,omitempty" jsonschema:"while sending with at least a minute between mails: the earliest time the next mail may go out"`
 	Counts        mcpBroadcastCounts      `json:"counts"`
 	CreatedAt     time.Time               `json:"created_at"`
 	UpdatedAt     time.Time               `json:"updated_at"`
@@ -214,8 +216,8 @@ func (c *mcpCall) broadcastOut(b oas.Broadcast) mcpBroadcast {
 		ID: b.Id, InboxID: b.InboxId, ChannelID: b.ChannelId, Name: b.Name, Subject: b.Subject, Preheader: b.Preheader,
 		DesignID: b.DesignId, ListIDs: b.Audience.ListIds, Conditions: []mcpBroadcastCondition{}, Locales: []string{},
 		ClickTracking: b.ClickTracking, State: string(b.State), StateDetail: deref(b.StateDetail), ScheduledAt: b.ScheduledAt,
-		StartedAt: b.StartedAt, FinishedAt: b.FinishedAt, LastTestAt: b.LastTestAt, Counts: broadcastCountsOut(b.Counts),
-		CreatedAt: b.CreatedAt, UpdatedAt: b.UpdatedAt,
+		StartedAt: b.StartedAt, FinishedAt: b.FinishedAt, LastTestAt: b.LastTestAt, Pace: b.Pace, PaceNextAt: b.PaceNextAt,
+		Counts: broadcastCountsOut(b.Counts), CreatedAt: b.CreatedAt, UpdatedAt: b.UpdatedAt,
 	}
 	if out.ListIDs == nil {
 		out.ListIDs = []uuid.UUID{}
@@ -261,6 +263,7 @@ type mcpReview struct {
 	Recipients int64           `json:"recipients" jsonschema:"who would get it now; schedule_broadcast needs this number as confirm_recipients"`
 	HTMLBytes  int32           `json:"html_bytes,omitempty"`
 	Days       int32           `json:"days,omitempty" jsonschema:"how many days sending takes under the workspace's daily limit"`
+	Duration   int64           `json:"duration_seconds,omitempty" jsonschema:"about how many seconds sending takes from its start, at the slowest of the pace, the channel's rate and the daily limit"`
 	Items      []mcpReviewItem `json:"items"`
 }
 
@@ -303,6 +306,9 @@ func (c *mcpCall) getBroadcast(ctx context.Context, id uuid.UUID) (getBroadcastO
 	if r.Days != nil {
 		rv.Days = *r.Days
 	}
+	if r.DurationSeconds != nil {
+		rv.Duration = *r.DurationSeconds
+	}
 	for _, it := range r.Items {
 		rv.Items = append(rv.Items, mcpReviewItem{Key: string(it.Key), Status: string(it.Status), Detail: deref(it.Detail)})
 	}
@@ -338,6 +344,9 @@ type createBroadcastIn struct {
 	Locales       []string                `json:"locales,omitempty" jsonschema:"only contacts with these languages, BCP 47 tags"`
 	Conditions    []mcpBroadcastCondition `json:"conditions,omitempty" jsonschema:"contact attribute conditions every recipient must meet"`
 	ClickTracking bool                    `json:"click_tracking,omitempty" jsonschema:"count unique clicks on links; links then point at this server"`
+	PacePerHour   *int32                  `json:"pace_per_hour,omitempty" jsonschema:"at most this many mails in any 60 minutes, 1 to 10,000,000; optional"`
+	PacePerDay    *int32                  `json:"pace_per_day,omitempty" jsonschema:"at most this many mails in any 24 hours, 1 to 10,000,000; optional"`
+	PacePerMonth  *int32                  `json:"pace_per_month,omitempty" jsonschema:"at most this many mails in any 30 days, 1 to 10,000,000; optional"`
 }
 
 type sendTestIn struct {
@@ -543,7 +552,7 @@ var mcpBroadcastTools = []mcpTool{
 			return c.getBroadcast(ctx, in.BroadcastID)
 		}),
 	defineTool("create_broadcast_draft", "Create a draft broadcast",
-		"Creates a draft broadcast for an inbox: the e-mail channel, the lists, the design, subject and preheader. Nothing is sent; check it with get_broadcast. Owners, admins and keys only. Maps to POST /v1/broadcasts.",
+		"Creates a draft broadcast for an inbox: the e-mail channel, the lists, the design, subject and preheader, and an optional pace (per hour, day, 30 days) that spreads the mails evenly. Nothing is sent; check it with get_broadcast. Owners, admins and keys only. Maps to POST /v1/broadcasts.",
 		additive, map[string][]any{"conditions.op": conditionOps},
 		mcpTool{ops: []string{"CreateBroadcast"}, allow: mayManageBroadcasts, denied: errNotBroadcastManager},
 		func(ctx context.Context, c *mcpCall, in createBroadcastIn) (mcpBroadcast, error) {
@@ -574,6 +583,9 @@ var mcpBroadcastTools = []mcpTool{
 			}
 			if in.Preheader != "" {
 				body.Preheader = &in.Preheader
+			}
+			if in.PacePerHour != nil || in.PacePerDay != nil || in.PacePerMonth != nil {
+				body.Pace = &oas.BroadcastPace{PerHour: in.PacePerHour, PerDay: in.PacePerDay, PerMonth: in.PacePerMonth}
 			}
 			res, err := c.s.CreateBroadcast(ctx, oas.CreateBroadcastRequestObject{Body: &body})
 			if err != nil {
