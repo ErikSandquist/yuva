@@ -1856,9 +1856,9 @@ msgstr "{until} tarihine kadar indirilebilir"
 msgid "Away"
 msgstr "Uzakta"
 
+#: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
-#: src/features/setup/SetupLayout.tsx
 msgid "Back"
 msgstr "Geri"
 
@@ -2052,6 +2052,7 @@ msgstr "Her abone için ayrı bülten planlayabilir miyim?"
 
 #: src/components/common/ConfirmDialog.tsx
 #: src/components/common/TypeToConfirmDialog.tsx
+#: src/components/common/Wizard.tsx
 #: src/features/account/ConnectPage.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
@@ -2061,7 +2062,6 @@ msgstr "Her abone için ayrı bülten planlayabilir miyim?"
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
-#: src/features/setup/SetupLayout.tsx
 msgid "Cancel"
 msgstr "Vazgeç"
 
@@ -3279,8 +3279,8 @@ msgstr "DNS, yukarıdaki adda henüz bu anahtarla yanıt vermiyor. Kaydı ekleyi
 msgid "Do not both write."
 msgstr "İkiniz birden yazmayın."
 
+#: src/components/common/Wizard.tsx
 #: src/features/setup/SetupHub.tsx
-#: src/features/setup/SetupLayout.tsx
 msgid "Do this later"
 msgstr "Sonra yaparım"
 
@@ -4255,7 +4255,7 @@ msgstr "Gizle"
 msgid "Hide quoted text"
 msgstr "Alıntıyı gizle"
 
-#: src/features/setup/SetupLayout.tsx
+#: src/components/common/Wizard.tsx
 msgid "Hide the preview"
 msgstr "Önizlemeyi gizle"
 
@@ -7430,8 +7430,8 @@ msgstr "Tercih sayfası"
 msgid "Preparing"
 msgstr "Hazırlanıyor"
 
+#: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
-#: src/features/setup/SetupLayout.tsx
 msgid "Preview"
 msgstr "Önizleme"
 
@@ -8784,7 +8784,7 @@ msgstr "Gönderenin seçtiği renkleri beyaz zeminde göster"
 msgid "Show the conversation screen"
 msgstr "Konuşma ekranını gösterin"
 
-#: src/features/setup/SetupLayout.tsx
+#: src/components/common/Wizard.tsx
 msgid "Show the preview"
 msgstr "Önizlemeyi göster"
 
@@ -9221,8 +9221,7 @@ msgstr "Durum"
 msgid "Stay under your provider’s sending rate. Support replies are never slowed down by a broadcast."
 msgstr "Sağlayıcınızın gönderim hızının altında kalın. Destek yanıtları bir bülten yüzünden hiç yavaşlamaz."
 
-#: src/features/broadcasts/Import.tsx
-#: src/features/setup/SetupLayout.tsx
+#: src/components/common/Wizard.tsx
 msgid "Step {step} of {count}"
 msgstr "Adım {step} / {count}"
 

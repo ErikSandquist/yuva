@@ -5,7 +5,7 @@ import { ArrowRightIcon, CheckCircle2Icon } from "lucide-react"
 import { useMemo, useState } from "react"
 import { Link, Navigate, useLocation, useNavigate, useParams } from "react-router"
 
-import { ErrorLine, Notice } from "@/components/common"
+import { ErrorLine, Notice, StepHeader, WizardFrame } from "@/components/common"
 import { formatDateTime } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -18,7 +18,6 @@ import { PropertyCard } from "@/features/home/PropertyCard"
 import { ChoiceSelect, Field } from "@/features/settings/ui"
 import { PreviewCaption } from "@/features/setup/previews"
 import type { SetupState } from "@/features/setup/setup"
-import { SetupLayout, StepHeader } from "@/features/setup/SetupLayout"
 import { useSession } from "@/lib/session"
 import { useInboxes } from "@/lib/workspace"
 import { timeZones } from "@/lib/utils"
@@ -45,7 +44,7 @@ export function useZones() {
 
 function useSteps() {
   const { t } = useLingui()
-  return [t`Website or app`, t`Install`, t`First visit`]
+  return [t`Website or app`, t`Install`, t`First visit`].map((label, i) => ({ key: String(i + 1), label }))
 }
 
 function Preview({ name, host }: { name: string; host: string }) {
@@ -73,8 +72,8 @@ function NewPropertyStep() {
   const create = useCreateProperty()
   const hosts = splitLines(domains).map(hostOnly).filter(Boolean)
   return (
-    <SetupLayout
-      step={1}
+    <WizardFrame
+      current="1"
       steps={steps}
       stepsLabel={t`Analytics steps`}
       preview={<Preview name={name} host={hosts[0] ?? ""} />}
@@ -170,7 +169,7 @@ function NewPropertyStep() {
           <ArrowRightIcon className="rtl:rotate-180" />
         </Button>
       </form>
-    </SetupLayout>
+    </WizardFrame>
   )
 }
 
@@ -223,8 +222,8 @@ function InstallPropertyStep({ propertyId }: { propertyId: string }) {
   const wait = useWaitForFirstEvent(propertyId, !!p && !p.first_event_at)
   const arrived = !!(p?.first_event_at ?? wait.data?.first_event_at)
   return (
-    <SetupLayout
-      step={arrived ? 3 : 2}
+    <WizardFrame
+      current={arrived ? "3" : "2"}
       steps={steps}
       stepsLabel={t`Analytics steps`}
       preview={<Preview name={p?.name ?? ""} host={p?.domains[0] ?? ""} />}
@@ -247,7 +246,7 @@ function InstallPropertyStep({ propertyId }: { propertyId: string }) {
           <WaitForFirstEvent propertyId={p.id} />
         </div>
       )}
-    </SetupLayout>
+    </WizardFrame>
   )
 }
 

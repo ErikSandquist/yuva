@@ -12,7 +12,7 @@ import {
 import { useRef, useState } from "react"
 import { useSearchParams } from "react-router"
 
-import { ErrorLine, Notice, useConfirm } from "@/components/common"
+import { ErrorLine, Notice, Stepper, useConfirm } from "@/components/common"
 import { formatBytes, formatDate, formatDateTime } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -124,31 +124,11 @@ function ImportState({ state }: { state: ListImportState }) {
 
 function Steps({ step }: { step: number }) {
   const { t } = useLingui()
-  const names = [t`File and consent`, t`Columns`, t`Review`, t`Import`]
-  const count = names.length
-  const name = names[step - 1]
-  return (
-    <div>
-      <ol className="flex gap-1.5" aria-label={t`Import steps`}>
-        {names.map((n, i) => (
-          <li
-            key={n}
-            className={cn("h-1 flex-1 rounded-full bg-border transition-colors", i < step && "bg-brand")}
-            aria-current={i + 1 === step ? "step" : undefined}
-          >
-            <span className="sr-only">{n}</span>
-          </li>
-        ))}
-      </ol>
-      <p className="mt-3 text-small text-faint" data-testid="import-step">
-        <Trans>
-          Step {step} of {count}
-        </Trans>
-        <span aria-hidden="true"> · </span>
-        {name}
-      </p>
-    </div>
-  )
+  const steps = [t`File and consent`, t`Columns`, t`Review`, t`Import`].map((label, i) => ({
+    key: String(i + 1),
+    label,
+  }))
+  return <Stepper steps={steps} current={String(step)} label={t`Import steps`} testId="import-step" />
 }
 
 function useImportParam() {

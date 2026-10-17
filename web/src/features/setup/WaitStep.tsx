@@ -2,7 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro"
 import { ArrowRightIcon, MailIcon, PartyPopperIcon } from "lucide-react"
 import { useNavigate, useSearchParams } from "react-router"
 
-import { Notice } from "@/components/common"
+import { Notice, StepHeader } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useConversations } from "@/features/inbox/queries"
@@ -17,7 +17,7 @@ import {
   PhoneMock,
   PreviewCaption,
 } from "@/features/setup/previews"
-import { SetupLayout, StepHeader } from "@/features/setup/SetupLayout"
+import { SetupLayout } from "@/features/setup/SetupLayout"
 import type { Channel } from "@/lib/api"
 import { useRealtimeStatus } from "@/lib/realtime"
 import { cn } from "@/lib/utils"

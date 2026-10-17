@@ -3,7 +3,7 @@ import { ArrowRightIcon, CheckIcon, InfoIcon, LoaderIcon, SearchIcon } from "luc
 import { useState } from "react"
 import { useNavigate } from "react-router"
 
-import { ErrorLine, Notice } from "@/components/common"
+import { ErrorLine, Notice, StepHeader } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -17,7 +17,6 @@ import {
 import { isHelpdesk, usePresetName } from "@/features/migrations/text"
 import { WizardLayout } from "@/features/migrations/Wizard"
 import { Field } from "@/features/settings/ui"
-import { StepHeader } from "@/features/setup/SetupLayout"
 import type { Migration, MigrationDetection, MigrationPreset, MigrationPresetId } from "@/lib/api"
 import { cn } from "@/lib/utils"
 

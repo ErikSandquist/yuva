@@ -11,7 +11,7 @@ import {
 } from "lucide-react"
 import { useState } from "react"
 
-import { CodeLine, ErrorLine, Notice, Segmented } from "@/components/common"
+import { CodeLine, ErrorLine, Notice, Segmented, StepHeader } from "@/components/common"
 import { formatDate, formatDateTime, formatRelative } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { useNumber } from "@/features/broadcasts/BroadcastParts"
@@ -19,7 +19,6 @@ import { MigrationStateTag, useMigrationConfirms, useStateAnnouncement } from "@
 import { useMigrationStep } from "@/features/migrations/queries"
 import { guideUrl, isHelpdesk } from "@/features/migrations/text"
 import { WizardLayout } from "@/features/migrations/Wizard"
-import { StepHeader } from "@/features/setup/SetupLayout"
 import { useNow } from "@/hooks/use-now"
 import type { Migration, MigrationPreset } from "@/lib/api"
 

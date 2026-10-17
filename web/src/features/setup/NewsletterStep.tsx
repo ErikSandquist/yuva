@@ -2,14 +2,14 @@ import { Trans, useLingui } from "@lingui/react/macro"
 import { ArrowRightIcon, MailCheckIcon, MailIcon, PartyPopperIcon } from "lucide-react"
 import { Link, useLocation, useNavigate } from "react-router"
 
-import { ErrorLine, Notice } from "@/components/common"
+import { ErrorLine, Notice, StepHeader } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { canSend, ListFields, useNewList } from "@/features/broadcasts/ListForm"
 import { listLink, useList } from "@/features/broadcasts/queries"
 import { DEFAULT_COLOR, PreviewCaption, SubscribeMock } from "@/features/setup/previews"
 import type { SetupState } from "@/features/setup/setup"
-import { SetupLayout, StepHeader } from "@/features/setup/SetupLayout"
+import { SetupLayout } from "@/features/setup/SetupLayout"
 import { useChannel, useInboxes } from "@/lib/workspace"
 
 function useSteps() {

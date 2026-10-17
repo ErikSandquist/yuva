@@ -13,7 +13,7 @@ import {
 import { useRef, useState } from "react"
 import { Link } from "react-router"
 
-import { ErrorLine, Notice, ProgressBar } from "@/components/common"
+import { ErrorLine, Notice, ProgressBar, StepHeader } from "@/components/common"
 import { formatBytes } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -29,7 +29,6 @@ import {
   type Upload,
 } from "@/features/migrations/upload"
 import { WizardLayout } from "@/features/migrations/Wizard"
-import { StepHeader } from "@/features/setup/SetupLayout"
 import { ApiError, type Migration, type MigrationPreset } from "@/lib/api"
 import { cn } from "@/lib/utils"
 

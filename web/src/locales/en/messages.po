@@ -1856,9 +1856,9 @@ msgstr "Available until {until}"
 msgid "Away"
 msgstr "Away"
 
+#: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
-#: src/features/setup/SetupLayout.tsx
 msgid "Back"
 msgstr "Back"
 
@@ -2052,6 +2052,7 @@ msgstr "Can I schedule a newsletter for each subscriber?"
 
 #: src/components/common/ConfirmDialog.tsx
 #: src/components/common/TypeToConfirmDialog.tsx
+#: src/components/common/Wizard.tsx
 #: src/features/account/ConnectPage.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
@@ -2061,7 +2062,6 @@ msgstr "Can I schedule a newsletter for each subscriber?"
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
-#: src/features/setup/SetupLayout.tsx
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -3279,8 +3279,8 @@ msgstr "DNS does not answer with this key at the name above yet. Publish the rec
 msgid "Do not both write."
 msgstr "Do not both write."
 
+#: src/components/common/Wizard.tsx
 #: src/features/setup/SetupHub.tsx
-#: src/features/setup/SetupLayout.tsx
 msgid "Do this later"
 msgstr "Do this later"
 
@@ -4255,7 +4255,7 @@ msgstr "Hide"
 msgid "Hide quoted text"
 msgstr "Hide quoted text"
 
-#: src/features/setup/SetupLayout.tsx
+#: src/components/common/Wizard.tsx
 msgid "Hide the preview"
 msgstr "Hide the preview"
 
@@ -7430,8 +7430,8 @@ msgstr "Preference page"
 msgid "Preparing"
 msgstr "Preparing"
 
+#: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
-#: src/features/setup/SetupLayout.tsx
 msgid "Preview"
 msgstr "Preview"
 
@@ -8784,7 +8784,7 @@ msgstr "Show the colours the sender chose, on white"
 msgid "Show the conversation screen"
 msgstr "Show the conversation screen"
 
-#: src/features/setup/SetupLayout.tsx
+#: src/components/common/Wizard.tsx
 msgid "Show the preview"
 msgstr "Show the preview"
 
@@ -9221,8 +9221,7 @@ msgstr "Status"
 msgid "Stay under your provider’s sending rate. Support replies are never slowed down by a broadcast."
 msgstr "Stay under your provider’s sending rate. Support replies are never slowed down by a broadcast."
 
-#: src/features/broadcasts/Import.tsx
-#: src/features/setup/SetupLayout.tsx
+#: src/components/common/Wizard.tsx
 msgid "Step {step} of {count}"
 msgstr "Step {step} of {count}"
 

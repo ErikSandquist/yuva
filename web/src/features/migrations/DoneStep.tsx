@@ -11,7 +11,7 @@ import {
 import { Link, useNavigate } from "react-router"
 
 import { inboxRoot } from "@/app/shell"
-import { ErrorLine, Notice, ProgressBar } from "@/components/common"
+import { ErrorLine, Notice, ProgressBar, StepHeader } from "@/components/common"
 import { formatDateTime } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { useNumber } from "@/features/broadcasts/BroadcastParts"
@@ -20,7 +20,6 @@ import { Figure, SkippedList, useMigrationConfirms, useStateAnnouncement } from 
 import { useCreateMigration, useMigrations } from "@/features/migrations/queries"
 import { isHelpdesk, isPersonalMicrosoft, useGuides } from "@/features/migrations/text"
 import { WizardLayout } from "@/features/migrations/Wizard"
-import { StepHeader } from "@/features/setup/SetupLayout"
 import type { Migration, MigrationPreset } from "@/lib/api"
 import { useSession } from "@/lib/session"
 

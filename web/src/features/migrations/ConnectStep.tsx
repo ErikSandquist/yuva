@@ -15,7 +15,7 @@ import {
 import { Fragment, useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router"
 
-import { ErrorLine, Notice } from "@/components/common"
+import { ErrorLine, Notice, StepHeader } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
@@ -33,7 +33,6 @@ import type { ConnectState } from "@/features/migrations/SourceStep"
 import { guideUrl, TEST_STEPS, useGuides, useMigrationText, useTestCodeText } from "@/features/migrations/text"
 import { WizardLayout } from "@/features/migrations/Wizard"
 import { ChoiceSelect, Field } from "@/features/settings/ui"
-import { StepHeader } from "@/features/setup/SetupLayout"
 import type {
   Migration,
   MigrationCredentialsInput,

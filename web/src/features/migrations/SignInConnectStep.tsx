@@ -13,7 +13,7 @@ import {
 import { useState } from "react"
 import { Link, useNavigate, useSearchParams } from "react-router"
 
-import { CodeLine, CopyButton, ErrorLine, Notice, useCopy } from "@/components/common"
+import { CodeLine, CopyButton, ErrorLine, Notice, StepHeader, useCopy } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { FollowsNotice } from "@/features/migrations/parts"
@@ -27,7 +27,6 @@ import {
 } from "@/features/migrations/text"
 import { WizardLayout } from "@/features/migrations/Wizard"
 import { Field } from "@/features/settings/ui"
-import { StepHeader } from "@/features/setup/SetupLayout"
 import type { Migration, MigrationPreset, MigrationSignInResult, MigrationSignInStart } from "@/lib/api"
 
 const RESULTS: MigrationSignInResult[] = [

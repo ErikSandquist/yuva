@@ -4,7 +4,7 @@ import { ArrowRightIcon, CheckIcon, InfoIcon, PlusIcon, XIcon } from "lucide-rea
 import { useState } from "react"
 import { useNavigate } from "react-router"
 
-import { CheckItem, CheckList, ErrorLine, Notice, Segmented } from "@/components/common"
+import { CheckItem, CheckList, ErrorLine, Notice, Segmented, StepHeader } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -17,7 +17,6 @@ import { useMigrationFolders, useMigrationStep, useUpdateMigration } from "@/fea
 import { isHelpdesk } from "@/features/migrations/text"
 import { WizardLayout } from "@/features/migrations/Wizard"
 import { browserLanguage, browserTimeZone } from "@/features/setup/setup"
-import { StepHeader } from "@/features/setup/SetupLayout"
 import {
   api,
   ApiError,

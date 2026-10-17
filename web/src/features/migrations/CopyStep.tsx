@@ -4,7 +4,7 @@ import { ChevronDownIcon, ClockIcon, PauseIcon, PlayIcon, TriangleAlertIcon } fr
 import { useEffect, useState } from "react"
 import { Link } from "react-router"
 
-import { ErrorLine, Notice, ProgressBar } from "@/components/common"
+import { ErrorLine, Notice, ProgressBar, StepHeader } from "@/components/common"
 import { formatDate, formatDateTime, formatDuration } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -19,7 +19,6 @@ import {
 import { useMigrationErrors, useMigrationFolders, useMigrationStep } from "@/features/migrations/queries"
 import { isHelpdesk, useItemErrorText } from "@/features/migrations/text"
 import { WizardLayout } from "@/features/migrations/Wizard"
-import { StepHeader } from "@/features/setup/SetupLayout"
 import type { Migration, MigrationFolder, MigrationPreset } from "@/lib/api"
 import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"

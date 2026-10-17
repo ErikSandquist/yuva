@@ -2,7 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro"
 import { ArrowDownIcon, LifeBuoyIcon, MailIcon, ShieldCheckIcon } from "lucide-react"
 import { Link, Navigate, useParams, useSearchParams } from "react-router"
 
-import { ErrorLine, YuvaMark } from "@/components/common"
+import { ErrorLine, SummaryList, WizardFrame, YuvaMark } from "@/components/common"
 import { formatDate } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { useNumber } from "@/features/broadcasts/BroadcastParts"
@@ -19,7 +19,6 @@ import { SwitchStep } from "@/features/migrations/SwitchStep"
 import { isHelpdesk, useFormatName, useMigrationText } from "@/features/migrations/text"
 import { UploadStep } from "@/features/migrations/UploadStep"
 import { PreviewCaption } from "@/features/setup/previews"
-import { SetupLayout } from "@/features/setup/SetupLayout"
 import type { Migration, MigrationPreset } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { useInboxes } from "@/lib/workspace"
@@ -107,9 +106,10 @@ export function WizardLayout({
   const prev = index > 0 ? steps[index - 1] : undefined
   const back = m && prev && reachable(prev, m) ? `/migrations/${m.id}/${prev}` : undefined
   return (
-    <SetupLayout
-      step={index + 1}
-      steps={steps.map((s) => names[s])}
+    <WizardFrame
+      current={step}
+      steps={steps.map((s) => ({ key: s, label: names[s] }))}
+      stepHref={(key) => (m && reachable(key as StepKey, m) ? `/migrations/${m.id}/${key}` : undefined)}
       stepsLabel={t`Migration steps`}
       back={back ?? (step === "source" ? "/settings/migrations" : undefined)}
       leave={
@@ -120,7 +120,7 @@ export function WizardLayout({
       preview={<Journey m={m} preset={preset} address={address ?? m?.source_address} />}
     >
       {children}
-    </SetupLayout>
+    </WizardFrame>
   )
 }
 
@@ -186,16 +186,7 @@ function Journey({ m, preset, address }: { m?: Migration; preset?: MigrationPres
             <span className="block truncate font-medium">{inbox?.name ?? t`Chosen in the Map step`}</span>
           </span>
         </div>
-        {facts.length > 0 && (
-          <dl className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1.5 border-t pt-4 text-small">
-            {facts.map(([k, v]) => (
-              <div key={k} className="contents">
-                <dt className="text-faint">{k}</dt>
-                <dd className="truncate text-end">{v}</dd>
-              </div>
-            ))}
-          </dl>
-        )}
+        {facts.length > 0 && <SummaryList items={facts} className="border-t pt-4" />}
         <p className="flex items-center gap-2 border-t pt-4 text-small text-muted-foreground">
           <ShieldCheckIcon className="size-4 shrink-0 text-success" />
           {file ? <Trans>Access to your mailbox: none</Trans> : <Trans>Changes made to {provider}: none</Trans>}
