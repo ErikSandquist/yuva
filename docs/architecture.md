@@ -788,8 +788,10 @@ inherits the policy. Every response carries `X-Content-Type-Options: nosniff`.
 Languages: the panel ships 47 languages, one list in `web/src/localeList.ts` that `web/lingui.config.ts`
 and the loader both read; adding a language is one line there plus its three catalogs
 (`messages`, `analytics`, `designs`). Catalogs load lazily per locale (`import.meta.glob`), only the
-active language is fetched, and the service worker precaches just `en` and `tr`. Before sign-in the
-browser's languages pick the best match (exact, alias such as `zh-TW` or `no`, base language, then
+active language is fetched, and the service worker precaches just `en` and `tr`. Before sign-in a `lang`
+query parameter (the marketing site's choice, matched the same way, unknown values ignored) wins on the
+first load, is remembered like a picker choice and is removed from the address bar; otherwise the
+saved choice, then the browser's languages pick the best match (exact, alias such as `zh-TW` or `no`, base language, then
 `en`); after sign-in the person's `locale` rules, and every picker lists languages by native name and
 saves to it. `<html lang>` follows the language and `dir` is `rtl` for `ar`, `he` and `ur`; shared
 shells use logical Tailwind utilities (`ms`, `pe`, `start`, `end`, `rtl:`). Dates, numbers and

@@ -85,7 +85,24 @@ export function matchLocale(tags: readonly string[]): Locale {
   return "en"
 }
 
+function localeFromAddress(): Locale | null {
+  try {
+    const url = new URL(window.location.href)
+    const tag = url.searchParams.get("lang")?.trim()
+    if (tag === undefined || tag === null) return null
+    url.searchParams.delete("lang")
+    window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash)
+    if (!tag) return null
+    const locale = matchLocale([tag])
+    return locale !== "en" || tag.toLowerCase().startsWith("en") ? locale : null
+  } catch {
+    return null
+  }
+}
+
 export function initialLocale(): Locale {
+  const fromAddress = localeFromAddress()
+  if (fromAddress) return fromAddress
   try {
     const saved = localStorage.getItem("locale")
     if (isLocale(saved)) return saved
