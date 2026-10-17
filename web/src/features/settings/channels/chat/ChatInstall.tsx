@@ -2,7 +2,6 @@ import { Trans } from "@lingui/react/macro"
 import { useState } from "react"
 
 import { CopyButton } from "@/components/common"
-import { FormBlock } from "@/features/settings/channels/parts"
 import { PublicKeyField } from "@/features/settings/channels/PublicKeyField"
 import { Field } from "@/features/settings/ui"
 import type { Channel } from "@/lib/api"
@@ -16,7 +15,7 @@ export function ChatInstall({ channel }: { channel: Channel }) {
   const [publicKey, setPublicKey] = useState(channel.chat!.public_key)
   const snippet = embedSnippet(publicKey)
   return (
-    <FormBlock title={<Trans>Install</Trans>} data-testid="chat-embed">
+    <div className="flex min-w-0 flex-col gap-5" data-testid="chat-embed">
       <PublicKeyField
         channel={channel}
         value={publicKey}
@@ -47,6 +46,6 @@ export function ChatInstall({ channel }: { channel: Channel }) {
           <CopyButton value={snippet} className="self-start" />
         </div>
       </Field>
-    </FormBlock>
+    </div>
   )
 }

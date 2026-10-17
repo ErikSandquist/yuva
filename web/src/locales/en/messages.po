@@ -1039,6 +1039,8 @@ msgid "Accepted answer"
 msgstr "Accepted answer"
 
 #: src/features/oauth/ConsentPage.tsx
+#: src/features/settings/channels/app/AppSections.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Access"
 msgstr "Access"
@@ -1349,6 +1351,11 @@ msgstr "Also for sign-in and notification e-mails"
 #: src/features/settings/webhooks/WebhookDialog.tsx
 msgid "Also send message.created for members' internal notes. Internal events are never sent."
 msgstr "Also send message.created for members' internal notes. Internal events are never sent."
+
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/email/EmailSections.tsx
+msgid "Amazon SES"
+msgstr "Amazon SES"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Amazon SES error"
@@ -1830,7 +1837,9 @@ msgid "Auto-replies, newsletters and delivery reports nobody answered."
 msgstr "Auto-replies, newsletters and delivery reports nobody answered."
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/settings/channels/email/EmailSections.tsx
 msgid "Auto-reply"
 msgstr "Auto-reply"
 
@@ -1981,8 +1990,9 @@ msgstr "Bring the history of a mailbox you answer from today, then switch its ma
 msgid "Broadcast"
 msgstr "Broadcast"
 
-#: src/features/settings/channels/email/ChannelSendingPage.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/settings/channels/email/EmailSections.tsx
 msgid "Broadcast sending"
 msgstr "Broadcast sending"
 
@@ -2005,8 +2015,8 @@ msgid "Broadcasts are turned off on this server. Lists and their forms still wor
 msgstr "Broadcasts are turned off on this server. Lists and their forms still work, so you can collect subscribers."
 
 #: src/features/settings/channels/email/EmailFields.tsx
-msgid "Broadcasts from this channel go out through its SMTP account above, or through a separate account. A separate account, ideally on its own subdomain, keeps spam complaints about newsletters away from your support mail."
-msgstr "Broadcasts from this channel go out through its SMTP account above, or through a separate account. A separate account, ideally on its own subdomain, keeps spam complaints about newsletters away from your support mail."
+msgid "Broadcasts from this channel go out through its SMTP account for replies, or through a separate account. A separate account, ideally on its own subdomain, keeps spam complaints about newsletters away from your support mail."
+msgstr "Broadcasts from this channel go out through its SMTP account for replies, or through a separate account. A separate account, ideally on its own subdomain, keeps spam complaints about newsletters away from your support mail."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Browser"
@@ -2178,6 +2188,10 @@ msgstr "Change, move and bulk-update conversations"
 msgid "Changes made to {provider}: none"
 msgstr "Changes made to {provider}: none"
 
+#: src/features/settings/channels/email/EmailSections.tsx
+msgid "Changing the sending domain turns DKIM signing off until you enable it again for the new domain."
+msgstr "Changing the sending domain turns DKIM signing off until you enable it again for the new domain."
+
 #: src/features/contact/ContactDetails.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Channel"
@@ -2187,7 +2201,7 @@ msgstr "Channel"
 msgid "Channel added"
 msgstr "Channel added"
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/sections.tsx
 msgid "Channel removed"
 msgstr "Channel removed"
 
@@ -2726,9 +2740,13 @@ msgstr "Conversations nobody wrote in after the import are deleted. Nothing chan
 msgid "Conversations nobody wrote in after the import are deleted. Nothing changed in {provider}."
 msgstr "Conversations nobody wrote in after the import are deleted. Nothing changed in {provider}."
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/sections.tsx
 msgid "Conversations that started on it keep their messages."
 msgstr "Conversations that started on it keep their messages."
+
+#: src/features/settings/channels/sections.tsx
+msgid "Conversations that started on this channel keep their messages."
+msgstr "Conversations that started on this channel keep their messages."
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Conversations your team wrote in stay. Nothing changes in {address}."
@@ -3110,18 +3128,10 @@ msgid "Deleting {name} removes its inboxes, channels, conversations, contacts, f
 msgstr "Deleting {name} removes its inboxes, channels, conversations, contacts, files, labels, webhooks and API keys for everyone, at once. Members keep their accounts. This cannot be undone."
 
 #: src/features/broadcasts/ReviewPanel.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Deliverability"
 msgstr "Deliverability"
-
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Deliverability and DKIM"
-msgstr "Deliverability and DKIM"
-
-#. placeholder {0}: ch.name
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Deliverability and DKIM of {0}"
-msgstr "Deliverability and DKIM of {0}"
 
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "Deliveries"
@@ -3211,6 +3221,8 @@ msgstr "Discussion started"
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/docs/DocsColumn.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/setup/previews.tsx
 msgid "Discussions"
 msgstr "Discussions"
@@ -3238,6 +3250,10 @@ msgstr "Discussions you started or replied to"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
 msgstr "Display name"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "DKIM"
+msgstr "DKIM"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "DKIM does not pass for the sending domain."
@@ -3510,10 +3526,6 @@ msgstr "Edit API key"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Edit canned reply"
 msgstr "Edit canned reply"
-
-#: src/features/settings/channels/ChannelDialog.tsx
-msgid "Edit channel"
-msgstr "Edit channel"
 
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Edit design"
@@ -4098,6 +4110,11 @@ msgstr "Fumadocs / React"
 msgid "Further copies of the same message"
 msgstr "Further copies of the same message"
 
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/sections.tsx
+msgid "General"
+msgstr "General"
+
 #: src/features/migrations/text.ts
 msgid "Generate a password named “Yuva” and paste it below."
 msgstr "Generate a password named “Yuva” and paste it below."
@@ -4607,8 +4624,9 @@ msgstr "Include notes"
 msgid "Info"
 msgstr "Info"
 
-#: src/features/settings/channels/app/AppInstall.tsx
-#: src/features/settings/channels/chat/ChatInstall.tsx
+#: src/features/settings/channels/app/AppSections.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Install"
 msgstr "Install"
@@ -5109,6 +5127,11 @@ msgstr "Locked"
 msgid "Locked: readers can no longer write here. You still can."
 msgstr "Locked: readers can no longer write here. You still can."
 
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "Look"
+msgstr "Look"
+
 #: src/features/contact/ConversationMedia.tsx
 msgid "Look in older messages"
 msgstr "Look in older messages"
@@ -5592,6 +5615,7 @@ msgstr "My profile"
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/channels/ChannelDialog.tsx
 #: src/features/settings/channels/email/Deliverability.tsx
+#: src/features/settings/channels/sections.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/profile/ProfileForm.tsx
@@ -6557,6 +6581,10 @@ msgstr "On Team and Enterprise plans an owner adds it once in <0>Organization se
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "On the web"
 msgstr "On the web"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "On this page"
+msgstr "On this page"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Once a test message arrives, Yuva waits {hours} hours. If nothing reaches only {provider} in that time, the migration finishes on its own. You can also finish it yourself."
@@ -7702,7 +7730,9 @@ msgstr "Receives only"
 msgid "receives only, no SMTP account"
 msgstr "receives only, no SMTP account"
 
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/settings/channels/email/EmailSections.tsx
 msgid "Receiving"
 msgstr "Receiving"
 
@@ -7782,8 +7812,9 @@ msgstr "Reload"
 msgid "Remote images can tell the sender that you opened the mail."
 msgstr "Remote images can tell the sender that you opened the mail."
 
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/sections.tsx
 #: src/features/settings/members/MemberList.tsx
 #: src/features/settings/notifications/PushSection.tsx
 #: src/features/settings/profile/Passkeys.tsx
@@ -7791,11 +7822,9 @@ msgstr "Remote images can tell the sender that you opened the mail."
 msgid "Remove"
 msgstr "Remove"
 
-#. placeholder {0}: ch.name
 #. placeholder {0}: f.name
 #. placeholder {0}: p.name
 #: src/features/conversation/composer/ReplyBox.tsx
-#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/profile/Passkeys.tsx
 msgid "Remove {0}"
 msgstr "Remove {0}"
@@ -7816,6 +7845,10 @@ msgstr "Remove {name} from the workspace?"
 #: src/features/migrations/MapStep.tsx
 msgid "Remove {sender}"
 msgstr "Remove {sender}"
+
+#: src/features/settings/channels/sections.tsx
+msgid "Remove channel"
+msgstr "Remove channel"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Remove condition {n}"
@@ -7838,7 +7871,7 @@ msgstr "Remove imported history?"
 msgid "Remove the app password you made for Yuva in {provider}; it is not needed any more."
 msgstr "Remove the app password you made for Yuva in {provider}; it is not needed any more."
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/sections.tsx
 msgid "Remove this channel?"
 msgstr "Remove this channel?"
 
@@ -7910,6 +7943,8 @@ msgstr "replies"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/Feedback.tsx
 #: src/features/reports/ReportPages.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/email/EmailSections.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Replies"
 msgstr "Replies"
@@ -8209,6 +8244,8 @@ msgstr "Save now and keep a version"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/settings/channels/app/AppSections.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/inboxes/SenderIdentity.tsx
 #: src/features/settings/profile/ProfileForm.tsx
@@ -8217,8 +8254,8 @@ msgid "Saved"
 msgstr "Saved"
 
 #: src/features/settings/channels/email/EmailFields.tsx
-msgid "Saving removes the broadcast account; broadcasts then use the account above."
-msgstr "Saving removes the broadcast account; broadcasts then use the account above."
+msgid "Saving removes the broadcast account; broadcasts then use the account for replies."
+msgstr "Saving removes the broadcast account; broadcasts then use the account for replies."
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Saving removes the stored password."
@@ -8705,6 +8742,8 @@ msgstr "Setting up the tenant…"
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/sections.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
 msgid "Settings"
@@ -8715,6 +8754,7 @@ msgid "Settings ({mod},)"
 msgstr "Settings ({mod},)"
 
 #: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/sections.tsx
 msgid "Settings (JSON)"
 msgstr "Settings (JSON)"
 
@@ -9009,6 +9049,11 @@ msgstr "Site generator"
 #: src/features/setup/AddChannelStep.tsx
 msgid "Site name"
 msgstr "Site name"
+
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "Sites"
+msgstr "Sites"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Skip this column"
@@ -10319,6 +10364,7 @@ msgid "This is not a CSV file. Save the spreadsheet as CSV and upload that."
 msgstr "This is not a CSV file. Save the spreadsheet as CSV and upload that."
 
 #: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/sections.tsx
 msgid "This is not a JSON object."
 msgstr "This is not a JSON object."
 
@@ -11079,6 +11125,8 @@ msgid "visitors"
 msgstr "visitors"
 
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
 msgid "Visitors"
 msgstr "Visitors"
 

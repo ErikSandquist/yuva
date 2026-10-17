@@ -1,10 +1,10 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { ShieldCheckIcon, Trash2Icon, TriangleAlertIcon } from "lucide-react"
+import { TriangleAlertIcon } from "lucide-react"
 import { createContext, useContext, useMemo, useState } from "react"
-import { Link, useLocation, useParams } from "react-router"
+import { Link, useLocation, useNavigate, useParams } from "react-router"
 
-import { ChannelIcon, ErrorLine, Notice, toast, useConfirm } from "@/components/common"
+import { ChannelIcon, ErrorLine, Notice, toast } from "@/components/common"
 import { formatRelative, useEnumText, useErrorText, WEEKDAYS } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -75,26 +75,60 @@ function channelState(ch: Channel): "ok" | "receive" | "paused" | "identity_miss
   return ses === "paused" || ses === "identity_missing" || ses === "error" ? ses : "ok"
 }
 
+function ChannelStatus({ inboxId, ch }: { inboxId: string; ch: Channel }) {
+  const { canManage } = useSession()
+  const state = channelState(ch)
+  const tag = {
+    ok: (
+      <StatusTag tone="success">
+        <Trans>Working</Trans>
+      </StatusTag>
+    ),
+    receive: (
+      <StatusTag tone="warning">
+        <Trans>Receives only</Trans>
+      </StatusTag>
+    ),
+    paused: (
+      <StatusTag tone="danger">
+        <Trans>Paused by Amazon SES</Trans>
+      </StatusTag>
+    ),
+    identity_missing: (
+      <StatusTag tone="warning">
+        <Trans>Identity not verified</Trans>
+      </StatusTag>
+    ),
+    error: (
+      <StatusTag tone="danger">
+        <Trans>Amazon SES error</Trans>
+      </StatusTag>
+    ),
+  }[state]
+  if (state === "ok" || !canManage) return tag
+  return (
+    <Link
+      to={channelLink(inboxId, ch.id, state === "receive" ? "replies" : "ses")}
+      className="shrink-0 underline-offset-4 hover:underline"
+      data-testid="channel-status"
+    >
+      {tag}
+    </Link>
+  )
+}
+
 function Channels({ inbox }: { inbox: Inbox }) {
   const { t } = useLingui()
   const text = useEnumText()
-  const qc = useQueryClient()
+  const navigate = useNavigate()
   const { workspaceId: ws, canManage } = useSession()
-  const [editing, setEditing] = useState<{ channel: Channel | null; kind?: ChannelKind } | null>(null)
-  const [confirm, confirmDialog] = useConfirm()
+  const [adding, setAdding] = useState<ChannelKind | null>(null)
   const channels = useQuery({
     queryKey: keys.channels(ws, inbox.id),
     queryFn: () =>
       unwrap(api.GET("/v1/inboxes/{inboxId}/channels", { params: { path: { inboxId: inbox.id } } })).then(
         (r) => r.items
       ),
-  })
-  const remove = useMutation({
-    mutationFn: (id: string) => unwrap(api.DELETE("/v1/channels/{channelId}", { params: { path: { channelId: id } } })),
-    onSuccess: () => {
-      toast(t`Channel removed`)
-      void qc.invalidateQueries({ queryKey: keys.channels(ws, inbox.id) })
-    },
   })
   const { pathname } = useLocation()
   const adds: [ChannelKind, string][] = [
@@ -114,10 +148,10 @@ function Channels({ inbox }: { inbox: Inbox }) {
             {(channels.data ?? []).map((ch) => (
               <Row key={ch.id} data-testid="channel-row" className="pe-2">
                 <Item
-                  render={<button type="button" disabled={!canManage} />}
+                  render={canManage ? <Link to={channelLink(inbox.id, ch.id)} /> : <div />}
                   size="xs"
-                  className="min-w-0 flex-1 flex-nowrap px-0 disabled:cursor-default [button]:hover:bg-transparent"
-                  onClick={() => setEditing({ channel: ch })}
+                  className="min-w-0 flex-1 flex-nowrap px-0 [a]:hover:bg-transparent"
+                  data-testid="channel-open"
                 >
                   <RowIcon>
                     <ChannelIcon kind={ch.kind} />
@@ -131,69 +165,12 @@ function Channels({ inbox }: { inbox: Inbox }) {
                     }
                   />
                 </Item>
-                {
-                  {
-                    ok: (
-                      <StatusTag tone="success">
-                        <Trans>Working</Trans>
-                      </StatusTag>
-                    ),
-                    receive: (
-                      <StatusTag tone="warning">
-                        <Trans>Receives only</Trans>
-                      </StatusTag>
-                    ),
-                    paused: (
-                      <StatusTag tone="danger">
-                        <Trans>Paused by Amazon SES</Trans>
-                      </StatusTag>
-                    ),
-                    identity_missing: (
-                      <StatusTag tone="warning">
-                        <Trans>Identity not verified</Trans>
-                      </StatusTag>
-                    ),
-                    error: (
-                      <StatusTag tone="danger">
-                        <Trans>Amazon SES error</Trans>
-                      </StatusTag>
-                    ),
-                  }[channelState(ch)]
-                }
-                {ch.kind === "email" && (ch.email?.smtp || ch.email?.broadcast_smtp) && (
-                  <Button
-                    variant="ghost"
-                    size="icon-sm"
-                    aria-label={t`Deliverability and DKIM of ${ch.name}`}
-                    title={t`Deliverability and DKIM`}
-                    render={<Link to={channelLink(inbox.id, ch.id)} />}
-                    data-testid="channel-deliverability"
-                  >
-                    <ShieldCheckIcon />
-                  </Button>
-                )}
-                {canManage && (
-                  <Button
-                    variant="ghost"
-                    size="icon-sm"
-                    aria-label={t`Remove ${ch.name}`}
-                    onClick={() =>
-                      confirm({
-                        title: <Trans>Remove this channel?</Trans>,
-                        description: <Trans>Conversations that started on it keep their messages.</Trans>,
-                        confirm: <Trans>Remove</Trans>,
-                        run: () => remove.mutate(ch.id),
-                      })
-                    }
-                  >
-                    <Trash2Icon />
-                  </Button>
-                )}
+                <ChannelStatus inboxId={inbox.id} ch={ch} />
               </Row>
             ))}
           </Rows>
         )}
-        <ErrorLine error={channels.error ?? remove.error} className="px-4 pb-3" />
+        <ErrorLine error={channels.error} className="px-4 pb-3" />
       </Card>
       {canManage && (
         <div className="mt-1 flex flex-wrap gap-2">
@@ -203,7 +180,7 @@ function Channels({ inbox }: { inbox: Inbox }) {
               variant="outline"
               size="sm"
               className="bg-card"
-              onClick={() => setEditing({ channel: null, kind })}
+              onClick={() => setAdding(kind)}
               data-testid={`add-${kind}`}
             >
               + {label}
@@ -220,20 +197,19 @@ function Channels({ inbox }: { inbox: Inbox }) {
           </Button>
         </div>
       )}
-      {editing && (
+      {adding && (
         <ChannelDialog
-          key={editing.channel?.id ?? editing.kind}
+          key={adding}
           inboxId={inbox.id}
-          channel={editing.channel}
-          kind={editing.kind}
-          onClose={() => setEditing(null)}
+          kind={adding}
+          onClose={() => setAdding(null)}
           onCreated={(ch) => {
             toast(t`Channel added`)
-            setEditing(ch.kind === "chat" || ch.kind === "app" ? { channel: ch } : null)
+            setAdding(null)
+            if (ch.kind === "chat" || ch.kind === "app") navigate(channelLink(inbox.id, ch.id, "install"))
           }}
         />
       )}
-      {confirmDialog}
     </Section>
   )
 }

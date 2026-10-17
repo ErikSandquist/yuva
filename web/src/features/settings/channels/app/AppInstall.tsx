@@ -2,7 +2,6 @@ import { Trans } from "@lingui/react/macro"
 import { useState } from "react"
 
 import { CodeLine, Notice } from "@/components/common"
-import { FormBlock } from "@/features/settings/channels/parts"
 import { PublicKeyField } from "@/features/settings/channels/PublicKeyField"
 import { Field } from "@/features/settings/ui"
 import type { Channel } from "@/lib/api"
@@ -10,7 +9,7 @@ import type { Channel } from "@/lib/api"
 export function AppInstall({ channel }: { channel: Channel }) {
   const [publicKey, setPublicKey] = useState(channel.app!.public_key)
   return (
-    <FormBlock title={<Trans>Install</Trans>} data-testid="app-install">
+    <div className="flex min-w-0 flex-col gap-5" data-testid="app-install">
       <Field label={<Trans>Server URL</Trans>}>
         <CodeLine value={window.location.origin} />
       </Field>
@@ -54,6 +53,6 @@ export function AppInstall({ channel }: { channel: Channel }) {
           </li>
         </ul>
       </Notice>
-    </FormBlock>
+    </div>
   )
 }

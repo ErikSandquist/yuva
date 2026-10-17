@@ -14,7 +14,7 @@ import { FieldError, FormBlock } from "@/features/settings/channels/parts"
 import { Field, ToggleRow } from "@/features/settings/ui"
 import type { EmailSes, SmtpTls } from "@/lib/api"
 
-type Props = {
+export type Props = {
   f: EmailForm
   set: (patch: Partial<EmailForm>) => void
   error: (field: EmailField) => string | undefined
@@ -23,18 +23,18 @@ type Props = {
   ses?: EmailSes
 }
 
-function useInvalid({ error, taken }: Pick<Props, "error" | "taken">) {
+export function useInvalid({ error, taken }: Pick<Props, "error" | "taken">) {
   return (field: EmailField) => ({
     "aria-invalid": !!error(field) || (field === "address" && taken) || undefined,
     "aria-describedby": error(field) ? `err-${field}` : undefined,
   })
 }
 
-function Receiving({ f, set, error, taken }: Props) {
+export function ReceivingFields({ f, set, error, taken }: Props) {
   const invalid = useInvalid({ error, taken })
   const ingress = `${window.location.origin}/ingress/email`
   return (
-    <FormBlock title={<Trans>Receiving</Trans>}>
+    <>
       <Field
         label={<Trans>Support address</Trans>}
         htmlFor="email-address"
@@ -68,6 +68,14 @@ function Receiving({ f, set, error, taken }: Props) {
         </p>
         <CodeLine value={ingress} />
       </Notice>
+    </>
+  )
+}
+
+function Receiving(p: Props) {
+  return (
+    <FormBlock title={<Trans>Receiving</Trans>}>
+      <ReceivingFields {...p} />
     </FormBlock>
   )
 }
@@ -165,7 +173,7 @@ function Password({ f, set, error, taken }: Props) {
   )
 }
 
-export function Sending(p: Props) {
+export function SendingFields(p: Props) {
   const { t } = useLingui()
   const { f, set, error } = p
   const invalid = useInvalid(p)
@@ -175,7 +183,7 @@ export function Sending(p: Props) {
     none: t`None (local relays and test servers only)`,
   }
   return (
-    <FormBlock title={<Trans>Sending</Trans>}>
+    <>
       <div className="grid gap-5 sm:grid-cols-2">
         <Field
           label={<Trans>Display name</Trans>}
@@ -273,31 +281,39 @@ export function Sending(p: Props) {
       <p className="text-caption text-muted-foreground">
         <Trans>The password is stored encrypted and never shown again.</Trans>
       </p>
+    </>
+  )
+}
+
+export function Sending(p: Props) {
+  return (
+    <FormBlock title={<Trans>Sending</Trans>}>
+      <SendingFields {...p} />
     </FormBlock>
   )
 }
 
-function AutoReply(p: Props) {
+export function AutoReplyFields(p: Props) {
   const { t } = useLingui()
   const { f, set, error } = p
   const invalid = useInvalid(p)
   return (
-    <FormBlock
-      title={<Trans>Auto-reply</Trans>}
-      action={
+    <>
+      <ToggleRow
+        title={<Trans>Send an auto-reply</Trans>}
+        hint={
+          <Trans>
+            Greets new conversations by e-mail, once per contact within the interval. Never sent to automatic mail or
+            spam.
+          </Trans>
+        }
+      >
         <Switch
           checked={f.autoReply}
           onCheckedChange={(autoReply) => set({ autoReply })}
           aria-label={t`Send an auto-reply`}
         />
-      }
-    >
-      <p className="-mt-2 text-caption text-muted-foreground">
-        <Trans>
-          Greets new conversations by e-mail, once per contact within the interval. Never sent to automatic mail or
-          spam.
-        </Trans>
-      </p>
+      </ToggleRow>
       {f.autoReply && (
         <>
           <Field label={<Trans>Text</Trans>} htmlFor="auto-reply-text">
@@ -328,11 +344,19 @@ function AutoReply(p: Props) {
           </Field>
         </>
       )}
+    </>
+  )
+}
+
+function AutoReply(p: Props) {
+  return (
+    <FormBlock title={<Trans>Auto-reply</Trans>}>
+      <AutoReplyFields {...p} />
     </FormBlock>
   )
 }
 
-function BroadcastSending(p: Props) {
+export function BroadcastFields(p: Props) {
   const { t } = useLingui()
   const { f, set, error } = p
   const invalid = useInvalid(p)
@@ -342,18 +366,19 @@ function BroadcastSending(p: Props) {
     none: t`None (local relays and test servers only)`,
   }
   return (
-    <FormBlock title={<Trans>Broadcast sending</Trans>} data-testid="broadcast-sending">
+    <>
       <p className="-mt-2 text-caption text-muted-foreground">
         <Trans>
-          Broadcasts from this channel go out through its SMTP account above, or through a separate account. A separate
-          account, ideally on its own subdomain, keeps spam complaints about newsletters away from your support mail.
+          Broadcasts from this channel go out through its SMTP account for replies, or through a separate account. A
+          separate account, ideally on its own subdomain, keeps spam complaints about newsletters away from your support
+          mail.
         </Trans>
       </p>
       <ToggleRow
         title={<Trans>Use a separate account for broadcasts</Trans>}
         hint={
           f.bcHad && !f.bc ? (
-            <Trans>Saving removes the broadcast account; broadcasts then use the account above.</Trans>
+            <Trans>Saving removes the broadcast account; broadcasts then use the account for replies.</Trans>
           ) : undefined
         }
       >
@@ -473,6 +498,14 @@ function BroadcastSending(p: Props) {
         />
         <FieldError id="err-broadcast_rate">{error("broadcast_rate")}</FieldError>
       </Field>
+    </>
+  )
+}
+
+function BroadcastSending(p: Props) {
+  return (
+    <FormBlock title={<Trans>Broadcast sending</Trans>} data-testid="broadcast-sending">
+      <BroadcastFields {...p} />
       {p.sendingLink && (
         <Link
           to={p.sendingLink}
@@ -487,13 +520,15 @@ function BroadcastSending(p: Props) {
   )
 }
 
-function SesTenant(p: Props) {
+export function sesShown({ f, ses }: Pick<Props, "f" | "ses">) {
+  return !!ses || isSesHost(f.host) || (f.bc && isSesHost(f.bcHost))
+}
+
+export function SesFields(p: Props) {
   const { f, set, error, ses } = p
   const invalid = useInvalid(p)
   const { t } = useLingui()
   const errorText = t`Use letters, digits, - and _, at most 64.`
-  const shown = !!ses || isSesHost(f.host) || (f.bc && isSesHost(f.bcHost))
-  if (!shown) return null
   const typed = ses?.source !== "server"
   const bad = (v: string) => v !== "" && !/^[A-Za-z0-9_-]{1,64}$/.test(v.trim())
   const nameError = (field: "ses.tenant" | "ses.configuration_set", v: string) =>
@@ -504,7 +539,7 @@ function SesTenant(p: Props) {
     "aria-describedby": bad(v) || error(field) ? `err-${field}` : undefined,
   })
   return (
-    <FormBlock title={<Trans>Amazon SES tenant</Trans>} data-testid="ses-tenant">
+    <>
       {ses && <SesStatus ses={ses} address={f.fromAddress || f.address} />}
       {typed && (
         <>
@@ -544,6 +579,15 @@ function SesTenant(p: Props) {
           </div>
         </>
       )}
+    </>
+  )
+}
+
+function SesTenant(p: Props) {
+  if (!sesShown(p)) return null
+  return (
+    <FormBlock title={<Trans>Amazon SES tenant</Trans>} data-testid="ses-tenant">
+      <SesFields {...p} />
     </FormBlock>
   )
 }

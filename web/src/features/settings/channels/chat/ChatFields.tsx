@@ -15,29 +15,14 @@ import { Field, ToggleRow } from "@/features/settings/ui"
 import type { ChatLauncherPosition, DiscussionMode } from "@/lib/api"
 import { Input } from "@/components/ui/input"
 
-export function ChatFields({
-  f,
-  set,
-  invalid,
-  serverError,
-}: {
+type Props = {
   f: ChatForm
   set: (patch: Partial<ChatForm>) => void
   invalid: Extract<ChatInputResult, { ok: false }> | null
   serverError: ChatField | null
-}) {
-  const { t } = useLingui()
-  const positionText: Record<ChatLauncherPosition, string> = { right: t`Bottom right`, left: t`Bottom left` }
-  const modeText: Record<DiscussionMode, string> = { off: t`Off`, moderated: t`Moderated`, open: t`Open` }
-  const modeHint: Record<DiscussionMode, React.ReactNode> = {
-    off: <Trans>No discussions under the pages of these sites.</Trans>,
-    moderated: (
-      <Trans>
-        A reader's posts wait for a member until one of theirs is approved. Signed-in users of your app publish at once.
-      </Trans>
-    ),
-    open: <Trans>Everyone's posts are published at once, except those of authors you marked as spam.</Trans>,
-  }
+}
+
+export function SitesFields({ f, set, invalid, serverError }: Props) {
   const notOrigins = invalid?.bad.join(", ") ?? ""
   const originsError =
     serverError === "allowed_origins" ? (
@@ -52,7 +37,7 @@ export function ChatFields({
       )
     ) : null
   return (
-    <FormBlock title={<Trans>Web chat</Trans>}>
+    <>
       <Field
         label={<Trans>Allowed origins</Trans>}
         htmlFor="chat-origins"
@@ -72,6 +57,14 @@ export function ChatFields({
         />
         <FieldError id="err-chat-origins">{originsError}</FieldError>
       </Field>
+    </>
+  )
+}
+
+export function VisitorsFields({ f, set }: Pick<Props, "f" | "set">) {
+  const { t } = useLingui()
+  return (
+    <>
       <ToggleRow
         title={<Trans>Allow anonymous visitors</Trans>}
         hint={<Trans>Visitors can chat without an identity token from your backend.</Trans>}
@@ -92,6 +85,15 @@ export function ChatFields({
           aria-label={t`Ask for an e-mail address when offline`}
         />
       </ToggleRow>
+    </>
+  )
+}
+
+export function LookFields({ f, set, serverError }: Pick<Props, "f" | "set" | "serverError">) {
+  const { t } = useLingui()
+  const positionText: Record<ChatLauncherPosition, string> = { right: t`Bottom right`, left: t`Bottom left` }
+  return (
+    <>
       <Field
         label={<Trans>Greeting</Trans>}
         htmlFor="chat-greeting"
@@ -109,24 +111,6 @@ export function ChatFields({
         <FieldError id="err-chat-greeting">
           {serverError === "greeting" && <Trans>Use at most 500 characters.</Trans>}
         </FieldError>
-      </Field>
-      <Field label={<Trans>Discussions on documentation pages</Trans>} hint={modeHint[f.discussions]}>
-        <Select value={f.discussions} onValueChange={(v) => set({ discussions: v as DiscussionMode })} items={modeText}>
-          <SelectTrigger
-            className="w-full sm:w-64"
-            aria-label={t`Discussions on documentation pages`}
-            data-testid="chat-discussions"
-          >
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {DISCUSSION_MODES.map((x) => (
-              <SelectItem key={x} value={x} data-testid={`chat-discussions-${x}`}>
-                {modeText[x]}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
       </Field>
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label={<Trans>Launcher position</Trans>}>
@@ -177,6 +161,53 @@ export function ChatFields({
           </FieldError>
         </Field>
       </div>
+    </>
+  )
+}
+
+export function DiscussionsFields({ f, set }: Pick<Props, "f" | "set">) {
+  const { t } = useLingui()
+  const modeText: Record<DiscussionMode, string> = { off: t`Off`, moderated: t`Moderated`, open: t`Open` }
+  const modeHint: Record<DiscussionMode, React.ReactNode> = {
+    off: <Trans>No discussions under the pages of these sites.</Trans>,
+    moderated: (
+      <Trans>
+        A reader's posts wait for a member until one of theirs is approved. Signed-in users of your app publish at once.
+      </Trans>
+    ),
+    open: <Trans>Everyone's posts are published at once, except those of authors you marked as spam.</Trans>,
+  }
+  return (
+    <>
+      <Field label={<Trans>Discussions on documentation pages</Trans>} hint={modeHint[f.discussions]}>
+        <Select value={f.discussions} onValueChange={(v) => set({ discussions: v as DiscussionMode })} items={modeText}>
+          <SelectTrigger
+            className="w-full sm:w-64"
+            aria-label={t`Discussions on documentation pages`}
+            data-testid="chat-discussions"
+          >
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {DISCUSSION_MODES.map((x) => (
+              <SelectItem key={x} value={x} data-testid={`chat-discussions-${x}`}>
+                {modeText[x]}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </Field>
+    </>
+  )
+}
+
+export function ChatFields(p: Props) {
+  return (
+    <FormBlock title={<Trans>Web chat</Trans>}>
+      <SitesFields {...p} />
+      <VisitorsFields {...p} />
+      <LookFields {...p} />
+      <DiscussionsFields {...p} />
     </FormBlock>
   )
 }

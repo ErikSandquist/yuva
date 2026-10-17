@@ -5,7 +5,11 @@ import { api, ApiError, unwrap, type Channel, type DeliverabilityCheck } from "@
 import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
 
-export function channelLink(inboxId: string, channelId: string, hash?: "deliverability" | "dkim") {
+export function channelLink(
+  inboxId: string,
+  channelId: string,
+  hash?: "general" | "receiving" | "replies" | "ses" | "broadcasts" | "deliverability" | "dkim" | "install"
+) {
   return `/settings/inboxes/${inboxId}/channels/${channelId}${hash ? `#${hash}` : ""}`
 }
 

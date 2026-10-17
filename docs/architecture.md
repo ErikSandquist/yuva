@@ -939,6 +939,13 @@ remote images, http(s)):
 - Settings: inboxes, channels, members and access, labels, canned replies, business hours,
   auto-replies, webhooks, API keys, retention and deleting the workspace; deleting one's own
   account in the profile.
+  A channel has its own page, `/settings/inboxes/:inboxId/channels/:channelId`, with one card per
+  topic (general, receiving, replies, Amazon SES, broadcast sending, deliverability, DKIM,
+  auto-reply for e-mail; sites, visitors, look, discussions, install for chat; access, install
+  for apps; settings for API channels; remove for all). Each card saves on its own and sends
+  only its fields on top of the latest stored channel, so another card's unsaved text and the
+  stored SMTP passwords are untouched; cards with only switches save on change. The inbox page
+  lists channels as links to it; the add dialog is only for creating.
 - Installable PWA with Web Push (VAPID), so members get notifications on phones without a native
   app. E-mail notifications as a fallback (see Member notifications).
 - Sign-in with an e-mailed one-time code and passkeys. Sign-up is a server setting,

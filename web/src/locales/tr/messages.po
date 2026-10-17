@@ -1039,6 +1039,8 @@ msgid "Accepted answer"
 msgstr "Kabul edilen yanıt"
 
 #: src/features/oauth/ConsentPage.tsx
+#: src/features/settings/channels/app/AppSections.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Access"
 msgstr "Erişim"
@@ -1349,6 +1351,11 @@ msgstr "Giriş ve bildirim e-postaları da bu dilde gelir"
 #: src/features/settings/webhooks/WebhookDialog.tsx
 msgid "Also send message.created for members' internal notes. Internal events are never sent."
 msgstr "Üyelerin iç notları için de message.created gönderilir. İç olaylar hiçbir zaman gönderilmez."
+
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/email/EmailSections.tsx
+msgid "Amazon SES"
+msgstr "Amazon SES"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Amazon SES error"
@@ -1830,7 +1837,9 @@ msgid "Auto-replies, newsletters and delivery reports nobody answered."
 msgstr "Kimsenin yanıtlamadığı otomatik yanıtlar, bültenler ve teslim raporları."
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/settings/channels/email/EmailSections.tsx
 msgid "Auto-reply"
 msgstr "Otomatik yanıt"
 
@@ -1981,8 +1990,9 @@ msgstr "Bugün yanıt verdiğiniz posta kutusunun geçmişini getirin, sonra e-p
 msgid "Broadcast"
 msgstr "Bülten"
 
-#: src/features/settings/channels/email/ChannelSendingPage.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/settings/channels/email/EmailSections.tsx
 msgid "Broadcast sending"
 msgstr "Bülten gönderimi"
 
@@ -2005,8 +2015,8 @@ msgid "Broadcasts are turned off on this server. Lists and their forms still wor
 msgstr "Bu sunucuda bültenler kapalı. Listeler ve formları çalışmaya devam eder; abone toplayabilirsiniz."
 
 #: src/features/settings/channels/email/EmailFields.tsx
-msgid "Broadcasts from this channel go out through its SMTP account above, or through a separate account. A separate account, ideally on its own subdomain, keeps spam complaints about newsletters away from your support mail."
-msgstr "Bu kanalın bültenleri yukarıdaki SMTP hesabından ya da ayrı bir hesaptan gider. Ayrı bir hesap, tercihen kendi alt alan adında, bültenlerle ilgili spam şikâyetlerini destek e-postanızdan uzak tutar."
+msgid "Broadcasts from this channel go out through its SMTP account for replies, or through a separate account. A separate account, ideally on its own subdomain, keeps spam complaints about newsletters away from your support mail."
+msgstr "Bu kanalın toplu postaları, yanıtlar için kullandığı SMTP hesabı üzerinden ya da ayrı bir hesap üzerinden gider. İdeal olarak kendi alt alan adında olan ayrı bir hesap, bültenlere gelen spam şikayetlerini destek postanızdan uzak tutar."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Browser"
@@ -2178,6 +2188,10 @@ msgstr "Konuşmaları değiştirme, taşıma ve toplu güncelleme"
 msgid "Changes made to {provider}: none"
 msgstr "{provider} içinde yapılan değişiklik: yok"
 
+#: src/features/settings/channels/email/EmailSections.tsx
+msgid "Changing the sending domain turns DKIM signing off until you enable it again for the new domain."
+msgstr "Gönderim alan adını değiştirmek, yeni alan adı için yeniden açana kadar DKIM imzalamayı kapatır."
+
 #: src/features/contact/ContactDetails.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Channel"
@@ -2187,7 +2201,7 @@ msgstr "Kanal"
 msgid "Channel added"
 msgstr "Kanal eklendi"
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/sections.tsx
 msgid "Channel removed"
 msgstr "Kanal kaldırıldı"
 
@@ -2726,9 +2740,13 @@ msgstr "Aktarımdan sonra kimsenin yazmadığı konuşmalar silindi. {address} i
 msgid "Conversations nobody wrote in after the import are deleted. Nothing changed in {provider}."
 msgstr "Aktarımdan sonra kimsenin yazmadığı konuşmalar silindi. {provider} tarafında hiçbir şey değişmedi."
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/sections.tsx
 msgid "Conversations that started on it keep their messages."
 msgstr "Bu kanalda başlayan konuşmaların mesajları korunur."
+
+#: src/features/settings/channels/sections.tsx
+msgid "Conversations that started on this channel keep their messages."
+msgstr "Bu kanalda başlayan konuşmalar mesajlarını korur."
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Conversations your team wrote in stay. Nothing changes in {address}."
@@ -3110,18 +3128,10 @@ msgid "Deleting {name} removes its inboxes, channels, conversations, contacts, f
 msgstr "{name} silindiğinde gelen kutuları, kanalları, konuşmaları, kişileri, dosyaları, etiketleri, webhook'ları ve API anahtarları herkes için hemen silinir. Üyelerin hesapları kalır. Bu geri alınamaz."
 
 #: src/features/broadcasts/ReviewPanel.tsx
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Deliverability"
 msgstr "Teslim edilebilirlik"
-
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Deliverability and DKIM"
-msgstr "Teslim edilebilirlik ve DKIM"
-
-#. placeholder {0}: ch.name
-#: src/features/settings/inboxes/InboxPage.tsx
-msgid "Deliverability and DKIM of {0}"
-msgstr "{0} için teslim edilebilirlik ve DKIM"
 
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "Deliveries"
@@ -3211,6 +3221,8 @@ msgstr "Tartışma başlatıldı"
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/docs/DocsColumn.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/setup/previews.tsx
 msgid "Discussions"
 msgstr "Tartışmalar"
@@ -3238,6 +3250,10 @@ msgstr "Başlattığınız ya da yanıt yazdığınız tartışmalar"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
 msgstr "Görünen ad"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "DKIM"
+msgstr "DKIM"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "DKIM does not pass for the sending domain."
@@ -3510,10 +3526,6 @@ msgstr "API anahtarını düzenle"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Edit canned reply"
 msgstr "Hazır yanıtı düzenle"
-
-#: src/features/settings/channels/ChannelDialog.tsx
-msgid "Edit channel"
-msgstr "Kanalı düzenle"
 
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Edit design"
@@ -4098,6 +4110,11 @@ msgstr "Fumadocs / React"
 msgid "Further copies of the same message"
 msgstr "Aynı mesajın diğer kopyaları"
 
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/sections.tsx
+msgid "General"
+msgstr "Genel"
+
 #: src/features/migrations/text.ts
 msgid "Generate a password named “Yuva” and paste it below."
 msgstr "Adı “Yuva” olan bir şifre oluşturup aşağıya yapıştırın."
@@ -4607,8 +4624,9 @@ msgstr "Notları dahil et"
 msgid "Info"
 msgstr "Bilgiler"
 
-#: src/features/settings/channels/app/AppInstall.tsx
-#: src/features/settings/channels/chat/ChatInstall.tsx
+#: src/features/settings/channels/app/AppSections.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Install"
 msgstr "Kurulum"
@@ -5109,6 +5127,11 @@ msgstr "Kilitli"
 msgid "Locked: readers can no longer write here. You still can."
 msgstr "Kilitli: okuyucular artık buraya yazamaz. Siz hâlâ yazabilirsiniz."
 
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "Look"
+msgstr "Görünüm"
+
 #: src/features/contact/ConversationMedia.tsx
 msgid "Look in older messages"
 msgstr "Eski mesajlara da bak"
@@ -5592,6 +5615,7 @@ msgstr "Profilim"
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/channels/ChannelDialog.tsx
 #: src/features/settings/channels/email/Deliverability.tsx
+#: src/features/settings/channels/sections.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/profile/ProfileForm.tsx
@@ -6557,6 +6581,10 @@ msgstr "Team ve Enterprise planlarında bir sahip bunu <0>Organization settings 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "On the web"
 msgstr "Web'de"
+
+#: src/features/settings/channels/ChannelPage.tsx
+msgid "On this page"
+msgstr "Bu sayfada"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Once a test message arrives, Yuva waits {hours} hours. If nothing reaches only {provider} in that time, the migration finishes on its own. You can also finish it yourself."
@@ -7702,7 +7730,9 @@ msgstr "Sadece alır"
 msgid "receives only, no SMTP account"
 msgstr "yalnızca alır, SMTP hesabı yok"
 
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/settings/channels/email/EmailSections.tsx
 msgid "Receiving"
 msgstr "Alma"
 
@@ -7782,8 +7812,9 @@ msgstr "Yenile"
 msgid "Remote images can tell the sender that you opened the mail."
 msgstr "Uzak görseller, postayı açtığınızı gönderene bildirebilir."
 
+#: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/sections.tsx
 #: src/features/settings/members/MemberList.tsx
 #: src/features/settings/notifications/PushSection.tsx
 #: src/features/settings/profile/Passkeys.tsx
@@ -7791,11 +7822,9 @@ msgstr "Uzak görseller, postayı açtığınızı gönderene bildirebilir."
 msgid "Remove"
 msgstr "Kaldır"
 
-#. placeholder {0}: ch.name
 #. placeholder {0}: f.name
 #. placeholder {0}: p.name
 #: src/features/conversation/composer/ReplyBox.tsx
-#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/profile/Passkeys.tsx
 msgid "Remove {0}"
 msgstr "{0} öğesini kaldır"
@@ -7816,6 +7845,10 @@ msgstr "{name} çalışma alanından çıkarılsın mı?"
 #: src/features/migrations/MapStep.tsx
 msgid "Remove {sender}"
 msgstr "{sender} adresini kaldır"
+
+#: src/features/settings/channels/sections.tsx
+msgid "Remove channel"
+msgstr "Kanalı kaldır"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Remove condition {n}"
@@ -7838,7 +7871,7 @@ msgstr "Aktarılan geçmiş kaldırılsın mı?"
 msgid "Remove the app password you made for Yuva in {provider}; it is not needed any more."
 msgstr "Yuva için oluşturduğunuz uygulama şifresini {provider} içinden kaldırın; artık gerekmiyor."
 
-#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/channels/sections.tsx
 msgid "Remove this channel?"
 msgstr "Bu kanal kaldırılsın mı?"
 
@@ -7910,6 +7943,8 @@ msgstr "yanıt"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/Feedback.tsx
 #: src/features/reports/ReportPages.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/email/EmailSections.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Replies"
 msgstr "Yanıtlar"
@@ -8209,6 +8244,8 @@ msgstr "Şimdi kaydet ve sürüm sakla"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/settings/channels/app/AppSections.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/inboxes/SenderIdentity.tsx
 #: src/features/settings/profile/ProfileForm.tsx
@@ -8217,8 +8254,8 @@ msgid "Saved"
 msgstr "Kaydedildi"
 
 #: src/features/settings/channels/email/EmailFields.tsx
-msgid "Saving removes the broadcast account; broadcasts then use the account above."
-msgstr "Kaydedince bülten hesabı kaldırılır; bültenler yukarıdaki hesabı kullanır."
+msgid "Saving removes the broadcast account; broadcasts then use the account for replies."
+msgstr "Kaydetmek toplu posta hesabını kaldırır; toplu postalar bundan sonra yanıtlar için kullanılan hesabı kullanır."
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Saving removes the stored password."
@@ -8705,6 +8742,8 @@ msgstr "Kiracı kuruluyor…"
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/sections.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
 msgid "Settings"
@@ -8715,6 +8754,7 @@ msgid "Settings ({mod},)"
 msgstr "Ayarlar ({mod},)"
 
 #: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/sections.tsx
 msgid "Settings (JSON)"
 msgstr "Ayarlar (JSON)"
 
@@ -9009,6 +9049,11 @@ msgstr "Site oluşturucu"
 #: src/features/setup/AddChannelStep.tsx
 msgid "Site name"
 msgstr "Site adı"
+
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
+msgid "Sites"
+msgstr "Siteler"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Skip this column"
@@ -10319,6 +10364,7 @@ msgid "This is not a CSV file. Save the spreadsheet as CSV and upload that."
 msgstr "Bu bir CSV dosyası değil. Tabloyu CSV olarak kaydedip onu yükleyin."
 
 #: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/sections.tsx
 msgid "This is not a JSON object."
 msgstr "Bu bir JSON nesnesi değil."
 
@@ -11079,6 +11125,8 @@ msgid "visitors"
 msgstr "ziyaretçi"
 
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/channels/chat/ChatSections.tsx
 msgid "Visitors"
 msgstr "Ziyaretçiler"
 

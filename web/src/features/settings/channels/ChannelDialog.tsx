@@ -18,12 +18,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea"
 import { AppFields } from "@/features/settings/channels/app/AppFields"
 import { appChannelInput, appForm, type AppForm } from "@/features/settings/channels/app/form"
-import { AppInstall } from "@/features/settings/channels/app/AppInstall"
 import { ChatFields } from "@/features/settings/channels/chat/ChatFields"
 import { chatChannelInput, chatErrorField, chatForm, type ChatForm } from "@/features/settings/channels/chat/form"
-import { ChatInstall } from "@/features/settings/channels/chat/ChatInstall"
-import { channelLink } from "@/features/settings/channels/email/deliverability"
-import { ForwardingAddressField } from "@/features/settings/channels/email/ForwardingAddressField"
 import { EmailFields } from "@/features/settings/channels/email/EmailFields"
 import {
   emailErrorField,
@@ -50,13 +46,11 @@ function parseSettings(raw: string): Record<string, unknown> | null {
 
 export function ChannelDialog({
   inboxId,
-  channel,
   onClose,
   onCreated,
   kind: preset,
 }: {
   inboxId: string
-  channel: Channel | null
   onClose: () => void
   onCreated: (ch: Channel) => void
   kind?: ChannelKind
@@ -66,12 +60,12 @@ export function ChannelDialog({
   const { workspaceId: ws } = useSession()
   const text = useEnumText()
   const fieldErrors = useEmailFieldErrors()
-  const [kind, setKind] = useState<ChannelKind>(channel?.kind ?? preset ?? "email")
-  const [name, setName] = useState(channel?.name ?? "")
-  const [raw, setRaw] = useState(channel ? JSON.stringify(channel.settings, null, 2) : "{}")
-  const [email, setEmail] = useState<EmailForm>(() => emailForm(channel?.email))
-  const [chat, setChat] = useState<ChatForm>(() => chatForm(channel?.chat))
-  const [app, setApp] = useState<AppForm>(() => appForm(channel?.app))
+  const [kind, setKind] = useState<ChannelKind>(preset ?? "email")
+  const [name, setName] = useState("")
+  const [raw, setRaw] = useState("{}")
+  const [email, setEmail] = useState<EmailForm>(() => emailForm())
+  const [chat, setChat] = useState<ChatForm>(() => chatForm())
+  const [app, setApp] = useState<AppForm>(() => appForm())
   const settings = kind === "api" ? parseSettings(raw) : {}
   const chatInput = kind === "chat" ? chatChannelInput(chat) : null
   const appInput = kind === "app" ? appChannelInput(app) : null
@@ -86,25 +80,16 @@ export function ChannelDialog({
             : kind === "app" && appInput
               ? { app: appInput }
               : { settings: settings ?? {} }
-      return channel
-        ? unwrap(
-            api.PATCH("/v1/channels/{channelId}", {
-              params: { path: { channelId: channel.id } },
-              body: { name, ...typed },
-            })
-          )
-        : unwrap(
-            api.POST("/v1/inboxes/{inboxId}/channels", {
-              params: { path: { inboxId } },
-              body: { kind, name, ...typed },
-            })
-          )
+      return unwrap(
+        api.POST("/v1/inboxes/{inboxId}/channels", {
+          params: { path: { inboxId } },
+          body: { kind, name, ...typed },
+        })
+      )
     },
     onSuccess: (saved) => {
       void qc.invalidateQueries({ queryKey: keys.channels(ws, inboxId) })
-      void qc.invalidateQueries({ queryKey: ["ws", ws, "channel"] })
-      if (channel) onClose()
-      else onCreated(saved)
+      onCreated(saved)
     },
   })
   const bad = emailErrorField(save.error)
@@ -125,19 +110,16 @@ export function ChannelDialog({
         >
           <div className="flex flex-col gap-5 p-6">
             <DialogHeader>
-              <DialogTitle>{channel ? <Trans>Edit channel</Trans> : <Trans>Add channel</Trans>}</DialogTitle>
+              <DialogTitle>
+                <Trans>Add channel</Trans>
+              </DialogTitle>
               <DialogDescription>
                 <Trans>The kind cannot be changed later.</Trans>
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-5 sm:grid-cols-2">
               <Field label={<Trans>Kind</Trans>}>
-                <Select
-                  value={kind}
-                  onValueChange={(v) => setKind(v as ChannelKind)}
-                  items={text.channel}
-                  disabled={!!channel}
-                >
+                <Select value={kind} onValueChange={(v) => setKind(v as ChannelKind)} items={text.channel}>
                   <SelectTrigger className="w-full" aria-label={t`Kind`}>
                     <SelectValue />
                   </SelectTrigger>
@@ -169,28 +151,17 @@ export function ChannelDialog({
                 set={(patch) => setEmail((f) => ({ ...f, ...patch }))}
                 error={fieldError}
                 taken={taken}
-                sendingLink={channel?.email ? channelLink(inboxId, channel.id) : undefined}
-                ses={channel?.email?.ses}
               />
             )}
-            {kind === "email" && channel?.forwarding_address && <ForwardingAddressField channel={channel} />}
             {kind === "chat" && (
-              <>
-                <ChatFields
-                  f={chat}
-                  set={(patch) => setChat((f) => ({ ...f, ...patch }))}
-                  invalid={chatInput && !chatInput.ok ? chatInput : null}
-                  serverError={badChat}
-                />
-                {channel?.chat && <ChatInstall channel={channel} />}
-              </>
+              <ChatFields
+                f={chat}
+                set={(patch) => setChat((f) => ({ ...f, ...patch }))}
+                invalid={chatInput && !chatInput.ok ? chatInput : null}
+                serverError={badChat}
+              />
             )}
-            {kind === "app" && (
-              <>
-                <AppFields f={app} set={(patch) => setApp((f) => ({ ...f, ...patch }))} />
-                {channel?.app && <AppInstall channel={channel} />}
-              </>
-            )}
+            {kind === "app" && <AppFields f={app} set={(patch) => setApp((f) => ({ ...f, ...patch }))} />}
             {kind === "api" && (
               <Field
                 label={<Trans>Settings (JSON)</Trans>}

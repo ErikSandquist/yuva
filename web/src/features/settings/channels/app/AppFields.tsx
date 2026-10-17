@@ -8,12 +8,12 @@ import { FieldError, FormBlock } from "@/features/settings/channels/parts"
 import { ToggleRow } from "@/features/settings/ui"
 import { Label } from "@/components/ui/label"
 
-export function AppFields({ f, set }: { f: AppForm; set: (patch: Partial<AppForm>) => void }) {
+export function AppAccessFields({ f, set }: { f: AppForm; set: (patch: Partial<AppForm>) => void }) {
   const { t } = useLingui()
   const text = useEnumText()
   const none = f.platforms.length === 0
   return (
-    <FormBlock title={<Trans>Mobile app</Trans>}>
+    <>
       <div className="flex flex-col gap-2">
         <span className="text-body font-medium" id="app-platforms">
           <Trans>Platforms</Trans>
@@ -46,6 +46,14 @@ export function AppFields({ f, set }: { f: AppForm; set: (patch: Partial<AppForm
           aria-label={t`Allow anonymous users`}
         />
       </ToggleRow>
+    </>
+  )
+}
+
+export function AppFields(p: { f: AppForm; set: (patch: Partial<AppForm>) => void }) {
+  return (
+    <FormBlock title={<Trans>Mobile app</Trans>}>
+      <AppAccessFields {...p} />
     </FormBlock>
   )
 }
