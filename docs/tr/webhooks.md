@@ -55,7 +55,7 @@ göre sıralayın.
 | `subscription.created` | Biri uç noktanın gelen kutusundaki bir [listeye](lists.md) abone oldu, her durumda (onay beklerken `pending`) | `subscription`, `list`, `contact` |
 | `subscription.updated` | Bir abonelik onaylandı, iptal edildi (`unsubscribe_reason` ile) ya da yeniden abone olundu | `subscription`, `list`, `contact`, `previous_state` |
 | `analytics.alert` | Bir [Analytics](analytics.md) web sitesi [uyarı](analytics-support.md#uyarılar) tetikledi: ani artış, düşüş, hedef düşüşü, destek yükü ya da yeni yönlendiren | `alert`, `property` |
-| `broadcast.updated` | Bir [bülten](broadcasts.md) durum değiştirdi: zamanlandı, gönderiliyor, duraklatıldı, gönderildi, iptal edildi, başarısız oldu ya da taslağa döndü | `broadcast`, `previous_state` |
+| `broadcast.updated` | Bir [bülten](broadcasts.md) durum değiştirdi: zamanlandı, gönderiliyor, duraklatıldı, gönderildi, iptal edildi, başarısız oldu taslağa döndü ya da hızı değişti | `broadcast`, `previous_state` |
 
 Her gövdede `type`, `timestamp` (olayın zamanı), `workspace_id`, `inbox_id` (kişi olaylarında yok)
 ve `data` bulunur. Kişinin canlı bağlantısı yoksa `data.contact.online` `false` olur:

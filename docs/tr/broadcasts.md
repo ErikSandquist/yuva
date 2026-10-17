@@ -80,6 +80,18 @@ da çalışır; yedek değeri olmayan bir alan birinde boş kalacaksa gözden ge
 "Tıklamaları say" kapalıdır. Bkz. [Tıklama takibi](#tıklama-takibi). Bağlantılar ayrıca [Analytics](#kampanya-takibi-utm) için
 kampanya parametreleri taşır; siz kapatmadıkça açıktır.
 
+### Gönderim hızı
+
+Bir bültenin kendi hızı olabilir: saatte, günde ve ayda (30 gün) en fazla şu kadar e-posta; üçü de isteğe
+bağlıdır. Hazırlama ekranındaki "Hızı sınırla" bunu açar. Yuva e-postaları üçünün en sıkısına göre eşit
+aralıklarla dağıtır; yani günde 100, gece yarısı 100 e-posta değil, yaklaşık her 14 dakikada bir e-posta
+demektir ve hiçbir 60 dakika, 24 saat ya da 30 gün sizin verdiğinizden fazlasını almaz. Kanalın hızı ve
+çalışma alanının [günlük sınırı](#günlük-sınır) yine geçerlidir; bültenin hızı onu yalnızca yavaşlatabilir.
+Her deneme sayılır, yeniden deneme de; bu arada abonelikten çıktığı için atlananlar sayılmaz. Bir bülten
+kendi hızıyla en fazla 365 gün sürebilir; kontrol listesi bundan önce sizi durdurur. Zamanlanmış,
+gönderilen ya da duraklatılmış bir bültenin hızını sayfasından değiştirebilirsiniz; bir sonraki e-postaya
+uygulanır. Duraklatma e-posta biriktirmez: devam ettirdikten sonra bir sonraki e-posta sırasını bekler.
+
 ### Deneme gönderimleri
 
 Her gönderimden önce kendinize ya da en fazla beş üyeye deneme gönderin. Gerçek e-postayla aynı görünür;
@@ -105,6 +117,7 @@ maddeler göndermeyi durdurur; uyarılar durdurmaz.
 | Görsel açıklamaları | Uyarı: bir görselde alternatif metin yok. |
 | Bağlantılar | Uyarı: bir bağlantı `http:` kullanıyor. |
 | Konu | Boş ya da 300 karakterden uzun. 80 üstü uyarıdır. |
+| Gönderim hızı | Bültenin hızı gönderimi 365 günden uzun sürdürür. |
 | Günlük sınır | Uyarı: [günlük sınır](#günlük-sınır) gönderimi bir günden uzun sürdürür. |
 | Deneme e-postası | Uyarı: son değişiklikten beri deneme gitmedi. |
 | Tıklama sayımı | Açıksa uyarı: bağlantılar sunucunun bağlantı alan adına işaret eder. |
@@ -124,7 +137,7 @@ Zamanladığınızda olanlar:
 ## 4. Gönderilirken
 
 Bülten sayfası ilerlemeyi canlı izler: belirlenen alıcılar, gönderilenler, başarısızlar, geri dönenler ve
-yaklaşık ne zaman biteceği.
+yaklaşık ne zaman biteceği. Hız varsa sayfa bir sonraki e-postanın ne zaman çıkacağını gösterir; Hızı değiştir onu ayarlar.
 
 | Durum | Anlamı |
 |---|---|
@@ -309,9 +322,12 @@ curl -X POST https://support.example.com/v1/broadcasts \
     "name": "October newsletter",
     "subject": "What is new in October",
     "design_id": "DESIGN-ID",
-    "audience": { "list_ids": ["LIST-ID"] }
+    "audience": { "list_ids": ["LIST-ID"] },
+    "pace": { "per_hour": 10, "per_day": 100 }
   }'
 ```
+
+`pace` tek başına `PATCH` edilirse zamanlanmış ya da çalışan bir bültenin hızı değişir; `{}` hızı kaldırır.
 
 Sonra kontrol listesi için `GET /v1/broadcasts/{broadcastId}/review`, alıcı sayısı için
 `POST .../audience` ve bir üyeye deneme göndermek için `POST .../test` (API anahtarı üyeleri
@@ -332,7 +348,7 @@ curl -X POST https://support.example.com/v1/broadcasts/BROADCAST-ID/schedule \
 | Uç nokta | Kullanım |
 |---|---|
 | `GET`, `POST /v1/broadcasts` | Taslakları listeler (`inbox_id`, `state`) ve oluşturur. |
-| `GET`, `PATCH`, `DELETE /v1/broadcasts/{broadcastId}` | Okur, taslağı değiştirir, taslağı ya da bitmiş bülteni siler. |
+| `GET`, `PATCH`, `DELETE /v1/broadcasts/{broadcastId}` | Okur, taslağı (ya da zamanlanmış veya çalışan bir bültenin yalnızca hızını) değiştirir, taslağı ya da bitmiş bülteni siler. |
 | `POST /v1/broadcasts/{broadcastId}/audience` | Alıcıları sayar: alıcılar, kimin neden dışarıda kaldığı, boş kalacak birleştirme alanları. |
 | `GET /v1/broadcasts/{broadcastId}/review` | Kontrol listesi. |
 | `POST /v1/broadcasts/{broadcastId}/test` | Üyelere deneme gönderir (`member_ids`, `contact_id`). |
@@ -349,7 +365,7 @@ curl -X POST https://support.example.com/v1/broadcasts/BROADCAST-ID/schedule \
 `by_keys` değerlerini içeren bir `broadcasts` nesnesi döndürür. Bir kanalın `email.broadcast_smtp` ve
 `email.broadcast_rate` alanları `PATCH /v1/channels/{channelId}` ile ayarlanır (`broadcast_smtp_remove: true`
 hesabı kaldırır). Tam şekiller [API sözleşmesinde](../../openapi/openapi.yaml). İşlemeye değer hatalar:
-`409 review_failed` (engelleyen `items` ile), `409 audience_changed`, `409 not_draft`, `409 invalid_state`,
+`409 review_failed` (engelleyen `items` ile), `409 audience_changed`, `409 not_draft`, `409 invalid_state`, `409 pace_too_slow`,
 `403 broadcasts_approval_required`, `403 broadcasts_suspended`, `403 broadcasts_by_keys_disabled`,
 `403 broadcasts_disabled` ve `429 test_limit`.
 
@@ -367,7 +383,7 @@ Bu kapsamlar var olmadan önce yapılmış anahtarlar bunları almaz.
 
 | Ad | Anlamı |
 |---|---|
-| `broadcast.updated` | [Webhook](webhooks.md) ve olay akışı olayı: bülten durum değiştirdi. `data.broadcast` bültendir, `data.previous_state` eski durumdur. |
+| `broadcast.updated` | [Webhook](webhooks.md) ve olay akışı olayı: bülten durum ya da hız değiştirdi. `data.broadcast` bültendir, `data.previous_state` eski durumdur. |
 | `broadcast.progress` | Yalnızca gerçek zamanlı (`/v1/realtime`): hazırlanan ya da gönderilen bir bültenin sayıları, en fazla 5 saniyede bir. Saklanmaz, yeniden oynatılmaz; yeniden bağlandıktan sonra bülteni tekrar okuyun. |
 
 İkisi de bültenin gelen kutusunu görebilen, `broadcasts:read` sahibi çağıranlara ulaşır. Yanıtlar,
@@ -384,6 +400,7 @@ konuşmanın zaman çizelgesine bir `broadcast_reply` girdisi ekler.
 | Deneme gönderimi | Çalışma alanı başına saatte 20; her biri 1 ile 5 üyeye |
 | Duraklatma ve iptal şu sürede etki eder | Bir toplu işlem, en fazla 50 e-posta |
 | Hız | Kanal başına saniyede 1 ile 100 e-posta; varsayılan 5 |
+| Bülten hızı | Saatte, günde, 30 günlük ayda 1 ile 10.000.000; gönderim başına en fazla 365 gün |
 | Geçici hatanın yeniden denemeleri | 5 dakika, 30 dakika, 2 saat, 6 saat sonra |
 | HTML | 90 KB uyarı, 102 KB engeller, 500 KB reddedilir |
 | Çalışma alanı başına bülten | `approval` sunucusunda 1.000 |

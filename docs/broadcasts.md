@@ -81,6 +81,18 @@ without a fallback would be empty for anyone.
 "Count clicks" is off. See [Click tracking](#click-tracking). Links also carry campaign parameters for
 [Analytics](#campaign-tracking-utm), on unless you turn them off.
 
+### Sending pace
+
+A broadcast can have its own pace: at most so many mails an hour, a day and a month (30 days), each
+optional. "Limit the pace" in the composer turns it on. Yuva then spaces the mails evenly at the
+tightest of the three, so 100 a day means one mail about every 14 minutes, not 100 at midnight, and no
+60 minutes, 24 hours or 30 days get more than you set. The channel's pace and the workspace's
+[daily limit](#the-daily-limit) still apply; the broadcast's pace can only make it slower. Every
+attempt counts, a retry too; people skipped because they unsubscribed in the meantime do not. A
+broadcast may take at most 365 days at its pace; the review stops you before that. You can change the
+pace of a scheduled, sending or paused broadcast from its page; it applies to the next mail. Pausing
+does not save up mails: after a resume, the next mail waits for its turn.
+
 ### Test sends
 
 Send a test to yourself, or to up to five members, before every send. It looks exactly like the real
@@ -105,6 +117,7 @@ the send; warnings do not.
 | Image descriptions | Warning: an image has no alt text. |
 | Links | Warning: a link uses `http:`. |
 | Subject | Empty or over 300 characters. A warning above 80. |
+| Sending pace | The broadcast's pace would make sending take more than 365 days. |
 | Daily limit | Warning: the [daily limit](#the-daily-limit) makes it take more than one day. |
 | Test mail | Warning: no test went out since the last change. |
 | Click tracking | Warning when on: links point at the server's link domain. |
@@ -124,7 +137,7 @@ What happens when you schedule:
 ## 4. While it sends
 
 The broadcast page follows the progress live: recipients taken, sent, failed, bounced, and when it is
-about done.
+about done. With a pace, the page shows when the next mail goes out and Change pace adjusts it.
 
 | State | Meaning |
 |---|---|
@@ -305,10 +318,13 @@ curl -X POST https://support.example.com/v1/broadcasts \
     "name": "October newsletter",
     "subject": "What is new in October",
     "design_id": "DESIGN-ID",
-    "audience": { "list_ids": ["LIST-ID"] }
+    "audience": { "list_ids": ["LIST-ID"] },
+    "pace": { "per_hour": 10, "per_day": 100 }
   }'
 
 ```
+
+`PATCH` with `pace` alone changes the pace of a scheduled or running broadcast; `{}` removes it.
 
 Then `GET /v1/broadcasts/{broadcastId}/review` for the checklist, `POST .../audience` for the recipient
 count and `POST .../test` for a test mail to a member (an API key names them in `member_ids`). Keys
@@ -328,7 +344,7 @@ curl -X POST https://support.example.com/v1/broadcasts/BROADCAST-ID/schedule \
 | Endpoint | Use |
 |---|---|
 | `GET`, `POST /v1/broadcasts` | List (`inbox_id`, `state`) and create drafts. |
-| `GET`, `PATCH`, `DELETE /v1/broadcasts/{broadcastId}` | Read, change a draft, delete a draft or finished broadcast. |
+| `GET`, `PATCH`, `DELETE /v1/broadcasts/{broadcastId}` | Read, change a draft (or only the pace of a scheduled or running one), delete a draft or finished broadcast. |
 | `POST /v1/broadcasts/{broadcastId}/audience` | Count the audience: recipients, who is left out and why, merge fields that would be empty. |
 | `GET /v1/broadcasts/{broadcastId}/review` | The checklist. |
 | `POST /v1/broadcasts/{broadcastId}/test` | Send a test to members (`member_ids`, `contact_id`). |
@@ -346,7 +362,7 @@ curl -X POST https://support.example.com/v1/broadcasts/BROADCAST-ID/schedule \
 are set with `PATCH /v1/channels/{channelId}` (`broadcast_smtp_remove: true` removes the account).
 Full shapes are in the [API contract](../openapi/openapi.yaml). Errors worth handling:
 `409 review_failed` (with the blocking `items`), `409 audience_changed`, `409 not_draft`,
-`409 invalid_state`, `403 broadcasts_approval_required`, `403 broadcasts_suspended`,
+`409 invalid_state`, `409 pace_too_slow`, `403 broadcasts_approval_required`, `403 broadcasts_suspended`,
 `403 broadcasts_by_keys_disabled`, `403 broadcasts_disabled` and `429 test_limit`.
 
 ### Scopes
@@ -363,7 +379,7 @@ Keys made before these scopes existed do not get them.
 
 | Name | Meaning |
 |---|---|
-| `broadcast.updated` | [Webhook](webhooks.md) and event-feed event: the broadcast changed state. `data.broadcast` is the broadcast, `data.previous_state` the old state. |
+| `broadcast.updated` | [Webhook](webhooks.md) and event-feed event: the broadcast changed state or its pace. `data.broadcast` is the broadcast, `data.previous_state` the old state. |
 | `broadcast.progress` | Realtime only (`/v1/realtime`): the counts of a preparing or sending broadcast, at most every 5 seconds. Not stored or replayed; reload the broadcast after a reconnect. |
 
 Both reach callers with `broadcasts:read` who can see the broadcast's inbox. Replies add a
@@ -380,6 +396,7 @@ Both reach callers with `broadcasts:read` who can see the broadcast's inbox. Rep
 | Test sends | 20 an hour per workspace; 1 to 5 members each |
 | Pause and cancel act within | One batch, at most 50 mails |
 | Pace | 1 to 100 mails a second per channel; 5 by default |
+| Broadcast pace | 1 to 10,000,000 an hour, a day, a 30-day month; at most 365 days per send |
 | Retries of a temporary failure | After 5 minutes, 30 minutes, 2 hours, 6 hours |
 | HTML | 90 KB warning, 102 KB blocks, 500 KB refused |
 | Broadcasts per workspace | 1,000 on an `approval` server |

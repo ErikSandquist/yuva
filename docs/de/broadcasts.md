@@ -86,6 +86,19 @@ Betreff; die Prüfung hält Sie auf, wenn ein Feld ohne Fallback bei jemandem le
 „Count clicks“ ist aus. Siehe [Klick-Tracking](#klick-tracking). Links tragen außerdem Kampagnenparameter für
 [Analytics](#kampagnen-tracking-utm), an, solange Sie es nicht ausschalten.
 
+### Versandtempo
+
+Ein Broadcast kann ein eigenes Tempo haben: höchstens so viele Mails pro Stunde, pro Tag und pro Monat
+(30 Tage), jeweils optional. „Tempo begrenzen“ im Editor schaltet es ein. Yuva verteilt die Mails dann
+gleichmäßig nach dem engsten der drei Werte. 100 am Tag heißt also etwa alle 14 Minuten eine Mail, nicht
+100 um Mitternacht, und keine 60 Minuten, 24 Stunden oder 30 Tage bekommen mehr, als Sie festgelegt haben.
+Das Tempo des Kanals und das [Tageslimit](#das-tageslimit) des Workspaces gelten weiter; das Tempo des
+Broadcasts kann es nur verlangsamen. Jeder Versuch zählt, auch ein erneuter; Personen, die inzwischen
+ausgetragen wurden und übersprungen werden, nicht. Ein Broadcast darf mit seinem Tempo höchstens 365 Tage
+dauern; die Prüfung hält Sie vorher auf. Das Tempo eines geplanten, sendenden oder pausierten Broadcasts
+ändern Sie auf seiner Seite; es gilt ab der nächsten Mail. Eine Pause spart keine Mails an: Nach dem
+Fortsetzen wartet die nächste Mail auf ihren Platz.
+
 ### Testversand
 
 Senden Sie vor jedem Versand einen Test an sich selbst oder an bis zu fünf Mitglieder. Er sieht genau
@@ -111,6 +124,7 @@ den Versand; Warnungen nicht.
 | Image descriptions | Warnung: einem Bild fehlt der Alternativtext. |
 | Links | Warnung: ein Link nutzt `http:`. |
 | Subject | Leer oder länger als 300 Zeichen. Ab 80 eine Warnung. |
+| Sending pace | Das Tempo des Broadcasts würde den Versand länger als 365 Tage dauern lassen. |
 | Daily limit | Warnung: das [Tageslimit](#das-tageslimit) macht den Versand länger als einen Tag. |
 | Test mail | Warnung: seit der letzten Änderung ging kein Test hinaus. |
 | Click tracking | Warnung, wenn an: Links zeigen auf die Link-Domain des Servers. |
@@ -131,7 +145,7 @@ Was beim Planen passiert:
 ## 4. Während des Versands
 
 Die Broadcast-Seite zeigt den Fortschritt live: festgelegte Empfänger, gesendet, fehlgeschlagen,
-gebounct und wann er ungefähr fertig ist.
+gebounct und wann er ungefähr fertig ist. Mit einem Tempo zeigt die Seite, wann die nächste Mail rausgeht, und „Tempo ändern“ passt es an.
 
 | Status | Bedeutung |
 |---|---|
@@ -324,9 +338,12 @@ curl -X POST https://support.example.com/v1/broadcasts \
     "name": "October newsletter",
     "subject": "What is new in October",
     "design_id": "DESIGN-ID",
-    "audience": { "list_ids": ["LIST-ID"] }
+    "audience": { "list_ids": ["LIST-ID"] },
+    "pace": { "per_hour": 10, "per_day": 100 }
   }'
 ```
+
+`PATCH` mit `pace` allein ändert das Tempo eines geplanten oder laufenden Broadcasts; `{}` entfernt es.
 
 Danach `GET /v1/broadcasts/{broadcastId}/review` für die Checkliste, `POST .../audience` für die
 Empfängerzahl und `POST .../test` für eine Testmail an ein Mitglied (ein API-Key nennt sie in
@@ -347,7 +364,7 @@ curl -X POST https://support.example.com/v1/broadcasts/BROADCAST-ID/schedule \
 | Endpunkt | Zweck |
 |---|---|
 | `GET`, `POST /v1/broadcasts` | Entwürfe auflisten (`inbox_id`, `state`) und anlegen. |
-| `GET`, `PATCH`, `DELETE /v1/broadcasts/{broadcastId}` | Lesen, einen Entwurf ändern, einen Entwurf oder beendeten Broadcast löschen. |
+| `GET`, `PATCH`, `DELETE /v1/broadcasts/{broadcastId}` | Lesen, einen Entwurf ändern (oder nur das Tempo eines geplanten oder laufenden), einen Entwurf oder beendeten Broadcast löschen. |
 | `POST /v1/broadcasts/{broadcastId}/audience` | Die Zielgruppe zählen: Empfänger, wer warum ausgelassen wird, Merge-Felder, die leer wären. |
 | `GET /v1/broadcasts/{broadcastId}/review` | Die Checkliste. |
 | `POST /v1/broadcasts/{broadcastId}/test` | Einen Test an Mitglieder senden (`member_ids`, `contact_id`). |
@@ -365,7 +382,7 @@ curl -X POST https://support.example.com/v1/broadcasts/BROADCAST-ID/schedule \
 `email.broadcast_rate` eines Kanals setzen Sie mit `PATCH /v1/channels/{channelId}`
 (`broadcast_smtp_remove: true` entfernt das Konto). Die vollständigen Formen stehen im
 [API-Vertrag](../../openapi/openapi.yaml). Fehler, die Sie behandeln sollten: `409 review_failed` (mit
-den blockierenden `items`), `409 audience_changed`, `409 not_draft`, `409 invalid_state`,
+den blockierenden `items`), `409 audience_changed`, `409 not_draft`, `409 invalid_state`, `409 pace_too_slow`,
 `403 broadcasts_approval_required`, `403 broadcasts_suspended`, `403 broadcasts_by_keys_disabled`,
 `403 broadcasts_disabled` und `429 test_limit`.
 
@@ -383,7 +400,7 @@ Keys, die vor diesen Scopes angelegt wurden, bekommen sie nicht.
 
 | Name | Bedeutung |
 |---|---|
-| `broadcast.updated` | [Webhook](webhooks.md)- und Event-Feed-Ereignis: Der Broadcast hat den Status gewechselt. `data.broadcast` ist der Broadcast, `data.previous_state` der alte Status. |
+| `broadcast.updated` | [Webhook](webhooks.md)- und Event-Feed-Ereignis: Der Broadcast hat den Status oder sein Tempo gewechselt. `data.broadcast` ist der Broadcast, `data.previous_state` der alte Status. |
 | `broadcast.progress` | Nur Realtime (`/v1/realtime`): die Zahlen eines vorbereitenden oder sendenden Broadcasts, höchstens alle 5 Sekunden. Nicht gespeichert und nicht wiedergegeben; lesen Sie den Broadcast nach einem Neuaufbau der Verbindung erneut. |
 
 Beide erreichen Aufrufer mit `broadcasts:read`, die den Posteingang des Broadcasts sehen können.
@@ -400,6 +417,7 @@ Antworten fügen der Zeitleiste der Unterhaltung einen Eintrag `broadcast_reply`
 | Testversand | 20 pro Stunde und Workspace; je 1 bis 5 Mitglieder |
 | Pause und Abbruch wirken innerhalb von | einem Stapel, höchstens 50 Mails |
 | Tempo | 1 bis 100 Mails pro Sekunde und Kanal; standardmäßig 5 |
+| Broadcast-Tempo | 1 bis 10.000.000 pro Stunde, Tag und 30-Tage-Monat; höchstens 365 Tage pro Versand |
 | Wiederholungen bei vorübergehendem Fehler | nach 5 Minuten, 30 Minuten, 2 Stunden, 6 Stunden |
 | HTML | 90 KB Warnung, 102 KB blockiert, 500 KB abgelehnt |
 | Broadcasts pro Workspace | 1.000 auf einem `approval`-Server |
