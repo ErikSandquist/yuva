@@ -450,8 +450,8 @@ msgid "{name} is looking at this too."
 msgstr "{name} is looking at this too."
 
 #: src/features/setup/WaitStep.tsx
-msgid "{name} is ready. Reply to it, and invite your team in Settings › Members when you like."
-msgstr "{name} is ready. Reply to it, and invite your team in Settings › Members when you like."
+msgid "{name} is ready. Reply to it when you like."
+msgstr "{name} is ready. Reply to it when you like."
 
 #: src/features/conversation/Collision.tsx
 msgid "{name} is typing a reply too."
@@ -1575,6 +1575,10 @@ msgstr "Anything using this key stops working at once."
 msgid "API"
 msgstr "API"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "API channel"
+msgstr "API channel"
+
 #: src/app/Palette.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -1908,6 +1912,10 @@ msgstr "Billing"
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "Billing bot"
 msgstr "Billing bot"
+
+#: src/features/settings/channels/ChannelDialog.tsx
+msgid "Billing events"
+msgstr "Billing events"
 
 #: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
@@ -4659,13 +4667,13 @@ msgstr "Invite"
 msgid "Invite language"
 msgstr "Invite language"
 
+#: src/features/setup/WaitStep.tsx
+msgid "Invite your team"
+msgstr "Invite your team"
+
 #: src/features/settings/members/Invites.tsx
 msgid "Invites"
 msgstr "Invites"
-
-#: src/features/settings/channels/ChannelDialog.tsx
-msgid "iOS and Android app"
-msgstr "iOS and Android app"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "IP address"
@@ -6894,6 +6902,7 @@ msgstr "Open the inbox"
 
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/setup/WaitStep.tsx
 msgid "Open the inbox settings"
 msgstr "Open the inbox settings"
 
@@ -7418,6 +7427,7 @@ msgstr "Platform"
 
 #: src/features/settings/channels/app/AppFields.tsx
 #: src/features/setup/AddChannelStep.tsx
+#: src/features/setup/SetupLayout.tsx
 msgid "Platforms"
 msgstr "Platforms"
 
@@ -9034,6 +9044,7 @@ msgstr "Since…"
 
 #: src/features/docs/DocsColumn.tsx
 #: src/features/inbox/SourceFilter.tsx
+#: src/features/setup/SetupLayout.tsx
 msgid "Site"
 msgstr "Site"
 
@@ -9052,6 +9063,7 @@ msgstr "Site name"
 
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
+#: src/features/setup/SetupLayout.tsx
 msgid "Sites"
 msgstr "Sites"
 
@@ -11276,7 +11288,6 @@ msgstr "Webhooks for this inbox"
 msgid "Website addresses"
 msgstr "Website addresses"
 
-#: src/features/settings/channels/ChannelDialog.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/ChannelStep.tsx
 msgid "Website chat"

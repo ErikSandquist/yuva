@@ -76,6 +76,8 @@ export function AppRoutes() {
         <Route path="workspaces/new" element={<NewWorkspacePage />} />
         <Route path="setup" element={<SetupPage flow="hub" />} />
         <Route path="setup/new" element={<SetupPage flow="new" />} />
+        <Route path="setup/new/pick" element={<SetupPage flow="pick" />} />
+        <Route path="setup/new/add/:kind" element={<SetupPage flow="add" />} />
         <Route path="setup/new/:kind" element={<SetupPage flow="new" />} />
         <Route path="setup/start/:kind" element={<SetupPage flow="start" />} />
         <Route path="setup/newsletter" element={<SetupPage flow="newsletter" />} />

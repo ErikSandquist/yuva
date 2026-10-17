@@ -48,7 +48,7 @@ export function StartStep({ kind }: { kind: SetupKind }) {
               icon: <Dot color={i.branding.color} className="size-3 rounded-[4px]" />,
               title: i.name,
               to: `/setup/${i.id}/add/${kind}`,
-              state,
+              state: { ...state, existing: true },
               testId: `setup-start-${i.id}`,
             })),
             {

@@ -830,8 +830,13 @@ remote images, http(s)):
   for the first message, which the preview's own chat widget can send. A documentation site asks
   for the site's name and address, creates a chat channel named after it with that origin and
   anonymous visitors allowed, and shows the elements for plain HTML, Nuxt and Fumadocs/React filled
-  with this server's URL and the channel key, with a link to the guide; the inbox settings start
-  the same flow for another docs site. Home's checklist links to it (it no longer opens on its own), and adding an
+  with this server's URL and the channel key, with a link to the guide. Nothing is created until the channel step is submitted: the name, language,
+  time zone and channel fields live in a per-tab draft (`/setup/new/...`), then the inbox and its
+  channel are created with `Idempotency-Key`s; a failed channel POST keeps the inbox id in the draft so a
+  retry sends only the channel, and Cancel deletes an inbox that got no channel. The inbox settings
+  start the same flow for chat, app or docs on an existing inbox with a trimmed step list (sites or
+  platforms, install, first message), and the last step offers inviting the team and the inbox
+  settings. Home's checklist links to it (it no longer opens on its own), and adding an
   inbox later uses the same page (`/setup/new`).
 - Connect an assistant (Settings › Connected apps): one page per client (Claude, Claude Code, Codex,
   ChatGPT, Cursor, VS Code, other MCP clients) with the server's own `/mcp` URL, a copyable command

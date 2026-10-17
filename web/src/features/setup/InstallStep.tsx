@@ -10,7 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { useInbox } from "@/features/settings/inboxes/queries"
 import { LiveChat, useForgetPreviewVisitor } from "@/features/setup/LiveChat"
 import { DEFAULT_COLOR, DocsMock, MailMock, PhoneMock, PreviewCaption } from "@/features/setup/previews"
-import type { SetupKind, SetupState } from "@/features/setup/setup"
+import { isTrimmed, stepNumber, type SetupKind, type SetupState } from "@/features/setup/setup"
 import { SetupLayout } from "@/features/setup/SetupLayout"
 import { api, unwrap, useVersion, type Channel, type EmailChannel } from "@/lib/api"
 import { keys } from "@/lib/keys"
@@ -417,7 +417,12 @@ export function InstallStep({ inboxId, channelId }: { inboxId: string; channelId
     docs: <Trans>Add Yuva to your documentation</Trans>,
   }
   return (
-    <SetupLayout step={3} preview={preview}>
+    <SetupLayout
+      step={stepNumber("install", isTrimmed(kind, state.existing))}
+      kind={kind}
+      trimmed={isTrimmed(kind, state.existing)}
+      preview={preview}
+    >
       {!channel || !kind ? (
         <div className="flex flex-col gap-4">
           <Skeleton className="h-8 w-3/4" />

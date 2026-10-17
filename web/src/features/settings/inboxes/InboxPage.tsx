@@ -2,7 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { TriangleAlertIcon } from "lucide-react"
 import { createContext, useContext, useMemo, useState } from "react"
-import { Link, useLocation, useNavigate, useParams } from "react-router"
+import { Link, useLocation, useParams } from "react-router"
 
 import { ChannelIcon, ErrorLine, Notice, toast } from "@/components/common"
 import { formatRelative, useEnumText, useErrorText, WEEKDAYS } from "@/components/common/text"
@@ -30,16 +30,7 @@ import {
   SettingRow,
   StatusTag,
 } from "@/features/settings/ui"
-import {
-  api,
-  unwrap,
-  type BusinessHours,
-  type Channel,
-  type ChannelKind,
-  type Inbox,
-  type InboxUpdate,
-  type Weekday,
-} from "@/lib/api"
+import { api, unwrap, type BusinessHours, type Channel, type Inbox, type InboxUpdate, type Weekday } from "@/lib/api"
 import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
 import { useInboxMembers, useMembers } from "@/lib/workspace"
@@ -120,9 +111,8 @@ function ChannelStatus({ inboxId, ch }: { inboxId: string; ch: Channel }) {
 function Channels({ inbox }: { inbox: Inbox }) {
   const { t } = useLingui()
   const text = useEnumText()
-  const navigate = useNavigate()
   const { workspaceId: ws, canManage } = useSession()
-  const [adding, setAdding] = useState<ChannelKind | null>(null)
+  const [adding, setAdding] = useState<"email" | "api" | null>(null)
   const channels = useQuery({
     queryKey: keys.channels(ws, inbox.id),
     queryFn: () =>
@@ -131,10 +121,10 @@ function Channels({ inbox }: { inbox: Inbox }) {
       ),
   })
   const { pathname } = useLocation()
-  const adds: [ChannelKind, string][] = [
-    ["email", t`E-mail`],
+  const wizards: [string, string][] = [
     ["chat", t`Website chat`],
     ["app", t`Mobile app`],
+    ["docs", t`Documentation site`],
   ]
   return (
     <Section title={<Trans>Where customers write from</Trans>}>
@@ -174,13 +164,22 @@ function Channels({ inbox }: { inbox: Inbox }) {
       </Card>
       {canManage && (
         <div className="mt-1 flex flex-wrap gap-2">
-          {adds.map(([kind, label]) => (
+          <Button
+            variant="outline"
+            size="sm"
+            className="bg-card"
+            onClick={() => setAdding("email")}
+            data-testid="add-email"
+          >
+            + <Trans>E-mail</Trans>
+          </Button>
+          {wizards.map(([kind, label]) => (
             <Button
               key={kind}
               variant="outline"
               size="sm"
               className="bg-card"
-              onClick={() => setAdding(kind)}
+              render={<Link to={`/setup/${inbox.id}/add/${kind}`} state={{ back: pathname, existing: true }} />}
               data-testid={`add-${kind}`}
             >
               + {label}
@@ -190,10 +189,10 @@ function Channels({ inbox }: { inbox: Inbox }) {
             variant="outline"
             size="sm"
             className="bg-card"
-            render={<Link to={`/setup/${inbox.id}/add/docs`} state={{ back: pathname }} />}
-            data-testid="add-docs"
+            onClick={() => setAdding("api")}
+            data-testid="add-api"
           >
-            + <Trans>Documentation site</Trans>
+            + <Trans>API channel</Trans>
           </Button>
         </div>
       )}
@@ -203,10 +202,9 @@ function Channels({ inbox }: { inbox: Inbox }) {
           inboxId={inbox.id}
           kind={adding}
           onClose={() => setAdding(null)}
-          onCreated={(ch) => {
+          onCreated={() => {
             toast(t`Channel added`)
             setAdding(null)
-            if (ch.kind === "chat" || ch.kind === "app") navigate(channelLink(inbox.id, ch.id, "install"))
           }}
         />
       )}

@@ -11,7 +11,7 @@ import { StartStep } from "@/features/setup/StartStep"
 import { WaitStep } from "@/features/setup/WaitStep"
 import { useSession } from "@/lib/session"
 
-type Flow = "hub" | "new" | "start" | "newsletter" | "wait"
+type Flow = "hub" | "new" | "pick" | "add" | "start" | "newsletter" | "wait"
 
 function isKind(kind: string | undefined): kind is SetupKind {
   return SETUP_KINDS.includes(kind as SetupKind)
@@ -19,7 +19,8 @@ function isKind(kind: string | undefined): kind is SetupKind {
 
 export function SetupPage({ flow }: { flow?: Flow }) {
   const { canManage } = useSession()
-  const { inboxId, channelId, kind, listId } = useParams()
+  const { inboxId: param, channelId, kind, listId } = useParams()
+  const inboxId = flow === "pick" || flow === "add" ? "new" : param
   if (!canManage) return <Navigate to="/" replace />
   if (flow === "hub") return <SetupHub />
   if (flow === "newsletter") return <NewsletterStep key={listId ?? ""} listId={listId} />

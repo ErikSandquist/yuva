@@ -1,8 +1,8 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { ArrowRightIcon } from "lucide-react"
-import { useState } from "react"
-import { useLocation, useNavigate } from "react-router"
+import { useRef, useState } from "react"
+import { Navigate, useLocation, useNavigate } from "react-router"
 
 import { ErrorLine, StepHeader } from "@/components/common"
 import { PLATFORMS, useEnumText } from "@/components/common/text"
@@ -27,12 +27,16 @@ import { FieldError } from "@/features/settings/channels/parts"
 import { useInbox } from "@/features/settings/inboxes/queries"
 import { Field, ToggleRow } from "@/features/settings/ui"
 import { useKindText } from "@/features/setup/ChannelStep"
+import { idempotencyKey, useInboxDraft, useLeaveSetup } from "@/features/setup/draft"
 import { DEFAULT_COLOR, DocsMock, MailMock, PhoneMock, PreviewCaption, SiteMock } from "@/features/setup/previews"
-import type { SetupKind, SetupState } from "@/features/setup/setup"
+import { browserTimeZone, isTrimmed, stepNumber, type SetupKind, type SetupState } from "@/features/setup/setup"
 import { SetupLayout } from "@/features/setup/SetupLayout"
-import { api, ApiError, unwrap } from "@/lib/api"
+import { api, ApiError, unwrap, type Inbox } from "@/lib/api"
 import { keys } from "@/lib/keys"
+import { slugify } from "@/features/settings/inboxes/slugify"
 import { useSession } from "@/lib/session"
+import { useWizardDraft } from "@/hooks/use-wizard-draft"
+import { timeZones } from "@/lib/utils"
 
 function hostOf(origins: string) {
   for (const line of origins.split(/[\n,]+/)) {
@@ -44,6 +48,10 @@ function hostOf(origins: string) {
     }
   }
   return "www.example.com"
+}
+
+function randomSuffix() {
+  return Math.random().toString(36).slice(2, 6)
 }
 
 function originOfUrl(url: string) {
@@ -61,33 +69,82 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
   const navigate = useNavigate()
   const state = (useLocation().state ?? {}) as SetupState
   const { workspaceId: ws } = useSession()
+  const leaveSetup = useLeaveSetup()
+  const isNew = inboxId === "new"
   const inbox = useInbox(inboxId).data
+  const [inboxDraft, patchInbox, clearInbox] = useInboxDraft()
+  const [fields, patchFields, clearFields] = useWizardDraft(`channel:${inboxId}:${kind}`, {
+    chat: { ...chatForm(), allowAnonymous: true } as ChatForm,
+    app: appForm() as AppForm,
+    docs: { name: "", url: "", touched: false },
+  })
+  const { chat, app, docs } = fields
+  const setChat = (f: (c: ChatForm) => ChatForm) => patchFields({ chat: f(chat) })
+  const setApp = (f: (a: AppForm) => AppForm) => patchFields({ app: f(app) })
+  const setDocs = (f: (d: typeof docs) => typeof docs) => patchFields({ docs: f(docs) })
   const kindText = useKindText()
   const enumText = useEnumText()
   const fieldErrors = useEmailFieldErrors()
-  const [chat, setChat] = useState<ChatForm>(() => ({ ...chatForm(), allowAnonymous: true }))
   const [email, setEmail] = useState<EmailForm>(() => emailForm())
-  const [app, setApp] = useState<AppForm>(() => appForm())
-  const [docs, setDocs] = useState({ name: "", url: "", touched: false })
+  const secret = useRef<string>(undefined)
   const docsOrigin = kind === "docs" ? originOfUrl(docs.url) : null
-  const name = inbox?.name ?? ""
+  const name = isNew ? inboxDraft.name : (inbox?.name ?? "")
   const color = inbox?.branding.color ?? DEFAULT_COLOR
   const chatInput = kind === "chat" ? chatChannelInput(chat) : null
   const appInput = kind === "app" ? appChannelInput(app) : null
+  const trimmed = isTrimmed(kind, !isNew)
+  const leave = () => {
+    clearFields()
+    if (isNew) leaveSetup()
+  }
+
+  const createInbox = async () => {
+    const zones = timeZones()
+    const base = slugify(inboxDraft.name) || "inbox"
+    const body = (slug: string) => ({
+      name: inboxDraft.name.trim(),
+      slug,
+      mode: "async" as const,
+      ask_for_rating: false,
+      default_locale: inboxDraft.locale,
+      timezone: zones.includes(inboxDraft.zone) ? inboxDraft.zone : browserTimeZone(),
+    })
+    const post = (slug: string) =>
+      unwrap(
+        api.POST("/v1/inboxes", {
+          params: { header: { "Idempotency-Key": idempotencyKey(inboxDraft.idempotencyKey, "inbox", body(slug)) } },
+          body: body(slug),
+        })
+      )
+    let created
+    try {
+      created = await post(base)
+    } catch (err) {
+      if (!(err instanceof ApiError) || err.status !== 409 || err.code === "idempotency_key_in_use") throw err
+      created = await post(`${base}-${randomSuffix()}`)
+    }
+    secret.current = created.identity_secret
+    patchInbox({ inboxId: created.inbox.id })
+    qc.setQueryData([...keys.inboxes(ws), created.inbox.id], created.inbox satisfies Inbox)
+    void qc.invalidateQueries({ queryKey: keys.inboxes(ws) })
+    return created.inbox.id
+  }
 
   const save = useMutation({
-    mutationFn: () => {
-      if (kind === "docs")
-        return unwrap(
-          api.POST("/v1/inboxes/{inboxId}/channels", {
-            params: { path: { inboxId } },
-            body: {
-              kind: "chat",
-              name: docs.name.trim(),
-              chat: { allowed_origins: [docsOrigin!], allow_anonymous: true },
-            },
-          })
-        )
+    mutationFn: async () => {
+      const target = isNew ? (inboxDraft.inboxId ?? (await createInbox())) : inboxId
+      const params = (body: unknown) => ({
+        path: { inboxId: target },
+        header: { "Idempotency-Key": idempotencyKey(fields.idempotencyKey, "channel", [target, body]) },
+      })
+      if (kind === "docs") {
+        const body = {
+          kind: "chat" as const,
+          name: docs.name.trim(),
+          chat: { allowed_origins: [docsOrigin!], allow_anonymous: true },
+        }
+        return unwrap(api.POST("/v1/inboxes/{inboxId}/channels", { params: params(body), body }))
+      }
       const typed =
         kind === "email"
           ? { email: emailInput(email) }
@@ -96,17 +153,18 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
             : { app: appInput! }
       const channelKind = kind as "chat" | "email" | "app"
       const channelName = kind === "email" ? name || kindText.email.title : kindText[kind].title
-      return unwrap(
-        api.POST("/v1/inboxes/{inboxId}/channels", {
-          params: { path: { inboxId } },
-          body: { kind: channelKind, name: channelName, ...typed },
-        })
-      )
+      const body = { kind: channelKind, name: channelName, ...typed }
+      return unwrap(api.POST("/v1/inboxes/{inboxId}/channels", { params: params(body), body }))
     },
     onSuccess: (ch) => {
-      void qc.invalidateQueries({ queryKey: keys.channels(ws, inboxId) })
+      const target = ch.inbox_id
+      void qc.invalidateQueries({ queryKey: keys.channels(ws, target) })
       qc.setQueryData(keys.channel(ws, ch.id), ch)
-      navigate(`/setup/${inboxId}/${ch.id}${kind === "docs" ? "?docs" : ""}`, { state })
+      clearFields()
+      if (isNew) clearInbox()
+      navigate(`/setup/${target}/${ch.id}${kind === "docs" ? "?docs" : ""}`, {
+        state: { ...state, existing: !isNew, secret: secret.current ?? state.secret } satisfies SetupState,
+      })
     },
   })
 
@@ -199,16 +257,27 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
     docs: <Trans>Get the snippets</Trans>,
   }[kind]
 
+  if (isNew && !inboxDraft.name.trim() && !save.isSuccess) return <Navigate to="/setup/new" replace state={state} />
+
   return (
-    <SetupLayout step={3} back={`/setup/${inboxId}`} preview={preview}>
+    <SetupLayout
+      step={stepNumber("fields", trimmed)}
+      kind={kind}
+      trimmed={trimmed}
+      onLeave={leave}
+      back={isNew ? "/setup/new/pick" : undefined}
+      preview={preview}
+    >
       <StepHeader title={title}>{lead}</StepHeader>
       <form
         className="flex flex-col gap-6"
         onSubmit={(e) => {
           e.preventDefault()
-          setApp((a) => ({ ...a, touched: true }))
-          setChat((c) => ({ ...c, touched: true }))
-          setDocs((d) => ({ ...d, touched: true }))
+          patchFields({
+            app: { ...app, touched: true },
+            chat: { ...chat, touched: true },
+            docs: { ...docs, touched: true },
+          })
           if (valid) save.mutate()
         }}
         data-testid={`setup-add-${kind}`}

@@ -9,6 +9,7 @@ export function useInbox(inboxId: string) {
   return useQuery({
     queryKey: [...keys.inboxes(ws), inboxId],
     queryFn: () => unwrap(api.GET("/v1/inboxes/{inboxId}", { params: { path: { inboxId } } })),
+    enabled: inboxId !== "new",
   })
 }
 

@@ -1,64 +1,34 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { ArrowRightIcon } from "lucide-react"
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import { useLocation, useNavigate } from "react-router"
 
-import { ErrorLine, StepHeader } from "@/components/common"
+import { StepHeader } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { languageName } from "@/features/contact/ContactDetails"
 import { LANGS } from "@/features/settings/inboxes/InboxPage"
-import { slugify } from "@/features/settings/inboxes/slugify"
 import { ChoiceSelect, Field } from "@/features/settings/ui"
+import { useInboxDraft, useLeaveSetup } from "@/features/setup/draft"
 import { ChatMock, DEFAULT_COLOR, PreviewCaption } from "@/features/setup/previews"
-import { browserLanguage, browserTimeZone, type SetupKind, type SetupState } from "@/features/setup/setup"
+import { type SetupKind, type SetupState } from "@/features/setup/setup"
 import { SetupLayout } from "@/features/setup/SetupLayout"
-import { api, ApiError, unwrap } from "@/lib/api"
-import { keys } from "@/lib/keys"
-import { useSession } from "@/lib/session"
 import { timeZones } from "@/lib/utils"
 
 export function NameStep({ kind }: { kind?: SetupKind }) {
   const { t, i18n } = useLingui()
-  const qc = useQueryClient()
   const navigate = useNavigate()
   const state = (useLocation().state ?? {}) as SetupState
-  const { workspaceId: ws } = useSession()
-  const [name, setName] = useState("")
-  const [locale, setLocale] = useState(browserLanguage)
-  const [zone, setZone] = useState(browserTimeZone)
+  const [draft, patch] = useInboxDraft()
+  const leave = useLeaveSetup()
+  const { name, locale, zone } = draft
   const zones = useMemo(() => timeZones(), [])
   const langs = LANGS.includes(locale) ? LANGS : [locale, ...LANGS]
-  const create = useMutation({
-    mutationFn: async () => {
-      const base = slugify(name) || "inbox"
-      const body = (slug: string) => ({
-        name: name.trim(),
-        slug,
-        mode: "async" as const,
-        ask_for_rating: false,
-        default_locale: locale,
-        timezone: zones.includes(zone) ? zone : browserTimeZone(),
-      })
-      try {
-        return await unwrap(api.POST("/v1/inboxes", { body: body(base) }))
-      } catch (err) {
-        if (!(err instanceof ApiError) || err.status !== 409) throw err
-        return unwrap(api.POST("/v1/inboxes", { body: body(`${base}-${Math.random().toString(36).slice(2, 6)}`) }))
-      }
-    },
-    onSuccess: (r) => {
-      void qc.invalidateQueries({ queryKey: keys.inboxes(ws) })
-      qc.setQueryData([...keys.inboxes(ws), r.inbox.id], r.inbox)
-      navigate(kind ? `/setup/${r.inbox.id}/add/${kind}` : `/setup/${r.inbox.id}`, {
-        state: { ...state, secret: r.identity_secret } satisfies SetupState,
-      })
-    },
-  })
+  const next = kind ? `/setup/new/add/${kind}` : "/setup/new/pick"
   return (
     <SetupLayout
       step={1}
+      onLeave={leave}
       preview={
         <>
           <ChatMock name={name} color={DEFAULT_COLOR} />
@@ -77,7 +47,7 @@ export function NameStep({ kind }: { kind?: SetupKind }) {
         className="flex flex-col gap-6"
         onSubmit={(e) => {
           e.preventDefault()
-          if (name.trim()) create.mutate()
+          if (name.trim()) navigate(next, { state })
         }}
       >
         <Field label={<Trans>Product name</Trans>} htmlFor="setup-name">
@@ -86,7 +56,7 @@ export function NameStep({ kind }: { kind?: SetupKind }) {
             autoFocus
             required
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => patch({ name: e.target.value })}
             maxLength={200}
             placeholder={t`For example Fieldnote`}
             className="h-12 rounded-xl px-3.5 text-title md:text-title"
@@ -99,7 +69,7 @@ export function NameStep({ kind }: { kind?: SetupKind }) {
               id="setup-locale"
               label={t`Language`}
               value={locale}
-              onChange={setLocale}
+              onChange={(v) => patch({ locale: v })}
               options={langs.map((l) => [l, languageName(l, i18n.locale)] as const)}
               className="h-10 w-full rounded-xl"
             />
@@ -110,7 +80,7 @@ export function NameStep({ kind }: { kind?: SetupKind }) {
               list="setup-zones"
               className="h-10 rounded-xl"
               value={zone}
-              onChange={(e) => setZone(e.target.value)}
+              onChange={(e) => patch({ zone: e.target.value })}
             />
             <datalist id="setup-zones">
               {zones.map((z) => (
@@ -119,11 +89,10 @@ export function NameStep({ kind }: { kind?: SetupKind }) {
             </datalist>
           </Field>
         </div>
-        <ErrorLine error={create.error} />
         <Button
           type="submit"
           size="lg"
-          disabled={!name.trim() || create.isPending}
+          disabled={!name.trim()}
           className="self-start"
           data-testid="setup-name-continue"
         >

@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { ArrowRightIcon, MailIcon, PartyPopperIcon } from "lucide-react"
-import { useNavigate, useSearchParams } from "react-router"
+import { ArrowRightIcon, MailIcon, PartyPopperIcon, SettingsIcon, UsersIcon } from "lucide-react"
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router"
 
 import { Notice, StepHeader } from "@/components/common"
 import { Button } from "@/components/ui/button"
@@ -17,6 +17,7 @@ import {
   PhoneMock,
   PreviewCaption,
 } from "@/features/setup/previews"
+import { isTrimmed, stepNumber, type SetupState } from "@/features/setup/setup"
 import { SetupLayout } from "@/features/setup/SetupLayout"
 import type { Channel } from "@/lib/api"
 import { useRealtimeStatus } from "@/lib/realtime"
@@ -62,7 +63,9 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
   const first = docs ? recent?.find((c) => c.channel_id === channelId && c.kind !== "conversation") : recent?.[0]
   const name = inbox?.name ?? ""
   const color = inbox?.branding.color ?? DEFAULT_COLOR
-  const step = first ? 5 : 4
+  const state = (useLocation().state ?? {}) as SetupState
+  const trimmed = isTrimmed(kind, state.existing)
+  const step = trimmed ? stepNumber("wait", true) : first ? 5 : 4
   useForgetPreviewVisitor(channel?.chat?.public_key, `/setup/${inboxId}/${channelId}`)
 
   const preview = !channel ? null : first ? (
@@ -100,6 +103,8 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
   return (
     <SetupLayout
       step={step}
+      kind={kind}
+      trimmed={trimmed}
       back={first ? undefined : `/setup/${inboxId}/${channelId}${docs ? "?docs" : ""}`}
       preview={preview}
       previewOpen={!!first || kind === "chat"}
@@ -112,7 +117,7 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
       ) : first ? (
         <div data-testid="setup-done">
           <StepHeader icon={<PartyPopperIcon />} title={<Trans>Your first conversation is here</Trans>}>
-            <Trans>{name} is ready. Reply to it, and invite your team in Settings › Members when you like.</Trans>
+            <Trans>{name} is ready. Reply to it when you like.</Trans>
           </StepHeader>
           <Button
             size="lg"
@@ -122,6 +127,20 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
             <Trans>Open the conversation</Trans>
             <ArrowRightIcon className="rtl:rotate-180" />
           </Button>
+          <div className="mt-6 flex flex-wrap gap-2">
+            <Button variant="outline" render={<Link to="/settings/members" />} data-testid="setup-invite">
+              <UsersIcon />
+              <Trans>Invite your team</Trans>
+            </Button>
+            <Button
+              variant="outline"
+              render={<Link to={`/settings/inboxes/${inboxId}`} />}
+              data-testid="setup-settings"
+            >
+              <SettingsIcon />
+              <Trans>Open the inbox settings</Trans>
+            </Button>
+          </div>
         </div>
       ) : (
         <>
