@@ -25,6 +25,7 @@ import { designLink } from "@/features/designs/queries"
 import { channelLink, isChecking, useDeliverability } from "@/features/settings/channels/email/deliverability"
 import type { Broadcast, BroadcastReview, BroadcastReviewItem, BroadcastReviewKey } from "@/lib/api"
 import { ApiError } from "@/lib/api"
+import { useInboxes } from "@/lib/workspace"
 import { cn } from "@/lib/utils"
 
 export type Spot = "sender" | "audience" | "content" | "options" | "pace" | "test"
@@ -46,6 +47,7 @@ const ORDER: BroadcastReviewKey[] = [
   "click_tracking",
   "daily_cap",
   "pace",
+  "ses_tenant",
   "test_sent",
 ]
 
@@ -77,6 +79,7 @@ function useItemText(b: Broadcast, review: BroadcastReview) {
   const { t, i18n } = useLingui()
   const deliverability = useDeliverabilityText(b, review)
   const status = useBroadcastsStatus()
+  const tenantMissing = useInboxes().data?.find((i) => i.id === b.inbox_id)?.ses_tenant?.state === "missing"
   const size = review.html_bytes !== undefined ? formatBytes(review.html_bytes, i18n.locale) : ""
   const days = review.days ?? 0
   const paceDays = Math.ceil((paceGap(b.pace) * Math.max(0, review.recipients - 1)) / 86400)
@@ -96,6 +99,7 @@ function useItemText(b: Broadcast, review: BroadcastReview) {
     pace: t`Sending pace`,
     test_sent: t`Test mail`,
     click_tracking: t`Click tracking`,
+    ses_tenant: t`Amazon SES tenant`,
   }
   const problem = (it: BroadcastReviewItem): string | null => {
     const blocking = it.status === "blocking"
@@ -138,6 +142,12 @@ function useItemText(b: Broadcast, review: BroadcastReview) {
           : null
       case "test_sent":
         return t`No test went out since the last change.`
+      case "ses_tenant":
+        return tenantMissing
+          ? t`The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out.`
+          : blocking
+            ? t`Amazon SES paused this inbox’s tenant, or the channel lost its tenant isolation. The broadcast cannot go out until the server’s operator fixes it.`
+            : t`The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts.`
       case "click_tracking":
         return t`Links will point at this server’s link domain instead of your own. Spam filters look at link domains.`
     }
@@ -167,6 +177,8 @@ function fixOf(b: Broadcast, key: BroadcastReviewKey): Fix | null {
       return b.design_id ? { to: designLink(b.design_id) } : { spot: "content" }
     case "click_tracking":
       return { spot: "options" }
+    case "ses_tenant":
+      return { to: `/settings/inboxes/${b.inbox_id}` }
     case "test_sent":
       return { spot: "test" }
     case "pace":

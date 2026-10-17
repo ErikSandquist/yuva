@@ -29,6 +29,18 @@ export type EmailForm = {
   bcClearing: boolean
   rate: string
   rateWas: string
+  sesTenant: string
+  sesTenantWas: string
+  sesSet: string
+  sesSetWas: string
+}
+
+const SES_HOST = /^email-smtp(-fips)?\.[a-z0-9-]+\.amazonaws\.com$/i
+
+export const SES_NAME = "[A-Za-z0-9_-]{0,64}"
+
+export function isSesHost(host: string) {
+  return SES_HOST.test(host.trim())
 }
 
 export function emailForm(e?: EmailChannel): EmailForm {
@@ -57,6 +69,10 @@ export function emailForm(e?: EmailChannel): EmailForm {
     bcClearing: false,
     rate: String(e?.broadcast_rate ?? 5),
     rateWas: String(e?.broadcast_rate ?? 5),
+    sesTenant: e?.ses?.channel_tenant ?? "",
+    sesTenantWas: e?.ses?.channel_tenant ?? "",
+    sesSet: e?.ses?.channel_configuration_set ?? "",
+    sesSetWas: e?.ses?.channel_configuration_set ?? "",
   }
 }
 
@@ -80,6 +96,10 @@ export function emailInput(f: EmailForm): EmailChannelInput {
     out.broadcast_smtp_remove = true
   }
   if (f.rate !== f.rateWas && f.rate.trim()) out.broadcast_rate = Number(f.rate)
+  const ses: NonNullable<EmailChannelInput["ses"]> = {}
+  if (f.sesTenant.trim() !== f.sesTenantWas) ses.tenant = f.sesTenant.trim()
+  if (f.sesSet.trim() !== f.sesSetWas) ses.configuration_set = f.sesSet.trim()
+  if (Object.keys(ses).length) out.ses = ses
   return out
 }
 
@@ -100,6 +120,8 @@ export type EmailField =
   | "broadcast_smtp.password"
   | "broadcast_smtp.tls"
   | "broadcast_rate"
+  | "ses.tenant"
+  | "ses.configuration_set"
 
 export function emailErrorField(err: unknown): EmailField | null {
   if (!(err instanceof ApiError)) return null
@@ -128,5 +150,7 @@ export function useEmailFieldErrors() {
     "broadcast_smtp.password": t`The password is too long.`,
     "broadcast_smtp.tls": t`Pick a TLS mode.`,
     broadcast_rate: t`Use 1 to 100 mails a second.`,
+    "ses.tenant": t`Use letters, digits, - and _, at most 64.`,
+    "ses.configuration_set": t`Use letters, digits, - and _, at most 64.`,
   } satisfies Record<EmailField, string>
 }

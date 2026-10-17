@@ -709,6 +709,10 @@ msgstr "*@example.com, alan adının başka bir kanala ait olmayan tüm adresler
 msgid "+ Add address"
 msgstr "+ Adres ekle"
 
+#: src/features/settings/channels/email/Ses.tsx
+msgid "<0>{domain}</0> is not a verified identity in the server’s Amazon SES account. Mail goes out without tenant isolation and broadcasts are blocked. Ask the server’s operator to verify the domain."
+msgstr "<0>{domain}</0>, sunucunun Amazon SES hesabında doğrulanmış bir kimlik değil. E-postalar kiracı yalıtımı olmadan gider ve bültenler engellenir. Sunucu operatöründen alan adını doğrulamasını isteyin."
+
 #: src/features/settings/channels/app/AppInstall.tsx
 msgid "<0>Android:</0> add the library from <1>sdk/kotlin</1> in the Yuva repository and configure it with the same two values."
 msgstr "<0>Android:</0> Yuva deposundaki <1>sdk/kotlin</1> kütüphanesini ekleyin ve aynı iki değerle yapılandırın."
@@ -1346,9 +1350,52 @@ msgstr "Giriş ve bildirim e-postaları da bu dilde gelir"
 msgid "Also send message.created for members' internal notes. Internal events are never sent."
 msgstr "Üyelerin iç notları için de message.created gönderilir. İç olaylar hiçbir zaman gönderilmez."
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Amazon SES error"
+msgstr "Amazon SES hatası"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Amazon SES itself paused it; the operator has to open a case with AWS."
+msgstr "Göndermeyi Amazon SES’in kendisi durdurdu; operatörün AWS’ye bir destek talebi açması gerekiyor."
+
+#: src/features/settings/channels/email/Ses.tsx
+msgid "Amazon SES paused sending for this inbox. Its mail through SES is refused with “Sending disabled” until the server’s operator reinstates it. Other inboxes keep sending."
+msgstr "Amazon SES bu gelen kutusunun göndermesini durdurdu. SES üzerinden giden e-postalar, sunucu operatörü yeniden etkinleştirene kadar “Sending disabled” yanıtıyla reddedilir. Diğer gelen kutuları göndermeye devam eder."
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Amazon SES paused this inbox’s sending. Its replies and broadcasts through the server’s SES account are refused until the operator reinstates it. Other inboxes keep sending."
+msgstr "Amazon SES bu gelen kutusunun göndermesini durdurdu. Sunucunun SES hesabı üzerinden giden yanıtlar ve bültenler, operatör yeniden etkinleştirene kadar reddedilir. Diğer gelen kutuları göndermeye devam eder."
+
+#: src/components/common/text.ts
+msgid "Amazon SES paused this inbox's tenant, or its channel lost tenant isolation, so the broadcast cannot resume. The server's operator has to fix it first."
+msgstr "Amazon SES bu gelen kutusunun kiracısını durdurdu ya da kanalı kiracı yalıtımını yitirdi; bu yüzden bülten sürdürülemiyor. Önce sunucu operatörünün bunu düzeltmesi gerekiyor."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "Amazon SES paused this inbox’s tenant, or the channel lost its tenant isolation. The broadcast cannot go out until the server’s operator fixes it."
+msgstr "Amazon SES bu gelen kutusunun kiracısını durdurdu ya da kanal kiracı yalıtımını yitirdi. Sunucu operatörü düzeltene kadar bülten gönderilemez."
+
+#: src/features/settings/channels/email/Ses.tsx
+msgid "Amazon SES refused a step of the tenant setup."
+msgstr "Amazon SES kiracı kurulumunun bir adımını reddetti."
+
+#: src/features/settings/channels/email/Ses.tsx
+msgid "Amazon SES refused to set up the tenant: <0>{detail}</0>"
+msgstr "Amazon SES kiracıyı kurmayı reddetti: <0>{detail}</0>"
+
+#: src/features/settings/channels/email/Ses.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Amazon SES refused to set up the tenant."
+msgstr "Amazon SES kiracıyı kurmayı reddetti."
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Amazon SES shows your account’s maximum send rate in its console; new accounts often start at 14. A mailbox account such as Google Workspace or Microsoft 365 is not made for bulk mail: keep it at 1."
 msgstr "Amazon SES, hesabınızın en yüksek gönderim hızını konsolunda gösterir; yeni hesaplar çoğunlukla 14 ile başlar. Google Workspace ya da Microsoft 365 gibi bir posta kutusu hesabı toplu gönderim için yapılmamıştır: 1'de bırakın."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+#: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Amazon SES tenant"
+msgstr "Amazon SES kiracısı"
 
 #: src/features/migrations/UploadStep.tsx
 msgid "An .mbox file, or a .zip of .eml files, of a Maildir or of uncompressed .mbox files."
@@ -2416,6 +2463,10 @@ msgstr "Tamamlandı"
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Conditions"
 msgstr "Koşullar"
+
+#: src/features/settings/channels/email/EmailFields.tsx
+msgid "Configuration set"
+msgstr "Yapılandırma kümesi"
 
 #: src/components/common/text.ts
 msgid "Confirm that everyone in the file agreed, and write where and when they did."
@@ -4213,6 +4264,7 @@ msgid "Hide the selected post"
 msgstr "Seçili gönderiyi gizle"
 
 #: src/components/common/text.ts
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "High"
 msgstr "Yüksek"
 
@@ -4310,6 +4362,10 @@ msgstr "Geri döndüm"
 msgid "Idea"
 msgstr "Fikir"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Identity not verified"
+msgstr "Kimlik doğrulanmadı"
+
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Identity secret"
 msgstr "Kimlik anahtarı"
@@ -4338,6 +4394,10 @@ msgstr "Yalnızca eski posta kutusuna ulaşan bir şey olmazsa taşıma {when} k
 #: src/features/migrations/DoneStep.tsx
 msgid "If you made a password just for Yuva, remove it in {provider}."
 msgstr "Yalnızca Yuva için bir şifre oluşturduysanız {provider} içinden kaldırın."
+
+#: src/features/settings/channels/email/EmailFields.tsx
+msgid "If your Amazon SES account uses tenants, name the tenant this channel’s mail belongs to. Yuva adds it as X-SES-TENANT; the tenant must have this sending domain and the configuration set."
+msgstr "Amazon SES hesabınız kiracı kullanıyorsa, bu kanalın e-postalarının ait olduğu kiracıyı yazın. Yuva bunu X-SES-TENANT olarak ekler; kiracıda bu gönderen alan adı ve yapılandırma kümesi bulunmalıdır."
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "If your DNS provider limits a TXT string to 255 characters, split the value into several strings of one record."
@@ -4838,6 +4898,10 @@ msgstr "Son deneme"
 msgid "Last broadcast"
 msgstr "Son bülten"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Last checked"
+msgstr "Son kontrol"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Last name"
 msgstr "Soyad"
@@ -5058,6 +5122,7 @@ msgid "Looking up the provider…"
 msgstr "Sağlayıcı aranıyor…"
 
 #: src/components/common/text.ts
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Low"
 msgstr "Düşük"
 
@@ -5073,9 +5138,21 @@ msgstr "Küçük harf, rakam ve tire."
 msgid "Lowercase letters, digits, dashes, underscores and dots. Fixed once the broadcast is sent."
 msgstr "Küçük harfler, rakamlar, tire, alt çizgi ve nokta. Bülten gönderildikten sonra değişmez."
 
+#: src/features/settings/channels/email/Ses.tsx
+msgid "Mail carries the tenant <0>{channelTenant}</0> you typed below."
+msgstr "E-postalar aşağıda yazdığınız <0>{channelTenant}</0> kiracısıyla gider."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Mail from these addresses is imported as sent by your team. Your members' sign-in addresses count too."
 msgstr "Bu adreslerden gelen e-postalar ekibinizin gönderdiği olarak aktarılır. Üyelerinizin oturum açma adresleri de sayılır."
+
+#: src/features/settings/channels/email/Ses.tsx
+msgid "Mail from this inbox goes out in its own Amazon SES tenant, <0>{tenant}</0>, so its reputation is kept apart from your other inboxes and other senders."
+msgstr "Bu gelen kutusunun e-postaları kendi Amazon SES kiracısı <0>{tenant}</0> içinden gider; böylece itibarı diğer gelen kutularınızdan ve diğer göndericilerden ayrı tutulur."
+
+#: src/features/settings/channels/email/Ses.tsx
+msgid "Mail from this inbox goes out in its own Amazon SES tenant, so its reputation is kept apart from your other inboxes and other senders."
+msgstr "Bu gelen kutusunun e-postaları kendi Amazon SES kiracısı içinden gider; böylece itibarı diğer gelen kutularınızdan ve diğer göndericilerden ayrı tutulur."
 
 #: src/components/common/text.ts
 msgid "Mail from Yuva"
@@ -6149,6 +6226,7 @@ msgstr "Bu e-postayı kimse almayacak. Abonesi olan listeler seçin ya da koşul
 
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/contact/MergePreview.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "None"
 msgstr "Yok"
@@ -7029,12 +7107,21 @@ msgstr "Gönderimi duraklat ya da sürdür"
 
 #: src/components/common/text.ts
 #: src/features/migrations/text.ts
+#: src/features/settings/inboxes/InboxPage.tsx
 msgid "Paused"
 msgstr "Duraklatıldı"
 
 #: src/components/common/text.ts
+msgid "Paused because Amazon SES paused this inbox's tenant, or the channel lost its tenant isolation. Resume it once the server's operator has fixed that."
+msgstr "Amazon SES bu gelen kutusunun kiracısını durdurduğu ya da kanal kiracı yalıtımını yitirdiği için duraklatıldı. Sunucu operatörü düzelttikten sonra sürdürün."
+
+#: src/components/common/text.ts
 msgid "Paused because the workspace may not send broadcasts for now."
 msgstr "Çalışma alanı şimdilik bülten gönderemediği için duraklatıldı."
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Paused by Amazon SES"
+msgstr "Amazon SES durdurdu"
 
 #: src/components/common/text.ts
 msgid "Paused by the server's operator."
@@ -7683,6 +7770,10 @@ msgstr "Microsoft Entra'da bir uygulama kaydedin"
 msgid "Registration"
 msgstr "Sicil"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Reinstated"
+msgstr "Yeniden etkinleştirildi"
+
 #: src/components/common/ServiceWorkerBridge.tsx
 msgid "Reload"
 msgstr "Yenile"
@@ -7941,6 +8032,10 @@ msgstr "Spam olarak bildirildi"
 #: src/features/reports/ReportsColumn.tsx
 msgid "Reports"
 msgstr "Raporlar"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Reputation impact"
+msgstr "İtibar etkisi"
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
@@ -8434,9 +8529,15 @@ msgstr "Gönderen bilgileri"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/migrations/UploadStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sending"
 msgstr "Gönderme"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgctxt "SES tenant status"
+msgid "Sending"
+msgstr "Gönderiyor"
 
 #: src/features/conversation/messages/DeliveryState.tsx
 msgid "Sending by e-mail…"
@@ -8576,6 +8677,10 @@ msgstr "Sunucu ayarları"
 msgid "Server URL"
 msgstr "Sunucu adresi"
 
+#: src/features/settings/channels/email/EmailFields.tsx
+msgid "SES tenant"
+msgstr "SES kiracısı"
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "Set up e-mail"
 msgstr "E-postayı kur"
@@ -8584,6 +8689,14 @@ msgstr "E-postayı kur"
 #: src/features/setup/SetupHub.tsx
 msgid "Set up Yuva"
 msgstr "Yuva’yı kur"
+
+#: src/features/settings/channels/email/Ses.tsx
+msgid "Setting up the inbox’s Amazon SES tenant…"
+msgstr "Gelen kutusunun Amazon SES kiracısı kuruluyor…"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Setting up the tenant…"
+msgstr "Kiracı kuruluyor…"
 
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
@@ -9649,6 +9762,14 @@ msgstr "Gelen kutusu salt okunur olarak açılamadı."
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "Gelen kutusunun henüz resmi adı ya da posta adresi yok. Yasanın istediği gibi her bülten bunlarla biter."
 
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
+msgstr "Gelen kutusunun Amazon SES kiracısı hâlâ kuruluyor. Bülten gönderilebilir, ama başlamadan önce bunu bir kez daha kontrol edin."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
+msgstr "Gelen kutusunun Amazon SES kiracısı artık yok. Sunucu onu yeniden oluşturur; o zamana kadar bülten gönderilemez."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "İYS dosyası, İYS'nin sütunlarıyla abone başına bir satır içerir: abone olanlar için ONAY, ayrılanlar için RET. İzinleri İYS'ye kendiniz yüklemeniz içindir. Onay bekleyen abonelikler dosyaya alınmaz."
@@ -9935,6 +10056,10 @@ msgstr "Bugün ekip"
 msgid "The team today:"
 msgstr "Ekip bugün:"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "The tenant is gone from Amazon SES. Broadcasts are blocked until the server sets it up again."
+msgstr "Kiracı Amazon SES’ten silinmiş. Sunucu yeniden kurana kadar bültenler engellenir."
+
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "The test mail arrived without results from a receiving server this Yuva trusts, so SPF, DKIM and DMARC could not be read and only DNS was checked. Ask the server’s operator to set the trusted receiving server."
 msgstr "Deneme e-postası, bu Yuva'nın güvendiği bir alan sunucunun sonuçları olmadan ulaştı; bu yüzden SPF, DKIM ve DMARC okunamadı, yalnızca DNS denetlendi. Sunucunun yöneticisinden güvenilen alan sunucuyu tanımlamasını isteyin."
@@ -10103,6 +10228,14 @@ msgstr "Bu kanalın SMTP hesabı yok, bu yüzden bülten ya da deneme e-postası
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "This channel has no Yuva DKIM key."
 msgstr "Bu kanalın Yuva DKIM anahtarı yok."
+
+#: src/features/settings/channels/email/Ses.tsx
+msgid "This channel is not isolated in an Amazon SES tenant."
+msgstr "Bu kanal bir Amazon SES kiracısında yalıtılmış değil."
+
+#: src/features/settings/channels/email/Ses.tsx
+msgid "This channel sends through Amazon SES in another account or region, so Yuva cannot isolate it in a tenant. Mail goes out without one."
+msgstr "Bu kanal başka bir hesap ya da bölgedeki Amazon SES üzerinden gönderiyor; Yuva onu bir kiracıda yalıtamaz. E-postalar kiracısız gider."
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "This channel’s broadcasts go through Amazon SES, which signs your mail with your domain through Easy DKIM. Yuva DKIM is for other relays; set up Easy DKIM for your domain in SES instead."
@@ -10819,6 +10952,11 @@ msgstr "En fazla 200 karakter girin."
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Use at most 500 characters."
 msgstr "En fazla 500 karakter kullanın."
+
+#: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/settings/channels/email/form.ts
+msgid "Use letters, digits, - and _, at most 64."
+msgstr "Harf, rakam, - ve _ kullanın; en fazla 64 karakter."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Use lowercase letters, digits, dashes, underscores and dots, starting with a letter or digit."

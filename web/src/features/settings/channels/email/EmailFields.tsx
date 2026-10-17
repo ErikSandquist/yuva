@@ -8,10 +8,11 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
-import { TLS, type EmailField, type EmailForm } from "@/features/settings/channels/email/form"
+import { SesStatus } from "@/features/settings/channels/email/Ses"
+import { isSesHost, SES_NAME, TLS, type EmailField, type EmailForm } from "@/features/settings/channels/email/form"
 import { FieldError, FormBlock } from "@/features/settings/channels/parts"
 import { Field, ToggleRow } from "@/features/settings/ui"
-import type { SmtpTls } from "@/lib/api"
+import type { EmailSes, SmtpTls } from "@/lib/api"
 
 type Props = {
   f: EmailForm
@@ -19,6 +20,7 @@ type Props = {
   error: (field: EmailField) => string | undefined
   taken: boolean
   sendingLink?: string
+  ses?: EmailSes
 }
 
 function useInvalid({ error, taken }: Pick<Props, "error" | "taken">) {
@@ -485,12 +487,74 @@ function BroadcastSending(p: Props) {
   )
 }
 
+function SesTenant(p: Props) {
+  const { f, set, error, ses } = p
+  const invalid = useInvalid(p)
+  const { t } = useLingui()
+  const errorText = t`Use letters, digits, - and _, at most 64.`
+  const shown = !!ses || isSesHost(f.host) || (f.bc && isSesHost(f.bcHost))
+  if (!shown) return null
+  const typed = ses?.source !== "server"
+  const bad = (v: string) => v !== "" && !/^[A-Za-z0-9_-]{1,64}$/.test(v.trim())
+  const nameError = (field: "ses.tenant" | "ses.configuration_set", v: string) =>
+    error(field) ?? (bad(v) ? errorText : undefined)
+  const invalidName = (field: "ses.tenant" | "ses.configuration_set", v: string) => ({
+    ...invalid(field),
+    "aria-invalid": bad(v) || !!error(field) || undefined,
+    "aria-describedby": bad(v) || error(field) ? `err-${field}` : undefined,
+  })
+  return (
+    <FormBlock title={<Trans>Amazon SES tenant</Trans>} data-testid="ses-tenant">
+      {ses && <SesStatus ses={ses} address={f.fromAddress || f.address} />}
+      {typed && (
+        <>
+          <p className="-mt-2 text-caption text-muted-foreground">
+            <Trans>
+              If your Amazon SES account uses tenants, name the tenant this channel’s mail belongs to. Yuva adds it as
+              X-SES-TENANT; the tenant must have this sending domain and the configuration set.
+            </Trans>
+          </p>
+          <div className="grid gap-5 sm:grid-cols-2">
+            <Field label={<Trans>SES tenant</Trans>} htmlFor="ses-tenant">
+              <Input
+                id="ses-tenant"
+                maxLength={64}
+                pattern={SES_NAME}
+                dir="ltr"
+                autoComplete="off"
+                value={f.sesTenant}
+                onChange={(e) => set({ sesTenant: e.target.value })}
+                {...invalidName("ses.tenant", f.sesTenant)}
+              />
+              <FieldError id="err-ses.tenant">{nameError("ses.tenant", f.sesTenant)}</FieldError>
+            </Field>
+            <Field label={<Trans>Configuration set</Trans>} htmlFor="ses-configuration-set">
+              <Input
+                id="ses-configuration-set"
+                maxLength={64}
+                pattern={SES_NAME}
+                dir="ltr"
+                autoComplete="off"
+                value={f.sesSet}
+                onChange={(e) => set({ sesSet: e.target.value })}
+                {...invalidName("ses.configuration_set", f.sesSet)}
+              />
+              <FieldError id="err-ses.configuration_set">{nameError("ses.configuration_set", f.sesSet)}</FieldError>
+            </Field>
+          </div>
+        </>
+      )}
+    </FormBlock>
+  )
+}
+
 export function EmailFields(p: Props) {
   return (
     <>
       <Receiving {...p} />
       <Sending {...p} />
       <BroadcastSending {...p} />
+      <SesTenant {...p} />
       <AutoReply {...p} />
     </>
   )

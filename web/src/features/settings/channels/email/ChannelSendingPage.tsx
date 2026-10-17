@@ -4,6 +4,7 @@ import { Navigate, useLocation, useParams } from "react-router"
 
 import { ErrorLine } from "@/components/common"
 import { Skeleton } from "@/components/ui/skeleton"
+import { SesStatus } from "@/features/settings/channels/email/Ses"
 import { DeliverabilityCard, DkimSection } from "@/features/settings/channels/email/Deliverability"
 import { InboxProvider } from "@/features/settings/inboxes/InboxPage"
 import { PageHeader } from "@/features/settings/ui"
@@ -35,6 +36,7 @@ export function ChannelSendingPage() {
               description={<span dir="ltr">{ch.email?.from_address || ch.email?.address}</span>}
               back={{ to: `/settings/inboxes/${inbox.id}`, label: inbox.name }}
             />
+            {ch.email?.ses && <SesStatus ses={ch.email.ses} address={ch.email.from_address || ch.email.address} />}
             <DeliverabilityCard channel={ch} />
             <DkimSection key={ch.email?.dkim?.selector ?? "none"} channel={ch} />
           </>

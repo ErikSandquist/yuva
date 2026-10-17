@@ -1,11 +1,11 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { ShieldCheckIcon, Trash2Icon } from "lucide-react"
+import { ShieldCheckIcon, Trash2Icon, TriangleAlertIcon } from "lucide-react"
 import { createContext, useContext, useMemo, useState } from "react"
 import { Link, useLocation, useParams } from "react-router"
 
-import { ChannelIcon, ErrorLine, toast, useConfirm } from "@/components/common"
-import { useEnumText, useErrorText, WEEKDAYS } from "@/components/common/text"
+import { ChannelIcon, ErrorLine, Notice, toast, useConfirm } from "@/components/common"
+import { formatRelative, useEnumText, useErrorText, WEEKDAYS } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -66,8 +66,13 @@ function useAutosave(inbox: Inbox) {
     save.mutate(body, { onSuccess: () => toast(t`Saved`), onError: (e) => toast(errorText(e)) })
 }
 
-function channelState(ch: Channel): "ok" | "receive" {
-  return ch.kind === "email" && !ch.email?.smtp ? "receive" : "ok"
+type SesState = NonNullable<NonNullable<Channel["email"]>["ses"]>["state"]
+
+function channelState(ch: Channel): "ok" | "receive" | "paused" | "identity_missing" | "error" {
+  if (ch.kind !== "email") return "ok"
+  if (!ch.email?.smtp) return "receive"
+  const ses: SesState | undefined = ch.email.ses?.state
+  return ses === "paused" || ses === "identity_missing" || ses === "error" ? ses : "ok"
 }
 
 function Channels({ inbox }: { inbox: Inbox }) {
@@ -126,15 +131,35 @@ function Channels({ inbox }: { inbox: Inbox }) {
                     }
                   />
                 </Item>
-                {channelState(ch) === "ok" ? (
-                  <StatusTag tone="success">
-                    <Trans>Working</Trans>
-                  </StatusTag>
-                ) : (
-                  <StatusTag tone="warning">
-                    <Trans>Receives only</Trans>
-                  </StatusTag>
-                )}
+                {
+                  {
+                    ok: (
+                      <StatusTag tone="success">
+                        <Trans>Working</Trans>
+                      </StatusTag>
+                    ),
+                    receive: (
+                      <StatusTag tone="warning">
+                        <Trans>Receives only</Trans>
+                      </StatusTag>
+                    ),
+                    paused: (
+                      <StatusTag tone="danger">
+                        <Trans>Paused by Amazon SES</Trans>
+                      </StatusTag>
+                    ),
+                    identity_missing: (
+                      <StatusTag tone="warning">
+                        <Trans>Identity not verified</Trans>
+                      </StatusTag>
+                    ),
+                    error: (
+                      <StatusTag tone="danger">
+                        <Trans>Amazon SES error</Trans>
+                      </StatusTag>
+                    ),
+                  }[channelState(ch)]
+                }
                 {ch.kind === "email" && (ch.email?.smtp || ch.email?.broadcast_smtp) && (
                   <Button
                     variant="ghost"
@@ -215,6 +240,77 @@ function Channels({ inbox }: { inbox: Inbox }) {
 
 export const LANGS = ["en", "tr", "de", "fr", "es", "it", "nl", "pt", "ar", "ja"]
 const PROMISES = [15, 60, 240, 1440]
+
+function SesTenant({ inbox }: { inbox: Inbox }) {
+  const { t, i18n } = useLingui()
+  const { canManage } = useSession()
+  const ses = inbox.ses_tenant
+  if (!ses) return null
+  const paused = ses.sending_status === "disabled"
+  const status = {
+    enabled: t({ message: "Sending", context: "SES tenant status" }),
+    reinstated: t`Reinstated`,
+    disabled: t`Paused`,
+  }[ses.sending_status]
+  const impact = {
+    none: t`None`,
+    low: t`Low`,
+    high: t`High`,
+  }[ses.reputation_impact]
+  return (
+    <Section title={<Trans>Amazon SES tenant</Trans>} className="gap-3">
+      {paused && canManage && (
+        <Notice tone="danger" icon={TriangleAlertIcon} data-testid="ses-paused">
+          <p>
+            <Trans>
+              Amazon SES paused this inbox’s sending. Its replies and broadcasts through the server’s SES account are
+              refused until the operator reinstates it. Other inboxes keep sending.
+            </Trans>
+          </p>
+          {ses.paused_by === "aws" && (
+            <p>
+              <Trans>Amazon SES itself paused it; the operator has to open a case with AWS.</Trans>
+            </p>
+          )}
+        </Notice>
+      )}
+      <Card flush>
+        <Rows>
+          <SettingRow
+            title={<Trans>Sending</Trans>}
+            hint={
+              ses.state === "pending" ? (
+                <Trans>Setting up the tenant…</Trans>
+              ) : ses.state === "missing" ? (
+                <Trans>
+                  The tenant is gone from Amazon SES. Broadcasts are blocked until the server sets it up again.
+                </Trans>
+              ) : ses.state === "error" ? (
+                <Trans>Amazon SES refused to set up the tenant.</Trans>
+              ) : undefined
+            }
+          >
+            <StatusTag tone={paused ? "danger" : ses.sending_status === "reinstated" ? "warning" : "success"}>
+              {status}
+            </StatusTag>
+          </SettingRow>
+          <SettingRow title={<Trans>Reputation impact</Trans>} hint={ses.cause || undefined}>
+            <StatusTag
+              tone={ses.reputation_impact === "high" ? "danger" : ses.reputation_impact === "low" ? "warning" : "muted"}
+            >
+              {impact}
+            </StatusTag>
+          </SettingRow>
+          {ses.checked_at && (
+            <SettingRow title={<Trans>Last checked</Trans>}>
+              <span className="text-small text-faint">{formatRelative(ses.checked_at, i18n.locale)}</span>
+            </SettingRow>
+          )}
+        </Rows>
+      </Card>
+    </Section>
+  )
+}
 
 function languageName(tag: string, locale: string) {
   try {
@@ -574,6 +670,7 @@ export function InboxPage() {
         <>
           <PageHeader title={inbox.name} description={`${text.mode[inbox.mode]} · ${inbox.timezone}`} />
           <Channels inbox={inbox} />
+          <SesTenant inbox={inbox} />
           <CustomerSees key={`see:${inbox.id}`} inbox={inbox} />
           <Hours key={`hours:${inbox.id}`} inbox={inbox} />
           <WhoCanReply inbox={inbox} />

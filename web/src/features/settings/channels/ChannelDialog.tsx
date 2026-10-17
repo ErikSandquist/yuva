@@ -170,6 +170,7 @@ export function ChannelDialog({
                 error={fieldError}
                 taken={taken}
                 sendingLink={channel?.email ? channelLink(inboxId, channel.id) : undefined}
+                ses={channel?.email?.ses}
               />
             )}
             {kind === "email" && channel?.forwarding_address && <ForwardingAddressField channel={channel} />}

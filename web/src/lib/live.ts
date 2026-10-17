@@ -573,10 +573,11 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
     }
     case "inbox.updated": {
       const inbox = event.data
+      const keep = (old?: Inbox): Inbox => ({ ...inbox, ses_tenant: inbox.ses_tenant ?? old?.ses_tenant })
       qc.setQueryData<Inbox[]>(keys.inboxes(ctx.ws), (old) =>
-        old?.map((x) => (x.id === inbox.id ? inbox : x)).sort(byName)
+        old?.map((x) => (x.id === inbox.id ? keep(x) : x)).sort(byName)
       )
-      qc.setQueryData([...keys.inboxes(ctx.ws), inbox.id], inbox)
+      qc.setQueryData<Inbox>([...keys.inboxes(ctx.ws), inbox.id], keep)
       return
     }
     case "inbox.deleted": {

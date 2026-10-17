@@ -890,7 +890,7 @@ export interface paths {
         /**
          * Delete an inbox
          * @description Owners, admins and API keys. Deletes its channels, conversations,
-         *     messages and attachments.
+         *     messages and attachments, and its Amazon SES tenant, when the server manages one.
          *
          *     Scope: `inboxes:manage`.
          */
@@ -3452,8 +3452,10 @@ export interface paths {
          * Resume sending
          * @description A paused broadcast continues where it stopped, whatever paused it; the bounce and
          *     complaint rates that pause it on their own count again from now. Refused like scheduling
-         *     while the workspace is suspended or keys may not schedule (`403`), and `409 invalid_state`
-         *     when it is not paused.
+         *     while the workspace is suspended or keys may not schedule (`403`), `409 invalid_state`
+         *     when it is not paused, and `409 ses_tenant_blocked` while the review item `ses_tenant`
+         *     would block it (the inbox's Amazon SES tenant is paused, or its channel lost its tenant
+         *     isolation).
          *
          *     Owners, admins and API keys. Scope: `broadcasts:send`.
          */
@@ -7665,6 +7667,7 @@ export interface components {
             ask_for_rating: boolean;
             sender: components["schemas"]["InboxSender"];
             import?: components["schemas"]["InboxImport"];
+            ses_tenant?: components["schemas"]["SesTenantStatus"];
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
@@ -7824,6 +7827,7 @@ export interface components {
             broadcast_rate: number;
             /** @description The channel's Yuva DKIM key; absent without one. */
             dkim?: components["schemas"]["EmailDkim"];
+            ses?: components["schemas"]["EmailSes"];
         };
         EmailChannelInput: {
             /**
@@ -7851,6 +7855,69 @@ export interface components {
              */
             broadcast_rate?: number;
             dkim?: components["schemas"]["EmailDkimInput"];
+            ses?: components["schemas"]["EmailSesInput"];
+        };
+        /**
+         * @description How the channel's mail through Amazon SES is isolated in an SES tenant. Absent when neither SMTP
+         *     account is Amazon SES. `source: server`: the server manages a tenant for the channel's inbox in
+         *     its own AWS account and writes `X-SES-TENANT` and `X-SES-CONFIGURATION-SET`; `channel`: the
+         *     tenant typed on the channel is written as is; `none`: no tenant header.
+         */
+        EmailSes: {
+            /** @enum {string} */
+            source: "server" | "channel" | "none";
+            /**
+             * @description `isolated`: mail carries the tenant. `pending`: Yuva is setting the tenant up.
+             *     `identity_missing`: the sending address and domain are not a verified identity in the
+             *     server's SES account; mail goes out without the tenant and broadcasts are blocked.
+             *     `paused`: Amazon SES paused the inbox's tenant; mail is refused until it is reinstated.
+             *     `not_isolated`: SES through another AWS account or region and no tenant typed.
+             *     `error`: AWS refused a step (`detail`).
+             * @enum {string}
+             */
+            state: "isolated" | "pending" | "identity_missing" | "paused" | "not_isolated" | "error";
+            /** @description The `X-SES-TENANT` value written; absent unless `isolated` or `paused`. */
+            tenant?: string;
+            /** @description The `X-SES-CONFIGURATION-SET` value written; absent without one. */
+            configuration_set?: string;
+            detail?: string;
+            /** @description The tenant typed on the channel; used when `source` is not `server`. */
+            channel_tenant?: string;
+            channel_configuration_set?: string;
+        };
+        /**
+         * @description A tenant of your own SES account for this channel's mail, for servers that do not manage
+         *     tenants. Absent keeps the stored values; an empty string removes one. Ignored while the server
+         *     manages the inbox's tenant.
+         */
+        EmailSesInput: {
+            tenant?: string;
+            configuration_set?: string;
+        };
+        /**
+         * @description The inbox's Amazon SES tenant, when the server manages one. `sending_status: disabled` means SES
+         *     paused it: the inbox's mail through the server's SES account is refused and its broadcasts pause
+         *     until the server's operator reinstates it. Other inboxes are not affected. `state: missing`
+         *     means the tenant is gone from SES: broadcasts are blocked and mail goes out without the tenant
+         *     until the server has set it up again.
+         */
+        SesTenantStatus: {
+            /** @enum {string} */
+            state: "pending" | "ready" | "error" | "missing";
+            /** @enum {string} */
+            sending_status: "enabled" | "reinstated" | "disabled";
+            /** @enum {string} */
+            reputation_impact: "none" | "low" | "high";
+            /**
+             * @description `policy`: the reputation policy or the operator; `aws`: Amazon SES itself. Only while disabled.
+             * @enum {string}
+             */
+            paused_by?: "policy" | "aws";
+            cause?: string;
+            /** Format: date-time */
+            status_at?: string;
+            /** Format: date-time */
+            checked_at?: string;
         };
         /**
          * @description A DKIM key Yuva signs the channel's broadcast mail with. `dns_name` and `dns_value` are the
@@ -11242,9 +11309,11 @@ export interface components {
          *     spam (after at least 1,000). `sender_error`: the SMTP server refused the account, its TLS or
          *     too many mails in a row (`state_detail` has its answer). `workspace_suspended`: the
          *     workspace was suspended from sending. `operator`: the server's operator paused it.
+         *     `ses_tenant`: Amazon SES paused the inbox's tenant, or the channel lost its tenant isolation;
+         *     `state_detail` says which.
          * @enum {string}
          */
-        BroadcastPauseReason: "member" | "bounce_rate" | "complaint_rate" | "sender_error" | "workspace_suspended" | "operator";
+        BroadcastPauseReason: "member" | "bounce_rate" | "complaint_rate" | "sender_error" | "workspace_suspended" | "operator" | "ses_tenant";
         /**
          * @description Compares the contact attribute named by `attribute`: `eq`, `neq`, `contains` (text,
          *     ignoring case) and `gt`, `lt` (as numbers when both sides are numbers, else as text) with
@@ -11507,7 +11576,7 @@ export interface components {
             by_list: components["schemas"]["BroadcastListCount"][];
         };
         /** @enum {string} */
-        BroadcastReviewKey: "sender_identity" | "sender_ready" | "approval" | "design" | "audience_nonempty" | "merge_fields" | "html_size" | "images_alt" | "links" | "subject" | "deliverability" | "daily_cap" | "pace" | "test_sent" | "click_tracking";
+        BroadcastReviewKey: "sender_identity" | "sender_ready" | "approval" | "design" | "audience_nonempty" | "merge_fields" | "html_size" | "images_alt" | "links" | "subject" | "deliverability" | "daily_cap" | "pace" | "test_sent" | "click_tracking" | "ses_tenant";
         /** @enum {string} */
         BroadcastReviewStatus: "ok" | "warning" | "blocking";
         BroadcastReviewItem: {
