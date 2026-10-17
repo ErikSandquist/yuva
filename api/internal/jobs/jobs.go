@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"log/slog"
 	"time"
+	"uuid"
 
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/riverqueue/river"
 	"github.com/riverqueue/river/riverdriver/riverpgxv5"
 	"github.com/riverqueue/river/rivermigrate"
+	"github.com/riverqueue/river/rivertype"
 
 	"github.com/productdevbook/yuva/api/internal/store"
 )
@@ -31,13 +33,14 @@ func Migrate(ctx context.Context, pool *pgxpool.Pool, log *slog.Logger) error {
 }
 
 const (
-	EventRetention         = 7 * 24 * time.Hour
-	WebhookRetention       = 7 * 24 * time.Hour
-	IdempotencyRetention   = 24 * time.Hour
-	UnusedOAuthClientAge   = 30 * 24 * time.Hour
-	PresenceSweepInterval  = time.Minute
-	OperatorDigestInterval = time.Minute
-	BroadcastSweepInterval = 5 * time.Minute
+	EventRetention          = 7 * 24 * time.Hour
+	WebhookRetention        = 7 * 24 * time.Hour
+	IdempotencyRetention    = 24 * time.Hour
+	UnusedOAuthClientAge    = 30 * 24 * time.Hour
+	PresenceSweepInterval   = time.Minute
+	OperatorDigestInterval  = time.Minute
+	BroadcastSweepInterval  = 5 * time.Minute
+	SESTenantStatusInterval = 5 * time.Minute
 )
 
 // BroadcastQueue holds the broadcast sending jobs, so a large send never delays replies,
@@ -64,8 +67,8 @@ const (
 )
 
 // New starts no migration workers when migrationWorkers is 0, and no analytics workers or analytics
-// periodic jobs when analyticsWorkers is 0.
-func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorkers, migrationWorkers, analyticsWorkers int, register ...func(*river.Workers)) (*river.Client[pgx.Tx], error) {
+// periodic jobs when analyticsWorkers is 0. sesTenants adds the periodic Amazon SES tenant status check.
+func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorkers, migrationWorkers, analyticsWorkers int, sesTenants bool, register ...func(*river.Workers)) (*river.Client[pgx.Tx], error) {
 	if broadcastWorkers < 1 {
 		broadcastWorkers = 2
 	}
@@ -100,6 +103,11 @@ func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorker
 		river.NewPeriodicJob(river.PeriodicInterval(MigrationWatchdogInterval), func() (river.JobArgs, *river.InsertOpts) {
 			return MigrationWatchdogArgs{}, nil
 		}, &river.PeriodicJobOpts{ID: "migration_watchdog", RunOnStart: true}),
+	}
+	if sesTenants {
+		periodic = append(periodic, river.NewPeriodicJob(river.PeriodicInterval(SESTenantStatusInterval), func() (river.JobArgs, *river.InsertOpts) {
+			return SESTenantStatusArgs{}, nil
+		}, &river.PeriodicJobOpts{ID: "ses_tenant_status", RunOnStart: true}))
 	}
 	if analyticsWorkers > 0 {
 		onAnalytics := &river.InsertOpts{Queue: AnalyticsQueue}
@@ -184,6 +192,21 @@ func (OperatorDigestArgs) Kind() string { return "operator_digest" }
 type BroadcastSweepArgs struct{}
 
 func (BroadcastSweepArgs) Kind() string { return "broadcast_sweep" }
+
+// SESTenantStatusArgs is worked by the api package: it reads the sending status of the Amazon SES
+// tenants it manages, of one inbox or, without ids, of all.
+type SESTenantStatusArgs struct {
+	WorkspaceID *uuid.UUID `json:"workspace_id,omitempty"`
+	InboxID     *uuid.UUID `json:"inbox_id,omitempty"`
+}
+
+func (SESTenantStatusArgs) Kind() string { return "ses_tenant_status" }
+
+func (SESTenantStatusArgs) InsertOpts() river.InsertOpts {
+	return river.InsertOpts{UniqueOpts: river.UniqueOpts{ByArgs: true, ByState: []rivertype.JobState{
+		rivertype.JobStateAvailable, rivertype.JobStatePending, rivertype.JobStateRunning, rivertype.JobStateScheduled, rivertype.JobStateRetryable,
+	}}}
+}
 
 // MigrationWatchdogArgs is worked by the api package, which owns migrations.
 type MigrationWatchdogArgs struct{}

@@ -182,6 +182,13 @@ func (s *Server) reviewBroadcast(ctx context.Context, q *store.Queries, b store.
 			return out, err
 		}
 		l.add(oas.BroadcastReviewKeyDeliverability, status, detail)
+		sc, err := s.sesBroadcastCheck(ctx, q, *ch, b.InboxID)
+		if err != nil {
+			return out, err
+		}
+		if sc.applies {
+			l.add(oas.BroadcastReviewKeySesTenant, sc.status, sc.detail)
+		}
 	}
 	limit, sent, err := s.dailyAllowance(ctx, q, w)
 	if err != nil {
@@ -539,6 +546,21 @@ func (s *Server) ResumeBroadcast(ctx context.Context, req oas.ResumeBroadcastReq
 		}
 		if err := s.sendGate(p, w); err != nil {
 			return err
+		}
+		if b.ChannelID != nil {
+			ch, err := q.GetEmailChannel(ctx, store.GetEmailChannelParams{WorkspaceID: b.WorkspaceID, ChannelID: *b.ChannelID})
+			if err != nil && !store.IsNotFound(err) {
+				return err
+			}
+			if err == nil {
+				sc, err := s.sesBroadcastCheck(ctx, q, ch, b.InboxID)
+				if err != nil {
+					return err
+				}
+				if sc.status == oas.ReviewBlocking {
+					return errSESTenantBlocked
+				}
+			}
 		}
 		now := s.now()
 		b.PauseReason, b.StateDetail, b.SenderFailingSince, b.WaitingUntil, b.ResumedAt = nil, nil, nil, nil, &now

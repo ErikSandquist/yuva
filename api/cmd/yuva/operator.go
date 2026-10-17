@@ -25,7 +25,10 @@ import (
 
 const (
 	inboxUsage = "usage: yuva inbox create --workspace <id|name> --name <name> [--slug <slug>] [--locale <tag>] [--timezone <zone>] [--mode live|async] [--expected-reply-minutes <n>]\n" +
-		"       yuva inbox list --workspace <id|name>"
+		"       yuva inbox list --workspace <id|name>\n" +
+		"       yuva inbox ses-tenant show --workspace <id|name> [--inbox <id|slug>]\n" +
+		"       yuva inbox ses-tenant sync (--workspace <id|name> [--inbox <id|slug>] | --all) [--dry-run]\n" +
+		"       yuva inbox ses-tenant reinstate --workspace <id|name> --inbox <id|slug>"
 	channelUsage = "usage: yuva channel create-email --workspace <id|name> --inbox <id|slug> --name <name> --address <address> [--display-name <name>] [--from-address <address>]\n" +
 		"         [--smtp-host <host> [--smtp-port <n>] [--tls starttls|tls|none] [--smtp-username <name>] [--smtp-password-file <path|->]]\n" +
 		"       yuva channel create-chat --workspace <id|name> --inbox <id|slug> --name <name> --origin <origin>... [--allow-anonymous] [--ask-email-offline=false] [--greeting <text>]\n" +
@@ -57,7 +60,7 @@ func operatorCLI(ctx context.Context, cfg config.Config, cmd string, args []stri
 	log := slog.Default()
 	srv := api.New(api.Deps{Log: log, Store: st, Version: cfg.Version, Mailer: mail.Log{Log: log}, Secrets: masterKey,
 		Broadcasts: api.BroadcastSettings{Mode: cfg.Broadcasts, DailyRecipients: cfg.BroadcastDailyRecipients, LinkURL: cfg.MailLinkURL},
-		Analytics:  analyticsSettings(cfg)})
+		Analytics:  analyticsSettings(cfg), SES: sesSettings(cfg), Auth: api.AuthSettings{PublicURL: cfg.PublicURL}})
 	switch cmd {
 	case "inbox":
 		return inboxCommand(ctx, st, srv, args, os.Stdout, os.Stderr)
@@ -133,6 +136,9 @@ func personCommand(ctx context.Context, srv *api.Server, args []string, stderr i
 func inboxCommand(ctx context.Context, st *store.Store, srv *api.Server, args []string, stdout, stderr io.Writer) error {
 	if len(args) == 0 {
 		return errors.New(inboxUsage)
+	}
+	if args[0] == "ses-tenant" {
+		return sesTenantCommand(ctx, st, srv, args[1:], stdout, stderr)
 	}
 	fs := flag.NewFlagSet("inbox "+args[0], flag.ContinueOnError)
 	fs.SetOutput(stderr)
@@ -435,7 +441,13 @@ func broadcastsCommand(ctx context.Context, st *store.Store, srv *api.Server, ar
 	}
 	switch args[0] {
 	case "approve":
-		err = srv.OperatorApproveBroadcasts(ctx, ws.ID, *reason)
+		if err = srv.OperatorApproveBroadcasts(ctx, ws.ID, *reason); err == nil && srv.SESEnabled() {
+			fmt.Fprintf(stderr, "workspace %q (%s): broadcasts approve done\n", ws.Name, ws.ID)
+			if err := syncSESTenants(ctx, srv, ws, nil, false, stdout); err != nil {
+				fmt.Fprintf(stderr, "%v; the approval stays\n", err)
+			}
+			return nil
+		}
 	case "deny":
 		err = srv.OperatorDenyBroadcasts(ctx, ws.ID, *reason)
 	case "suspend":
@@ -622,4 +634,193 @@ func geoipUpdate(ctx context.Context, cfg config.Config, args []string, stdout i
 		_, err = fmt.Fprintf(stdout, "%s (%s), CC BY 4.0\n", analytics.DBIPAttribution, analytics.DBIPAttributionURL)
 	}
 	return err
+}
+
+func sesTenantCommand(ctx context.Context, st *store.Store, srv *api.Server, args []string, stdout, stderr io.Writer) error {
+	if len(args) == 0 {
+		return errors.New(inboxUsage)
+	}
+	fs := flag.NewFlagSet("inbox ses-tenant "+args[0], flag.ContinueOnError)
+	fs.SetOutput(stderr)
+	workspace := fs.String("workspace", "", "workspace id or exact name")
+	inbox := fs.String("inbox", "", "inbox id or slug")
+	all := fs.Bool("all", false, "every inbox with an Amazon SES channel or tenant (sync)")
+	dry := fs.Bool("dry-run", false, "print what sync would change in AWS and change nothing")
+	if err := fs.Parse(args[1:]); err != nil {
+		return err
+	}
+	if fs.NArg() != 0 {
+		return errors.New(inboxUsage)
+	}
+	if !srv.SESEnabled() {
+		return api.ErrSESNotConfigured
+	}
+	pick := func(required bool) (store.Workspace, *uuid.UUID, error) {
+		if *inbox == "" && !required {
+			ws, err := api.FindWorkspace(ctx, st, *workspace)
+			return ws, nil, err
+		}
+		ws, in, err := findInbox(ctx, st, srv, *workspace, *inbox)
+		if err != nil {
+			return ws, nil, err
+		}
+		return ws, &in.Id, nil
+	}
+	switch args[0] {
+	case "show":
+		ws, inboxID, err := pick(false)
+		if err != nil {
+			return err
+		}
+		reports, err := srv.OperatorSESTenants(ctx, ws.ID, inboxID)
+		if err != nil {
+			return err
+		}
+		for _, r := range reports {
+			printSESReport(stdout, r)
+		}
+		return nil
+	case "sync":
+		if *all {
+			if *workspace != "" || *inbox != "" {
+				return errors.New(inboxUsage)
+			}
+			refs, err := srv.OperatorSESInboxes(ctx)
+			if err != nil {
+				return err
+			}
+			failed := 0
+			for _, r := range refs {
+				res, err := srv.OperatorSyncSESTenant(ctx, r.WorkspaceID, r.InboxID, *dry)
+				if !printSESSync(stdout, r.WorkspaceID.String(), r.InboxID.String(), res, err, *dry) {
+					failed++
+				}
+			}
+			if failed > 0 {
+				return fmt.Errorf("%d of %d inboxes failed to sync", failed, len(refs))
+			}
+			return nil
+		}
+		ws, inboxID, err := pick(false)
+		if err != nil {
+			return err
+		}
+		return syncSESTenants(ctx, srv, ws, inboxID, *dry, stdout)
+	case "reinstate":
+		ws, inboxID, err := pick(true)
+		if err != nil {
+			return err
+		}
+		t, err := srv.OperatorReinstateSESTenant(ctx, ws.ID, *inboxID)
+		if err != nil {
+			return err
+		}
+		fmt.Fprintf(stdout, "tenant %s: sending status %s\n", t.Name, t.SendingStatus)
+		return nil
+	default:
+		return errors.New(inboxUsage)
+	}
+}
+
+func syncSESTenants(ctx context.Context, srv *api.Server, ws store.Workspace, inboxID *uuid.UUID, dry bool, stdout io.Writer) error {
+	inboxes, err := srv.OperatorListInboxes(ctx, ws.ID)
+	if err != nil {
+		return err
+	}
+	failed := 0
+	for _, in := range inboxes {
+		if inboxID != nil && in.Id != *inboxID {
+			continue
+		}
+		res, err := srv.OperatorSyncSESTenant(ctx, ws.ID, in.Id, dry)
+		if !printSESSync(stdout, ws.Name, in.Slug, res, err, dry) {
+			failed++
+		}
+	}
+	if failed > 0 {
+		return fmt.Errorf("%d inboxes of workspace %s failed to sync", failed, ws.ID)
+	}
+	return nil
+}
+
+func printSESSync(w io.Writer, workspace, inbox string, res api.SESSyncResult, err error, dry bool) bool {
+	prefix := fmt.Sprintf("%s/%s", workspace, inbox)
+	if err != nil {
+		fmt.Fprintf(w, "%s: sync failed: %v\n", prefix, err)
+		return false
+	}
+	tenant := res.Tenant
+	if tenant == "" {
+		tenant = "no tenant"
+	}
+	states := make([]string, 0, len(res.Channels))
+	for _, c := range res.Channels {
+		states = append(states, c.Address+" "+c.State)
+	}
+	fmt.Fprintf(w, "%s: %s; channels: %s\n", prefix, tenant, orDash(strings.Join(states, ", ")))
+	verb := "done"
+	if dry {
+		verb = "would"
+	}
+	for _, a := range res.Actions {
+		fmt.Fprintf(w, "  %s: %s\n", verb, a)
+	}
+	for _, c := range res.Channels {
+		if c.Detail != "" {
+			fmt.Fprintf(w, "  %s: %s\n", c.Address, c.Detail)
+		}
+	}
+	return true
+}
+
+func printSESReport(w io.Writer, r api.SESInboxReport) {
+	fmt.Fprintf(w, "inbox %s (%s, %s)\n", r.InboxName, r.InboxSlug, r.InboxID)
+	if t := r.Tenant; t != nil {
+		fmt.Fprintf(w, "  tenant          %s\n  arn             %s\n  state           %s", t.Name, orDash(deref(t.Arn)), t.State)
+		if t.Error != nil {
+			fmt.Fprintf(w, " (%s)", *t.Error)
+		}
+		fmt.Fprintf(w, "\n  sending status  %s (policy %s, aws %s)\n", t.SendingStatus, orDash(deref(t.CustomerStatus)), orDash(deref(t.AwsStatus)))
+		if t.Cause != nil {
+			fmt.Fprintf(w, "  cause           %s\n", *t.Cause)
+		}
+		if deref(t.AwsStatus) == "disabled" {
+			fmt.Fprintln(w, "  Amazon SES itself paused this tenant; only an AWS Support case lifts it")
+		}
+		checked := "-"
+		if t.CheckedAt != nil {
+			checked = t.CheckedAt.UTC().Format(time.RFC3339)
+		}
+		fmt.Fprintf(w, "  impact          %s\n  checked at      %s\n", t.ReputationImpact, checked)
+		for _, res := range r.Resources {
+			fmt.Fprintf(w, "  associated      %s %s\n", res.Kind, res.Name)
+		}
+	} else {
+		fmt.Fprintln(w, "  tenant          none")
+	}
+	for _, c := range r.Channels {
+		if c.SES == nil {
+			fmt.Fprintf(w, "  channel %s <%s>: no Amazon SES account\n", c.Name, c.Address)
+			continue
+		}
+		fmt.Fprintf(w, "  channel %s <%s>: %s (%s)", c.Name, c.Address, c.SES.State, c.SES.Source)
+		if c.SES.Detail != nil {
+			fmt.Fprintf(w, ": %s", *c.SES.Detail)
+		}
+		fmt.Fprintln(w)
+	}
+}
+
+func orDash(v string) string {
+	if v == "" {
+		return "-"
+	}
+	return v
+}
+
+func deref(v *string) string {
+	if v == nil {
+		return ""
+	}
+	return *v
 }

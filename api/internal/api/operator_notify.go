@@ -79,6 +79,7 @@ var broadcastNoticeTitles = map[string]string{
 	noticeBroadcastPaused:    "Broadcast paused",
 	noticeAnalyticsLimit:     "Analytics monthly limit reached",
 	noticeAnalyticsDropped:   "Analytics events mostly dropped",
+	noticeSESTenantPaused:    "SES tenant paused",
 }
 
 func oneLine(s string) string {

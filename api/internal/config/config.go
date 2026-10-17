@@ -54,6 +54,8 @@ type Config struct {
 	SESTopicARNs         []string
 	EmailSenderHourlyCap int
 
+	SES SES
+
 	ChatEmailDelay           time.Duration
 	DiscussionEmailDelay     time.Duration
 	AnonymousContactsPerHour int
@@ -136,6 +138,18 @@ type VAPID struct {
 }
 
 func (v VAPID) Enabled() bool { return v.PublicKey != "" }
+
+// SES is the server's own Amazon SES account, whose tenants Yuva manages for the inboxes that send
+// through it (YUVA_SES_*); all of region, key, secret and configuration set, or none.
+type SES struct {
+	Region           string
+	AccessKeyID      string
+	SecretAccessKey  string
+	ConfigurationSet string
+	TenantPrefix     string
+}
+
+func (s SES) Enabled() bool { return s.AccessKeyID != "" }
 
 type Storage struct {
 	Driver            string
@@ -326,6 +340,9 @@ func Load(version string) (Config, error) {
 	if err := c.loadAnalytics(); err != nil {
 		return c, err
 	}
+	if err := c.loadSES(); err != nil {
+		return c, err
+	}
 	if c.SMTP.Enabled() && c.SMTP.From == "" {
 		return c, errors.New("YUVA_SMTP_FROM is required when YUVA_SMTP_HOST is set")
 	}
@@ -403,6 +420,55 @@ func (c *Config) loadAnalytics() error {
 	default:
 		return errors.New("YUVA_GEOIP must be dbip, file or off")
 	}
+	return nil
+}
+
+var (
+	sesRegionRe = regexp.MustCompile(`^[a-z]{2}(-[a-z]+)+-\d$`)
+	sesNameRe   = regexp.MustCompile(`^[A-Za-z0-9_-]{1,64}$`)
+	sesPrefixRe = regexp.MustCompile(`^[A-Za-z0-9_-]{1,32}$`)
+)
+
+func (c *Config) loadSES() error {
+	s := SES{
+		Region:           env("YUVA_SES_REGION", ""),
+		AccessKeyID:      env("YUVA_SES_ACCESS_KEY_ID", ""),
+		SecretAccessKey:  strings.TrimSpace(os.Getenv("YUVA_SES_SECRET_ACCESS_KEY")),
+		ConfigurationSet: env("YUVA_SES_CONFIGURATION_SET", ""),
+		TenantPrefix:     env("YUVA_SES_TENANT_PREFIX", "yuva-"),
+	}
+	set := map[string]bool{
+		"YUVA_SES_REGION": s.Region != "", "YUVA_SES_ACCESS_KEY_ID": s.AccessKeyID != "",
+		"YUVA_SES_SECRET_ACCESS_KEY": s.SecretAccessKey != "", "YUVA_SES_CONFIGURATION_SET": s.ConfigurationSet != "",
+	}
+	n := 0
+	for _, v := range set {
+		if v {
+			n++
+		}
+	}
+	if n == 0 {
+		return nil
+	}
+	if n != len(set) {
+		var missing []string
+		for _, name := range []string{"YUVA_SES_REGION", "YUVA_SES_ACCESS_KEY_ID", "YUVA_SES_SECRET_ACCESS_KEY", "YUVA_SES_CONFIGURATION_SET"} {
+			if !set[name] {
+				missing = append(missing, name)
+			}
+		}
+		return fmt.Errorf("set YUVA_SES_REGION, YUVA_SES_ACCESS_KEY_ID, YUVA_SES_SECRET_ACCESS_KEY and YUVA_SES_CONFIGURATION_SET together, or none; missing %s", strings.Join(missing, ", "))
+	}
+	if !sesRegionRe.MatchString(s.Region) {
+		return fmt.Errorf("YUVA_SES_REGION must be an AWS region such as eu-west-1, got %q", s.Region)
+	}
+	if !sesNameRe.MatchString(s.ConfigurationSet) {
+		return fmt.Errorf("YUVA_SES_CONFIGURATION_SET must be 1 to 64 letters, digits, - or _, got %q", s.ConfigurationSet)
+	}
+	if !sesPrefixRe.MatchString(s.TenantPrefix) {
+		return fmt.Errorf("YUVA_SES_TENANT_PREFIX must be 1 to 32 letters, digits, - or _, got %q", s.TenantPrefix)
+	}
+	c.SES = s
 	return nil
 }
 

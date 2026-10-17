@@ -228,6 +228,7 @@ type bcRenderer struct {
 	fromName, from, replyTo, domain string
 	cfg                             email.SMTPConfig
 	dkim                            *email.DKIMKey
+	ses                             []email.Header
 }
 
 func (s *Server) newBroadcastRenderer(ctx context.Context, q *store.Queries, b store.Broadcast, doc design.Document, ch *store.EmailChannel) (*bcRenderer, error) {
@@ -276,6 +277,9 @@ func (s *Server) newBroadcastRenderer(ctx context.Context, q *store.Queries, b s
 		}
 		r.cfg, r.from, r.domain = cfg, from, email.Domain(from)
 		if r.dkim, err = s.dkimKey(*ch, from, cfg.Host); err != nil {
+			return nil, err
+		}
+		if r.ses, err = s.sesHeaders(ctx, *ch, cfg); err != nil {
 			return nil, err
 		}
 		r.fromName = ch.DisplayName
@@ -422,7 +426,7 @@ func (r *bcRenderer) listHeaders(manage string, list store.MailingList, hasList 
 		listPart = hex8(list.ID)
 	}
 	h = append(h, email.Header{Name: "Feedback-ID", Value: hex8(r.b.ID) + ":" + listPart + ":" + hex8(r.b.WorkspaceID) + ":" + feedbackSenderID})
-	return h
+	return append(h, r.ses...)
 }
 
 // message builds one recipient's mail.
@@ -856,6 +860,17 @@ func (s *Server) SendBroadcasts(ctx context.Context, ws, channelID uuid.UUID, bu
 		if err != nil {
 			return 0, err
 		}
+		if sc, err := s.sesBroadcastCheck(ctx, s.st.Queries, ch, b.InboxID); err != nil {
+			return 0, err
+		} else if sc.wait {
+			deferred[b.ID] = now.Add(sesSetupWait)
+			continue
+		} else if sc.status == oas.ReviewBlocking {
+			if err := s.pauseFor(ctx, ws, b.ID, oas.BroadcastPauseReasonSesTenant, sc.detail); err != nil {
+				return 0, err
+			}
+			continue
+		}
 		if sess != nil && (sessCfg != r.cfg || sessSent >= sessionMessages || time.Since(sessStart) > sessionAge) {
 			closeSession()
 		}
@@ -1137,11 +1152,15 @@ func lastError(results []deliveryResult) string {
 }
 
 func (s *Server) pauseForSender(ctx context.Context, ws, id uuid.UUID, detail string) error {
+	return s.pauseFor(ctx, ws, id, oas.BroadcastPauseReasonSenderError, detail)
+}
+
+func (s *Server) pauseFor(ctx context.Context, ws, id uuid.UUID, reason oas.BroadcastPauseReason, detail string) error {
 	var b store.Broadcast
 	paused := false
 	err := s.inTx(ctx, ws, func(q *store.Queries, events *eventBatch) error {
 		var err error
-		paused, err = s.pauseBroadcast(ctx, q, events, id, ws, oas.BroadcastPauseReasonSenderError, detail)
+		paused, err = s.pauseBroadcast(ctx, q, events, id, ws, reason, detail)
 		if err != nil {
 			return err
 		}
@@ -1149,7 +1168,7 @@ func (s *Server) pauseForSender(ctx context.Context, ws, id uuid.UUID, detail st
 		return err
 	})
 	if err == nil && paused {
-		s.noteBroadcastPaused(ctx, b, string(oas.BroadcastPauseReasonSenderError))
+		s.noteBroadcastPaused(ctx, b, string(reason))
 	}
 	return err
 }

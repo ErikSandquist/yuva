@@ -12,7 +12,7 @@ import (
 
 const maxChannelSettingsBytes = 64 << 10
 
-func (s *Server) channelBody(c store.Channel, e *store.EmailChannel, chat *store.ChatChannel) oas.Channel {
+func (s *Server) channelBody(c store.Channel, e *store.EmailChannel, chat *store.ChatChannel, t *store.SesTenant) oas.Channel {
 	out := oas.Channel{
 		Id: c.ID, InboxId: c.InboxID, Kind: oas.ChannelKind(c.Kind), Name: c.Name,
 		CreatedAt: c.CreatedAt, UpdatedAt: c.UpdatedAt, Settings: oas.ChannelSettings{},
@@ -20,6 +20,7 @@ func (s *Server) channelBody(c store.Channel, e *store.EmailChannel, chat *store
 	_ = json.Unmarshal(c.Settings, &out.Settings)
 	if e != nil {
 		out.Email = emailChannelBody(*e)
+		out.Email.Ses = s.emailSesBody(*e, t)
 		if addr := s.forwardingAddress(*e); addr != "" {
 			out.ForwardingAddress = &addr
 		}
@@ -36,24 +37,28 @@ func (s *Server) oneChannelBody(ctx context.Context, q *store.Queries, c store.C
 	if hasPublicKey(c.Kind) {
 		chat, err := q.GetChatChannel(ctx, store.GetChatChannelParams{WorkspaceID: c.WorkspaceID, ChannelID: c.ID})
 		if store.IsNotFound(err) {
-			return s.channelBody(c, nil, nil), nil
+			return s.channelBody(c, nil, nil, nil), nil
 		}
 		if err != nil {
 			return oas.Channel{}, err
 		}
-		return s.channelBody(c, nil, &chat), nil
+		return s.channelBody(c, nil, &chat, nil), nil
 	}
 	if c.Kind != string(oas.ChannelKindEmail) {
-		return s.channelBody(c, nil, nil), nil
+		return s.channelBody(c, nil, nil, nil), nil
 	}
 	e, err := q.GetEmailChannel(ctx, store.GetEmailChannelParams{WorkspaceID: c.WorkspaceID, ChannelID: c.ID})
 	if store.IsNotFound(err) {
-		return s.channelBody(c, nil, nil), nil
+		return s.channelBody(c, nil, nil, nil), nil
 	}
 	if err != nil {
 		return oas.Channel{}, err
 	}
-	return s.channelBody(c, &e, nil), nil
+	t, err := s.channelTenant(ctx, q, e)
+	if err != nil {
+		return oas.Channel{}, err
+	}
+	return s.channelBody(c, &e, nil, t), nil
 }
 
 func channelSettings(v *oas.ChannelSettings) ([]byte, error) {
@@ -88,6 +93,10 @@ func (s *Server) ListChannels(ctx context.Context, req oas.ListChannelsRequestOb
 	if err != nil {
 		return nil, err
 	}
+	tenant, err := inboxTenant(ctx, s.st.Queries, p.workspaceID, req.InboxId)
+	if err != nil {
+		return nil, err
+	}
 	out := oas.ListChannels200JSONResponse{Items: make([]oas.Channel, 0, len(rows))}
 	for _, r := range rows {
 		var e *store.EmailChannel
@@ -98,7 +107,9 @@ func (s *Server) ListChannels(ctx context.Context, req oas.ListChannelsRequestOb
 		if v, ok := chats[r.ID]; ok {
 			chat = &v
 		}
-		out.Items = append(out.Items, s.channelBody(r, e, chat))
+		ch := s.channelBody(r, e, chat, tenant)
+		redactChannelSES(p, &ch)
+		out.Items = append(out.Items, ch)
 	}
 	return out, nil
 }
@@ -162,7 +173,7 @@ func (s *Server) CreateChannel(ctx context.Context, req oas.CreateChannelRequest
 		return nil, err
 	}
 	var out oas.Channel
-	err = s.st.InTx(ctx, func(q *store.Queries) error {
+	err = s.inTx(ctx, p.workspaceID, func(q *store.Queries, events *eventBatch) error {
 		c, err := q.CreateChannel(ctx, store.CreateChannelParams{
 			ID: id, WorkspaceID: p.workspaceID, InboxID: req.InboxId, Kind: string(req.Body.Kind),
 			Name: name, Settings: settings, Now: s.now(),
@@ -178,11 +189,11 @@ func (s *Server) CreateChannel(ctx context.Context, req oas.CreateChannelRequest
 			if err != nil {
 				return err
 			}
-			out = s.channelBody(c, nil, &chat)
+			out = s.channelBody(c, nil, &chat, nil)
 			return nil
 		}
 		if !isEmail {
-			out = s.channelBody(c, nil, nil)
+			out = s.channelBody(c, nil, nil, nil)
 			return nil
 		}
 		e, err := saveEmailChannel(ctx, q, emailArg)
@@ -198,7 +209,17 @@ func (s *Server) CreateChannel(ctx context.Context, req oas.CreateChannelRequest
 				return err
 			}
 		}
-		out = s.channelBody(c, &e, nil)
+		if e, err = applySESInput(ctx, q, e, req.Body.Email.Ses); err != nil {
+			return err
+		}
+		if e, err = s.sesChannelSaved(ctx, q, events, nil, e, c.InboxID); err != nil {
+			return err
+		}
+		t, err := inboxTenant(ctx, q, p.workspaceID, c.InboxID)
+		if err != nil {
+			return err
+		}
+		out = s.channelBody(c, &e, nil, t)
 		return nil
 	})
 	if err != nil {
@@ -234,6 +255,7 @@ func (s *Server) GetChannel(ctx context.Context, req oas.GetChannelRequestObject
 	if err != nil {
 		return nil, err
 	}
+	redactChannelSES(principalFrom(ctx), &out)
 	return oas.GetChannel200JSONResponse(out), nil
 }
 
@@ -267,7 +289,7 @@ func (s *Server) UpdateChannel(ctx context.Context, req oas.UpdateChannelRequest
 		return nil, errAppNotAllowed
 	}
 	var out oas.Channel
-	err = s.st.InTx(ctx, func(q *store.Queries) error {
+	err = s.inTx(ctx, p.workspaceID, func(q *store.Queries, events *eventBatch) error {
 		c, err := q.UpdateChannel(ctx, store.UpdateChannelParams{WorkspaceID: p.workspaceID, ID: cur.ID, Name: name, Settings: settings, Now: s.now()})
 		if store.IsNotFound(err) {
 			return errChannelGone
@@ -301,6 +323,12 @@ func (s *Server) UpdateChannel(ctx context.Context, req oas.UpdateChannelRequest
 				}
 			}
 			if err := s.applyDkimInput(ctx, q, prev, saved, req.Body.Email.Dkim); err != nil {
+				return err
+			}
+			if saved, err = applySESInput(ctx, q, saved, req.Body.Email.Ses); err != nil {
+				return err
+			}
+			if _, err = s.sesChannelSaved(ctx, q, events, prev, saved, c.InboxID); err != nil {
 				return err
 			}
 		}
@@ -355,10 +383,25 @@ func (s *Server) DeleteChannel(ctx context.Context, req oas.DeleteChannelRequest
 	if err := requireManagerOrKey(p); err != nil {
 		return nil, err
 	}
-	if _, err := s.visibleChannel(ctx, p, req.ChannelId); err != nil {
+	c, err := s.visibleChannel(ctx, p, req.ChannelId)
+	if err != nil {
 		return nil, err
 	}
-	if err := s.st.DeleteChannel(ctx, store.DeleteChannelParams{WorkspaceID: p.workspaceID, ID: req.ChannelId}); err != nil {
+	err = s.inTx(ctx, p.workspaceID, func(q *store.Queries, events *eventBatch) error {
+		e, err := q.GetEmailChannel(ctx, store.GetEmailChannelParams{WorkspaceID: p.workspaceID, ChannelID: c.ID})
+		found := err == nil
+		if err != nil && !store.IsNotFound(err) {
+			return err
+		}
+		if err := q.DeleteChannel(ctx, store.DeleteChannelParams{WorkspaceID: p.workspaceID, ID: c.ID}); err != nil {
+			return err
+		}
+		if found && s.sesOn() && (channelUsesSES(e) || e.SesState != sesStateNone) {
+			events.jobOnce(SESTenantSyncArgs{WorkspaceID: p.workspaceID, InboxID: c.InboxID}, nil)
+		}
+		return nil
+	})
+	if err != nil {
 		return nil, err
 	}
 	return oas.DeleteChannel204Response{}, nil

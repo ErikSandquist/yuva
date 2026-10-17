@@ -1646,7 +1646,7 @@ paths:
       summary: Delete an inbox
       description: |
         Owners, admins and API keys. Deletes its channels, conversations,
-        messages and attachments.
+        messages and attachments, and its Amazon SES tenant, when the server manages one.
 
         Scope: `inboxes:manage`.
       tags: [inboxes]
@@ -6025,8 +6025,10 @@ paths:
       description: |
         A paused broadcast continues where it stopped, whatever paused it; the bounce and
         complaint rates that pause it on their own count again from now. Refused like scheduling
-        while the workspace is suspended or keys may not schedule (`403`), and `409 invalid_state`
-        when it is not paused.
+        while the workspace is suspended or keys may not schedule (`403`), `409 invalid_state`
+        when it is not paused, and `409 ses_tenant_blocked` while the review item `ses_tenant`
+        would block it (the inbox's Amazon SES tenant is paused, or its channel lost its tenant
+        isolation).
 
         Owners, admins and API keys. Scope: `broadcasts:send`.
       tags: [broadcasts]
@@ -12810,6 +12812,8 @@ components:
           $ref: "#/components/schemas/InboxSender"
         import:
           $ref: "#/components/schemas/InboxImport"
+        ses_tenant:
+          $ref: "#/components/schemas/SesTenantStatus"
         created_at:
           type: string
           format: date-time
@@ -13053,6 +13057,8 @@ components:
         dkim:
           $ref: "#/components/schemas/EmailDkim"
           description: The channel's Yuva DKIM key; absent without one.
+        ses:
+          $ref: "#/components/schemas/EmailSes"
     EmailChannelInput:
       type: object
       required: [address]
@@ -13090,6 +13096,93 @@ components:
           description: Broadcast mails a second; absent keeps the stored pace (5 for a new channel).
         dkim:
           $ref: "#/components/schemas/EmailDkimInput"
+        ses:
+          $ref: "#/components/schemas/EmailSesInput"
+    EmailSes:
+      type: object
+      description: |
+        How the channel's mail through Amazon SES is isolated in an SES tenant. Absent when neither SMTP
+        account is Amazon SES. `source: server`: the server manages a tenant for the channel's inbox in
+        its own AWS account and writes `X-SES-TENANT` and `X-SES-CONFIGURATION-SET`; `channel`: the
+        tenant typed on the channel is written as is; `none`: no tenant header.
+      required: [source, state]
+      properties:
+        source:
+          type: string
+          enum: [server, channel, none]
+          x-enum-varnames: [SesSourceServer, SesSourceChannel, SesSourceNone]
+        state:
+          type: string
+          description: |
+            `isolated`: mail carries the tenant. `pending`: Yuva is setting the tenant up.
+            `identity_missing`: the sending address and domain are not a verified identity in the
+            server's SES account; mail goes out without the tenant and broadcasts are blocked.
+            `paused`: Amazon SES paused the inbox's tenant; mail is refused until it is reinstated.
+            `not_isolated`: SES through another AWS account or region and no tenant typed.
+            `error`: AWS refused a step (`detail`).
+          enum: [isolated, pending, identity_missing, paused, not_isolated, error]
+          x-enum-varnames: [SesIsolated, SesPending, SesIdentityMissing, SesPaused, SesNotIsolated, SesError]
+        tenant:
+          type: string
+          description: The `X-SES-TENANT` value written; absent unless `isolated` or `paused`.
+        configuration_set:
+          type: string
+          description: The `X-SES-CONFIGURATION-SET` value written; absent without one.
+        detail:
+          type: string
+        channel_tenant:
+          type: string
+          description: The tenant typed on the channel; used when `source` is not `server`.
+        channel_configuration_set:
+          type: string
+    EmailSesInput:
+      type: object
+      description: |
+        A tenant of your own SES account for this channel's mail, for servers that do not manage
+        tenants. Absent keeps the stored values; an empty string removes one. Ignored while the server
+        manages the inbox's tenant.
+      properties:
+        tenant:
+          type: string
+          pattern: "^([A-Za-z0-9_-]{1,64})?$"
+        configuration_set:
+          type: string
+          pattern: "^([A-Za-z0-9_-]{1,64})?$"
+    SesTenantStatus:
+      type: object
+      description: |
+        The inbox's Amazon SES tenant, when the server manages one. `sending_status: disabled` means SES
+        paused it: the inbox's mail through the server's SES account is refused and its broadcasts pause
+        until the server's operator reinstates it. Other inboxes are not affected. `state: missing`
+        means the tenant is gone from SES: broadcasts are blocked and mail goes out without the tenant
+        until the server has set it up again.
+      required: [state, sending_status, reputation_impact]
+      properties:
+        state:
+          type: string
+          enum: [pending, ready, error, missing]
+          x-enum-varnames: [SesTenantPending, SesTenantReady, SesTenantError, SesTenantMissing]
+        sending_status:
+          type: string
+          enum: [enabled, reinstated, disabled]
+          x-enum-varnames: [SesSendingEnabled, SesSendingReinstated, SesSendingDisabled]
+        reputation_impact:
+          type: string
+          enum: [none, low, high]
+          x-enum-varnames: [SesImpactNone, SesImpactLow, SesImpactHigh]
+        paused_by:
+          type: string
+          description: "`policy`: the reputation policy or the operator; `aws`: Amazon SES itself. Only while disabled."
+          enum: [policy, aws]
+          x-enum-varnames: [SesPausedByPolicy, SesPausedByAws]
+        cause:
+          type: string
+        status_at:
+          type: string
+          format: date-time
+        checked_at:
+          type: string
+          format: date-time
     EmailDkim:
       type: object
       description: |
@@ -18175,7 +18268,9 @@ components:
         spam (after at least 1,000). `sender_error`: the SMTP server refused the account, its TLS or
         too many mails in a row (`state_detail` has its answer). `workspace_suspended`: the
         workspace was suspended from sending. `operator`: the server's operator paused it.
-      enum: [member, bounce_rate, complaint_rate, sender_error, workspace_suspended, operator]
+        `ses_tenant`: Amazon SES paused the inbox's tenant, or the channel lost its tenant isolation;
+        `state_detail` says which.
+      enum: [member, bounce_rate, complaint_rate, sender_error, workspace_suspended, operator, ses_tenant]
     BroadcastConditionOp:
       type: string
       description: |
@@ -18589,7 +18684,7 @@ components:
             $ref: "#/components/schemas/BroadcastListCount"
     BroadcastReviewKey:
       type: string
-      enum: [sender_identity, sender_ready, approval, design, audience_nonempty, merge_fields, html_size, images_alt, links, subject, deliverability, daily_cap, pace, test_sent, click_tracking]
+      enum: [sender_identity, sender_ready, approval, design, audience_nonempty, merge_fields, html_size, images_alt, links, subject, deliverability, daily_cap, pace, test_sent, click_tracking, ses_tenant]
     BroadcastReviewStatus:
       type: string
       enum: [ok, warning, blocking]

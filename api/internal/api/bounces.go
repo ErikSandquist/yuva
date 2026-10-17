@@ -288,6 +288,9 @@ func (s *Server) applySES(ctx context.Context, payload string) error {
 		s.log.WarnContext(ctx, "ses notification is not JSON", slog.Any("error", err))
 		return nil
 	}
+	if n.Source == "aws.ses" && n.DetailType != "" {
+		return s.applySESTenantEvent(ctx, n.DetailType, n.Resources)
+	}
 	var recipients []bounced
 	failMessage := false
 	switch n.Kind() {
@@ -319,12 +322,19 @@ func (s *Server) applySES(ctx context.Context, payload string) error {
 	if id == "" || len(recipients) == 0 {
 		return nil
 	}
+	tenant := n.TenantName()
 	row, err := s.st.FindOutboundEmailAnyWorkspace(ctx, id)
 	if store.IsNotFound(err) {
-		return s.applyBroadcastSES(ctx, id, recipients)
+		return s.applyBroadcastSES(ctx, id, recipients, tenant)
 	}
 	if err != nil {
 		return err
+	}
+	if foreign, err := s.sesTenantForeign(ctx, row.WorkspaceID, row.ChannelID, tenant); err != nil {
+		return err
+	} else if foreign {
+		s.log.WarnContext(ctx, "ses notification of another tenant dropped", slog.String("message_id", id), slog.String("tenant", tenant))
+		return nil
 	}
 	recipients = slices.DeleteFunc(recipients, func(r bounced) bool { return !slices.Contains(row.ToAddresses, r.email) })
 	if len(recipients) == 0 {
@@ -335,7 +345,7 @@ func (s *Server) applySES(ctx context.Context, payload string) error {
 }
 
 // applyBroadcastSES applies an SES bounce or complaint about broadcast mail, for its recipient only.
-func (s *Server) applyBroadcastSES(ctx context.Context, id string, recipients []bounced) error {
+func (s *Server) applyBroadcastSES(ctx context.Context, id string, recipients []bounced, tenant string) error {
 	d, err := s.st.FindBroadcastDeliveryAnyWorkspace(ctx, id)
 	if store.IsNotFound(err) {
 		s.log.InfoContext(ctx, "ses notification for an unknown message", slog.String("message_id", id))
@@ -343,6 +353,18 @@ func (s *Server) applyBroadcastSES(ctx context.Context, id string, recipients []
 	}
 	if err != nil {
 		return err
+	}
+	if tenant != "" {
+		b, err := s.st.GetBroadcast(ctx, store.GetBroadcastParams{WorkspaceID: d.WorkspaceID, ID: d.BroadcastID})
+		if err != nil && !store.IsNotFound(err) {
+			return err
+		}
+		if foreign, err := s.sesTenantForeign(ctx, d.WorkspaceID, b.ChannelID, tenant); err != nil {
+			return err
+		} else if foreign {
+			s.log.WarnContext(ctx, "ses notification of another tenant dropped", slog.String("message_id", id), slog.String("tenant", tenant))
+			return nil
+		}
 	}
 	for _, r := range recipients {
 		if r.email == d.Email {

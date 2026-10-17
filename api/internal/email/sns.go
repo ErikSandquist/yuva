@@ -136,7 +136,20 @@ type SESNotification struct {
 			Name  string `json:"name"`
 			Value string `json:"value"`
 		} `json:"headers"`
+		Tags map[string][]string `json:"tags"`
 	} `json:"mail"`
+
+	Source     string   `json:"source"`
+	DetailType string   `json:"detail-type"`
+	Resources  []string `json:"resources"`
+}
+
+// TenantName is the SES tenant the mail was sent under (the tag ses:tenant-name), or "".
+func (n SESNotification) TenantName() string {
+	if v := n.Mail.Tags["ses:tenant-name"]; len(v) > 0 {
+		return v[0]
+	}
+	return ""
 }
 
 func (n SESNotification) Kind() string {

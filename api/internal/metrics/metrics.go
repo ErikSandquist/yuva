@@ -40,6 +40,12 @@ var (
 	AnalyticsLateEvents = promauto.NewCounter(prometheus.CounterOpts{
 		Name: "yuva_analytics_late_events_total", Help: "Analytics events written to a day that was already rolled up.",
 	})
+	SESTenants = promauto.NewGaugeVec(prometheus.GaugeOpts{
+		Name: "yuva_ses_tenants", Help: "Amazon SES tenants the server manages, by sending status.",
+	}, []string{"sending_status"})
+	SESAPIErrors = promauto.NewCounterVec(prometheus.CounterOpts{
+		Name: "yuva_ses_api_errors_total", Help: "Refused or failed Amazon SES and STS calls, by operation and error code.",
+	}, []string{"operation", "code"})
 )
 
 func Serve(ctx context.Context, addr string, log *slog.Logger) {

@@ -77,7 +77,8 @@ these, which the chart sets:
 Secrets are read from `secrets.existingSecret` with `secretKeyRef`s, one key per variable:
 `YUVA_DATABASE_URL` and `YUVA_MASTER_KEY` (required), `YUVA_INGRESS_SECRET`, `YUVA_SMTP_USERNAME`,
 `YUVA_SMTP_PASSWORD`, `YUVA_S3_ACCESS_KEY_ID`, `YUVA_S3_SECRET_ACCESS_KEY`, `YUVA_VAPID_PUBLIC_KEY`,
-`YUVA_VAPID_PRIVATE_KEY`, `YUVA_MICROSOFT_CLIENT_ID` and `YUVA_MICROSOFT_CLIENT_SECRET` (optional).
+`YUVA_VAPID_PRIVATE_KEY`, `YUVA_MICROSOFT_CLIENT_ID`, `YUVA_MICROSOFT_CLIENT_SECRET`, `YUVA_SES_ACCESS_KEY_ID` and
+`YUVA_SES_SECRET_ACCESS_KEY` (optional).
 `secrets.keys` renames a key, for example `YUVA_DATABASE_URL: uri` for the app Secret CloudNativePG
 makes. Putting one of them in `env` fails the rendering.
 

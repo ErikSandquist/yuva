@@ -476,17 +476,21 @@ func (s *Server) SendDeliverabilityProbe(ctx context.Context, a DeliverabilityPr
 	dns := s.probeDNSRecords(ctx, e, domain, email.Domain(to))
 	manage := s.manageURL(ws, uuid.Nil(), uuid.Nil(), uuid.Nil())
 	listID := "<l000000000000." + domain + ">"
+	sesH, err := s.sesHeaders(ctx, e, cfg)
+	if err != nil {
+		return err
+	}
 	raw, err := email.Build(email.Outgoing{
 		From: email.Address{Name: name, Email: from}, ReplyTo: email.Address{Name: name, Email: to}, To: email.Address{Email: to},
 		Subject: probeSubject, Text: probeText, Date: s.now(), MessageID: email.NewMessageID(a.Token, domain),
-		Headers: []email.Header{
+		Headers: append([]email.Header{
 			{Name: "List-Unsubscribe", Value: "<" + manage + ">"},
 			{Name: "List-Unsubscribe-Post", Value: "List-Unsubscribe=One-Click"},
 			{Name: "X-Auto-Response-Suppress", Value: "OOF, AutoReply"},
 			{Name: "List-Id", Value: headerPhrase(probeListName) + " " + listID},
 			{Name: "Feedback-ID", Value: "00000000:00000000:" + hex8(ws) + ":" + feedbackSenderID},
 			{Name: email.ProbeHeader, Value: a.Token},
-		},
+		}, sesH...),
 	})
 	if err != nil {
 		return err

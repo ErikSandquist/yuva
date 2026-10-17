@@ -628,6 +628,10 @@ addresses (or the contact's first address) and never another sender in the threa
 errors are retried, 5xx replies fail at once. An e-mail channel can greet new conversations once
 per contact within a set interval; the greeting is a `system` message with
 `Auto-Submitted: auto-replied`.
+Mail through Amazon SES can carry the SES tenant of the channel's inbox (see Broadcasts and e-mail
+designs › Amazon SES tenants): every send path (replies, greetings, rating requests, continuity,
+broadcasts, tests, list mails, both probes) adds `X-SES-TENANT` and `X-SES-CONFIGURATION-SET` through
+one helper when the account used is an SES endpoint; server mail (`YUVA_SMTP_*`) never does.
 
 Bounces: an inbound delivery report (`multipart/report; report-type=delivery-status`) to a channel
 address counts only when its envelope sender is empty (the null reverse-path RFC 5321 §4.5.5
@@ -1235,7 +1239,7 @@ Private help stays private: page feedback, live chat and e-mail are unchanged. D
 
 A workspace sends e-mail to many contacts at once: newsletters, product updates, announcements. Every
 broadcast is sent on behalf of an inbox through one of its e-mail channels, and a reply becomes a
-conversation in that inbox. Plan in issue #25; it ships in five steps (M13.1–M13.5 in the roadmap).
+conversation in that inbox. Plan in issue #25; it ships in steps M13.1–M13.7 in the roadmap.
 Decisions:
 
 - **Lists.** `mailing_lists` belong to an inbox: name, public description, `double_opt_in` (on by
@@ -1334,10 +1338,62 @@ Decisions:
   limit's. A send may take at most 365 days at its pace: the review's `pace` item blocks above that and
   `PATCH` refuses such a pace on a started broadcast (`409 pace_too_slow`); the review's
   `duration_seconds` estimates the whole send from the pace, the channel's rate and the daily limit.
+- **Amazon SES tenants.** On a shared SES account one inbox's bounces and complaints pause only its own
+  SES tenant, never another inbox of the workspace or another workspace (M13.7). One tenant per inbox,
+  not per workspace, because inboxes are where a workspace keeps its products. With
+  `YUVA_SES_REGION`, `YUVA_SES_ACCESS_KEY_ID`, `YUVA_SES_SECRET_ACCESS_KEY` and
+  `YUVA_SES_CONFIGURATION_SET` (all or none; an IAM user limited to tenants named
+  `YUVA_SES_TENANT_PREFIX`, default `yuva-`, identity associations and that configuration set) the
+  server manages the tenants; customers never enter AWS keys. A channel's SMTP account is managed when
+  its host is an SES endpoint in that region and its user name is an access key of the server's own
+  AWS account (`sts:GetAccessKeyInfo`), since customers with their own SES use the same hosts. A
+  `ses_tenant_sync` job per inbox (on saving or deleting such a channel, on `broadcasts approve` for
+  every inbox of the workspace, and from `yuva inbox ses-tenant sync [--all]`, the back-fill; never at
+  boot) creates the inbox's tenant (`ses_tenants`, keyed on `workspace_id` and `inbox_id`) with a random
+  name, tags and tenant-level suppression (bounces and complaints stay inside the tenant), associates
+  the configuration set and, per channel, the sending address's identity and the most specific
+  verified domain identity, and dissociates identities none of the inbox's channels uses any more
+  (never the configuration set, never a tenant Yuva did not create). A domain shared by two inboxes is
+  associated with both tenants. Support mail is isolated from the first managed channel, not only after
+  approval. Every tenant keeps SES's Standard reputation policy. The configuration set is one, created
+  by the operator with its SNS bounce and complaint destination; Yuva never sets an identity's default
+  configuration set. A channel whose sending domain is not a verified identity is `identity_missing`:
+  its mail goes out without the tenant (a header without the association would fail the send) and the
+  review blocks its broadcasts. Mail through the managed account always carries the configuration set;
+  the tenant header only once the tenant is ready. A `pending` tenant (after a channel save) holds a
+  running broadcast's batch for 15 seconds instead of pausing it. A ready tenant absent from a complete
+  listing and confirmed gone by `GetTenant` is `missing`: it blocks broadcasts, loses the header and a
+  sync creates it again. Tenant names, the configuration set and AWS details reach owners, admins and
+  keys with `inboxes:manage` only. Once isolated, a managed channel's mail always carries the tenant, also
+  while it is paused. Without server keys a channel may name a tenant (and configuration set) of its
+  own SES account, which Yuva only writes as headers. A periodic job every 5 minutes reads
+  `ListReputationEntities` under the prefix (aggregate and both origins); optionally, an EventBridge
+  rule on SES's tenant events sent to an SNS topic in `YUVA_SES_TOPIC_ARNS` makes `/ingress/ses`
+  refresh that tenant at once (its body is not trusted for the status). A paused tenant pauses that
+  inbox's running broadcasts through managed channels (`pause_reason: ses_tenant`), blocks their
+  scheduling and resuming (`409 ses_tenant_blocked`), shows on the inbox (`Inbox.ses_tenant`), its
+  channel pages and in the operator digest; the inbox's replies are still attempted and fail with SES's
+  answer; other inboxes keep sending. Only the operator reinstates (`yuva inbox ses-tenant reinstate`,
+  customer-managed status `REINSTATED`); a pause by SES itself needs an AWS Support case. Deleting an
+  inbox or a workspace deletes its tenants. An SES notification tagged `ses:tenant-name` of a managed
+  tenant counts only for that tenant's workspace and inbox. The status poll (`ListSESTenantsAll`), the event lookup
+  (`FindSESTenantByARN`) and the operator back-fill (`ListInboxesWithSESChannels`) read across
+  workspaces (SES names only the tenant), and every write that follows is scoped
+  to the row's `workspace_id`: the written exception to the workspace filter. The AWS calls are a small
+  client on minio-go's SigV4 signer (already a dependency), using only operations without path
+  parameters except the reinstate call.
+
+  ```sh
+  yuva inbox ses-tenant show --workspace <id|name> [--inbox <id|slug>]
+  yuva inbox ses-tenant sync (--workspace <id|name> [--inbox <id|slug>] | --all) [--dry-run]
+  yuva inbox ses-tenant reinstate --workspace <id|name> --inbox <id|slug>
+  ```
 - **Headers.** `Message-ID` `<delivery token.random@sending domain>` (the conversation shape, so loop
   protection is unchanged), `List-Unsubscribe`, `List-Unsubscribe-Post`, `List-Id`, `Feedback-ID`
   (`broadcast:list:workspace:yuvabroadcast`), `X-Auto-Response-Suppress: OOF, AutoReply`; no
   `Auto-Submitted`.
+  Mail through an SES account also carries `X-SES-TENANT` and, when set, `X-SES-CONFIGURATION-SET`
+  (Amazon SES tenants).
 - **Bounces and complaints.** SES (SNS), delivery reports to the channel, SMTP 5xx at send time and ARF
   feedback reports find the delivery by Message-ID. A hard bounce suppresses the address for all mail; a
   complaint about a broadcast suppresses broadcasts only, unsubscribes every list of the workspace and

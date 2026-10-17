@@ -1141,6 +1141,7 @@ const (
 	BroadcastPauseReasonMember             BroadcastPauseReason = "member"
 	BroadcastPauseReasonOperator           BroadcastPauseReason = "operator"
 	BroadcastPauseReasonSenderError        BroadcastPauseReason = "sender_error"
+	BroadcastPauseReasonSesTenant          BroadcastPauseReason = "ses_tenant"
 	BroadcastPauseReasonWorkspaceSuspended BroadcastPauseReason = "workspace_suspended"
 )
 
@@ -1156,6 +1157,8 @@ func (e BroadcastPauseReason) Valid() bool {
 	case BroadcastPauseReasonOperator:
 		return true
 	case BroadcastPauseReasonSenderError:
+		return true
+	case BroadcastPauseReasonSesTenant:
 		return true
 	case BroadcastPauseReasonWorkspaceSuspended:
 		return true
@@ -1194,6 +1197,7 @@ const (
 	BroadcastReviewKeyPace             BroadcastReviewKey = "pace"
 	BroadcastReviewKeySenderIdentity   BroadcastReviewKey = "sender_identity"
 	BroadcastReviewKeySenderReady      BroadcastReviewKey = "sender_ready"
+	BroadcastReviewKeySesTenant        BroadcastReviewKey = "ses_tenant"
 	BroadcastReviewKeySubject          BroadcastReviewKey = "subject"
 	BroadcastReviewKeyTestSent         BroadcastReviewKey = "test_sent"
 )
@@ -1226,6 +1230,8 @@ func (e BroadcastReviewKey) Valid() bool {
 	case BroadcastReviewKeySenderIdentity:
 		return true
 	case BroadcastReviewKeySenderReady:
+		return true
+	case BroadcastReviewKeySesTenant:
 		return true
 	case BroadcastReviewKeySubject:
 		return true
@@ -2244,6 +2250,57 @@ const (
 func (e EmailSectionBlockType) Valid() bool {
 	switch e {
 	case EmailBlockSection:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailSesSource.
+const (
+	SesSourceChannel EmailSesSource = "channel"
+	SesSourceNone    EmailSesSource = "none"
+	SesSourceServer  EmailSesSource = "server"
+)
+
+// Valid indicates whether the value is a known member of the EmailSesSource enum.
+func (e EmailSesSource) Valid() bool {
+	switch e {
+	case SesSourceChannel:
+		return true
+	case SesSourceNone:
+		return true
+	case SesSourceServer:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailSesState.
+const (
+	SesError           EmailSesState = "error"
+	SesIdentityMissing EmailSesState = "identity_missing"
+	SesIsolated        EmailSesState = "isolated"
+	SesNotIsolated     EmailSesState = "not_isolated"
+	SesPaused          EmailSesState = "paused"
+	SesPending         EmailSesState = "pending"
+)
+
+// Valid indicates whether the value is a known member of the EmailSesState enum.
+func (e EmailSesState) Valid() bool {
+	switch e {
+	case SesError:
+		return true
+	case SesIdentityMissing:
+		return true
+	case SesIsolated:
+		return true
+	case SesNotIsolated:
+		return true
+	case SesPaused:
+		return true
+	case SesPending:
 		return true
 	default:
 		return false
@@ -4086,6 +4143,90 @@ func (e Role) Valid() bool {
 	case Agent:
 		return true
 	case Owner:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for SesTenantStatusPausedBy.
+const (
+	SesPausedByAws    SesTenantStatusPausedBy = "aws"
+	SesPausedByPolicy SesTenantStatusPausedBy = "policy"
+)
+
+// Valid indicates whether the value is a known member of the SesTenantStatusPausedBy enum.
+func (e SesTenantStatusPausedBy) Valid() bool {
+	switch e {
+	case SesPausedByAws:
+		return true
+	case SesPausedByPolicy:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for SesTenantStatusReputationImpact.
+const (
+	SesImpactHigh SesTenantStatusReputationImpact = "high"
+	SesImpactLow  SesTenantStatusReputationImpact = "low"
+	SesImpactNone SesTenantStatusReputationImpact = "none"
+)
+
+// Valid indicates whether the value is a known member of the SesTenantStatusReputationImpact enum.
+func (e SesTenantStatusReputationImpact) Valid() bool {
+	switch e {
+	case SesImpactHigh:
+		return true
+	case SesImpactLow:
+		return true
+	case SesImpactNone:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for SesTenantStatusSendingStatus.
+const (
+	SesSendingDisabled   SesTenantStatusSendingStatus = "disabled"
+	SesSendingEnabled    SesTenantStatusSendingStatus = "enabled"
+	SesSendingReinstated SesTenantStatusSendingStatus = "reinstated"
+)
+
+// Valid indicates whether the value is a known member of the SesTenantStatusSendingStatus enum.
+func (e SesTenantStatusSendingStatus) Valid() bool {
+	switch e {
+	case SesSendingDisabled:
+		return true
+	case SesSendingEnabled:
+		return true
+	case SesSendingReinstated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for SesTenantStatusState.
+const (
+	SesTenantError   SesTenantStatusState = "error"
+	SesTenantMissing SesTenantStatusState = "missing"
+	SesTenantPending SesTenantStatusState = "pending"
+	SesTenantReady   SesTenantStatusState = "ready"
+)
+
+// Valid indicates whether the value is a known member of the SesTenantStatusState enum.
+func (e SesTenantStatusState) Valid() bool {
+	switch e {
+	case SesTenantError:
+		return true
+	case SesTenantMissing:
+		return true
+	case SesTenantPending:
+		return true
+	case SesTenantReady:
 		return true
 	default:
 		return false
@@ -6509,6 +6650,8 @@ type Broadcast struct {
 	// spam (after at least 1,000). `sender_error`: the SMTP server refused the account, its TLS or
 	// too many mails in a row (`state_detail` has its answer). `workspace_suspended`: the
 	// workspace was suspended from sending. `operator`: the server's operator paused it.
+	// `ses_tenant`: Amazon SES paused the inbox's tenant, or the channel lost its tenant isolation;
+	// `state_detail` says which.
 	PauseReason *BroadcastPauseReason `json:"pause_reason,omitempty"`
 
 	// Preheader The preview text after the subject; the design's own when empty.
@@ -6788,6 +6931,8 @@ type BroadcastPage struct {
 // spam (after at least 1,000). `sender_error`: the SMTP server refused the account, its TLS or
 // too many mails in a row (`state_detail` has its answer). `workspace_suspended`: the
 // workspace was suspended from sending. `operator`: the server's operator paused it.
+// `ses_tenant`: Amazon SES paused the inbox's tenant, or the channel lost its tenant isolation;
+// `state_detail` says which.
 type BroadcastPauseReason string
 
 // BroadcastProblem defines model for BroadcastProblem.
@@ -9173,6 +9318,12 @@ type EmailChannel struct {
 	// FromAddress Examples: owner@example.com
 	FromAddress *Email `json:"from_address,omitempty"`
 
+	// Ses How the channel's mail through Amazon SES is isolated in an SES tenant. Absent when neither SMTP
+	// account is Amazon SES. `source: server`: the server manages a tenant for the channel's inbox in
+	// its own AWS account and writes `X-SES-TENANT` and `X-SES-CONFIGURATION-SET`; `channel`: the
+	// tenant typed on the channel is written as is; `none`: no tenant header.
+	Ses *EmailSes `json:"ses,omitempty"`
+
 	// Smtp The outbound SMTP account. The password is never returned.
 	Smtp *SmtpSettings `json:"smtp,omitempty"`
 }
@@ -9209,8 +9360,13 @@ type EmailChannelInput struct {
 	Dkim *EmailDkimInput `json:"dkim,omitempty"`
 
 	// FromAddress Examples: owner@example.com
-	FromAddress *Email             `json:"from_address,omitempty"`
-	Smtp        *SmtpSettingsInput `json:"smtp,omitempty"`
+	FromAddress *Email `json:"from_address,omitempty"`
+
+	// Ses A tenant of your own SES account for this channel's mail, for servers that do not manage
+	// tenants. Absent keeps the stored values; an empty string removes one. Ignored while the server
+	// manages the inbox's tenant.
+	Ses  *EmailSesInput     `json:"ses,omitempty"`
+	Smtp *SmtpSettingsInput `json:"smtp,omitempty"`
 }
 
 // EmailColor Examples: #2563eb
@@ -9745,6 +9901,52 @@ type EmailSectionBlockType string
 // EmailSectionChild defines model for EmailSectionChild.
 type EmailSectionChild struct {
 	union json.RawMessage
+}
+
+// EmailSes How the channel's mail through Amazon SES is isolated in an SES tenant. Absent when neither SMTP
+// account is Amazon SES. `source: server`: the server manages a tenant for the channel's inbox in
+// its own AWS account and writes `X-SES-TENANT` and `X-SES-CONFIGURATION-SET`; `channel`: the
+// tenant typed on the channel is written as is; `none`: no tenant header.
+type EmailSes struct {
+	ChannelConfigurationSet *string `json:"channel_configuration_set,omitempty"`
+
+	// ChannelTenant The tenant typed on the channel; used when `source` is not `server`.
+	ChannelTenant *string `json:"channel_tenant,omitempty"`
+
+	// ConfigurationSet The `X-SES-CONFIGURATION-SET` value written; absent without one.
+	ConfigurationSet *string        `json:"configuration_set,omitempty"`
+	Detail           *string        `json:"detail,omitempty"`
+	Source           EmailSesSource `json:"source"`
+
+	// State `isolated`: mail carries the tenant. `pending`: Yuva is setting the tenant up.
+	// `identity_missing`: the sending address and domain are not a verified identity in the
+	// server's SES account; mail goes out without the tenant and broadcasts are blocked.
+	// `paused`: Amazon SES paused the inbox's tenant; mail is refused until it is reinstated.
+	// `not_isolated`: SES through another AWS account or region and no tenant typed.
+	// `error`: AWS refused a step (`detail`).
+	State EmailSesState `json:"state"`
+
+	// Tenant The `X-SES-TENANT` value written; absent unless `isolated` or `paused`.
+	Tenant *string `json:"tenant,omitempty"`
+}
+
+// EmailSesSource defines model for EmailSes.Source.
+type EmailSesSource string
+
+// EmailSesState `isolated`: mail carries the tenant. `pending`: Yuva is setting the tenant up.
+// `identity_missing`: the sending address and domain are not a verified identity in the
+// server's SES account; mail goes out without the tenant and broadcasts are blocked.
+// `paused`: Amazon SES paused the inbox's tenant; mail is refused until it is reinstated.
+// `not_isolated`: SES through another AWS account or region and no tenant typed.
+// `error`: AWS refused a step (`detail`).
+type EmailSesState string
+
+// EmailSesInput A tenant of your own SES account for this channel's mail, for servers that do not manage
+// tenants. Absent keeps the stored values; an empty string removes one. Ignored while the server
+// manages the inbox's tenant.
+type EmailSesInput struct {
+	ConfigurationSet *string `json:"configuration_set,omitempty"`
+	Tenant           *string `json:"tenant,omitempty"`
 }
 
 // EmailSocialBlock Links to profiles, as icons (served by the server) or as text.
@@ -10307,6 +10509,13 @@ type Inbox struct {
 	// Regulation on Commercial Communication): the legal name, a postal address, a registration
 	// such as a MERSİS number or VAT id, and a contact (an e-mail address, phone or URL).
 	Sender InboxSender `json:"sender"`
+
+	// SesTenant The inbox's Amazon SES tenant, when the server manages one. `sending_status: disabled` means SES
+	// paused it: the inbox's mail through the server's SES account is refused and its broadcasts pause
+	// until the server's operator reinstates it. Other inboxes are not affected. `state: missing`
+	// means the tenant is gone from SES: broadcasts are blocked and mail goes out without the tenant
+	// until the server has set it up again.
+	SesTenant *SesTenantStatus `json:"ses_tenant,omitempty"`
 
 	// Slug Examples: acme-app
 	Slug Slug `json:"slug"`
@@ -13064,6 +13273,35 @@ type RealtimeResyncRequiredType string
 
 // Role defines model for Role.
 type Role string
+
+// SesTenantStatus The inbox's Amazon SES tenant, when the server manages one. `sending_status: disabled` means SES
+// paused it: the inbox's mail through the server's SES account is refused and its broadcasts pause
+// until the server's operator reinstates it. Other inboxes are not affected. `state: missing`
+// means the tenant is gone from SES: broadcasts are blocked and mail goes out without the tenant
+// until the server has set it up again.
+type SesTenantStatus struct {
+	Cause     *string    `json:"cause,omitempty"`
+	CheckedAt *time.Time `json:"checked_at,omitempty"`
+
+	// PausedBy `policy`: the reputation policy or the operator; `aws`: Amazon SES itself. Only while disabled.
+	PausedBy         *SesTenantStatusPausedBy        `json:"paused_by,omitempty"`
+	ReputationImpact SesTenantStatusReputationImpact `json:"reputation_impact"`
+	SendingStatus    SesTenantStatusSendingStatus    `json:"sending_status"`
+	State            SesTenantStatusState            `json:"state"`
+	StatusAt         *time.Time                      `json:"status_at,omitempty"`
+}
+
+// SesTenantStatusPausedBy `policy`: the reputation policy or the operator; `aws`: Amazon SES itself. Only while disabled.
+type SesTenantStatusPausedBy string
+
+// SesTenantStatusReputationImpact defines model for SesTenantStatus.ReputationImpact.
+type SesTenantStatusReputationImpact string
+
+// SesTenantStatusSendingStatus defines model for SesTenantStatus.SendingStatus.
+type SesTenantStatusSendingStatus string
+
+// SesTenantStatusState defines model for SesTenantStatus.State.
+type SesTenantStatusState string
 
 // SignInCodeRequest defines model for SignInCodeRequest.
 type SignInCodeRequest struct {
@@ -22263,8 +22501,10 @@ type ClientInterface interface {
 	//
 	// A paused broadcast continues where it stopped, whatever paused it; the bounce and
 	// complaint rates that pause it on their own count again from now. Refused like scheduling
-	// while the workspace is suspended or keys may not schedule (`403`), and `409 invalid_state`
-	// when it is not paused.
+	// while the workspace is suspended or keys may not schedule (`403`), `409 invalid_state`
+	// when it is not paused, and `409 ses_tenant_blocked` while the review item `ses_tenant`
+	// would block it (the inbox's Amazon SES tenant is paused, or its channel lost its tenant
+	// isolation).
 	//
 	// Owners, admins and API keys. Scope: `broadcasts:send`.
 	//
@@ -23862,7 +24102,7 @@ type ClientInterface interface {
 	// DeleteInbox Delete an inbox
 	//
 	// Owners, admins and API keys. Deletes its channels, conversations,
-	// messages and attachments.
+	// messages and attachments, and its Amazon SES tenant, when the server manages one.
 	//
 	// Scope: `inboxes:manage`.
 	//
@@ -29670,8 +29910,10 @@ func (c *Client) GetBroadcastReport(ctx context.Context, broadcastId BroadcastId
 //
 // A paused broadcast continues where it stopped, whatever paused it; the bounce and
 // complaint rates that pause it on their own count again from now. Refused like scheduling
-// while the workspace is suspended or keys may not schedule (`403`), and `409 invalid_state`
-// when it is not paused.
+// while the workspace is suspended or keys may not schedule (`403`), `409 invalid_state`
+// when it is not paused, and `409 ses_tenant_blocked` while the review item `ses_tenant`
+// would block it (the inbox's Amazon SES tenant is paused, or its channel lost its tenant
+// isolation).
 //
 // Owners, admins and API keys. Scope: `broadcasts:send`.
 //
@@ -32449,7 +32691,7 @@ func (c *Client) CreateInbox(ctx context.Context, params *CreateInboxParams, bod
 // DeleteInbox Delete an inbox
 //
 // Owners, admins and API keys. Deletes its channels, conversations,
-// messages and attachments.
+// messages and attachments, and its Amazon SES tenant, when the server manages one.
 //
 // Scope: `inboxes:manage`.
 //
@@ -56766,8 +57008,10 @@ type ClientWithResponsesInterface interface {
 	//
 	// A paused broadcast continues where it stopped, whatever paused it; the bounce and
 	// complaint rates that pause it on their own count again from now. Refused like scheduling
-	// while the workspace is suspended or keys may not schedule (`403`), and `409 invalid_state`
-	// when it is not paused.
+	// while the workspace is suspended or keys may not schedule (`403`), `409 invalid_state`
+	// when it is not paused, and `409 ses_tenant_blocked` while the review item `ses_tenant`
+	// would block it (the inbox's Amazon SES tenant is paused, or its channel lost its tenant
+	// isolation).
 	//
 	// Owners, admins and API keys. Scope: `broadcasts:send`.
 	//
@@ -58479,7 +58723,7 @@ type ClientWithResponsesInterface interface {
 	// DeleteInboxWithResponse Delete an inbox
 	//
 	// Owners, admins and API keys. Deletes its channels, conversations,
-	// messages and attachments.
+	// messages and attachments, and its Amazon SES tenant, when the server manages one.
 	//
 	// Scope: `inboxes:manage`.
 	//
@@ -84469,8 +84713,10 @@ func (c *ClientWithResponses) GetBroadcastReportWithResponse(ctx context.Context
 //
 // A paused broadcast continues where it stopped, whatever paused it; the bounce and
 // complaint rates that pause it on their own count again from now. Refused like scheduling
-// while the workspace is suspended or keys may not schedule (`403`), and `409 invalid_state`
-// when it is not paused.
+// while the workspace is suspended or keys may not schedule (`403`), `409 invalid_state`
+// when it is not paused, and `409 ses_tenant_blocked` while the review item `ses_tenant`
+// would block it (the inbox's Amazon SES tenant is paused, or its channel lost its tenant
+// isolation).
 //
 // Owners, admins and API keys. Scope: `broadcasts:send`.
 //
@@ -86890,7 +87136,7 @@ func (c *ClientWithResponses) CreateInboxWithResponse(ctx context.Context, param
 // DeleteInboxWithResponse Delete an inbox
 //
 // Owners, admins and API keys. Deletes its channels, conversations,
-// messages and attachments.
+// messages and attachments, and its Amazon SES tenant, when the server manages one.
 //
 // Scope: `inboxes:manage`.
 //

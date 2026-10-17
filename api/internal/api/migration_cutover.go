@@ -262,6 +262,7 @@ func (s *Server) SendMigrationProbeMail(ctx context.Context, a MigrationProbeArg
 		return err
 	}
 	cfg, from := email.SMTPConfig{}, ""
+	var sesH []email.Header
 	if s.migrations.ProbeSMTP != nil && s.migrations.ProbeFrom != "" {
 		cfg, from = *s.migrations.ProbeSMTP, s.migrations.ProbeFrom
 	} else {
@@ -289,13 +290,16 @@ func (s *Server) SendMigrationProbeMail(ctx context.Context, a MigrationProbeArg
 		if e.FromAddress != nil {
 			from = *e.FromAddress
 		}
+		if sesH, err = s.sesHeaders(ctx, e, cfg); err != nil {
+			return err
+		}
 	}
 	value := s.probeValue(m.WorkspaceID, m.ID)
 	raw, err := email.Build(email.Outgoing{
 		From: email.Address{Name: "Yuva", Email: from}, To: email.Address{Email: m.SourceAddress},
 		Subject: migrationProbeSubject + " " + probeCode(value), Text: migrationProbeText, Date: s.now(),
 		MessageID: email.NewMessageID(email.NewConversationToken(), email.Domain(from)), AutoSubmitted: true,
-		Headers: []email.Header{{Name: email.MigrationProbeHeader, Value: value}, {Name: "X-Auto-Response-Suppress", Value: "All"}},
+		Headers: append([]email.Header{{Name: email.MigrationProbeHeader, Value: value}, {Name: "X-Auto-Response-Suppress", Value: "All"}}, sesH...),
 	})
 	if err != nil {
 		return err
@@ -519,7 +523,11 @@ func (s *Server) RotateForwardingAddress(ctx context.Context, req oas.RotateForw
 	if err != nil {
 		return nil, err
 	}
-	return oas.RotateForwardingAddress200JSONResponse(s.channelBody(c, &e, nil)), nil
+	t, err := s.channelTenant(ctx, s.st.Queries, e)
+	if err != nil {
+		return nil, err
+	}
+	return oas.RotateForwardingAddress200JSONResponse(s.channelBody(c, &e, nil, t)), nil
 }
 
 func errorsAsIngest(err error) (*IngestError, bool) {

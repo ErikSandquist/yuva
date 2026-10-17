@@ -181,6 +181,11 @@ func (s *Server) SendListMail(ctx context.Context, a ListMailArgs, lastAttempt b
 	if isCatchAll(replyTo) {
 		replyTo = from
 	}
+	sesH, err := s.sesHeaders(ctx, ch, email.SMTPConfig{Host: ch.SmtpHost, Username: ch.SmtpUsername})
+	if err != nil {
+		return err
+	}
+	headers = append(headers, sesH...)
 	raw, err := email.Build(email.Outgoing{
 		From: email.Address{Name: name, Email: from}, ReplyTo: email.Address{Name: name, Email: replyTo},
 		To: email.Address{Email: sub.Email}, Subject: msg.Subject, Text: msg.Text, HTML: msg.HTML, Date: s.now(),

@@ -172,12 +172,20 @@ func (c *mcpCall) setupState(ctx context.Context) (setupStateOut, error) {
 	}
 	var emails map[uuid.UUID]store.EmailChannel
 	var chats map[uuid.UUID]store.ChatChannel
+	tenants := map[uuid.UUID]*store.SesTenant{}
 	if want.channels {
 		if emails, err = emailChannelsByID(ctx, c.s.st.Queries, c.p.workspaceID, ids); err != nil {
 			return out, err
 		}
 		if chats, err = chatChannelsByID(ctx, c.s.st.Queries, c.p.workspaceID, ids); err != nil {
 			return out, err
+		}
+		rows, err := c.s.st.ListSESTenantsOfWorkspace(ctx, c.p.workspaceID)
+		if err != nil {
+			return out, err
+		}
+		for _, t := range rows {
+			tenants[t.InboxID] = &t
 		}
 	}
 	for _, in := range parts.inboxes {
@@ -192,7 +200,7 @@ func (c *mcpCall) setupState(ctx context.Context) (setupStateOut, error) {
 				chat = &v
 			}
 			row := store.Channel{ID: ch.ID, WorkspaceID: c.p.workspaceID, InboxID: in.ID, Kind: ch.Kind, Name: ch.Name, CreatedAt: ch.CreatedAt}
-			si.Channels = append(si.Channels, channelOut(c.s.channelBody(row, e, chat)))
+			si.Channels = append(si.Channels, channelOut(c.s.channelBody(row, e, chat, tenants[in.ID])))
 		}
 		out.Inboxes = append(out.Inboxes, si)
 	}

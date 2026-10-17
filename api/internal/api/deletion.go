@@ -108,7 +108,16 @@ func (s *Server) closeWorkspace(ctx context.Context, workspaceID uuid.UUID) erro
 		if err := notifyAnalyticsChanged(ctx, q, workspaceID, nil); err != nil {
 			return err
 		}
-		_, err := s.jobs.InsertTx(ctx, tx, WorkspaceDeleteArgs{WorkspaceID: workspaceID}, nil)
+		tenants, err := q.ListSESTenantsOfWorkspace(ctx, workspaceID)
+		if err != nil {
+			return err
+		}
+		for _, t := range tenants {
+			if _, err := s.jobs.InsertTx(ctx, tx, SESTenantDeleteArgs{Name: t.Name, Region: t.Region}, nil); err != nil {
+				return err
+			}
+		}
+		_, err = s.jobs.InsertTx(ctx, tx, WorkspaceDeleteArgs{WorkspaceID: workspaceID}, nil)
 		return err
 	})
 }

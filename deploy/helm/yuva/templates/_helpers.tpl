@@ -63,6 +63,8 @@ YUVA_VAPID_PUBLIC_KEY: false
 YUVA_VAPID_PRIVATE_KEY: false
 YUVA_MICROSOFT_CLIENT_ID: false
 YUVA_MICROSOFT_CLIENT_SECRET: false
+YUVA_SES_ACCESS_KEY_ID: false
+YUVA_SES_SECRET_ACCESS_KEY: false
 {{- end }}
 
 {{- define "yuva.publicHost" -}}

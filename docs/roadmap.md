@@ -179,8 +179,8 @@ workspace or another reader is visible.
 
 ## M13 — Broadcasts and e-mail designs
 
-Status: M13.1–M13.5 done and deployed on 2026-10-12 (#26–#30); M13.6 in progress (#91). Umbrella issue
-#25, decisions in `architecture.md` › Broadcasts and e-mail designs (M13).
+Status: M13.1–M13.5 done and deployed on 2026-10-12 (#26–#30); M13.6 (#91) and M13.7 (#92) in
+progress. Umbrella issue #25, decisions in `architecture.md` › Broadcasts and e-mail designs (M13).
 
 - **M13.1 Lists and subscribing:** mailing lists with recorded consent and double opt-in,
   `<yuva-subscribe>` (HTML, React, Nuxt, shadcn), unsubscribe and preference pages with one-click, an API
@@ -198,6 +198,11 @@ Status: M13.1–M13.5 done and deployed on 2026-10-12 (#26–#30); M13.6 in prog
 - **M13.6 Pace:** a broadcast's own pace, at most so many mails an hour, a day and in 30 days, spread
   evenly below the channel's rate and the workspace's daily limit; set in the composer, changed while it
   runs, checked by the review (at most 365 days), in the API and MCP.
+- **M13.7 SES tenants:** on a shared Amazon SES account each inbox sends in its own SES tenant, created
+  and watched by the server with an operator's IAM key limited to its tenants; support replies and
+  broadcasts carry `X-SES-TENANT`; a channel's own tenant for self-hosters without keys; pauses shown
+  on the inbox and its channels and acted on by its broadcasts; the operator's `inbox ses-tenant`
+  commands, with the back-fill.
 
 Accept: a visitor subscribes through `<yuva-subscribe>` and confirms; a member designs a newsletter from a
 gallery template, sends a test and schedules it to the list; the deliverability check on one of our own
@@ -208,6 +213,12 @@ suppresses the address and a complaint unsubscribes it; a hosted workspace canno
 another workspace sees none of it.
 A broadcast with a pace of 60 an hour sends one mail a minute to Mailpit, shows when its next mail goes
 out, and goes on at the channel's rate within five minutes of removing the pace.
+With the server's SES keys set, two inboxes sending through the server's SES account from one domain
+get a tenant each, holding the domain and the configuration set; a reply and a broadcast to the SES
+success simulator count under their inbox's tenant in CloudWatch; pausing one inbox's tenant in SES
+pauses its running broadcast within five minutes, blocks resuming and shows on the inbox and its
+channels, while the other inbox's broadcast finishes; `inbox ses-tenant reinstate` lets mail go again;
+the IAM key cannot read a tenant outside its prefix; deleting the workspace deletes its tenants.
 
 ## M14 — Move to Yuva
 

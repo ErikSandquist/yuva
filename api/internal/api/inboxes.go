@@ -182,6 +182,9 @@ func (s *Server) ListInboxes(ctx context.Context, _ oas.ListInboxesRequestObject
 	if err := withImports(ctx, s.st.Queries, p.workspaceID, out.Items); err != nil {
 		return nil, err
 	}
+	if err := withSESTenants(ctx, s.st.Queries, p, out.Items); err != nil {
+		return nil, err
+	}
 	return out, nil
 }
 
@@ -247,7 +250,11 @@ func (s *Server) GetInbox(ctx context.Context, req oas.GetInboxRequestObject) (o
 	if err != nil {
 		return nil, err
 	}
-	return oas.GetInbox200JSONResponse(out), nil
+	items := []oas.Inbox{out}
+	if err := withSESTenants(ctx, s.st.Queries, principalFrom(ctx), items); err != nil {
+		return nil, err
+	}
+	return oas.GetInbox200JSONResponse(items[0]), nil
 }
 
 func (s *Server) UpdateInbox(ctx context.Context, req oas.UpdateInboxRequestObject) (oas.UpdateInboxResponseObject, error) {
@@ -331,7 +338,11 @@ func (s *Server) UpdateInbox(ctx context.Context, req oas.UpdateInboxRequestObje
 	if err != nil {
 		return nil, err
 	}
-	return oas.UpdateInbox200JSONResponse(out), nil
+	items := []oas.Inbox{out}
+	if err := withSESTenants(ctx, s.st.Queries, p, items); err != nil {
+		return nil, err
+	}
+	return oas.UpdateInbox200JSONResponse(items[0]), nil
 }
 
 func (s *Server) DeleteInbox(ctx context.Context, req oas.DeleteInboxRequestObject) (oas.DeleteInboxResponseObject, error) {
@@ -355,6 +366,11 @@ func (s *Server) DeleteInbox(ctx context.Context, req oas.DeleteInboxRequestObje
 			return err
 		}
 		keys = append(keys, raw...)
+		if t, err := inboxTenant(ctx, q, p.workspaceID, req.InboxId); err != nil {
+			return err
+		} else if t != nil {
+			events.job(SESTenantDeleteArgs{Name: t.Name, Region: t.Region}, nil)
+		}
 		if _, err = q.DeleteInbox(ctx, store.DeleteInboxParams{WorkspaceID: p.workspaceID, ID: req.InboxId}); err != nil {
 			return err
 		}

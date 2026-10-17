@@ -825,30 +825,37 @@ type EmailAutoReply struct {
 }
 
 type EmailChannel struct {
-	WorkspaceID            uuid.UUID
-	ChannelID              uuid.UUID
-	Address                string
-	DisplayName            string
-	FromAddress            *string
-	SmtpHost               string
-	SmtpPort               int32
-	SmtpUsername           string
-	SmtpPassword           []byte
-	SmtpTls                string
-	AutoReplyEnabled       bool
-	AutoReplyText          string
-	AutoReplyIntervalHours int32
-	BroadcastSmtpHost      *string
-	BroadcastSmtpPort      *int32
-	BroadcastSmtpUsername  *string
-	BroadcastSmtpPassword  []byte
-	BroadcastSmtpTls       *string
-	BroadcastRate          int32
-	DkimSelector           *string
-	DkimPrivateKey         []byte
-	DkimEnabled            bool
-	DkimPublicKey          []byte
-	ForwardToken           string
+	WorkspaceID             uuid.UUID
+	ChannelID               uuid.UUID
+	Address                 string
+	DisplayName             string
+	FromAddress             *string
+	SmtpHost                string
+	SmtpPort                int32
+	SmtpUsername            string
+	SmtpPassword            []byte
+	SmtpTls                 string
+	AutoReplyEnabled        bool
+	AutoReplyText           string
+	AutoReplyIntervalHours  int32
+	BroadcastSmtpHost       *string
+	BroadcastSmtpPort       *int32
+	BroadcastSmtpUsername   *string
+	BroadcastSmtpPassword   []byte
+	BroadcastSmtpTls        *string
+	BroadcastRate           int32
+	DkimSelector            *string
+	DkimPrivateKey          []byte
+	DkimEnabled             bool
+	DkimPublicKey           []byte
+	ForwardToken            string
+	SesTenant               *string
+	SesConfigurationSet     *string
+	SmtpAwsAccount          *string
+	BroadcastSmtpAwsAccount *string
+	SesState                string
+	SesDetail               *string
+	SesCheckedAt            *time.Time
 }
 
 type EmailConfirmation struct {
@@ -1512,6 +1519,33 @@ type RealtimeConnection struct {
 	ContactID             *uuid.UUID
 	SeenAt                time.Time
 	ViewingConversationID *uuid.UUID
+}
+
+type SesTenant struct {
+	WorkspaceID      uuid.UUID
+	InboxID          uuid.UUID
+	Name             string
+	Region           string
+	Arn              *string
+	State            string
+	Error            *string
+	SendingStatus    string
+	CustomerStatus   *string
+	AwsStatus        *string
+	Cause            *string
+	ReputationImpact string
+	StatusAt         *time.Time
+	CheckedAt        *time.Time
+	CreatedAt        time.Time
+}
+
+type SesTenantResource struct {
+	WorkspaceID uuid.UUID
+	InboxID     uuid.UUID
+	Arn         string
+	Kind        string
+	Name        string
+	CreatedAt   time.Time
 }
 
 type Session struct {

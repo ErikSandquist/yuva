@@ -272,6 +272,7 @@ func (s *Server) AddWorkers(workers *river.Workers) {
 	river.AddWorker(workers, &migrationRemoveWorker{s: s})
 	river.AddWorker(workers, &migrationProbeWorker{s: s})
 	s.addAnalyticsWorkers(workers)
+	s.addSESWorkers(workers)
 }
 
 func truncateRunes(v string, n int) string {
@@ -435,11 +436,14 @@ func (s *Server) sendQueued(ctx context.Context, workspaceID uuid.UUID, msgs []m
 			out.Attachments = append(out.Attachments, email.Attachment{Filename: a.Filename, ContentType: a.ContentType, Data: data})
 		}
 	}
+	cfg := email.SMTPConfig{Host: ch.SmtpHost, Port: int(ch.SmtpPort), Username: ch.SmtpUsername, Password: password, TLS: ch.SmtpTls}
+	if out.Headers, err = s.sesHeaders(ctx, ch, cfg); err != nil {
+		return "", err
+	}
 	raw, err := email.Build(out)
 	if err != nil {
 		return "", &email.PermanentError{Err: err}
 	}
-	cfg := email.SMTPConfig{Host: ch.SmtpHost, Port: int(ch.SmtpPort), Username: ch.SmtpUsername, Password: password, TLS: ch.SmtpTls}
 	sendCtx, cancel := context.WithTimeout(ctx, time.Minute)
 	defer cancel()
 	return email.SendRelayed(sendCtx, s.sender, cfg, me.FromAddress, []string{to}, raw)

@@ -150,7 +150,7 @@ ON CONFLICT (workspace_id, channel_id) DO UPDATE SET
     smtp_password = excluded.smtp_password, smtp_tls = excluded.smtp_tls,
     auto_reply_enabled = excluded.auto_reply_enabled, auto_reply_text = excluded.auto_reply_text,
     auto_reply_interval_hours = excluded.auto_reply_interval_hours
-RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token
+RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token, ses_tenant, ses_configuration_set, smtp_aws_account, broadcast_smtp_aws_account, ses_state, ses_detail, ses_checked_at
 `
 
 type CreateEmailChannelParams struct {
@@ -211,6 +211,13 @@ func (q *Queries) CreateEmailChannel(ctx context.Context, arg CreateEmailChannel
 		&i.DkimEnabled,
 		&i.DkimPublicKey,
 		&i.ForwardToken,
+		&i.SesTenant,
+		&i.SesConfigurationSet,
+		&i.SmtpAwsAccount,
+		&i.BroadcastSmtpAwsAccount,
+		&i.SesState,
+		&i.SesDetail,
+		&i.SesCheckedAt,
 	)
 	return i, err
 }
@@ -219,7 +226,7 @@ const createEmailChannelDkimKey = `-- name: CreateEmailChannelDkimKey :one
 UPDATE email_channels SET dkim_selector = $1, dkim_private_key = $2, dkim_public_key = $3,
     dkim_enabled = false
 WHERE workspace_id = $4 AND channel_id = $5 AND dkim_private_key IS NULL
-RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token
+RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token, ses_tenant, ses_configuration_set, smtp_aws_account, broadcast_smtp_aws_account, ses_state, ses_detail, ses_checked_at
 `
 
 type CreateEmailChannelDkimKeyParams struct {
@@ -264,6 +271,13 @@ func (q *Queries) CreateEmailChannelDkimKey(ctx context.Context, arg CreateEmail
 		&i.DkimEnabled,
 		&i.DkimPublicKey,
 		&i.ForwardToken,
+		&i.SesTenant,
+		&i.SesConfigurationSet,
+		&i.SmtpAwsAccount,
+		&i.BroadcastSmtpAwsAccount,
+		&i.SesState,
+		&i.SesDetail,
+		&i.SesCheckedAt,
 	)
 	return i, err
 }
@@ -471,39 +485,46 @@ func (q *Queries) FindConversationByHeaders(ctx context.Context, arg FindConvers
 }
 
 const findEmailChannelByAddress = `-- name: FindEmailChannelByAddress :one
-SELECT e.workspace_id, e.channel_id, e.address, e.display_name, e.from_address, e.smtp_host, e.smtp_port, e.smtp_username, e.smtp_password, e.smtp_tls, e.auto_reply_enabled, e.auto_reply_text, e.auto_reply_interval_hours, e.broadcast_smtp_host, e.broadcast_smtp_port, e.broadcast_smtp_username, e.broadcast_smtp_password, e.broadcast_smtp_tls, e.broadcast_rate, e.dkim_selector, e.dkim_private_key, e.dkim_enabled, e.dkim_public_key, e.forward_token, c.inbox_id, c.name AS channel_name FROM email_channels e
+SELECT e.workspace_id, e.channel_id, e.address, e.display_name, e.from_address, e.smtp_host, e.smtp_port, e.smtp_username, e.smtp_password, e.smtp_tls, e.auto_reply_enabled, e.auto_reply_text, e.auto_reply_interval_hours, e.broadcast_smtp_host, e.broadcast_smtp_port, e.broadcast_smtp_username, e.broadcast_smtp_password, e.broadcast_smtp_tls, e.broadcast_rate, e.dkim_selector, e.dkim_private_key, e.dkim_enabled, e.dkim_public_key, e.forward_token, e.ses_tenant, e.ses_configuration_set, e.smtp_aws_account, e.broadcast_smtp_aws_account, e.ses_state, e.ses_detail, e.ses_checked_at, c.inbox_id, c.name AS channel_name FROM email_channels e
 JOIN channels c ON c.workspace_id = e.workspace_id AND c.id = e.channel_id
 JOIN workspaces w ON w.id = e.workspace_id
 WHERE e.address = $1 AND w.deleted_at IS NULL
 `
 
 type FindEmailChannelByAddressRow struct {
-	WorkspaceID            uuid.UUID
-	ChannelID              uuid.UUID
-	Address                string
-	DisplayName            string
-	FromAddress            *string
-	SmtpHost               string
-	SmtpPort               int32
-	SmtpUsername           string
-	SmtpPassword           []byte
-	SmtpTls                string
-	AutoReplyEnabled       bool
-	AutoReplyText          string
-	AutoReplyIntervalHours int32
-	BroadcastSmtpHost      *string
-	BroadcastSmtpPort      *int32
-	BroadcastSmtpUsername  *string
-	BroadcastSmtpPassword  []byte
-	BroadcastSmtpTls       *string
-	BroadcastRate          int32
-	DkimSelector           *string
-	DkimPrivateKey         []byte
-	DkimEnabled            bool
-	DkimPublicKey          []byte
-	ForwardToken           string
-	InboxID                uuid.UUID
-	ChannelName            string
+	WorkspaceID             uuid.UUID
+	ChannelID               uuid.UUID
+	Address                 string
+	DisplayName             string
+	FromAddress             *string
+	SmtpHost                string
+	SmtpPort                int32
+	SmtpUsername            string
+	SmtpPassword            []byte
+	SmtpTls                 string
+	AutoReplyEnabled        bool
+	AutoReplyText           string
+	AutoReplyIntervalHours  int32
+	BroadcastSmtpHost       *string
+	BroadcastSmtpPort       *int32
+	BroadcastSmtpUsername   *string
+	BroadcastSmtpPassword   []byte
+	BroadcastSmtpTls        *string
+	BroadcastRate           int32
+	DkimSelector            *string
+	DkimPrivateKey          []byte
+	DkimEnabled             bool
+	DkimPublicKey           []byte
+	ForwardToken            string
+	SesTenant               *string
+	SesConfigurationSet     *string
+	SmtpAwsAccount          *string
+	BroadcastSmtpAwsAccount *string
+	SesState                string
+	SesDetail               *string
+	SesCheckedAt            *time.Time
+	InboxID                 uuid.UUID
+	ChannelName             string
 }
 
 // Inbound mail names only its recipient, so the channel is found before the workspace is known
@@ -536,6 +557,13 @@ func (q *Queries) FindEmailChannelByAddress(ctx context.Context, address string)
 		&i.DkimEnabled,
 		&i.DkimPublicKey,
 		&i.ForwardToken,
+		&i.SesTenant,
+		&i.SesConfigurationSet,
+		&i.SmtpAwsAccount,
+		&i.BroadcastSmtpAwsAccount,
+		&i.SesState,
+		&i.SesDetail,
+		&i.SesCheckedAt,
 		&i.InboxID,
 		&i.ChannelName,
 	)
@@ -543,39 +571,46 @@ func (q *Queries) FindEmailChannelByAddress(ctx context.Context, address string)
 }
 
 const findEmailChannelByForwardToken = `-- name: FindEmailChannelByForwardToken :one
-SELECT e.workspace_id, e.channel_id, e.address, e.display_name, e.from_address, e.smtp_host, e.smtp_port, e.smtp_username, e.smtp_password, e.smtp_tls, e.auto_reply_enabled, e.auto_reply_text, e.auto_reply_interval_hours, e.broadcast_smtp_host, e.broadcast_smtp_port, e.broadcast_smtp_username, e.broadcast_smtp_password, e.broadcast_smtp_tls, e.broadcast_rate, e.dkim_selector, e.dkim_private_key, e.dkim_enabled, e.dkim_public_key, e.forward_token, c.inbox_id, c.name AS channel_name FROM email_channels e
+SELECT e.workspace_id, e.channel_id, e.address, e.display_name, e.from_address, e.smtp_host, e.smtp_port, e.smtp_username, e.smtp_password, e.smtp_tls, e.auto_reply_enabled, e.auto_reply_text, e.auto_reply_interval_hours, e.broadcast_smtp_host, e.broadcast_smtp_port, e.broadcast_smtp_username, e.broadcast_smtp_password, e.broadcast_smtp_tls, e.broadcast_rate, e.dkim_selector, e.dkim_private_key, e.dkim_enabled, e.dkim_public_key, e.forward_token, e.ses_tenant, e.ses_configuration_set, e.smtp_aws_account, e.broadcast_smtp_aws_account, e.ses_state, e.ses_detail, e.ses_checked_at, c.inbox_id, c.name AS channel_name FROM email_channels e
 JOIN channels c ON c.workspace_id = e.workspace_id AND c.id = e.channel_id
 JOIN workspaces w ON w.id = e.workspace_id
 WHERE e.forward_token = $1 AND w.deleted_at IS NULL
 `
 
 type FindEmailChannelByForwardTokenRow struct {
-	WorkspaceID            uuid.UUID
-	ChannelID              uuid.UUID
-	Address                string
-	DisplayName            string
-	FromAddress            *string
-	SmtpHost               string
-	SmtpPort               int32
-	SmtpUsername           string
-	SmtpPassword           []byte
-	SmtpTls                string
-	AutoReplyEnabled       bool
-	AutoReplyText          string
-	AutoReplyIntervalHours int32
-	BroadcastSmtpHost      *string
-	BroadcastSmtpPort      *int32
-	BroadcastSmtpUsername  *string
-	BroadcastSmtpPassword  []byte
-	BroadcastSmtpTls       *string
-	BroadcastRate          int32
-	DkimSelector           *string
-	DkimPrivateKey         []byte
-	DkimEnabled            bool
-	DkimPublicKey          []byte
-	ForwardToken           string
-	InboxID                uuid.UUID
-	ChannelName            string
+	WorkspaceID             uuid.UUID
+	ChannelID               uuid.UUID
+	Address                 string
+	DisplayName             string
+	FromAddress             *string
+	SmtpHost                string
+	SmtpPort                int32
+	SmtpUsername            string
+	SmtpPassword            []byte
+	SmtpTls                 string
+	AutoReplyEnabled        bool
+	AutoReplyText           string
+	AutoReplyIntervalHours  int32
+	BroadcastSmtpHost       *string
+	BroadcastSmtpPort       *int32
+	BroadcastSmtpUsername   *string
+	BroadcastSmtpPassword   []byte
+	BroadcastSmtpTls        *string
+	BroadcastRate           int32
+	DkimSelector            *string
+	DkimPrivateKey          []byte
+	DkimEnabled             bool
+	DkimPublicKey           []byte
+	ForwardToken            string
+	SesTenant               *string
+	SesConfigurationSet     *string
+	SmtpAwsAccount          *string
+	BroadcastSmtpAwsAccount *string
+	SesState                string
+	SesDetail               *string
+	SesCheckedAt            *time.Time
+	InboxID                 uuid.UUID
+	ChannelName             string
 }
 
 // A forwarding address names only its token (see "Hosting for others later" in docs/architecture.md).
@@ -607,6 +642,13 @@ func (q *Queries) FindEmailChannelByForwardToken(ctx context.Context, forwardTok
 		&i.DkimEnabled,
 		&i.DkimPublicKey,
 		&i.ForwardToken,
+		&i.SesTenant,
+		&i.SesConfigurationSet,
+		&i.SmtpAwsAccount,
+		&i.BroadcastSmtpAwsAccount,
+		&i.SesState,
+		&i.SesDetail,
+		&i.SesCheckedAt,
 		&i.InboxID,
 		&i.ChannelName,
 	)
@@ -637,7 +679,7 @@ func (q *Queries) FindInboundEmailByHeader(ctx context.Context, arg FindInboundE
 }
 
 const findOutboundEmailAnyWorkspace = `-- name: FindOutboundEmailAnyWorkspace :one
-SELECT e.workspace_id, e.message_id, e.conversation_id, e.to_addresses FROM message_emails e
+SELECT e.workspace_id, e.message_id, e.conversation_id, e.to_addresses, e.channel_id FROM message_emails e
 JOIN workspaces w ON w.id = e.workspace_id
 WHERE e.direction = 'out' AND e.imported_at IS NULL AND e.header_message_id = $1 AND w.deleted_at IS NULL
 LIMIT 1
@@ -648,6 +690,7 @@ type FindOutboundEmailAnyWorkspaceRow struct {
 	MessageID      uuid.UUID
 	ConversationID uuid.UUID
 	ToAddresses    []string
+	ChannelID      *uuid.UUID
 }
 
 // SES reports name only our Message-ID, so the message is found before the workspace is known
@@ -660,6 +703,7 @@ func (q *Queries) FindOutboundEmailAnyWorkspace(ctx context.Context, headerMessa
 		&i.MessageID,
 		&i.ConversationID,
 		&i.ToAddresses,
+		&i.ChannelID,
 	)
 	return i, err
 }
@@ -716,7 +760,7 @@ func (q *Queries) GetContactIDByEmail(ctx context.Context, arg GetContactIDByEma
 }
 
 const getEmailChannel = `-- name: GetEmailChannel :one
-SELECT workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token FROM email_channels WHERE workspace_id = $1 AND channel_id = $2
+SELECT workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token, ses_tenant, ses_configuration_set, smtp_aws_account, broadcast_smtp_aws_account, ses_state, ses_detail, ses_checked_at FROM email_channels WHERE workspace_id = $1 AND channel_id = $2
 `
 
 type GetEmailChannelParams struct {
@@ -752,12 +796,19 @@ func (q *Queries) GetEmailChannel(ctx context.Context, arg GetEmailChannelParams
 		&i.DkimEnabled,
 		&i.DkimPublicKey,
 		&i.ForwardToken,
+		&i.SesTenant,
+		&i.SesConfigurationSet,
+		&i.SmtpAwsAccount,
+		&i.BroadcastSmtpAwsAccount,
+		&i.SesState,
+		&i.SesDetail,
+		&i.SesCheckedAt,
 	)
 	return i, err
 }
 
 const getIngestChannel = `-- name: GetIngestChannel :one
-SELECT e.workspace_id, e.channel_id, e.address, e.display_name, e.from_address, e.smtp_host, e.smtp_port, e.smtp_username, e.smtp_password, e.smtp_tls, e.auto_reply_enabled, e.auto_reply_text, e.auto_reply_interval_hours, e.broadcast_smtp_host, e.broadcast_smtp_port, e.broadcast_smtp_username, e.broadcast_smtp_password, e.broadcast_smtp_tls, e.broadcast_rate, e.dkim_selector, e.dkim_private_key, e.dkim_enabled, e.dkim_public_key, e.forward_token, c.inbox_id, c.name AS channel_name FROM email_channels e
+SELECT e.workspace_id, e.channel_id, e.address, e.display_name, e.from_address, e.smtp_host, e.smtp_port, e.smtp_username, e.smtp_password, e.smtp_tls, e.auto_reply_enabled, e.auto_reply_text, e.auto_reply_interval_hours, e.broadcast_smtp_host, e.broadcast_smtp_port, e.broadcast_smtp_username, e.broadcast_smtp_password, e.broadcast_smtp_tls, e.broadcast_rate, e.dkim_selector, e.dkim_private_key, e.dkim_enabled, e.dkim_public_key, e.forward_token, e.ses_tenant, e.ses_configuration_set, e.smtp_aws_account, e.broadcast_smtp_aws_account, e.ses_state, e.ses_detail, e.ses_checked_at, c.inbox_id, c.name AS channel_name FROM email_channels e
 JOIN channels c ON c.workspace_id = e.workspace_id AND c.id = e.channel_id
 WHERE e.workspace_id = $1 AND e.channel_id = $2
 `
@@ -768,32 +819,39 @@ type GetIngestChannelParams struct {
 }
 
 type GetIngestChannelRow struct {
-	WorkspaceID            uuid.UUID
-	ChannelID              uuid.UUID
-	Address                string
-	DisplayName            string
-	FromAddress            *string
-	SmtpHost               string
-	SmtpPort               int32
-	SmtpUsername           string
-	SmtpPassword           []byte
-	SmtpTls                string
-	AutoReplyEnabled       bool
-	AutoReplyText          string
-	AutoReplyIntervalHours int32
-	BroadcastSmtpHost      *string
-	BroadcastSmtpPort      *int32
-	BroadcastSmtpUsername  *string
-	BroadcastSmtpPassword  []byte
-	BroadcastSmtpTls       *string
-	BroadcastRate          int32
-	DkimSelector           *string
-	DkimPrivateKey         []byte
-	DkimEnabled            bool
-	DkimPublicKey          []byte
-	ForwardToken           string
-	InboxID                uuid.UUID
-	ChannelName            string
+	WorkspaceID             uuid.UUID
+	ChannelID               uuid.UUID
+	Address                 string
+	DisplayName             string
+	FromAddress             *string
+	SmtpHost                string
+	SmtpPort                int32
+	SmtpUsername            string
+	SmtpPassword            []byte
+	SmtpTls                 string
+	AutoReplyEnabled        bool
+	AutoReplyText           string
+	AutoReplyIntervalHours  int32
+	BroadcastSmtpHost       *string
+	BroadcastSmtpPort       *int32
+	BroadcastSmtpUsername   *string
+	BroadcastSmtpPassword   []byte
+	BroadcastSmtpTls        *string
+	BroadcastRate           int32
+	DkimSelector            *string
+	DkimPrivateKey          []byte
+	DkimEnabled             bool
+	DkimPublicKey           []byte
+	ForwardToken            string
+	SesTenant               *string
+	SesConfigurationSet     *string
+	SmtpAwsAccount          *string
+	BroadcastSmtpAwsAccount *string
+	SesState                string
+	SesDetail               *string
+	SesCheckedAt            *time.Time
+	InboxID                 uuid.UUID
+	ChannelName             string
 }
 
 func (q *Queries) GetIngestChannel(ctx context.Context, arg GetIngestChannelParams) (GetIngestChannelRow, error) {
@@ -824,6 +882,13 @@ func (q *Queries) GetIngestChannel(ctx context.Context, arg GetIngestChannelPara
 		&i.DkimEnabled,
 		&i.DkimPublicKey,
 		&i.ForwardToken,
+		&i.SesTenant,
+		&i.SesConfigurationSet,
+		&i.SmtpAwsAccount,
+		&i.BroadcastSmtpAwsAccount,
+		&i.SesState,
+		&i.SesDetail,
+		&i.SesCheckedAt,
 		&i.InboxID,
 		&i.ChannelName,
 	)
@@ -1097,7 +1162,7 @@ func (q *Queries) ListConversationsRawKeys(ctx context.Context, arg ListConversa
 }
 
 const listEmailChannels = `-- name: ListEmailChannels :many
-SELECT workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token FROM email_channels WHERE workspace_id = $1 AND channel_id = ANY($2::uuid[])
+SELECT workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token, ses_tenant, ses_configuration_set, smtp_aws_account, broadcast_smtp_aws_account, ses_state, ses_detail, ses_checked_at FROM email_channels WHERE workspace_id = $1 AND channel_id = ANY($2::uuid[])
 `
 
 type ListEmailChannelsParams struct {
@@ -1139,6 +1204,13 @@ func (q *Queries) ListEmailChannels(ctx context.Context, arg ListEmailChannelsPa
 			&i.DkimEnabled,
 			&i.DkimPublicKey,
 			&i.ForwardToken,
+			&i.SesTenant,
+			&i.SesConfigurationSet,
+			&i.SmtpAwsAccount,
+			&i.BroadcastSmtpAwsAccount,
+			&i.SesState,
+			&i.SesDetail,
+			&i.SesCheckedAt,
 		); err != nil {
 			return nil, err
 		}
@@ -1309,7 +1381,7 @@ func (q *Queries) MessageIDSharedBeyond(ctx context.Context, arg MessageIDShared
 
 const rotateForwardToken = `-- name: RotateForwardToken :one
 UPDATE email_channels SET forward_token = DEFAULT WHERE workspace_id = $1 AND channel_id = $2
-RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token
+RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token, ses_tenant, ses_configuration_set, smtp_aws_account, broadcast_smtp_aws_account, ses_state, ses_detail, ses_checked_at
 `
 
 type RotateForwardTokenParams struct {
@@ -1345,6 +1417,13 @@ func (q *Queries) RotateForwardToken(ctx context.Context, arg RotateForwardToken
 		&i.DkimEnabled,
 		&i.DkimPublicKey,
 		&i.ForwardToken,
+		&i.SesTenant,
+		&i.SesConfigurationSet,
+		&i.SmtpAwsAccount,
+		&i.BroadcastSmtpAwsAccount,
+		&i.SesState,
+		&i.SesDetail,
+		&i.SesCheckedAt,
 	)
 	return i, err
 }
@@ -1388,7 +1467,7 @@ UPDATE email_channels SET broadcast_smtp_host = $1, broadcast_smtp_port = $2,
     broadcast_smtp_username = $3, broadcast_smtp_password = $4,
     broadcast_smtp_tls = $5, broadcast_rate = $6
 WHERE workspace_id = $7 AND channel_id = $8
-RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token
+RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token, ses_tenant, ses_configuration_set, smtp_aws_account, broadcast_smtp_aws_account, ses_state, ses_detail, ses_checked_at
 `
 
 type SetEmailChannelBroadcastParams struct {
@@ -1439,6 +1518,13 @@ func (q *Queries) SetEmailChannelBroadcast(ctx context.Context, arg SetEmailChan
 		&i.DkimEnabled,
 		&i.DkimPublicKey,
 		&i.ForwardToken,
+		&i.SesTenant,
+		&i.SesConfigurationSet,
+		&i.SmtpAwsAccount,
+		&i.BroadcastSmtpAwsAccount,
+		&i.SesState,
+		&i.SesDetail,
+		&i.SesCheckedAt,
 	)
 	return i, err
 }
@@ -1446,7 +1532,7 @@ func (q *Queries) SetEmailChannelBroadcast(ctx context.Context, arg SetEmailChan
 const setEmailChannelDkimEnabled = `-- name: SetEmailChannelDkimEnabled :one
 UPDATE email_channels SET dkim_enabled = $1
 WHERE workspace_id = $2 AND channel_id = $3 AND (dkim_private_key IS NOT NULL OR NOT $1)
-RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token
+RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token, ses_tenant, ses_configuration_set, smtp_aws_account, broadcast_smtp_aws_account, ses_state, ses_detail, ses_checked_at
 `
 
 type SetEmailChannelDkimEnabledParams struct {
@@ -1483,6 +1569,13 @@ func (q *Queries) SetEmailChannelDkimEnabled(ctx context.Context, arg SetEmailCh
 		&i.DkimEnabled,
 		&i.DkimPublicKey,
 		&i.ForwardToken,
+		&i.SesTenant,
+		&i.SesConfigurationSet,
+		&i.SmtpAwsAccount,
+		&i.BroadcastSmtpAwsAccount,
+		&i.SesState,
+		&i.SesDetail,
+		&i.SesCheckedAt,
 	)
 	return i, err
 }

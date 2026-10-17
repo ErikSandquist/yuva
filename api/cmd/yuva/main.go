@@ -20,6 +20,7 @@ import (
 	"github.com/go-webauthn/webauthn/webauthn"
 
 	"github.com/productdevbook/yuva/api/internal/api"
+	"github.com/productdevbook/yuva/api/internal/awsses"
 	"github.com/productdevbook/yuva/api/internal/config"
 	"github.com/productdevbook/yuva/api/internal/email"
 	"github.com/productdevbook/yuva/api/internal/jobs"
@@ -44,6 +45,9 @@ const usageText = `usage:
   yuva api-key revoke <id>
   yuva inbox create --workspace <id|name> --name <name> [--slug <slug>] [--locale <tag>] [--timezone <zone>] [--mode live|async] [--expected-reply-minutes <n>]
   yuva inbox list --workspace <id|name>
+  yuva inbox ses-tenant show --workspace <id|name> [--inbox <id|slug>]
+  yuva inbox ses-tenant sync (--workspace <id|name> [--inbox <id|slug>] | --all) [--dry-run]
+  yuva inbox ses-tenant reinstate --workspace <id|name> --inbox <id|slug>
   yuva channel create-email --workspace <id|name> --inbox <id|slug> --name <name> --address <address> [--display-name <name>] [--from-address <address>]
       [--smtp-host <host> [--smtp-port <n>] [--tls starttls|tls|none] [--smtp-username <name>] [--smtp-password-file <path|->]]
   yuva channel create-chat --workspace <id|name> --inbox <id|slug> --name <name> --origin <origin>... [--allow-anonymous] [--ask-email-offline=false] [--greeting <text>]
@@ -259,6 +263,7 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 			Mode: cfg.Broadcasts, DailyRecipients: cfg.BroadcastDailyRecipients, LinkURL: cfg.MailLinkURL,
 		},
 		Analytics: analyticsSettings(cfg),
+		SES:       sesSettings(cfg),
 	})
 	if cfg.SMTPAllowPrivate {
 		log.Warn("YUVA_SMTP_ALLOW_PRIVATE is set; e-mail channels may send through SMTP servers on private and loopback addresses")
@@ -291,7 +296,7 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 	if cfg.Analytics.On {
 		analyticsWorkers = cfg.Analytics.Workers
 	}
-	queue, err := jobs.New(st.Pool, st.Queries, log, cfg.BroadcastWorkers, cfg.MigrationWorkers, analyticsWorkers, srv.AddWorkers)
+	queue, err := jobs.New(st.Pool, st.Queries, log, cfg.BroadcastWorkers, cfg.MigrationWorkers, analyticsWorkers, cfg.SES.Enabled(), srv.AddWorkers)
 	if err != nil {
 		return fmt.Errorf("job queue: %w", err)
 	}
@@ -338,6 +343,16 @@ func analyticsSettings(cfg config.Config) api.AnalyticsSettings {
 		Off: !a.On, Buffer: a.Buffer, VisitCache: a.VisitCache, SaltGrace: a.SaltGrace, MonthlyEvents: a.MonthlyEvents,
 		PropertyEventsPerMinute: a.PropertyEventsPerMinute, PropertiesPerWorkspace: a.PropertiesPerWorkspace,
 		RawDays: a.RawDays, RollupTop: a.RollupTop, GeoIP: a.GeoIP, GeoIPDir: a.GeoIPDir, GeoIPFile: a.GeoIPFile,
+	}
+}
+
+func sesSettings(cfg config.Config) api.SESSettings {
+	if !cfg.SES.Enabled() {
+		return api.SESSettings{}
+	}
+	return api.SESSettings{
+		Client: awsses.New(awsses.Config{Region: cfg.SES.Region, AccessKeyID: cfg.SES.AccessKeyID, SecretAccessKey: cfg.SES.SecretAccessKey}),
+		Region: cfg.SES.Region, ConfigurationSet: cfg.SES.ConfigurationSet, TenantPrefix: cfg.SES.TenantPrefix,
 	}
 }
 
