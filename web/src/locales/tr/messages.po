@@ -77,6 +77,11 @@ msgstr "bugün {0} üye çalıştı"
 msgid "{0} closed"
 msgstr "{0} konuşma bitti"
 
+#. placeholder {0}: done.events
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "{0} events"
+msgstr "{0} olay"
+
 #. placeholder {0}: items.length
 #: src/features/inbox/ChatList.tsx
 msgid "{0} marked as spam · no reply needed"
@@ -735,6 +740,7 @@ msgid "1 attempt"
 msgstr "1 deneme"
 
 #: src/features/settings/webhooks/WebhookList.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "1 event"
 msgstr "1 olay"
 
@@ -1139,6 +1145,10 @@ msgstr "Gelen kutusu ekle"
 msgid "Add an OAuth client named “Yuva”, as a confidential client, and enter the redirect URL below as its redirect URL."
 msgstr "“Yuva” adında, gizli (confidential) türde bir OAuth istemcisi ekleyin ve yönlendirme URL'si olarak aşağıdaki adresi girin."
 
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "Add another"
+msgstr "Bir tane daha ekle"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/setup/AddChannelStep.tsx
 msgid "Add at least one origin."
@@ -1148,8 +1158,8 @@ msgstr "En az bir kaynak ekleyin."
 msgid "Add channel"
 msgstr "Kanal ekle"
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
 #: src/features/settings/webhooks/WebhookList.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Add endpoint"
 msgstr "Uç nokta ekle"
 
@@ -1280,9 +1290,10 @@ msgstr "Tüm içe aktarmalar"
 
 #: src/app/Palette.tsx
 #: src/features/inbox/InboxPicker.tsx
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "All inboxes"
 msgstr "Tüm gelen kutuları"
 
@@ -1362,7 +1373,7 @@ msgstr "Zaten listede, olduğu gibi bırakılır"
 msgid "Also for sign-in and notification e-mails"
 msgstr "Giriş ve bildirim e-postaları da bu dilde gelir"
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "Also send message.created for members' internal notes. Internal events are never sent."
 msgstr "Üyelerin iç notları için de message.created gönderilir. İç olaylar hiçbir zaman gönderilmez."
 
@@ -1501,6 +1512,7 @@ msgstr "Bir yükleme yarıda kaldı: {count} parça ({size}) zaten sunucuda."
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/webhooks/events.tsx
 #: src/features/setup/SetupHub.tsx
 msgid "Analytics"
 msgstr "Analitik"
@@ -1827,6 +1839,7 @@ msgid "Attempt log"
 msgstr "Deneme kaydı"
 
 #: src/features/settings/webhooks/DeliverySheet.tsx
+#: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Attempts"
 msgstr "Denemeler"
 
@@ -2040,6 +2053,7 @@ msgstr "Bülten gönderimi"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/settings/webhooks/events.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Broadcasts"
 msgstr "Bültenler"
@@ -2110,6 +2124,7 @@ msgstr "Her abone için ayrı bülten planlayabilir miyim?"
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Cancel"
 msgstr "Vazgeç"
 
@@ -2731,6 +2746,7 @@ msgstr "{since} tarihinden beri kayıtlı"
 #: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "Contacts"
 msgstr "Kişiler"
 
@@ -2750,6 +2766,7 @@ msgstr "İçerik"
 #: src/features/migrations/SignInConnectStep.tsx
 #: src/features/migrations/SourceStep.tsx
 #: src/features/migrations/UploadStep.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/email/EmailAddressStep.tsx
 #: src/features/setup/email/EmailReceiveStep.tsx
 #: src/features/setup/email/EmailTestStep.tsx
@@ -2792,6 +2809,7 @@ msgstr "konuşma"
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "Conversations"
 msgstr "Konuşmalar"
 
@@ -2851,15 +2869,11 @@ msgstr "Kopyalayıp aşağıya yapıştırın."
 msgid "Copy it now and store it safely; it is not shown again."
 msgstr "Şimdi kopyalayıp güvenli bir yerde saklayın; bir daha gösterilmeyecek."
 
-#: src/features/settings/webhooks/WebhookPage.tsx
-msgid "Copy it now and store it with your receiver; it is not shown again."
-msgstr "Şimdi kopyalayıp alıcı tarafında saklayın; bir daha gösterilmez."
-
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Copy it now and update your backend; it is not shown again."
 msgstr "Şimdi kopyalayıp sunucu tarafınızı güncelleyin; bir daha gösterilmeyecek."
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Copy it now and update your receiver; the old secret keeps signing for 24 hours. It is not shown again."
 msgstr "Şimdi kopyalayıp alıcınızı güncelleyin; eski anahtar 24 saat daha imzalamaya devam eder. Bir daha gösterilmez."
 
@@ -3205,6 +3219,7 @@ msgid "Deliverability"
 msgstr "Teslim edilebilirlik"
 
 #: src/features/settings/webhooks/Deliveries.tsx
+#: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Deliveries"
 msgstr "Gönderimler"
 
@@ -3221,7 +3236,8 @@ msgid "Deny"
 msgstr "Reddet"
 
 #: src/features/broadcasts/ListForm.tsx
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/sections.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Description (optional)"
 msgstr "Açıklama (isteğe bağlı)"
 
@@ -3294,6 +3310,7 @@ msgstr "Tartışma başlatıldı"
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
+#: src/features/settings/webhooks/events.tsx
 #: src/features/setup/previews.tsx
 msgid "Discussions"
 msgstr "Tartışmalar"
@@ -3412,6 +3429,7 @@ msgstr "Alan adı doğrulanmadı"
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
@@ -3480,6 +3498,7 @@ msgstr "Taslak:"
 
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "Drafts"
 msgstr "Taslaklar"
 
@@ -3597,7 +3616,6 @@ msgstr "Her biri tüm mesajları ve notlarıyla"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Edit"
 msgstr "Düzenle"
 
@@ -3612,10 +3630,6 @@ msgstr "Hazır yanıtı düzenle"
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Edit design"
 msgstr "Tasarımı düzenle"
-
-#: src/features/settings/webhooks/WebhookDialog.tsx
-msgid "Edit endpoint"
-msgstr "Uç noktayı düzenle"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -3664,6 +3678,12 @@ msgstr "Şifreleme"
 msgid "Ended {finished}"
 msgstr "Bitti: {finished}"
 
+#: src/features/settings/webhooks/sections.tsx
+#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "Endpoint"
+msgstr "Uç nokta"
+
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "Endpoints"
 msgstr "Uç noktalar"
@@ -3680,7 +3700,7 @@ msgstr "Geçerli bir e-posta adresi girin ya da boş bırakın."
 msgid "Enter a valid e-mail address."
 msgstr "Geçerli bir e-posta adresi girin."
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "Enter an http or https URL without a user name or password."
 msgstr "Kullanıcı adı ve parola içermeyen bir http veya https adresi girin."
 
@@ -3712,12 +3732,13 @@ msgstr "Hata"
 msgid "Error or answer"
 msgstr "Hata veya yanıt"
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Events"
 msgstr "Olaylar"
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off."
 msgstr "{failingSince} tarihinden beri her deneme başarısız. 24 saat boyunca başarısız olursa Yuva uç noktayı kapatır."
 
@@ -3736,6 +3757,10 @@ msgstr "Tüm gelen kutuları"
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Every inbox follows the settings above."
 msgstr "Tüm gelen kutuları yukarıdaki ayarlara uyar."
+
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "Every inbox of the workspace, including ones you add later."
+msgstr "Çalışma alanındaki her gelen kutusu, sonradan ekleyecekleriniz dahil."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Every language. Add a language to keep only contacts who use it; tr also keeps tr-TR."
@@ -3870,6 +3895,7 @@ msgstr "geri bildirim"
 
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "Geri bildirim"
 
@@ -4464,6 +4490,10 @@ msgstr "Nasıl eklenir"
 msgid "How to send the mail"
 msgstr "E-postaları gönderme yolu"
 
+#: src/features/settings/webhooks/WebhookPage.tsx
+msgid "How to verify"
+msgstr "Nasıl doğrulanır"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
 msgstr "Bu kişinin yukarıda anlatıldığı gibi bu listeden e-posta almayı kabul ettiğini ve istenirse bunun nasıl ve ne zaman olduğunu gösterebileceğimizi onaylıyorum."
@@ -4711,7 +4741,8 @@ msgstr "Uygulama içi"
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/migrations/text.ts
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/sections.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Inbox"
 msgstr "Gelen kutusu"
 
@@ -4737,7 +4768,7 @@ msgstr "Gelen kutuları"
 msgid "Inboxes cut off subjects longer than 80 characters."
 msgstr "Gelen kutuları 80 karakterden uzun konuları keser."
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "Include notes"
 msgstr "Notları dahil et"
 
@@ -5185,6 +5216,7 @@ msgstr "Talepler listeleniyor…"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "Lists"
 msgstr "Listeler"
 
@@ -5573,6 +5605,7 @@ msgstr "Mesaj türü"
 
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/migrations/ReviewStep.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "Messages"
 msgstr "Mesajlar"
 
@@ -5964,7 +5997,7 @@ msgstr "Yeni parola"
 msgid "New reply in <0>{title}</0>"
 msgstr "<0>{title}</0> tartışmasında yeni yanıt"
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "New signing secret"
 msgstr "Yeni imzalama anahtarı"
 
@@ -6738,7 +6771,7 @@ msgstr "Team ve Enterprise planlarında bir sahip bunu <0>Organization settings 
 msgid "On the web"
 msgstr "Web'de"
 
-#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/OnThisPage.tsx
 msgid "On this page"
 msgstr "Bu sayfada"
 
@@ -6756,6 +6789,7 @@ msgid "One e-mail a month about what is new."
 msgstr "Yeniliklerle ilgili ayda bir e-posta."
 
 #: src/features/auth/AuthLayout.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "One inbox"
 msgstr "Tek gelen kutusu"
 
@@ -7050,6 +7084,10 @@ msgstr "Tasarımı aç"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the discussion"
 msgstr "Tartışmayı aç"
+
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "Open the endpoint"
+msgstr "Uç noktayı aç"
 
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -7359,7 +7397,7 @@ msgstr "Gövde"
 msgid "Pending"
 msgstr "Beklemede"
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Pending deliveries are dropped with it."
 msgstr "Bekleyen gönderimler de onunla birlikte silinir."
 
@@ -7481,7 +7519,8 @@ msgstr "Bu gelen kutusunun SMTP hesabı olan bir e-posta kanalını seçin. Onay
 msgid "Pick an inbox"
 msgstr "Bir gelen kutusu seçin"
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/sections.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Pick at least one event."
 msgstr "En az bir olay seçin."
 
@@ -7562,6 +7601,10 @@ msgstr "Neyin getirileceğini ve ne kadar geriye gidileceğini seçin. Tarama, t
 #: src/features/setup/SetupHub.tsx
 msgid "Pick what you want to use. Each part takes a few minutes, and you can come back here at any time."
 msgstr "Kullanmak istediklerinizi seçin. Her biri birkaç dakika sürer ve buraya istediğiniz zaman dönebilirsiniz."
+
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "Pick what Yuva should tell your server about. You can change this later."
+msgstr "Yuva'nın sunucunuza nelerden haber vereceğini seçin. Bunu sonra değiştirebilirsiniz."
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -7721,7 +7764,7 @@ msgid "Push and e-mail"
 msgstr "Anlık ve e-posta"
 
 #: src/features/settings/notifications/PushSection.tsx
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Push notifications"
 msgstr "Anlık bildirimler"
 
@@ -7998,6 +8041,7 @@ msgstr "Uzak görseller, postayı açtığınızı gönderene bildirebilir."
 #: src/features/settings/members/MemberList.tsx
 #: src/features/settings/notifications/PushSection.tsx
 #: src/features/settings/profile/Passkeys.tsx
+#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Remove"
 msgstr "Kaldır"
@@ -8034,6 +8078,10 @@ msgstr "Kanalı kaldır"
 msgid "Remove condition {n}"
 msgstr "{n}. koşulu kaldır"
 
+#: src/features/settings/webhooks/sections.tsx
+msgid "Remove endpoint"
+msgstr "Uç noktayı kaldır"
+
 #: src/features/migrations/parts.tsx
 msgid "Remove history"
 msgstr "Geçmişi kaldır"
@@ -8059,7 +8107,7 @@ msgstr "Bu kanal kaldırılsın mı?"
 msgid "Remove this device?"
 msgstr "Bu cihaz kaldırılsın mı?"
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Remove this endpoint?"
 msgstr "Bu uç nokta kaldırılsın mı?"
 
@@ -8345,12 +8393,12 @@ msgstr "{name} adlı üyenin rolü"
 #: src/features/settings/channels/email/ForwardingAddressField.tsx
 #: src/features/settings/channels/PublicKeyField.tsx
 #: src/features/settings/inboxes/InboxSecurity.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Rotate"
 msgstr "Yenile"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Rotate secret"
 msgstr "Anahtarı yenile"
 
@@ -8362,7 +8410,7 @@ msgstr "Kimlik anahtarı yenilensin mi?"
 msgid "Rotate the public key?"
 msgstr "Genel anahtar yenilensin mi?"
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Rotate the signing secret?"
 msgstr "İmzalama anahtarı yenilensin mi?"
 
@@ -8418,7 +8466,6 @@ msgstr "Cumartesi"
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/ui.tsx
-#: src/features/settings/webhooks/WebhookDialog.tsx
 msgid "Save"
 msgstr "Kaydet"
 
@@ -8442,6 +8489,7 @@ msgstr "Şimdi kaydet ve sürüm sakla"
 #: src/features/settings/inboxes/SenderIdentity.tsx
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/settings/ui.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Saved"
 msgstr "Kaydedildi"
 
@@ -8685,7 +8733,7 @@ msgstr "Bir deneme e-postası daha gönder"
 msgid "Send drafts"
 msgstr "Taslakları gönderme"
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Send events"
 msgstr "Olayları gönder"
 
@@ -8762,6 +8810,8 @@ msgstr "Gönderen bilgileri"
 #: src/features/migrations/UploadStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/webhooks/sections.tsx
+#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Sending"
@@ -8971,6 +9021,7 @@ msgstr "Kurulum"
 msgid "Setup guide"
 msgstr "Kurulum kılavuzu"
 
+#: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Setup steps"
 msgstr "Kurulum adımları"
@@ -9072,6 +9123,10 @@ msgstr "Tüm dokümantasyon sitelerindeki gönderilerinizde görünür. Ad girme
 #: src/features/account/ConnectPage.tsx
 msgid "Shown on your posts. Leave it empty to show as “Reader”."
 msgstr "Gönderilerinizde görünür. “Okuyucu” olarak görünmek için boş bırakın."
+
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "Shown only now. Copy it and store it with your receiver."
+msgstr "Yalnızca şimdi gösterilir. Kopyalayıp alıcı tarafında saklayın."
 
 #: src/features/settings/profile/ProfileForm.tsx
 msgid "Shown to your team and to contacts"
@@ -9222,7 +9277,9 @@ msgstr "yalnızca oturum açmış kullanıcılar"
 msgid "Signing"
 msgstr "İmzalıyor"
 
+#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Signing secret"
 msgstr "İmzalama anahtarı"
 
@@ -9901,6 +9958,10 @@ msgstr "Öğeler şu adreslerde çalışır; geliştirme sunucunuzu gelen kutusu
 msgid "The endpoint is disabled. Enable it to send deliveries again."
 msgstr "Uç nokta kapalı. Yeniden göndermek için önce açın."
 
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "The endpoint is ready"
+msgstr "Uç nokta hazır"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "The exact words they saw next to the checkbox or signature."
 msgstr "Onay kutusunun ya da imzanın yanında gördükleri metnin aynısı."
@@ -10013,7 +10074,8 @@ msgstr "İçe aktarma başarısız oldu; dosyadan hiçbir şey eklenmedi."
 msgid "The import is no longer waiting to start. Look at its state."
 msgstr "İçe aktarma artık başlatılmayı beklemiyor. Durumuna bakın."
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/sections.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "The inbox cannot be changed later."
 msgstr "Gelen kutusu sonradan değiştirilemez."
 
@@ -10201,7 +10263,7 @@ msgstr "İlke quarantine: başarısız olan e-postalar spama gider."
 msgid "The policy is reject: mail that fails is refused."
 msgstr "İlke reject: başarısız olan e-postalar reddedilir."
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "Önceki anahtar {rotatedUntil} tarihine kadar imzalamaya devam eder."
 
@@ -10249,6 +10311,14 @@ msgstr "Tarama sürüyor. Bittiğinde bunları değiştirebilirsiniz."
 #: src/features/setup/InstallStep.tsx
 msgid "The SDKs bring ready-made screens, or a client for your own."
 msgstr "SDK'lar hazır ekranlarla gelir; isterseniz kendi ekranlarınız için yalnızca istemciyi kullanın."
+
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "The secret is not shown again. Rotate the secret on the endpoint page if you did not copy it."
+msgstr "Gizli anahtar bir daha gösterilmez. Kopyalamadıysanız uç nokta sayfasından yenileyin."
+
+#: src/features/settings/webhooks/sections.tsx
+msgid "The secret is shown once, when it is made. Rotate it to get a new one."
+msgstr "Gizli anahtar yalnızca oluşturulurken bir kez gösterilir. Yenisi için anahtarı döndürün."
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "The sender's domain did not authorize this mail. It may be forged."
@@ -10464,7 +10534,7 @@ msgstr "Bu adres şimdilik izin verilen sayıda onay e-postası aldı. Yarın ye
 msgid "This address has no SMTP account yet. Add one in the inbox settings before the first broadcast."
 msgstr "Bu adresin henüz SMTP hesabı yok. İlk bültenden önce gelen kutusu ayarlarından ekleyin."
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "This address is private, loopback or link-local. Webhooks only reach public servers."
 msgstr "Bu adres özel, yerel (loopback) veya bağlantı-yerel bir adres. Webhook'lar yalnızca herkese açık sunuculara ulaşır."
 
@@ -10552,6 +10622,10 @@ msgstr "Bu tartışma artık yok ya da onu göremiyorsunuz."
 #: src/components/common/text.ts
 msgid "This e-mail address bounced or complained, so the reply was not sent. Clear it on the contact to send again."
 msgstr "Bu e-posta adresi geri döndü ya da şikâyet etti, yanıt gönderilmedi. Yeniden göndermek için kişi panelinden temizleyin."
+
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "This endpoint receives only the events of {lockedName}."
+msgstr "Bu uç nokta yalnızca {lockedName} olaylarını alır."
 
 #: src/components/common/text.ts
 msgid "This file type is not allowed."
@@ -10935,7 +11009,7 @@ msgstr "Tartışmaya dönüştür"
 msgid "Turn into a public discussion"
 msgstr "Herkese açık bir tartışmaya dönüştür"
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Turn it on again once the receiver works; send failed deliveries again from the log below."
 msgstr "Alıcı çalışınca yeniden açın; başarısız gönderimleri aşağıdaki kayıttan yeniden gönderin."
 
@@ -11185,7 +11259,8 @@ msgstr "Yükleniyor…"
 msgid "Urgent"
 msgstr "Acil"
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/sections.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "URL"
 msgstr "Adres"
 
@@ -11672,6 +11747,10 @@ msgstr "Nereye gidecek?"
 msgid "Where is your mail now?"
 msgstr "E-postalarınız şu anda nerede?"
 
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "Where should Yuva send events?"
+msgstr "Yuva olayları nereye göndersin?"
+
 #: src/features/setup/email/EmailAddressStep.tsx
 msgid "Which address do customers write to?"
 msgstr "Müşteriler hangi adrese yazıyor?"
@@ -11684,6 +11763,10 @@ msgstr "Hangi uygulamalarda kullanılacak?"
 msgid "Which documentation site?"
 msgstr "Hangi dokümantasyon sitesi?"
 
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "Which events do you want?"
+msgstr "Hangi olaylar gelsin?"
+
 #: src/features/setup/StartStep.tsx
 msgid "Which product is it for?"
 msgstr "Hangi ürün için?"
@@ -11692,7 +11775,7 @@ msgstr "Hangi ürün için?"
 msgid "Which sites will show the chat?"
 msgstr "Sohbet hangi sitelerde görünecek?"
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "While off, no deliveries are made."
 msgstr "Kapalıyken hiçbir gönderim yapılmaz."
 
@@ -11743,10 +11826,6 @@ msgstr "Cloudflare Email Routing kullanıyorsanız Yuva deposundaki edge/ klasö
 #: src/features/setup/StartStep.tsx
 msgid "With its own name, language and time zone"
 msgstr "Kendi adı, dili ve saat dilimiyle"
-
-#: src/features/settings/webhooks/WebhookPage.tsx
-msgid "with notes"
-msgstr "notlarla"
 
 #: src/features/migrations/text.ts
 msgid "With two-factor sign-in, create an app password in Zoho Accounts › Security › App passwords; otherwise your password works."
@@ -11944,7 +12023,7 @@ msgstr "Ardından oradaki tartışmalara yazabilir, oy verebilir ve onları taki
 msgid "You follow no discussions. You follow the ones you start or reply to."
 msgstr "Takip ettiğiniz tartışma yok. Başlattığınız ya da yanıt yazdığınız tartışmaları takip edersiniz."
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "You get a new secret once. For 24 hours every delivery carries two signatures, one with the new and one with the old secret, so you can update your receiver without losing events."
 msgstr "Yeni anahtar yalnızca bir kez gösterilir. 24 saat boyunca her gönderim biri yeni, biri eski anahtarla olmak üzere iki imza taşır; böylece alıcınızı olay kaybetmeden güncelleyebilirsiniz."
 
@@ -12196,6 +12275,10 @@ msgstr "Yuva, {address} adresine kısa bir deneme e-postası gönderir. Yeni yol
 msgid "Yuva may now read your organization's mailboxes over IMAP, each once its owner signs in. Whoever started the migration can open it and sign in with Microsoft again."
 msgstr "Yuva artık kuruluşunuzun posta kutularını, sahibi oturum açtıktan sonra IMAP üzerinden okuyabilir. Taşımayı başlatan kişi onu açıp Microsoft ile yeniden oturum açabilir."
 
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "Yuva now sends the events you picked to this address."
+msgstr "Yuva artık seçtiğiniz olayları bu adrese gönderiyor."
+
 #: src/app/Gate.tsx
 msgid "Yuva on this server is invite only. Ask an owner or admin of your team's workspace for an invitation."
 msgstr "Bu sunucudaki Yuva'ya yalnızca davetle girilebilir. Ekibinizin çalışma alanının sahibinden ya da yöneticisinden davet isteyin."
@@ -12224,7 +12307,7 @@ msgstr "Yuva yalnızca okur. {provider} içinde hiçbir şeyi silmez, taşımaz,
 msgid "Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no notifications, no auto-replies."
 msgstr "Yuva yalnızca yüklediğiniz dosyayı okur ve taşıma bitince siler. Geçmiş sessizce gelir: bildirim yok, otomatik yanıt yok."
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."
 msgstr "Yuva seçtiğiniz her olay için JSON gövdeli, imzalı bir POST isteği gönderir."
 
@@ -12252,11 +12335,11 @@ msgstr "Yuva hiçbir şey saklamadı. OAuth istemcisinin okumadan fazlasını is
 msgid "Yuva stored nothing. Sign in again; if this keeps happening, tell the operator of this Yuva server."
 msgstr "Yuva hiçbir şey saklamadı. Yeniden oturum açın; böyle sürerse bu Yuva sunucusunu işletene haber verin."
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Yuva turned this endpoint off on {disabledAt}."
 msgstr "Yuva bu uç noktayı {disabledAt} tarihinde kapattı."
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Yuva turned this endpoint off."
 msgstr "Yuva bu uç noktayı kapattı."
 

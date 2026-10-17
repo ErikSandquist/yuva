@@ -844,6 +844,10 @@ remote images, http(s)):
   to Address. From Receiving on the channel exists, earlier steps are unreachable and Cancel reads
   "Finish later"; Test reuses the deliverability check, the SES tenant status and the DKIM section.
   The inbox settings' "+ E-mail" opens this flow; only "+ API channel" is still a dialog.
+  Adding a webhook endpoint is a three-step wizard (`/setup/webhook`, `?inbox=` locks the inbox:
+  Endpoint, Events, Done) with a per-tab draft; the endpoint is created when Events is submitted
+  (a private or invalid URL sends the user back to Endpoint), and the signing secret is shown once
+  on Done and never stored in the draft.
 - Connect an assistant (Settings › Connected apps): one page per client (Claude, Claude Code, Codex,
   ChatGPT, Cursor, VS Code, other MCP clients) with the server's own `/mcp` URL, a copyable command
   or config, install links where the client has them, and the steps; a new grant shows up there live.
@@ -957,6 +961,8 @@ remote images, http(s)):
   only its fields on top of the latest stored channel, so another card's unsaved text and the
   stored SMTP passwords are untouched; cards with only switches save on change. The inbox page
   lists channels as links to it; the add dialog is only for creating.
+  A webhook endpoint page works the same way: endpoint (URL, description), events, sending,
+  signing secret, deliveries, attempts, how to verify and remove, each saved on its own.
 - Installable PWA with Web Push (VAPID), so members get notifications on phones without a native
   app. E-mail notifications as a fallback (see Member notifications).
 - Sign-in with an e-mailed one-time code and passkeys. Sign-up is a server setting,

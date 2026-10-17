@@ -1,6 +1,5 @@
 import { Trans } from "@lingui/react/macro"
-import { useState } from "react"
-import { useNavigate } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 
 import { ErrorLine } from "@/components/common"
 import { Button } from "@/components/ui/button"
@@ -9,7 +8,6 @@ import { Card, EmptyRow, LinkRow, Rows, Section } from "@/features/settings/ui"
 import { EndpointStatus } from "@/features/settings/webhooks/parts"
 import { useWebhooks } from "@/features/settings/webhooks/queries"
 import { SignatureHint } from "@/features/settings/webhooks/SignatureHint"
-import { WebhookDialog } from "@/features/settings/webhooks/WebhookDialog"
 import { useSession } from "@/lib/session"
 import { useInboxes } from "@/lib/workspace"
 
@@ -17,8 +15,8 @@ export function WebhookList({ inboxId }: { inboxId?: string }) {
   const { canManage } = useSession()
   const inboxes = useInboxes().data ?? []
   const list = useWebhooks(inboxId)
-  const [creating, setCreating] = useState(false)
   const navigate = useNavigate()
+  const location = useLocation()
   if (!canManage) return null
   return (
     <Section
@@ -34,7 +32,16 @@ export function WebhookList({ inboxId }: { inboxId?: string }) {
         )
       }
       action={
-        <Button variant="outline" size="sm" onClick={() => setCreating(true)} data-testid="webhook-add">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() =>
+            navigate(inboxId ? `/setup/webhook?inbox=${inboxId}` : "/setup/webhook", {
+              state: { back: location.pathname },
+            })
+          }
+          data-testid="webhook-add"
+        >
           <Trans>Add endpoint</Trans>
         </Button>
       }
@@ -75,17 +82,6 @@ export function WebhookList({ inboxId }: { inboxId?: string }) {
         <ErrorLine error={list.error} className="px-5 pb-4" />
       </Card>
       <SignatureHint />
-      {creating && (
-        <WebhookDialog
-          endpoint={null}
-          inboxId={inboxId}
-          onClose={() => setCreating(false)}
-          onCreated={(e, secret) => {
-            setCreating(false)
-            navigate(`/settings/webhooks/${e.id}`, { state: { secret } })
-          }}
-        />
-      )}
     </Section>
   )
 }

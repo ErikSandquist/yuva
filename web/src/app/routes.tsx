@@ -35,6 +35,7 @@ import { ProfilePage } from "@/features/settings/profile/ProfilePage"
 import { MembersReport, RatingsReport, ReportsPane, TodayReport } from "@/features/reports/ReportPages"
 import { SettingsHome, SettingsPane } from "@/features/settings/SettingsColumn"
 import { WebhookPage } from "@/features/settings/webhooks/WebhookPage"
+import { WebhookDoneStep, WebhookEndpointStep, WebhookEventsStep } from "@/features/settings/webhooks/WebhookWizard"
 import { WebhooksPage } from "@/features/settings/webhooks/WebhooksPage"
 import { WorkspacePage } from "@/features/settings/workspace/WorkspacePage"
 import { SetupPage } from "@/features/setup/SetupPage"
@@ -81,6 +82,9 @@ export function AppRoutes() {
         <Route path="setup/new/add/:kind" element={<SetupPage flow="add" />} />
         <Route path="setup/new/:kind" element={<SetupPage flow="new" />} />
         <Route path="setup/start/:kind" element={<SetupPage flow="start" />} />
+        <Route path="setup/webhook" element={<WebhookEndpointStep />} />
+        <Route path="setup/webhook/events" element={<WebhookEventsStep />} />
+        <Route path="setup/webhook/done" element={<WebhookDoneStep />} />
         <Route path="setup/newsletter" element={<SetupPage flow="newsletter" />} />
         <Route path="setup/newsletter/:listId" element={<SetupPage flow="newsletter" />} />
         {["setup/analytics", "setup/analytics/:propertyId"].map((path) => (

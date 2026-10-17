@@ -77,6 +77,11 @@ msgstr "{0} active today"
 msgid "{0} closed"
 msgstr "{0} closed"
 
+#. placeholder {0}: done.events
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "{0} events"
+msgstr "{0} events"
+
 #. placeholder {0}: items.length
 #: src/features/inbox/ChatList.tsx
 msgid "{0} marked as spam · no reply needed"
@@ -735,6 +740,7 @@ msgid "1 attempt"
 msgstr "1 attempt"
 
 #: src/features/settings/webhooks/WebhookList.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "1 event"
 msgstr "1 event"
 
@@ -1139,6 +1145,10 @@ msgstr "Add an inbox"
 msgid "Add an OAuth client named “Yuva”, as a confidential client, and enter the redirect URL below as its redirect URL."
 msgstr "Add an OAuth client named “Yuva”, as a confidential client, and enter the redirect URL below as its redirect URL."
 
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "Add another"
+msgstr "Add another"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/setup/AddChannelStep.tsx
 msgid "Add at least one origin."
@@ -1148,8 +1158,8 @@ msgstr "Add at least one origin."
 msgid "Add channel"
 msgstr "Add channel"
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
 #: src/features/settings/webhooks/WebhookList.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Add endpoint"
 msgstr "Add endpoint"
 
@@ -1280,9 +1290,10 @@ msgstr "All imports"
 
 #: src/app/Palette.tsx
 #: src/features/inbox/InboxPicker.tsx
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookList.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "All inboxes"
 msgstr "All inboxes"
 
@@ -1362,7 +1373,7 @@ msgstr "Already on the list, left as they are"
 msgid "Also for sign-in and notification e-mails"
 msgstr "Also for sign-in and notification e-mails"
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "Also send message.created for members' internal notes. Internal events are never sent."
 msgstr "Also send message.created for members' internal notes. Internal events are never sent."
 
@@ -1501,6 +1512,7 @@ msgstr "An upload was cut off: {count} parts, {size}, are already on the server.
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/settings/webhooks/events.tsx
 #: src/features/setup/SetupHub.tsx
 msgid "Analytics"
 msgstr "Analytics"
@@ -1827,6 +1839,7 @@ msgid "Attempt log"
 msgstr "Attempt log"
 
 #: src/features/settings/webhooks/DeliverySheet.tsx
+#: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Attempts"
 msgstr "Attempts"
 
@@ -2040,6 +2053,7 @@ msgstr "Broadcast sending"
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/settings/webhooks/events.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Broadcasts"
 msgstr "Broadcasts"
@@ -2110,6 +2124,7 @@ msgstr "Can I schedule a newsletter for each subscriber?"
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -2731,6 +2746,7 @@ msgstr "Contact since {since}"
 #: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "Contacts"
 msgstr "Contacts"
 
@@ -2750,6 +2766,7 @@ msgstr "Content"
 #: src/features/migrations/SignInConnectStep.tsx
 #: src/features/migrations/SourceStep.tsx
 #: src/features/migrations/UploadStep.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/email/EmailAddressStep.tsx
 #: src/features/setup/email/EmailReceiveStep.tsx
 #: src/features/setup/email/EmailTestStep.tsx
@@ -2792,6 +2809,7 @@ msgstr "conversations"
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/ReviewStep.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "Conversations"
 msgstr "Conversations"
 
@@ -2851,15 +2869,11 @@ msgstr "Copy it and paste it below."
 msgid "Copy it now and store it safely; it is not shown again."
 msgstr "Copy it now and store it safely; it is not shown again."
 
-#: src/features/settings/webhooks/WebhookPage.tsx
-msgid "Copy it now and store it with your receiver; it is not shown again."
-msgstr "Copy it now and store it with your receiver; it is not shown again."
-
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Copy it now and update your backend; it is not shown again."
 msgstr "Copy it now and update your backend; it is not shown again."
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Copy it now and update your receiver; the old secret keeps signing for 24 hours. It is not shown again."
 msgstr "Copy it now and update your receiver; the old secret keeps signing for 24 hours. It is not shown again."
 
@@ -3205,6 +3219,7 @@ msgid "Deliverability"
 msgstr "Deliverability"
 
 #: src/features/settings/webhooks/Deliveries.tsx
+#: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Deliveries"
 msgstr "Deliveries"
 
@@ -3221,7 +3236,8 @@ msgid "Deny"
 msgstr "Deny"
 
 #: src/features/broadcasts/ListForm.tsx
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/sections.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Description (optional)"
 msgstr "Description (optional)"
 
@@ -3294,6 +3310,7 @@ msgstr "Discussion started"
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
+#: src/features/settings/webhooks/events.tsx
 #: src/features/setup/previews.tsx
 msgid "Discussions"
 msgstr "Discussions"
@@ -3412,6 +3429,7 @@ msgstr "Domain not verified"
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
@@ -3480,6 +3498,7 @@ msgstr "Draft:"
 
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/migrations/parts.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "Drafts"
 msgstr "Drafts"
 
@@ -3597,7 +3616,6 @@ msgstr "Each with all its messages and notes"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Edit"
 msgstr "Edit"
 
@@ -3612,10 +3630,6 @@ msgstr "Edit canned reply"
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "Edit design"
 msgstr "Edit design"
-
-#: src/features/settings/webhooks/WebhookDialog.tsx
-msgid "Edit endpoint"
-msgstr "Edit endpoint"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
@@ -3664,6 +3678,12 @@ msgstr "Encryption"
 msgid "Ended {finished}"
 msgstr "Ended {finished}"
 
+#: src/features/settings/webhooks/sections.tsx
+#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "Endpoint"
+msgstr "Endpoint"
+
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "Endpoints"
 msgstr "Endpoints"
@@ -3680,7 +3700,7 @@ msgstr "Enter a valid e-mail address, or leave it empty."
 msgid "Enter a valid e-mail address."
 msgstr "Enter a valid e-mail address."
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "Enter an http or https URL without a user name or password."
 msgstr "Enter an http or https URL without a user name or password."
 
@@ -3712,12 +3732,13 @@ msgstr "Error"
 msgid "Error or answer"
 msgstr "Error or answer"
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Events"
 msgstr "Events"
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off."
 msgstr "Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off."
 
@@ -3736,6 +3757,10 @@ msgstr "Every inbox"
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Every inbox follows the settings above."
 msgstr "Every inbox follows the settings above."
+
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "Every inbox of the workspace, including ones you add later."
+msgstr "Every inbox of the workspace, including ones you add later."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Every language. Add a language to keep only contacts who use it; tr also keeps tr-TR."
@@ -3870,6 +3895,7 @@ msgstr "feedback"
 
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "Feedback"
 
@@ -4464,6 +4490,10 @@ msgstr "How to add them"
 msgid "How to send the mail"
 msgstr "How to send the mail"
 
+#: src/features/settings/webhooks/WebhookPage.tsx
+msgid "How to verify"
+msgstr "How to verify"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
 msgstr "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
@@ -4711,7 +4741,8 @@ msgstr "In-app"
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/migrations/text.ts
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/sections.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Inbox"
 msgstr "Inbox"
 
@@ -4737,7 +4768,7 @@ msgstr "Inboxes"
 msgid "Inboxes cut off subjects longer than 80 characters."
 msgstr "Inboxes cut off subjects longer than 80 characters."
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "Include notes"
 msgstr "Include notes"
 
@@ -5185,6 +5216,7 @@ msgstr "Listing the tickets…"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "Lists"
 msgstr "Lists"
 
@@ -5573,6 +5605,7 @@ msgstr "Message type"
 
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/migrations/ReviewStep.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "Messages"
 msgstr "Messages"
 
@@ -5964,7 +5997,7 @@ msgstr "New password"
 msgid "New reply in <0>{title}</0>"
 msgstr "New reply in <0>{title}</0>"
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "New signing secret"
 msgstr "New signing secret"
 
@@ -6738,7 +6771,7 @@ msgstr "On Team and Enterprise plans an owner adds it once in <0>Organization se
 msgid "On the web"
 msgstr "On the web"
 
-#: src/features/settings/channels/ChannelPage.tsx
+#: src/features/settings/OnThisPage.tsx
 msgid "On this page"
 msgstr "On this page"
 
@@ -6756,6 +6789,7 @@ msgid "One e-mail a month about what is new."
 msgstr "One e-mail a month about what is new."
 
 #: src/features/auth/AuthLayout.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "One inbox"
 msgstr "One inbox"
 
@@ -7050,6 +7084,10 @@ msgstr "Open the design"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the discussion"
 msgstr "Open the discussion"
+
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "Open the endpoint"
+msgstr "Open the endpoint"
 
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -7359,7 +7397,7 @@ msgstr "Payload"
 msgid "Pending"
 msgstr "Pending"
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Pending deliveries are dropped with it."
 msgstr "Pending deliveries are dropped with it."
 
@@ -7481,7 +7519,8 @@ msgstr "Pick an e-mail channel of this inbox that has an SMTP account. It sends 
 msgid "Pick an inbox"
 msgstr "Pick an inbox"
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/sections.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Pick at least one event."
 msgstr "Pick at least one event."
 
@@ -7562,6 +7601,10 @@ msgstr "Pick what to bring and how far back to go. The scan lists the tickets to
 #: src/features/setup/SetupHub.tsx
 msgid "Pick what you want to use. Each part takes a few minutes, and you can come back here at any time."
 msgstr "Pick what you want to use. Each part takes a few minutes, and you can come back here at any time."
+
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "Pick what Yuva should tell your server about. You can change this later."
+msgstr "Pick what Yuva should tell your server about. You can change this later."
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -7721,7 +7764,7 @@ msgid "Push and e-mail"
 msgstr "Push and e-mail"
 
 #: src/features/settings/notifications/PushSection.tsx
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Push notifications"
 msgstr "Push notifications"
 
@@ -7998,6 +8041,7 @@ msgstr "Remote images can tell the sender that you opened the mail."
 #: src/features/settings/members/MemberList.tsx
 #: src/features/settings/notifications/PushSection.tsx
 #: src/features/settings/profile/Passkeys.tsx
+#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Remove"
 msgstr "Remove"
@@ -8034,6 +8078,10 @@ msgstr "Remove channel"
 msgid "Remove condition {n}"
 msgstr "Remove condition {n}"
 
+#: src/features/settings/webhooks/sections.tsx
+msgid "Remove endpoint"
+msgstr "Remove endpoint"
+
 #: src/features/migrations/parts.tsx
 msgid "Remove history"
 msgstr "Remove history"
@@ -8059,7 +8107,7 @@ msgstr "Remove this channel?"
 msgid "Remove this device?"
 msgstr "Remove this device?"
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Remove this endpoint?"
 msgstr "Remove this endpoint?"
 
@@ -8345,12 +8393,12 @@ msgstr "Role of {name}"
 #: src/features/settings/channels/email/ForwardingAddressField.tsx
 #: src/features/settings/channels/PublicKeyField.tsx
 #: src/features/settings/inboxes/InboxSecurity.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Rotate"
 msgstr "Rotate"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Rotate secret"
 msgstr "Rotate secret"
 
@@ -8362,7 +8410,7 @@ msgstr "Rotate the identity secret?"
 msgid "Rotate the public key?"
 msgstr "Rotate the public key?"
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Rotate the signing secret?"
 msgstr "Rotate the signing secret?"
 
@@ -8418,7 +8466,6 @@ msgstr "Saturday"
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/ui.tsx
-#: src/features/settings/webhooks/WebhookDialog.tsx
 msgid "Save"
 msgstr "Save"
 
@@ -8442,6 +8489,7 @@ msgstr "Save now and keep a version"
 #: src/features/settings/inboxes/SenderIdentity.tsx
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/settings/ui.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Saved"
 msgstr "Saved"
 
@@ -8685,7 +8733,7 @@ msgstr "Send another test message"
 msgid "Send drafts"
 msgstr "Send drafts"
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Send events"
 msgstr "Send events"
 
@@ -8762,6 +8810,8 @@ msgstr "Sender identity"
 #: src/features/migrations/UploadStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/settings/webhooks/sections.tsx
+#: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Sending"
@@ -8971,6 +9021,7 @@ msgstr "Setup"
 msgid "Setup guide"
 msgstr "Setup guide"
 
+#: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Setup steps"
 msgstr "Setup steps"
@@ -9072,6 +9123,10 @@ msgstr "Shown on your posts in every documentation site. Without one you show as
 #: src/features/account/ConnectPage.tsx
 msgid "Shown on your posts. Leave it empty to show as “Reader”."
 msgstr "Shown on your posts. Leave it empty to show as “Reader”."
+
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "Shown only now. Copy it and store it with your receiver."
+msgstr "Shown only now. Copy it and store it with your receiver."
 
 #: src/features/settings/profile/ProfileForm.tsx
 msgid "Shown to your team and to contacts"
@@ -9222,7 +9277,9 @@ msgstr "signed-in users only"
 msgid "Signing"
 msgstr "Signing"
 
+#: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Signing secret"
 msgstr "Signing secret"
 
@@ -9901,6 +9958,10 @@ msgstr "The elements work on these addresses; add your dev server in the inbox s
 msgid "The endpoint is disabled. Enable it to send deliveries again."
 msgstr "The endpoint is disabled. Enable it to send deliveries again."
 
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "The endpoint is ready"
+msgstr "The endpoint is ready"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "The exact words they saw next to the checkbox or signature."
 msgstr "The exact words they saw next to the checkbox or signature."
@@ -10013,7 +10074,8 @@ msgstr "The import failed, and nothing was added from the file."
 msgid "The import is no longer waiting to start. Look at its state."
 msgstr "The import is no longer waiting to start. Look at its state."
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/sections.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "The inbox cannot be changed later."
 msgstr "The inbox cannot be changed later."
 
@@ -10201,7 +10263,7 @@ msgstr "The policy is quarantine: mail that fails goes to spam."
 msgid "The policy is reject: mail that fails is refused."
 msgstr "The policy is reject: mail that fails is refused."
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "The previous secret also signs until {rotatedUntil}."
 
@@ -10249,6 +10311,14 @@ msgstr "The scan is running. You can change these when it is done."
 #: src/features/setup/InstallStep.tsx
 msgid "The SDKs bring ready-made screens, or a client for your own."
 msgstr "The SDKs bring ready-made screens, or a client for your own."
+
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "The secret is not shown again. Rotate the secret on the endpoint page if you did not copy it."
+msgstr "The secret is not shown again. Rotate the secret on the endpoint page if you did not copy it."
+
+#: src/features/settings/webhooks/sections.tsx
+msgid "The secret is shown once, when it is made. Rotate it to get a new one."
+msgstr "The secret is shown once, when it is made. Rotate it to get a new one."
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "The sender's domain did not authorize this mail. It may be forged."
@@ -10464,7 +10534,7 @@ msgstr "This address got as many confirmation mails as allowed for now. Try agai
 msgid "This address has no SMTP account yet. Add one in the inbox settings before the first broadcast."
 msgstr "This address has no SMTP account yet. Add one in the inbox settings before the first broadcast."
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/events.tsx
 msgid "This address is private, loopback or link-local. Webhooks only reach public servers."
 msgstr "This address is private, loopback or link-local. Webhooks only reach public servers."
 
@@ -10552,6 +10622,10 @@ msgstr "This discussion no longer exists or you cannot see it."
 #: src/components/common/text.ts
 msgid "This e-mail address bounced or complained, so the reply was not sent. Clear it on the contact to send again."
 msgstr "This e-mail address bounced or complained, so the reply was not sent. Clear it on the contact to send again."
+
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "This endpoint receives only the events of {lockedName}."
+msgstr "This endpoint receives only the events of {lockedName}."
 
 #: src/components/common/text.ts
 msgid "This file type is not allowed."
@@ -10935,7 +11009,7 @@ msgstr "Turn into a discussion"
 msgid "Turn into a public discussion"
 msgstr "Turn into a public discussion"
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Turn it on again once the receiver works; send failed deliveries again from the log below."
 msgstr "Turn it on again once the receiver works; send failed deliveries again from the log below."
 
@@ -11185,7 +11259,8 @@ msgstr "Uploading…"
 msgid "Urgent"
 msgstr "Urgent"
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/sections.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "URL"
 msgstr "URL"
 
@@ -11672,6 +11747,10 @@ msgstr "Where does it go?"
 msgid "Where is your mail now?"
 msgstr "Where is your mail now?"
 
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "Where should Yuva send events?"
+msgstr "Where should Yuva send events?"
+
 #: src/features/setup/email/EmailAddressStep.tsx
 msgid "Which address do customers write to?"
 msgstr "Which address do customers write to?"
@@ -11684,6 +11763,10 @@ msgstr "Which apps will use it?"
 msgid "Which documentation site?"
 msgstr "Which documentation site?"
 
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "Which events do you want?"
+msgstr "Which events do you want?"
+
 #: src/features/setup/StartStep.tsx
 msgid "Which product is it for?"
 msgstr "Which product is it for?"
@@ -11692,7 +11775,7 @@ msgstr "Which product is it for?"
 msgid "Which sites will show the chat?"
 msgstr "Which sites will show the chat?"
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "While off, no deliveries are made."
 msgstr "While off, no deliveries are made."
 
@@ -11743,10 +11826,6 @@ msgstr "With Cloudflare Email Routing, deploy the Email Worker from edge/ of the
 #: src/features/setup/StartStep.tsx
 msgid "With its own name, language and time zone"
 msgstr "With its own name, language and time zone"
-
-#: src/features/settings/webhooks/WebhookPage.tsx
-msgid "with notes"
-msgstr "with notes"
 
 #: src/features/migrations/text.ts
 msgid "With two-factor sign-in, create an app password in Zoho Accounts › Security › App passwords; otherwise your password works."
@@ -11944,7 +12023,7 @@ msgstr "You can then write, vote and follow discussions there. The team behind {
 msgid "You follow no discussions. You follow the ones you start or reply to."
 msgstr "You follow no discussions. You follow the ones you start or reply to."
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "You get a new secret once. For 24 hours every delivery carries two signatures, one with the new and one with the old secret, so you can update your receiver without losing events."
 msgstr "You get a new secret once. For 24 hours every delivery carries two signatures, one with the new and one with the old secret, so you can update your receiver without losing events."
 
@@ -12196,6 +12275,10 @@ msgstr "Yuva mails {address} a short test message. When it reaches Yuva by the n
 msgid "Yuva may now read your organization's mailboxes over IMAP, each once its owner signs in. Whoever started the migration can open it and sign in with Microsoft again."
 msgstr "Yuva may now read your organization's mailboxes over IMAP, each once its owner signs in. Whoever started the migration can open it and sign in with Microsoft again."
 
+#: src/features/settings/webhooks/WebhookWizard.tsx
+msgid "Yuva now sends the events you picked to this address."
+msgstr "Yuva now sends the events you picked to this address."
+
 #: src/app/Gate.tsx
 msgid "Yuva on this server is invite only. Ask an owner or admin of your team's workspace for an invitation."
 msgstr "Yuva on this server is invite only. Ask an owner or admin of your team's workspace for an invitation."
@@ -12224,7 +12307,7 @@ msgstr "Yuva only reads. It never deletes, moves, archives or marks anything as 
 msgid "Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no notifications, no auto-replies."
 msgstr "Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no notifications, no auto-replies."
 
-#: src/features/settings/webhooks/WebhookDialog.tsx
+#: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."
 msgstr "Yuva sends a signed POST request with a JSON body for every event you pick."
 
@@ -12252,11 +12335,11 @@ msgstr "Yuva stored nothing. Make sure the OAuth client asks for nothing more th
 msgid "Yuva stored nothing. Sign in again; if this keeps happening, tell the operator of this Yuva server."
 msgstr "Yuva stored nothing. Sign in again; if this keeps happening, tell the operator of this Yuva server."
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Yuva turned this endpoint off on {disabledAt}."
 msgstr "Yuva turned this endpoint off on {disabledAt}."
 
-#: src/features/settings/webhooks/WebhookPage.tsx
+#: src/features/settings/webhooks/sections.tsx
 msgid "Yuva turned this endpoint off."
 msgstr "Yuva turned this endpoint off."
 
