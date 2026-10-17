@@ -53,7 +53,7 @@ func (s *Server) CreateInvite(ctx context.Context, req oas.CreateInviteRequestOb
 	locale := oas.En
 	if b.Locale != nil {
 		if !validLocale(*b.Locale) {
-			return nil, errValidation("locale must be en or tr")
+			return nil, errValidation("locale must be a supported language code")
 		}
 		locale = *b.Locale
 	}

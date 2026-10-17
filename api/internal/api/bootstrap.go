@@ -37,7 +37,7 @@ func Bootstrap(ctx context.Context, st *store.Store, in BootstrapInput) (Bootstr
 		in.Locale = string(oas.En)
 	}
 	if !validLocale(oas.Locale(in.Locale)) {
-		return BootstrapResult{}, errors.New("--locale must be en or tr")
+		return BootstrapResult{}, errors.New("--locale must be a supported language code such as en, tr or pt-BR")
 	}
 	var res BootstrapResult
 	err = st.InTx(ctx, func(q *store.Queries) error {

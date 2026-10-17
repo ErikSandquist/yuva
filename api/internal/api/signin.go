@@ -103,7 +103,7 @@ func (s *Server) RequestSignInCode(ctx context.Context, req oas.RequestSignInCod
 	var pageLocale *string
 	if l := req.Body.Locale; l != nil {
 		if !validLocale(*l) {
-			return nil, errValidation("locale must be en or tr")
+			return nil, errValidation("locale must be a supported language code")
 		}
 		v := string(*l)
 		pageLocale = &v

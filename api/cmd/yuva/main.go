@@ -38,7 +38,7 @@ var version = ""
 const usageText = `usage:
   yuva serve [--migrate=false]   (applies database migrations first unless disabled)
   yuva migrate up|down|status
-  yuva bootstrap --email <address> --workspace <name> [--name <name>] [--locale en|tr] [--allow-existing]
+  yuva bootstrap --email <address> --workspace <name> [--name <name>] [--locale <code>] [--allow-existing]
   yuva ingest-email --to <address> [--from <address>] < message.eml
   yuva api-key create --workspace <id|name> --name <name> [--scope <scope>]... [--inbox <id>]...   (prints only the secret, once)
   yuva api-key list --workspace <id|name>
@@ -413,7 +413,7 @@ func bootstrap(ctx context.Context, cfg config.Config, log *slog.Logger, args []
 	fs.StringVar(&in.Email, "email", "", "e-mail address of the first owner")
 	fs.StringVar(&in.Workspace, "workspace", "", "name of the workspace")
 	fs.StringVar(&in.Name, "name", "", "display name of the owner")
-	fs.StringVar(&in.Locale, "locale", "en", "language of e-mails to the owner: en or tr")
+	fs.StringVar(&in.Locale, "locale", "en", "panel and e-mail language of the owner, such as en, tr or pt-BR")
 	fs.BoolVar(&in.AllowExisting, "allow-existing", false, "create a workspace even if one exists")
 	if err := fs.Parse(args); err != nil {
 		return err

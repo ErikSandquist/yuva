@@ -7109,10 +7109,10 @@ export interface components {
         /** @enum {string} */
         Role: "owner" | "admin" | "agent";
         /**
-         * @description The language of e-mails sent to the person.
+         * @description The person's language: the language of the panel and of e-mails sent to them. E-mails are sent in English where the server has no translation for the language (today English, Turkish and German).
          * @enum {string}
          */
-        Locale: "en" | "tr";
+        Locale: "en" | "tr" | "ar" | "bn" | "ca" | "cs" | "da" | "de" | "el" | "es" | "es-MX" | "fi" | "fr" | "fr-CA" | "gu" | "he" | "hi" | "hr" | "hu" | "id" | "it" | "ja" | "kn" | "ko" | "ml" | "mr" | "ms" | "nb" | "nl" | "or" | "pa" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sk" | "sl" | "sv" | "ta" | "te" | "th" | "uk" | "ur" | "vi" | "zh-Hans" | "zh-Hant";
         /**
          * Format: email
          * @example owner@example.com

@@ -8,7 +8,7 @@ import (
 	"github.com/productdevbook/yuva/api/internal/store"
 )
 
-func validLocale(l oas.Locale) bool { return l == oas.En || l == oas.Tr }
+func validLocale(l oas.Locale) bool { return l.Valid() }
 
 func validRole(r oas.Role) bool { return r == oas.Owner || r == oas.Admin || r == oas.Agent }
 
@@ -61,7 +61,7 @@ func (s *Server) UpdateMe(ctx context.Context, req oas.UpdateMeRequestObject) (o
 		return nil, errValidation("name is longer than 200 characters")
 	}
 	if b.Locale != nil && !validLocale(*b.Locale) {
-		return nil, errValidation("locale must be en or tr")
+		return nil, errValidation("locale must be a supported language code")
 	}
 	personID := principalFrom(ctx).personID
 	if _, err := s.st.UpdatePerson(ctx, store.UpdatePersonParams{ID: personID, Name: b.Name, Locale: (*string)(b.Locale)}); err != nil {

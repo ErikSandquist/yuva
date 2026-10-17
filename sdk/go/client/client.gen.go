@@ -2921,16 +2921,151 @@ func (e ListImportState) Valid() bool {
 
 // Defines values for Locale.
 const (
-	En Locale = "en"
-	Tr Locale = "tr"
+	Ar     Locale = "ar"
+	Bn     Locale = "bn"
+	Ca     Locale = "ca"
+	Cs     Locale = "cs"
+	Da     Locale = "da"
+	De     Locale = "de"
+	El     Locale = "el"
+	En     Locale = "en"
+	Es     Locale = "es"
+	EsMX   Locale = "es-MX"
+	Fi     Locale = "fi"
+	Fr     Locale = "fr"
+	FrCA   Locale = "fr-CA"
+	Gu     Locale = "gu"
+	He     Locale = "he"
+	Hi     Locale = "hi"
+	Hr     Locale = "hr"
+	Hu     Locale = "hu"
+	Id     Locale = "id"
+	It     Locale = "it"
+	Ja     Locale = "ja"
+	Kn     Locale = "kn"
+	Ko     Locale = "ko"
+	Ml     Locale = "ml"
+	Mr     Locale = "mr"
+	Ms     Locale = "ms"
+	Nb     Locale = "nb"
+	Nl     Locale = "nl"
+	Or     Locale = "or"
+	Pa     Locale = "pa"
+	Pl     Locale = "pl"
+	PtBR   Locale = "pt-BR"
+	PtPT   Locale = "pt-PT"
+	Ro     Locale = "ro"
+	Ru     Locale = "ru"
+	Sk     Locale = "sk"
+	Sl     Locale = "sl"
+	Sv     Locale = "sv"
+	Ta     Locale = "ta"
+	Te     Locale = "te"
+	Th     Locale = "th"
+	Tr     Locale = "tr"
+	Uk     Locale = "uk"
+	Ur     Locale = "ur"
+	Vi     Locale = "vi"
+	ZhHans Locale = "zh-Hans"
+	ZhHant Locale = "zh-Hant"
 )
 
 // Valid indicates whether the value is a known member of the Locale enum.
 func (e Locale) Valid() bool {
 	switch e {
+	case Ar:
+		return true
+	case Bn:
+		return true
+	case Ca:
+		return true
+	case Cs:
+		return true
+	case Da:
+		return true
+	case De:
+		return true
+	case El:
+		return true
 	case En:
 		return true
+	case Es:
+		return true
+	case EsMX:
+		return true
+	case Fi:
+		return true
+	case Fr:
+		return true
+	case FrCA:
+		return true
+	case Gu:
+		return true
+	case He:
+		return true
+	case Hi:
+		return true
+	case Hr:
+		return true
+	case Hu:
+		return true
+	case Id:
+		return true
+	case It:
+		return true
+	case Ja:
+		return true
+	case Kn:
+		return true
+	case Ko:
+		return true
+	case Ml:
+		return true
+	case Mr:
+		return true
+	case Ms:
+		return true
+	case Nb:
+		return true
+	case Nl:
+		return true
+	case Or:
+		return true
+	case Pa:
+		return true
+	case Pl:
+		return true
+	case PtBR:
+		return true
+	case PtPT:
+		return true
+	case Ro:
+		return true
+	case Ru:
+		return true
+	case Sk:
+		return true
+	case Sl:
+		return true
+	case Sv:
+		return true
+	case Ta:
+		return true
+	case Te:
+		return true
+	case Th:
+		return true
 	case Tr:
+		return true
+	case Uk:
+		return true
+	case Ur:
+		return true
+	case Vi:
+		return true
+	case ZhHans:
+		return true
+	case ZhHant:
 		return true
 	default:
 		return false
@@ -10774,7 +10909,7 @@ type Invite struct {
 	// InvitedBy The inviting member, absent when that member was removed.
 	InvitedBy *uuid.UUID `json:"invited_by,omitempty"`
 
-	// Locale The language of e-mails sent to the person.
+	// Locale The person's language: the language of the panel and of e-mails sent to them. E-mails are sent in English where the server has no translation for the language (today English, Turkish and German).
 	Locale Locale `json:"locale"`
 	Role   Role   `json:"role"`
 }
@@ -10784,7 +10919,7 @@ type InviteCreate struct {
 	// Email Examples: owner@example.com
 	Email Email `json:"email"`
 
-	// Locale The language of e-mails sent to the person.
+	// Locale The person's language: the language of the panel and of e-mails sent to them. E-mails are sent in English where the server has no translation for the language (today English, Turkish and German).
 	Locale *Locale `json:"locale,omitempty"`
 	Role   Role    `json:"role"`
 }
@@ -11018,7 +11153,7 @@ type ListImportUpload struct {
 	Reconfirm *bool   `json:"reconfirm,omitempty"`
 }
 
-// Locale The language of e-mails sent to the person.
+// Locale The person's language: the language of the panel and of e-mails sent to them. E-mails are sent in English where the server has no translation for the language (today English, Turkish and German).
 type Locale string
 
 // MailingList defines model for MailingList.
@@ -11129,7 +11264,7 @@ type MeUpdate struct {
 	// hours. `away`: never shown as available.
 	Availability *Availability `json:"availability,omitempty"`
 
-	// Locale The language of e-mails sent to the person.
+	// Locale The person's language: the language of the panel and of e-mails sent to them. E-mails are sent in English where the server has no translation for the language (today English, Turkish and German).
 	Locale *Locale `json:"locale,omitempty"`
 	Name   *string `json:"name,omitempty"`
 }
@@ -12992,7 +13127,7 @@ type Person struct {
 	Email Email     `json:"email"`
 	Id    uuid.UUID `json:"id"`
 
-	// Locale The language of e-mails sent to the person.
+	// Locale The person's language: the language of the panel and of e-mails sent to them. E-mails are sent in English where the server has no translation for the language (today English, Turkish and German).
 	Locale Locale `json:"locale"`
 
 	// Name Empty until the person sets it.
@@ -13122,7 +13257,7 @@ type ReaderAccount struct {
 	EmailNotifications bool   `json:"email_notifications"`
 	Initials           string `json:"initials"`
 
-	// Locale The language of e-mails sent to the person.
+	// Locale The person's language: the language of the panel and of e-mails sent to them. E-mails are sent in English where the server has no translation for the language (today English, Turkish and German).
 	Locale Locale `json:"locale"`
 
 	// Member The person is a member of at least one workspace.
