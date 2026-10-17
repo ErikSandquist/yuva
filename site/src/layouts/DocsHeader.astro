@@ -3,7 +3,7 @@ import { docsCopy } from "@/copy/docs"
 import { i18nFor } from "@/i18n"
 import { href } from "@/lib/docs"
 import { headerCopy } from "@/copy/header"
-import { APP_URL, home, links, type Locale } from "@/lib/routes"
+import { appUrl, home, links, type Locale } from "@/lib/routes"
 import Cross from "@/ui/Cross.astro"
 import DocsSearch from "@/ui/DocsSearch.astro"
 import GitHubIcon from "@/ui/GitHubIcon.astro"
@@ -69,13 +69,13 @@ const tab =
         </a>
         <a
           class="hidden h-9 items-center rounded-full px-3 text-sm font-medium text-ink-soft hover:bg-paper-deep hover:text-ink md:inline-flex"
-          href={APP_URL}
+          href={appUrl(locale)}
         >
           {h.logIn}
         </a>
         <a
           class="hidden h-9 items-center rounded-full bg-signal px-4 text-sm font-medium text-white hover:bg-signal/90 md:inline-flex"
-          href={`${APP_URL}/?signup=1`}
+          href={appUrl(locale, { signup: "1" })}
         >
           {h.startFree}
         </a>

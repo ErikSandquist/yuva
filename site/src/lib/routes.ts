@@ -123,6 +123,10 @@ export const templates = localized("/templates/")
 export const template = (slug: string): Record<Locale, string> => localized(`/templates/${slug}/`)
 export const localePaths = () => locales.filter((l) => l !== defaultLocale).map((locale) => ({ params: { locale } }))
 export const APP_URL = "https://app.useyuva.com"
+export const appUrl = (locale: Locale, params: Record<string, string> = {}, path = "/") => {
+  const query = new URLSearchParams({ ...params, lang: locale })
+  return `${APP_URL}${path}?${query}`
+}
 export const post = (slug: string) => `/blog/${slug}/`
 export const docsRoot = (locale: Locale) => `${prefix(locale)}/docs/`
 export const docsPath = (rel: string): Record<Locale, string> => localized(`/docs/${rel}`)

@@ -1,7 +1,7 @@
 ---
 import { headerCopy } from "@/copy/header"
 import { i18nFor } from "@/i18n"
-import { APP_URL, bcp47, brand, brandAssets, home, languageName, links, locales, type Locale } from "@/lib/routes"
+import { appUrl, bcp47, brand, brandAssets, home, languageName, links, locales, type Locale } from "@/lib/routes"
 import Icon from "@/ui/Icon.astro"
 import Cross from "@/ui/Cross.astro"
 import GitHubIcon from "@/ui/GitHubIcon.astro"
@@ -145,13 +145,13 @@ const item =
       </a>
       <a
         class="hidden h-9 items-center rounded-full px-3 text-sm font-medium text-ink-soft transition-colors hover:bg-paper-deep hover:text-ink lg:inline-flex"
-        href={APP_URL}
+        href={appUrl(locale)}
       >
         {t.logIn}
       </a>
       <a
         class="hidden h-9 items-center rounded-full bg-signal px-4 text-sm font-medium text-white transition-colors hover:bg-signal/90 lg:inline-flex"
-        href={`${APP_URL}/?signup=1`}
+        href={appUrl(locale, { signup: "1" })}
       >
         {t.startFree}
       </a>
@@ -211,13 +211,13 @@ const item =
           <div class="mt-auto grid grid-cols-2 gap-3 pt-6">
             <a
               class="inline-flex h-11 items-center justify-center rounded-full border border-rule-strong text-sm font-medium"
-              href={APP_URL}
+              href={appUrl(locale)}
             >
               {t.logIn}
             </a>
             <a
               class="inline-flex h-11 items-center justify-center rounded-full bg-signal text-sm font-medium text-white"
-              href={`${APP_URL}/?signup=1`}
+              href={appUrl(locale, { signup: "1" })}
             >
               {t.startFree}
             </a>

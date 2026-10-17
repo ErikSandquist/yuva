@@ -1,19 +1,21 @@
 ---
+import type { Locale } from "@/lib/routes"
 import type { HomeCopy } from "@/copy/home"
-import { APP_URL } from "@/lib/routes"
+import { appUrl } from "@/lib/routes"
 
 interface Props {
   t: HomeCopy["hero"]
+  locale: Locale
   class?: string
 }
 
-const { t } = Astro.props
+const { t, locale } = Astro.props
 ---
 
 <div class:list={["grid gap-3 sm:grid-cols-2", Astro.props.class]}>
   <a
     class="group rounded-2xl border border-signal/30 bg-brand-wash p-5 transition-colors hover:border-signal/60"
-    href={`${APP_URL}/?signup=1`}
+    href={appUrl(locale, { signup: "1" })}
   >
     <p class="font-semibold tracking-tight">{t.hosted}</p>
     <p class="mt-1.5 text-sm leading-relaxed text-ink-soft">{t.hostedBody}</p>

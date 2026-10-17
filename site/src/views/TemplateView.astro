@@ -2,7 +2,7 @@
 import { templatesCopy } from "@/copy/templates"
 import { i18nFor } from "@/i18n"
 import Base from "@/layouts/Base.astro"
-import { APP_URL, links, template as pagePaths, templates as galleryPaths, type Locale } from "@/lib/routes"
+import { appUrl, links, template as pagePaths, templates as galleryPaths, type Locale } from "@/lib/routes"
 import { previewHtml, previewLocale, text, type Template } from "@/lib/templates"
 
 interface Props {
@@ -14,7 +14,6 @@ const { locale, entry } = Astro.props
 const t = templatesCopy(i18nFor(locale))
 const name = text(entry.name, locale)
 const preview = previewLocale(entry, locale)
-const designer = `/broadcasts/designs/new?template=${entry.slug}&locale=${preview}`
 const seg = "inline-flex rounded-full border border-rule-strong p-0.5"
 const segButton =
   "h-8 rounded-full px-3.5 text-sm font-medium text-ink-soft transition-colors hover:text-ink aria-pressed:bg-ink aria-pressed:text-paper disabled:cursor-not-allowed disabled:opacity-40"
@@ -83,7 +82,7 @@ const link = "font-medium text-brand hover:underline"
         <div class="rounded-2xl border border-rule p-5">
           <a
             class="inline-flex h-11 w-full items-center justify-center rounded-full bg-signal px-5 text-[0.95rem] font-medium text-white transition-colors hover:bg-signal/90"
-            href={`${APP_URL}${designer}`}
+            href={appUrl(locale, { template: entry.slug, locale: preview }, "/broadcasts/designs/new")}
           >
             {t.use}
           </a>

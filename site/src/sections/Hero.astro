@@ -1,6 +1,6 @@
 ---
 import type { HomeCopy } from "@/copy/home"
-import { APP_URL, links } from "@/lib/routes"
+import { appUrl, links } from "@/lib/routes"
 import { stack } from "@/lib/stack"
 import type { Locale } from "@/lib/routes"
 import type { Shots } from "@/lib/shots"
@@ -35,7 +35,7 @@ const button =
       </h1>
       <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-pretty text-ink-soft">{t.lead}</p>
       <div class="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-        <a class:list={[button, "bg-signal text-white hover:bg-signal/90"]} href={`${APP_URL}/?signup=1`}>
+        <a class:list={[button, "bg-signal text-white hover:bg-signal/90"]} href={appUrl(locale, { signup: "1" })}>
           {t.signUp}
         </a>
         <a class:list={[button, "border border-rule-strong hover:border-ink/40 hover:bg-paper-deep"]} href={links.repo}>

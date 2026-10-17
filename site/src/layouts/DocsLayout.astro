@@ -4,7 +4,7 @@ import { i18nFor } from "@/i18n"
 import Base from "@/layouts/Base.astro"
 import { href, neighbours, nav } from "@/lib/docs"
 import { headerCopy } from "@/copy/header"
-import { APP_URL, bcp47, docsPath, languageName, links, locales, type Locale } from "@/lib/routes"
+import { appUrl, bcp47, docsPath, languageName, links, locales, type Locale } from "@/lib/routes"
 import ThemeToggle from "@/ui/ThemeToggle.astro"
 import DocsHeader from "@/layouts/DocsHeader.astro"
 import Cross from "@/ui/Cross.astro"
@@ -102,13 +102,13 @@ const strip = "relative flex h-11 items-center gap-2 border-b border-rule px-5 t
             <div class="grid grid-cols-2 gap-3">
               <a
                 class="inline-flex h-10 items-center justify-center rounded-full border border-rule-strong text-sm font-medium"
-                href={APP_URL}
+                href={appUrl(locale)}
               >
                 {h.logIn}
               </a>
               <a
                 class="inline-flex h-10 items-center justify-center rounded-full bg-signal text-sm font-medium text-white"
-                href={`${APP_URL}/?signup=1`}
+                href={appUrl(locale, { signup: "1" })}
               >
                 {h.startFree}
               </a>

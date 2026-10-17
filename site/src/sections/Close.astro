@@ -1,4 +1,5 @@
 ---
+import type { Locale } from "@/lib/routes"
 import type { HomeCopy } from "@/copy/home"
 import StartCards from "@/ui/StartCards.astro"
 import Stop from "@/ui/Stop.astro"
@@ -6,9 +7,10 @@ import Stop from "@/ui/Stop.astro"
 interface Props {
   t: HomeCopy["close"]
   hero: HomeCopy["hero"]
+  locale: Locale
 }
 
-const { t, hero } = Astro.props
+const { t, hero, locale } = Astro.props
 ---
 
 <Stop labelledby="close-title">
@@ -19,6 +21,6 @@ const { t, hero } = Astro.props
       </h2>
       <p class="mt-4 text-lg leading-relaxed text-ink-soft">{t.lead}</p>
     </div>
-    <StartCards t={hero} />
+    <StartCards t={hero} locale={locale} />
   </div>
 </Stop>
