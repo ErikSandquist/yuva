@@ -79,6 +79,9 @@ Befehle, die eine ID oder ein Secret ausgeben, schreiben nur das auf stdout.
 | `api-key revoke <id>` | Widerruft einen Schlüssel. |
 | `inbox create --workspace <ws> --name <name> [--slug <slug>] [--locale <tag>] [--timezone <zone>] [--mode live\|async] [--expected-reply-minutes <n>]` | Legt einen Posteingang an und gibt seine ID aus. Standards: Slug aus dem Namen, `en`, `UTC`, `async`. |
 | `inbox list --workspace <ws>` | Listet Posteingänge auf. |
+| `inbox ses-tenant show --workspace <ws> [--inbox <id\|slug>]` | Gibt für jeden Posteingang den gespeicherten Amazon-SES-Tenant-Zustand, Sendestatus, Grund, zugeordnete Ressourcen und Kanäle aus. Ruft kein AWS auf. |
+| `inbox ses-tenant sync (--workspace <ws> [--inbox <id\|slug>] \| --all) [--dry-run]` | Legt Tenants in AWS an und aktualisiert sie, liest danach ihren Status neu, eine Zeile pro Posteingang. `--all` ist der Nachtrag; `--dry-run` zeigt nur, was sich ändern würde. |
+| `inbox ses-tenant reinstate --workspace <ws> --inbox <id\|slug>` | Hebt eine Pause auf, die von der Reputationsrichtlinie kam. |
 | `channel create-email --workspace <ws> --inbox <id\|slug> --name <name> --address <address> [--display-name <name>] [--from-address <address>] [--smtp-host <host> [--smtp-port <n>] [--tls starttls\|tls\|none] [--smtp-username <name>] [--smtp-password-file <path\|->]]` | Legt einen E-Mail-Kanal an und gibt seine ID aus. Passwort aus einer Datei, oder mit `-` von stdin. |
 | `channel create-chat --workspace <ws> --inbox <id\|slug> --name <name> --origin <origin>... [--allow-anonymous] [--ask-email-offline=false] [--greeting <text>]` | Legt einen Chat-Kanal (Web-Widget) an und gibt seine ID und seinen öffentlichen Schlüssel (`yuva_pk_…`) durch einen Tabulator getrennt aus. `--origin` für jede Website wiederholen. |
 | `channel list --workspace <ws> --inbox <id\|slug>` | Listet die Kanäle eines Posteingangs auf, bei Chat-Kanälen mit öffentlichem Schlüssel und Origins. |
@@ -110,6 +113,7 @@ Minuten) listet, ohne Mailinhalt und ohne Adressen der Empfänger:
 | Broadcast approval requested | Ein Owner hat gefragt: Workspace-Name, Adresse der Person, Website, wer was sendet, wie die Abonnenten zugestimmt haben. |
 | Workspace suspended from broadcasts | Der Server hat ihn wegen seiner 30-Tage-Beschwerde- oder Bounce-Rate gesperrt, mit den Raten. |
 | Broadcast paused | Ein Broadcast hat sich selbst pausiert (Bounce-Rate, Beschwerderate oder Absenderfehler), mit Broadcast-ID und Grund. |
+| SES tenant paused | Amazon SES hat den Tenant eines Posteingangs pausiert: Namen von Workspace und Posteingang, wer pausiert hat und der Grund von SES. |
 
 Ein Workspace wird gesperrt, wenn in den letzten 30 Tagen mindestens 0,3 % von mindestens 1.000
 Broadcast-Mails als Spam gemeldet wurden oder mindestens 8 % von mindestens 2.000 gebounct sind. Seine
@@ -136,6 +140,123 @@ docker compose exec -T yuva /yuva workspace broadcasts show --workspace Example
 
 Eine Sperre hebt nur der Operator auf. Schauen Sie vor einer Freigabe auf die Website und darauf, wie
 die Abonnenten zugestimmt haben.
+
+## Amazon-SES-Tenants auf einem gehosteten Server
+
+Mehrere Workspaces, die über ein Amazon-SES-Konto senden, teilen sich dessen Reputation. SES-Tenants trennen sie:
+Yuva führt **einen Tenant pro Posteingang**, SES verfolgt Reputation und Sendestopp pro Tenant, sodass schlechter
+Versand eines Posteingangs nur diesen Posteingang pausiert. Einmal einrichten.
+
+1. Verifizieren Sie Ihre Absenderdomains als Identitäten im SES-Konto (siehe [Zustellbarkeit](deliverability.md#amazon-ses)).
+2. Legen Sie ein Configuration Set an und, um Bounces und Beschwerden zu erfahren, ein Event Destination auf einem
+   SNS-Topic aus `YUVA_SES_TOPIC_ARNS` (siehe [E-Mail](email.md#bounces)). Geben Sie dem Set keine eigenen
+   Suppression-Optionen, damit die des Tenants gelten.
+
+   ```sh
+   aws sesv2 create-configuration-set --configuration-set-name yuva --region REGION
+   aws sesv2 create-configuration-set-event-destination --configuration-set-name yuva \
+     --event-destination-name yuva-feedback --region REGION \
+     --event-destination '{"Enabled":true,"MatchingEventTypes":["BOUNCE","COMPLAINT"],"SnsDestination":{"TopicArn":"arn:aws:sns:REGION:ACCOUNT:yuva-ses"}}'
+   ```
+
+3. Legen Sie für Yuva einen IAM-Benutzer mit dieser Richtlinie und einen Zugriffsschlüssel an. Ersetzen Sie
+   `REGION`, `ACCOUNT`, `PREFIX` (der Wert von `YUVA_SES_TENANT_PREFIX`) und `CONFIG_SET`.
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "YuvaOwnTenants",
+      "Effect": "Allow",
+      "Action": [
+        "ses:CreateTenant",
+        "ses:GetTenant",
+        "ses:DeleteTenant",
+        "ses:TagResource",
+        "ses:ListTenantResources",
+        "ses:PutTenantSuppressionAttributes",
+        "ses:UpdateReputationEntityCustomerManagedStatus"
+      ],
+      "Resource": "arn:aws:ses:REGION:ACCOUNT:tenant/PREFIX*"
+    },
+    {
+      "Sid": "YuvaTenantResources",
+      "Effect": "Allow",
+      "Action": [
+        "ses:CreateTenantResourceAssociation",
+        "ses:DeleteTenantResourceAssociation"
+      ],
+      "Resource": [
+        "arn:aws:ses:REGION:ACCOUNT:tenant/PREFIX*",
+        "arn:aws:ses:REGION:ACCOUNT:identity/*",
+        "arn:aws:ses:REGION:ACCOUNT:configuration-set/CONFIG_SET"
+      ]
+    },
+    {
+      "Sid": "YuvaReadAccount",
+      "Effect": "Allow",
+      "Action": [
+        "ses:ListReputationEntities",
+        "ses:ListEmailIdentities",
+        "sts:GetAccessKeyInfo"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+   Yuva sendet nie mit diesem Schlüssel: Das tun die SMTP-Benutzer der Kanäle. `ses:TagResource` wird gebraucht,
+   weil Tenants mit Tags angelegt werden. `ses:ListReputationEntities` lässt sich nur auf `*` erlauben; es ist
+   schreibgeschützt, und Yuva fragt nur nach Tenants mit seinem Präfix. Die Richtlinie erreicht keine Tenants
+   außerhalb des Präfixes.
+4. Setzen Sie `YUVA_SES_REGION`, `YUVA_SES_ACCESS_KEY_ID`, `YUVA_SES_SECRET_ACCESS_KEY` und
+   `YUVA_SES_CONFIGURATION_SET` ([Konfiguration](configuration.md#eingehende-e-mail)) und starten Sie neu. Alle vier oder keine.
+
+Ein Kanal wird verwaltet, wenn sein SMTP-Host der Amazon-SES-Endpunkt von `YUVA_SES_REGION` ist und sein
+Benutzername ein Zugriffsschlüssel desselben AWS-Kontos wie der Schlüssel des Servers. Kanäle über ein anderes
+Konto oder eine andere Region bleiben unberührt. Für einen verwalteten Kanal legt der Server den Tenant des
+Posteingangs an (mit Suppression von Bounces und Beschwerden auf Tenant-Ebene), ordnet das Configuration Set und
+die Absenderidentität zu und fügt jeder Mail über den Kanal die Header hinzu. Das geschieht beim Speichern eines
+Kanals und bei `workspace broadcasts approve`; beim Start ruft er AWS nie schreibend auf. Für bereits vorhandene
+Kanäle führen Sie den Nachtrag einmal aus:
+
+```sh
+docker compose exec -T yuva /yuva inbox ses-tenant sync --all --dry-run
+docker compose exec -T yuva /yuva inbox ses-tenant sync --all
+```
+
+Alle fünf Minuten liest der Server den Status all seiner Tenants. Wird einer deaktiviert, pausieren die laufenden
+und geplanten Broadcasts des Posteingangs über verwaltete Kanäle (Grund `ses_tenant`; die anderen Posteingänge
+senden weiter), Planen und Fortsetzen werden mit `409 ses_tenant_blocked` abgelehnt, Support-Antworten werden
+weiter versucht und scheitern mit der Antwort von SES, und der Digest bekommt eine Zeile. Nichts setzt sich von
+selbst fort. Wer einen Posteingang oder Workspace löscht, löscht auch seine Tenants.
+
+`show` gibt aus, wer einen Tenant pausiert hat. Kam die Pause von der Richtlinie, setzt `reinstate` den
+Reinstated-Status von SES, und ein Mitglied setzt die Broadcasts fort. Hat Amazon SES selbst pausiert, hebt nur
+ein AWS-Support-Fall die Pause auf; `show` sagt das.
+
+Optional, für eine Reaktion in Sekunden statt in fünf Minuten: Leiten Sie die Tenant-Ereignisse von SES an das
+SNS-Topic. Das Ereignis lässt Yuva nur den Status neu lesen; sein Inhalt wird nicht vertraut.
+
+```sh
+aws events put-rule --name yuva-ses-tenants --region REGION \
+  --event-pattern '{"source":["aws.ses"],"detail-type":["Sending Status Enabled","Sending Status Disabled","Advisor Recommendation Status Open","Advisor Recommendation Status Resolved"]}'
+aws events put-targets --rule yuva-ses-tenants --region REGION --targets Id=yuva,Arn=arn:aws:sns:REGION:ACCOUNT:yuva-ses
+```
+
+Erlauben Sie EventBridge das Veröffentlichen im Topic mit dieser Anweisung in der Zugriffsrichtlinie des Topics:
+
+```json
+{
+  "Sid": "AllowEventBridge",
+  "Effect": "Allow",
+  "Principal": { "Service": "events.amazonaws.com" },
+  "Action": "sns:Publish",
+  "Resource": "arn:aws:sns:REGION:ACCOUNT:yuva-ses"
+}
+```
 
 ## Workspace oder Konto entfernen
 

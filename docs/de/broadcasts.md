@@ -128,6 +128,7 @@ den Versand; Warnungen nicht.
 | Daily limit | Warnung: das [Tageslimit](#das-tageslimit) macht den Versand länger als einen Tag. |
 | Test mail | Warnung: seit der letzten Änderung ging kein Test hinaus. |
 | Click tracking | Warnung, wenn an: Links zeigen auf die Link-Domain des Servers. |
+| Amazon-SES-Tenant | Blockiert, wenn der SES-Tenant des Posteingangs pausiert ist oder fehlt, nicht eingerichtet werden konnte oder die Identität des Kanals fehlt. Warnung bei einem Reputationsbefund hoher Schwere oder solange der Server den Tenant noch einrichtet (der Versand wartet Sekunden). |
 
 Wählen Sie dann Send now oder Schedule mit einer Zeit in Ihrer Zeitzone, höchstens 90 Tage im Voraus. Das
 Panel bittet Sie, die Empfängerzahl zu bestätigen. Hat sich die Zielgruppe geändert, während Sie
@@ -187,9 +188,12 @@ Ein Broadcast pausiert von selbst, mit dem Grund auf der Seite, wenn:
 | Beschwerderate | 0,3 % oder mehr wurden als Spam gemeldet (nach mindestens 1.000 Mails). |
 | Absenderfehler | Der SMTP-Server lehnt das Konto oder sein TLS ab, lehnt 20 Mails hintereinander ab oder ist 30 Minuten nicht erreichbar. Seine Antwort wird angezeigt. |
 | Workspace gesperrt | Siehe unten. |
+| Amazon-SES-Tenant | Amazon SES hat den [Tenant](email.md#amazon-ses-tenants) des Posteingangs pausiert, oder der Kanal hat seine Tenant-Isolation verloren. Die Seite sagt, was von beidem. Andere Posteingänge senden weiter. |
 | Mitglied, Operator | Jemand hat pausiert. |
 
 Beheben Sie die Ursache und setzen Sie dann fort. Nach dem Fortsetzen zählen die Raten ab diesem
+
+Fortsetzen wird mit `409 ses_tenant_blocked` abgelehnt, solange der Tenant pausiert ist; der Operator des Servers hebt die Pause auf.
 Moment.
 
 Ein Workspace wird vom Versand **gesperrt**, wenn in den letzten 30 Tagen mindestens 0,3 % von

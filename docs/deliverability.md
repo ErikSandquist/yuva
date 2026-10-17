@@ -75,6 +75,12 @@ Records take a while to spread. Run the check again when your provider says they
    encryption and these credentials.
 6. For bounces and complaints, connect SNS as described under [Bounces](email.md#bounces).
 
+Verify the sending **domain** as an identity in the SES account, not only a single address. When the
+server manages [SES tenants](email.md#amazon-ses-tenants), it associates a verified identity with the
+inbox's tenant: the address if it is verified, otherwise the most specific verified domain. With
+neither, the channel shows "Identity missing", its mail goes out without the tenant and its
+broadcasts are blocked until the identity exists. A catch-all channel needs its domain identity.
+
 ### Postmark
 
 1. In Postmark, add your sending domain and publish the DKIM and Return-Path

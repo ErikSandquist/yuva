@@ -77,6 +77,12 @@ verifiziert meldet.
    und diese Zugangsdaten ein.
 6. Für Bounces und Beschwerden verbinden Sie SNS, wie unter [Bounces](email.md#bounces) beschrieben.
 
+Verifizieren Sie die Absender-**Domain** als Identität im SES-Konto, nicht nur eine einzelne Adresse. Verwaltet der
+Server [SES-Tenants](email.md#amazon-ses-tenants), ordnet er dem Tenant des Posteingangs eine verifizierte
+Identität zu: die Adresse, wenn sie verifiziert ist, sonst die spezifischste verifizierte Domain. Gibt es keine von
+beiden, zeigt der Kanal „Identität fehlt“, seine Mails gehen ohne Tenant hinaus und seine Broadcasts sind
+blockiert, bis die Identität existiert. Ein Catch-all-Kanal braucht die Identität seiner Domain.
+
 ### Postmark
 
 1. Fügen Sie in Postmark Ihre Absenderdomain hinzu und veröffentlichen Sie die DKIM- und Return-Path-Einträge,

@@ -129,6 +129,31 @@ chat or app channels an e-mail channel too.
 
 Private and loopback SMTP hosts, such as Mailpit in development, need `YUVA_SMTP_ALLOW_PRIVATE=true`.
 
+### Amazon SES tenants
+
+SES keeps reputation, and pauses sending, per tenant. When the server's operator has set up
+[tenant management](operations.md#amazon-ses-tenants-on-a-hosted-server) and a channel sends through
+the operator's SES account, each inbox sends in its own tenant: bounces or complaints of one inbox
+pause only that inbox, never another inbox or workspace. There is nothing for your team to do. The
+channel's sending page and the inbox settings show the state, to owners and admins:
+
+| State | Meaning |
+|---|---|
+| Isolated | Mail carries the inbox's tenant. |
+| Setting up | The server is creating the tenant. It takes seconds; a broadcast waits and starts by itself. |
+| Identity missing | The sending address or its domain is not a verified identity in the SES account. See [Deliverability](deliverability.md#amazon-ses). Mail goes out without the tenant, and broadcasts are blocked. |
+| Paused | Amazon SES paused the inbox's tenant. Replies fail with SES's answer; the server's operator reinstates it. |
+| Error | A step failed; the page shows why. |
+| Missing | The tenant no longer exists in Amazon SES. Mail goes out without it and broadcasts are blocked until the server creates it again. |
+
+Mail through the managed account always carries `X-SES-CONFIGURATION-SET`, and `X-SES-TENANT` once the
+tenant is ready. Both headers are added only on mail through Amazon SES.
+
+With your own SES account, which the server does not manage, type the tenant yourself: set `ses.tenant`
+and, if you use one, `ses.configuration_set` on the channel (letters, digits, `-` and `_`, up to 64).
+Yuva adds them as headers on mail through SES and checks nothing in AWS. They are ignored while the
+server manages the inbox's tenant.
+
 ## Bounces
 
 A bounce or complaint marks the message failed and the address undeliverable; replies to it are

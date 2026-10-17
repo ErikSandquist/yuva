@@ -99,6 +99,11 @@ Default types: `image/png,image/jpeg,image/gif,image/webp,image/heic,application
 | `YUVA_INGRESS_AUTHSERV_ID` | unset | Authserv-id of your receiving mail server, e.g. `mx.cloudflare.net`. Needed to use DMARC results; without it every inbound message is stored with DMARC `unknown` and the server warns at startup. |
 | `YUVA_INGRESS_MAX_CONCURRENT` | `8` | Messages `/ingress/email` handles at once per process; more get `503`. |
 | `YUVA_SES_TOPIC_ARNS` | unset | SNS topic ARNs whose SES bounces and complaints `/ingress/ses` accepts. |
+| `YUVA_SES_REGION` | unset | The Amazon SES region whose [tenants](operations.md#amazon-ses-tenants-on-a-hosted-server) Yuva manages, e.g. `eu-west-1`. Channels that send through SES in another region are not isolated. Set it with the next three, or none. |
+| `YUVA_SES_ACCESS_KEY_ID` | unset | Access key of an IAM user with the tenant policy. |
+| `YUVA_SES_SECRET_ACCESS_KEY` | unset | Its secret. |
+| `YUVA_SES_CONFIGURATION_SET` | unset | The configuration set Yuva associates with every tenant and names in `X-SES-CONFIGURATION-SET`. 1 to 64 letters, digits, `-` or `_`. |
+| `YUVA_SES_TENANT_PREFIX` | `yuva-` | Start of every tenant name Yuva creates, up to 32 letters, digits, `-` or `_`. The IAM policy allows only tenants with it. |
 | `YUVA_EMAIL_SENDER_HOURLY_CAP` | `500` | Inbound e-mails one sender may send to a workspace per hour; more are refused (`429`). |
 
 ## Moving to Yuva

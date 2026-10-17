@@ -76,6 +76,12 @@ Kayıtların yayılması zaman alır. Sağlayıcınız doğrulandıklarını sö
 6. Geri dönenler ve şikâyetler için [Geri dönen e-postalar](email.md#geri-dönen-e-postalar) bölümünde anlatıldığı
    gibi SNS'i bağlayın.
 
+Gönderen **alan adını** yalnızca tek bir adresi değil, SES hesabında kimlik olarak doğrulayın. Sunucu
+[SES tenant'larını](email.md#amazon-ses-tenantları) yönettiğinde gelen kutusunun tenant'ı ile doğrulanmış bir kimliği
+ilişkilendirir: adres doğrulanmışsa adresi, değilse doğrulanmış en özel alan adını. İkisi de yoksa kanal "Kimlik
+eksik" gösterir, e-postaları tenant'sız gider ve kimlik oluşana kadar bültenleri engellenir. Catch-all kanalın
+alan adı kimliğine ihtiyacı vardır.
+
 ### Postmark
 
 1. Postmark'ta gönderen alan adınızı ekleyin ve gösterdiği DKIM ile Return-Path kayıtlarını ekleyin.

@@ -138,6 +138,32 @@ App-Kanälen auch einen E-Mail-Kanal.
 Private und Loopback-SMTP-Hosts, etwa Mailpit in der Entwicklung, brauchen
 `YUVA_SMTP_ALLOW_PRIVATE=true`.
 
+### Amazon-SES-Tenants
+
+SES führt Reputation und Sendestopp pro Tenant. Hat der Operator des Servers die
+[Tenant-Verwaltung](operations.md#amazon-ses-tenants-auf-einem-gehosteten-server) eingerichtet und sendet ein Kanal über
+dessen SES-Konto, sendet jeder Posteingang in seinem eigenen Tenant: Bounces oder Beschwerden eines
+Posteingangs pausieren nur diesen Posteingang, nie einen anderen Posteingang oder Workspace. Ihr Team muss
+nichts tun. Die Sendeseite des Kanals und die Einstellungen des Posteingangs zeigen den Zustand, für Inhaber
+und Admins:
+
+| Zustand | Bedeutung |
+|---|---|
+| Isoliert | Mails tragen den Tenant des Posteingangs. |
+| Wird eingerichtet | Der Server legt den Tenant an. Das dauert Sekunden; ein Broadcast wartet und startet von selbst. |
+| Identität fehlt | Die Absenderadresse oder ihre Domain ist keine verifizierte Identität im SES-Konto. Siehe [Zustellbarkeit](deliverability.md#amazon-ses). Mails gehen ohne Tenant hinaus, Broadcasts sind blockiert. |
+| Pausiert | Amazon SES hat den Tenant des Posteingangs pausiert. Antworten scheitern mit der Antwort von SES; der Operator des Servers hebt die Pause auf. |
+| Fehler | Ein Schritt ist fehlgeschlagen; die Seite zeigt den Grund. |
+| Fehlt | Der Tenant existiert in Amazon SES nicht mehr. Mails gehen ohne ihn hinaus, Broadcasts sind blockiert, bis der Server ihn neu anlegt. |
+
+Mails über das verwaltete Konto tragen immer `X-SES-CONFIGURATION-SET` und `X-SES-TENANT`, sobald der Tenant
+bereit ist. Beide Header kommen nur auf Mails über Amazon SES.
+
+Mit einem eigenen SES-Konto, das der Server nicht verwaltet, tragen Sie den Tenant selbst ein: am Kanal
+`ses.tenant` und, falls Sie eines nutzen, `ses.configuration_set` (Buchstaben, Ziffern, `-` und `_`, bis zu 64).
+Yuva fügt sie als Header zu Mails über SES hinzu und prüft in AWS nichts. Sie werden ignoriert, solange der
+Server den Tenant des Posteingangs verwaltet.
+
 ## Bounces
 
 Ein Bounce oder eine Beschwerde markiert die Nachricht als fehlgeschlagen und die Adresse als

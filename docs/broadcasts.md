@@ -121,6 +121,7 @@ the send; warnings do not.
 | Daily limit | Warning: the [daily limit](#the-daily-limit) makes it take more than one day. |
 | Test mail | Warning: no test went out since the last change. |
 | Click tracking | Warning when on: links point at the server's link domain. |
+| Amazon SES tenant | Blocks when the inbox's SES tenant is paused or missing, could not be set up, or the channel's identity is missing. A warning on a high-severity reputation finding, or while the server is still setting the tenant up (sending waits seconds). |
 
 Then choose Send now, or Schedule and pick a time in your time zone, at most 90 days ahead. The panel
 asks you to confirm the recipient count. If the audience changed while you were looking, it asks you
@@ -176,9 +177,12 @@ A broadcast pauses itself, with the reason on the page, when:
 | Complaint rate | 0.3% or more were reported as spam (after at least 1,000 mails). |
 | Sender error | The SMTP server refuses the account or its TLS, refuses 20 mails in a row, or cannot be reached for 30 minutes. The server's answer is shown. |
 | Workspace suspended | See below. |
+| Amazon SES tenant | Amazon SES paused the inbox's [tenant](email.md#amazon-ses-tenants), or the channel lost its tenant isolation. The page says which. Other inboxes keep sending. |
 | Member, operator | Someone paused it. |
 
 Fix the cause, then resume. After a resume the rates count from that moment.
+
+Resuming is refused with `409 ses_tenant_blocked` while the tenant is paused; the server's operator reinstates it.
 
 A workspace is **suspended** from sending when, over the last 30 days, at least 0.3% of at least 1,000
 broadcast mails were reported as spam, or at least 8% of at least 2,000 bounced. Its running broadcasts

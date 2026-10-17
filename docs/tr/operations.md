@@ -76,6 +76,9 @@ Bir id ya da gizli anahtar yazdıran komutlar stdout'a yalnızca onu yazar.
 | `api-key revoke <id>` | Bir anahtarı iptal eder. |
 | `inbox create --workspace <ws> --name <name> [--slug <slug>] [--locale <tag>] [--timezone <zone>] [--mode live\|async] [--expected-reply-minutes <n>]` | Bir gelen kutusu oluşturur ve id'sini yazdırır. Varsayılanlar: addan türetilen slug, `en`, `UTC`, `async`. |
 | `inbox list --workspace <ws>` | Gelen kutularını listeler. |
+| `inbox ses-tenant show --workspace <ws> [--inbox <id\|slug>]` | Her gelen kutusunun kayıtlı Amazon SES tenant durumunu, gönderim durumunu, nedenini, ilişkili kaynakları ve kanalları yazdırır. AWS'ye çağrı yapmaz. |
+| `inbox ses-tenant sync (--workspace <ws> [--inbox <id\|slug>] \| --all) [--dry-run]` | Tenant'ları AWS'de oluşturur ve günceller, sonra durumlarını yeniler; gelen kutusu başına bir satır. `--all` geriye dönük doldurmadır; `--dry-run` yalnızca neyi değiştireceğini yazdırır. |
+| `inbox ses-tenant reinstate --workspace <ws> --inbox <id\|slug>` | İtibar politikasından gelen bir duraklatmayı kaldırır. |
 | `channel create-email --workspace <ws> --inbox <id\|slug> --name <name> --address <address> [--display-name <name>] [--from-address <address>] [--smtp-host <host> [--smtp-port <n>] [--tls starttls\|tls\|none] [--smtp-username <name>] [--smtp-password-file <path\|->]]` | Bir e-posta kanalı oluşturur ve id'sini yazdırır. Parola bir dosyadan ya da `-` ile stdin'den okunur. |
 | `channel create-chat --workspace <ws> --inbox <id\|slug> --name <name> --origin <origin>... [--allow-anonymous] [--ask-email-offline=false] [--greeting <text>]` | Bir sohbet (web widget) kanalı oluşturur; id'sini ve genel anahtarını (`yuva_pk_…`) aralarında bir sekmeyle yazdırır. Her site için `--origin` yinelenir. |
 | `channel list --workspace <ws> --inbox <id\|slug>` | Bir gelen kutusunun kanallarını listeler; sohbet kanallarında genel anahtarı ve origin'leri de gösterir. |
@@ -107,6 +110,7 @@ içeriğini ve alıcıların adreslerini içermeden şunları listeler:
 | Bülten onayı istendi | Bir sahip istedi: çalışma alanı adı, kişinin adresi, web sitesi, kimin neyi gönderdiği, abonelerin nasıl izin verdiği. |
 | Çalışma alanı bültenlerden askıya alındı | Sunucu, 30 günlük şikâyet ya da geri dönme oranı nedeniyle askıya aldı; oranlarla birlikte. |
 | Bülten duraklatıldı | Bir bülten kendiliğinden duraklatıldı (geri dönme oranı, şikâyet oranı ya da gönderici hatası); bülten id'si ve nedeniyle. |
+| SES tenant duraklatıldı | Amazon SES bir gelen kutusunun tenant'ını duraklattı: çalışma alanı ve gelen kutusu adları, kimin duraklattığı ve SES'in nedeni. |
 
 Son 30 günde en az 1.000 bülten e-postasının en az %0,3'ü spam bildirildiğinde ya da en az 2.000
 e-postanın en az %8'i geri döndüğünde bir çalışma alanı askıya alınır. Çalışan bültenleri duraklar.
@@ -131,6 +135,121 @@ docker compose exec -T yuva /yuva workspace broadcasts show --workspace Example
 | `show` | Durum ve nedeni, günlük sınır ve bugünkü sayı, son 30 gün (gönderilen, geri dönme ve şikâyet oranları), kullandığı gönderen alan adları ve son 10 bülteni. |
 
 Askıyı yalnızca operatör kaldırır. Onaylamadan önce web sitesine ve abonelerin nasıl izin verdiğine bakın.
+
+## Barındırılan sunucuda Amazon SES tenant'ları
+
+Aynı Amazon SES hesabı üzerinden gönderen birkaç çalışma alanı itibarı paylaşır. SES tenant'ları onları ayırır:
+Yuva **gelen kutusu başına bir tenant** tutar, SES itibarı ve gönderimin durdurulmasını tenant başına izler; böylece
+bir gelen kutusunun kötü gönderimi yalnızca o gelen kutusunu duraklatır. Bir kez kurulur.
+
+1. Gönderen alan adlarınızı SES hesabında kimlik olarak doğrulayın (bkz. [Teslim edilebilirlik](deliverability.md#amazon-ses)).
+2. Bir configuration set oluşturun ve geri dönmeleri ile şikâyetleri öğrenmek için `YUVA_SES_TOPIC_ARNS` içinde
+   listelenen bir SNS topic'ine event destination ekleyin (bkz. [E-posta](email.md#geri-dönen-e-postalar)). Set'e kendi
+   bastırma seçeneklerini vermeyin; böylece tenant'ınkiler geçerli olur.
+
+   ```sh
+   aws sesv2 create-configuration-set --configuration-set-name yuva --region REGION
+   aws sesv2 create-configuration-set-event-destination --configuration-set-name yuva \
+     --event-destination-name yuva-feedback --region REGION \
+     --event-destination '{"Enabled":true,"MatchingEventTypes":["BOUNCE","COMPLAINT"],"SnsDestination":{"TopicArn":"arn:aws:sns:REGION:ACCOUNT:yuva-ses"}}'
+   ```
+
+3. Yuva için bu politikayla bir IAM kullanıcısı ve bir erişim anahtarı oluşturun. `REGION`, `ACCOUNT`, `PREFIX`
+   (`YUVA_SES_TENANT_PREFIX` değeri) ve `CONFIG_SET` değerlerini değiştirin.
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "YuvaOwnTenants",
+      "Effect": "Allow",
+      "Action": [
+        "ses:CreateTenant",
+        "ses:GetTenant",
+        "ses:DeleteTenant",
+        "ses:TagResource",
+        "ses:ListTenantResources",
+        "ses:PutTenantSuppressionAttributes",
+        "ses:UpdateReputationEntityCustomerManagedStatus"
+      ],
+      "Resource": "arn:aws:ses:REGION:ACCOUNT:tenant/PREFIX*"
+    },
+    {
+      "Sid": "YuvaTenantResources",
+      "Effect": "Allow",
+      "Action": [
+        "ses:CreateTenantResourceAssociation",
+        "ses:DeleteTenantResourceAssociation"
+      ],
+      "Resource": [
+        "arn:aws:ses:REGION:ACCOUNT:tenant/PREFIX*",
+        "arn:aws:ses:REGION:ACCOUNT:identity/*",
+        "arn:aws:ses:REGION:ACCOUNT:configuration-set/CONFIG_SET"
+      ]
+    },
+    {
+      "Sid": "YuvaReadAccount",
+      "Effect": "Allow",
+      "Action": [
+        "ses:ListReputationEntities",
+        "ses:ListEmailIdentities",
+        "sts:GetAccessKeyInfo"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+   Yuva bu anahtarla hiç göndermez: kanalların SMTP kullanıcıları gönderir. Tenant'lar etiketle oluşturulduğu için
+   `ses:TagResource` gerekir. `ses:ListReputationEntities` yalnızca `*` üzerinde verilebilir; salt okunurdur ve Yuva
+   yalnızca kendi önekli tenant'ları ister. Politika önek dışındaki tenant'lara erişemez.
+4. `YUVA_SES_REGION`, `YUVA_SES_ACCESS_KEY_ID`, `YUVA_SES_SECRET_ACCESS_KEY` ve `YUVA_SES_CONFIGURATION_SET`
+   değerlerini ayarlayın ([Yapılandırma](configuration.md#gelen-e-posta)) ve yeniden başlatın. Dördü birden ya da hiçbiri.
+
+Bir kanal, SMTP sunucusu `YUVA_SES_REGION` bölgesinin Amazon SES uç noktası ve kullanıcı adı sunucunun anahtarıyla
+aynı AWS hesabının bir erişim anahtarı olduğunda yönetilir. Başka hesap ya da bölge üzerinden giden kanallara
+dokunulmaz. Yönetilen bir kanal için sunucu gelen kutusunun tenant'ını oluşturur (geri dönmelerin ve şikâyetlerin
+tenant düzeyinde bastırılmasıyla), configuration set'i ve gönderen kimliği ilişkilendirir ve kanaldan giden her
+e-postaya başlıkları ekler. Bunu bir kanal kaydedildiğinde ve `workspace broadcasts approve` sırasında yapar;
+başlangıçta AWS'ye yazmak için hiç çağrı yapmaz. Önceden var olan kanallar için geriye dönük doldurmayı bir kez çalıştırın:
+
+```sh
+docker compose exec -T yuva /yuva inbox ses-tenant sync --all --dry-run
+docker compose exec -T yuva /yuva inbox ses-tenant sync --all
+```
+
+Sunucu beş dakikada bir tüm tenant'larının durumunu okur. Biri devre dışı kaldığında gelen kutusunun yönetilen
+kanallardan giden çalışan ve zamanlanmış bültenleri duraklar (neden `ses_tenant`; diğer gelen kutuları göndermeye
+devam eder), zamanlama ve sürdürme `409 ses_tenant_blocked` ile reddedilir, destek yanıtları yine denenir ve SES'in
+cevabıyla başarısız olur, özete bir satır eklenir. Hiçbir şey kendiliğinden sürdürülmez. Bir gelen kutusunu ya da
+çalışma alanını silmek tenant'larını da siler.
+
+`show` bir tenant'ı kimin duraklattığını yazar. Duraklatma politikadan geldiyse `reinstate` SES'in yeniden
+etkinleştirilmiş durumunu ayarlar ve bir üye bültenleri sürdürür. Amazon SES'in kendisi duraklattıysa yalnızca bir
+AWS Support talebi kaldırır; `show` bunu söyler.
+
+İsteğe bağlı, beş dakika yerine saniyeler içinde tepki için: SES'in tenant olaylarını SNS topic'ine gönderin. Olay
+yalnızca Yuva'nın durumu yeniden okumasını sağlar; içeriğine güvenilmez.
+
+```sh
+aws events put-rule --name yuva-ses-tenants --region REGION \
+  --event-pattern '{"source":["aws.ses"],"detail-type":["Sending Status Enabled","Sending Status Disabled","Advisor Recommendation Status Open","Advisor Recommendation Status Resolved"]}'
+aws events put-targets --rule yuva-ses-tenants --region REGION --targets Id=yuva,Arn=arn:aws:sns:REGION:ACCOUNT:yuva-ses
+```
+
+Topic'in erişim politikasına şu ifadeyi ekleyerek EventBridge'in topic'e yayımlamasına izin verin:
+
+```json
+{
+  "Sid": "AllowEventBridge",
+  "Effect": "Allow",
+  "Principal": { "Service": "events.amazonaws.com" },
+  "Action": "sns:Publish",
+  "Resource": "arn:aws:sns:REGION:ACCOUNT:yuva-ses"
+}
+```
 
 ## Çalışma alanını veya hesabı silme
 

@@ -100,6 +100,11 @@ Standardtypen: `image/png,image/jpeg,image/gif,image/webp,image/heic,application
 | `YUVA_INGRESS_AUTHSERV_ID` | nicht gesetzt | Authserv-ID Ihres empfangenden Mailservers, z. B. `mx.cloudflare.net`. Nötig, damit DMARC-Ergebnisse genutzt werden; ohne sie wird jede eingehende Nachricht mit DMARC `unknown` gespeichert und der Server warnt beim Start. |
 | `YUVA_INGRESS_MAX_CONCURRENT` | `8` | Nachrichten, die `/ingress/email` pro Prozess gleichzeitig verarbeitet; weitere erhalten `503`. |
 | `YUVA_SES_TOPIC_ARNS` | nicht gesetzt | SNS-Topic-ARNs, deren SES-Bounces und -Beschwerden `/ingress/ses` annimmt. |
+| `YUVA_SES_REGION` | nicht gesetzt | Die Amazon-SES-Region, deren [Tenants](operations.md#amazon-ses-tenants-auf-einem-gehosteten-server) Yuva verwaltet, z. B. `eu-west-1`. Kanäle, die über SES in einer anderen Region senden, werden nicht isoliert. Zusammen mit den nächsten drei setzen, oder keine. |
+| `YUVA_SES_ACCESS_KEY_ID` | nicht gesetzt | Zugriffsschlüssel eines IAM-Benutzers mit der Tenant-Richtlinie. |
+| `YUVA_SES_SECRET_ACCESS_KEY` | nicht gesetzt | Sein Secret. |
+| `YUVA_SES_CONFIGURATION_SET` | nicht gesetzt | Das Configuration Set, das Yuva jedem Tenant zuordnet und in `X-SES-CONFIGURATION-SET` nennt. 1 bis 64 Buchstaben, Ziffern, `-` oder `_`. |
+| `YUVA_SES_TENANT_PREFIX` | `yuva-` | Anfang jedes Tenant-Namens, den Yuva anlegt, bis zu 32 Buchstaben, Ziffern, `-` oder `_`. Die IAM-Richtlinie erlaubt nur Tenants mit diesem Präfix. |
 | `YUVA_EMAIL_SENDER_HOURLY_CAP` | `500` | Eingehende E-Mails, die ein Absender pro Stunde an einen Workspace senden darf; weitere werden abgelehnt (`429`). |
 
 ## Zu Yuva umziehen

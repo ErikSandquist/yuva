@@ -100,6 +100,11 @@ Varsayılan türler: `image/png,image/jpeg,image/gif,image/webp,image/heic,appli
 | `YUVA_INGRESS_AUTHSERV_ID` | atanmamış | E-postayı alan sunucunuzun authserv-id'si, ör. `mx.cloudflare.net`. DMARC sonuçlarının kullanılması için gerekir; yoksa her gelen ileti DMARC `unknown` ile saklanır ve sunucu açılışta uyarı verir. |
 | `YUVA_INGRESS_MAX_CONCURRENT` | `8` | `/ingress/email`'in süreç başına aynı anda işlediği mesaj sayısı; fazlası `503` alır. |
 | `YUVA_SES_TOPIC_ARNS` | atanmamış | `/ingress/ses`'in SES geri dönme (bounce) ve şikâyet bildirimlerini kabul ettiği SNS topic ARN'leri. |
+| `YUVA_SES_REGION` | atanmamış | Yuva'nın [tenant](operations.md#barındırılan-sunucuda-amazon-ses-tenantları)'larını yönettiği Amazon SES bölgesi, örn. `eu-west-1`. Başka bir bölgede SES üzerinden gönderen kanallar yalıtılmaz. Sonraki üçüyle birlikte ayarlayın ya da hiçbirini ayarlamayın. |
+| `YUVA_SES_ACCESS_KEY_ID` | atanmamış | Tenant politikasına sahip bir IAM kullanıcısının erişim anahtarı. |
+| `YUVA_SES_SECRET_ACCESS_KEY` | atanmamış | Gizli anahtarı. |
+| `YUVA_SES_CONFIGURATION_SET` | atanmamış | Yuva'nın her tenant ile ilişkilendirdiği ve `X-SES-CONFIGURATION-SET` içinde adını yazdığı configuration set. 1 ila 64 harf, rakam, `-` veya `_`. |
+| `YUVA_SES_TENANT_PREFIX` | `yuva-` | Yuva'nın oluşturduğu her tenant adının başlangıcı; en fazla 32 harf, rakam, `-` veya `_`. IAM politikası yalnızca bu önekle başlayan tenant'lara izin verir. |
 | `YUVA_EMAIL_SENDER_HOURLY_CAP` | `500` | Bir göndericinin bir çalışma alanına saatte gönderebileceği e-posta sayısı; fazlası reddedilir (`429`). |
 
 ## Yuva'ya taşıma

@@ -121,6 +121,7 @@ maddeler göndermeyi durdurur; uyarılar durdurmaz.
 | Günlük sınır | Uyarı: [günlük sınır](#günlük-sınır) gönderimi bir günden uzun sürdürür. |
 | Deneme e-postası | Uyarı: son değişiklikten beri deneme gitmedi. |
 | Tıklama sayımı | Açıksa uyarı: bağlantılar sunucunun bağlantı alan adına işaret eder. |
+| Amazon SES tenant | Gelen kutusunun SES tenant'ı duraklatılmış ya da yok, kurulamamış ya da kanalın kimliği eksikse engeller. Yüksek önemde bir itibar bulgusunda ya da sunucu tenant'ı hâlâ kurarken (gönderim saniyelerce bekler) uyarı verir. |
 
 Sonra Şimdi gönder'i seçin ya da Zamanla'yı seçip saat diliminizde en fazla 90 gün sonrası için bir
 zaman belirleyin. Panel alıcı sayısını onaylamanızı ister. Siz bakarken alıcılar değiştiyse yeniden
@@ -177,9 +178,12 @@ Bir bülten kendiliğinden duraklar ve nedeni sayfada görünür, eğer:
 | Şikâyet oranı | %0,3 veya fazlası spam bildirildi (en az 1.000 e-postadan sonra). |
 | Gönderici hatası | SMTP sunucusu hesabı ya da TLS'i reddediyor, art arda 20 e-postayı reddediyor ya da 30 dakika boyunca erişilemiyor. Sunucunun yanıtı gösterilir. |
 | Çalışma alanı askıya alındı | Aşağıya bakın. |
+| Amazon SES tenant | Amazon SES gelen kutusunun [tenant](email.md#amazon-ses-tenantları)'ını duraklattı ya da kanal tenant yalıtımını kaybetti. Sayfa hangisi olduğunu söyler. Diğer gelen kutuları göndermeye devam eder. |
 | Üye, operatör | Biri duraklattı. |
 
 Nedeni giderin, sonra sürdürün. Sürdürdükten sonra oranlar o andan itibaren sayılır.
+
+Tenant duraklatılmışken sürdürme `409 ses_tenant_blocked` ile reddedilir; sunucunun operatörü yeniden etkinleştirir.
 
 Bir çalışma alanı, son 30 günde en az 1.000 bülten e-postasının en az %0,3'ü spam bildirildiğinde ya da
 en az 2.000 e-postanın en az %8'i geri döndüğünde gönderimden **askıya alınır**. Çalışan bültenleri

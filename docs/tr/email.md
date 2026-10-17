@@ -137,6 +137,32 @@ Sohbet ya da uygulama kanalı olan her gelen kutusuna bir de e-posta kanalı ekl
 Geliştirmedeki Mailpit gibi özel ağ ve loopback SMTP sunucuları `YUVA_SMTP_ALLOW_PRIVATE=true`
 ister.
 
+### Amazon SES tenant'ları
+
+SES itibarı ve gönderimin durdurulmasını tenant başına tutar. Sunucunun operatörü
+[tenant yönetimini](operations.md#barındırılan-sunucuda-amazon-ses-tenantları) kurmuşsa ve bir kanal operatörün SES
+hesabı üzerinden gönderiyorsa, her gelen kutusu kendi tenant'ında gönderir: bir gelen kutusunun geri dönmeleri
+ya da şikâyetleri yalnızca o gelen kutusunu duraklatır, başka bir gelen kutusunu ya da çalışma alanını değil.
+Ekibinizin yapacağı bir şey yok. Kanalın gönderim sayfası ve gelen kutusu ayarları durumu sahiplere ve
+yöneticilere gösterir:
+
+| Durum | Anlamı |
+|---|---|
+| Yalıtılmış | E-postalar gelen kutusunun tenant'ını taşır. |
+| Kuruluyor | Sunucu tenant'ı oluşturuyor. Saniyeler sürer; bülten bekler ve kendiliğinden başlar. |
+| Kimlik eksik | Gönderen adres ya da alan adı SES hesabında doğrulanmış bir kimlik değil. Bkz. [Teslim edilebilirlik](deliverability.md#amazon-ses). E-postalar tenant'sız gider ve bültenler engellenir. |
+| Duraklatıldı | Amazon SES gelen kutusunun tenant'ını duraklattı. Yanıtlar SES'in cevabıyla başarısız olur; sunucunun operatörü yeniden etkinleştirir. |
+| Hata | Bir adım başarısız oldu; sayfa nedenini gösterir. |
+| Kayıp | Tenant artık Amazon SES'te yok. E-postalar tenant'sız gider ve sunucu onu yeniden oluşturana kadar bültenler engellenir. |
+
+Yönetilen hesap üzerinden giden e-postalar her zaman `X-SES-CONFIGURATION-SET` taşır; `X-SES-TENANT` ise tenant
+hazır olunca eklenir. İki başlık da yalnızca Amazon SES üzerinden giden e-postalara eklenir.
+
+Sunucunun yönetmediği kendi SES hesabınızla tenant'ı kendiniz yazın: kanalda `ses.tenant` ve kullanıyorsanız
+`ses.configuration_set` ayarlayın (harf, rakam, `-` ve `_`, en fazla 64). Yuva bunları SES üzerinden giden
+e-postalara başlık olarak ekler ve AWS'de hiçbir şeyi denetlemez. Sunucu gelen kutusunun tenant'ını yönettiği
+sürece yok sayılırlar.
+
 ## Geri dönen e-postalar
 
 Bir geri dönme (bounce) ya da şikâyet, mesajı başarısız ve adresi teslim edilemez olarak işaretler;
