@@ -1,0 +1,2748 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 10:11+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: zh-Hans\n"
+
+#: src/features/analytics/text.ts
+msgid "(not set)"
+msgstr "(未设置)"
+
+#. placeholder {0}: e.rows
+#: src/features/analytics/Exports.tsx
+msgid "{0, plural, one {# row} other {# rows}}"
+msgstr "{0, plural, other {# 行}}"
+
+#. placeholder {0}: p.visitors_today
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{0, plural, one {visitor today} other {visitors today}}"
+msgstr "{0, plural, other {今日访客}}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{consentedCount} consented, across visits and days"
+msgstr "{consentedCount} 位已同意,跨访问和天数"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {{site} sent # visit, and none in the 28 days before.} other {{site} sent # visits, and none in the 28 days before.}}"
+msgstr "{count, plural, other {{site} 带来了 # 次访问,而之前 28 天没有。}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {# conversation per 1,000 views, against {usual} in the 28 days before.} other {# conversations per 1,000 views, against {usual} in the 28 days before.}}"
+msgstr "{count, plural, other {每 1,000 次浏览 # 个对话,之前 28 天为 {usual}。}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {Goal “{goal}” had # conversion, against {usual} a day on average in the week before.} other {Goal “{goal}” had # conversions, against {usual} a day on average in the week before.}}"
+msgstr "{count, plural, other {目标“{goal}”有 # 次转化,之前一周日均为 {usual}。}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{count} in this range, none in the compared days."
+msgstr "此范围内 {count},对比的日子里没有。"
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {count}, none in the compared days."
+msgstr "{dim} {value}:{count},对比的日子里没有。"
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} fell {change}, {now} against {before}."
+msgstr "{dim} {value}:{lower}下降了 {change},从 {before} 降到 {now}。"
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} rose {change}, {now} against {before}."
+msgstr "{dim} {value}:{lower}上升了 {change},从 {before} 升到 {now}。"
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {metric} {now}, none in the compared days."
+msgstr "{dim} {value}:{metric} {now},对比的日子里没有。"
+
+#: src/features/analytics/Annotations.tsx
+msgid "{kind}: {found}"
+msgstr "{kind}:{found}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{lost} left ({lostPct})"
+msgstr "流失 {lost}({lostPct})"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} fell {change}: {now}, against {before} in the compared days."
+msgstr "{metric}下降了 {change}:{now},对比的日子里是 {before}。"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} rose {change}: {now}, against {before} in the compared days."
+msgstr "{metric}上升了 {change}:{now},对比的日子里是 {before}。"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric}: {now}, none in the compared days."
+msgstr "{metric}:{now},对比的日子里没有。"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversation} other {# conversations}}"
+msgstr "{n, plural, other {# 个对话}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversion} other {# conversions}}"
+msgstr "{n, plural, other {# 次转化}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# discussion} other {# discussions}}"
+msgstr "{n, plural, other {# 个讨论}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# event} other {# events}}"
+msgstr "{n, plural, other {# 个事件}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# view} other {# views}}"
+msgstr "{n, plural, other {# 次浏览}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visit} other {# visits}}"
+msgstr "{n, plural, other {# 次访问}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visitor} other {# visitors}}"
+msgstr "{n, plural, other {# 位访客}}"
+
+#: src/features/analytics/Events.tsx
+msgid "{n} payments, {avg} on average"
+msgstr "{n} 笔付款,平均 {avg}"
+
+#: src/features/analytics/Install.tsx
+msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
+msgstr "{name} 不是此属性的平台之一,因此服务器会拒绝该应用的事件。所有者或管理员可以开启。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
+msgstr "到达第一步的访客中有 {overall} 也到达了最后一步,{from} – {to}。"
+
+#: src/features/analytics/Insights.tsx
+msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
+msgstr "{rate, plural, other {{dim} {value}:每 1,000 次浏览 # 个对话,所有页面上的 {site}。}}"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
+msgstr "本月已使用 {used} 个分析事件,上限为 {limit} 个。超出上限的事件会被丢弃,直到月底。"
+
+#: src/features/analytics/Settings.tsx
+msgid "A change applies to new events. Days already counted keep their zone."
+msgstr "更改适用于新事件。已经统计过的日子保持其时区。"
+
+#: src/features/analytics/Goals.tsx
+msgid "A changed goal is counted again over the days the detailed records are kept."
+msgstr "更改过的目标会在保留详细记录的天数内重新统计。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel follows each visit step by step, so it covers at most 90 days at once, or 31 days for a property with more than 10 million events a month. Pick a shorter range."
+msgstr "漏斗按步骤跟踪每次访问,因此一次最多覆盖 90 天;对于每月事件超过 1000 万的属性则为 31 天。请选择更短的范围。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel is made of two to eight goals in a row. Make at least two goals first."
+msgstr "漏斗由连续的两到八个目标组成。请先创建至少两个目标。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are kept since {day}. Earlier days only have totals, so they cannot show a funnel."
+msgstr "漏斗需要每次访问的步骤,这些数据自 {day} 起保留。更早的日子只有总数,因此无法显示漏斗。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are no longer kept for this range."
+msgstr "漏斗需要每次访问的步骤,而此范围的这些数据已不再保留。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel shows how many visitors go from one goal to the next within a visit, and where they leave."
+msgstr "漏斗显示在一次访问中有多少访客从一个目标走向下一个目标,以及他们在哪里离开。"
+
+#: src/features/analytics/Goals.tsx
+msgid "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
+msgstr "目标统计查看某个页面、发送某个事件或滚动到足够远的访客,以及他们带来的收入。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "A goal’s conversions yesterday were at most half its daily average of the week before."
+msgstr "目标昨天的转化次数最多只有其前一周日均值的一半。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A link shows only its views of this property, read-only, without filters or segments. Revoking or deleting it stops it at once."
+msgstr "链接只显示此属性你所选的视图,只读,不带筛选或细分。撤销或删除它会立即停止访问。"
+
+#: src/features/analytics/Goals.tsx
+msgid "A new goal also counts the days the detailed records are kept, not only from today."
+msgstr "新目标也会统计保留详细记录的那些天,而不仅是从今天起。"
+
+#: src/features/analytics/Annotations.tsx
+msgid "A new key was made"
+msgstr "已创建新密钥"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A new password signs out everyone who unlocked the link."
+msgstr "新密码会让所有解锁过该链接的人退出登录。"
+
+#: src/features/analytics/Goals.tsx
+msgid "A path. * stands for one part of it, ** for any number of them."
+msgstr "一个路径。* 代表其中一段,** 代表任意数量的段。"
+
+#: src/features/analytics/Settings.tsx
+msgid "A prop name has at most 300 characters and does not start with $ or yuva_."
+msgstr "属性名最多 300 个字符,且不能以 $ 或 yuva_ 开头。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A property can have at most 50 share links. Delete one first."
+msgstr "每个属性最多可有 50 个共享链接。请先删除一个。"
+
+#: src/features/analytics/parts.tsx
+msgid "A range can be at most 400 days long. Pick a shorter one."
+msgstr "范围最长 400 天。请选择更短的范围。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "A site sent 10 or more visits yesterday and none in the 28 days before."
+msgstr "某个站点昨天有 10 次或更多访问,而之前 28 天没有。"
+
+#: src/features/analytics/Settings.tsx
+msgid "A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and it shows as a chip on the Events view."
+msgstr "被跟踪的属性也会保存在每日总数中,因此详细记录消失后其明细仍会保留,并在“事件”视图中显示为标签。"
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page or screen views without a gap of 30 minutes, within one day."
+msgstr "访客在一天内、间隔不超过 30 分钟的页面或屏幕浏览。"
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page views without a gap of 30 minutes, within one day."
+msgstr "访客在一天内、间隔不超过 30 分钟的页面浏览。"
+
+#: src/features/analytics/text.ts
+msgid "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
+msgstr "访客在一天内、间隔不超过 30 分钟的屏幕浏览。应用每次启动都会开始新的访问。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Active"
+msgstr "活跃"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add"
+msgstr "添加"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add a note to the chart"
+msgstr "在图表上添加备注"
+
+#: src/features/analytics/Settings.tsx
+msgid "Add a rule"
+msgstr "添加规则"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Add a step"
+msgstr "添加步骤"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/NewProperty.tsx
+msgid "Add a website"
+msgstr "添加网站"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add a website to count its visitors, pages and sources, without cookies."
+msgstr "添加网站,以无 Cookie 的方式统计其访客、页面和来源。"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Add and install"
+msgstr "添加并安装"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add note"
+msgstr "添加备注"
+
+#: src/features/analytics/Install.tsx
+msgid "Add the YuvaAnalytics library of the Yuva package and configure it once at launch. .yuvaScreen counts a SwiftUI screen; in UIKit, call YuvaAnalytics.screen when a screen appears. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "添加 Yuva 包中的 YuvaAnalytics 库,并在启动时配置一次。.yuvaScreen 统计一个 SwiftUI 屏幕;在 UIKit 中,屏幕出现时调用 YuvaAnalytics.screen。没有网络时,事件会在设备上最多等待 72 小时,并带着各自的时间送达。"
+
+#: src/features/analytics/Install.tsx
+msgid "Add yuva-analytics from JitPack and configure it once in Application.onCreate. TrackScreen counts a Compose screen. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "从 JitPack 添加 yuva-analytics,并在 Application.onCreate 中配置一次。TrackScreen 统计一个 Compose 屏幕。没有网络时,事件会在设备上最多等待 72 小时,并带着各自的时间送达。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Addresses not counted"
+msgstr "不统计的地址"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the compared days"
+msgstr "与对比的日子相比"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the period before"
+msgstr "与上一时段相比"
+
+#: src/features/analytics/Support.tsx
+msgid "Agents of the inbox can then see this property’s numbers too."
+msgstr "这样,收件箱的客服也能看到此属性的数据。"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Agents of this inbox can see the numbers."
+msgstr "此收件箱的客服可以看到这些数据。"
+
+#: src/features/analytics/text.ts
+msgid "AI assistants"
+msgstr "AI 助手"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Alerts"
+msgstr "警报"
+
+#: src/features/analytics/Settings.tsx
+msgid "Alerts and reports"
+msgstr "警报和报告"
+
+#: src/features/analytics/Events.tsx
+msgid "All events"
+msgstr "所有事件"
+
+#: src/features/analytics/Goals.tsx
+msgid "All goals"
+msgstr "所有目标"
+
+#: src/features/analytics/Support.tsx
+msgid "An owner or admin can link one in the property’s settings."
+msgstr "所有者或管理员可以在属性设置中关联一个。"
+
+#: src/features/analytics/Retention.tsx
+msgid "An owner or admin can turn on the persistent id in the consent features."
+msgstr "所有者或管理员可以在同意功能中开启持久 ID。"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics"
+msgstr "分析"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Analytics properties"
+msgstr "分析属性"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Analytics steps"
+msgstr "分析步骤"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics views"
+msgstr "分析视图"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Anyone with the link sees the views you pick, read-only, without signing in."
+msgstr "任何拿到链接的人都能只读查看你选择的视图,无需登录。"
+
+#: src/features/analytics/text.ts
+msgid "App"
+msgstr "应用"
+
+#: src/features/analytics/text.ts
+msgid "App version"
+msgstr "应用版本"
+
+#: src/features/analytics/Settings.tsx
+msgid "Apps send without a domain, so only the platforms turned on here are counted. Events from your backend need no platform."
+msgstr "应用发送时不带域名,因此只统计此处开启的平台。来自你后端的事件不需要平台。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Ask for a password"
+msgstr "要求密码"
+
+#: src/features/analytics/Sharing.tsx
+msgid "At least 8 characters"
+msgstr "至少 8 个字符"
+
+#: src/features/analytics/Settings.tsx
+msgid "At most 10 props can be tracked."
+msgstr "最多可跟踪 10 个属性。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Audience"
+msgstr "受众"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Available until {expires}"
+msgstr "可用至 {expires}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots"
+msgstr "机器人"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
+msgstr "机器人、速率限制、被排除的地址和路径、月度上限或服务器繁忙。"
+
+#: src/features/analytics/text.ts
+msgid "Bounce rate"
+msgstr "跳出率"
+
+#: src/features/analytics/Events.tsx
+msgid "Break down by prop"
+msgstr "按属性细分"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Breakdown"
+msgstr "明细"
+
+#: src/features/analytics/Exports.tsx
+msgid "Broken down by"
+msgstr "细分依据"
+
+#: src/features/analytics/Settings.tsx
+msgid "Broken events, such as a screen address that does not start with app://, a reserved name or too many props."
+msgstr "有问题的事件,例如不以 app:// 开头的屏幕地址、保留名称或属性过多。"
+
+#: src/features/analytics/text.ts
+msgid "Browser"
+msgstr "浏览器"
+
+#: src/features/analytics/text.ts
+msgid "Browser version"
+msgstr "浏览器版本"
+
+#: src/features/analytics/Install.tsx
+msgid "Call it once in the browser. During server rendering it does nothing."
+msgstr "在浏览器中调用一次。在服务端渲染期间它不会执行任何操作。"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Cancel"
+msgstr "取消"
+
+#: src/features/analytics/Controls.tsx
+msgid "Change filter: {label}"
+msgstr "更改筛选条件:{label}"
+
+#: src/features/analytics/Controls.tsx
+msgid "changed"
+msgstr "已更改"
+
+#: src/features/analytics/text.ts
+msgid "Channel"
+msgstr "渠道"
+
+#: src/features/analytics/text.ts
+msgid "Chat opened"
+msgstr "打开了聊天"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Checked every hour. Each alert is sent once and also shows as a note on the chart."
+msgstr "每小时检查一次。每个警报只发送一次,并在图表上显示为备注。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Children"
+msgstr "儿童"
+
+#: src/features/analytics/Support.tsx
+msgid "Choose an inbox"
+msgstr "选择收件箱"
+
+#: src/features/analytics/Settings.tsx
+msgid "Choose children for a site made for children."
+msgstr "对于面向儿童的站点,请选择“儿童”。"
+
+#: src/features/analytics/text.ts
+msgid "City"
+msgstr "城市"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Clear"
+msgstr "清除"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts by"
+msgstr "同期群依据"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts fill once visitors agree to a persistent id and come back. The numbers are rebuilt every hour."
+msgstr "当访客同意持久 ID 并再次回访后,同期群才会填充。数据每小时重新计算。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Collection"
+msgstr "集合"
+
+#. placeholder {0}: formatDate(`${c.from}T12:00:00Z`, i18n.locale)
+#. placeholder {1}: formatDate(`${c.to}T12:00:00Z`, i18n.locale)
+#: src/features/analytics/Controls.tsx
+msgid "Compare with {0} – {1}"
+msgstr "与 {0} – {1} 对比"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with a year earlier"
+msgstr "与一年前对比"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days"
+msgstr "与其他日子对比"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days…"
+msgstr "与其他日子对比…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the days"
+msgstr "与这些日子对比"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the period before"
+msgstr "与上一时段对比"
+
+#: src/features/analytics/Overview.tsx
+msgid "Compared days"
+msgstr "对比的日子"
+
+#: src/features/analytics/Controls.tsx
+msgid "Comparison"
+msgstr "对比"
+
+#: src/features/analytics/text.ts
+msgid "Completions"
+msgstr "完成数"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consent features"
+msgstr "同意功能"
+
+#: src/features/analytics/Install.tsx
+msgid "Consent mode"
+msgstr "同意模式"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id, and signed-in users are linked to their contact."
+msgstr "同意的访客会保留持久 ID,已登录用户会关联到其联系人。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id."
+msgstr "同意的访客会保留持久 ID。"
+
+#: src/features/analytics/parts.tsx
+msgid "Consented visitors only"
+msgstr "仅限已同意的访客"
+
+#: src/features/analytics/text.ts
+msgid "contains"
+msgstr "包含"
+
+#: src/features/analytics/Install.tsx
+msgid "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
+msgstr "内容拦截器常会拦截来自其他域名的脚本。从你自己的站点提供脚本及其端点,可让这些访客也被统计。Yuva 服务器必须信任你的代理转发的地址;否则所有访客看起来像同一个人。"
+
+#: src/features/analytics/text.ts
+msgid "Conversations"
+msgstr "对话"
+
+#: src/features/analytics/text.ts
+msgid "Conversations per 1,000 views of the page."
+msgstr "该页面每 1,000 次浏览的对话数。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Conversations per 1,000 views yesterday were at least twice the rate of the 28 days before."
+msgstr "昨天每 1,000 次浏览的对话数至少是之前 28 天的两倍。"
+
+#: src/features/analytics/text.ts
+msgid "Conversations started on the page, from the chat of the linked inbox."
+msgstr "从关联收件箱的聊天在该页面上发起的对话。"
+
+#: src/features/analytics/Support.tsx
+msgid "Conversations, feedback, ratings and discussions of the linked inbox show here next to each page’s views. They are counted per page and day; no visitor is ever matched to a contact."
+msgstr "关联收件箱的对话、反馈、评分和讨论会显示在这里,紧挨着每个页面的浏览量。它们按页面和天统计;绝不会把任何访客与联系人匹配。"
+
+#: src/features/analytics/text.ts
+msgid "Conversion rate"
+msgstr "转化率"
+
+#: src/features/analytics/text.ts
+msgid "Conversions"
+msgstr "转化"
+
+#: src/features/analytics/text.ts
+msgid "Conversions per 100 visitors."
+msgstr "每 100 位访客的转化数。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
+msgstr "请立即复制;之后不会再显示。丢失的链接只能撤销后重新创建。"
+
+#: src/features/analytics/Install.tsx
+msgid "Count my visits again"
+msgstr "重新统计我的访问"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Count visitors, pages, sources, places and devices without cookies and without storing IP addresses."
+msgstr "无 Cookie、不存储 IP 地址,统计访客、页面、来源、地点和设备。"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Count your website’s visitors"
+msgstr "统计你网站的访客"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted"
+msgstr "已统计"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted as"
+msgstr "统计为"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Countries"
+msgstr "国家和地区"
+
+#: src/features/analytics/text.ts
+msgid "Country"
+msgstr "国家或地区"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
+msgstr "不经询问统计每位访客:设备上不存储任何内容,也不保留 IP 地址。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Counts the visitors who reached each step after the ones before it, within one visit on one day. Numbers are at most ten minutes old."
+msgstr "统计在一天内的一次访问中,依次通过之前步骤后到达每一步的访客。数据最多滞后十分钟。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Currency"
+msgstr "货币"
+
+#: src/features/analytics/Exports.tsx
+msgid "Current view"
+msgstr "当前视图"
+
+#: src/features/analytics/text.ts
+msgid "Custom and built-in events."
+msgstr "自定义事件和内置事件。"
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range"
+msgstr "自定义范围"
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range…"
+msgstr "自定义范围…"
+
+#: src/features/analytics/Settings.tsx
+msgid "Data"
+msgstr "数据"
+
+#: src/features/analytics/Install.tsx
+msgid "data-outbound counts clicks on links to other sites, data-files downloads of documents and archives, and data-chat each time a visitor opens the chat. track() sends your own events with up to 30 props; e-mail addresses in props are dropped. Make goals from events in the Goals view."
+msgstr "data-outbound 统计指向其他站点的链接点击,data-files 统计文档和压缩包的下载,data-chat 统计访客每次打开聊天。track() 发送你自己的事件,最多带 30 个属性;属性中的电子邮件地址会被丢弃。在“目标”视图中用事件创建目标。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Day"
+msgstr "日"
+
+#: src/features/analytics/Retention.tsx
+msgid "Day {period}"
+msgstr "第 {period} 天"
+
+#: src/features/analytics/Exports.tsx
+msgid "Day by day"
+msgstr "按天"
+
+#: src/features/analytics/Retention.tsx
+msgid "Days"
+msgstr "天数"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/SharePage.tsx
+msgid "Days are counted in this time zone"
+msgstr "按此时区计算天数"
+
+#: src/features/analytics/Settings.tsx
+msgid "Days are in the property’s time zone. Their totals are counted again without them."
+msgstr "天数按属性的时区计算。它们的总数将在去掉这些天之后重新计算。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Days waiting to be summed up"
+msgstr "等待汇总的天数"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete"
+msgstr "删除"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete {0}?"
+msgstr "删除 {0}?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete {name}?"
+msgstr "删除 {name}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data"
+msgstr "删除所有数据"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data of {0}?"
+msgstr "删除 {0} 的所有数据?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete days"
+msgstr "删除天数"
+
+#: src/features/analytics/Exports.tsx
+msgid "Delete export"
+msgstr "删除导出"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Delete funnel"
+msgstr "删除漏斗"
+
+#: src/features/analytics/Goals.tsx
+msgid "Delete goal"
+msgstr "删除目标"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete note"
+msgstr "删除备注"
+
+#: src/features/analytics/Controls.tsx
+msgid "Delete segment"
+msgstr "删除细分"
+
+#. placeholder {0}: funnel.name
+#: src/features/analytics/Funnels.tsx
+msgid "Delete the funnel “{0}”?"
+msgstr "删除漏斗“{0}”?"
+
+#. placeholder {0}: goal.name
+#: src/features/analytics/Goals.tsx
+msgid "Delete the goal “{0}”?"
+msgstr "删除目标“{0}”?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the property"
+msgstr "删除属性"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Delete the segment “{0}”?"
+msgstr "删除细分“{0}”?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the visits and events of {span}?"
+msgstr "删除 {span} 的访问和事件?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete these days"
+msgstr "删除这些天"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete this note?"
+msgstr "删除此备注?"
+
+#: src/features/analytics/Exports.tsx
+msgid "deleted {expires}"
+msgstr "{expires} 删除"
+
+#: src/features/analytics/Settings.tsx
+msgid "Deleting in the background. The numbers update when it is done."
+msgstr "正在后台删除。完成后数据会更新。"
+
+#: src/features/analytics/Goals.tsx
+msgid "Depth in %"
+msgstr "深度(%)"
+
+#: src/features/analytics/text.ts
+msgid "Desktop"
+msgstr "桌面设备"
+
+#: src/features/analytics/Exports.tsx
+msgid "Detailed records are kept since {rawDay}."
+msgstr "详细记录自 {rawDay} 起保留。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Detailed records kept since"
+msgstr "详细记录保留起始日"
+
+#: src/features/analytics/Overview.tsx
+msgid "Details"
+msgstr "详情"
+
+#: src/features/analytics/text.ts
+msgid "Device"
+msgstr "设备"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Devices"
+msgstr "设备"
+
+#: src/features/analytics/text.ts
+msgid "Direct"
+msgstr "直接"
+
+#: src/features/analytics/text.ts
+msgid "Direct / none"
+msgstr "直接访问 / 无"
+
+#: src/features/analytics/text.ts
+msgid "Discussion threads started on the page."
+msgstr "在该页面上发起的讨论串。"
+
+#: src/features/analytics/text.ts
+msgid "Discussions"
+msgstr "讨论"
+
+#: src/features/analytics/text.ts
+msgid "Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again."
+msgstr "每天的独立访客,按范围内的天数相加。在另一天再次回访的人会被重新计入。"
+
+#: src/features/analytics/Install.tsx
+msgid "Do not count my visits"
+msgstr "不统计我的访问"
+
+#: src/features/analytics/text.ts
+msgid "does not contain"
+msgstr "不包含"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Domains"
+msgstr "域名"
+
+#: src/features/analytics/Exports.tsx
+msgid "Download"
+msgstr "下载"
+
+#: src/features/analytics/parts.tsx
+msgid "Download CSV"
+msgstr "下载 CSV"
+
+#: src/features/analytics/Settings.tsx
+msgid "Dropped"
+msgstr "已丢弃"
+
+#: src/features/analytics/text.ts
+msgid "E-mail"
+msgstr "电子邮件"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that day, each column the share of them who came back that many days later."
+msgstr "每一行是当天首次出现的访客,每一列是其中在这么多天后回访的比例。"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that month, each column the share of them who came back that many months later."
+msgstr "每一行是当月首次出现的访客,每一列是其中在这么多个月后回访的比例。"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that week, each column the share of them who came back that many weeks later."
+msgstr "每一行是当周首次出现的访客,每一列是其中在这么多周后回访的比例。"
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Edit"
+msgstr "编辑"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Edit funnel"
+msgstr "编辑漏斗"
+
+#: src/features/analytics/Goals.tsx
+msgid "Edit goal"
+msgstr "编辑目标"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Edit note"
+msgstr "编辑备注"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Edit share link"
+msgstr "编辑共享链接"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embed"
+msgstr "嵌入"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embeds"
+msgstr "嵌入"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Enter the password you were given with the link."
+msgstr "输入随链接给你的密码。"
+
+#: src/features/analytics/text.ts
+msgid "Entry page"
+msgstr "入口页面"
+
+#: src/features/analytics/Goals.tsx
+msgid "equal to"
+msgstr "等于"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Event"
+msgstr "事件"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event}"
+msgstr "事件 {event}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event} with {key} = {value}"
+msgstr "事件 {event},{key} = {value}"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Install.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Events"
+msgstr "事件"
+
+#: src/features/analytics/Settings.tsx
+msgid "Events are arriving."
+msgstr "事件正在到达。"
+
+#: src/features/analytics/Events.tsx
+msgid "Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when the script has their attributes."
+msgstr "事件来自你的页面和应用中的 track() 调用。当脚本带有相应属性时,会统计出站链接、下载和打开聊天。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Events count only after the page calls yuva.consent with analytics set to true. Install the script with data-consent=\"required\"."
+msgstr "只有在页面调用 yuva.consent 并将 analytics 设为 true 之后,才会统计事件。请用 data-consent=\"required\" 安装脚本。"
+
+#: src/features/analytics/Settings.tsx
+msgid "events counted"
+msgstr "已统计的事件"
+
+#: src/features/analytics/Settings.tsx
+msgid "events dropped"
+msgstr "已丢弃的事件"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every event with its visit’s page, source, place and device, as NDJSON. Visits are numbered within the file; there is no visitor id, address or contact. At most 31 days."
+msgstr "每个事件连同其访问的页面、来源、地点和设备,以 NDJSON 格式导出。访问在文件中按序编号;没有访客 ID、地址或联系人。最多 31 天。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Every Monday at 08:00 in {zone}, about the week before."
+msgstr "每周一 {zone} 08:00,汇报前一周的情况。"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range and the filters you are looking at, without a comparison."
+msgstr "你正在查看的范围和筛选条件下的每一行,不含对比。"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range you are looking at, without a comparison."
+msgstr "你正在查看的范围内的每一行,不含对比。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
+msgstr "每次访问、事件和总数都会被删除。属性及其密钥保留,统计继续。"
+
+#: src/features/analytics/Controls.tsx
+msgid "Everyone who sees this property can pick it. You, owners and admins can change it."
+msgstr "所有能看到此属性的人都可以选择它。你、所有者和管理员可以更改。"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Everyone who sees this property sees the note, such as a launch or a campaign."
+msgstr "所有能看到此属性的人都能看到该备注,例如一次发布或一个活动。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Everything this property raised, newest first, whoever was notified."
+msgstr "此属性触发的所有警报,最新的在前,无论通知了谁。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Excluded"
+msgstr "已排除"
+
+#: src/features/analytics/text.ts
+msgid "Exit page"
+msgstr "退出页面"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expired"
+msgstr "已过期"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expires"
+msgstr "过期时间"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export"
+msgstr "导出"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export progress"
+msgstr "导出进度"
+
+#: src/features/analytics/Exports.tsx
+msgid "Exports"
+msgstr "导出"
+
+#: src/features/analytics/Exports.tsx
+msgid "Failed"
+msgstr "失败"
+
+#: src/features/analytics/text.ts
+msgid "Feedback"
+msgstr "反馈"
+
+#: src/features/analytics/Support.tsx
+msgid "Fewer than 100 views"
+msgstr "浏览不足 100 次"
+
+#: src/features/analytics/text.ts
+msgid "File download"
+msgstr "文件下载"
+
+#: src/features/analytics/Exports.tsx
+msgid "Files are made in the background and deleted seven days later."
+msgstr "文件在后台生成,并在七天后删除。"
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Support.tsx
+msgid "Filter by this"
+msgstr "按此筛选"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Filters"
+msgstr "筛选条件"
+
+#: src/features/analytics/Exports.tsx
+msgid "Filters come from the view: click a row there to add one. <0>Change them in the view</0>"
+msgstr "筛选条件来自视图:在那里点击某一行即可添加。<0>在视图中更改</0>"
+
+#: src/features/analytics/Retention.tsx
+msgid "First day"
+msgstr "第一天"
+
+#: src/features/analytics/Retention.tsx
+msgid "First month"
+msgstr "第一个月"
+
+#: src/features/analytics/text.ts
+msgid "First page or screen"
+msgstr "第一个页面或屏幕"
+
+#: src/features/analytics/text.ts
+msgid "First screen"
+msgstr "第一个屏幕"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "First visit"
+msgstr "首次访问"
+
+#: src/features/analytics/Retention.tsx
+msgid "First week"
+msgstr "第一周"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Five reports an hour at most. Try again later."
+msgstr "每小时最多五份报告。请稍后再试。"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "For example Fieldnote website"
+msgstr "例如 Fieldnote 网站"
+
+#: src/features/analytics/Settings.tsx
+msgid "For revenue, an ISO code like EUR."
+msgstr "用于收入,如 EUR 这样的 ISO 代码。"
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an <0>API key</0> with the analytics:write scope, which stays on your server."
+msgstr "用于只有你的后端能看到的内容,例如注册或付款。Track 会转发访客的地址和浏览器,使事件并入其访问;带有 Do Not Track 或 Global Privacy Control 的请求不会发送。它需要一个具有 analytics:write 权限范围的 <0>API 密钥</0>,并保存在你的服务器上。"
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
+msgstr "用于只有你的后端能看到的内容,例如注册或付款。Track 会转发访客的地址和浏览器,使事件并入其访问;带有 Do Not Track 或 Global Privacy Control 的请求不会发送。它需要由所有者或管理员创建的、具有 analytics:write 权限范围的 API 密钥,并保存在你的服务器上。"
+
+#: src/features/analytics/Exports.tsx
+msgid "Format"
+msgstr "格式"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "From"
+msgstr "发件人"
+
+#: src/features/analytics/Settings.tsx
+msgid "From a site that is not one of the domains, or from an app whose platform is not turned on."
+msgstr "来自不属于这些域名的站点,或来自未开启其平台的应用。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "From pricing to signup"
+msgstr "从定价到注册"
+
+#: src/features/analytics/Support.tsx
+msgid "From the inbox {inboxName}. Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "来自收件箱 {inboxName}。按每 1,000 次浏览的对话数排序;浏览不足 100 次的页面排在其他页面之后。按页面和天统计,绝不按访客或联系人统计。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Funnel"
+msgstr "漏斗"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Funnels"
+msgstr "漏斗"
+
+#: src/features/analytics/Settings.tsx
+msgid "General"
+msgstr "常规"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Go to goals"
+msgstr "前往目标"
+
+#: src/features/analytics/Goals.tsx
+msgid "Goal"
+msgstr "目标"
+
+#. placeholder {0}: a.text
+#: src/features/analytics/Annotations.tsx
+msgid "Goal “{0}” was created"
+msgstr "已创建目标“{0}”"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Goal drop"
+msgstr "目标下滑"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Goals"
+msgstr "目标"
+
+#: src/features/analytics/Settings.tsx
+msgid "had an address removed"
+msgstr "有地址被移除"
+
+#: src/features/analytics/Settings.tsx
+msgid "Health"
+msgstr "健康度"
+
+#: src/features/analytics/text.ts
+msgid "Helpful"
+msgstr "有帮助"
+
+#: src/features/analytics/Support.tsx
+msgid "Helpful and not helpful"
+msgstr "有帮助与没有帮助"
+
+#: src/features/analytics/text.ts
+msgid "Helpful ratings out of all ratings."
+msgstr "“有帮助”评分占全部评分的比例。"
+
+#: src/features/analytics/text.ts
+msgid "Helpful share"
+msgstr "有帮助的比例"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Home shows each website and app like this: visitors today, in the last 30 minutes and this week."
+msgstr "首页这样显示每个网站和应用:今日、最近 30 分钟和本周的访客。"
+
+#: src/features/analytics/text.ts
+msgid "Host"
+msgstr "主机"
+
+#: src/features/analytics/text.ts
+msgid "Host or app"
+msgstr "主机或应用"
+
+#: src/features/analytics/Install.tsx
+msgid "How to install"
+msgstr "如何安装"
+
+#: src/features/analytics/Events.tsx
+msgid "How to send events"
+msgstr "如何发送事件"
+
+#: src/features/analytics/Sharing.tsx
+msgid "I saved it"
+msgstr "我已保存"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Support.tsx
+msgid "Inbox"
+msgstr "收件箱"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Install"
+msgstr "安装"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/NewProperty.tsx
+msgid "Install on {0}"
+msgstr "在 {0} 上安装"
+
+#: src/features/analytics/text.ts
+msgid "Internal"
+msgstr "内部"
+
+#: src/features/analytics/Settings.tsx
+msgid "Invalid"
+msgstr "无效"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Investors"
+msgstr "投资者"
+
+#: src/features/analytics/text.ts
+msgid "is"
+msgstr "等于"
+
+#: src/features/analytics/text.ts
+msgid "is not"
+msgstr "不是"
+
+#: src/features/analytics/Controls.tsx
+msgid "It is gone for everyone who uses it. The numbers stay."
+msgstr "所有使用它的人都会失效。数据保留。"
+
+#: src/features/analytics/SharePage.tsx
+msgid "It may have expired or been revoked. Ask the person who shared it for a new one."
+msgstr "它可能已过期或被撤销。请让分享它的人给你一个新的。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Its goals stay."
+msgstr "它的目标会保留。"
+
+#: src/features/analytics/Goals.tsx
+msgid "Its numbers are deleted too. This cannot be undone."
+msgstr "它的数据也会被删除。此操作无法撤销。"
+
+#: src/features/analytics/Events.tsx
+msgid "Keep only visits with this value"
+msgstr "只保留此值的访问"
+
+#: src/features/analytics/Settings.tsx
+msgid "Key"
+msgstr "键"
+
+#: src/features/analytics/Goals.tsx
+msgid "Kind of goal"
+msgstr "目标类型"
+
+#: src/features/analytics/text.ts
+msgid "Language"
+msgstr "语言"
+
+#: src/features/analytics/text.ts
+msgid "Laptop"
+msgstr "笔记本电脑"
+
+#: src/features/analytics/text.ts
+msgid "Last 12 months"
+msgstr "最近 12 个月"
+
+#: src/features/analytics/text.ts
+msgid "Last 28 days"
+msgstr "最近 28 天"
+
+#: src/features/analytics/text.ts
+msgid "Last 30 days"
+msgstr "最近 30 天"
+
+#: src/features/analytics/text.ts
+msgid "Last 6 months"
+msgstr "最近 6 个月"
+
+#: src/features/analytics/text.ts
+msgid "Last 7 days"
+msgstr "最近 7 天"
+
+#: src/features/analytics/text.ts
+msgid "Last 90 days"
+msgstr "最近 90 天"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event"
+msgstr "最近事件"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event: {last}"
+msgstr "最近事件:{last}"
+
+#: src/features/analytics/text.ts
+msgid "Last month"
+msgstr "上个月"
+
+#: src/features/analytics/Sharing.tsx
+msgid "last opened {viewed}"
+msgstr "最近打开 {viewed}"
+
+#: src/features/analytics/text.ts
+msgid "Last page or screen"
+msgstr "最后一个页面或屏幕"
+
+#: src/features/analytics/text.ts
+msgid "Last screen"
+msgstr "最后一个屏幕"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Leave empty to keep the current one"
+msgstr "留空则保留当前的"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Link"
+msgstr "链接"
+
+#: src/features/analytics/Support.tsx
+msgid "Link an inbox to see support per page"
+msgstr "关联收件箱以按页面查看支持情况"
+
+#: src/features/analytics/Support.tsx
+msgid "Link inbox"
+msgstr "关联收件箱"
+
+#: src/features/analytics/Settings.tsx
+msgid "Link signed-in users to their contact"
+msgstr "将已登录用户关联到其联系人"
+
+#: src/features/analytics/Alerts.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Support.tsx
+msgid "Load more"
+msgstr "加载更多"
+
+#: src/features/analytics/Settings.tsx
+msgid "Location database"
+msgstr "位置数据库"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Locations"
+msgstr "位置"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created}"
+msgstr "{created} 创建"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created} by {by}"
+msgstr "{created} 由 {by} 创建"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key"
+msgstr "创建新密钥"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key?"
+msgstr "创建新密钥?"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Make at least two goals first."
+msgstr "请先创建至少两个目标。"
+
+#: src/features/analytics/Goals.tsx
+msgid "Make goal"
+msgstr "创建目标"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Make link"
+msgstr "创建链接"
+
+#: src/features/analytics/text.ts
+msgid "matches"
+msgstr "匹配"
+
+#: src/features/analytics/text.ts
+msgid "Mobile"
+msgstr "移动设备"
+
+#: src/features/analytics/Retention.tsx
+msgid "Month {period}"
+msgstr "第 {period} 个月"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Monthly"
+msgstr "每月"
+
+#: src/features/analytics/Settings.tsx
+msgid "Monthly limit"
+msgstr "每月上限"
+
+#: src/features/analytics/Retention.tsx
+msgid "Months"
+msgstr "月"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move down"
+msgstr "下移"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move up"
+msgstr "上移"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Name"
+msgstr "名称"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs a linked inbox under General: its identity secret signs the tokens."
+msgstr "需要在“常规”下关联收件箱:其身份密钥用于签发令牌。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Needs a linked inbox. {help}"
+msgstr "需要关联收件箱。{help}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs the persistent id: a visitor is linked through it."
+msgstr "需要持久 ID:访客通过它被关联。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Never"
+msgstr "从不"
+
+#: src/features/analytics/Sharing.tsx
+msgid "never opened"
+msgstr "从未打开"
+
+#: src/features/analytics/text.ts
+msgid "New"
+msgstr "新"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value} with {count}, none in the compared days."
+msgstr "新的{kind}:{value},{count} 次,对比的日子里没有。"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
+msgstr "新的{kind}:{value}。{metric}:{now},对比的日子里没有。"
+
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "新访客和回访访客"
+
+#: src/features/analytics/Funnels.tsx
+msgid "New funnel"
+msgstr "新建漏斗"
+
+#: src/features/analytics/Goals.tsx
+msgid "New goal"
+msgstr "新建目标"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New link"
+msgstr "新建链接"
+
+#: src/features/analytics/text.ts
+msgid "New or returning"
+msgstr "新访客或回访访客"
+
+#: src/features/analytics/Annotations.tsx
+msgid "New pricing page"
+msgstr "新的定价页面"
+
+#: src/features/analytics/Alerts.tsx
+msgid "New referrer"
+msgstr "新的引荐来源"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New share link"
+msgstr "新建共享链接"
+
+#: src/features/analytics/Alerts.tsx
+msgid "No alerts yet."
+msgstr "还没有警报。"
+
+#: src/features/analytics/Controls.tsx
+msgid "No comparison"
+msgstr "不对比"
+
+#: src/features/analytics/Settings.tsx
+msgid "No consent features are offered."
+msgstr "未提供同意功能。"
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "此范围内没有已同意的访客。"
+
+#: src/features/analytics/Retention.tsx
+msgid "No consented visitors yet"
+msgstr "还没有已同意的访客"
+
+#: src/features/analytics/Support.tsx
+msgid "No conversations, feedback, ratings or discussions from these pages in this range."
+msgstr "此范围内没有来自这些页面的对话、反馈、评分或讨论。"
+
+#: src/features/analytics/Goals.tsx
+msgid "No conversions in this range."
+msgstr "此范围内没有转化。"
+
+#: src/features/analytics/Settings.tsx
+msgid "No event yet."
+msgstr "还没有事件。"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events in the last 24 hours"
+msgstr "最近 24 小时没有事件"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events yet"
+msgstr "还没有事件"
+
+#: src/features/analytics/Exports.tsx
+msgid "No exports yet."
+msgstr "还没有导出。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "No funnels yet"
+msgstr "还没有漏斗"
+
+#: src/features/analytics/Goals.tsx
+msgid "No goals yet"
+msgstr "还没有目标"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No properties yet"
+msgstr "还没有属性"
+
+#: src/features/analytics/Settings.tsx
+msgid "No props are tracked."
+msgstr "没有跟踪任何属性。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "No scheduled reports."
+msgstr "没有定期报告。"
+
+#: src/features/analytics/Controls.tsx
+msgid "No segment"
+msgstr "无细分"
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Make one to show these numbers to people outside the workspace."
+msgstr "还没有共享链接。创建一个,把这些数据展示给工作区之外的人。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Owners and admins make them."
+msgstr "还没有共享链接。由所有者和管理员创建。"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Nobody in the last 30 minutes."
+msgstr "最近 30 分钟没有人。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Nobody reached the first step in this range."
+msgstr "此范围内没有人到达第一步。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "None"
+msgstr "无"
+
+#: src/features/analytics/Settings.tsx
+msgid "None yet"
+msgstr "暂无"
+
+#: src/features/analytics/Exports.tsx
+msgid "None, every visit counts."
+msgstr "无,每次访问都计入。"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "None, owners and admins only"
+msgstr "无,仅所有者和管理员"
+
+#: src/features/analytics/parts.tsx
+msgid "Not available for this range."
+msgstr "此范围不可用。"
+
+#: src/features/analytics/text.ts
+msgid "Not helpful"
+msgstr "没有帮助"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Note"
+msgstr "备注"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Notes"
+msgstr "备注"
+
+#: src/features/analytics/Exports.tsx
+msgid "Nothing"
+msgstr "无"
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Nothing counted in this range."
+msgstr "此范围内没有统计到任何内容。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Notify me"
+msgstr "通知我"
+
+#: src/features/analytics/Settings.tsx
+msgid "Off"
+msgstr "关"
+
+#: src/features/analytics/Settings.tsx
+msgid "Offered only to visitors who agree in your consent tool. Everyone else is counted exactly as before, one day at a time and without anything stored on the device."
+msgstr "只对在你的同意工具中同意的访客提供。其他所有人的统计方式与以前完全一样:按天统计,设备上不存储任何内容。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Older than 72 hours. Apps keep events without a connection for at most that long."
+msgstr "早于 72 小时。应用在没有网络时最多保留事件这么久。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "On its way to {email}."
+msgstr "正在发往 {email}。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "On the 1st of each month at 08:00 in {zone}, about the month before."
+msgstr "每月 1 日 {zone} 08:00,汇报上个月的情况。"
+
+#: src/features/analytics/Settings.tsx
+msgid "One IP address or range per line, up to 50, such as your office or a monitoring service."
+msgstr "每行一个 IP 地址或范围,最多 50 个,例如你的办公室或监控服务。"
+
+#: src/features/analytics/Settings.tsx
+msgid "One path per line, up to 50. * stands for one part of the path, ** for any number of them."
+msgstr "每行一个路径,最多 50 个。* 代表路径中的一段,** 代表任意数量的段。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "One per line, like https://example.com or https://*.example.com. Without any, no other site can show it in a frame."
+msgstr "每行一个,如 https://example.com 或 https://*.example.com。若没有,其他站点都不能以框架显示它。"
+
+#: src/features/analytics/Settings.tsx
+msgid "One per line. *.example.com covers every subdomain, but not example.com itself."
+msgstr "每行一个。*.example.com 涵盖所有子域名,但不包括 example.com 本身。"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "One per line. Pages on other domains cannot send events. *.example.com covers every subdomain."
+msgstr "每行一个。其他域名上的页面无法发送事件。*.example.com 涵盖所有子域名。"
+
+#: src/features/analytics/Settings.tsx
+msgid "One prop name per line, up to 10, such as plan."
+msgstr "每行一个属性名,最多 10 个,如 plan。"
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
+msgstr "每天一行,包含访客、访问、浏览、跳出率、时长和滚动深度。最多 400 天。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Only for you, by e-mail to {email}. Reports are plain numbers, with no images and nothing that tracks opening or clicks."
+msgstr "仅发给你,通过邮件发到 {email}。报告只有纯数字,没有图片,也没有任何跟踪打开或点击的内容。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Only members see it, to tell links apart."
+msgstr "只有成员能看到,用来区分链接。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Only the country is kept, never the region or city."
+msgstr "只保留国家或地区,绝不保留省州或城市。"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Only totals are shown. There is no list of individual visitors."
+msgstr "只显示总数。没有单个访客的列表。"
+
+#: src/features/analytics/parts.tsx
+msgid "Only visitors who agreed to a persistent id are counted here. Everyone else is counted one day at a time."
+msgstr "这里只统计同意持久 ID 的访客。其他所有人按天统计。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Only with consent"
+msgstr "仅限已同意"
+
+#: src/features/analytics/Goals.tsx
+msgid "Only with prop"
+msgstr "仅限带此属性"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
+msgstr "打开你网站上已放置代码片段的页面。服务器一存储第一次页面浏览,这里就会变绿。带有 Do Not Track 或 Global Privacy Control 的浏览器不会发送任何内容,因此请换另一个来测试。"
+
+#: src/features/analytics/Retention.tsx
+msgid "Open consent features"
+msgstr "打开同意功能"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Open report"
+msgstr "打开报告"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open the overview"
+msgstr "打开概览"
+
+#: src/features/analytics/Support.tsx
+msgid "Open the property’s settings"
+msgstr "打开属性的设置"
+
+#: src/features/analytics/text.ts
+msgid "Operating system"
+msgstr "操作系统"
+
+#: src/features/analytics/Install.tsx
+msgid "Opt-out link"
+msgstr "退出统计链接"
+
+#: src/features/analytics/text.ts
+msgid "Organic search"
+msgstr "自然搜索"
+
+#: src/features/analytics/text.ts
+msgid "OS version"
+msgstr "系统版本"
+
+#: src/features/analytics/text.ts
+msgid "Other"
+msgstr "其他"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other drops"
+msgstr "其他下滑"
+
+#: src/features/analytics/Events.tsx
+msgid "Other prop"
+msgstr "其他属性"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other sites"
+msgstr "其他站点"
+
+#: src/features/analytics/text.ts
+msgid "Outbound link"
+msgstr "出站链接"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Overview"
+msgstr "概览"
+
+#: src/features/analytics/Install.tsx
+msgid "Own domain"
+msgstr "自有域名"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Owners and admins make funnels from goals. They show up here with each step’s drop-off."
+msgstr "所有者和管理员用目标创建漏斗。它们会连同每一步的流失显示在这里。"
+
+#: src/features/analytics/Goals.tsx
+msgid "Owners and admins make goals. They show up here with their conversions."
+msgstr "所有者和管理员创建目标。它们会连同其转化显示在这里。"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Page"
+msgstr "页面"
+
+#: src/features/analytics/text.ts
+msgid "Page feedback sent from the page."
+msgstr "从页面发送的页面反馈。"
+
+#: src/features/analytics/text.ts
+msgid "Page not found"
+msgstr "找不到页面"
+
+#: src/features/analytics/text.ts
+msgid "Page or screen"
+msgstr "页面或屏幕"
+
+#: src/features/analytics/Goals.tsx
+msgid "Page view of {path}"
+msgstr "{path} 的页面浏览"
+
+#: src/features/analytics/text.ts
+msgid "Pages"
+msgstr "页面"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens"
+msgstr "页面和屏幕"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens viewed."
+msgstr "浏览的页面和屏幕。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages not counted"
+msgstr "不统计的页面"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
+msgstr "匹配某个模式的页面会计在同一路径下,因此所有订单页面合计为一个。路径中的地址始终会被替换。"
+
+#: src/features/analytics/text.ts
+msgid "Pages viewed."
+msgstr "浏览的页面。"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Pages, sources, places and devices, without cookies, without storing IP addresses and without a consent banner where the law allows it."
+msgstr "统计页面、来源、地点和设备,无 Cookie、不存储 IP 地址,并且在法律允许的地方无需同意横幅。"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews"
+msgstr "页面浏览量"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews divided by visits."
+msgstr "页面浏览量除以访问数。"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews in the last 30 minutes"
+msgstr "最近 30 分钟的页面浏览量"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews per minute"
+msgstr "每分钟页面浏览量"
+
+#: src/features/analytics/text.ts
+msgid "Paid search"
+msgstr "付费搜索"
+
+#: src/features/analytics/text.ts
+msgid "Paid social"
+msgstr "付费社交"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Password"
+msgstr "密码"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Past alerts"
+msgstr "过往警报"
+
+#: src/features/analytics/Settings.tsx
+msgid "Path rules"
+msgstr "路径规则"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pattern"
+msgstr "模式"
+
+#: src/features/analytics/Controls.tsx
+msgid "Paying customers from Germany"
+msgstr "来自德国的付费客户"
+
+#: src/features/analytics/text.ts
+msgid "Per 1,000 views"
+msgstr "每 1,000 次浏览"
+
+#: src/features/analytics/Overview.tsx
+msgid "per day"
+msgstr "每天"
+
+#: src/features/analytics/Settings.tsx
+msgid "Per day"
+msgstr "每天"
+
+#: src/features/analytics/Overview.tsx
+msgid "per hour"
+msgstr "每小时"
+
+#: src/features/analytics/Overview.tsx
+msgid "per week"
+msgstr "每周"
+
+#: src/features/analytics/Settings.tsx
+msgid "Persistent id"
+msgstr "持久 ID"
+
+#: src/features/analytics/text.ts
+msgid "Phone"
+msgstr "手机"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Pick a goal"
+msgstr "选择目标"
+
+#: src/features/analytics/Events.tsx
+msgid "Pick a prop to see the values this event carried."
+msgstr "选择一个属性,查看此事件携带的值。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pick at least one platform."
+msgstr "请至少选择一个平台。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Pick at least one view."
+msgstr "请至少选择一个视图。"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
+msgstr "选择站点的构建方式并复制代码片段。该密钥是公开的,和聊天密钥一样:它只在属性的域名上有效。"
+
+#: src/features/analytics/text.ts
+msgid "Platform"
+msgstr "平台"
+
+#: src/features/analytics/Settings.tsx
+msgid "Platforms"
+msgstr "平台"
+
+#: src/features/analytics/text.ts
+msgid "Prop"
+msgstr "属性"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name"
+msgstr "属性名"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name, like plan"
+msgstr "属性名,如 plan"
+
+#: src/features/analytics/Events.tsx
+msgid "Properties for children keep no props, only the address of outbound links and downloads."
+msgstr "面向儿童的属性不保留属性,只保留出站链接和下载的地址。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children keep no props, so none can be tracked."
+msgstr "面向儿童的属性不保留属性,因此无法跟踪。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children never keep an id on the device or link visits to a contact."
+msgstr "面向儿童的属性绝不会在设备上保留 ID,也不会把访问关联到联系人。"
+
+#: src/features/analytics/Retention.tsx
+msgid "Properties for children never keep an id on the device, so they have no retention."
+msgstr "面向儿童的属性绝不会在设备上保留 ID,因此没有留存分析。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Property name"
+msgstr "属性名称"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Props"
+msgstr "属性"
+
+#: src/features/analytics/Events.tsx
+msgid "Props of any name can be broken down for the days the detailed records are kept. Earlier days only have the tracked props."
+msgstr "在保留详细记录的天数内,可以对任意名称的属性进行细分。更早的日子只有被跟踪的属性。"
+
+#: src/features/analytics/Install.tsx
+msgid "Put the script in the head of every page. It counts page views, also when a single-page app changes the address, and stores nothing on the visitor’s device."
+msgstr "把脚本放在每个页面的 head 中。它会统计页面浏览,包括单页应用更改地址时,并且不会在访客的设备上存储任何内容。"
+
+#: src/features/analytics/Install.tsx
+msgid "Put these links on your privacy page. Opting out is the only thing the script stores on the visitor’s device, and only when they ask for it. Visitors with Do Not Track or Global Privacy Control are never counted."
+msgstr "把这些链接放在你的隐私页面上。退出统计是脚本在访客设备上存储的唯一内容,而且仅在对方要求时才会存储。带有 Do Not Track 或 Global Privacy Control 的访客绝不会被统计。"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Range"
+msgstr "范围"
+
+#: src/features/analytics/Support.tsx
+msgid "Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "按每 1,000 次浏览的对话数排序;浏览不足 100 次的页面排在其他页面之后。按页面和天统计,绝不按访客或联系人统计。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Rate limits"
+msgstr "速率限制"
+
+#: src/features/analytics/Support.tsx
+msgid "Ratings"
+msgstr "评分"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw events"
+msgstr "原始事件"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw exports cover at most 31 days."
+msgstr "原始导出最多覆盖 31 天。"
+
+#: src/features/analytics/Goals.tsx
+msgid "Reached when a visitor"
+msgstr "当访客满足以下条件时到达"
+
+#: src/features/analytics/Exports.tsx
+msgid "Ready"
+msgstr "就绪"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Realtime"
+msgstr "实时"
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour, last at {builtAt}."
+msgstr "每小时重新构建,最近一次在 {builtAt}。"
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour."
+msgstr "每小时重新构建。"
+
+#: src/features/analytics/text.ts
+msgid "Referral"
+msgstr "引荐"
+
+#: src/features/analytics/text.ts
+msgid "Referrer"
+msgstr "引荐来源"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Refreshes every 15 seconds"
+msgstr "每 15 秒刷新"
+
+#: src/features/analytics/Settings.tsx
+msgid "Refused"
+msgstr "已拒绝"
+
+#: src/features/analytics/text.ts
+msgid "Region"
+msgstr "区域"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter"
+msgstr "移除筛选"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter: {label}"
+msgstr "移除筛选:{label}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Remove rule"
+msgstr "移除规则"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Remove step"
+msgstr "移除步骤"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Rename “{0}”…"
+msgstr "重命名“{0}”…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Rename segment"
+msgstr "重命名细分"
+
+#: src/features/analytics/Install.tsx
+msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
+msgstr "在根布局中渲染该组件一次。它不渲染任何内容;其下任何位置都可以通过 useYuvaAnalytics() 使用这些方法。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Report"
+msgstr "报告"
+
+#: src/features/analytics/Settings.tsx
+msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
+msgstr "带有 Do Not Track 或 Global Privacy Control 的请求,以及在需要同意的属性上没有同意的事件,会被接收,但不会在此存储或统计。"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Retention"
+msgstr "留存"
+
+#: src/features/analytics/Retention.tsx
+msgid "Retention needs consent features"
+msgstr "留存需要同意功能"
+
+#: src/features/analytics/text.ts
+msgid "Returning"
+msgstr "回访"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/text.ts
+msgid "Revenue"
+msgstr "收入"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke"
+msgstr "撤销"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke {name}?"
+msgstr "撤销 {name}?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoked"
+msgstr "已撤销"
+
+#: src/features/analytics/Exports.tsx
+msgid "Rows"
+msgstr "行"
+
+#: src/features/analytics/Exports.tsx
+msgid "Running"
+msgstr "运行中"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Save"
+msgstr "保存"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Save the changes to “{0}”"
+msgstr "保存对“{0}”的更改"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save the filters as a new segment…"
+msgstr "将筛选条件另存为新细分…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save these filters as a segment"
+msgstr "将这些筛选条件保存为细分"
+
+#: src/features/analytics/Controls.tsx
+msgid "Saved segments"
+msgstr "已保存的细分"
+
+#: src/features/analytics/text.ts
+msgid "Screen"
+msgstr "屏幕"
+
+#: src/features/analytics/text.ts
+msgid "Screen size"
+msgstr "屏幕尺寸"
+
+#: src/features/analytics/text.ts
+msgid "Screen views"
+msgstr "屏幕浏览"
+
+#: src/features/analytics/text.ts
+msgid "Screen views divided by visits."
+msgstr "屏幕浏览量除以访问数。"
+
+#: src/features/analytics/text.ts
+msgid "Screen views in the last 30 minutes"
+msgstr "最近 30 分钟的屏幕浏览"
+
+#: src/features/analytics/text.ts
+msgid "Screen views per minute"
+msgstr "每分钟屏幕浏览"
+
+#: src/features/analytics/text.ts
+msgid "Screens"
+msgstr "屏幕"
+
+#: src/features/analytics/text.ts
+msgid "Screens viewed."
+msgstr "浏览的屏幕。"
+
+#: src/features/analytics/text.ts
+msgid "Scroll depth"
+msgstr "滚动深度"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolled to {pct} on {path}"
+msgstr "在 {path} 滚动到 {pct}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolls"
+msgstr "滚动"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segment"
+msgstr "细分"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segments"
+msgstr "细分"
+
+#: src/features/analytics/Settings.tsx
+msgid "Send a screen or an event from your app or backend while this page is open, and see whether it reached the server. Refreshes every 5 seconds."
+msgstr "保持此页面打开,从你的应用或后端发送一个屏幕或事件,看看它是否到达了服务器。每 5 秒刷新。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Send me one now"
+msgstr "现在给我发一个"
+
+#: src/features/analytics/Goals.tsx
+msgid "Sends an event"
+msgstr "发送了事件"
+
+#: src/features/analytics/text.ts
+msgid "Server"
+msgstr "服务器"
+
+#: src/features/analytics/Settings.tsx
+msgid "Server busy"
+msgstr "服务器繁忙"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Settings"
+msgstr "设置"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Share links"
+msgstr "共享链接"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Shared with Yuva"
+msgstr "与 Yuva 共享"
+
+#: src/features/analytics/Settings.tsx
+msgid "Sharing"
+msgstr "共享"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Events.tsx
+msgid "Show"
+msgstr "显示"
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/parts.tsx
+msgid "Show from {day}"
+msgstr "显示 {day} 起"
+
+#: src/features/analytics/Events.tsx
+msgid "Show its props"
+msgstr "显示其属性"
+
+#: src/features/analytics/Controls.tsx
+msgid "Show the days"
+msgstr "显示这些天"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Show the last 30 days"
+msgstr "显示最近 30 天"
+
+#: src/features/analytics/Goals.tsx
+msgid "Signed up"
+msgstr "已注册"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Sites that may embed it"
+msgstr "可以嵌入它的站点"
+
+#: src/features/analytics/text.ts
+msgid "Social"
+msgstr "社交"
+
+#: src/features/analytics/Settings.tsx
+msgid "Some events were dropped. The reasons are below."
+msgstr "有些事件被丢弃了。原因见下方。"
+
+#: src/features/analytics/text.ts
+msgid "Source"
+msgstr "来源"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Realtime.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Sources"
+msgstr "来源"
+
+#: src/features/analytics/Settings.tsx
+msgid "Start over"
+msgstr "重新开始"
+
+#. placeholder {0}: i + 1
+#: src/features/analytics/Funnels.tsx
+msgid "Step {0}"
+msgstr "第 {0} 步"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Steps"
+msgstr "步骤"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Support.tsx
+msgid "Support"
+msgstr "支持"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Support load"
+msgstr "支持负载"
+
+#: src/features/analytics/Support.tsx
+msgid "Support numbers can only be filtered by page and host. The other filters are left out here."
+msgstr "支持数据只能按页面和主机筛选。其他筛选条件在这里被忽略。"
+
+#: src/features/analytics/text.ts
+msgid "Tablet"
+msgstr "平板电脑"
+
+#: src/features/analytics/Settings.tsx
+msgid "Taken and stored. They show up in Realtime within a minute."
+msgstr "已接收并存储。一分钟内会显示在实时中。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Test events"
+msgstr "测试事件"
+
+#: src/features/analytics/SharePage.tsx
+msgid "That password is not right."
+msgstr "密码不正确。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "The consented counts follow visitors with a persistent id from one visit and day to the next, so a step reached on a later day still counts."
+msgstr "已同意的统计会通过持久 ID 跟踪访客跨访问、跨天的行为,因此在之后某天到达的步骤也会被统计。"
+
+#: src/features/analytics/Settings.tsx
+msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
+msgstr "当前密钥会继续有效 24 小时,让你在不丢失事件的情况下更新页面。在此期间再创建另一个密钥,会立即终止旧密钥。"
+
+#: src/features/analytics/text.ts
+msgid "The deepest point reached on the page, per view."
+msgstr "在页面上到达的最深位置,按每次浏览计。"
+
+#: src/features/analytics/Exports.tsx
+msgid "The export failed on the server."
+msgstr "服务器上的导出失败了。"
+
+#: src/features/analytics/Exports.tsx
+msgid "The file would be larger than 1 GiB. Export a shorter range."
+msgstr "文件会超过 1 GiB。请导出更短的范围。"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "The first event arrived at {at}."
+msgstr "第一个事件在 {at} 到达。"
+
+#: src/features/analytics/Goals.tsx
+msgid "The goal reports the revenue its events carry, per currency."
+msgstr "目标按币种报告其事件携带的收入。"
+
+#: src/features/analytics/Settings.tsx
+msgid "The key is public, like a chat key: every page carries it, and it only works on the property’s domains."
+msgstr "该密钥是公开的,和聊天密钥一样:每个页面都带有它,它只在属性的域名上有效。"
+
+#: src/features/analytics/Settings.tsx
+msgid "The key stops working at once, and all visits, events and totals are deleted. This cannot be undone."
+msgstr "密钥会立即失效,所有访问、事件和总数都会被删除。此操作无法撤销。"
+
+#: src/features/analytics/Settings.tsx
+msgid "The last 30 days"
+msgstr "最近 30 天"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and leaves the list."
+msgstr "链接会立即失效并从列表中消失。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and stays in the list."
+msgstr "链接会立即失效,但仍保留在列表中。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked."
+msgstr "链接会在 {timezone} 的这一天结束时失效。留空则保留到被撤销为止。"
+
+#: src/features/analytics/Install.tsx
+msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
+msgstr "该模块会添加一个客户端插件和 useYuvaAnalytics() 组合式函数。NUXT_PUBLIC_YUVA_ANALYTICS_KEY 可在运行时覆盖密钥。"
+
+#: src/features/analytics/Settings.tsx
+msgid "The name does not match. Type it exactly as shown."
+msgstr "名称不匹配。请完全按显示的内容输入。"
+
+#: src/features/analytics/Goals.tsx
+msgid "The name given to track(), or outbound_click, file_download, not_found, chat_open."
+msgstr "传给 track() 的名称,或 outbound_click、file_download、not_found、chat_open。"
+
+#: src/features/analytics/Settings.tsx
+msgid "The previous key keeps working until {at}. Update every page and app before then."
+msgstr "之前的密钥在 {at} 之前仍然有效。请在此之前更新每个页面和应用。"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "The properties of your inboxes show up here once an owner or admin adds them."
+msgstr "所有者或管理员添加后,你的收件箱的属性会显示在这里。"
+
+#: src/features/analytics/Exports.tsx
+msgid "The query could not be run."
+msgstr "无法运行该查询。"
+
+#: src/features/analytics/Exports.tsx
+msgid "The range is outside the detailed records."
+msgstr "该范围超出了详细记录。"
+
+#: src/features/analytics/SharePage.tsx
+msgid "The report could not be loaded"
+msgstr "无法加载报告"
+
+#: src/features/analytics/Settings.tsx
+msgid "The server’s own database"
+msgstr "服务器自己的数据库"
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need detailed records that are no longer kept for this range."
+msgstr "这些筛选条件需要详细记录,而此范围的详细记录已不再保留。"
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need the detailed records, which are kept since {day}. Earlier days only have totals per page, source, place and device."
+msgstr "这些筛选条件需要详细记录,这些记录自 {day} 起保留。更早的日子只有按页面、来源、地点和设备汇总的总数。"
+
+#: src/features/analytics/Settings.tsx
+msgid "This cannot be undone."
+msgstr "此操作无法撤销。"
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal has numbers from {since} on. Days before that show none."
+msgstr "此目标自 {since} 起才有数据。在此之前的日子没有。"
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
+msgstr "此目标是漏斗的一个步骤。请先把它从漏斗中移除,或删除该漏斗。"
+
+#: src/features/analytics/SharePage.tsx
+msgid "This link is not available"
+msgstr "此链接不可用"
+
+#: src/features/analytics/text.ts
+msgid "This month"
+msgstr "本月"
+
+#: src/features/analytics/Funnels.tsx
+msgid "This property already has a funnel with this name."
+msgstr "此属性已有同名漏斗。"
+
+#: src/features/analytics/Goals.tsx
+msgid "This property already has a goal with this name."
+msgstr "此属性已有同名目标。"
+
+#: src/features/analytics/Controls.tsx
+msgid "This property already has a segment with this name."
+msgstr "此属性已有同名细分。"
+
+#: src/features/analytics/Exports.tsx
+msgid "This range cannot be exported. Pick a shorter one, or one inside the detailed records."
+msgstr "无法导出此范围。请选择更短的范围,或详细记录内的范围。"
+
+#: src/features/analytics/SharePage.tsx
+msgid "This report has a password"
+msgstr "此报告设有密码"
+
+#: src/features/analytics/Support.tsx
+msgid "This workspace has no inbox yet."
+msgstr "此工作区还没有收件箱。"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
+msgstr "此工作区已达到本月 {limit} 个分析事件的上限。新事件会被丢弃,直到月底。"
+
+#: src/features/analytics/text.ts
+msgid "This year"
+msgstr "今年"
+
+#: src/features/analytics/Exports.tsx
+msgid "Three exports are already running in this workspace. Try again when one finishes."
+msgstr "此工作区已有三个导出正在运行。请等其中一个完成后再试。"
+
+#: src/features/analytics/text.ts
+msgid "Time from the first to the last event of a visit, on average. Bounces count as zero."
+msgstr "一次访问中从第一个到最后一个事件的平均时间。跳出按零计算。"
+
+#: src/features/analytics/text.ts
+msgid "Time on page"
+msgstr "页面停留时间"
+
+#: src/features/analytics/text.ts
+msgid "Time the page was visible and in focus, per view."
+msgstr "页面可见且处于焦点的时间,按每次浏览计。"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Time zone"
+msgstr "时区"
+
+#: src/features/analytics/text.ts
+msgid "Times the goal was reached, also several times by one visitor."
+msgstr "目标被达成的次数,同一位访客多次达成也计入。"
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated helpful."
+msgstr "页面被评为有帮助的次数。"
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated not helpful."
+msgstr "页面被评为没有帮助的次数。"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "To"
+msgstr "收件人"
+
+#: src/features/analytics/text.ts
+msgid "Today"
+msgstr "今天"
+
+#: src/features/analytics/Settings.tsx
+msgid "Today: {todayCounted} counted, {todayDropped} dropped"
+msgstr "今日:已统计 {todayCounted},已丢弃 {todayDropped}"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Token"
+msgstr "令牌"
+
+#: src/features/analytics/Settings.tsx
+msgid "Too late"
+msgstr "太晚了"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many requests from your network. Wait a minute and reload the page."
+msgstr "来自你的网络的请求过多。请等一分钟后重新加载页面。"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many tries. Wait a minute and try again."
+msgstr "尝试次数过多。请等一分钟后重试。"
+
+#: src/features/analytics/text.ts
+msgid "Top pages"
+msgstr "热门页面"
+
+#: src/features/analytics/text.ts
+msgid "Top pages and screens"
+msgstr "热门页面和屏幕"
+
+#: src/features/analytics/text.ts
+msgid "Top screens"
+msgstr "热门屏幕"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracked props"
+msgstr "被跟踪的属性"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracking"
+msgstr "跟踪"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic drop"
+msgstr "流量下降"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic spike"
+msgstr "流量激增"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Try again"
+msgstr "重试"
+
+#: src/features/analytics/Install.tsx
+msgid "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
+msgstr "请先在常规设置的“平台”中开启 {name}。在此之前,服务器会拒绝该应用的事件。"
+
+#: src/features/analytics/Retention.tsx
+msgid "Turn on the persistent id in the consent features, then call yuva.consent with persistent set to true."
+msgstr "在同意功能中开启持久 ID,然后调用 yuva.consent 并将 persistent 设为 true。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Two to eight goals, in the order visitors reach them within one visit."
+msgstr "两到八个目标,按访客在一次访问中到达它们的顺序排列。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Type the property’s name to delete it and all its data."
+msgstr "输入属性的名称以删除它及其所有数据。"
+
+#: src/features/analytics/text.ts
+msgid "Unknown"
+msgstr "未知"
+
+#: src/features/analytics/Install.tsx
+msgid "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
+msgstr "每次请求最多 100 个事件,每个都带有访客的 IP 地址和 user agent,或你自己的 visitor_key。两者都不会被存储。因无效而被排除的事件会连同其位置在 errors 中返回;已到达的内容请在“测试事件”下查看。"
+
+#: src/features/analytics/text.ts
+msgid "UTM campaign"
+msgstr "UTM 活动"
+
+#: src/features/analytics/text.ts
+msgid "UTM content"
+msgstr "UTM 内容"
+
+#: src/features/analytics/text.ts
+msgid "UTM medium"
+msgstr "UTM 媒介"
+
+#: src/features/analytics/text.ts
+msgid "UTM source"
+msgstr "UTM 来源"
+
+#: src/features/analytics/text.ts
+msgid "UTM term"
+msgstr "UTM 关键词"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Views"
+msgstr "浏览"
+
+#: src/features/analytics/Goals.tsx
+msgid "Views a page"
+msgstr "浏览某个页面"
+
+#: src/features/analytics/text.ts
+msgid "Views divided by visits."
+msgstr "浏览量除以访问数。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views fell to {now} in two hours, against {usual} usually."
+msgstr "最近两小时的浏览量降至 {now},通常为 {usual}。"
+
+#: src/features/analytics/text.ts
+msgid "Views in the last 30 minutes"
+msgstr "最近 30 分钟的浏览量"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at least three times the same hours of the week before."
+msgstr "最近两小时的浏览量至少是前一周同一时段的三倍。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at most half the same hours of the week before."
+msgstr "最近两小时的浏览量至多是前一周同一时段的一半。"
+
+#: src/features/analytics/text.ts
+msgid "Views per minute"
+msgstr "每分钟浏览量"
+
+#: src/features/analytics/text.ts
+msgid "Views per visit"
+msgstr "每次访问的浏览量"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views rose to {now} in two hours, against {usual} usually."
+msgstr "最近两小时的浏览量升至 {now},通常为 {usual}。"
+
+#: src/features/analytics/text.ts
+msgid "Visit duration"
+msgstr "访问时长"
+
+#: src/features/analytics/Retention.tsx
+#: src/features/analytics/text.ts
+msgid "Visitors"
+msgstr "访客"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Visitors in the last 30 minutes"
+msgstr "最近 30 分钟的访客"
+
+#: src/features/analytics/Retention.tsx
+msgid "Visitors who came back"
+msgstr "回访的访客"
+
+#: src/features/analytics/text.ts
+msgid "Visitors who reached the goal, per day, added up over the days of the range."
+msgstr "达成目标的访客,按天统计,按范围内的天数相加。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
+msgstr "带有 Do Not Track 或 Global Privacy Control 的访客不会发送任何内容,因此这里也不会统计他们。对于被丢弃的事件,除了数量之外不保留任何内容。"
+
+#: src/features/analytics/text.ts
+msgid "Visits"
+msgstr "访问"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page or screen view and nothing else."
+msgstr "只有一次页面或屏幕浏览、没有其他行为的访问。"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page view and nothing else."
+msgstr "只有一次页面浏览、没有其他行为的访问。"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one screen view and nothing else."
+msgstr "只有一次屏幕浏览、没有其他行为的访问。"
+
+#: src/features/analytics/Install.tsx
+msgid "Vue, Astro, other"
+msgstr "Vue、Astro、其他"
+
+#: src/features/analytics/Exports.tsx
+msgid "Waiting"
+msgstr "等待中"
+
+#: src/features/analytics/Settings.tsx
+msgid "Waiting for events since {at}."
+msgstr "自 {at} 起等待事件。"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Waiting for the first event"
+msgstr "等待第一个事件"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Watch it live"
+msgstr "实时查看"
+
+#: src/features/analytics/text.ts
+msgid "Web"
+msgstr "网页"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Website or app"
+msgstr "网站或应用"
+
+#: src/features/analytics/Retention.tsx
+msgid "Week {period}"
+msgstr "第 {period} 周"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Weekly"
+msgstr "每周"
+
+#: src/features/analytics/Retention.tsx
+msgid "Weeks"
+msgstr "周"
+
+#: src/features/analytics/Insights.tsx
+msgid "What changed"
+msgstr "变化了什么"
+
+#: src/features/analytics/Support.tsx
+msgid "What stands out"
+msgstr "值得注意的地方"
+
+#: src/features/analytics/text.ts
+msgid "What the goal's events carried, per currency. Currencies are never converted or added up."
+msgstr "目标的事件携带的内容,按币种统计。币种绝不会被换算或相加。"
+
+#: src/features/analytics/Exports.tsx
+msgid "What to export"
+msgstr "要导出什么"
+
+#: src/features/analytics/Goals.tsx
+msgid "Where conversions come from"
+msgstr "转化来自哪里"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Where the property’s day starts and ends."
+msgstr "属性的一天从何时开始和结束。"
+
+#: src/features/analytics/Install.tsx
+msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."
+msgstr "使用 data-consent=\"required\" 时,在你的同意工具表示访客已同意之前,脚本不会发送任何内容。也请在常规设置中把“收集”设为“仅限同意”,让服务器拒绝没有同意的事件。"
+
+#: src/features/analytics/Settings.tsx
+msgid "With yuva.consent and persistent set to true, the device keeps a random id for 13 months. The visitor counts once over several days, is told apart as new or returning, fills retention and is followed across days in funnels. Never under Do Not Track or Global Privacy Control."
+msgstr "当 yuva.consent 的 persistent 设为 true 时,设备会保留一个随机 ID 13 个月。访客跨多天只计一次,可区分新访客或回访访客,填充留存,并在漏斗中跨天被跟踪。在 Do Not Track 或 Global Privacy Control 下绝不会这样做。"
+
+#: src/features/analytics/text.ts
+msgid "Without consent"
+msgstr "无同意"
+
+#: src/features/analytics/Retention.tsx
+msgid "Without cookies a visitor is new every day, so nobody can be followed from one day to the next. Only visitors who agree to a persistent id in your consent tool show up here."
+msgstr "没有 Cookie 时,访客每天都是新的,因此无法跨天跟踪任何人。只有在你的同意工具中同意持久 ID 的访客才会显示在这里。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Without cookies, for everyone"
+msgstr "无 Cookie,面向所有人"
+
+#: src/features/analytics/text.ts
+msgid "Yesterday"
+msgstr "昨天"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Your access ended. Enter the password again to keep reading."
+msgstr "你的访问已结束。请再次输入密码以继续阅读。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Your new share link"
+msgstr "你的新共享链接"
+
+#: src/features/analytics/Settings.tsx
+msgid "yuva.identify with a token from your backend, signed like a chat session, links the visitor’s visits to their contact. They show on the contact’s page under Recent visits. Forged or reused tokens are ignored."
+msgstr "yuva.identify 带上来自你后端的令牌(像聊天会话一样签名),会把访客的访问关联到其联系人。它们显示在联系人页面的“最近访问”下。伪造或重复使用的令牌会被忽略。"

@@ -1,0 +1,2748 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 10:11+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: th\n"
+
+#: src/features/analytics/text.ts
+msgid "(not set)"
+msgstr "(ไม่ได้ตั้งค่า)"
+
+#. placeholder {0}: e.rows
+#: src/features/analytics/Exports.tsx
+msgid "{0, plural, one {# row} other {# rows}}"
+msgstr "{0, plural, other {# แถว}}"
+
+#. placeholder {0}: p.visitors_today
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{0, plural, one {visitor today} other {visitors today}}"
+msgstr "{0, plural, other {ผู้เข้าชมวันนี้}}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{consentedCount} consented, across visits and days"
+msgstr "ยินยอม {consentedCount} ตลอดการเข้าชมและวัน"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {{site} sent # visit, and none in the 28 days before.} other {{site} sent # visits, and none in the 28 days before.}}"
+msgstr "{count, plural, other {{site} ส่งการเข้าชม # ครั้ง และไม่มีเลยใน 28 วันก่อนหน้า}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {# conversation per 1,000 views, against {usual} in the 28 days before.} other {# conversations per 1,000 views, against {usual} in the 28 days before.}}"
+msgstr "{count, plural, other {# การสนทนาต่อ 1,000 การดู เทียบกับ {usual} ใน 28 วันก่อนหน้า}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {Goal “{goal}” had # conversion, against {usual} a day on average in the week before.} other {Goal “{goal}” had # conversions, against {usual} a day on average in the week before.}}"
+msgstr "{count, plural, other {เป้าหมาย “{goal}” มี # คอนเวอร์ชัน เทียบกับเฉลี่ย {usual} ต่อวันในสัปดาห์ก่อนหน้า}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{count} in this range, none in the compared days."
+msgstr "{count} ในช่วงนี้ ไม่มีในวันที่เปรียบเทียบ"
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {count}, none in the compared days."
+msgstr "{dim} {value}: {count} ไม่มีในวันที่เปรียบเทียบ"
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} fell {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} ลดลง {change} {now} เทียบกับ {before}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} rose {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} เพิ่มขึ้น {change} {now} เทียบกับ {before}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {metric} {now}, none in the compared days."
+msgstr "{dim} {value}: {metric} {now} ไม่มีในวันที่เปรียบเทียบ"
+
+#: src/features/analytics/Annotations.tsx
+msgid "{kind}: {found}"
+msgstr "{kind}: {found}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{lost} left ({lostPct})"
+msgstr "ออกไป {lost} ({lostPct})"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} fell {change}: {now}, against {before} in the compared days."
+msgstr "{metric} ลดลง {change}: {now} เทียบกับ {before} ในวันที่เปรียบเทียบ"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} rose {change}: {now}, against {before} in the compared days."
+msgstr "{metric} เพิ่มขึ้น {change}: {now} เทียบกับ {before} ในวันที่เปรียบเทียบ"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric}: {now}, none in the compared days."
+msgstr "{metric}: {now} ไม่มีในวันที่เปรียบเทียบ"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversation} other {# conversations}}"
+msgstr "{n, plural, other {# การสนทนา}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversion} other {# conversions}}"
+msgstr "{n, plural, other {# คอนเวอร์ชัน}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# discussion} other {# discussions}}"
+msgstr "{n, plural, other {# กระทู้}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# event} other {# events}}"
+msgstr "{n, plural, other {# เหตุการณ์}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# view} other {# views}}"
+msgstr "{n, plural, other {# การดู}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visit} other {# visits}}"
+msgstr "{n, plural, other {# การเข้าชม}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visitor} other {# visitors}}"
+msgstr "{n, plural, other {# ผู้เข้าชม}}"
+
+#: src/features/analytics/Events.tsx
+msgid "{n} payments, {avg} on average"
+msgstr "{n} การชำระเงิน เฉลี่ย {avg}"
+
+#: src/features/analytics/Install.tsx
+msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
+msgstr "{name} ไม่ใช่หนึ่งในแพลตฟอร์มของพร็อพเพอร์ตีนี้ เซิร์ฟเวอร์จึงปฏิเสธเหตุการณ์ของแอป เจ้าของหรือผู้ดูแลเปิดได้"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
+msgstr "{overall} ของผู้เข้าชมที่ถึงขั้นแรกถึงขั้นสุดท้ายด้วย {from} – {to}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
+msgstr "{rate, plural, other {{dim} {value}: # การสนทนาต่อ 1,000 การดู เทียบกับ {site} ทั่วทุกหน้า}}"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
+msgstr "ใช้เหตุการณ์การวิเคราะห์ {used} จาก {limit} ในเดือนนี้ เหตุการณ์ที่เกินขีดจำกัดจะถูกทิ้งจนสิ้นเดือน"
+
+#: src/features/analytics/Settings.tsx
+msgid "A change applies to new events. Days already counted keep their zone."
+msgstr "การเปลี่ยนแปลงมีผลกับเหตุการณ์ใหม่ วันที่นับแล้วคงเขตเวลาเดิม"
+
+#: src/features/analytics/Goals.tsx
+msgid "A changed goal is counted again over the days the detailed records are kept."
+msgstr "เป้าหมายที่เปลี่ยนจะถูกนับใหม่ตลอดวันที่เก็บบันทึกโดยละเอียด"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel follows each visit step by step, so it covers at most 90 days at once, or 31 days for a property with more than 10 million events a month. Pick a shorter range."
+msgstr "ฟันเนลติดตามแต่ละการเข้าชมทีละขั้น จึงครอบคลุมสูงสุด 90 วันต่อครั้ง หรือ 31 วันสำหรับพร็อพเพอร์ตีที่มีเหตุการณ์เกิน 10 ล้านต่อเดือน เลือกช่วงที่สั้นลง"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel is made of two to eight goals in a row. Make at least two goals first."
+msgstr "ฟันเนลประกอบด้วยเป้าหมายสองถึงแปดรายการต่อเนื่อง สร้างอย่างน้อยสองเป้าหมายก่อน"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are kept since {day}. Earlier days only have totals, so they cannot show a funnel."
+msgstr "ฟันเนลต้องใช้ขั้นตอนของแต่ละการเข้าชม ซึ่งเก็บตั้งแต่ {day} วันก่อนหน้านั้นมีเฉพาะยอดรวม จึงแสดงฟันเนลไม่ได้"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are no longer kept for this range."
+msgstr "ฟันเนลต้องใช้ขั้นตอนของแต่ละการเข้าชม ซึ่งไม่ได้เก็บไว้สำหรับช่วงนี้อีกต่อไป"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel shows how many visitors go from one goal to the next within a visit, and where they leave."
+msgstr "ฟันเนลแสดงว่ามีผู้เข้าชมกี่คนที่ไปจากเป้าหมายหนึ่งสู่เป้าหมายถัดไปภายในหนึ่งการเข้าชม และออกไปที่ใด"
+
+#: src/features/analytics/Goals.tsx
+msgid "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
+msgstr "เป้าหมายนับผู้เข้าชมที่ดูหน้า ส่งเหตุการณ์ หรือเลื่อนไกลพอ และรายได้ที่พวกเขานำมา"
+
+#: src/features/analytics/Alerts.tsx
+msgid "A goal’s conversions yesterday were at most half its daily average of the week before."
+msgstr "คอนเวอร์ชันของเป้าหมายเมื่อวานมากที่สุดครึ่งหนึ่งของค่าเฉลี่ยรายวันของสัปดาห์ก่อนหน้า"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A link shows only its views of this property, read-only, without filters or segments. Revoking or deleting it stops it at once."
+msgstr "ลิงก์แสดงเฉพาะมุมมองของพร็อพเพอร์ตีนี้ แบบอ่านอย่างเดียว ไม่มีตัวกรองหรือเซกเมนต์ การเพิกถอนหรือลบจะหยุดทันที"
+
+#: src/features/analytics/Goals.tsx
+msgid "A new goal also counts the days the detailed records are kept, not only from today."
+msgstr "เป้าหมายใหม่นับวันที่เก็บบันทึกโดยละเอียดด้วย ไม่ใช่เฉพาะจากวันนี้"
+
+#: src/features/analytics/Annotations.tsx
+msgid "A new key was made"
+msgstr "สร้างคีย์ใหม่แล้ว"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A new password signs out everyone who unlocked the link."
+msgstr "รหัสผ่านใหม่ทำให้ทุกคนที่ปลดล็อกลิงก์ออกจากระบบ"
+
+#: src/features/analytics/Goals.tsx
+msgid "A path. * stands for one part of it, ** for any number of them."
+msgstr "พาธ * แทนหนึ่งส่วนของพาธ ** แทนกี่ส่วนก็ได้"
+
+#: src/features/analytics/Settings.tsx
+msgid "A prop name has at most 300 characters and does not start with $ or yuva_."
+msgstr "ชื่อ prop ยาวไม่เกิน 300 ตัวอักษรและไม่ขึ้นต้นด้วย $ หรือ yuva_"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A property can have at most 50 share links. Delete one first."
+msgstr "พร็อพเพอร์ตีหนึ่งมีลิงก์แชร์ได้สูงสุด 50 รายการ ลบหนึ่งรายการก่อน"
+
+#: src/features/analytics/parts.tsx
+msgid "A range can be at most 400 days long. Pick a shorter one."
+msgstr "ช่วงยาวได้สูงสุด 400 วัน เลือกช่วงที่สั้นลง"
+
+#: src/features/analytics/Alerts.tsx
+msgid "A site sent 10 or more visits yesterday and none in the 28 days before."
+msgstr "ไซต์ส่งการเข้าชม 10 ครั้งขึ้นไปเมื่อวานและไม่มีเลยใน 28 วันก่อนหน้า"
+
+#: src/features/analytics/Settings.tsx
+msgid "A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and it shows as a chip on the Events view."
+msgstr "prop ที่ติดตามยังถูกเก็บในยอดรวมรายวันด้วย การแยกย่อยจึงอยู่ต่อหลังบันทึกโดยละเอียดหายไป และแสดงเป็นชิปในมุมมองเหตุการณ์"
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page or screen views without a gap of 30 minutes, within one day."
+msgstr "การดูหน้าหรือหน้าจอของผู้เข้าชมโดยไม่ห่างกัน 30 นาที ภายในหนึ่งวัน"
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page views without a gap of 30 minutes, within one day."
+msgstr "การดูหน้าของผู้เข้าชมโดยไม่ห่างกัน 30 นาที ภายในหนึ่งวัน"
+
+#: src/features/analytics/text.ts
+msgid "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
+msgstr "การดูหน้าจอของผู้เข้าชมโดยไม่ห่างกัน 30 นาที ภายในหนึ่งวัน การเปิดแอปแต่ละครั้งเริ่มการเข้าชมใหม่"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Active"
+msgstr "ใช้งานอยู่"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add"
+msgstr "เพิ่ม"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add a note to the chart"
+msgstr "เพิ่มบันทึกในแผนภูมิ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Add a rule"
+msgstr "เพิ่มกฎ"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Add a step"
+msgstr "เพิ่มขั้นตอน"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/NewProperty.tsx
+msgid "Add a website"
+msgstr "เพิ่มเว็บไซต์"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add a website to count its visitors, pages and sources, without cookies."
+msgstr "เพิ่มเว็บไซต์เพื่อนับผู้เข้าชม หน้า และแหล่งที่มา โดยไม่ใช้คุกกี้"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Add and install"
+msgstr "เพิ่มและติดตั้ง"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add note"
+msgstr "เพิ่มหมายเหตุ"
+
+#: src/features/analytics/Install.tsx
+msgid "Add the YuvaAnalytics library of the Yuva package and configure it once at launch. .yuvaScreen counts a SwiftUI screen; in UIKit, call YuvaAnalytics.screen when a screen appears. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "เพิ่มไลบรารี YuvaAnalytics ของแพ็กเกจ Yuva และตั้งค่าครั้งเดียวตอนเปิดแอป .yuvaScreen นับหน้าจอ SwiftUI ใน UIKit เรียก YuvaAnalytics.screen เมื่อหน้าจอปรากฏ เมื่อไม่มีการเชื่อมต่อ เหตุการณ์รออยู่บนอุปกรณ์ได้สูงสุด 72 ชั่วโมงและมาถึงพร้อมเวลาของตัวเอง"
+
+#: src/features/analytics/Install.tsx
+msgid "Add yuva-analytics from JitPack and configure it once in Application.onCreate. TrackScreen counts a Compose screen. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "เพิ่ม yuva-analytics จาก JitPack และตั้งค่าครั้งเดียวใน Application.onCreate TrackScreen นับหน้าจอ Compose เมื่อไม่มีการเชื่อมต่อ เหตุการณ์รออยู่บนอุปกรณ์ได้สูงสุด 72 ชั่วโมงและมาถึงพร้อมเวลาของตัวเอง"
+
+#: src/features/analytics/Settings.tsx
+msgid "Addresses not counted"
+msgstr "ที่อยู่ที่ไม่นับ"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the compared days"
+msgstr "เทียบกับวันที่เปรียบเทียบ"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the period before"
+msgstr "เทียบกับช่วงก่อนหน้า"
+
+#: src/features/analytics/Support.tsx
+msgid "Agents of the inbox can then see this property’s numbers too."
+msgstr "เอเจนต์ของกล่องข้อความจะเห็นตัวเลขของพร็อพเพอร์ตีนี้ด้วย"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Agents of this inbox can see the numbers."
+msgstr "เอเจนต์ของกล่องข้อความนี้เห็นตัวเลข"
+
+#: src/features/analytics/text.ts
+msgid "AI assistants"
+msgstr "ผู้ช่วย AI"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Alerts"
+msgstr "การแจ้งเตือน"
+
+#: src/features/analytics/Settings.tsx
+msgid "Alerts and reports"
+msgstr "การแจ้งเตือนและรายงาน"
+
+#: src/features/analytics/Events.tsx
+msgid "All events"
+msgstr "เหตุการณ์ทั้งหมด"
+
+#: src/features/analytics/Goals.tsx
+msgid "All goals"
+msgstr "เป้าหมายทั้งหมด"
+
+#: src/features/analytics/Support.tsx
+msgid "An owner or admin can link one in the property’s settings."
+msgstr "เจ้าของหรือผู้ดูแลเชื่อมโยงได้ในการตั้งค่าของพร็อพเพอร์ตี"
+
+#: src/features/analytics/Retention.tsx
+msgid "An owner or admin can turn on the persistent id in the consent features."
+msgstr "เจ้าของหรือผู้ดูแลเปิดรหัสถาวรได้ในคุณลักษณะความยินยอม"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics"
+msgstr "การวิเคราะห์"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Analytics properties"
+msgstr "พร็อพเพอร์ตีการวิเคราะห์"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Analytics steps"
+msgstr "ขั้นตอนการวิเคราะห์"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics views"
+msgstr "มุมมองการวิเคราะห์"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Anyone with the link sees the views you pick, read-only, without signing in."
+msgstr "ทุกคนที่มีลิงก์เห็นมุมมองที่คุณเลือก แบบอ่านอย่างเดียว โดยไม่ต้องลงชื่อเข้าใช้"
+
+#: src/features/analytics/text.ts
+msgid "App"
+msgstr "แอป"
+
+#: src/features/analytics/text.ts
+msgid "App version"
+msgstr "เวอร์ชันแอป"
+
+#: src/features/analytics/Settings.tsx
+msgid "Apps send without a domain, so only the platforms turned on here are counted. Events from your backend need no platform."
+msgstr "แอปส่งโดยไม่มีโดเมน จึงนับเฉพาะแพลตฟอร์มที่เปิดไว้ที่นี่ เหตุการณ์จากแบ็กเอนด์ของคุณไม่ต้องมีแพลตฟอร์ม"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Ask for a password"
+msgstr "ขอรหัสผ่าน"
+
+#: src/features/analytics/Sharing.tsx
+msgid "At least 8 characters"
+msgstr "อย่างน้อย 8 ตัวอักษร"
+
+#: src/features/analytics/Settings.tsx
+msgid "At most 10 props can be tracked."
+msgstr "ติดตาม prop ได้สูงสุด 10 รายการ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Audience"
+msgstr "กลุ่มเป้าหมาย"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Available until {expires}"
+msgstr "ใช้ได้ถึง {expires}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots"
+msgstr "บอท"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
+msgstr "บอท ขีดจำกัดอัตรา ที่อยู่และพาธที่ยกเว้น ขีดจำกัดรายเดือน หรือเซิร์ฟเวอร์ที่ยุ่ง"
+
+#: src/features/analytics/text.ts
+msgid "Bounce rate"
+msgstr "อัตราตีกลับ"
+
+#: src/features/analytics/Events.tsx
+msgid "Break down by prop"
+msgstr "แยกย่อยตาม prop"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Breakdown"
+msgstr "การแยกย่อย"
+
+#: src/features/analytics/Exports.tsx
+msgid "Broken down by"
+msgstr "แยกย่อยตาม"
+
+#: src/features/analytics/Settings.tsx
+msgid "Broken events, such as a screen address that does not start with app://, a reserved name or too many props."
+msgstr "เหตุการณ์ที่เสีย เช่น ที่อยู่หน้าจอที่ไม่ขึ้นต้นด้วย app:// ชื่อที่สงวน หรือ prop มากเกินไป"
+
+#: src/features/analytics/text.ts
+msgid "Browser"
+msgstr "เบราว์เซอร์"
+
+#: src/features/analytics/text.ts
+msgid "Browser version"
+msgstr "เวอร์ชันเบราว์เซอร์"
+
+#: src/features/analytics/Install.tsx
+msgid "Call it once in the browser. During server rendering it does nothing."
+msgstr "เรียกครั้งเดียวในเบราว์เซอร์ ระหว่างเรนเดอร์ฝั่งเซิร์ฟเวอร์จะไม่ทำอะไร"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Cancel"
+msgstr "ยกเลิก"
+
+#: src/features/analytics/Controls.tsx
+msgid "Change filter: {label}"
+msgstr "เปลี่ยนตัวกรอง: {label}"
+
+#: src/features/analytics/Controls.tsx
+msgid "changed"
+msgstr "เปลี่ยนแล้ว"
+
+#: src/features/analytics/text.ts
+msgid "Channel"
+msgstr "ช่องทาง"
+
+#: src/features/analytics/text.ts
+msgid "Chat opened"
+msgstr "เปิดแชต"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Checked every hour. Each alert is sent once and also shows as a note on the chart."
+msgstr "ตรวจสอบทุกชั่วโมง แต่ละการแจ้งเตือนส่งครั้งเดียวและแสดงเป็นบันทึกบนแผนภูมิด้วย"
+
+#: src/features/analytics/Settings.tsx
+msgid "Children"
+msgstr "เด็ก"
+
+#: src/features/analytics/Support.tsx
+msgid "Choose an inbox"
+msgstr "เลือกกล่องข้อความ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Choose children for a site made for children."
+msgstr "เลือกเด็กสำหรับไซต์ที่ทำสำหรับเด็ก"
+
+#: src/features/analytics/text.ts
+msgid "City"
+msgstr "เมือง"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Clear"
+msgstr "ล้าง"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts by"
+msgstr "กลุ่มตาม"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts fill once visitors agree to a persistent id and come back. The numbers are rebuilt every hour."
+msgstr "กลุ่มจะเติมเมื่อผู้เข้าชมยินยอมใช้รหัสถาวรและกลับมา ตัวเลขถูกสร้างใหม่ทุกชั่วโมง"
+
+#: src/features/analytics/Settings.tsx
+msgid "Collection"
+msgstr "คอลเลกชัน"
+
+#. placeholder {0}: formatDate(`${c.from}T12:00:00Z`, i18n.locale)
+#. placeholder {1}: formatDate(`${c.to}T12:00:00Z`, i18n.locale)
+#: src/features/analytics/Controls.tsx
+msgid "Compare with {0} – {1}"
+msgstr "เปรียบเทียบกับ {0} – {1}"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with a year earlier"
+msgstr "เปรียบเทียบกับปีก่อน"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days"
+msgstr "เปรียบเทียบกับวันอื่น"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days…"
+msgstr "เปรียบเทียบกับวันอื่น…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the days"
+msgstr "เปรียบเทียบกับวัน"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the period before"
+msgstr "เปรียบเทียบกับช่วงก่อนหน้า"
+
+#: src/features/analytics/Overview.tsx
+msgid "Compared days"
+msgstr "วันที่เปรียบเทียบ"
+
+#: src/features/analytics/Controls.tsx
+msgid "Comparison"
+msgstr "การเปรียบเทียบ"
+
+#: src/features/analytics/text.ts
+msgid "Completions"
+msgstr "จำนวนที่สำเร็จ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consent features"
+msgstr "คุณลักษณะความยินยอม"
+
+#: src/features/analytics/Install.tsx
+msgid "Consent mode"
+msgstr "โหมดความยินยอม"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id, and signed-in users are linked to their contact."
+msgstr "ผู้เข้าชมที่ยินยอมมีรหัสถาวร และผู้ใช้ที่ลงชื่อเข้าใช้ถูกเชื่อมโยงกับผู้ติดต่อของตน"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id."
+msgstr "ผู้เข้าชมที่ยินยอมมีรหัสถาวร"
+
+#: src/features/analytics/parts.tsx
+msgid "Consented visitors only"
+msgstr "เฉพาะผู้เข้าชมที่ยินยอม"
+
+#: src/features/analytics/text.ts
+msgid "contains"
+msgstr "มีคำว่า"
+
+#: src/features/analytics/Install.tsx
+msgid "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
+msgstr "ตัวบล็อกเนื้อหามักหยุดสคริปต์จากโดเมนอื่น การให้บริการสคริปต์และเอนด์พอยต์จากไซต์ของคุณเองทำให้ผู้เข้าชมเหล่านั้นยังถูกนับ เซิร์ฟเวอร์ Yuva ต้องเชื่อถือที่อยู่ที่ส่งต่อของพร็อกซีของคุณ มิฉะนั้นผู้เข้าชมทั้งหมดจะดูเหมือนคนเดียว"
+
+#: src/features/analytics/text.ts
+msgid "Conversations"
+msgstr "การสนทนา"
+
+#: src/features/analytics/text.ts
+msgid "Conversations per 1,000 views of the page."
+msgstr "การสนทนาต่อ 1,000 การดูของหน้า"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Conversations per 1,000 views yesterday were at least twice the rate of the 28 days before."
+msgstr "การสนทนาต่อ 1,000 การดูเมื่อวานอย่างน้อยสองเท่าของอัตราใน 28 วันก่อนหน้า"
+
+#: src/features/analytics/text.ts
+msgid "Conversations started on the page, from the chat of the linked inbox."
+msgstr "การสนทนาที่เริ่มบนหน้า จากแชตของกล่องข้อความที่เชื่อมโยง"
+
+#: src/features/analytics/Support.tsx
+msgid "Conversations, feedback, ratings and discussions of the linked inbox show here next to each page’s views. They are counted per page and day; no visitor is ever matched to a contact."
+msgstr "การสนทนา ความคิดเห็น คะแนน และกระทู้ของกล่องข้อความที่เชื่อมโยงแสดงที่นี่ข้างการดูของแต่ละหน้า นับต่อหน้าและวัน ไม่มีผู้เข้าชมคนใดถูกจับคู่กับผู้ติดต่อ"
+
+#: src/features/analytics/text.ts
+msgid "Conversion rate"
+msgstr "อัตราคอนเวอร์ชัน"
+
+#: src/features/analytics/text.ts
+msgid "Conversions"
+msgstr "คอนเวอร์ชัน"
+
+#: src/features/analytics/text.ts
+msgid "Conversions per 100 visitors."
+msgstr "คอนเวอร์ชันต่อผู้เข้าชม 100 คน"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
+msgstr "คัดลอกตอนนี้ จะไม่แสดงอีก ลิงก์ที่หายไปทำได้เพียงเพิกถอนและสร้างใหม่"
+
+#: src/features/analytics/Install.tsx
+msgid "Count my visits again"
+msgstr "นับการเข้าชมของฉันอีกครั้ง"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Count visitors, pages, sources, places and devices without cookies and without storing IP addresses."
+msgstr "นับผู้เข้าชม หน้า แหล่งที่มา สถานที่ และอุปกรณ์ โดยไม่ใช้คุกกี้และไม่เก็บที่อยู่ IP"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Count your website’s visitors"
+msgstr "นับผู้เข้าชมเว็บไซต์ของคุณ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted"
+msgstr "นับแล้ว"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted as"
+msgstr "นับเป็น"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Countries"
+msgstr "ประเทศ"
+
+#: src/features/analytics/text.ts
+msgid "Country"
+msgstr "ประเทศ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
+msgstr "นับผู้เข้าชมทุกคนโดยไม่ถาม ไม่มีอะไรถูกเก็บบนอุปกรณ์และไม่เก็บที่อยู่ IP"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Counts the visitors who reached each step after the ones before it, within one visit on one day. Numbers are at most ten minutes old."
+msgstr "นับผู้เข้าชมที่ถึงแต่ละขั้นหลังขั้นก่อนหน้า ภายในหนึ่งการเข้าชมในหนึ่งวัน ตัวเลขเก่าสุดสิบนาที"
+
+#: src/features/analytics/Settings.tsx
+msgid "Currency"
+msgstr "สกุลเงิน"
+
+#: src/features/analytics/Exports.tsx
+msgid "Current view"
+msgstr "มุมมองปัจจุบัน"
+
+#: src/features/analytics/text.ts
+msgid "Custom and built-in events."
+msgstr "เหตุการณ์แบบกำหนดเองและในตัว"
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range"
+msgstr "ช่วงที่กำหนดเอง"
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range…"
+msgstr "ช่วงที่กำหนดเอง…"
+
+#: src/features/analytics/Settings.tsx
+msgid "Data"
+msgstr "ข้อมูล"
+
+#: src/features/analytics/Install.tsx
+msgid "data-outbound counts clicks on links to other sites, data-files downloads of documents and archives, and data-chat each time a visitor opens the chat. track() sends your own events with up to 30 props; e-mail addresses in props are dropped. Make goals from events in the Goals view."
+msgstr "data-outbound นับการคลิกลิงก์ไปไซต์อื่น data-files นับการดาวน์โหลดเอกสารและไฟล์เก็บถาวร และ data-chat นับทุกครั้งที่ผู้เข้าชมเปิดแชต track() ส่งเหตุการณ์ของคุณเองพร้อม prop สูงสุด 30 รายการ ที่อยู่อีเมลใน prop จะถูกทิ้ง สร้างเป้าหมายจากเหตุการณ์ในมุมมองเป้าหมาย"
+
+#: src/features/analytics/Settings.tsx
+msgid "Day"
+msgstr "วัน"
+
+#: src/features/analytics/Retention.tsx
+msgid "Day {period}"
+msgstr "วัน {period}"
+
+#: src/features/analytics/Exports.tsx
+msgid "Day by day"
+msgstr "ทีละวัน"
+
+#: src/features/analytics/Retention.tsx
+msgid "Days"
+msgstr "วัน"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/SharePage.tsx
+msgid "Days are counted in this time zone"
+msgstr "นับวันตามเขตเวลานี้"
+
+#: src/features/analytics/Settings.tsx
+msgid "Days are in the property’s time zone. Their totals are counted again without them."
+msgstr "วันเป็นไปตามเขตเวลาของพร็อพเพอร์ตี ยอดรวมของวันเหล่านั้นถูกนับใหม่โดยไม่มีวันเหล่านั้น"
+
+#: src/features/analytics/Settings.tsx
+msgid "Days waiting to be summed up"
+msgstr "วันที่รอการรวมยอด"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete"
+msgstr "ลบ"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete {0}?"
+msgstr "ลบ {0} ไหม"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete {name}?"
+msgstr "ลบ {name} ไหม"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data"
+msgstr "ลบข้อมูลทั้งหมด"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data of {0}?"
+msgstr "ลบข้อมูลทั้งหมดของ {0} ไหม"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete days"
+msgstr "ลบวัน"
+
+#: src/features/analytics/Exports.tsx
+msgid "Delete export"
+msgstr "ลบไฟล์ส่งออก"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Delete funnel"
+msgstr "ลบฟันเนล"
+
+#: src/features/analytics/Goals.tsx
+msgid "Delete goal"
+msgstr "ลบเป้าหมาย"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete note"
+msgstr "ลบบันทึก"
+
+#: src/features/analytics/Controls.tsx
+msgid "Delete segment"
+msgstr "ลบเซกเมนต์"
+
+#. placeholder {0}: funnel.name
+#: src/features/analytics/Funnels.tsx
+msgid "Delete the funnel “{0}”?"
+msgstr "ลบฟันเนล “{0}” ไหม"
+
+#. placeholder {0}: goal.name
+#: src/features/analytics/Goals.tsx
+msgid "Delete the goal “{0}”?"
+msgstr "ลบเป้าหมาย “{0}” ไหม"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the property"
+msgstr "ลบพร็อพเพอร์ตี"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Delete the segment “{0}”?"
+msgstr "ลบเซกเมนต์ “{0}” ไหม"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the visits and events of {span}?"
+msgstr "ลบการเข้าชมและเหตุการณ์ของ {span} ไหม"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete these days"
+msgstr "ลบวันเหล่านี้"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete this note?"
+msgstr "ลบบันทึกนี้ไหม"
+
+#: src/features/analytics/Exports.tsx
+msgid "deleted {expires}"
+msgstr "ลบเมื่อ {expires}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Deleting in the background. The numbers update when it is done."
+msgstr "กำลังลบเบื้องหลัง ตัวเลขจะอัปเดตเมื่อเสร็จ"
+
+#: src/features/analytics/Goals.tsx
+msgid "Depth in %"
+msgstr "ความลึกเป็น %"
+
+#: src/features/analytics/text.ts
+msgid "Desktop"
+msgstr "เดสก์ท็อป"
+
+#: src/features/analytics/Exports.tsx
+msgid "Detailed records are kept since {rawDay}."
+msgstr "เก็บบันทึกโดยละเอียดตั้งแต่ {rawDay}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Detailed records kept since"
+msgstr "เก็บบันทึกโดยละเอียดตั้งแต่"
+
+#: src/features/analytics/Overview.tsx
+msgid "Details"
+msgstr "รายละเอียด"
+
+#: src/features/analytics/text.ts
+msgid "Device"
+msgstr "อุปกรณ์"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Devices"
+msgstr "อุปกรณ์"
+
+#: src/features/analytics/text.ts
+msgid "Direct"
+msgstr "โดยตรง"
+
+#: src/features/analytics/text.ts
+msgid "Direct / none"
+msgstr "โดยตรง / ไม่มี"
+
+#: src/features/analytics/text.ts
+msgid "Discussion threads started on the page."
+msgstr "เธรดกระทู้ที่เริ่มบนหน้า"
+
+#: src/features/analytics/text.ts
+msgid "Discussions"
+msgstr "กระทู้"
+
+#: src/features/analytics/text.ts
+msgid "Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again."
+msgstr "ผู้เข้าชมที่ไม่ซ้ำต่อวัน รวมตลอดวันของช่วง ผู้ที่กลับมาในวันอื่นนับอีกครั้ง"
+
+#: src/features/analytics/Install.tsx
+msgid "Do not count my visits"
+msgstr "ไม่นับการเข้าชมของฉัน"
+
+#: src/features/analytics/text.ts
+msgid "does not contain"
+msgstr "ไม่มีคำว่า"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Domains"
+msgstr "โดเมน"
+
+#: src/features/analytics/Exports.tsx
+msgid "Download"
+msgstr "ดาวน์โหลด"
+
+#: src/features/analytics/parts.tsx
+msgid "Download CSV"
+msgstr "ดาวน์โหลด CSV"
+
+#: src/features/analytics/Settings.tsx
+msgid "Dropped"
+msgstr "ทิ้ง"
+
+#: src/features/analytics/text.ts
+msgid "E-mail"
+msgstr "อีเมล"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that day, each column the share of them who came back that many days later."
+msgstr "แต่ละแถวมีผู้เข้าชมที่พบครั้งแรกในวันนั้น แต่ละคอลัมน์คือสัดส่วนของพวกเขาที่กลับมาหลังจากจำนวนวันนั้น"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that month, each column the share of them who came back that many months later."
+msgstr "แต่ละแถวมีผู้เข้าชมที่พบครั้งแรกในเดือนนั้น แต่ละคอลัมน์คือสัดส่วนของพวกเขาที่กลับมาหลังจากจำนวนเดือนนั้น"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that week, each column the share of them who came back that many weeks later."
+msgstr "แต่ละแถวมีผู้เข้าชมที่พบครั้งแรกในสัปดาห์นั้น แต่ละคอลัมน์คือสัดส่วนของพวกเขาที่กลับมาหลังจากจำนวนสัปดาห์นั้น"
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Edit"
+msgstr "แก้ไข"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Edit funnel"
+msgstr "แก้ไขฟันเนล"
+
+#: src/features/analytics/Goals.tsx
+msgid "Edit goal"
+msgstr "แก้ไขเป้าหมาย"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Edit note"
+msgstr "แก้ไขบันทึก"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Edit share link"
+msgstr "แก้ไขลิงก์แชร์"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embed"
+msgstr "ฝัง"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embeds"
+msgstr "การฝัง"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Enter the password you were given with the link."
+msgstr "ใส่รหัสผ่านที่คุณได้รับพร้อมลิงก์"
+
+#: src/features/analytics/text.ts
+msgid "Entry page"
+msgstr "หน้าเข้า"
+
+#: src/features/analytics/Goals.tsx
+msgid "equal to"
+msgstr "เท่ากับ"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Event"
+msgstr "เหตุการณ์"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event}"
+msgstr "เหตุการณ์ {event}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event} with {key} = {value}"
+msgstr "เหตุการณ์ {event} ที่ {key} = {value}"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Install.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Events"
+msgstr "เหตุการณ์"
+
+#: src/features/analytics/Settings.tsx
+msgid "Events are arriving."
+msgstr "เหตุการณ์กำลังเข้ามา"
+
+#: src/features/analytics/Events.tsx
+msgid "Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when the script has their attributes."
+msgstr "เหตุการณ์มาจากการเรียก track() บนหน้าและแอปของคุณ ลิงก์ออก การดาวน์โหลด และการเปิดแชตถูกนับเมื่อสคริปต์มีแอตทริบิวต์ของสิ่งเหล่านั้น"
+
+#: src/features/analytics/Settings.tsx
+msgid "Events count only after the page calls yuva.consent with analytics set to true. Install the script with data-consent=\"required\"."
+msgstr "เหตุการณ์ถูกนับหลังจากหน้าเรียก yuva.consent โดยตั้ง analytics เป็น true เท่านั้น ติดตั้งสคริปต์ด้วย data-consent=\"required\""
+
+#: src/features/analytics/Settings.tsx
+msgid "events counted"
+msgstr "เหตุการณ์ที่นับ"
+
+#: src/features/analytics/Settings.tsx
+msgid "events dropped"
+msgstr "เหตุการณ์ที่ทิ้ง"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every event with its visit’s page, source, place and device, as NDJSON. Visits are numbered within the file; there is no visitor id, address or contact. At most 31 days."
+msgstr "ทุกเหตุการณ์พร้อมหน้า แหล่งที่มา สถานที่ และอุปกรณ์ของการเข้าชม เป็น NDJSON การเข้าชมถูกกำหนดหมายเลขภายในไฟล์ ไม่มีรหัสผู้เข้าชม ที่อยู่ หรือผู้ติดต่อ สูงสุด 31 วัน"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Every Monday at 08:00 in {zone}, about the week before."
+msgstr "ทุกวันจันทร์เวลา 08:00 ใน {zone} เกี่ยวกับสัปดาห์ก่อนหน้า"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range and the filters you are looking at, without a comparison."
+msgstr "ทุกแถวของช่วงและตัวกรองที่คุณกำลังดู โดยไม่มีการเปรียบเทียบ"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range you are looking at, without a comparison."
+msgstr "ทุกแถวของช่วงที่คุณกำลังดู โดยไม่มีการเปรียบเทียบ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
+msgstr "ทุกการเข้าชม เหตุการณ์ และยอดรวมถูกลบ พร็อพเพอร์ตีและคีย์ยังอยู่ และการนับดำเนินต่อ"
+
+#: src/features/analytics/Controls.tsx
+msgid "Everyone who sees this property can pick it. You, owners and admins can change it."
+msgstr "ทุกคนที่เห็นพร็อพเพอร์ตีนี้เลือกได้ คุณ เจ้าของ และผู้ดูแลเปลี่ยนได้"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Everyone who sees this property sees the note, such as a launch or a campaign."
+msgstr "ทุกคนที่เห็นพร็อพเพอร์ตีนี้เห็นบันทึก เช่น การเปิดตัวหรือแคมเปญ"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Everything this property raised, newest first, whoever was notified."
+msgstr "ทุกอย่างที่พร็อพเพอร์ตีนี้ส่งการแจ้งเตือน ใหม่สุดก่อน ไม่ว่าใครได้รับแจ้ง"
+
+#: src/features/analytics/Settings.tsx
+msgid "Excluded"
+msgstr "ยกเว้น"
+
+#: src/features/analytics/text.ts
+msgid "Exit page"
+msgstr "หน้าออก"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expired"
+msgstr "หมดอายุ"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expires"
+msgstr "หมดอายุ"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export"
+msgstr "ส่งออก"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export progress"
+msgstr "ความคืบหน้าการส่งออก"
+
+#: src/features/analytics/Exports.tsx
+msgid "Exports"
+msgstr "การส่งออก"
+
+#: src/features/analytics/Exports.tsx
+msgid "Failed"
+msgstr "ล้มเหลว"
+
+#: src/features/analytics/text.ts
+msgid "Feedback"
+msgstr "ความคิดเห็น"
+
+#: src/features/analytics/Support.tsx
+msgid "Fewer than 100 views"
+msgstr "น้อยกว่า 100 การดู"
+
+#: src/features/analytics/text.ts
+msgid "File download"
+msgstr "ดาวน์โหลดไฟล์"
+
+#: src/features/analytics/Exports.tsx
+msgid "Files are made in the background and deleted seven days later."
+msgstr "ไฟล์ถูกสร้างเบื้องหลังและลบหลังเจ็ดวัน"
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Support.tsx
+msgid "Filter by this"
+msgstr "กรองด้วยสิ่งนี้"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Filters"
+msgstr "ตัวกรอง"
+
+#: src/features/analytics/Exports.tsx
+msgid "Filters come from the view: click a row there to add one. <0>Change them in the view</0>"
+msgstr "ตัวกรองมาจากมุมมอง: คลิกแถวในนั้นเพื่อเพิ่ม <0>เปลี่ยนในมุมมอง</0>"
+
+#: src/features/analytics/Retention.tsx
+msgid "First day"
+msgstr "วันแรก"
+
+#: src/features/analytics/Retention.tsx
+msgid "First month"
+msgstr "เดือนแรก"
+
+#: src/features/analytics/text.ts
+msgid "First page or screen"
+msgstr "หน้าหรือหน้าจอแรก"
+
+#: src/features/analytics/text.ts
+msgid "First screen"
+msgstr "หน้าจอแรก"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "First visit"
+msgstr "การเข้าชมครั้งแรก"
+
+#: src/features/analytics/Retention.tsx
+msgid "First week"
+msgstr "สัปดาห์แรก"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Five reports an hour at most. Try again later."
+msgstr "ได้สูงสุดห้ารายงานต่อชั่วโมง ลองอีกครั้งภายหลัง"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "For example Fieldnote website"
+msgstr "เช่น เว็บไซต์ Fieldnote"
+
+#: src/features/analytics/Settings.tsx
+msgid "For revenue, an ISO code like EUR."
+msgstr "สำหรับรายได้ ใส่รหัส ISO เช่น EUR"
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an <0>API key</0> with the analytics:write scope, which stays on your server."
+msgstr "สำหรับสิ่งที่เฉพาะแบ็กเอนด์ของคุณเห็น เช่น การสมัครหรือการชำระเงิน Track ส่งต่อที่อยู่และเบราว์เซอร์ของผู้เข้าชม เหตุการณ์จึงรวมกับการเข้าชมของพวกเขา คำขอที่มี Do Not Track หรือ Global Privacy Control จะไม่ถูกส่ง ต้องใช้<0>คีย์ API</0> ที่มีขอบเขต analytics:write ซึ่งเก็บไว้บนเซิร์ฟเวอร์ของคุณ"
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
+msgstr "สำหรับสิ่งที่เฉพาะแบ็กเอนด์ของคุณเห็น เช่น การสมัครหรือการชำระเงิน Track ส่งต่อที่อยู่และเบราว์เซอร์ของผู้เข้าชม เหตุการณ์จึงรวมกับการเข้าชมของพวกเขา คำขอที่มี Do Not Track หรือ Global Privacy Control จะไม่ถูกส่ง ต้องใช้คีย์ API ที่มีขอบเขต analytics:write จากเจ้าของหรือผู้ดูแล ซึ่งเก็บไว้บนเซิร์ฟเวอร์ของคุณ"
+
+#: src/features/analytics/Exports.tsx
+msgid "Format"
+msgstr "รูปแบบ"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "From"
+msgstr "จาก"
+
+#: src/features/analytics/Settings.tsx
+msgid "From a site that is not one of the domains, or from an app whose platform is not turned on."
+msgstr "จากไซต์ที่ไม่ใช่หนึ่งในโดเมน หรือจากแอปที่ยังไม่ได้เปิดแพลตฟอร์ม"
+
+#: src/features/analytics/Funnels.tsx
+msgid "From pricing to signup"
+msgstr "จากราคาไปสู่การสมัคร"
+
+#: src/features/analytics/Support.tsx
+msgid "From the inbox {inboxName}. Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "จากกล่องข้อความ {inboxName} เรียงตามการสนทนาต่อ 1,000 การดู หน้าที่มีน้อยกว่า 100 การดูอยู่หลัง นับต่อหน้าและวัน ไม่เคยนับต่อผู้เข้าชมหรือผู้ติดต่อ"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Funnel"
+msgstr "ฟันเนล"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Funnels"
+msgstr "ฟันเนล"
+
+#: src/features/analytics/Settings.tsx
+msgid "General"
+msgstr "ทั่วไป"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Go to goals"
+msgstr "ไปที่เป้าหมาย"
+
+#: src/features/analytics/Goals.tsx
+msgid "Goal"
+msgstr "เป้าหมาย"
+
+#. placeholder {0}: a.text
+#: src/features/analytics/Annotations.tsx
+msgid "Goal “{0}” was created"
+msgstr "สร้างเป้าหมาย “{0}” แล้ว"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Goal drop"
+msgstr "การหลุดของเป้าหมาย"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Goals"
+msgstr "เป้าหมาย"
+
+#: src/features/analytics/Settings.tsx
+msgid "had an address removed"
+msgstr "ถูกนำที่อยู่ออก"
+
+#: src/features/analytics/Settings.tsx
+msgid "Health"
+msgstr "สุขภาพ"
+
+#: src/features/analytics/text.ts
+msgid "Helpful"
+msgstr "เป็นประโยชน์"
+
+#: src/features/analytics/Support.tsx
+msgid "Helpful and not helpful"
+msgstr "เป็นประโยชน์และไม่เป็นประโยชน์"
+
+#: src/features/analytics/text.ts
+msgid "Helpful ratings out of all ratings."
+msgstr "คะแนนที่เป็นประโยชน์จากคะแนนทั้งหมด"
+
+#: src/features/analytics/text.ts
+msgid "Helpful share"
+msgstr "สัดส่วนที่เป็นประโยชน์"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Home shows each website and app like this: visitors today, in the last 30 minutes and this week."
+msgstr "หน้าแรกแสดงแต่ละเว็บไซต์และแอปแบบนี้: ผู้เข้าชมวันนี้ ใน 30 นาทีที่ผ่านมา และสัปดาห์นี้"
+
+#: src/features/analytics/text.ts
+msgid "Host"
+msgstr "โฮสต์"
+
+#: src/features/analytics/text.ts
+msgid "Host or app"
+msgstr "โฮสต์หรือแอป"
+
+#: src/features/analytics/Install.tsx
+msgid "How to install"
+msgstr "วิธีติดตั้ง"
+
+#: src/features/analytics/Events.tsx
+msgid "How to send events"
+msgstr "วิธีส่งเหตุการณ์"
+
+#: src/features/analytics/Sharing.tsx
+msgid "I saved it"
+msgstr "ฉันบันทึกแล้ว"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Support.tsx
+msgid "Inbox"
+msgstr "กล่องข้อความ"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Install"
+msgstr "ติดตั้ง"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/NewProperty.tsx
+msgid "Install on {0}"
+msgstr "ติดตั้งบน {0}"
+
+#: src/features/analytics/text.ts
+msgid "Internal"
+msgstr "ภายใน"
+
+#: src/features/analytics/Settings.tsx
+msgid "Invalid"
+msgstr "ไม่ถูกต้อง"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Investors"
+msgstr "นักลงทุน"
+
+#: src/features/analytics/text.ts
+msgid "is"
+msgstr "คือ"
+
+#: src/features/analytics/text.ts
+msgid "is not"
+msgstr "ไม่ใช่"
+
+#: src/features/analytics/Controls.tsx
+msgid "It is gone for everyone who uses it. The numbers stay."
+msgstr "หายไปสำหรับทุกคนที่ใช้ ตัวเลขยังอยู่"
+
+#: src/features/analytics/SharePage.tsx
+msgid "It may have expired or been revoked. Ask the person who shared it for a new one."
+msgstr "อาจหมดอายุหรือถูกเพิกถอน ขอลิงก์ใหม่จากผู้แชร์"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Its goals stay."
+msgstr "เป้าหมายของรายการนี้ยังอยู่"
+
+#: src/features/analytics/Goals.tsx
+msgid "Its numbers are deleted too. This cannot be undone."
+msgstr "ตัวเลขของรายการนี้ถูกลบด้วย ไม่สามารถยกเลิกได้"
+
+#: src/features/analytics/Events.tsx
+msgid "Keep only visits with this value"
+msgstr "เก็บเฉพาะการเข้าชมที่มีค่านี้"
+
+#: src/features/analytics/Settings.tsx
+msgid "Key"
+msgstr "คีย์"
+
+#: src/features/analytics/Goals.tsx
+msgid "Kind of goal"
+msgstr "ประเภทเป้าหมาย"
+
+#: src/features/analytics/text.ts
+msgid "Language"
+msgstr "ภาษา"
+
+#: src/features/analytics/text.ts
+msgid "Laptop"
+msgstr "แล็ปท็อป"
+
+#: src/features/analytics/text.ts
+msgid "Last 12 months"
+msgstr "12 เดือนที่ผ่านมา"
+
+#: src/features/analytics/text.ts
+msgid "Last 28 days"
+msgstr "28 วันที่ผ่านมา"
+
+#: src/features/analytics/text.ts
+msgid "Last 30 days"
+msgstr "30 วันที่ผ่านมา"
+
+#: src/features/analytics/text.ts
+msgid "Last 6 months"
+msgstr "6 เดือนที่ผ่านมา"
+
+#: src/features/analytics/text.ts
+msgid "Last 7 days"
+msgstr "7 วันที่ผ่านมา"
+
+#: src/features/analytics/text.ts
+msgid "Last 90 days"
+msgstr "90 วันที่ผ่านมา"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event"
+msgstr "เหตุการณ์ล่าสุด"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event: {last}"
+msgstr "เหตุการณ์ล่าสุด: {last}"
+
+#: src/features/analytics/text.ts
+msgid "Last month"
+msgstr "เดือนที่แล้ว"
+
+#: src/features/analytics/Sharing.tsx
+msgid "last opened {viewed}"
+msgstr "เปิดล่าสุด {viewed}"
+
+#: src/features/analytics/text.ts
+msgid "Last page or screen"
+msgstr "หน้าหรือหน้าจอสุดท้าย"
+
+#: src/features/analytics/text.ts
+msgid "Last screen"
+msgstr "หน้าจอสุดท้าย"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Leave empty to keep the current one"
+msgstr "เว้นว่างไว้เพื่อคงอันปัจจุบัน"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Link"
+msgstr "ลิงก์"
+
+#: src/features/analytics/Support.tsx
+msgid "Link an inbox to see support per page"
+msgstr "เชื่อมโยงกล่องข้อความเพื่อดูฝ่ายสนับสนุนต่อหน้า"
+
+#: src/features/analytics/Support.tsx
+msgid "Link inbox"
+msgstr "เชื่อมโยงกล่องข้อความ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Link signed-in users to their contact"
+msgstr "เชื่อมโยงผู้ใช้ที่ลงชื่อเข้าใช้กับผู้ติดต่อของตน"
+
+#: src/features/analytics/Alerts.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Support.tsx
+msgid "Load more"
+msgstr "โหลดเพิ่ม"
+
+#: src/features/analytics/Settings.tsx
+msgid "Location database"
+msgstr "ฐานข้อมูลตำแหน่ง"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Locations"
+msgstr "ตำแหน่ง"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created}"
+msgstr "สร้าง {created}"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created} by {by}"
+msgstr "สร้าง {created} โดย {by}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key"
+msgstr "สร้างคีย์ใหม่"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key?"
+msgstr "สร้างคีย์ใหม่ไหม"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Make at least two goals first."
+msgstr "สร้างอย่างน้อยสองเป้าหมายก่อน"
+
+#: src/features/analytics/Goals.tsx
+msgid "Make goal"
+msgstr "สร้างเป้าหมาย"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Make link"
+msgstr "สร้างลิงก์"
+
+#: src/features/analytics/text.ts
+msgid "matches"
+msgstr "ตรงกับ"
+
+#: src/features/analytics/text.ts
+msgid "Mobile"
+msgstr "มือถือ"
+
+#: src/features/analytics/Retention.tsx
+msgid "Month {period}"
+msgstr "เดือน {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Monthly"
+msgstr "รายเดือน"
+
+#: src/features/analytics/Settings.tsx
+msgid "Monthly limit"
+msgstr "ขีดจำกัดรายเดือน"
+
+#: src/features/analytics/Retention.tsx
+msgid "Months"
+msgstr "เดือน"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move down"
+msgstr "เลื่อนลง"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move up"
+msgstr "เลื่อนขึ้น"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Name"
+msgstr "ชื่อ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs a linked inbox under General: its identity secret signs the tokens."
+msgstr "ต้องมีกล่องข้อความที่เชื่อมโยงในทั่วไป: identity secret ของกล่องนั้นลงนามโทเค็น"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Needs a linked inbox. {help}"
+msgstr "ต้องมีกล่องข้อความที่เชื่อมโยง {help}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs the persistent id: a visitor is linked through it."
+msgstr "ต้องใช้รหัสถาวร: ผู้เข้าชมถูกเชื่อมโยงผ่านรหัสนั้น"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Never"
+msgstr "ไม่เคย"
+
+#: src/features/analytics/Sharing.tsx
+msgid "never opened"
+msgstr "ไม่เคยเปิด"
+
+#: src/features/analytics/text.ts
+msgid "New"
+msgstr "ใหม่"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value} with {count}, none in the compared days."
+msgstr "{kind} ใหม่: {value} ที่ {count} ไม่มีในวันที่เปรียบเทียบ"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
+msgstr "{kind} ใหม่: {value} {metric}: {now} ไม่มีในวันที่เปรียบเทียบ"
+
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "ใหม่และกลับมา"
+
+#: src/features/analytics/Funnels.tsx
+msgid "New funnel"
+msgstr "ฟันเนลใหม่"
+
+#: src/features/analytics/Goals.tsx
+msgid "New goal"
+msgstr "เป้าหมายใหม่"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New link"
+msgstr "ลิงก์ใหม่"
+
+#: src/features/analytics/text.ts
+msgid "New or returning"
+msgstr "ใหม่หรือกลับมา"
+
+#: src/features/analytics/Annotations.tsx
+msgid "New pricing page"
+msgstr "หน้าราคาใหม่"
+
+#: src/features/analytics/Alerts.tsx
+msgid "New referrer"
+msgstr "ผู้อ้างอิงใหม่"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New share link"
+msgstr "ลิงก์แชร์ใหม่"
+
+#: src/features/analytics/Alerts.tsx
+msgid "No alerts yet."
+msgstr "ยังไม่มีการแจ้งเตือน"
+
+#: src/features/analytics/Controls.tsx
+msgid "No comparison"
+msgstr "ไม่เปรียบเทียบ"
+
+#: src/features/analytics/Settings.tsx
+msgid "No consent features are offered."
+msgstr "ไม่มีคุณลักษณะความยินยอมให้ใช้"
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "ไม่มีผู้เข้าชมที่ยินยอมในช่วงนี้"
+
+#: src/features/analytics/Retention.tsx
+msgid "No consented visitors yet"
+msgstr "ยังไม่มีผู้เข้าชมที่ยินยอม"
+
+#: src/features/analytics/Support.tsx
+msgid "No conversations, feedback, ratings or discussions from these pages in this range."
+msgstr "ไม่มีการสนทนา ความคิดเห็น คะแนน หรือกระทู้จากหน้าเหล่านี้ในช่วงนี้"
+
+#: src/features/analytics/Goals.tsx
+msgid "No conversions in this range."
+msgstr "ไม่มีคอนเวอร์ชันในช่วงนี้"
+
+#: src/features/analytics/Settings.tsx
+msgid "No event yet."
+msgstr "ยังไม่มีเหตุการณ์"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events in the last 24 hours"
+msgstr "ไม่มีเหตุการณ์ใน 24 ชั่วโมงที่ผ่านมา"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events yet"
+msgstr "ยังไม่มีเหตุการณ์"
+
+#: src/features/analytics/Exports.tsx
+msgid "No exports yet."
+msgstr "ยังไม่มีการส่งออก"
+
+#: src/features/analytics/Funnels.tsx
+msgid "No funnels yet"
+msgstr "ยังไม่มีฟันเนล"
+
+#: src/features/analytics/Goals.tsx
+msgid "No goals yet"
+msgstr "ยังไม่มีเป้าหมาย"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No properties yet"
+msgstr "ยังไม่มีพร็อพเพอร์ตี"
+
+#: src/features/analytics/Settings.tsx
+msgid "No props are tracked."
+msgstr "ไม่มี prop ที่ติดตาม"
+
+#: src/features/analytics/Alerts.tsx
+msgid "No scheduled reports."
+msgstr "ไม่มีรายงานตามกำหนด"
+
+#: src/features/analytics/Controls.tsx
+msgid "No segment"
+msgstr "ไม่มีเซกเมนต์"
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Make one to show these numbers to people outside the workspace."
+msgstr "ยังไม่มีลิงก์แชร์ สร้างหนึ่งรายการเพื่อแสดงตัวเลขเหล่านี้แก่คนนอกพื้นที่ทำงาน"
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Owners and admins make them."
+msgstr "ยังไม่มีลิงก์แชร์ เจ้าของและผู้ดูแลสร้าง"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Nobody in the last 30 minutes."
+msgstr "ไม่มีใครใน 30 นาทีที่ผ่านมา"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Nobody reached the first step in this range."
+msgstr "ไม่มีใครถึงขั้นแรกในช่วงนี้"
+
+#: src/features/analytics/Alerts.tsx
+msgid "None"
+msgstr "ไม่มี"
+
+#: src/features/analytics/Settings.tsx
+msgid "None yet"
+msgstr "ยังไม่มี"
+
+#: src/features/analytics/Exports.tsx
+msgid "None, every visit counts."
+msgstr "ไม่มี ทุกการเข้าชมถูกนับ"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "None, owners and admins only"
+msgstr "ไม่มี เฉพาะเจ้าของและผู้ดูแล"
+
+#: src/features/analytics/parts.tsx
+msgid "Not available for this range."
+msgstr "ไม่พร้อมใช้งานสำหรับช่วงนี้"
+
+#: src/features/analytics/text.ts
+msgid "Not helpful"
+msgstr "ไม่เป็นประโยชน์"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Note"
+msgstr "บันทึก"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Notes"
+msgstr "บันทึก"
+
+#: src/features/analytics/Exports.tsx
+msgid "Nothing"
+msgstr "ไม่มีอะไร"
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Nothing counted in this range."
+msgstr "ไม่มีอะไรถูกนับในช่วงนี้"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Notify me"
+msgstr "แจ้งฉัน"
+
+#: src/features/analytics/Settings.tsx
+msgid "Off"
+msgstr "ปิด"
+
+#: src/features/analytics/Settings.tsx
+msgid "Offered only to visitors who agree in your consent tool. Everyone else is counted exactly as before, one day at a time and without anything stored on the device."
+msgstr "เสนอเฉพาะผู้เข้าชมที่ยินยอมในเครื่องมือความยินยอมของคุณ คนอื่นถูกนับเหมือนเดิม ทีละวันและไม่มีอะไรเก็บบนอุปกรณ์"
+
+#: src/features/analytics/Settings.tsx
+msgid "Older than 72 hours. Apps keep events without a connection for at most that long."
+msgstr "เก่ากว่า 72 ชั่วโมง แอปเก็บเหตุการณ์เมื่อไม่มีการเชื่อมต่อได้นานสุดเท่านั้น"
+
+#: src/features/analytics/Alerts.tsx
+msgid "On its way to {email}."
+msgstr "กำลังส่งไปที่ {email}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "On the 1st of each month at 08:00 in {zone}, about the month before."
+msgstr "วันที่ 1 ของทุกเดือนเวลา 08:00 ใน {zone} เกี่ยวกับเดือนก่อนหน้า"
+
+#: src/features/analytics/Settings.tsx
+msgid "One IP address or range per line, up to 50, such as your office or a monitoring service."
+msgstr "หนึ่งที่อยู่ IP หรือช่วงต่อบรรทัด สูงสุด 50 เช่น สำนักงานของคุณหรือบริการตรวจสอบ"
+
+#: src/features/analytics/Settings.tsx
+msgid "One path per line, up to 50. * stands for one part of the path, ** for any number of them."
+msgstr "หนึ่งพาธต่อบรรทัด สูงสุด 50 * แทนหนึ่งส่วนของพาธ ** แทนกี่ส่วนก็ได้"
+
+#: src/features/analytics/Sharing.tsx
+msgid "One per line, like https://example.com or https://*.example.com. Without any, no other site can show it in a frame."
+msgstr "หนึ่งรายการต่อบรรทัด เช่น https://example.com หรือ https://*.example.com หากไม่มี ไซต์อื่นไม่แสดงในเฟรมได้"
+
+#: src/features/analytics/Settings.tsx
+msgid "One per line. *.example.com covers every subdomain, but not example.com itself."
+msgstr "หนึ่งรายการต่อบรรทัด *.example.com ครอบคลุมทุกโดเมนย่อย แต่ไม่รวม example.com เอง"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "One per line. Pages on other domains cannot send events. *.example.com covers every subdomain."
+msgstr "หนึ่งรายการต่อบรรทัด หน้าบนโดเมนอื่นส่งเหตุการณ์ไม่ได้ *.example.com ครอบคลุมทุกโดเมนย่อย"
+
+#: src/features/analytics/Settings.tsx
+msgid "One prop name per line, up to 10, such as plan."
+msgstr "หนึ่งชื่อ prop ต่อบรรทัด สูงสุด 10 เช่น plan"
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
+msgstr "หนึ่งแถวต่อวันพร้อมผู้เข้าชม การเข้าชม การดู อัตราตีกลับ ระยะเวลา และความลึกการเลื่อน สูงสุด 400 วัน"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Only for you, by e-mail to {email}. Reports are plain numbers, with no images and nothing that tracks opening or clicks."
+msgstr "เฉพาะคุณ ทางอีเมลถึง {email} รายงานเป็นตัวเลขล้วน ไม่มีรูปภาพและไม่มีสิ่งที่ติดตามการเปิดหรือการคลิก"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Only members see it, to tell links apart."
+msgstr "เฉพาะสมาชิกเห็น เพื่อแยกลิงก์"
+
+#: src/features/analytics/Settings.tsx
+msgid "Only the country is kept, never the region or city."
+msgstr "เก็บเฉพาะประเทศ ไม่เคยเก็บภูมิภาคหรือเมือง"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Only totals are shown. There is no list of individual visitors."
+msgstr "แสดงเฉพาะยอดรวม ไม่มีรายชื่อผู้เข้าชมรายบุคคล"
+
+#: src/features/analytics/parts.tsx
+msgid "Only visitors who agreed to a persistent id are counted here. Everyone else is counted one day at a time."
+msgstr "นับเฉพาะผู้เข้าชมที่ยินยอมใช้รหัสถาวรที่นี่ คนอื่นถูกนับทีละวัน"
+
+#: src/features/analytics/Settings.tsx
+msgid "Only with consent"
+msgstr "เฉพาะเมื่อมีความยินยอม"
+
+#: src/features/analytics/Goals.tsx
+msgid "Only with prop"
+msgstr "เฉพาะที่มี prop"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
+msgstr "เปิดหน้าของไซต์ที่มีโค้ดอยู่ สิ่งนี้เปลี่ยนเป็นสีเขียวทันทีที่เซิร์ฟเวอร์เก็บการดูหน้าแรก เบราว์เซอร์ที่มี Do Not Track หรือ Global Privacy Control ไม่ส่งอะไร จึงใช้เบราว์เซอร์อื่นทดสอบ"
+
+#: src/features/analytics/Retention.tsx
+msgid "Open consent features"
+msgstr "เปิดคุณลักษณะความยินยอม"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Open report"
+msgstr "เปิดรายงาน"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open the overview"
+msgstr "เปิดภาพรวม"
+
+#: src/features/analytics/Support.tsx
+msgid "Open the property’s settings"
+msgstr "เปิดการตั้งค่าของพร็อพเพอร์ตี"
+
+#: src/features/analytics/text.ts
+msgid "Operating system"
+msgstr "ระบบปฏิบัติการ"
+
+#: src/features/analytics/Install.tsx
+msgid "Opt-out link"
+msgstr "ลิงก์ไม่ร่วม"
+
+#: src/features/analytics/text.ts
+msgid "Organic search"
+msgstr "การค้นหาธรรมชาติ"
+
+#: src/features/analytics/text.ts
+msgid "OS version"
+msgstr "เวอร์ชัน OS"
+
+#: src/features/analytics/text.ts
+msgid "Other"
+msgstr "อื่น ๆ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other drops"
+msgstr "การหลุดอื่น ๆ"
+
+#: src/features/analytics/Events.tsx
+msgid "Other prop"
+msgstr "prop อื่น"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other sites"
+msgstr "ไซต์อื่น"
+
+#: src/features/analytics/text.ts
+msgid "Outbound link"
+msgstr "ลิงก์ออก"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Overview"
+msgstr "ภาพรวม"
+
+#: src/features/analytics/Install.tsx
+msgid "Own domain"
+msgstr "โดเมนของตัวเอง"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Owners and admins make funnels from goals. They show up here with each step’s drop-off."
+msgstr "เจ้าของและผู้ดูแลสร้างฟันเนลจากเป้าหมาย ฟันเนลแสดงที่นี่พร้อมการหลุดของแต่ละขั้น"
+
+#: src/features/analytics/Goals.tsx
+msgid "Owners and admins make goals. They show up here with their conversions."
+msgstr "เจ้าของและผู้ดูแลสร้างเป้าหมาย เป้าหมายแสดงที่นี่พร้อมคอนเวอร์ชัน"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Page"
+msgstr "หน้า"
+
+#: src/features/analytics/text.ts
+msgid "Page feedback sent from the page."
+msgstr "ความคิดเห็นเกี่ยวกับหน้าที่ส่งจากหน้า"
+
+#: src/features/analytics/text.ts
+msgid "Page not found"
+msgstr "ไม่พบหน้า"
+
+#: src/features/analytics/text.ts
+msgid "Page or screen"
+msgstr "หน้าหรือหน้าจอ"
+
+#: src/features/analytics/Goals.tsx
+msgid "Page view of {path}"
+msgstr "การดูหน้า {path}"
+
+#: src/features/analytics/text.ts
+msgid "Pages"
+msgstr "หน้า"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens"
+msgstr "หน้าและหน้าจอ"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens viewed."
+msgstr "หน้าและหน้าจอที่ดู"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages not counted"
+msgstr "หน้าที่ไม่นับ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
+msgstr "หน้าที่ตรงกับรูปแบบถูกนับภายใต้พาธเดียว หน้าคำสั่งซื้อทั้งหมดจึงรวมเป็นหนึ่ง ที่อยู่ในพาธจะถูกแทนที่เสมอ"
+
+#: src/features/analytics/text.ts
+msgid "Pages viewed."
+msgstr "หน้าที่ดู"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Pages, sources, places and devices, without cookies, without storing IP addresses and without a consent banner where the law allows it."
+msgstr "หน้า แหล่งที่มา สถานที่ และอุปกรณ์ โดยไม่ใช้คุกกี้ ไม่เก็บที่อยู่ IP และไม่มีแบนเนอร์ความยินยอมในที่ที่กฎหมายอนุญาต"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews"
+msgstr "การดูหน้า"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews divided by visits."
+msgstr "การดูหน้าหารด้วยการเข้าชม"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews in the last 30 minutes"
+msgstr "การดูหน้าใน 30 นาทีที่ผ่านมา"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews per minute"
+msgstr "การดูหน้าต่อนาที"
+
+#: src/features/analytics/text.ts
+msgid "Paid search"
+msgstr "การค้นหาแบบเสียเงิน"
+
+#: src/features/analytics/text.ts
+msgid "Paid social"
+msgstr "โซเชียลแบบเสียเงิน"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Password"
+msgstr "รหัสผ่าน"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Past alerts"
+msgstr "การแจ้งเตือนที่ผ่านมา"
+
+#: src/features/analytics/Settings.tsx
+msgid "Path rules"
+msgstr "กฎพาธ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pattern"
+msgstr "รูปแบบ"
+
+#: src/features/analytics/Controls.tsx
+msgid "Paying customers from Germany"
+msgstr "ลูกค้าที่จ่ายเงินจากเยอรมนี"
+
+#: src/features/analytics/text.ts
+msgid "Per 1,000 views"
+msgstr "ต่อ 1,000 การดู"
+
+#: src/features/analytics/Overview.tsx
+msgid "per day"
+msgstr "ต่อวัน"
+
+#: src/features/analytics/Settings.tsx
+msgid "Per day"
+msgstr "ต่อวัน"
+
+#: src/features/analytics/Overview.tsx
+msgid "per hour"
+msgstr "ต่อชั่วโมง"
+
+#: src/features/analytics/Overview.tsx
+msgid "per week"
+msgstr "ต่อสัปดาห์"
+
+#: src/features/analytics/Settings.tsx
+msgid "Persistent id"
+msgstr "รหัสถาวร"
+
+#: src/features/analytics/text.ts
+msgid "Phone"
+msgstr "โทรศัพท์"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Pick a goal"
+msgstr "เลือกเป้าหมาย"
+
+#: src/features/analytics/Events.tsx
+msgid "Pick a prop to see the values this event carried."
+msgstr "เลือก prop เพื่อดูค่าที่เหตุการณ์นี้มี"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pick at least one platform."
+msgstr "เลือกอย่างน้อยหนึ่งแพลตฟอร์ม"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Pick at least one view."
+msgstr "เลือกอย่างน้อยหนึ่งมุมมอง"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
+msgstr "เลือกวิธีสร้างไซต์และคัดลอกโค้ด คีย์เป็นสาธารณะ เหมือนคีย์แชต: ใช้ได้เฉพาะบนโดเมนของพร็อพเพอร์ตี"
+
+#: src/features/analytics/text.ts
+msgid "Platform"
+msgstr "แพลตฟอร์ม"
+
+#: src/features/analytics/Settings.tsx
+msgid "Platforms"
+msgstr "แพลตฟอร์ม"
+
+#: src/features/analytics/text.ts
+msgid "Prop"
+msgstr "prop"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name"
+msgstr "ชื่อ prop"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name, like plan"
+msgstr "ชื่อ prop เช่น plan"
+
+#: src/features/analytics/Events.tsx
+msgid "Properties for children keep no props, only the address of outbound links and downloads."
+msgstr "พร็อพเพอร์ตีสำหรับเด็กไม่เก็บ prop เก็บเฉพาะที่อยู่ของลิงก์ออกและการดาวน์โหลด"
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children keep no props, so none can be tracked."
+msgstr "พร็อพเพอร์ตีสำหรับเด็กไม่เก็บ prop จึงติดตามไม่ได้"
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children never keep an id on the device or link visits to a contact."
+msgstr "พร็อพเพอร์ตีสำหรับเด็กไม่เคยเก็บรหัสบนอุปกรณ์หรือเชื่อมโยงการเข้าชมกับผู้ติดต่อ"
+
+#: src/features/analytics/Retention.tsx
+msgid "Properties for children never keep an id on the device, so they have no retention."
+msgstr "พร็อพเพอร์ตีสำหรับเด็กไม่เคยเก็บรหัสบนอุปกรณ์ จึงไม่มีการเก็บรักษา"
+
+#: src/features/analytics/Settings.tsx
+msgid "Property name"
+msgstr "ชื่อพร็อพเพอร์ตี"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Props"
+msgstr "prop"
+
+#: src/features/analytics/Events.tsx
+msgid "Props of any name can be broken down for the days the detailed records are kept. Earlier days only have the tracked props."
+msgstr "prop ชื่อใดก็ได้แยกย่อยได้ในวันที่เก็บบันทึกโดยละเอียด วันก่อนหน้านั้นมีเฉพาะ prop ที่ติดตาม"
+
+#: src/features/analytics/Install.tsx
+msgid "Put the script in the head of every page. It counts page views, also when a single-page app changes the address, and stores nothing on the visitor’s device."
+msgstr "ใส่สคริปต์ใน head ของทุกหน้า นับการดูหน้า รวมถึงเมื่อแอปหน้าเดียวเปลี่ยนที่อยู่ และไม่เก็บอะไรบนอุปกรณ์ของผู้เข้าชม"
+
+#: src/features/analytics/Install.tsx
+msgid "Put these links on your privacy page. Opting out is the only thing the script stores on the visitor’s device, and only when they ask for it. Visitors with Do Not Track or Global Privacy Control are never counted."
+msgstr "ใส่ลิงก์เหล่านี้ในหน้านโยบายความเป็นส่วนตัวของคุณ การไม่ร่วมเป็นสิ่งเดียวที่สคริปต์เก็บบนอุปกรณ์ของผู้เข้าชม และเฉพาะเมื่อพวกเขาขอ ผู้เข้าชมที่มี Do Not Track หรือ Global Privacy Control ไม่เคยถูกนับ"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Range"
+msgstr "ช่วง"
+
+#: src/features/analytics/Support.tsx
+msgid "Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "เรียงตามการสนทนาต่อ 1,000 การดู หน้าที่มีน้อยกว่า 100 การดูอยู่หลัง นับต่อหน้าและวัน ไม่เคยนับต่อผู้เข้าชมหรือผู้ติดต่อ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Rate limits"
+msgstr "ขีดจำกัดอัตรา"
+
+#: src/features/analytics/Support.tsx
+msgid "Ratings"
+msgstr "คะแนน"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw events"
+msgstr "เหตุการณ์ดิบ"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw exports cover at most 31 days."
+msgstr "การส่งออกดิบครอบคลุมสูงสุด 31 วัน"
+
+#: src/features/analytics/Goals.tsx
+msgid "Reached when a visitor"
+msgstr "ถึงเมื่อผู้เข้าชม"
+
+#: src/features/analytics/Exports.tsx
+msgid "Ready"
+msgstr "พร้อม"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Realtime"
+msgstr "เรียลไทม์"
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour, last at {builtAt}."
+msgstr "สร้างใหม่ทุกชั่วโมง ล่าสุดเมื่อ {builtAt}"
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour."
+msgstr "สร้างใหม่ทุกชั่วโมง"
+
+#: src/features/analytics/text.ts
+msgid "Referral"
+msgstr "การอ้างอิง"
+
+#: src/features/analytics/text.ts
+msgid "Referrer"
+msgstr "ผู้อ้างอิง"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Refreshes every 15 seconds"
+msgstr "รีเฟรชทุก 15 วินาที"
+
+#: src/features/analytics/Settings.tsx
+msgid "Refused"
+msgstr "ถูกปฏิเสธ"
+
+#: src/features/analytics/text.ts
+msgid "Region"
+msgstr "ภูมิภาค"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter"
+msgstr "นำตัวกรองออก"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter: {label}"
+msgstr "นำตัวกรองออก: {label}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Remove rule"
+msgstr "นำกฎออก"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Remove step"
+msgstr "นำขั้นตอนออก"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Rename “{0}”…"
+msgstr "เปลี่ยนชื่อ “{0}”…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Rename segment"
+msgstr "เปลี่ยนชื่อเซกเมนต์"
+
+#: src/features/analytics/Install.tsx
+msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
+msgstr "เรนเดอร์คอมโพเนนต์ครั้งเดียวในเลย์เอาต์ราก ไม่เรนเดอร์อะไร useYuvaAnalytics() ให้เมธอดทุกที่ภายใต้"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Report"
+msgstr "รายงาน"
+
+#: src/features/analytics/Settings.tsx
+msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
+msgstr "คำขอที่มี Do Not Track หรือ Global Privacy Control และเหตุการณ์ที่ไม่มีความยินยอมบนพร็อพเพอร์ตีที่ต้องการ ถูกรับแต่ไม่เก็บและไม่นับที่นี่"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Retention"
+msgstr "การเก็บรักษาผู้เข้าชม"
+
+#: src/features/analytics/Retention.tsx
+msgid "Retention needs consent features"
+msgstr "การเก็บรักษาผู้เข้าชมต้องใช้คุณลักษณะความยินยอม"
+
+#: src/features/analytics/text.ts
+msgid "Returning"
+msgstr "กลับมา"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/text.ts
+msgid "Revenue"
+msgstr "รายได้"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke"
+msgstr "เพิกถอน"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke {name}?"
+msgstr "เพิกถอน {name} ไหม"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoked"
+msgstr "เพิกถอนแล้ว"
+
+#: src/features/analytics/Exports.tsx
+msgid "Rows"
+msgstr "แถว"
+
+#: src/features/analytics/Exports.tsx
+msgid "Running"
+msgstr "กำลังทำงาน"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Save"
+msgstr "บันทึก"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Save the changes to “{0}”"
+msgstr "บันทึกการเปลี่ยนแปลงของ “{0}”"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save the filters as a new segment…"
+msgstr "บันทึกตัวกรองเป็นเซกเมนต์ใหม่…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save these filters as a segment"
+msgstr "บันทึกตัวกรองเหล่านี้เป็นเซกเมนต์"
+
+#: src/features/analytics/Controls.tsx
+msgid "Saved segments"
+msgstr "เซกเมนต์ที่บันทึก"
+
+#: src/features/analytics/text.ts
+msgid "Screen"
+msgstr "หน้าจอ"
+
+#: src/features/analytics/text.ts
+msgid "Screen size"
+msgstr "ขนาดหน้าจอ"
+
+#: src/features/analytics/text.ts
+msgid "Screen views"
+msgstr "การดูหน้าจอ"
+
+#: src/features/analytics/text.ts
+msgid "Screen views divided by visits."
+msgstr "การดูหน้าจอหารด้วยการเข้าชม"
+
+#: src/features/analytics/text.ts
+msgid "Screen views in the last 30 minutes"
+msgstr "การดูหน้าจอใน 30 นาทีที่ผ่านมา"
+
+#: src/features/analytics/text.ts
+msgid "Screen views per minute"
+msgstr "การดูหน้าจอต่อนาที"
+
+#: src/features/analytics/text.ts
+msgid "Screens"
+msgstr "หน้าจอ"
+
+#: src/features/analytics/text.ts
+msgid "Screens viewed."
+msgstr "หน้าจอที่ดู"
+
+#: src/features/analytics/text.ts
+msgid "Scroll depth"
+msgstr "ความลึกการเลื่อน"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolled to {pct} on {path}"
+msgstr "เลื่อนถึง {pct} บน {path}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolls"
+msgstr "การเลื่อน"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segment"
+msgstr "เซกเมนต์"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segments"
+msgstr "เซกเมนต์"
+
+#: src/features/analytics/Settings.tsx
+msgid "Send a screen or an event from your app or backend while this page is open, and see whether it reached the server. Refreshes every 5 seconds."
+msgstr "ส่งหน้าจอหรือเหตุการณ์จากแอปหรือแบ็กเอนด์ของคุณขณะที่หน้านี้เปิดอยู่ แล้วดูว่าถึงเซิร์ฟเวอร์หรือไม่ รีเฟรชทุก 5 วินาที"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Send me one now"
+msgstr "ส่งให้ฉันหนึ่งรายการตอนนี้"
+
+#: src/features/analytics/Goals.tsx
+msgid "Sends an event"
+msgstr "ส่งเหตุการณ์"
+
+#: src/features/analytics/text.ts
+msgid "Server"
+msgstr "เซิร์ฟเวอร์"
+
+#: src/features/analytics/Settings.tsx
+msgid "Server busy"
+msgstr "เซิร์ฟเวอร์ยุ่ง"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Settings"
+msgstr "การตั้งค่า"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Share links"
+msgstr "ลิงก์แชร์"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Shared with Yuva"
+msgstr "แชร์กับ Yuva"
+
+#: src/features/analytics/Settings.tsx
+msgid "Sharing"
+msgstr "การแชร์"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Events.tsx
+msgid "Show"
+msgstr "แสดง"
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/parts.tsx
+msgid "Show from {day}"
+msgstr "แสดงตั้งแต่ {day}"
+
+#: src/features/analytics/Events.tsx
+msgid "Show its props"
+msgstr "แสดง prop ของรายการนั้น"
+
+#: src/features/analytics/Controls.tsx
+msgid "Show the days"
+msgstr "แสดงวัน"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Show the last 30 days"
+msgstr "แสดง 30 วันที่ผ่านมา"
+
+#: src/features/analytics/Goals.tsx
+msgid "Signed up"
+msgstr "สมัครแล้ว"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Sites that may embed it"
+msgstr "ไซต์ที่ฝังได้"
+
+#: src/features/analytics/text.ts
+msgid "Social"
+msgstr "โซเชียล"
+
+#: src/features/analytics/Settings.tsx
+msgid "Some events were dropped. The reasons are below."
+msgstr "เหตุการณ์บางรายการถูกทิ้ง เหตุผลอยู่ด้านล่าง"
+
+#: src/features/analytics/text.ts
+msgid "Source"
+msgstr "ต้นทาง"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Realtime.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Sources"
+msgstr "แหล่งที่มา"
+
+#: src/features/analytics/Settings.tsx
+msgid "Start over"
+msgstr "เริ่มใหม่"
+
+#. placeholder {0}: i + 1
+#: src/features/analytics/Funnels.tsx
+msgid "Step {0}"
+msgstr "ขั้นตอน {0}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Steps"
+msgstr "ขั้นตอน"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Support.tsx
+msgid "Support"
+msgstr "ฝ่ายสนับสนุน"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Support load"
+msgstr "ภาระฝ่ายสนับสนุน"
+
+#: src/features/analytics/Support.tsx
+msgid "Support numbers can only be filtered by page and host. The other filters are left out here."
+msgstr "ตัวเลขฝ่ายสนับสนุนกรองได้เฉพาะตามหน้าและโฮสต์ ตัวกรองอื่นถูกตัดออกที่นี่"
+
+#: src/features/analytics/text.ts
+msgid "Tablet"
+msgstr "แท็บเล็ต"
+
+#: src/features/analytics/Settings.tsx
+msgid "Taken and stored. They show up in Realtime within a minute."
+msgstr "รับและเก็บแล้ว จะแสดงในเรียลไทม์ภายในหนึ่งนาที"
+
+#: src/features/analytics/Settings.tsx
+msgid "Test events"
+msgstr "เหตุการณ์ทดสอบ"
+
+#: src/features/analytics/SharePage.tsx
+msgid "That password is not right."
+msgstr "รหัสผ่านนั้นไม่ถูกต้อง"
+
+#: src/features/analytics/Funnels.tsx
+msgid "The consented counts follow visitors with a persistent id from one visit and day to the next, so a step reached on a later day still counts."
+msgstr "ยอดที่ยินยอมติดตามผู้เข้าชมที่มีรหัสถาวรจากการเข้าชมและวันหนึ่งไปอีกวัน ขั้นตอนที่ถึงในวันถัดมาจึงยังนับ"
+
+#: src/features/analytics/Settings.tsx
+msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
+msgstr "คีย์ปัจจุบันยังใช้ได้ 24 ชั่วโมง คุณจึงอัปเดตหน้าได้โดยไม่เสียเหตุการณ์ การสร้างคีย์อื่นในช่วงนั้นจะสิ้นสุดคีย์เก่าทันที"
+
+#: src/features/analytics/text.ts
+msgid "The deepest point reached on the page, per view."
+msgstr "จุดที่ลึกที่สุดที่ถึงบนหน้า ต่อการดู"
+
+#: src/features/analytics/Exports.tsx
+msgid "The export failed on the server."
+msgstr "การส่งออกล้มเหลวบนเซิร์ฟเวอร์"
+
+#: src/features/analytics/Exports.tsx
+msgid "The file would be larger than 1 GiB. Export a shorter range."
+msgstr "ไฟล์จะใหญ่กว่า 1 GiB ส่งออกช่วงที่สั้นลง"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "The first event arrived at {at}."
+msgstr "เหตุการณ์แรกมาถึงเมื่อ {at}"
+
+#: src/features/analytics/Goals.tsx
+msgid "The goal reports the revenue its events carry, per currency."
+msgstr "เป้าหมายรายงานรายได้ที่เหตุการณ์ของเป้าหมายมี แยกตามสกุลเงิน"
+
+#: src/features/analytics/Settings.tsx
+msgid "The key is public, like a chat key: every page carries it, and it only works on the property’s domains."
+msgstr "คีย์เป็นสาธารณะ เหมือนคีย์แชต: ทุกหน้ามีคีย์นี้ และใช้ได้เฉพาะบนโดเมนของพร็อพเพอร์ตี"
+
+#: src/features/analytics/Settings.tsx
+msgid "The key stops working at once, and all visits, events and totals are deleted. This cannot be undone."
+msgstr "คีย์หยุดทำงานทันที และทุกการเข้าชม เหตุการณ์ และยอดรวมถูกลบ ไม่สามารถยกเลิกได้"
+
+#: src/features/analytics/Settings.tsx
+msgid "The last 30 days"
+msgstr "30 วันที่ผ่านมา"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and leaves the list."
+msgstr "ลิงก์หยุดทำงานทันทีและออกจากรายการ"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and stays in the list."
+msgstr "ลิงก์หยุดทำงานทันทีและอยู่ในรายการ"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked."
+msgstr "ลิงก์หยุดทำงานเมื่อสิ้นสุดวันนี้ใน {timezone} เว้นว่างไว้เพื่อเก็บไว้จนกว่าจะเพิกถอน"
+
+#: src/features/analytics/Install.tsx
+msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
+msgstr "โมดูลเพิ่มปลั๊กอินไคลเอนต์และ composable useYuvaAnalytics() NUXT_PUBLIC_YUVA_ANALYTICS_KEY แทนที่คีย์ขณะรัน"
+
+#: src/features/analytics/Settings.tsx
+msgid "The name does not match. Type it exactly as shown."
+msgstr "ชื่อไม่ตรงกัน พิมพ์ให้ตรงตามที่แสดง"
+
+#: src/features/analytics/Goals.tsx
+msgid "The name given to track(), or outbound_click, file_download, not_found, chat_open."
+msgstr "ชื่อที่ส่งให้ track() หรือ outbound_click, file_download, not_found, chat_open"
+
+#: src/features/analytics/Settings.tsx
+msgid "The previous key keeps working until {at}. Update every page and app before then."
+msgstr "คีย์ก่อนหน้ายังใช้ได้จนถึง {at} อัปเดตทุกหน้าและแอปก่อนถึงตอนนั้น"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "The properties of your inboxes show up here once an owner or admin adds them."
+msgstr "พร็อพเพอร์ตีของกล่องข้อความของคุณจะแสดงที่นี่เมื่อเจ้าของหรือผู้ดูแลเพิ่ม"
+
+#: src/features/analytics/Exports.tsx
+msgid "The query could not be run."
+msgstr "รันคิวรีไม่ได้"
+
+#: src/features/analytics/Exports.tsx
+msgid "The range is outside the detailed records."
+msgstr "ช่วงอยู่นอกบันทึกโดยละเอียด"
+
+#: src/features/analytics/SharePage.tsx
+msgid "The report could not be loaded"
+msgstr "โหลดรายงานไม่ได้"
+
+#: src/features/analytics/Settings.tsx
+msgid "The server’s own database"
+msgstr "ฐานข้อมูลของเซิร์ฟเวอร์เอง"
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need detailed records that are no longer kept for this range."
+msgstr "ตัวกรองเหล่านี้ต้องใช้บันทึกโดยละเอียดที่ไม่ได้เก็บไว้สำหรับช่วงนี้อีกต่อไป"
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need the detailed records, which are kept since {day}. Earlier days only have totals per page, source, place and device."
+msgstr "ตัวกรองเหล่านี้ต้องใช้บันทึกโดยละเอียด ซึ่งเก็บตั้งแต่ {day} วันก่อนหน้านั้นมีเฉพาะยอดรวมต่อหน้า แหล่งที่มา สถานที่ และอุปกรณ์"
+
+#: src/features/analytics/Settings.tsx
+msgid "This cannot be undone."
+msgstr "ไม่สามารถยกเลิกได้"
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal has numbers from {since} on. Days before that show none."
+msgstr "เป้าหมายนี้มีตัวเลขตั้งแต่ {since} เป็นต้นไป วันก่อนหน้านั้นไม่มี"
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
+msgstr "เป้าหมายนี้เป็นขั้นตอนของฟันเนล นำออกจากฟันเนลหรือลบฟันเนลก่อน"
+
+#: src/features/analytics/SharePage.tsx
+msgid "This link is not available"
+msgstr "ลิงก์นี้ไม่พร้อมใช้งาน"
+
+#: src/features/analytics/text.ts
+msgid "This month"
+msgstr "เดือนนี้"
+
+#: src/features/analytics/Funnels.tsx
+msgid "This property already has a funnel with this name."
+msgstr "พร็อพเพอร์ตีนี้มีฟันเนลที่ใช้ชื่อนี้อยู่แล้ว"
+
+#: src/features/analytics/Goals.tsx
+msgid "This property already has a goal with this name."
+msgstr "พร็อพเพอร์ตีนี้มีเป้าหมายที่ใช้ชื่อนี้อยู่แล้ว"
+
+#: src/features/analytics/Controls.tsx
+msgid "This property already has a segment with this name."
+msgstr "พร็อพเพอร์ตีนี้มีเซกเมนต์ที่ใช้ชื่อนี้อยู่แล้ว"
+
+#: src/features/analytics/Exports.tsx
+msgid "This range cannot be exported. Pick a shorter one, or one inside the detailed records."
+msgstr "ส่งออกช่วงนี้ไม่ได้ เลือกช่วงที่สั้นลง หรือช่วงที่อยู่ในบันทึกโดยละเอียด"
+
+#: src/features/analytics/SharePage.tsx
+msgid "This report has a password"
+msgstr "รายงานนี้มีรหัสผ่าน"
+
+#: src/features/analytics/Support.tsx
+msgid "This workspace has no inbox yet."
+msgstr "พื้นที่ทำงานนี้ยังไม่มีกล่องข้อความ"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
+msgstr "พื้นที่ทำงานนี้ถึง {limit} เหตุการณ์การวิเคราะห์ของเดือนนี้แล้ว เหตุการณ์ใหม่ถูกทิ้งจนสิ้นเดือน"
+
+#: src/features/analytics/text.ts
+msgid "This year"
+msgstr "ปีนี้"
+
+#: src/features/analytics/Exports.tsx
+msgid "Three exports are already running in this workspace. Try again when one finishes."
+msgstr "มีการส่งออกสามรายการกำลังรันอยู่ในพื้นที่ทำงานนี้แล้ว ลองอีกครั้งเมื่อรายการหนึ่งเสร็จ"
+
+#: src/features/analytics/text.ts
+msgid "Time from the first to the last event of a visit, on average. Bounces count as zero."
+msgstr "เวลาเฉลี่ยตั้งแต่เหตุการณ์แรกถึงสุดท้ายของการเข้าชม การตีกลับนับเป็นศูนย์"
+
+#: src/features/analytics/text.ts
+msgid "Time on page"
+msgstr "เวลาบนหน้า"
+
+#: src/features/analytics/text.ts
+msgid "Time the page was visible and in focus, per view."
+msgstr "เวลาที่หน้าแสดงและอยู่ในโฟกัส ต่อการดู"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Time zone"
+msgstr "เขตเวลา"
+
+#: src/features/analytics/text.ts
+msgid "Times the goal was reached, also several times by one visitor."
+msgstr "จำนวนครั้งที่ถึงเป้าหมาย รวมหลายครั้งโดยผู้เข้าชมคนเดียว"
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated helpful."
+msgstr "จำนวนครั้งที่หน้าถูกให้คะแนนว่าเป็นประโยชน์"
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated not helpful."
+msgstr "จำนวนครั้งที่หน้าถูกให้คะแนนว่าไม่เป็นประโยชน์"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "To"
+msgstr "ถึง"
+
+#: src/features/analytics/text.ts
+msgid "Today"
+msgstr "วันนี้"
+
+#: src/features/analytics/Settings.tsx
+msgid "Today: {todayCounted} counted, {todayDropped} dropped"
+msgstr "วันนี้: นับ {todayCounted} ทิ้ง {todayDropped}"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Token"
+msgstr "โทเค็น"
+
+#: src/features/analytics/Settings.tsx
+msgid "Too late"
+msgstr "สายเกินไป"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many requests from your network. Wait a minute and reload the page."
+msgstr "มีคำขอจากเครือข่ายของคุณมากเกินไป รอหนึ่งนาทีแล้วโหลดหน้าใหม่"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many tries. Wait a minute and try again."
+msgstr "ลองมากเกินไป รอหนึ่งนาทีแล้วลองอีกครั้ง"
+
+#: src/features/analytics/text.ts
+msgid "Top pages"
+msgstr "หน้ายอดนิยม"
+
+#: src/features/analytics/text.ts
+msgid "Top pages and screens"
+msgstr "หน้าและหน้าจอยอดนิยม"
+
+#: src/features/analytics/text.ts
+msgid "Top screens"
+msgstr "หน้าจอยอดนิยม"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracked props"
+msgstr "prop ที่ติดตาม"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracking"
+msgstr "การติดตาม"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic drop"
+msgstr "ทราฟฟิกลดลง"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic spike"
+msgstr "ทราฟฟิกพุ่งสูง"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Try again"
+msgstr "ลองอีกครั้ง"
+
+#: src/features/analytics/Install.tsx
+msgid "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
+msgstr "เปิด {name} ใต้แพลตฟอร์มในการตั้งค่าทั่วไปก่อน จนกว่าจะเปิด เซิร์ฟเวอร์จะปฏิเสธเหตุการณ์ของแอป"
+
+#: src/features/analytics/Retention.tsx
+msgid "Turn on the persistent id in the consent features, then call yuva.consent with persistent set to true."
+msgstr "เปิดรหัสถาวรในคุณลักษณะความยินยอม แล้วเรียก yuva.consent โดยตั้ง persistent เป็น true"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Two to eight goals, in the order visitors reach them within one visit."
+msgstr "สองถึงแปดเป้าหมาย ตามลำดับที่ผู้เข้าชมไปถึงภายในหนึ่งการเข้าชม"
+
+#: src/features/analytics/Settings.tsx
+msgid "Type the property’s name to delete it and all its data."
+msgstr "พิมพ์ชื่อพร็อพเพอร์ตีเพื่อลบพร็อพเพอร์ตีและข้อมูลทั้งหมด"
+
+#: src/features/analytics/text.ts
+msgid "Unknown"
+msgstr "ไม่ทราบ"
+
+#: src/features/analytics/Install.tsx
+msgid "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
+msgstr "สูงสุด 100 เหตุการณ์ต่อคำขอ แต่ละเหตุการณ์พร้อมที่อยู่ IP และ user agent ของผู้เข้าชม หรือ visitor_key ของคุณเอง ไม่มีอย่างใดถูกเก็บ เหตุการณ์ที่ตัดออกเพราะไม่ถูกต้องจะกลับมาใน errors พร้อมตำแหน่ง ดูสิ่งที่มาถึงใต้เหตุการณ์ทดสอบ"
+
+#: src/features/analytics/text.ts
+msgid "UTM campaign"
+msgstr "แคมเปญ UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM content"
+msgstr "เนื้อหา UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM medium"
+msgstr "สื่อ UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM source"
+msgstr "แหล่ง UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM term"
+msgstr "คำ UTM"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Views"
+msgstr "การดู"
+
+#: src/features/analytics/Goals.tsx
+msgid "Views a page"
+msgstr "ดูหน้า"
+
+#: src/features/analytics/text.ts
+msgid "Views divided by visits."
+msgstr "การดูหารด้วยการเข้าชม"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views fell to {now} in two hours, against {usual} usually."
+msgstr "การดูลดลงเหลือ {now} ในสองชั่วโมง เทียบกับ {usual} ตามปกติ"
+
+#: src/features/analytics/text.ts
+msgid "Views in the last 30 minutes"
+msgstr "การดูใน 30 นาทีที่ผ่านมา"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at least three times the same hours of the week before."
+msgstr "การดูในสองชั่วโมงที่ผ่านมาอย่างน้อยสามเท่าของชั่วโมงเดียวกันในสัปดาห์ก่อนหน้า"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at most half the same hours of the week before."
+msgstr "การดูในสองชั่วโมงที่ผ่านมามากที่สุดครึ่งหนึ่งของชั่วโมงเดียวกันในสัปดาห์ก่อนหน้า"
+
+#: src/features/analytics/text.ts
+msgid "Views per minute"
+msgstr "การดูต่อนาที"
+
+#: src/features/analytics/text.ts
+msgid "Views per visit"
+msgstr "การดูต่อการเข้าชม"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views rose to {now} in two hours, against {usual} usually."
+msgstr "การดูเพิ่มขึ้นเป็น {now} ในสองชั่วโมง เทียบกับ {usual} ตามปกติ"
+
+#: src/features/analytics/text.ts
+msgid "Visit duration"
+msgstr "ระยะเวลาเข้าชม"
+
+#: src/features/analytics/Retention.tsx
+#: src/features/analytics/text.ts
+msgid "Visitors"
+msgstr "ผู้เข้าชม"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Visitors in the last 30 minutes"
+msgstr "ผู้เข้าชมใน 30 นาทีที่ผ่านมา"
+
+#: src/features/analytics/Retention.tsx
+msgid "Visitors who came back"
+msgstr "ผู้เข้าชมที่กลับมา"
+
+#: src/features/analytics/text.ts
+msgid "Visitors who reached the goal, per day, added up over the days of the range."
+msgstr "ผู้เข้าชมที่ถึงเป้าหมาย ต่อวัน รวมตลอดวันของช่วง"
+
+#: src/features/analytics/Settings.tsx
+msgid "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
+msgstr "ผู้เข้าชมที่มี Do Not Track หรือ Global Privacy Control ไม่ส่งอะไร จึงไม่ถูกนับที่นี่เช่นกัน ไม่มีอะไรเกี่ยวกับเหตุการณ์ที่ทิ้งถูกเก็บนอกจากจำนวน"
+
+#: src/features/analytics/text.ts
+msgid "Visits"
+msgstr "การเข้าชม"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page or screen view and nothing else."
+msgstr "การเข้าชมที่มีการดูหน้าหรือหน้าจอหนึ่งครั้งและไม่มีอย่างอื่น"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page view and nothing else."
+msgstr "การเข้าชมที่มีการดูหน้าหนึ่งครั้งและไม่มีอย่างอื่น"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one screen view and nothing else."
+msgstr "การเข้าชมที่มีการดูหน้าจอหนึ่งครั้งและไม่มีอย่างอื่น"
+
+#: src/features/analytics/Install.tsx
+msgid "Vue, Astro, other"
+msgstr "Vue, Astro, อื่น ๆ"
+
+#: src/features/analytics/Exports.tsx
+msgid "Waiting"
+msgstr "รอ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Waiting for events since {at}."
+msgstr "กำลังรอเหตุการณ์ตั้งแต่ {at}"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Waiting for the first event"
+msgstr "กำลังรอเหตุการณ์แรก"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Watch it live"
+msgstr "ดูแบบสด"
+
+#: src/features/analytics/text.ts
+msgid "Web"
+msgstr "เว็บ"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Website or app"
+msgstr "เว็บไซต์หรือแอป"
+
+#: src/features/analytics/Retention.tsx
+msgid "Week {period}"
+msgstr "สัปดาห์ {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Weekly"
+msgstr "รายสัปดาห์"
+
+#: src/features/analytics/Retention.tsx
+msgid "Weeks"
+msgstr "สัปดาห์"
+
+#: src/features/analytics/Insights.tsx
+msgid "What changed"
+msgstr "สิ่งที่เปลี่ยน"
+
+#: src/features/analytics/Support.tsx
+msgid "What stands out"
+msgstr "สิ่งที่โดดเด่น"
+
+#: src/features/analytics/text.ts
+msgid "What the goal's events carried, per currency. Currencies are never converted or added up."
+msgstr "สิ่งที่เหตุการณ์ของเป้าหมายมี แยกตามสกุลเงิน สกุลเงินไม่เคยถูกแปลงหรือรวมกัน"
+
+#: src/features/analytics/Exports.tsx
+msgid "What to export"
+msgstr "สิ่งที่จะส่งออก"
+
+#: src/features/analytics/Goals.tsx
+msgid "Where conversions come from"
+msgstr "คอนเวอร์ชันมาจากที่ใด"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Where the property’s day starts and ends."
+msgstr "ที่ที่วันของพร็อพเพอร์ตีเริ่มและสิ้นสุด"
+
+#: src/features/analytics/Install.tsx
+msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."
+msgstr "เมื่อใช้ data-consent=\"required\" สคริปต์จะไม่ส่งอะไรจนกว่าเครื่องมือความยินยอมของคุณบอกว่าผู้เข้าชมยินยอม ตั้งการเก็บข้อมูลเป็น “เฉพาะเมื่อมีความยินยอม” ในการตั้งค่าทั่วไปด้วย เซิร์ฟเวอร์จะได้ปฏิเสธเหตุการณ์ที่ไม่มีความยินยอม"
+
+#: src/features/analytics/Settings.tsx
+msgid "With yuva.consent and persistent set to true, the device keeps a random id for 13 months. The visitor counts once over several days, is told apart as new or returning, fills retention and is followed across days in funnels. Never under Do Not Track or Global Privacy Control."
+msgstr "เมื่อใช้ yuva.consent และ persistent เป็น true อุปกรณ์จะเก็บรหัสสุ่มไว้ 13 เดือน ผู้เข้าชมถูกนับครั้งเดียวตลอดหลายวัน แยกได้ว่าใหม่หรือกลับมา เติมการเก็บรักษา และถูกติดตามข้ามวันในฟันเนล ไม่เคยทำเมื่อมี Do Not Track หรือ Global Privacy Control"
+
+#: src/features/analytics/text.ts
+msgid "Without consent"
+msgstr "ไม่มีความยินยอม"
+
+#: src/features/analytics/Retention.tsx
+msgid "Without cookies a visitor is new every day, so nobody can be followed from one day to the next. Only visitors who agree to a persistent id in your consent tool show up here."
+msgstr "เมื่อไม่ใช้คุกกี้ ผู้เข้าชมเป็นคนใหม่ทุกวัน จึงติดตามใครจากวันหนึ่งไปอีกวันไม่ได้ เฉพาะผู้เข้าชมที่ยินยอมใช้รหัสถาวรในเครื่องมือความยินยอมของคุณเท่านั้นที่แสดงที่นี่"
+
+#: src/features/analytics/Settings.tsx
+msgid "Without cookies, for everyone"
+msgstr "โดยไม่ใช้คุกกี้ สำหรับทุกคน"
+
+#: src/features/analytics/text.ts
+msgid "Yesterday"
+msgstr "เมื่อวานนี้"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Your access ended. Enter the password again to keep reading."
+msgstr "สิทธิ์เข้าถึงของคุณสิ้นสุดแล้ว ใส่รหัสผ่านอีกครั้งเพื่ออ่านต่อ"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Your new share link"
+msgstr "ลิงก์แชร์ใหม่ของคุณ"
+
+#: src/features/analytics/Settings.tsx
+msgid "yuva.identify with a token from your backend, signed like a chat session, links the visitor’s visits to their contact. They show on the contact’s page under Recent visits. Forged or reused tokens are ignored."
+msgstr "yuva.identify พร้อมโทเค็นจากแบ็กเอนด์ของคุณ ลงนามเหมือนเซสชันแชต เชื่อมโยงการเข้าชมของผู้เข้าชมกับผู้ติดต่อของพวกเขา แสดงในหน้าผู้ติดต่อใต้การเข้าชมล่าสุด โทเค็นปลอมหรือใช้ซ้ำจะถูกเพิกเฉย"

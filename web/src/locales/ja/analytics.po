@@ -1,0 +1,2748 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 10:11+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ja\n"
+
+#: src/features/analytics/text.ts
+msgid "(not set)"
+msgstr "(未設定)"
+
+#. placeholder {0}: e.rows
+#: src/features/analytics/Exports.tsx
+msgid "{0, plural, one {# row} other {# rows}}"
+msgstr "{0, plural, other {# 行}}"
+
+#. placeholder {0}: p.visitors_today
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{0, plural, one {visitor today} other {visitors today}}"
+msgstr "{0, plural, other {本日の訪問者}}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{consentedCount} consented, across visits and days"
+msgstr "同意済み {consentedCount} 人(訪問と日をまたぐ)"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {{site} sent # visit, and none in the 28 days before.} other {{site} sent # visits, and none in the 28 days before.}}"
+msgstr "{count, plural, other {{site} から # 件の訪問がありました。その前の 28 日間はありませんでした。}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {# conversation per 1,000 views, against {usual} in the 28 days before.} other {# conversations per 1,000 views, against {usual} in the 28 days before.}}"
+msgstr "{count, plural, other {1,000 表示あたり # 件の会話。その前の 28 日間は {usual} 件でした。}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {Goal “{goal}” had # conversion, against {usual} a day on average in the week before.} other {Goal “{goal}” had # conversions, against {usual} a day on average in the week before.}}"
+msgstr "{count, plural, other {ゴール「{goal}」のコンバージョンは # 件で、その前の週の 1 日平均は {usual} 件でした。}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{count} in this range, none in the compared days."
+msgstr "この期間に {count} 件、比較した日にはありません。"
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {count}, none in the compared days."
+msgstr "{dim} {value}: {count} 件、比較した日にはありません。"
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} fell {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} が {change} 減少し、{before} から {now} になりました。"
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} rose {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} が {change} 増加し、{before} から {now} になりました。"
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {metric} {now}, none in the compared days."
+msgstr "{dim} {value}: {metric} {now}、比較した日にはありません。"
+
+#: src/features/analytics/Annotations.tsx
+msgid "{kind}: {found}"
+msgstr "{kind}: {found}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{lost} left ({lostPct})"
+msgstr "{lost} が離脱({lostPct})"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} fell {change}: {now}, against {before} in the compared days."
+msgstr "{metric} が {change} 減少: 比較した日の {before} に対して {now}。"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} rose {change}: {now}, against {before} in the compared days."
+msgstr "{metric} が {change} 増加: 比較した日の {before} に対して {now}。"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric}: {now}, none in the compared days."
+msgstr "{metric}: {now}、比較した日にはありません。"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversation} other {# conversations}}"
+msgstr "{n, plural, other {# 件の会話}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversion} other {# conversions}}"
+msgstr "{n, plural, other {# 件のコンバージョン}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# discussion} other {# discussions}}"
+msgstr "{n, plural, other {# 件のディスカッション}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# event} other {# events}}"
+msgstr "{n, plural, other {# 件のイベント}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# view} other {# views}}"
+msgstr "{n, plural, other {# 回の表示}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visit} other {# visits}}"
+msgstr "{n, plural, other {# 回の訪問}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visitor} other {# visitors}}"
+msgstr "{n, plural, other {# 人の訪問者}}"
+
+#: src/features/analytics/Events.tsx
+msgid "{n} payments, {avg} on average"
+msgstr "{n} 件の支払い、平均 {avg}"
+
+#: src/features/analytics/Install.tsx
+msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
+msgstr "{name} はこのプロパティのプラットフォームではないため、サーバーはアプリのイベントを拒否します。オーナーまたは管理者がオンにできます。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
+msgstr "最初のステップに到達した訪問者の {overall} が、最後のステップにも到達しました({from} 〜 {to})。"
+
+#: src/features/analytics/Insights.tsx
+msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
+msgstr "{rate, plural, other {{dim} {value}: 1,000 表示あたり # 件の会話。全ページでは {site}。}}"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
+msgstr "今月のアナリティクスイベント {limit} 件のうち {used} 件を使用しました。上限を超えたイベントは、月末まで破棄されます。"
+
+#: src/features/analytics/Settings.tsx
+msgid "A change applies to new events. Days already counted keep their zone."
+msgstr "変更は新しいイベントに適用されます。すでに集計された日は、元のタイムゾーンのままです。"
+
+#: src/features/analytics/Goals.tsx
+msgid "A changed goal is counted again over the days the detailed records are kept."
+msgstr "変更したゴールは、詳細レコードが保持されている日数分、再集計されます。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel follows each visit step by step, so it covers at most 90 days at once, or 31 days for a property with more than 10 million events a month. Pick a shorter range."
+msgstr "ファネルは訪問をステップごとに追跡するため、一度に最大 90 日間まで(月間イベントが 1,000 万件を超えるプロパティでは 31 日間まで)です。もっと短い期間を選んでください。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel is made of two to eight goals in a row. Make at least two goals first."
+msgstr "ファネルは、連続する 2 〜 8 個のゴールで構成されます。先に 2 つ以上のゴールを作成してください。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are kept since {day}. Earlier days only have totals, so they cannot show a funnel."
+msgstr "ファネルには各訪問のステップが必要で、{day} 以降のものが保持されています。それ以前の日は合計値のみのため、ファネルを表示できません。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are no longer kept for this range."
+msgstr "ファネルには各訪問のステップが必要ですが、この期間のものはもう保持されていません。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel shows how many visitors go from one goal to the next within a visit, and where they leave."
+msgstr "ファネルは、訪問の中で何人の訪問者があるゴールから次のゴールに進み、どこで離脱したかを示します。"
+
+#: src/features/analytics/Goals.tsx
+msgid "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
+msgstr "ゴールは、ページを表示した、イベントを送信した、十分にスクロールした訪問者と、それによる収益を数えます。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "A goal’s conversions yesterday were at most half its daily average of the week before."
+msgstr "昨日のゴールのコンバージョンが、その前の週の 1 日平均の半分以下でした。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A link shows only its views of this property, read-only, without filters or segments. Revoking or deleting it stops it at once."
+msgstr "リンクには、このプロパティのビューのみが読み取り専用で、フィルターやセグメントなしで表示されます。取り消しまたは削除すると、すぐに無効になります。"
+
+#: src/features/analytics/Goals.tsx
+msgid "A new goal also counts the days the detailed records are kept, not only from today."
+msgstr "新しいゴールは、今日からだけでなく、詳細レコードが保持されている日数分も集計されます。"
+
+#: src/features/analytics/Annotations.tsx
+msgid "A new key was made"
+msgstr "新しいキーを作成しました"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A new password signs out everyone who unlocked the link."
+msgstr "新しいパスワードにすると、リンクのロックを解除した全員がサインアウトされます。"
+
+#: src/features/analytics/Goals.tsx
+msgid "A path. * stands for one part of it, ** for any number of them."
+msgstr "パス。* はその 1 区間、** は任意の数の区間を表します。"
+
+#: src/features/analytics/Settings.tsx
+msgid "A prop name has at most 300 characters and does not start with $ or yuva_."
+msgstr "プロパティ名は最大 300 文字で、$ や yuva_ で始めることはできません。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A property can have at most 50 share links. Delete one first."
+msgstr "1 つのプロパティに設定できる共有リンクは最大 50 件です。先に 1 件削除してください。"
+
+#: src/features/analytics/parts.tsx
+msgid "A range can be at most 400 days long. Pick a shorter one."
+msgstr "期間は最大 400 日です。短い期間を選んでください。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "A site sent 10 or more visits yesterday and none in the 28 days before."
+msgstr "昨日、サイトから 10 回以上の訪問があり、その前の 28 日間はありませんでした。"
+
+#: src/features/analytics/Settings.tsx
+msgid "A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and it shows as a chip on the Events view."
+msgstr "追跡するプロパティは日次の合計にも保持されるため、詳細レコードがなくなっても内訳が残り、イベントビューにチップとして表示されます。"
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page or screen views without a gap of 30 minutes, within one day."
+msgstr "1 日以内で、30 分以上の間隔のない訪問者のページまたは画面の表示。"
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page views without a gap of 30 minutes, within one day."
+msgstr "1 日以内で、30 分以上の間隔のない訪問者のページ表示。"
+
+#: src/features/analytics/text.ts
+msgid "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
+msgstr "1 日以内で、30 分以上の間隔のない訪問者の画面表示。アプリを起動するたびに新しい訪問になります。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Active"
+msgstr "アクティブ"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add"
+msgstr "追加"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add a note to the chart"
+msgstr "グラフにメモを追加"
+
+#: src/features/analytics/Settings.tsx
+msgid "Add a rule"
+msgstr "ルールを追加"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Add a step"
+msgstr "ステップを追加"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/NewProperty.tsx
+msgid "Add a website"
+msgstr "ウェブサイトを追加"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add a website to count its visitors, pages and sources, without cookies."
+msgstr "ウェブサイトを追加すると、Cookie なしで訪問者、ページ、流入元を集計します。"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Add and install"
+msgstr "追加してインストール"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add note"
+msgstr "メモを追加"
+
+#: src/features/analytics/Install.tsx
+msgid "Add the YuvaAnalytics library of the Yuva package and configure it once at launch. .yuvaScreen counts a SwiftUI screen; in UIKit, call YuvaAnalytics.screen when a screen appears. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "Yuva パッケージの YuvaAnalytics ライブラリを追加し、起動時に一度だけ設定します。.yuvaScreen は SwiftUI の画面を集計します。UIKit では、画面が表示されたときに YuvaAnalytics.screen を呼び出します。接続がない場合、イベントは最大 72 時間デバイスに保持され、元の時刻のまま届きます。"
+
+#: src/features/analytics/Install.tsx
+msgid "Add yuva-analytics from JitPack and configure it once in Application.onCreate. TrackScreen counts a Compose screen. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "JitPack から yuva-analytics を追加し、Application.onCreate で一度だけ設定します。TrackScreen は Compose の画面を集計します。接続がない場合、イベントは最大 72 時間デバイスに保持され、元の時刻のまま届きます。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Addresses not counted"
+msgstr "集計対象外のアドレス"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the compared days"
+msgstr "比較した日と比べて"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the period before"
+msgstr "前の期間と比べて"
+
+#: src/features/analytics/Support.tsx
+msgid "Agents of the inbox can then see this property’s numbers too."
+msgstr "受信トレイのエージェントも、このプロパティの数値を見られるようになります。"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Agents of this inbox can see the numbers."
+msgstr "この受信トレイのエージェントは数値を見られます。"
+
+#: src/features/analytics/text.ts
+msgid "AI assistants"
+msgstr "AI アシスタント"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Alerts"
+msgstr "アラート"
+
+#: src/features/analytics/Settings.tsx
+msgid "Alerts and reports"
+msgstr "アラートとレポート"
+
+#: src/features/analytics/Events.tsx
+msgid "All events"
+msgstr "すべてのイベント"
+
+#: src/features/analytics/Goals.tsx
+msgid "All goals"
+msgstr "すべてのゴール"
+
+#: src/features/analytics/Support.tsx
+msgid "An owner or admin can link one in the property’s settings."
+msgstr "オーナーまたは管理者が、プロパティの設定でリンクできます。"
+
+#: src/features/analytics/Retention.tsx
+msgid "An owner or admin can turn on the persistent id in the consent features."
+msgstr "オーナーまたは管理者が、同意機能で永続 ID をオンにできます。"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics"
+msgstr "アナリティクス"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Analytics properties"
+msgstr "アナリティクスプロパティ"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Analytics steps"
+msgstr "アナリティクスの手順"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics views"
+msgstr "アナリティクスのビュー"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Anyone with the link sees the views you pick, read-only, without signing in."
+msgstr "リンクを知っている人は、選択したビューをサインインなしで読み取り専用で見られます。"
+
+#: src/features/analytics/text.ts
+msgid "App"
+msgstr "アプリ"
+
+#: src/features/analytics/text.ts
+msgid "App version"
+msgstr "アプリのバージョン"
+
+#: src/features/analytics/Settings.tsx
+msgid "Apps send without a domain, so only the platforms turned on here are counted. Events from your backend need no platform."
+msgstr "アプリはドメインなしで送信するため、ここでオンにしたプラットフォームのみ集計されます。バックエンドからのイベントにプラットフォームは不要です。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Ask for a password"
+msgstr "パスワードを要求"
+
+#: src/features/analytics/Sharing.tsx
+msgid "At least 8 characters"
+msgstr "8 文字以上"
+
+#: src/features/analytics/Settings.tsx
+msgid "At most 10 props can be tracked."
+msgstr "追跡できるプロパティは最大 10 件です。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Audience"
+msgstr "オーディエンス"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Available until {expires}"
+msgstr "{expires} まで利用可能"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots"
+msgstr "ボット"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
+msgstr "ボット、レート制限、除外したアドレスとパス、月間上限、またはサーバーの混雑。"
+
+#: src/features/analytics/text.ts
+msgid "Bounce rate"
+msgstr "直帰率"
+
+#: src/features/analytics/Events.tsx
+msgid "Break down by prop"
+msgstr "プロパティで内訳を表示"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Breakdown"
+msgstr "内訳"
+
+#: src/features/analytics/Exports.tsx
+msgid "Broken down by"
+msgstr "内訳の軸"
+
+#: src/features/analytics/Settings.tsx
+msgid "Broken events, such as a screen address that does not start with app://, a reserved name or too many props."
+msgstr "不正なイベント。例: app:// で始まらない画面アドレス、予約された名前、プロパティが多すぎる場合。"
+
+#: src/features/analytics/text.ts
+msgid "Browser"
+msgstr "ブラウザー"
+
+#: src/features/analytics/text.ts
+msgid "Browser version"
+msgstr "ブラウザーのバージョン"
+
+#: src/features/analytics/Install.tsx
+msgid "Call it once in the browser. During server rendering it does nothing."
+msgstr "ブラウザーで一度だけ呼び出します。サーバーサイドレンダリング中は何もしません。"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: src/features/analytics/Controls.tsx
+msgid "Change filter: {label}"
+msgstr "フィルターを変更: {label}"
+
+#: src/features/analytics/Controls.tsx
+msgid "changed"
+msgstr "変更あり"
+
+#: src/features/analytics/text.ts
+msgid "Channel"
+msgstr "チャネル"
+
+#: src/features/analytics/text.ts
+msgid "Chat opened"
+msgstr "チャットを開いた"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Checked every hour. Each alert is sent once and also shows as a note on the chart."
+msgstr "1 時間ごとにチェックされます。各アラートは 1 回だけ送信され、グラフ上のメモとしても表示されます。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Children"
+msgstr "子ども向け"
+
+#: src/features/analytics/Support.tsx
+msgid "Choose an inbox"
+msgstr "受信トレイを選択"
+
+#: src/features/analytics/Settings.tsx
+msgid "Choose children for a site made for children."
+msgstr "子ども向けに作られたサイトの場合は、子ども向けを選択してください。"
+
+#: src/features/analytics/text.ts
+msgid "City"
+msgstr "市区町村"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Clear"
+msgstr "クリア"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts by"
+msgstr "コホートの軸"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts fill once visitors agree to a persistent id and come back. The numbers are rebuilt every hour."
+msgstr "訪問者が永続 ID に同意して再訪すると、コホートが埋まります。数値は 1 時間ごとに再構築されます。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Collection"
+msgstr "コレクション"
+
+#. placeholder {0}: formatDate(`${c.from}T12:00:00Z`, i18n.locale)
+#. placeholder {1}: formatDate(`${c.to}T12:00:00Z`, i18n.locale)
+#: src/features/analytics/Controls.tsx
+msgid "Compare with {0} – {1}"
+msgstr "{0} – {1} と比較"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with a year earlier"
+msgstr "1 年前と比較"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days"
+msgstr "他の日と比較"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days…"
+msgstr "他の日と比較…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the days"
+msgstr "比較する日"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the period before"
+msgstr "前の期間と比較"
+
+#: src/features/analytics/Overview.tsx
+msgid "Compared days"
+msgstr "比較した日"
+
+#: src/features/analytics/Controls.tsx
+msgid "Comparison"
+msgstr "比較"
+
+#: src/features/analytics/text.ts
+msgid "Completions"
+msgstr "完了数"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consent features"
+msgstr "同意機能"
+
+#: src/features/analytics/Install.tsx
+msgid "Consent mode"
+msgstr "同意モード"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id, and signed-in users are linked to their contact."
+msgstr "同意した訪問者は永続 ID を保持し、サインイン済みユーザーは連絡先にリンクされます。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id."
+msgstr "同意した訪問者は永続 ID を保持します。"
+
+#: src/features/analytics/parts.tsx
+msgid "Consented visitors only"
+msgstr "同意した訪問者のみ"
+
+#: src/features/analytics/text.ts
+msgid "contains"
+msgstr "を含む"
+
+#: src/features/analytics/Install.tsx
+msgid "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
+msgstr "コンテンツブロッカーは、他のドメインのスクリプトを止めることがよくあります。スクリプトとそのエンドポイントを自分のサイトから配信すれば、そうした訪問者も集計されます。Yuva サーバーは、プロキシが転送するアドレスを信頼する必要があります。そうしないと、すべての訪問者が 1 人に見えます。"
+
+#: src/features/analytics/text.ts
+msgid "Conversations"
+msgstr "会話"
+
+#: src/features/analytics/text.ts
+msgid "Conversations per 1,000 views of the page."
+msgstr "ページ 1,000 表示あたりの会話数。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Conversations per 1,000 views yesterday were at least twice the rate of the 28 days before."
+msgstr "昨日の 1,000 表示あたりの会話数が、その前の 28 日間の 2 倍以上でした。"
+
+#: src/features/analytics/text.ts
+msgid "Conversations started on the page, from the chat of the linked inbox."
+msgstr "リンクした受信トレイのチャットから、そのページで始まった会話。"
+
+#: src/features/analytics/Support.tsx
+msgid "Conversations, feedback, ratings and discussions of the linked inbox show here next to each page’s views. They are counted per page and day; no visitor is ever matched to a contact."
+msgstr "リンクした受信トレイの会話、フィードバック、評価、ディスカッションが、各ページの表示回数と並んでここに表示されます。ページと日ごとに集計され、訪問者が連絡先と結び付けられることはありません。"
+
+#: src/features/analytics/text.ts
+msgid "Conversion rate"
+msgstr "コンバージョン率"
+
+#: src/features/analytics/text.ts
+msgid "Conversions"
+msgstr "コンバージョン"
+
+#: src/features/analytics/text.ts
+msgid "Conversions per 100 visitors."
+msgstr "訪問者 100 人あたりのコンバージョン。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
+msgstr "今すぐコピーしてください。再表示されません。リンクを紛失した場合は、取り消して作り直すしかありません。"
+
+#: src/features/analytics/Install.tsx
+msgid "Count my visits again"
+msgstr "自分の訪問を再び集計する"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Count visitors, pages, sources, places and devices without cookies and without storing IP addresses."
+msgstr "Cookie を使わず、IP アドレスも保存せずに、訪問者、ページ、流入元、場所、デバイスを集計します。"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Count your website’s visitors"
+msgstr "ウェブサイトの訪問者を集計"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted"
+msgstr "集計済み"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted as"
+msgstr "集計の扱い"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Countries"
+msgstr "国"
+
+#: src/features/analytics/text.ts
+msgid "Country"
+msgstr "国"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
+msgstr "確認なしですべての訪問者を集計します。デバイスには何も保存されず、IP アドレスも保持されません。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Counts the visitors who reached each step after the ones before it, within one visit on one day. Numbers are at most ten minutes old."
+msgstr "1 回の訪問内、1 日以内で、前のステップを経て各ステップに到達した訪問者を数えます。数値は最大 10 分前のものです。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Currency"
+msgstr "通貨"
+
+#: src/features/analytics/Exports.tsx
+msgid "Current view"
+msgstr "現在のビュー"
+
+#: src/features/analytics/text.ts
+msgid "Custom and built-in events."
+msgstr "カスタムイベントと組み込みイベント。"
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range"
+msgstr "カスタム期間"
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range…"
+msgstr "カスタム期間…"
+
+#: src/features/analytics/Settings.tsx
+msgid "Data"
+msgstr "データ"
+
+#: src/features/analytics/Install.tsx
+msgid "data-outbound counts clicks on links to other sites, data-files downloads of documents and archives, and data-chat each time a visitor opens the chat. track() sends your own events with up to 30 props; e-mail addresses in props are dropped. Make goals from events in the Goals view."
+msgstr "data-outbound は他サイトへのリンクのクリック、data-files はドキュメントやアーカイブのダウンロード、data-chat は訪問者がチャットを開くたびに集計します。track() は最大 30 個のプロパティ付きで独自のイベントを送信します。プロパティ内のメールアドレスは破棄されます。ゴールビューで、イベントからゴールを作成します。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Day"
+msgstr "日"
+
+#: src/features/analytics/Retention.tsx
+msgid "Day {period}"
+msgstr "{period} 日"
+
+#: src/features/analytics/Exports.tsx
+msgid "Day by day"
+msgstr "日別"
+
+#: src/features/analytics/Retention.tsx
+msgid "Days"
+msgstr "日"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/SharePage.tsx
+msgid "Days are counted in this time zone"
+msgstr "日はこのタイムゾーンで集計されます"
+
+#: src/features/analytics/Settings.tsx
+msgid "Days are in the property’s time zone. Their totals are counted again without them."
+msgstr "日はプロパティのタイムゾーンです。それらを除いて合計が再集計されます。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Days waiting to be summed up"
+msgstr "集計待ちの日"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete"
+msgstr "削除"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete {0}?"
+msgstr "{0} を削除しますか?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete {name}?"
+msgstr "{name} を削除しますか?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data"
+msgstr "すべてのデータを削除"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data of {0}?"
+msgstr "{0} のすべてのデータを削除しますか?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete days"
+msgstr "日を削除"
+
+#: src/features/analytics/Exports.tsx
+msgid "Delete export"
+msgstr "エクスポートを削除"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Delete funnel"
+msgstr "ファネルを削除"
+
+#: src/features/analytics/Goals.tsx
+msgid "Delete goal"
+msgstr "ゴールを削除"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete note"
+msgstr "メモを削除"
+
+#: src/features/analytics/Controls.tsx
+msgid "Delete segment"
+msgstr "セグメントを削除"
+
+#. placeholder {0}: funnel.name
+#: src/features/analytics/Funnels.tsx
+msgid "Delete the funnel “{0}”?"
+msgstr "ファネル「{0}」を削除しますか?"
+
+#. placeholder {0}: goal.name
+#: src/features/analytics/Goals.tsx
+msgid "Delete the goal “{0}”?"
+msgstr "ゴール「{0}」を削除しますか?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the property"
+msgstr "プロパティを削除"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Delete the segment “{0}”?"
+msgstr "セグメント「{0}」を削除しますか?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the visits and events of {span}?"
+msgstr "{span} の訪問とイベントを削除しますか?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete these days"
+msgstr "これらの日を削除"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete this note?"
+msgstr "このメモを削除しますか?"
+
+#: src/features/analytics/Exports.tsx
+msgid "deleted {expires}"
+msgstr "{expires} に削除"
+
+#: src/features/analytics/Settings.tsx
+msgid "Deleting in the background. The numbers update when it is done."
+msgstr "バックグラウンドで削除中です。完了すると数値が更新されます。"
+
+#: src/features/analytics/Goals.tsx
+msgid "Depth in %"
+msgstr "深さ(%)"
+
+#: src/features/analytics/text.ts
+msgid "Desktop"
+msgstr "デスクトップ"
+
+#: src/features/analytics/Exports.tsx
+msgid "Detailed records are kept since {rawDay}."
+msgstr "詳細レコードは {rawDay} 以降が保持されています。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Detailed records kept since"
+msgstr "詳細レコードの保持開始日"
+
+#: src/features/analytics/Overview.tsx
+msgid "Details"
+msgstr "詳細"
+
+#: src/features/analytics/text.ts
+msgid "Device"
+msgstr "デバイス"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Devices"
+msgstr "デバイス"
+
+#: src/features/analytics/text.ts
+msgid "Direct"
+msgstr "直接"
+
+#: src/features/analytics/text.ts
+msgid "Direct / none"
+msgstr "ダイレクト / なし"
+
+#: src/features/analytics/text.ts
+msgid "Discussion threads started on the page."
+msgstr "そのページで始まったディスカッションスレッド。"
+
+#: src/features/analytics/text.ts
+msgid "Discussions"
+msgstr "ディスカッション"
+
+#: src/features/analytics/text.ts
+msgid "Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again."
+msgstr "1 日あたりのユニーク訪問者を、期間内の日数分合計したものです。別の日に再訪した人は再度カウントされます。"
+
+#: src/features/analytics/Install.tsx
+msgid "Do not count my visits"
+msgstr "自分の訪問を集計しない"
+
+#: src/features/analytics/text.ts
+msgid "does not contain"
+msgstr "を含まない"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Domains"
+msgstr "ドメイン"
+
+#: src/features/analytics/Exports.tsx
+msgid "Download"
+msgstr "ダウンロード"
+
+#: src/features/analytics/parts.tsx
+msgid "Download CSV"
+msgstr "CSV をダウンロード"
+
+#: src/features/analytics/Settings.tsx
+msgid "Dropped"
+msgstr "破棄"
+
+#: src/features/analytics/text.ts
+msgid "E-mail"
+msgstr "メール"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that day, each column the share of them who came back that many days later."
+msgstr "各行はその日に初めて確認された訪問者、各列はその何日後に再訪した割合です。"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that month, each column the share of them who came back that many months later."
+msgstr "各行はその月に初めて確認された訪問者、各列はその何か月後に再訪した割合です。"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that week, each column the share of them who came back that many weeks later."
+msgstr "各行はその週に初めて確認された訪問者、各列はその何週間後に再訪した割合です。"
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Edit"
+msgstr "編集"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Edit funnel"
+msgstr "ファネルを編集"
+
+#: src/features/analytics/Goals.tsx
+msgid "Edit goal"
+msgstr "ゴールを編集"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Edit note"
+msgstr "メモを編集"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Edit share link"
+msgstr "共有リンクを編集"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embed"
+msgstr "埋め込み"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embeds"
+msgstr "埋め込み"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Enter the password you were given with the link."
+msgstr "リンクと一緒に伝えられたパスワードを入力してください。"
+
+#: src/features/analytics/text.ts
+msgid "Entry page"
+msgstr "エントリーページ"
+
+#: src/features/analytics/Goals.tsx
+msgid "equal to"
+msgstr "が次と等しい"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Event"
+msgstr "イベント"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event}"
+msgstr "イベント {event}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event} with {key} = {value}"
+msgstr "イベント {event}({key} = {value})"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Install.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Events"
+msgstr "イベント"
+
+#: src/features/analytics/Settings.tsx
+msgid "Events are arriving."
+msgstr "イベントが届いています。"
+
+#: src/features/analytics/Events.tsx
+msgid "Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when the script has their attributes."
+msgstr "イベントは、ページとアプリの track() 呼び出しから届きます。外部リンク、ダウンロード、チャットのオープンは、スクリプトに属性があると集計されます。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Events count only after the page calls yuva.consent with analytics set to true. Install the script with data-consent=\"required\"."
+msgstr "イベントは、ページが analytics を true にして yuva.consent を呼び出した後にのみ集計されます。data-consent=\"required\" を付けてスクリプトをインストールしてください。"
+
+#: src/features/analytics/Settings.tsx
+msgid "events counted"
+msgstr "集計されたイベント"
+
+#: src/features/analytics/Settings.tsx
+msgid "events dropped"
+msgstr "破棄されたイベント"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every event with its visit’s page, source, place and device, as NDJSON. Visits are numbered within the file; there is no visitor id, address or contact. At most 31 days."
+msgstr "各イベントを、その訪問のページ、流入元、場所、デバイスとともに NDJSON で。訪問はファイル内で番号が付けられ、訪問者 ID、アドレス、連絡先は含まれません。最大 31 日間。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Every Monday at 08:00 in {zone}, about the week before."
+msgstr "毎週月曜日 08:00({zone})、前の週について。"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range and the filters you are looking at, without a comparison."
+msgstr "表示している期間とフィルターのすべての行(比較なし)。"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range you are looking at, without a comparison."
+msgstr "表示している期間のすべての行(比較なし)。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
+msgstr "すべての訪問、イベント、合計が削除されます。プロパティとそのキーは残り、集計は続きます。"
+
+#: src/features/analytics/Controls.tsx
+msgid "Everyone who sees this property can pick it. You, owners and admins can change it."
+msgstr "このプロパティを見られる全員が選択できます。あなた、オーナー、管理者が変更できます。"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Everyone who sees this property sees the note, such as a launch or a campaign."
+msgstr "このプロパティを見られる全員に、メモ(公開やキャンペーンなど)が表示されます。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Everything this property raised, newest first, whoever was notified."
+msgstr "このプロパティが発生させたすべてのアラート(新しい順)。通知を受けた人は問いません。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Excluded"
+msgstr "除外"
+
+#: src/features/analytics/text.ts
+msgid "Exit page"
+msgstr "離脱ページ"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expired"
+msgstr "期限切れ"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expires"
+msgstr "有効期限"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export"
+msgstr "エクスポート"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export progress"
+msgstr "エクスポートの進捗"
+
+#: src/features/analytics/Exports.tsx
+msgid "Exports"
+msgstr "エクスポート"
+
+#: src/features/analytics/Exports.tsx
+msgid "Failed"
+msgstr "失敗"
+
+#: src/features/analytics/text.ts
+msgid "Feedback"
+msgstr "フィードバック"
+
+#: src/features/analytics/Support.tsx
+msgid "Fewer than 100 views"
+msgstr "表示 100 回未満"
+
+#: src/features/analytics/text.ts
+msgid "File download"
+msgstr "ファイルのダウンロード"
+
+#: src/features/analytics/Exports.tsx
+msgid "Files are made in the background and deleted seven days later."
+msgstr "ファイルはバックグラウンドで作成され、7 日後に削除されます。"
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Support.tsx
+msgid "Filter by this"
+msgstr "これで絞り込む"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Filters"
+msgstr "フィルター"
+
+#: src/features/analytics/Exports.tsx
+msgid "Filters come from the view: click a row there to add one. <0>Change them in the view</0>"
+msgstr "フィルターはビューから設定します。そこで行をクリックして追加してください。<0>ビューで変更</0>"
+
+#: src/features/analytics/Retention.tsx
+msgid "First day"
+msgstr "最初の日"
+
+#: src/features/analytics/Retention.tsx
+msgid "First month"
+msgstr "最初の月"
+
+#: src/features/analytics/text.ts
+msgid "First page or screen"
+msgstr "最初のページまたは画面"
+
+#: src/features/analytics/text.ts
+msgid "First screen"
+msgstr "最初の画面"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "First visit"
+msgstr "初回訪問"
+
+#: src/features/analytics/Retention.tsx
+msgid "First week"
+msgstr "最初の週"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Five reports an hour at most. Try again later."
+msgstr "レポートは 1 時間に最大 5 件です。後でもう一度お試しください。"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "For example Fieldnote website"
+msgstr "例: Fieldnote ウェブサイト"
+
+#: src/features/analytics/Settings.tsx
+msgid "For revenue, an ISO code like EUR."
+msgstr "収益用。EUR のような ISO コード。"
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an <0>API key</0> with the analytics:write scope, which stays on your server."
+msgstr "サインアップや支払いなど、バックエンドだけが把握する内容用です。Track は訪問者のアドレスとブラウザーを転送するため、イベントは訪問に紐づきます。Do Not Track や Global Privacy Control のあるリクエストは送信されません。サーバー上に保管する analytics:write スコープの <0>API キー</0> が必要です。"
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
+msgstr "サインアップや支払いなど、バックエンドだけが把握する内容用です。Track は訪問者のアドレスとブラウザーを転送するため、イベントは訪問に紐づきます。Do Not Track や Global Privacy Control のあるリクエストは送信されません。オーナーまたは管理者が作成する、サーバー上に保管する analytics:write スコープの API キーが必要です。"
+
+#: src/features/analytics/Exports.tsx
+msgid "Format"
+msgstr "形式"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "From"
+msgstr "差出人"
+
+#: src/features/analytics/Settings.tsx
+msgid "From a site that is not one of the domains, or from an app whose platform is not turned on."
+msgstr "ドメインに含まれないサイトから、またはプラットフォームがオンになっていないアプリから。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "From pricing to signup"
+msgstr "料金ページからサインアップまで"
+
+#: src/features/analytics/Support.tsx
+msgid "From the inbox {inboxName}. Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "受信トレイ {inboxName} から。1,000 表示あたりの会話数順です。表示 100 回未満のページは最後に並びます。ページと日ごとに集計され、訪問者や連絡先ごとには集計されません。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Funnel"
+msgstr "ファネル"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Funnels"
+msgstr "ファネル"
+
+#: src/features/analytics/Settings.tsx
+msgid "General"
+msgstr "全般"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Go to goals"
+msgstr "ゴールへ移動"
+
+#: src/features/analytics/Goals.tsx
+msgid "Goal"
+msgstr "ゴール"
+
+#. placeholder {0}: a.text
+#: src/features/analytics/Annotations.tsx
+msgid "Goal “{0}” was created"
+msgstr "ゴール「{0}」を作成しました"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Goal drop"
+msgstr "ゴールの減少"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Goals"
+msgstr "ゴール"
+
+#: src/features/analytics/Settings.tsx
+msgid "had an address removed"
+msgstr "アドレスが削除されました"
+
+#: src/features/analytics/Settings.tsx
+msgid "Health"
+msgstr "状態"
+
+#: src/features/analytics/text.ts
+msgid "Helpful"
+msgstr "役に立った"
+
+#: src/features/analytics/Support.tsx
+msgid "Helpful and not helpful"
+msgstr "役に立った/役に立たなかった"
+
+#: src/features/analytics/text.ts
+msgid "Helpful ratings out of all ratings."
+msgstr "全評価のうち、役に立ったとの評価。"
+
+#: src/features/analytics/text.ts
+msgid "Helpful share"
+msgstr "役に立った割合"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Home shows each website and app like this: visitors today, in the last 30 minutes and this week."
+msgstr "ホームでは、各ウェブサイトとアプリを次のように表示します。今日、過去 30 分、今週の訪問者。"
+
+#: src/features/analytics/text.ts
+msgid "Host"
+msgstr "ホスト"
+
+#: src/features/analytics/text.ts
+msgid "Host or app"
+msgstr "ホストまたはアプリ"
+
+#: src/features/analytics/Install.tsx
+msgid "How to install"
+msgstr "インストール方法"
+
+#: src/features/analytics/Events.tsx
+msgid "How to send events"
+msgstr "イベントの送信方法"
+
+#: src/features/analytics/Sharing.tsx
+msgid "I saved it"
+msgstr "保存しました"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Support.tsx
+msgid "Inbox"
+msgstr "受信トレイ"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Install"
+msgstr "インストール"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/NewProperty.tsx
+msgid "Install on {0}"
+msgstr "{0} にインストール"
+
+#: src/features/analytics/text.ts
+msgid "Internal"
+msgstr "内部"
+
+#: src/features/analytics/Settings.tsx
+msgid "Invalid"
+msgstr "無効"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Investors"
+msgstr "投資家"
+
+#: src/features/analytics/text.ts
+msgid "is"
+msgstr "が次と等しい"
+
+#: src/features/analytics/text.ts
+msgid "is not"
+msgstr "が次と異なる"
+
+#: src/features/analytics/Controls.tsx
+msgid "It is gone for everyone who uses it. The numbers stay."
+msgstr "使っているすべての人に対して無効になります。数値は残ります。"
+
+#: src/features/analytics/SharePage.tsx
+msgid "It may have expired or been revoked. Ask the person who shared it for a new one."
+msgstr "期限切れか、取り消された可能性があります。共有した人に新しいものを依頼してください。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Its goals stay."
+msgstr "ゴールは残ります。"
+
+#: src/features/analytics/Goals.tsx
+msgid "Its numbers are deleted too. This cannot be undone."
+msgstr "その数値も削除されます。この操作は元に戻せません。"
+
+#: src/features/analytics/Events.tsx
+msgid "Keep only visits with this value"
+msgstr "この値の訪問のみ残す"
+
+#: src/features/analytics/Settings.tsx
+msgid "Key"
+msgstr "キー"
+
+#: src/features/analytics/Goals.tsx
+msgid "Kind of goal"
+msgstr "ゴールの種類"
+
+#: src/features/analytics/text.ts
+msgid "Language"
+msgstr "言語"
+
+#: src/features/analytics/text.ts
+msgid "Laptop"
+msgstr "ノートPC"
+
+#: src/features/analytics/text.ts
+msgid "Last 12 months"
+msgstr "過去 12 か月"
+
+#: src/features/analytics/text.ts
+msgid "Last 28 days"
+msgstr "過去 28 日間"
+
+#: src/features/analytics/text.ts
+msgid "Last 30 days"
+msgstr "過去 30 日間"
+
+#: src/features/analytics/text.ts
+msgid "Last 6 months"
+msgstr "過去 6 か月"
+
+#: src/features/analytics/text.ts
+msgid "Last 7 days"
+msgstr "過去 7 日間"
+
+#: src/features/analytics/text.ts
+msgid "Last 90 days"
+msgstr "過去 90 日間"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event"
+msgstr "最後のイベント"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event: {last}"
+msgstr "最後のイベント: {last}"
+
+#: src/features/analytics/text.ts
+msgid "Last month"
+msgstr "先月"
+
+#: src/features/analytics/Sharing.tsx
+msgid "last opened {viewed}"
+msgstr "最終閲覧 {viewed}"
+
+#: src/features/analytics/text.ts
+msgid "Last page or screen"
+msgstr "最後のページまたは画面"
+
+#: src/features/analytics/text.ts
+msgid "Last screen"
+msgstr "最後の画面"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Leave empty to keep the current one"
+msgstr "空のままにすると現在のものを保持します"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Link"
+msgstr "リンク"
+
+#: src/features/analytics/Support.tsx
+msgid "Link an inbox to see support per page"
+msgstr "受信トレイをリンクして、ページごとのサポート状況を確認"
+
+#: src/features/analytics/Support.tsx
+msgid "Link inbox"
+msgstr "受信トレイをリンク"
+
+#: src/features/analytics/Settings.tsx
+msgid "Link signed-in users to their contact"
+msgstr "サインイン済みユーザーを連絡先にリンク"
+
+#: src/features/analytics/Alerts.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Support.tsx
+msgid "Load more"
+msgstr "さらに読み込む"
+
+#: src/features/analytics/Settings.tsx
+msgid "Location database"
+msgstr "位置情報データベース"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Locations"
+msgstr "場所"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created}"
+msgstr "{created} に作成"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created} by {by}"
+msgstr "{created} に {by} が作成"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key"
+msgstr "新しいキーを作成"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key?"
+msgstr "新しいキーを作成しますか?"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Make at least two goals first."
+msgstr "先に 2 つ以上のゴールを作成してください。"
+
+#: src/features/analytics/Goals.tsx
+msgid "Make goal"
+msgstr "ゴールを作成"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Make link"
+msgstr "リンクを作成"
+
+#: src/features/analytics/text.ts
+msgid "matches"
+msgstr "に一致"
+
+#: src/features/analytics/text.ts
+msgid "Mobile"
+msgstr "モバイル"
+
+#: src/features/analytics/Retention.tsx
+msgid "Month {period}"
+msgstr "{period} か月目"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Monthly"
+msgstr "月次"
+
+#: src/features/analytics/Settings.tsx
+msgid "Monthly limit"
+msgstr "月間上限"
+
+#: src/features/analytics/Retention.tsx
+msgid "Months"
+msgstr "月"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move down"
+msgstr "下に移動"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move up"
+msgstr "上に移動"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Name"
+msgstr "名前"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs a linked inbox under General: its identity secret signs the tokens."
+msgstr "全般でリンクした受信トレイが必要です。そのアイデンティティシークレットでトークンに署名します。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Needs a linked inbox. {help}"
+msgstr "リンクした受信トレイが必要です。{help}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs the persistent id: a visitor is linked through it."
+msgstr "永続 ID が必要です。訪問者はそれを通じて紐づけられます。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Never"
+msgstr "なし"
+
+#: src/features/analytics/Sharing.tsx
+msgid "never opened"
+msgstr "一度も開かれていません"
+
+#: src/features/analytics/text.ts
+msgid "New"
+msgstr "新規"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value} with {count}, none in the compared days."
+msgstr "新しい {kind}: {value}({count} 件)、比較した日にはありません。"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
+msgstr "新しい {kind}: {value}。{metric}: {now}、比較した日にはありません。"
+
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "新規とリピート"
+
+#: src/features/analytics/Funnels.tsx
+msgid "New funnel"
+msgstr "新しいファネル"
+
+#: src/features/analytics/Goals.tsx
+msgid "New goal"
+msgstr "新しいゴール"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New link"
+msgstr "新しいリンク"
+
+#: src/features/analytics/text.ts
+msgid "New or returning"
+msgstr "新規またはリピート"
+
+#: src/features/analytics/Annotations.tsx
+msgid "New pricing page"
+msgstr "新しい料金ページ"
+
+#: src/features/analytics/Alerts.tsx
+msgid "New referrer"
+msgstr "新しい参照元"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New share link"
+msgstr "新しい共有リンク"
+
+#: src/features/analytics/Alerts.tsx
+msgid "No alerts yet."
+msgstr "アラートはまだありません。"
+
+#: src/features/analytics/Controls.tsx
+msgid "No comparison"
+msgstr "比較なし"
+
+#: src/features/analytics/Settings.tsx
+msgid "No consent features are offered."
+msgstr "同意機能は提供されていません。"
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "この期間に同意した訪問者はいません。"
+
+#: src/features/analytics/Retention.tsx
+msgid "No consented visitors yet"
+msgstr "同意した訪問者はまだいません"
+
+#: src/features/analytics/Support.tsx
+msgid "No conversations, feedback, ratings or discussions from these pages in this range."
+msgstr "この期間に、これらのページからの会話、フィードバック、評価、ディスカッションはありません。"
+
+#: src/features/analytics/Goals.tsx
+msgid "No conversions in this range."
+msgstr "この期間にコンバージョンはありません。"
+
+#: src/features/analytics/Settings.tsx
+msgid "No event yet."
+msgstr "イベントはまだありません。"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events in the last 24 hours"
+msgstr "過去 24 時間にイベントはありません"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events yet"
+msgstr "イベントはまだありません"
+
+#: src/features/analytics/Exports.tsx
+msgid "No exports yet."
+msgstr "エクスポートはまだありません。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "No funnels yet"
+msgstr "ファネルはまだありません"
+
+#: src/features/analytics/Goals.tsx
+msgid "No goals yet"
+msgstr "ゴールはまだありません"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No properties yet"
+msgstr "プロパティはまだありません"
+
+#: src/features/analytics/Settings.tsx
+msgid "No props are tracked."
+msgstr "追跡しているプロパティはありません。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "No scheduled reports."
+msgstr "予定されているレポートはありません。"
+
+#: src/features/analytics/Controls.tsx
+msgid "No segment"
+msgstr "セグメントなし"
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Make one to show these numbers to people outside the workspace."
+msgstr "共有リンクはまだありません。ワークスペース外の人にこの数値を見せるには、作成してください。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Owners and admins make them."
+msgstr "共有リンクはまだありません。オーナーと管理者が作成します。"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Nobody in the last 30 minutes."
+msgstr "過去 30 分間は誰もいません。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Nobody reached the first step in this range."
+msgstr "この期間に最初のステップに到達した人はいません。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "None"
+msgstr "なし"
+
+#: src/features/analytics/Settings.tsx
+msgid "None yet"
+msgstr "まだありません"
+
+#: src/features/analytics/Exports.tsx
+msgid "None, every visit counts."
+msgstr "なし。すべての訪問を集計します。"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "None, owners and admins only"
+msgstr "なし。オーナーと管理者のみ"
+
+#: src/features/analytics/parts.tsx
+msgid "Not available for this range."
+msgstr "この期間では利用できません。"
+
+#: src/features/analytics/text.ts
+msgid "Not helpful"
+msgstr "役に立たなかった"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Note"
+msgstr "メモ"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Notes"
+msgstr "メモ"
+
+#: src/features/analytics/Exports.tsx
+msgid "Nothing"
+msgstr "なし"
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Nothing counted in this range."
+msgstr "この期間に集計されたものはありません。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Notify me"
+msgstr "通知する"
+
+#: src/features/analytics/Settings.tsx
+msgid "Off"
+msgstr "オフ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Offered only to visitors who agree in your consent tool. Everyone else is counted exactly as before, one day at a time and without anything stored on the device."
+msgstr "同意ツールで同意した訪問者にのみ提供されます。それ以外の人は、これまでどおり 1 日単位で、デバイスに何も保存せずに集計されます。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Older than 72 hours. Apps keep events without a connection for at most that long."
+msgstr "72 時間より前。アプリは接続がない間、イベントを最大でこの時間まで保持します。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "On its way to {email}."
+msgstr "{email} に送信中です。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "On the 1st of each month at 08:00 in {zone}, about the month before."
+msgstr "毎月 1 日 08:00({zone})、前の月について。"
+
+#: src/features/analytics/Settings.tsx
+msgid "One IP address or range per line, up to 50, such as your office or a monitoring service."
+msgstr "1 行に 1 つの IP アドレスまたは範囲を、最大 50 件。オフィスや監視サービスなど。"
+
+#: src/features/analytics/Settings.tsx
+msgid "One path per line, up to 50. * stands for one part of the path, ** for any number of them."
+msgstr "1 行に 1 つのパスを、最大 50 件。* はパスの 1 区間、** は任意の数の区間を表します。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "One per line, like https://example.com or https://*.example.com. Without any, no other site can show it in a frame."
+msgstr "1 行に 1 つ。例: https://example.com または https://*.example.com。指定がない場合、他のサイトはフレームに表示できません。"
+
+#: src/features/analytics/Settings.tsx
+msgid "One per line. *.example.com covers every subdomain, but not example.com itself."
+msgstr "1 行に 1 つ。*.example.com はすべてのサブドメインを含みますが、example.com 自体は含みません。"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "One per line. Pages on other domains cannot send events. *.example.com covers every subdomain."
+msgstr "1 行に 1 つ。他のドメインのページはイベントを送信できません。*.example.com はすべてのサブドメインを含みます。"
+
+#: src/features/analytics/Settings.tsx
+msgid "One prop name per line, up to 10, such as plan."
+msgstr "1 行にプロパティ名を 1 つ、最大 10 件。例: plan。"
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
+msgstr "訪問者、訪問、表示、直帰率、滞在時間、スクロール深度を、1 日 1 行で。最大 400 日。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Only for you, by e-mail to {email}. Reports are plain numbers, with no images and nothing that tracks opening or clicks."
+msgstr "あなた宛てのみ、{email} へメールで。レポートはプレーンな数値のみで、画像も、開封やクリックを追跡するものも含みません。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Only members see it, to tell links apart."
+msgstr "リンクを区別するため、メンバーにのみ表示されます。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Only the country is kept, never the region or city."
+msgstr "国のみ保持され、地域や市区町村は保持されません。"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Only totals are shown. There is no list of individual visitors."
+msgstr "合計のみ表示されます。個々の訪問者の一覧はありません。"
+
+#: src/features/analytics/parts.tsx
+msgid "Only visitors who agreed to a persistent id are counted here. Everyone else is counted one day at a time."
+msgstr "永続 ID に同意した訪問者のみがここで集計されます。それ以外の人は 1 日単位で集計されます。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Only with consent"
+msgstr "同意がある場合のみ"
+
+#: src/features/analytics/Goals.tsx
+msgid "Only with prop"
+msgstr "プロパティがある場合のみ"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
+msgstr "スニペットを設置したサイトのページを開いてください。サーバーが最初のページビューを保存すると、すぐに緑色になります。Do Not Track や Global Privacy Control のあるブラウザーは何も送信しないため、テストには別のブラウザーを使ってください。"
+
+#: src/features/analytics/Retention.tsx
+msgid "Open consent features"
+msgstr "同意機能を開く"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Open report"
+msgstr "レポートを開く"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open the overview"
+msgstr "概要を開く"
+
+#: src/features/analytics/Support.tsx
+msgid "Open the property’s settings"
+msgstr "プロパティの設定を開く"
+
+#: src/features/analytics/text.ts
+msgid "Operating system"
+msgstr "OS"
+
+#: src/features/analytics/Install.tsx
+msgid "Opt-out link"
+msgstr "オプトアウトリンク"
+
+#: src/features/analytics/text.ts
+msgid "Organic search"
+msgstr "自然検索"
+
+#: src/features/analytics/text.ts
+msgid "OS version"
+msgstr "OS バージョン"
+
+#: src/features/analytics/text.ts
+msgid "Other"
+msgstr "その他"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other drops"
+msgstr "その他の減少"
+
+#: src/features/analytics/Events.tsx
+msgid "Other prop"
+msgstr "その他のプロパティ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other sites"
+msgstr "その他のサイト"
+
+#: src/features/analytics/text.ts
+msgid "Outbound link"
+msgstr "外部リンク"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Overview"
+msgstr "概要"
+
+#: src/features/analytics/Install.tsx
+msgid "Own domain"
+msgstr "独自ドメイン"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Owners and admins make funnels from goals. They show up here with each step’s drop-off."
+msgstr "オーナーと管理者がゴールからファネルを作成します。各ステップの離脱とともにここに表示されます。"
+
+#: src/features/analytics/Goals.tsx
+msgid "Owners and admins make goals. They show up here with their conversions."
+msgstr "オーナーと管理者がゴールを作成します。コンバージョンとともにここに表示されます。"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Page"
+msgstr "ページ"
+
+#: src/features/analytics/text.ts
+msgid "Page feedback sent from the page."
+msgstr "ページから送信されたページフィードバック。"
+
+#: src/features/analytics/text.ts
+msgid "Page not found"
+msgstr "ページが見つかりません"
+
+#: src/features/analytics/text.ts
+msgid "Page or screen"
+msgstr "ページまたは画面"
+
+#: src/features/analytics/Goals.tsx
+msgid "Page view of {path}"
+msgstr "{path} のページビュー"
+
+#: src/features/analytics/text.ts
+msgid "Pages"
+msgstr "ページ"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens"
+msgstr "ページと画面"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens viewed."
+msgstr "表示されたページと画面。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages not counted"
+msgstr "集計対象外のページ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
+msgstr "パターンに一致するページは 1 つのパスにまとめて集計されるため、すべての注文ページが 1 つとして合計されます。パス内のアドレスは常に置き換えられます。"
+
+#: src/features/analytics/text.ts
+msgid "Pages viewed."
+msgstr "表示されたページ。"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Pages, sources, places and devices, without cookies, without storing IP addresses and without a consent banner where the law allows it."
+msgstr "Cookie なし、IP アドレスの保存なし、法令で許される場合は同意バナーなしで、ページ、流入元、場所、デバイスを集計します。"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews"
+msgstr "ページビュー"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews divided by visits."
+msgstr "ページビューを訪問数で割った値。"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews in the last 30 minutes"
+msgstr "過去 30 分のページビュー"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews per minute"
+msgstr "1 分あたりのページビュー"
+
+#: src/features/analytics/text.ts
+msgid "Paid search"
+msgstr "有料検索"
+
+#: src/features/analytics/text.ts
+msgid "Paid social"
+msgstr "有料ソーシャル"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Password"
+msgstr "パスワード"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Past alerts"
+msgstr "過去のアラート"
+
+#: src/features/analytics/Settings.tsx
+msgid "Path rules"
+msgstr "パスのルール"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pattern"
+msgstr "パターン"
+
+#: src/features/analytics/Controls.tsx
+msgid "Paying customers from Germany"
+msgstr "ドイツの有料顧客"
+
+#: src/features/analytics/text.ts
+msgid "Per 1,000 views"
+msgstr "1,000 表示あたり"
+
+#: src/features/analytics/Overview.tsx
+msgid "per day"
+msgstr "日別"
+
+#: src/features/analytics/Settings.tsx
+msgid "Per day"
+msgstr "1 日あたり"
+
+#: src/features/analytics/Overview.tsx
+msgid "per hour"
+msgstr "時間別"
+
+#: src/features/analytics/Overview.tsx
+msgid "per week"
+msgstr "週別"
+
+#: src/features/analytics/Settings.tsx
+msgid "Persistent id"
+msgstr "永続 ID"
+
+#: src/features/analytics/text.ts
+msgid "Phone"
+msgstr "スマートフォン"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Pick a goal"
+msgstr "ゴールを選択"
+
+#: src/features/analytics/Events.tsx
+msgid "Pick a prop to see the values this event carried."
+msgstr "プロパティを選ぶと、このイベントが持っていた値を表示します。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pick at least one platform."
+msgstr "プラットフォームを 1 つ以上選択してください。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Pick at least one view."
+msgstr "ビューを 1 つ以上選択してください。"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
+msgstr "サイトの構築方法を選んでスニペットをコピーします。キーはチャットキーと同様に公開されており、プロパティのドメインでのみ動作します。"
+
+#: src/features/analytics/text.ts
+msgid "Platform"
+msgstr "プラットフォーム"
+
+#: src/features/analytics/Settings.tsx
+msgid "Platforms"
+msgstr "プラットフォーム"
+
+#: src/features/analytics/text.ts
+msgid "Prop"
+msgstr "プロパティ"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name"
+msgstr "プロパティ名"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name, like plan"
+msgstr "プロパティ名(例: plan)"
+
+#: src/features/analytics/Events.tsx
+msgid "Properties for children keep no props, only the address of outbound links and downloads."
+msgstr "子ども向けのプロパティはプロパティを保持せず、外部リンクとダウンロードのアドレスのみ保持します。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children keep no props, so none can be tracked."
+msgstr "子ども向けのプロパティはプロパティを保持しないため、追跡できません。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children never keep an id on the device or link visits to a contact."
+msgstr "子ども向けのプロパティは、デバイスに ID を保持したり、訪問を連絡先に紐づけたりしません。"
+
+#: src/features/analytics/Retention.tsx
+msgid "Properties for children never keep an id on the device, so they have no retention."
+msgstr "子ども向けのプロパティは、デバイスに ID を保持しないため、保持機能はありません。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Property name"
+msgstr "プロパティ名"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Props"
+msgstr "プロパティ"
+
+#: src/features/analytics/Events.tsx
+msgid "Props of any name can be broken down for the days the detailed records are kept. Earlier days only have the tracked props."
+msgstr "任意の名前のプロパティは、詳細レコードが保持されている日数分、内訳を表示できます。それ以前の日は、追跡対象のプロパティのみです。"
+
+#: src/features/analytics/Install.tsx
+msgid "Put the script in the head of every page. It counts page views, also when a single-page app changes the address, and stores nothing on the visitor’s device."
+msgstr "すべてのページの head にスクリプトを設置します。シングルページアプリがアドレスを変更した場合も含め、ページビューを集計し、訪問者のデバイスには何も保存しません。"
+
+#: src/features/analytics/Install.tsx
+msgid "Put these links on your privacy page. Opting out is the only thing the script stores on the visitor’s device, and only when they ask for it. Visitors with Do Not Track or Global Privacy Control are never counted."
+msgstr "これらのリンクをプライバシーのページに掲載してください。オプトアウトは、スクリプトが訪問者のデバイスに保存する唯一のもので、本人が求めた場合のみです。Do Not Track や Global Privacy Control のある訪問者は一切集計されません。"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Range"
+msgstr "期間"
+
+#: src/features/analytics/Support.tsx
+msgid "Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "1,000 表示あたりの会話数順です。表示 100 回未満のページは最後に並びます。ページと日ごとに集計され、訪問者や連絡先ごとには集計されません。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Rate limits"
+msgstr "レート制限"
+
+#: src/features/analytics/Support.tsx
+msgid "Ratings"
+msgstr "評価"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw events"
+msgstr "生イベント"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw exports cover at most 31 days."
+msgstr "生データのエクスポートは最大 31 日間です。"
+
+#: src/features/analytics/Goals.tsx
+msgid "Reached when a visitor"
+msgstr "訪問者が次を行った時点で到達"
+
+#: src/features/analytics/Exports.tsx
+msgid "Ready"
+msgstr "準備完了"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Realtime"
+msgstr "リアルタイム"
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour, last at {builtAt}."
+msgstr "1 時間ごとに再構築され、最後は {builtAt} です。"
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour."
+msgstr "1 時間ごとに再構築されます。"
+
+#: src/features/analytics/text.ts
+msgid "Referral"
+msgstr "リファラル"
+
+#: src/features/analytics/text.ts
+msgid "Referrer"
+msgstr "参照元"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Refreshes every 15 seconds"
+msgstr "15 秒ごとに更新"
+
+#: src/features/analytics/Settings.tsx
+msgid "Refused"
+msgstr "拒否"
+
+#: src/features/analytics/text.ts
+msgid "Region"
+msgstr "リージョン"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter"
+msgstr "フィルターを削除"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter: {label}"
+msgstr "フィルターを削除: {label}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Remove rule"
+msgstr "ルールを削除"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Remove step"
+msgstr "ステップを削除"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Rename “{0}”…"
+msgstr "「{0}」の名前を変更…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Rename segment"
+msgstr "セグメント名を変更"
+
+#: src/features/analytics/Install.tsx
+msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
+msgstr "ルートレイアウトで、コンポーネントを 1 回だけレンダリングします。何も描画せず、その下ならどこでも useYuvaAnalytics() でメソッドを使えます。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Report"
+msgstr "レポート"
+
+#: src/features/analytics/Settings.tsx
+msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
+msgstr "Do Not Track や Global Privacy Control のあるリクエスト、および同意が必要なプロパティで同意のないイベントは、受け取りますが、保存も集計もされません。"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Retention"
+msgstr "リテンション"
+
+#: src/features/analytics/Retention.tsx
+msgid "Retention needs consent features"
+msgstr "リテンションには同意機能が必要です"
+
+#: src/features/analytics/text.ts
+msgid "Returning"
+msgstr "リピート"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/text.ts
+msgid "Revenue"
+msgstr "収益"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke"
+msgstr "取り消す"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke {name}?"
+msgstr "{name} を取り消しますか?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoked"
+msgstr "取り消し済み"
+
+#: src/features/analytics/Exports.tsx
+msgid "Rows"
+msgstr "行"
+
+#: src/features/analytics/Exports.tsx
+msgid "Running"
+msgstr "実行中"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Save"
+msgstr "保存"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Save the changes to “{0}”"
+msgstr "「{0}」への変更を保存"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save the filters as a new segment…"
+msgstr "フィルターを新しいセグメントとして保存…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save these filters as a segment"
+msgstr "これらのフィルターをセグメントとして保存"
+
+#: src/features/analytics/Controls.tsx
+msgid "Saved segments"
+msgstr "保存済みセグメント"
+
+#: src/features/analytics/text.ts
+msgid "Screen"
+msgstr "画面"
+
+#: src/features/analytics/text.ts
+msgid "Screen size"
+msgstr "画面サイズ"
+
+#: src/features/analytics/text.ts
+msgid "Screen views"
+msgstr "画面表示"
+
+#: src/features/analytics/text.ts
+msgid "Screen views divided by visits."
+msgstr "画面表示を訪問数で割った値。"
+
+#: src/features/analytics/text.ts
+msgid "Screen views in the last 30 minutes"
+msgstr "過去 30 分の画面表示"
+
+#: src/features/analytics/text.ts
+msgid "Screen views per minute"
+msgstr "1 分あたりの画面表示"
+
+#: src/features/analytics/text.ts
+msgid "Screens"
+msgstr "画面"
+
+#: src/features/analytics/text.ts
+msgid "Screens viewed."
+msgstr "表示された画面。"
+
+#: src/features/analytics/text.ts
+msgid "Scroll depth"
+msgstr "スクロール深度"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolled to {pct} on {path}"
+msgstr "{path} で {pct} までスクロール"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolls"
+msgstr "スクロール"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segment"
+msgstr "セグメント"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segments"
+msgstr "セグメント"
+
+#: src/features/analytics/Settings.tsx
+msgid "Send a screen or an event from your app or backend while this page is open, and see whether it reached the server. Refreshes every 5 seconds."
+msgstr "このページを開いたまま、アプリまたはバックエンドから画面またはイベントを送信し、サーバーに届いたか確認します。5 秒ごとに更新されます。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Send me one now"
+msgstr "今すぐ 1 件送信"
+
+#: src/features/analytics/Goals.tsx
+msgid "Sends an event"
+msgstr "イベントを送信"
+
+#: src/features/analytics/text.ts
+msgid "Server"
+msgstr "サーバー"
+
+#: src/features/analytics/Settings.tsx
+msgid "Server busy"
+msgstr "サーバー混雑"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Settings"
+msgstr "設定"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Share links"
+msgstr "共有リンク"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Shared with Yuva"
+msgstr "Yuva と共有済み"
+
+#: src/features/analytics/Settings.tsx
+msgid "Sharing"
+msgstr "共有"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Events.tsx
+msgid "Show"
+msgstr "表示"
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/parts.tsx
+msgid "Show from {day}"
+msgstr "{day} 以降を表示"
+
+#: src/features/analytics/Events.tsx
+msgid "Show its props"
+msgstr "そのプロパティを表示"
+
+#: src/features/analytics/Controls.tsx
+msgid "Show the days"
+msgstr "日を表示"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Show the last 30 days"
+msgstr "過去 30 日間を表示"
+
+#: src/features/analytics/Goals.tsx
+msgid "Signed up"
+msgstr "サインアップ済み"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Sites that may embed it"
+msgstr "埋め込みを許可するサイト"
+
+#: src/features/analytics/text.ts
+msgid "Social"
+msgstr "ソーシャル"
+
+#: src/features/analytics/Settings.tsx
+msgid "Some events were dropped. The reasons are below."
+msgstr "一部のイベントが破棄されました。理由は下に表示されています。"
+
+#: src/features/analytics/text.ts
+msgid "Source"
+msgstr "ソース"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Realtime.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Sources"
+msgstr "流入元"
+
+#: src/features/analytics/Settings.tsx
+msgid "Start over"
+msgstr "最初からやり直す"
+
+#. placeholder {0}: i + 1
+#: src/features/analytics/Funnels.tsx
+msgid "Step {0}"
+msgstr "ステップ {0}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Steps"
+msgstr "手順"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Support.tsx
+msgid "Support"
+msgstr "サポート"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Support load"
+msgstr "サポート負荷"
+
+#: src/features/analytics/Support.tsx
+msgid "Support numbers can only be filtered by page and host. The other filters are left out here."
+msgstr "サポートの数値は、ページとホストでしか絞り込めません。その他のフィルターはここでは除外されます。"
+
+#: src/features/analytics/text.ts
+msgid "Tablet"
+msgstr "タブレット"
+
+#: src/features/analytics/Settings.tsx
+msgid "Taken and stored. They show up in Realtime within a minute."
+msgstr "受信して保存しました。1 分以内にリアルタイムに表示されます。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Test events"
+msgstr "テストイベント"
+
+#: src/features/analytics/SharePage.tsx
+msgid "That password is not right."
+msgstr "パスワードが正しくありません。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "The consented counts follow visitors with a persistent id from one visit and day to the next, so a step reached on a later day still counts."
+msgstr "同意した訪問者の数は、永続 ID によって、ある訪問や日から次の訪問や日まで追跡されるため、後の日に到達したステップも集計されます。"
+
+#: src/features/analytics/Settings.tsx
+msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
+msgstr "現在のキーは 24 時間引き続き動作するため、イベントを失わずにページを更新できます。その間に別のキーを作成すると、古いキーはすぐに無効になります。"
+
+#: src/features/analytics/text.ts
+msgid "The deepest point reached on the page, per view."
+msgstr "ページで到達した最も深い位置(表示ごと)。"
+
+#: src/features/analytics/Exports.tsx
+msgid "The export failed on the server."
+msgstr "サーバーでエクスポートに失敗しました。"
+
+#: src/features/analytics/Exports.tsx
+msgid "The file would be larger than 1 GiB. Export a shorter range."
+msgstr "ファイルが 1 GiB を超えます。もっと短い期間でエクスポートしてください。"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "The first event arrived at {at}."
+msgstr "最初のイベントが {at} に届きました。"
+
+#: src/features/analytics/Goals.tsx
+msgid "The goal reports the revenue its events carry, per currency."
+msgstr "ゴールは、そのイベントに含まれる収益を通貨ごとに報告します。"
+
+#: src/features/analytics/Settings.tsx
+msgid "The key is public, like a chat key: every page carries it, and it only works on the property’s domains."
+msgstr "キーはチャットキーと同様に公開されています。すべてのページに含まれ、プロパティのドメインでのみ動作します。"
+
+#: src/features/analytics/Settings.tsx
+msgid "The key stops working at once, and all visits, events and totals are deleted. This cannot be undone."
+msgstr "キーはすぐに動作しなくなり、すべての訪問、イベント、合計が削除されます。この操作は元に戻せません。"
+
+#: src/features/analytics/Settings.tsx
+msgid "The last 30 days"
+msgstr "過去 30 日間"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and leaves the list."
+msgstr "リンクはすぐに無効になり、一覧から消えます。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and stays in the list."
+msgstr "リンクはすぐに無効になり、一覧には残ります。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked."
+msgstr "リンクは {timezone} のこの日の終わりに無効になります。空のままにすると、取り消すまで有効です。"
+
+#: src/features/analytics/Install.tsx
+msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
+msgstr "このモジュールは、クライアントプラグインと useYuvaAnalytics() コンポーザブルを追加します。NUXT_PUBLIC_YUVA_ANALYTICS_KEY で実行時にキーを上書きできます。"
+
+#: src/features/analytics/Settings.tsx
+msgid "The name does not match. Type it exactly as shown."
+msgstr "名前が一致しません。表示されているとおりに入力してください。"
+
+#: src/features/analytics/Goals.tsx
+msgid "The name given to track(), or outbound_click, file_download, not_found, chat_open."
+msgstr "track() に渡された名前、または outbound_click、file_download、not_found、chat_open。"
+
+#: src/features/analytics/Settings.tsx
+msgid "The previous key keeps working until {at}. Update every page and app before then."
+msgstr "以前のキーは {at} まで引き続き動作します。それまでにすべてのページとアプリを更新してください。"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "The properties of your inboxes show up here once an owner or admin adds them."
+msgstr "オーナーまたは管理者が追加すると、受信トレイのプロパティがここに表示されます。"
+
+#: src/features/analytics/Exports.tsx
+msgid "The query could not be run."
+msgstr "クエリを実行できませんでした。"
+
+#: src/features/analytics/Exports.tsx
+msgid "The range is outside the detailed records."
+msgstr "この期間は詳細レコードの範囲外です。"
+
+#: src/features/analytics/SharePage.tsx
+msgid "The report could not be loaded"
+msgstr "レポートを読み込めませんでした"
+
+#: src/features/analytics/Settings.tsx
+msgid "The server’s own database"
+msgstr "サーバー自身のデータベース"
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need detailed records that are no longer kept for this range."
+msgstr "これらのフィルターには詳細レコードが必要ですが、この期間のものはもう保持されていません。"
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need the detailed records, which are kept since {day}. Earlier days only have totals per page, source, place and device."
+msgstr "これらのフィルターには詳細レコードが必要で、{day} 以降のものが保持されています。それ以前の日は、ページ、流入元、場所、デバイスごとの合計値のみです。"
+
+#: src/features/analytics/Settings.tsx
+msgid "This cannot be undone."
+msgstr "この操作は元に戻せません。"
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal has numbers from {since} on. Days before that show none."
+msgstr "このゴールの数値は {since} 以降のものです。それ以前の日にはありません。"
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
+msgstr "このゴールはファネルの 1 ステップです。先にファネルから外すか、ファネルを削除してください。"
+
+#: src/features/analytics/SharePage.tsx
+msgid "This link is not available"
+msgstr "このリンクは利用できません"
+
+#: src/features/analytics/text.ts
+msgid "This month"
+msgstr "今月"
+
+#: src/features/analytics/Funnels.tsx
+msgid "This property already has a funnel with this name."
+msgstr "このプロパティにはすでに同じ名前のファネルがあります。"
+
+#: src/features/analytics/Goals.tsx
+msgid "This property already has a goal with this name."
+msgstr "このプロパティにはすでに同じ名前のゴールがあります。"
+
+#: src/features/analytics/Controls.tsx
+msgid "This property already has a segment with this name."
+msgstr "このプロパティにはすでに同じ名前のセグメントがあります。"
+
+#: src/features/analytics/Exports.tsx
+msgid "This range cannot be exported. Pick a shorter one, or one inside the detailed records."
+msgstr "この期間はエクスポートできません。短い期間か、詳細レコード内の期間を選んでください。"
+
+#: src/features/analytics/SharePage.tsx
+msgid "This report has a password"
+msgstr "このレポートにはパスワードが設定されています"
+
+#: src/features/analytics/Support.tsx
+msgid "This workspace has no inbox yet."
+msgstr "このワークスペースには受信トレイがまだありません。"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
+msgstr "このワークスペースは今月のアナリティクスイベント {limit} 件の上限に達しました。月末まで、新しいイベントは破棄されます。"
+
+#: src/features/analytics/text.ts
+msgid "This year"
+msgstr "今年"
+
+#: src/features/analytics/Exports.tsx
+msgid "Three exports are already running in this workspace. Try again when one finishes."
+msgstr "このワークスペースではすでに 3 件のエクスポートが実行中です。1 件が終わってからもう一度お試しください。"
+
+#: src/features/analytics/text.ts
+msgid "Time from the first to the last event of a visit, on average. Bounces count as zero."
+msgstr "訪問の最初から最後のイベントまでの時間の平均。直帰は 0 として数えます。"
+
+#: src/features/analytics/text.ts
+msgid "Time on page"
+msgstr "ページ滞在時間"
+
+#: src/features/analytics/text.ts
+msgid "Time the page was visible and in focus, per view."
+msgstr "ページが表示され、フォーカスされていた時間(表示ごと)。"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Time zone"
+msgstr "タイムゾーン"
+
+#: src/features/analytics/text.ts
+msgid "Times the goal was reached, also several times by one visitor."
+msgstr "ゴールに到達した回数。1 人の訪問者が複数回到達した場合も含みます。"
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated helpful."
+msgstr "ページが役に立ったと評価された回数。"
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated not helpful."
+msgstr "ページが役に立たなかったと評価された回数。"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "To"
+msgstr "宛先"
+
+#: src/features/analytics/text.ts
+msgid "Today"
+msgstr "今日"
+
+#: src/features/analytics/Settings.tsx
+msgid "Today: {todayCounted} counted, {todayDropped} dropped"
+msgstr "今日: 集計 {todayCounted} 件、破棄 {todayDropped} 件"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Token"
+msgstr "トークン"
+
+#: src/features/analytics/Settings.tsx
+msgid "Too late"
+msgstr "遅すぎます"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many requests from your network. Wait a minute and reload the page."
+msgstr "あなたのネットワークからのリクエストが多すぎます。1 分待ってからページを再読み込みしてください。"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many tries. Wait a minute and try again."
+msgstr "試行回数が多すぎます。1 分待ってからもう一度お試しください。"
+
+#: src/features/analytics/text.ts
+msgid "Top pages"
+msgstr "人気ページ"
+
+#: src/features/analytics/text.ts
+msgid "Top pages and screens"
+msgstr "人気のページと画面"
+
+#: src/features/analytics/text.ts
+msgid "Top screens"
+msgstr "人気の画面"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracked props"
+msgstr "追跡中のプロパティ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracking"
+msgstr "トラッキング"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic drop"
+msgstr "トラフィック減少"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic spike"
+msgstr "トラフィック急増"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Try again"
+msgstr "もう一度試す"
+
+#: src/features/analytics/Install.tsx
+msgid "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
+msgstr "先に、全般設定のプラットフォームで {name} をオンにしてください。それまでサーバーはアプリのイベントを拒否します。"
+
+#: src/features/analytics/Retention.tsx
+msgid "Turn on the persistent id in the consent features, then call yuva.consent with persistent set to true."
+msgstr "同意機能で永続 ID をオンにしてから、persistent を true にして yuva.consent を呼び出してください。"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Two to eight goals, in the order visitors reach them within one visit."
+msgstr "2 〜 8 個のゴール。1 回の訪問内で訪問者が到達する順に並べます。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Type the property’s name to delete it and all its data."
+msgstr "プロパティとそのすべてのデータを削除するには、プロパティ名を入力してください。"
+
+#: src/features/analytics/text.ts
+msgid "Unknown"
+msgstr "不明"
+
+#: src/features/analytics/Install.tsx
+msgid "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
+msgstr "1 リクエストあたり最大 100 件のイベント。それぞれに訪問者の IP アドレスとユーザーエージェント、または独自の visitor_key が必要です。どちらも保存されません。無効として除外されたイベントは、位置とともに errors で返ります。届いた内容はテストイベントで確認できます。"
+
+#: src/features/analytics/text.ts
+msgid "UTM campaign"
+msgstr "UTM キャンペーン"
+
+#: src/features/analytics/text.ts
+msgid "UTM content"
+msgstr "UTM コンテンツ"
+
+#: src/features/analytics/text.ts
+msgid "UTM medium"
+msgstr "UTM メディア"
+
+#: src/features/analytics/text.ts
+msgid "UTM source"
+msgstr "UTM ソース"
+
+#: src/features/analytics/text.ts
+msgid "UTM term"
+msgstr "UTM キーワード"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Views"
+msgstr "表示"
+
+#: src/features/analytics/Goals.tsx
+msgid "Views a page"
+msgstr "ページを表示する"
+
+#: src/features/analytics/text.ts
+msgid "Views divided by visits."
+msgstr "表示回数を訪問数で割った値。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views fell to {now} in two hours, against {usual} usually."
+msgstr "過去 2 時間の表示回数が {now} に減少しました(通常は {usual})。"
+
+#: src/features/analytics/text.ts
+msgid "Views in the last 30 minutes"
+msgstr "過去 30 分の表示回数"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at least three times the same hours of the week before."
+msgstr "過去 2 時間の表示回数が、前の週の同じ時間帯の 3 倍以上です。"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at most half the same hours of the week before."
+msgstr "過去 2 時間の表示回数が、前の週の同じ時間帯の半分以下です。"
+
+#: src/features/analytics/text.ts
+msgid "Views per minute"
+msgstr "1 分あたりの表示回数"
+
+#: src/features/analytics/text.ts
+msgid "Views per visit"
+msgstr "訪問あたりの表示回数"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views rose to {now} in two hours, against {usual} usually."
+msgstr "過去 2 時間の表示回数が {now} に増加しました(通常は {usual})。"
+
+#: src/features/analytics/text.ts
+msgid "Visit duration"
+msgstr "訪問時間"
+
+#: src/features/analytics/Retention.tsx
+#: src/features/analytics/text.ts
+msgid "Visitors"
+msgstr "訪問者"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Visitors in the last 30 minutes"
+msgstr "過去 30 分の訪問者"
+
+#: src/features/analytics/Retention.tsx
+msgid "Visitors who came back"
+msgstr "再訪した訪問者"
+
+#: src/features/analytics/text.ts
+msgid "Visitors who reached the goal, per day, added up over the days of the range."
+msgstr "ゴールに到達した訪問者を 1 日ごとに、期間内の日数分合計したもの。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
+msgstr "Do Not Track や Global Privacy Control のある訪問者は何も送信しないため、ここでも集計されません。破棄されたイベントについては、件数以外は何も保持されません。"
+
+#: src/features/analytics/text.ts
+msgid "Visits"
+msgstr "訪問"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page or screen view and nothing else."
+msgstr "ページまたは画面を 1 回表示しただけで、他に何もない訪問。"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page view and nothing else."
+msgstr "ページを 1 回表示しただけで、他に何もない訪問。"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one screen view and nothing else."
+msgstr "画面を 1 回表示しただけで、他に何もない訪問。"
+
+#: src/features/analytics/Install.tsx
+msgid "Vue, Astro, other"
+msgstr "Vue、Astro、その他"
+
+#: src/features/analytics/Exports.tsx
+msgid "Waiting"
+msgstr "待機中"
+
+#: src/features/analytics/Settings.tsx
+msgid "Waiting for events since {at}."
+msgstr "{at} からイベントを待機中です。"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Waiting for the first event"
+msgstr "最初のイベントを待機中"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Watch it live"
+msgstr "ライブで見る"
+
+#: src/features/analytics/text.ts
+msgid "Web"
+msgstr "ウェブ"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Website or app"
+msgstr "ウェブサイトまたはアプリ"
+
+#: src/features/analytics/Retention.tsx
+msgid "Week {period}"
+msgstr "{period} 週目"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Weekly"
+msgstr "週次"
+
+#: src/features/analytics/Retention.tsx
+msgid "Weeks"
+msgstr "週"
+
+#: src/features/analytics/Insights.tsx
+msgid "What changed"
+msgstr "変更点"
+
+#: src/features/analytics/Support.tsx
+msgid "What stands out"
+msgstr "目立つ点"
+
+#: src/features/analytics/text.ts
+msgid "What the goal's events carried, per currency. Currencies are never converted or added up."
+msgstr "ゴールのイベントが持っていた内容を通貨ごとに表示します。通貨は換算も合算もされません。"
+
+#: src/features/analytics/Exports.tsx
+msgid "What to export"
+msgstr "エクスポートする内容"
+
+#: src/features/analytics/Goals.tsx
+msgid "Where conversions come from"
+msgstr "コンバージョンの流入元"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Where the property’s day starts and ends."
+msgstr "プロパティの 1 日が始まり、終わる時刻。"
+
+#: src/features/analytics/Install.tsx
+msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."
+msgstr "data-consent=\"required\" を指定すると、同意ツールが訪問者の同意を伝えるまで、スクリプトは何も送信しません。全般設定の収集も「同意がある場合のみ」にして、サーバー側でも同意のないイベントを拒否してください。"
+
+#: src/features/analytics/Settings.tsx
+msgid "With yuva.consent and persistent set to true, the device keeps a random id for 13 months. The visitor counts once over several days, is told apart as new or returning, fills retention and is followed across days in funnels. Never under Do Not Track or Global Privacy Control."
+msgstr "yuva.consent で persistent を true にすると、デバイスはランダムな ID を 13 か月間保持します。訪問者は複数日にわたって 1 人として数えられ、新規とリピートが区別され、リテンションが集計され、ファネルで日をまたいで追跡されます。Do Not Track や Global Privacy Control のもとでは行いません。"
+
+#: src/features/analytics/text.ts
+msgid "Without consent"
+msgstr "同意なし"
+
+#: src/features/analytics/Retention.tsx
+msgid "Without cookies a visitor is new every day, so nobody can be followed from one day to the next. Only visitors who agree to a persistent id in your consent tool show up here."
+msgstr "Cookie がない場合、訪問者は毎日新規になるため、日をまたいで追跡できません。ここには、同意ツールで永続 ID に同意した訪問者のみが表示されます。"
+
+#: src/features/analytics/Settings.tsx
+msgid "Without cookies, for everyone"
+msgstr "Cookie なし、全員対象"
+
+#: src/features/analytics/text.ts
+msgid "Yesterday"
+msgstr "昨日"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Your access ended. Enter the password again to keep reading."
+msgstr "アクセスが終了しました。読み続けるには、もう一度パスワードを入力してください。"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Your new share link"
+msgstr "新しい共有リンク"
+
+#: src/features/analytics/Settings.tsx
+msgid "yuva.identify with a token from your backend, signed like a chat session, links the visitor’s visits to their contact. They show on the contact’s page under Recent visits. Forged or reused tokens are ignored."
+msgstr "バックエンドからのトークン(チャットセッションと同様に署名)を付けた yuva.identify は、訪問者の訪問を連絡先に紐づけます。連絡先のページの「最近の訪問」に表示されます。偽造または再利用されたトークンは無視されます。"

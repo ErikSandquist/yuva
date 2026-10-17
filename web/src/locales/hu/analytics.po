@@ -1,0 +1,2748 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 10:11+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: hu\n"
+
+#: src/features/analytics/text.ts
+msgid "(not set)"
+msgstr "(nincs beállítva)"
+
+#. placeholder {0}: e.rows
+#: src/features/analytics/Exports.tsx
+msgid "{0, plural, one {# row} other {# rows}}"
+msgstr "{0, plural, one {# sor} other {# sor}}"
+
+#. placeholder {0}: p.visitors_today
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{0, plural, one {visitor today} other {visitors today}}"
+msgstr "{0, plural, one {látogató ma} other {látogató ma}}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{consentedCount} consented, across visits and days"
+msgstr "{consentedCount} beleegyezett, látogatásokon és napokon át"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {{site} sent # visit, and none in the 28 days before.} other {{site} sent # visits, and none in the 28 days before.}}"
+msgstr "{count, plural, one {A(z) {site} # látogatást küldött, az előző 28 napban pedig egyet sem.} other {A(z) {site} # látogatást küldött, az előző 28 napban pedig egyet sem.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {# conversation per 1,000 views, against {usual} in the 28 days before.} other {# conversations per 1,000 views, against {usual} in the 28 days before.}}"
+msgstr "{count, plural, one {# beszélgetés 1000 megtekintésre, szemben az előző 28 nap {usual} értékével.} other {# beszélgetés 1000 megtekintésre, szemben az előző 28 nap {usual} értékével.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {Goal “{goal}” had # conversion, against {usual} a day on average in the week before.} other {Goal “{goal}” had # conversions, against {usual} a day on average in the week before.}}"
+msgstr "{count, plural, one {A(z) „{goal}” cél # konverziót ért el, szemben az előző hét napi átlagos {usual} értékével.} other {A(z) „{goal}” cél # konverziót ért el, szemben az előző hét napi átlagos {usual} értékével.}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{count} in this range, none in the compared days."
+msgstr "{count} ebben a tartományban, egy sem az összehasonlított napokon."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {count}, none in the compared days."
+msgstr "{dim} {value}: {count}, egy sem az összehasonlított napokon."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} fell {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} {change}-val csökkent, {now} a(z) {before} helyett."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} rose {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} {change}-val nőtt, {now} a(z) {before} helyett."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {metric} {now}, none in the compared days."
+msgstr "{dim} {value}: {metric} {now}, egy sem az összehasonlított napokon."
+
+#: src/features/analytics/Annotations.tsx
+msgid "{kind}: {found}"
+msgstr "{kind}: {found}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{lost} left ({lostPct})"
+msgstr "{lost} lépett ki ({lostPct})"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} fell {change}: {now}, against {before} in the compared days."
+msgstr "{metric} {change}-val csökkent: {now}, szemben a(z) {before} értékkel az összehasonlított napokon."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} rose {change}: {now}, against {before} in the compared days."
+msgstr "{metric} {change}-val nőtt: {now}, szemben a(z) {before} értékkel az összehasonlított napokon."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric}: {now}, none in the compared days."
+msgstr "{metric}: {now}, egy sem az összehasonlított napokon."
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversation} other {# conversations}}"
+msgstr "{n, plural, one {# beszélgetés} other {# beszélgetés}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversion} other {# conversions}}"
+msgstr "{n, plural, one {# konverzió} other {# konverzió}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# discussion} other {# discussions}}"
+msgstr "{n, plural, one {# vita} other {# vita}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# event} other {# events}}"
+msgstr "{n, plural, one {# esemény} other {# esemény}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# view} other {# views}}"
+msgstr "{n, plural, one {# megtekintés} other {# megtekintés}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visit} other {# visits}}"
+msgstr "{n, plural, one {# látogatás} other {# látogatás}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visitor} other {# visitors}}"
+msgstr "{n, plural, one {# látogató} other {# látogató}}"
+
+#: src/features/analytics/Events.tsx
+msgid "{n} payments, {avg} on average"
+msgstr "{n} fizetés, átlagosan {avg}"
+
+#: src/features/analytics/Install.tsx
+msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
+msgstr "A(z) {name} nem tartozik ennek a tulajdonságnak a platformjai közé, így a szerver elutasítja az alkalmazás eseményeit. Tulajdonos vagy admin bekapcsolhatja."
+
+#: src/features/analytics/Funnels.tsx
+msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
+msgstr "Az első lépést elérő látogatók {overall}-a az utolsót is elérte, {from} – {to}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
+msgstr "{rate, plural, one {{dim} {value}: # beszélgetés 1000 megtekintésre, szemben a(z) {site} értékkel az összes oldalon.} other {{dim} {value}: # beszélgetés 1000 megtekintésre, szemben a(z) {site} értékkel az összes oldalon.}}"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
+msgstr "Ebben a hónapban {used} / {limit} analitikai esemény használva. A korláton túli események a hónap végéig elvetésre kerülnek."
+
+#: src/features/analytics/Settings.tsx
+msgid "A change applies to new events. Days already counted keep their zone."
+msgstr "A módosítás az új eseményekre vonatkozik. A már megszámolt napok megtartják az övezetüket."
+
+#: src/features/analytics/Goals.tsx
+msgid "A changed goal is counted again over the days the detailed records are kept."
+msgstr "A módosított célt újra megszámoljuk azokra a napokra, amelyekre a részletes rekordokat megőrizzük."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel follows each visit step by step, so it covers at most 90 days at once, or 31 days for a property with more than 10 million events a month. Pick a shorter range."
+msgstr "A tölcsér minden látogatást lépésről lépésre követ, így egyszerre legfeljebb 90 napot fed le, vagy 31 napot a havi 10 milliónál több eseményt kapó tulajdonságnál. Válassz rövidebb tartományt."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel is made of two to eight goals in a row. Make at least two goals first."
+msgstr "A tölcsér két-nyolc egymás utáni célból áll. Előbb hozz létre legalább két célt."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are kept since {day}. Earlier days only have totals, so they cannot show a funnel."
+msgstr "A tölcsérhez minden látogatás lépései kellenek, amelyeket {day} óta őrzünk meg. A korábbi napokhoz csak összegek vannak, így nem mutathatnak tölcsért."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are no longer kept for this range."
+msgstr "A tölcsérhez minden látogatás lépései kellenek, amelyeket ehhez a tartományhoz már nem őrzünk meg."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel shows how many visitors go from one goal to the next within a visit, and where they leave."
+msgstr "A tölcsér megmutatja, hány látogató jut el egy látogatáson belül az egyik céltól a következőig, és hol lépnek ki."
+
+#: src/features/analytics/Goals.tsx
+msgid "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
+msgstr "A cél azokat a látogatókat számolja, akik megtekintenek egy oldalt, eseményt küldenek vagy elég messzire görgetnek, valamint az általuk hozott bevételt."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A goal’s conversions yesterday were at most half its daily average of the week before."
+msgstr "A cél tegnapi konverziói legfeljebb fele volt az előző heti napi átlagának."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A link shows only its views of this property, read-only, without filters or segments. Revoking or deleting it stops it at once."
+msgstr "A link csak az ennek a tulajdonságnak a nézeteit mutatja, csak olvashatóan, szűrők és szegmensek nélkül. A visszavonása vagy törlése azonnal leállítja."
+
+#: src/features/analytics/Goals.tsx
+msgid "A new goal also counts the days the detailed records are kept, not only from today."
+msgstr "Az új cél azokat a napokat is számolja, amelyekre a részletes rekordokat megőrizzük, nem csak mától."
+
+#: src/features/analytics/Annotations.tsx
+msgid "A new key was made"
+msgstr "Új kulcs jött létre"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A new password signs out everyone who unlocked the link."
+msgstr "Az új jelszó kijelentkeztet mindenkit, aki feloldotta a linket."
+
+#: src/features/analytics/Goals.tsx
+msgid "A path. * stands for one part of it, ** for any number of them."
+msgstr "Egy útvonal. A * az egy részét jelenti, a ** tetszőleges számú részt."
+
+#: src/features/analytics/Settings.tsx
+msgid "A prop name has at most 300 characters and does not start with $ or yuva_."
+msgstr "A prop neve legfeljebb 300 karakter lehet, és nem kezdődhet $ vagy yuva_ előtaggal."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A property can have at most 50 share links. Delete one first."
+msgstr "Egy tulajdonságnak legfeljebb 50 megosztási linkje lehet. Előbb törölj egyet."
+
+#: src/features/analytics/parts.tsx
+msgid "A range can be at most 400 days long. Pick a shorter one."
+msgstr "Egy tartomány legfeljebb 400 napos lehet. Válassz rövidebbet."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A site sent 10 or more visits yesterday and none in the 28 days before."
+msgstr "Egy webhely tegnap 10 vagy több látogatást küldött, az előző 28 napban pedig egyet sem."
+
+#: src/features/analytics/Settings.tsx
+msgid "A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and it shows as a chip on the Events view."
+msgstr "A követett propot a napi összegek is megőrzik, így a bontása a részletes rekordok eltűnése után is megmarad, és chipként jelenik meg az Események nézeten."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page or screen views without a gap of 30 minutes, within one day."
+msgstr "Egy látogató oldal- vagy képernyő-megtekintései 30 percnél hosszabb szünet nélkül, egy napon belül."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page views without a gap of 30 minutes, within one day."
+msgstr "Egy látogató oldalmegtekintései 30 percnél hosszabb szünet nélkül, egy napon belül."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
+msgstr "Egy látogató képernyő-megtekintései 30 percnél hosszabb szünet nélkül, egy napon belül. Az alkalmazás minden indítása új látogatást kezd."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Active"
+msgstr "Aktív"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add"
+msgstr "Hozzáadás"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add a note to the chart"
+msgstr "Jegyzet hozzáadása a diagramhoz"
+
+#: src/features/analytics/Settings.tsx
+msgid "Add a rule"
+msgstr "Szabály hozzáadása"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Add a step"
+msgstr "Lépés hozzáadása"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/NewProperty.tsx
+msgid "Add a website"
+msgstr "Webhely hozzáadása"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add a website to count its visitors, pages and sources, without cookies."
+msgstr "Adj hozzá egy webhelyet, hogy sütik nélkül számold a látogatóit, oldalait és forrásait."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Add and install"
+msgstr "Hozzáadás és telepítés"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add note"
+msgstr "Megjegyzés hozzáadása"
+
+#: src/features/analytics/Install.tsx
+msgid "Add the YuvaAnalytics library of the Yuva package and configure it once at launch. .yuvaScreen counts a SwiftUI screen; in UIKit, call YuvaAnalytics.screen when a screen appears. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "Add hozzá a Yuva-csomag YuvaAnalytics könyvtárát, és egyszer állítsd be indításkor. A .yuvaScreen egy SwiftUI-képernyőt számol; UIKitben hívd a YuvaAnalytics.screen függvényt, amikor egy képernyő megjelenik. Kapcsolat nélkül az események akár 72 óráig várnak az eszközön, és a saját időpontjaikkal érkeznek."
+
+#: src/features/analytics/Install.tsx
+msgid "Add yuva-analytics from JitPack and configure it once in Application.onCreate. TrackScreen counts a Compose screen. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "Add hozzá a yuva-analytics csomagot a JitPackról, és egyszer állítsd be az Application.onCreate-ben. A TrackScreen egy Compose-képernyőt számol. Kapcsolat nélkül az események akár 72 óráig várnak az eszközön, és a saját időpontjaikkal érkeznek."
+
+#: src/features/analytics/Settings.tsx
+msgid "Addresses not counted"
+msgstr "Nem számolt címek"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the compared days"
+msgstr "az összehasonlított napokhoz képest"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the period before"
+msgstr "az előző időszakhoz képest"
+
+#: src/features/analytics/Support.tsx
+msgid "Agents of the inbox can then see this property’s numbers too."
+msgstr "A postafiók ügynökei ekkor a tulajdonság számait is láthatják."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Agents of this inbox can see the numbers."
+msgstr "A postafiók ügynökei láthatják a számokat."
+
+#: src/features/analytics/text.ts
+msgid "AI assistants"
+msgstr "MI-asszisztensek"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Alerts"
+msgstr "Riasztások"
+
+#: src/features/analytics/Settings.tsx
+msgid "Alerts and reports"
+msgstr "Riasztások és jelentések"
+
+#: src/features/analytics/Events.tsx
+msgid "All events"
+msgstr "Minden esemény"
+
+#: src/features/analytics/Goals.tsx
+msgid "All goals"
+msgstr "Minden cél"
+
+#: src/features/analytics/Support.tsx
+msgid "An owner or admin can link one in the property’s settings."
+msgstr "Tulajdonos vagy admin összekapcsolhat egyet a tulajdonság beállításaiban."
+
+#: src/features/analytics/Retention.tsx
+msgid "An owner or admin can turn on the persistent id in the consent features."
+msgstr "Tulajdonos vagy admin bekapcsolhatja a tartós azonosítót a hozzájárulási funkciókban."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics"
+msgstr "Analitika"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Analytics properties"
+msgstr "Analitikai tulajdonságok"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Analytics steps"
+msgstr "Analitikai lépések"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics views"
+msgstr "Analitikai nézetek"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Anyone with the link sees the views you pick, read-only, without signing in."
+msgstr "Bárki, akinél ott a link, látja a kiválasztott nézeteket, csak olvashatóan, bejelentkezés nélkül."
+
+#: src/features/analytics/text.ts
+msgid "App"
+msgstr "Alkalmazás"
+
+#: src/features/analytics/text.ts
+msgid "App version"
+msgstr "Alkalmazásverzió"
+
+#: src/features/analytics/Settings.tsx
+msgid "Apps send without a domain, so only the platforms turned on here are counted. Events from your backend need no platform."
+msgstr "Az alkalmazások domain nélkül küldenek, így csak az itt bekapcsolt platformokat számoljuk. A háttérrendszeredből érkező eseményekhez nem kell platform."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Ask for a password"
+msgstr "Jelszó kérése"
+
+#: src/features/analytics/Sharing.tsx
+msgid "At least 8 characters"
+msgstr "Legalább 8 karakter"
+
+#: src/features/analytics/Settings.tsx
+msgid "At most 10 props can be tracked."
+msgstr "Legfeljebb 10 prop követhető."
+
+#: src/features/analytics/Settings.tsx
+msgid "Audience"
+msgstr "Közönség"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Available until {expires}"
+msgstr "Elérhető eddig: {expires}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots"
+msgstr "Botok"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
+msgstr "Botok, sebességkorlátok, kizárt címek és útvonalak, a havi korlát vagy egy túlterhelt szerver."
+
+#: src/features/analytics/text.ts
+msgid "Bounce rate"
+msgstr "Visszafordulási arány"
+
+#: src/features/analytics/Events.tsx
+msgid "Break down by prop"
+msgstr "Bontás propok szerint"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Breakdown"
+msgstr "Bontás"
+
+#: src/features/analytics/Exports.tsx
+msgid "Broken down by"
+msgstr "Bontva"
+
+#: src/features/analytics/Settings.tsx
+msgid "Broken events, such as a screen address that does not start with app://, a reserved name or too many props."
+msgstr "Hibás események, például egy nem app://-vel kezdődő képernyőcím, egy fenntartott név vagy túl sok prop."
+
+#: src/features/analytics/text.ts
+msgid "Browser"
+msgstr "Böngésző"
+
+#: src/features/analytics/text.ts
+msgid "Browser version"
+msgstr "Böngészőverzió"
+
+#: src/features/analytics/Install.tsx
+msgid "Call it once in the browser. During server rendering it does nothing."
+msgstr "Hívd meg egyszer a böngészőben. Szerveroldali renderelés közben nem csinál semmit."
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Cancel"
+msgstr "Mégse"
+
+#: src/features/analytics/Controls.tsx
+msgid "Change filter: {label}"
+msgstr "Szűrő módosítása: {label}"
+
+#: src/features/analytics/Controls.tsx
+msgid "changed"
+msgstr "módosítva"
+
+#: src/features/analytics/text.ts
+msgid "Channel"
+msgstr "Csatorna"
+
+#: src/features/analytics/text.ts
+msgid "Chat opened"
+msgstr "Csevegés megnyitva"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Checked every hour. Each alert is sent once and also shows as a note on the chart."
+msgstr "Óránként ellenőrizzük. Minden riasztás egyszer kerül elküldésre, és jegyzetként is megjelenik a diagramon."
+
+#: src/features/analytics/Settings.tsx
+msgid "Children"
+msgstr "Gyerekek"
+
+#: src/features/analytics/Support.tsx
+msgid "Choose an inbox"
+msgstr "Válassz postafiókot"
+
+#: src/features/analytics/Settings.tsx
+msgid "Choose children for a site made for children."
+msgstr "Gyerekeknek készült webhelyhez válaszd a Gyerekek lehetőséget."
+
+#: src/features/analytics/text.ts
+msgid "City"
+msgstr "Város"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Clear"
+msgstr "Törlés"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts by"
+msgstr "Kohorszok ennek alapján"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts fill once visitors agree to a persistent id and come back. The numbers are rebuilt every hour."
+msgstr "A kohorszok akkor töltődnek fel, ha a látogatók beleegyeznek egy tartós azonosítóba, és visszatérnek. A számokat óránként újraépítjük."
+
+#: src/features/analytics/Settings.tsx
+msgid "Collection"
+msgstr "Gyűjtemény"
+
+#. placeholder {0}: formatDate(`${c.from}T12:00:00Z`, i18n.locale)
+#. placeholder {1}: formatDate(`${c.to}T12:00:00Z`, i18n.locale)
+#: src/features/analytics/Controls.tsx
+msgid "Compare with {0} – {1}"
+msgstr "Összehasonlítás ezzel: {0} – {1}"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with a year earlier"
+msgstr "Összehasonlítás egy évvel korábbival"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days"
+msgstr "Összehasonlítás más napokkal"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days…"
+msgstr "Összehasonlítás más napokkal…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the days"
+msgstr "Összehasonlítás a napokkal"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the period before"
+msgstr "Összehasonlítás az előző időszakkal"
+
+#: src/features/analytics/Overview.tsx
+msgid "Compared days"
+msgstr "Összehasonlított napok"
+
+#: src/features/analytics/Controls.tsx
+msgid "Comparison"
+msgstr "Összehasonlítás"
+
+#: src/features/analytics/text.ts
+msgid "Completions"
+msgstr "Teljesítések"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consent features"
+msgstr "Hozzájárulási funkciók"
+
+#: src/features/analytics/Install.tsx
+msgid "Consent mode"
+msgstr "Hozzájárulási mód"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id, and signed-in users are linked to their contact."
+msgstr "A beleegyező látogatók tartós azonosítót kapnak, a bejelentkezett felhasználók pedig a kontaktjukhoz kapcsolódnak."
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id."
+msgstr "A beleegyező látogatók tartós azonosítót kapnak."
+
+#: src/features/analytics/parts.tsx
+msgid "Consented visitors only"
+msgstr "Csak a beleegyező látogatók"
+
+#: src/features/analytics/text.ts
+msgid "contains"
+msgstr "tartalmazza"
+
+#: src/features/analytics/Install.tsx
+msgid "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
+msgstr "A tartalomblokkolók gyakran megállítják a más domainekről származó szkripteket. A szkript és a végpontja kiszolgálása a saját webhelyedről megtartja ezeket a látogatókat a számlálásban. A Yuva-szervernek bíznia kell a proxyd által továbbított címben; különben minden látogató egynek látszik."
+
+#: src/features/analytics/text.ts
+msgid "Conversations"
+msgstr "Beszélgetések"
+
+#: src/features/analytics/text.ts
+msgid "Conversations per 1,000 views of the page."
+msgstr "Beszélgetések az oldal 1000 megtekintésére."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Conversations per 1,000 views yesterday were at least twice the rate of the 28 days before."
+msgstr "A beszélgetések 1000 megtekintésre tegnap legalább kétszer akkorák voltak, mint az előző 28 napban."
+
+#: src/features/analytics/text.ts
+msgid "Conversations started on the page, from the chat of the linked inbox."
+msgstr "Az oldalon indított beszélgetések, a kapcsolt postafiók csevegéséből."
+
+#: src/features/analytics/Support.tsx
+msgid "Conversations, feedback, ratings and discussions of the linked inbox show here next to each page’s views. They are counted per page and day; no visitor is ever matched to a contact."
+msgstr "A kapcsolt postafiók beszélgetései, visszajelzései, értékelései és vitái itt jelennek meg az egyes oldalak megtekintései mellett. Oldalanként és naponként számolódnak; egyetlen látogatót sem párosítunk kontakttal."
+
+#: src/features/analytics/text.ts
+msgid "Conversion rate"
+msgstr "Konverziós arány"
+
+#: src/features/analytics/text.ts
+msgid "Conversions"
+msgstr "Konverziók"
+
+#: src/features/analytics/text.ts
+msgid "Conversions per 100 visitors."
+msgstr "Konverziók 100 látogatóra."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
+msgstr "Másold ki most; nem jelenik meg újra. Az elvesztett linkek csak visszavonhatók és újra létrehozhatók."
+
+#: src/features/analytics/Install.tsx
+msgid "Count my visits again"
+msgstr "Látogatásaim újraszámolása"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Count visitors, pages, sources, places and devices without cookies and without storing IP addresses."
+msgstr "Számold a látogatókat, oldalakat, forrásokat, helyeket és eszközöket sütik nélkül és IP-címek tárolása nélkül."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Count your website’s visitors"
+msgstr "Számold a webhelyed látogatóit"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted"
+msgstr "Megszámolva"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted as"
+msgstr "Megszámolva mint"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Countries"
+msgstr "Országok"
+
+#: src/features/analytics/text.ts
+msgid "Country"
+msgstr "Ország"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
+msgstr "Minden látogatót megkérdezés nélkül számol: semmi sem tárolódik az eszközön, és IP-cím sem őrződik meg."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Counts the visitors who reached each step after the ones before it, within one visit on one day. Numbers are at most ten minutes old."
+msgstr "Azokat a látogatókat számolja, akik az előzők után elértek minden lépést, egy látogatáson belül, egy napon. A számok legfeljebb tíz percesek."
+
+#: src/features/analytics/Settings.tsx
+msgid "Currency"
+msgstr "Pénznem"
+
+#: src/features/analytics/Exports.tsx
+msgid "Current view"
+msgstr "Aktuális nézet"
+
+#: src/features/analytics/text.ts
+msgid "Custom and built-in events."
+msgstr "Egyéni és beépített események."
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range"
+msgstr "Egyéni tartomány"
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range…"
+msgstr "Egyéni tartomány…"
+
+#: src/features/analytics/Settings.tsx
+msgid "Data"
+msgstr "Adatok"
+
+#: src/features/analytics/Install.tsx
+msgid "data-outbound counts clicks on links to other sites, data-files downloads of documents and archives, and data-chat each time a visitor opens the chat. track() sends your own events with up to 30 props; e-mail addresses in props are dropped. Make goals from events in the Goals view."
+msgstr "A data-outbound a más webhelyekre mutató linkek kattintásait számolja, a data-files a dokumentumok és archívumok letöltéseit, a data-chat pedig minden alkalommal, amikor egy látogató megnyitja a csevegést. A track() saját eseményeidet küldi legfeljebb 30 proppal; az e-mail-címek a propokban elvetésre kerülnek. A Célok nézetben eseményekből hozz létre célokat."
+
+#: src/features/analytics/Settings.tsx
+msgid "Day"
+msgstr "Nap"
+
+#: src/features/analytics/Retention.tsx
+msgid "Day {period}"
+msgstr "{period}. nap"
+
+#: src/features/analytics/Exports.tsx
+msgid "Day by day"
+msgstr "Napról napra"
+
+#: src/features/analytics/Retention.tsx
+msgid "Days"
+msgstr "Napok"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/SharePage.tsx
+msgid "Days are counted in this time zone"
+msgstr "A napokat ebben az időzónában számoljuk"
+
+#: src/features/analytics/Settings.tsx
+msgid "Days are in the property’s time zone. Their totals are counted again without them."
+msgstr "A napok a tulajdonság időzónájában vannak. Az összegeik nélkülük újraszámolódnak."
+
+#: src/features/analytics/Settings.tsx
+msgid "Days waiting to be summed up"
+msgstr "Összegzésre váró napok"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete"
+msgstr "Törlés"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete {0}?"
+msgstr "Törlöd ezt: {0}?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete {name}?"
+msgstr "Törlöd ezt: {name}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data"
+msgstr "Minden adat törlése"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data of {0}?"
+msgstr "Törlöd a(z) {0} összes adatát?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete days"
+msgstr "Napok törlése"
+
+#: src/features/analytics/Exports.tsx
+msgid "Delete export"
+msgstr "Export törlése"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Delete funnel"
+msgstr "Tölcsér törlése"
+
+#: src/features/analytics/Goals.tsx
+msgid "Delete goal"
+msgstr "Cél törlése"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete note"
+msgstr "Jegyzet törlése"
+
+#: src/features/analytics/Controls.tsx
+msgid "Delete segment"
+msgstr "Szegmens törlése"
+
+#. placeholder {0}: funnel.name
+#: src/features/analytics/Funnels.tsx
+msgid "Delete the funnel “{0}”?"
+msgstr "Törlöd a(z) „{0}” tölcsért?"
+
+#. placeholder {0}: goal.name
+#: src/features/analytics/Goals.tsx
+msgid "Delete the goal “{0}”?"
+msgstr "Törlöd a(z) „{0}” célt?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the property"
+msgstr "Tulajdonság törlése"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Delete the segment “{0}”?"
+msgstr "Törlöd a(z) „{0}” szegmenst?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the visits and events of {span}?"
+msgstr "Törlöd a(z) {span} látogatásait és eseményeit?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete these days"
+msgstr "Ezek a napok törlése"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete this note?"
+msgstr "Törlöd ezt a megjegyzést?"
+
+#: src/features/analytics/Exports.tsx
+msgid "deleted {expires}"
+msgstr "törölve: {expires}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Deleting in the background. The numbers update when it is done."
+msgstr "Törlés a háttérben. A számok frissülnek, amikor kész."
+
+#: src/features/analytics/Goals.tsx
+msgid "Depth in %"
+msgstr "Mélység %-ban"
+
+#: src/features/analytics/text.ts
+msgid "Desktop"
+msgstr "Asztali gép"
+
+#: src/features/analytics/Exports.tsx
+msgid "Detailed records are kept since {rawDay}."
+msgstr "A részletes rekordokat {rawDay} óta őrizzük meg."
+
+#: src/features/analytics/Settings.tsx
+msgid "Detailed records kept since"
+msgstr "A részletes rekordok megőrzése ettől"
+
+#: src/features/analytics/Overview.tsx
+msgid "Details"
+msgstr "Részletek"
+
+#: src/features/analytics/text.ts
+msgid "Device"
+msgstr "Eszköz"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Devices"
+msgstr "Eszközök"
+
+#: src/features/analytics/text.ts
+msgid "Direct"
+msgstr "Közvetlen"
+
+#: src/features/analytics/text.ts
+msgid "Direct / none"
+msgstr "Közvetlen / nincs"
+
+#: src/features/analytics/text.ts
+msgid "Discussion threads started on the page."
+msgstr "Az oldalon indított vitaszálak."
+
+#: src/features/analytics/text.ts
+msgid "Discussions"
+msgstr "Viták"
+
+#: src/features/analytics/text.ts
+msgid "Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again."
+msgstr "Egyedi látogatók naponta, a tartomány napjain összeadva. Aki másik napon visszatér, újra számít."
+
+#: src/features/analytics/Install.tsx
+msgid "Do not count my visits"
+msgstr "Ne számold a látogatásaimat"
+
+#: src/features/analytics/text.ts
+msgid "does not contain"
+msgstr "nem tartalmazza"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Domains"
+msgstr "Domainek"
+
+#: src/features/analytics/Exports.tsx
+msgid "Download"
+msgstr "Letöltés"
+
+#: src/features/analytics/parts.tsx
+msgid "Download CSV"
+msgstr "CSV letöltése"
+
+#: src/features/analytics/Settings.tsx
+msgid "Dropped"
+msgstr "Elvetve"
+
+#: src/features/analytics/text.ts
+msgid "E-mail"
+msgstr "E-mail"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that day, each column the share of them who came back that many days later."
+msgstr "Minden sor az aznap először látott látogatókat tartalmazza, minden oszlop azt a hányadot, amely ennyi nappal később visszatért."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that month, each column the share of them who came back that many months later."
+msgstr "Minden sor az abban a hónapban először látott látogatókat tartalmazza, minden oszlop azt a hányadot, amely ennyi hónappal később visszatért."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that week, each column the share of them who came back that many weeks later."
+msgstr "Minden sor az abban a hétben először látott látogatókat tartalmazza, minden oszlop azt a hányadot, amely ennyi héttel később visszatért."
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Edit"
+msgstr "Szerkesztés"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Edit funnel"
+msgstr "Tölcsér szerkesztése"
+
+#: src/features/analytics/Goals.tsx
+msgid "Edit goal"
+msgstr "Cél szerkesztése"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Edit note"
+msgstr "Jegyzet szerkesztése"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Edit share link"
+msgstr "Megosztási link szerkesztése"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embed"
+msgstr "Beágyazás"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embeds"
+msgstr "Beágyazások"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Enter the password you were given with the link."
+msgstr "Add meg a linkkel kapott jelszót."
+
+#: src/features/analytics/text.ts
+msgid "Entry page"
+msgstr "Belépési oldal"
+
+#: src/features/analytics/Goals.tsx
+msgid "equal to"
+msgstr "egyenlő"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Event"
+msgstr "Esemény"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event}"
+msgstr "{event} esemény"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event} with {key} = {value}"
+msgstr "{event} esemény, {key} = {value}"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Install.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Events"
+msgstr "Események"
+
+#: src/features/analytics/Settings.tsx
+msgid "Events are arriving."
+msgstr "Események érkeznek."
+
+#: src/features/analytics/Events.tsx
+msgid "Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when the script has their attributes."
+msgstr "Az események az oldalaidon és alkalmazásaidban lévő track()-hívásokból származnak. A kimenő linkeket, letöltéseket és csevegésmegnyitásokat akkor számoljuk, ha a szkript rendelkezik az attribútumaikkal."
+
+#: src/features/analytics/Settings.tsx
+msgid "Events count only after the page calls yuva.consent with analytics set to true. Install the script with data-consent=\"required\"."
+msgstr "Az események csak azután számolódnak, hogy az oldal meghívja a yuva.consent függvényt analytics: true értékkel. Telepítsd a szkriptet data-consent=\"required\" beállítással."
+
+#: src/features/analytics/Settings.tsx
+msgid "events counted"
+msgstr "esemény megszámolva"
+
+#: src/features/analytics/Settings.tsx
+msgid "events dropped"
+msgstr "esemény elvetve"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every event with its visit’s page, source, place and device, as NDJSON. Visits are numbered within the file; there is no visitor id, address or contact. At most 31 days."
+msgstr "Minden esemény a látogatás oldalával, forrásával, helyével és eszközével, NDJSON-ként. A látogatások a fájlon belül vannak számozva; nincs látogatóazonosító, cím vagy kontakt. Legfeljebb 31 nap."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Every Monday at 08:00 in {zone}, about the week before."
+msgstr "Minden hétfőn 08:00-kor ({zone}), az előző hétről."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range and the filters you are looking at, without a comparison."
+msgstr "Az általad nézett tartomány és szűrők minden sora, összehasonlítás nélkül."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range you are looking at, without a comparison."
+msgstr "Az általad nézett tartomány minden sora, összehasonlítás nélkül."
+
+#: src/features/analytics/Settings.tsx
+msgid "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
+msgstr "Minden látogatás, esemény és összeg törlődik. A tulajdonság és a kulcsa megmarad, és a számolás folytatódik."
+
+#: src/features/analytics/Controls.tsx
+msgid "Everyone who sees this property can pick it. You, owners and admins can change it."
+msgstr "Bárki, aki látja ezt a tulajdonságot, kiválaszthatja. Te, a tulajdonosok és az adminok módosíthatjátok."
+
+#: src/features/analytics/Annotations.tsx
+msgid "Everyone who sees this property sees the note, such as a launch or a campaign."
+msgstr "Bárki, aki látja ezt a tulajdonságot, látja a jegyzetet, például egy indulásról vagy kampányról."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Everything this property raised, newest first, whoever was notified."
+msgstr "Minden, amit ez a tulajdonság kiváltott, legújabbal kezdve, függetlenül attól, kit értesítettek."
+
+#: src/features/analytics/Settings.tsx
+msgid "Excluded"
+msgstr "Kizárva"
+
+#: src/features/analytics/text.ts
+msgid "Exit page"
+msgstr "Kilépési oldal"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expired"
+msgstr "Lejárt"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expires"
+msgstr "Lejár"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export"
+msgstr "Exportálás"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export progress"
+msgstr "Export előrehaladása"
+
+#: src/features/analytics/Exports.tsx
+msgid "Exports"
+msgstr "Exportok"
+
+#: src/features/analytics/Exports.tsx
+msgid "Failed"
+msgstr "Sikertelen"
+
+#: src/features/analytics/text.ts
+msgid "Feedback"
+msgstr "Visszajelzések"
+
+#: src/features/analytics/Support.tsx
+msgid "Fewer than 100 views"
+msgstr "100-nál kevesebb megtekintés"
+
+#: src/features/analytics/text.ts
+msgid "File download"
+msgstr "Fájlletöltés"
+
+#: src/features/analytics/Exports.tsx
+msgid "Files are made in the background and deleted seven days later."
+msgstr "A fájlok a háttérben készülnek, és hét nap múlva törlődnek."
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Support.tsx
+msgid "Filter by this"
+msgstr "Szűrés erre"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Filters"
+msgstr "Szűrők"
+
+#: src/features/analytics/Exports.tsx
+msgid "Filters come from the view: click a row there to add one. <0>Change them in the view</0>"
+msgstr "A szűrők a nézetből jönnek: kattints ott egy sorra egy hozzáadásához. <0>Módosítsd őket a nézetben</0>"
+
+#: src/features/analytics/Retention.tsx
+msgid "First day"
+msgstr "Első nap"
+
+#: src/features/analytics/Retention.tsx
+msgid "First month"
+msgstr "Első hónap"
+
+#: src/features/analytics/text.ts
+msgid "First page or screen"
+msgstr "Első oldal vagy képernyő"
+
+#: src/features/analytics/text.ts
+msgid "First screen"
+msgstr "Első képernyő"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "First visit"
+msgstr "Első látogatás"
+
+#: src/features/analytics/Retention.tsx
+msgid "First week"
+msgstr "Első hét"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Five reports an hour at most. Try again later."
+msgstr "Óránként legfeljebb öt jelentés. Próbáld később."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "For example Fieldnote website"
+msgstr "Például a Fieldnote webhelye"
+
+#: src/features/analytics/Settings.tsx
+msgid "For revenue, an ISO code like EUR."
+msgstr "Bevételhez ISO-kód, például EUR."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an <0>API key</0> with the analytics:write scope, which stays on your server."
+msgstr "Arra, amit csak a háttérrendszered lát, például egy regisztrációra vagy fizetésre. A Track továbbítja a látogató címét és böngészőjét, így az esemény csatlakozik a látogatásához; a Do Not Track vagy Global Privacy Control kéréseket nem küldjük el. Szükséges hozzá egy <0>API-kulcs</0> analytics:write hatókörrel, amely a szervereden marad."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
+msgstr "Arra, amit csak a háttérrendszered lát, például egy regisztrációra vagy fizetésre. A Track továbbítja a látogató címét és böngészőjét, így az esemény csatlakozik a látogatásához; a Do Not Track vagy Global Privacy Control kéréseket nem küldjük el. Szükséges hozzá egy API-kulcs analytics:write hatókörrel egy tulajdonostól vagy admintól, amely a szervereden marad."
+
+#: src/features/analytics/Exports.tsx
+msgid "Format"
+msgstr "Formátum"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "From"
+msgstr "Feladó"
+
+#: src/features/analytics/Settings.tsx
+msgid "From a site that is not one of the domains, or from an app whose platform is not turned on."
+msgstr "Olyan webhelyről, amely nem a domainek egyike, vagy olyan alkalmazásból, amelynek a platformja nincs bekapcsolva."
+
+#: src/features/analytics/Funnels.tsx
+msgid "From pricing to signup"
+msgstr "Az árazástól a regisztrációig"
+
+#: src/features/analytics/Support.tsx
+msgid "From the inbox {inboxName}. Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "A(z) {inboxName} postafiókból. 1000 megtekintésre jutó beszélgetések szerint rendezve; a 100-nál kevesebb megtekintéssel rendelkező oldalak a többi után jönnek. Oldalanként és naponta számolva, soha nem látogatónként vagy kontaktonként."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Funnel"
+msgstr "Tölcsér"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Funnels"
+msgstr "Tölcsérek"
+
+#: src/features/analytics/Settings.tsx
+msgid "General"
+msgstr "Általános"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Go to goals"
+msgstr "Ugrás a célokhoz"
+
+#: src/features/analytics/Goals.tsx
+msgid "Goal"
+msgstr "Cél"
+
+#. placeholder {0}: a.text
+#: src/features/analytics/Annotations.tsx
+msgid "Goal “{0}” was created"
+msgstr "A(z) „{0}” cél létrejött"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Goal drop"
+msgstr "Cél visszaesése"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Goals"
+msgstr "Célok"
+
+#: src/features/analytics/Settings.tsx
+msgid "had an address removed"
+msgstr "eltávolították a címét"
+
+#: src/features/analytics/Settings.tsx
+msgid "Health"
+msgstr "Állapot"
+
+#: src/features/analytics/text.ts
+msgid "Helpful"
+msgstr "Hasznos"
+
+#: src/features/analytics/Support.tsx
+msgid "Helpful and not helpful"
+msgstr "Hasznos és nem hasznos"
+
+#: src/features/analytics/text.ts
+msgid "Helpful ratings out of all ratings."
+msgstr "A hasznos értékelések az összes értékelésből."
+
+#: src/features/analytics/text.ts
+msgid "Helpful share"
+msgstr "Hasznosak aránya"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Home shows each website and app like this: visitors today, in the last 30 minutes and this week."
+msgstr "A Főoldal minden webhelyet és alkalmazást így mutat: látogatók ma, az elmúlt 30 percben és ezen a héten."
+
+#: src/features/analytics/text.ts
+msgid "Host"
+msgstr "Hoszt"
+
+#: src/features/analytics/text.ts
+msgid "Host or app"
+msgstr "Hoszt vagy alkalmazás"
+
+#: src/features/analytics/Install.tsx
+msgid "How to install"
+msgstr "Hogyan telepítsd"
+
+#: src/features/analytics/Events.tsx
+msgid "How to send events"
+msgstr "Hogyan küldj eseményeket"
+
+#: src/features/analytics/Sharing.tsx
+msgid "I saved it"
+msgstr "Elmentettem"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Support.tsx
+msgid "Inbox"
+msgstr "Postafiók"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Install"
+msgstr "Telepítés"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/NewProperty.tsx
+msgid "Install on {0}"
+msgstr "Telepítés ide: {0}"
+
+#: src/features/analytics/text.ts
+msgid "Internal"
+msgstr "Belső"
+
+#: src/features/analytics/Settings.tsx
+msgid "Invalid"
+msgstr "Érvénytelen"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Investors"
+msgstr "Befektetők"
+
+#: src/features/analytics/text.ts
+msgid "is"
+msgstr "egyenlő"
+
+#: src/features/analytics/text.ts
+msgid "is not"
+msgstr "nem egyenlő"
+
+#: src/features/analytics/Controls.tsx
+msgid "It is gone for everyone who uses it. The numbers stay."
+msgstr "Mindenkinél eltűnik, aki használja. A számok megmaradnak."
+
+#: src/features/analytics/SharePage.tsx
+msgid "It may have expired or been revoked. Ask the person who shared it for a new one."
+msgstr "Lehet, hogy lejárt vagy visszavonták. Kérj újat attól, aki megosztotta."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Its goals stay."
+msgstr "A céljai megmaradnak."
+
+#: src/features/analytics/Goals.tsx
+msgid "Its numbers are deleted too. This cannot be undone."
+msgstr "A számai is törlődnek. Ez nem vonható vissza."
+
+#: src/features/analytics/Events.tsx
+msgid "Keep only visits with this value"
+msgstr "Csak az ilyen értékű látogatások megtartása"
+
+#: src/features/analytics/Settings.tsx
+msgid "Key"
+msgstr "Kulcs"
+
+#: src/features/analytics/Goals.tsx
+msgid "Kind of goal"
+msgstr "A cél fajtája"
+
+#: src/features/analytics/text.ts
+msgid "Language"
+msgstr "Nyelv"
+
+#: src/features/analytics/text.ts
+msgid "Laptop"
+msgstr "Laptop"
+
+#: src/features/analytics/text.ts
+msgid "Last 12 months"
+msgstr "Elmúlt 12 hónap"
+
+#: src/features/analytics/text.ts
+msgid "Last 28 days"
+msgstr "Elmúlt 28 nap"
+
+#: src/features/analytics/text.ts
+msgid "Last 30 days"
+msgstr "Elmúlt 30 nap"
+
+#: src/features/analytics/text.ts
+msgid "Last 6 months"
+msgstr "Elmúlt 6 hónap"
+
+#: src/features/analytics/text.ts
+msgid "Last 7 days"
+msgstr "Elmúlt 7 nap"
+
+#: src/features/analytics/text.ts
+msgid "Last 90 days"
+msgstr "Elmúlt 90 nap"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event"
+msgstr "Utolsó esemény"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event: {last}"
+msgstr "Utolsó esemény: {last}"
+
+#: src/features/analytics/text.ts
+msgid "Last month"
+msgstr "Múlt hónap"
+
+#: src/features/analytics/Sharing.tsx
+msgid "last opened {viewed}"
+msgstr "utoljára megnyitva: {viewed}"
+
+#: src/features/analytics/text.ts
+msgid "Last page or screen"
+msgstr "Utolsó oldal vagy képernyő"
+
+#: src/features/analytics/text.ts
+msgid "Last screen"
+msgstr "Utolsó képernyő"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Leave empty to keep the current one"
+msgstr "Hagyd üresen a jelenlegi megtartásához"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Link"
+msgstr "Link"
+
+#: src/features/analytics/Support.tsx
+msgid "Link an inbox to see support per page"
+msgstr "Kapcsolj össze egy postafiókot, hogy oldalanként lásd a támogatást"
+
+#: src/features/analytics/Support.tsx
+msgid "Link inbox"
+msgstr "Postafiók összekapcsolása"
+
+#: src/features/analytics/Settings.tsx
+msgid "Link signed-in users to their contact"
+msgstr "Bejelentkezett felhasználók összekapcsolása a kontaktjukkal"
+
+#: src/features/analytics/Alerts.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Support.tsx
+msgid "Load more"
+msgstr "Továbbiak betöltése"
+
+#: src/features/analytics/Settings.tsx
+msgid "Location database"
+msgstr "Helyadatbázis"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Locations"
+msgstr "Helyek"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created}"
+msgstr "Létrehozva: {created}"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created} by {by}"
+msgstr "Létrehozva: {created}, létrehozta: {by}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key"
+msgstr "Új kulcs létrehozása"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key?"
+msgstr "Létrehozol új kulcsot?"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Make at least two goals first."
+msgstr "Előbb hozz létre legalább két célt."
+
+#: src/features/analytics/Goals.tsx
+msgid "Make goal"
+msgstr "Cél létrehozása"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Make link"
+msgstr "Link létrehozása"
+
+#: src/features/analytics/text.ts
+msgid "matches"
+msgstr "egyezik"
+
+#: src/features/analytics/text.ts
+msgid "Mobile"
+msgstr "Mobil"
+
+#: src/features/analytics/Retention.tsx
+msgid "Month {period}"
+msgstr "{period}. hónap"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Monthly"
+msgstr "Havonta"
+
+#: src/features/analytics/Settings.tsx
+msgid "Monthly limit"
+msgstr "Havi korlát"
+
+#: src/features/analytics/Retention.tsx
+msgid "Months"
+msgstr "Hónapok"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move down"
+msgstr "Mozgatás lefelé"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move up"
+msgstr "Mozgatás felfelé"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Name"
+msgstr "Név"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs a linked inbox under General: its identity secret signs the tokens."
+msgstr "Kapcsolt postafiók kell az Általános alatt: az identitástitka írja alá a tokeneket."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Needs a linked inbox. {help}"
+msgstr "Kapcsolt postafiók kell. {help}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs the persistent id: a visitor is linked through it."
+msgstr "Tartós azonosító kell: a látogató ezen keresztül kapcsolódik."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Never"
+msgstr "Soha"
+
+#: src/features/analytics/Sharing.tsx
+msgid "never opened"
+msgstr "soha nem nyitották meg"
+
+#: src/features/analytics/text.ts
+msgid "New"
+msgstr "Új"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value} with {count}, none in the compared days."
+msgstr "Új {kind}: {value} {count} értékkel, egy sem az összehasonlított napokon."
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
+msgstr "Új {kind}: {value}. {metric}: {now}, egy sem az összehasonlított napokon."
+
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "Új és visszatérő"
+
+#: src/features/analytics/Funnels.tsx
+msgid "New funnel"
+msgstr "Új tölcsér"
+
+#: src/features/analytics/Goals.tsx
+msgid "New goal"
+msgstr "Új cél"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New link"
+msgstr "Új link"
+
+#: src/features/analytics/text.ts
+msgid "New or returning"
+msgstr "Új vagy visszatérő"
+
+#: src/features/analytics/Annotations.tsx
+msgid "New pricing page"
+msgstr "Új árazási oldal"
+
+#: src/features/analytics/Alerts.tsx
+msgid "New referrer"
+msgstr "Új hivatkozó"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New share link"
+msgstr "Új megosztási link"
+
+#: src/features/analytics/Alerts.tsx
+msgid "No alerts yet."
+msgstr "Még nincsenek riasztások."
+
+#: src/features/analytics/Controls.tsx
+msgid "No comparison"
+msgstr "Nincs összehasonlítás"
+
+#: src/features/analytics/Settings.tsx
+msgid "No consent features are offered."
+msgstr "Hozzájárulási funkciók nem érhetők el."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "Ebben a tartományban nincsenek beleegyező látogatók."
+
+#: src/features/analytics/Retention.tsx
+msgid "No consented visitors yet"
+msgstr "Még nincsenek beleegyező látogatók"
+
+#: src/features/analytics/Support.tsx
+msgid "No conversations, feedback, ratings or discussions from these pages in this range."
+msgstr "Ebben a tartományban nincsenek beszélgetések, visszajelzések, értékelések vagy viták ezekről az oldalakról."
+
+#: src/features/analytics/Goals.tsx
+msgid "No conversions in this range."
+msgstr "Ebben a tartományban nincsenek konverziók."
+
+#: src/features/analytics/Settings.tsx
+msgid "No event yet."
+msgstr "Még nincs esemény."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events in the last 24 hours"
+msgstr "Az elmúlt 24 órában nincsenek események"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events yet"
+msgstr "Még nincsenek események"
+
+#: src/features/analytics/Exports.tsx
+msgid "No exports yet."
+msgstr "Még nincsenek exportok."
+
+#: src/features/analytics/Funnels.tsx
+msgid "No funnels yet"
+msgstr "Még nincsenek tölcsérek"
+
+#: src/features/analytics/Goals.tsx
+msgid "No goals yet"
+msgstr "Még nincsenek célok"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No properties yet"
+msgstr "Még nincsenek tulajdonságok"
+
+#: src/features/analytics/Settings.tsx
+msgid "No props are tracked."
+msgstr "Nincsenek követett propok."
+
+#: src/features/analytics/Alerts.tsx
+msgid "No scheduled reports."
+msgstr "Nincsenek ütemezett jelentések."
+
+#: src/features/analytics/Controls.tsx
+msgid "No segment"
+msgstr "Nincs szegmens"
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Make one to show these numbers to people outside the workspace."
+msgstr "Még nincsenek megosztási linkek. Hozz létre egyet, hogy a munkaterületen kívüli embereknek is megmutasd ezeket a számokat."
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Owners and admins make them."
+msgstr "Még nincsenek megosztási linkek. A tulajdonosok és adminok hozzák létre őket."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Nobody in the last 30 minutes."
+msgstr "Az elmúlt 30 percben senki."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Nobody reached the first step in this range."
+msgstr "Ebben a tartományban senki sem érte el az első lépést."
+
+#: src/features/analytics/Alerts.tsx
+msgid "None"
+msgstr "Nincs"
+
+#: src/features/analytics/Settings.tsx
+msgid "None yet"
+msgstr "Még nincs"
+
+#: src/features/analytics/Exports.tsx
+msgid "None, every visit counts."
+msgstr "Nincs, minden látogatás számít."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "None, owners and admins only"
+msgstr "Nincs, csak tulajdonosok és adminok"
+
+#: src/features/analytics/parts.tsx
+msgid "Not available for this range."
+msgstr "Ehhez a tartományhoz nem érhető el."
+
+#: src/features/analytics/text.ts
+msgid "Not helpful"
+msgstr "Nem hasznos"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Note"
+msgstr "Jegyzet"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Notes"
+msgstr "Jegyzetek"
+
+#: src/features/analytics/Exports.tsx
+msgid "Nothing"
+msgstr "Semmi"
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Nothing counted in this range."
+msgstr "Ebben a tartományban semmi sem lett számolva."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Notify me"
+msgstr "Értesítsen"
+
+#: src/features/analytics/Settings.tsx
+msgid "Off"
+msgstr "Ki"
+
+#: src/features/analytics/Settings.tsx
+msgid "Offered only to visitors who agree in your consent tool. Everyone else is counted exactly as before, one day at a time and without anything stored on the device."
+msgstr "Csak azoknak a látogatóknak kínáljuk fel, akik beleegyeznek a hozzájárulás-kezelő eszközödben. Mindenki mást pontosan úgy számolunk, mint eddig, napról napra, és semmi sem tárolódik az eszközön."
+
+#: src/features/analytics/Settings.tsx
+msgid "Older than 72 hours. Apps keep events without a connection for at most that long."
+msgstr "72 óránál régebbi. Az alkalmazások legfeljebb ennyi ideig őrzik meg az eseményeket kapcsolat nélkül."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On its way to {email}."
+msgstr "Úton ide: {email}."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On the 1st of each month at 08:00 in {zone}, about the month before."
+msgstr "Minden hónap 1-jén 08:00-kor ({zone}), az előző hónapról."
+
+#: src/features/analytics/Settings.tsx
+msgid "One IP address or range per line, up to 50, such as your office or a monitoring service."
+msgstr "Soronként egy IP-cím vagy tartomány, legfeljebb 50, például az irodád vagy egy megfigyelőszolgáltatás."
+
+#: src/features/analytics/Settings.tsx
+msgid "One path per line, up to 50. * stands for one part of the path, ** for any number of them."
+msgstr "Soronként egy útvonal, legfeljebb 50. A * az útvonal egy részét jelenti, a ** tetszőleges számú részt."
+
+#: src/features/analytics/Sharing.tsx
+msgid "One per line, like https://example.com or https://*.example.com. Without any, no other site can show it in a frame."
+msgstr "Soronként egy, például https://example.com vagy https://*.example.com. Nélkülük más webhely nem jelenítheti meg keretben."
+
+#: src/features/analytics/Settings.tsx
+msgid "One per line. *.example.com covers every subdomain, but not example.com itself."
+msgstr "Soronként egy. A *.example.com minden aldomaint lefed, de magát az example.com-ot nem."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "One per line. Pages on other domains cannot send events. *.example.com covers every subdomain."
+msgstr "Soronként egy. A más domainen lévő oldalak nem küldhetnek eseményeket. A *.example.com minden aldomaint lefed."
+
+#: src/features/analytics/Settings.tsx
+msgid "One prop name per line, up to 10, such as plan."
+msgstr "Soronként egy propnév, legfeljebb 10, például plan."
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
+msgstr "Naponta egy sor látogatókkal, látogatásokkal, megtekintésekkel, visszafordulási aránnyal, időtartamokkal és görgetési mélységgel. Legfeljebb 400 nap."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Only for you, by e-mail to {email}. Reports are plain numbers, with no images and nothing that tracks opening or clicks."
+msgstr "Csak neked, e-mailben ide: {email}. A jelentések puszta számok, képek nélkül és semmivel, ami a megnyitásokat vagy kattintásokat követné."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Only members see it, to tell links apart."
+msgstr "Csak a tagok látják, a linkek megkülönböztetéséhez."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only the country is kept, never the region or city."
+msgstr "Csak az ország kerül megőrzésre, soha a régió vagy a város."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Only totals are shown. There is no list of individual visitors."
+msgstr "Csak összegek jelennek meg. Az egyes látogatók listája nincs."
+
+#: src/features/analytics/parts.tsx
+msgid "Only visitors who agreed to a persistent id are counted here. Everyone else is counted one day at a time."
+msgstr "Itt csak azokat a látogatókat számoljuk, akik beleegyeztek egy tartós azonosítóba. Mindenki mást napról napra számolunk."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only with consent"
+msgstr "Csak hozzájárulással"
+
+#: src/features/analytics/Goals.tsx
+msgid "Only with prop"
+msgstr "Csak propokkal"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
+msgstr "Nyisd meg a webhelyed egy oldalát a kódrészlettel a helyén. Ez zöldre vált, amint a szerver tárolta az első oldalmegtekintést. A Do Not Track vagy Global Privacy Control beállítású böngészők nem küldenek semmit, ezért teszteléshez használj másikat."
+
+#: src/features/analytics/Retention.tsx
+msgid "Open consent features"
+msgstr "Hozzájárulási funkciók megnyitása"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Open report"
+msgstr "Jelentés megnyitása"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open the overview"
+msgstr "Áttekintés megnyitása"
+
+#: src/features/analytics/Support.tsx
+msgid "Open the property’s settings"
+msgstr "A tulajdonság beállításainak megnyitása"
+
+#: src/features/analytics/text.ts
+msgid "Operating system"
+msgstr "Operációs rendszer"
+
+#: src/features/analytics/Install.tsx
+msgid "Opt-out link"
+msgstr "Leiratkozási link"
+
+#: src/features/analytics/text.ts
+msgid "Organic search"
+msgstr "Organikus keresés"
+
+#: src/features/analytics/text.ts
+msgid "OS version"
+msgstr "OS verziója"
+
+#: src/features/analytics/text.ts
+msgid "Other"
+msgstr "Egyéb"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other drops"
+msgstr "Egyéb visszaesések"
+
+#: src/features/analytics/Events.tsx
+msgid "Other prop"
+msgstr "Másik prop"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other sites"
+msgstr "Más webhelyek"
+
+#: src/features/analytics/text.ts
+msgid "Outbound link"
+msgstr "Kimenő link"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Overview"
+msgstr "Áttekintés"
+
+#: src/features/analytics/Install.tsx
+msgid "Own domain"
+msgstr "Saját domain"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Owners and admins make funnels from goals. They show up here with each step’s drop-off."
+msgstr "A tulajdonosok és adminok célokból hoznak létre tölcséreket. Itt jelennek meg az egyes lépések lemorzsolódásával."
+
+#: src/features/analytics/Goals.tsx
+msgid "Owners and admins make goals. They show up here with their conversions."
+msgstr "A tulajdonosok és adminok hoznak létre célokat. Itt jelennek meg a konverzióikkal."
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Page"
+msgstr "Oldal"
+
+#: src/features/analytics/text.ts
+msgid "Page feedback sent from the page."
+msgstr "Az oldalról küldött oldalvisszajelzés."
+
+#: src/features/analytics/text.ts
+msgid "Page not found"
+msgstr "Az oldal nem található"
+
+#: src/features/analytics/text.ts
+msgid "Page or screen"
+msgstr "Oldal vagy képernyő"
+
+#: src/features/analytics/Goals.tsx
+msgid "Page view of {path}"
+msgstr "{path} oldalmegtekintése"
+
+#: src/features/analytics/text.ts
+msgid "Pages"
+msgstr "Oldalak"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens"
+msgstr "Oldalak és képernyők"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens viewed."
+msgstr "Megtekintett oldalak és képernyők."
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages not counted"
+msgstr "Nem számolt oldalak"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
+msgstr "A mintának megfelelő oldalak egy útvonal alatt számolódnak, így minden rendelési oldal egyként összegződik. Az útvonalban lévő címeket mindig lecseréljük."
+
+#: src/features/analytics/text.ts
+msgid "Pages viewed."
+msgstr "Megtekintett oldalak."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Pages, sources, places and devices, without cookies, without storing IP addresses and without a consent banner where the law allows it."
+msgstr "Oldalak, források, helyek és eszközök, sütik nélkül, IP-címek tárolása nélkül és hozzájárulási szalaghirdetés nélkül, ahol a törvény engedi."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews"
+msgstr "Oldalmegtekintések"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews divided by visits."
+msgstr "Oldalmegtekintések osztva a látogatásokkal."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews in the last 30 minutes"
+msgstr "Oldalmegtekintések az elmúlt 30 percben"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews per minute"
+msgstr "Oldalmegtekintések percenként"
+
+#: src/features/analytics/text.ts
+msgid "Paid search"
+msgstr "Fizetett keresés"
+
+#: src/features/analytics/text.ts
+msgid "Paid social"
+msgstr "Fizetett közösségi"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Password"
+msgstr "Jelszó"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Past alerts"
+msgstr "Korábbi riasztások"
+
+#: src/features/analytics/Settings.tsx
+msgid "Path rules"
+msgstr "Útvonalszabályok"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pattern"
+msgstr "Minta"
+
+#: src/features/analytics/Controls.tsx
+msgid "Paying customers from Germany"
+msgstr "Fizető ügyfelek Németországból"
+
+#: src/features/analytics/text.ts
+msgid "Per 1,000 views"
+msgstr "1000 megtekintésre"
+
+#: src/features/analytics/Overview.tsx
+msgid "per day"
+msgstr "naponta"
+
+#: src/features/analytics/Settings.tsx
+msgid "Per day"
+msgstr "Naponta"
+
+#: src/features/analytics/Overview.tsx
+msgid "per hour"
+msgstr "óránként"
+
+#: src/features/analytics/Overview.tsx
+msgid "per week"
+msgstr "hetente"
+
+#: src/features/analytics/Settings.tsx
+msgid "Persistent id"
+msgstr "Tartós azonosító"
+
+#: src/features/analytics/text.ts
+msgid "Phone"
+msgstr "Telefon"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Pick a goal"
+msgstr "Válassz célt"
+
+#: src/features/analytics/Events.tsx
+msgid "Pick a prop to see the values this event carried."
+msgstr "Válassz egy propot, hogy lásd az esemény által hordozott értékeket."
+
+#: src/features/analytics/Settings.tsx
+msgid "Pick at least one platform."
+msgstr "Válassz legalább egy platformot."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Pick at least one view."
+msgstr "Válassz legalább egy nézetet."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
+msgstr "Válaszd ki, hogyan épül fel a webhely, és másold ki a kódrészletet. A kulcs nyilvános, mint a csevegőkulcs: csak a tulajdonság domainjein működik."
+
+#: src/features/analytics/text.ts
+msgid "Platform"
+msgstr "Platform"
+
+#: src/features/analytics/Settings.tsx
+msgid "Platforms"
+msgstr "Platformok"
+
+#: src/features/analytics/text.ts
+msgid "Prop"
+msgstr "Prop"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name"
+msgstr "Prop neve"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name, like plan"
+msgstr "Prop neve, például plan"
+
+#: src/features/analytics/Events.tsx
+msgid "Properties for children keep no props, only the address of outbound links and downloads."
+msgstr "A gyerekeknek szóló tulajdonságok nem őriznek propokat, csak a kimenő linkek és letöltések címét."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children keep no props, so none can be tracked."
+msgstr "A gyerekeknek szóló tulajdonságok nem őriznek propokat, így egyet sem lehet követni."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children never keep an id on the device or link visits to a contact."
+msgstr "A gyerekeknek szóló tulajdonságok soha nem tartanak azonosítót az eszközön, és nem kapcsolnak látogatásokat kontakthoz."
+
+#: src/features/analytics/Retention.tsx
+msgid "Properties for children never keep an id on the device, so they have no retention."
+msgstr "A gyerekeknek szóló tulajdonságok soha nem tartanak azonosítót az eszközön, így nincs megtartásuk."
+
+#: src/features/analytics/Settings.tsx
+msgid "Property name"
+msgstr "Tulajdonság neve"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Props"
+msgstr "Propok"
+
+#: src/features/analytics/Events.tsx
+msgid "Props of any name can be broken down for the days the detailed records are kept. Earlier days only have the tracked props."
+msgstr "Bármilyen nevű propok bonthatók azokra a napokra, amelyekre a részletes rekordokat megőrizzük. A korábbi napokhoz csak a követett propok vannak."
+
+#: src/features/analytics/Install.tsx
+msgid "Put the script in the head of every page. It counts page views, also when a single-page app changes the address, and stores nothing on the visitor’s device."
+msgstr "Tedd a szkriptet minden oldal head részébe. Számolja az oldalmegtekintéseket, akkor is, ha egy egyoldalas alkalmazás címet vált, és nem tárol semmit a látogató eszközén."
+
+#: src/features/analytics/Install.tsx
+msgid "Put these links on your privacy page. Opting out is the only thing the script stores on the visitor’s device, and only when they ask for it. Visitors with Do Not Track or Global Privacy Control are never counted."
+msgstr "Tedd ezeket a linkeket az adatvédelmi oldaladra. A tiltakozás az egyetlen dolog, amelyet a szkript a látogató eszközén tárol, és csak akkor, ha kéri. A Do Not Track vagy Global Privacy Control beállítású látogatókat soha nem számoljuk."
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Range"
+msgstr "Tartomány"
+
+#: src/features/analytics/Support.tsx
+msgid "Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "1000 megtekintésre jutó beszélgetések szerint rendezve; a 100-nál kevesebb megtekintéssel rendelkező oldalak a többi után jönnek. Oldalanként és naponta számolva, soha nem látogatónként vagy kontaktonként."
+
+#: src/features/analytics/Settings.tsx
+msgid "Rate limits"
+msgstr "Sebességkorlátok"
+
+#: src/features/analytics/Support.tsx
+msgid "Ratings"
+msgstr "Értékelések"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw events"
+msgstr "Nyers események"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw exports cover at most 31 days."
+msgstr "A nyers exportok legfeljebb 31 napot fednek le."
+
+#: src/features/analytics/Goals.tsx
+msgid "Reached when a visitor"
+msgstr "Akkor érhető el, amikor egy látogató"
+
+#: src/features/analytics/Exports.tsx
+msgid "Ready"
+msgstr "Kész"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Realtime"
+msgstr "Valós idő"
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour, last at {builtAt}."
+msgstr "Óránként újraépítve, utoljára: {builtAt}."
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour."
+msgstr "Óránként újraépítve."
+
+#: src/features/analytics/text.ts
+msgid "Referral"
+msgstr "Hivatkozás"
+
+#: src/features/analytics/text.ts
+msgid "Referrer"
+msgstr "Hivatkozó"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Refreshes every 15 seconds"
+msgstr "15 másodpercenként frissül"
+
+#: src/features/analytics/Settings.tsx
+msgid "Refused"
+msgstr "Elutasítva"
+
+#: src/features/analytics/text.ts
+msgid "Region"
+msgstr "Régió"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter"
+msgstr "Szűrő eltávolítása"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter: {label}"
+msgstr "Szűrő eltávolítása: {label}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Remove rule"
+msgstr "Szabály eltávolítása"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Remove step"
+msgstr "Lépés eltávolítása"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Rename “{0}”…"
+msgstr "„{0}” átnevezése…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Rename segment"
+msgstr "Szegmens átnevezése"
+
+#: src/features/analytics/Install.tsx
+msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
+msgstr "Rendereld a komponenst egyszer, a gyökérelrendezésben. Nem renderel semmit; a useYuvaAnalytics() bárhol alatta megadja a metódusokat."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Report"
+msgstr "Jelentés"
+
+#: src/features/analytics/Settings.tsx
+msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
+msgstr "A Do Not Track vagy Global Privacy Control kéréseket, és a hozzájárulást igénylő tulajdonságnál a hozzájárulás nélküli eseményeket fogadjuk, de itt nem tároljuk és nem számoljuk."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Retention"
+msgstr "Megtartás"
+
+#: src/features/analytics/Retention.tsx
+msgid "Retention needs consent features"
+msgstr "A megtartáshoz hozzájárulási funkciók kellenek"
+
+#: src/features/analytics/text.ts
+msgid "Returning"
+msgstr "Visszatérő"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/text.ts
+msgid "Revenue"
+msgstr "Bevétel"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke"
+msgstr "Visszavonás"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke {name}?"
+msgstr "Visszavonod: {name}?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoked"
+msgstr "Visszavonva"
+
+#: src/features/analytics/Exports.tsx
+msgid "Rows"
+msgstr "Sorok"
+
+#: src/features/analytics/Exports.tsx
+msgid "Running"
+msgstr "Fut"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Save"
+msgstr "Mentés"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Save the changes to “{0}”"
+msgstr "Módosítások mentése ebbe: „{0}”"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save the filters as a new segment…"
+msgstr "Szűrők mentése új szegmensként…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save these filters as a segment"
+msgstr "Ezen szűrők mentése szegmensként"
+
+#: src/features/analytics/Controls.tsx
+msgid "Saved segments"
+msgstr "Mentett szegmensek"
+
+#: src/features/analytics/text.ts
+msgid "Screen"
+msgstr "Képernyő"
+
+#: src/features/analytics/text.ts
+msgid "Screen size"
+msgstr "Képernyőméret"
+
+#: src/features/analytics/text.ts
+msgid "Screen views"
+msgstr "Képernyő-megtekintések"
+
+#: src/features/analytics/text.ts
+msgid "Screen views divided by visits."
+msgstr "Képernyő-megtekintések osztva a látogatásokkal."
+
+#: src/features/analytics/text.ts
+msgid "Screen views in the last 30 minutes"
+msgstr "Képernyő-megtekintések az elmúlt 30 percben"
+
+#: src/features/analytics/text.ts
+msgid "Screen views per minute"
+msgstr "Képernyő-megtekintések percenként"
+
+#: src/features/analytics/text.ts
+msgid "Screens"
+msgstr "Képernyők"
+
+#: src/features/analytics/text.ts
+msgid "Screens viewed."
+msgstr "Megtekintett képernyők."
+
+#: src/features/analytics/text.ts
+msgid "Scroll depth"
+msgstr "Görgetési mélység"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolled to {pct} on {path}"
+msgstr "{pct}-ig görgetve itt: {path}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolls"
+msgstr "Görgetések"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segment"
+msgstr "Szegmens"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segments"
+msgstr "Szegmensek"
+
+#: src/features/analytics/Settings.tsx
+msgid "Send a screen or an event from your app or backend while this page is open, and see whether it reached the server. Refreshes every 5 seconds."
+msgstr "Küldj egy képernyőt vagy eseményt az alkalmazásodból vagy háttérrendszeredből, amíg ez az oldal nyitva van, és nézd meg, eljutott-e a szerverre. 5 másodpercenként frissül."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Send me one now"
+msgstr "Küldj most egyet"
+
+#: src/features/analytics/Goals.tsx
+msgid "Sends an event"
+msgstr "Eseményt küld"
+
+#: src/features/analytics/text.ts
+msgid "Server"
+msgstr "Szerver"
+
+#: src/features/analytics/Settings.tsx
+msgid "Server busy"
+msgstr "A szerver foglalt"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Settings"
+msgstr "Beállítások"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Share links"
+msgstr "Megosztási linkek"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Shared with Yuva"
+msgstr "Megosztva a Yuvával"
+
+#: src/features/analytics/Settings.tsx
+msgid "Sharing"
+msgstr "Megosztás"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Events.tsx
+msgid "Show"
+msgstr "Megjelenítés"
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/parts.tsx
+msgid "Show from {day}"
+msgstr "Megjelenítés ettől: {day}"
+
+#: src/features/analytics/Events.tsx
+msgid "Show its props"
+msgstr "Propjainak megjelenítése"
+
+#: src/features/analytics/Controls.tsx
+msgid "Show the days"
+msgstr "Napok megjelenítése"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Show the last 30 days"
+msgstr "Az elmúlt 30 nap megjelenítése"
+
+#: src/features/analytics/Goals.tsx
+msgid "Signed up"
+msgstr "Regisztrált"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Sites that may embed it"
+msgstr "Webhelyek, amelyek beágyazhatják"
+
+#: src/features/analytics/text.ts
+msgid "Social"
+msgstr "Közösségi"
+
+#: src/features/analytics/Settings.tsx
+msgid "Some events were dropped. The reasons are below."
+msgstr "Néhány eseményt elvetettünk. Az okok alább láthatók."
+
+#: src/features/analytics/text.ts
+msgid "Source"
+msgstr "Forrás"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Realtime.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Sources"
+msgstr "Források"
+
+#: src/features/analytics/Settings.tsx
+msgid "Start over"
+msgstr "Újrakezdés"
+
+#. placeholder {0}: i + 1
+#: src/features/analytics/Funnels.tsx
+msgid "Step {0}"
+msgstr "{0}. lépés"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Steps"
+msgstr "Lépések"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Support.tsx
+msgid "Support"
+msgstr "Támogatás"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Support load"
+msgstr "Támogatási terhelés"
+
+#: src/features/analytics/Support.tsx
+msgid "Support numbers can only be filtered by page and host. The other filters are left out here."
+msgstr "A támogatási számok csak oldal és hoszt szerint szűrhetők. A többi szűrő itt kimarad."
+
+#: src/features/analytics/text.ts
+msgid "Tablet"
+msgstr "Táblagép"
+
+#: src/features/analytics/Settings.tsx
+msgid "Taken and stored. They show up in Realtime within a minute."
+msgstr "Fogadva és tárolva. Egy percen belül megjelennek a Valós időben."
+
+#: src/features/analytics/Settings.tsx
+msgid "Test events"
+msgstr "Tesztesemények"
+
+#: src/features/analytics/SharePage.tsx
+msgid "That password is not right."
+msgstr "Ez a jelszó nem helyes."
+
+#: src/features/analytics/Funnels.tsx
+msgid "The consented counts follow visitors with a persistent id from one visit and day to the next, so a step reached on a later day still counts."
+msgstr "A hozzájárulással számolt számok a tartós azonosítóval rendelkező látogatókat követik egyik látogatásból és napról a másikra, így a későbbi napon elért lépés is számít."
+
+#: src/features/analytics/Settings.tsx
+msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
+msgstr "A jelenlegi kulcs még 24 óráig működik, így eseményvesztés nélkül frissítheted az oldalaidat. Egy újabb kulcs létrehozása ezalatt azonnal véget vet a régi kulcsnak."
+
+#: src/features/analytics/text.ts
+msgid "The deepest point reached on the page, per view."
+msgstr "Az oldalon elért legmélyebb pont, megtekintésenként."
+
+#: src/features/analytics/Exports.tsx
+msgid "The export failed on the server."
+msgstr "Az export a szerveren meghiúsult."
+
+#: src/features/analytics/Exports.tsx
+msgid "The file would be larger than 1 GiB. Export a shorter range."
+msgstr "A fájl 1 GiB-nál nagyobb lenne. Exportálj rövidebb tartományt."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "The first event arrived at {at}."
+msgstr "Az első esemény megérkezett: {at}."
+
+#: src/features/analytics/Goals.tsx
+msgid "The goal reports the revenue its events carry, per currency."
+msgstr "A cél a bevételt jelenti, amelyet az események hordoznak, pénznemenként."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key is public, like a chat key: every page carries it, and it only works on the property’s domains."
+msgstr "A kulcs nyilvános, mint a csevegőkulcs: minden oldal hordozza, és csak a tulajdonság domainjein működik."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key stops working at once, and all visits, events and totals are deleted. This cannot be undone."
+msgstr "A kulcs azonnal leáll, és minden látogatás, esemény és összeg törlődik. Ez nem vonható vissza."
+
+#: src/features/analytics/Settings.tsx
+msgid "The last 30 days"
+msgstr "Az elmúlt 30 nap"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and leaves the list."
+msgstr "A link azonnal leáll, és eltűnik a listáról."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and stays in the list."
+msgstr "A link azonnal leáll, és a listán marad."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked."
+msgstr "A link e nap végén leáll ({timezone}). Hagyd üresen, hogy visszavonásig érvényes legyen."
+
+#: src/features/analytics/Install.tsx
+msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
+msgstr "A modul hozzáad egy klienspluginet és a useYuvaAnalytics() composable-t. A NUXT_PUBLIC_YUVA_ANALYTICS_KEY futásidőben felülírja a kulcsot."
+
+#: src/features/analytics/Settings.tsx
+msgid "The name does not match. Type it exactly as shown."
+msgstr "A név nem egyezik. Pontosan úgy írd be, ahogy látható."
+
+#: src/features/analytics/Goals.tsx
+msgid "The name given to track(), or outbound_click, file_download, not_found, chat_open."
+msgstr "A track()-nek adott név, vagy outbound_click, file_download, not_found, chat_open."
+
+#: src/features/analytics/Settings.tsx
+msgid "The previous key keeps working until {at}. Update every page and app before then."
+msgstr "Az előző kulcs eddig működik: {at}. Addig frissíts minden oldalt és alkalmazást."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "The properties of your inboxes show up here once an owner or admin adds them."
+msgstr "A postafiókjaid tulajdonságai itt jelennek meg, amint egy tulajdonos vagy admin hozzáadja őket."
+
+#: src/features/analytics/Exports.tsx
+msgid "The query could not be run."
+msgstr "A lekérdezést nem lehetett futtatni."
+
+#: src/features/analytics/Exports.tsx
+msgid "The range is outside the detailed records."
+msgstr "A tartomány a részletes rekordokon kívül esik."
+
+#: src/features/analytics/SharePage.tsx
+msgid "The report could not be loaded"
+msgstr "A jelentést nem lehetett betölteni"
+
+#: src/features/analytics/Settings.tsx
+msgid "The server’s own database"
+msgstr "A szerver saját adatbázisa"
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need detailed records that are no longer kept for this range."
+msgstr "Ezekhez a szűrőkhöz részletes rekordok kellenek, amelyeket ehhez a tartományhoz már nem őrzünk meg."
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need the detailed records, which are kept since {day}. Earlier days only have totals per page, source, place and device."
+msgstr "Ezekhez a szűrőkhöz a részletes rekordok kellenek, amelyeket {day} óta őrzünk meg. A korábbi napokhoz csak oldal, forrás, hely és eszköz szerinti összegek vannak."
+
+#: src/features/analytics/Settings.tsx
+msgid "This cannot be undone."
+msgstr "Ez nem vonható vissza."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal has numbers from {since} on. Days before that show none."
+msgstr "Ennek a célnak {since} óta vannak számai. Az előtte lévő napokon nem mutat semmit."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
+msgstr "Ez a cél egy tölcsér lépése. Előbb vedd ki a tölcsérből, vagy töröld a tölcsért."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This link is not available"
+msgstr "Ez a link nem elérhető"
+
+#: src/features/analytics/text.ts
+msgid "This month"
+msgstr "Ebben a hónapban"
+
+#: src/features/analytics/Funnels.tsx
+msgid "This property already has a funnel with this name."
+msgstr "Ennek a tulajdonságnak már van ilyen nevű tölcsére."
+
+#: src/features/analytics/Goals.tsx
+msgid "This property already has a goal with this name."
+msgstr "Ennek a tulajdonságnak már van ilyen nevű célja."
+
+#: src/features/analytics/Controls.tsx
+msgid "This property already has a segment with this name."
+msgstr "Ennek a tulajdonságnak már van ilyen nevű szegmense."
+
+#: src/features/analytics/Exports.tsx
+msgid "This range cannot be exported. Pick a shorter one, or one inside the detailed records."
+msgstr "Ez a tartomány nem exportálható. Válassz rövidebbet, vagy a részletes rekordokon belülit."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This report has a password"
+msgstr "Ennek a jelentésnek jelszava van"
+
+#: src/features/analytics/Support.tsx
+msgid "This workspace has no inbox yet."
+msgstr "Ennek a munkaterületnek még nincs postafiókja."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
+msgstr "Ez a munkaterület elérte az erre a hónapra vonatkozó {limit} analitikai eseményt. Az új események a hónap végéig elvetésre kerülnek."
+
+#: src/features/analytics/text.ts
+msgid "This year"
+msgstr "Ebben az évben"
+
+#: src/features/analytics/Exports.tsx
+msgid "Three exports are already running in this workspace. Try again when one finishes."
+msgstr "Ebben a munkaterületben már három export fut. Próbáld újra, ha egy befejeződik."
+
+#: src/features/analytics/text.ts
+msgid "Time from the first to the last event of a visit, on average. Bounces count as zero."
+msgstr "Az első és az utolsó esemény közötti átlagos idő egy látogatásban. A visszafordulások nullának számítanak."
+
+#: src/features/analytics/text.ts
+msgid "Time on page"
+msgstr "Idő az oldalon"
+
+#: src/features/analytics/text.ts
+msgid "Time the page was visible and in focus, per view."
+msgstr "Az idő, amíg az oldal látható és fókuszban volt, megtekintésenként."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Time zone"
+msgstr "Időzóna"
+
+#: src/features/analytics/text.ts
+msgid "Times the goal was reached, also several times by one visitor."
+msgstr "Hányszor érték el a célt, egy látogató által többször is."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated helpful."
+msgstr "Hányszor értékelték az oldalt hasznosnak."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated not helpful."
+msgstr "Hányszor értékelték az oldalt nem hasznosnak."
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "To"
+msgstr "Címzett"
+
+#: src/features/analytics/text.ts
+msgid "Today"
+msgstr "Ma"
+
+#: src/features/analytics/Settings.tsx
+msgid "Today: {todayCounted} counted, {todayDropped} dropped"
+msgstr "Ma: {todayCounted} megszámolva, {todayDropped} elvetve"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Token"
+msgstr "Token"
+
+#: src/features/analytics/Settings.tsx
+msgid "Too late"
+msgstr "Túl késő"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many requests from your network. Wait a minute and reload the page."
+msgstr "Túl sok kérés érkezett a hálózatodról. Várj egy percet, és töltsd újra az oldalt."
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many tries. Wait a minute and try again."
+msgstr "Túl sok próbálkozás. Várj egy percet, és próbáld újra."
+
+#: src/features/analytics/text.ts
+msgid "Top pages"
+msgstr "Legnépszerűbb oldalak"
+
+#: src/features/analytics/text.ts
+msgid "Top pages and screens"
+msgstr "Legnépszerűbb oldalak és képernyők"
+
+#: src/features/analytics/text.ts
+msgid "Top screens"
+msgstr "Legnépszerűbb képernyők"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracked props"
+msgstr "Követett propok"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracking"
+msgstr "Követés"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic drop"
+msgstr "Forgalomesés"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic spike"
+msgstr "Forgalomugrás"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Try again"
+msgstr "Próbáld újra"
+
+#: src/features/analytics/Install.tsx
+msgid "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
+msgstr "Előbb kapcsold be a(z) {name} platformot az általános beállítások Platformok részében. Addig a szerver elutasítja az alkalmazás eseményeit."
+
+#: src/features/analytics/Retention.tsx
+msgid "Turn on the persistent id in the consent features, then call yuva.consent with persistent set to true."
+msgstr "Kapcsold be a tartós azonosítót a hozzájárulási funkciókban, majd hívd meg a yuva.consent függvényt persistent: true értékkel."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Two to eight goals, in the order visitors reach them within one visit."
+msgstr "Kettőtől nyolc célig, abban a sorrendben, ahogy a látogatók elérik őket egy látogatáson belül."
+
+#: src/features/analytics/Settings.tsx
+msgid "Type the property’s name to delete it and all its data."
+msgstr "Írd be a tulajdonság nevét, hogy töröld az összes adatával együtt."
+
+#: src/features/analytics/text.ts
+msgid "Unknown"
+msgstr "Ismeretlen"
+
+#: src/features/analytics/Install.tsx
+msgid "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
+msgstr "Kérésenként legfeljebb 100 esemény, mindegyik a látogató IP-címével és user agentjével vagy a saját visitor_key-edel. Egyiket sem tároljuk. Az érvénytelenként kihagyott események az errors mezőben térnek vissza a pozíciójukkal; hogy mi érkezett meg, a Teszteseményeknél látod."
+
+#: src/features/analytics/text.ts
+msgid "UTM campaign"
+msgstr "UTM-kampány"
+
+#: src/features/analytics/text.ts
+msgid "UTM content"
+msgstr "UTM-tartalom"
+
+#: src/features/analytics/text.ts
+msgid "UTM medium"
+msgstr "UTM-médium"
+
+#: src/features/analytics/text.ts
+msgid "UTM source"
+msgstr "UTM-forrás"
+
+#: src/features/analytics/text.ts
+msgid "UTM term"
+msgstr "UTM-kifejezés"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Views"
+msgstr "Megtekintések"
+
+#: src/features/analytics/Goals.tsx
+msgid "Views a page"
+msgstr "Megtekint egy oldalt"
+
+#: src/features/analytics/text.ts
+msgid "Views divided by visits."
+msgstr "Megtekintések osztva a látogatásokkal."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views fell to {now} in two hours, against {usual} usually."
+msgstr "A megtekintések két óra alatt {now}-ra estek, szemben a szokásos {usual} értékkel."
+
+#: src/features/analytics/text.ts
+msgid "Views in the last 30 minutes"
+msgstr "Megtekintések az elmúlt 30 percben"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at least three times the same hours of the week before."
+msgstr "Az elmúlt két óra megtekintései legalább háromszorosai az előző hét azonos óráinak."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at most half the same hours of the week before."
+msgstr "Az elmúlt két óra megtekintései legfeljebb felei az előző hét azonos óráinak."
+
+#: src/features/analytics/text.ts
+msgid "Views per minute"
+msgstr "Megtekintések percenként"
+
+#: src/features/analytics/text.ts
+msgid "Views per visit"
+msgstr "Megtekintések látogatásonként"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views rose to {now} in two hours, against {usual} usually."
+msgstr "A megtekintések két óra alatt {now}-ra nőttek, szemben a szokásos {usual} értékkel."
+
+#: src/features/analytics/text.ts
+msgid "Visit duration"
+msgstr "Látogatás időtartama"
+
+#: src/features/analytics/Retention.tsx
+#: src/features/analytics/text.ts
+msgid "Visitors"
+msgstr "Látogatók"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Visitors in the last 30 minutes"
+msgstr "Látogatók az elmúlt 30 percben"
+
+#: src/features/analytics/Retention.tsx
+msgid "Visitors who came back"
+msgstr "Visszatért látogatók"
+
+#: src/features/analytics/text.ts
+msgid "Visitors who reached the goal, per day, added up over the days of the range."
+msgstr "A célt elérő látogatók naponta, a tartomány napjain összeadva."
+
+#: src/features/analytics/Settings.tsx
+msgid "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
+msgstr "A Do Not Track vagy Global Privacy Control beállítású látogatók nem küldenek semmit, így itt sem számítanak. Az elvetett eseményről nem őrzünk meg mást, csak a számukat."
+
+#: src/features/analytics/text.ts
+msgid "Visits"
+msgstr "Látogatások"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page or screen view and nothing else."
+msgstr "Egy oldal- vagy képernyő-megtekintéssel és semmi mással rendelkező látogatások."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page view and nothing else."
+msgstr "Egy oldalmegtekintéssel és semmi mással rendelkező látogatások."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one screen view and nothing else."
+msgstr "Egy képernyő-megtekintéssel és semmi mással rendelkező látogatások."
+
+#: src/features/analytics/Install.tsx
+msgid "Vue, Astro, other"
+msgstr "Vue, Astro, egyéb"
+
+#: src/features/analytics/Exports.tsx
+msgid "Waiting"
+msgstr "Várakozik"
+
+#: src/features/analytics/Settings.tsx
+msgid "Waiting for events since {at}."
+msgstr "Várakozás eseményekre {at} óta."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Waiting for the first event"
+msgstr "Várakozás az első eseményre"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Watch it live"
+msgstr "Nézd élőben"
+
+#: src/features/analytics/text.ts
+msgid "Web"
+msgstr "Web"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Website or app"
+msgstr "Webhely vagy alkalmazás"
+
+#: src/features/analytics/Retention.tsx
+msgid "Week {period}"
+msgstr "{period}. hét"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Weekly"
+msgstr "Hetente"
+
+#: src/features/analytics/Retention.tsx
+msgid "Weeks"
+msgstr "Hetek"
+
+#: src/features/analytics/Insights.tsx
+msgid "What changed"
+msgstr "Mi változott"
+
+#: src/features/analytics/Support.tsx
+msgid "What stands out"
+msgstr "Mi tűnik ki"
+
+#: src/features/analytics/text.ts
+msgid "What the goal's events carried, per currency. Currencies are never converted or added up."
+msgstr "Amit a cél eseményei hordoztak, pénznemenként. A pénznemeket soha nem váltjuk át és nem adjuk össze."
+
+#: src/features/analytics/Exports.tsx
+msgid "What to export"
+msgstr "Mit exportálj"
+
+#: src/features/analytics/Goals.tsx
+msgid "Where conversions come from"
+msgstr "Honnan jönnek a konverziók"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Where the property’s day starts and ends."
+msgstr "Hol kezdődik és végződik a tulajdonság napja."
+
+#: src/features/analytics/Install.tsx
+msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."
+msgstr "A data-consent=\"required\" beállítással a szkript nem küld semmit, amíg a hozzájárulás-kezelő eszközöd nem mondja, hogy a látogató beleegyezett. Állítsd a Gyűjtést „Csak hozzájárulással” értékre az általános beállításokban is, hogy a szerver hozzájárulás nélküli eseményeket elutasítsa."
+
+#: src/features/analytics/Settings.tsx
+msgid "With yuva.consent and persistent set to true, the device keeps a random id for 13 months. The visitor counts once over several days, is told apart as new or returning, fills retention and is followed across days in funnels. Never under Do Not Track or Global Privacy Control."
+msgstr "A yuva.consent és persistent: true beállítással az eszköz 13 hónapig tart egy véletlen azonosítót. A látogatót egyszer számoljuk több napon át, megkülönböztetjük újként vagy visszatérőként, feltölti a megtartást, és a tölcsérekben napokon át követjük. Soha nem a Do Not Track vagy Global Privacy Control mellett."
+
+#: src/features/analytics/text.ts
+msgid "Without consent"
+msgstr "Hozzájárulás nélkül"
+
+#: src/features/analytics/Retention.tsx
+msgid "Without cookies a visitor is new every day, so nobody can be followed from one day to the next. Only visitors who agree to a persistent id in your consent tool show up here."
+msgstr "Sütik nélkül a látogató minden nap új, így senkit sem lehet követni egyik napról a másikra. Itt csak azok a látogatók jelennek meg, akik a hozzájárulás-kezelő eszközödben beleegyeznek egy tartós azonosítóba."
+
+#: src/features/analytics/Settings.tsx
+msgid "Without cookies, for everyone"
+msgstr "Sütik nélkül, mindenkinek"
+
+#: src/features/analytics/text.ts
+msgid "Yesterday"
+msgstr "Tegnap"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Your access ended. Enter the password again to keep reading."
+msgstr "A hozzáférésed véget ért. Add meg újra a jelszót az olvasás folytatásához."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Your new share link"
+msgstr "Az új megosztási linked"
+
+#: src/features/analytics/Settings.tsx
+msgid "yuva.identify with a token from your backend, signed like a chat session, links the visitor’s visits to their contact. They show on the contact’s page under Recent visits. Forged or reused tokens are ignored."
+msgstr "A yuva.identify a háttérrendszeredből származó, csevegési munkamenethez hasonlóan aláírt tokennel a látogató látogatásait a kontaktjához kapcsolja. Ezek a kontakt oldalán jelennek meg a Legutóbbi látogatások alatt. A hamisított vagy újrahasznosított tokeneket figyelmen kívül hagyjuk."

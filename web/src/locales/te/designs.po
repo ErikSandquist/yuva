@@ -1,0 +1,1333 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 10:11+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: te\n"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "{name} (copy)"
+msgstr "{name} (కాపీ)"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "{used} of {limit}"
+msgstr "{limit} లో {used}"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "{who} saved it {when}, after you started editing. Your changes are kept on this device until you choose."
+msgstr "మీరు సవరించడం మొదలుపెట్టిన తర్వాత {who} దీన్ని {when} సేవ్ చేశారు. మీరు ఎంచుకునే వరకు మీ మార్పులు ఈ పరికరంలో ఉంచబడతాయి."
+
+#: src/features/designs/designer/controls.tsx
+msgid "A button needs a link."
+msgstr "బటన్‌కు లింక్ అవసరం."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "A clear heading"
+msgstr "స్పష్టమైన శీర్షిక"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "A design can hold at most 200 blocks."
+msgstr "ఒక డిజైన్‌లో గరిష్టంగా 200 బ్లాక్‌లు ఉండవచ్చు."
+
+#: src/features/designs/DesignsList.tsx
+msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
+msgstr "డిజైన్ అంటే మెయిల్ రూపం: టెంప్లేట్‌తో ప్రారంభించి, దాన్ని మీ బ్రాడ్‌కాస్ట్‌ల కోసం ఉపయోగించండి."
+
+#: src/features/designs/designer/editor.tsx
+msgid "A field without a fallback can leave a gap, like “Hi ,”."
+msgstr "ఫాల్‌బ్యాక్ లేని ఫీల్డ్ “నమస్కారం ,” లాంటి ఖాళీని వదలవచ్చు."
+
+#: src/features/designs/text.ts
+msgid "A group of blocks on its own background"
+msgstr "దాని స్వంత నేపథ్యంపై బ్లాక్‌ల సమూహం"
+
+#: src/features/designs/text.ts
+msgid "A link that looks like a button"
+msgstr "బటన్‌లా కనిపించే లింక్"
+
+#: src/features/designs/text.ts
+msgid "A merge field has no fallback, so it can be empty for some people."
+msgstr "మెర్జ్ ఫీల్డ్‌కు ఫాల్‌బ్యాక్ లేదు, కాబట్టి కొందరికి ఖాళీగా ఉండవచ్చు."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "A newer version of Yuva made this design. You can look at it here, but not change it."
+msgstr "Yuva కొత్త వెర్షన్ ఈ డిజైన్‌ను తయారు చేసింది. మీరు దీన్ని ఇక్కడ చూడవచ్చు, కానీ మార్చలేరు."
+
+#: src/features/designs/text.ts
+msgid "A thin line between parts"
+msgstr "భాగాల మధ్య సన్నని గీత"
+
+#: src/features/designs/text.ts
+msgid "A title in three sizes"
+msgstr "మూడు పరిమాణాల్లో శీర్షిక"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "A version is kept at most every ten minutes while you edit, when you save by hand, when you restore one and when someone else's save wins a conflict. The newest 50 stay."
+msgstr "మీరు సవరించేటప్పుడు గరిష్టంగా ప్రతి పది నిమిషాలకు, చేతితో సేవ్ చేసినప్పుడు, ఒకదాన్ని పునరుద్ధరించినప్పుడు మరియు మరొకరి సేవ్ ఘర్షణలో గెలిచినప్పుడు వెర్షన్ ఉంచబడుతుంది. తాజా 50 ఉంటాయి."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Add"
+msgstr "జోడించండి"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Add a block"
+msgstr "బ్లాక్‌ను జోడించండి"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Add a link"
+msgstr "లింక్‌ను జోడించండి"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Add your own lines above the required footer"
+msgstr "అవసరమైన ఫుటర్ పైన మీ స్వంత లైన్‌లను జోడించండి"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Added to every mail: your legal name and postal address, why the person gets the mail, and the unsubscribe and preference links."
+msgstr "ప్రతి మెయిల్‌కు జోడించబడుతుంది: మీ చట్టబద్ధ పేరు మరియు తపాలా చిరునామా, వ్యక్తికి మెయిల్ ఎందుకు వస్తోంది, మరియు అన్‌సబ్‌స్క్రైబ్ మరియు ప్రాధాన్యత లింక్‌లు."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Address"
+msgstr "చిరునామా"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Alignment"
+msgstr "అమరిక"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Also shown when a mail app blocks images."
+msgstr "మెయిల్ యాప్ చిత్రాలను బ్లాక్ చేసినప్పుడు కూడా చూపబడుతుంది."
+
+#: src/features/designs/text.ts
+msgid "An uploaded picture, with a link if you like"
+msgstr "అప్‌లోడ్ చేసిన చిత్రం, కావాలంటే లింక్‌తో"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Animated GIFs can be at most 1,200 pixels wide."
+msgstr "యానిమేటెడ్ GIF లు గరిష్టంగా 1,200 పిక్సెల్‌ల వెడల్పు ఉండవచ్చు."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Announcement"
+msgstr "ప్రకటన"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Apply"
+msgstr "వర్తింపజేయండి"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Archive"
+msgstr "ఆర్కైవ్ చేయండి"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Archive this design?"
+msgstr "ఈ డిజైన్‌ను ఆర్కైవ్ చేయాలా?"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Attribute key"
+msgstr "అట్రిబ్యూట్ కీ"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Automatic"
+msgstr "ఆటోమేటిక్"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Back to designs"
+msgstr "డిజైన్‌లకు తిరిగి"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Background"
+msgstr "నేపథ్యం"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Block settings"
+msgstr "బ్లాక్ సెట్టింగ్‌లు"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Panels.tsx
+msgid "Blocks"
+msgstr "బ్లాక్‌లు"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Blocks and layers"
+msgstr "బ్లాక్‌లు మరియు లేయర్‌లు"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Bold"
+msgstr "బోల్డ్"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Bottom"
+msgstr "కింద"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Brand"
+msgstr "బ్రాండ్"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Build it yourself from blocks"
+msgstr "బ్లాక్‌ల నుండి మీరే నిర్మించండి"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Bulleted list"
+msgstr "బుల్లెట్ జాబితా"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Button"
+msgstr "బటన్"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Button colour"
+msgstr "బటన్ రంగు"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Button text"
+msgstr "బటన్ టెక్స్ట్"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Buttons"
+msgstr "బటన్‌లు"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Cancel"
+msgstr "రద్దు చేయండి"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Centre"
+msgstr "మధ్య"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Changed elsewhere"
+msgstr "వేరే చోట మారింది"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Checks"
+msgstr "తనిఖీలు"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Choose an image"
+msgstr "చిత్రాన్ని ఎంచుకోండి"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Clear formatting"
+msgstr "ఫార్మాటింగ్‌ను క్లియర్ చేయండి"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Close"
+msgstr "మూసివేయండి"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Code"
+msgstr "కోడ్"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Colour"
+msgstr "రంగు"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Colours"
+msgstr "రంగులు"
+
+#. placeholder {0}: n(i)
+#: src/features/designs/designer/Inspector.tsx
+msgid "Column {0}"
+msgstr "నిలువు వరుస {0}"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Column {n} · {width}%"
+msgstr "నిలువు వరుస {n} · {width}%"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Columns"
+msgstr "నిలువు వరుసలు"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Contact attribute"
+msgstr "కాంటాక్ట్ అట్రిబ్యూట్"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Content background"
+msgstr "కంటెంట్ నేపథ్యం"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Copy made"
+msgstr "కాపీ తయారైంది"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Corner radius"
+msgstr "మూల వ్యాసార్థం"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Create and edit"
+msgstr "సృష్టించండి మరియు సవరించండి"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Current"
+msgstr "ప్రస్తుతం"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Dark"
+msgstr "డార్క్"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Dark mode"
+msgstr "డార్క్ మోడ్"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Decorative"
+msgstr "అలంకార"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Default"
+msgstr "డిఫాల్ట్"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Default spacing"
+msgstr "డిఫాల్ట్ అంతరం"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/ImageLibrary.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Delete"
+msgstr "తొలగించండి"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Delete {name}"
+msgstr "{name} ను తొలగించండి"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Delete anyway"
+msgstr "అయినా తొలగించండి"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Delete this image?"
+msgstr "ఈ చిత్రాన్ని తొలగించాలా?"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Describe the image, or mark it as decorative."
+msgstr "చిత్రాన్ని వివరించండి, లేదా దాన్ని అలంకారంగా గుర్తించండి."
+
+#: src/features/designs/text.ts
+msgid "Describe this image for people who cannot see it, or mark it as decorative."
+msgstr "చూడలేని వారి కోసం ఈ చిత్రాన్ని వివరించండి, లేదా దాన్ని అలంకారంగా గుర్తించండి."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Description for screen readers"
+msgstr "స్క్రీన్ రీడర్‌ల కోసం వివరణ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Design"
+msgstr "డిజైన్"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Design archived"
+msgstr "డిజైన్ ఆర్కైవ్ చేయబడింది"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Design name"
+msgstr "డిజైన్ పేరు"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Design settings"
+msgstr "డిజైన్ సెట్టింగ్‌లు"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Designer"
+msgstr "డిజైనర్"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Designs"
+msgstr "డిజైన్‌లు"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Desktop"
+msgstr "డెస్క్‌టాప్"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Digest"
+msgstr "డైజెస్ట్"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Direction"
+msgstr "దిశ"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Divider"
+msgstr "విభజన"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Done"
+msgstr "పూర్తయింది"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Download JSON"
+msgstr "JSON ను డౌన్‌లోడ్ చేయండి"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Download my version as JSON"
+msgstr "నా వెర్షన్‌ను JSON గా డౌన్‌లోడ్ చేయండి"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Panels.tsx
+msgid "Drag {kind}"
+msgstr "{kind} ను లాగండి"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Drag a block here, or pick one from the list."
+msgstr "బ్లాక్‌ను ఇక్కడికి లాగండి, లేదా జాబితా నుండి ఒకదాన్ని ఎంచుకోండి."
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Drag a block onto the mail, or press Enter to add it after the selected block."
+msgstr "బ్లాక్‌ను మెయిల్‌పైకి లాగండి, లేదా ఎంచుకున్న బ్లాక్ తర్వాత జోడించడానికి Enter నొక్కండి."
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Drop blocks here"
+msgstr "బ్లాక్‌లను ఇక్కడ వదలండి"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Duplicate"
+msgstr "నకలు చేయండి"
+
+#: src/features/designs/text.ts
+msgid "E-mail address"
+msgstr "ఇమెయిల్ చిరునామా"
+
+#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "E-mail designs"
+msgstr "ఇమెయిల్ డిజైన్‌లు"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Easy to read: {value}:1"
+msgstr "చదవడానికి సులభం: {value}:1"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Edit"
+msgstr "సవరించండి"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Empty"
+msgstr "ఖాళీ"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Empty page"
+msgstr "ఖాళీ పేజీ"
+
+#: src/features/designs/text.ts
+msgid "Empty room between blocks"
+msgstr "బ్లాక్‌ల మధ్య ఖాళీ స్థలం"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "End"
+msgstr "ముగింపు"
+
+#: src/features/designs/text.ts
+msgid "English"
+msgstr "ఆంగ్లం"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Event"
+msgstr "ఈవెంట్"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Everywhere"
+msgstr "ప్రతిచోటా"
+
+#: src/features/designs/text.ts
+msgid "First name"
+msgstr "మొదటి పేరు"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Fonts already on people’s devices; mails load no web fonts."
+msgstr "ప్రజల పరికరాల్లో ఇప్పటికే ఉన్న ఫాంట్‌లు; మెయిల్‌లు వెబ్ ఫాంట్‌లను లోడ్ చేయవు."
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Footer text"
+msgstr "ఫుటర్ టెక్స్ట్"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "For dark logos on a transparent background."
+msgstr "పారదర్శక నేపథ్యంపై ముదురు లోగోల కోసం."
+
+#: src/features/designs/text.ts
+msgid "Full name"
+msgstr "పూర్తి పేరు"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Full width"
+msgstr "పూర్తి వెడల్పు"
+
+#: src/features/designs/text.ts
+msgid "Geometric"
+msgstr "రేఖాగణిత"
+
+#: src/features/designs/text.ts
+msgid "German"
+msgstr "జర్మన్"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Gmail cuts mails off at about 102 KB of HTML, hiding the unsubscribe link."
+msgstr "Gmail సుమారు 102 KB HTML వద్ద మెయిల్‌లను కత్తిరిస్తుంది, అన్‌సబ్‌స్క్రైబ్ లింక్‌ను దాచేస్తూ."
+
+#: src/features/designs/designer/controls.tsx
+msgid "Hard to read: {value}:1, aim for 4.5:1"
+msgstr "చదవడం కష్టం: {value}:1, 4.5:1 లక్ష్యంగా పెట్టుకోండి"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Has problems"
+msgstr "సమస్యలు ఉన్నాయి"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Has warnings"
+msgstr "హెచ్చరికలు ఉన్నాయి"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Heading"
+msgstr "శీర్షిక"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Heading font"
+msgstr "శీర్షిక ఫాంట్"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Height"
+msgstr "ఎత్తు"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Hidden on phones"
+msgstr "ఫోన్‌లలో దాచబడింది"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Hidden on wide screens"
+msgstr "వెడల్పు స్క్రీన్‌లపై దాచబడింది"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Hide dark colours"
+msgstr "ముదురు రంగులను దాచండి"
+
+#: src/features/designs/text.ts
+msgid "Humanist"
+msgstr "హ్యూమనిస్ట్"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Icon colour"
+msgstr "ఐకాన్ రంగు"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Icons"
+msgstr "ఐకాన్‌లు"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Image"
+msgstr "చిత్రం"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Images"
+msgstr "చిత్రాలు"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Images can be at most 10 MB."
+msgstr "చిత్రాలు గరిష్టంగా 10 MB ఉండవచ్చు."
+
+#: src/features/designs/designer/ThemePanel.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Inbox"
+msgstr "ఇన్‌బాక్స్"
+
+#: src/features/designs/text.ts
+msgid "Inbox name"
+msgstr "ఇన్‌బాక్స్ పేరు"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Insert"
+msgstr "చొప్పించండి"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "It adds nothing to the message, so screen readers skip it."
+msgstr "ఇది సందేశానికి ఏమీ జోడించదు, కాబట్టి స్క్రీన్ రీడర్‌లు దీన్ని దాటవేస్తాయి."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "It leaves the list of designs. Its versions are kept, and saving it again brings it back."
+msgstr "ఇది డిజైన్‌ల జాబితా నుండి పోతుంది. దాని వెర్షన్‌లు ఉంచబడతాయి, మళ్లీ సేవ్ చేస్తే అది తిరిగి వస్తుంది."
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "It was saved {when} in another tab or by someone else, after you started editing. Your changes are kept on this device until you choose."
+msgstr "మీరు సవరించడం మొదలుపెట్టిన తర్వాత, ఇది {when} మరో ట్యాబ్‌లో లేదా మరొకరి ద్వారా సేవ్ చేయబడింది. మీరు ఎంచుకునే వరకు మీ మార్పులు ఈ పరికరంలో ఉంచబడతాయి."
+
+#: src/features/designs/designer/editor.tsx
+msgid "Italic"
+msgstr "ఇటాలిక్"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Its address stops working at once."
+msgstr "దాని చిరునామా వెంటనే పనిచేయడం ఆగిపోతుంది."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Its images are copied into your workspace’s images. You can change everything after."
+msgstr "దాని చిత్రాలు మీ వర్క్‌స్పేస్ చిత్రాలలోకి కాపీ చేయబడతాయి. తర్వాత అన్నీ మార్చవచ్చు."
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Its sender details fill the required footer."
+msgstr "దాని పంపేవారి వివరాలు అవసరమైన ఫుటర్‌ను నింపుతాయి."
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Keep mine"
+msgstr "నాది ఉంచండి"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Kept from a conflict"
+msgstr "ఘర్షణ నుండి ఉంచబడింది"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Keyboard shortcuts"
+msgstr "కీబోర్డ్ షార్ట్‌కట్‌లు"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Large"
+msgstr "పెద్ద"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Panels.tsx
+msgid "Layers"
+msgstr "లేయర్‌లు"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Layout"
+msgstr "లేఅవుట్"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Left"
+msgstr "ఎడమ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Left panel"
+msgstr "ఎడమ ప్యానెల్"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Left to right"
+msgstr "ఎడమ నుండి కుడికి"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Light"
+msgstr "లైట్"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Light plate in dark mode"
+msgstr "డార్క్ మోడ్‌లో లేత ప్లేట్"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Lines"
+msgstr "గీతలు"
+
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Link"
+msgstr "లింక్"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Link address"
+msgstr "లింక్ చిరునామా"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Links"
+msgstr "లింక్‌లు"
+
+#: src/features/designs/designer/controls.tsx
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/text.ts
+msgid "Links start with https://, http://, mailto: or tel:."
+msgstr "లింక్‌లు https://, http://, mailto: లేదా tel: తో మొదలవుతాయి."
+
+#: src/features/designs/text.ts
+msgid "Links to your profiles"
+msgstr "మీ ప్రొఫైల్‌లకు లింక్‌లు"
+
+#: src/features/designs/text.ts
+msgid "List name"
+msgstr "లిస్ట్ పేరు"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+#: src/features/designs/DesignsList.tsx
+msgid "Load more"
+msgstr "మరిన్ని లోడ్ చేయండి"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Load theirs"
+msgstr "వారిది లోడ్ చేయండి"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Loading the image…"
+msgstr "చిత్రాన్ని లోడ్ చేస్తోంది…"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Mail"
+msgstr "మెయిల్"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Mail apps in dark mode get darker colours made from yours, with text kept easy to read. Set any of them yourself."
+msgstr "డార్క్ మోడ్‌లో మెయిల్ యాప్‌లు మీ రంగుల నుండి తయారైన ముదురు రంగులను పొందుతాయి, టెక్స్ట్ చదవడానికి సులభంగా ఉండేలా. వాటిలో దేన్నైనా మీరే సెట్ చేయండి."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Make a copy"
+msgstr "కాపీ చేయండి"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Make them all from the light colours"
+msgstr "అన్నింటినీ లేత రంగుల నుండి తయారు చేయండి"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Medium"
+msgstr "మధ్యస్థ"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Merge field"
+msgstr "మెర్జ్ ఫీల్డ్"
+
+#: src/features/designs/text.ts
+msgid "Merge fields can only go in the part of a link after the question mark."
+msgstr "మెర్జ్ ఫీల్డ్‌లు లింక్‌లో ప్రశ్న గుర్తు తర్వాతి భాగంలో మాత్రమే ఉండవచ్చు."
+
+#: src/features/designs/text.ts
+msgid "Monospace"
+msgstr "మోనోస్పేస్"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "More actions"
+msgstr "మరిన్ని చర్యలు"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Move down"
+msgstr "కిందకు తరలించండి"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Move up"
+msgstr "పైకి తరలించండి"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Name"
+msgstr "పేరు"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Network"
+msgstr "నెట్‌వర్క్"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "New blank design"
+msgstr "కొత్త ఖాళీ డిజైన్"
+
+#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "New design"
+msgstr "కొత్త డిజైన్"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Newsletter"
+msgstr "న్యూస్‌లెటర్"
+
+#: src/features/designs/DesignsList.tsx
+msgid "No archived designs"
+msgstr "ఆర్కైవ్ చేసిన డిజైన్‌లు లేవు"
+
+#: src/features/designs/DesignsList.tsx
+msgid "No designs match."
+msgstr "ఏ డిజైన్ సరిపోలడం లేదు."
+
+#: src/features/designs/DesignsList.tsx
+msgid "No designs yet"
+msgstr "ఇంకా డిజైన్‌లు లేవు"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "No images yet. Upload the first one."
+msgstr "ఇంకా చిత్రాలు లేవు. మొదటిదాన్ని అప్‌లోడ్ చేయండి."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "No problems found."
+msgstr "సమస్యలు ఏవీ కనుగొనబడలేదు."
+
+#: src/features/designs/designer/Versions.tsx
+msgid "No versions yet. One is kept after ten minutes of editing."
+msgstr "ఇంకా వెర్షన్‌లు లేవు. పది నిమిషాల సవరణ తర్వాత ఒకటి ఉంచబడుతుంది."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Not saved: fix the marked blocks"
+msgstr "సేవ్ కాలేదు: గుర్తించిన బ్లాక్‌లను సరిచేయండి"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Not saved. Try again"
+msgstr "సేవ్ కాలేదు. మళ్లీ ప్రయత్నించండి"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Number of columns"
+msgstr "నిలువు వరుసల సంఖ్య"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Numbered list"
+msgstr "సంఖ్యల జాబితా"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Offline, kept on this device"
+msgstr "ఆఫ్‌లైన్, ఈ పరికరంలో ఉంచబడింది"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Offline. Your changes are kept on this device and saved when you are back."
+msgstr "ఆఫ్‌లైన్. మీ మార్పులు ఈ పరికరంలో ఉంచబడి, మీరు తిరిగి వచ్చినప్పుడు సేవ్ అవుతాయి."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Onboarding"
+msgstr "ఆన్‌బోర్డింగ్"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "One under the other on narrow screens."
+msgstr "ఇరుకైన స్క్రీన్‌లపై ఒకదాని కింద ఒకటి."
+
+#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Owners and admins make e-mail designs and send broadcasts."
+msgstr "యజమానులు మరియు అడ్మిన్‌లు ఇమెయిల్ డిజైన్‌లను తయారు చేసి బ్రాడ్‌కాస్ట్‌లను పంపుతారు."
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Page background"
+msgstr "పేజీ నేపథ్యం"
+
+#: src/features/designs/text.ts
+msgid "Paragraphs, lists and links"
+msgstr "పేరాలు, జాబితాలు మరియు లింక్‌లు"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Phone"
+msgstr "ఫోన్"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Phones"
+msgstr "ఫోన్‌లు"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Pick a colour"
+msgstr "రంగును ఎంచుకోండి"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Pick a version to see it."
+msgstr "చూడటానికి వెర్షన్‌ను ఎంచుకోండి."
+
+#: src/features/designs/text.ts
+msgid "Pick an image from your library."
+msgstr "మీ లైబ్రరీ నుండి చిత్రాన్ని ఎంచుకోండి."
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "PNG, JPEG, GIF or WebP up to 10 MB. Uploads are made at most 1,200 pixels wide and lose their location and camera details. SVG files are not allowed."
+msgstr "10 MB వరకు PNG, JPEG, GIF లేదా WebP. అప్‌లోడ్‌లు గరిష్టంగా 1,200 పిక్సెల్‌ల వెడల్పుతో తయారవుతాయి మరియు వాటి స్థానం, కెమెరా వివరాలను కోల్పోతాయి. SVG ఫైల్‌లు అనుమతించబడవు."
+
+#: src/features/designs/text.ts
+msgid "Preferences link"
+msgstr "ప్రాధాన్యత లింక్"
+
+#: src/features/designs/designer/Preview.tsx
+#: src/features/designs/designer/Versions.tsx
+msgid "Preview"
+msgstr "ప్రివ్యూ"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Preview of {title}"
+msgstr "{title} ప్రివ్యూ"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Preview text"
+msgstr "ప్రివ్యూ టెక్స్ట్"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Product"
+msgstr "ఉత్పత్తి"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Put each person’s own details into the mail."
+msgstr "ప్రతి వ్యక్తి స్వంత వివరాలను మెయిల్‌లో ఉంచండి."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Read more"
+msgstr "మరింత చదవండి"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Redo"
+msgstr "మళ్లీ చేయండి"
+
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Remove"
+msgstr "తొలగించండి"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Remove link"
+msgstr "లింక్‌ను తొలగించండి"
+
+#: src/features/designs/designer/Preview.tsx
+msgid "Rendering the mail…"
+msgstr "మెయిల్‌ను రెండర్ చేస్తోంది…"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Replace"
+msgstr "భర్తీ చేయండి"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Restore"
+msgstr "పునరుద్ధరించండి"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Restored"
+msgstr "పునరుద్ధరించబడింది"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Restoring saves this version as the newest one. You can undo it."
+msgstr "పునరుద్ధరిస్తే ఈ వెర్షన్ తాజాదిగా సేవ్ అవుతుంది. మీరు దాన్ని రద్దు చేయవచ్చు."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Right"
+msgstr "కుడి"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Right to left"
+msgstr "కుడి నుండి ఎడమకు"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Right to left for Arabic, Hebrew and Persian."
+msgstr "అరబిక్, హీబ్రూ మరియు పర్షియన్ కోసం కుడి నుండి ఎడమకు."
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Same as the text"
+msgstr "టెక్స్ట్ లాగే"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Save mine as a copy"
+msgstr "నాది కాపీగా సేవ్ చేయండి"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Save now and keep a version"
+msgstr "ఇప్పుడే సేవ్ చేసి వెర్షన్‌ను ఉంచండి"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Save your version over theirs. Theirs is kept in Versions as “Kept from a conflict”."
+msgstr "మీ వెర్షన్‌ను వారిది మీద సేవ్ చేయండి. వారిది Versions లో “ఘర్షణ నుండి ఉంచబడింది” గా ఉంటుంది."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Saved"
+msgstr "సేవ్ అయింది"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Saved by hand"
+msgstr "చేతితో సేవ్ చేశారు"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Saved while editing"
+msgstr "సవరిస్తున్నప్పుడు సేవ్ అయింది"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Saved, with a version kept"
+msgstr "సేవ్ అయింది, వెర్షన్‌తో"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Saving…"
+msgstr "సేవ్ చేస్తోంది…"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Scheduled to send"
+msgstr "పంపడానికి షెడ్యూల్ చేయబడింది"
+
+#: src/features/designs/DesignsList.tsx
+msgid "Search designs"
+msgstr "డిజైన్‌లను శోధించండి"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Secondary text"
+msgstr "ద్వితీయ టెక్స్ట్"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Section"
+msgstr "విభాగం"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Select a block to change it. These settings apply to the whole mail."
+msgstr "మార్చడానికి బ్లాక్‌ను ఎంచుకోండి. ఈ సెట్టింగ్‌లు మొత్తం మెయిల్‌కు వర్తిస్తాయి."
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Sent as a test"
+msgstr "టెస్ట్‌గా పంపబడింది"
+
+#: src/features/designs/text.ts
+msgid "Serif"
+msgstr "సెరిఫ్"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Shape"
+msgstr "ఆకారం"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Show"
+msgstr "చూపండి"
+
+#: src/features/designs/DesignsList.tsx
+msgid "Show archived designs"
+msgstr "ఆర్కైవ్ చేసిన డిజైన్‌లను చూపండి"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Show as"
+msgstr "ఇలా చూపండి"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Show dark colours"
+msgstr "ముదురు రంగులను చూపండి"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Show on"
+msgstr "దీనిపై చూపండి"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Show their version. Undo brings yours back."
+msgstr "వారి వెర్షన్‌ను చూపండి. రద్దు చేస్తే మీది తిరిగి వస్తుంది."
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Shown after the subject in most inboxes. A broadcast can set its own."
+msgstr "చాలా ఇన్‌బాక్స్‌లలో విషయం తర్వాత చూపబడుతుంది. బ్రాడ్‌కాస్ట్ తన స్వంతదాన్ని సెట్ చేయవచ్చు."
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Size"
+msgstr "పరిమాణం"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Small"
+msgstr "చిన్న"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Social links"
+msgstr "సోషల్ లింక్‌లు"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Some mail apps show every block anyway."
+msgstr "కొన్ని మెయిల్ యాప్‌లు ఏదేమైనా ప్రతి బ్లాక్‌ను చూపుతాయి."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Some text for this column."
+msgstr "ఈ నిలువు వరుస కోసం కొంత టెక్స్ట్."
+
+#: src/features/designs/text.ts
+msgid "Some text is hard to read on its background, in the light or dark colours. Aim for 4.5:1."
+msgstr "కొన్ని టెక్స్ట్ దాని నేపథ్యంపై, లేత లేదా ముదురు రంగుల్లో, చదవడం కష్టంగా ఉంది. 4.5:1 లక్ష్యంగా పెట్టుకోండి."
+
+#: src/features/designs/text.ts
+msgid "Something required is empty."
+msgstr "అవసరమైనది ఖాళీగా ఉంది."
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Space"
+msgstr "స్థలం"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Space between"
+msgstr "మధ్య స్థలం"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Stack on phones"
+msgstr "ఫోన్‌లలో స్టాక్ చేయండి"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Start"
+msgstr "ప్రారంభించండి"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Start from a template or an empty page. Every design gets the footer the law asks for, and you can change everything else."
+msgstr "టెంప్లేట్ లేదా ఖాళీ పేజీతో ప్రారంభించండి. ప్రతి డిజైన్‌కు చట్టం కోరే ఫుటర్ వస్తుంది, మరియు మిగతా అన్నీ మీరు మార్చవచ్చు."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Start from an empty mail with simple colours."
+msgstr "సాధారణ రంగులతో ఖాళీ మెయిల్‌తో ప్రారంభించండి."
+
+#: src/features/designs/designer/editor.tsx
+msgid "Strikethrough"
+msgstr "కొట్టివేత"
+
+#: src/features/designs/text.ts
+msgid "System"
+msgstr "సిస్టమ్"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Take it out of these designs first, or archive them:"
+msgstr "ముందుగా దీన్ని ఈ డిజైన్‌ల నుండి తీసివేయండి, లేదా వాటిని ఆర్కైవ్ చేయండి:"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Template language"
+msgstr "టెంప్లేట్ భాష"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+#: src/features/designs/text.ts
+msgid "Text"
+msgstr "టెక్స్ట్"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Text colour"
+msgstr "టెక్స్ట్ రంగు"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Text font"
+msgstr "టెక్స్ట్ ఫాంట్"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Text formatting"
+msgstr "టెక్స్ట్ ఫార్మాటింగ్"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Text in English"
+msgstr "ఆంగ్లంలో టెక్స్ట్"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Text size"
+msgstr "టెక్స్ట్ పరిమాణం"
+
+#: src/features/designs/text.ts
+msgid "The column widths must add up to 100."
+msgstr "నిలువు వరుసల వెడల్పుల మొత్తం 100 అయి ఉండాలి."
+
+#: src/features/designs/text.ts
+msgid "The inbox has no legal name or postal address for the footer. Add them in the inbox settings before sending."
+msgstr "ఇన్‌బాక్స్‌కు ఫుటర్ కోసం చట్టబద్ధ పేరు లేదా తపాలా చిరునామా లేదు. పంపే ముందు ఇన్‌బాక్స్ సెట్టింగ్‌లలో జోడించండి."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "The inbox’s sender details fill the footer every mail gets."
+msgstr "ఇన్‌బాక్స్ పంపేవారి వివరాలు ప్రతి మెయిల్‌కు వచ్చే ఫుటర్‌ను నింపుతాయి."
+
+#: src/features/designs/designer/Panels.tsx
+msgid "The mail is empty. Add a block to start."
+msgstr "మెయిల్ ఖాళీగా ఉంది. ప్రారంభించడానికి బ్లాక్‌ను జోడించండి."
+
+#: src/features/designs/text.ts
+msgid "The mail is over 102 KB, so Gmail will cut it off and hide the unsubscribe link. Remove some blocks."
+msgstr "మెయిల్ 102 KB కంటే ఎక్కువ, కాబట్టి Gmail దాన్ని కత్తిరించి అన్‌సబ్‌స్క్రైబ్ లింక్‌ను దాచేస్తుంది. కొన్ని బ్లాక్‌లను తొలగించండి."
+
+#: src/features/designs/text.ts
+msgid "The mail is over 90 KB. Gmail cuts mails off at about 102 KB."
+msgstr "మెయిల్ 90 KB కంటే ఎక్కువ. Gmail సుమారు 102 KB వద్ద మెయిల్‌లను కత్తిరిస్తుంది."
+
+#: src/features/designs/text.ts
+msgid "The text has formatting e-mails cannot keep. Clear its formatting and try again."
+msgstr "టెక్స్ట్‌లో ఇమెయిల్‌లు ఉంచుకోలేని ఫార్మాటింగ్ ఉంది. దాని ఫార్మాటింగ్‌ను క్లియర్ చేసి మళ్లీ ప్రయత్నించండి."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "The widths add up to {sum}, not 100."
+msgstr "వెడల్పుల మొత్తం 100 కాదు, {sum}."
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "The workspace’s images take all the room this server allows. Delete images you no longer use."
+msgstr "వర్క్‌స్పేస్ చిత్రాలు ఈ సర్వర్ అనుమతించే స్థలమంతా తీసుకుంటున్నాయి. ఇకపై వాడని చిత్రాలను తొలగించండి."
+
+#: src/features/designs/text.ts
+msgid "There are too many items here."
+msgstr "ఇక్కడ చాలా అంశాలు ఉన్నాయి."
+
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/text.ts
+msgid "There is no merge field called {field}."
+msgstr "{field} అనే మెర్జ్ ఫీల్డ్ లేదు."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "These lines go above the footer every mail gets: the inbox’s legal name and postal address, why the person gets the mail, and the unsubscribe and preference links. Set the sender’s details in the inbox settings."
+msgstr "ఈ లైన్‌లు ప్రతి మెయిల్‌కు వచ్చే ఫుటర్ పైన వెళ్తాయి: ఇన్‌బాక్స్ చట్టబద్ధ పేరు మరియు తపాలా చిరునామా, వ్యక్తికి మెయిల్ ఎందుకు వస్తోంది, మరియు అన్‌సబ్‌స్క్రైబ్ మరియు ప్రాధాన్యత లింక్‌లు. పంపేవారి వివరాలను ఇన్‌బాక్స్ సెట్టింగ్‌లలో సెట్ చేయండి."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Thickness"
+msgstr "మందం"
+
+#: src/features/designs/text.ts
+msgid "This block cannot sit inside this one."
+msgstr "ఈ బ్లాక్ దీని లోపల ఉండలేదు."
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "This design changed somewhere else"
+msgstr "ఈ డిజైన్ వేరే చోట మారింది"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This file type is not allowed. Use PNG, JPEG, GIF or WebP; SVG files can carry scripts, so they are refused."
+msgstr "ఈ ఫైల్ రకం అనుమతించబడదు. PNG, JPEG, GIF లేదా WebP ఉపయోగించండి; SVG ఫైల్‌లు స్క్రిప్ట్‌లను కలిగి ఉండవచ్చు, కాబట్టి అవి తిరస్కరించబడతాయి."
+
+#: src/features/designs/text.ts
+msgid "This image block has no image yet."
+msgstr "ఈ చిత్ర బ్లాక్‌కు ఇంకా చిత్రం లేదు."
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This image is in use"
+msgstr "ఈ చిత్రం వాడుకలో ఉంది"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This image is too large. Use one under 40 megapixels and 8,000 pixels on a side, and at most 4,000 pixels tall once it is 1,200 wide."
+msgstr "ఈ చిత్రం చాలా పెద్దది. 40 మెగాపిక్సెల్‌ల కంటే తక్కువ మరియు ప్రతి వైపు 8,000 పిక్సెల్‌ల కంటే తక్కువ ఉన్నదాన్ని ఉపయోగించండి, మరియు 1,200 వెడల్పు అయినప్పుడు గరిష్టంగా 4,000 పిక్సెల్‌ల ఎత్తు."
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This image went out in a broadcast. If you delete it, people who open that mail see a broken image."
+msgstr "ఈ చిత్రం బ్రాడ్‌కాస్ట్‌లో వెళ్లింది. దీన్ని తొలగిస్తే, ఆ మెయిల్‌ను తెరిచేవారికి విరిగిన చిత్రం కనిపిస్తుంది."
+
+#: src/features/designs/text.ts
+msgid "This is too long."
+msgstr "ఇది చాలా పొడవుగా ఉంది."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "This server does not have the template “{slug}”. It may need a newer Yuva."
+msgstr "ఈ సర్వర్‌లో “{slug}” టెంప్లేట్ లేదు. కొత్త Yuva అవసరం కావచ్చు."
+
+#: src/features/designs/text.ts
+msgid "This text uses a merge field that does not exist."
+msgstr "ఈ టెక్స్ట్ లేని మెర్జ్ ఫీల్డ్‌ను ఉపయోగిస్తోంది."
+
+#: src/features/designs/text.ts
+msgid "This uses an image or link that belongs to another workspace."
+msgstr "ఇది మరో వర్క్‌స్పేస్‌కు చెందిన చిత్రం లేదా లింక్‌ను ఉపయోగిస్తోంది."
+
+#: src/features/designs/text.ts
+msgid "This value is not valid."
+msgstr "ఈ విలువ చెల్లదు."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Three"
+msgstr "మూడు"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Top"
+msgstr "పైన"
+
+#: src/features/designs/text.ts
+msgid "Turkish"
+msgstr "టర్కిష్"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Two"
+msgstr "రెండు"
+
+#: src/features/designs/text.ts
+msgid "Two blocks have the same id."
+msgstr "రెండు బ్లాక్‌లకు ఒకే ID ఉంది."
+
+#: src/features/designs/text.ts
+msgid "Two or three columns that stack on phones"
+msgstr "ఫోన్‌లలో స్టాక్ అయ్యే రెండు లేదా మూడు నిలువు వరుసలు"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Type"
+msgstr "రకం"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Underline"
+msgstr "అండర్‌లైన్"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Undo"
+msgstr "రద్దు చేయండి"
+
+#: src/features/designs/text.ts
+msgid "Unsubscribe link"
+msgstr "అన్‌సబ్‌స్క్రైబ్ లింక్"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Untitled design"
+msgstr "పేరు లేని డిజైన్"
+
+#: src/features/designs/designer/Preview.tsx
+msgid "Updating…"
+msgstr "అప్‌డేట్ అవుతోంది…"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Upload images, or drop them here"
+msgstr "చిత్రాలను అప్‌లోడ్ చేయండి, లేదా ఇక్కడ వదలండి"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Uploading…"
+msgstr "అప్‌లోడ్ అవుతోంది…"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Use “{title}”"
+msgstr "“{title}” ను ఉపయోగించండి"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Use the default"
+msgstr "డిఫాల్ట్‌ను ఉపయోగించండి"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Version restored"
+msgstr "వెర్షన్ పునరుద్ధరించబడింది"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Versions.tsx
+msgid "Versions"
+msgstr "వెర్షన్‌లు"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "View"
+msgstr "చూడండి"
+
+#: src/features/designs/text.ts
+msgid "Website"
+msgstr "వెబ్‌సైట్"
+
+#: src/features/designs/designer/editor.tsx
+msgid "When it is empty, write"
+msgstr "అది ఖాళీగా ఉన్నప్పుడు, రాయండి"
+
+#: src/features/designs/designer/ThemePanel.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Whole workspace"
+msgstr "మొత్తం వర్క్‌స్పేస్"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Wide screens"
+msgstr "వెడల్పు స్క్రీన్‌లు"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Width"
+msgstr "వెడల్పు"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Widths in percent"
+msgstr "శాతంలో వెడల్పులు"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Write a heading"
+msgstr "శీర్షిక రాయండి"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Write something"
+msgstr "ఏదైనా రాయండి"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Write what you want to tell your readers."
+msgstr "మీ పాఠకులకు చెప్పాలనుకున్నది రాయండి."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "You can reply to this mail; a person reads every answer."
+msgstr "మీరు ఈ మెయిల్‌కు జవాబివ్వవచ్చు; ప్రతి జవాబును ఒక వ్యక్తి చదువుతారు."
+
+#: src/features/designs/text.ts
+msgid "Your own lines above the required footer"
+msgstr "అవసరమైన ఫుటర్ పైన మీ స్వంత లైన్‌లు"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Your version becomes a new design; this one keeps theirs."
+msgstr "మీ వెర్షన్ కొత్త డిజైన్ అవుతుంది; ఇది వారిదాన్ని ఉంచుకుంటుంది."

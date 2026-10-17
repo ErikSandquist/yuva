@@ -133,7 +133,7 @@ export function UserMenu({
             <Trans>Language</Trans>
             <span className="eyebrow ms-auto">{i18n.locale}</span>
           </DropdownMenuSubTrigger>
-          <DropdownMenuSubContent className="min-w-36">
+          <DropdownMenuSubContent className="max-h-80 min-w-44 overflow-y-auto">
             <DropdownMenuRadioGroup value={i18n.locale} onValueChange={(v) => changeLocale(v as Locale)}>
               {Object.entries(locales).map(([k, v]) => (
                 <DropdownMenuRadioItem key={k} value={k}>
@@ -177,7 +177,7 @@ export function UserMenu({
             {theme === "dark" ? <MoonIcon /> : theme === "light" ? <SunIcon /> : <MonitorIcon />}
             <Trans>Appearance</Trans>
           </DropdownMenuSubTrigger>
-          <DropdownMenuSubContent className="min-w-36">
+          <DropdownMenuSubContent className="max-h-80 min-w-44 overflow-y-auto">
             <DropdownMenuRadioGroup value={theme} onValueChange={(v) => setTheme(v as Theme)}>
               <DropdownMenuRadioItem value="system" data-testid="theme-system">
                 <Trans>System</Trans>

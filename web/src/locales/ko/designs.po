@@ -1,0 +1,1333 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 10:11+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ko\n"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "{name} (copy)"
+msgstr "{name}(사본)"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "{used} of {limit}"
+msgstr "{used} / {limit}"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "{who} saved it {when}, after you started editing. Your changes are kept on this device until you choose."
+msgstr "{who}님이 내가 편집을 시작한 뒤인 {when}에 저장했습니다. 내 변경 사항은 선택할 때까지 이 기기에 보관됩니다."
+
+#: src/features/designs/designer/controls.tsx
+msgid "A button needs a link."
+msgstr "버튼에는 링크가 필요합니다."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "A clear heading"
+msgstr "분명한 제목"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "A design can hold at most 200 blocks."
+msgstr "디자인 하나에는 블록을 최대 200개까지 넣을 수 있습니다."
+
+#: src/features/designs/DesignsList.tsx
+msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
+msgstr "디자인은 메일의 모양입니다. 템플릿으로 시작해 일괄 발송에 사용하세요."
+
+#: src/features/designs/designer/editor.tsx
+msgid "A field without a fallback can leave a gap, like “Hi ,”."
+msgstr "대체값이 없는 필드는 \"안녕하세요 님\"처럼 빈칸이 생길 수 있습니다."
+
+#: src/features/designs/text.ts
+msgid "A group of blocks on its own background"
+msgstr "자체 배경이 있는 블록 묶음"
+
+#: src/features/designs/text.ts
+msgid "A link that looks like a button"
+msgstr "버튼처럼 보이는 링크"
+
+#: src/features/designs/text.ts
+msgid "A merge field has no fallback, so it can be empty for some people."
+msgstr "병합 필드에 대체값이 없어 일부 사람에게는 비어 보일 수 있습니다."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "A newer version of Yuva made this design. You can look at it here, but not change it."
+msgstr "Yuva의 새 버전으로 만든 디자인입니다. 여기서 볼 수는 있지만 변경할 수 없습니다."
+
+#: src/features/designs/text.ts
+msgid "A thin line between parts"
+msgstr "부분 사이의 가는 선"
+
+#: src/features/designs/text.ts
+msgid "A title in three sizes"
+msgstr "세 가지 크기의 제목"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "A version is kept at most every ten minutes while you edit, when you save by hand, when you restore one and when someone else's save wins a conflict. The newest 50 stay."
+msgstr "편집하는 동안 최대 10분마다, 직접 저장할 때, 복원할 때, 다른 사람의 저장이 충돌에서 이길 때 버전이 보관됩니다. 최신 50개가 남습니다."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Add"
+msgstr "추가"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Add a block"
+msgstr "블록 추가"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Add a link"
+msgstr "링크 추가"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Add your own lines above the required footer"
+msgstr "필수 바닥글 위에 직접 쓴 줄 추가"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Added to every mail: your legal name and postal address, why the person gets the mail, and the unsubscribe and preference links."
+msgstr "모든 메일에 추가됩니다: 법적 이름과 우편 주소, 메일을 받는 이유, 구독 취소와 수신 설정 링크."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Address"
+msgstr "주소"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Alignment"
+msgstr "정렬"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Also shown when a mail app blocks images."
+msgstr "메일 앱이 이미지를 차단할 때도 표시됩니다."
+
+#: src/features/designs/text.ts
+msgid "An uploaded picture, with a link if you like"
+msgstr "업로드한 이미지(원하면 링크 포함)"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Animated GIFs can be at most 1,200 pixels wide."
+msgstr "애니메이션 GIF의 너비는 최대 1,200픽셀입니다."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Announcement"
+msgstr "공지"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Apply"
+msgstr "적용"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Archive"
+msgstr "보관"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Archive this design?"
+msgstr "이 디자인을 보관할까요?"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Attribute key"
+msgstr "속성 키"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Automatic"
+msgstr "자동"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Back to designs"
+msgstr "디자인으로 돌아가기"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Background"
+msgstr "배경"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Block settings"
+msgstr "블록 설정"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Panels.tsx
+msgid "Blocks"
+msgstr "블록"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Blocks and layers"
+msgstr "블록과 레이어"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Bold"
+msgstr "굵게"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Bottom"
+msgstr "아래"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Brand"
+msgstr "브랜드"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Build it yourself from blocks"
+msgstr "블록으로 직접 만들기"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Bulleted list"
+msgstr "글머리 기호 목록"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Button"
+msgstr "버튼"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Button colour"
+msgstr "버튼 색상"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Button text"
+msgstr "버튼 텍스트"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Buttons"
+msgstr "버튼"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Cancel"
+msgstr "취소"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Centre"
+msgstr "가운데"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Changed elsewhere"
+msgstr "다른 곳에서 변경됨"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Checks"
+msgstr "검사"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Choose an image"
+msgstr "이미지 선택"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Clear formatting"
+msgstr "서식 지우기"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Close"
+msgstr "닫기"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Code"
+msgstr "코드"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Colour"
+msgstr "색상"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Colours"
+msgstr "색상"
+
+#. placeholder {0}: n(i)
+#: src/features/designs/designer/Inspector.tsx
+msgid "Column {0}"
+msgstr "열 {0}"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Column {n} · {width}%"
+msgstr "열 {n} · {width}%"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Columns"
+msgstr "열"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Contact attribute"
+msgstr "연락처 속성"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Content background"
+msgstr "콘텐츠 배경"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Copy made"
+msgstr "사본을 만들었습니다"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Corner radius"
+msgstr "모서리 둥글기"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Create and edit"
+msgstr "만들기 및 편집"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Current"
+msgstr "현재"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Dark"
+msgstr "어둡게"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Dark mode"
+msgstr "다크 모드"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Decorative"
+msgstr "장식용"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Default"
+msgstr "기본값"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Default spacing"
+msgstr "기본 간격"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/ImageLibrary.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Delete"
+msgstr "삭제"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Delete {name}"
+msgstr "{name} 삭제"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Delete anyway"
+msgstr "그래도 삭제"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Delete this image?"
+msgstr "이 이미지를 삭제할까요?"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Describe the image, or mark it as decorative."
+msgstr "이미지를 설명하거나 장식용으로 표시하세요."
+
+#: src/features/designs/text.ts
+msgid "Describe this image for people who cannot see it, or mark it as decorative."
+msgstr "볼 수 없는 사람을 위해 이 이미지를 설명하거나 장식용으로 표시하세요."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Description for screen readers"
+msgstr "스크린 리더용 설명"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Design"
+msgstr "디자인"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Design archived"
+msgstr "디자인을 보관했습니다"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Design name"
+msgstr "디자인 이름"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Design settings"
+msgstr "디자인 설정"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Designer"
+msgstr "디자이너"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Designs"
+msgstr "디자인"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Desktop"
+msgstr "데스크톱"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Digest"
+msgstr "다이제스트"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Direction"
+msgstr "방향"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Divider"
+msgstr "구분선"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Done"
+msgstr "완료"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Download JSON"
+msgstr "JSON 다운로드"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Download my version as JSON"
+msgstr "내 버전을 JSON으로 다운로드"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Panels.tsx
+msgid "Drag {kind}"
+msgstr "{kind} 끌기"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Drag a block here, or pick one from the list."
+msgstr "블록을 여기로 끌어 놓거나 목록에서 선택하세요."
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Drag a block onto the mail, or press Enter to add it after the selected block."
+msgstr "블록을 메일로 끌어 놓거나, Enter를 눌러 선택한 블록 뒤에 추가하세요."
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Drop blocks here"
+msgstr "여기에 블록 놓기"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Duplicate"
+msgstr "복제"
+
+#: src/features/designs/text.ts
+msgid "E-mail address"
+msgstr "이메일 주소"
+
+#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "E-mail designs"
+msgstr "이메일 디자인"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Easy to read: {value}:1"
+msgstr "읽기 쉬움: {value}:1"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Edit"
+msgstr "편집"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Empty"
+msgstr "비어 있음"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Empty page"
+msgstr "빈 페이지"
+
+#: src/features/designs/text.ts
+msgid "Empty room between blocks"
+msgstr "블록 사이의 빈 공간"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "End"
+msgstr "끝"
+
+#: src/features/designs/text.ts
+msgid "English"
+msgstr "영어"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Event"
+msgstr "이벤트"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Everywhere"
+msgstr "어디서나"
+
+#: src/features/designs/text.ts
+msgid "First name"
+msgstr "이름"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Fonts already on people’s devices; mails load no web fonts."
+msgstr "사람들의 기기에 이미 있는 글꼴입니다. 메일은 웹 글꼴을 불러오지 않습니다."
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Footer text"
+msgstr "바닥글 텍스트"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "For dark logos on a transparent background."
+msgstr "투명 배경의 어두운 로고용."
+
+#: src/features/designs/text.ts
+msgid "Full name"
+msgstr "전체 이름"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Full width"
+msgstr "전체 너비"
+
+#: src/features/designs/text.ts
+msgid "Geometric"
+msgstr "기하학적"
+
+#: src/features/designs/text.ts
+msgid "German"
+msgstr "독일어"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Gmail cuts mails off at about 102 KB of HTML, hiding the unsubscribe link."
+msgstr "Gmail은 HTML 약 102KB에서 메일을 잘라 구독 취소 링크가 가려집니다."
+
+#: src/features/designs/designer/controls.tsx
+msgid "Hard to read: {value}:1, aim for 4.5:1"
+msgstr "읽기 어려움: {value}:1, 목표는 4.5:1"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Has problems"
+msgstr "문제 있음"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Has warnings"
+msgstr "경고 있음"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Heading"
+msgstr "제목"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Heading font"
+msgstr "제목 글꼴"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Height"
+msgstr "높이"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Hidden on phones"
+msgstr "휴대폰에서 숨김"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Hidden on wide screens"
+msgstr "넓은 화면에서 숨김"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Hide dark colours"
+msgstr "어두운 색상 숨기기"
+
+#: src/features/designs/text.ts
+msgid "Humanist"
+msgstr "휴머니스트"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Icon colour"
+msgstr "아이콘 색상"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Icons"
+msgstr "아이콘"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Image"
+msgstr "이미지"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Images"
+msgstr "이미지"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Images can be at most 10 MB."
+msgstr "이미지는 최대 10MB입니다."
+
+#: src/features/designs/designer/ThemePanel.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Inbox"
+msgstr "받은 편지함"
+
+#: src/features/designs/text.ts
+msgid "Inbox name"
+msgstr "받은 편지함 이름"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Insert"
+msgstr "삽입"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "It adds nothing to the message, so screen readers skip it."
+msgstr "메시지에 아무것도 추가하지 않으므로 스크린 리더가 건너뜁니다."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "It leaves the list of designs. Its versions are kept, and saving it again brings it back."
+msgstr "디자인 목록에서 사라집니다. 버전은 유지되며 다시 저장하면 돌아옵니다."
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "It was saved {when} in another tab or by someone else, after you started editing. Your changes are kept on this device until you choose."
+msgstr "내가 편집을 시작한 뒤인 {when}에 다른 탭 또는 다른 사람이 저장했습니다. 내 변경 사항은 선택할 때까지 이 기기에 보관됩니다."
+
+#: src/features/designs/designer/editor.tsx
+msgid "Italic"
+msgstr "기울임"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Its address stops working at once."
+msgstr "주소가 즉시 작동을 멈춥니다."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Its images are copied into your workspace’s images. You can change everything after."
+msgstr "이미지는 워크스페이스의 이미지로 복사됩니다. 그 후 모든 것을 바꿀 수 있습니다."
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Its sender details fill the required footer."
+msgstr "이 받은 편지함의 발신자 정보가 필수 바닥글을 채웁니다."
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Keep mine"
+msgstr "내 것 유지"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Kept from a conflict"
+msgstr "충돌에서 보관됨"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Keyboard shortcuts"
+msgstr "키보드 단축키"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Large"
+msgstr "큼"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Panels.tsx
+msgid "Layers"
+msgstr "레이어"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Layout"
+msgstr "레이아웃"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Left"
+msgstr "왼쪽"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Left panel"
+msgstr "왼쪽 패널"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Left to right"
+msgstr "왼쪽에서 오른쪽"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Light"
+msgstr "밝게"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Light plate in dark mode"
+msgstr "다크 모드에서 밝은 바탕"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Lines"
+msgstr "선"
+
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Link"
+msgstr "링크"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Link address"
+msgstr "링크 주소"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Links"
+msgstr "링크"
+
+#: src/features/designs/designer/controls.tsx
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/text.ts
+msgid "Links start with https://, http://, mailto: or tel:."
+msgstr "링크는 https://, http://, mailto: 또는 tel:로 시작합니다."
+
+#: src/features/designs/text.ts
+msgid "Links to your profiles"
+msgstr "내 프로필 링크"
+
+#: src/features/designs/text.ts
+msgid "List name"
+msgstr "리스트 이름"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+#: src/features/designs/DesignsList.tsx
+msgid "Load more"
+msgstr "더 보기"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Load theirs"
+msgstr "상대 것 불러오기"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Loading the image…"
+msgstr "이미지를 불러오는 중…"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Mail"
+msgstr "메일"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Mail apps in dark mode get darker colours made from yours, with text kept easy to read. Set any of them yourself."
+msgstr "다크 모드의 메일 앱은 내 색상으로 만든 더 어두운 색상을 사용하며 텍스트는 읽기 쉽게 유지됩니다. 어느 것이든 직접 지정할 수 있습니다."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Make a copy"
+msgstr "사본 만들기"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Make them all from the light colours"
+msgstr "모두 밝은 색상으로 만들기"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Medium"
+msgstr "보통"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Merge field"
+msgstr "병합 필드"
+
+#: src/features/designs/text.ts
+msgid "Merge fields can only go in the part of a link after the question mark."
+msgstr "병합 필드는 링크에서 물음표 뒤 부분에만 넣을 수 있습니다."
+
+#: src/features/designs/text.ts
+msgid "Monospace"
+msgstr "고정폭"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "More actions"
+msgstr "더 많은 작업"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Move down"
+msgstr "아래로 이동"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Move up"
+msgstr "위로 이동"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Name"
+msgstr "이름"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Network"
+msgstr "네트워크"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "New blank design"
+msgstr "새 빈 디자인"
+
+#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "New design"
+msgstr "새 디자인"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Newsletter"
+msgstr "뉴스레터"
+
+#: src/features/designs/DesignsList.tsx
+msgid "No archived designs"
+msgstr "보관된 디자인 없음"
+
+#: src/features/designs/DesignsList.tsx
+msgid "No designs match."
+msgstr "일치하는 디자인이 없습니다."
+
+#: src/features/designs/DesignsList.tsx
+msgid "No designs yet"
+msgstr "아직 디자인이 없습니다"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "No images yet. Upload the first one."
+msgstr "아직 이미지가 없습니다. 첫 이미지를 업로드하세요."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "No problems found."
+msgstr "문제가 없습니다."
+
+#: src/features/designs/designer/Versions.tsx
+msgid "No versions yet. One is kept after ten minutes of editing."
+msgstr "아직 버전이 없습니다. 10분간 편집하면 하나가 보관됩니다."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Not saved: fix the marked blocks"
+msgstr "저장되지 않음: 표시된 블록을 수정하세요"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Not saved. Try again"
+msgstr "저장되지 않음. 다시 시도하세요"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Number of columns"
+msgstr "열 개수"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Numbered list"
+msgstr "번호 매기기 목록"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Offline, kept on this device"
+msgstr "오프라인, 이 기기에 보관됨"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Offline. Your changes are kept on this device and saved when you are back."
+msgstr "오프라인입니다. 변경 사항은 이 기기에 보관되었다가 다시 연결되면 저장됩니다."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Onboarding"
+msgstr "온보딩"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "One under the other on narrow screens."
+msgstr "좁은 화면에서는 위아래로 쌓입니다."
+
+#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Owners and admins make e-mail designs and send broadcasts."
+msgstr "소유자와 관리자가 이메일 디자인을 만들고 일괄 발송을 보냅니다."
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Page background"
+msgstr "페이지 배경"
+
+#: src/features/designs/text.ts
+msgid "Paragraphs, lists and links"
+msgstr "단락, 목록, 링크"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Phone"
+msgstr "휴대폰"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Phones"
+msgstr "휴대폰"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Pick a colour"
+msgstr "색상 선택"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Pick a version to see it."
+msgstr "버전을 선택해 보세요."
+
+#: src/features/designs/text.ts
+msgid "Pick an image from your library."
+msgstr "라이브러리에서 이미지를 선택하세요."
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "PNG, JPEG, GIF or WebP up to 10 MB. Uploads are made at most 1,200 pixels wide and lose their location and camera details. SVG files are not allowed."
+msgstr "PNG, JPEG, GIF 또는 WebP, 최대 10MB. 업로드는 너비 최대 1,200픽셀로 만들어지며 위치와 카메라 정보는 제거됩니다. SVG 파일은 허용되지 않습니다."
+
+#: src/features/designs/text.ts
+msgid "Preferences link"
+msgstr "수신 설정 링크"
+
+#: src/features/designs/designer/Preview.tsx
+#: src/features/designs/designer/Versions.tsx
+msgid "Preview"
+msgstr "미리 보기"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Preview of {title}"
+msgstr "{title} 미리 보기"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Preview text"
+msgstr "미리 보기 텍스트"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Product"
+msgstr "제품"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Put each person’s own details into the mail."
+msgstr "각 사람의 고유 정보를 메일에 넣으세요."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Read more"
+msgstr "더 읽기"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Redo"
+msgstr "다시 실행"
+
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Remove"
+msgstr "제거"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Remove link"
+msgstr "링크 제거"
+
+#: src/features/designs/designer/Preview.tsx
+msgid "Rendering the mail…"
+msgstr "메일을 렌더링하는 중…"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Replace"
+msgstr "교체"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Restore"
+msgstr "복원"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Restored"
+msgstr "복원됨"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Restoring saves this version as the newest one. You can undo it."
+msgstr "복원하면 이 버전이 최신 버전으로 저장됩니다. 되돌릴 수 있습니다."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Right"
+msgstr "오른쪽"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Right to left"
+msgstr "오른쪽에서 왼쪽"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Right to left for Arabic, Hebrew and Persian."
+msgstr "아랍어, 히브리어, 페르시아어용 오른쪽에서 왼쪽."
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Same as the text"
+msgstr "텍스트와 같음"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Save mine as a copy"
+msgstr "내 것을 사본으로 저장"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Save now and keep a version"
+msgstr "지금 저장하고 버전 남기기"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Save your version over theirs. Theirs is kept in Versions as “Kept from a conflict”."
+msgstr "상대 버전 위에 내 버전을 저장합니다. 상대 것은 버전에 \"충돌에서 보관됨\"으로 남습니다."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Saved"
+msgstr "저장됨"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Saved by hand"
+msgstr "직접 저장"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Saved while editing"
+msgstr "편집 중 저장"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Saved, with a version kept"
+msgstr "저장됨, 버전 보관"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Saving…"
+msgstr "저장 중…"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Scheduled to send"
+msgstr "발송 예약됨"
+
+#: src/features/designs/DesignsList.tsx
+msgid "Search designs"
+msgstr "디자인 검색"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Secondary text"
+msgstr "보조 텍스트"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Section"
+msgstr "섹션"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Select a block to change it. These settings apply to the whole mail."
+msgstr "블록을 선택해 변경하세요. 이 설정은 메일 전체에 적용됩니다."
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Sent as a test"
+msgstr "테스트로 발송됨"
+
+#: src/features/designs/text.ts
+msgid "Serif"
+msgstr "세리프"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Shape"
+msgstr "모양"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Show"
+msgstr "보기"
+
+#: src/features/designs/DesignsList.tsx
+msgid "Show archived designs"
+msgstr "보관된 디자인 보기"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Show as"
+msgstr "표시 형식"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Show dark colours"
+msgstr "어두운 색상 보기"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Show on"
+msgstr "표시 대상"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Show their version. Undo brings yours back."
+msgstr "상대 버전을 보여 줍니다. 실행 취소하면 내 것이 돌아옵니다."
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Shown after the subject in most inboxes. A broadcast can set its own."
+msgstr "대부분의 받은 편지함에서 제목 뒤에 표시됩니다. 일괄 발송은 자체로 지정할 수 있습니다."
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Size"
+msgstr "크기"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Small"
+msgstr "작음"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Social links"
+msgstr "소셜 링크"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Some mail apps show every block anyway."
+msgstr "일부 메일 앱은 모든 블록을 그대로 표시합니다."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Some text for this column."
+msgstr "이 열의 텍스트."
+
+#: src/features/designs/text.ts
+msgid "Some text is hard to read on its background, in the light or dark colours. Aim for 4.5:1."
+msgstr "일부 텍스트가 배경에서 읽기 어렵습니다(밝은 색상 또는 어두운 색상에서). 목표는 4.5:1입니다."
+
+#: src/features/designs/text.ts
+msgid "Something required is empty."
+msgstr "필수 항목이 비어 있습니다."
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Space"
+msgstr "공백"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Space between"
+msgstr "사이 간격"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Stack on phones"
+msgstr "휴대폰에서 쌓기"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Start"
+msgstr "시작"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Start from a template or an empty page. Every design gets the footer the law asks for, and you can change everything else."
+msgstr "템플릿 또는 빈 페이지로 시작하세요. 모든 디자인에는 법이 요구하는 바닥글이 붙으며 나머지는 모두 바꿀 수 있습니다."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Start from an empty mail with simple colours."
+msgstr "단순한 색상의 빈 메일로 시작하세요."
+
+#: src/features/designs/designer/editor.tsx
+msgid "Strikethrough"
+msgstr "취소선"
+
+#: src/features/designs/text.ts
+msgid "System"
+msgstr "시스템"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Take it out of these designs first, or archive them:"
+msgstr "먼저 이 디자인에서 빼거나 보관하세요:"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Template language"
+msgstr "템플릿 언어"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+#: src/features/designs/text.ts
+msgid "Text"
+msgstr "텍스트"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Text colour"
+msgstr "텍스트 색상"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Text font"
+msgstr "텍스트 글꼴"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Text formatting"
+msgstr "텍스트 서식"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Text in English"
+msgstr "영어 텍스트"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Text size"
+msgstr "텍스트 크기"
+
+#: src/features/designs/text.ts
+msgid "The column widths must add up to 100."
+msgstr "열 너비의 합은 100이어야 합니다."
+
+#: src/features/designs/text.ts
+msgid "The inbox has no legal name or postal address for the footer. Add them in the inbox settings before sending."
+msgstr "받은 편지함에 바닥글용 법적 이름이나 우편 주소가 없습니다. 보내기 전에 받은 편지함 설정에서 추가하세요."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "The inbox’s sender details fill the footer every mail gets."
+msgstr "받은 편지함의 발신자 정보가 모든 메일이 받는 바닥글을 채웁니다."
+
+#: src/features/designs/designer/Panels.tsx
+msgid "The mail is empty. Add a block to start."
+msgstr "메일이 비어 있습니다. 블록을 추가해 시작하세요."
+
+#: src/features/designs/text.ts
+msgid "The mail is over 102 KB, so Gmail will cut it off and hide the unsubscribe link. Remove some blocks."
+msgstr "메일이 102KB를 넘어 Gmail이 잘라내고 구독 취소 링크를 숨깁니다. 블록을 줄이세요."
+
+#: src/features/designs/text.ts
+msgid "The mail is over 90 KB. Gmail cuts mails off at about 102 KB."
+msgstr "메일이 90KB를 넘습니다. Gmail은 약 102KB에서 메일을 잘라냅니다."
+
+#: src/features/designs/text.ts
+msgid "The text has formatting e-mails cannot keep. Clear its formatting and try again."
+msgstr "텍스트에 이메일이 유지할 수 없는 서식이 있습니다. 서식을 지우고 다시 시도하세요."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "The widths add up to {sum}, not 100."
+msgstr "너비의 합이 100이 아니라 {sum}입니다."
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "The workspace’s images take all the room this server allows. Delete images you no longer use."
+msgstr "워크스페이스의 이미지가 이 서버가 허용하는 공간을 모두 차지합니다. 쓰지 않는 이미지를 삭제하세요."
+
+#: src/features/designs/text.ts
+msgid "There are too many items here."
+msgstr "항목이 너무 많습니다."
+
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/text.ts
+msgid "There is no merge field called {field}."
+msgstr "{field}라는 병합 필드가 없습니다."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "These lines go above the footer every mail gets: the inbox’s legal name and postal address, why the person gets the mail, and the unsubscribe and preference links. Set the sender’s details in the inbox settings."
+msgstr "이 줄은 모든 메일이 받는 바닥글 위에 들어갑니다. 바닥글에는 받은 편지함의 법적 이름과 우편 주소, 메일을 받는 이유, 구독 취소와 수신 설정 링크가 있습니다. 발신자 정보는 받은 편지함 설정에서 지정하세요."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Thickness"
+msgstr "두께"
+
+#: src/features/designs/text.ts
+msgid "This block cannot sit inside this one."
+msgstr "이 블록은 이 블록 안에 놓을 수 없습니다."
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "This design changed somewhere else"
+msgstr "이 디자인이 다른 곳에서 변경되었습니다"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This file type is not allowed. Use PNG, JPEG, GIF or WebP; SVG files can carry scripts, so they are refused."
+msgstr "이 파일 형식은 허용되지 않습니다. PNG, JPEG, GIF 또는 WebP를 사용하세요. SVG 파일은 스크립트를 담을 수 있어 거부됩니다."
+
+#: src/features/designs/text.ts
+msgid "This image block has no image yet."
+msgstr "이 이미지 블록에는 아직 이미지가 없습니다."
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This image is in use"
+msgstr "이 이미지는 사용 중입니다"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This image is too large. Use one under 40 megapixels and 8,000 pixels on a side, and at most 4,000 pixels tall once it is 1,200 wide."
+msgstr "이미지가 너무 큽니다. 40메가픽셀 이하, 한 변 8,000픽셀 이하이며, 너비 1,200픽셀로 맞췄을 때 높이가 4,000픽셀 이하인 이미지를 사용하세요."
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This image went out in a broadcast. If you delete it, people who open that mail see a broken image."
+msgstr "이 이미지는 일괄 발송에 사용되었습니다. 삭제하면 그 메일을 연 사람에게는 이미지가 깨져 보입니다."
+
+#: src/features/designs/text.ts
+msgid "This is too long."
+msgstr "너무 깁니다."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "This server does not have the template “{slug}”. It may need a newer Yuva."
+msgstr "이 서버에는 템플릿 \"{slug}\"이(가) 없습니다. 더 새로운 Yuva가 필요할 수 있습니다."
+
+#: src/features/designs/text.ts
+msgid "This text uses a merge field that does not exist."
+msgstr "이 텍스트는 존재하지 않는 병합 필드를 사용합니다."
+
+#: src/features/designs/text.ts
+msgid "This uses an image or link that belongs to another workspace."
+msgstr "다른 워크스페이스의 이미지나 링크를 사용하고 있습니다."
+
+#: src/features/designs/text.ts
+msgid "This value is not valid."
+msgstr "이 값은 올바르지 않습니다."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Three"
+msgstr "세 개"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Top"
+msgstr "상단"
+
+#: src/features/designs/text.ts
+msgid "Turkish"
+msgstr "터키어"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Two"
+msgstr "두 개"
+
+#: src/features/designs/text.ts
+msgid "Two blocks have the same id."
+msgstr "블록 두 개가 같은 ID를 가지고 있습니다."
+
+#: src/features/designs/text.ts
+msgid "Two or three columns that stack on phones"
+msgstr "휴대폰에서 쌓이는 두세 개의 열"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Type"
+msgstr "유형"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Underline"
+msgstr "밑줄"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Undo"
+msgstr "실행 취소"
+
+#: src/features/designs/text.ts
+msgid "Unsubscribe link"
+msgstr "구독 취소 링크"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Untitled design"
+msgstr "제목 없는 디자인"
+
+#: src/features/designs/designer/Preview.tsx
+msgid "Updating…"
+msgstr "업데이트 중…"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Upload images, or drop them here"
+msgstr "이미지를 업로드하거나 여기에 놓으세요"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Uploading…"
+msgstr "업로드 중…"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Use “{title}”"
+msgstr "\"{title}\" 사용"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Use the default"
+msgstr "기본값 사용"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Version restored"
+msgstr "버전을 복원했습니다"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Versions.tsx
+msgid "Versions"
+msgstr "버전"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "View"
+msgstr "보기"
+
+#: src/features/designs/text.ts
+msgid "Website"
+msgstr "웹사이트"
+
+#: src/features/designs/designer/editor.tsx
+msgid "When it is empty, write"
+msgstr "비어 있으면 다음을 쓰기"
+
+#: src/features/designs/designer/ThemePanel.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Whole workspace"
+msgstr "워크스페이스 전체"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Wide screens"
+msgstr "넓은 화면"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Width"
+msgstr "너비"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Widths in percent"
+msgstr "너비(퍼센트)"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Write a heading"
+msgstr "제목 쓰기"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Write something"
+msgstr "무언가 쓰기"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Write what you want to tell your readers."
+msgstr "독자에게 전하고 싶은 내용을 쓰세요."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "You can reply to this mail; a person reads every answer."
+msgstr "이 메일에 답장할 수 있습니다. 모든 답장은 사람이 읽습니다."
+
+#: src/features/designs/text.ts
+msgid "Your own lines above the required footer"
+msgstr "필수 바닥글 위에 넣을 직접 쓴 줄"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Your version becomes a new design; this one keeps theirs."
+msgstr "내 버전이 새 디자인이 되며, 이 디자인은 상대 것을 유지합니다."

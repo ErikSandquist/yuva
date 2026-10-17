@@ -1,0 +1,2748 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 10:11+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ta\n"
+
+#: src/features/analytics/text.ts
+msgid "(not set)"
+msgstr "(அமைக்கப்படவில்லை)"
+
+#. placeholder {0}: e.rows
+#: src/features/analytics/Exports.tsx
+msgid "{0, plural, one {# row} other {# rows}}"
+msgstr "{0, plural, one {# வரிசை} other {# வரிசைகள்}}"
+
+#. placeholder {0}: p.visitors_today
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{0, plural, one {visitor today} other {visitors today}}"
+msgstr "{0, plural, one {இன்று பார்வையாளர்} other {இன்று பார்வையாளர்கள்}}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{consentedCount} consented, across visits and days"
+msgstr "{consentedCount} பேர் ஒப்புக்கொண்டனர், வருகைகள் மற்றும் நாட்கள் முழுவதும்"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {{site} sent # visit, and none in the 28 days before.} other {{site} sent # visits, and none in the 28 days before.}}"
+msgstr "{count, plural, one {{site} # வருகையை அனுப்பியது, முந்தைய 28 நாட்களில் எதுவும் இல்லை.} other {{site} # வருகைகளை அனுப்பியது, முந்தைய 28 நாட்களில் எதுவும் இல்லை.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {# conversation per 1,000 views, against {usual} in the 28 days before.} other {# conversations per 1,000 views, against {usual} in the 28 days before.}}"
+msgstr "{count, plural, one {1,000 பார்வைகளுக்கு # உரையாடல், முந்தைய 28 நாட்களில் {usual}-க்கு எதிராக.} other {1,000 பார்வைகளுக்கு # உரையாடல்கள், முந்தைய 28 நாட்களில் {usual}-க்கு எதிராக.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {Goal “{goal}” had # conversion, against {usual} a day on average in the week before.} other {Goal “{goal}” had # conversions, against {usual} a day on average in the week before.}}"
+msgstr "{count, plural, one {இலக்கு “{goal}” # மாற்றத்தைப் பெற்றது, முந்தைய வாரத்தில் சராசரியாக நாளுக்கு {usual}-க்கு எதிராக.} other {இலக்கு “{goal}” # மாற்றங்களைப் பெற்றது, முந்தைய வாரத்தில் சராசரியாக நாளுக்கு {usual}-க்கு எதிராக.}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{count} in this range, none in the compared days."
+msgstr "இந்த வரம்பில் {count}, ஒப்பிட்ட நாட்களில் எதுவும் இல்லை."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {count}, none in the compared days."
+msgstr "{dim} {value}: {count}, ஒப்பிட்ட நாட்களில் எதுவும் இல்லை."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} fell {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} {change} குறைந்தது, {before}-க்கு எதிராக {now}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} rose {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} {change} உயர்ந்தது, {before}-க்கு எதிராக {now}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {metric} {now}, none in the compared days."
+msgstr "{dim} {value}: {metric} {now}, ஒப்பிட்ட நாட்களில் எதுவும் இல்லை."
+
+#: src/features/analytics/Annotations.tsx
+msgid "{kind}: {found}"
+msgstr "{kind}: {found}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{lost} left ({lostPct})"
+msgstr "{lost} விலகினர் ({lostPct})"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} fell {change}: {now}, against {before} in the compared days."
+msgstr "{metric} {change} குறைந்தது: {now}, ஒப்பிட்ட நாட்களில் {before}-க்கு எதிராக."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} rose {change}: {now}, against {before} in the compared days."
+msgstr "{metric} {change} உயர்ந்தது: {now}, ஒப்பிட்ட நாட்களில் {before}-க்கு எதிராக."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric}: {now}, none in the compared days."
+msgstr "{metric}: {now}, ஒப்பிட்ட நாட்களில் எதுவும் இல்லை."
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversation} other {# conversations}}"
+msgstr "{n, plural, one {# உரையாடல்} other {# உரையாடல்கள்}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversion} other {# conversions}}"
+msgstr "{n, plural, one {# மாற்றம்} other {# மாற்றங்கள்}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# discussion} other {# discussions}}"
+msgstr "{n, plural, one {# விவாதம்} other {# விவாதங்கள்}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# event} other {# events}}"
+msgstr "{n, plural, one {# நிகழ்வு} other {# நிகழ்வுகள்}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# view} other {# views}}"
+msgstr "{n, plural, one {# பார்வை} other {# பார்வைகள்}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visit} other {# visits}}"
+msgstr "{n, plural, one {# வருகை} other {# வருகைகள்}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visitor} other {# visitors}}"
+msgstr "{n, plural, one {# பார்வையாளர்} other {# பார்வையாளர்கள்}}"
+
+#: src/features/analytics/Events.tsx
+msgid "{n} payments, {avg} on average"
+msgstr "{n} கட்டணங்கள், சராசரியாக {avg}"
+
+#: src/features/analytics/Install.tsx
+msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
+msgstr "{name} இந்தச் சொத்தின் தளங்களில் ஒன்றல்ல, எனவே சேவையகம் ஆப்பின் நிகழ்வுகளை மறுக்கிறது. உரிமையாளர் அல்லது நிர்வாகி இதை இயக்கலாம்."
+
+#: src/features/analytics/Funnels.tsx
+msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
+msgstr "முதல் படியை அடைந்த பார்வையாளர்களில் {overall} பேர் கடைசிப் படியையும் அடைந்தனர், {from} – {to}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
+msgstr "{rate, plural, one {{dim} {value}: 1,000 பார்வைகளுக்கு # உரையாடல், அனைத்துப் பக்கங்களிலும் {site}-க்கு எதிராக.} other {{dim} {value}: 1,000 பார்வைகளுக்கு # உரையாடல்கள், அனைத்துப் பக்கங்களிலும் {site}-க்கு எதிராக.}}"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
+msgstr "இந்த மாதம் {limit}-இல் {used} பகுப்பாய்வு நிகழ்வுகள் பயன்படுத்தப்பட்டன. வரம்பைத் தாண்டிய நிகழ்வுகள் மாதம் முடியும் வரை கைவிடப்படும்."
+
+#: src/features/analytics/Settings.tsx
+msgid "A change applies to new events. Days already counted keep their zone."
+msgstr "மாற்றம் புதிய நிகழ்வுகளுக்குப் பொருந்தும். ஏற்கெனவே எண்ணிய நாட்கள் தம் மண்டலத்தையே வைத்திருக்கும்."
+
+#: src/features/analytics/Goals.tsx
+msgid "A changed goal is counted again over the days the detailed records are kept."
+msgstr "மாற்றிய இலக்கு, விரிவான பதிவுகள் வைக்கப்படும் நாட்களில் மீண்டும் எண்ணப்படும்."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel follows each visit step by step, so it covers at most 90 days at once, or 31 days for a property with more than 10 million events a month. Pick a shorter range."
+msgstr "புனல் ஒவ்வொரு வருகையையும் படிப்படியாகப் பின்தொடரும்; எனவே ஒரே நேரத்தில் அதிகபட்சம் 90 நாட்களை, அல்லது மாதம் 1 கோடிக்கும் மேற்பட்ட நிகழ்வுகள் உள்ள சொத்துக்கு 31 நாட்களை உள்ளடக்கும். குறுகிய வரம்பைத் தேர்ந்தெடுங்கள்."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel is made of two to eight goals in a row. Make at least two goals first."
+msgstr "புனல் வரிசையாக இரண்டு முதல் எட்டு இலக்குகளால் ஆனது. முதலில் குறைந்தது இரண்டு இலக்குகளை உருவாக்குங்கள்."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are kept since {day}. Earlier days only have totals, so they cannot show a funnel."
+msgstr "புனலுக்கு ஒவ்வொரு வருகையின் படிகளும் தேவை; அவை {day} முதல் வைக்கப்படுகின்றன. அதற்கு முந்தைய நாட்களுக்கு மொத்தங்கள் மட்டுமே உள்ளன, எனவே அவை புனலைக் காட்ட முடியாது."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are no longer kept for this range."
+msgstr "புனலுக்கு ஒவ்வொரு வருகையின் படிகளும் தேவை; அவை இந்த வரம்புக்கு இனி வைக்கப்படுவதில்லை."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel shows how many visitors go from one goal to the next within a visit, and where they leave."
+msgstr "ஒரு வருகைக்குள் எத்தனை பார்வையாளர்கள் ஓர் இலக்கிலிருந்து அடுத்ததுக்குச் செல்கிறார்கள், எங்கே விலகுகிறார்கள் என்பதைப் புனல் காட்டும்."
+
+#: src/features/analytics/Goals.tsx
+msgid "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
+msgstr "ஒரு பக்கத்தைப் பார்க்கும், நிகழ்வை அனுப்பும் அல்லது போதுமான அளவு உருட்டும் பார்வையாளர்களையும், அவர்கள் கொண்டுவரும் வருவாயையும் இலக்கு எண்ணும்."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A goal’s conversions yesterday were at most half its daily average of the week before."
+msgstr "நேற்று இலக்கின் மாற்றங்கள் முந்தைய வாரத்தின் தினசரிச் சராசரியில் அதிகபட்சம் பாதியாக இருந்தன."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A link shows only its views of this property, read-only, without filters or segments. Revoking or deleting it stops it at once."
+msgstr "இணைப்பு இந்தச் சொத்தின் நீங்கள் தேர்ந்த பார்வைகளை மட்டும், படிக்க-மட்டும், வடிப்பான்கள் அல்லது பிரிவுகள் இல்லாமல் காட்டும். திரும்பப் பெற்றாலோ நீக்கினாலோ அது உடனே நிற்கும்."
+
+#: src/features/analytics/Goals.tsx
+msgid "A new goal also counts the days the detailed records are kept, not only from today."
+msgstr "புதிய இலக்கு இன்றிலிருந்து மட்டுமல்ல, விரிவான பதிவுகள் வைக்கப்படும் நாட்களையும் எண்ணும்."
+
+#: src/features/analytics/Annotations.tsx
+msgid "A new key was made"
+msgstr "புதிய விசை உருவாக்கப்பட்டது"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A new password signs out everyone who unlocked the link."
+msgstr "புதிய கடவுச்சொல் இணைப்பைத் திறந்த அனைவரையும் வெளியேற்றும்."
+
+#: src/features/analytics/Goals.tsx
+msgid "A path. * stands for one part of it, ** for any number of them."
+msgstr "ஒரு பாதை. * அதன் ஒரு பகுதியையும், ** எத்தனை பகுதிகளையும் குறிக்கும்."
+
+#: src/features/analytics/Settings.tsx
+msgid "A prop name has at most 300 characters and does not start with $ or yuva_."
+msgstr "சார்பு பெயர் அதிகபட்சம் 300 எழுத்துகள், $ அல்லது yuva_ இல் தொடங்காது."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A property can have at most 50 share links. Delete one first."
+msgstr "ஒரு சொத்துக்கு அதிகபட்சம் 50 பகிர்வு இணைப்புகள் இருக்கலாம். முதலில் ஒன்றை நீக்குங்கள்."
+
+#: src/features/analytics/parts.tsx
+msgid "A range can be at most 400 days long. Pick a shorter one."
+msgstr "வரம்பு அதிகபட்சம் 400 நாட்கள் நீளம். குறுகியதைத் தேர்ந்தெடுங்கள்."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A site sent 10 or more visits yesterday and none in the 28 days before."
+msgstr "ஒரு தளம் நேற்று 10 அல்லது அதற்கு மேல் வருகைகளை அனுப்பியது, முந்தைய 28 நாட்களில் எதுவும் இல்லை."
+
+#: src/features/analytics/Settings.tsx
+msgid "A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and it shows as a chip on the Events view."
+msgstr "கண்காணிக்கப்படும் சார்பு தினசரி மொத்தங்களிலும் வைக்கப்படும்; எனவே விரிவான பதிவுகள் போன பிறகும் அதன் பிரிவு நிலைக்கும், மேலும் அது நிகழ்வுகள் பார்வையில் சிப்பாகத் தெரியும்."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page or screen views without a gap of 30 minutes, within one day."
+msgstr "ஒரு நாளுக்குள், 30 நிமிட இடைவெளி இல்லாமல், பார்வையாளரின் பக்கம் அல்லது திரைப் பார்வைகள்."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page views without a gap of 30 minutes, within one day."
+msgstr "ஒரு நாளுக்குள், 30 நிமிட இடைவெளி இல்லாமல், பார்வையாளரின் பக்கப் பார்வைகள்."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
+msgstr "ஒரு நாளுக்குள், 30 நிமிட இடைவெளி இல்லாமல், பார்வையாளரின் திரைப் பார்வைகள். ஆப்பின் ஒவ்வொரு துவக்கமும் புதிய வருகையைத் தொடங்கும்."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Active"
+msgstr "செயலில்"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add"
+msgstr "சேர்"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add a note to the chart"
+msgstr "வரைபடத்தில் குறிப்பைச் சேர்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Add a rule"
+msgstr "விதியைச் சேர்"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Add a step"
+msgstr "படியைச் சேர்"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/NewProperty.tsx
+msgid "Add a website"
+msgstr "இணையதளத்தைச் சேர்"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add a website to count its visitors, pages and sources, without cookies."
+msgstr "அதன் பார்வையாளர்கள், பக்கங்கள், மூலங்களைக் குக்கீகள் இல்லாமல் எண்ண இணையதளத்தைச் சேருங்கள்."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Add and install"
+msgstr "சேர்த்து நிறுவு"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add note"
+msgstr "குறிப்பைச் சேர்"
+
+#: src/features/analytics/Install.tsx
+msgid "Add the YuvaAnalytics library of the Yuva package and configure it once at launch. .yuvaScreen counts a SwiftUI screen; in UIKit, call YuvaAnalytics.screen when a screen appears. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "Yuva தொகுப்பின் YuvaAnalytics நூலகத்தைச் சேர்த்து, துவக்கத்தில் ஒருமுறை உள்ளமையுங்கள். .yuvaScreen SwiftUI திரையை எண்ணும்; UIKit-இல் திரை தோன்றும்போது YuvaAnalytics.screen-ஐ அழையுங்கள். இணைப்பு இல்லாதபோது, நிகழ்வுகள் சாதனத்தில் 72 மணி நேரம் வரை காத்திருந்து தம் சொந்த நேரங்களுடன் வந்துசேரும்."
+
+#: src/features/analytics/Install.tsx
+msgid "Add yuva-analytics from JitPack and configure it once in Application.onCreate. TrackScreen counts a Compose screen. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "JitPack-இலிருந்து yuva-analytics-ஐச் சேர்த்து, Application.onCreate-இல் ஒருமுறை உள்ளமையுங்கள். TrackScreen Compose திரையை எண்ணும். இணைப்பு இல்லாதபோது, நிகழ்வுகள் சாதனத்தில் 72 மணி நேரம் வரை காத்திருந்து தம் சொந்த நேரங்களுடன் வந்துசேரும்."
+
+#: src/features/analytics/Settings.tsx
+msgid "Addresses not counted"
+msgstr "எண்ணப்படாத முகவரிகள்"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the compared days"
+msgstr "ஒப்பிட்ட நாட்களுக்கு எதிராக"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the period before"
+msgstr "முந்தைய காலத்துக்கு எதிராக"
+
+#: src/features/analytics/Support.tsx
+msgid "Agents of the inbox can then see this property’s numbers too."
+msgstr "இன்பாக்ஸின் முகவர்கள் பிறகு இந்தச் சொத்தின் எண்களையும் காணலாம்."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Agents of this inbox can see the numbers."
+msgstr "இந்த இன்பாக்ஸின் முகவர்கள் எண்களைக் காணலாம்."
+
+#: src/features/analytics/text.ts
+msgid "AI assistants"
+msgstr "AI உதவியாளர்கள்"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Alerts"
+msgstr "எச்சரிக்கைகள்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Alerts and reports"
+msgstr "எச்சரிக்கைகளும் அறிக்கையும்"
+
+#: src/features/analytics/Events.tsx
+msgid "All events"
+msgstr "அனைத்து நிகழ்வுகள்"
+
+#: src/features/analytics/Goals.tsx
+msgid "All goals"
+msgstr "அனைத்து இலக்குகள்"
+
+#: src/features/analytics/Support.tsx
+msgid "An owner or admin can link one in the property’s settings."
+msgstr "உரிமையாளர் அல்லது நிர்வாகி சொத்தின் அமைப்புகளில் ஒன்றை இணைக்கலாம்."
+
+#: src/features/analytics/Retention.tsx
+msgid "An owner or admin can turn on the persistent id in the consent features."
+msgstr "உரிமையாளர் அல்லது நிர்வாகி ஒப்புதல் அம்சங்களில் நிலையான ID-ஐ இயக்கலாம்."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics"
+msgstr "பகுப்பாய்வு"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Analytics properties"
+msgstr "பகுப்பாய்வு சொத்துகள்"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Analytics steps"
+msgstr "பகுப்பாய்வுப் படிகள்"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics views"
+msgstr "பகுப்பாய்வுப் பார்வைகள்"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Anyone with the link sees the views you pick, read-only, without signing in."
+msgstr "இணைப்பு உள்ள எவரும் நீங்கள் தேர்ந்த பார்வைகளை, படிக்க-மட்டும், உள்நுழையாமல் காண்பர்."
+
+#: src/features/analytics/text.ts
+msgid "App"
+msgstr "ஆப்"
+
+#: src/features/analytics/text.ts
+msgid "App version"
+msgstr "ஆப் பதிப்பு"
+
+#: src/features/analytics/Settings.tsx
+msgid "Apps send without a domain, so only the platforms turned on here are counted. Events from your backend need no platform."
+msgstr "ஆப்கள் டொமைன் இல்லாமல் அனுப்புகின்றன, எனவே இங்கே இயக்கிய தளங்கள் மட்டுமே எண்ணப்படும். உங்கள் பின்தளத்தின் நிகழ்வுகளுக்குத் தளம் தேவையில்லை."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Ask for a password"
+msgstr "கடவுச்சொல் கேள்"
+
+#: src/features/analytics/Sharing.tsx
+msgid "At least 8 characters"
+msgstr "குறைந்தது 8 எழுத்துகள்"
+
+#: src/features/analytics/Settings.tsx
+msgid "At most 10 props can be tracked."
+msgstr "அதிகபட்சம் 10 சார்புகளைக் கண்காணிக்கலாம்."
+
+#: src/features/analytics/Settings.tsx
+msgid "Audience"
+msgstr "பார்வையாளர்கள்"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Available until {expires}"
+msgstr "{expires} வரை கிடைக்கும்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots"
+msgstr "பாட்கள்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
+msgstr "பாட்கள், விகித வரம்புகள், விலக்கிய முகவரிகளும் பாதைகளும், மாதாந்திர வரம்பு அல்லது பரபரப்பான சேவையகம்."
+
+#: src/features/analytics/text.ts
+msgid "Bounce rate"
+msgstr "திரும்பும் விகிதம்"
+
+#: src/features/analytics/Events.tsx
+msgid "Break down by prop"
+msgstr "சார்பு வாரியாகப் பிரி"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Breakdown"
+msgstr "பிரிவு"
+
+#: src/features/analytics/Exports.tsx
+msgid "Broken down by"
+msgstr "இதன்படி பிரிக்கப்பட்டது"
+
+#: src/features/analytics/Settings.tsx
+msgid "Broken events, such as a screen address that does not start with app://, a reserved name or too many props."
+msgstr "உடைந்த நிகழ்வுகள், எ.கா. app:// இல் தொடங்காத திரை முகவரி, ஒதுக்கப்பட்ட பெயர் அல்லது மிக அதிகச் சார்புகள்."
+
+#: src/features/analytics/text.ts
+msgid "Browser"
+msgstr "உலாவி"
+
+#: src/features/analytics/text.ts
+msgid "Browser version"
+msgstr "உலாவிப் பதிப்பு"
+
+#: src/features/analytics/Install.tsx
+msgid "Call it once in the browser. During server rendering it does nothing."
+msgstr "உலாவியில் ஒருமுறை அழையுங்கள். சேவையக ரெண்டரிங்கின்போது அது எதுவும் செய்யாது."
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Cancel"
+msgstr "ரத்துசெய்"
+
+#: src/features/analytics/Controls.tsx
+msgid "Change filter: {label}"
+msgstr "வடிப்பானை மாற்று: {label}"
+
+#: src/features/analytics/Controls.tsx
+msgid "changed"
+msgstr "மாறியது"
+
+#: src/features/analytics/text.ts
+msgid "Channel"
+msgstr "சேனல்"
+
+#: src/features/analytics/text.ts
+msgid "Chat opened"
+msgstr "அரட்டை திறக்கப்பட்டது"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Checked every hour. Each alert is sent once and also shows as a note on the chart."
+msgstr "ஒவ்வொரு மணி நேரமும் சரிபார்க்கப்படும். ஒவ்வோர் எச்சரிக்கையும் ஒருமுறை அனுப்பப்படும், வரைபடத்தில் குறிப்பாகவும் தெரியும்."
+
+#: src/features/analytics/Settings.tsx
+msgid "Children"
+msgstr "குழந்தைகள்"
+
+#: src/features/analytics/Support.tsx
+msgid "Choose an inbox"
+msgstr "இன்பாக்ஸைத் தேர்ந்தெடுங்கள்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Choose children for a site made for children."
+msgstr "குழந்தைகளுக்கான தளத்துக்குக் குழந்தைகளைத் தேர்ந்தெடுங்கள்."
+
+#: src/features/analytics/text.ts
+msgid "City"
+msgstr "நகரம்"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Clear"
+msgstr "அழி"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts by"
+msgstr "இதன்படி குழுக்கள்"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts fill once visitors agree to a persistent id and come back. The numbers are rebuilt every hour."
+msgstr "பார்வையாளர்கள் நிலையான ID-க்கு ஒப்புக்கொண்டு திரும்பி வரும்போது குழுக்கள் நிரம்பும். எண்கள் ஒவ்வொரு மணி நேரமும் மீண்டும் உருவாக்கப்படும்."
+
+#: src/features/analytics/Settings.tsx
+msgid "Collection"
+msgstr "சேகரிப்பு"
+
+#. placeholder {0}: formatDate(`${c.from}T12:00:00Z`, i18n.locale)
+#. placeholder {1}: formatDate(`${c.to}T12:00:00Z`, i18n.locale)
+#: src/features/analytics/Controls.tsx
+msgid "Compare with {0} – {1}"
+msgstr "{0} – {1} உடன் ஒப்பிடு"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with a year earlier"
+msgstr "ஓராண்டு முந்தையதுடன் ஒப்பிடு"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days"
+msgstr "பிற நாட்களுடன் ஒப்பிடு"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days…"
+msgstr "பிற நாட்களுடன் ஒப்பிடு…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the days"
+msgstr "நாட்களுடன் ஒப்பிடு"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the period before"
+msgstr "முந்தைய காலத்துடன் ஒப்பிடு"
+
+#: src/features/analytics/Overview.tsx
+msgid "Compared days"
+msgstr "ஒப்பிட்ட நாட்கள்"
+
+#: src/features/analytics/Controls.tsx
+msgid "Comparison"
+msgstr "ஒப்பீடு"
+
+#: src/features/analytics/text.ts
+msgid "Completions"
+msgstr "நிறைவுகள்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consent features"
+msgstr "ஒப்புதல் அம்சங்கள்"
+
+#: src/features/analytics/Install.tsx
+msgid "Consent mode"
+msgstr "ஒப்புதல் பயன்முறை"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id, and signed-in users are linked to their contact."
+msgstr "ஒப்புக்கொண்ட பார்வையாளர்கள் நிலையான ID-ஐ வைத்திருப்பர், உள்நுழைந்த பயனர்கள் அவர்களின் தொடர்புடன் இணைக்கப்படுவர்."
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id."
+msgstr "ஒப்புக்கொண்ட பார்வையாளர்கள் நிலையான ID-ஐ வைத்திருப்பர்."
+
+#: src/features/analytics/parts.tsx
+msgid "Consented visitors only"
+msgstr "ஒப்புக்கொண்ட பார்வையாளர்கள் மட்டும்"
+
+#: src/features/analytics/text.ts
+msgid "contains"
+msgstr "கொண்டுள்ளது"
+
+#: src/features/analytics/Install.tsx
+msgid "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
+msgstr "உள்ளடக்கத் தடுப்பான்கள் பெரும்பாலும் பிற டொமைன்களின் ஸ்கிரிப்ட்களை நிறுத்தும். ஸ்கிரிப்ட்டையும் அதன் முனையையும் உங்கள் சொந்தத் தளத்திலிருந்து வழங்கினால், அந்தப் பார்வையாளர்கள் தொடர்ந்து எண்ணப்படுவர். Yuva சேவையகம் உங்கள் ப்ராக்ஸியின் முன்னனுப்பிய முகவரியை நம்ப வேண்டும்; இல்லையெனில் அனைத்துப் பார்வையாளர்களும் ஒருவராகத் தெரிவர்."
+
+#: src/features/analytics/text.ts
+msgid "Conversations"
+msgstr "உரையாடல்கள்"
+
+#: src/features/analytics/text.ts
+msgid "Conversations per 1,000 views of the page."
+msgstr "பக்கத்தின் 1,000 பார்வைகளுக்கு உரையாடல்கள்."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Conversations per 1,000 views yesterday were at least twice the rate of the 28 days before."
+msgstr "நேற்று 1,000 பார்வைகளுக்கு உரையாடல்கள் முந்தைய 28 நாட்களின் விகிதத்தைவிடக் குறைந்தது இரு மடங்காக இருந்தன."
+
+#: src/features/analytics/text.ts
+msgid "Conversations started on the page, from the chat of the linked inbox."
+msgstr "இணைக்கப்பட்ட இன்பாக்ஸின் அரட்டையிலிருந்து, பக்கத்தில் தொடங்கிய உரையாடல்கள்."
+
+#: src/features/analytics/Support.tsx
+msgid "Conversations, feedback, ratings and discussions of the linked inbox show here next to each page’s views. They are counted per page and day; no visitor is ever matched to a contact."
+msgstr "இணைக்கப்பட்ட இன்பாக்ஸின் உரையாடல்கள், கருத்துகள், மதிப்பீடுகள், விவாதங்கள் இங்கே ஒவ்வொரு பக்கத்தின் பார்வைகளுக்கு அருகில் தெரியும். அவை பக்கம் மற்றும் நாள் வாரியாக எண்ணப்படும்; எந்தப் பார்வையாளரும் ஒருபோதும் தொடர்புடன் பொருத்தப்படுவதில்லை."
+
+#: src/features/analytics/text.ts
+msgid "Conversion rate"
+msgstr "மாற்ற விகிதம்"
+
+#: src/features/analytics/text.ts
+msgid "Conversions"
+msgstr "மாற்றங்கள்"
+
+#: src/features/analytics/text.ts
+msgid "Conversions per 100 visitors."
+msgstr "100 பார்வையாளர்களுக்கு மாற்றங்கள்."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
+msgstr "இதை இப்போதே நகலெடுங்கள்; இது மீண்டும் காட்டப்படாது. தொலைந்த இணைப்புகளைத் திரும்பப் பெற்று மீண்டும் உருவாக்க மட்டுமே முடியும்."
+
+#: src/features/analytics/Install.tsx
+msgid "Count my visits again"
+msgstr "என் வருகைகளை மீண்டும் எண்ணு"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Count visitors, pages, sources, places and devices without cookies and without storing IP addresses."
+msgstr "குக்கீகள் இல்லாமல், IP முகவரிகளைச் சேமிக்காமல் பார்வையாளர்கள், பக்கங்கள், மூலங்கள், இடங்கள், சாதனங்களை எண்ணுங்கள்."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Count your website’s visitors"
+msgstr "உங்கள் இணையதளத்தின் பார்வையாளர்களை எண்ணுங்கள்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted"
+msgstr "எண்ணப்பட்டது"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted as"
+msgstr "இவ்வாறு எண்ணப்பட்டது"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Countries"
+msgstr "நாடுகள்"
+
+#: src/features/analytics/text.ts
+msgid "Country"
+msgstr "நாடு"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
+msgstr "கேட்காமல் ஒவ்வொரு பார்வையாளரையும் எண்ணும்: சாதனத்தில் எதுவும் சேமிக்கப்படாது, IP முகவரி வைக்கப்படாது."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Counts the visitors who reached each step after the ones before it, within one visit on one day. Numbers are at most ten minutes old."
+msgstr "ஒவ்வொரு படியையும் அடைந்த பார்வையாளர்களை, முந்தையவற்றுக்குப் பிறகு, ஒரு நாளில் ஒரு வருகைக்குள் எண்ணும். எண்கள் அதிகபட்சம் பத்து நிமிடங்கள் பழையவை."
+
+#: src/features/analytics/Settings.tsx
+msgid "Currency"
+msgstr "நாணயம்"
+
+#: src/features/analytics/Exports.tsx
+msgid "Current view"
+msgstr "தற்போதைய பார்வை"
+
+#: src/features/analytics/text.ts
+msgid "Custom and built-in events."
+msgstr "தனிப்பயன் மற்றும் உள்ளமைந்த நிகழ்வுகள்."
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range"
+msgstr "தனிப்பயன் வரம்பு"
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range…"
+msgstr "தனிப்பயன் வரம்பு…"
+
+#: src/features/analytics/Settings.tsx
+msgid "Data"
+msgstr "தரவு"
+
+#: src/features/analytics/Install.tsx
+msgid "data-outbound counts clicks on links to other sites, data-files downloads of documents and archives, and data-chat each time a visitor opens the chat. track() sends your own events with up to 30 props; e-mail addresses in props are dropped. Make goals from events in the Goals view."
+msgstr "data-outbound பிற தளங்களுக்கான இணைப்புகளின் கிளிக்குகளையும், data-files ஆவணங்கள், காப்பகங்களின் பதிவிறக்கங்களையும், data-chat பார்வையாளர் அரட்டையைத் திறக்கும் ஒவ்வொரு முறையையும் எண்ணும். track() 30 சார்புகள் வரை உங்கள் சொந்த நிகழ்வுகளை அனுப்பும்; சார்புகளில் உள்ள மின்னஞ்சல் முகவரிகள் கைவிடப்படும். Goals பார்வையில் நிகழ்வுகளிலிருந்து இலக்குகளை உருவாக்குங்கள்."
+
+#: src/features/analytics/Settings.tsx
+msgid "Day"
+msgstr "நாள்"
+
+#: src/features/analytics/Retention.tsx
+msgid "Day {period}"
+msgstr "நாள் {period}"
+
+#: src/features/analytics/Exports.tsx
+msgid "Day by day"
+msgstr "நாள் வாரியாக"
+
+#: src/features/analytics/Retention.tsx
+msgid "Days"
+msgstr "நாட்கள்"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/SharePage.tsx
+msgid "Days are counted in this time zone"
+msgstr "நாட்கள் இந்த நேர மண்டலத்தில் எண்ணப்படுகின்றன"
+
+#: src/features/analytics/Settings.tsx
+msgid "Days are in the property’s time zone. Their totals are counted again without them."
+msgstr "நாட்கள் சொத்தின் நேர மண்டலத்தில் உள்ளன. அவற்றின் மொத்தங்கள் அவை இல்லாமல் மீண்டும் எண்ணப்படும்."
+
+#: src/features/analytics/Settings.tsx
+msgid "Days waiting to be summed up"
+msgstr "கூட்டப்படக் காத்திருக்கும் நாட்கள்"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete"
+msgstr "நீக்கு"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete {0}?"
+msgstr "{0}-ஐ நீக்கவா?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete {name}?"
+msgstr "{name}-ஐ நீக்கவா?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data"
+msgstr "அனைத்துத் தரவையும் நீக்கு"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data of {0}?"
+msgstr "{0}-இன் அனைத்துத் தரவையும் நீக்கவா?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete days"
+msgstr "நாட்களை நீக்கு"
+
+#: src/features/analytics/Exports.tsx
+msgid "Delete export"
+msgstr "ஏற்றுமதியை நீக்கு"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Delete funnel"
+msgstr "புனலை நீக்கு"
+
+#: src/features/analytics/Goals.tsx
+msgid "Delete goal"
+msgstr "இலக்கை நீக்கு"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete note"
+msgstr "குறிப்பை நீக்கு"
+
+#: src/features/analytics/Controls.tsx
+msgid "Delete segment"
+msgstr "பிரிவை நீக்கு"
+
+#. placeholder {0}: funnel.name
+#: src/features/analytics/Funnels.tsx
+msgid "Delete the funnel “{0}”?"
+msgstr "புனல் “{0}”-ஐ நீக்கவா?"
+
+#. placeholder {0}: goal.name
+#: src/features/analytics/Goals.tsx
+msgid "Delete the goal “{0}”?"
+msgstr "இலக்கு “{0}”-ஐ நீக்கவா?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the property"
+msgstr "சொத்தை நீக்கு"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Delete the segment “{0}”?"
+msgstr "பிரிவு “{0}”-ஐ நீக்கவா?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the visits and events of {span}?"
+msgstr "{span}-இன் வருகைகளையும் நிகழ்வுகளையும் நீக்கவா?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete these days"
+msgstr "இந்த நாட்களை நீக்கு"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete this note?"
+msgstr "இந்தக் குறிப்பை நீக்கவா?"
+
+#: src/features/analytics/Exports.tsx
+msgid "deleted {expires}"
+msgstr "{expires} நீக்கப்பட்டது"
+
+#: src/features/analytics/Settings.tsx
+msgid "Deleting in the background. The numbers update when it is done."
+msgstr "பின்னணியில் நீக்குகிறது. முடிந்ததும் எண்கள் புதுப்பிக்கப்படும்."
+
+#: src/features/analytics/Goals.tsx
+msgid "Depth in %"
+msgstr "ஆழம் % இல்"
+
+#: src/features/analytics/text.ts
+msgid "Desktop"
+msgstr "டெஸ்க்டாப்"
+
+#: src/features/analytics/Exports.tsx
+msgid "Detailed records are kept since {rawDay}."
+msgstr "விரிவான பதிவுகள் {rawDay} முதல் வைக்கப்படுகின்றன."
+
+#: src/features/analytics/Settings.tsx
+msgid "Detailed records kept since"
+msgstr "விரிவான பதிவுகள் இதிலிருந்து வைக்கப்படுகின்றன"
+
+#: src/features/analytics/Overview.tsx
+msgid "Details"
+msgstr "விவரங்கள்"
+
+#: src/features/analytics/text.ts
+msgid "Device"
+msgstr "சாதனம்"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Devices"
+msgstr "சாதனங்கள்"
+
+#: src/features/analytics/text.ts
+msgid "Direct"
+msgstr "நேரடி"
+
+#: src/features/analytics/text.ts
+msgid "Direct / none"
+msgstr "நேரடி / இல்லை"
+
+#: src/features/analytics/text.ts
+msgid "Discussion threads started on the page."
+msgstr "பக்கத்தில் தொடங்கிய விவாத இழைகள்."
+
+#: src/features/analytics/text.ts
+msgid "Discussions"
+msgstr "விவாதங்கள்"
+
+#: src/features/analytics/text.ts
+msgid "Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again."
+msgstr "நாளுக்கு தனித்த பார்வையாளர்கள், வரம்பின் நாட்களில் கூட்டப்பட்டவை. வேறொரு நாளில் திரும்பி வருபவர் மீண்டும் எண்ணப்படுவார்."
+
+#: src/features/analytics/Install.tsx
+msgid "Do not count my visits"
+msgstr "என் வருகைகளை எண்ணாதே"
+
+#: src/features/analytics/text.ts
+msgid "does not contain"
+msgstr "கொண்டிருக்கவில்லை"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Domains"
+msgstr "டொமைன்கள்"
+
+#: src/features/analytics/Exports.tsx
+msgid "Download"
+msgstr "பதிவிறக்கு"
+
+#: src/features/analytics/parts.tsx
+msgid "Download CSV"
+msgstr "CSV-ஐப் பதிவிறக்கு"
+
+#: src/features/analytics/Settings.tsx
+msgid "Dropped"
+msgstr "கைவிடப்பட்டவை"
+
+#: src/features/analytics/text.ts
+msgid "E-mail"
+msgstr "மின்னஞ்சல்"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that day, each column the share of them who came back that many days later."
+msgstr "ஒவ்வொரு வரிசையும் அந்த நாளில் முதலில் பார்த்த பார்வையாளர்களைக் கொண்டுள்ளது, ஒவ்வொரு நெடுவரிசையும் அவர்களில் அத்தனை நாட்களுக்குப் பிறகு திரும்பியவர்களின் பங்கு."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that month, each column the share of them who came back that many months later."
+msgstr "ஒவ்வொரு வரிசையும் அந்த மாதத்தில் முதலில் பார்த்த பார்வையாளர்களைக் கொண்டுள்ளது, ஒவ்வொரு நெடுவரிசையும் அவர்களில் அத்தனை மாதங்களுக்குப் பிறகு திரும்பியவர்களின் பங்கு."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that week, each column the share of them who came back that many weeks later."
+msgstr "ஒவ்வொரு வரிசையும் அந்த வாரத்தில் முதலில் பார்த்த பார்வையாளர்களைக் கொண்டுள்ளது, ஒவ்வொரு நெடுவரிசையும் அவர்களில் அத்தனை வாரங்களுக்குப் பிறகு திரும்பியவர்களின் பங்கு."
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Edit"
+msgstr "திருத்து"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Edit funnel"
+msgstr "புனலைத் திருத்து"
+
+#: src/features/analytics/Goals.tsx
+msgid "Edit goal"
+msgstr "இலக்கைத் திருத்து"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Edit note"
+msgstr "குறிப்பைத் திருத்து"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Edit share link"
+msgstr "பகிர்வு இணைப்பைத் திருத்து"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embed"
+msgstr "உட்பொதி"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embeds"
+msgstr "உட்பொதிப்புகள்"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Enter the password you were given with the link."
+msgstr "இணைப்புடன் உங்களுக்குத் தரப்பட்ட கடவுச்சொல்லை உள்ளிடுங்கள்."
+
+#: src/features/analytics/text.ts
+msgid "Entry page"
+msgstr "நுழைவுப் பக்கம்"
+
+#: src/features/analytics/Goals.tsx
+msgid "equal to"
+msgstr "சமம்"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Event"
+msgstr "நிகழ்வு"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event}"
+msgstr "நிகழ்வு {event}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event} with {key} = {value}"
+msgstr "{key} = {value} உடன் நிகழ்வு {event}"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Install.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Events"
+msgstr "நிகழ்வுகள்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Events are arriving."
+msgstr "நிகழ்வுகள் வருகின்றன."
+
+#: src/features/analytics/Events.tsx
+msgid "Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when the script has their attributes."
+msgstr "நிகழ்வுகள் உங்கள் பக்கங்கள், ஆப்களில் உள்ள track() அழைப்புகளிலிருந்து வரும். ஸ்கிரிப்ட்டிடம் பண்புக்கூறுகள் இருக்கும்போது வெளிச்செல்லும் இணைப்புகள், பதிவிறக்கங்கள், அரட்டைத் திறப்புகள் எண்ணப்படும்."
+
+#: src/features/analytics/Settings.tsx
+msgid "Events count only after the page calls yuva.consent with analytics set to true. Install the script with data-consent=\"required\"."
+msgstr "பக்கம் analytics true உடன் yuva.consent-ஐ அழைத்த பிறகே நிகழ்வுகள் எண்ணப்படும். ஸ்கிரிப்ட்டை data-consent=\"required\" உடன் நிறுவுங்கள்."
+
+#: src/features/analytics/Settings.tsx
+msgid "events counted"
+msgstr "எண்ணப்பட்ட நிகழ்வுகள்"
+
+#: src/features/analytics/Settings.tsx
+msgid "events dropped"
+msgstr "கைவிடப்பட்ட நிகழ்வுகள்"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every event with its visit’s page, source, place and device, as NDJSON. Visits are numbered within the file; there is no visitor id, address or contact. At most 31 days."
+msgstr "ஒவ்வொரு நிகழ்வும் அதன் வருகையின் பக்கம், மூலம், இடம், சாதனத்துடன், NDJSON ஆக. வருகைகள் கோப்புக்குள் எண்ணிடப்பட்டுள்ளன; பார்வையாளர் ID, முகவரி அல்லது தொடர்பு இல்லை. அதிகபட்சம் 31 நாட்கள்."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Every Monday at 08:00 in {zone}, about the week before."
+msgstr "ஒவ்வொரு திங்கள் {zone}-இல் 08:00 மணிக்கு, முந்தைய வாரம் பற்றி."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range and the filters you are looking at, without a comparison."
+msgstr "நீங்கள் பார்க்கும் வரம்பு மற்றும் வடிப்பான்களின் ஒவ்வொரு வரிசையும், ஒப்பீடு இல்லாமல்."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range you are looking at, without a comparison."
+msgstr "நீங்கள் பார்க்கும் வரம்பின் ஒவ்வொரு வரிசையும், ஒப்பீடு இல்லாமல்."
+
+#: src/features/analytics/Settings.tsx
+msgid "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
+msgstr "ஒவ்வொரு வருகை, நிகழ்வு, மொத்தம் நீக்கப்படும். சொத்தும் அதன் விசையும் இருக்கும், எண்ணுதல் தொடரும்."
+
+#: src/features/analytics/Controls.tsx
+msgid "Everyone who sees this property can pick it. You, owners and admins can change it."
+msgstr "இந்தச் சொத்தைக் காணும் அனைவரும் இதைத் தேர்ந்தெடுக்கலாம். நீங்கள், உரிமையாளர்கள், நிர்வாகிகள் மாற்றலாம்."
+
+#: src/features/analytics/Annotations.tsx
+msgid "Everyone who sees this property sees the note, such as a launch or a campaign."
+msgstr "இந்தச் சொத்தைக் காணும் அனைவரும் குறிப்பைக் காண்பர், எ.கா. வெளியீடு அல்லது பிரசாரம்."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Everything this property raised, newest first, whoever was notified."
+msgstr "இந்தச் சொத்து எழுப்பிய அனைத்தும், புதியது முதலில், யாருக்கு அறிவிக்கப்பட்டாலும்."
+
+#: src/features/analytics/Settings.tsx
+msgid "Excluded"
+msgstr "விலக்கப்பட்டது"
+
+#: src/features/analytics/text.ts
+msgid "Exit page"
+msgstr "வெளியேறும் பக்கம்"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expired"
+msgstr "காலாவதியானது"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expires"
+msgstr "காலாவதி"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export"
+msgstr "ஏற்றுமதி"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export progress"
+msgstr "ஏற்றுமதி முன்னேற்றம்"
+
+#: src/features/analytics/Exports.tsx
+msgid "Exports"
+msgstr "ஏற்றுமதிகள்"
+
+#: src/features/analytics/Exports.tsx
+msgid "Failed"
+msgstr "தோல்வி"
+
+#: src/features/analytics/text.ts
+msgid "Feedback"
+msgstr "கருத்து"
+
+#: src/features/analytics/Support.tsx
+msgid "Fewer than 100 views"
+msgstr "100-க்கும் குறைவான பார்வைகள்"
+
+#: src/features/analytics/text.ts
+msgid "File download"
+msgstr "கோப்புப் பதிவிறக்கம்"
+
+#: src/features/analytics/Exports.tsx
+msgid "Files are made in the background and deleted seven days later."
+msgstr "கோப்புகள் பின்னணியில் உருவாக்கப்பட்டு ஏழு நாட்களுக்குப் பிறகு நீக்கப்படும்."
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Support.tsx
+msgid "Filter by this"
+msgstr "இதன்படி வடிகட்டு"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Filters"
+msgstr "வடிப்பான்கள்"
+
+#: src/features/analytics/Exports.tsx
+msgid "Filters come from the view: click a row there to add one. <0>Change them in the view</0>"
+msgstr "வடிப்பான்கள் பார்வையிலிருந்து வருகின்றன: ஒன்றைச் சேர்க்க அங்கே ஒரு வரிசையைக் கிளிக் செய்யுங்கள். <0>அவற்றைப் பார்வையில் மாற்றுங்கள்</0>"
+
+#: src/features/analytics/Retention.tsx
+msgid "First day"
+msgstr "முதல் நாள்"
+
+#: src/features/analytics/Retention.tsx
+msgid "First month"
+msgstr "முதல் மாதம்"
+
+#: src/features/analytics/text.ts
+msgid "First page or screen"
+msgstr "முதல் பக்கம் அல்லது திரை"
+
+#: src/features/analytics/text.ts
+msgid "First screen"
+msgstr "முதல் திரை"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "First visit"
+msgstr "முதல் வருகை"
+
+#: src/features/analytics/Retention.tsx
+msgid "First week"
+msgstr "முதல் வாரம்"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Five reports an hour at most. Try again later."
+msgstr "மணிக்கு அதிகபட்சம் ஐந்து அறிக்கைகள். பிறகு மீண்டும் முயலுங்கள்."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "For example Fieldnote website"
+msgstr "எ.கா. Fieldnote இணையதளம்"
+
+#: src/features/analytics/Settings.tsx
+msgid "For revenue, an ISO code like EUR."
+msgstr "வருவாய்க்கு, EUR போன்ற ISO குறியீடு."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an <0>API key</0> with the analytics:write scope, which stays on your server."
+msgstr "பதிவு அல்லது கட்டணம் போல உங்கள் பின்தளம் மட்டுமே காணும் விஷயங்களுக்கு. Track பார்வையாளரின் முகவரியையும் உலாவியையும் முன்னனுப்பும், எனவே நிகழ்வு அவர்கள் வருகையுடன் சேரும்; Do Not Track அல்லது Global Privacy Control உள்ள கோரிக்கைகள் அனுப்பப்படாது. இதற்கு analytics:write நோக்கெல்லையுடன் கூடிய <0>API விசை</0> தேவை; அது உங்கள் சேவையகத்திலேயே இருக்கும்."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
+msgstr "பதிவு அல்லது கட்டணம் போல உங்கள் பின்தளம் மட்டுமே காணும் விஷயங்களுக்கு. Track பார்வையாளரின் முகவரியையும் உலாவியையும் முன்னனுப்பும், எனவே நிகழ்வு அவர்கள் வருகையுடன் சேரும்; Do Not Track அல்லது Global Privacy Control உள்ள கோரிக்கைகள் அனுப்பப்படாது. இதற்கு உரிமையாளர் அல்லது நிர்வாகியிடமிருந்து analytics:write நோக்கெல்லையுடன் கூடிய API விசை தேவை; அது உங்கள் சேவையகத்திலேயே இருக்கும்."
+
+#: src/features/analytics/Exports.tsx
+msgid "Format"
+msgstr "வடிவம்"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "From"
+msgstr "From"
+
+#: src/features/analytics/Settings.tsx
+msgid "From a site that is not one of the domains, or from an app whose platform is not turned on."
+msgstr "டொமைன்களில் ஒன்றல்லாத தளத்திலிருந்து, அல்லது தளம் இயக்கப்படாத ஆப்பிலிருந்து."
+
+#: src/features/analytics/Funnels.tsx
+msgid "From pricing to signup"
+msgstr "விலை நிர்ணயத்திலிருந்து பதிவு வரை"
+
+#: src/features/analytics/Support.tsx
+msgid "From the inbox {inboxName}. Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "இன்பாக்ஸ் {inboxName}-இலிருந்து. 1,000 பார்வைகளுக்கு உரையாடல்கள் வரிசையில்; 100-க்கும் குறைவான பார்வைகள் உள்ள பக்கங்கள் மற்றவற்றுக்குப் பிறகு வரும். பக்கம் மற்றும் நாள் வாரியாக எண்ணப்படும், பார்வையாளர் அல்லது தொடர்பு வாரியாக ஒருபோதும் இல்லை."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Funnel"
+msgstr "புனல்"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Funnels"
+msgstr "புனல்கள்"
+
+#: src/features/analytics/Settings.tsx
+msgid "General"
+msgstr "பொது"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Go to goals"
+msgstr "இலக்குகளுக்குச் செல்"
+
+#: src/features/analytics/Goals.tsx
+msgid "Goal"
+msgstr "இலக்கு"
+
+#. placeholder {0}: a.text
+#: src/features/analytics/Annotations.tsx
+msgid "Goal “{0}” was created"
+msgstr "இலக்கு “{0}” உருவாக்கப்பட்டது"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Goal drop"
+msgstr "இலக்கு வீழ்ச்சி"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Goals"
+msgstr "இலக்குகள்"
+
+#: src/features/analytics/Settings.tsx
+msgid "had an address removed"
+msgstr "ஒரு முகவரி அகற்றப்பட்டது"
+
+#: src/features/analytics/Settings.tsx
+msgid "Health"
+msgstr "நலம்"
+
+#: src/features/analytics/text.ts
+msgid "Helpful"
+msgstr "உதவியது"
+
+#: src/features/analytics/Support.tsx
+msgid "Helpful and not helpful"
+msgstr "உதவியது மற்றும் உதவவில்லை"
+
+#: src/features/analytics/text.ts
+msgid "Helpful ratings out of all ratings."
+msgstr "அனைத்து மதிப்பீடுகளிலும் உதவிய மதிப்பீடுகள்."
+
+#: src/features/analytics/text.ts
+msgid "Helpful share"
+msgstr "உதவியதின் பங்கு"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Home shows each website and app like this: visitors today, in the last 30 minutes and this week."
+msgstr "முகப்பு ஒவ்வோர் இணையதளத்தையும் ஆப்பையும் இப்படிக் காட்டும்: இன்று, கடந்த 30 நிமிடங்களில், இந்த வாரம் பார்வையாளர்கள்."
+
+#: src/features/analytics/text.ts
+msgid "Host"
+msgstr "ஹோஸ்ட்"
+
+#: src/features/analytics/text.ts
+msgid "Host or app"
+msgstr "ஹோஸ்ட் அல்லது ஆப்"
+
+#: src/features/analytics/Install.tsx
+msgid "How to install"
+msgstr "எப்படி நிறுவுவது"
+
+#: src/features/analytics/Events.tsx
+msgid "How to send events"
+msgstr "நிகழ்வுகளை எப்படி அனுப்புவது"
+
+#: src/features/analytics/Sharing.tsx
+msgid "I saved it"
+msgstr "சேமித்துவிட்டேன்"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Support.tsx
+msgid "Inbox"
+msgstr "இன்பாக்ஸ்"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Install"
+msgstr "நிறுவு"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/NewProperty.tsx
+msgid "Install on {0}"
+msgstr "{0}-இல் நிறுவு"
+
+#: src/features/analytics/text.ts
+msgid "Internal"
+msgstr "உள்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Invalid"
+msgstr "செல்லாதது"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Investors"
+msgstr "முதலீட்டாளர்கள்"
+
+#: src/features/analytics/text.ts
+msgid "is"
+msgstr "இது"
+
+#: src/features/analytics/text.ts
+msgid "is not"
+msgstr "இது அல்ல"
+
+#: src/features/analytics/Controls.tsx
+msgid "It is gone for everyone who uses it. The numbers stay."
+msgstr "இதைப் பயன்படுத்தும் அனைவருக்கும் இது போய்விட்டது. எண்கள் இருக்கும்."
+
+#: src/features/analytics/SharePage.tsx
+msgid "It may have expired or been revoked. Ask the person who shared it for a new one."
+msgstr "இது காலாவதியாகியிருக்கலாம் அல்லது திரும்பப் பெறப்பட்டிருக்கலாம். பகிர்ந்தவரிடம் புதியதைக் கேளுங்கள்."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Its goals stay."
+msgstr "அதன் இலக்குகள் இருக்கும்."
+
+#: src/features/analytics/Goals.tsx
+msgid "Its numbers are deleted too. This cannot be undone."
+msgstr "அதன் எண்களும் நீக்கப்படும். இதை மீட்க முடியாது."
+
+#: src/features/analytics/Events.tsx
+msgid "Keep only visits with this value"
+msgstr "இந்த மதிப்பு உள்ள வருகைகளை மட்டும் வை"
+
+#: src/features/analytics/Settings.tsx
+msgid "Key"
+msgstr "விசை"
+
+#: src/features/analytics/Goals.tsx
+msgid "Kind of goal"
+msgstr "இலக்கு வகை"
+
+#: src/features/analytics/text.ts
+msgid "Language"
+msgstr "மொழி"
+
+#: src/features/analytics/text.ts
+msgid "Laptop"
+msgstr "மடிக்கணினி"
+
+#: src/features/analytics/text.ts
+msgid "Last 12 months"
+msgstr "கடந்த 12 மாதங்கள்"
+
+#: src/features/analytics/text.ts
+msgid "Last 28 days"
+msgstr "கடந்த 28 நாட்கள்"
+
+#: src/features/analytics/text.ts
+msgid "Last 30 days"
+msgstr "கடந்த 30 நாட்கள்"
+
+#: src/features/analytics/text.ts
+msgid "Last 6 months"
+msgstr "கடந்த 6 மாதங்கள்"
+
+#: src/features/analytics/text.ts
+msgid "Last 7 days"
+msgstr "கடந்த 7 நாட்கள்"
+
+#: src/features/analytics/text.ts
+msgid "Last 90 days"
+msgstr "கடந்த 90 நாட்கள்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event"
+msgstr "கடைசி நிகழ்வு"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event: {last}"
+msgstr "கடைசி நிகழ்வு: {last}"
+
+#: src/features/analytics/text.ts
+msgid "Last month"
+msgstr "கடந்த மாதம்"
+
+#: src/features/analytics/Sharing.tsx
+msgid "last opened {viewed}"
+msgstr "{viewed} கடைசியாகத் திறக்கப்பட்டது"
+
+#: src/features/analytics/text.ts
+msgid "Last page or screen"
+msgstr "கடைசிப் பக்கம் அல்லது திரை"
+
+#: src/features/analytics/text.ts
+msgid "Last screen"
+msgstr "கடைசித் திரை"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Leave empty to keep the current one"
+msgstr "தற்போதையதை வைத்திருக்கக் காலியாக விடுங்கள்"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Link"
+msgstr "இணைப்பு"
+
+#: src/features/analytics/Support.tsx
+msgid "Link an inbox to see support per page"
+msgstr "பக்க வாரியாக ஆதரவைக் காண இன்பாக்ஸை இணையுங்கள்"
+
+#: src/features/analytics/Support.tsx
+msgid "Link inbox"
+msgstr "இன்பாக்ஸை இணை"
+
+#: src/features/analytics/Settings.tsx
+msgid "Link signed-in users to their contact"
+msgstr "உள்நுழைந்த பயனர்களை அவர்களின் தொடர்புடன் இணை"
+
+#: src/features/analytics/Alerts.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Support.tsx
+msgid "Load more"
+msgstr "மேலும் ஏற்று"
+
+#: src/features/analytics/Settings.tsx
+msgid "Location database"
+msgstr "இடத் தரவுத்தளம்"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Locations"
+msgstr "இடங்கள்"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created}"
+msgstr "{created} உருவாக்கப்பட்டது"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created} by {by}"
+msgstr "{by} {created} உருவாக்கினார்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key"
+msgstr "புதிய விசையை உருவாக்கு"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key?"
+msgstr "புதிய விசையை உருவாக்கவா?"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Make at least two goals first."
+msgstr "முதலில் குறைந்தது இரண்டு இலக்குகளை உருவாக்குங்கள்."
+
+#: src/features/analytics/Goals.tsx
+msgid "Make goal"
+msgstr "இலக்கை உருவாக்கு"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Make link"
+msgstr "இணைப்பை உருவாக்கு"
+
+#: src/features/analytics/text.ts
+msgid "matches"
+msgstr "பொருந்துகிறது"
+
+#: src/features/analytics/text.ts
+msgid "Mobile"
+msgstr "மொபைல்"
+
+#: src/features/analytics/Retention.tsx
+msgid "Month {period}"
+msgstr "மாதம் {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Monthly"
+msgstr "மாதாந்திரம்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Monthly limit"
+msgstr "மாதாந்திர வரம்பு"
+
+#: src/features/analytics/Retention.tsx
+msgid "Months"
+msgstr "மாதங்கள்"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move down"
+msgstr "கீழே நகர்த்து"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move up"
+msgstr "மேலே நகர்த்து"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Name"
+msgstr "பெயர்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs a linked inbox under General: its identity secret signs the tokens."
+msgstr "General-இன் கீழ் இணைக்கப்பட்ட இன்பாக்ஸ் தேவை: அதன் அடையாள ரகசியம் குறியீடுகளில் கையொப்பமிடும்."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Needs a linked inbox. {help}"
+msgstr "இணைக்கப்பட்ட இன்பாக்ஸ் தேவை. {help}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs the persistent id: a visitor is linked through it."
+msgstr "நிலையான ID தேவை: பார்வையாளர் அதன் மூலம் இணைக்கப்படுவார்."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Never"
+msgstr "ஒருபோதும் இல்லை"
+
+#: src/features/analytics/Sharing.tsx
+msgid "never opened"
+msgstr "ஒருபோதும் திறக்கப்படவில்லை"
+
+#: src/features/analytics/text.ts
+msgid "New"
+msgstr "புதிய"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value} with {count}, none in the compared days."
+msgstr "புதிய {kind}: {value}, {count} உடன், ஒப்பிட்ட நாட்களில் எதுவும் இல்லை."
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
+msgstr "புதிய {kind}: {value}. {metric}: {now}, ஒப்பிட்ட நாட்களில் எதுவும் இல்லை."
+
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "புதியவர்களும் திரும்பி வருபவர்களும்"
+
+#: src/features/analytics/Funnels.tsx
+msgid "New funnel"
+msgstr "புதிய புனல்"
+
+#: src/features/analytics/Goals.tsx
+msgid "New goal"
+msgstr "புதிய இலக்கு"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New link"
+msgstr "புதிய இணைப்பு"
+
+#: src/features/analytics/text.ts
+msgid "New or returning"
+msgstr "புதியவர் அல்லது திரும்பி வருபவர்"
+
+#: src/features/analytics/Annotations.tsx
+msgid "New pricing page"
+msgstr "புதிய விலை நிர்ணயப் பக்கம்"
+
+#: src/features/analytics/Alerts.tsx
+msgid "New referrer"
+msgstr "புதிய பரிந்துரையாளர்"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New share link"
+msgstr "புதிய பகிர்வு இணைப்பு"
+
+#: src/features/analytics/Alerts.tsx
+msgid "No alerts yet."
+msgstr "இன்னும் எச்சரிக்கைகள் இல்லை."
+
+#: src/features/analytics/Controls.tsx
+msgid "No comparison"
+msgstr "ஒப்பீடு இல்லை"
+
+#: src/features/analytics/Settings.tsx
+msgid "No consent features are offered."
+msgstr "ஒப்புதல் அம்சங்கள் எதுவும் வழங்கப்படவில்லை."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "இந்த வரம்பில் ஒப்புக்கொண்ட பார்வையாளர்கள் இல்லை."
+
+#: src/features/analytics/Retention.tsx
+msgid "No consented visitors yet"
+msgstr "இன்னும் ஒப்புக்கொண்ட பார்வையாளர்கள் இல்லை"
+
+#: src/features/analytics/Support.tsx
+msgid "No conversations, feedback, ratings or discussions from these pages in this range."
+msgstr "இந்த வரம்பில் இந்தப் பக்கங்களிலிருந்து உரையாடல்கள், கருத்துகள், மதிப்பீடுகள், விவாதங்கள் இல்லை."
+
+#: src/features/analytics/Goals.tsx
+msgid "No conversions in this range."
+msgstr "இந்த வரம்பில் மாற்றங்கள் இல்லை."
+
+#: src/features/analytics/Settings.tsx
+msgid "No event yet."
+msgstr "இன்னும் நிகழ்வு இல்லை."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events in the last 24 hours"
+msgstr "கடந்த 24 மணி நேரத்தில் நிகழ்வுகள் இல்லை"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events yet"
+msgstr "இன்னும் நிகழ்வுகள் இல்லை"
+
+#: src/features/analytics/Exports.tsx
+msgid "No exports yet."
+msgstr "இன்னும் ஏற்றுமதிகள் இல்லை."
+
+#: src/features/analytics/Funnels.tsx
+msgid "No funnels yet"
+msgstr "இன்னும் புனல்கள் இல்லை"
+
+#: src/features/analytics/Goals.tsx
+msgid "No goals yet"
+msgstr "இன்னும் இலக்குகள் இல்லை"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No properties yet"
+msgstr "இன்னும் சொத்துகள் இல்லை"
+
+#: src/features/analytics/Settings.tsx
+msgid "No props are tracked."
+msgstr "சார்புகள் எதுவும் கண்காணிக்கப்படவில்லை."
+
+#: src/features/analytics/Alerts.tsx
+msgid "No scheduled reports."
+msgstr "திட்டமிட்ட அறிக்கைகள் இல்லை."
+
+#: src/features/analytics/Controls.tsx
+msgid "No segment"
+msgstr "பிரிவு இல்லை"
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Make one to show these numbers to people outside the workspace."
+msgstr "இன்னும் பகிர்வு இணைப்புகள் இல்லை. பணியிடத்துக்கு வெளியே உள்ளவர்களுக்கு இந்த எண்களைக் காட்ட ஒன்றை உருவாக்குங்கள்."
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Owners and admins make them."
+msgstr "இன்னும் பகிர்வு இணைப்புகள் இல்லை. உரிமையாளர்களும் நிர்வாகிகளும் அவற்றை உருவாக்குவர்."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Nobody in the last 30 minutes."
+msgstr "கடந்த 30 நிமிடங்களில் யாரும் இல்லை."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Nobody reached the first step in this range."
+msgstr "இந்த வரம்பில் யாரும் முதல் படியை அடையவில்லை."
+
+#: src/features/analytics/Alerts.tsx
+msgid "None"
+msgstr "எதுவுமில்லை"
+
+#: src/features/analytics/Settings.tsx
+msgid "None yet"
+msgstr "இன்னும் இல்லை"
+
+#: src/features/analytics/Exports.tsx
+msgid "None, every visit counts."
+msgstr "இல்லை, ஒவ்வொரு வருகையும் எண்ணப்படும்."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "None, owners and admins only"
+msgstr "இல்லை, உரிமையாளர்களும் நிர்வாகிகளும் மட்டும்"
+
+#: src/features/analytics/parts.tsx
+msgid "Not available for this range."
+msgstr "இந்த வரம்புக்குக் கிடைக்கவில்லை."
+
+#: src/features/analytics/text.ts
+msgid "Not helpful"
+msgstr "உதவவில்லை"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Note"
+msgstr "குறிப்பு"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Notes"
+msgstr "குறிப்புகள்"
+
+#: src/features/analytics/Exports.tsx
+msgid "Nothing"
+msgstr "எதுவுமில்லை"
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Nothing counted in this range."
+msgstr "இந்த வரம்பில் எதுவும் எண்ணப்படவில்லை."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Notify me"
+msgstr "எனக்கு அறிவி"
+
+#: src/features/analytics/Settings.tsx
+msgid "Off"
+msgstr "அணை"
+
+#: src/features/analytics/Settings.tsx
+msgid "Offered only to visitors who agree in your consent tool. Everyone else is counted exactly as before, one day at a time and without anything stored on the device."
+msgstr "உங்கள் ஒப்புதல் கருவியில் ஒப்புக்கொள்ளும் பார்வையாளர்களுக்கு மட்டுமே வழங்கப்படும். மற்ற அனைவரும் முன்பு போலவே, ஒரு நேரத்தில் ஒரு நாளாக, சாதனத்தில் எதுவும் சேமிக்காமல் எண்ணப்படுவர்."
+
+#: src/features/analytics/Settings.tsx
+msgid "Older than 72 hours. Apps keep events without a connection for at most that long."
+msgstr "72 மணி நேரத்தை விடப் பழையது. இணைப்பு இல்லாதபோது ஆப்கள் நிகழ்வுகளை அதிகபட்சம் இவ்வளவு நேரம் வைத்திருக்கும்."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On its way to {email}."
+msgstr "{email}-க்கு வழியில் உள்ளது."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On the 1st of each month at 08:00 in {zone}, about the month before."
+msgstr "ஒவ்வொரு மாதமும் 1-ஆம் தேதி {zone}-இல் 08:00 மணிக்கு, முந்தைய மாதம் பற்றி."
+
+#: src/features/analytics/Settings.tsx
+msgid "One IP address or range per line, up to 50, such as your office or a monitoring service."
+msgstr "ஒரு வரிக்கு ஒரு IP முகவரி அல்லது வரம்பு, 50 வரை, எ.கா. உங்கள் அலுவலகம் அல்லது கண்காணிப்புச் சேவை."
+
+#: src/features/analytics/Settings.tsx
+msgid "One path per line, up to 50. * stands for one part of the path, ** for any number of them."
+msgstr "ஒரு வரிக்கு ஒரு பாதை, 50 வரை. * பாதையின் ஒரு பகுதியையும், ** எத்தனை பகுதிகளையும் குறிக்கும்."
+
+#: src/features/analytics/Sharing.tsx
+msgid "One per line, like https://example.com or https://*.example.com. Without any, no other site can show it in a frame."
+msgstr "ஒரு வரிக்கு ஒன்று, https://example.com அல்லது https://*.example.com போல. எதுவும் இல்லாவிட்டால், வேறு தளம் இதை ஃபிரேமில் காட்ட முடியாது."
+
+#: src/features/analytics/Settings.tsx
+msgid "One per line. *.example.com covers every subdomain, but not example.com itself."
+msgstr "ஒரு வரிக்கு ஒன்று. *.example.com ஒவ்வொரு துணை டொமைனையும் உள்ளடக்கும், example.com-ஐ அல்ல."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "One per line. Pages on other domains cannot send events. *.example.com covers every subdomain."
+msgstr "ஒரு வரிக்கு ஒன்று. பிற டொமைன்களின் பக்கங்கள் நிகழ்வுகளை அனுப்ப முடியாது. *.example.com ஒவ்வொரு துணை டொமைனையும் உள்ளடக்கும்."
+
+#: src/features/analytics/Settings.tsx
+msgid "One prop name per line, up to 10, such as plan."
+msgstr "ஒரு வரிக்கு ஒரு சார்புப் பெயர், 10 வரை, எ.கா. plan."
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
+msgstr "ஒரு நாளுக்கு ஒரு வரிசை: பார்வையாளர்கள், வருகைகள், பார்வைகள், திரும்பும் விகிதம், கால அளவுகள், உருட்டு ஆழத்துடன். அதிகபட்சம் 400 நாட்கள்."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Only for you, by e-mail to {email}. Reports are plain numbers, with no images and nothing that tracks opening or clicks."
+msgstr "உங்களுக்கு மட்டும், {email}-க்கு மின்னஞ்சலில். அறிக்கைகள் எளிய எண்கள், படங்கள் இல்லாமல், திறப்பு அல்லது கிளிக்குகளைக் கண்காணிக்கும் எதுவும் இல்லாமல்."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Only members see it, to tell links apart."
+msgstr "உறுப்பினர்கள் மட்டுமே காண்பர், இணைப்புகளை வேறுபடுத்த."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only the country is kept, never the region or city."
+msgstr "நாடு மட்டுமே வைக்கப்படும், பகுதி அல்லது நகரம் ஒருபோதும் இல்லை."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Only totals are shown. There is no list of individual visitors."
+msgstr "மொத்தங்கள் மட்டுமே காட்டப்படும். தனிப் பார்வையாளர்களின் பட்டியல் இல்லை."
+
+#: src/features/analytics/parts.tsx
+msgid "Only visitors who agreed to a persistent id are counted here. Everyone else is counted one day at a time."
+msgstr "இங்கே நிலையான ID-க்கு ஒப்புக்கொண்ட பார்வையாளர்கள் மட்டுமே எண்ணப்படுவர். மற்ற அனைவரும் ஒரு நேரத்தில் ஒரு நாளாக எண்ணப்படுவர்."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only with consent"
+msgstr "ஒப்புதலுடன் மட்டும்"
+
+#: src/features/analytics/Goals.tsx
+msgid "Only with prop"
+msgstr "சார்புடன் மட்டும்"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
+msgstr "துணுக்கு உள்ள உங்கள் தளத்தின் ஒரு பக்கத்தைத் திறவுங்கள். சேவையகம் முதல் பக்கப் பார்வையைச் சேமித்ததும் இது பச்சையாகும். Do Not Track அல்லது Global Privacy Control உள்ள உலாவிகள் எதையும் அனுப்பாது, எனவே சோதிக்க வேறொன்றைப் பயன்படுத்துங்கள்."
+
+#: src/features/analytics/Retention.tsx
+msgid "Open consent features"
+msgstr "ஒப்புதல் அம்சங்களைத் திற"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Open report"
+msgstr "அறிக்கையைத் திற"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open the overview"
+msgstr "மேலோட்டத்தைத் திற"
+
+#: src/features/analytics/Support.tsx
+msgid "Open the property’s settings"
+msgstr "சொத்தின் அமைப்புகளைத் திற"
+
+#: src/features/analytics/text.ts
+msgid "Operating system"
+msgstr "இயக்க முறைமை"
+
+#: src/features/analytics/Install.tsx
+msgid "Opt-out link"
+msgstr "விலகல் இணைப்பு"
+
+#: src/features/analytics/text.ts
+msgid "Organic search"
+msgstr "இயற்கைத் தேடல்"
+
+#: src/features/analytics/text.ts
+msgid "OS version"
+msgstr "OS பதிப்பு"
+
+#: src/features/analytics/text.ts
+msgid "Other"
+msgstr "பிற"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other drops"
+msgstr "பிற வீழ்ச்சிகள்"
+
+#: src/features/analytics/Events.tsx
+msgid "Other prop"
+msgstr "பிற சார்பு"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other sites"
+msgstr "பிற தளங்கள்"
+
+#: src/features/analytics/text.ts
+msgid "Outbound link"
+msgstr "வெளிச்செல்லும் இணைப்பு"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Overview"
+msgstr "மேலோட்டம்"
+
+#: src/features/analytics/Install.tsx
+msgid "Own domain"
+msgstr "சொந்த டொமைன்"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Owners and admins make funnels from goals. They show up here with each step’s drop-off."
+msgstr "உரிமையாளர்களும் நிர்வாகிகளும் இலக்குகளிலிருந்து புனல்களை உருவாக்குவர். அவை ஒவ்வொரு படியின் வீழ்ச்சியுடன் இங்கே தோன்றும்."
+
+#: src/features/analytics/Goals.tsx
+msgid "Owners and admins make goals. They show up here with their conversions."
+msgstr "உரிமையாளர்களும் நிர்வாகிகளும் இலக்குகளை உருவாக்குவர். அவை அவற்றின் மாற்றங்களுடன் இங்கே தோன்றும்."
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Page"
+msgstr "பக்கம்"
+
+#: src/features/analytics/text.ts
+msgid "Page feedback sent from the page."
+msgstr "பக்கத்திலிருந்து அனுப்பப்பட்ட பக்கக் கருத்து."
+
+#: src/features/analytics/text.ts
+msgid "Page not found"
+msgstr "பக்கம் கிடைக்கவில்லை"
+
+#: src/features/analytics/text.ts
+msgid "Page or screen"
+msgstr "பக்கம் அல்லது திரை"
+
+#: src/features/analytics/Goals.tsx
+msgid "Page view of {path}"
+msgstr "{path}-இன் பக்கப் பார்வை"
+
+#: src/features/analytics/text.ts
+msgid "Pages"
+msgstr "பக்கங்கள்"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens"
+msgstr "பக்கங்களும் திரைகளும்"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens viewed."
+msgstr "பார்த்த பக்கங்களும் திரைகளும்."
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages not counted"
+msgstr "எண்ணப்படாத பக்கங்கள்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
+msgstr "ஒரு வடிவத்துடன் பொருந்தும் பக்கங்கள் ஒரே பாதையின் கீழ் எண்ணப்படும், எனவே ஒவ்வொரு ஆர்டர் பக்கமும் ஒன்றாகக் கூடும். பாதையில் உள்ள முகவரிகள் எப்போதும் மாற்றப்படும்."
+
+#: src/features/analytics/text.ts
+msgid "Pages viewed."
+msgstr "பார்த்த பக்கங்கள்."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Pages, sources, places and devices, without cookies, without storing IP addresses and without a consent banner where the law allows it."
+msgstr "பக்கங்கள், மூலங்கள், இடங்கள், சாதனங்கள், குக்கீகள் இல்லாமல், IP முகவரிகளைச் சேமிக்காமல், சட்டம் அனுமதிக்கும் இடத்தில் ஒப்புதல் பதாகை இல்லாமல்."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews"
+msgstr "பக்கப் பார்வைகள்"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews divided by visits."
+msgstr "பக்கப் பார்வைகள் வருகைகளால் வகுக்கப்பட்டவை."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews in the last 30 minutes"
+msgstr "கடந்த 30 நிமிடங்களில் பக்கப் பார்வைகள்"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews per minute"
+msgstr "நிமிடத்துக்குப் பக்கப் பார்வைகள்"
+
+#: src/features/analytics/text.ts
+msgid "Paid search"
+msgstr "கட்டணத் தேடல்"
+
+#: src/features/analytics/text.ts
+msgid "Paid social"
+msgstr "கட்டணச் சமூகம்"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Password"
+msgstr "கடவுச்சொல்"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Past alerts"
+msgstr "கடந்த எச்சரிக்கைகள்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Path rules"
+msgstr "பாதை விதிகள்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pattern"
+msgstr "வடிவம்"
+
+#: src/features/analytics/Controls.tsx
+msgid "Paying customers from Germany"
+msgstr "ஜெர்மனியிலிருந்து கட்டண வாடிக்கையாளர்கள்"
+
+#: src/features/analytics/text.ts
+msgid "Per 1,000 views"
+msgstr "1,000 பார்வைகளுக்கு"
+
+#: src/features/analytics/Overview.tsx
+msgid "per day"
+msgstr "நாளுக்கு"
+
+#: src/features/analytics/Settings.tsx
+msgid "Per day"
+msgstr "நாளுக்கு"
+
+#: src/features/analytics/Overview.tsx
+msgid "per hour"
+msgstr "மணிக்கு"
+
+#: src/features/analytics/Overview.tsx
+msgid "per week"
+msgstr "வாரத்துக்கு"
+
+#: src/features/analytics/Settings.tsx
+msgid "Persistent id"
+msgstr "நிலையான ID"
+
+#: src/features/analytics/text.ts
+msgid "Phone"
+msgstr "தொலைபேசி"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Pick a goal"
+msgstr "ஓர் இலக்கைத் தேர்ந்தெடுங்கள்"
+
+#: src/features/analytics/Events.tsx
+msgid "Pick a prop to see the values this event carried."
+msgstr "இந்த நிகழ்வு கொண்டிருந்த மதிப்புகளைக் காண ஒரு சார்பைத் தேர்ந்தெடுங்கள்."
+
+#: src/features/analytics/Settings.tsx
+msgid "Pick at least one platform."
+msgstr "குறைந்தது ஒரு தளத்தைத் தேர்ந்தெடுங்கள்."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Pick at least one view."
+msgstr "குறைந்தது ஒரு பார்வையைத் தேர்ந்தெடுங்கள்."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
+msgstr "தளம் எப்படி உருவாக்கப்பட்டது எனத் தேர்ந்தெடுத்து துணுக்கை நகலெடுங்கள். விசை அரட்டை விசையைப் போல பொதுவானது: அது சொத்தின் டொமைன்களில் மட்டுமே வேலை செய்யும்."
+
+#: src/features/analytics/text.ts
+msgid "Platform"
+msgstr "தளம்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Platforms"
+msgstr "தளங்கள்"
+
+#: src/features/analytics/text.ts
+msgid "Prop"
+msgstr "சார்பு"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name"
+msgstr "சார்புப் பெயர்"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name, like plan"
+msgstr "சார்புப் பெயர், plan போல"
+
+#: src/features/analytics/Events.tsx
+msgid "Properties for children keep no props, only the address of outbound links and downloads."
+msgstr "குழந்தைகளுக்கான சொத்துகள் சார்புகளை வைத்திருக்காது, வெளிச்செல்லும் இணைப்புகள் மற்றும் பதிவிறக்கங்களின் முகவரியை மட்டும்."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children keep no props, so none can be tracked."
+msgstr "குழந்தைகளுக்கான சொத்துகள் சார்புகளை வைத்திருக்காது, எனவே எதையும் கண்காணிக்க முடியாது."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children never keep an id on the device or link visits to a contact."
+msgstr "குழந்தைகளுக்கான சொத்துகள் சாதனத்தில் ID-ஐ வைத்திருக்காது, வருகைகளைத் தொடர்புடன் இணைக்காது."
+
+#: src/features/analytics/Retention.tsx
+msgid "Properties for children never keep an id on the device, so they have no retention."
+msgstr "குழந்தைகளுக்கான சொத்துகள் சாதனத்தில் ID-ஐ வைத்திருக்காது, எனவே அவற்றுக்குத் தக்கவைப்பு இல்லை."
+
+#: src/features/analytics/Settings.tsx
+msgid "Property name"
+msgstr "சொத்தின் பெயர்"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Props"
+msgstr "சார்புகள்"
+
+#: src/features/analytics/Events.tsx
+msgid "Props of any name can be broken down for the days the detailed records are kept. Earlier days only have the tracked props."
+msgstr "எந்தப் பெயரின் சார்புகளையும் விரிவான பதிவுகள் வைக்கப்படும் நாட்களுக்குப் பிரிக்கலாம். அதற்கு முந்தைய நாட்களுக்குக் கண்காணித்த சார்புகள் மட்டுமே உள்ளன."
+
+#: src/features/analytics/Install.tsx
+msgid "Put the script in the head of every page. It counts page views, also when a single-page app changes the address, and stores nothing on the visitor’s device."
+msgstr "ஸ்கிரிப்ட்டை ஒவ்வொரு பக்கத்தின் head-இலும் வையுங்கள். இது பக்கப் பார்வைகளை எண்ணும், ஒற்றைப் பக்க ஆப் முகவரியை மாற்றும்போதும், பார்வையாளரின் சாதனத்தில் எதையும் சேமிக்காது."
+
+#: src/features/analytics/Install.tsx
+msgid "Put these links on your privacy page. Opting out is the only thing the script stores on the visitor’s device, and only when they ask for it. Visitors with Do Not Track or Global Privacy Control are never counted."
+msgstr "இந்த இணைப்புகளை உங்கள் தனியுரிமைப் பக்கத்தில் வையுங்கள். விலகுவது மட்டுமே ஸ்கிரிப்ட் பார்வையாளரின் சாதனத்தில் சேமிக்கும் ஒரே விஷயம், அதுவும் அவர்கள் கேட்கும்போது மட்டுமே. Do Not Track அல்லது Global Privacy Control உள்ள பார்வையாளர்கள் ஒருபோதும் எண்ணப்படுவதில்லை."
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Range"
+msgstr "வரம்பு"
+
+#: src/features/analytics/Support.tsx
+msgid "Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "1,000 பார்வைகளுக்கு உரையாடல்கள் வரிசையில்; 100-க்கும் குறைவான பார்வைகள் உள்ள பக்கங்கள் மற்றவற்றுக்குப் பிறகு வரும். பக்கம் மற்றும் நாள் வாரியாக எண்ணப்படும், பார்வையாளர் அல்லது தொடர்பு வாரியாக ஒருபோதும் இல்லை."
+
+#: src/features/analytics/Settings.tsx
+msgid "Rate limits"
+msgstr "விகித வரம்புகள்"
+
+#: src/features/analytics/Support.tsx
+msgid "Ratings"
+msgstr "மதிப்பீடுகள்"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw events"
+msgstr "மூல நிகழ்வுகள்"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw exports cover at most 31 days."
+msgstr "மூல ஏற்றுமதிகள் அதிகபட்சம் 31 நாட்களை உள்ளடக்கும்."
+
+#: src/features/analytics/Goals.tsx
+msgid "Reached when a visitor"
+msgstr "பார்வையாளர் இதைச் செய்யும்போது எட்டப்படும்"
+
+#: src/features/analytics/Exports.tsx
+msgid "Ready"
+msgstr "தயார்"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Realtime"
+msgstr "நிகழ்நேரம்"
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour, last at {builtAt}."
+msgstr "ஒவ்வொரு மணி நேரமும் மீண்டும் உருவாக்கப்படும், கடைசியாக {builtAt}."
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour."
+msgstr "ஒவ்வொரு மணி நேரமும் மீண்டும் உருவாக்கப்படும்."
+
+#: src/features/analytics/text.ts
+msgid "Referral"
+msgstr "பரிந்துரை"
+
+#: src/features/analytics/text.ts
+msgid "Referrer"
+msgstr "பரிந்துரையாளர்"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Refreshes every 15 seconds"
+msgstr "ஒவ்வொரு 15 வினாடிக்கும் புதுப்பிக்கப்படும்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Refused"
+msgstr "மறுக்கப்பட்டது"
+
+#: src/features/analytics/text.ts
+msgid "Region"
+msgstr "பிராந்தியம்"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter"
+msgstr "வடிப்பானை அகற்று"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter: {label}"
+msgstr "வடிப்பானை அகற்று: {label}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Remove rule"
+msgstr "விதியை அகற்று"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Remove step"
+msgstr "படியை அகற்று"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Rename “{0}”…"
+msgstr "“{0}”-க்கு மறுபெயரிடு…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Rename segment"
+msgstr "பிரிவுக்கு மறுபெயரிடு"
+
+#: src/features/analytics/Install.tsx
+msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
+msgstr "கூறை ஒருமுறை ரூட் தளவமைப்பில் வழங்குங்கள். அது எதையும் வழங்காது; useYuvaAnalytics() அதற்குக் கீழ் எங்கும் முறைகளைத் தரும்."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Report"
+msgstr "அறிக்கை"
+
+#: src/features/analytics/Settings.tsx
+msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
+msgstr "Do Not Track அல்லது Global Privacy Control உள்ள கோரிக்கைகளும், ஒப்புதல் தேவைப்படும் சொத்தில் ஒப்புதல் இல்லாத நிகழ்வுகளும் ஏற்கப்படும், ஆனால் இங்கே சேமிக்கப்படவோ எண்ணப்படவோ மாட்டாது."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Retention"
+msgstr "தக்கவைப்பு"
+
+#: src/features/analytics/Retention.tsx
+msgid "Retention needs consent features"
+msgstr "தக்கவைப்புக்கு ஒப்புதல் அம்சங்கள் தேவை"
+
+#: src/features/analytics/text.ts
+msgid "Returning"
+msgstr "திரும்பி வருபவர்"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/text.ts
+msgid "Revenue"
+msgstr "வருவாய்"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke"
+msgstr "திரும்பப் பெறு"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke {name}?"
+msgstr "{name}-ஐத் திரும்பப் பெறவா?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoked"
+msgstr "திரும்பப் பெறப்பட்டது"
+
+#: src/features/analytics/Exports.tsx
+msgid "Rows"
+msgstr "வரிசைகள்"
+
+#: src/features/analytics/Exports.tsx
+msgid "Running"
+msgstr "இயங்குகிறது"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Save"
+msgstr "சேமி"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Save the changes to “{0}”"
+msgstr "“{0}”-இல் மாற்றங்களைச் சேமி"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save the filters as a new segment…"
+msgstr "வடிப்பான்களைப் புதிய பிரிவாகச் சேமி…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save these filters as a segment"
+msgstr "இந்த வடிப்பான்களைப் பிரிவாகச் சேமி"
+
+#: src/features/analytics/Controls.tsx
+msgid "Saved segments"
+msgstr "சேமித்த பிரிவுகள்"
+
+#: src/features/analytics/text.ts
+msgid "Screen"
+msgstr "திரை"
+
+#: src/features/analytics/text.ts
+msgid "Screen size"
+msgstr "திரை அளவு"
+
+#: src/features/analytics/text.ts
+msgid "Screen views"
+msgstr "திரைப் பார்வைகள்"
+
+#: src/features/analytics/text.ts
+msgid "Screen views divided by visits."
+msgstr "திரைப் பார்வைகள் வருகைகளால் வகுக்கப்பட்டவை."
+
+#: src/features/analytics/text.ts
+msgid "Screen views in the last 30 minutes"
+msgstr "கடந்த 30 நிமிடங்களில் திரைப் பார்வைகள்"
+
+#: src/features/analytics/text.ts
+msgid "Screen views per minute"
+msgstr "நிமிடத்துக்குத் திரைப் பார்வைகள்"
+
+#: src/features/analytics/text.ts
+msgid "Screens"
+msgstr "திரைகள்"
+
+#: src/features/analytics/text.ts
+msgid "Screens viewed."
+msgstr "பார்த்த திரைகள்."
+
+#: src/features/analytics/text.ts
+msgid "Scroll depth"
+msgstr "உருட்டு ஆழம்"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolled to {pct} on {path}"
+msgstr "{path}-இல் {pct} வரை உருட்டினர்"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolls"
+msgstr "உருட்டல்கள்"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segment"
+msgstr "பிரிவு"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segments"
+msgstr "பிரிவுகள்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Send a screen or an event from your app or backend while this page is open, and see whether it reached the server. Refreshes every 5 seconds."
+msgstr "இந்தப் பக்கம் திறந்திருக்கும்போது உங்கள் ஆப் அல்லது பின்தளத்திலிருந்து ஒரு திரையையோ நிகழ்வையோ அனுப்பி, அது சேவையகத்தை அடைந்ததா எனப் பாருங்கள். ஒவ்வொரு 5 வினாடிக்கும் புதுப்பிக்கப்படும்."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Send me one now"
+msgstr "இப்போது ஒன்றை அனுப்பு"
+
+#: src/features/analytics/Goals.tsx
+msgid "Sends an event"
+msgstr "நிகழ்வை அனுப்புகிறது"
+
+#: src/features/analytics/text.ts
+msgid "Server"
+msgstr "சேவையகம்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Server busy"
+msgstr "சேவையகம் பரபரப்பு"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Settings"
+msgstr "அமைப்புகள்"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Share links"
+msgstr "பகிர்வு இணைப்புகள்"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Shared with Yuva"
+msgstr "Yuva-வுடன் பகிரப்பட்டது"
+
+#: src/features/analytics/Settings.tsx
+msgid "Sharing"
+msgstr "பகிர்தல்"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Events.tsx
+msgid "Show"
+msgstr "காட்டு"
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/parts.tsx
+msgid "Show from {day}"
+msgstr "{day} முதல் காட்டு"
+
+#: src/features/analytics/Events.tsx
+msgid "Show its props"
+msgstr "அதன் சார்புகளைக் காட்டு"
+
+#: src/features/analytics/Controls.tsx
+msgid "Show the days"
+msgstr "நாட்களைக் காட்டு"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Show the last 30 days"
+msgstr "கடந்த 30 நாட்களைக் காட்டு"
+
+#: src/features/analytics/Goals.tsx
+msgid "Signed up"
+msgstr "பதிவு செய்தனர்"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Sites that may embed it"
+msgstr "இதை உட்பொதிக்கக்கூடிய தளங்கள்"
+
+#: src/features/analytics/text.ts
+msgid "Social"
+msgstr "சமூகம்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Some events were dropped. The reasons are below."
+msgstr "சில நிகழ்வுகள் கைவிடப்பட்டன. காரணங்கள் கீழே உள்ளன."
+
+#: src/features/analytics/text.ts
+msgid "Source"
+msgstr "மூலம்"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Realtime.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Sources"
+msgstr "மூலங்கள்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Start over"
+msgstr "மீண்டும் தொடங்கு"
+
+#. placeholder {0}: i + 1
+#: src/features/analytics/Funnels.tsx
+msgid "Step {0}"
+msgstr "படி {0}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Steps"
+msgstr "படிகள்"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Support.tsx
+msgid "Support"
+msgstr "ஆதரவு"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Support load"
+msgstr "ஆதரவுச் சுமை"
+
+#: src/features/analytics/Support.tsx
+msgid "Support numbers can only be filtered by page and host. The other filters are left out here."
+msgstr "ஆதரவு எண்களைப் பக்கம் மற்றும் ஹோஸ்ட் மூலம் மட்டுமே வடிகட்ட முடியும். மற்ற வடிப்பான்கள் இங்கே விடப்பட்டுள்ளன."
+
+#: src/features/analytics/text.ts
+msgid "Tablet"
+msgstr "டேப்லெட்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Taken and stored. They show up in Realtime within a minute."
+msgstr "ஏற்கப்பட்டு சேமிக்கப்பட்டது. அவை ஒரு நிமிடத்தில் நிகழ்நேரத்தில் தெரியும்."
+
+#: src/features/analytics/Settings.tsx
+msgid "Test events"
+msgstr "சோதனை நிகழ்வுகள்"
+
+#: src/features/analytics/SharePage.tsx
+msgid "That password is not right."
+msgstr "அந்தக் கடவுச்சொல் சரியல்ல."
+
+#: src/features/analytics/Funnels.tsx
+msgid "The consented counts follow visitors with a persistent id from one visit and day to the next, so a step reached on a later day still counts."
+msgstr "ஒப்புதல் எண்ணிக்கைகள் நிலையான ID உள்ள பார்வையாளர்களை ஒரு வருகை, நாளிலிருந்து அடுத்ததுக்குப் பின்தொடரும்; எனவே பிந்தைய நாளில் எட்டிய படியும் எண்ணப்படும்."
+
+#: src/features/analytics/Settings.tsx
+msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
+msgstr "தற்போதைய விசை 24 மணி நேரம் தொடர்ந்து வேலை செய்யும்; எனவே நிகழ்வுகளை இழக்காமல் உங்கள் பக்கங்களைப் புதுப்பிக்கலாம். அந்த நேரத்தில் மற்றொரு விசையை உருவாக்கினால் பழையது உடனே முடியும்."
+
+#: src/features/analytics/text.ts
+msgid "The deepest point reached on the page, per view."
+msgstr "பக்கத்தில் எட்டிய ஆழமான புள்ளி, பார்வைக்கு."
+
+#: src/features/analytics/Exports.tsx
+msgid "The export failed on the server."
+msgstr "சேவையகத்தில் ஏற்றுமதி தோல்வியடைந்தது."
+
+#: src/features/analytics/Exports.tsx
+msgid "The file would be larger than 1 GiB. Export a shorter range."
+msgstr "கோப்பு 1 GiB-ஐ விடப் பெரிதாக இருக்கும். குறுகிய வரம்பை ஏற்றுமதி செய்யுங்கள்."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "The first event arrived at {at}."
+msgstr "முதல் நிகழ்வு {at} வந்தது."
+
+#: src/features/analytics/Goals.tsx
+msgid "The goal reports the revenue its events carry, per currency."
+msgstr "இலக்கு அதன் நிகழ்வுகள் கொண்டுள்ள வருவாயை, நாணயம் வாரியாகத் தெரிவிக்கும்."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key is public, like a chat key: every page carries it, and it only works on the property’s domains."
+msgstr "விசை அரட்டை விசையைப் போல பொதுவானது: ஒவ்வொரு பக்கமும் அதைக் கொண்டிருக்கும், அது சொத்தின் டொமைன்களில் மட்டுமே வேலை செய்யும்."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key stops working at once, and all visits, events and totals are deleted. This cannot be undone."
+msgstr "விசை உடனே வேலை செய்வதை நிறுத்தும், அனைத்து வருகைகள், நிகழ்வுகள், மொத்தங்களும் நீக்கப்படும். இதை மீட்க முடியாது."
+
+#: src/features/analytics/Settings.tsx
+msgid "The last 30 days"
+msgstr "கடந்த 30 நாட்கள்"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and leaves the list."
+msgstr "இணைப்பு உடனே வேலை செய்வதை நிறுத்தி, பட்டியலிலிருந்து போய்விடும்."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and stays in the list."
+msgstr "இணைப்பு உடனே வேலை செய்வதை நிறுத்தி, பட்டியலில் இருக்கும்."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked."
+msgstr "இணைப்பு {timezone}-இல் இந்த நாளின் முடிவில் வேலை செய்வதை நிறுத்தும். திரும்பப் பெறும் வரை வைத்திருக்கக் காலியாக விடுங்கள்."
+
+#: src/features/analytics/Install.tsx
+msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
+msgstr "தொகுதி கிளையன்ட் செருகுநிரலையும் useYuvaAnalytics() composable-ஐயும் சேர்க்கும். NUXT_PUBLIC_YUVA_ANALYTICS_KEY இயக்க நேரத்தில் விசையை மேலெழுதும்."
+
+#: src/features/analytics/Settings.tsx
+msgid "The name does not match. Type it exactly as shown."
+msgstr "பெயர் பொருந்தவில்லை. காட்டியபடியே சரியாகத் தட்டச்சு செய்யுங்கள்."
+
+#: src/features/analytics/Goals.tsx
+msgid "The name given to track(), or outbound_click, file_download, not_found, chat_open."
+msgstr "track()-க்குத் தந்த பெயர், அல்லது outbound_click, file_download, not_found, chat_open."
+
+#: src/features/analytics/Settings.tsx
+msgid "The previous key keeps working until {at}. Update every page and app before then."
+msgstr "முந்தைய விசை {at} வரை தொடர்ந்து வேலை செய்யும். அதற்குள் ஒவ்வொரு பக்கத்தையும் ஆப்பையும் புதுப்பியுங்கள்."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "The properties of your inboxes show up here once an owner or admin adds them."
+msgstr "உங்கள் இன்பாக்ஸ்களின் சொத்துகள், உரிமையாளர் அல்லது நிர்வாகி சேர்த்ததும் இங்கே தோன்றும்."
+
+#: src/features/analytics/Exports.tsx
+msgid "The query could not be run."
+msgstr "வினவலை இயக்க முடியவில்லை."
+
+#: src/features/analytics/Exports.tsx
+msgid "The range is outside the detailed records."
+msgstr "வரம்பு விரிவான பதிவுகளுக்கு வெளியே உள்ளது."
+
+#: src/features/analytics/SharePage.tsx
+msgid "The report could not be loaded"
+msgstr "அறிக்கையை ஏற்ற முடியவில்லை"
+
+#: src/features/analytics/Settings.tsx
+msgid "The server’s own database"
+msgstr "சேவையகத்தின் சொந்தத் தரவுத்தளம்"
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need detailed records that are no longer kept for this range."
+msgstr "இந்த வடிப்பான்களுக்கு விரிவான பதிவுகள் தேவை; அவை இந்த வரம்புக்கு இனி வைக்கப்படுவதில்லை."
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need the detailed records, which are kept since {day}. Earlier days only have totals per page, source, place and device."
+msgstr "இந்த வடிப்பான்களுக்கு விரிவான பதிவுகள் தேவை; அவை {day} முதல் வைக்கப்படுகின்றன. அதற்கு முந்தைய நாட்களுக்குப் பக்கம், மூலம், இடம், சாதனம் வாரியாக மொத்தங்கள் மட்டுமே உள்ளன."
+
+#: src/features/analytics/Settings.tsx
+msgid "This cannot be undone."
+msgstr "இதை மீட்க முடியாது."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal has numbers from {since} on. Days before that show none."
+msgstr "இந்த இலக்குக்கு {since} முதல் எண்கள் உள்ளன. அதற்கு முந்தைய நாட்கள் எதுவும் காட்டாது."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
+msgstr "இந்த இலக்கு ஒரு புனலின் படி. முதலில் அதைப் புனலிலிருந்து எடுங்கள், அல்லது புனலை நீக்குங்கள்."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This link is not available"
+msgstr "இந்த இணைப்பு கிடைக்கவில்லை"
+
+#: src/features/analytics/text.ts
+msgid "This month"
+msgstr "இந்த மாதம்"
+
+#: src/features/analytics/Funnels.tsx
+msgid "This property already has a funnel with this name."
+msgstr "இந்தச் சொத்தில் இந்தப் பெயரில் புனல் ஏற்கெனவே உள்ளது."
+
+#: src/features/analytics/Goals.tsx
+msgid "This property already has a goal with this name."
+msgstr "இந்தச் சொத்தில் இந்தப் பெயரில் இலக்கு ஏற்கெனவே உள்ளது."
+
+#: src/features/analytics/Controls.tsx
+msgid "This property already has a segment with this name."
+msgstr "இந்தச் சொத்தில் இந்தப் பெயரில் பிரிவு ஏற்கெனவே உள்ளது."
+
+#: src/features/analytics/Exports.tsx
+msgid "This range cannot be exported. Pick a shorter one, or one inside the detailed records."
+msgstr "இந்த வரம்பை ஏற்றுமதி செய்ய முடியாது. குறுகியதை, அல்லது விரிவான பதிவுகளுக்குள் உள்ளதைத் தேர்ந்தெடுங்கள்."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This report has a password"
+msgstr "இந்த அறிக்கைக்குக் கடவுச்சொல் உள்ளது"
+
+#: src/features/analytics/Support.tsx
+msgid "This workspace has no inbox yet."
+msgstr "இந்தப் பணியிடத்துக்கு இன்னும் இன்பாக்ஸ் இல்லை."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
+msgstr "இந்தப் பணியிடம் இந்த மாதத்துக்கான {limit} பகுப்பாய்வு நிகழ்வுகளை எட்டியது. மாதம் முடியும் வரை புதிய நிகழ்வுகள் கைவிடப்படும்."
+
+#: src/features/analytics/text.ts
+msgid "This year"
+msgstr "இந்த ஆண்டு"
+
+#: src/features/analytics/Exports.tsx
+msgid "Three exports are already running in this workspace. Try again when one finishes."
+msgstr "இந்தப் பணியிடத்தில் மூன்று ஏற்றுமதிகள் ஏற்கெனவே ஓடுகின்றன. ஒன்று முடிந்ததும் மீண்டும் முயலுங்கள்."
+
+#: src/features/analytics/text.ts
+msgid "Time from the first to the last event of a visit, on average. Bounces count as zero."
+msgstr "ஒரு வருகையின் முதல் முதல் கடைசி நிகழ்வு வரையிலான சராசரி நேரம். திரும்புதல்கள் பூஜ்யமாக எண்ணப்படும்."
+
+#: src/features/analytics/text.ts
+msgid "Time on page"
+msgstr "பக்கத்தில் நேரம்"
+
+#: src/features/analytics/text.ts
+msgid "Time the page was visible and in focus, per view."
+msgstr "பார்வைக்கு, பக்கம் தெரிந்து கவனத்தில் இருந்த நேரம்."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Time zone"
+msgstr "நேர மண்டலம்"
+
+#: src/features/analytics/text.ts
+msgid "Times the goal was reached, also several times by one visitor."
+msgstr "இலக்கு எட்டப்பட்ட முறைகள், ஒரே பார்வையாளரால் பலமுறை கூட."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated helpful."
+msgstr "பக்கம் உதவியது என மதிப்பிடப்பட்ட முறைகள்."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated not helpful."
+msgstr "பக்கம் உதவவில்லை என மதிப்பிடப்பட்ட முறைகள்."
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "To"
+msgstr "To"
+
+#: src/features/analytics/text.ts
+msgid "Today"
+msgstr "இன்று"
+
+#: src/features/analytics/Settings.tsx
+msgid "Today: {todayCounted} counted, {todayDropped} dropped"
+msgstr "இன்று: {todayCounted} எண்ணப்பட்டன, {todayDropped} கைவிடப்பட்டன"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Token"
+msgstr "டோக்கன்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Too late"
+msgstr "மிகத் தாமதம்"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many requests from your network. Wait a minute and reload the page."
+msgstr "உங்கள் நெட்வொர்க்கிலிருந்து மிக அதிகக் கோரிக்கைகள். ஒரு நிமிடம் காத்திருந்து பக்கத்தை மீண்டும் ஏற்றுங்கள்."
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many tries. Wait a minute and try again."
+msgstr "மிக அதிக முயற்சிகள். ஒரு நிமிடம் காத்திருந்து மீண்டும் முயலுங்கள்."
+
+#: src/features/analytics/text.ts
+msgid "Top pages"
+msgstr "முதன்மைப் பக்கங்கள்"
+
+#: src/features/analytics/text.ts
+msgid "Top pages and screens"
+msgstr "முதன்மைப் பக்கங்களும் திரைகளும்"
+
+#: src/features/analytics/text.ts
+msgid "Top screens"
+msgstr "முதன்மைத் திரைகள்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracked props"
+msgstr "கண்காணிக்கும் சார்புகள்"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracking"
+msgstr "கண்காணிப்பு"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic drop"
+msgstr "போக்குவரத்து வீழ்ச்சி"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic spike"
+msgstr "போக்குவரத்து உயர்வு"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Try again"
+msgstr "மீண்டும் முயல்"
+
+#: src/features/analytics/Install.tsx
+msgid "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
+msgstr "முதலில் பொது அமைப்புகளில் Platforms-இன் கீழ் {name}-ஐ இயக்குங்கள். அதுவரை சேவையகம் ஆப்பின் நிகழ்வுகளை மறுக்கும்."
+
+#: src/features/analytics/Retention.tsx
+msgid "Turn on the persistent id in the consent features, then call yuva.consent with persistent set to true."
+msgstr "ஒப்புதல் அம்சங்களில் நிலையான ID-ஐ இயக்கி, பிறகு persistent true உடன் yuva.consent-ஐ அழையுங்கள்."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Two to eight goals, in the order visitors reach them within one visit."
+msgstr "இரண்டு முதல் எட்டு இலக்குகள், பார்வையாளர்கள் ஒரு வருகைக்குள் அவற்றை அடையும் வரிசையில்."
+
+#: src/features/analytics/Settings.tsx
+msgid "Type the property’s name to delete it and all its data."
+msgstr "சொத்தையும் அதன் அனைத்துத் தரவையும் நீக்க அதன் பெயரைத் தட்டச்சு செய்யுங்கள்."
+
+#: src/features/analytics/text.ts
+msgid "Unknown"
+msgstr "அறியப்படாதது"
+
+#: src/features/analytics/Install.tsx
+msgid "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
+msgstr "ஒரு கோரிக்கைக்கு 100 நிகழ்வுகள் வரை, ஒவ்வொன்றும் பார்வையாளரின் IP முகவரி மற்றும் பயனர் முகவர் அல்லது உங்கள் சொந்த visitor_key உடன். இரண்டும் சேமிக்கப்படாது. செல்லாதவை எனக் கைவிடப்பட்ட நிகழ்வுகள் errors-இல் அவற்றின் நிலையுடன் திரும்பும்; என்ன வந்தது என Test events-இன் கீழ் பாருங்கள்."
+
+#: src/features/analytics/text.ts
+msgid "UTM campaign"
+msgstr "UTM பிரசாரம்"
+
+#: src/features/analytics/text.ts
+msgid "UTM content"
+msgstr "UTM உள்ளடக்கம்"
+
+#: src/features/analytics/text.ts
+msgid "UTM medium"
+msgstr "UTM ஊடகம்"
+
+#: src/features/analytics/text.ts
+msgid "UTM source"
+msgstr "UTM மூலம்"
+
+#: src/features/analytics/text.ts
+msgid "UTM term"
+msgstr "UTM சொல்"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Views"
+msgstr "பார்வைகள்"
+
+#: src/features/analytics/Goals.tsx
+msgid "Views a page"
+msgstr "ஒரு பக்கத்தைப் பார்க்கிறார்"
+
+#: src/features/analytics/text.ts
+msgid "Views divided by visits."
+msgstr "பார்வைகள் வருகைகளால் வகுக்கப்பட்டவை."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views fell to {now} in two hours, against {usual} usually."
+msgstr "பார்வைகள் இரண்டு மணி நேரத்தில் {now}-க்குக் குறைந்தன, வழக்கமாக {usual}."
+
+#: src/features/analytics/text.ts
+msgid "Views in the last 30 minutes"
+msgstr "கடந்த 30 நிமிடங்களில் பார்வைகள்"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at least three times the same hours of the week before."
+msgstr "கடந்த இரண்டு மணி நேரப் பார்வைகள் முந்தைய வாரத்தின் அதே மணி நேரங்களைவிடக் குறைந்தது மூன்று மடங்கு."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at most half the same hours of the week before."
+msgstr "கடந்த இரண்டு மணி நேரப் பார்வைகள் முந்தைய வாரத்தின் அதே மணி நேரங்களில் அதிகபட்சம் பாதி."
+
+#: src/features/analytics/text.ts
+msgid "Views per minute"
+msgstr "நிமிடத்துக்குப் பார்வைகள்"
+
+#: src/features/analytics/text.ts
+msgid "Views per visit"
+msgstr "வருகைக்குப் பார்வைகள்"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views rose to {now} in two hours, against {usual} usually."
+msgstr "பார்வைகள் இரண்டு மணி நேரத்தில் {now}-க்கு உயர்ந்தன, வழக்கமாக {usual}."
+
+#: src/features/analytics/text.ts
+msgid "Visit duration"
+msgstr "வருகை கால அளவு"
+
+#: src/features/analytics/Retention.tsx
+#: src/features/analytics/text.ts
+msgid "Visitors"
+msgstr "பார்வையாளர்கள்"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Visitors in the last 30 minutes"
+msgstr "கடந்த 30 நிமிடங்களில் பார்வையாளர்கள்"
+
+#: src/features/analytics/Retention.tsx
+msgid "Visitors who came back"
+msgstr "திரும்பி வந்த பார்வையாளர்கள்"
+
+#: src/features/analytics/text.ts
+msgid "Visitors who reached the goal, per day, added up over the days of the range."
+msgstr "இலக்கை எட்டிய பார்வையாளர்கள், நாளுக்கு, வரம்பின் நாட்களில் கூட்டப்பட்டவை."
+
+#: src/features/analytics/Settings.tsx
+msgid "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
+msgstr "Do Not Track அல்லது Global Privacy Control உள்ள பார்வையாளர்கள் எதையும் அனுப்பாது, எனவே அவர்கள் இங்கேயும் எண்ணப்படுவதில்லை. கைவிடப்பட்ட நிகழ்வைப் பற்றி அதன் எண்ணிக்கையைத் தவிர எதுவும் வைக்கப்படாது."
+
+#: src/features/analytics/text.ts
+msgid "Visits"
+msgstr "வருகைகள்"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page or screen view and nothing else."
+msgstr "ஒரு பக்கம் அல்லது திரைப் பார்வை மட்டும் உள்ள வருகைகள்."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page view and nothing else."
+msgstr "ஒரு பக்கப் பார்வை மட்டும் உள்ள வருகைகள்."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one screen view and nothing else."
+msgstr "ஒரு திரைப் பார்வை மட்டும் உள்ள வருகைகள்."
+
+#: src/features/analytics/Install.tsx
+msgid "Vue, Astro, other"
+msgstr "Vue, Astro, பிற"
+
+#: src/features/analytics/Exports.tsx
+msgid "Waiting"
+msgstr "காத்திருக்கிறது"
+
+#: src/features/analytics/Settings.tsx
+msgid "Waiting for events since {at}."
+msgstr "{at} முதல் நிகழ்வுகளுக்காகக் காத்திருக்கிறது."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Waiting for the first event"
+msgstr "முதல் நிகழ்வுக்காகக் காத்திருக்கிறது"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Watch it live"
+msgstr "நேரலையில் பாருங்கள்"
+
+#: src/features/analytics/text.ts
+msgid "Web"
+msgstr "இணையம்"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Website or app"
+msgstr "இணையதளம் அல்லது ஆப்"
+
+#: src/features/analytics/Retention.tsx
+msgid "Week {period}"
+msgstr "வாரம் {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Weekly"
+msgstr "வாராந்திரம்"
+
+#: src/features/analytics/Retention.tsx
+msgid "Weeks"
+msgstr "வாரங்கள்"
+
+#: src/features/analytics/Insights.tsx
+msgid "What changed"
+msgstr "என்ன மாறியது"
+
+#: src/features/analytics/Support.tsx
+msgid "What stands out"
+msgstr "எது தனித்து நிற்கிறது"
+
+#: src/features/analytics/text.ts
+msgid "What the goal's events carried, per currency. Currencies are never converted or added up."
+msgstr "இலக்கின் நிகழ்வுகள் கொண்டிருந்தது, நாணயம் வாரியாக. நாணயங்கள் ஒருபோதும் மாற்றப்படவோ கூட்டப்படவோ மாட்டா."
+
+#: src/features/analytics/Exports.tsx
+msgid "What to export"
+msgstr "எதை ஏற்றுமதி செய்வது"
+
+#: src/features/analytics/Goals.tsx
+msgid "Where conversions come from"
+msgstr "மாற்றங்கள் எங்கிருந்து வருகின்றன"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Where the property’s day starts and ends."
+msgstr "சொத்தின் நாள் எங்கே தொடங்கி முடிகிறது."
+
+#: src/features/analytics/Install.tsx
+msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."
+msgstr "data-consent=\"required\" உடன், உங்கள் ஒப்புதல் கருவி பார்வையாளர் ஒப்புக்கொண்டார் எனச் சொல்லும் வரை ஸ்கிரிப்ட் எதையும் அனுப்பாது. பொது அமைப்புகளில் Collection-ஐயும் “Only with consent” என அமையுங்கள்; எனவே சேவையகம் அது இல்லாத நிகழ்வுகளை மறுக்கும்."
+
+#: src/features/analytics/Settings.tsx
+msgid "With yuva.consent and persistent set to true, the device keeps a random id for 13 months. The visitor counts once over several days, is told apart as new or returning, fills retention and is followed across days in funnels. Never under Do Not Track or Global Privacy Control."
+msgstr "yuva.consent மற்றும் persistent true உடன், சாதனம் 13 மாதங்களுக்கு ஒரு சீரற்ற ID-ஐ வைத்திருக்கும். பார்வையாளர் பல நாட்களில் ஒருமுறை எண்ணப்படுவார், புதியவர் அல்லது திரும்பி வருபவர் எனப் பிரித்தறியப்படுவார், தக்கவைப்பை நிரப்புவார், புனல்களில் நாட்கள் முழுவதும் பின்தொடரப்படுவார். Do Not Track அல்லது Global Privacy Control இருந்தால் ஒருபோதும் இல்லை."
+
+#: src/features/analytics/text.ts
+msgid "Without consent"
+msgstr "ஒப்புதல் இல்லாமல்"
+
+#: src/features/analytics/Retention.tsx
+msgid "Without cookies a visitor is new every day, so nobody can be followed from one day to the next. Only visitors who agree to a persistent id in your consent tool show up here."
+msgstr "குக்கீகள் இல்லாமல் பார்வையாளர் ஒவ்வொரு நாளும் புதியவர்; எனவே யாரையும் ஒரு நாளிலிருந்து அடுத்த நாளுக்குப் பின்தொடர முடியாது. உங்கள் ஒப்புதல் கருவியில் நிலையான ID-க்கு ஒப்புக்கொள்ளும் பார்வையாளர்கள் மட்டுமே இங்கே தோன்றுவர்."
+
+#: src/features/analytics/Settings.tsx
+msgid "Without cookies, for everyone"
+msgstr "குக்கீகள் இல்லாமல், அனைவருக்கும்"
+
+#: src/features/analytics/text.ts
+msgid "Yesterday"
+msgstr "நேற்று"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Your access ended. Enter the password again to keep reading."
+msgstr "உங்கள் அணுகல் முடிந்தது. தொடர்ந்து படிக்க கடவுச்சொல்லை மீண்டும் உள்ளிடுங்கள்."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Your new share link"
+msgstr "உங்கள் புதிய பகிர்வு இணைப்பு"
+
+#: src/features/analytics/Settings.tsx
+msgid "yuva.identify with a token from your backend, signed like a chat session, links the visitor’s visits to their contact. They show on the contact’s page under Recent visits. Forged or reused tokens are ignored."
+msgstr "உங்கள் பின்தளத்தின் டோக்கனுடன் yuva.identify, அரட்டை அமர்வைப் போலக் கையொப்பமிட்டது, பார்வையாளரின் வருகைகளை அவர்களின் தொடர்புடன் இணைக்கும். அவை தொடர்பின் பக்கத்தில் Recent visits-இன் கீழ் தெரியும். போலியான அல்லது மீண்டும் பயன்படுத்தப்பட்ட டோக்கன்கள் புறக்கணிக்கப்படும்."

@@ -45,6 +45,8 @@ function emojibase(): Plugin {
   }
 }
 
+const lazyCatalog = /\/locales\/(?!en\/|tr\/)[^/]+\/[a-z]+\.po$/
+
 function serviceWorker(): Plugin {
   let publicDir = ""
   return {
@@ -61,6 +63,10 @@ function serviceWorker(): Plugin {
         const files: string[] = []
         for (const [name, chunk] of Object.entries(bundle)) {
           if (name.endsWith(".map") || name.startsWith(`${EMOJIBASE}/`)) continue
+          if (chunk.type === "chunk" && lazyCatalog.test(chunk.facadeModuleId ?? "")) {
+            hash.update(name)
+            continue
+          }
           files.push(`/${name}`)
           hash.update(name)
           if (chunk.type === "asset") hash.update(chunk.source)

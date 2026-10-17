@@ -1,0 +1,1333 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 10:11+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: zh-Hans\n"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "{name} (copy)"
+msgstr "{name}(副本)"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "{used} of {limit}"
+msgstr "{used} / {limit}"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "{who} saved it {when}, after you started editing. Your changes are kept on this device until you choose."
+msgstr "{who} 在你开始编辑之后的 {when} 保存了它。你的更改会保留在此设备上,直到你做出选择。"
+
+#: src/features/designs/designer/controls.tsx
+msgid "A button needs a link."
+msgstr "按钮需要链接。"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "A clear heading"
+msgstr "清晰的标题"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "A design can hold at most 200 blocks."
+msgstr "一个设计最多可包含 200 个区块。"
+
+#: src/features/designs/DesignsList.tsx
+msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
+msgstr "设计是邮件的外观:从模板开始,然后用于你的群发。"
+
+#: src/features/designs/designer/editor.tsx
+msgid "A field without a fallback can leave a gap, like “Hi ,”."
+msgstr "没有备用值的字段可能留下空缺,如“你好 ,”。"
+
+#: src/features/designs/text.ts
+msgid "A group of blocks on its own background"
+msgstr "在自己的背景上的一组区块"
+
+#: src/features/designs/text.ts
+msgid "A link that looks like a button"
+msgstr "看起来像按钮的链接"
+
+#: src/features/designs/text.ts
+msgid "A merge field has no fallback, so it can be empty for some people."
+msgstr "合并字段没有备用值,因此对某些人可能为空。"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "A newer version of Yuva made this design. You can look at it here, but not change it."
+msgstr "此设计由较新版本的 Yuva 创建。你可以在这里查看,但不能更改。"
+
+#: src/features/designs/text.ts
+msgid "A thin line between parts"
+msgstr "各部分之间的细线"
+
+#: src/features/designs/text.ts
+msgid "A title in three sizes"
+msgstr "三种大小的标题"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "A version is kept at most every ten minutes while you edit, when you save by hand, when you restore one and when someone else's save wins a conflict. The newest 50 stay."
+msgstr "编辑时最多每十分钟保留一个版本,手动保存、恢复版本以及他人的保存在冲突中胜出时也会保留。最新的 50 个会保留下来。"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Add"
+msgstr "添加"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Add a block"
+msgstr "添加区块"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Add a link"
+msgstr "添加链接"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Add your own lines above the required footer"
+msgstr "在必需的页脚上方添加你自己的内容"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Added to every mail: your legal name and postal address, why the person gets the mail, and the unsubscribe and preference links."
+msgstr "添加到每封邮件:你的法定名称和邮寄地址、对方收到邮件的原因,以及退订和偏好设置链接。"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Address"
+msgstr "地址"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Alignment"
+msgstr "对齐"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Also shown when a mail app blocks images."
+msgstr "在邮件应用屏蔽图片时也会显示。"
+
+#: src/features/designs/text.ts
+msgid "An uploaded picture, with a link if you like"
+msgstr "上传的图片,可选带链接"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Animated GIFs can be at most 1,200 pixels wide."
+msgstr "动画 GIF 最宽 1,200 像素。"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Announcement"
+msgstr "公告"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Apply"
+msgstr "应用"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Archive"
+msgstr "归档"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Archive this design?"
+msgstr "归档此设计?"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Attribute key"
+msgstr "属性键"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Automatic"
+msgstr "自动"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Back to designs"
+msgstr "返回设计列表"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Background"
+msgstr "背景"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Block settings"
+msgstr "区块设置"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Panels.tsx
+msgid "Blocks"
+msgstr "区块"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Blocks and layers"
+msgstr "区块和图层"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Bold"
+msgstr "粗体"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Bottom"
+msgstr "下"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Brand"
+msgstr "品牌"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Build it yourself from blocks"
+msgstr "用区块自己搭建"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Bulleted list"
+msgstr "项目符号列表"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Button"
+msgstr "按钮"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Button colour"
+msgstr "按钮颜色"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Button text"
+msgstr "按钮文字"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Buttons"
+msgstr "按钮"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Cancel"
+msgstr "取消"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Centre"
+msgstr "居中"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Changed elsewhere"
+msgstr "已在别处更改"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Checks"
+msgstr "检查"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Choose an image"
+msgstr "选择图片"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Clear formatting"
+msgstr "清除格式"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Close"
+msgstr "关闭"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Code"
+msgstr "代码"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Colour"
+msgstr "颜色"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Colours"
+msgstr "颜色"
+
+#. placeholder {0}: n(i)
+#: src/features/designs/designer/Inspector.tsx
+msgid "Column {0}"
+msgstr "第 {0} 列"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Column {n} · {width}%"
+msgstr "第 {n} 列 · {width}%"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Columns"
+msgstr "列"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Contact attribute"
+msgstr "联系人属性"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Content background"
+msgstr "内容背景"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Copy made"
+msgstr "已创建副本"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Corner radius"
+msgstr "圆角半径"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Create and edit"
+msgstr "创建和编辑"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Current"
+msgstr "当前"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Dark"
+msgstr "深色"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Dark mode"
+msgstr "深色模式"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Decorative"
+msgstr "装饰性"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Default"
+msgstr "默认"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Default spacing"
+msgstr "默认间距"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/ImageLibrary.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Delete"
+msgstr "删除"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Delete {name}"
+msgstr "删除 {name}"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Delete anyway"
+msgstr "仍然删除"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Delete this image?"
+msgstr "删除此图片?"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Describe the image, or mark it as decorative."
+msgstr "请描述该图片,或将其标记为装饰性。"
+
+#: src/features/designs/text.ts
+msgid "Describe this image for people who cannot see it, or mark it as decorative."
+msgstr "请为看不到图片的人描述此图片,或将其标记为装饰性。"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Description for screen readers"
+msgstr "屏幕阅读器描述"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Design"
+msgstr "设计"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Design archived"
+msgstr "设计已归档"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Design name"
+msgstr "设计名称"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Design settings"
+msgstr "设计设置"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Designer"
+msgstr "设计器"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Designs"
+msgstr "设计"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Desktop"
+msgstr "桌面设备"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Digest"
+msgstr "摘要"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Direction"
+msgstr "方向"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Divider"
+msgstr "分隔线"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Done"
+msgstr "完成"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Download JSON"
+msgstr "下载 JSON"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Download my version as JSON"
+msgstr "以 JSON 下载我的版本"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Panels.tsx
+msgid "Drag {kind}"
+msgstr "拖动{kind}"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Drag a block here, or pick one from the list."
+msgstr "把区块拖到这里,或从列表中选一个。"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Drag a block onto the mail, or press Enter to add it after the selected block."
+msgstr "把区块拖到邮件上,或按 Enter 将其添加到所选区块之后。"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Drop blocks here"
+msgstr "把区块拖放到这里"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Duplicate"
+msgstr "复制"
+
+#: src/features/designs/text.ts
+msgid "E-mail address"
+msgstr "电子邮件地址"
+
+#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "E-mail designs"
+msgstr "邮件设计"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Easy to read: {value}:1"
+msgstr "易读:{value}:1"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Edit"
+msgstr "编辑"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Empty"
+msgstr "空"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Empty page"
+msgstr "空白页面"
+
+#: src/features/designs/text.ts
+msgid "Empty room between blocks"
+msgstr "区块之间的空白"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "End"
+msgstr "末端"
+
+#: src/features/designs/text.ts
+msgid "English"
+msgstr "英语"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Event"
+msgstr "事件"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Everywhere"
+msgstr "所有位置"
+
+#: src/features/designs/text.ts
+msgid "First name"
+msgstr "名"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Fonts already on people’s devices; mails load no web fonts."
+msgstr "人们设备上已有的字体;邮件不会加载网页字体。"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Footer text"
+msgstr "页脚文字"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "For dark logos on a transparent background."
+msgstr "适用于透明背景上的深色标志。"
+
+#: src/features/designs/text.ts
+msgid "Full name"
+msgstr "全名"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Full width"
+msgstr "全宽"
+
+#: src/features/designs/text.ts
+msgid "Geometric"
+msgstr "几何体"
+
+#: src/features/designs/text.ts
+msgid "German"
+msgstr "德语"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Gmail cuts mails off at about 102 KB of HTML, hiding the unsubscribe link."
+msgstr "Gmail 会在 HTML 约 102 KB 处截断邮件,从而隐藏退订链接。"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Hard to read: {value}:1, aim for 4.5:1"
+msgstr "难以阅读:{value}:1,目标为 4.5:1"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Has problems"
+msgstr "有问题"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Has warnings"
+msgstr "有警告"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Heading"
+msgstr "标题"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Heading font"
+msgstr "标题字体"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Height"
+msgstr "高度"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Hidden on phones"
+msgstr "在手机上隐藏"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Hidden on wide screens"
+msgstr "在宽屏上隐藏"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Hide dark colours"
+msgstr "隐藏深色"
+
+#: src/features/designs/text.ts
+msgid "Humanist"
+msgstr "人文体"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Icon colour"
+msgstr "图标颜色"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Icons"
+msgstr "图标"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Image"
+msgstr "图片"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Images"
+msgstr "图片"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Images can be at most 10 MB."
+msgstr "图片最大 10 MB。"
+
+#: src/features/designs/designer/ThemePanel.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Inbox"
+msgstr "收件箱"
+
+#: src/features/designs/text.ts
+msgid "Inbox name"
+msgstr "收件箱名称"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Insert"
+msgstr "插入"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "It adds nothing to the message, so screen readers skip it."
+msgstr "它不会给邮件增添任何内容,因此屏幕阅读器会跳过它。"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "It leaves the list of designs. Its versions are kept, and saving it again brings it back."
+msgstr "它会从设计列表中消失。其版本会保留,再次保存即可恢复。"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "It was saved {when} in another tab or by someone else, after you started editing. Your changes are kept on this device until you choose."
+msgstr "它在你开始编辑之后的 {when} 在另一个标签页或由他人保存。你的更改会保留在此设备上,直到你做出选择。"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Italic"
+msgstr "斜体"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Its address stops working at once."
+msgstr "它的地址会立即失效。"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Its images are copied into your workspace’s images. You can change everything after."
+msgstr "它的图片会复制到你工作区的图片中。之后你可以更改一切。"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Its sender details fill the required footer."
+msgstr "它的发件人信息会填入必需的页脚。"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Keep mine"
+msgstr "保留我的"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Kept from a conflict"
+msgstr "冲突时保留"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Keyboard shortcuts"
+msgstr "键盘快捷键"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Large"
+msgstr "大"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Panels.tsx
+msgid "Layers"
+msgstr "图层"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Layout"
+msgstr "布局"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Left"
+msgstr "左"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Left panel"
+msgstr "左侧面板"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Left to right"
+msgstr "从左到右"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Light"
+msgstr "浅色"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Light plate in dark mode"
+msgstr "深色模式下的浅色底板"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Lines"
+msgstr "线条"
+
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Link"
+msgstr "链接"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Link address"
+msgstr "链接地址"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Links"
+msgstr "链接"
+
+#: src/features/designs/designer/controls.tsx
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/text.ts
+msgid "Links start with https://, http://, mailto: or tel:."
+msgstr "链接以 https://、http://、mailto: 或 tel: 开头。"
+
+#: src/features/designs/text.ts
+msgid "Links to your profiles"
+msgstr "指向你个人主页的链接"
+
+#: src/features/designs/text.ts
+msgid "List name"
+msgstr "列表名称"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+#: src/features/designs/DesignsList.tsx
+msgid "Load more"
+msgstr "加载更多"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Load theirs"
+msgstr "加载对方的"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Loading the image…"
+msgstr "正在加载图片…"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Mail"
+msgstr "邮件"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Mail apps in dark mode get darker colours made from yours, with text kept easy to read. Set any of them yourself."
+msgstr "深色模式下的邮件应用会得到根据你的颜色生成的更深颜色,并保持文字易读。你也可以自己设置其中任何一个。"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Make a copy"
+msgstr "创建副本"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Make them all from the light colours"
+msgstr "全部根据浅色生成"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Medium"
+msgstr "中"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Merge field"
+msgstr "合并字段"
+
+#: src/features/designs/text.ts
+msgid "Merge fields can only go in the part of a link after the question mark."
+msgstr "合并字段只能放在链接中问号之后的部分。"
+
+#: src/features/designs/text.ts
+msgid "Monospace"
+msgstr "等宽"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "More actions"
+msgstr "更多操作"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Move down"
+msgstr "下移"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Move up"
+msgstr "上移"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Name"
+msgstr "名称"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Network"
+msgstr "网络"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "New blank design"
+msgstr "新建空白设计"
+
+#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "New design"
+msgstr "新建设计"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Newsletter"
+msgstr "新闻简报"
+
+#: src/features/designs/DesignsList.tsx
+msgid "No archived designs"
+msgstr "没有已归档的设计"
+
+#: src/features/designs/DesignsList.tsx
+msgid "No designs match."
+msgstr "没有匹配的设计。"
+
+#: src/features/designs/DesignsList.tsx
+msgid "No designs yet"
+msgstr "还没有设计"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "No images yet. Upload the first one."
+msgstr "还没有图片。请上传第一张。"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "No problems found."
+msgstr "没有发现问题。"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "No versions yet. One is kept after ten minutes of editing."
+msgstr "还没有版本。编辑十分钟后会保留一个。"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Not saved: fix the marked blocks"
+msgstr "未保存:请修复标记的区块"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Not saved. Try again"
+msgstr "未保存。请重试"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Number of columns"
+msgstr "列数"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Numbered list"
+msgstr "编号列表"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Offline, kept on this device"
+msgstr "离线,保存在此设备上"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Offline. Your changes are kept on this device and saved when you are back."
+msgstr "离线。你的更改保存在此设备上,恢复连接后会保存。"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Onboarding"
+msgstr "新手引导"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "One under the other on narrow screens."
+msgstr "在窄屏幕上上下堆叠。"
+
+#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Owners and admins make e-mail designs and send broadcasts."
+msgstr "所有者和管理员创建邮件设计并发送群发。"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Page background"
+msgstr "页面背景"
+
+#: src/features/designs/text.ts
+msgid "Paragraphs, lists and links"
+msgstr "段落、列表和链接"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Phone"
+msgstr "手机"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Phones"
+msgstr "手机"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Pick a colour"
+msgstr "选择颜色"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Pick a version to see it."
+msgstr "选择一个版本来查看。"
+
+#: src/features/designs/text.ts
+msgid "Pick an image from your library."
+msgstr "从你的图库中选择图片。"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "PNG, JPEG, GIF or WebP up to 10 MB. Uploads are made at most 1,200 pixels wide and lose their location and camera details. SVG files are not allowed."
+msgstr "PNG、JPEG、GIF 或 WebP,最大 10 MB。上传的图片最宽 1,200 像素,并会去除位置和相机信息。不允许 SVG 文件。"
+
+#: src/features/designs/text.ts
+msgid "Preferences link"
+msgstr "偏好设置链接"
+
+#: src/features/designs/designer/Preview.tsx
+#: src/features/designs/designer/Versions.tsx
+msgid "Preview"
+msgstr "预览"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Preview of {title}"
+msgstr "{title} 的预览"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Preview text"
+msgstr "预览文字"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Product"
+msgstr "产品"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Put each person’s own details into the mail."
+msgstr "把每个人自己的信息放进邮件。"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Read more"
+msgstr "阅读更多"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Redo"
+msgstr "重做"
+
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Remove"
+msgstr "移除"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Remove link"
+msgstr "移除链接"
+
+#: src/features/designs/designer/Preview.tsx
+msgid "Rendering the mail…"
+msgstr "正在渲染邮件…"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Replace"
+msgstr "替换"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Restore"
+msgstr "恢复"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Restored"
+msgstr "已恢复"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Restoring saves this version as the newest one. You can undo it."
+msgstr "恢复会把此版本保存为最新版本。你可以撤销。"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Right"
+msgstr "右"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Right to left"
+msgstr "从右到左"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Right to left for Arabic, Hebrew and Persian."
+msgstr "适用于阿拉伯语、希伯来语和波斯语的从右到左。"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Same as the text"
+msgstr "与文字相同"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Save mine as a copy"
+msgstr "将我的另存为副本"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Save now and keep a version"
+msgstr "立即保存并保留一个版本"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Save your version over theirs. Theirs is kept in Versions as “Kept from a conflict”."
+msgstr "用我的版本覆盖对方的版本。对方的会作为“冲突时保留”存放在“版本”中。"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Saved"
+msgstr "已保存"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Saved by hand"
+msgstr "手动保存"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Saved while editing"
+msgstr "编辑时保存"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Saved, with a version kept"
+msgstr "已保存,并保留了一个版本"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Saving…"
+msgstr "保存中…"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Scheduled to send"
+msgstr "已安排发送"
+
+#: src/features/designs/DesignsList.tsx
+msgid "Search designs"
+msgstr "搜索设计"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Secondary text"
+msgstr "次要文字"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Section"
+msgstr "版块"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Select a block to change it. These settings apply to the whole mail."
+msgstr "选择一个区块来更改它。这些设置适用于整封邮件。"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Sent as a test"
+msgstr "已作为测试发送"
+
+#: src/features/designs/text.ts
+msgid "Serif"
+msgstr "衬线"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Shape"
+msgstr "形状"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Show"
+msgstr "显示"
+
+#: src/features/designs/DesignsList.tsx
+msgid "Show archived designs"
+msgstr "显示已归档的设计"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Show as"
+msgstr "显示为"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Show dark colours"
+msgstr "显示深色"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Show on"
+msgstr "显示在"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Show their version. Undo brings yours back."
+msgstr "显示对方的版本。撤销可恢复你的版本。"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Shown after the subject in most inboxes. A broadcast can set its own."
+msgstr "在大多数收件箱中显示在主题之后。群发可以设置自己的。"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Size"
+msgstr "大小"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Small"
+msgstr "小"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Social links"
+msgstr "社交链接"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Some mail apps show every block anyway."
+msgstr "有些邮件应用仍会显示每个区块。"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Some text for this column."
+msgstr "这一列的一些文字。"
+
+#: src/features/designs/text.ts
+msgid "Some text is hard to read on its background, in the light or dark colours. Aim for 4.5:1."
+msgstr "有些文字在其背景上难以阅读,无论是浅色还是深色。目标是 4.5:1。"
+
+#: src/features/designs/text.ts
+msgid "Something required is empty."
+msgstr "有必填项为空。"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Space"
+msgstr "空白"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Space between"
+msgstr "间隔"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Stack on phones"
+msgstr "在手机上堆叠"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Start"
+msgstr "开始"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Start from a template or an empty page. Every design gets the footer the law asks for, and you can change everything else."
+msgstr "从模板或空白页面开始。每个设计都会带有法律要求的页脚,其他一切都可以更改。"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Start from an empty mail with simple colours."
+msgstr "从使用简单颜色的空白邮件开始。"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Strikethrough"
+msgstr "删除线"
+
+#: src/features/designs/text.ts
+msgid "System"
+msgstr "系统"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Take it out of these designs first, or archive them:"
+msgstr "请先把它从这些设计中移除,或将这些设计归档:"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Template language"
+msgstr "模板语言"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+#: src/features/designs/text.ts
+msgid "Text"
+msgstr "文本"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Text colour"
+msgstr "文字颜色"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Text font"
+msgstr "文字字体"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Text formatting"
+msgstr "文字格式"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Text in English"
+msgstr "英文文字"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Text size"
+msgstr "文字大小"
+
+#: src/features/designs/text.ts
+msgid "The column widths must add up to 100."
+msgstr "各列宽度之和必须为 100。"
+
+#: src/features/designs/text.ts
+msgid "The inbox has no legal name or postal address for the footer. Add them in the inbox settings before sending."
+msgstr "收件箱没有用于页脚的法定名称或邮寄地址。请在发送前在收件箱设置中添加。"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "The inbox’s sender details fill the footer every mail gets."
+msgstr "收件箱的发件人信息会填入每封邮件都带有的页脚。"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "The mail is empty. Add a block to start."
+msgstr "邮件是空的。添加一个区块开始吧。"
+
+#: src/features/designs/text.ts
+msgid "The mail is over 102 KB, so Gmail will cut it off and hide the unsubscribe link. Remove some blocks."
+msgstr "邮件超过 102 KB,Gmail 会截断它并隐藏退订链接。请删除一些区块。"
+
+#: src/features/designs/text.ts
+msgid "The mail is over 90 KB. Gmail cuts mails off at about 102 KB."
+msgstr "邮件超过 90 KB。Gmail 会在约 102 KB 处截断邮件。"
+
+#: src/features/designs/text.ts
+msgid "The text has formatting e-mails cannot keep. Clear its formatting and try again."
+msgstr "文字包含电子邮件无法保留的格式。请清除格式后重试。"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "The widths add up to {sum}, not 100."
+msgstr "宽度之和为 {sum},不是 100。"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "The workspace’s images take all the room this server allows. Delete images you no longer use."
+msgstr "工作区的图片占满了此服务器允许的全部空间。请删除不再使用的图片。"
+
+#: src/features/designs/text.ts
+msgid "There are too many items here."
+msgstr "这里的项目太多。"
+
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/text.ts
+msgid "There is no merge field called {field}."
+msgstr "没有名为 {field} 的合并字段。"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "These lines go above the footer every mail gets: the inbox’s legal name and postal address, why the person gets the mail, and the unsubscribe and preference links. Set the sender’s details in the inbox settings."
+msgstr "这些内容会放在每封邮件都带有的页脚上方:页脚包含收件箱的法定名称和邮寄地址、对方收到邮件的原因,以及退订和偏好设置链接。请在收件箱设置中设置发件人信息。"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Thickness"
+msgstr "粗细"
+
+#: src/features/designs/text.ts
+msgid "This block cannot sit inside this one."
+msgstr "此区块不能放在这个区块里。"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "This design changed somewhere else"
+msgstr "此设计在别处发生了更改"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This file type is not allowed. Use PNG, JPEG, GIF or WebP; SVG files can carry scripts, so they are refused."
+msgstr "不允许此文件类型。请使用 PNG、JPEG、GIF 或 WebP;SVG 文件可能携带脚本,因此被拒绝。"
+
+#: src/features/designs/text.ts
+msgid "This image block has no image yet."
+msgstr "此图片区块还没有图片。"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This image is in use"
+msgstr "此图片正在使用中"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This image is too large. Use one under 40 megapixels and 8,000 pixels on a side, and at most 4,000 pixels tall once it is 1,200 wide."
+msgstr "此图片太大。请使用小于 4000 万像素、每边不超过 8,000 像素、且宽度调整为 1,200 时高度不超过 4,000 像素的图片。"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This image went out in a broadcast. If you delete it, people who open that mail see a broken image."
+msgstr "此图片已用于某次群发。如果删除它,打开该邮件的人会看到一张损坏的图片。"
+
+#: src/features/designs/text.ts
+msgid "This is too long."
+msgstr "太长了。"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "This server does not have the template “{slug}”. It may need a newer Yuva."
+msgstr "此服务器没有模板“{slug}”。可能需要更新版本的 Yuva。"
+
+#: src/features/designs/text.ts
+msgid "This text uses a merge field that does not exist."
+msgstr "此文字使用了不存在的合并字段。"
+
+#: src/features/designs/text.ts
+msgid "This uses an image or link that belongs to another workspace."
+msgstr "这里使用了属于另一个工作区的图片或链接。"
+
+#: src/features/designs/text.ts
+msgid "This value is not valid."
+msgstr "此值无效。"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Three"
+msgstr "三列"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Top"
+msgstr "顶部"
+
+#: src/features/designs/text.ts
+msgid "Turkish"
+msgstr "土耳其语"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Two"
+msgstr "两列"
+
+#: src/features/designs/text.ts
+msgid "Two blocks have the same id."
+msgstr "有两个区块的 ID 相同。"
+
+#: src/features/designs/text.ts
+msgid "Two or three columns that stack on phones"
+msgstr "两列或三列,在手机上堆叠"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Type"
+msgstr "类型"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Underline"
+msgstr "下划线"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Undo"
+msgstr "撤销"
+
+#: src/features/designs/text.ts
+msgid "Unsubscribe link"
+msgstr "退订链接"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Untitled design"
+msgstr "未命名设计"
+
+#: src/features/designs/designer/Preview.tsx
+msgid "Updating…"
+msgstr "更新中…"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Upload images, or drop them here"
+msgstr "上传图片,或拖放到这里"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Uploading…"
+msgstr "上传中…"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Use “{title}”"
+msgstr "使用“{title}”"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Use the default"
+msgstr "使用默认值"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Version restored"
+msgstr "版本已恢复"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Versions.tsx
+msgid "Versions"
+msgstr "版本"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "View"
+msgstr "查看"
+
+#: src/features/designs/text.ts
+msgid "Website"
+msgstr "网站"
+
+#: src/features/designs/designer/editor.tsx
+msgid "When it is empty, write"
+msgstr "为空时,写"
+
+#: src/features/designs/designer/ThemePanel.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Whole workspace"
+msgstr "整个工作区"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Wide screens"
+msgstr "宽屏"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Width"
+msgstr "宽度"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Widths in percent"
+msgstr "宽度(百分比)"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Write a heading"
+msgstr "写一个标题"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Write something"
+msgstr "写点什么"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Write what you want to tell your readers."
+msgstr "写下你想告诉读者的话。"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "You can reply to this mail; a person reads every answer."
+msgstr "你可以回复这封邮件;每条回复都有人阅读。"
+
+#: src/features/designs/text.ts
+msgid "Your own lines above the required footer"
+msgstr "在必需的页脚上方放你自己的内容"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Your version becomes a new design; this one keeps theirs."
+msgstr "你的版本会成为新设计;此设计保留对方的版本。"

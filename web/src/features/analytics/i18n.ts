@@ -1,5 +1,3 @@
-import { i18n } from "@/i18n"
-import { messages as en } from "@/locales/en/analytics.po"
-import { messages as tr } from "@/locales/tr/analytics.po"
+import { needCatalog } from "@/i18n"
 
-i18n.load({ en, tr })
+await needCatalog("analytics")

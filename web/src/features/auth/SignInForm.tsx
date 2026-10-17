@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
+import { isLocale } from "@/i18n"
 import { api, unwrap, type Locale, type Me } from "@/lib/api"
 import { signInWithPasskey } from "@/lib/passkey"
 import { meKey } from "@/lib/session"
@@ -42,7 +43,7 @@ export function SignInForm({
 
   const request = useMutation({
     mutationFn: () => {
-      const locale: Locale = i18n.locale === "tr" ? "tr" : "en"
+      const locale: Locale = isLocale(i18n.locale) ? i18n.locale : "en"
       return unwrap(api.POST("/v1/auth/code", { body: reader ? { email, reader: true, locale } : { email, locale } }))
     },
     onSuccess: () => {

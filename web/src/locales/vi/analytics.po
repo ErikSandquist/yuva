@@ -1,0 +1,2748 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 10:11+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: vi\n"
+
+#: src/features/analytics/text.ts
+msgid "(not set)"
+msgstr "(chưa đặt)"
+
+#. placeholder {0}: e.rows
+#: src/features/analytics/Exports.tsx
+msgid "{0, plural, one {# row} other {# rows}}"
+msgstr "{0, plural, other {# dòng}}"
+
+#. placeholder {0}: p.visitors_today
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{0, plural, one {visitor today} other {visitors today}}"
+msgstr "{0, plural, other {khách truy cập hôm nay}}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{consentedCount} consented, across visits and days"
+msgstr "{consentedCount} đã đồng ý, qua các lượt truy cập và các ngày"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {{site} sent # visit, and none in the 28 days before.} other {{site} sent # visits, and none in the 28 days before.}}"
+msgstr "{count, plural, other {{site} đã gửi # lượt truy cập, và không có lượt nào trong 28 ngày trước.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {# conversation per 1,000 views, against {usual} in the 28 days before.} other {# conversations per 1,000 views, against {usual} in the 28 days before.}}"
+msgstr "{count, plural, other {# cuộc trò chuyện trên 1.000 lượt xem, so với {usual} trong 28 ngày trước.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {Goal “{goal}” had # conversion, against {usual} a day on average in the week before.} other {Goal “{goal}” had # conversions, against {usual} a day on average in the week before.}}"
+msgstr "{count, plural, other {Mục tiêu “{goal}” có # lượt chuyển đổi, so với trung bình {usual} mỗi ngày trong tuần trước.}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{count} in this range, none in the compared days."
+msgstr "{count} trong khoảng này, không có trong những ngày so sánh."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {count}, none in the compared days."
+msgstr "{dim} {value}: {count}, không có trong những ngày so sánh."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} fell {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} giảm {change}, {now} so với {before}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} rose {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} tăng {change}, {now} so với {before}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {metric} {now}, none in the compared days."
+msgstr "{dim} {value}: {metric} {now}, không có trong những ngày so sánh."
+
+#: src/features/analytics/Annotations.tsx
+msgid "{kind}: {found}"
+msgstr "{kind}: {found}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{lost} left ({lostPct})"
+msgstr "{lost} rời đi ({lostPct})"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} fell {change}: {now}, against {before} in the compared days."
+msgstr "{metric} giảm {change}: {now}, so với {before} trong những ngày so sánh."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} rose {change}: {now}, against {before} in the compared days."
+msgstr "{metric} tăng {change}: {now}, so với {before} trong những ngày so sánh."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric}: {now}, none in the compared days."
+msgstr "{metric}: {now}, không có trong những ngày so sánh."
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversation} other {# conversations}}"
+msgstr "{n, plural, other {# cuộc trò chuyện}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversion} other {# conversions}}"
+msgstr "{n, plural, other {# lượt chuyển đổi}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# discussion} other {# discussions}}"
+msgstr "{n, plural, other {# cuộc thảo luận}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# event} other {# events}}"
+msgstr "{n, plural, other {# sự kiện}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# view} other {# views}}"
+msgstr "{n, plural, other {# lượt xem}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visit} other {# visits}}"
+msgstr "{n, plural, other {# lượt truy cập}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visitor} other {# visitors}}"
+msgstr "{n, plural, other {# khách truy cập}}"
+
+#: src/features/analytics/Events.tsx
+msgid "{n} payments, {avg} on average"
+msgstr "{n} khoản thanh toán, trung bình {avg}"
+
+#: src/features/analytics/Install.tsx
+msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
+msgstr "{name} không nằm trong các nền tảng của thuộc tính này, nên máy chủ từ chối sự kiện của ứng dụng. Chủ sở hữu hoặc quản trị viên có thể bật nó."
+
+#: src/features/analytics/Funnels.tsx
+msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
+msgstr "{overall} khách truy cập đến bước đầu cũng đến bước cuối, {from} – {to}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
+msgstr "{rate, plural, other {{dim} {value}: # cuộc trò chuyện trên 1.000 lượt xem, so với {site} trên mọi trang.}}"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
+msgstr "Đã dùng {used} trên {limit} sự kiện phân tích trong tháng này. Sự kiện vượt giới hạn bị bỏ cho đến hết tháng."
+
+#: src/features/analytics/Settings.tsx
+msgid "A change applies to new events. Days already counted keep their zone."
+msgstr "Thay đổi áp dụng cho sự kiện mới. Các ngày đã đếm giữ múi giờ của chúng."
+
+#: src/features/analytics/Goals.tsx
+msgid "A changed goal is counted again over the days the detailed records are kept."
+msgstr "Mục tiêu đã thay đổi được đếm lại trong những ngày bản ghi chi tiết được giữ."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel follows each visit step by step, so it covers at most 90 days at once, or 31 days for a property with more than 10 million events a month. Pick a shorter range."
+msgstr "Phễu theo từng lượt truy cập từng bước, nên một lần chỉ bao quát tối đa 90 ngày, hoặc 31 ngày với thuộc tính có hơn 10 triệu sự kiện mỗi tháng. Hãy chọn khoảng ngắn hơn."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel is made of two to eight goals in a row. Make at least two goals first."
+msgstr "Phễu gồm từ hai đến tám mục tiêu liên tiếp. Hãy tạo ít nhất hai mục tiêu trước."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are kept since {day}. Earlier days only have totals, so they cannot show a funnel."
+msgstr "Phễu cần các bước của từng lượt truy cập, được giữ từ {day}. Những ngày trước chỉ có tổng số, nên không hiện được phễu."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are no longer kept for this range."
+msgstr "Phễu cần các bước của từng lượt truy cập, không còn được giữ cho khoảng này."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel shows how many visitors go from one goal to the next within a visit, and where they leave."
+msgstr "Phễu cho thấy có bao nhiêu khách truy cập đi từ mục tiêu này sang mục tiêu tiếp theo trong một lượt truy cập, và họ rời đi ở đâu."
+
+#: src/features/analytics/Goals.tsx
+msgid "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
+msgstr "Mục tiêu đếm khách truy cập xem một trang, gửi một sự kiện hoặc cuộn đủ xa, và doanh thu họ mang lại."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A goal’s conversions yesterday were at most half its daily average of the week before."
+msgstr "Số lượt chuyển đổi của mục tiêu hôm qua tối đa bằng một nửa mức trung bình hằng ngày của tuần trước."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A link shows only its views of this property, read-only, without filters or segments. Revoking or deleting it stops it at once."
+msgstr "Liên kết chỉ hiện các chế độ xem của thuộc tính này, chỉ đọc, không có bộ lọc hay phân khúc. Thu hồi hoặc xóa nó sẽ dừng ngay lập tức."
+
+#: src/features/analytics/Goals.tsx
+msgid "A new goal also counts the days the detailed records are kept, not only from today."
+msgstr "Mục tiêu mới cũng đếm những ngày bản ghi chi tiết được giữ, không chỉ từ hôm nay."
+
+#: src/features/analytics/Annotations.tsx
+msgid "A new key was made"
+msgstr "Một khóa mới đã được tạo"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A new password signs out everyone who unlocked the link."
+msgstr "Mật khẩu mới đăng xuất mọi người đã mở khóa liên kết."
+
+#: src/features/analytics/Goals.tsx
+msgid "A path. * stands for one part of it, ** for any number of them."
+msgstr "Một đường dẫn. * thay cho một phần của nó, ** cho số phần bất kỳ."
+
+#: src/features/analytics/Settings.tsx
+msgid "A prop name has at most 300 characters and does not start with $ or yuva_."
+msgstr "Tên prop dài tối đa 300 ký tự và không bắt đầu bằng $ hoặc yuva_."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A property can have at most 50 share links. Delete one first."
+msgstr "Một thuộc tính có thể có tối đa 50 liên kết chia sẻ. Hãy xóa một cái trước."
+
+#: src/features/analytics/parts.tsx
+msgid "A range can be at most 400 days long. Pick a shorter one."
+msgstr "Một khoảng có thể dài tối đa 400 ngày. Hãy chọn khoảng ngắn hơn."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A site sent 10 or more visits yesterday and none in the 28 days before."
+msgstr "Một trang web đã gửi 10 lượt truy cập trở lên hôm qua và không có lượt nào trong 28 ngày trước."
+
+#: src/features/analytics/Settings.tsx
+msgid "A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and it shows as a chip on the Events view."
+msgstr "Một prop được theo dõi cũng được giữ trong tổng số hằng ngày, nên phần phân tích của nó còn lại sau khi bản ghi chi tiết mất, và nó hiện dưới dạng chip trong chế độ xem Sự kiện."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page or screen views without a gap of 30 minutes, within one day."
+msgstr "Lượt xem trang hoặc màn hình của một khách truy cập không có khoảng nghỉ 30 phút, trong một ngày."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page views without a gap of 30 minutes, within one day."
+msgstr "Lượt xem trang của một khách truy cập không có khoảng nghỉ 30 phút, trong một ngày."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
+msgstr "Lượt xem màn hình của một khách truy cập không có khoảng nghỉ 30 phút, trong một ngày. Mỗi lần mở ứng dụng bắt đầu một lượt truy cập mới."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Active"
+msgstr "Hoạt động"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add"
+msgstr "Thêm"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add a note to the chart"
+msgstr "Thêm ghi chú vào biểu đồ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Add a rule"
+msgstr "Thêm quy tắc"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Add a step"
+msgstr "Thêm một bước"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/NewProperty.tsx
+msgid "Add a website"
+msgstr "Thêm trang web"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add a website to count its visitors, pages and sources, without cookies."
+msgstr "Thêm một trang web để đếm khách truy cập, trang và nguồn của nó, không dùng cookie."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Add and install"
+msgstr "Thêm và cài đặt"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add note"
+msgstr "Thêm ghi chú"
+
+#: src/features/analytics/Install.tsx
+msgid "Add the YuvaAnalytics library of the Yuva package and configure it once at launch. .yuvaScreen counts a SwiftUI screen; in UIKit, call YuvaAnalytics.screen when a screen appears. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "Thêm thư viện YuvaAnalytics của gói Yuva và cấu hình một lần khi khởi chạy. .yuvaScreen đếm một màn hình SwiftUI; trong UIKit, gọi YuvaAnalytics.screen khi màn hình xuất hiện. Khi không có kết nối, sự kiện chờ trên thiết bị tối đa 72 giờ và đến cùng thời gian của chúng."
+
+#: src/features/analytics/Install.tsx
+msgid "Add yuva-analytics from JitPack and configure it once in Application.onCreate. TrackScreen counts a Compose screen. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "Thêm yuva-analytics từ JitPack và cấu hình một lần trong Application.onCreate. TrackScreen đếm một màn hình Compose. Khi không có kết nối, sự kiện chờ trên thiết bị tối đa 72 giờ và đến cùng thời gian của chúng."
+
+#: src/features/analytics/Settings.tsx
+msgid "Addresses not counted"
+msgstr "Địa chỉ không được đếm"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the compared days"
+msgstr "so với những ngày so sánh"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the period before"
+msgstr "so với giai đoạn trước"
+
+#: src/features/analytics/Support.tsx
+msgid "Agents of the inbox can then see this property’s numbers too."
+msgstr "Khi đó nhân viên của hộp thư cũng thấy số liệu của thuộc tính này."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Agents of this inbox can see the numbers."
+msgstr "Nhân viên của hộp thư này thấy số liệu."
+
+#: src/features/analytics/text.ts
+msgid "AI assistants"
+msgstr "Trợ lý AI"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Alerts"
+msgstr "Cảnh báo"
+
+#: src/features/analytics/Settings.tsx
+msgid "Alerts and reports"
+msgstr "Cảnh báo và báo cáo"
+
+#: src/features/analytics/Events.tsx
+msgid "All events"
+msgstr "Tất cả sự kiện"
+
+#: src/features/analytics/Goals.tsx
+msgid "All goals"
+msgstr "Tất cả mục tiêu"
+
+#: src/features/analytics/Support.tsx
+msgid "An owner or admin can link one in the property’s settings."
+msgstr "Chủ sở hữu hoặc quản trị viên có thể liên kết một hộp thư trong cài đặt của thuộc tính."
+
+#: src/features/analytics/Retention.tsx
+msgid "An owner or admin can turn on the persistent id in the consent features."
+msgstr "Chủ sở hữu hoặc quản trị viên có thể bật ID liên tục trong các tính năng đồng ý."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics"
+msgstr "Phân tích"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Analytics properties"
+msgstr "Thuộc tính phân tích"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Analytics steps"
+msgstr "Các bước phân tích"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics views"
+msgstr "Chế độ xem phân tích"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Anyone with the link sees the views you pick, read-only, without signing in."
+msgstr "Bất kỳ ai có liên kết thấy các chế độ xem bạn chọn, chỉ đọc, không cần đăng nhập."
+
+#: src/features/analytics/text.ts
+msgid "App"
+msgstr "Ứng dụng"
+
+#: src/features/analytics/text.ts
+msgid "App version"
+msgstr "Phiên bản ứng dụng"
+
+#: src/features/analytics/Settings.tsx
+msgid "Apps send without a domain, so only the platforms turned on here are counted. Events from your backend need no platform."
+msgstr "Ứng dụng gửi mà không có tên miền, nên chỉ các nền tảng được bật ở đây mới được đếm. Sự kiện từ backend của bạn không cần nền tảng."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Ask for a password"
+msgstr "Yêu cầu mật khẩu"
+
+#: src/features/analytics/Sharing.tsx
+msgid "At least 8 characters"
+msgstr "Ít nhất 8 ký tự"
+
+#: src/features/analytics/Settings.tsx
+msgid "At most 10 props can be tracked."
+msgstr "Có thể theo dõi tối đa 10 prop."
+
+#: src/features/analytics/Settings.tsx
+msgid "Audience"
+msgstr "Đối tượng"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Available until {expires}"
+msgstr "Có sẵn đến {expires}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots"
+msgstr "Bot"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
+msgstr "Bot, giới hạn tốc độ, địa chỉ và đường dẫn bị loại trừ, giới hạn hằng tháng hoặc máy chủ bận."
+
+#: src/features/analytics/text.ts
+msgid "Bounce rate"
+msgstr "Tỷ lệ thoát"
+
+#: src/features/analytics/Events.tsx
+msgid "Break down by prop"
+msgstr "Phân tích theo prop"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Breakdown"
+msgstr "Phân tích chi tiết"
+
+#: src/features/analytics/Exports.tsx
+msgid "Broken down by"
+msgstr "Phân tích theo"
+
+#: src/features/analytics/Settings.tsx
+msgid "Broken events, such as a screen address that does not start with app://, a reserved name or too many props."
+msgstr "Sự kiện hỏng, như địa chỉ màn hình không bắt đầu bằng app://, tên dành riêng hoặc quá nhiều prop."
+
+#: src/features/analytics/text.ts
+msgid "Browser"
+msgstr "Trình duyệt"
+
+#: src/features/analytics/text.ts
+msgid "Browser version"
+msgstr "Phiên bản trình duyệt"
+
+#: src/features/analytics/Install.tsx
+msgid "Call it once in the browser. During server rendering it does nothing."
+msgstr "Gọi một lần trong trình duyệt. Khi kết xuất phía máy chủ, nó không làm gì."
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Cancel"
+msgstr "Hủy"
+
+#: src/features/analytics/Controls.tsx
+msgid "Change filter: {label}"
+msgstr "Đổi bộ lọc: {label}"
+
+#: src/features/analytics/Controls.tsx
+msgid "changed"
+msgstr "đã thay đổi"
+
+#: src/features/analytics/text.ts
+msgid "Channel"
+msgstr "Kênh"
+
+#: src/features/analytics/text.ts
+msgid "Chat opened"
+msgstr "Đã mở chat"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Checked every hour. Each alert is sent once and also shows as a note on the chart."
+msgstr "Kiểm tra mỗi giờ. Mỗi cảnh báo được gửi một lần và cũng hiện dưới dạng ghi chú trên biểu đồ."
+
+#: src/features/analytics/Settings.tsx
+msgid "Children"
+msgstr "Trẻ em"
+
+#: src/features/analytics/Support.tsx
+msgid "Choose an inbox"
+msgstr "Chọn một hộp thư"
+
+#: src/features/analytics/Settings.tsx
+msgid "Choose children for a site made for children."
+msgstr "Chọn trẻ em cho một trang web dành cho trẻ em."
+
+#: src/features/analytics/text.ts
+msgid "City"
+msgstr "Thành phố"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Clear"
+msgstr "Xóa"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts by"
+msgstr "Nhóm theo"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts fill once visitors agree to a persistent id and come back. The numbers are rebuilt every hour."
+msgstr "Nhóm theo dõi được điền khi khách truy cập đồng ý ID liên tục và quay lại. Số liệu được dựng lại mỗi giờ."
+
+#: src/features/analytics/Settings.tsx
+msgid "Collection"
+msgstr "Bộ sưu tập"
+
+#. placeholder {0}: formatDate(`${c.from}T12:00:00Z`, i18n.locale)
+#. placeholder {1}: formatDate(`${c.to}T12:00:00Z`, i18n.locale)
+#: src/features/analytics/Controls.tsx
+msgid "Compare with {0} – {1}"
+msgstr "So sánh với {0} – {1}"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with a year earlier"
+msgstr "So sánh với một năm trước"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days"
+msgstr "So sánh với những ngày khác"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days…"
+msgstr "So sánh với những ngày khác…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the days"
+msgstr "So sánh với các ngày"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the period before"
+msgstr "So sánh với giai đoạn trước"
+
+#: src/features/analytics/Overview.tsx
+msgid "Compared days"
+msgstr "Những ngày so sánh"
+
+#: src/features/analytics/Controls.tsx
+msgid "Comparison"
+msgstr "So sánh"
+
+#: src/features/analytics/text.ts
+msgid "Completions"
+msgstr "Lượt hoàn thành"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consent features"
+msgstr "Tính năng đồng ý"
+
+#: src/features/analytics/Install.tsx
+msgid "Consent mode"
+msgstr "Chế độ đồng ý"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id, and signed-in users are linked to their contact."
+msgstr "Khách truy cập đã đồng ý giữ một ID liên tục, và người dùng đã đăng nhập được liên kết với liên hệ của họ."
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id."
+msgstr "Khách truy cập đã đồng ý giữ một ID liên tục."
+
+#: src/features/analytics/parts.tsx
+msgid "Consented visitors only"
+msgstr "Chỉ khách truy cập đã đồng ý"
+
+#: src/features/analytics/text.ts
+msgid "contains"
+msgstr "chứa"
+
+#: src/features/analytics/Install.tsx
+msgid "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
+msgstr "Trình chặn nội dung thường chặn script từ tên miền khác. Phục vụ script và endpoint của nó từ chính trang của bạn giúp những khách đó vẫn được đếm. Máy chủ Yuva phải tin cậy địa chỉ được chuyển tiếp của proxy; nếu không mọi khách truy cập trông như một."
+
+#: src/features/analytics/text.ts
+msgid "Conversations"
+msgstr "Cuộc trò chuyện"
+
+#: src/features/analytics/text.ts
+msgid "Conversations per 1,000 views of the page."
+msgstr "Cuộc trò chuyện trên 1.000 lượt xem của trang."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Conversations per 1,000 views yesterday were at least twice the rate of the 28 days before."
+msgstr "Số cuộc trò chuyện trên 1.000 lượt xem hôm qua ít nhất gấp đôi tỷ lệ của 28 ngày trước."
+
+#: src/features/analytics/text.ts
+msgid "Conversations started on the page, from the chat of the linked inbox."
+msgstr "Các cuộc trò chuyện bắt đầu trên trang, từ chat của hộp thư được liên kết."
+
+#: src/features/analytics/Support.tsx
+msgid "Conversations, feedback, ratings and discussions of the linked inbox show here next to each page’s views. They are counted per page and day; no visitor is ever matched to a contact."
+msgstr "Cuộc trò chuyện, phản hồi, đánh giá và thảo luận của hộp thư được liên kết hiện ở đây cạnh lượt xem của từng trang. Chúng được đếm theo trang và ngày; không khách truy cập nào bị khớp với liên hệ."
+
+#: src/features/analytics/text.ts
+msgid "Conversion rate"
+msgstr "Tỷ lệ chuyển đổi"
+
+#: src/features/analytics/text.ts
+msgid "Conversions"
+msgstr "Lượt chuyển đổi"
+
+#: src/features/analytics/text.ts
+msgid "Conversions per 100 visitors."
+msgstr "Lượt chuyển đổi trên 100 khách truy cập."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
+msgstr "Hãy sao chép ngay; nó sẽ không được hiện lại. Liên kết bị mất chỉ có thể thu hồi và tạo lại."
+
+#: src/features/analytics/Install.tsx
+msgid "Count my visits again"
+msgstr "Đếm lại lượt truy cập của tôi"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Count visitors, pages, sources, places and devices without cookies and without storing IP addresses."
+msgstr "Đếm khách truy cập, trang, nguồn, địa điểm và thiết bị mà không dùng cookie và không lưu địa chỉ IP."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Count your website’s visitors"
+msgstr "Đếm khách truy cập trang web của bạn"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted"
+msgstr "Đã đếm"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted as"
+msgstr "Được đếm là"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Countries"
+msgstr "Quốc gia"
+
+#: src/features/analytics/text.ts
+msgid "Country"
+msgstr "Quốc gia"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
+msgstr "Đếm mọi khách truy cập mà không hỏi: không có gì được lưu trên thiết bị và không giữ địa chỉ IP."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Counts the visitors who reached each step after the ones before it, within one visit on one day. Numbers are at most ten minutes old."
+msgstr "Đếm những khách truy cập đã đến từng bước sau các bước trước nó, trong một lượt truy cập trong một ngày. Số liệu cũ nhất mười phút."
+
+#: src/features/analytics/Settings.tsx
+msgid "Currency"
+msgstr "Tiền tệ"
+
+#: src/features/analytics/Exports.tsx
+msgid "Current view"
+msgstr "Chế độ xem hiện tại"
+
+#: src/features/analytics/text.ts
+msgid "Custom and built-in events."
+msgstr "Sự kiện tùy chỉnh và có sẵn."
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range"
+msgstr "Khoảng tùy chỉnh"
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range…"
+msgstr "Khoảng tùy chỉnh…"
+
+#: src/features/analytics/Settings.tsx
+msgid "Data"
+msgstr "Dữ liệu"
+
+#: src/features/analytics/Install.tsx
+msgid "data-outbound counts clicks on links to other sites, data-files downloads of documents and archives, and data-chat each time a visitor opens the chat. track() sends your own events with up to 30 props; e-mail addresses in props are dropped. Make goals from events in the Goals view."
+msgstr "data-outbound đếm lượt nhấp vào liên kết tới trang khác, data-files đếm lượt tải tài liệu và kho lưu trữ, và data-chat đếm mỗi lần khách mở chat. track() gửi sự kiện của riêng bạn với tối đa 30 prop; địa chỉ email trong prop bị bỏ. Tạo mục tiêu từ sự kiện trong chế độ xem Mục tiêu."
+
+#: src/features/analytics/Settings.tsx
+msgid "Day"
+msgstr "Ngày"
+
+#: src/features/analytics/Retention.tsx
+msgid "Day {period}"
+msgstr "Ngày {period}"
+
+#: src/features/analytics/Exports.tsx
+msgid "Day by day"
+msgstr "Từng ngày"
+
+#: src/features/analytics/Retention.tsx
+msgid "Days"
+msgstr "Ngày"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/SharePage.tsx
+msgid "Days are counted in this time zone"
+msgstr "Ngày được đếm theo múi giờ này"
+
+#: src/features/analytics/Settings.tsx
+msgid "Days are in the property’s time zone. Their totals are counted again without them."
+msgstr "Các ngày theo múi giờ của thuộc tính. Tổng của chúng được đếm lại mà không có chúng."
+
+#: src/features/analytics/Settings.tsx
+msgid "Days waiting to be summed up"
+msgstr "Số ngày đang chờ được cộng dồn"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete"
+msgstr "Xóa"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete {0}?"
+msgstr "Xóa {0}?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete {name}?"
+msgstr "Xóa {name}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data"
+msgstr "Xóa mọi dữ liệu"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data of {0}?"
+msgstr "Xóa mọi dữ liệu của {0}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete days"
+msgstr "Xóa các ngày"
+
+#: src/features/analytics/Exports.tsx
+msgid "Delete export"
+msgstr "Xóa bản xuất"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Delete funnel"
+msgstr "Xóa phễu"
+
+#: src/features/analytics/Goals.tsx
+msgid "Delete goal"
+msgstr "Xóa mục tiêu"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete note"
+msgstr "Xóa ghi chú"
+
+#: src/features/analytics/Controls.tsx
+msgid "Delete segment"
+msgstr "Xóa phân khúc"
+
+#. placeholder {0}: funnel.name
+#: src/features/analytics/Funnels.tsx
+msgid "Delete the funnel “{0}”?"
+msgstr "Xóa phễu “{0}”?"
+
+#. placeholder {0}: goal.name
+#: src/features/analytics/Goals.tsx
+msgid "Delete the goal “{0}”?"
+msgstr "Xóa mục tiêu “{0}”?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the property"
+msgstr "Xóa thuộc tính"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Delete the segment “{0}”?"
+msgstr "Xóa phân khúc “{0}”?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the visits and events of {span}?"
+msgstr "Xóa các lượt truy cập và sự kiện của {span}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete these days"
+msgstr "Xóa những ngày này"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete this note?"
+msgstr "Xóa ghi chú này?"
+
+#: src/features/analytics/Exports.tsx
+msgid "deleted {expires}"
+msgstr "đã xóa {expires}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Deleting in the background. The numbers update when it is done."
+msgstr "Đang xóa ở chế độ nền. Số liệu cập nhật khi xong."
+
+#: src/features/analytics/Goals.tsx
+msgid "Depth in %"
+msgstr "Độ sâu theo %"
+
+#: src/features/analytics/text.ts
+msgid "Desktop"
+msgstr "Máy tính"
+
+#: src/features/analytics/Exports.tsx
+msgid "Detailed records are kept since {rawDay}."
+msgstr "Bản ghi chi tiết được giữ từ {rawDay}."
+
+#: src/features/analytics/Settings.tsx
+msgid "Detailed records kept since"
+msgstr "Bản ghi chi tiết được giữ từ"
+
+#: src/features/analytics/Overview.tsx
+msgid "Details"
+msgstr "Chi tiết"
+
+#: src/features/analytics/text.ts
+msgid "Device"
+msgstr "Thiết bị"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Devices"
+msgstr "Thiết bị"
+
+#: src/features/analytics/text.ts
+msgid "Direct"
+msgstr "Trực tiếp"
+
+#: src/features/analytics/text.ts
+msgid "Direct / none"
+msgstr "Trực tiếp / không có"
+
+#: src/features/analytics/text.ts
+msgid "Discussion threads started on the page."
+msgstr "Các chuỗi thảo luận bắt đầu trên trang."
+
+#: src/features/analytics/text.ts
+msgid "Discussions"
+msgstr "Thảo luận"
+
+#: src/features/analytics/text.ts
+msgid "Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again."
+msgstr "Khách truy cập riêng biệt mỗi ngày, cộng dồn qua các ngày của khoảng. Người quay lại vào ngày khác được đếm lại."
+
+#: src/features/analytics/Install.tsx
+msgid "Do not count my visits"
+msgstr "Không đếm lượt truy cập của tôi"
+
+#: src/features/analytics/text.ts
+msgid "does not contain"
+msgstr "không chứa"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Domains"
+msgstr "Tên miền"
+
+#: src/features/analytics/Exports.tsx
+msgid "Download"
+msgstr "Tải xuống"
+
+#: src/features/analytics/parts.tsx
+msgid "Download CSV"
+msgstr "Tải xuống CSV"
+
+#: src/features/analytics/Settings.tsx
+msgid "Dropped"
+msgstr "Đã bỏ"
+
+#: src/features/analytics/text.ts
+msgid "E-mail"
+msgstr "Email"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that day, each column the share of them who came back that many days later."
+msgstr "Mỗi dòng chứa những khách truy cập thấy lần đầu vào ngày đó, mỗi cột là tỷ lệ trong số họ quay lại sau ngần ấy ngày."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that month, each column the share of them who came back that many months later."
+msgstr "Mỗi dòng chứa những khách truy cập thấy lần đầu vào tháng đó, mỗi cột là tỷ lệ trong số họ quay lại sau ngần ấy tháng."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that week, each column the share of them who came back that many weeks later."
+msgstr "Mỗi dòng chứa những khách truy cập thấy lần đầu vào tuần đó, mỗi cột là tỷ lệ trong số họ quay lại sau ngần ấy tuần."
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Edit"
+msgstr "Sửa"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Edit funnel"
+msgstr "Sửa phễu"
+
+#: src/features/analytics/Goals.tsx
+msgid "Edit goal"
+msgstr "Sửa mục tiêu"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Edit note"
+msgstr "Sửa ghi chú"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Edit share link"
+msgstr "Sửa liên kết chia sẻ"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embed"
+msgstr "Nhúng"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embeds"
+msgstr "Bản nhúng"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Enter the password you were given with the link."
+msgstr "Nhập mật khẩu bạn nhận cùng liên kết."
+
+#: src/features/analytics/text.ts
+msgid "Entry page"
+msgstr "Trang vào"
+
+#: src/features/analytics/Goals.tsx
+msgid "equal to"
+msgstr "bằng"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Event"
+msgstr "Sự kiện"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event}"
+msgstr "Sự kiện {event}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event} with {key} = {value}"
+msgstr "Sự kiện {event} với {key} = {value}"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Install.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Events"
+msgstr "Sự kiện"
+
+#: src/features/analytics/Settings.tsx
+msgid "Events are arriving."
+msgstr "Sự kiện đang đến."
+
+#: src/features/analytics/Events.tsx
+msgid "Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when the script has their attributes."
+msgstr "Sự kiện đến từ lệnh gọi track() trên các trang và ứng dụng của bạn. Liên kết ra ngoài, lượt tải xuống và lượt mở chat được đếm khi script có thuộc tính của chúng."
+
+#: src/features/analytics/Settings.tsx
+msgid "Events count only after the page calls yuva.consent with analytics set to true. Install the script with data-consent=\"required\"."
+msgstr "Sự kiện chỉ được đếm sau khi trang gọi yuva.consent với analytics đặt là true. Cài script với data-consent=\"required\"."
+
+#: src/features/analytics/Settings.tsx
+msgid "events counted"
+msgstr "sự kiện đã đếm"
+
+#: src/features/analytics/Settings.tsx
+msgid "events dropped"
+msgstr "sự kiện đã bỏ"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every event with its visit’s page, source, place and device, as NDJSON. Visits are numbered within the file; there is no visitor id, address or contact. At most 31 days."
+msgstr "Mọi sự kiện cùng trang, nguồn, địa điểm và thiết bị của lượt truy cập, dưới dạng NDJSON. Lượt truy cập được đánh số trong tệp; không có ID khách, địa chỉ hay liên hệ. Tối đa 31 ngày."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Every Monday at 08:00 in {zone}, about the week before."
+msgstr "Mỗi thứ Hai lúc 08:00 theo {zone}, về tuần trước."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range and the filters you are looking at, without a comparison."
+msgstr "Mọi dòng của khoảng và bộ lọc bạn đang xem, không có so sánh."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range you are looking at, without a comparison."
+msgstr "Mọi dòng của khoảng bạn đang xem, không có so sánh."
+
+#: src/features/analytics/Settings.tsx
+msgid "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
+msgstr "Mọi lượt truy cập, sự kiện và tổng số đều bị xóa. Thuộc tính và khóa của nó vẫn còn, và việc đếm tiếp tục."
+
+#: src/features/analytics/Controls.tsx
+msgid "Everyone who sees this property can pick it. You, owners and admins can change it."
+msgstr "Mọi người thấy thuộc tính này đều chọn được. Bạn, chủ sở hữu và quản trị viên có thể thay đổi."
+
+#: src/features/analytics/Annotations.tsx
+msgid "Everyone who sees this property sees the note, such as a launch or a campaign."
+msgstr "Mọi người thấy thuộc tính này đều thấy ghi chú, như một lần ra mắt hoặc một chiến dịch."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Everything this property raised, newest first, whoever was notified."
+msgstr "Mọi thứ thuộc tính này đã phát, mới nhất trước, bất kể ai được thông báo."
+
+#: src/features/analytics/Settings.tsx
+msgid "Excluded"
+msgstr "Đã loại trừ"
+
+#: src/features/analytics/text.ts
+msgid "Exit page"
+msgstr "Trang thoát"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expired"
+msgstr "Đã hết hạn"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expires"
+msgstr "Hết hạn"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export"
+msgstr "Xuất"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export progress"
+msgstr "Tiến độ xuất"
+
+#: src/features/analytics/Exports.tsx
+msgid "Exports"
+msgstr "Bản xuất"
+
+#: src/features/analytics/Exports.tsx
+msgid "Failed"
+msgstr "Thất bại"
+
+#: src/features/analytics/text.ts
+msgid "Feedback"
+msgstr "Phản hồi"
+
+#: src/features/analytics/Support.tsx
+msgid "Fewer than 100 views"
+msgstr "Dưới 100 lượt xem"
+
+#: src/features/analytics/text.ts
+msgid "File download"
+msgstr "Tải tệp xuống"
+
+#: src/features/analytics/Exports.tsx
+msgid "Files are made in the background and deleted seven days later."
+msgstr "Tệp được tạo ở chế độ nền và bị xóa sau bảy ngày."
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Support.tsx
+msgid "Filter by this"
+msgstr "Lọc theo mục này"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Filters"
+msgstr "Bộ lọc"
+
+#: src/features/analytics/Exports.tsx
+msgid "Filters come from the view: click a row there to add one. <0>Change them in the view</0>"
+msgstr "Bộ lọc đến từ chế độ xem: nhấp một dòng ở đó để thêm. <0>Đổi chúng trong chế độ xem</0>"
+
+#: src/features/analytics/Retention.tsx
+msgid "First day"
+msgstr "Ngày đầu"
+
+#: src/features/analytics/Retention.tsx
+msgid "First month"
+msgstr "Tháng đầu"
+
+#: src/features/analytics/text.ts
+msgid "First page or screen"
+msgstr "Trang hoặc màn hình đầu tiên"
+
+#: src/features/analytics/text.ts
+msgid "First screen"
+msgstr "Màn hình đầu tiên"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "First visit"
+msgstr "Lượt truy cập đầu tiên"
+
+#: src/features/analytics/Retention.tsx
+msgid "First week"
+msgstr "Tuần đầu"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Five reports an hour at most. Try again later."
+msgstr "Tối đa năm báo cáo mỗi giờ. Hãy thử lại sau."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "For example Fieldnote website"
+msgstr "Ví dụ trang web Fieldnote"
+
+#: src/features/analytics/Settings.tsx
+msgid "For revenue, an ISO code like EUR."
+msgstr "Với doanh thu, một mã ISO như EUR."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an <0>API key</0> with the analytics:write scope, which stays on your server."
+msgstr "Cho những gì chỉ backend của bạn thấy, như đăng ký hoặc thanh toán. Track chuyển tiếp địa chỉ và trình duyệt của khách, nên sự kiện nối vào lượt truy cập của họ; yêu cầu có Do Not Track hoặc Global Privacy Control không được gửi. Nó cần một <0>khóa API</0> có phạm vi analytics:write, giữ trên máy chủ của bạn."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
+msgstr "Cho những gì chỉ backend của bạn thấy, như đăng ký hoặc thanh toán. Track chuyển tiếp địa chỉ và trình duyệt của khách, nên sự kiện nối vào lượt truy cập của họ; yêu cầu có Do Not Track hoặc Global Privacy Control không được gửi. Nó cần một khóa API có phạm vi analytics:write từ chủ sở hữu hoặc quản trị viên, giữ trên máy chủ của bạn."
+
+#: src/features/analytics/Exports.tsx
+msgid "Format"
+msgstr "Định dạng"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "From"
+msgstr "Từ"
+
+#: src/features/analytics/Settings.tsx
+msgid "From a site that is not one of the domains, or from an app whose platform is not turned on."
+msgstr "Từ một trang web không nằm trong các tên miền, hoặc từ một ứng dụng chưa bật nền tảng."
+
+#: src/features/analytics/Funnels.tsx
+msgid "From pricing to signup"
+msgstr "Từ bảng giá đến đăng ký"
+
+#: src/features/analytics/Support.tsx
+msgid "From the inbox {inboxName}. Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "Từ hộp thư {inboxName}. Xếp theo số cuộc trò chuyện trên 1.000 lượt xem; các trang dưới 100 lượt xem xếp sau. Đếm theo trang và ngày, không bao giờ theo khách hay liên hệ."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Funnel"
+msgstr "Phễu"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Funnels"
+msgstr "Phễu"
+
+#: src/features/analytics/Settings.tsx
+msgid "General"
+msgstr "Chung"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Go to goals"
+msgstr "Đi tới mục tiêu"
+
+#: src/features/analytics/Goals.tsx
+msgid "Goal"
+msgstr "Mục tiêu"
+
+#. placeholder {0}: a.text
+#: src/features/analytics/Annotations.tsx
+msgid "Goal “{0}” was created"
+msgstr "Mục tiêu “{0}” đã được tạo"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Goal drop"
+msgstr "Mục tiêu giảm"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Goals"
+msgstr "Mục tiêu"
+
+#: src/features/analytics/Settings.tsx
+msgid "had an address removed"
+msgstr "đã bị gỡ một địa chỉ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Health"
+msgstr "Tình trạng"
+
+#: src/features/analytics/text.ts
+msgid "Helpful"
+msgstr "Hữu ích"
+
+#: src/features/analytics/Support.tsx
+msgid "Helpful and not helpful"
+msgstr "Hữu ích và không hữu ích"
+
+#: src/features/analytics/text.ts
+msgid "Helpful ratings out of all ratings."
+msgstr "Đánh giá hữu ích trên tổng số đánh giá."
+
+#: src/features/analytics/text.ts
+msgid "Helpful share"
+msgstr "Tỷ lệ hữu ích"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Home shows each website and app like this: visitors today, in the last 30 minutes and this week."
+msgstr "Trang chủ hiện mỗi trang web và ứng dụng như sau: khách truy cập hôm nay, trong 30 phút qua và tuần này."
+
+#: src/features/analytics/text.ts
+msgid "Host"
+msgstr "Host"
+
+#: src/features/analytics/text.ts
+msgid "Host or app"
+msgstr "Host hoặc ứng dụng"
+
+#: src/features/analytics/Install.tsx
+msgid "How to install"
+msgstr "Cách cài đặt"
+
+#: src/features/analytics/Events.tsx
+msgid "How to send events"
+msgstr "Cách gửi sự kiện"
+
+#: src/features/analytics/Sharing.tsx
+msgid "I saved it"
+msgstr "Tôi đã lưu"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Support.tsx
+msgid "Inbox"
+msgstr "Hộp thư"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Install"
+msgstr "Cài đặt"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/NewProperty.tsx
+msgid "Install on {0}"
+msgstr "Cài đặt trên {0}"
+
+#: src/features/analytics/text.ts
+msgid "Internal"
+msgstr "Nội bộ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Invalid"
+msgstr "Không hợp lệ"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Investors"
+msgstr "Nhà đầu tư"
+
+#: src/features/analytics/text.ts
+msgid "is"
+msgstr "là"
+
+#: src/features/analytics/text.ts
+msgid "is not"
+msgstr "không phải"
+
+#: src/features/analytics/Controls.tsx
+msgid "It is gone for everyone who uses it. The numbers stay."
+msgstr "Nó biến mất với mọi người đang dùng. Số liệu vẫn còn."
+
+#: src/features/analytics/SharePage.tsx
+msgid "It may have expired or been revoked. Ask the person who shared it for a new one."
+msgstr "Có thể nó đã hết hạn hoặc bị thu hồi. Hãy xin người chia sẻ một liên kết mới."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Its goals stay."
+msgstr "Các mục tiêu của nó vẫn còn."
+
+#: src/features/analytics/Goals.tsx
+msgid "Its numbers are deleted too. This cannot be undone."
+msgstr "Số liệu của nó cũng bị xóa. Không thể hoàn tác."
+
+#: src/features/analytics/Events.tsx
+msgid "Keep only visits with this value"
+msgstr "Chỉ giữ các lượt truy cập có giá trị này"
+
+#: src/features/analytics/Settings.tsx
+msgid "Key"
+msgstr "Khóa"
+
+#: src/features/analytics/Goals.tsx
+msgid "Kind of goal"
+msgstr "Loại mục tiêu"
+
+#: src/features/analytics/text.ts
+msgid "Language"
+msgstr "Ngôn ngữ"
+
+#: src/features/analytics/text.ts
+msgid "Laptop"
+msgstr "Máy tính xách tay"
+
+#: src/features/analytics/text.ts
+msgid "Last 12 months"
+msgstr "12 tháng qua"
+
+#: src/features/analytics/text.ts
+msgid "Last 28 days"
+msgstr "28 ngày qua"
+
+#: src/features/analytics/text.ts
+msgid "Last 30 days"
+msgstr "30 ngày qua"
+
+#: src/features/analytics/text.ts
+msgid "Last 6 months"
+msgstr "6 tháng qua"
+
+#: src/features/analytics/text.ts
+msgid "Last 7 days"
+msgstr "7 ngày qua"
+
+#: src/features/analytics/text.ts
+msgid "Last 90 days"
+msgstr "90 ngày qua"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event"
+msgstr "Sự kiện cuối"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event: {last}"
+msgstr "Sự kiện cuối: {last}"
+
+#: src/features/analytics/text.ts
+msgid "Last month"
+msgstr "Tháng trước"
+
+#: src/features/analytics/Sharing.tsx
+msgid "last opened {viewed}"
+msgstr "mở lần cuối {viewed}"
+
+#: src/features/analytics/text.ts
+msgid "Last page or screen"
+msgstr "Trang hoặc màn hình cuối cùng"
+
+#: src/features/analytics/text.ts
+msgid "Last screen"
+msgstr "Màn hình cuối cùng"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Leave empty to keep the current one"
+msgstr "Để trống để giữ cái hiện tại"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Link"
+msgstr "Liên kết"
+
+#: src/features/analytics/Support.tsx
+msgid "Link an inbox to see support per page"
+msgstr "Liên kết một hộp thư để xem hỗ trợ theo trang"
+
+#: src/features/analytics/Support.tsx
+msgid "Link inbox"
+msgstr "Liên kết hộp thư"
+
+#: src/features/analytics/Settings.tsx
+msgid "Link signed-in users to their contact"
+msgstr "Liên kết người dùng đã đăng nhập với liên hệ của họ"
+
+#: src/features/analytics/Alerts.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Support.tsx
+msgid "Load more"
+msgstr "Tải thêm"
+
+#: src/features/analytics/Settings.tsx
+msgid "Location database"
+msgstr "Cơ sở dữ liệu vị trí"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Locations"
+msgstr "Vị trí"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created}"
+msgstr "Tạo {created}"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created} by {by}"
+msgstr "Tạo {created} bởi {by}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key"
+msgstr "Tạo khóa mới"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key?"
+msgstr "Tạo khóa mới?"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Make at least two goals first."
+msgstr "Hãy tạo ít nhất hai mục tiêu trước."
+
+#: src/features/analytics/Goals.tsx
+msgid "Make goal"
+msgstr "Tạo mục tiêu"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Make link"
+msgstr "Tạo liên kết"
+
+#: src/features/analytics/text.ts
+msgid "matches"
+msgstr "khớp"
+
+#: src/features/analytics/text.ts
+msgid "Mobile"
+msgstr "Di động"
+
+#: src/features/analytics/Retention.tsx
+msgid "Month {period}"
+msgstr "Tháng {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Monthly"
+msgstr "Hằng tháng"
+
+#: src/features/analytics/Settings.tsx
+msgid "Monthly limit"
+msgstr "Giới hạn hằng tháng"
+
+#: src/features/analytics/Retention.tsx
+msgid "Months"
+msgstr "Tháng"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move down"
+msgstr "Chuyển xuống"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move up"
+msgstr "Chuyển lên"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Name"
+msgstr "Tên"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs a linked inbox under General: its identity secret signs the tokens."
+msgstr "Cần một hộp thư được liên kết trong Chung: identity secret của nó ký các token."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Needs a linked inbox. {help}"
+msgstr "Cần một hộp thư được liên kết. {help}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs the persistent id: a visitor is linked through it."
+msgstr "Cần ID liên tục: khách được liên kết qua nó."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Never"
+msgstr "Không bao giờ"
+
+#: src/features/analytics/Sharing.tsx
+msgid "never opened"
+msgstr "chưa từng mở"
+
+#: src/features/analytics/text.ts
+msgid "New"
+msgstr "Mới"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value} with {count}, none in the compared days."
+msgstr "{kind} mới: {value} với {count}, không có trong những ngày so sánh."
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
+msgstr "{kind} mới: {value}. {metric}: {now}, không có trong những ngày so sánh."
+
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "Mới và quay lại"
+
+#: src/features/analytics/Funnels.tsx
+msgid "New funnel"
+msgstr "Phễu mới"
+
+#: src/features/analytics/Goals.tsx
+msgid "New goal"
+msgstr "Mục tiêu mới"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New link"
+msgstr "Liên kết mới"
+
+#: src/features/analytics/text.ts
+msgid "New or returning"
+msgstr "Mới hoặc quay lại"
+
+#: src/features/analytics/Annotations.tsx
+msgid "New pricing page"
+msgstr "Trang bảng giá mới"
+
+#: src/features/analytics/Alerts.tsx
+msgid "New referrer"
+msgstr "Nguồn giới thiệu mới"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New share link"
+msgstr "Liên kết chia sẻ mới"
+
+#: src/features/analytics/Alerts.tsx
+msgid "No alerts yet."
+msgstr "Chưa có cảnh báo."
+
+#: src/features/analytics/Controls.tsx
+msgid "No comparison"
+msgstr "Không so sánh"
+
+#: src/features/analytics/Settings.tsx
+msgid "No consent features are offered."
+msgstr "Không có tính năng đồng ý nào được cung cấp."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "Không có khách truy cập đã đồng ý trong khoảng này."
+
+#: src/features/analytics/Retention.tsx
+msgid "No consented visitors yet"
+msgstr "Chưa có khách truy cập đã đồng ý"
+
+#: src/features/analytics/Support.tsx
+msgid "No conversations, feedback, ratings or discussions from these pages in this range."
+msgstr "Không có cuộc trò chuyện, phản hồi, đánh giá hay thảo luận nào từ các trang này trong khoảng này."
+
+#: src/features/analytics/Goals.tsx
+msgid "No conversions in this range."
+msgstr "Không có lượt chuyển đổi nào trong khoảng này."
+
+#: src/features/analytics/Settings.tsx
+msgid "No event yet."
+msgstr "Chưa có sự kiện."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events in the last 24 hours"
+msgstr "Không có sự kiện trong 24 giờ qua"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events yet"
+msgstr "Chưa có sự kiện"
+
+#: src/features/analytics/Exports.tsx
+msgid "No exports yet."
+msgstr "Chưa có bản xuất."
+
+#: src/features/analytics/Funnels.tsx
+msgid "No funnels yet"
+msgstr "Chưa có phễu"
+
+#: src/features/analytics/Goals.tsx
+msgid "No goals yet"
+msgstr "Chưa có mục tiêu"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No properties yet"
+msgstr "Chưa có thuộc tính"
+
+#: src/features/analytics/Settings.tsx
+msgid "No props are tracked."
+msgstr "Không có prop nào được theo dõi."
+
+#: src/features/analytics/Alerts.tsx
+msgid "No scheduled reports."
+msgstr "Không có báo cáo theo lịch."
+
+#: src/features/analytics/Controls.tsx
+msgid "No segment"
+msgstr "Không có phân khúc"
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Make one to show these numbers to people outside the workspace."
+msgstr "Chưa có liên kết chia sẻ. Hãy tạo một cái để cho người ngoài không gian làm việc xem các số liệu này."
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Owners and admins make them."
+msgstr "Chưa có liên kết chia sẻ. Chủ sở hữu và quản trị viên tạo chúng."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Nobody in the last 30 minutes."
+msgstr "Không có ai trong 30 phút qua."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Nobody reached the first step in this range."
+msgstr "Không ai đến bước đầu trong khoảng này."
+
+#: src/features/analytics/Alerts.tsx
+msgid "None"
+msgstr "Không có"
+
+#: src/features/analytics/Settings.tsx
+msgid "None yet"
+msgstr "Chưa có"
+
+#: src/features/analytics/Exports.tsx
+msgid "None, every visit counts."
+msgstr "Không có, mọi lượt truy cập đều được tính."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "None, owners and admins only"
+msgstr "Không có, chỉ chủ sở hữu và quản trị viên"
+
+#: src/features/analytics/parts.tsx
+msgid "Not available for this range."
+msgstr "Không khả dụng cho khoảng này."
+
+#: src/features/analytics/text.ts
+msgid "Not helpful"
+msgstr "Không hữu ích"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Note"
+msgstr "Ghi chú"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Notes"
+msgstr "Ghi chú"
+
+#: src/features/analytics/Exports.tsx
+msgid "Nothing"
+msgstr "Không có gì"
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Nothing counted in this range."
+msgstr "Không có gì được đếm trong khoảng này."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Notify me"
+msgstr "Thông báo cho tôi"
+
+#: src/features/analytics/Settings.tsx
+msgid "Off"
+msgstr "Tắt"
+
+#: src/features/analytics/Settings.tsx
+msgid "Offered only to visitors who agree in your consent tool. Everyone else is counted exactly as before, one day at a time and without anything stored on the device."
+msgstr "Chỉ đưa ra cho khách đồng ý trong công cụ đồng ý của bạn. Mọi người khác được đếm đúng như trước, mỗi lần một ngày và không lưu gì trên thiết bị."
+
+#: src/features/analytics/Settings.tsx
+msgid "Older than 72 hours. Apps keep events without a connection for at most that long."
+msgstr "Cũ hơn 72 giờ. Ứng dụng giữ sự kiện khi không có kết nối tối đa chừng đó."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On its way to {email}."
+msgstr "Đang gửi tới {email}."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On the 1st of each month at 08:00 in {zone}, about the month before."
+msgstr "Vào ngày 1 mỗi tháng lúc 08:00 theo {zone}, về tháng trước."
+
+#: src/features/analytics/Settings.tsx
+msgid "One IP address or range per line, up to 50, such as your office or a monitoring service."
+msgstr "Mỗi dòng một địa chỉ IP hoặc dải, tối đa 50, như văn phòng của bạn hoặc một dịch vụ giám sát."
+
+#: src/features/analytics/Settings.tsx
+msgid "One path per line, up to 50. * stands for one part of the path, ** for any number of them."
+msgstr "Mỗi dòng một đường dẫn, tối đa 50. * thay cho một phần của đường dẫn, ** cho số phần bất kỳ."
+
+#: src/features/analytics/Sharing.tsx
+msgid "One per line, like https://example.com or https://*.example.com. Without any, no other site can show it in a frame."
+msgstr "Mỗi dòng một cái, như https://example.com hoặc https://*.example.com. Nếu không có, không trang nào khác hiện nó trong khung được."
+
+#: src/features/analytics/Settings.tsx
+msgid "One per line. *.example.com covers every subdomain, but not example.com itself."
+msgstr "Mỗi dòng một cái. *.example.com bao gồm mọi tên miền phụ, nhưng không bao gồm chính example.com."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "One per line. Pages on other domains cannot send events. *.example.com covers every subdomain."
+msgstr "Mỗi dòng một cái. Trang thuộc tên miền khác không gửi được sự kiện. *.example.com bao gồm mọi tên miền phụ."
+
+#: src/features/analytics/Settings.tsx
+msgid "One prop name per line, up to 10, such as plan."
+msgstr "Mỗi dòng một tên prop, tối đa 10, như plan."
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
+msgstr "Một dòng mỗi ngày với khách truy cập, lượt truy cập, lượt xem, tỷ lệ thoát, thời lượng và độ sâu cuộn. Tối đa 400 ngày."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Only for you, by e-mail to {email}. Reports are plain numbers, with no images and nothing that tracks opening or clicks."
+msgstr "Chỉ cho bạn, qua email tới {email}. Báo cáo là số liệu thuần, không có hình ảnh và không có gì theo dõi lượt mở hay nhấp."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Only members see it, to tell links apart."
+msgstr "Chỉ thành viên thấy, để phân biệt các liên kết."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only the country is kept, never the region or city."
+msgstr "Chỉ giữ quốc gia, không bao giờ giữ vùng hay thành phố."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Only totals are shown. There is no list of individual visitors."
+msgstr "Chỉ hiện tổng số. Không có danh sách từng khách truy cập."
+
+#: src/features/analytics/parts.tsx
+msgid "Only visitors who agreed to a persistent id are counted here. Everyone else is counted one day at a time."
+msgstr "Ở đây chỉ đếm khách đồng ý dùng ID liên tục. Mọi người khác được đếm mỗi lần một ngày."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only with consent"
+msgstr "Chỉ khi có đồng ý"
+
+#: src/features/analytics/Goals.tsx
+msgid "Only with prop"
+msgstr "Chỉ với prop"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
+msgstr "Hãy mở một trang của trang web bạn có đoạn mã. Mục này chuyển xanh ngay khi máy chủ lưu lượt xem trang đầu tiên. Trình duyệt có Do Not Track hoặc Global Privacy Control không gửi gì, nên hãy dùng trình duyệt khác để thử."
+
+#: src/features/analytics/Retention.tsx
+msgid "Open consent features"
+msgstr "Mở tính năng đồng ý"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Open report"
+msgstr "Mở báo cáo"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open the overview"
+msgstr "Mở tổng quan"
+
+#: src/features/analytics/Support.tsx
+msgid "Open the property’s settings"
+msgstr "Mở cài đặt của thuộc tính"
+
+#: src/features/analytics/text.ts
+msgid "Operating system"
+msgstr "Hệ điều hành"
+
+#: src/features/analytics/Install.tsx
+msgid "Opt-out link"
+msgstr "Liên kết từ chối"
+
+#: src/features/analytics/text.ts
+msgid "Organic search"
+msgstr "Tìm kiếm tự nhiên"
+
+#: src/features/analytics/text.ts
+msgid "OS version"
+msgstr "Phiên bản hệ điều hành"
+
+#: src/features/analytics/text.ts
+msgid "Other"
+msgstr "Khác"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other drops"
+msgstr "Các mục giảm khác"
+
+#: src/features/analytics/Events.tsx
+msgid "Other prop"
+msgstr "Prop khác"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other sites"
+msgstr "Trang web khác"
+
+#: src/features/analytics/text.ts
+msgid "Outbound link"
+msgstr "Liên kết ra ngoài"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Overview"
+msgstr "Tổng quan"
+
+#: src/features/analytics/Install.tsx
+msgid "Own domain"
+msgstr "Tên miền riêng"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Owners and admins make funnels from goals. They show up here with each step’s drop-off."
+msgstr "Chủ sở hữu và quản trị viên tạo phễu từ các mục tiêu. Chúng hiện ở đây cùng mức rơi rụng của từng bước."
+
+#: src/features/analytics/Goals.tsx
+msgid "Owners and admins make goals. They show up here with their conversions."
+msgstr "Chủ sở hữu và quản trị viên tạo mục tiêu. Chúng hiện ở đây cùng lượt chuyển đổi của chúng."
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Page"
+msgstr "Trang"
+
+#: src/features/analytics/text.ts
+msgid "Page feedback sent from the page."
+msgstr "Phản hồi về trang được gửi từ trang."
+
+#: src/features/analytics/text.ts
+msgid "Page not found"
+msgstr "Không tìm thấy trang"
+
+#: src/features/analytics/text.ts
+msgid "Page or screen"
+msgstr "Trang hoặc màn hình"
+
+#: src/features/analytics/Goals.tsx
+msgid "Page view of {path}"
+msgstr "Lượt xem trang {path}"
+
+#: src/features/analytics/text.ts
+msgid "Pages"
+msgstr "Trang"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens"
+msgstr "Trang và màn hình"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens viewed."
+msgstr "Trang và màn hình đã xem."
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages not counted"
+msgstr "Trang không được đếm"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
+msgstr "Các trang khớp một mẫu được đếm dưới một đường dẫn, nên mọi trang đơn hàng cộng lại thành một. Địa chỉ trong đường dẫn luôn bị thay thế."
+
+#: src/features/analytics/text.ts
+msgid "Pages viewed."
+msgstr "Trang đã xem."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Pages, sources, places and devices, without cookies, without storing IP addresses and without a consent banner where the law allows it."
+msgstr "Trang, nguồn, địa điểm và thiết bị, không dùng cookie, không lưu địa chỉ IP và không có biểu ngữ đồng ý ở nơi luật cho phép."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews"
+msgstr "Lượt xem trang"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews divided by visits."
+msgstr "Lượt xem trang chia cho số lượt truy cập."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews in the last 30 minutes"
+msgstr "Lượt xem trang trong 30 phút qua"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews per minute"
+msgstr "Lượt xem trang mỗi phút"
+
+#: src/features/analytics/text.ts
+msgid "Paid search"
+msgstr "Tìm kiếm trả phí"
+
+#: src/features/analytics/text.ts
+msgid "Paid social"
+msgstr "Mạng xã hội trả phí"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Password"
+msgstr "Mật khẩu"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Past alerts"
+msgstr "Cảnh báo trước đây"
+
+#: src/features/analytics/Settings.tsx
+msgid "Path rules"
+msgstr "Quy tắc đường dẫn"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pattern"
+msgstr "Mẫu"
+
+#: src/features/analytics/Controls.tsx
+msgid "Paying customers from Germany"
+msgstr "Khách hàng trả phí từ Đức"
+
+#: src/features/analytics/text.ts
+msgid "Per 1,000 views"
+msgstr "Trên 1.000 lượt xem"
+
+#: src/features/analytics/Overview.tsx
+msgid "per day"
+msgstr "mỗi ngày"
+
+#: src/features/analytics/Settings.tsx
+msgid "Per day"
+msgstr "Mỗi ngày"
+
+#: src/features/analytics/Overview.tsx
+msgid "per hour"
+msgstr "mỗi giờ"
+
+#: src/features/analytics/Overview.tsx
+msgid "per week"
+msgstr "mỗi tuần"
+
+#: src/features/analytics/Settings.tsx
+msgid "Persistent id"
+msgstr "ID liên tục"
+
+#: src/features/analytics/text.ts
+msgid "Phone"
+msgstr "Điện thoại"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Pick a goal"
+msgstr "Chọn một mục tiêu"
+
+#: src/features/analytics/Events.tsx
+msgid "Pick a prop to see the values this event carried."
+msgstr "Chọn một prop để xem các giá trị mà sự kiện này mang."
+
+#: src/features/analytics/Settings.tsx
+msgid "Pick at least one platform."
+msgstr "Hãy chọn ít nhất một nền tảng."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Pick at least one view."
+msgstr "Hãy chọn ít nhất một chế độ xem."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
+msgstr "Chọn cách trang web được xây dựng và sao chép đoạn mã. Khóa là công khai, như khóa chat: nó chỉ hoạt động trên các tên miền của thuộc tính."
+
+#: src/features/analytics/text.ts
+msgid "Platform"
+msgstr "Nền tảng"
+
+#: src/features/analytics/Settings.tsx
+msgid "Platforms"
+msgstr "Nền tảng"
+
+#: src/features/analytics/text.ts
+msgid "Prop"
+msgstr "Prop"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name"
+msgstr "Tên prop"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name, like plan"
+msgstr "Tên prop, ví dụ plan"
+
+#: src/features/analytics/Events.tsx
+msgid "Properties for children keep no props, only the address of outbound links and downloads."
+msgstr "Thuộc tính dành cho trẻ em không giữ prop, chỉ giữ địa chỉ của liên kết ra ngoài và lượt tải xuống."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children keep no props, so none can be tracked."
+msgstr "Thuộc tính dành cho trẻ em không giữ prop, nên không thể theo dõi prop nào."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children never keep an id on the device or link visits to a contact."
+msgstr "Thuộc tính dành cho trẻ em không bao giờ giữ ID trên thiết bị hoặc liên kết lượt truy cập với liên hệ."
+
+#: src/features/analytics/Retention.tsx
+msgid "Properties for children never keep an id on the device, so they have no retention."
+msgstr "Thuộc tính dành cho trẻ em không bao giờ giữ ID trên thiết bị, nên không có lưu giữ."
+
+#: src/features/analytics/Settings.tsx
+msgid "Property name"
+msgstr "Tên thuộc tính"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Props"
+msgstr "Prop"
+
+#: src/features/analytics/Events.tsx
+msgid "Props of any name can be broken down for the days the detailed records are kept. Earlier days only have the tracked props."
+msgstr "Prop có tên bất kỳ có thể được phân tích trong những ngày bản ghi chi tiết được giữ. Những ngày trước đó chỉ có các prop được theo dõi."
+
+#: src/features/analytics/Install.tsx
+msgid "Put the script in the head of every page. It counts page views, also when a single-page app changes the address, and stores nothing on the visitor’s device."
+msgstr "Đặt script trong head của mọi trang. Nó đếm lượt xem trang, cả khi một ứng dụng một trang đổi địa chỉ, và không lưu gì trên thiết bị của khách."
+
+#: src/features/analytics/Install.tsx
+msgid "Put these links on your privacy page. Opting out is the only thing the script stores on the visitor’s device, and only when they ask for it. Visitors with Do Not Track or Global Privacy Control are never counted."
+msgstr "Đặt các liên kết này trên trang quyền riêng tư của bạn. Từ chối là thứ duy nhất script lưu trên thiết bị của khách, và chỉ khi họ yêu cầu. Khách có Do Not Track hoặc Global Privacy Control không bao giờ được đếm."
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Range"
+msgstr "Khoảng"
+
+#: src/features/analytics/Support.tsx
+msgid "Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "Xếp theo số cuộc trò chuyện trên 1.000 lượt xem; các trang dưới 100 lượt xem xếp sau. Đếm theo trang và ngày, không bao giờ theo khách hay liên hệ."
+
+#: src/features/analytics/Settings.tsx
+msgid "Rate limits"
+msgstr "Giới hạn tốc độ"
+
+#: src/features/analytics/Support.tsx
+msgid "Ratings"
+msgstr "Đánh giá"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw events"
+msgstr "Sự kiện thô"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw exports cover at most 31 days."
+msgstr "Bản xuất thô bao gồm tối đa 31 ngày."
+
+#: src/features/analytics/Goals.tsx
+msgid "Reached when a visitor"
+msgstr "Đạt được khi một khách"
+
+#: src/features/analytics/Exports.tsx
+msgid "Ready"
+msgstr "Sẵn sàng"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Realtime"
+msgstr "Thời gian thực"
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour, last at {builtAt}."
+msgstr "Dựng lại mỗi giờ, lần cuối lúc {builtAt}."
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour."
+msgstr "Dựng lại mỗi giờ."
+
+#: src/features/analytics/text.ts
+msgid "Referral"
+msgstr "Giới thiệu"
+
+#: src/features/analytics/text.ts
+msgid "Referrer"
+msgstr "Nguồn giới thiệu"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Refreshes every 15 seconds"
+msgstr "Làm mới mỗi 15 giây"
+
+#: src/features/analytics/Settings.tsx
+msgid "Refused"
+msgstr "Bị từ chối"
+
+#: src/features/analytics/text.ts
+msgid "Region"
+msgstr "Khu vực"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter"
+msgstr "Gỡ bộ lọc"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter: {label}"
+msgstr "Gỡ bộ lọc: {label}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Remove rule"
+msgstr "Gỡ quy tắc"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Remove step"
+msgstr "Gỡ bước"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Rename “{0}”…"
+msgstr "Đổi tên “{0}”…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Rename segment"
+msgstr "Đổi tên phân khúc"
+
+#: src/features/analytics/Install.tsx
+msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
+msgstr "Kết xuất component một lần, trong layout gốc. Nó không kết xuất gì; useYuvaAnalytics() cung cấp các phương thức ở bất kỳ đâu bên dưới."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Report"
+msgstr "Báo cáo"
+
+#: src/features/analytics/Settings.tsx
+msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
+msgstr "Yêu cầu có Do Not Track hoặc Global Privacy Control, và sự kiện không có đồng ý trên thuộc tính cần nó, được nhận nhưng không lưu cũng không đếm ở đây."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Retention"
+msgstr "Lưu giữ khách"
+
+#: src/features/analytics/Retention.tsx
+msgid "Retention needs consent features"
+msgstr "Lưu giữ khách cần tính năng đồng ý"
+
+#: src/features/analytics/text.ts
+msgid "Returning"
+msgstr "Quay lại"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/text.ts
+msgid "Revenue"
+msgstr "Doanh thu"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke"
+msgstr "Thu hồi"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke {name}?"
+msgstr "Thu hồi {name}?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoked"
+msgstr "Đã thu hồi"
+
+#: src/features/analytics/Exports.tsx
+msgid "Rows"
+msgstr "Dòng"
+
+#: src/features/analytics/Exports.tsx
+msgid "Running"
+msgstr "Đang chạy"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Save"
+msgstr "Lưu"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Save the changes to “{0}”"
+msgstr "Lưu các thay đổi cho “{0}”"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save the filters as a new segment…"
+msgstr "Lưu các bộ lọc thành phân khúc mới…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save these filters as a segment"
+msgstr "Lưu các bộ lọc này thành phân khúc"
+
+#: src/features/analytics/Controls.tsx
+msgid "Saved segments"
+msgstr "Phân khúc đã lưu"
+
+#: src/features/analytics/text.ts
+msgid "Screen"
+msgstr "Màn hình"
+
+#: src/features/analytics/text.ts
+msgid "Screen size"
+msgstr "Kích thước màn hình"
+
+#: src/features/analytics/text.ts
+msgid "Screen views"
+msgstr "Lượt xem màn hình"
+
+#: src/features/analytics/text.ts
+msgid "Screen views divided by visits."
+msgstr "Lượt xem màn hình chia cho số lượt truy cập."
+
+#: src/features/analytics/text.ts
+msgid "Screen views in the last 30 minutes"
+msgstr "Lượt xem màn hình trong 30 phút qua"
+
+#: src/features/analytics/text.ts
+msgid "Screen views per minute"
+msgstr "Lượt xem màn hình mỗi phút"
+
+#: src/features/analytics/text.ts
+msgid "Screens"
+msgstr "Màn hình"
+
+#: src/features/analytics/text.ts
+msgid "Screens viewed."
+msgstr "Màn hình đã xem."
+
+#: src/features/analytics/text.ts
+msgid "Scroll depth"
+msgstr "Độ sâu cuộn"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolled to {pct} on {path}"
+msgstr "Đã cuộn đến {pct} trên {path}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolls"
+msgstr "Lượt cuộn"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segment"
+msgstr "Phân khúc"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segments"
+msgstr "Phân khúc"
+
+#: src/features/analytics/Settings.tsx
+msgid "Send a screen or an event from your app or backend while this page is open, and see whether it reached the server. Refreshes every 5 seconds."
+msgstr "Gửi một màn hình hoặc sự kiện từ ứng dụng hoặc backend của bạn khi trang này đang mở, và xem nó có đến máy chủ không. Làm mới mỗi 5 giây."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Send me one now"
+msgstr "Gửi cho tôi một cái ngay"
+
+#: src/features/analytics/Goals.tsx
+msgid "Sends an event"
+msgstr "Gửi một sự kiện"
+
+#: src/features/analytics/text.ts
+msgid "Server"
+msgstr "Máy chủ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Server busy"
+msgstr "Máy chủ bận"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Settings"
+msgstr "Cài đặt"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Share links"
+msgstr "Liên kết chia sẻ"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Shared with Yuva"
+msgstr "Chia sẻ với Yuva"
+
+#: src/features/analytics/Settings.tsx
+msgid "Sharing"
+msgstr "Chia sẻ"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Events.tsx
+msgid "Show"
+msgstr "Hiện"
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/parts.tsx
+msgid "Show from {day}"
+msgstr "Hiện từ {day}"
+
+#: src/features/analytics/Events.tsx
+msgid "Show its props"
+msgstr "Hiện prop của nó"
+
+#: src/features/analytics/Controls.tsx
+msgid "Show the days"
+msgstr "Hiện các ngày"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Show the last 30 days"
+msgstr "Hiện 30 ngày qua"
+
+#: src/features/analytics/Goals.tsx
+msgid "Signed up"
+msgstr "Đã đăng ký"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Sites that may embed it"
+msgstr "Trang web có thể nhúng nó"
+
+#: src/features/analytics/text.ts
+msgid "Social"
+msgstr "Mạng xã hội"
+
+#: src/features/analytics/Settings.tsx
+msgid "Some events were dropped. The reasons are below."
+msgstr "Một số sự kiện đã bị bỏ. Lý do ở bên dưới."
+
+#: src/features/analytics/text.ts
+msgid "Source"
+msgstr "Nguồn"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Realtime.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Sources"
+msgstr "Nguồn"
+
+#: src/features/analytics/Settings.tsx
+msgid "Start over"
+msgstr "Bắt đầu lại"
+
+#. placeholder {0}: i + 1
+#: src/features/analytics/Funnels.tsx
+msgid "Step {0}"
+msgstr "Bước {0}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Steps"
+msgstr "Các bước"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Support.tsx
+msgid "Support"
+msgstr "Hỗ trợ"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Support load"
+msgstr "Tải hỗ trợ"
+
+#: src/features/analytics/Support.tsx
+msgid "Support numbers can only be filtered by page and host. The other filters are left out here."
+msgstr "Số liệu hỗ trợ chỉ lọc được theo trang và host. Các bộ lọc khác bị bỏ ở đây."
+
+#: src/features/analytics/text.ts
+msgid "Tablet"
+msgstr "Máy tính bảng"
+
+#: src/features/analytics/Settings.tsx
+msgid "Taken and stored. They show up in Realtime within a minute."
+msgstr "Đã nhận và lưu. Chúng hiện trong Thời gian thực trong vòng một phút."
+
+#: src/features/analytics/Settings.tsx
+msgid "Test events"
+msgstr "Sự kiện thử"
+
+#: src/features/analytics/SharePage.tsx
+msgid "That password is not right."
+msgstr "Mật khẩu đó không đúng."
+
+#: src/features/analytics/Funnels.tsx
+msgid "The consented counts follow visitors with a persistent id from one visit and day to the next, so a step reached on a later day still counts."
+msgstr "Số đếm đã đồng ý theo dõi khách có ID liên tục từ lượt truy cập và ngày này sang lượt truy cập và ngày khác, nên bước đạt được vào ngày sau vẫn được tính."
+
+#: src/features/analytics/Settings.tsx
+msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
+msgstr "Khóa hiện tại vẫn hoạt động trong 24 giờ, để bạn cập nhật các trang mà không mất sự kiện. Tạo khóa khác trong thời gian đó sẽ kết thúc khóa cũ ngay."
+
+#: src/features/analytics/text.ts
+msgid "The deepest point reached on the page, per view."
+msgstr "Điểm sâu nhất đạt được trên trang, mỗi lượt xem."
+
+#: src/features/analytics/Exports.tsx
+msgid "The export failed on the server."
+msgstr "Việc xuất thất bại trên máy chủ."
+
+#: src/features/analytics/Exports.tsx
+msgid "The file would be larger than 1 GiB. Export a shorter range."
+msgstr "Tệp sẽ lớn hơn 1 GiB. Hãy xuất khoảng ngắn hơn."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "The first event arrived at {at}."
+msgstr "Sự kiện đầu tiên đến lúc {at}."
+
+#: src/features/analytics/Goals.tsx
+msgid "The goal reports the revenue its events carry, per currency."
+msgstr "Mục tiêu báo cáo doanh thu mà các sự kiện của nó mang, theo từng loại tiền tệ."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key is public, like a chat key: every page carries it, and it only works on the property’s domains."
+msgstr "Khóa là công khai, như khóa chat: mọi trang đều mang nó, và nó chỉ hoạt động trên các tên miền của thuộc tính."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key stops working at once, and all visits, events and totals are deleted. This cannot be undone."
+msgstr "Khóa ngừng hoạt động ngay, và mọi lượt truy cập, sự kiện và tổng số bị xóa. Không thể hoàn tác."
+
+#: src/features/analytics/Settings.tsx
+msgid "The last 30 days"
+msgstr "30 ngày qua"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and leaves the list."
+msgstr "Liên kết ngừng hoạt động ngay và rời khỏi danh sách."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and stays in the list."
+msgstr "Liên kết ngừng hoạt động ngay và vẫn ở trong danh sách."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked."
+msgstr "Liên kết ngừng hoạt động vào cuối ngày này theo {timezone}. Để trống để giữ đến khi bị thu hồi."
+
+#: src/features/analytics/Install.tsx
+msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
+msgstr "Module thêm một plugin client và composable useYuvaAnalytics(). NUXT_PUBLIC_YUVA_ANALYTICS_KEY ghi đè khóa lúc chạy."
+
+#: src/features/analytics/Settings.tsx
+msgid "The name does not match. Type it exactly as shown."
+msgstr "Tên không khớp. Hãy gõ chính xác như hiển thị."
+
+#: src/features/analytics/Goals.tsx
+msgid "The name given to track(), or outbound_click, file_download, not_found, chat_open."
+msgstr "Tên được truyền cho track(), hoặc outbound_click, file_download, not_found, chat_open."
+
+#: src/features/analytics/Settings.tsx
+msgid "The previous key keeps working until {at}. Update every page and app before then."
+msgstr "Khóa trước đó vẫn hoạt động đến {at}. Hãy cập nhật mọi trang và ứng dụng trước đó."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "The properties of your inboxes show up here once an owner or admin adds them."
+msgstr "Các thuộc tính của hộp thư của bạn hiện ở đây khi chủ sở hữu hoặc quản trị viên thêm chúng."
+
+#: src/features/analytics/Exports.tsx
+msgid "The query could not be run."
+msgstr "Không chạy được truy vấn."
+
+#: src/features/analytics/Exports.tsx
+msgid "The range is outside the detailed records."
+msgstr "Khoảng nằm ngoài các bản ghi chi tiết."
+
+#: src/features/analytics/SharePage.tsx
+msgid "The report could not be loaded"
+msgstr "Không tải được báo cáo"
+
+#: src/features/analytics/Settings.tsx
+msgid "The server’s own database"
+msgstr "Cơ sở dữ liệu riêng của máy chủ"
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need detailed records that are no longer kept for this range."
+msgstr "Những bộ lọc này cần các bản ghi chi tiết không còn được giữ cho khoảng này."
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need the detailed records, which are kept since {day}. Earlier days only have totals per page, source, place and device."
+msgstr "Những bộ lọc này cần các bản ghi chi tiết, được giữ từ {day}. Những ngày trước đó chỉ có tổng số theo trang, nguồn, địa điểm và thiết bị."
+
+#: src/features/analytics/Settings.tsx
+msgid "This cannot be undone."
+msgstr "Không thể hoàn tác."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal has numbers from {since} on. Days before that show none."
+msgstr "Mục tiêu này có số liệu từ {since} trở đi. Những ngày trước đó không có."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
+msgstr "Mục tiêu này là một bước của phễu. Hãy gỡ nó khỏi phễu, hoặc xóa phễu, trước."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This link is not available"
+msgstr "Liên kết này không khả dụng"
+
+#: src/features/analytics/text.ts
+msgid "This month"
+msgstr "Tháng này"
+
+#: src/features/analytics/Funnels.tsx
+msgid "This property already has a funnel with this name."
+msgstr "Thuộc tính này đã có một phễu với tên này."
+
+#: src/features/analytics/Goals.tsx
+msgid "This property already has a goal with this name."
+msgstr "Thuộc tính này đã có một mục tiêu với tên này."
+
+#: src/features/analytics/Controls.tsx
+msgid "This property already has a segment with this name."
+msgstr "Thuộc tính này đã có một phân khúc với tên này."
+
+#: src/features/analytics/Exports.tsx
+msgid "This range cannot be exported. Pick a shorter one, or one inside the detailed records."
+msgstr "Không thể xuất khoảng này. Hãy chọn khoảng ngắn hơn, hoặc một khoảng nằm trong các bản ghi chi tiết."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This report has a password"
+msgstr "Báo cáo này có mật khẩu"
+
+#: src/features/analytics/Support.tsx
+msgid "This workspace has no inbox yet."
+msgstr "Không gian làm việc này chưa có hộp thư."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
+msgstr "Không gian làm việc này đã đạt {limit} sự kiện phân tích trong tháng này. Sự kiện mới bị bỏ cho đến hết tháng."
+
+#: src/features/analytics/text.ts
+msgid "This year"
+msgstr "Năm nay"
+
+#: src/features/analytics/Exports.tsx
+msgid "Three exports are already running in this workspace. Try again when one finishes."
+msgstr "Đã có ba lần xuất đang chạy trong không gian làm việc này. Hãy thử lại khi một lần kết thúc."
+
+#: src/features/analytics/text.ts
+msgid "Time from the first to the last event of a visit, on average. Bounces count as zero."
+msgstr "Thời gian trung bình từ sự kiện đầu đến sự kiện cuối của một lượt truy cập. Lượt thoát tính bằng không."
+
+#: src/features/analytics/text.ts
+msgid "Time on page"
+msgstr "Thời gian trên trang"
+
+#: src/features/analytics/text.ts
+msgid "Time the page was visible and in focus, per view."
+msgstr "Thời gian trang hiển thị và được tập trung, mỗi lượt xem."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Time zone"
+msgstr "Múi giờ"
+
+#: src/features/analytics/text.ts
+msgid "Times the goal was reached, also several times by one visitor."
+msgstr "Số lần mục tiêu đạt được, kể cả nhiều lần bởi một khách."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated helpful."
+msgstr "Số lần trang được đánh giá là hữu ích."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated not helpful."
+msgstr "Số lần trang được đánh giá là không hữu ích."
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "To"
+msgstr "Đến"
+
+#: src/features/analytics/text.ts
+msgid "Today"
+msgstr "Hôm nay"
+
+#: src/features/analytics/Settings.tsx
+msgid "Today: {todayCounted} counted, {todayDropped} dropped"
+msgstr "Hôm nay: {todayCounted} đã đếm, {todayDropped} đã bỏ"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Token"
+msgstr "Token"
+
+#: src/features/analytics/Settings.tsx
+msgid "Too late"
+msgstr "Quá muộn"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many requests from your network. Wait a minute and reload the page."
+msgstr "Quá nhiều yêu cầu từ mạng của bạn. Hãy chờ một phút và tải lại trang."
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many tries. Wait a minute and try again."
+msgstr "Quá nhiều lần thử. Hãy chờ một phút và thử lại."
+
+#: src/features/analytics/text.ts
+msgid "Top pages"
+msgstr "Trang hàng đầu"
+
+#: src/features/analytics/text.ts
+msgid "Top pages and screens"
+msgstr "Trang và màn hình hàng đầu"
+
+#: src/features/analytics/text.ts
+msgid "Top screens"
+msgstr "Màn hình hàng đầu"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracked props"
+msgstr "Prop được theo dõi"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracking"
+msgstr "Theo dõi"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic drop"
+msgstr "Lưu lượng giảm"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic spike"
+msgstr "Lưu lượng tăng đột biến"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Try again"
+msgstr "Thử lại"
+
+#: src/features/analytics/Install.tsx
+msgid "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
+msgstr "Hãy bật {name} trong Nền tảng ở cài đặt chung trước. Cho đến lúc đó máy chủ từ chối sự kiện của ứng dụng."
+
+#: src/features/analytics/Retention.tsx
+msgid "Turn on the persistent id in the consent features, then call yuva.consent with persistent set to true."
+msgstr "Hãy bật ID liên tục trong các tính năng đồng ý, rồi gọi yuva.consent với persistent đặt là true."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Two to eight goals, in the order visitors reach them within one visit."
+msgstr "Hai đến tám mục tiêu, theo thứ tự khách đạt được chúng trong một lượt truy cập."
+
+#: src/features/analytics/Settings.tsx
+msgid "Type the property’s name to delete it and all its data."
+msgstr "Gõ tên thuộc tính để xóa nó và mọi dữ liệu của nó."
+
+#: src/features/analytics/text.ts
+msgid "Unknown"
+msgstr "Không rõ"
+
+#: src/features/analytics/Install.tsx
+msgid "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
+msgstr "Tối đa 100 sự kiện mỗi yêu cầu, mỗi sự kiện kèm địa chỉ IP và user agent của khách hoặc visitor_key của riêng bạn. Cả hai đều không được lưu. Sự kiện bị bỏ vì không hợp lệ được trả về trong errors cùng vị trí; xem những gì đã đến trong Sự kiện thử."
+
+#: src/features/analytics/text.ts
+msgid "UTM campaign"
+msgstr "Chiến dịch UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM content"
+msgstr "Nội dung UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM medium"
+msgstr "Phương tiện UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM source"
+msgstr "Nguồn UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM term"
+msgstr "Từ khóa UTM"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Views"
+msgstr "Lượt xem"
+
+#: src/features/analytics/Goals.tsx
+msgid "Views a page"
+msgstr "Xem một trang"
+
+#: src/features/analytics/text.ts
+msgid "Views divided by visits."
+msgstr "Lượt xem chia cho số lượt truy cập."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views fell to {now} in two hours, against {usual} usually."
+msgstr "Lượt xem giảm xuống {now} trong hai giờ, so với {usual} thông thường."
+
+#: src/features/analytics/text.ts
+msgid "Views in the last 30 minutes"
+msgstr "Lượt xem trong 30 phút qua"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at least three times the same hours of the week before."
+msgstr "Lượt xem hai giờ qua ít nhất gấp ba lần cùng khung giờ của tuần trước."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at most half the same hours of the week before."
+msgstr "Lượt xem hai giờ qua nhiều nhất bằng một nửa cùng khung giờ của tuần trước."
+
+#: src/features/analytics/text.ts
+msgid "Views per minute"
+msgstr "Lượt xem mỗi phút"
+
+#: src/features/analytics/text.ts
+msgid "Views per visit"
+msgstr "Lượt xem mỗi lượt truy cập"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views rose to {now} in two hours, against {usual} usually."
+msgstr "Lượt xem tăng lên {now} trong hai giờ, so với {usual} thông thường."
+
+#: src/features/analytics/text.ts
+msgid "Visit duration"
+msgstr "Thời lượng truy cập"
+
+#: src/features/analytics/Retention.tsx
+#: src/features/analytics/text.ts
+msgid "Visitors"
+msgstr "Khách truy cập"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Visitors in the last 30 minutes"
+msgstr "Khách truy cập trong 30 phút qua"
+
+#: src/features/analytics/Retention.tsx
+msgid "Visitors who came back"
+msgstr "Khách truy cập đã quay lại"
+
+#: src/features/analytics/text.ts
+msgid "Visitors who reached the goal, per day, added up over the days of the range."
+msgstr "Khách truy cập đã đạt mục tiêu, mỗi ngày, cộng dồn qua các ngày của khoảng."
+
+#: src/features/analytics/Settings.tsx
+msgid "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
+msgstr "Khách truy cập có Do Not Track hoặc Global Privacy Control không gửi gì, nên họ cũng không được đếm ở đây. Không có gì về một sự kiện bị bỏ được giữ ngoài số lượng."
+
+#: src/features/analytics/text.ts
+msgid "Visits"
+msgstr "Lượt truy cập"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page or screen view and nothing else."
+msgstr "Lượt truy cập có một lượt xem trang hoặc màn hình và không có gì khác."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page view and nothing else."
+msgstr "Lượt truy cập có một lượt xem trang và không có gì khác."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one screen view and nothing else."
+msgstr "Lượt truy cập có một lượt xem màn hình và không có gì khác."
+
+#: src/features/analytics/Install.tsx
+msgid "Vue, Astro, other"
+msgstr "Vue, Astro, khác"
+
+#: src/features/analytics/Exports.tsx
+msgid "Waiting"
+msgstr "Đang chờ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Waiting for events since {at}."
+msgstr "Đang chờ sự kiện từ {at}."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Waiting for the first event"
+msgstr "Đang chờ sự kiện đầu tiên"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Watch it live"
+msgstr "Xem trực tiếp"
+
+#: src/features/analytics/text.ts
+msgid "Web"
+msgstr "Web"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Website or app"
+msgstr "Trang web hoặc ứng dụng"
+
+#: src/features/analytics/Retention.tsx
+msgid "Week {period}"
+msgstr "Tuần {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Weekly"
+msgstr "Hằng tuần"
+
+#: src/features/analytics/Retention.tsx
+msgid "Weeks"
+msgstr "Tuần"
+
+#: src/features/analytics/Insights.tsx
+msgid "What changed"
+msgstr "Điều gì đã thay đổi"
+
+#: src/features/analytics/Support.tsx
+msgid "What stands out"
+msgstr "Điều nổi bật"
+
+#: src/features/analytics/text.ts
+msgid "What the goal's events carried, per currency. Currencies are never converted or added up."
+msgstr "Những gì sự kiện của mục tiêu mang, theo từng loại tiền tệ. Tiền tệ không bao giờ được quy đổi hay cộng lại."
+
+#: src/features/analytics/Exports.tsx
+msgid "What to export"
+msgstr "Xuất gì"
+
+#: src/features/analytics/Goals.tsx
+msgid "Where conversions come from"
+msgstr "Lượt chuyển đổi đến từ đâu"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Where the property’s day starts and ends."
+msgstr "Nơi ngày của thuộc tính bắt đầu và kết thúc."
+
+#: src/features/analytics/Install.tsx
+msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."
+msgstr "Với data-consent=\"required\" script không gửi gì cho đến khi công cụ đồng ý của bạn báo khách đã đồng ý. Hãy đặt Thu thập thành “Chỉ khi có đồng ý” trong cài đặt chung nữa, để máy chủ từ chối sự kiện không có nó."
+
+#: src/features/analytics/Settings.tsx
+msgid "With yuva.consent and persistent set to true, the device keeps a random id for 13 months. The visitor counts once over several days, is told apart as new or returning, fills retention and is followed across days in funnels. Never under Do Not Track or Global Privacy Control."
+msgstr "Với yuva.consent và persistent đặt là true, thiết bị giữ một ID ngẫu nhiên trong 13 tháng. Khách được đếm một lần qua nhiều ngày, được phân biệt là mới hay quay lại, điền vào lưu giữ khách và được theo dõi qua các ngày trong phễu. Không bao giờ khi có Do Not Track hoặc Global Privacy Control."
+
+#: src/features/analytics/text.ts
+msgid "Without consent"
+msgstr "Không có đồng ý"
+
+#: src/features/analytics/Retention.tsx
+msgid "Without cookies a visitor is new every day, so nobody can be followed from one day to the next. Only visitors who agree to a persistent id in your consent tool show up here."
+msgstr "Không dùng cookie, khách là mới mỗi ngày, nên không ai theo dõi được từ ngày này sang ngày khác. Chỉ khách đồng ý dùng ID liên tục trong công cụ đồng ý của bạn mới hiện ở đây."
+
+#: src/features/analytics/Settings.tsx
+msgid "Without cookies, for everyone"
+msgstr "Không dùng cookie, cho mọi người"
+
+#: src/features/analytics/text.ts
+msgid "Yesterday"
+msgstr "Hôm qua"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Your access ended. Enter the password again to keep reading."
+msgstr "Quyền truy cập của bạn đã kết thúc. Hãy nhập lại mật khẩu để tiếp tục đọc."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Your new share link"
+msgstr "Liên kết chia sẻ mới của bạn"
+
+#: src/features/analytics/Settings.tsx
+msgid "yuva.identify with a token from your backend, signed like a chat session, links the visitor’s visits to their contact. They show on the contact’s page under Recent visits. Forged or reused tokens are ignored."
+msgstr "yuva.identify với một token từ backend của bạn, ký như một phiên chat, liên kết các lượt truy cập của khách với liên hệ của họ. Chúng hiện trên trang của liên hệ trong Lượt truy cập gần đây. Token giả mạo hoặc dùng lại bị bỏ qua."

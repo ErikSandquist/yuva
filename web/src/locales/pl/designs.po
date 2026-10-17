@@ -1,0 +1,1333 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 10:11+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: pl\n"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "{name} (copy)"
+msgstr "{name} (kopia)"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "{used} of {limit}"
+msgstr "{used} z {limit}"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "{who} saved it {when}, after you started editing. Your changes are kept on this device until you choose."
+msgstr "{who} zapisał(a) to {when}, po tym jak zacząłeś(-aś) edycję. Twoje zmiany są przechowywane na tym urządzeniu, dopóki nie wybierzesz."
+
+#: src/features/designs/designer/controls.tsx
+msgid "A button needs a link."
+msgstr "Przycisk potrzebuje linku."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "A clear heading"
+msgstr "Wyraźny nagłówek"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "A design can hold at most 200 blocks."
+msgstr "Projekt może mieć najwyżej 200 bloków."
+
+#: src/features/designs/DesignsList.tsx
+msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
+msgstr "Projekt to wygląd wiadomości: zacznij od szablonu, a potem użyj go w swoich wysyłkach masowych."
+
+#: src/features/designs/designer/editor.tsx
+msgid "A field without a fallback can leave a gap, like “Hi ,”."
+msgstr "Pole bez wartości zastępczej może zostawić lukę, jak „Cześć ,”."
+
+#: src/features/designs/text.ts
+msgid "A group of blocks on its own background"
+msgstr "Grupa bloków na własnym tle"
+
+#: src/features/designs/text.ts
+msgid "A link that looks like a button"
+msgstr "Link wyglądający jak przycisk"
+
+#: src/features/designs/text.ts
+msgid "A merge field has no fallback, so it can be empty for some people."
+msgstr "Pole scalania nie ma wartości zastępczej, więc może być puste dla niektórych osób."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "A newer version of Yuva made this design. You can look at it here, but not change it."
+msgstr "Nowsza wersja Yuva stworzyła ten projekt. Możesz go tu obejrzeć, ale nie zmienić."
+
+#: src/features/designs/text.ts
+msgid "A thin line between parts"
+msgstr "Cienka linia między częściami"
+
+#: src/features/designs/text.ts
+msgid "A title in three sizes"
+msgstr "Tytuł w trzech rozmiarach"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "A version is kept at most every ten minutes while you edit, when you save by hand, when you restore one and when someone else's save wins a conflict. The newest 50 stay."
+msgstr "Wersja jest zachowywana najwyżej co dziesięć minut podczas edycji, gdy zapisujesz ręcznie, gdy przywracasz jedną i gdy czyjś zapis wygrywa konflikt. Najnowszych 50 zostaje."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Add"
+msgstr "Dodaj"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Add a block"
+msgstr "Dodaj blok"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Add a link"
+msgstr "Dodaj link"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Add your own lines above the required footer"
+msgstr "Dodaj własne linie nad wymaganą stopką"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Added to every mail: your legal name and postal address, why the person gets the mail, and the unsubscribe and preference links."
+msgstr "Dodawane do każdej wiadomości: Twoja nazwa prawna i adres pocztowy, dlaczego osoba dostaje wiadomość oraz linki rezygnacji i preferencji."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Address"
+msgstr "Adres"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Alignment"
+msgstr "Wyrównanie"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Also shown when a mail app blocks images."
+msgstr "Pokazywany też wtedy, gdy aplikacja pocztowa blokuje obrazy."
+
+#: src/features/designs/text.ts
+msgid "An uploaded picture, with a link if you like"
+msgstr "Wgrany obraz, z linkiem, jeśli chcesz"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Animated GIFs can be at most 1,200 pixels wide."
+msgstr "Animowane GIF-y mogą mieć najwyżej 1200 pikseli szerokości."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Announcement"
+msgstr "Ogłoszenie"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Apply"
+msgstr "Zastosuj"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Archive"
+msgstr "Archiwizuj"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Archive this design?"
+msgstr "Zarchiwizować ten projekt?"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Attribute key"
+msgstr "Klucz atrybutu"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Automatic"
+msgstr "Automatycznie"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Back to designs"
+msgstr "Wróć do projektów"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Background"
+msgstr "Tło"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Block settings"
+msgstr "Ustawienia bloku"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Panels.tsx
+msgid "Blocks"
+msgstr "Bloki"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Blocks and layers"
+msgstr "Bloki i warstwy"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Bold"
+msgstr "Pogrubienie"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Bottom"
+msgstr "Dół"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Brand"
+msgstr "Marka"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Build it yourself from blocks"
+msgstr "Zbuduj to sam z bloków"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Bulleted list"
+msgstr "Lista punktowana"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Button"
+msgstr "Przycisk"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Button colour"
+msgstr "Kolor przycisku"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Button text"
+msgstr "Tekst przycisku"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Buttons"
+msgstr "Przyciski"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Centre"
+msgstr "Do środka"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Changed elsewhere"
+msgstr "Zmieniono gdzie indziej"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Checks"
+msgstr "Sprawdzenia"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Choose an image"
+msgstr "Wybierz obraz"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Clear formatting"
+msgstr "Wyczyść formatowanie"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Close"
+msgstr "Zamknij"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Code"
+msgstr "Kod"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Colour"
+msgstr "Kolor"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Colours"
+msgstr "Kolory"
+
+#. placeholder {0}: n(i)
+#: src/features/designs/designer/Inspector.tsx
+msgid "Column {0}"
+msgstr "Kolumna {0}"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Column {n} · {width}%"
+msgstr "Kolumna {n} · {width}%"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Columns"
+msgstr "Kolumny"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Contact attribute"
+msgstr "Atrybut kontaktu"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Content background"
+msgstr "Tło treści"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Copy made"
+msgstr "Kopia utworzona"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Corner radius"
+msgstr "Promień rogów"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Create and edit"
+msgstr "Twórz i edytuj"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Current"
+msgstr "Bieżąca"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Dark"
+msgstr "Ciemny"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Dark mode"
+msgstr "Tryb ciemny"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Decorative"
+msgstr "Dekoracyjny"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Default"
+msgstr "Domyślny"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Default spacing"
+msgstr "Domyślny odstęp"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/ImageLibrary.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Delete"
+msgstr "Usuń"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Delete {name}"
+msgstr "Usuń {name}"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Delete anyway"
+msgstr "Usuń mimo to"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Delete this image?"
+msgstr "Usunąć ten obraz?"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Describe the image, or mark it as decorative."
+msgstr "Opisz obraz albo oznacz go jako dekoracyjny."
+
+#: src/features/designs/text.ts
+msgid "Describe this image for people who cannot see it, or mark it as decorative."
+msgstr "Opisz ten obraz dla osób, które go nie widzą, albo oznacz go jako dekoracyjny."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Description for screen readers"
+msgstr "Opis dla czytników ekranu"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Design"
+msgstr "Projekt"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Design archived"
+msgstr "Projekt zarchiwizowany"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Design name"
+msgstr "Nazwa projektu"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Design settings"
+msgstr "Ustawienia projektu"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Designer"
+msgstr "Projektant"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Designs"
+msgstr "Projekty"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Desktop"
+msgstr "Komputer"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Digest"
+msgstr "Zestawienie"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Direction"
+msgstr "Kierunek"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Divider"
+msgstr "Separator"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Done"
+msgstr "Gotowe"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Download JSON"
+msgstr "Pobierz JSON"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Download my version as JSON"
+msgstr "Pobierz moją wersję jako JSON"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Panels.tsx
+msgid "Drag {kind}"
+msgstr "Przeciągnij {kind}"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Drag a block here, or pick one from the list."
+msgstr "Przeciągnij tu blok albo wybierz jeden z listy."
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Drag a block onto the mail, or press Enter to add it after the selected block."
+msgstr "Przeciągnij blok na wiadomość albo naciśnij Enter, aby dodać go po zaznaczonym bloku."
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Drop blocks here"
+msgstr "Upuść bloki tutaj"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Duplicate"
+msgstr "Powiel"
+
+#: src/features/designs/text.ts
+msgid "E-mail address"
+msgstr "Adres e-mail"
+
+#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "E-mail designs"
+msgstr "Projekty e-maili"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Easy to read: {value}:1"
+msgstr "Łatwe do czytania: {value}:1"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Edit"
+msgstr "Edytuj"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Empty"
+msgstr "Pusty"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Empty page"
+msgstr "Pusta strona"
+
+#: src/features/designs/text.ts
+msgid "Empty room between blocks"
+msgstr "Pusta przestrzeń między blokami"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "End"
+msgstr "Koniec"
+
+#: src/features/designs/text.ts
+msgid "English"
+msgstr "angielski"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Event"
+msgstr "Zdarzenie"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Everywhere"
+msgstr "Wszędzie"
+
+#: src/features/designs/text.ts
+msgid "First name"
+msgstr "Imię"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Fonts already on people’s devices; mails load no web fonts."
+msgstr "Czcionki, które ludzie już mają na urządzeniach; wiadomości nie wczytują czcionek internetowych."
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Footer text"
+msgstr "Tekst stopki"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "For dark logos on a transparent background."
+msgstr "Dla ciemnych logo na przezroczystym tle."
+
+#: src/features/designs/text.ts
+msgid "Full name"
+msgstr "Imię i nazwisko"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Full width"
+msgstr "Pełna szerokość"
+
+#: src/features/designs/text.ts
+msgid "Geometric"
+msgstr "Geometryczna"
+
+#: src/features/designs/text.ts
+msgid "German"
+msgstr "niemiecki"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Gmail cuts mails off at about 102 KB of HTML, hiding the unsubscribe link."
+msgstr "Gmail obcina wiadomości przy około 102 KB HTML, ukrywając link rezygnacji."
+
+#: src/features/designs/designer/controls.tsx
+msgid "Hard to read: {value}:1, aim for 4.5:1"
+msgstr "Trudne do czytania: {value}:1, dąż do 4,5:1"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Has problems"
+msgstr "Ma problemy"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Has warnings"
+msgstr "Ma ostrzeżenia"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Heading"
+msgstr "Nagłówek"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Heading font"
+msgstr "Czcionka nagłówka"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Height"
+msgstr "Wysokość"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Hidden on phones"
+msgstr "Ukryty na telefonach"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Hidden on wide screens"
+msgstr "Ukryty na szerokich ekranach"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Hide dark colours"
+msgstr "Ukryj ciemne kolory"
+
+#: src/features/designs/text.ts
+msgid "Humanist"
+msgstr "Humanistyczna"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Icon colour"
+msgstr "Kolor ikony"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Icons"
+msgstr "Ikony"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Image"
+msgstr "Obraz"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Images"
+msgstr "Obrazy"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Images can be at most 10 MB."
+msgstr "Obrazy mogą mieć najwyżej 10 MB."
+
+#: src/features/designs/designer/ThemePanel.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Inbox"
+msgstr "Skrzynka"
+
+#: src/features/designs/text.ts
+msgid "Inbox name"
+msgstr "Nazwa skrzynki"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Insert"
+msgstr "Wstaw"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "It adds nothing to the message, so screen readers skip it."
+msgstr "Nic nie dodaje do wiadomości, więc czytniki ekranu go pomijają."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "It leaves the list of designs. Its versions are kept, and saving it again brings it back."
+msgstr "Znika z listy projektów. Jego wersje są zachowywane, a ponowny zapis go przywraca."
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "It was saved {when} in another tab or by someone else, after you started editing. Your changes are kept on this device until you choose."
+msgstr "Zapisano go {when} w innej karcie lub przez kogoś innego, po tym jak zacząłeś(-aś) edycję. Twoje zmiany są przechowywane na tym urządzeniu, dopóki nie wybierzesz."
+
+#: src/features/designs/designer/editor.tsx
+msgid "Italic"
+msgstr "Kursywa"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Its address stops working at once."
+msgstr "Jego adres natychmiast przestaje działać."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Its images are copied into your workspace’s images. You can change everything after."
+msgstr "Jego obrazy są kopiowane do obrazów Twojego obszaru roboczego. Potem możesz zmienić wszystko."
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Its sender details fill the required footer."
+msgstr "Jego dane nadawcy wypełniają wymaganą stopkę."
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Keep mine"
+msgstr "Zachowaj moją"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Kept from a conflict"
+msgstr "Zachowano z konfliktu"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Keyboard shortcuts"
+msgstr "Skróty klawiszowe"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Large"
+msgstr "Duży"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Panels.tsx
+msgid "Layers"
+msgstr "Warstwy"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Layout"
+msgstr "Układ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Left"
+msgstr "Lewo"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Left panel"
+msgstr "Lewy panel"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Left to right"
+msgstr "Od lewej do prawej"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Light"
+msgstr "Jasny"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Light plate in dark mode"
+msgstr "Jasna płyta w trybie ciemnym"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Lines"
+msgstr "Linie"
+
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Link"
+msgstr "Link"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Link address"
+msgstr "Adres linku"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Links"
+msgstr "Linki"
+
+#: src/features/designs/designer/controls.tsx
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/text.ts
+msgid "Links start with https://, http://, mailto: or tel:."
+msgstr "Linki zaczynają się od https://, http://, mailto: lub tel:."
+
+#: src/features/designs/text.ts
+msgid "Links to your profiles"
+msgstr "Linki do Twoich profili"
+
+#: src/features/designs/text.ts
+msgid "List name"
+msgstr "Nazwa listy"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+#: src/features/designs/DesignsList.tsx
+msgid "Load more"
+msgstr "Wczytaj więcej"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Load theirs"
+msgstr "Wczytaj ich"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Loading the image…"
+msgstr "Wczytywanie obrazu…"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Mail"
+msgstr "Poczta"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Mail apps in dark mode get darker colours made from yours, with text kept easy to read. Set any of them yourself."
+msgstr "Aplikacje pocztowe w trybie ciemnym dostają ciemniejsze kolory zrobione z Twoich, z tekstem łatwym do czytania. Ustaw dowolny z nich samodzielnie."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Make a copy"
+msgstr "Utwórz kopię"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Make them all from the light colours"
+msgstr "Zrób je wszystkie z jasnych kolorów"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Medium"
+msgstr "Średni"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Merge field"
+msgstr "Pole scalania"
+
+#: src/features/designs/text.ts
+msgid "Merge fields can only go in the part of a link after the question mark."
+msgstr "Pola scalania mogą być tylko w części linku po znaku zapytania."
+
+#: src/features/designs/text.ts
+msgid "Monospace"
+msgstr "Monospace"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "More actions"
+msgstr "Więcej działań"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Move down"
+msgstr "Przesuń w dół"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Move up"
+msgstr "Przesuń w górę"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Name"
+msgstr "Nazwa"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Network"
+msgstr "Sieć"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "New blank design"
+msgstr "Nowy pusty projekt"
+
+#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "New design"
+msgstr "Nowy projekt"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Newsletter"
+msgstr "Newsletter"
+
+#: src/features/designs/DesignsList.tsx
+msgid "No archived designs"
+msgstr "Brak zarchiwizowanych projektów"
+
+#: src/features/designs/DesignsList.tsx
+msgid "No designs match."
+msgstr "Żaden projekt nie pasuje."
+
+#: src/features/designs/DesignsList.tsx
+msgid "No designs yet"
+msgstr "Brak projektów"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "No images yet. Upload the first one."
+msgstr "Brak obrazów. Wgraj pierwszy."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "No problems found."
+msgstr "Nie znaleziono problemów."
+
+#: src/features/designs/designer/Versions.tsx
+msgid "No versions yet. One is kept after ten minutes of editing."
+msgstr "Brak wersji. Jedna jest zachowywana po dziesięciu minutach edycji."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Not saved: fix the marked blocks"
+msgstr "Niezapisane: popraw zaznaczone bloki"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Not saved. Try again"
+msgstr "Niezapisane. Spróbuj ponownie"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Number of columns"
+msgstr "Liczba kolumn"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Numbered list"
+msgstr "Lista numerowana"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Offline, kept on this device"
+msgstr "Offline, zachowane na tym urządzeniu"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Offline. Your changes are kept on this device and saved when you are back."
+msgstr "Offline. Twoje zmiany są przechowywane na tym urządzeniu i zapisane po Twoim powrocie."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Onboarding"
+msgstr "Wdrożenie"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "One under the other on narrow screens."
+msgstr "Jeden pod drugim na wąskich ekranach."
+
+#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Owners and admins make e-mail designs and send broadcasts."
+msgstr "Właściciele i administratorzy tworzą projekty e-maili i wysyłają wysyłki masowe."
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Page background"
+msgstr "Tło strony"
+
+#: src/features/designs/text.ts
+msgid "Paragraphs, lists and links"
+msgstr "Akapity, listy i linki"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Phone"
+msgstr "Telefon"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Phones"
+msgstr "Telefony"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Pick a colour"
+msgstr "Wybierz kolor"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Pick a version to see it."
+msgstr "Wybierz wersję, aby ją zobaczyć."
+
+#: src/features/designs/text.ts
+msgid "Pick an image from your library."
+msgstr "Wybierz obraz z biblioteki."
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "PNG, JPEG, GIF or WebP up to 10 MB. Uploads are made at most 1,200 pixels wide and lose their location and camera details. SVG files are not allowed."
+msgstr "PNG, JPEG, GIF lub WebP do 10 MB. Wgrywane obrazy są tworzone o szerokości najwyżej 1200 pikseli i tracą dane o lokalizacji i aparacie. Pliki SVG są niedozwolone."
+
+#: src/features/designs/text.ts
+msgid "Preferences link"
+msgstr "Link preferencji"
+
+#: src/features/designs/designer/Preview.tsx
+#: src/features/designs/designer/Versions.tsx
+msgid "Preview"
+msgstr "Podgląd"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Preview of {title}"
+msgstr "Podgląd {title}"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Preview text"
+msgstr "Tekst podglądu"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Product"
+msgstr "Produkt"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Put each person’s own details into the mail."
+msgstr "Wstaw do wiadomości dane każdej osoby."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Read more"
+msgstr "Czytaj dalej"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Redo"
+msgstr "Ponów"
+
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Remove"
+msgstr "Usuń"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Remove link"
+msgstr "Usuń link"
+
+#: src/features/designs/designer/Preview.tsx
+msgid "Rendering the mail…"
+msgstr "Renderowanie wiadomości…"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Replace"
+msgstr "Zamień"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Restore"
+msgstr "Przywróć"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Restored"
+msgstr "Przywrócono"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Restoring saves this version as the newest one. You can undo it."
+msgstr "Przywrócenie zapisuje tę wersję jako najnowszą. Możesz to cofnąć."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Right"
+msgstr "Prawo"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Right to left"
+msgstr "Od prawej do lewej"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Right to left for Arabic, Hebrew and Persian."
+msgstr "Od prawej do lewej dla arabskiego, hebrajskiego i perskiego."
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Same as the text"
+msgstr "Jak tekst"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Save mine as a copy"
+msgstr "Zapisz moją jako kopię"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Save now and keep a version"
+msgstr "Zapisz teraz i zachowaj wersję"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Save your version over theirs. Theirs is kept in Versions as “Kept from a conflict”."
+msgstr "Zapisz swoją wersję nad ich wersją. Ich wersja jest zachowana w Wersjach jako „Zachowano z konfliktu”."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Saved"
+msgstr "Zapisano"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Saved by hand"
+msgstr "Zapisano ręcznie"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Saved while editing"
+msgstr "Zapisano podczas edycji"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Saved, with a version kept"
+msgstr "Zapisano, z zachowaną wersją"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Saving…"
+msgstr "Zapisywanie…"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Scheduled to send"
+msgstr "Zaplanowano do wysłania"
+
+#: src/features/designs/DesignsList.tsx
+msgid "Search designs"
+msgstr "Szukaj projektów"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Secondary text"
+msgstr "Tekst drugorzędny"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Section"
+msgstr "Sekcja"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Select a block to change it. These settings apply to the whole mail."
+msgstr "Zaznacz blok, aby go zmienić. Te ustawienia dotyczą całej wiadomości."
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Sent as a test"
+msgstr "Wysłano jako test"
+
+#: src/features/designs/text.ts
+msgid "Serif"
+msgstr "Szeryfowa"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Shape"
+msgstr "Kształt"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Show"
+msgstr "Pokaż"
+
+#: src/features/designs/DesignsList.tsx
+msgid "Show archived designs"
+msgstr "Pokaż zarchiwizowane projekty"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Show as"
+msgstr "Pokaż jako"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Show dark colours"
+msgstr "Pokaż ciemne kolory"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Show on"
+msgstr "Pokaż na"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Show their version. Undo brings yours back."
+msgstr "Pokaż ich wersję. Cofnij przywraca Twoją."
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Shown after the subject in most inboxes. A broadcast can set its own."
+msgstr "Pokazywany po temacie w większości skrzynek. Wysyłka masowa może ustawić własny."
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Size"
+msgstr "Rozmiar"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Small"
+msgstr "Mały"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Social links"
+msgstr "Linki społecznościowe"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Some mail apps show every block anyway."
+msgstr "Niektóre aplikacje pocztowe i tak pokazują każdy blok."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Some text for this column."
+msgstr "Trochę tekstu do tej kolumny."
+
+#: src/features/designs/text.ts
+msgid "Some text is hard to read on its background, in the light or dark colours. Aim for 4.5:1."
+msgstr "Część tekstu jest trudna do odczytania na swoim tle, w jasnych lub ciemnych kolorach. Dąż do 4,5:1."
+
+#: src/features/designs/text.ts
+msgid "Something required is empty."
+msgstr "Coś wymaganego jest puste."
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Space"
+msgstr "Odstęp"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Space between"
+msgstr "Odstęp między"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Stack on phones"
+msgstr "Układaj w stos na telefonach"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Start"
+msgstr "Zacznij"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Start from a template or an empty page. Every design gets the footer the law asks for, and you can change everything else."
+msgstr "Zacznij od szablonu lub pustej strony. Każdy projekt dostaje stopkę wymaganą przez prawo, a wszystko inne możesz zmienić."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Start from an empty mail with simple colours."
+msgstr "Zacznij od pustej wiadomości z prostymi kolorami."
+
+#: src/features/designs/designer/editor.tsx
+msgid "Strikethrough"
+msgstr "Przekreślenie"
+
+#: src/features/designs/text.ts
+msgid "System"
+msgstr "System"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Take it out of these designs first, or archive them:"
+msgstr "Najpierw usuń go z tych projektów albo je zarchiwizuj:"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Template language"
+msgstr "Język szablonu"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+#: src/features/designs/text.ts
+msgid "Text"
+msgstr "Tekst"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Text colour"
+msgstr "Kolor tekstu"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Text font"
+msgstr "Czcionka tekstu"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Text formatting"
+msgstr "Formatowanie tekstu"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Text in English"
+msgstr "Tekst po angielsku"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Text size"
+msgstr "Rozmiar tekstu"
+
+#: src/features/designs/text.ts
+msgid "The column widths must add up to 100."
+msgstr "Szerokości kolumn muszą sumować się do 100."
+
+#: src/features/designs/text.ts
+msgid "The inbox has no legal name or postal address for the footer. Add them in the inbox settings before sending."
+msgstr "Skrzynka nie ma nazwy prawnej ani adresu pocztowego do stopki. Dodaj je w ustawieniach skrzynki przed wysłaniem."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "The inbox’s sender details fill the footer every mail gets."
+msgstr "Dane nadawcy skrzynki wypełniają stopkę, którą dostaje każda wiadomość."
+
+#: src/features/designs/designer/Panels.tsx
+msgid "The mail is empty. Add a block to start."
+msgstr "Wiadomość jest pusta. Dodaj blok, aby zacząć."
+
+#: src/features/designs/text.ts
+msgid "The mail is over 102 KB, so Gmail will cut it off and hide the unsubscribe link. Remove some blocks."
+msgstr "Wiadomość ma ponad 102 KB, więc Gmail ją obetnie i ukryje link rezygnacji. Usuń kilka bloków."
+
+#: src/features/designs/text.ts
+msgid "The mail is over 90 KB. Gmail cuts mails off at about 102 KB."
+msgstr "Wiadomość ma ponad 90 KB. Gmail obcina wiadomości przy około 102 KB."
+
+#: src/features/designs/text.ts
+msgid "The text has formatting e-mails cannot keep. Clear its formatting and try again."
+msgstr "Tekst ma formatowanie, którego e-maile nie mogą zachować. Wyczyść jego formatowanie i spróbuj ponownie."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "The widths add up to {sum}, not 100."
+msgstr "Szerokości sumują się do {sum}, a nie 100."
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "The workspace’s images take all the room this server allows. Delete images you no longer use."
+msgstr "Obrazy obszaru roboczego zajmują całe miejsce, na jakie pozwala ten serwer. Usuń obrazy, których już nie używasz."
+
+#: src/features/designs/text.ts
+msgid "There are too many items here."
+msgstr "Jest tu zbyt wiele elementów."
+
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/text.ts
+msgid "There is no merge field called {field}."
+msgstr "Nie ma pola scalania o nazwie {field}."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "These lines go above the footer every mail gets: the inbox’s legal name and postal address, why the person gets the mail, and the unsubscribe and preference links. Set the sender’s details in the inbox settings."
+msgstr "Te linie są nad stopką, którą dostaje każda wiadomość: nazwa prawna i adres pocztowy skrzynki, dlaczego osoba dostaje wiadomość oraz linki rezygnacji i preferencji. Ustaw dane nadawcy w ustawieniach skrzynki."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Thickness"
+msgstr "Grubość"
+
+#: src/features/designs/text.ts
+msgid "This block cannot sit inside this one."
+msgstr "Ten blok nie może być wewnątrz tego."
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "This design changed somewhere else"
+msgstr "Ten projekt zmienił się gdzie indziej"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This file type is not allowed. Use PNG, JPEG, GIF or WebP; SVG files can carry scripts, so they are refused."
+msgstr "Ten typ pliku jest niedozwolony. Użyj PNG, JPEG, GIF lub WebP; pliki SVG mogą zawierać skrypty, więc są odrzucane."
+
+#: src/features/designs/text.ts
+msgid "This image block has no image yet."
+msgstr "Ten blok obrazu nie ma jeszcze obrazu."
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This image is in use"
+msgstr "Ten obraz jest używany"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This image is too large. Use one under 40 megapixels and 8,000 pixels on a side, and at most 4,000 pixels tall once it is 1,200 wide."
+msgstr "Ten obraz jest za duży. Użyj obrazu poniżej 40 megapikseli i 8000 pikseli na bok oraz najwyżej 4000 pikseli wysokości, gdy ma 1200 szerokości."
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This image went out in a broadcast. If you delete it, people who open that mail see a broken image."
+msgstr "Ten obraz wyszedł w wysyłce masowej. Jeśli go usuniesz, osoby, które otworzą tę wiadomość, zobaczą uszkodzony obraz."
+
+#: src/features/designs/text.ts
+msgid "This is too long."
+msgstr "To jest za długie."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "This server does not have the template “{slug}”. It may need a newer Yuva."
+msgstr "Ten serwer nie ma szablonu „{slug}”. Może potrzebować nowszej Yuva."
+
+#: src/features/designs/text.ts
+msgid "This text uses a merge field that does not exist."
+msgstr "Ten tekst używa pola scalania, które nie istnieje."
+
+#: src/features/designs/text.ts
+msgid "This uses an image or link that belongs to another workspace."
+msgstr "To używa obrazu lub linku należącego do innego obszaru roboczego."
+
+#: src/features/designs/text.ts
+msgid "This value is not valid."
+msgstr "Ta wartość jest nieprawidłowa."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Three"
+msgstr "Trzy"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Top"
+msgstr "Najlepsze"
+
+#: src/features/designs/text.ts
+msgid "Turkish"
+msgstr "turecki"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Two"
+msgstr "Dwie"
+
+#: src/features/designs/text.ts
+msgid "Two blocks have the same id."
+msgstr "Dwa bloki mają to samo ID."
+
+#: src/features/designs/text.ts
+msgid "Two or three columns that stack on phones"
+msgstr "Dwie lub trzy kolumny, które układają się w stos na telefonach"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Type"
+msgstr "Typ"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Underline"
+msgstr "Podkreślenie"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Undo"
+msgstr "Cofnij"
+
+#: src/features/designs/text.ts
+msgid "Unsubscribe link"
+msgstr "Link do rezygnacji"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Untitled design"
+msgstr "Projekt bez nazwy"
+
+#: src/features/designs/designer/Preview.tsx
+msgid "Updating…"
+msgstr "Aktualizowanie…"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Upload images, or drop them here"
+msgstr "Wgraj obrazy albo upuść je tutaj"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Uploading…"
+msgstr "Wgrywanie…"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Use “{title}”"
+msgstr "Użyj „{title}”"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Use the default"
+msgstr "Użyj domyślnego"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Version restored"
+msgstr "Wersja przywrócona"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Versions.tsx
+msgid "Versions"
+msgstr "Wersje"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "View"
+msgstr "Widok"
+
+#: src/features/designs/text.ts
+msgid "Website"
+msgstr "Witryna"
+
+#: src/features/designs/designer/editor.tsx
+msgid "When it is empty, write"
+msgstr "Gdy jest puste, napisz"
+
+#: src/features/designs/designer/ThemePanel.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Whole workspace"
+msgstr "Cały obszar roboczy"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Wide screens"
+msgstr "Szerokie ekrany"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Width"
+msgstr "Szerokość"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Widths in percent"
+msgstr "Szerokości w procentach"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Write a heading"
+msgstr "Napisz nagłówek"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Write something"
+msgstr "Napisz coś"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Write what you want to tell your readers."
+msgstr "Napisz, co chcesz powiedzieć czytelnikom."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "You can reply to this mail; a person reads every answer."
+msgstr "Możesz odpowiedzieć na tę wiadomość; każdą odpowiedź czyta człowiek."
+
+#: src/features/designs/text.ts
+msgid "Your own lines above the required footer"
+msgstr "Twoje własne linie nad wymaganą stopką"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Your version becomes a new design; this one keeps theirs."
+msgstr "Twoja wersja staje się nowym projektem; ten zachowuje ich wersję."

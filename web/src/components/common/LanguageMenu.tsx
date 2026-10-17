@@ -33,7 +33,7 @@ export function LanguageMenu() {
         <LanguagesIcon />
         <span className="eyebrow">{i18n.locale}</span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-w-36">
+      <DropdownMenuContent align="end" className="max-h-80 min-w-44 overflow-y-auto">
         {Object.entries(locales).map(([k, v]) => (
           <DropdownMenuItem key={k} onClick={() => choose(k as Locale)}>
             <span className="flex-1">{v}</span>

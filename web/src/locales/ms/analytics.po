@@ -1,0 +1,2748 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 10:11+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ms\n"
+
+#: src/features/analytics/text.ts
+msgid "(not set)"
+msgstr "(tidak ditetapkan)"
+
+#. placeholder {0}: e.rows
+#: src/features/analytics/Exports.tsx
+msgid "{0, plural, one {# row} other {# rows}}"
+msgstr "{0, plural, other {# baris}}"
+
+#. placeholder {0}: p.visitors_today
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{0, plural, one {visitor today} other {visitors today}}"
+msgstr "{0, plural, other {pelawat hari ini}}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{consentedCount} consented, across visits and days"
+msgstr "{consentedCount} bersetuju, merentas lawatan dan hari"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {{site} sent # visit, and none in the 28 days before.} other {{site} sent # visits, and none in the 28 days before.}}"
+msgstr "{count, plural, other {{site} menghantar # lawatan, dan tiada dalam 28 hari sebelumnya.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {# conversation per 1,000 views, against {usual} in the 28 days before.} other {# conversations per 1,000 views, against {usual} in the 28 days before.}}"
+msgstr "{count, plural, other {# perbualan setiap 1,000 paparan, berbanding {usual} dalam 28 hari sebelumnya.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {Goal “{goal}” had # conversion, against {usual} a day on average in the week before.} other {Goal “{goal}” had # conversions, against {usual} a day on average in the week before.}}"
+msgstr "{count, plural, other {Matlamat “{goal}” mempunyai # penukaran, berbanding {usual} sehari secara purata pada minggu sebelumnya.}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{count} in this range, none in the compared days."
+msgstr "{count} dalam julat ini, tiada pada hari yang dibandingkan."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {count}, none in the compared days."
+msgstr "{dim} {value}: {count}, tiada pada hari yang dibandingkan."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} fell {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} turun {change}, {now} berbanding {before}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} rose {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} naik {change}, {now} berbanding {before}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {metric} {now}, none in the compared days."
+msgstr "{dim} {value}: {metric} {now}, tiada pada hari yang dibandingkan."
+
+#: src/features/analytics/Annotations.tsx
+msgid "{kind}: {found}"
+msgstr "{kind}: {found}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{lost} left ({lostPct})"
+msgstr "{lost} keluar ({lostPct})"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} fell {change}: {now}, against {before} in the compared days."
+msgstr "{metric} turun {change}: {now}, berbanding {before} pada hari yang dibandingkan."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} rose {change}: {now}, against {before} in the compared days."
+msgstr "{metric} naik {change}: {now}, berbanding {before} pada hari yang dibandingkan."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric}: {now}, none in the compared days."
+msgstr "{metric}: {now}, tiada pada hari yang dibandingkan."
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversation} other {# conversations}}"
+msgstr "{n, plural, other {# perbualan}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversion} other {# conversions}}"
+msgstr "{n, plural, other {# penukaran}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# discussion} other {# discussions}}"
+msgstr "{n, plural, other {# perbincangan}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# event} other {# events}}"
+msgstr "{n, plural, other {# peristiwa}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# view} other {# views}}"
+msgstr "{n, plural, other {# paparan}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visit} other {# visits}}"
+msgstr "{n, plural, other {# lawatan}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visitor} other {# visitors}}"
+msgstr "{n, plural, other {# pelawat}}"
+
+#: src/features/analytics/Events.tsx
+msgid "{n} payments, {avg} on average"
+msgstr "{n} bayaran, {avg} secara purata"
+
+#: src/features/analytics/Install.tsx
+msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
+msgstr "{name} bukan salah satu platform properti ini, jadi pelayan menolak peristiwa apl. Pemilik atau pentadbir boleh menghidupkannya."
+
+#: src/features/analytics/Funnels.tsx
+msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
+msgstr "{overall} daripada pelawat yang sampai ke langkah pertama turut sampai ke yang terakhir, {from} – {to}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
+msgstr "{rate, plural, other {{dim} {value}: # perbualan setiap 1,000 paparan, berbanding {site} merentas semua halaman.}}"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
+msgstr "{used} daripada {limit} peristiwa analitik digunakan bulan ini. Peristiwa melebihi had digugurkan sehingga bulan tamat."
+
+#: src/features/analytics/Settings.tsx
+msgid "A change applies to new events. Days already counted keep their zone."
+msgstr "Perubahan terpakai pada peristiwa baharu. Hari yang sudah dikira mengekalkan zonnya."
+
+#: src/features/analytics/Goals.tsx
+msgid "A changed goal is counted again over the days the detailed records are kept."
+msgstr "Matlamat yang diubah dikira semula merentas hari rekod terperinci disimpan."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel follows each visit step by step, so it covers at most 90 days at once, or 31 days for a property with more than 10 million events a month. Pick a shorter range."
+msgstr "Corong mengikuti setiap lawatan langkah demi langkah, jadi ia merangkumi paling banyak 90 hari sekali gus, atau 31 hari untuk properti dengan lebih 10 juta peristiwa sebulan. Pilih julat yang lebih pendek."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel is made of two to eight goals in a row. Make at least two goals first."
+msgstr "Corong terdiri daripada dua hingga lapan matlamat berturutan. Cipta sekurang-kurangnya dua matlamat dahulu."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are kept since {day}. Earlier days only have totals, so they cannot show a funnel."
+msgstr "Corong memerlukan langkah setiap lawatan, yang disimpan sejak {day}. Hari lebih awal hanya mempunyai jumlah, jadi ia tidak boleh menunjukkan corong."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are no longer kept for this range."
+msgstr "Corong memerlukan langkah setiap lawatan, yang tidak lagi disimpan untuk julat ini."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel shows how many visitors go from one goal to the next within a visit, and where they leave."
+msgstr "Corong menunjukkan berapa ramai pelawat bergerak dari satu matlamat ke yang seterusnya dalam satu lawatan, dan di mana mereka keluar."
+
+#: src/features/analytics/Goals.tsx
+msgid "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
+msgstr "Matlamat mengira pelawat yang melihat halaman, menghantar peristiwa atau menatal cukup jauh, dan hasil yang mereka bawa."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A goal’s conversions yesterday were at most half its daily average of the week before."
+msgstr "Penukaran matlamat semalam paling banyak separuh daripada purata hariannya pada minggu sebelumnya."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A link shows only its views of this property, read-only, without filters or segments. Revoking or deleting it stops it at once."
+msgstr "Pautan hanya menunjukkan paparan properti ini yang anda pilih, baca sahaja, tanpa penapis atau segmen. Membatalkan atau memadamnya menghentikannya serta-merta."
+
+#: src/features/analytics/Goals.tsx
+msgid "A new goal also counts the days the detailed records are kept, not only from today."
+msgstr "Matlamat baharu juga mengira hari rekod terperinci disimpan, bukan sahaja dari hari ini."
+
+#: src/features/analytics/Annotations.tsx
+msgid "A new key was made"
+msgstr "Kunci baharu dicipta"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A new password signs out everyone who unlocked the link."
+msgstr "Kata laluan baharu melog keluar semua orang yang membuka pautan."
+
+#: src/features/analytics/Goals.tsx
+msgid "A path. * stands for one part of it, ** for any number of them."
+msgstr "Satu laluan. * mewakili satu bahagiannya, ** sebarang bilangan."
+
+#: src/features/analytics/Settings.tsx
+msgid "A prop name has at most 300 characters and does not start with $ or yuva_."
+msgstr "Nama prop paling banyak 300 aksara dan tidak bermula dengan $ atau yuva_."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A property can have at most 50 share links. Delete one first."
+msgstr "Satu properti boleh mempunyai paling banyak 50 pautan kongsi. Padam satu dahulu."
+
+#: src/features/analytics/parts.tsx
+msgid "A range can be at most 400 days long. Pick a shorter one."
+msgstr "Satu julat boleh sepanjang paling banyak 400 hari. Pilih yang lebih pendek."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A site sent 10 or more visits yesterday and none in the 28 days before."
+msgstr "Satu tapak menghantar 10 atau lebih lawatan semalam dan tiada dalam 28 hari sebelumnya."
+
+#: src/features/analytics/Settings.tsx
+msgid "A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and it shows as a chip on the Events view."
+msgstr "Prop yang dijejaki juga disimpan dalam jumlah harian, jadi pecahannya kekal selepas rekod terperinci hilang, dan ia ditunjukkan sebagai cip dalam paparan Peristiwa."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page or screen views without a gap of 30 minutes, within one day."
+msgstr "Paparan halaman atau skrin pelawat tanpa jurang 30 minit, dalam satu hari."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page views without a gap of 30 minutes, within one day."
+msgstr "Paparan halaman pelawat tanpa jurang 30 minit, dalam satu hari."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
+msgstr "Paparan skrin pelawat tanpa jurang 30 minit, dalam satu hari. Setiap pelancaran apl memulakan lawatan baharu."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Active"
+msgstr "Aktif"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add"
+msgstr "Tambah"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add a note to the chart"
+msgstr "Tambah nota pada carta"
+
+#: src/features/analytics/Settings.tsx
+msgid "Add a rule"
+msgstr "Tambah peraturan"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Add a step"
+msgstr "Tambah langkah"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/NewProperty.tsx
+msgid "Add a website"
+msgstr "Tambah tapak web"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add a website to count its visitors, pages and sources, without cookies."
+msgstr "Tambah tapak web untuk mengira pelawat, halaman dan sumbernya, tanpa kuki."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Add and install"
+msgstr "Tambah dan pasang"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add note"
+msgstr "Tambah nota"
+
+#: src/features/analytics/Install.tsx
+msgid "Add the YuvaAnalytics library of the Yuva package and configure it once at launch. .yuvaScreen counts a SwiftUI screen; in UIKit, call YuvaAnalytics.screen when a screen appears. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "Tambah pustaka YuvaAnalytics daripada pakej Yuva dan konfigurasikan sekali semasa pelancaran. .yuvaScreen mengira skrin SwiftUI; dalam UIKit, panggil YuvaAnalytics.screen apabila skrin muncul. Tanpa sambungan, peristiwa menunggu pada peranti sehingga 72 jam dan tiba dengan masanya sendiri."
+
+#: src/features/analytics/Install.tsx
+msgid "Add yuva-analytics from JitPack and configure it once in Application.onCreate. TrackScreen counts a Compose screen. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "Tambah yuva-analytics daripada JitPack dan konfigurasikan sekali dalam Application.onCreate. TrackScreen mengira skrin Compose. Tanpa sambungan, peristiwa menunggu pada peranti sehingga 72 jam dan tiba dengan masanya sendiri."
+
+#: src/features/analytics/Settings.tsx
+msgid "Addresses not counted"
+msgstr "Alamat tidak dikira"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the compared days"
+msgstr "berbanding hari yang dibandingkan"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the period before"
+msgstr "berbanding tempoh sebelumnya"
+
+#: src/features/analytics/Support.tsx
+msgid "Agents of the inbox can then see this property’s numbers too."
+msgstr "Ejen peti masuk kemudian boleh melihat angka properti ini juga."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Agents of this inbox can see the numbers."
+msgstr "Ejen peti masuk ini boleh melihat angka."
+
+#: src/features/analytics/text.ts
+msgid "AI assistants"
+msgstr "Pembantu AI"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Alerts"
+msgstr "Amaran"
+
+#: src/features/analytics/Settings.tsx
+msgid "Alerts and reports"
+msgstr "Amaran dan laporan"
+
+#: src/features/analytics/Events.tsx
+msgid "All events"
+msgstr "Semua peristiwa"
+
+#: src/features/analytics/Goals.tsx
+msgid "All goals"
+msgstr "Semua matlamat"
+
+#: src/features/analytics/Support.tsx
+msgid "An owner or admin can link one in the property’s settings."
+msgstr "Pemilik atau pentadbir boleh memaut satu dalam tetapan properti."
+
+#: src/features/analytics/Retention.tsx
+msgid "An owner or admin can turn on the persistent id in the consent features."
+msgstr "Pemilik atau pentadbir boleh menghidupkan id berterusan dalam ciri persetujuan."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics"
+msgstr "Analitik"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Analytics properties"
+msgstr "Properti analitik"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Analytics steps"
+msgstr "Langkah analitik"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics views"
+msgstr "Paparan analitik"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Anyone with the link sees the views you pick, read-only, without signing in."
+msgstr "Sesiapa yang mempunyai pautan melihat paparan yang anda pilih, baca sahaja, tanpa log masuk."
+
+#: src/features/analytics/text.ts
+msgid "App"
+msgstr "Apl"
+
+#: src/features/analytics/text.ts
+msgid "App version"
+msgstr "Versi apl"
+
+#: src/features/analytics/Settings.tsx
+msgid "Apps send without a domain, so only the platforms turned on here are counted. Events from your backend need no platform."
+msgstr "Apl menghantar tanpa domain, jadi hanya platform yang dihidupkan di sini dikira. Peristiwa daripada bahagian belakang anda tidak memerlukan platform."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Ask for a password"
+msgstr "Minta kata laluan"
+
+#: src/features/analytics/Sharing.tsx
+msgid "At least 8 characters"
+msgstr "Sekurang-kurangnya 8 aksara"
+
+#: src/features/analytics/Settings.tsx
+msgid "At most 10 props can be tracked."
+msgstr "Paling banyak 10 prop boleh dijejaki."
+
+#: src/features/analytics/Settings.tsx
+msgid "Audience"
+msgstr "Khalayak"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Available until {expires}"
+msgstr "Tersedia sehingga {expires}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots"
+msgstr "Bot"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
+msgstr "Bot, had kadar, alamat dan laluan yang dikecualikan, had bulanan atau pelayan sibuk."
+
+#: src/features/analytics/text.ts
+msgid "Bounce rate"
+msgstr "Kadar lantunan"
+
+#: src/features/analytics/Events.tsx
+msgid "Break down by prop"
+msgstr "Pecahkan mengikut prop"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Breakdown"
+msgstr "Pecahan"
+
+#: src/features/analytics/Exports.tsx
+msgid "Broken down by"
+msgstr "Dipecahkan mengikut"
+
+#: src/features/analytics/Settings.tsx
+msgid "Broken events, such as a screen address that does not start with app://, a reserved name or too many props."
+msgstr "Peristiwa rosak, seperti alamat skrin yang tidak bermula dengan app://, nama terpelihara atau terlalu banyak prop."
+
+#: src/features/analytics/text.ts
+msgid "Browser"
+msgstr "Pelayar"
+
+#: src/features/analytics/text.ts
+msgid "Browser version"
+msgstr "Versi pelayar"
+
+#: src/features/analytics/Install.tsx
+msgid "Call it once in the browser. During server rendering it does nothing."
+msgstr "Panggil sekali dalam pelayar. Semasa pemaparan sebelah pelayan ia tidak berbuat apa-apa."
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Cancel"
+msgstr "Batal"
+
+#: src/features/analytics/Controls.tsx
+msgid "Change filter: {label}"
+msgstr "Tukar penapis: {label}"
+
+#: src/features/analytics/Controls.tsx
+msgid "changed"
+msgstr "berubah"
+
+#: src/features/analytics/text.ts
+msgid "Channel"
+msgstr "Saluran"
+
+#: src/features/analytics/text.ts
+msgid "Chat opened"
+msgstr "Sembang dibuka"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Checked every hour. Each alert is sent once and also shows as a note on the chart."
+msgstr "Disemak setiap jam. Setiap amaran dihantar sekali dan juga ditunjukkan sebagai nota pada carta."
+
+#: src/features/analytics/Settings.tsx
+msgid "Children"
+msgstr "Kanak-kanak"
+
+#: src/features/analytics/Support.tsx
+msgid "Choose an inbox"
+msgstr "Pilih peti masuk"
+
+#: src/features/analytics/Settings.tsx
+msgid "Choose children for a site made for children."
+msgstr "Pilih kanak-kanak untuk tapak yang dibuat untuk kanak-kanak."
+
+#: src/features/analytics/text.ts
+msgid "City"
+msgstr "Bandar"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Clear"
+msgstr "Kosongkan"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts by"
+msgstr "Kohort mengikut"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts fill once visitors agree to a persistent id and come back. The numbers are rebuilt every hour."
+msgstr "Kohort terisi apabila pelawat bersetuju dengan id berterusan dan kembali. Angka dibina semula setiap jam."
+
+#: src/features/analytics/Settings.tsx
+msgid "Collection"
+msgstr "Kohort"
+
+#. placeholder {0}: formatDate(`${c.from}T12:00:00Z`, i18n.locale)
+#. placeholder {1}: formatDate(`${c.to}T12:00:00Z`, i18n.locale)
+#: src/features/analytics/Controls.tsx
+msgid "Compare with {0} – {1}"
+msgstr "Bandingkan dengan {0} – {1}"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with a year earlier"
+msgstr "Bandingkan dengan setahun sebelumnya"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days"
+msgstr "Bandingkan dengan hari lain"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days…"
+msgstr "Bandingkan dengan hari lain…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the days"
+msgstr "Bandingkan dengan hari"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the period before"
+msgstr "Bandingkan dengan tempoh sebelumnya"
+
+#: src/features/analytics/Overview.tsx
+msgid "Compared days"
+msgstr "Hari yang dibandingkan"
+
+#: src/features/analytics/Controls.tsx
+msgid "Comparison"
+msgstr "Perbandingan"
+
+#: src/features/analytics/text.ts
+msgid "Completions"
+msgstr "Penyelesaian"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consent features"
+msgstr "Ciri persetujuan"
+
+#: src/features/analytics/Install.tsx
+msgid "Consent mode"
+msgstr "Mod persetujuan"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id, and signed-in users are linked to their contact."
+msgstr "Pelawat yang bersetuju mengekalkan id berterusan, dan pengguna yang log masuk dipautkan kepada kenalan mereka."
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id."
+msgstr "Pelawat yang bersetuju mengekalkan id berterusan."
+
+#: src/features/analytics/parts.tsx
+msgid "Consented visitors only"
+msgstr "Pelawat yang bersetuju sahaja"
+
+#: src/features/analytics/text.ts
+msgid "contains"
+msgstr "mengandungi"
+
+#: src/features/analytics/Install.tsx
+msgid "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
+msgstr "Penyekat kandungan sering menghentikan skrip daripada domain lain. Menyajikan skrip dan titik akhirnya daripada tapak anda sendiri mengekalkan pelawat itu dikira. Pelayan Yuva mesti mempercayai alamat yang dimajukan proksi anda; jika tidak semua pelawat kelihatan seperti satu."
+
+#: src/features/analytics/text.ts
+msgid "Conversations"
+msgstr "Perbualan"
+
+#: src/features/analytics/text.ts
+msgid "Conversations per 1,000 views of the page."
+msgstr "Perbualan setiap 1,000 paparan halaman."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Conversations per 1,000 views yesterday were at least twice the rate of the 28 days before."
+msgstr "Perbualan setiap 1,000 paparan semalam sekurang-kurangnya dua kali ganda kadar 28 hari sebelumnya."
+
+#: src/features/analytics/text.ts
+msgid "Conversations started on the page, from the chat of the linked inbox."
+msgstr "Perbualan yang bermula pada halaman, daripada sembang peti masuk yang dipautkan."
+
+#: src/features/analytics/Support.tsx
+msgid "Conversations, feedback, ratings and discussions of the linked inbox show here next to each page’s views. They are counted per page and day; no visitor is ever matched to a contact."
+msgstr "Perbualan, maklum balas, penilaian dan perbincangan peti masuk yang dipautkan ditunjukkan di sini di sebelah paparan setiap halaman. Ia dikira mengikut halaman dan hari; tiada pelawat pernah dipadankan dengan kenalan."
+
+#: src/features/analytics/text.ts
+msgid "Conversion rate"
+msgstr "Kadar penukaran"
+
+#: src/features/analytics/text.ts
+msgid "Conversions"
+msgstr "Penukaran"
+
+#: src/features/analytics/text.ts
+msgid "Conversions per 100 visitors."
+msgstr "Penukaran setiap 100 pelawat."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
+msgstr "Salin sekarang; ia tidak ditunjukkan lagi. Pautan yang hilang hanya boleh dibatalkan dan dibuat semula."
+
+#: src/features/analytics/Install.tsx
+msgid "Count my visits again"
+msgstr "Kira lawatan saya semula"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Count visitors, pages, sources, places and devices without cookies and without storing IP addresses."
+msgstr "Kira pelawat, halaman, sumber, tempat dan peranti tanpa kuki dan tanpa menyimpan alamat IP."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Count your website’s visitors"
+msgstr "Kira pelawat tapak web anda"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted"
+msgstr "Dikira"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted as"
+msgstr "Dikira sebagai"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Countries"
+msgstr "Negara"
+
+#: src/features/analytics/text.ts
+msgid "Country"
+msgstr "Negara"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
+msgstr "Mengira setiap pelawat tanpa bertanya: tiada apa disimpan pada peranti dan tiada alamat IP dikekalkan."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Counts the visitors who reached each step after the ones before it, within one visit on one day. Numbers are at most ten minutes old."
+msgstr "Mengira pelawat yang sampai ke setiap langkah selepas yang sebelumnya, dalam satu lawatan pada satu hari. Angka paling lama sepuluh minit."
+
+#: src/features/analytics/Settings.tsx
+msgid "Currency"
+msgstr "Mata wang"
+
+#: src/features/analytics/Exports.tsx
+msgid "Current view"
+msgstr "Paparan semasa"
+
+#: src/features/analytics/text.ts
+msgid "Custom and built-in events."
+msgstr "Peristiwa tersuai dan terbina dalam."
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range"
+msgstr "Julat tersuai"
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range…"
+msgstr "Julat tersuai…"
+
+#: src/features/analytics/Settings.tsx
+msgid "Data"
+msgstr "Data"
+
+#: src/features/analytics/Install.tsx
+msgid "data-outbound counts clicks on links to other sites, data-files downloads of documents and archives, and data-chat each time a visitor opens the chat. track() sends your own events with up to 30 props; e-mail addresses in props are dropped. Make goals from events in the Goals view."
+msgstr "data-outbound mengira klik pada pautan ke tapak lain, data-files muat turun dokumen dan arkib, dan data-chat setiap kali pelawat membuka sembang. track() menghantar peristiwa anda sendiri dengan sehingga 30 prop; alamat e-mel dalam prop digugurkan. Cipta matlamat daripada peristiwa dalam paparan Matlamat."
+
+#: src/features/analytics/Settings.tsx
+msgid "Day"
+msgstr "Hari"
+
+#: src/features/analytics/Retention.tsx
+msgid "Day {period}"
+msgstr "Hari {period}"
+
+#: src/features/analytics/Exports.tsx
+msgid "Day by day"
+msgstr "Hari demi hari"
+
+#: src/features/analytics/Retention.tsx
+msgid "Days"
+msgstr "Hari"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/SharePage.tsx
+msgid "Days are counted in this time zone"
+msgstr "Hari dikira dalam zon waktu ini"
+
+#: src/features/analytics/Settings.tsx
+msgid "Days are in the property’s time zone. Their totals are counted again without them."
+msgstr "Hari dalam zon waktu properti. Jumlahnya dikira semula tanpa mereka."
+
+#: src/features/analytics/Settings.tsx
+msgid "Days waiting to be summed up"
+msgstr "Hari menunggu untuk dijumlahkan"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete"
+msgstr "Padam"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete {0}?"
+msgstr "Padam {0}?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete {name}?"
+msgstr "Padam {name}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data"
+msgstr "Padam semua data"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data of {0}?"
+msgstr "Padam semua data {0}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete days"
+msgstr "Padam hari"
+
+#: src/features/analytics/Exports.tsx
+msgid "Delete export"
+msgstr "Padam eksport"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Delete funnel"
+msgstr "Padam corong"
+
+#: src/features/analytics/Goals.tsx
+msgid "Delete goal"
+msgstr "Padam matlamat"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete note"
+msgstr "Padam nota"
+
+#: src/features/analytics/Controls.tsx
+msgid "Delete segment"
+msgstr "Padam segmen"
+
+#. placeholder {0}: funnel.name
+#: src/features/analytics/Funnels.tsx
+msgid "Delete the funnel “{0}”?"
+msgstr "Padam corong “{0}”?"
+
+#. placeholder {0}: goal.name
+#: src/features/analytics/Goals.tsx
+msgid "Delete the goal “{0}”?"
+msgstr "Padam matlamat “{0}”?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the property"
+msgstr "Padam properti"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Delete the segment “{0}”?"
+msgstr "Padam segmen “{0}”?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the visits and events of {span}?"
+msgstr "Padam lawatan dan peristiwa {span}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete these days"
+msgstr "Padam hari ini"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete this note?"
+msgstr "Padam nota ini?"
+
+#: src/features/analytics/Exports.tsx
+msgid "deleted {expires}"
+msgstr "dipadam {expires}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Deleting in the background. The numbers update when it is done."
+msgstr "Memadam di latar belakang. Angka dikemas kini apabila selesai."
+
+#: src/features/analytics/Goals.tsx
+msgid "Depth in %"
+msgstr "Kedalaman dalam %"
+
+#: src/features/analytics/text.ts
+msgid "Desktop"
+msgstr "Desktop"
+
+#: src/features/analytics/Exports.tsx
+msgid "Detailed records are kept since {rawDay}."
+msgstr "Rekod terperinci disimpan sejak {rawDay}."
+
+#: src/features/analytics/Settings.tsx
+msgid "Detailed records kept since"
+msgstr "Rekod terperinci disimpan sejak"
+
+#: src/features/analytics/Overview.tsx
+msgid "Details"
+msgstr "Butiran"
+
+#: src/features/analytics/text.ts
+msgid "Device"
+msgstr "Peranti"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Devices"
+msgstr "Peranti"
+
+#: src/features/analytics/text.ts
+msgid "Direct"
+msgstr "Terus"
+
+#: src/features/analytics/text.ts
+msgid "Direct / none"
+msgstr "Terus / tiada"
+
+#: src/features/analytics/text.ts
+msgid "Discussion threads started on the page."
+msgstr "Utas perbincangan yang bermula pada halaman."
+
+#: src/features/analytics/text.ts
+msgid "Discussions"
+msgstr "Perbincangan"
+
+#: src/features/analytics/text.ts
+msgid "Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again."
+msgstr "Pelawat unik sehari, dijumlahkan merentas hari dalam julat. Seseorang yang kembali pada hari lain dikira semula."
+
+#: src/features/analytics/Install.tsx
+msgid "Do not count my visits"
+msgstr "Jangan kira lawatan saya"
+
+#: src/features/analytics/text.ts
+msgid "does not contain"
+msgstr "tidak mengandungi"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Domains"
+msgstr "Domain"
+
+#: src/features/analytics/Exports.tsx
+msgid "Download"
+msgstr "Muat turun"
+
+#: src/features/analytics/parts.tsx
+msgid "Download CSV"
+msgstr "Muat turun CSV"
+
+#: src/features/analytics/Settings.tsx
+msgid "Dropped"
+msgstr "Digugurkan"
+
+#: src/features/analytics/text.ts
+msgid "E-mail"
+msgstr "E-mel"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that day, each column the share of them who came back that many days later."
+msgstr "Setiap baris memegang pelawat yang mula-mula dilihat pada hari itu, setiap lajur bahagian mereka yang kembali sekian hari kemudian."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that month, each column the share of them who came back that many months later."
+msgstr "Setiap baris memegang pelawat yang mula-mula dilihat pada bulan itu, setiap lajur bahagian mereka yang kembali sekian bulan kemudian."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that week, each column the share of them who came back that many weeks later."
+msgstr "Setiap baris memegang pelawat yang mula-mula dilihat pada minggu itu, setiap lajur bahagian mereka yang kembali sekian minggu kemudian."
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Edit"
+msgstr "Sunting"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Edit funnel"
+msgstr "Sunting corong"
+
+#: src/features/analytics/Goals.tsx
+msgid "Edit goal"
+msgstr "Sunting matlamat"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Edit note"
+msgstr "Sunting nota"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Edit share link"
+msgstr "Sunting pautan kongsi"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embed"
+msgstr "Benam"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embeds"
+msgstr "Benam"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Enter the password you were given with the link."
+msgstr "Masukkan kata laluan yang diberikan bersama pautan."
+
+#: src/features/analytics/text.ts
+msgid "Entry page"
+msgstr "Halaman masuk"
+
+#: src/features/analytics/Goals.tsx
+msgid "equal to"
+msgstr "sama dengan"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Event"
+msgstr "Peristiwa"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event}"
+msgstr "Peristiwa {event}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event} with {key} = {value}"
+msgstr "Peristiwa {event} dengan {key} = {value}"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Install.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Events"
+msgstr "Peristiwa"
+
+#: src/features/analytics/Settings.tsx
+msgid "Events are arriving."
+msgstr "Peristiwa sedang tiba."
+
+#: src/features/analytics/Events.tsx
+msgid "Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when the script has their attributes."
+msgstr "Peristiwa datang daripada panggilan track() pada halaman dan apl anda. Pautan keluar, muat turun dan pembukaan sembang dikira apabila skrip mempunyai atributnya."
+
+#: src/features/analytics/Settings.tsx
+msgid "Events count only after the page calls yuva.consent with analytics set to true. Install the script with data-consent=\"required\"."
+msgstr "Peristiwa dikira hanya selepas halaman memanggil yuva.consent dengan analytics ditetapkan kepada true. Pasang skrip dengan data-consent=\"required\"."
+
+#: src/features/analytics/Settings.tsx
+msgid "events counted"
+msgstr "peristiwa dikira"
+
+#: src/features/analytics/Settings.tsx
+msgid "events dropped"
+msgstr "peristiwa digugurkan"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every event with its visit’s page, source, place and device, as NDJSON. Visits are numbered within the file; there is no visitor id, address or contact. At most 31 days."
+msgstr "Setiap peristiwa dengan halaman, sumber, tempat dan peranti lawatannya, sebagai NDJSON. Lawatan dinomborkan dalam fail; tiada id pelawat, alamat atau kenalan. Paling banyak 31 hari."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Every Monday at 08:00 in {zone}, about the week before."
+msgstr "Setiap Isnin pada 08:00 dalam {zone}, tentang minggu sebelumnya."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range and the filters you are looking at, without a comparison."
+msgstr "Setiap baris julat dan penapis yang anda lihat, tanpa perbandingan."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range you are looking at, without a comparison."
+msgstr "Setiap baris julat yang anda lihat, tanpa perbandingan."
+
+#: src/features/analytics/Settings.tsx
+msgid "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
+msgstr "Setiap lawatan, peristiwa dan jumlah dipadam. Properti dan kuncinya kekal, dan pengiraan diteruskan."
+
+#: src/features/analytics/Controls.tsx
+msgid "Everyone who sees this property can pick it. You, owners and admins can change it."
+msgstr "Sesiapa yang melihat properti ini boleh memilihnya. Anda, pemilik dan pentadbir boleh mengubahnya."
+
+#: src/features/analytics/Annotations.tsx
+msgid "Everyone who sees this property sees the note, such as a launch or a campaign."
+msgstr "Sesiapa yang melihat properti ini melihat nota, seperti pelancaran atau kempen."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Everything this property raised, newest first, whoever was notified."
+msgstr "Segala yang dicetuskan properti ini, terbaharu dahulu, sesiapa pun yang dimaklumkan."
+
+#: src/features/analytics/Settings.tsx
+msgid "Excluded"
+msgstr "Dikecualikan"
+
+#: src/features/analytics/text.ts
+msgid "Exit page"
+msgstr "Halaman keluar"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expired"
+msgstr "Tamat tempoh"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expires"
+msgstr "Tamat tempoh"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export"
+msgstr "Eksport"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export progress"
+msgstr "Kemajuan eksport"
+
+#: src/features/analytics/Exports.tsx
+msgid "Exports"
+msgstr "Eksport"
+
+#: src/features/analytics/Exports.tsx
+msgid "Failed"
+msgstr "Gagal"
+
+#: src/features/analytics/text.ts
+msgid "Feedback"
+msgstr "Maklum balas"
+
+#: src/features/analytics/Support.tsx
+msgid "Fewer than 100 views"
+msgstr "Kurang daripada 100 paparan"
+
+#: src/features/analytics/text.ts
+msgid "File download"
+msgstr "Muat turun fail"
+
+#: src/features/analytics/Exports.tsx
+msgid "Files are made in the background and deleted seven days later."
+msgstr "Fail dibuat di latar belakang dan dipadam tujuh hari kemudian."
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Support.tsx
+msgid "Filter by this"
+msgstr "Tapis mengikut ini"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Filters"
+msgstr "Penapis"
+
+#: src/features/analytics/Exports.tsx
+msgid "Filters come from the view: click a row there to add one. <0>Change them in the view</0>"
+msgstr "Penapis datang daripada paparan: klik baris di sana untuk menambah satu. <0>Ubahnya dalam paparan</0>"
+
+#: src/features/analytics/Retention.tsx
+msgid "First day"
+msgstr "Hari pertama"
+
+#: src/features/analytics/Retention.tsx
+msgid "First month"
+msgstr "Bulan pertama"
+
+#: src/features/analytics/text.ts
+msgid "First page or screen"
+msgstr "Halaman atau skrin pertama"
+
+#: src/features/analytics/text.ts
+msgid "First screen"
+msgstr "Skrin pertama"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "First visit"
+msgstr "Lawatan pertama"
+
+#: src/features/analytics/Retention.tsx
+msgid "First week"
+msgstr "Minggu pertama"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Five reports an hour at most. Try again later."
+msgstr "Paling banyak lima laporan sejam. Cuba lagi nanti."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "For example Fieldnote website"
+msgstr "Contohnya tapak web Fieldnote"
+
+#: src/features/analytics/Settings.tsx
+msgid "For revenue, an ISO code like EUR."
+msgstr "Untuk hasil, kod ISO seperti EUR."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an <0>API key</0> with the analytics:write scope, which stays on your server."
+msgstr "Untuk apa yang hanya dilihat bahagian belakang anda, seperti pendaftaran atau bayaran. Track memajukan alamat dan pelayar pelawat, jadi peristiwa menyertai lawatan mereka; permintaan dengan Do Not Track atau Global Privacy Control tidak dihantar. Ia memerlukan <0>kunci API</0> dengan skop analytics:write, yang kekal pada pelayan anda."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
+msgstr "Untuk apa yang hanya dilihat bahagian belakang anda, seperti pendaftaran atau bayaran. Track memajukan alamat dan pelayar pelawat, jadi peristiwa menyertai lawatan mereka; permintaan dengan Do Not Track atau Global Privacy Control tidak dihantar. Ia memerlukan kunci API dengan skop analytics:write daripada pemilik atau pentadbir, yang kekal pada pelayan anda."
+
+#: src/features/analytics/Exports.tsx
+msgid "Format"
+msgstr "Format"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "From"
+msgstr "Daripada"
+
+#: src/features/analytics/Settings.tsx
+msgid "From a site that is not one of the domains, or from an app whose platform is not turned on."
+msgstr "Daripada tapak yang bukan salah satu domain, atau daripada apl yang platformnya tidak dihidupkan."
+
+#: src/features/analytics/Funnels.tsx
+msgid "From pricing to signup"
+msgstr "Dari harga ke pendaftaran"
+
+#: src/features/analytics/Support.tsx
+msgid "From the inbox {inboxName}. Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "Daripada peti masuk {inboxName}. Disusun mengikut perbualan setiap 1,000 paparan; halaman dengan kurang daripada 100 paparan datang selepas yang lain. Dikira mengikut halaman dan hari, tidak pernah mengikut pelawat atau kenalan."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Funnel"
+msgstr "Corong"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Funnels"
+msgstr "Corong"
+
+#: src/features/analytics/Settings.tsx
+msgid "General"
+msgstr "Umum"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Go to goals"
+msgstr "Pergi ke matlamat"
+
+#: src/features/analytics/Goals.tsx
+msgid "Goal"
+msgstr "Matlamat"
+
+#. placeholder {0}: a.text
+#: src/features/analytics/Annotations.tsx
+msgid "Goal “{0}” was created"
+msgstr "Matlamat “{0}” dicipta"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Goal drop"
+msgstr "Penurunan matlamat"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Goals"
+msgstr "Matlamat"
+
+#: src/features/analytics/Settings.tsx
+msgid "had an address removed"
+msgstr "alamat dialih keluar"
+
+#: src/features/analytics/Settings.tsx
+msgid "Health"
+msgstr "Kesihatan"
+
+#: src/features/analytics/text.ts
+msgid "Helpful"
+msgstr "Membantu"
+
+#: src/features/analytics/Support.tsx
+msgid "Helpful and not helpful"
+msgstr "Membantu dan tidak membantu"
+
+#: src/features/analytics/text.ts
+msgid "Helpful ratings out of all ratings."
+msgstr "Penilaian membantu daripada semua penilaian."
+
+#: src/features/analytics/text.ts
+msgid "Helpful share"
+msgstr "Bahagian membantu"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Home shows each website and app like this: visitors today, in the last 30 minutes and this week."
+msgstr "Laman Utama menunjukkan setiap tapak web dan apl seperti ini: pelawat hari ini, dalam 30 minit lepas dan minggu ini."
+
+#: src/features/analytics/text.ts
+msgid "Host"
+msgstr "Hos"
+
+#: src/features/analytics/text.ts
+msgid "Host or app"
+msgstr "Hos atau apl"
+
+#: src/features/analytics/Install.tsx
+msgid "How to install"
+msgstr "Cara memasang"
+
+#: src/features/analytics/Events.tsx
+msgid "How to send events"
+msgstr "Cara menghantar peristiwa"
+
+#: src/features/analytics/Sharing.tsx
+msgid "I saved it"
+msgstr "Saya telah menyimpannya"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Support.tsx
+msgid "Inbox"
+msgstr "Peti masuk"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Install"
+msgstr "Pasang"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/NewProperty.tsx
+msgid "Install on {0}"
+msgstr "Pasang pada {0}"
+
+#: src/features/analytics/text.ts
+msgid "Internal"
+msgstr "Dalaman"
+
+#: src/features/analytics/Settings.tsx
+msgid "Invalid"
+msgstr "Tidak sah"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Investors"
+msgstr "Pelabur"
+
+#: src/features/analytics/text.ts
+msgid "is"
+msgstr "ialah"
+
+#: src/features/analytics/text.ts
+msgid "is not"
+msgstr "bukan"
+
+#: src/features/analytics/Controls.tsx
+msgid "It is gone for everyone who uses it. The numbers stay."
+msgstr "Ia hilang untuk semua orang yang menggunakannya. Angka kekal."
+
+#: src/features/analytics/SharePage.tsx
+msgid "It may have expired or been revoked. Ask the person who shared it for a new one."
+msgstr "Ia mungkin telah tamat tempoh atau dibatalkan. Minta orang yang berkongsinya untuk yang baharu."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Its goals stay."
+msgstr "Matlamatnya kekal."
+
+#: src/features/analytics/Goals.tsx
+msgid "Its numbers are deleted too. This cannot be undone."
+msgstr "Angkanya turut dipadam. Ini tidak boleh dibuat asal."
+
+#: src/features/analytics/Events.tsx
+msgid "Keep only visits with this value"
+msgstr "Kekalkan hanya lawatan dengan nilai ini"
+
+#: src/features/analytics/Settings.tsx
+msgid "Key"
+msgstr "Kunci"
+
+#: src/features/analytics/Goals.tsx
+msgid "Kind of goal"
+msgstr "Jenis matlamat"
+
+#: src/features/analytics/text.ts
+msgid "Language"
+msgstr "Bahasa"
+
+#: src/features/analytics/text.ts
+msgid "Laptop"
+msgstr "Komputer riba"
+
+#: src/features/analytics/text.ts
+msgid "Last 12 months"
+msgstr "12 bulan lepas"
+
+#: src/features/analytics/text.ts
+msgid "Last 28 days"
+msgstr "28 hari lepas"
+
+#: src/features/analytics/text.ts
+msgid "Last 30 days"
+msgstr "30 hari lepas"
+
+#: src/features/analytics/text.ts
+msgid "Last 6 months"
+msgstr "6 bulan lepas"
+
+#: src/features/analytics/text.ts
+msgid "Last 7 days"
+msgstr "7 hari lepas"
+
+#: src/features/analytics/text.ts
+msgid "Last 90 days"
+msgstr "90 hari lepas"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event"
+msgstr "Peristiwa terakhir"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event: {last}"
+msgstr "Peristiwa terakhir: {last}"
+
+#: src/features/analytics/text.ts
+msgid "Last month"
+msgstr "Bulan lepas"
+
+#: src/features/analytics/Sharing.tsx
+msgid "last opened {viewed}"
+msgstr "dibuka terakhir {viewed}"
+
+#: src/features/analytics/text.ts
+msgid "Last page or screen"
+msgstr "Halaman atau skrin terakhir"
+
+#: src/features/analytics/text.ts
+msgid "Last screen"
+msgstr "Skrin terakhir"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Leave empty to keep the current one"
+msgstr "Biarkan kosong untuk mengekalkan yang semasa"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Link"
+msgstr "Pautan"
+
+#: src/features/analytics/Support.tsx
+msgid "Link an inbox to see support per page"
+msgstr "Paut peti masuk untuk melihat sokongan setiap halaman"
+
+#: src/features/analytics/Support.tsx
+msgid "Link inbox"
+msgstr "Paut peti masuk"
+
+#: src/features/analytics/Settings.tsx
+msgid "Link signed-in users to their contact"
+msgstr "Paut pengguna yang log masuk kepada kenalan mereka"
+
+#: src/features/analytics/Alerts.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Support.tsx
+msgid "Load more"
+msgstr "Muatkan lagi"
+
+#: src/features/analytics/Settings.tsx
+msgid "Location database"
+msgstr "Pangkalan data lokasi"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Locations"
+msgstr "Lokasi"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created}"
+msgstr "Dibuat {created}"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created} by {by}"
+msgstr "Dibuat {created} oleh {by}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key"
+msgstr "Buat kunci baharu"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key?"
+msgstr "Buat kunci baharu?"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Make at least two goals first."
+msgstr "Cipta sekurang-kurangnya dua matlamat dahulu."
+
+#: src/features/analytics/Goals.tsx
+msgid "Make goal"
+msgstr "Cipta matlamat"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Make link"
+msgstr "Cipta pautan"
+
+#: src/features/analytics/text.ts
+msgid "matches"
+msgstr "sepadan"
+
+#: src/features/analytics/text.ts
+msgid "Mobile"
+msgstr "Mudah alih"
+
+#: src/features/analytics/Retention.tsx
+msgid "Month {period}"
+msgstr "Bulan {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Monthly"
+msgstr "Bulanan"
+
+#: src/features/analytics/Settings.tsx
+msgid "Monthly limit"
+msgstr "Had bulanan"
+
+#: src/features/analytics/Retention.tsx
+msgid "Months"
+msgstr "Bulan"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move down"
+msgstr "Alih ke bawah"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move up"
+msgstr "Alih ke atas"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Name"
+msgstr "Nama"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs a linked inbox under General: its identity secret signs the tokens."
+msgstr "Memerlukan peti masuk yang dipautkan di bawah Umum: rahsia identitinya menandatangani token."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Needs a linked inbox. {help}"
+msgstr "Memerlukan peti masuk yang dipautkan. {help}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs the persistent id: a visitor is linked through it."
+msgstr "Memerlukan id berterusan: pelawat dipautkan melaluinya."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Never"
+msgstr "Tidak pernah"
+
+#: src/features/analytics/Sharing.tsx
+msgid "never opened"
+msgstr "tidak pernah dibuka"
+
+#: src/features/analytics/text.ts
+msgid "New"
+msgstr "Baharu"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value} with {count}, none in the compared days."
+msgstr "{kind} baharu: {value} dengan {count}, tiada pada hari yang dibandingkan."
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
+msgstr "{kind} baharu: {value}. {metric}: {now}, tiada pada hari yang dibandingkan."
+
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "Baharu dan kembali"
+
+#: src/features/analytics/Funnels.tsx
+msgid "New funnel"
+msgstr "Corong baharu"
+
+#: src/features/analytics/Goals.tsx
+msgid "New goal"
+msgstr "Matlamat baharu"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New link"
+msgstr "Pautan baharu"
+
+#: src/features/analytics/text.ts
+msgid "New or returning"
+msgstr "Baharu atau kembali"
+
+#: src/features/analytics/Annotations.tsx
+msgid "New pricing page"
+msgstr "Halaman harga baharu"
+
+#: src/features/analytics/Alerts.tsx
+msgid "New referrer"
+msgstr "Perujuk baharu"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New share link"
+msgstr "Pautan kongsi baharu"
+
+#: src/features/analytics/Alerts.tsx
+msgid "No alerts yet."
+msgstr "Belum ada amaran."
+
+#: src/features/analytics/Controls.tsx
+msgid "No comparison"
+msgstr "Tiada perbandingan"
+
+#: src/features/analytics/Settings.tsx
+msgid "No consent features are offered."
+msgstr "Tiada ciri persetujuan ditawarkan."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "Tiada pelawat bersetuju dalam julat ini."
+
+#: src/features/analytics/Retention.tsx
+msgid "No consented visitors yet"
+msgstr "Belum ada pelawat bersetuju"
+
+#: src/features/analytics/Support.tsx
+msgid "No conversations, feedback, ratings or discussions from these pages in this range."
+msgstr "Tiada perbualan, maklum balas, penilaian atau perbincangan daripada halaman ini dalam julat ini."
+
+#: src/features/analytics/Goals.tsx
+msgid "No conversions in this range."
+msgstr "Tiada penukaran dalam julat ini."
+
+#: src/features/analytics/Settings.tsx
+msgid "No event yet."
+msgstr "Belum ada peristiwa."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events in the last 24 hours"
+msgstr "Tiada peristiwa dalam 24 jam lepas"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events yet"
+msgstr "Belum ada peristiwa"
+
+#: src/features/analytics/Exports.tsx
+msgid "No exports yet."
+msgstr "Belum ada eksport."
+
+#: src/features/analytics/Funnels.tsx
+msgid "No funnels yet"
+msgstr "Belum ada corong"
+
+#: src/features/analytics/Goals.tsx
+msgid "No goals yet"
+msgstr "Belum ada matlamat"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No properties yet"
+msgstr "Belum ada properti"
+
+#: src/features/analytics/Settings.tsx
+msgid "No props are tracked."
+msgstr "Tiada prop dijejaki."
+
+#: src/features/analytics/Alerts.tsx
+msgid "No scheduled reports."
+msgstr "Tiada laporan berjadual."
+
+#: src/features/analytics/Controls.tsx
+msgid "No segment"
+msgstr "Tiada segmen"
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Make one to show these numbers to people outside the workspace."
+msgstr "Belum ada pautan kongsi. Cipta satu untuk menunjukkan angka ini kepada orang di luar ruang kerja."
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Owners and admins make them."
+msgstr "Belum ada pautan kongsi. Pemilik dan pentadbir mencipta."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Nobody in the last 30 minutes."
+msgstr "Tiada sesiapa dalam 30 minit lepas."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Nobody reached the first step in this range."
+msgstr "Tiada sesiapa sampai ke langkah pertama dalam julat ini."
+
+#: src/features/analytics/Alerts.tsx
+msgid "None"
+msgstr "Tiada"
+
+#: src/features/analytics/Settings.tsx
+msgid "None yet"
+msgstr "Belum ada"
+
+#: src/features/analytics/Exports.tsx
+msgid "None, every visit counts."
+msgstr "Tiada, setiap lawatan dikira."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "None, owners and admins only"
+msgstr "Tiada, pemilik dan pentadbir sahaja"
+
+#: src/features/analytics/parts.tsx
+msgid "Not available for this range."
+msgstr "Tidak tersedia untuk julat ini."
+
+#: src/features/analytics/text.ts
+msgid "Not helpful"
+msgstr "Tidak membantu"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Note"
+msgstr "Nota"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Notes"
+msgstr "Nota"
+
+#: src/features/analytics/Exports.tsx
+msgid "Nothing"
+msgstr "Tiada apa-apa"
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Nothing counted in this range."
+msgstr "Tiada apa dikira dalam julat ini."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Notify me"
+msgstr "Maklumkan saya"
+
+#: src/features/analytics/Settings.tsx
+msgid "Off"
+msgstr "Mati"
+
+#: src/features/analytics/Settings.tsx
+msgid "Offered only to visitors who agree in your consent tool. Everyone else is counted exactly as before, one day at a time and without anything stored on the device."
+msgstr "Ditawarkan hanya kepada pelawat yang bersetuju dalam alat persetujuan anda. Yang lain dikira seperti sebelum ini, sehari demi sehari dan tanpa apa-apa disimpan pada peranti."
+
+#: src/features/analytics/Settings.tsx
+msgid "Older than 72 hours. Apps keep events without a connection for at most that long."
+msgstr "Lebih lama daripada 72 jam. Apl menyimpan peristiwa tanpa sambungan paling lama sebegitu."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On its way to {email}."
+msgstr "Dalam perjalanan ke {email}."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On the 1st of each month at 08:00 in {zone}, about the month before."
+msgstr "Pada 1 setiap bulan pada 08:00 dalam {zone}, tentang bulan sebelumnya."
+
+#: src/features/analytics/Settings.tsx
+msgid "One IP address or range per line, up to 50, such as your office or a monitoring service."
+msgstr "Satu alamat IP atau julat setiap baris, sehingga 50, seperti pejabat anda atau perkhidmatan pemantauan."
+
+#: src/features/analytics/Settings.tsx
+msgid "One path per line, up to 50. * stands for one part of the path, ** for any number of them."
+msgstr "Satu laluan setiap baris, sehingga 50. * mewakili satu bahagian laluan, ** sebarang bilangan."
+
+#: src/features/analytics/Sharing.tsx
+msgid "One per line, like https://example.com or https://*.example.com. Without any, no other site can show it in a frame."
+msgstr "Satu setiap baris, seperti https://example.com atau https://*.example.com. Tanpa mana-mana, tiada tapak lain boleh menunjukkannya dalam bingkai."
+
+#: src/features/analytics/Settings.tsx
+msgid "One per line. *.example.com covers every subdomain, but not example.com itself."
+msgstr "Satu setiap baris. *.example.com merangkumi setiap subdomain, tetapi bukan example.com itu sendiri."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "One per line. Pages on other domains cannot send events. *.example.com covers every subdomain."
+msgstr "Satu setiap baris. Halaman pada domain lain tidak boleh menghantar peristiwa. *.example.com merangkumi setiap subdomain."
+
+#: src/features/analytics/Settings.tsx
+msgid "One prop name per line, up to 10, such as plan."
+msgstr "Satu nama prop setiap baris, sehingga 10, seperti plan."
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
+msgstr "Satu baris setiap hari dengan pelawat, lawatan, paparan, kadar lantunan, tempoh dan kedalaman tatal. Paling banyak 400 hari."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Only for you, by e-mail to {email}. Reports are plain numbers, with no images and nothing that tracks opening or clicks."
+msgstr "Untuk anda sahaja, melalui e-mel ke {email}. Laporan ialah angka biasa, tanpa imej dan tiada apa yang menjejaki bukaan atau klik."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Only members see it, to tell links apart."
+msgstr "Hanya ahli melihatnya, untuk membezakan pautan."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only the country is kept, never the region or city."
+msgstr "Hanya negara disimpan, tidak pernah wilayah atau bandar."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Only totals are shown. There is no list of individual visitors."
+msgstr "Hanya jumlah ditunjukkan. Tiada senarai pelawat individu."
+
+#: src/features/analytics/parts.tsx
+msgid "Only visitors who agreed to a persistent id are counted here. Everyone else is counted one day at a time."
+msgstr "Hanya pelawat yang bersetuju dengan id berterusan dikira di sini. Yang lain dikira sehari demi sehari."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only with consent"
+msgstr "Hanya dengan persetujuan"
+
+#: src/features/analytics/Goals.tsx
+msgid "Only with prop"
+msgstr "Hanya dengan prop"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
+msgstr "Buka halaman tapak anda dengan coretan di tempatnya. Ini bertukar hijau sebaik pelayan menyimpan paparan halaman pertama. Pelayar dengan Do Not Track atau Global Privacy Control tidak menghantar apa-apa, jadi gunakan yang lain untuk menguji."
+
+#: src/features/analytics/Retention.tsx
+msgid "Open consent features"
+msgstr "Buka ciri persetujuan"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Open report"
+msgstr "Buka laporan"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open the overview"
+msgstr "Buka gambaran keseluruhan"
+
+#: src/features/analytics/Support.tsx
+msgid "Open the property’s settings"
+msgstr "Buka tetapan properti"
+
+#: src/features/analytics/text.ts
+msgid "Operating system"
+msgstr "Sistem pengendalian"
+
+#: src/features/analytics/Install.tsx
+msgid "Opt-out link"
+msgstr "Pautan menarik diri"
+
+#: src/features/analytics/text.ts
+msgid "Organic search"
+msgstr "Carian organik"
+
+#: src/features/analytics/text.ts
+msgid "OS version"
+msgstr "Versi OS"
+
+#: src/features/analytics/text.ts
+msgid "Other"
+msgstr "Lain-lain"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other drops"
+msgstr "Penurunan lain"
+
+#: src/features/analytics/Events.tsx
+msgid "Other prop"
+msgstr "Prop lain"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other sites"
+msgstr "Tapak lain"
+
+#: src/features/analytics/text.ts
+msgid "Outbound link"
+msgstr "Pautan keluar"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Overview"
+msgstr "Gambaran keseluruhan"
+
+#: src/features/analytics/Install.tsx
+msgid "Own domain"
+msgstr "Domain sendiri"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Owners and admins make funnels from goals. They show up here with each step’s drop-off."
+msgstr "Pemilik dan pentadbir mencipta corong daripada matlamat. Ia muncul di sini dengan penurunan setiap langkah."
+
+#: src/features/analytics/Goals.tsx
+msgid "Owners and admins make goals. They show up here with their conversions."
+msgstr "Pemilik dan pentadbir mencipta matlamat. Ia muncul di sini dengan penukarannya."
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Page"
+msgstr "Halaman"
+
+#: src/features/analytics/text.ts
+msgid "Page feedback sent from the page."
+msgstr "Maklum balas halaman yang dihantar daripada halaman."
+
+#: src/features/analytics/text.ts
+msgid "Page not found"
+msgstr "Halaman tidak ditemui"
+
+#: src/features/analytics/text.ts
+msgid "Page or screen"
+msgstr "Halaman atau skrin"
+
+#: src/features/analytics/Goals.tsx
+msgid "Page view of {path}"
+msgstr "Paparan halaman {path}"
+
+#: src/features/analytics/text.ts
+msgid "Pages"
+msgstr "Halaman"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens"
+msgstr "Halaman dan skrin"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens viewed."
+msgstr "Halaman dan skrin yang dilihat."
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages not counted"
+msgstr "Halaman tidak dikira"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
+msgstr "Halaman yang sepadan dengan corak dikira di bawah satu laluan, jadi setiap halaman pesanan berjumlah sebagai satu. Alamat dalam laluan sentiasa diganti."
+
+#: src/features/analytics/text.ts
+msgid "Pages viewed."
+msgstr "Halaman yang dilihat."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Pages, sources, places and devices, without cookies, without storing IP addresses and without a consent banner where the law allows it."
+msgstr "Halaman, sumber, tempat dan peranti, tanpa kuki, tanpa menyimpan alamat IP dan tanpa sepanduk persetujuan di mana undang-undang membenarkan."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews"
+msgstr "Paparan halaman"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews divided by visits."
+msgstr "Paparan halaman dibahagi dengan lawatan."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews in the last 30 minutes"
+msgstr "Paparan halaman dalam 30 minit lepas"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews per minute"
+msgstr "Paparan halaman seminit"
+
+#: src/features/analytics/text.ts
+msgid "Paid search"
+msgstr "Carian berbayar"
+
+#: src/features/analytics/text.ts
+msgid "Paid social"
+msgstr "Sosial berbayar"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Password"
+msgstr "Kata laluan"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Past alerts"
+msgstr "Amaran lepas"
+
+#: src/features/analytics/Settings.tsx
+msgid "Path rules"
+msgstr "Peraturan laluan"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pattern"
+msgstr "Corak"
+
+#: src/features/analytics/Controls.tsx
+msgid "Paying customers from Germany"
+msgstr "Pelanggan membayar dari Jerman"
+
+#: src/features/analytics/text.ts
+msgid "Per 1,000 views"
+msgstr "Setiap 1,000 paparan"
+
+#: src/features/analytics/Overview.tsx
+msgid "per day"
+msgstr "sehari"
+
+#: src/features/analytics/Settings.tsx
+msgid "Per day"
+msgstr "Sehari"
+
+#: src/features/analytics/Overview.tsx
+msgid "per hour"
+msgstr "sejam"
+
+#: src/features/analytics/Overview.tsx
+msgid "per week"
+msgstr "seminggu"
+
+#: src/features/analytics/Settings.tsx
+msgid "Persistent id"
+msgstr "Id berterusan"
+
+#: src/features/analytics/text.ts
+msgid "Phone"
+msgstr "Telefon"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Pick a goal"
+msgstr "Pilih matlamat"
+
+#: src/features/analytics/Events.tsx
+msgid "Pick a prop to see the values this event carried."
+msgstr "Pilih prop untuk melihat nilai yang dibawa peristiwa ini."
+
+#: src/features/analytics/Settings.tsx
+msgid "Pick at least one platform."
+msgstr "Pilih sekurang-kurangnya satu platform."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Pick at least one view."
+msgstr "Pilih sekurang-kurangnya satu paparan."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
+msgstr "Pilih bagaimana tapak dibina dan salin coretan. Kunci adalah awam, seperti kunci sembang: ia hanya berfungsi pada domain properti."
+
+#: src/features/analytics/text.ts
+msgid "Platform"
+msgstr "Platform"
+
+#: src/features/analytics/Settings.tsx
+msgid "Platforms"
+msgstr "Platform"
+
+#: src/features/analytics/text.ts
+msgid "Prop"
+msgstr "Prop"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name"
+msgstr "Nama prop"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name, like plan"
+msgstr "Nama prop, seperti plan"
+
+#: src/features/analytics/Events.tsx
+msgid "Properties for children keep no props, only the address of outbound links and downloads."
+msgstr "Properti untuk kanak-kanak tidak menyimpan prop, hanya alamat pautan keluar dan muat turun."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children keep no props, so none can be tracked."
+msgstr "Properti untuk kanak-kanak tidak menyimpan prop, jadi tiada yang boleh dijejaki."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children never keep an id on the device or link visits to a contact."
+msgstr "Properti untuk kanak-kanak tidak pernah menyimpan id pada peranti atau memaut lawatan kepada kenalan."
+
+#: src/features/analytics/Retention.tsx
+msgid "Properties for children never keep an id on the device, so they have no retention."
+msgstr "Properti untuk kanak-kanak tidak pernah menyimpan id pada peranti, jadi ia tiada pengekalan."
+
+#: src/features/analytics/Settings.tsx
+msgid "Property name"
+msgstr "Nama properti"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Props"
+msgstr "Prop"
+
+#: src/features/analytics/Events.tsx
+msgid "Props of any name can be broken down for the days the detailed records are kept. Earlier days only have the tracked props."
+msgstr "Prop dengan sebarang nama boleh dipecahkan untuk hari rekod terperinci disimpan. Hari lebih awal hanya mempunyai prop yang dijejaki."
+
+#: src/features/analytics/Install.tsx
+msgid "Put the script in the head of every page. It counts page views, also when a single-page app changes the address, and stores nothing on the visitor’s device."
+msgstr "Letakkan skrip dalam head setiap halaman. Ia mengira paparan halaman, juga apabila apl satu halaman menukar alamat, dan tidak menyimpan apa-apa pada peranti pelawat."
+
+#: src/features/analytics/Install.tsx
+msgid "Put these links on your privacy page. Opting out is the only thing the script stores on the visitor’s device, and only when they ask for it. Visitors with Do Not Track or Global Privacy Control are never counted."
+msgstr "Letakkan pautan ini pada halaman privasi anda. Menarik diri ialah satu-satunya perkara yang disimpan skrip pada peranti pelawat, dan hanya apabila mereka memintanya. Pelawat dengan Do Not Track atau Global Privacy Control tidak pernah dikira."
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Range"
+msgstr "Julat"
+
+#: src/features/analytics/Support.tsx
+msgid "Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "Disusun mengikut perbualan setiap 1,000 paparan; halaman dengan kurang daripada 100 paparan datang selepas yang lain. Dikira mengikut halaman dan hari, tidak pernah mengikut pelawat atau kenalan."
+
+#: src/features/analytics/Settings.tsx
+msgid "Rate limits"
+msgstr "Had kadar"
+
+#: src/features/analytics/Support.tsx
+msgid "Ratings"
+msgstr "Penilaian"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw events"
+msgstr "Peristiwa mentah"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw exports cover at most 31 days."
+msgstr "Eksport mentah merangkumi paling banyak 31 hari."
+
+#: src/features/analytics/Goals.tsx
+msgid "Reached when a visitor"
+msgstr "Dicapai apabila pelawat"
+
+#: src/features/analytics/Exports.tsx
+msgid "Ready"
+msgstr "Sedia"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Realtime"
+msgstr "Masa nyata"
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour, last at {builtAt}."
+msgstr "Dibina semula setiap jam, terakhir pada {builtAt}."
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour."
+msgstr "Dibina semula setiap jam."
+
+#: src/features/analytics/text.ts
+msgid "Referral"
+msgstr "Rujukan"
+
+#: src/features/analytics/text.ts
+msgid "Referrer"
+msgstr "Perujuk"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Refreshes every 15 seconds"
+msgstr "Disegarkan setiap 15 saat"
+
+#: src/features/analytics/Settings.tsx
+msgid "Refused"
+msgstr "Ditolak"
+
+#: src/features/analytics/text.ts
+msgid "Region"
+msgstr "Wilayah"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter"
+msgstr "Alih keluar penapis"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter: {label}"
+msgstr "Alih keluar penapis: {label}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Remove rule"
+msgstr "Alih keluar peraturan"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Remove step"
+msgstr "Alih keluar langkah"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Rename “{0}”…"
+msgstr "Namakan semula “{0}”…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Rename segment"
+msgstr "Namakan semula segmen"
+
+#: src/features/analytics/Install.tsx
+msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
+msgstr "Paparkan komponen sekali, dalam reka letak akar. Ia tidak memaparkan apa-apa; useYuvaAnalytics() memberi kaedah di mana-mana di bawahnya."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Report"
+msgstr "Laporan"
+
+#: src/features/analytics/Settings.tsx
+msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
+msgstr "Permintaan dengan Do Not Track atau Global Privacy Control, dan peristiwa tanpa persetujuan pada properti yang memerlukannya, diterima tetapi tidak disimpan mahupun dikira di sini."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Retention"
+msgstr "Pengekalan"
+
+#: src/features/analytics/Retention.tsx
+msgid "Retention needs consent features"
+msgstr "Pengekalan memerlukan ciri persetujuan"
+
+#: src/features/analytics/text.ts
+msgid "Returning"
+msgstr "Kembali"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/text.ts
+msgid "Revenue"
+msgstr "Hasil"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke"
+msgstr "Batalkan akses"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke {name}?"
+msgstr "Batalkan {name}?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoked"
+msgstr "Dibatalkan"
+
+#: src/features/analytics/Exports.tsx
+msgid "Rows"
+msgstr "Baris"
+
+#: src/features/analytics/Exports.tsx
+msgid "Running"
+msgstr "Berjalan"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Save"
+msgstr "Simpan"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Save the changes to “{0}”"
+msgstr "Simpan perubahan pada “{0}”"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save the filters as a new segment…"
+msgstr "Simpan penapis sebagai segmen baharu…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save these filters as a segment"
+msgstr "Simpan penapis ini sebagai segmen"
+
+#: src/features/analytics/Controls.tsx
+msgid "Saved segments"
+msgstr "Segmen disimpan"
+
+#: src/features/analytics/text.ts
+msgid "Screen"
+msgstr "Skrin"
+
+#: src/features/analytics/text.ts
+msgid "Screen size"
+msgstr "Saiz skrin"
+
+#: src/features/analytics/text.ts
+msgid "Screen views"
+msgstr "Paparan skrin"
+
+#: src/features/analytics/text.ts
+msgid "Screen views divided by visits."
+msgstr "Paparan skrin dibahagi dengan lawatan."
+
+#: src/features/analytics/text.ts
+msgid "Screen views in the last 30 minutes"
+msgstr "Paparan skrin dalam 30 minit lepas"
+
+#: src/features/analytics/text.ts
+msgid "Screen views per minute"
+msgstr "Paparan skrin seminit"
+
+#: src/features/analytics/text.ts
+msgid "Screens"
+msgstr "Skrin"
+
+#: src/features/analytics/text.ts
+msgid "Screens viewed."
+msgstr "Skrin yang dilihat."
+
+#: src/features/analytics/text.ts
+msgid "Scroll depth"
+msgstr "Kedalaman tatal"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolled to {pct} on {path}"
+msgstr "Menatal ke {pct} pada {path}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolls"
+msgstr "Tatalan"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segment"
+msgstr "Segmen"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segments"
+msgstr "Segmen"
+
+#: src/features/analytics/Settings.tsx
+msgid "Send a screen or an event from your app or backend while this page is open, and see whether it reached the server. Refreshes every 5 seconds."
+msgstr "Hantar skrin atau peristiwa daripada apl atau bahagian belakang anda semasa halaman ini dibuka, dan lihat sama ada ia sampai ke pelayan. Disegarkan setiap 5 saat."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Send me one now"
+msgstr "Hantar satu kepada saya sekarang"
+
+#: src/features/analytics/Goals.tsx
+msgid "Sends an event"
+msgstr "Menghantar peristiwa"
+
+#: src/features/analytics/text.ts
+msgid "Server"
+msgstr "Pelayan"
+
+#: src/features/analytics/Settings.tsx
+msgid "Server busy"
+msgstr "Pelayan sibuk"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Settings"
+msgstr "Tetapan"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Share links"
+msgstr "Pautan kongsi"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Shared with Yuva"
+msgstr "Dikongsi dengan Yuva"
+
+#: src/features/analytics/Settings.tsx
+msgid "Sharing"
+msgstr "Perkongsian"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Events.tsx
+msgid "Show"
+msgstr "Tunjuk"
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/parts.tsx
+msgid "Show from {day}"
+msgstr "Tunjuk dari {day}"
+
+#: src/features/analytics/Events.tsx
+msgid "Show its props"
+msgstr "Tunjuk propnya"
+
+#: src/features/analytics/Controls.tsx
+msgid "Show the days"
+msgstr "Tunjuk hari"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Show the last 30 days"
+msgstr "Tunjuk 30 hari lepas"
+
+#: src/features/analytics/Goals.tsx
+msgid "Signed up"
+msgstr "Mendaftar"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Sites that may embed it"
+msgstr "Tapak yang boleh membenamkannya"
+
+#: src/features/analytics/text.ts
+msgid "Social"
+msgstr "Sosial"
+
+#: src/features/analytics/Settings.tsx
+msgid "Some events were dropped. The reasons are below."
+msgstr "Sesetengah peristiwa digugurkan. Sebabnya di bawah."
+
+#: src/features/analytics/text.ts
+msgid "Source"
+msgstr "Sumber"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Realtime.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Sources"
+msgstr "Sumber"
+
+#: src/features/analytics/Settings.tsx
+msgid "Start over"
+msgstr "Mula semula"
+
+#. placeholder {0}: i + 1
+#: src/features/analytics/Funnels.tsx
+msgid "Step {0}"
+msgstr "Langkah {0}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Steps"
+msgstr "Langkah"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Support.tsx
+msgid "Support"
+msgstr "Sokongan"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Support load"
+msgstr "Beban sokongan"
+
+#: src/features/analytics/Support.tsx
+msgid "Support numbers can only be filtered by page and host. The other filters are left out here."
+msgstr "Angka sokongan hanya boleh ditapis mengikut halaman dan hos. Penapis lain ditinggalkan di sini."
+
+#: src/features/analytics/text.ts
+msgid "Tablet"
+msgstr "Tablet"
+
+#: src/features/analytics/Settings.tsx
+msgid "Taken and stored. They show up in Realtime within a minute."
+msgstr "Diterima dan disimpan. Ia muncul dalam Masa nyata dalam masa seminit."
+
+#: src/features/analytics/Settings.tsx
+msgid "Test events"
+msgstr "Peristiwa ujian"
+
+#: src/features/analytics/SharePage.tsx
+msgid "That password is not right."
+msgstr "Kata laluan itu tidak betul."
+
+#: src/features/analytics/Funnels.tsx
+msgid "The consented counts follow visitors with a persistent id from one visit and day to the next, so a step reached on a later day still counts."
+msgstr "Kiraan yang bersetuju mengikuti pelawat dengan id berterusan dari satu lawatan dan hari ke yang seterusnya, jadi langkah yang dicapai pada hari kemudian masih dikira."
+
+#: src/features/analytics/Settings.tsx
+msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
+msgstr "Kunci semasa terus berfungsi selama 24 jam, supaya anda boleh mengemas kini halaman tanpa kehilangan peristiwa. Membuat kunci lain dalam masa itu menamatkan yang lama serta-merta."
+
+#: src/features/analytics/text.ts
+msgid "The deepest point reached on the page, per view."
+msgstr "Titik terdalam yang dicapai pada halaman, setiap paparan."
+
+#: src/features/analytics/Exports.tsx
+msgid "The export failed on the server."
+msgstr "Eksport gagal pada pelayan."
+
+#: src/features/analytics/Exports.tsx
+msgid "The file would be larger than 1 GiB. Export a shorter range."
+msgstr "Fail akan lebih besar daripada 1 GiB. Eksport julat yang lebih pendek."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "The first event arrived at {at}."
+msgstr "Peristiwa pertama tiba pada {at}."
+
+#: src/features/analytics/Goals.tsx
+msgid "The goal reports the revenue its events carry, per currency."
+msgstr "Matlamat melaporkan hasil yang dibawa peristiwanya, setiap mata wang."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key is public, like a chat key: every page carries it, and it only works on the property’s domains."
+msgstr "Kunci adalah awam, seperti kunci sembang: setiap halaman membawanya, dan ia hanya berfungsi pada domain properti."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key stops working at once, and all visits, events and totals are deleted. This cannot be undone."
+msgstr "Kunci berhenti berfungsi serta-merta, dan semua lawatan, peristiwa dan jumlah dipadam. Ini tidak boleh dibuat asal."
+
+#: src/features/analytics/Settings.tsx
+msgid "The last 30 days"
+msgstr "30 hari lepas"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and leaves the list."
+msgstr "Pautan berhenti berfungsi serta-merta dan keluar daripada senarai."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and stays in the list."
+msgstr "Pautan berhenti berfungsi serta-merta dan kekal dalam senarai."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked."
+msgstr "Pautan berhenti berfungsi pada penghujung hari ini dalam {timezone}. Biarkan kosong untuk mengekalkannya sehingga dibatalkan."
+
+#: src/features/analytics/Install.tsx
+msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
+msgstr "Modul menambah pemalam klien dan composable useYuvaAnalytics(). NUXT_PUBLIC_YUVA_ANALYTICS_KEY mengatasi kunci semasa runtime."
+
+#: src/features/analytics/Settings.tsx
+msgid "The name does not match. Type it exactly as shown."
+msgstr "Nama tidak sepadan. Taip tepat seperti yang ditunjukkan."
+
+#: src/features/analytics/Goals.tsx
+msgid "The name given to track(), or outbound_click, file_download, not_found, chat_open."
+msgstr "Nama yang diberikan kepada track(), atau outbound_click, file_download, not_found, chat_open."
+
+#: src/features/analytics/Settings.tsx
+msgid "The previous key keeps working until {at}. Update every page and app before then."
+msgstr "Kunci sebelumnya terus berfungsi sehingga {at}. Kemas kini setiap halaman dan apl sebelum itu."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "The properties of your inboxes show up here once an owner or admin adds them."
+msgstr "Properti peti masuk anda muncul di sini setelah pemilik atau pentadbir menambahnya."
+
+#: src/features/analytics/Exports.tsx
+msgid "The query could not be run."
+msgstr "Pertanyaan tidak dapat dijalankan."
+
+#: src/features/analytics/Exports.tsx
+msgid "The range is outside the detailed records."
+msgstr "Julat berada di luar rekod terperinci."
+
+#: src/features/analytics/SharePage.tsx
+msgid "The report could not be loaded"
+msgstr "Laporan tidak dapat dimuatkan"
+
+#: src/features/analytics/Settings.tsx
+msgid "The server’s own database"
+msgstr "Pangkalan data pelayan sendiri"
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need detailed records that are no longer kept for this range."
+msgstr "Penapis ini memerlukan rekod terperinci yang tidak lagi disimpan untuk julat ini."
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need the detailed records, which are kept since {day}. Earlier days only have totals per page, source, place and device."
+msgstr "Penapis ini memerlukan rekod terperinci, yang disimpan sejak {day}. Hari lebih awal hanya mempunyai jumlah setiap halaman, sumber, tempat dan peranti."
+
+#: src/features/analytics/Settings.tsx
+msgid "This cannot be undone."
+msgstr "Ini tidak boleh dibuat asal."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal has numbers from {since} on. Days before that show none."
+msgstr "Matlamat ini mempunyai angka dari {since} ke atas. Hari sebelum itu tidak menunjukkan apa-apa."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
+msgstr "Matlamat ini ialah satu langkah corong. Keluarkannya daripada corong, atau padam corong, dahulu."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This link is not available"
+msgstr "Pautan ini tidak tersedia"
+
+#: src/features/analytics/text.ts
+msgid "This month"
+msgstr "Bulan ini"
+
+#: src/features/analytics/Funnels.tsx
+msgid "This property already has a funnel with this name."
+msgstr "Properti ini sudah mempunyai corong dengan nama ini."
+
+#: src/features/analytics/Goals.tsx
+msgid "This property already has a goal with this name."
+msgstr "Properti ini sudah mempunyai matlamat dengan nama ini."
+
+#: src/features/analytics/Controls.tsx
+msgid "This property already has a segment with this name."
+msgstr "Properti ini sudah mempunyai segmen dengan nama ini."
+
+#: src/features/analytics/Exports.tsx
+msgid "This range cannot be exported. Pick a shorter one, or one inside the detailed records."
+msgstr "Julat ini tidak boleh dieksport. Pilih yang lebih pendek, atau satu dalam rekod terperinci."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This report has a password"
+msgstr "Laporan ini mempunyai kata laluan"
+
+#: src/features/analytics/Support.tsx
+msgid "This workspace has no inbox yet."
+msgstr "Ruang kerja ini belum mempunyai peti masuk."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
+msgstr "Ruang kerja ini mencapai {limit} peristiwa analitiknya untuk bulan ini. Peristiwa baharu digugurkan sehingga bulan tamat."
+
+#: src/features/analytics/text.ts
+msgid "This year"
+msgstr "Tahun ini"
+
+#: src/features/analytics/Exports.tsx
+msgid "Three exports are already running in this workspace. Try again when one finishes."
+msgstr "Tiga eksport sudah berjalan dalam ruang kerja ini. Cuba lagi apabila satu selesai."
+
+#: src/features/analytics/text.ts
+msgid "Time from the first to the last event of a visit, on average. Bounces count as zero."
+msgstr "Masa dari peristiwa pertama hingga terakhir dalam lawatan, secara purata. Lantunan dikira sifar."
+
+#: src/features/analytics/text.ts
+msgid "Time on page"
+msgstr "Masa pada halaman"
+
+#: src/features/analytics/text.ts
+msgid "Time the page was visible and in focus, per view."
+msgstr "Masa halaman kelihatan dan difokuskan, setiap paparan."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Time zone"
+msgstr "Zon waktu"
+
+#: src/features/analytics/text.ts
+msgid "Times the goal was reached, also several times by one visitor."
+msgstr "Bilangan kali matlamat dicapai, juga beberapa kali oleh seorang pelawat."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated helpful."
+msgstr "Bilangan kali halaman dinilai membantu."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated not helpful."
+msgstr "Bilangan kali halaman dinilai tidak membantu."
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "To"
+msgstr "Kepada"
+
+#: src/features/analytics/text.ts
+msgid "Today"
+msgstr "Hari ini"
+
+#: src/features/analytics/Settings.tsx
+msgid "Today: {todayCounted} counted, {todayDropped} dropped"
+msgstr "Hari ini: {todayCounted} dikira, {todayDropped} digugurkan"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Token"
+msgstr "Token"
+
+#: src/features/analytics/Settings.tsx
+msgid "Too late"
+msgstr "Terlalu lewat"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many requests from your network. Wait a minute and reload the page."
+msgstr "Terlalu banyak permintaan daripada rangkaian anda. Tunggu seminit dan muat semula halaman."
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many tries. Wait a minute and try again."
+msgstr "Terlalu banyak percubaan. Tunggu seminit dan cuba lagi."
+
+#: src/features/analytics/text.ts
+msgid "Top pages"
+msgstr "Halaman teratas"
+
+#: src/features/analytics/text.ts
+msgid "Top pages and screens"
+msgstr "Halaman dan skrin teratas"
+
+#: src/features/analytics/text.ts
+msgid "Top screens"
+msgstr "Skrin teratas"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracked props"
+msgstr "Prop dijejaki"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracking"
+msgstr "Penjejakan"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic drop"
+msgstr "Penurunan trafik"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic spike"
+msgstr "Lonjakan trafik"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Try again"
+msgstr "Cuba lagi"
+
+#: src/features/analytics/Install.tsx
+msgid "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
+msgstr "Hidupkan {name} di bawah Platform dalam tetapan umum dahulu. Sehingga itu pelayan menolak peristiwa apl."
+
+#: src/features/analytics/Retention.tsx
+msgid "Turn on the persistent id in the consent features, then call yuva.consent with persistent set to true."
+msgstr "Hidupkan id berterusan dalam ciri persetujuan, kemudian panggil yuva.consent dengan persistent ditetapkan kepada true."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Two to eight goals, in the order visitors reach them within one visit."
+msgstr "Dua hingga lapan matlamat, mengikut susunan pelawat mencapainya dalam satu lawatan."
+
+#: src/features/analytics/Settings.tsx
+msgid "Type the property’s name to delete it and all its data."
+msgstr "Taip nama properti untuk memadamnya dan semua datanya."
+
+#: src/features/analytics/text.ts
+msgid "Unknown"
+msgstr "Tidak diketahui"
+
+#: src/features/analytics/Install.tsx
+msgid "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
+msgstr "Sehingga 100 peristiwa setiap permintaan, masing-masing dengan alamat IP dan ejen pengguna pelawat atau visitor_key anda sendiri. Kedua-duanya tidak disimpan. Peristiwa yang ditinggalkan kerana tidak sah kembali dalam errors dengan kedudukannya; lihat apa yang tiba di bawah Peristiwa ujian."
+
+#: src/features/analytics/text.ts
+msgid "UTM campaign"
+msgstr "Kempen UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM content"
+msgstr "Kandungan UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM medium"
+msgstr "Medium UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM source"
+msgstr "Sumber UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM term"
+msgstr "Terma UTM"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Views"
+msgstr "Paparan"
+
+#: src/features/analytics/Goals.tsx
+msgid "Views a page"
+msgstr "Melihat halaman"
+
+#: src/features/analytics/text.ts
+msgid "Views divided by visits."
+msgstr "Paparan dibahagi dengan lawatan."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views fell to {now} in two hours, against {usual} usually."
+msgstr "Paparan turun kepada {now} dalam dua jam, berbanding {usual} biasanya."
+
+#: src/features/analytics/text.ts
+msgid "Views in the last 30 minutes"
+msgstr "Paparan dalam 30 minit lepas"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at least three times the same hours of the week before."
+msgstr "Paparan dua jam lepas sekurang-kurangnya tiga kali ganda jam yang sama pada minggu sebelumnya."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at most half the same hours of the week before."
+msgstr "Paparan dua jam lepas paling banyak separuh daripada jam yang sama pada minggu sebelumnya."
+
+#: src/features/analytics/text.ts
+msgid "Views per minute"
+msgstr "Paparan seminit"
+
+#: src/features/analytics/text.ts
+msgid "Views per visit"
+msgstr "Paparan setiap lawatan"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views rose to {now} in two hours, against {usual} usually."
+msgstr "Paparan naik kepada {now} dalam dua jam, berbanding {usual} biasanya."
+
+#: src/features/analytics/text.ts
+msgid "Visit duration"
+msgstr "Tempoh lawatan"
+
+#: src/features/analytics/Retention.tsx
+#: src/features/analytics/text.ts
+msgid "Visitors"
+msgstr "Pelawat"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Visitors in the last 30 minutes"
+msgstr "Pelawat dalam 30 minit lepas"
+
+#: src/features/analytics/Retention.tsx
+msgid "Visitors who came back"
+msgstr "Pelawat yang kembali"
+
+#: src/features/analytics/text.ts
+msgid "Visitors who reached the goal, per day, added up over the days of the range."
+msgstr "Pelawat yang mencapai matlamat, sehari, dijumlahkan merentas hari dalam julat."
+
+#: src/features/analytics/Settings.tsx
+msgid "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
+msgstr "Pelawat dengan Do Not Track atau Global Privacy Control tidak menghantar apa-apa, jadi mereka tidak dikira di sini juga. Tiada apa tentang peristiwa yang digugurkan disimpan selain kiraannya."
+
+#: src/features/analytics/text.ts
+msgid "Visits"
+msgstr "Lawatan"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page or screen view and nothing else."
+msgstr "Lawatan dengan satu paparan halaman atau skrin dan tiada yang lain."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page view and nothing else."
+msgstr "Lawatan dengan satu paparan halaman dan tiada yang lain."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one screen view and nothing else."
+msgstr "Lawatan dengan satu paparan skrin dan tiada yang lain."
+
+#: src/features/analytics/Install.tsx
+msgid "Vue, Astro, other"
+msgstr "Vue, Astro, lain-lain"
+
+#: src/features/analytics/Exports.tsx
+msgid "Waiting"
+msgstr "Menunggu"
+
+#: src/features/analytics/Settings.tsx
+msgid "Waiting for events since {at}."
+msgstr "Menunggu peristiwa sejak {at}."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Waiting for the first event"
+msgstr "Menunggu peristiwa pertama"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Watch it live"
+msgstr "Tonton secara langsung"
+
+#: src/features/analytics/text.ts
+msgid "Web"
+msgstr "Web"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Website or app"
+msgstr "Tapak web atau apl"
+
+#: src/features/analytics/Retention.tsx
+msgid "Week {period}"
+msgstr "Minggu {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Weekly"
+msgstr "Mingguan"
+
+#: src/features/analytics/Retention.tsx
+msgid "Weeks"
+msgstr "Minggu"
+
+#: src/features/analytics/Insights.tsx
+msgid "What changed"
+msgstr "Apa yang berubah"
+
+#: src/features/analytics/Support.tsx
+msgid "What stands out"
+msgstr "Apa yang menonjol"
+
+#: src/features/analytics/text.ts
+msgid "What the goal's events carried, per currency. Currencies are never converted or added up."
+msgstr "Apa yang dibawa peristiwa matlamat, setiap mata wang. Mata wang tidak pernah ditukar atau dijumlahkan."
+
+#: src/features/analytics/Exports.tsx
+msgid "What to export"
+msgstr "Apa yang hendak dieksport"
+
+#: src/features/analytics/Goals.tsx
+msgid "Where conversions come from"
+msgstr "Dari mana penukaran datang"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Where the property’s day starts and ends."
+msgstr "Di mana hari properti bermula dan berakhir."
+
+#: src/features/analytics/Install.tsx
+msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."
+msgstr "Dengan data-consent=\"required\" skrip tidak menghantar apa-apa sehingga alat persetujuan anda menyatakan pelawat bersetuju. Tetapkan juga Pengumpulan kepada “Hanya dengan persetujuan” dalam tetapan umum, supaya pelayan menolak peristiwa tanpanya."
+
+#: src/features/analytics/Settings.tsx
+msgid "With yuva.consent and persistent set to true, the device keeps a random id for 13 months. The visitor counts once over several days, is told apart as new or returning, fills retention and is followed across days in funnels. Never under Do Not Track or Global Privacy Control."
+msgstr "Dengan yuva.consent dan persistent ditetapkan kepada true, peranti menyimpan id rawak selama 13 bulan. Pelawat dikira sekali merentas beberapa hari, dibezakan sebagai baharu atau kembali, mengisi pengekalan dan diikuti merentas hari dalam corong. Tidak pernah di bawah Do Not Track atau Global Privacy Control."
+
+#: src/features/analytics/text.ts
+msgid "Without consent"
+msgstr "Tanpa persetujuan"
+
+#: src/features/analytics/Retention.tsx
+msgid "Without cookies a visitor is new every day, so nobody can be followed from one day to the next. Only visitors who agree to a persistent id in your consent tool show up here."
+msgstr "Tanpa kuki pelawat baharu setiap hari, jadi tiada sesiapa boleh diikuti dari satu hari ke hari berikutnya. Hanya pelawat yang bersetuju dengan id berterusan dalam alat persetujuan anda muncul di sini."
+
+#: src/features/analytics/Settings.tsx
+msgid "Without cookies, for everyone"
+msgstr "Tanpa kuki, untuk semua orang"
+
+#: src/features/analytics/text.ts
+msgid "Yesterday"
+msgstr "Semalam"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Your access ended. Enter the password again to keep reading."
+msgstr "Akses anda telah tamat. Masukkan kata laluan semula untuk terus membaca."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Your new share link"
+msgstr "Pautan kongsi baharu anda"
+
+#: src/features/analytics/Settings.tsx
+msgid "yuva.identify with a token from your backend, signed like a chat session, links the visitor’s visits to their contact. They show on the contact’s page under Recent visits. Forged or reused tokens are ignored."
+msgstr "yuva.identify dengan token daripada bahagian belakang anda, ditandatangani seperti sesi sembang, memaut lawatan pelawat kepada kenalan mereka. Ia muncul pada halaman kenalan di bawah Lawatan terkini. Token palsu atau yang digunakan semula diabaikan."

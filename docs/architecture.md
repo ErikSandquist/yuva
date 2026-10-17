@@ -785,6 +785,16 @@ that allows only its own scripts, connections and workers, no framing (`frame-an
 no plugins; inline styles and any http(s) image stay allowed for the sandboxed e-mail frame, which
 inherits the policy. Every response carries `X-Content-Type-Options: nosniff`.
 
+Languages: the panel ships 47 languages, one list in `web/src/localeList.ts` that `web/lingui.config.ts`
+and the loader both read; adding a language is one line there plus its three catalogs
+(`messages`, `analytics`, `designs`). Catalogs load lazily per locale (`import.meta.glob`), only the
+active language is fetched, and the service worker precaches just `en` and `tr`. Before sign-in the
+browser's languages pick the best match (exact, alias such as `zh-TW` or `no`, base language, then
+`en`); after sign-in the person's `locale` rules, and every picker lists languages by native name and
+saves to it. `<html lang>` follows the language and `dir` is `rtl` for `ar`, `he` and `ur`; shared
+shells use logical Tailwind utilities (`ms`, `pe`, `start`, `end`, `rtl:`). Dates, numbers and
+relative times format with the active locale.
+
 Home and setup (M17): owners and admins open `/` on Home, agents on the inbox; the managers' inbox
 lives at `/conversations`. Home is one request, `GET /v1/home` (member sessions only): inbox counts
 and the oldest waiting conversation (open, not spam, with a contact message after the last reply from

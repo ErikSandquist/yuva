@@ -15,7 +15,7 @@ import { startPwa } from "@/lib/pwa"
 import { startTheme } from "@/lib/theme"
 import { meKey } from "@/lib/session"
 
-activate(initialLocale())
+await activate(initialLocale())
 startTheme()
 startPwa()
 

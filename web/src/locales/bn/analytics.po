@@ -1,0 +1,2748 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 10:11+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: bn\n"
+
+#: src/features/analytics/text.ts
+msgid "(not set)"
+msgstr "(সেট করা নেই)"
+
+#. placeholder {0}: e.rows
+#: src/features/analytics/Exports.tsx
+msgid "{0, plural, one {# row} other {# rows}}"
+msgstr "{0, plural, one {#টি সারি} other {#টি সারি}}"
+
+#. placeholder {0}: p.visitors_today
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{0, plural, one {visitor today} other {visitors today}}"
+msgstr "{0, plural, one {আজকের ভিজিটর} other {আজকের ভিজিটর}}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{consentedCount} consented, across visits and days"
+msgstr "{consentedCount}জন সম্মতি দিয়েছে, ভিজিট ও দিন জুড়ে"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {{site} sent # visit, and none in the 28 days before.} other {{site} sent # visits, and none in the 28 days before.}}"
+msgstr "{count, plural, one {{site} #টি ভিজিট পাঠিয়েছে, এবং আগের 28 দিনে কোনোটি নয়।} other {{site} #টি ভিজিট পাঠিয়েছে, এবং আগের 28 দিনে কোনোটি নয়।}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {# conversation per 1,000 views, against {usual} in the 28 days before.} other {# conversations per 1,000 views, against {usual} in the 28 days before.}}"
+msgstr "{count, plural, one {প্রতি 1,000 ভিউতে #টি কথোপকথন, আগের 28 দিনের {usual}-এর তুলনায়।} other {প্রতি 1,000 ভিউতে #টি কথোপকথন, আগের 28 দিনের {usual}-এর তুলনায়।}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {Goal “{goal}” had # conversion, against {usual} a day on average in the week before.} other {Goal “{goal}” had # conversions, against {usual} a day on average in the week before.}}"
+msgstr "{count, plural, one {গোল “{goal}”-এর #টি কনভার্সন ছিল, আগের সপ্তাহের দৈনিক গড় {usual}-এর তুলনায়।} other {গোল “{goal}”-এর #টি কনভার্সন ছিল, আগের সপ্তাহের দৈনিক গড় {usual}-এর তুলনায়।}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{count} in this range, none in the compared days."
+msgstr "এই রেঞ্জে {count}, তুলনার দিনগুলোতে কোনোটি নয়।"
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {count}, none in the compared days."
+msgstr "{dim} {value}: {count}, তুলনার দিনগুলোতে কোনোটি নয়।"
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} fell {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} {change} কমেছে, {before}-এর তুলনায় {now}।"
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} rose {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} {change} বেড়েছে, {before}-এর তুলনায় {now}।"
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {metric} {now}, none in the compared days."
+msgstr "{dim} {value}: {metric} {now}, তুলনার দিনগুলোতে কোনোটি নয়।"
+
+#: src/features/analytics/Annotations.tsx
+msgid "{kind}: {found}"
+msgstr "{kind}: {found}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{lost} left ({lostPct})"
+msgstr "{lost}জন ছেড়েছে ({lostPct})"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} fell {change}: {now}, against {before} in the compared days."
+msgstr "{metric} {change} কমেছে: {now}, তুলনার দিনগুলোতে {before}-এর তুলনায়।"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} rose {change}: {now}, against {before} in the compared days."
+msgstr "{metric} {change} বেড়েছে: {now}, তুলনার দিনগুলোতে {before}-এর তুলনায়।"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric}: {now}, none in the compared days."
+msgstr "{metric}: {now}, তুলনার দিনগুলোতে কোনোটি নয়।"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversation} other {# conversations}}"
+msgstr "{n, plural, one {#টি কথোপকথন} other {#টি কথোপকথন}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversion} other {# conversions}}"
+msgstr "{n, plural, one {#টি কনভার্সন} other {#টি কনভার্সন}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# discussion} other {# discussions}}"
+msgstr "{n, plural, one {#টি আলোচনা} other {#টি আলোচনা}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# event} other {# events}}"
+msgstr "{n, plural, one {#টি ইভেন্ট} other {#টি ইভেন্ট}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# view} other {# views}}"
+msgstr "{n, plural, one {#টি ভিউ} other {#টি ভিউ}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visit} other {# visits}}"
+msgstr "{n, plural, one {#টি ভিজিট} other {#টি ভিজিট}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visitor} other {# visitors}}"
+msgstr "{n, plural, one {#জন ভিজিটর} other {#জন ভিজিটর}}"
+
+#: src/features/analytics/Events.tsx
+msgid "{n} payments, {avg} on average"
+msgstr "{n}টি পেমেন্ট, গড়ে {avg}"
+
+#: src/features/analytics/Install.tsx
+msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
+msgstr "{name} এই প্রপার্টির প্ল্যাটফর্মের মধ্যে নেই, তাই সার্ভার অ্যাপের ইভেন্ট প্রত্যাখ্যান করে। একজন ওনার বা অ্যাডমিন এটি চালু করতে পারেন।"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
+msgstr "প্রথম ধাপে পৌঁছানো ভিজিটরদের {overall} শেষ ধাপেও পৌঁছেছে, {from} – {to}।"
+
+#: src/features/analytics/Insights.tsx
+msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
+msgstr "{rate, plural, one {{dim} {value}: প্রতি 1,000 ভিউতে #টি কথোপকথন, সব পেজ জুড়ে {site}-এর তুলনায়।} other {{dim} {value}: প্রতি 1,000 ভিউতে #টি কথোপকথন, সব পেজ জুড়ে {site}-এর তুলনায়।}}"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
+msgstr "এই মাসে {limit}-এর মধ্যে {used}টি অ্যানালিটিক্স ইভেন্ট ব্যবহৃত হয়েছে। সীমার বেশি ইভেন্ট মাস শেষ না হওয়া পর্যন্ত বাদ যায়।"
+
+#: src/features/analytics/Settings.tsx
+msgid "A change applies to new events. Days already counted keep their zone."
+msgstr "পরিবর্তন নতুন ইভেন্টে প্রযোজ্য। যে দিন আগেই গোনা হয়েছে তারা নিজের জোন রাখে।"
+
+#: src/features/analytics/Goals.tsx
+msgid "A changed goal is counted again over the days the detailed records are kept."
+msgstr "বদলানো গোল সেই দিনগুলোর জন্য আবার গোনা হয় যেগুলোর বিস্তারিত রেকর্ড রাখা হয়।"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel follows each visit step by step, so it covers at most 90 days at once, or 31 days for a property with more than 10 million events a month. Pick a shorter range."
+msgstr "ফানেল প্রতিটি ভিজিট ধাপে ধাপে অনুসরণ করে, তাই এটি একবারে সর্বোচ্চ 90 দিন, বা মাসে 1 কোটির বেশি ইভেন্টের প্রপার্টির জন্য 31 দিন কভার করে। ছোট রেঞ্জ বেছে নিন।"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel is made of two to eight goals in a row. Make at least two goals first."
+msgstr "একটি ফানেল পরপর দুই থেকে আটটি গোল দিয়ে তৈরি। আগে অন্তত দুটি গোল তৈরি করুন।"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are kept since {day}. Earlier days only have totals, so they cannot show a funnel."
+msgstr "ফানেলের জন্য প্রতিটি ভিজিটের ধাপ দরকার, যা {day} থেকে রাখা হয়। আগের দিনগুলোতে শুধু মোট আছে, তাই তারা ফানেল দেখাতে পারে না।"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are no longer kept for this range."
+msgstr "ফানেলের জন্য প্রতিটি ভিজিটের ধাপ দরকার, যা এই রেঞ্জের জন্য আর রাখা হয় না।"
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel shows how many visitors go from one goal to the next within a visit, and where they leave."
+msgstr "ফানেল দেখায় কতজন ভিজিটর এক ভিজিটের মধ্যে এক গোল থেকে পরেরটিতে যায়, এবং কোথায় ছেড়ে যায়।"
+
+#: src/features/analytics/Goals.tsx
+msgid "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
+msgstr "একটি গোল সেই ভিজিটরদের গোনে যারা পেজ দেখে, ইভেন্ট পাঠায় বা যথেষ্ট স্ক্রল করে, এবং তাদের আনা আয়।"
+
+#: src/features/analytics/Alerts.tsx
+msgid "A goal’s conversions yesterday were at most half its daily average of the week before."
+msgstr "গতকাল গোলের কনভার্সন তার আগের সপ্তাহের দৈনিক গড়ের অর্ধেক বা তার কম ছিল।"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A link shows only its views of this property, read-only, without filters or segments. Revoking or deleting it stops it at once."
+msgstr "একটি লিংক এই প্রপার্টির শুধু আপনার বাছা ভিউ দেখায়, শুধু-পঠন, ফিল্টার বা সেগমেন্ট ছাড়া। বাতিল বা মুছলে এটি সঙ্গে সঙ্গে থেমে যায়।"
+
+#: src/features/analytics/Goals.tsx
+msgid "A new goal also counts the days the detailed records are kept, not only from today."
+msgstr "নতুন গোল সেই দিনগুলোও গোনে যেগুলোর বিস্তারিত রেকর্ড রাখা হয়, শুধু আজ থেকে নয়।"
+
+#: src/features/analytics/Annotations.tsx
+msgid "A new key was made"
+msgstr "একটি নতুন কী তৈরি করা হয়েছে"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A new password signs out everyone who unlocked the link."
+msgstr "নতুন পাসওয়ার্ড যারা লিংক আনলক করেছে সবাইকে সাইন আউট করে।"
+
+#: src/features/analytics/Goals.tsx
+msgid "A path. * stands for one part of it, ** for any number of them."
+msgstr "একটি পাথ। * এর একটি অংশের জন্য, ** যেকোনো সংখ্যক অংশের জন্য।"
+
+#: src/features/analytics/Settings.tsx
+msgid "A prop name has at most 300 characters and does not start with $ or yuva_."
+msgstr "প্রপ নামে সর্বোচ্চ 300 অক্ষর থাকে এবং এটি $ বা yuva_ দিয়ে শুরু হয় না।"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A property can have at most 50 share links. Delete one first."
+msgstr "একটি প্রপার্টিতে সর্বোচ্চ 50টি শেয়ার লিংক থাকতে পারে। আগে একটি মুছুন।"
+
+#: src/features/analytics/parts.tsx
+msgid "A range can be at most 400 days long. Pick a shorter one."
+msgstr "একটি রেঞ্জ সর্বোচ্চ 400 দিন লম্বা হতে পারে। ছোট একটি বেছে নিন।"
+
+#: src/features/analytics/Alerts.tsx
+msgid "A site sent 10 or more visits yesterday and none in the 28 days before."
+msgstr "গতকাল একটি সাইট 10 বা তার বেশি ভিজিট পাঠিয়েছে এবং আগের 28 দিনে কোনোটি নয়।"
+
+#: src/features/analytics/Settings.tsx
+msgid "A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and it shows as a chip on the Events view."
+msgstr "একটি ট্র্যাক করা প্রপ দৈনিক মোটেও রাখা হয়, তাই বিস্তারিত রেকর্ড চলে গেলেও এর ব্রেকডাউন থাকে, এবং এটি ইভেন্ট ভিউতে চিপ হিসেবে দেখা যায়।"
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page or screen views without a gap of 30 minutes, within one day."
+msgstr "একজন ভিজিটরের পেজ বা স্ক্রিন ভিউ, 30 মিনিটের ব্যবধান ছাড়া, এক দিনের মধ্যে।"
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page views without a gap of 30 minutes, within one day."
+msgstr "একজন ভিজিটরের পেজ ভিউ, 30 মিনিটের ব্যবধান ছাড়া, এক দিনের মধ্যে।"
+
+#: src/features/analytics/text.ts
+msgid "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
+msgstr "একজন ভিজিটরের স্ক্রিন ভিউ, 30 মিনিটের ব্যবধান ছাড়া, এক দিনের মধ্যে। অ্যাপের প্রতিটি লঞ্চ নতুন ভিজিট শুরু করে।"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Active"
+msgstr "সক্রিয়"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add"
+msgstr "যোগ করুন"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add a note to the chart"
+msgstr "চার্টে নোট যোগ করুন"
+
+#: src/features/analytics/Settings.tsx
+msgid "Add a rule"
+msgstr "একটি নিয়ম যোগ করুন"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Add a step"
+msgstr "একটি ধাপ যোগ করুন"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/NewProperty.tsx
+msgid "Add a website"
+msgstr "একটি ওয়েবসাইট যোগ করুন"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add a website to count its visitors, pages and sources, without cookies."
+msgstr "কুকি ছাড়া একটি ওয়েবসাইটের ভিজিটর, পেজ ও উৎস গুনতে সেটি যোগ করুন।"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Add and install"
+msgstr "যোগ করুন ও ইনস্টল করুন"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add note"
+msgstr "নোট যোগ করুন"
+
+#: src/features/analytics/Install.tsx
+msgid "Add the YuvaAnalytics library of the Yuva package and configure it once at launch. .yuvaScreen counts a SwiftUI screen; in UIKit, call YuvaAnalytics.screen when a screen appears. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "Yuva প্যাকেজের YuvaAnalytics লাইব্রেরি যোগ করুন এবং লঞ্চে একবার কনফিগার করুন। .yuvaScreen একটি SwiftUI স্ক্রিন গোনে; UIKit-এ স্ক্রিন দেখা দিলে YuvaAnalytics.screen কল করুন। সংযোগ ছাড়া ইভেন্ট ডিভাইসে 72 ঘণ্টা পর্যন্ত অপেক্ষা করে এবং নিজের সময়সহ পৌঁছায়।"
+
+#: src/features/analytics/Install.tsx
+msgid "Add yuva-analytics from JitPack and configure it once in Application.onCreate. TrackScreen counts a Compose screen. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "JitPack থেকে yuva-analytics যোগ করুন এবং Application.onCreate-এ একবার কনফিগার করুন। TrackScreen একটি Compose স্ক্রিন গোনে। সংযোগ ছাড়া ইভেন্ট ডিভাইসে 72 ঘণ্টা পর্যন্ত অপেক্ষা করে এবং নিজের সময়সহ পৌঁছায়।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Addresses not counted"
+msgstr "যে ঠিকানা গোনা হয় না"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the compared days"
+msgstr "তুলনার দিনগুলোর তুলনায়"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the period before"
+msgstr "আগের সময়ের তুলনায়"
+
+#: src/features/analytics/Support.tsx
+msgid "Agents of the inbox can then see this property’s numbers too."
+msgstr "ইনবক্সের এজেন্টরা তখন এই প্রপার্টির সংখ্যাও দেখতে পারে।"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Agents of this inbox can see the numbers."
+msgstr "এই ইনবক্সের এজেন্টরা সংখ্যা দেখতে পারে।"
+
+#: src/features/analytics/text.ts
+msgid "AI assistants"
+msgstr "AI অ্যাসিস্ট্যান্ট"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Alerts"
+msgstr "অ্যালার্ট"
+
+#: src/features/analytics/Settings.tsx
+msgid "Alerts and reports"
+msgstr "অ্যালার্ট ও রিপোর্ট"
+
+#: src/features/analytics/Events.tsx
+msgid "All events"
+msgstr "সব ইভেন্ট"
+
+#: src/features/analytics/Goals.tsx
+msgid "All goals"
+msgstr "সব গোল"
+
+#: src/features/analytics/Support.tsx
+msgid "An owner or admin can link one in the property’s settings."
+msgstr "একজন ওনার বা অ্যাডমিন প্রপার্টির সেটিংসে একটি লিংক করতে পারেন।"
+
+#: src/features/analytics/Retention.tsx
+msgid "An owner or admin can turn on the persistent id in the consent features."
+msgstr "একজন ওনার বা অ্যাডমিন সম্মতি ফিচারে স্থায়ী id চালু করতে পারেন।"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics"
+msgstr "অ্যানালিটিক্স"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Analytics properties"
+msgstr "অ্যানালিটিক্স প্রপার্টি"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Analytics steps"
+msgstr "অ্যানালিটিক্সের ধাপ"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics views"
+msgstr "অ্যানালিটিক্স ভিউ"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Anyone with the link sees the views you pick, read-only, without signing in."
+msgstr "লিংক থাকা যে কেউ আপনার বাছা ভিউ দেখে, শুধু-পঠন, সাইন ইন ছাড়া।"
+
+#: src/features/analytics/text.ts
+msgid "App"
+msgstr "অ্যাপ"
+
+#: src/features/analytics/text.ts
+msgid "App version"
+msgstr "অ্যাপ সংস্করণ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Apps send without a domain, so only the platforms turned on here are counted. Events from your backend need no platform."
+msgstr "অ্যাপ ডোমেন ছাড়া পাঠায়, তাই শুধু এখানে চালু প্ল্যাটফর্ম গোনা হয়। আপনার ব্যাকএন্ডের ইভেন্টে প্ল্যাটফর্ম লাগে না।"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Ask for a password"
+msgstr "পাসওয়ার্ড চান"
+
+#: src/features/analytics/Sharing.tsx
+msgid "At least 8 characters"
+msgstr "অন্তত 8 অক্ষর"
+
+#: src/features/analytics/Settings.tsx
+msgid "At most 10 props can be tracked."
+msgstr "সর্বোচ্চ 10টি প্রপ ট্র্যাক করা যায়।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Audience"
+msgstr "অডিয়েন্স"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Available until {expires}"
+msgstr "{expires} পর্যন্ত উপলব্ধ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots"
+msgstr "বট"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
+msgstr "বট, রেট সীমা, বাদ দেওয়া ঠিকানা ও পাথ, মাসিক সীমা বা ব্যস্ত সার্ভার।"
+
+#: src/features/analytics/text.ts
+msgid "Bounce rate"
+msgstr "বাউন্স রেট"
+
+#: src/features/analytics/Events.tsx
+msgid "Break down by prop"
+msgstr "প্রপ অনুযায়ী ভাগ করুন"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Breakdown"
+msgstr "ব্রেকডাউন"
+
+#: src/features/analytics/Exports.tsx
+msgid "Broken down by"
+msgstr "এর অনুযায়ী ভাগ করা"
+
+#: src/features/analytics/Settings.tsx
+msgid "Broken events, such as a screen address that does not start with app://, a reserved name or too many props."
+msgstr "ভাঙা ইভেন্ট, যেমন app:// দিয়ে শুরু না হওয়া স্ক্রিন ঠিকানা, সংরক্ষিত নাম বা অনেক বেশি প্রপ।"
+
+#: src/features/analytics/text.ts
+msgid "Browser"
+msgstr "ব্রাউজার"
+
+#: src/features/analytics/text.ts
+msgid "Browser version"
+msgstr "ব্রাউজার সংস্করণ"
+
+#: src/features/analytics/Install.tsx
+msgid "Call it once in the browser. During server rendering it does nothing."
+msgstr "এটি ব্রাউজারে একবার কল করুন। সার্ভার রেন্ডারিংয়ের সময় এটি কিছু করে না।"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Cancel"
+msgstr "বাতিল"
+
+#: src/features/analytics/Controls.tsx
+msgid "Change filter: {label}"
+msgstr "ফিল্টার বদলান: {label}"
+
+#: src/features/analytics/Controls.tsx
+msgid "changed"
+msgstr "বদলেছে"
+
+#: src/features/analytics/text.ts
+msgid "Channel"
+msgstr "চ্যানেল"
+
+#: src/features/analytics/text.ts
+msgid "Chat opened"
+msgstr "চ্যাট খোলা হয়েছে"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Checked every hour. Each alert is sent once and also shows as a note on the chart."
+msgstr "প্রতি ঘণ্টায় পরীক্ষা করা হয়। প্রতিটি অ্যালার্ট একবার পাঠানো হয় এবং চার্টে নোট হিসেবেও দেখা যায়।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Children"
+msgstr "শিশু"
+
+#: src/features/analytics/Support.tsx
+msgid "Choose an inbox"
+msgstr "একটি ইনবক্স বেছে নিন"
+
+#: src/features/analytics/Settings.tsx
+msgid "Choose children for a site made for children."
+msgstr "শিশুদের জন্য তৈরি সাইটের জন্য শিশু বেছে নিন।"
+
+#: src/features/analytics/text.ts
+msgid "City"
+msgstr "শহর"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Clear"
+msgstr "মুছে ফেলুন"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts by"
+msgstr "কোহর্ট অনুযায়ী"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts fill once visitors agree to a persistent id and come back. The numbers are rebuilt every hour."
+msgstr "কোহর্ট ভরে যখন ভিজিটররা স্থায়ী id-তে রাজি হয় এবং ফিরে আসে। সংখ্যা প্রতি ঘণ্টায় আবার তৈরি হয়।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Collection"
+msgstr "সংগ্রহ"
+
+#. placeholder {0}: formatDate(`${c.from}T12:00:00Z`, i18n.locale)
+#. placeholder {1}: formatDate(`${c.to}T12:00:00Z`, i18n.locale)
+#: src/features/analytics/Controls.tsx
+msgid "Compare with {0} – {1}"
+msgstr "{0} – {1}-এর সঙ্গে তুলনা করুন"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with a year earlier"
+msgstr "এক বছর আগের সঙ্গে তুলনা করুন"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days"
+msgstr "অন্য দিনগুলোর সঙ্গে তুলনা করুন"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days…"
+msgstr "অন্য দিনগুলোর সঙ্গে তুলনা করুন…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the days"
+msgstr "এই দিনগুলোর সঙ্গে তুলনা করুন"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the period before"
+msgstr "আগের সময়ের সঙ্গে তুলনা করুন"
+
+#: src/features/analytics/Overview.tsx
+msgid "Compared days"
+msgstr "তুলনার দিন"
+
+#: src/features/analytics/Controls.tsx
+msgid "Comparison"
+msgstr "তুলনা"
+
+#: src/features/analytics/text.ts
+msgid "Completions"
+msgstr "সম্পূর্ণতা"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consent features"
+msgstr "সম্মতি ফিচার"
+
+#: src/features/analytics/Install.tsx
+msgid "Consent mode"
+msgstr "সম্মতি মোড"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id, and signed-in users are linked to their contact."
+msgstr "সম্মতি দেওয়া ভিজিটররা স্থায়ী id রাখে, এবং সাইন-ইন করা ব্যবহারকারীরা তাদের কনট্যাক্টের সঙ্গে যুক্ত হয়।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id."
+msgstr "সম্মতি দেওয়া ভিজিটররা স্থায়ী id রাখে।"
+
+#: src/features/analytics/parts.tsx
+msgid "Consented visitors only"
+msgstr "শুধু সম্মতি দেওয়া ভিজিটর"
+
+#: src/features/analytics/text.ts
+msgid "contains"
+msgstr "ধারণ করে"
+
+#: src/features/analytics/Install.tsx
+msgid "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
+msgstr "কনটেন্ট ব্লকার প্রায়ই অন্য ডোমেনের স্ক্রিপ্ট আটকায়। স্ক্রিপ্ট ও এর এন্ডপয়েন্ট নিজের সাইট থেকে দিলে সেই ভিজিটররা গোনা হতে থাকে। Yuva সার্ভারকে আপনার প্রক্সির ফরওয়ার্ড করা ঠিকানা বিশ্বাস করতে হবে; নইলে সব ভিজিটর এক রকম দেখায়।"
+
+#: src/features/analytics/text.ts
+msgid "Conversations"
+msgstr "কথোপকথন"
+
+#: src/features/analytics/text.ts
+msgid "Conversations per 1,000 views of the page."
+msgstr "পেজের প্রতি 1,000 ভিউতে কথোপকথন।"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Conversations per 1,000 views yesterday were at least twice the rate of the 28 days before."
+msgstr "গতকাল প্রতি 1,000 ভিউতে কথোপকথন আগের 28 দিনের হারের অন্তত দ্বিগুণ ছিল।"
+
+#: src/features/analytics/text.ts
+msgid "Conversations started on the page, from the chat of the linked inbox."
+msgstr "পেজে শুরু হওয়া কথোপকথন, লিংক করা ইনবক্সের চ্যাট থেকে।"
+
+#: src/features/analytics/Support.tsx
+msgid "Conversations, feedback, ratings and discussions of the linked inbox show here next to each page’s views. They are counted per page and day; no visitor is ever matched to a contact."
+msgstr "লিংক করা ইনবক্সের কথোপকথন, ফিডব্যাক, রেটিং ও আলোচনা এখানে প্রতিটি পেজের ভিউয়ের পাশে দেখা যায়। এগুলো প্রতি পেজ ও দিনে গোনা হয়; কোনো ভিজিটরকে কখনও কনট্যাক্টের সঙ্গে মেলানো হয় না।"
+
+#: src/features/analytics/text.ts
+msgid "Conversion rate"
+msgstr "কনভার্সন রেট"
+
+#: src/features/analytics/text.ts
+msgid "Conversions"
+msgstr "কনভার্সন"
+
+#: src/features/analytics/text.ts
+msgid "Conversions per 100 visitors."
+msgstr "প্রতি 100 ভিজিটরে কনভার্সন।"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
+msgstr "এখনই কপি করুন; এটি আর দেখানো হয় না। হারানো লিংক শুধু বাতিল করে আবার তৈরি করা যায়।"
+
+#: src/features/analytics/Install.tsx
+msgid "Count my visits again"
+msgstr "আমার ভিজিট আবার গুনুন"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Count visitors, pages, sources, places and devices without cookies and without storing IP addresses."
+msgstr "কুকি ছাড়া এবং IP ঠিকানা সংরক্ষণ না করে ভিজিটর, পেজ, উৎস, স্থান ও ডিভাইস গুনুন।"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Count your website’s visitors"
+msgstr "আপনার ওয়েবসাইটের ভিজিটর গুনুন"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted"
+msgstr "গোনা হয়েছে"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted as"
+msgstr "হিসেবে গোনা হয়েছে"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Countries"
+msgstr "দেশ"
+
+#: src/features/analytics/text.ts
+msgid "Country"
+msgstr "দেশ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
+msgstr "জিজ্ঞেস না করেই প্রতিটি ভিজিটর গোনে: ডিভাইসে কিছু সংরক্ষিত হয় না এবং কোনো IP ঠিকানা রাখা হয় না।"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Counts the visitors who reached each step after the ones before it, within one visit on one day. Numbers are at most ten minutes old."
+msgstr "যারা প্রতিটি ধাপে তার আগেরগুলোর পরে পৌঁছেছে তাদের গোনে, এক দিনে এক ভিজিটের মধ্যে। সংখ্যা সর্বোচ্চ দশ মিনিট পুরোনো।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Currency"
+msgstr "মুদ্রা"
+
+#: src/features/analytics/Exports.tsx
+msgid "Current view"
+msgstr "বর্তমান ভিউ"
+
+#: src/features/analytics/text.ts
+msgid "Custom and built-in events."
+msgstr "কাস্টম ও বিল্ট-ইন ইভেন্ট।"
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range"
+msgstr "কাস্টম রেঞ্জ"
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range…"
+msgstr "কাস্টম রেঞ্জ…"
+
+#: src/features/analytics/Settings.tsx
+msgid "Data"
+msgstr "ডেটা"
+
+#: src/features/analytics/Install.tsx
+msgid "data-outbound counts clicks on links to other sites, data-files downloads of documents and archives, and data-chat each time a visitor opens the chat. track() sends your own events with up to 30 props; e-mail addresses in props are dropped. Make goals from events in the Goals view."
+msgstr "data-outbound অন্য সাইটের লিংকে ক্লিক গোনে, data-files নথি ও আর্কাইভের ডাউনলোড, এবং data-chat প্রতিবার ভিজিটর চ্যাট খুললে। track() 30টি প্রপ পর্যন্ত সহ আপনার নিজের ইভেন্ট পাঠায়; প্রপে ই-মেইল ঠিকানা বাদ যায়। ইভেন্ট থেকে Goals ভিউতে গোল তৈরি করুন।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Day"
+msgstr "দিন"
+
+#: src/features/analytics/Retention.tsx
+msgid "Day {period}"
+msgstr "দিন {period}"
+
+#: src/features/analytics/Exports.tsx
+msgid "Day by day"
+msgstr "দিন দিন"
+
+#: src/features/analytics/Retention.tsx
+msgid "Days"
+msgstr "দিন"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/SharePage.tsx
+msgid "Days are counted in this time zone"
+msgstr "দিন এই সময় অঞ্চলে গোনা হয়"
+
+#: src/features/analytics/Settings.tsx
+msgid "Days are in the property’s time zone. Their totals are counted again without them."
+msgstr "দিন প্রপার্টির সময় অঞ্চলে। তাদের মোট সেগুলো ছাড়া আবার গোনা হয়।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Days waiting to be summed up"
+msgstr "যোগ করার অপেক্ষায় থাকা দিন"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete"
+msgstr "মুছুন"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete {0}?"
+msgstr "{0} মুছবেন?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete {name}?"
+msgstr "{name} মুছবেন?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data"
+msgstr "সব ডেটা মুছুন"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data of {0}?"
+msgstr "{0}-এর সব ডেটা মুছবেন?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete days"
+msgstr "দিন মুছুন"
+
+#: src/features/analytics/Exports.tsx
+msgid "Delete export"
+msgstr "এক্সপোর্ট মুছুন"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Delete funnel"
+msgstr "ফানেল মুছুন"
+
+#: src/features/analytics/Goals.tsx
+msgid "Delete goal"
+msgstr "গোল মুছুন"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete note"
+msgstr "নোট মুছুন"
+
+#: src/features/analytics/Controls.tsx
+msgid "Delete segment"
+msgstr "সেগমেন্ট মুছুন"
+
+#. placeholder {0}: funnel.name
+#: src/features/analytics/Funnels.tsx
+msgid "Delete the funnel “{0}”?"
+msgstr "ফানেল “{0}” মুছবেন?"
+
+#. placeholder {0}: goal.name
+#: src/features/analytics/Goals.tsx
+msgid "Delete the goal “{0}”?"
+msgstr "গোল “{0}” মুছবেন?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the property"
+msgstr "প্রপার্টি মুছুন"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Delete the segment “{0}”?"
+msgstr "সেগমেন্ট “{0}” মুছবেন?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the visits and events of {span}?"
+msgstr "{span}-এর ভিজিট ও ইভেন্ট মুছবেন?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete these days"
+msgstr "এই দিনগুলো মুছুন"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete this note?"
+msgstr "এই নোট মুছবেন?"
+
+#: src/features/analytics/Exports.tsx
+msgid "deleted {expires}"
+msgstr "{expires} মুছে ফেলা হয়েছে"
+
+#: src/features/analytics/Settings.tsx
+msgid "Deleting in the background. The numbers update when it is done."
+msgstr "ব্যাকগ্রাউন্ডে মোছা হচ্ছে। শেষ হলে সংখ্যা আপডেট হয়।"
+
+#: src/features/analytics/Goals.tsx
+msgid "Depth in %"
+msgstr "গভীরতা % এ"
+
+#: src/features/analytics/text.ts
+msgid "Desktop"
+msgstr "ডেস্কটপ"
+
+#: src/features/analytics/Exports.tsx
+msgid "Detailed records are kept since {rawDay}."
+msgstr "বিস্তারিত রেকর্ড {rawDay} থেকে রাখা হয়।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Detailed records kept since"
+msgstr "বিস্তারিত রেকর্ড এর পর থেকে রাখা হয়"
+
+#: src/features/analytics/Overview.tsx
+msgid "Details"
+msgstr "বিবরণ"
+
+#: src/features/analytics/text.ts
+msgid "Device"
+msgstr "ডিভাইস"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Devices"
+msgstr "ডিভাইস"
+
+#: src/features/analytics/text.ts
+msgid "Direct"
+msgstr "সরাসরি"
+
+#: src/features/analytics/text.ts
+msgid "Direct / none"
+msgstr "সরাসরি / কিছু নয়"
+
+#: src/features/analytics/text.ts
+msgid "Discussion threads started on the page."
+msgstr "পেজে শুরু হওয়া আলোচনা থ্রেড।"
+
+#: src/features/analytics/text.ts
+msgid "Discussions"
+msgstr "আলোচনা"
+
+#: src/features/analytics/text.ts
+msgid "Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again."
+msgstr "প্রতিদিন আলাদা ভিজিটর, রেঞ্জের দিনগুলোতে যোগ করা। যে অন্য দিনে ফিরে আসে সে আবার গোনা হয়।"
+
+#: src/features/analytics/Install.tsx
+msgid "Do not count my visits"
+msgstr "আমার ভিজিট গুনবেন না"
+
+#: src/features/analytics/text.ts
+msgid "does not contain"
+msgstr "ধারণ করে না"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Domains"
+msgstr "ডোমেন"
+
+#: src/features/analytics/Exports.tsx
+msgid "Download"
+msgstr "ডাউনলোড"
+
+#: src/features/analytics/parts.tsx
+msgid "Download CSV"
+msgstr "CSV ডাউনলোড করুন"
+
+#: src/features/analytics/Settings.tsx
+msgid "Dropped"
+msgstr "বাদ পড়েছে"
+
+#: src/features/analytics/text.ts
+msgid "E-mail"
+msgstr "ই-মেইল"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that day, each column the share of them who came back that many days later."
+msgstr "প্রতিটি সারিতে সেই দিন প্রথম দেখা ভিজিটর আছে, প্রতিটি কলামে তাদের কত অংশ ততদিন পরে ফিরে এসেছে।"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that month, each column the share of them who came back that many months later."
+msgstr "প্রতিটি সারিতে সেই মাসে প্রথম দেখা ভিজিটর আছে, প্রতিটি কলামে তাদের কত অংশ ততমাস পরে ফিরে এসেছে।"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that week, each column the share of them who came back that many weeks later."
+msgstr "প্রতিটি সারিতে সেই সপ্তাহে প্রথম দেখা ভিজিটর আছে, প্রতিটি কলামে তাদের কত অংশ ততসপ্তাহ পরে ফিরে এসেছে।"
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Edit"
+msgstr "সম্পাদনা করুন"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Edit funnel"
+msgstr "ফানেল সম্পাদনা করুন"
+
+#: src/features/analytics/Goals.tsx
+msgid "Edit goal"
+msgstr "গোল সম্পাদনা করুন"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Edit note"
+msgstr "নোট সম্পাদনা করুন"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Edit share link"
+msgstr "শেয়ার লিংক সম্পাদনা করুন"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embed"
+msgstr "এমবেড"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embeds"
+msgstr "এমবেড"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Enter the password you were given with the link."
+msgstr "লিংকের সঙ্গে পাওয়া পাসওয়ার্ড দিন।"
+
+#: src/features/analytics/text.ts
+msgid "Entry page"
+msgstr "এন্ট্রি পেজ"
+
+#: src/features/analytics/Goals.tsx
+msgid "equal to"
+msgstr "সমান"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Event"
+msgstr "ইভেন্ট"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event}"
+msgstr "ইভেন্ট {event}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event} with {key} = {value}"
+msgstr "{key} = {value} সহ ইভেন্ট {event}"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Install.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Events"
+msgstr "ইভেন্ট"
+
+#: src/features/analytics/Settings.tsx
+msgid "Events are arriving."
+msgstr "ইভেন্ট আসছে।"
+
+#: src/features/analytics/Events.tsx
+msgid "Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when the script has their attributes."
+msgstr "ইভেন্ট আপনার পেজ ও অ্যাপে track() কল থেকে আসে। স্ক্রিপ্টে অ্যাট্রিবিউট থাকলে আউটবাউন্ড লিংক, ডাউনলোড ও চ্যাট খোলা গোনা হয়।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Events count only after the page calls yuva.consent with analytics set to true. Install the script with data-consent=\"required\"."
+msgstr "ইভেন্ট শুধু তখনই গোনা হয় যখন পেজ analytics true সেট করে yuva.consent কল করে। স্ক্রিপ্ট data-consent=\"required\" দিয়ে ইনস্টল করুন।"
+
+#: src/features/analytics/Settings.tsx
+msgid "events counted"
+msgstr "ইভেন্ট গোনা হয়েছে"
+
+#: src/features/analytics/Settings.tsx
+msgid "events dropped"
+msgstr "ইভেন্ট বাদ পড়েছে"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every event with its visit’s page, source, place and device, as NDJSON. Visits are numbered within the file; there is no visitor id, address or contact. At most 31 days."
+msgstr "প্রতিটি ইভেন্ট তার ভিজিটের পেজ, উৎস, স্থান ও ডিভাইসসহ, NDJSON হিসেবে। ভিজিট ফাইলের মধ্যে ক্রমিক; কোনো ভিজিটর id, ঠিকানা বা কনট্যাক্ট নেই। সর্বোচ্চ 31 দিন।"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Every Monday at 08:00 in {zone}, about the week before."
+msgstr "প্রতি সোমবার 08:00-এ {zone}-এ, আগের সপ্তাহ নিয়ে।"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range and the filters you are looking at, without a comparison."
+msgstr "আপনি যে রেঞ্জ ও ফিল্টার দেখছেন তার প্রতিটি সারি, তুলনা ছাড়া।"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range you are looking at, without a comparison."
+msgstr "আপনি যে রেঞ্জ দেখছেন তার প্রতিটি সারি, তুলনা ছাড়া।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
+msgstr "প্রতিটি ভিজিট, ইভেন্ট ও মোট মুছে ফেলা হয়। প্রপার্টি ও এর কী থাকে, এবং গণনা চলতে থাকে।"
+
+#: src/features/analytics/Controls.tsx
+msgid "Everyone who sees this property can pick it. You, owners and admins can change it."
+msgstr "যে কেউ এই প্রপার্টি দেখে সে এটি বেছে নিতে পারে। আপনি, ওনার ও অ্যাডমিনরা এটি বদলাতে পারেন।"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Everyone who sees this property sees the note, such as a launch or a campaign."
+msgstr "যে কেউ এই প্রপার্টি দেখে সে নোট দেখে, যেমন লঞ্চ বা ক্যাম্পেইন।"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Everything this property raised, newest first, whoever was notified."
+msgstr "এই প্রপার্টি যা তুলেছে সব, নতুন আগে, যাকেই জানানো হোক।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Excluded"
+msgstr "বাদ দেওয়া"
+
+#: src/features/analytics/text.ts
+msgid "Exit page"
+msgstr "এক্সিট পেজ"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expired"
+msgstr "মেয়াদ শেষ"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expires"
+msgstr "মেয়াদ শেষ"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export"
+msgstr "এক্সপোর্ট"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export progress"
+msgstr "এক্সপোর্টের অগ্রগতি"
+
+#: src/features/analytics/Exports.tsx
+msgid "Exports"
+msgstr "এক্সপোর্ট"
+
+#: src/features/analytics/Exports.tsx
+msgid "Failed"
+msgstr "ব্যর্থ"
+
+#: src/features/analytics/text.ts
+msgid "Feedback"
+msgstr "ফিডব্যাক"
+
+#: src/features/analytics/Support.tsx
+msgid "Fewer than 100 views"
+msgstr "100-এর কম ভিউ"
+
+#: src/features/analytics/text.ts
+msgid "File download"
+msgstr "ফাইল ডাউনলোড"
+
+#: src/features/analytics/Exports.tsx
+msgid "Files are made in the background and deleted seven days later."
+msgstr "ফাইল ব্যাকগ্রাউন্ডে তৈরি হয় এবং সাত দিন পরে মুছে ফেলা হয়।"
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Support.tsx
+msgid "Filter by this"
+msgstr "এটি দিয়ে ফিল্টার করুন"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Filters"
+msgstr "ফিল্টার"
+
+#: src/features/analytics/Exports.tsx
+msgid "Filters come from the view: click a row there to add one. <0>Change them in the view</0>"
+msgstr "ফিল্টার ভিউ থেকে আসে: সেখানে একটি সারিতে ক্লিক করে একটি যোগ করুন। <0>ভিউতে সেগুলো বদলান</0>"
+
+#: src/features/analytics/Retention.tsx
+msgid "First day"
+msgstr "প্রথম দিন"
+
+#: src/features/analytics/Retention.tsx
+msgid "First month"
+msgstr "প্রথম মাস"
+
+#: src/features/analytics/text.ts
+msgid "First page or screen"
+msgstr "প্রথম পেজ বা স্ক্রিন"
+
+#: src/features/analytics/text.ts
+msgid "First screen"
+msgstr "প্রথম স্ক্রিন"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "First visit"
+msgstr "প্রথম ভিজিট"
+
+#: src/features/analytics/Retention.tsx
+msgid "First week"
+msgstr "প্রথম সপ্তাহ"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Five reports an hour at most. Try again later."
+msgstr "ঘণ্টায় সর্বোচ্চ পাঁচটি রিপোর্ট। পরে আবার চেষ্টা করুন।"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "For example Fieldnote website"
+msgstr "যেমন Fieldnote ওয়েবসাইট"
+
+#: src/features/analytics/Settings.tsx
+msgid "For revenue, an ISO code like EUR."
+msgstr "আয়ের জন্য, EUR-এর মতো একটি ISO কোড।"
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an <0>API key</0> with the analytics:write scope, which stays on your server."
+msgstr "যা শুধু আপনার ব্যাকএন্ড দেখে তার জন্য, যেমন সাইনআপ বা পেমেন্ট। Track ভিজিটরের ঠিকানা ও ব্রাউজার ফরওয়ার্ড করে, তাই ইভেন্ট তাদের ভিজিটে যুক্ত হয়; Do Not Track বা Global Privacy Control সহ অনুরোধ পাঠানো হয় না। এর জন্য analytics:write স্কোপসহ একটি <0>API কী</0> দরকার, যা আপনার সার্ভারে থাকে।"
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
+msgstr "যা শুধু আপনার ব্যাকএন্ড দেখে তার জন্য, যেমন সাইনআপ বা পেমেন্ট। Track ভিজিটরের ঠিকানা ও ব্রাউজার ফরওয়ার্ড করে, তাই ইভেন্ট তাদের ভিজিটে যুক্ত হয়; Do Not Track বা Global Privacy Control সহ অনুরোধ পাঠানো হয় না। এর জন্য একজন ওনার বা অ্যাডমিনের কাছ থেকে analytics:write স্কোপসহ একটি API কী দরকার, যা আপনার সার্ভারে থাকে।"
+
+#: src/features/analytics/Exports.tsx
+msgid "Format"
+msgstr "ফরম্যাট"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "From"
+msgstr "প্রেরক"
+
+#: src/features/analytics/Settings.tsx
+msgid "From a site that is not one of the domains, or from an app whose platform is not turned on."
+msgstr "এমন সাইট থেকে যা ডোমেনগুলোর মধ্যে নেই, বা এমন অ্যাপ থেকে যার প্ল্যাটফর্ম চালু নেই।"
+
+#: src/features/analytics/Funnels.tsx
+msgid "From pricing to signup"
+msgstr "প্রাইসিং থেকে সাইনআপ"
+
+#: src/features/analytics/Support.tsx
+msgid "From the inbox {inboxName}. Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "ইনবক্স {inboxName} থেকে। প্রতি 1,000 ভিউতে কথোপকথন অনুযায়ী সাজানো; 100-এর কম ভিউ থাকা পেজ অন্যদের পরে আসে। প্রতি পেজ ও দিনে গোনা হয়, কখনও প্রতি ভিজিটর বা কনট্যাক্টে নয়।"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Funnel"
+msgstr "ফানেল"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Funnels"
+msgstr "ফানেল"
+
+#: src/features/analytics/Settings.tsx
+msgid "General"
+msgstr "সাধারণ"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Go to goals"
+msgstr "গোলে যান"
+
+#: src/features/analytics/Goals.tsx
+msgid "Goal"
+msgstr "গোল"
+
+#. placeholder {0}: a.text
+#: src/features/analytics/Annotations.tsx
+msgid "Goal “{0}” was created"
+msgstr "গোল “{0}” তৈরি করা হয়েছে"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Goal drop"
+msgstr "গোলে পতন"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Goals"
+msgstr "গোল"
+
+#: src/features/analytics/Settings.tsx
+msgid "had an address removed"
+msgstr "একটি ঠিকানা সরানো হয়েছে"
+
+#: src/features/analytics/Settings.tsx
+msgid "Health"
+msgstr "স্বাস্থ্য"
+
+#: src/features/analytics/text.ts
+msgid "Helpful"
+msgstr "সহায়ক"
+
+#: src/features/analytics/Support.tsx
+msgid "Helpful and not helpful"
+msgstr "সহায়ক ও সহায়ক নয়"
+
+#: src/features/analytics/text.ts
+msgid "Helpful ratings out of all ratings."
+msgstr "সব রেটিংয়ের মধ্যে সহায়ক রেটিং।"
+
+#: src/features/analytics/text.ts
+msgid "Helpful share"
+msgstr "সহায়কের অংশ"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Home shows each website and app like this: visitors today, in the last 30 minutes and this week."
+msgstr "হোম প্রতিটি ওয়েবসাইট ও অ্যাপ এভাবে দেখায়: আজকের ভিজিটর, গত 30 মিনিটে এবং এই সপ্তাহে।"
+
+#: src/features/analytics/text.ts
+msgid "Host"
+msgstr "হোস্ট"
+
+#: src/features/analytics/text.ts
+msgid "Host or app"
+msgstr "হোস্ট বা অ্যাপ"
+
+#: src/features/analytics/Install.tsx
+msgid "How to install"
+msgstr "কীভাবে ইনস্টল করবেন"
+
+#: src/features/analytics/Events.tsx
+msgid "How to send events"
+msgstr "কীভাবে ইভেন্ট পাঠাবেন"
+
+#: src/features/analytics/Sharing.tsx
+msgid "I saved it"
+msgstr "আমি সংরক্ষণ করেছি"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Support.tsx
+msgid "Inbox"
+msgstr "ইনবক্স"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Install"
+msgstr "ইনস্টল করুন"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/NewProperty.tsx
+msgid "Install on {0}"
+msgstr "{0}-এ ইনস্টল করুন"
+
+#: src/features/analytics/text.ts
+msgid "Internal"
+msgstr "অভ্যন্তরীণ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Invalid"
+msgstr "অবৈধ"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Investors"
+msgstr "বিনিয়োগকারী"
+
+#: src/features/analytics/text.ts
+msgid "is"
+msgstr "হলো"
+
+#: src/features/analytics/text.ts
+msgid "is not"
+msgstr "নয়"
+
+#: src/features/analytics/Controls.tsx
+msgid "It is gone for everyone who uses it. The numbers stay."
+msgstr "যারা এটি ব্যবহার করে সবার জন্য এটি চলে গেছে। সংখ্যা থাকে।"
+
+#: src/features/analytics/SharePage.tsx
+msgid "It may have expired or been revoked. Ask the person who shared it for a new one."
+msgstr "এটির মেয়াদ শেষ বা বাতিল হয়ে থাকতে পারে। যিনি শেয়ার করেছেন তাঁর কাছে নতুন একটি চান।"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Its goals stay."
+msgstr "এর গোল থাকে।"
+
+#: src/features/analytics/Goals.tsx
+msgid "Its numbers are deleted too. This cannot be undone."
+msgstr "এর সংখ্যাও মুছে যায়। এটি পূর্বাবস্থায় ফেরানো যায় না।"
+
+#: src/features/analytics/Events.tsx
+msgid "Keep only visits with this value"
+msgstr "শুধু এই মানের ভিজিট রাখুন"
+
+#: src/features/analytics/Settings.tsx
+msgid "Key"
+msgstr "কী"
+
+#: src/features/analytics/Goals.tsx
+msgid "Kind of goal"
+msgstr "গোলের ধরন"
+
+#: src/features/analytics/text.ts
+msgid "Language"
+msgstr "ভাষা"
+
+#: src/features/analytics/text.ts
+msgid "Laptop"
+msgstr "ল্যাপটপ"
+
+#: src/features/analytics/text.ts
+msgid "Last 12 months"
+msgstr "গত 12 মাস"
+
+#: src/features/analytics/text.ts
+msgid "Last 28 days"
+msgstr "গত 28 দিন"
+
+#: src/features/analytics/text.ts
+msgid "Last 30 days"
+msgstr "গত 30 দিন"
+
+#: src/features/analytics/text.ts
+msgid "Last 6 months"
+msgstr "গত 6 মাস"
+
+#: src/features/analytics/text.ts
+msgid "Last 7 days"
+msgstr "গত 7 দিন"
+
+#: src/features/analytics/text.ts
+msgid "Last 90 days"
+msgstr "গত 90 দিন"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event"
+msgstr "শেষ ইভেন্ট"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event: {last}"
+msgstr "শেষ ইভেন্ট: {last}"
+
+#: src/features/analytics/text.ts
+msgid "Last month"
+msgstr "গত মাস"
+
+#: src/features/analytics/Sharing.tsx
+msgid "last opened {viewed}"
+msgstr "শেষবার খোলা {viewed}"
+
+#: src/features/analytics/text.ts
+msgid "Last page or screen"
+msgstr "শেষ পেজ বা স্ক্রিন"
+
+#: src/features/analytics/text.ts
+msgid "Last screen"
+msgstr "শেষ স্ক্রিন"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Leave empty to keep the current one"
+msgstr "বর্তমানটি রাখতে খালি রাখুন"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Link"
+msgstr "লিংক"
+
+#: src/features/analytics/Support.tsx
+msgid "Link an inbox to see support per page"
+msgstr "প্রতি পেজে সাপোর্ট দেখতে একটি ইনবক্স লিংক করুন"
+
+#: src/features/analytics/Support.tsx
+msgid "Link inbox"
+msgstr "ইনবক্স লিংক করুন"
+
+#: src/features/analytics/Settings.tsx
+msgid "Link signed-in users to their contact"
+msgstr "সাইন-ইন করা ব্যবহারকারীদের তাদের কনট্যাক্টের সঙ্গে যুক্ত করুন"
+
+#: src/features/analytics/Alerts.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Support.tsx
+msgid "Load more"
+msgstr "আরও লোড করুন"
+
+#: src/features/analytics/Settings.tsx
+msgid "Location database"
+msgstr "লোকেশন ডেটাবেস"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Locations"
+msgstr "অবস্থান"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created}"
+msgstr "{created} তৈরি করা হয়েছে"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created} by {by}"
+msgstr "{by} {created} তৈরি করেছেন"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key"
+msgstr "নতুন কী তৈরি করুন"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key?"
+msgstr "নতুন কী তৈরি করবেন?"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Make at least two goals first."
+msgstr "আগে অন্তত দুটি গোল তৈরি করুন।"
+
+#: src/features/analytics/Goals.tsx
+msgid "Make goal"
+msgstr "গোল তৈরি করুন"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Make link"
+msgstr "লিংক তৈরি করুন"
+
+#: src/features/analytics/text.ts
+msgid "matches"
+msgstr "মেলে"
+
+#: src/features/analytics/text.ts
+msgid "Mobile"
+msgstr "মোবাইল"
+
+#: src/features/analytics/Retention.tsx
+msgid "Month {period}"
+msgstr "মাস {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Monthly"
+msgstr "মাসিক"
+
+#: src/features/analytics/Settings.tsx
+msgid "Monthly limit"
+msgstr "মাসিক সীমা"
+
+#: src/features/analytics/Retention.tsx
+msgid "Months"
+msgstr "মাস"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move down"
+msgstr "নিচে নামান"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move up"
+msgstr "উপরে তুলুন"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Name"
+msgstr "নাম"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs a linked inbox under General: its identity secret signs the tokens."
+msgstr "General-এর অধীনে একটি লিংক করা ইনবক্স দরকার: এর আইডেন্টিটি সিক্রেট টোকেন সাইন করে।"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Needs a linked inbox. {help}"
+msgstr "একটি লিংক করা ইনবক্স দরকার। {help}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs the persistent id: a visitor is linked through it."
+msgstr "স্থায়ী id দরকার: ভিজিটর এর মাধ্যমে যুক্ত হয়।"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Never"
+msgstr "কখনও না"
+
+#: src/features/analytics/Sharing.tsx
+msgid "never opened"
+msgstr "কখনও খোলা হয়নি"
+
+#: src/features/analytics/text.ts
+msgid "New"
+msgstr "নতুন"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value} with {count}, none in the compared days."
+msgstr "নতুন {kind}: {count} সহ {value}, তুলনার দিনগুলোতে কোনোটি নয়।"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
+msgstr "নতুন {kind}: {value}। {metric}: {now}, তুলনার দিনগুলোতে কোনোটি নয়।"
+
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "নতুন ও ফিরে আসা"
+
+#: src/features/analytics/Funnels.tsx
+msgid "New funnel"
+msgstr "নতুন ফানেল"
+
+#: src/features/analytics/Goals.tsx
+msgid "New goal"
+msgstr "নতুন গোল"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New link"
+msgstr "নতুন লিংক"
+
+#: src/features/analytics/text.ts
+msgid "New or returning"
+msgstr "নতুন বা ফিরে আসা"
+
+#: src/features/analytics/Annotations.tsx
+msgid "New pricing page"
+msgstr "নতুন প্রাইসিং পেজ"
+
+#: src/features/analytics/Alerts.tsx
+msgid "New referrer"
+msgstr "নতুন রেফারার"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New share link"
+msgstr "নতুন শেয়ার লিংক"
+
+#: src/features/analytics/Alerts.tsx
+msgid "No alerts yet."
+msgstr "এখনও কোনো অ্যালার্ট নেই।"
+
+#: src/features/analytics/Controls.tsx
+msgid "No comparison"
+msgstr "কোনো তুলনা নেই"
+
+#: src/features/analytics/Settings.tsx
+msgid "No consent features are offered."
+msgstr "কোনো সম্মতি ফিচার দেওয়া হয় না।"
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "এই রেঞ্জে কোনো সম্মতি দেওয়া ভিজিটর নেই।"
+
+#: src/features/analytics/Retention.tsx
+msgid "No consented visitors yet"
+msgstr "এখনও কোনো সম্মতি দেওয়া ভিজিটর নেই"
+
+#: src/features/analytics/Support.tsx
+msgid "No conversations, feedback, ratings or discussions from these pages in this range."
+msgstr "এই রেঞ্জে এই পেজগুলো থেকে কোনো কথোপকথন, ফিডব্যাক, রেটিং বা আলোচনা নেই।"
+
+#: src/features/analytics/Goals.tsx
+msgid "No conversions in this range."
+msgstr "এই রেঞ্জে কোনো কনভার্সন নেই।"
+
+#: src/features/analytics/Settings.tsx
+msgid "No event yet."
+msgstr "এখনও কোনো ইভেন্ট নেই।"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events in the last 24 hours"
+msgstr "গত 24 ঘণ্টায় কোনো ইভেন্ট নেই"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events yet"
+msgstr "এখনও কোনো ইভেন্ট নেই"
+
+#: src/features/analytics/Exports.tsx
+msgid "No exports yet."
+msgstr "এখনও কোনো এক্সপোর্ট নেই।"
+
+#: src/features/analytics/Funnels.tsx
+msgid "No funnels yet"
+msgstr "এখনও কোনো ফানেল নেই"
+
+#: src/features/analytics/Goals.tsx
+msgid "No goals yet"
+msgstr "এখনও কোনো গোল নেই"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No properties yet"
+msgstr "এখনও কোনো প্রপার্টি নেই"
+
+#: src/features/analytics/Settings.tsx
+msgid "No props are tracked."
+msgstr "কোনো প্রপ ট্র্যাক করা হয় না।"
+
+#: src/features/analytics/Alerts.tsx
+msgid "No scheduled reports."
+msgstr "কোনো শিডিউল করা রিপোর্ট নেই।"
+
+#: src/features/analytics/Controls.tsx
+msgid "No segment"
+msgstr "কোনো সেগমেন্ট নেই"
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Make one to show these numbers to people outside the workspace."
+msgstr "এখনও কোনো শেয়ার লিংক নেই। ওয়ার্কস্পেসের বাইরের মানুষকে এই সংখ্যা দেখাতে একটি তৈরি করুন।"
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Owners and admins make them."
+msgstr "এখনও কোনো শেয়ার লিংক নেই। ওনার ও অ্যাডমিনরা এগুলো তৈরি করেন।"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Nobody in the last 30 minutes."
+msgstr "গত 30 মিনিটে কেউ নেই।"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Nobody reached the first step in this range."
+msgstr "এই রেঞ্জে কেউ প্রথম ধাপে পৌঁছায়নি।"
+
+#: src/features/analytics/Alerts.tsx
+msgid "None"
+msgstr "নেই"
+
+#: src/features/analytics/Settings.tsx
+msgid "None yet"
+msgstr "এখনও কিছু নেই"
+
+#: src/features/analytics/Exports.tsx
+msgid "None, every visit counts."
+msgstr "কিছু নয়, প্রতিটি ভিজিট গোনা হয়।"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "None, owners and admins only"
+msgstr "কিছু নয়, শুধু ওনার ও অ্যাডমিন"
+
+#: src/features/analytics/parts.tsx
+msgid "Not available for this range."
+msgstr "এই রেঞ্জের জন্য উপলব্ধ নয়।"
+
+#: src/features/analytics/text.ts
+msgid "Not helpful"
+msgstr "সহায়ক নয়"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Note"
+msgstr "নোট"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Notes"
+msgstr "নোট"
+
+#: src/features/analytics/Exports.tsx
+msgid "Nothing"
+msgstr "কিছু না"
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Nothing counted in this range."
+msgstr "এই রেঞ্জে কিছু গোনা হয়নি।"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Notify me"
+msgstr "আমাকে জানান"
+
+#: src/features/analytics/Settings.tsx
+msgid "Off"
+msgstr "বন্ধ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Offered only to visitors who agree in your consent tool. Everyone else is counted exactly as before, one day at a time and without anything stored on the device."
+msgstr "শুধু সেই ভিজিটরদের দেওয়া হয় যারা আপনার সম্মতি টুলে রাজি হয়। বাকি সবাই আগের মতোই গোনা হয়, একবারে এক দিন এবং ডিভাইসে কিছু সংরক্ষণ না করে।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Older than 72 hours. Apps keep events without a connection for at most that long."
+msgstr "72 ঘণ্টার চেয়ে পুরোনো। অ্যাপ সংযোগ ছাড়া ইভেন্ট সর্বোচ্চ এত সময় রাখে।"
+
+#: src/features/analytics/Alerts.tsx
+msgid "On its way to {email}."
+msgstr "{email}-এর পথে।"
+
+#: src/features/analytics/Alerts.tsx
+msgid "On the 1st of each month at 08:00 in {zone}, about the month before."
+msgstr "প্রতি মাসের 1 তারিখে 08:00-এ {zone}-এ, আগের মাস নিয়ে।"
+
+#: src/features/analytics/Settings.tsx
+msgid "One IP address or range per line, up to 50, such as your office or a monitoring service."
+msgstr "প্রতি লাইনে একটি IP ঠিকানা বা রেঞ্জ, সর্বোচ্চ 50, যেমন আপনার অফিস বা মনিটরিং সেবা।"
+
+#: src/features/analytics/Settings.tsx
+msgid "One path per line, up to 50. * stands for one part of the path, ** for any number of them."
+msgstr "প্রতি লাইনে একটি পাথ, সর্বোচ্চ 50। * পাথের একটি অংশের জন্য, ** যেকোনো সংখ্যক অংশের জন্য।"
+
+#: src/features/analytics/Sharing.tsx
+msgid "One per line, like https://example.com or https://*.example.com. Without any, no other site can show it in a frame."
+msgstr "প্রতি লাইনে একটি, যেমন https://example.com বা https://*.example.com। কিছু না থাকলে অন্য কোনো সাইট এটি ফ্রেমে দেখাতে পারে না।"
+
+#: src/features/analytics/Settings.tsx
+msgid "One per line. *.example.com covers every subdomain, but not example.com itself."
+msgstr "প্রতি লাইনে একটি। *.example.com প্রতিটি সাবডোমেন কভার করে, কিন্তু example.com নিজে নয়।"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "One per line. Pages on other domains cannot send events. *.example.com covers every subdomain."
+msgstr "প্রতি লাইনে একটি। অন্য ডোমেনের পেজ ইভেন্ট পাঠাতে পারে না। *.example.com প্রতিটি সাবডোমেন কভার করে।"
+
+#: src/features/analytics/Settings.tsx
+msgid "One prop name per line, up to 10, such as plan."
+msgstr "প্রতি লাইনে একটি প্রপ নাম, সর্বোচ্চ 10, যেমন plan।"
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
+msgstr "প্রতিদিনের জন্য একটি সারি: ভিজিটর, ভিজিট, ভিউ, বাউন্স রেট, সময়কাল ও স্ক্রল গভীরতাসহ। সর্বোচ্চ 400 দিন।"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Only for you, by e-mail to {email}. Reports are plain numbers, with no images and nothing that tracks opening or clicks."
+msgstr "শুধু আপনার জন্য, {email}-এ ই-মেইলে। রিপোর্ট সাধারণ সংখ্যা, ছবি ছাড়া এবং খোলা বা ক্লিক ট্র্যাক করে এমন কিছু ছাড়া।"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Only members see it, to tell links apart."
+msgstr "শুধু সদস্যরা এটি দেখে, লিংক আলাদা করতে।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Only the country is kept, never the region or city."
+msgstr "শুধু দেশ রাখা হয়, অঞ্চল বা শহর কখনও নয়।"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Only totals are shown. There is no list of individual visitors."
+msgstr "শুধু মোট দেখানো হয়। আলাদা ভিজিটরের কোনো তালিকা নেই।"
+
+#: src/features/analytics/parts.tsx
+msgid "Only visitors who agreed to a persistent id are counted here. Everyone else is counted one day at a time."
+msgstr "এখানে শুধু সেই ভিজিটর গোনা হয় যারা স্থায়ী id-তে রাজি হয়েছে। বাকি সবাই একবারে এক দিন গোনা হয়।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Only with consent"
+msgstr "শুধু সম্মতিসহ"
+
+#: src/features/analytics/Goals.tsx
+msgid "Only with prop"
+msgstr "শুধু প্রপসহ"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
+msgstr "স্নিপেট বসানো আপনার সাইটের একটি পেজ খুলুন। সার্ভার প্রথম পেজ ভিউ সংরক্ষণ করামাত্র এটি সবুজ হয়ে যায়। Do Not Track বা Global Privacy Control সহ ব্রাউজার কিছু পাঠায় না, তাই পরীক্ষার জন্য অন্যটি ব্যবহার করুন।"
+
+#: src/features/analytics/Retention.tsx
+msgid "Open consent features"
+msgstr "সম্মতি ফিচার খুলুন"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Open report"
+msgstr "রিপোর্ট খুলুন"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open the overview"
+msgstr "ওভারভিউ খুলুন"
+
+#: src/features/analytics/Support.tsx
+msgid "Open the property’s settings"
+msgstr "প্রপার্টির সেটিংস খুলুন"
+
+#: src/features/analytics/text.ts
+msgid "Operating system"
+msgstr "অপারেটিং সিস্টেম"
+
+#: src/features/analytics/Install.tsx
+msgid "Opt-out link"
+msgstr "অপ্ট-আউট লিংক"
+
+#: src/features/analytics/text.ts
+msgid "Organic search"
+msgstr "অর্গানিক সার্চ"
+
+#: src/features/analytics/text.ts
+msgid "OS version"
+msgstr "OS সংস্করণ"
+
+#: src/features/analytics/text.ts
+msgid "Other"
+msgstr "অন্যান্য"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other drops"
+msgstr "অন্য পতন"
+
+#: src/features/analytics/Events.tsx
+msgid "Other prop"
+msgstr "অন্য প্রপ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other sites"
+msgstr "অন্য সাইট"
+
+#: src/features/analytics/text.ts
+msgid "Outbound link"
+msgstr "আউটবাউন্ড লিংক"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Overview"
+msgstr "ওভারভিউ"
+
+#: src/features/analytics/Install.tsx
+msgid "Own domain"
+msgstr "নিজস্ব ডোমেন"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Owners and admins make funnels from goals. They show up here with each step’s drop-off."
+msgstr "ওনার ও অ্যাডমিনরা গোল থেকে ফানেল তৈরি করেন। সেগুলো এখানে প্রতিটি ধাপের পতনসহ দেখা যায়।"
+
+#: src/features/analytics/Goals.tsx
+msgid "Owners and admins make goals. They show up here with their conversions."
+msgstr "ওনার ও অ্যাডমিনরা গোল তৈরি করেন। সেগুলো এখানে তাদের কনভার্সনসহ দেখা যায়।"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Page"
+msgstr "পেজ"
+
+#: src/features/analytics/text.ts
+msgid "Page feedback sent from the page."
+msgstr "পেজ থেকে পাঠানো পেজ ফিডব্যাক।"
+
+#: src/features/analytics/text.ts
+msgid "Page not found"
+msgstr "পেজ পাওয়া যায়নি"
+
+#: src/features/analytics/text.ts
+msgid "Page or screen"
+msgstr "পেজ বা স্ক্রিন"
+
+#: src/features/analytics/Goals.tsx
+msgid "Page view of {path}"
+msgstr "{path}-এর পেজ ভিউ"
+
+#: src/features/analytics/text.ts
+msgid "Pages"
+msgstr "পেজ"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens"
+msgstr "পেজ ও স্ক্রিন"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens viewed."
+msgstr "দেখা পেজ ও স্ক্রিন।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages not counted"
+msgstr "যে পেজ গোনা হয় না"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
+msgstr "প্যাটার্নের সঙ্গে মেলা পেজ একটি পাথের অধীনে গোনা হয়, তাই প্রতিটি অর্ডার পেজ একটি হিসেবে যোগ হয়। পাথে ঠিকানা সবসময় বদলে দেওয়া হয়।"
+
+#: src/features/analytics/text.ts
+msgid "Pages viewed."
+msgstr "দেখা পেজ।"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Pages, sources, places and devices, without cookies, without storing IP addresses and without a consent banner where the law allows it."
+msgstr "পেজ, উৎস, স্থান ও ডিভাইস, কুকি ছাড়া, IP ঠিকানা সংরক্ষণ না করে এবং যেখানে আইন অনুমতি দেয় সেখানে সম্মতি ব্যানার ছাড়া।"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews"
+msgstr "পেজভিউ"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews divided by visits."
+msgstr "পেজভিউকে ভিজিট দিয়ে ভাগ করা।"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews in the last 30 minutes"
+msgstr "গত 30 মিনিটে পেজভিউ"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews per minute"
+msgstr "প্রতি মিনিটে পেজভিউ"
+
+#: src/features/analytics/text.ts
+msgid "Paid search"
+msgstr "পেইড সার্চ"
+
+#: src/features/analytics/text.ts
+msgid "Paid social"
+msgstr "পেইড সোশ্যাল"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Password"
+msgstr "পাসওয়ার্ড"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Past alerts"
+msgstr "আগের অ্যালার্ট"
+
+#: src/features/analytics/Settings.tsx
+msgid "Path rules"
+msgstr "পাথ নিয়ম"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pattern"
+msgstr "প্যাটার্ন"
+
+#: src/features/analytics/Controls.tsx
+msgid "Paying customers from Germany"
+msgstr "জার্মানি থেকে পেয়িং গ্রাহক"
+
+#: src/features/analytics/text.ts
+msgid "Per 1,000 views"
+msgstr "প্রতি 1,000 ভিউতে"
+
+#: src/features/analytics/Overview.tsx
+msgid "per day"
+msgstr "প্রতিদিন"
+
+#: src/features/analytics/Settings.tsx
+msgid "Per day"
+msgstr "প্রতিদিন"
+
+#: src/features/analytics/Overview.tsx
+msgid "per hour"
+msgstr "প্রতি ঘণ্টায়"
+
+#: src/features/analytics/Overview.tsx
+msgid "per week"
+msgstr "প্রতি সপ্তাহে"
+
+#: src/features/analytics/Settings.tsx
+msgid "Persistent id"
+msgstr "স্থায়ী id"
+
+#: src/features/analytics/text.ts
+msgid "Phone"
+msgstr "ফোন"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Pick a goal"
+msgstr "একটি গোল বেছে নিন"
+
+#: src/features/analytics/Events.tsx
+msgid "Pick a prop to see the values this event carried."
+msgstr "এই ইভেন্ট যে মান বহন করেছে তা দেখতে একটি প্রপ বেছে নিন।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pick at least one platform."
+msgstr "অন্তত একটি প্ল্যাটফর্ম বেছে নিন।"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Pick at least one view."
+msgstr "অন্তত একটি ভিউ বেছে নিন।"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
+msgstr "সাইট কীভাবে তৈরি তা বেছে নিন এবং স্নিপেট কপি করুন। কী পাবলিক, চ্যাট কী-র মতো: এটি শুধু প্রপার্টির ডোমেনে কাজ করে।"
+
+#: src/features/analytics/text.ts
+msgid "Platform"
+msgstr "প্ল্যাটফর্ম"
+
+#: src/features/analytics/Settings.tsx
+msgid "Platforms"
+msgstr "প্ল্যাটফর্ম"
+
+#: src/features/analytics/text.ts
+msgid "Prop"
+msgstr "প্রপ"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name"
+msgstr "প্রপের নাম"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name, like plan"
+msgstr "প্রপের নাম, যেমন plan"
+
+#: src/features/analytics/Events.tsx
+msgid "Properties for children keep no props, only the address of outbound links and downloads."
+msgstr "শিশুদের প্রপার্টি কোনো প্রপ রাখে না, শুধু আউটবাউন্ড লিংক ও ডাউনলোডের ঠিকানা।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children keep no props, so none can be tracked."
+msgstr "শিশুদের প্রপার্টি কোনো প্রপ রাখে না, তাই কোনোটি ট্র্যাক করা যায় না।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children never keep an id on the device or link visits to a contact."
+msgstr "শিশুদের প্রপার্টি ডিভাইসে কখনও id রাখে না বা ভিজিটকে কনট্যাক্টের সঙ্গে যুক্ত করে না।"
+
+#: src/features/analytics/Retention.tsx
+msgid "Properties for children never keep an id on the device, so they have no retention."
+msgstr "শিশুদের প্রপার্টি ডিভাইসে কখনও id রাখে না, তাই তাদের রিটেনশন নেই।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Property name"
+msgstr "প্রপার্টির নাম"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Props"
+msgstr "প্রপ"
+
+#: src/features/analytics/Events.tsx
+msgid "Props of any name can be broken down for the days the detailed records are kept. Earlier days only have the tracked props."
+msgstr "যেকোনো নামের প্রপ সেই দিনগুলোর জন্য ভাগ করা যায় যেগুলোর বিস্তারিত রেকর্ড রাখা হয়। আগের দিনগুলোতে শুধু ট্র্যাক করা প্রপ আছে।"
+
+#: src/features/analytics/Install.tsx
+msgid "Put the script in the head of every page. It counts page views, also when a single-page app changes the address, and stores nothing on the visitor’s device."
+msgstr "স্ক্রিপ্ট প্রতিটি পেজের head-এ রাখুন। এটি পেজ ভিউ গোনে, সিঙ্গেল-পেজ অ্যাপ ঠিকানা বদলালেও, এবং ভিজিটরের ডিভাইসে কিছু সংরক্ষণ করে না।"
+
+#: src/features/analytics/Install.tsx
+msgid "Put these links on your privacy page. Opting out is the only thing the script stores on the visitor’s device, and only when they ask for it. Visitors with Do Not Track or Global Privacy Control are never counted."
+msgstr "এই লিংকগুলো আপনার প্রাইভেসি পেজে রাখুন। অপ্ট-আউট করাই একমাত্র জিনিস যা স্ক্রিপ্ট ভিজিটরের ডিভাইসে সংরক্ষণ করে, এবং শুধু তারা চাইলে। Do Not Track বা Global Privacy Control সহ ভিজিটর কখনও গোনা হয় না।"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Range"
+msgstr "রেঞ্জ"
+
+#: src/features/analytics/Support.tsx
+msgid "Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "প্রতি 1,000 ভিউতে কথোপকথন অনুযায়ী সাজানো; 100-এর কম ভিউ থাকা পেজ অন্যদের পরে আসে। প্রতি পেজ ও দিনে গোনা হয়, কখনও প্রতি ভিজিটর বা কনট্যাক্টে নয়।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Rate limits"
+msgstr "রেট সীমা"
+
+#: src/features/analytics/Support.tsx
+msgid "Ratings"
+msgstr "রেটিং"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw events"
+msgstr "র ইভেন্ট"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw exports cover at most 31 days."
+msgstr "র এক্সপোর্ট সর্বোচ্চ 31 দিন কভার করে।"
+
+#: src/features/analytics/Goals.tsx
+msgid "Reached when a visitor"
+msgstr "পৌঁছানো হয় যখন ভিজিটর"
+
+#: src/features/analytics/Exports.tsx
+msgid "Ready"
+msgstr "প্রস্তুত"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Realtime"
+msgstr "রিয়েলটাইম"
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour, last at {builtAt}."
+msgstr "প্রতি ঘণ্টায় আবার তৈরি হয়, শেষবার {builtAt}-এ।"
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour."
+msgstr "প্রতি ঘণ্টায় আবার তৈরি হয়।"
+
+#: src/features/analytics/text.ts
+msgid "Referral"
+msgstr "রেফারাল"
+
+#: src/features/analytics/text.ts
+msgid "Referrer"
+msgstr "রেফারার"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Refreshes every 15 seconds"
+msgstr "প্রতি 15 সেকেন্ডে রিফ্রেশ হয়"
+
+#: src/features/analytics/Settings.tsx
+msgid "Refused"
+msgstr "প্রত্যাখ্যাত"
+
+#: src/features/analytics/text.ts
+msgid "Region"
+msgstr "অঞ্চল"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter"
+msgstr "ফিল্টার সরান"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter: {label}"
+msgstr "ফিল্টার সরান: {label}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Remove rule"
+msgstr "নিয়ম সরান"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Remove step"
+msgstr "ধাপ সরান"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Rename “{0}”…"
+msgstr "“{0}”-এর নাম বদলান…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Rename segment"
+msgstr "সেগমেন্টের নাম বদলান"
+
+#: src/features/analytics/Install.tsx
+msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
+msgstr "কম্পোনেন্টটি রুট লেআউটে একবার রেন্ডার করুন। এটি কিছু রেন্ডার করে না; useYuvaAnalytics() এর নিচে যেকোনো জায়গায় মেথড দেয়।"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Report"
+msgstr "রিপোর্ট"
+
+#: src/features/analytics/Settings.tsx
+msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
+msgstr "Do Not Track বা Global Privacy Control সহ অনুরোধ, এবং যে প্রপার্টির সম্মতি দরকার সেখানে সম্মতি ছাড়া ইভেন্ট, নেওয়া হয় কিন্তু এখানে সংরক্ষিত বা গোনা হয় না।"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Retention"
+msgstr "রিটেনশন"
+
+#: src/features/analytics/Retention.tsx
+msgid "Retention needs consent features"
+msgstr "রিটেনশনের জন্য সম্মতি ফিচার দরকার"
+
+#: src/features/analytics/text.ts
+msgid "Returning"
+msgstr "ফিরে আসা"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/text.ts
+msgid "Revenue"
+msgstr "আয়"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke"
+msgstr "বাতিল করুন"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke {name}?"
+msgstr "{name} বাতিল করবেন?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoked"
+msgstr "বাতিল করা হয়েছে"
+
+#: src/features/analytics/Exports.tsx
+msgid "Rows"
+msgstr "সারি"
+
+#: src/features/analytics/Exports.tsx
+msgid "Running"
+msgstr "চলছে"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Save"
+msgstr "সংরক্ষণ করুন"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Save the changes to “{0}”"
+msgstr "“{0}”-এর পরিবর্তন সংরক্ষণ করুন"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save the filters as a new segment…"
+msgstr "ফিল্টার নতুন সেগমেন্ট হিসেবে সংরক্ষণ করুন…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save these filters as a segment"
+msgstr "এই ফিল্টার সেগমেন্ট হিসেবে সংরক্ষণ করুন"
+
+#: src/features/analytics/Controls.tsx
+msgid "Saved segments"
+msgstr "সংরক্ষিত সেগমেন্ট"
+
+#: src/features/analytics/text.ts
+msgid "Screen"
+msgstr "স্ক্রিন"
+
+#: src/features/analytics/text.ts
+msgid "Screen size"
+msgstr "স্ক্রিনের আকার"
+
+#: src/features/analytics/text.ts
+msgid "Screen views"
+msgstr "স্ক্রিন ভিউ"
+
+#: src/features/analytics/text.ts
+msgid "Screen views divided by visits."
+msgstr "স্ক্রিন ভিউকে ভিজিট দিয়ে ভাগ করা।"
+
+#: src/features/analytics/text.ts
+msgid "Screen views in the last 30 minutes"
+msgstr "গত 30 মিনিটে স্ক্রিন ভিউ"
+
+#: src/features/analytics/text.ts
+msgid "Screen views per minute"
+msgstr "প্রতি মিনিটে স্ক্রিন ভিউ"
+
+#: src/features/analytics/text.ts
+msgid "Screens"
+msgstr "স্ক্রিন"
+
+#: src/features/analytics/text.ts
+msgid "Screens viewed."
+msgstr "দেখা স্ক্রিন।"
+
+#: src/features/analytics/text.ts
+msgid "Scroll depth"
+msgstr "স্ক্রল গভীরতা"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolled to {pct} on {path}"
+msgstr "{path}-এ {pct} পর্যন্ত স্ক্রল করেছে"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolls"
+msgstr "স্ক্রল"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segment"
+msgstr "সেগমেন্ট"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segments"
+msgstr "সেগমেন্ট"
+
+#: src/features/analytics/Settings.tsx
+msgid "Send a screen or an event from your app or backend while this page is open, and see whether it reached the server. Refreshes every 5 seconds."
+msgstr "এই পেজ খোলা থাকতে আপনার অ্যাপ বা ব্যাকএন্ড থেকে একটি স্ক্রিন বা ইভেন্ট পাঠান, এবং দেখুন এটি সার্ভারে পৌঁছাল কি না। প্রতি 5 সেকেন্ডে রিফ্রেশ হয়।"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Send me one now"
+msgstr "আমাকে এখনই একটি পাঠান"
+
+#: src/features/analytics/Goals.tsx
+msgid "Sends an event"
+msgstr "একটি ইভেন্ট পাঠায়"
+
+#: src/features/analytics/text.ts
+msgid "Server"
+msgstr "সার্ভার"
+
+#: src/features/analytics/Settings.tsx
+msgid "Server busy"
+msgstr "সার্ভার ব্যস্ত"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Settings"
+msgstr "সেটিংস"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Share links"
+msgstr "শেয়ার লিংক"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Shared with Yuva"
+msgstr "Yuva-র সঙ্গে শেয়ার করা"
+
+#: src/features/analytics/Settings.tsx
+msgid "Sharing"
+msgstr "শেয়ার করা"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Events.tsx
+msgid "Show"
+msgstr "দেখান"
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/parts.tsx
+msgid "Show from {day}"
+msgstr "{day} থেকে দেখান"
+
+#: src/features/analytics/Events.tsx
+msgid "Show its props"
+msgstr "এর প্রপ দেখান"
+
+#: src/features/analytics/Controls.tsx
+msgid "Show the days"
+msgstr "দিনগুলো দেখান"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Show the last 30 days"
+msgstr "গত 30 দিন দেখান"
+
+#: src/features/analytics/Goals.tsx
+msgid "Signed up"
+msgstr "সাইন আপ করেছে"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Sites that may embed it"
+msgstr "যে সাইট এটি এমবেড করতে পারে"
+
+#: src/features/analytics/text.ts
+msgid "Social"
+msgstr "সোশ্যাল"
+
+#: src/features/analytics/Settings.tsx
+msgid "Some events were dropped. The reasons are below."
+msgstr "কিছু ইভেন্ট বাদ পড়েছে। কারণ নিচে।"
+
+#: src/features/analytics/text.ts
+msgid "Source"
+msgstr "উৎস"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Realtime.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Sources"
+msgstr "উৎস"
+
+#: src/features/analytics/Settings.tsx
+msgid "Start over"
+msgstr "আবার শুরু করুন"
+
+#. placeholder {0}: i + 1
+#: src/features/analytics/Funnels.tsx
+msgid "Step {0}"
+msgstr "ধাপ {0}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Steps"
+msgstr "ধাপ"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Support.tsx
+msgid "Support"
+msgstr "সাপোর্ট"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Support load"
+msgstr "সাপোর্ট লোড"
+
+#: src/features/analytics/Support.tsx
+msgid "Support numbers can only be filtered by page and host. The other filters are left out here."
+msgstr "সাপোর্টের সংখ্যা শুধু পেজ ও হোস্ট দিয়ে ফিল্টার করা যায়। অন্য ফিল্টার এখানে বাদ যায়।"
+
+#: src/features/analytics/text.ts
+msgid "Tablet"
+msgstr "ট্যাবলেট"
+
+#: src/features/analytics/Settings.tsx
+msgid "Taken and stored. They show up in Realtime within a minute."
+msgstr "নেওয়া ও সংরক্ষণ করা হয়েছে। এগুলো এক মিনিটের মধ্যে Realtime-এ দেখা যায়।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Test events"
+msgstr "টেস্ট ইভেন্ট"
+
+#: src/features/analytics/SharePage.tsx
+msgid "That password is not right."
+msgstr "ওই পাসওয়ার্ড ঠিক নয়।"
+
+#: src/features/analytics/Funnels.tsx
+msgid "The consented counts follow visitors with a persistent id from one visit and day to the next, so a step reached on a later day still counts."
+msgstr "সম্মতির গণনা স্থায়ী id সহ ভিজিটরদের এক ভিজিট ও দিন থেকে পরেরটিতে অনুসরণ করে, তাই পরের দিনে পৌঁছানো ধাপও গোনা হয়।"
+
+#: src/features/analytics/Settings.tsx
+msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
+msgstr "বর্তমান কী 24 ঘণ্টা কাজ করতে থাকে, যাতে ইভেন্ট না হারিয়ে আপনি আপনার পেজ আপডেট করতে পারেন। ওই সময়ের মধ্যে আরেকটি কী তৈরি করলে পুরোনোটি সঙ্গে সঙ্গে শেষ হয়।"
+
+#: src/features/analytics/text.ts
+msgid "The deepest point reached on the page, per view."
+msgstr "পেজে পৌঁছানো সবচেয়ে গভীর বিন্দু, প্রতি ভিউতে।"
+
+#: src/features/analytics/Exports.tsx
+msgid "The export failed on the server."
+msgstr "সার্ভারে এক্সপোর্ট ব্যর্থ হয়েছে।"
+
+#: src/features/analytics/Exports.tsx
+msgid "The file would be larger than 1 GiB. Export a shorter range."
+msgstr "ফাইল 1 GiB-এর চেয়ে বড় হবে। ছোট রেঞ্জ এক্সপোর্ট করুন।"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "The first event arrived at {at}."
+msgstr "প্রথম ইভেন্ট {at}-এ এসেছে।"
+
+#: src/features/analytics/Goals.tsx
+msgid "The goal reports the revenue its events carry, per currency."
+msgstr "গোল তার ইভেন্ট যে আয় বহন করে তা জানায়, প্রতি মুদ্রায়।"
+
+#: src/features/analytics/Settings.tsx
+msgid "The key is public, like a chat key: every page carries it, and it only works on the property’s domains."
+msgstr "কী পাবলিক, চ্যাট কী-র মতো: প্রতিটি পেজ এটি বহন করে, এবং এটি শুধু প্রপার্টির ডোমেনে কাজ করে।"
+
+#: src/features/analytics/Settings.tsx
+msgid "The key stops working at once, and all visits, events and totals are deleted. This cannot be undone."
+msgstr "কী সঙ্গে সঙ্গে কাজ করা বন্ধ করে, এবং সব ভিজিট, ইভেন্ট ও মোট মুছে ফেলা হয়। এটি পূর্বাবস্থায় ফেরানো যায় না।"
+
+#: src/features/analytics/Settings.tsx
+msgid "The last 30 days"
+msgstr "গত 30 দিন"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and leaves the list."
+msgstr "লিংক সঙ্গে সঙ্গে কাজ করা বন্ধ করে এবং তালিকা থেকে সরে যায়।"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and stays in the list."
+msgstr "লিংক সঙ্গে সঙ্গে কাজ করা বন্ধ করে এবং তালিকায় থাকে।"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked."
+msgstr "লিংক {timezone}-এ এই দিনের শেষে কাজ করা বন্ধ করে। বাতিল না হওয়া পর্যন্ত রাখতে খালি রাখুন।"
+
+#: src/features/analytics/Install.tsx
+msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
+msgstr "মডিউল একটি ক্লায়েন্ট প্লাগইন ও useYuvaAnalytics() কম্পোজেবল যোগ করে। NUXT_PUBLIC_YUVA_ANALYTICS_KEY রানটাইমে কী ওভাররাইড করে।"
+
+#: src/features/analytics/Settings.tsx
+msgid "The name does not match. Type it exactly as shown."
+msgstr "নাম মেলে না। দেখানো মতো হুবহু লিখুন।"
+
+#: src/features/analytics/Goals.tsx
+msgid "The name given to track(), or outbound_click, file_download, not_found, chat_open."
+msgstr "track()-কে দেওয়া নাম, বা outbound_click, file_download, not_found, chat_open।"
+
+#: src/features/analytics/Settings.tsx
+msgid "The previous key keeps working until {at}. Update every page and app before then."
+msgstr "আগের কী {at} পর্যন্ত কাজ করতে থাকে। এর আগে প্রতিটি পেজ ও অ্যাপ আপডেট করুন।"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "The properties of your inboxes show up here once an owner or admin adds them."
+msgstr "আপনার ইনবক্সের প্রপার্টি এখানে দেখা যায় যখন একজন ওনার বা অ্যাডমিন সেগুলো যোগ করেন।"
+
+#: src/features/analytics/Exports.tsx
+msgid "The query could not be run."
+msgstr "কোয়েরি চালানো যায়নি।"
+
+#: src/features/analytics/Exports.tsx
+msgid "The range is outside the detailed records."
+msgstr "রেঞ্জ বিস্তারিত রেকর্ডের বাইরে।"
+
+#: src/features/analytics/SharePage.tsx
+msgid "The report could not be loaded"
+msgstr "রিপোর্ট লোড করা যায়নি"
+
+#: src/features/analytics/Settings.tsx
+msgid "The server’s own database"
+msgstr "সার্ভারের নিজস্ব ডেটাবেস"
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need detailed records that are no longer kept for this range."
+msgstr "এই ফিল্টারের জন্য বিস্তারিত রেকর্ড দরকার যা এই রেঞ্জের জন্য আর রাখা হয় না।"
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need the detailed records, which are kept since {day}. Earlier days only have totals per page, source, place and device."
+msgstr "এই ফিল্টারের জন্য বিস্তারিত রেকর্ড দরকার, যা {day} থেকে রাখা হয়। আগের দিনগুলোতে শুধু প্রতি পেজ, উৎস, স্থান ও ডিভাইসের মোট আছে।"
+
+#: src/features/analytics/Settings.tsx
+msgid "This cannot be undone."
+msgstr "এটি পূর্বাবস্থায় ফেরানো যায় না।"
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal has numbers from {since} on. Days before that show none."
+msgstr "এই গোলের সংখ্যা {since} থেকে আছে। তার আগের দিনগুলো কিছু দেখায় না।"
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
+msgstr "এই গোল একটি ফানেলের ধাপ। আগে এটি ফানেল থেকে বের করুন, বা ফানেল মুছুন।"
+
+#: src/features/analytics/SharePage.tsx
+msgid "This link is not available"
+msgstr "এই লিংক উপলব্ধ নয়"
+
+#: src/features/analytics/text.ts
+msgid "This month"
+msgstr "এই মাসে"
+
+#: src/features/analytics/Funnels.tsx
+msgid "This property already has a funnel with this name."
+msgstr "এই প্রপার্টিতে এই নামে একটি ফানেল আগে থেকেই আছে।"
+
+#: src/features/analytics/Goals.tsx
+msgid "This property already has a goal with this name."
+msgstr "এই প্রপার্টিতে এই নামে একটি গোল আগে থেকেই আছে।"
+
+#: src/features/analytics/Controls.tsx
+msgid "This property already has a segment with this name."
+msgstr "এই প্রপার্টিতে এই নামে একটি সেগমেন্ট আগে থেকেই আছে।"
+
+#: src/features/analytics/Exports.tsx
+msgid "This range cannot be exported. Pick a shorter one, or one inside the detailed records."
+msgstr "এই রেঞ্জ এক্সপোর্ট করা যায় না। ছোট একটি বেছে নিন, বা বিস্তারিত রেকর্ডের ভেতরের একটি।"
+
+#: src/features/analytics/SharePage.tsx
+msgid "This report has a password"
+msgstr "এই রিপোর্টে পাসওয়ার্ড আছে"
+
+#: src/features/analytics/Support.tsx
+msgid "This workspace has no inbox yet."
+msgstr "এই ওয়ার্কস্পেসে এখনও কোনো ইনবক্স নেই।"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
+msgstr "এই ওয়ার্কস্পেস এই মাসের তার {limit}টি অ্যানালিটিক্স ইভেন্টে পৌঁছেছে। মাস শেষ না হওয়া পর্যন্ত নতুন ইভেন্ট বাদ যায়।"
+
+#: src/features/analytics/text.ts
+msgid "This year"
+msgstr "এই বছর"
+
+#: src/features/analytics/Exports.tsx
+msgid "Three exports are already running in this workspace. Try again when one finishes."
+msgstr "এই ওয়ার্কস্পেসে তিনটি এক্সপোর্ট ইতিমধ্যে চলছে। একটি শেষ হলে আবার চেষ্টা করুন।"
+
+#: src/features/analytics/text.ts
+msgid "Time from the first to the last event of a visit, on average. Bounces count as zero."
+msgstr "একটি ভিজিটের প্রথম থেকে শেষ ইভেন্টের গড় সময়। বাউন্স শূন্য গোনা হয়।"
+
+#: src/features/analytics/text.ts
+msgid "Time on page"
+msgstr "পেজে সময়"
+
+#: src/features/analytics/text.ts
+msgid "Time the page was visible and in focus, per view."
+msgstr "পেজ দেখা যাচ্ছিল ও ফোকাসে ছিল এমন সময়, প্রতি ভিউতে।"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Time zone"
+msgstr "সময় অঞ্চল"
+
+#: src/features/analytics/text.ts
+msgid "Times the goal was reached, also several times by one visitor."
+msgstr "গোল যতবার পূর্ণ হয়েছে, একজন ভিজিটর কয়েকবার করলেও।"
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated helpful."
+msgstr "পেজকে সহায়ক রেট করা হয়েছে এমন বার।"
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated not helpful."
+msgstr "পেজকে সহায়ক নয় রেট করা হয়েছে এমন বার।"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "To"
+msgstr "প্রতি"
+
+#: src/features/analytics/text.ts
+msgid "Today"
+msgstr "আজ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Today: {todayCounted} counted, {todayDropped} dropped"
+msgstr "আজ: {todayCounted}টি গোনা হয়েছে, {todayDropped}টি বাদ পড়েছে"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Token"
+msgstr "টোকেন"
+
+#: src/features/analytics/Settings.tsx
+msgid "Too late"
+msgstr "অনেক দেরি"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many requests from your network. Wait a minute and reload the page."
+msgstr "আপনার নেটওয়ার্ক থেকে অনেক বেশি অনুরোধ। এক মিনিট অপেক্ষা করে পেজ রিলোড করুন।"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many tries. Wait a minute and try again."
+msgstr "অনেক বেশি চেষ্টা। এক মিনিট অপেক্ষা করে আবার চেষ্টা করুন।"
+
+#: src/features/analytics/text.ts
+msgid "Top pages"
+msgstr "শীর্ষ পেজ"
+
+#: src/features/analytics/text.ts
+msgid "Top pages and screens"
+msgstr "শীর্ষ পেজ ও স্ক্রিন"
+
+#: src/features/analytics/text.ts
+msgid "Top screens"
+msgstr "শীর্ষ স্ক্রিন"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracked props"
+msgstr "ট্র্যাক করা প্রপ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracking"
+msgstr "ট্র্যাকিং"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic drop"
+msgstr "ট্র্যাফিক পতন"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic spike"
+msgstr "ট্র্যাফিক বৃদ্ধি"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Try again"
+msgstr "আবার চেষ্টা করুন"
+
+#: src/features/analytics/Install.tsx
+msgid "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
+msgstr "আগে সাধারণ সেটিংসে Platforms-এর অধীনে {name} চালু করুন। ততক্ষণ সার্ভার অ্যাপের ইভেন্ট প্রত্যাখ্যান করে।"
+
+#: src/features/analytics/Retention.tsx
+msgid "Turn on the persistent id in the consent features, then call yuva.consent with persistent set to true."
+msgstr "সম্মতি ফিচারে স্থায়ী id চালু করুন, তারপর persistent true সেট করে yuva.consent কল করুন।"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Two to eight goals, in the order visitors reach them within one visit."
+msgstr "দুই থেকে আটটি গোল, যে ক্রমে ভিজিটররা এক ভিজিটের মধ্যে সেগুলোতে পৌঁছায়।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Type the property’s name to delete it and all its data."
+msgstr "প্রপার্টি ও এর সব ডেটা মুছতে এর নাম লিখুন।"
+
+#: src/features/analytics/text.ts
+msgid "Unknown"
+msgstr "অজানা"
+
+#: src/features/analytics/Install.tsx
+msgid "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
+msgstr "প্রতি অনুরোধে 100টি ইভেন্ট পর্যন্ত, প্রতিটি ভিজিটরের IP ঠিকানা ও ইউজার এজেন্ট বা আপনার নিজের visitor_key সহ। কোনোটিই সংরক্ষিত হয় না। অবৈধ হিসেবে বাদ পড়া ইভেন্ট তাদের অবস্থানসহ errors-এ ফেরত আসে; কী পৌঁছাল তা Test events-এর অধীনে দেখুন।"
+
+#: src/features/analytics/text.ts
+msgid "UTM campaign"
+msgstr "UTM ক্যাম্পেইন"
+
+#: src/features/analytics/text.ts
+msgid "UTM content"
+msgstr "UTM কনটেন্ট"
+
+#: src/features/analytics/text.ts
+msgid "UTM medium"
+msgstr "UTM মাধ্যম"
+
+#: src/features/analytics/text.ts
+msgid "UTM source"
+msgstr "UTM উৎস"
+
+#: src/features/analytics/text.ts
+msgid "UTM term"
+msgstr "UTM টার্ম"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Views"
+msgstr "ভিউ"
+
+#: src/features/analytics/Goals.tsx
+msgid "Views a page"
+msgstr "একটি পেজ দেখে"
+
+#: src/features/analytics/text.ts
+msgid "Views divided by visits."
+msgstr "ভিউকে ভিজিট দিয়ে ভাগ করা।"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views fell to {now} in two hours, against {usual} usually."
+msgstr "ভিউ দুই ঘণ্টায় {now}-এ নেমেছে, সাধারণত {usual}-এর তুলনায়।"
+
+#: src/features/analytics/text.ts
+msgid "Views in the last 30 minutes"
+msgstr "গত 30 মিনিটে ভিউ"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at least three times the same hours of the week before."
+msgstr "গত দুই ঘণ্টার ভিউ আগের সপ্তাহের একই ঘণ্টাগুলোর অন্তত তিনগুণ।"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at most half the same hours of the week before."
+msgstr "গত দুই ঘণ্টার ভিউ আগের সপ্তাহের একই ঘণ্টাগুলোর সর্বোচ্চ অর্ধেক।"
+
+#: src/features/analytics/text.ts
+msgid "Views per minute"
+msgstr "প্রতি মিনিটে ভিউ"
+
+#: src/features/analytics/text.ts
+msgid "Views per visit"
+msgstr "প্রতি ভিজিটে ভিউ"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views rose to {now} in two hours, against {usual} usually."
+msgstr "ভিউ দুই ঘণ্টায় {now}-এ বেড়েছে, সাধারণত {usual}-এর তুলনায়।"
+
+#: src/features/analytics/text.ts
+msgid "Visit duration"
+msgstr "ভিজিটের সময়কাল"
+
+#: src/features/analytics/Retention.tsx
+#: src/features/analytics/text.ts
+msgid "Visitors"
+msgstr "ভিজিটর"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Visitors in the last 30 minutes"
+msgstr "গত 30 মিনিটে ভিজিটর"
+
+#: src/features/analytics/Retention.tsx
+msgid "Visitors who came back"
+msgstr "যে ভিজিটররা ফিরে এসেছে"
+
+#: src/features/analytics/text.ts
+msgid "Visitors who reached the goal, per day, added up over the days of the range."
+msgstr "গোলে পৌঁছানো ভিজিটর, প্রতিদিন, রেঞ্জের দিনগুলোতে যোগ করা।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
+msgstr "Do Not Track বা Global Privacy Control সহ ভিজিটররা কিছু পাঠায় না, তাই তারা এখানেও গোনা হয় না। বাদ পড়া ইভেন্টের গণনা ছাড়া আর কিছু রাখা হয় না।"
+
+#: src/features/analytics/text.ts
+msgid "Visits"
+msgstr "ভিজিট"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page or screen view and nothing else."
+msgstr "একটি পেজ বা স্ক্রিন ভিউ এবং আর কিছু নয় এমন ভিজিট।"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page view and nothing else."
+msgstr "একটি পেজ ভিউ এবং আর কিছু নয় এমন ভিজিট।"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one screen view and nothing else."
+msgstr "একটি স্ক্রিন ভিউ এবং আর কিছু নয় এমন ভিজিট।"
+
+#: src/features/analytics/Install.tsx
+msgid "Vue, Astro, other"
+msgstr "Vue, Astro, অন্যান্য"
+
+#: src/features/analytics/Exports.tsx
+msgid "Waiting"
+msgstr "অপেক্ষায়"
+
+#: src/features/analytics/Settings.tsx
+msgid "Waiting for events since {at}."
+msgstr "{at} থেকে ইভেন্টের অপেক্ষায়।"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Waiting for the first event"
+msgstr "প্রথম ইভেন্টের অপেক্ষায়"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Watch it live"
+msgstr "লাইভ দেখুন"
+
+#: src/features/analytics/text.ts
+msgid "Web"
+msgstr "ওয়েব"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Website or app"
+msgstr "ওয়েবসাইট বা অ্যাপ"
+
+#: src/features/analytics/Retention.tsx
+msgid "Week {period}"
+msgstr "সপ্তাহ {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Weekly"
+msgstr "সাপ্তাহিক"
+
+#: src/features/analytics/Retention.tsx
+msgid "Weeks"
+msgstr "সপ্তাহ"
+
+#: src/features/analytics/Insights.tsx
+msgid "What changed"
+msgstr "কী বদলেছে"
+
+#: src/features/analytics/Support.tsx
+msgid "What stands out"
+msgstr "কী চোখে পড়ে"
+
+#: src/features/analytics/text.ts
+msgid "What the goal's events carried, per currency. Currencies are never converted or added up."
+msgstr "গোলের ইভেন্ট যা বহন করেছে, প্রতি মুদ্রায়। মুদ্রা কখনও রূপান্তর বা যোগ করা হয় না।"
+
+#: src/features/analytics/Exports.tsx
+msgid "What to export"
+msgstr "কী এক্সপোর্ট করবেন"
+
+#: src/features/analytics/Goals.tsx
+msgid "Where conversions come from"
+msgstr "কনভার্সন কোথা থেকে আসে"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Where the property’s day starts and ends."
+msgstr "যেখানে প্রপার্টির দিন শুরু ও শেষ হয়।"
+
+#: src/features/analytics/Install.tsx
+msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."
+msgstr "data-consent=\"required\" দিয়ে স্ক্রিপ্ট কিছু পাঠায় না যতক্ষণ না আপনার সম্মতি টুল বলে যে ভিজিটর রাজি হয়েছে। সাধারণ সেটিংসে Collection-ও “Only with consent” করুন, যাতে সার্ভার সম্মতি ছাড়া ইভেন্ট প্রত্যাখ্যান করে।"
+
+#: src/features/analytics/Settings.tsx
+msgid "With yuva.consent and persistent set to true, the device keeps a random id for 13 months. The visitor counts once over several days, is told apart as new or returning, fills retention and is followed across days in funnels. Never under Do Not Track or Global Privacy Control."
+msgstr "yuva.consent ও persistent true সহ ডিভাইস 13 মাসের জন্য একটি র‍্যান্ডম id রাখে। ভিজিটর কয়েক দিনে একবার গোনা হয়, নতুন বা ফিরে আসা হিসেবে আলাদা করা হয়, রিটেনশন ভরে এবং ফানেলে দিন জুড়ে অনুসরণ করা হয়। Do Not Track বা Global Privacy Control-এর অধীনে কখনও নয়।"
+
+#: src/features/analytics/text.ts
+msgid "Without consent"
+msgstr "সম্মতি ছাড়া"
+
+#: src/features/analytics/Retention.tsx
+msgid "Without cookies a visitor is new every day, so nobody can be followed from one day to the next. Only visitors who agree to a persistent id in your consent tool show up here."
+msgstr "কুকি ছাড়া ভিজিটর প্রতিদিন নতুন, তাই কাউকে এক দিন থেকে পরের দিন অনুসরণ করা যায় না। শুধু যারা আপনার সম্মতি টুলে স্থায়ী id-তে রাজি হয় তারাই এখানে দেখা যায়।"
+
+#: src/features/analytics/Settings.tsx
+msgid "Without cookies, for everyone"
+msgstr "কুকি ছাড়া, সবার জন্য"
+
+#: src/features/analytics/text.ts
+msgid "Yesterday"
+msgstr "গতকাল"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Your access ended. Enter the password again to keep reading."
+msgstr "আপনার অ্যাক্সেস শেষ হয়েছে। পড়া চালিয়ে যেতে পাসওয়ার্ড আবার দিন।"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Your new share link"
+msgstr "আপনার নতুন শেয়ার লিংক"
+
+#: src/features/analytics/Settings.tsx
+msgid "yuva.identify with a token from your backend, signed like a chat session, links the visitor’s visits to their contact. They show on the contact’s page under Recent visits. Forged or reused tokens are ignored."
+msgstr "আপনার ব্যাকএন্ডের টোকেনসহ yuva.identify, চ্যাট সেশনের মতো সাইন করা, ভিজিটরের ভিজিট তাদের কনট্যাক্টের সঙ্গে যুক্ত করে। সেগুলো কনট্যাক্টের পেজে Recent visits-এর অধীনে দেখা যায়। জাল বা পুনর্ব্যবহৃত টোকেন উপেক্ষা করা হয়।"

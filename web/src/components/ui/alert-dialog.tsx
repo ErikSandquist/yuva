@@ -12,7 +12,7 @@ function AlertDialogContent({ className, ...props }: AlertDialogPrimitive.Popup.
       <AlertDialogPrimitive.Backdrop className={overlayClass} />
       <AlertDialogPrimitive.Popup
         className={cn(
-          "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-5 rounded-2xl border bg-card p-6 text-foreground shadow-[0_24px_60px_-24px_rgb(15_23_42/0.35)] outline-none sm:max-w-md",
+          "fixed top-1/2 start-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 rtl:translate-x-1/2 gap-5 rounded-2xl border bg-card p-6 text-foreground shadow-[0_24px_60px_-24px_rgb(15_23_42/0.35)] outline-none sm:max-w-md",
           className
         )}
         {...props}

@@ -1,0 +1,2748 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 10:11+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: he\n"
+
+#: src/features/analytics/text.ts
+msgid "(not set)"
+msgstr "(לא מוגדר)"
+
+#. placeholder {0}: e.rows
+#: src/features/analytics/Exports.tsx
+msgid "{0, plural, one {# row} other {# rows}}"
+msgstr "{0, plural, one {שורה #} two {# שורות} other {# שורות}}"
+
+#. placeholder {0}: p.visitors_today
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{0, plural, one {visitor today} other {visitors today}}"
+msgstr "{0, plural, one {מבקר היום} two {מבקרים היום} other {מבקרים היום}}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{consentedCount} consented, across visits and days"
+msgstr "{consentedCount} הסכימו, לאורך ביקורים וימים"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {{site} sent # visit, and none in the 28 days before.} other {{site} sent # visits, and none in the 28 days before.}}"
+msgstr "{count, plural, one {{site} שלח ביקור #, ואף אחד ב-28 הימים הקודמים.} two {{site} שלח # ביקורים, ואף אחד ב-28 הימים הקודמים.} other {{site} שלח # ביקורים, ואף אחד ב-28 הימים הקודמים.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {# conversation per 1,000 views, against {usual} in the 28 days before.} other {# conversations per 1,000 views, against {usual} in the 28 days before.}}"
+msgstr "{count, plural, one {שיחה # לכל 1,000 צפיות, לעומת {usual} ב-28 הימים הקודמים.} two {# שיחות לכל 1,000 צפיות, לעומת {usual} ב-28 הימים הקודמים.} other {# שיחות לכל 1,000 צפיות, לעומת {usual} ב-28 הימים הקודמים.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {Goal “{goal}” had # conversion, against {usual} a day on average in the week before.} other {Goal “{goal}” had # conversions, against {usual} a day on average in the week before.}}"
+msgstr "{count, plural, one {ליעד „{goal}” הייתה המרה #, לעומת {usual} ביום בממוצע בשבוע הקודם.} two {ליעד „{goal}” היו # המרות, לעומת {usual} ביום בממוצע בשבוע הקודם.} other {ליעד „{goal}” היו # המרות, לעומת {usual} ביום בממוצע בשבוע הקודם.}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{count} in this range, none in the compared days."
+msgstr "{count} בטווח הזה, אפס בימים שהושוו."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {count}, none in the compared days."
+msgstr "{dim} {value}: {count}, אפס בימים שהושוו."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} fell {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} ירד ב-{change}, {now} לעומת {before}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} rose {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} עלה ב-{change}, {now} לעומת {before}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {metric} {now}, none in the compared days."
+msgstr "{dim} {value}: {metric} {now}, אפס בימים שהושוו."
+
+#: src/features/analytics/Annotations.tsx
+msgid "{kind}: {found}"
+msgstr "{kind}: {found}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{lost} left ({lostPct})"
+msgstr "{lost} עזבו ({lostPct})"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} fell {change}: {now}, against {before} in the compared days."
+msgstr "{metric} ירד ב-{change}: {now}, לעומת {before} בימים שהושוו."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} rose {change}: {now}, against {before} in the compared days."
+msgstr "{metric} עלה ב-{change}: {now}, לעומת {before} בימים שהושוו."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric}: {now}, none in the compared days."
+msgstr "{metric}: {now}, אפס בימים שהושוו."
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversation} other {# conversations}}"
+msgstr "{n, plural, one {שיחה #} two {# שיחות} other {# שיחות}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversion} other {# conversions}}"
+msgstr "{n, plural, one {המרה #} two {# המרות} other {# המרות}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# discussion} other {# discussions}}"
+msgstr "{n, plural, one {דיון #} two {# דיונים} other {# דיונים}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# event} other {# events}}"
+msgstr "{n, plural, one {אירוע #} two {# אירועים} other {# אירועים}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# view} other {# views}}"
+msgstr "{n, plural, one {צפייה #} two {# צפיות} other {# צפיות}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visit} other {# visits}}"
+msgstr "{n, plural, one {ביקור #} two {# ביקורים} other {# ביקורים}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visitor} other {# visitors}}"
+msgstr "{n, plural, one {מבקר #} two {# מבקרים} other {# מבקרים}}"
+
+#: src/features/analytics/Events.tsx
+msgid "{n} payments, {avg} on average"
+msgstr "{n} תשלומים, {avg} בממוצע"
+
+#: src/features/analytics/Install.tsx
+msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
+msgstr "{name} אינו אחת הפלטפורמות של הנכס הזה, ולכן השרת דוחה את האירועים של האפליקציה. בעלים או מנהל יכולים להפעיל אותו."
+
+#: src/features/analytics/Funnels.tsx
+msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
+msgstr "{overall} מהמבקרים שהגיעו לשלב הראשון הגיעו גם לאחרון, {from} – {to}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
+msgstr "{rate, plural, one {{dim} {value}: שיחה # לכל 1,000 צפיות, לעומת {site} בכל הדפים.} two {{dim} {value}: # שיחות לכל 1,000 צפיות, לעומת {site} בכל הדפים.} other {{dim} {value}: # שיחות לכל 1,000 צפיות, לעומת {site} בכל הדפים.}}"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
+msgstr "נעשה שימוש ב-{used} מתוך {limit} אירועי אנליטיקה החודש. אירועים מעבר למגבלה נזרקים עד שהחודש מסתיים."
+
+#: src/features/analytics/Settings.tsx
+msgid "A change applies to new events. Days already counted keep their zone."
+msgstr "שינוי חל על אירועים חדשים. ימים שכבר נספרו שומרים על האזור שלהם."
+
+#: src/features/analytics/Goals.tsx
+msgid "A changed goal is counted again over the days the detailed records are kept."
+msgstr "יעד ששונה נספר שוב על פני הימים שהרשומות המפורטות נשמרות בהם."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel follows each visit step by step, so it covers at most 90 days at once, or 31 days for a property with more than 10 million events a month. Pick a shorter range."
+msgstr "משפך עוקב אחר כל ביקור שלב אחר שלב, ולכן הוא מכסה לכל היותר 90 יום בבת אחת, או 31 יום לנכס עם יותר מ-10 מיליון אירועים בחודש. בחר טווח קצר יותר."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel is made of two to eight goals in a row. Make at least two goals first."
+msgstr "משפך מורכב משני יעדים עד שמונה ברצף. צור קודם לפחות שני יעדים."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are kept since {day}. Earlier days only have totals, so they cannot show a funnel."
+msgstr "משפך צריך את השלבים של כל ביקור, שנשמרים מאז {day}. לימים מוקדמים יותר יש רק סכומים, ולכן הם לא יכולים להציג משפך."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are no longer kept for this range."
+msgstr "משפך צריך את השלבים של כל ביקור, שכבר לא נשמרים לטווח הזה."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel shows how many visitors go from one goal to the next within a visit, and where they leave."
+msgstr "משפך מראה כמה מבקרים עוברים מיעד אחד לבא בתוך ביקור, ואיפה הם עוזבים."
+
+#: src/features/analytics/Goals.tsx
+msgid "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
+msgstr "יעד סופר את המבקרים שצופים בדף, שולחים אירוע או גוללים מספיק רחוק, ואת ההכנסות שהם מביאים."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A goal’s conversions yesterday were at most half its daily average of the week before."
+msgstr "ההמרות של יעד אתמול היו לכל היותר מחצית מהממוצע היומי שלו בשבוע הקודם."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A link shows only its views of this property, read-only, without filters or segments. Revoking or deleting it stops it at once."
+msgstr "קישור מציג רק את הצפיות שבחרת בנכס הזה, לקריאה בלבד, בלי מסננים או פלחים. ביטול או מחיקה שלו עוצרים אותו מיד."
+
+#: src/features/analytics/Goals.tsx
+msgid "A new goal also counts the days the detailed records are kept, not only from today."
+msgstr "יעד חדש סופר גם את הימים שהרשומות המפורטות נשמרות בהם, לא רק מהיום."
+
+#: src/features/analytics/Annotations.tsx
+msgid "A new key was made"
+msgstr "נוצר מפתח חדש"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A new password signs out everyone who unlocked the link."
+msgstr "סיסמה חדשה מנתקת את כל מי שפתח את הקישור."
+
+#: src/features/analytics/Goals.tsx
+msgid "A path. * stands for one part of it, ** for any number of them."
+msgstr "נתיב. * מייצג חלק אחד שלו, ** כל מספר חלקים."
+
+#: src/features/analytics/Settings.tsx
+msgid "A prop name has at most 300 characters and does not start with $ or yuva_."
+msgstr "שם מאפיין הוא עד 300 תווים ואינו מתחיל ב-$ או ב-yuva_."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A property can have at most 50 share links. Delete one first."
+msgstr "לנכס יכולים להיות לכל היותר 50 קישורי שיתוף. מחק קודם אחד."
+
+#: src/features/analytics/parts.tsx
+msgid "A range can be at most 400 days long. Pick a shorter one."
+msgstr "טווח יכול להיות עד 400 יום. בחר קצר יותר."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A site sent 10 or more visits yesterday and none in the 28 days before."
+msgstr "אתר שלח 10 ביקורים או יותר אתמול ואף אחד ב-28 הימים הקודמים."
+
+#: src/features/analytics/Settings.tsx
+msgid "A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and it shows as a chip on the Events view."
+msgstr "מאפיין במעקב נשמר גם בסכומים היומיים, כך שהפירוט שלו נשאר אחרי שהרשומות המפורטות נעלמות, והוא מוצג כצ׳יפ בתצוגת האירועים."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page or screen views without a gap of 30 minutes, within one day."
+msgstr "צפיות של מבקר בדפים או במסכים בלי פער של 30 דקות, בתוך יום אחד."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page views without a gap of 30 minutes, within one day."
+msgstr "צפיות של מבקר בדפים בלי פער של 30 דקות, בתוך יום אחד."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
+msgstr "צפיות של מבקר במסכים בלי פער של 30 דקות, בתוך יום אחד. כל הפעלה של האפליקציה פותחת ביקור חדש."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Active"
+msgstr "פעיל"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add"
+msgstr "הוספה"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add a note to the chart"
+msgstr "הוספת הערה לתרשים"
+
+#: src/features/analytics/Settings.tsx
+msgid "Add a rule"
+msgstr "הוספת כלל"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Add a step"
+msgstr "הוספת שלב"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/NewProperty.tsx
+msgid "Add a website"
+msgstr "הוספת אתר"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add a website to count its visitors, pages and sources, without cookies."
+msgstr "הוסף אתר כדי לספור את המבקרים, הדפים והמקורות שלו, בלי עוגיות."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Add and install"
+msgstr "הוספה והתקנה"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add note"
+msgstr "הוספת הערה"
+
+#: src/features/analytics/Install.tsx
+msgid "Add the YuvaAnalytics library of the Yuva package and configure it once at launch. .yuvaScreen counts a SwiftUI screen; in UIKit, call YuvaAnalytics.screen when a screen appears. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "הוסף את ספריית YuvaAnalytics מחבילת Yuva והגדר אותה פעם אחת בהפעלה. ‎.yuvaScreen סופר מסך SwiftUI; ב-UIKit, קרא ל-YuvaAnalytics.screen כשמסך מופיע. בלי חיבור, אירועים ממתינים במכשיר עד 72 שעות ומגיעים עם הזמנים שלהם."
+
+#: src/features/analytics/Install.tsx
+msgid "Add yuva-analytics from JitPack and configure it once in Application.onCreate. TrackScreen counts a Compose screen. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "הוסף את yuva-analytics מ-JitPack והגדר אותו פעם אחת ב-Application.onCreate. ‏TrackScreen סופר מסך Compose. בלי חיבור, אירועים ממתינים במכשיר עד 72 שעות ומגיעים עם הזמנים שלהם."
+
+#: src/features/analytics/Settings.tsx
+msgid "Addresses not counted"
+msgstr "כתובות שלא נספרות"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the compared days"
+msgstr "לעומת הימים שהושוו"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the period before"
+msgstr "לעומת התקופה הקודמת"
+
+#: src/features/analytics/Support.tsx
+msgid "Agents of the inbox can then see this property’s numbers too."
+msgstr "סוכנים של תיבת הדואר יוכלו אז לראות גם את המספרים של הנכס הזה."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Agents of this inbox can see the numbers."
+msgstr "סוכנים של תיבת הדואר הזאת יכולים לראות את המספרים."
+
+#: src/features/analytics/text.ts
+msgid "AI assistants"
+msgstr "עוזרי בינה מלאכותית"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Alerts"
+msgstr "התראות"
+
+#: src/features/analytics/Settings.tsx
+msgid "Alerts and reports"
+msgstr "התראות ודוחות"
+
+#: src/features/analytics/Events.tsx
+msgid "All events"
+msgstr "כל האירועים"
+
+#: src/features/analytics/Goals.tsx
+msgid "All goals"
+msgstr "כל היעדים"
+
+#: src/features/analytics/Support.tsx
+msgid "An owner or admin can link one in the property’s settings."
+msgstr "בעלים או מנהל יכולים לקשר אחת בהגדרות הנכס."
+
+#: src/features/analytics/Retention.tsx
+msgid "An owner or admin can turn on the persistent id in the consent features."
+msgstr "בעלים או מנהל יכולים להפעיל את המזהה הקבוע בתכונות ההסכמה."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics"
+msgstr "אנליטיקה"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Analytics properties"
+msgstr "נכסי אנליטיקה"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Analytics steps"
+msgstr "שלבי אנליטיקה"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics views"
+msgstr "תצוגות אנליטיקה"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Anyone with the link sees the views you pick, read-only, without signing in."
+msgstr "כל מי שיש לו את הקישור רואה את התצוגות שבחרת, לקריאה בלבד, בלי להיכנס."
+
+#: src/features/analytics/text.ts
+msgid "App"
+msgstr "אפליקציה"
+
+#: src/features/analytics/text.ts
+msgid "App version"
+msgstr "גרסת אפליקציה"
+
+#: src/features/analytics/Settings.tsx
+msgid "Apps send without a domain, so only the platforms turned on here are counted. Events from your backend need no platform."
+msgstr "אפליקציות שולחות בלי דומיין, ולכן נספרות רק הפלטפורמות שהופעלו כאן. אירועים מצד השרת שלך לא צריכים פלטפורמה."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Ask for a password"
+msgstr "בקשת סיסמה"
+
+#: src/features/analytics/Sharing.tsx
+msgid "At least 8 characters"
+msgstr "לפחות 8 תווים"
+
+#: src/features/analytics/Settings.tsx
+msgid "At most 10 props can be tracked."
+msgstr "אפשר לעקוב אחר 10 מאפיינים לכל היותר."
+
+#: src/features/analytics/Settings.tsx
+msgid "Audience"
+msgstr "קהל"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Available until {expires}"
+msgstr "זמין עד {expires}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots"
+msgstr "בוטים"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
+msgstr "בוטים, מגבלות קצב, כתובות ונתיבים שהוחרגו, המגבלה החודשית או שרת עמוס."
+
+#: src/features/analytics/text.ts
+msgid "Bounce rate"
+msgstr "שיעור נטישה"
+
+#: src/features/analytics/Events.tsx
+msgid "Break down by prop"
+msgstr "פירוט לפי מאפיין"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Breakdown"
+msgstr "פירוט"
+
+#: src/features/analytics/Exports.tsx
+msgid "Broken down by"
+msgstr "מפורט לפי"
+
+#: src/features/analytics/Settings.tsx
+msgid "Broken events, such as a screen address that does not start with app://, a reserved name or too many props."
+msgstr "אירועים פגומים, כמו כתובת מסך שאינה מתחילה ב-app://, שם שמור או יותר מדי מאפיינים."
+
+#: src/features/analytics/text.ts
+msgid "Browser"
+msgstr "דפדפן"
+
+#: src/features/analytics/text.ts
+msgid "Browser version"
+msgstr "גרסת דפדפן"
+
+#: src/features/analytics/Install.tsx
+msgid "Call it once in the browser. During server rendering it does nothing."
+msgstr "קרא לזה פעם אחת בדפדפן. ברינדור בצד השרת זה לא עושה דבר."
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Cancel"
+msgstr "ביטול"
+
+#: src/features/analytics/Controls.tsx
+msgid "Change filter: {label}"
+msgstr "שינוי מסנן: {label}"
+
+#: src/features/analytics/Controls.tsx
+msgid "changed"
+msgstr "השתנה"
+
+#: src/features/analytics/text.ts
+msgid "Channel"
+msgstr "ערוץ"
+
+#: src/features/analytics/text.ts
+msgid "Chat opened"
+msgstr "הצ׳אט נפתח"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Checked every hour. Each alert is sent once and also shows as a note on the chart."
+msgstr "נבדק כל שעה. כל התראה נשלחת פעם אחת ומוצגת גם כהערה בתרשים."
+
+#: src/features/analytics/Settings.tsx
+msgid "Children"
+msgstr "ילדים"
+
+#: src/features/analytics/Support.tsx
+msgid "Choose an inbox"
+msgstr "בחר תיבת דואר"
+
+#: src/features/analytics/Settings.tsx
+msgid "Choose children for a site made for children."
+msgstr "בחר ילדים לאתר שנועד לילדים."
+
+#: src/features/analytics/text.ts
+msgid "City"
+msgstr "עיר"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Clear"
+msgstr "ניקוי"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts by"
+msgstr "עוקבות לפי"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts fill once visitors agree to a persistent id and come back. The numbers are rebuilt every hour."
+msgstr "עוקבות מתמלאות כשמבקרים מסכימים למזהה קבוע וחוזרים. המספרים נבנים מחדש כל שעה."
+
+#: src/features/analytics/Settings.tsx
+msgid "Collection"
+msgstr "עוקבה"
+
+#. placeholder {0}: formatDate(`${c.from}T12:00:00Z`, i18n.locale)
+#. placeholder {1}: formatDate(`${c.to}T12:00:00Z`, i18n.locale)
+#: src/features/analytics/Controls.tsx
+msgid "Compare with {0} – {1}"
+msgstr "השוואה עם {0} – {1}"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with a year earlier"
+msgstr "השוואה עם שנה קודם"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days"
+msgstr "השוואה עם ימים אחרים"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days…"
+msgstr "השוואה עם ימים אחרים…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the days"
+msgstr "השוואה עם הימים"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the period before"
+msgstr "השוואה עם התקופה הקודמת"
+
+#: src/features/analytics/Overview.tsx
+msgid "Compared days"
+msgstr "ימים שהושוו"
+
+#: src/features/analytics/Controls.tsx
+msgid "Comparison"
+msgstr "השוואה"
+
+#: src/features/analytics/text.ts
+msgid "Completions"
+msgstr "השלמות"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consent features"
+msgstr "תכונות הסכמה"
+
+#: src/features/analytics/Install.tsx
+msgid "Consent mode"
+msgstr "מצב הסכמה"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id, and signed-in users are linked to their contact."
+msgstr "מבקרים שהסכימו שומרים מזהה קבוע, ומשתמשים מחוברים מקושרים לאיש הקשר שלהם."
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id."
+msgstr "מבקרים שהסכימו שומרים מזהה קבוע."
+
+#: src/features/analytics/parts.tsx
+msgid "Consented visitors only"
+msgstr "רק מבקרים שהסכימו"
+
+#: src/features/analytics/text.ts
+msgid "contains"
+msgstr "מכיל"
+
+#: src/features/analytics/Install.tsx
+msgid "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
+msgstr "חוסמי תוכן עוצרים לעתים קרובות סקריפטים מדומיינים אחרים. הגשת הסקריפט ונקודת הקצה שלו מהאתר שלך שומרת על ספירת המבקרים האלה. שרת Yuva צריך לסמוך על הכתובת המועברת של הפרוקסי שלך; אחרת כל המבקרים נראים כמבקר אחד."
+
+#: src/features/analytics/text.ts
+msgid "Conversations"
+msgstr "שיחות"
+
+#: src/features/analytics/text.ts
+msgid "Conversations per 1,000 views of the page."
+msgstr "שיחות לכל 1,000 צפיות בדף."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Conversations per 1,000 views yesterday were at least twice the rate of the 28 days before."
+msgstr "שיחות לכל 1,000 צפיות אתמול היו לפחות כפולות מהקצב ב-28 הימים הקודמים."
+
+#: src/features/analytics/text.ts
+msgid "Conversations started on the page, from the chat of the linked inbox."
+msgstr "שיחות שהתחילו בדף, מהצ׳אט של תיבת הדואר המקושרת."
+
+#: src/features/analytics/Support.tsx
+msgid "Conversations, feedback, ratings and discussions of the linked inbox show here next to each page’s views. They are counted per page and day; no visitor is ever matched to a contact."
+msgstr "שיחות, משוב, דירוגים ודיונים של תיבת הדואר המקושרת מוצגים כאן לצד הצפיות של כל דף. הם נספרים לפי דף ויום; אף מבקר לא מותאם לאיש קשר לעולם."
+
+#: src/features/analytics/text.ts
+msgid "Conversion rate"
+msgstr "שיעור המרה"
+
+#: src/features/analytics/text.ts
+msgid "Conversions"
+msgstr "המרות"
+
+#: src/features/analytics/text.ts
+msgid "Conversions per 100 visitors."
+msgstr "המרות לכל 100 מבקרים."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
+msgstr "העתק אותו עכשיו; הוא לא מוצג שוב. קישורים שאבדו אפשר רק לבטל וליצור מחדש."
+
+#: src/features/analytics/Install.tsx
+msgid "Count my visits again"
+msgstr "ספירת הביקורים שלי שוב"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Count visitors, pages, sources, places and devices without cookies and without storing IP addresses."
+msgstr "ספור מבקרים, דפים, מקורות, מקומות ומכשירים בלי עוגיות ובלי לשמור כתובות IP."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Count your website’s visitors"
+msgstr "ספור את המבקרים באתר שלך"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted"
+msgstr "נספר"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted as"
+msgstr "נספר בתור"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Countries"
+msgstr "מדינות"
+
+#: src/features/analytics/text.ts
+msgid "Country"
+msgstr "מדינה"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
+msgstr "סופר כל מבקר בלי לשאול: שום דבר לא נשמר במכשיר ושום כתובת IP לא נשמרת."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Counts the visitors who reached each step after the ones before it, within one visit on one day. Numbers are at most ten minutes old."
+msgstr "סופר את המבקרים שהגיעו לכל שלב אחרי אלה שלפניו, בתוך ביקור אחד ביום אחד. המספרים בני עשר דקות לכל היותר."
+
+#: src/features/analytics/Settings.tsx
+msgid "Currency"
+msgstr "מטבע"
+
+#: src/features/analytics/Exports.tsx
+msgid "Current view"
+msgstr "התצוגה הנוכחית"
+
+#: src/features/analytics/text.ts
+msgid "Custom and built-in events."
+msgstr "אירועים מותאמים ומובנים."
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range"
+msgstr "טווח מותאם"
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range…"
+msgstr "טווח מותאם…"
+
+#: src/features/analytics/Settings.tsx
+msgid "Data"
+msgstr "נתונים"
+
+#: src/features/analytics/Install.tsx
+msgid "data-outbound counts clicks on links to other sites, data-files downloads of documents and archives, and data-chat each time a visitor opens the chat. track() sends your own events with up to 30 props; e-mail addresses in props are dropped. Make goals from events in the Goals view."
+msgstr "data-outbound סופר לחיצות על קישורים לאתרים אחרים, data-files הורדות של מסמכים וארכיונים, ו-data-chat כל פעם שמבקר פותח את הצ׳אט. track() שולח אירועים משלך עם עד 30 מאפיינים; כתובות אימייל במאפיינים נזרקות. צור יעדים מאירועים בתצוגת היעדים."
+
+#: src/features/analytics/Settings.tsx
+msgid "Day"
+msgstr "יום"
+
+#: src/features/analytics/Retention.tsx
+msgid "Day {period}"
+msgstr "יום {period}"
+
+#: src/features/analytics/Exports.tsx
+msgid "Day by day"
+msgstr "יום אחר יום"
+
+#: src/features/analytics/Retention.tsx
+msgid "Days"
+msgstr "ימים"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/SharePage.tsx
+msgid "Days are counted in this time zone"
+msgstr "ימים נספרים באזור הזמן הזה"
+
+#: src/features/analytics/Settings.tsx
+msgid "Days are in the property’s time zone. Their totals are counted again without them."
+msgstr "הימים הם באזור הזמן של הנכס. הסכומים שלהם נספרים מחדש בלעדיהם."
+
+#: src/features/analytics/Settings.tsx
+msgid "Days waiting to be summed up"
+msgstr "ימים הממתינים לסיכום"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete"
+msgstr "מחיקה"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete {0}?"
+msgstr "למחוק את {0}?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete {name}?"
+msgstr "למחוק את {name}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data"
+msgstr "מחיקת כל הנתונים"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data of {0}?"
+msgstr "למחוק את כל הנתונים של {0}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete days"
+msgstr "מחיקת ימים"
+
+#: src/features/analytics/Exports.tsx
+msgid "Delete export"
+msgstr "מחיקת ייצוא"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Delete funnel"
+msgstr "מחיקת משפך"
+
+#: src/features/analytics/Goals.tsx
+msgid "Delete goal"
+msgstr "מחיקת יעד"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete note"
+msgstr "מחיקת הערה"
+
+#: src/features/analytics/Controls.tsx
+msgid "Delete segment"
+msgstr "מחיקת פלח"
+
+#. placeholder {0}: funnel.name
+#: src/features/analytics/Funnels.tsx
+msgid "Delete the funnel “{0}”?"
+msgstr "למחוק את המשפך „{0}”?"
+
+#. placeholder {0}: goal.name
+#: src/features/analytics/Goals.tsx
+msgid "Delete the goal “{0}”?"
+msgstr "למחוק את היעד „{0}”?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the property"
+msgstr "מחיקת הנכס"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Delete the segment “{0}”?"
+msgstr "למחוק את הפלח „{0}”?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the visits and events of {span}?"
+msgstr "למחוק את הביקורים והאירועים של {span}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete these days"
+msgstr "מחיקת הימים האלה"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete this note?"
+msgstr "למחוק את ההערה הזאת?"
+
+#: src/features/analytics/Exports.tsx
+msgid "deleted {expires}"
+msgstr "נמחק {expires}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Deleting in the background. The numbers update when it is done."
+msgstr "מוחק ברקע. המספרים מתעדכנים כשזה מסתיים."
+
+#: src/features/analytics/Goals.tsx
+msgid "Depth in %"
+msgstr "עומק ב-%"
+
+#: src/features/analytics/text.ts
+msgid "Desktop"
+msgstr "שולחן עבודה"
+
+#: src/features/analytics/Exports.tsx
+msgid "Detailed records are kept since {rawDay}."
+msgstr "הרשומות המפורטות נשמרות מאז {rawDay}."
+
+#: src/features/analytics/Settings.tsx
+msgid "Detailed records kept since"
+msgstr "רשומות מפורטות נשמרות מאז"
+
+#: src/features/analytics/Overview.tsx
+msgid "Details"
+msgstr "פרטים"
+
+#: src/features/analytics/text.ts
+msgid "Device"
+msgstr "מכשיר"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Devices"
+msgstr "מכשירים"
+
+#: src/features/analytics/text.ts
+msgid "Direct"
+msgstr "ישיר"
+
+#: src/features/analytics/text.ts
+msgid "Direct / none"
+msgstr "ישיר / ללא"
+
+#: src/features/analytics/text.ts
+msgid "Discussion threads started on the page."
+msgstr "שרשורי דיון שהתחילו בדף."
+
+#: src/features/analytics/text.ts
+msgid "Discussions"
+msgstr "דיונים"
+
+#: src/features/analytics/text.ts
+msgid "Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again."
+msgstr "מבקרים ייחודיים ביום, מסוכמים על פני ימי הטווח. מי שחוזר ביום אחר נספר שוב."
+
+#: src/features/analytics/Install.tsx
+msgid "Do not count my visits"
+msgstr "לא לספור את הביקורים שלי"
+
+#: src/features/analytics/text.ts
+msgid "does not contain"
+msgstr "אינו מכיל"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Domains"
+msgstr "דומיינים"
+
+#: src/features/analytics/Exports.tsx
+msgid "Download"
+msgstr "הורדה"
+
+#: src/features/analytics/parts.tsx
+msgid "Download CSV"
+msgstr "הורדת CSV"
+
+#: src/features/analytics/Settings.tsx
+msgid "Dropped"
+msgstr "נזרק"
+
+#: src/features/analytics/text.ts
+msgid "E-mail"
+msgstr "אימייל"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that day, each column the share of them who came back that many days later."
+msgstr "כל שורה מכילה את המבקרים שנראו לראשונה באותו יום, וכל עמודה את חלקם שחזרו אחרי כמות הימים הזאת."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that month, each column the share of them who came back that many months later."
+msgstr "כל שורה מכילה את המבקרים שנראו לראשונה באותו חודש, וכל עמודה את חלקם שחזרו אחרי כמות החודשים הזאת."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that week, each column the share of them who came back that many weeks later."
+msgstr "כל שורה מכילה את המבקרים שנראו לראשונה באותו שבוע, וכל עמודה את חלקם שחזרו אחרי כמות השבועות הזאת."
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Edit"
+msgstr "עריכה"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Edit funnel"
+msgstr "עריכת משפך"
+
+#: src/features/analytics/Goals.tsx
+msgid "Edit goal"
+msgstr "עריכת יעד"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Edit note"
+msgstr "עריכת הערה"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Edit share link"
+msgstr "עריכת קישור שיתוף"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embed"
+msgstr "הטמעה"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embeds"
+msgstr "הטמעות"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Enter the password you were given with the link."
+msgstr "הזן את הסיסמה שקיבלת עם הקישור."
+
+#: src/features/analytics/text.ts
+msgid "Entry page"
+msgstr "דף כניסה"
+
+#: src/features/analytics/Goals.tsx
+msgid "equal to"
+msgstr "שווה ל"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Event"
+msgstr "אירוע"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event}"
+msgstr "אירוע {event}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event} with {key} = {value}"
+msgstr "אירוע {event} עם {key} = {value}"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Install.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Events"
+msgstr "אירועים"
+
+#: src/features/analytics/Settings.tsx
+msgid "Events are arriving."
+msgstr "אירועים מגיעים."
+
+#: src/features/analytics/Events.tsx
+msgid "Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when the script has their attributes."
+msgstr "אירועים מגיעים מקריאות track() בדפים ובאפליקציות שלך. קישורים יוצאים, הורדות ופתיחות צ׳אט נספרים כשהסקריפט מחזיק את המאפיינים שלהם."
+
+#: src/features/analytics/Settings.tsx
+msgid "Events count only after the page calls yuva.consent with analytics set to true. Install the script with data-consent=\"required\"."
+msgstr "אירועים נספרים רק אחרי שהדף קורא ל-yuva.consent עם analytics בערך true. התקן את הסקריפט עם data-consent=\"required\"."
+
+#: src/features/analytics/Settings.tsx
+msgid "events counted"
+msgstr "אירועים שנספרו"
+
+#: src/features/analytics/Settings.tsx
+msgid "events dropped"
+msgstr "אירועים שנזרקו"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every event with its visit’s page, source, place and device, as NDJSON. Visits are numbered within the file; there is no visitor id, address or contact. At most 31 days."
+msgstr "כל אירוע עם הדף, המקור, המקום והמכשיר של הביקור שלו, כ-NDJSON. ביקורים ממוספרים בתוך הקובץ; אין מזהה מבקר, כתובת או איש קשר. עד 31 יום."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Every Monday at 08:00 in {zone}, about the week before."
+msgstr "כל יום שני ב-08:00 ב-{zone}, על השבוע הקודם."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range and the filters you are looking at, without a comparison."
+msgstr "כל שורה בטווח ובמסננים שאתה מסתכל עליהם, בלי השוואה."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range you are looking at, without a comparison."
+msgstr "כל שורה בטווח שאתה מסתכל עליו, בלי השוואה."
+
+#: src/features/analytics/Settings.tsx
+msgid "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
+msgstr "כל ביקור, אירוע וסכום נמחקים. הנכס והמפתח שלו נשארים, והספירה נמשכת."
+
+#: src/features/analytics/Controls.tsx
+msgid "Everyone who sees this property can pick it. You, owners and admins can change it."
+msgstr "כל מי שרואה את הנכס הזה יכול לבחור בו. אתה, בעלים ומנהלים יכולים לשנות אותו."
+
+#: src/features/analytics/Annotations.tsx
+msgid "Everyone who sees this property sees the note, such as a launch or a campaign."
+msgstr "כל מי שרואה את הנכס הזה רואה את ההערה, כמו השקה או קמפיין."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Everything this property raised, newest first, whoever was notified."
+msgstr "כל מה שהנכס הזה העלה, החדש ביותר קודם, ולא משנה מי קיבל הודעה."
+
+#: src/features/analytics/Settings.tsx
+msgid "Excluded"
+msgstr "הוחרג"
+
+#: src/features/analytics/text.ts
+msgid "Exit page"
+msgstr "דף יציאה"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expired"
+msgstr "פג תוקף"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expires"
+msgstr "פג תוקף"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export"
+msgstr "ייצוא"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export progress"
+msgstr "התקדמות הייצוא"
+
+#: src/features/analytics/Exports.tsx
+msgid "Exports"
+msgstr "ייצואים"
+
+#: src/features/analytics/Exports.tsx
+msgid "Failed"
+msgstr "נכשל"
+
+#: src/features/analytics/text.ts
+msgid "Feedback"
+msgstr "משוב"
+
+#: src/features/analytics/Support.tsx
+msgid "Fewer than 100 views"
+msgstr "פחות מ-100 צפיות"
+
+#: src/features/analytics/text.ts
+msgid "File download"
+msgstr "הורדת קובץ"
+
+#: src/features/analytics/Exports.tsx
+msgid "Files are made in the background and deleted seven days later."
+msgstr "קבצים נוצרים ברקע ונמחקים שבעה ימים אחר כך."
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Support.tsx
+msgid "Filter by this"
+msgstr "סינון לפי זה"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Filters"
+msgstr "מסננים"
+
+#: src/features/analytics/Exports.tsx
+msgid "Filters come from the view: click a row there to add one. <0>Change them in the view</0>"
+msgstr "מסננים באים מהתצוגה: לחץ שם על שורה כדי להוסיף אחד. <0>שנה אותם בתצוגה</0>"
+
+#: src/features/analytics/Retention.tsx
+msgid "First day"
+msgstr "היום הראשון"
+
+#: src/features/analytics/Retention.tsx
+msgid "First month"
+msgstr "החודש הראשון"
+
+#: src/features/analytics/text.ts
+msgid "First page or screen"
+msgstr "הדף או המסך הראשון"
+
+#: src/features/analytics/text.ts
+msgid "First screen"
+msgstr "המסך הראשון"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "First visit"
+msgstr "ביקור ראשון"
+
+#: src/features/analytics/Retention.tsx
+msgid "First week"
+msgstr "השבוע הראשון"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Five reports an hour at most. Try again later."
+msgstr "חמישה דוחות בשעה לכל היותר. נסה שוב מאוחר יותר."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "For example Fieldnote website"
+msgstr "לדוגמה אתר Fieldnote"
+
+#: src/features/analytics/Settings.tsx
+msgid "For revenue, an ISO code like EUR."
+msgstr "להכנסות, קוד ISO כמו EUR."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an <0>API key</0> with the analytics:write scope, which stays on your server."
+msgstr "למה שרק צד השרת שלך רואה, כמו הרשמה או תשלום. Track מעביר את הכתובת והדפדפן של המבקר, כך שהאירוע מצטרף לביקור שלו; בקשות עם Do Not Track או Global Privacy Control לא נשלחות. הוא צריך <0>מפתח API</0> עם ההיקף analytics:write, שנשאר בשרת שלך."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
+msgstr "למה שרק צד השרת שלך רואה, כמו הרשמה או תשלום. Track מעביר את הכתובת והדפדפן של המבקר, כך שהאירוע מצטרף לביקור שלו; בקשות עם Do Not Track או Global Privacy Control לא נשלחות. הוא צריך מפתח API עם ההיקף analytics:write מבעלים או מנהל, שנשאר בשרת שלך."
+
+#: src/features/analytics/Exports.tsx
+msgid "Format"
+msgstr "פורמט"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "From"
+msgstr "מאת"
+
+#: src/features/analytics/Settings.tsx
+msgid "From a site that is not one of the domains, or from an app whose platform is not turned on."
+msgstr "מאתר שאינו אחד הדומיינים, או מאפליקציה שהפלטפורמה שלה לא מופעלת."
+
+#: src/features/analytics/Funnels.tsx
+msgid "From pricing to signup"
+msgstr "מתמחור להרשמה"
+
+#: src/features/analytics/Support.tsx
+msgid "From the inbox {inboxName}. Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "מתיבת הדואר {inboxName}. מדורג לפי שיחות לכל 1,000 צפיות; דפים עם פחות מ-100 צפיות באים אחרי האחרים. נספר לפי דף ויום, לעולם לא לפי מבקר או איש קשר."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Funnel"
+msgstr "משפך"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Funnels"
+msgstr "משפכים"
+
+#: src/features/analytics/Settings.tsx
+msgid "General"
+msgstr "כללי"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Go to goals"
+msgstr "מעבר ליעדים"
+
+#: src/features/analytics/Goals.tsx
+msgid "Goal"
+msgstr "יעד"
+
+#. placeholder {0}: a.text
+#: src/features/analytics/Annotations.tsx
+msgid "Goal “{0}” was created"
+msgstr "היעד „{0}” נוצר"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Goal drop"
+msgstr "נשירה מהיעד"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Goals"
+msgstr "יעדים"
+
+#: src/features/analytics/Settings.tsx
+msgid "had an address removed"
+msgstr "כתובת הוסרה"
+
+#: src/features/analytics/Settings.tsx
+msgid "Health"
+msgstr "בריאות"
+
+#: src/features/analytics/text.ts
+msgid "Helpful"
+msgstr "מועיל"
+
+#: src/features/analytics/Support.tsx
+msgid "Helpful and not helpful"
+msgstr "מועיל ולא מועיל"
+
+#: src/features/analytics/text.ts
+msgid "Helpful ratings out of all ratings."
+msgstr "דירוגים מועילים מתוך כל הדירוגים."
+
+#: src/features/analytics/text.ts
+msgid "Helpful share"
+msgstr "שיעור מועיל"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Home shows each website and app like this: visitors today, in the last 30 minutes and this week."
+msgstr "הבית מציג כל אתר ואפליקציה כך: מבקרים היום, ב-30 הדקות האחרונות ובשבוע הזה."
+
+#: src/features/analytics/text.ts
+msgid "Host"
+msgstr "מארח"
+
+#: src/features/analytics/text.ts
+msgid "Host or app"
+msgstr "מארח או אפליקציה"
+
+#: src/features/analytics/Install.tsx
+msgid "How to install"
+msgstr "איך להתקין"
+
+#: src/features/analytics/Events.tsx
+msgid "How to send events"
+msgstr "איך לשלוח אירועים"
+
+#: src/features/analytics/Sharing.tsx
+msgid "I saved it"
+msgstr "שמרתי אותו"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Support.tsx
+msgid "Inbox"
+msgstr "תיבת דואר"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Install"
+msgstr "התקנה"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/NewProperty.tsx
+msgid "Install on {0}"
+msgstr "התקנה ב-{0}"
+
+#: src/features/analytics/text.ts
+msgid "Internal"
+msgstr "פנימי"
+
+#: src/features/analytics/Settings.tsx
+msgid "Invalid"
+msgstr "לא תקין"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Investors"
+msgstr "משקיעים"
+
+#: src/features/analytics/text.ts
+msgid "is"
+msgstr "שווה ל"
+
+#: src/features/analytics/text.ts
+msgid "is not"
+msgstr "אינו"
+
+#: src/features/analytics/Controls.tsx
+msgid "It is gone for everyone who uses it. The numbers stay."
+msgstr "הוא נעלם עבור כל מי שמשתמש בו. המספרים נשארים."
+
+#: src/features/analytics/SharePage.tsx
+msgid "It may have expired or been revoked. Ask the person who shared it for a new one."
+msgstr "ייתכן שהוא פג או בוטל. בקש מהאדם ששיתף אותו קישור חדש."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Its goals stay."
+msgstr "היעדים שלו נשארים."
+
+#: src/features/analytics/Goals.tsx
+msgid "Its numbers are deleted too. This cannot be undone."
+msgstr "גם המספרים שלו נמחקים. אי אפשר לבטל זאת."
+
+#: src/features/analytics/Events.tsx
+msgid "Keep only visits with this value"
+msgstr "השאר רק ביקורים עם הערך הזה"
+
+#: src/features/analytics/Settings.tsx
+msgid "Key"
+msgstr "מפתח"
+
+#: src/features/analytics/Goals.tsx
+msgid "Kind of goal"
+msgstr "סוג יעד"
+
+#: src/features/analytics/text.ts
+msgid "Language"
+msgstr "שפה"
+
+#: src/features/analytics/text.ts
+msgid "Laptop"
+msgstr "מחשב נייד"
+
+#: src/features/analytics/text.ts
+msgid "Last 12 months"
+msgstr "12 החודשים האחרונים"
+
+#: src/features/analytics/text.ts
+msgid "Last 28 days"
+msgstr "28 הימים האחרונים"
+
+#: src/features/analytics/text.ts
+msgid "Last 30 days"
+msgstr "30 הימים האחרונים"
+
+#: src/features/analytics/text.ts
+msgid "Last 6 months"
+msgstr "6 החודשים האחרונים"
+
+#: src/features/analytics/text.ts
+msgid "Last 7 days"
+msgstr "7 הימים האחרונים"
+
+#: src/features/analytics/text.ts
+msgid "Last 90 days"
+msgstr "90 הימים האחרונים"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event"
+msgstr "אירוע אחרון"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event: {last}"
+msgstr "אירוע אחרון: {last}"
+
+#: src/features/analytics/text.ts
+msgid "Last month"
+msgstr "החודש שעבר"
+
+#: src/features/analytics/Sharing.tsx
+msgid "last opened {viewed}"
+msgstr "נפתח לאחרונה {viewed}"
+
+#: src/features/analytics/text.ts
+msgid "Last page or screen"
+msgstr "הדף או המסך האחרון"
+
+#: src/features/analytics/text.ts
+msgid "Last screen"
+msgstr "המסך האחרון"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Leave empty to keep the current one"
+msgstr "השאר ריק כדי לשמור את הנוכחי"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Link"
+msgstr "קישור"
+
+#: src/features/analytics/Support.tsx
+msgid "Link an inbox to see support per page"
+msgstr "קשר תיבת דואר כדי לראות תמיכה לפי דף"
+
+#: src/features/analytics/Support.tsx
+msgid "Link inbox"
+msgstr "קישור תיבת דואר"
+
+#: src/features/analytics/Settings.tsx
+msgid "Link signed-in users to their contact"
+msgstr "קישור משתמשים מחוברים לאיש הקשר שלהם"
+
+#: src/features/analytics/Alerts.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Support.tsx
+msgid "Load more"
+msgstr "טעינת עוד"
+
+#: src/features/analytics/Settings.tsx
+msgid "Location database"
+msgstr "מסד נתוני מיקום"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Locations"
+msgstr "מיקומים"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created}"
+msgstr "נוצר {created}"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created} by {by}"
+msgstr "נוצר {created} על ידי {by}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key"
+msgstr "יצירת מפתח חדש"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key?"
+msgstr "ליצור מפתח חדש?"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Make at least two goals first."
+msgstr "צור קודם לפחות שני יעדים."
+
+#: src/features/analytics/Goals.tsx
+msgid "Make goal"
+msgstr "יצירת יעד"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Make link"
+msgstr "יצירת קישור"
+
+#: src/features/analytics/text.ts
+msgid "matches"
+msgstr "תואם"
+
+#: src/features/analytics/text.ts
+msgid "Mobile"
+msgstr "נייד"
+
+#: src/features/analytics/Retention.tsx
+msgid "Month {period}"
+msgstr "חודש {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Monthly"
+msgstr "חודשי"
+
+#: src/features/analytics/Settings.tsx
+msgid "Monthly limit"
+msgstr "מגבלה חודשית"
+
+#: src/features/analytics/Retention.tsx
+msgid "Months"
+msgstr "חודשים"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move down"
+msgstr "הזזה למטה"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move up"
+msgstr "הזזה למעלה"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Name"
+msgstr "שם"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs a linked inbox under General: its identity secret signs the tokens."
+msgstr "צריך תיבת דואר מקושרת תחת כללי: סוד הזהות שלה חותם על האסימונים."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Needs a linked inbox. {help}"
+msgstr "צריך תיבת דואר מקושרת. {help}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs the persistent id: a visitor is linked through it."
+msgstr "צריך את המזהה הקבוע: מבקר מקושר דרכו."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Never"
+msgstr "אף פעם"
+
+#: src/features/analytics/Sharing.tsx
+msgid "never opened"
+msgstr "מעולם לא נפתח"
+
+#: src/features/analytics/text.ts
+msgid "New"
+msgstr "חדש"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value} with {count}, none in the compared days."
+msgstr "{kind} חדש: {value} עם {count}, אפס בימים שהושוו."
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
+msgstr "{kind} חדש: {value}. {metric}: {now}, אפס בימים שהושוו."
+
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "חדשים וחוזרים"
+
+#: src/features/analytics/Funnels.tsx
+msgid "New funnel"
+msgstr "משפך חדש"
+
+#: src/features/analytics/Goals.tsx
+msgid "New goal"
+msgstr "יעד חדש"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New link"
+msgstr "קישור חדש"
+
+#: src/features/analytics/text.ts
+msgid "New or returning"
+msgstr "חדש או חוזר"
+
+#: src/features/analytics/Annotations.tsx
+msgid "New pricing page"
+msgstr "דף תמחור חדש"
+
+#: src/features/analytics/Alerts.tsx
+msgid "New referrer"
+msgstr "מפנה חדש"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New share link"
+msgstr "קישור שיתוף חדש"
+
+#: src/features/analytics/Alerts.tsx
+msgid "No alerts yet."
+msgstr "עדיין אין התראות."
+
+#: src/features/analytics/Controls.tsx
+msgid "No comparison"
+msgstr "ללא השוואה"
+
+#: src/features/analytics/Settings.tsx
+msgid "No consent features are offered."
+msgstr "לא מוצעות תכונות הסכמה."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "אין מבקרים שהסכימו בטווח הזה."
+
+#: src/features/analytics/Retention.tsx
+msgid "No consented visitors yet"
+msgstr "עדיין אין מבקרים שהסכימו"
+
+#: src/features/analytics/Support.tsx
+msgid "No conversations, feedback, ratings or discussions from these pages in this range."
+msgstr "אין שיחות, משוב, דירוגים או דיונים מהדפים האלה בטווח הזה."
+
+#: src/features/analytics/Goals.tsx
+msgid "No conversions in this range."
+msgstr "אין המרות בטווח הזה."
+
+#: src/features/analytics/Settings.tsx
+msgid "No event yet."
+msgstr "עדיין אין אירוע."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events in the last 24 hours"
+msgstr "אין אירועים ב-24 השעות האחרונות"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events yet"
+msgstr "עדיין אין אירועים"
+
+#: src/features/analytics/Exports.tsx
+msgid "No exports yet."
+msgstr "עדיין אין ייצואים."
+
+#: src/features/analytics/Funnels.tsx
+msgid "No funnels yet"
+msgstr "עדיין אין משפכים"
+
+#: src/features/analytics/Goals.tsx
+msgid "No goals yet"
+msgstr "עדיין אין יעדים"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No properties yet"
+msgstr "עדיין אין נכסים"
+
+#: src/features/analytics/Settings.tsx
+msgid "No props are tracked."
+msgstr "אין מאפיינים במעקב."
+
+#: src/features/analytics/Alerts.tsx
+msgid "No scheduled reports."
+msgstr "אין דוחות מתוזמנים."
+
+#: src/features/analytics/Controls.tsx
+msgid "No segment"
+msgstr "ללא פלח"
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Make one to show these numbers to people outside the workspace."
+msgstr "עדיין אין קישורי שיתוף. צור אחד כדי להציג את המספרים האלה לאנשים מחוץ לסביבת העבודה."
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Owners and admins make them."
+msgstr "עדיין אין קישורי שיתוף. בעלים ומנהלים יוצרים אותם."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Nobody in the last 30 minutes."
+msgstr "אף אחד ב-30 הדקות האחרונות."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Nobody reached the first step in this range."
+msgstr "אף אחד לא הגיע לשלב הראשון בטווח הזה."
+
+#: src/features/analytics/Alerts.tsx
+msgid "None"
+msgstr "ללא"
+
+#: src/features/analytics/Settings.tsx
+msgid "None yet"
+msgstr "עדיין אין"
+
+#: src/features/analytics/Exports.tsx
+msgid "None, every visit counts."
+msgstr "אין, כל ביקור נספר."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "None, owners and admins only"
+msgstr "אין, רק בעלים ומנהלים"
+
+#: src/features/analytics/parts.tsx
+msgid "Not available for this range."
+msgstr "לא זמין לטווח הזה."
+
+#: src/features/analytics/text.ts
+msgid "Not helpful"
+msgstr "לא מועיל"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Note"
+msgstr "הערה"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Notes"
+msgstr "הערות"
+
+#: src/features/analytics/Exports.tsx
+msgid "Nothing"
+msgstr "כלום"
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Nothing counted in this range."
+msgstr "שום דבר לא נספר בטווח הזה."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Notify me"
+msgstr "הודע לי"
+
+#: src/features/analytics/Settings.tsx
+msgid "Off"
+msgstr "כבוי"
+
+#: src/features/analytics/Settings.tsx
+msgid "Offered only to visitors who agree in your consent tool. Everyone else is counted exactly as before, one day at a time and without anything stored on the device."
+msgstr "מוצע רק למבקרים שמסכימים בכלי ההסכמה שלך. כל השאר נספרים בדיוק כמו קודם, יום אחד בכל פעם ובלי שום דבר שנשמר במכשיר."
+
+#: src/features/analytics/Settings.tsx
+msgid "Older than 72 hours. Apps keep events without a connection for at most that long."
+msgstr "ישן מ-72 שעות. אפליקציות שומרות אירועים בלי חיבור לכל היותר כל כך הרבה זמן."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On its way to {email}."
+msgstr "בדרך אל {email}."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On the 1st of each month at 08:00 in {zone}, about the month before."
+msgstr "ב-1 בכל חודש ב-08:00 ב-{zone}, על החודש הקודם."
+
+#: src/features/analytics/Settings.tsx
+msgid "One IP address or range per line, up to 50, such as your office or a monitoring service."
+msgstr "כתובת IP או טווח אחד בכל שורה, עד 50, כמו המשרד שלך או שירות ניטור."
+
+#: src/features/analytics/Settings.tsx
+msgid "One path per line, up to 50. * stands for one part of the path, ** for any number of them."
+msgstr "נתיב אחד בכל שורה, עד 50. * מייצג חלק אחד בנתיב, ** כל מספר חלקים."
+
+#: src/features/analytics/Sharing.tsx
+msgid "One per line, like https://example.com or https://*.example.com. Without any, no other site can show it in a frame."
+msgstr "אחד בכל שורה, כמו https://example.com או https://*.example.com. בלי אף אחד, אף אתר אחר לא יכול להציג אותו במסגרת."
+
+#: src/features/analytics/Settings.tsx
+msgid "One per line. *.example.com covers every subdomain, but not example.com itself."
+msgstr "אחד בכל שורה. ‎*.example.com מכסה כל תת-דומיין, אבל לא את example.com עצמו."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "One per line. Pages on other domains cannot send events. *.example.com covers every subdomain."
+msgstr "אחד בכל שורה. דפים בדומיינים אחרים לא יכולים לשלוח אירועים. ‎*.example.com מכסה כל תת-דומיין."
+
+#: src/features/analytics/Settings.tsx
+msgid "One prop name per line, up to 10, such as plan."
+msgstr "שם מאפיין אחד בכל שורה, עד 10, כמו plan."
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
+msgstr "שורה אחת לכל יום עם מבקרים, ביקורים, צפיות, שיעור נטישה, משכים ועומק גלילה. עד 400 יום."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Only for you, by e-mail to {email}. Reports are plain numbers, with no images and nothing that tracks opening or clicks."
+msgstr "רק בשבילך, באימייל אל {email}. דוחות הם מספרים פשוטים, בלי תמונות ובלי שום דבר שעוקב אחר פתיחות או לחיצות."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Only members see it, to tell links apart."
+msgstr "רק חברי צוות רואים אותו, כדי להבדיל בין קישורים."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only the country is kept, never the region or city."
+msgstr "נשמרת רק המדינה, לעולם לא האזור או העיר."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Only totals are shown. There is no list of individual visitors."
+msgstr "מוצגים רק סכומים. אין רשימה של מבקרים בודדים."
+
+#: src/features/analytics/parts.tsx
+msgid "Only visitors who agreed to a persistent id are counted here. Everyone else is counted one day at a time."
+msgstr "נספרים כאן רק מבקרים שהסכימו למזהה קבוע. כל השאר נספרים יום אחד בכל פעם."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only with consent"
+msgstr "רק עם הסכמה"
+
+#: src/features/analytics/Goals.tsx
+msgid "Only with prop"
+msgstr "רק עם מאפיין"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
+msgstr "פתח דף באתר שלך כשהקטע במקומו. זה הופך לירוק ברגע שהשרת שמר את צפיית הדף הראשונה. דפדפנים עם Do Not Track או Global Privacy Control לא שולחים דבר, ולכן השתמש באחר לבדיקה."
+
+#: src/features/analytics/Retention.tsx
+msgid "Open consent features"
+msgstr "פתיחת תכונות הסכמה"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Open report"
+msgstr "פתיחת הדוח"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open the overview"
+msgstr "פתיחת הסקירה הכללית"
+
+#: src/features/analytics/Support.tsx
+msgid "Open the property’s settings"
+msgstr "פתיחת הגדרות הנכס"
+
+#: src/features/analytics/text.ts
+msgid "Operating system"
+msgstr "מערכת הפעלה"
+
+#: src/features/analytics/Install.tsx
+msgid "Opt-out link"
+msgstr "קישור ביטול הסכמה"
+
+#: src/features/analytics/text.ts
+msgid "Organic search"
+msgstr "חיפוש אורגני"
+
+#: src/features/analytics/text.ts
+msgid "OS version"
+msgstr "גרסת מערכת"
+
+#: src/features/analytics/text.ts
+msgid "Other"
+msgstr "אחר"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other drops"
+msgstr "נשירות אחרות"
+
+#: src/features/analytics/Events.tsx
+msgid "Other prop"
+msgstr "מאפיין אחר"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other sites"
+msgstr "אתרים אחרים"
+
+#: src/features/analytics/text.ts
+msgid "Outbound link"
+msgstr "קישור יוצא"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Overview"
+msgstr "סקירה כללית"
+
+#: src/features/analytics/Install.tsx
+msgid "Own domain"
+msgstr "דומיין משלו"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Owners and admins make funnels from goals. They show up here with each step’s drop-off."
+msgstr "בעלים ומנהלים יוצרים משפכים מיעדים. הם מופיעים כאן עם הנשירה בכל שלב."
+
+#: src/features/analytics/Goals.tsx
+msgid "Owners and admins make goals. They show up here with their conversions."
+msgstr "בעלים ומנהלים יוצרים יעדים. הם מופיעים כאן עם ההמרות שלהם."
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Page"
+msgstr "דף"
+
+#: src/features/analytics/text.ts
+msgid "Page feedback sent from the page."
+msgstr "משוב על הדף שנשלח מהדף."
+
+#: src/features/analytics/text.ts
+msgid "Page not found"
+msgstr "הדף לא נמצא"
+
+#: src/features/analytics/text.ts
+msgid "Page or screen"
+msgstr "דף או מסך"
+
+#: src/features/analytics/Goals.tsx
+msgid "Page view of {path}"
+msgstr "צפייה בדף {path}"
+
+#: src/features/analytics/text.ts
+msgid "Pages"
+msgstr "דפים"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens"
+msgstr "דפים ומסכים"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens viewed."
+msgstr "דפים ומסכים שנצפו."
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages not counted"
+msgstr "דפים שלא נספרים"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
+msgstr "דפים שמתאימים לתבנית נספרים תחת נתיב אחד, כך שכל דפי ההזמנה מצטברים כאחד. כתובות בנתיב מוחלפות תמיד."
+
+#: src/features/analytics/text.ts
+msgid "Pages viewed."
+msgstr "דפים שנצפו."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Pages, sources, places and devices, without cookies, without storing IP addresses and without a consent banner where the law allows it."
+msgstr "דפים, מקורות, מקומות ומכשירים, בלי עוגיות, בלי לשמור כתובות IP ובלי באנר הסכמה במקום שהחוק מתיר."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews"
+msgstr "צפיות בדפים"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews divided by visits."
+msgstr "צפיות בדפים מחולקות בביקורים."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews in the last 30 minutes"
+msgstr "צפיות בדפים ב-30 הדקות האחרונות"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews per minute"
+msgstr "צפיות בדפים לדקה"
+
+#: src/features/analytics/text.ts
+msgid "Paid search"
+msgstr "חיפוש ממומן"
+
+#: src/features/analytics/text.ts
+msgid "Paid social"
+msgstr "רשתות חברתיות ממומנות"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Password"
+msgstr "סיסמה"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Past alerts"
+msgstr "התראות קודמות"
+
+#: src/features/analytics/Settings.tsx
+msgid "Path rules"
+msgstr "כללי נתיב"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pattern"
+msgstr "תבנית"
+
+#: src/features/analytics/Controls.tsx
+msgid "Paying customers from Germany"
+msgstr "לקוחות משלמים מגרמניה"
+
+#: src/features/analytics/text.ts
+msgid "Per 1,000 views"
+msgstr "לכל 1,000 צפיות"
+
+#: src/features/analytics/Overview.tsx
+msgid "per day"
+msgstr "ליום"
+
+#: src/features/analytics/Settings.tsx
+msgid "Per day"
+msgstr "ליום"
+
+#: src/features/analytics/Overview.tsx
+msgid "per hour"
+msgstr "לשעה"
+
+#: src/features/analytics/Overview.tsx
+msgid "per week"
+msgstr "לשבוע"
+
+#: src/features/analytics/Settings.tsx
+msgid "Persistent id"
+msgstr "מזהה קבוע"
+
+#: src/features/analytics/text.ts
+msgid "Phone"
+msgstr "טלפון"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Pick a goal"
+msgstr "בחר יעד"
+
+#: src/features/analytics/Events.tsx
+msgid "Pick a prop to see the values this event carried."
+msgstr "בחר מאפיין כדי לראות את הערכים שהאירוע הזה נשא."
+
+#: src/features/analytics/Settings.tsx
+msgid "Pick at least one platform."
+msgstr "בחר לפחות פלטפורמה אחת."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Pick at least one view."
+msgstr "בחר לפחות תצוגה אחת."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
+msgstr "בחר איך האתר בנוי והעתק את הקטע. המפתח ציבורי, כמו מפתח צ׳אט: הוא עובד רק בדומיינים של הנכס."
+
+#: src/features/analytics/text.ts
+msgid "Platform"
+msgstr "פלטפורמה"
+
+#: src/features/analytics/Settings.tsx
+msgid "Platforms"
+msgstr "פלטפורמות"
+
+#: src/features/analytics/text.ts
+msgid "Prop"
+msgstr "מאפיין"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name"
+msgstr "שם מאפיין"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name, like plan"
+msgstr "שם מאפיין, כמו plan"
+
+#: src/features/analytics/Events.tsx
+msgid "Properties for children keep no props, only the address of outbound links and downloads."
+msgstr "נכסים לילדים לא שומרים מאפיינים, רק את הכתובת של קישורים יוצאים והורדות."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children keep no props, so none can be tracked."
+msgstr "נכסים לילדים לא שומרים מאפיינים, ולכן אי אפשר לעקוב אחר אף אחד."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children never keep an id on the device or link visits to a contact."
+msgstr "נכסים לילדים לעולם לא שומרים מזהה במכשיר או מקשרים ביקורים לאיש קשר."
+
+#: src/features/analytics/Retention.tsx
+msgid "Properties for children never keep an id on the device, so they have no retention."
+msgstr "נכסים לילדים לעולם לא שומרים מזהה במכשיר, ולכן אין להם שימור."
+
+#: src/features/analytics/Settings.tsx
+msgid "Property name"
+msgstr "שם הנכס"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Props"
+msgstr "מאפיינים"
+
+#: src/features/analytics/Events.tsx
+msgid "Props of any name can be broken down for the days the detailed records are kept. Earlier days only have the tracked props."
+msgstr "אפשר לפרט מאפיינים בכל שם לימים שהרשומות המפורטות נשמרות בהם. לימים מוקדמים יותר יש רק את המאפיינים שבמעקב."
+
+#: src/features/analytics/Install.tsx
+msgid "Put the script in the head of every page. It counts page views, also when a single-page app changes the address, and stores nothing on the visitor’s device."
+msgstr "הצב את הסקריפט ב-head של כל דף. הוא סופר צפיות בדפים, גם כשאפליקציית דף יחיד משנה את הכתובת, ולא שומר דבר במכשיר המבקר."
+
+#: src/features/analytics/Install.tsx
+msgid "Put these links on your privacy page. Opting out is the only thing the script stores on the visitor’s device, and only when they ask for it. Visitors with Do Not Track or Global Privacy Control are never counted."
+msgstr "הצב את הקישורים האלה בדף הפרטיות שלך. ביטול הסכמה הוא הדבר היחיד שהסקריפט שומר במכשיר המבקר, ורק כשהוא מבקש זאת. מבקרים עם Do Not Track או Global Privacy Control לעולם לא נספרים."
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Range"
+msgstr "טווח"
+
+#: src/features/analytics/Support.tsx
+msgid "Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "מדורג לפי שיחות לכל 1,000 צפיות; דפים עם פחות מ-100 צפיות באים אחרי האחרים. נספר לפי דף ויום, לעולם לא לפי מבקר או איש קשר."
+
+#: src/features/analytics/Settings.tsx
+msgid "Rate limits"
+msgstr "מגבלות קצב"
+
+#: src/features/analytics/Support.tsx
+msgid "Ratings"
+msgstr "דירוגים"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw events"
+msgstr "אירועים גולמיים"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw exports cover at most 31 days."
+msgstr "ייצואים גולמיים מכסים עד 31 יום."
+
+#: src/features/analytics/Goals.tsx
+msgid "Reached when a visitor"
+msgstr "מושג כשמבקר"
+
+#: src/features/analytics/Exports.tsx
+msgid "Ready"
+msgstr "מוכן"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Realtime"
+msgstr "זמן אמת"
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour, last at {builtAt}."
+msgstr "נבנה מחדש כל שעה, לאחרונה ב-{builtAt}."
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour."
+msgstr "נבנה מחדש כל שעה."
+
+#: src/features/analytics/text.ts
+msgid "Referral"
+msgstr "הפניה"
+
+#: src/features/analytics/text.ts
+msgid "Referrer"
+msgstr "מפנה"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Refreshes every 15 seconds"
+msgstr "מתרענן כל 15 שניות"
+
+#: src/features/analytics/Settings.tsx
+msgid "Refused"
+msgstr "נדחה"
+
+#: src/features/analytics/text.ts
+msgid "Region"
+msgstr "אזור"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter"
+msgstr "הסרת מסנן"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter: {label}"
+msgstr "הסרת מסנן: {label}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Remove rule"
+msgstr "הסרת כלל"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Remove step"
+msgstr "הסרת שלב"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Rename “{0}”…"
+msgstr "שינוי שם של „{0}”…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Rename segment"
+msgstr "שינוי שם פלח"
+
+#: src/features/analytics/Install.tsx
+msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
+msgstr "רנדר את הרכיב פעם אחת, בפריסת השורש. הוא לא מרנדר דבר; useYuvaAnalytics() נותן את השיטות בכל מקום מתחתיו."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Report"
+msgstr "דיווח"
+
+#: src/features/analytics/Settings.tsx
+msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
+msgstr "בקשות עם Do Not Track או Global Privacy Control, ואירועים בלי הסכמה בנכס שדורש אותה, מתקבלים אבל לא נשמרים ולא נספרים כאן."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Retention"
+msgstr "שימור"
+
+#: src/features/analytics/Retention.tsx
+msgid "Retention needs consent features"
+msgstr "שימור צריך תכונות הסכמה"
+
+#: src/features/analytics/text.ts
+msgid "Returning"
+msgstr "חוזרים"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/text.ts
+msgid "Revenue"
+msgstr "הכנסות"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke"
+msgstr "ביטול הגישה"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke {name}?"
+msgstr "לבטל את {name}?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoked"
+msgstr "בוטל"
+
+#: src/features/analytics/Exports.tsx
+msgid "Rows"
+msgstr "שורות"
+
+#: src/features/analytics/Exports.tsx
+msgid "Running"
+msgstr "רץ"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Save"
+msgstr "שמירה"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Save the changes to “{0}”"
+msgstr "שמירת השינויים ב„{0}”"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save the filters as a new segment…"
+msgstr "שמירת המסננים כפלח חדש…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save these filters as a segment"
+msgstr "שמירת המסננים האלה כפלח"
+
+#: src/features/analytics/Controls.tsx
+msgid "Saved segments"
+msgstr "פלחים שמורים"
+
+#: src/features/analytics/text.ts
+msgid "Screen"
+msgstr "מסך"
+
+#: src/features/analytics/text.ts
+msgid "Screen size"
+msgstr "גודל מסך"
+
+#: src/features/analytics/text.ts
+msgid "Screen views"
+msgstr "צפיות במסכים"
+
+#: src/features/analytics/text.ts
+msgid "Screen views divided by visits."
+msgstr "צפיות במסכים מחולקות בביקורים."
+
+#: src/features/analytics/text.ts
+msgid "Screen views in the last 30 minutes"
+msgstr "צפיות במסכים ב-30 הדקות האחרונות"
+
+#: src/features/analytics/text.ts
+msgid "Screen views per minute"
+msgstr "צפיות במסכים לדקה"
+
+#: src/features/analytics/text.ts
+msgid "Screens"
+msgstr "מסכים"
+
+#: src/features/analytics/text.ts
+msgid "Screens viewed."
+msgstr "מסכים שנצפו."
+
+#: src/features/analytics/text.ts
+msgid "Scroll depth"
+msgstr "עומק גלילה"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolled to {pct} on {path}"
+msgstr "גלל עד {pct} ב-{path}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolls"
+msgstr "גלילות"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segment"
+msgstr "פלח"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segments"
+msgstr "פלחים"
+
+#: src/features/analytics/Settings.tsx
+msgid "Send a screen or an event from your app or backend while this page is open, and see whether it reached the server. Refreshes every 5 seconds."
+msgstr "שלח מסך או אירוע מהאפליקציה או מצד השרת שלך בזמן שהדף הזה פתוח, וראה אם הוא הגיע לשרת. מתרענן כל 5 שניות."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Send me one now"
+msgstr "שלח לי אחד עכשיו"
+
+#: src/features/analytics/Goals.tsx
+msgid "Sends an event"
+msgstr "שולח אירוע"
+
+#: src/features/analytics/text.ts
+msgid "Server"
+msgstr "שרת"
+
+#: src/features/analytics/Settings.tsx
+msgid "Server busy"
+msgstr "השרת עסוק"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Settings"
+msgstr "הגדרות"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Share links"
+msgstr "קישורי שיתוף"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Shared with Yuva"
+msgstr "משותף עם Yuva"
+
+#: src/features/analytics/Settings.tsx
+msgid "Sharing"
+msgstr "שיתוף"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Events.tsx
+msgid "Show"
+msgstr "הצגה"
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/parts.tsx
+msgid "Show from {day}"
+msgstr "הצגה מ-{day}"
+
+#: src/features/analytics/Events.tsx
+msgid "Show its props"
+msgstr "הצגת המאפיינים שלו"
+
+#: src/features/analytics/Controls.tsx
+msgid "Show the days"
+msgstr "הצגת הימים"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Show the last 30 days"
+msgstr "הצגת 30 הימים האחרונים"
+
+#: src/features/analytics/Goals.tsx
+msgid "Signed up"
+msgstr "נרשם"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Sites that may embed it"
+msgstr "אתרים שרשאים להטמיע אותו"
+
+#: src/features/analytics/text.ts
+msgid "Social"
+msgstr "רשתות חברתיות"
+
+#: src/features/analytics/Settings.tsx
+msgid "Some events were dropped. The reasons are below."
+msgstr "חלק מהאירועים נזרקו. הסיבות למטה."
+
+#: src/features/analytics/text.ts
+msgid "Source"
+msgstr "מקור"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Realtime.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Sources"
+msgstr "מקורות"
+
+#: src/features/analytics/Settings.tsx
+msgid "Start over"
+msgstr "התחלה מחדש"
+
+#. placeholder {0}: i + 1
+#: src/features/analytics/Funnels.tsx
+msgid "Step {0}"
+msgstr "שלב {0}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Steps"
+msgstr "שלבים"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Support.tsx
+msgid "Support"
+msgstr "תמיכה"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Support load"
+msgstr "עומס תמיכה"
+
+#: src/features/analytics/Support.tsx
+msgid "Support numbers can only be filtered by page and host. The other filters are left out here."
+msgstr "מספרי תמיכה אפשר לסנן רק לפי דף ומארח. המסננים האחרים מדולגים כאן."
+
+#: src/features/analytics/text.ts
+msgid "Tablet"
+msgstr "טאבלט"
+
+#: src/features/analytics/Settings.tsx
+msgid "Taken and stored. They show up in Realtime within a minute."
+msgstr "התקבלו ונשמרו. הם מופיעים בזמן אמת תוך דקה."
+
+#: src/features/analytics/Settings.tsx
+msgid "Test events"
+msgstr "אירועי בדיקה"
+
+#: src/features/analytics/SharePage.tsx
+msgid "That password is not right."
+msgstr "הסיסמה הזאת אינה נכונה."
+
+#: src/features/analytics/Funnels.tsx
+msgid "The consented counts follow visitors with a persistent id from one visit and day to the next, so a step reached on a later day still counts."
+msgstr "הספירות של מי שהסכימו עוקבות אחר מבקרים עם מזהה קבוע מביקור ויום אחד לבא, כך ששלב שהושג ביום מאוחר יותר עדיין נספר."
+
+#: src/features/analytics/Settings.tsx
+msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
+msgstr "המפתח הנוכחי ממשיך לעבוד 24 שעות, כך שאפשר לעדכן את הדפים בלי לאבד אירועים. יצירת מפתח נוסף בזמן הזה מסיימת את הישן מיד."
+
+#: src/features/analytics/text.ts
+msgid "The deepest point reached on the page, per view."
+msgstr "הנקודה העמוקה ביותר שהושגה בדף, לכל צפייה."
+
+#: src/features/analytics/Exports.tsx
+msgid "The export failed on the server."
+msgstr "הייצוא נכשל בשרת."
+
+#: src/features/analytics/Exports.tsx
+msgid "The file would be larger than 1 GiB. Export a shorter range."
+msgstr "הקובץ יהיה גדול מ-1 GiB. ייצא טווח קצר יותר."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "The first event arrived at {at}."
+msgstr "האירוע הראשון הגיע ב-{at}."
+
+#: src/features/analytics/Goals.tsx
+msgid "The goal reports the revenue its events carry, per currency."
+msgstr "היעד מדווח על ההכנסות שהאירועים שלו נושאים, לכל מטבע."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key is public, like a chat key: every page carries it, and it only works on the property’s domains."
+msgstr "המפתח ציבורי, כמו מפתח צ׳אט: כל דף נושא אותו, והוא עובד רק בדומיינים של הנכס."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key stops working at once, and all visits, events and totals are deleted. This cannot be undone."
+msgstr "המפתח מפסיק לעבוד מיד, וכל הביקורים, האירועים והסכומים נמחקים. אי אפשר לבטל זאת."
+
+#: src/features/analytics/Settings.tsx
+msgid "The last 30 days"
+msgstr "30 הימים האחרונים"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and leaves the list."
+msgstr "הקישור מפסיק לעבוד מיד ועוזב את הרשימה."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and stays in the list."
+msgstr "הקישור מפסיק לעבוד מיד ונשאר ברשימה."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked."
+msgstr "הקישור מפסיק לעבוד בסוף היום הזה ב-{timezone}. השאר ריק כדי לשמור אותו עד שיבוטל."
+
+#: src/features/analytics/Install.tsx
+msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
+msgstr "המודול מוסיף תוסף לקוח ואת ה-composable ‏useYuvaAnalytics(). ‏NUXT_PUBLIC_YUVA_ANALYTICS_KEY עוקף את המפתח בזמן ריצה."
+
+#: src/features/analytics/Settings.tsx
+msgid "The name does not match. Type it exactly as shown."
+msgstr "השם לא תואם. הקלד אותו בדיוק כפי שמוצג."
+
+#: src/features/analytics/Goals.tsx
+msgid "The name given to track(), or outbound_click, file_download, not_found, chat_open."
+msgstr "השם שנמסר ל-track(), או outbound_click, file_download, not_found, chat_open."
+
+#: src/features/analytics/Settings.tsx
+msgid "The previous key keeps working until {at}. Update every page and app before then."
+msgstr "המפתח הקודם ממשיך לעבוד עד {at}. עדכן כל דף ואפליקציה לפני כן."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "The properties of your inboxes show up here once an owner or admin adds them."
+msgstr "הנכסים של תיבות הדואר שלך מופיעים כאן אחרי שבעלים או מנהל מוסיפים אותם."
+
+#: src/features/analytics/Exports.tsx
+msgid "The query could not be run."
+msgstr "לא ניתן היה להריץ את השאילתה."
+
+#: src/features/analytics/Exports.tsx
+msgid "The range is outside the detailed records."
+msgstr "הטווח מחוץ לרשומות המפורטות."
+
+#: src/features/analytics/SharePage.tsx
+msgid "The report could not be loaded"
+msgstr "לא ניתן היה לטעון את הדוח"
+
+#: src/features/analytics/Settings.tsx
+msgid "The server’s own database"
+msgstr "מסד הנתונים של השרת עצמו"
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need detailed records that are no longer kept for this range."
+msgstr "המסננים האלה צריכים רשומות מפורטות שכבר לא נשמרות לטווח הזה."
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need the detailed records, which are kept since {day}. Earlier days only have totals per page, source, place and device."
+msgstr "המסננים האלה צריכים את הרשומות המפורטות, שנשמרות מאז {day}. לימים מוקדמים יותר יש רק סכומים לכל דף, מקור, מקום ומכשיר."
+
+#: src/features/analytics/Settings.tsx
+msgid "This cannot be undone."
+msgstr "אי אפשר לבטל זאת."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal has numbers from {since} on. Days before that show none."
+msgstr "ליעד הזה יש מספרים מ-{since} ואילך. ימים לפני כן לא מציגים דבר."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
+msgstr "היעד הזה הוא שלב במשפך. הוצא אותו מהמשפך, או מחק את המשפך, קודם."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This link is not available"
+msgstr "הקישור הזה אינו זמין"
+
+#: src/features/analytics/text.ts
+msgid "This month"
+msgstr "החודש"
+
+#: src/features/analytics/Funnels.tsx
+msgid "This property already has a funnel with this name."
+msgstr "לנכס הזה כבר יש משפך בשם הזה."
+
+#: src/features/analytics/Goals.tsx
+msgid "This property already has a goal with this name."
+msgstr "לנכס הזה כבר יש יעד בשם הזה."
+
+#: src/features/analytics/Controls.tsx
+msgid "This property already has a segment with this name."
+msgstr "לנכס הזה כבר יש פלח בשם הזה."
+
+#: src/features/analytics/Exports.tsx
+msgid "This range cannot be exported. Pick a shorter one, or one inside the detailed records."
+msgstr "אי אפשר לייצא את הטווח הזה. בחר קצר יותר, או כזה שבתוך הרשומות המפורטות."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This report has a password"
+msgstr "לדוח הזה יש סיסמה"
+
+#: src/features/analytics/Support.tsx
+msgid "This workspace has no inbox yet."
+msgstr "בסביבת העבודה הזאת עדיין אין תיבת דואר."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
+msgstr "סביבת העבודה הזאת הגיעה ל-{limit} אירועי האנליטיקה שלה לחודש הזה. אירועים חדשים נזרקים עד שהחודש מסתיים."
+
+#: src/features/analytics/text.ts
+msgid "This year"
+msgstr "השנה"
+
+#: src/features/analytics/Exports.tsx
+msgid "Three exports are already running in this workspace. Try again when one finishes."
+msgstr "שלושה ייצואים כבר רצים בסביבת העבודה הזאת. נסה שוב כשאחד מסתיים."
+
+#: src/features/analytics/text.ts
+msgid "Time from the first to the last event of a visit, on average. Bounces count as zero."
+msgstr "הזמן מהאירוע הראשון לאחרון בביקור, בממוצע. נטישות נספרות כאפס."
+
+#: src/features/analytics/text.ts
+msgid "Time on page"
+msgstr "זמן בדף"
+
+#: src/features/analytics/text.ts
+msgid "Time the page was visible and in focus, per view."
+msgstr "הזמן שהדף היה גלוי ובפוקוס, לכל צפייה."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Time zone"
+msgstr "אזור זמן"
+
+#: src/features/analytics/text.ts
+msgid "Times the goal was reached, also several times by one visitor."
+msgstr "מספר הפעמים שהיעד הושג, גם כמה פעמים על ידי מבקר אחד."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated helpful."
+msgstr "מספר הפעמים שהדף דורג כמועיל."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated not helpful."
+msgstr "מספר הפעמים שהדף דורג כלא מועיל."
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "To"
+msgstr "אל"
+
+#: src/features/analytics/text.ts
+msgid "Today"
+msgstr "היום"
+
+#: src/features/analytics/Settings.tsx
+msgid "Today: {todayCounted} counted, {todayDropped} dropped"
+msgstr "היום: {todayCounted} נספרו, {todayDropped} נזרקו"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Token"
+msgstr "אסימון"
+
+#: src/features/analytics/Settings.tsx
+msgid "Too late"
+msgstr "מאוחר מדי"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many requests from your network. Wait a minute and reload the page."
+msgstr "יותר מדי בקשות מהרשת שלך. המתן דקה וטען את הדף מחדש."
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many tries. Wait a minute and try again."
+msgstr "יותר מדי ניסיונות. המתן דקה ונסה שוב."
+
+#: src/features/analytics/text.ts
+msgid "Top pages"
+msgstr "הדפים המובילים"
+
+#: src/features/analytics/text.ts
+msgid "Top pages and screens"
+msgstr "הדפים והמסכים המובילים"
+
+#: src/features/analytics/text.ts
+msgid "Top screens"
+msgstr "המסכים המובילים"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracked props"
+msgstr "מאפיינים במעקב"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracking"
+msgstr "מעקב"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic drop"
+msgstr "ירידה בתנועה"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic spike"
+msgstr "זינוק בתנועה"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Try again"
+msgstr "נסה שוב"
+
+#: src/features/analytics/Install.tsx
+msgid "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
+msgstr "הפעל את {name} תחת פלטפורמות בהגדרות הכלליות קודם. עד אז השרת דוחה את האירועים של האפליקציה."
+
+#: src/features/analytics/Retention.tsx
+msgid "Turn on the persistent id in the consent features, then call yuva.consent with persistent set to true."
+msgstr "הפעל את המזהה הקבוע בתכונות ההסכמה, ואז קרא ל-yuva.consent עם persistent בערך true."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Two to eight goals, in the order visitors reach them within one visit."
+msgstr "שניים עד שמונה יעדים, בסדר שבו מבקרים משיגים אותם בתוך ביקור אחד."
+
+#: src/features/analytics/Settings.tsx
+msgid "Type the property’s name to delete it and all its data."
+msgstr "הקלד את שם הנכס כדי למחוק אותו ואת כל הנתונים שלו."
+
+#: src/features/analytics/text.ts
+msgid "Unknown"
+msgstr "לא ידוע"
+
+#: src/features/analytics/Install.tsx
+msgid "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
+msgstr "עד 100 אירועים בבקשה, כל אחד עם כתובת ה-IP של המבקר ו-user agent או visitor_key משלך. אף אחד מהם לא נשמר. אירועים שהוחרגו כלא תקינים חוזרים ב-errors עם מיקומם; ראה מה הגיע תחת אירועי בדיקה."
+
+#: src/features/analytics/text.ts
+msgid "UTM campaign"
+msgstr "קמפיין UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM content"
+msgstr "תוכן UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM medium"
+msgstr "מדיום UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM source"
+msgstr "מקור UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM term"
+msgstr "מונח UTM"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Views"
+msgstr "צפיות"
+
+#: src/features/analytics/Goals.tsx
+msgid "Views a page"
+msgstr "צופה בדף"
+
+#: src/features/analytics/text.ts
+msgid "Views divided by visits."
+msgstr "צפיות מחולקות בביקורים."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views fell to {now} in two hours, against {usual} usually."
+msgstr "הצפיות ירדו ל-{now} בשעתיים, לעומת {usual} בדרך כלל."
+
+#: src/features/analytics/text.ts
+msgid "Views in the last 30 minutes"
+msgstr "צפיות ב-30 הדקות האחרונות"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at least three times the same hours of the week before."
+msgstr "הצפיות בשעתיים האחרונות הן לפחות פי שלושה מאותן שעות בשבוע הקודם."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at most half the same hours of the week before."
+msgstr "הצפיות בשעתיים האחרונות הן לכל היותר מחצית מאותן שעות בשבוע הקודם."
+
+#: src/features/analytics/text.ts
+msgid "Views per minute"
+msgstr "צפיות לדקה"
+
+#: src/features/analytics/text.ts
+msgid "Views per visit"
+msgstr "צפיות לביקור"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views rose to {now} in two hours, against {usual} usually."
+msgstr "הצפיות עלו ל-{now} בשעתיים, לעומת {usual} בדרך כלל."
+
+#: src/features/analytics/text.ts
+msgid "Visit duration"
+msgstr "משך ביקור"
+
+#: src/features/analytics/Retention.tsx
+#: src/features/analytics/text.ts
+msgid "Visitors"
+msgstr "מבקרים"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Visitors in the last 30 minutes"
+msgstr "מבקרים ב-30 הדקות האחרונות"
+
+#: src/features/analytics/Retention.tsx
+msgid "Visitors who came back"
+msgstr "מבקרים שחזרו"
+
+#: src/features/analytics/text.ts
+msgid "Visitors who reached the goal, per day, added up over the days of the range."
+msgstr "מבקרים שהשיגו את היעד, ליום, מסוכמים על פני ימי הטווח."
+
+#: src/features/analytics/Settings.tsx
+msgid "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
+msgstr "מבקרים עם Do Not Track או Global Privacy Control לא שולחים דבר, ולכן הם לא נספרים גם כאן. שום דבר על אירוע שנזרק לא נשמר מלבד המספר שלו."
+
+#: src/features/analytics/text.ts
+msgid "Visits"
+msgstr "ביקורים"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page or screen view and nothing else."
+msgstr "ביקורים עם צפייה אחת בדף או במסך ושום דבר אחר."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page view and nothing else."
+msgstr "ביקורים עם צפייה אחת בדף ושום דבר אחר."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one screen view and nothing else."
+msgstr "ביקורים עם צפייה אחת במסך ושום דבר אחר."
+
+#: src/features/analytics/Install.tsx
+msgid "Vue, Astro, other"
+msgstr "Vue, Astro, אחר"
+
+#: src/features/analytics/Exports.tsx
+msgid "Waiting"
+msgstr "ממתין"
+
+#: src/features/analytics/Settings.tsx
+msgid "Waiting for events since {at}."
+msgstr "ממתין לאירועים מאז {at}."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Waiting for the first event"
+msgstr "ממתין לאירוע הראשון"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Watch it live"
+msgstr "צפה בזה בזמן אמת"
+
+#: src/features/analytics/text.ts
+msgid "Web"
+msgstr "אינטרנט"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Website or app"
+msgstr "אתר או אפליקציה"
+
+#: src/features/analytics/Retention.tsx
+msgid "Week {period}"
+msgstr "שבוע {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Weekly"
+msgstr "שבועי"
+
+#: src/features/analytics/Retention.tsx
+msgid "Weeks"
+msgstr "שבועות"
+
+#: src/features/analytics/Insights.tsx
+msgid "What changed"
+msgstr "מה השתנה"
+
+#: src/features/analytics/Support.tsx
+msgid "What stands out"
+msgstr "מה בולט"
+
+#: src/features/analytics/text.ts
+msgid "What the goal's events carried, per currency. Currencies are never converted or added up."
+msgstr "מה שאירועי היעד נשאו, לכל מטבע. מטבעות לעולם לא ממירים או מסכמים."
+
+#: src/features/analytics/Exports.tsx
+msgid "What to export"
+msgstr "מה לייצא"
+
+#: src/features/analytics/Goals.tsx
+msgid "Where conversions come from"
+msgstr "מאיפה המרות מגיעות"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Where the property’s day starts and ends."
+msgstr "איפה יום הנכס מתחיל ומסתיים."
+
+#: src/features/analytics/Install.tsx
+msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."
+msgstr "עם data-consent=\"required\" הסקריפט לא שולח דבר עד שכלי ההסכמה שלך אומר שהמבקר הסכים. קבע גם את האיסוף ל„רק עם הסכמה” בהגדרות הכלליות, כך שהשרת ידחה אירועים בלעדיה."
+
+#: src/features/analytics/Settings.tsx
+msgid "With yuva.consent and persistent set to true, the device keeps a random id for 13 months. The visitor counts once over several days, is told apart as new or returning, fills retention and is followed across days in funnels. Never under Do Not Track or Global Privacy Control."
+msgstr "עם yuva.consent ו-persistent בערך true, המכשיר שומר מזהה אקראי ל-13 חודשים. המבקר נספר פעם אחת על פני כמה ימים, מובחן כחדש או חוזר, ממלא שימור ונעקב לאורך ימים במשפכים. לעולם לא תחת Do Not Track או Global Privacy Control."
+
+#: src/features/analytics/text.ts
+msgid "Without consent"
+msgstr "ללא הסכמה"
+
+#: src/features/analytics/Retention.tsx
+msgid "Without cookies a visitor is new every day, so nobody can be followed from one day to the next. Only visitors who agree to a persistent id in your consent tool show up here."
+msgstr "בלי עוגיות מבקר הוא חדש כל יום, ולכן אי אפשר לעקוב אחר אף אחד מיום לבא. רק מבקרים שמסכימים למזהה קבוע בכלי ההסכמה שלך מופיעים כאן."
+
+#: src/features/analytics/Settings.tsx
+msgid "Without cookies, for everyone"
+msgstr "בלי עוגיות, לכולם"
+
+#: src/features/analytics/text.ts
+msgid "Yesterday"
+msgstr "אתמול"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Your access ended. Enter the password again to keep reading."
+msgstr "הגישה שלך הסתיימה. הזן את הסיסמה שוב כדי להמשיך לקרוא."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Your new share link"
+msgstr "קישור השיתוף החדש שלך"
+
+#: src/features/analytics/Settings.tsx
+msgid "yuva.identify with a token from your backend, signed like a chat session, links the visitor’s visits to their contact. They show on the contact’s page under Recent visits. Forged or reused tokens are ignored."
+msgstr "yuva.identify עם אסימון מצד השרת שלך, חתום כמו סשן צ׳אט, מקשר את הביקורים של המבקר לאיש הקשר שלו. הם מופיעים בדף איש הקשר תחת ביקורים אחרונים. אסימונים מזויפים או ממוחזרים מתעלמים מהם."

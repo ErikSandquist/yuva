@@ -1,0 +1,2748 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 10:11+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: sk\n"
+
+#: src/features/analytics/text.ts
+msgid "(not set)"
+msgstr "(nenastavené)"
+
+#. placeholder {0}: e.rows
+#: src/features/analytics/Exports.tsx
+msgid "{0, plural, one {# row} other {# rows}}"
+msgstr "{0, plural, one {# riadok} few {# riadky} many {# riadku} other {# riadkov}}"
+
+#. placeholder {0}: p.visitors_today
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{0, plural, one {visitor today} other {visitors today}}"
+msgstr "{0, plural, one {návštevník dnes} few {návštevníci dnes} many {návštevníka dnes} other {návštevníkov dnes}}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{consentedCount} consented, across visits and days"
+msgstr "{consentedCount} súhlasilo, naprieč návštevami a dňami"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {{site} sent # visit, and none in the 28 days before.} other {{site} sent # visits, and none in the 28 days before.}}"
+msgstr "{count, plural, one {{site} poslal # návštevu a v predchádzajúcich 28 dňoch žiadnu.} few {{site} poslal # návštevy a v predchádzajúcich 28 dňoch žiadnu.} many {{site} poslal # návštevy a v predchádzajúcich 28 dňoch žiadnu.} other {{site} poslal # návštev a v predchádzajúcich 28 dňoch žiadnu.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {# conversation per 1,000 views, against {usual} in the 28 days before.} other {# conversations per 1,000 views, against {usual} in the 28 days before.}}"
+msgstr "{count, plural, one {# konverzácia na 1 000 zobrazení, oproti {usual} v predchádzajúcich 28 dňoch.} few {# konverzácie na 1 000 zobrazení, oproti {usual} v predchádzajúcich 28 dňoch.} many {# konverzácie na 1 000 zobrazení, oproti {usual} v predchádzajúcich 28 dňoch.} other {# konverzácií na 1 000 zobrazení, oproti {usual} v predchádzajúcich 28 dňoch.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {Goal “{goal}” had # conversion, against {usual} a day on average in the week before.} other {Goal “{goal}” had # conversions, against {usual} a day on average in the week before.}}"
+msgstr "{count, plural, one {Cieľ „{goal}“ mal # konverziu, oproti priemeru {usual} denne v predchádzajúcom týždni.} few {Cieľ „{goal}“ mal # konverzie, oproti priemeru {usual} denne v predchádzajúcom týždni.} many {Cieľ „{goal}“ mal # konverzie, oproti priemeru {usual} denne v predchádzajúcom týždni.} other {Cieľ „{goal}“ mal # konverzií, oproti priemeru {usual} denne v predchádzajúcom týždni.}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{count} in this range, none in the compared days."
+msgstr "{count} v tomto rozsahu, žiadne v porovnávaných dňoch."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {count}, none in the compared days."
+msgstr "{dim} {value}: {count}, žiadne v porovnávaných dňoch."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} fell {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} kleslo o {change}, {now} oproti {before}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} rose {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} vzrástlo o {change}, {now} oproti {before}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {metric} {now}, none in the compared days."
+msgstr "{dim} {value}: {metric} {now}, žiadne v porovnávaných dňoch."
+
+#: src/features/analytics/Annotations.tsx
+msgid "{kind}: {found}"
+msgstr "{kind}: {found}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{lost} left ({lostPct})"
+msgstr "{lost} odišlo ({lostPct})"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} fell {change}: {now}, against {before} in the compared days."
+msgstr "{metric} kleslo o {change}: {now}, oproti {before} v porovnávaných dňoch."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} rose {change}: {now}, against {before} in the compared days."
+msgstr "{metric} vzrástlo o {change}: {now}, oproti {before} v porovnávaných dňoch."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric}: {now}, none in the compared days."
+msgstr "{metric}: {now}, žiadne v porovnávaných dňoch."
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversation} other {# conversations}}"
+msgstr "{n, plural, one {# konverzácia} few {# konverzácie} many {# konverzácie} other {# konverzácií}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversion} other {# conversions}}"
+msgstr "{n, plural, one {# konverzia} few {# konverzie} many {# konverzie} other {# konverzií}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# discussion} other {# discussions}}"
+msgstr "{n, plural, one {# diskusia} few {# diskusie} many {# diskusie} other {# diskusií}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# event} other {# events}}"
+msgstr "{n, plural, one {# udalosť} few {# udalosti} many {# udalosti} other {# udalostí}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# view} other {# views}}"
+msgstr "{n, plural, one {# zobrazenie} few {# zobrazenia} many {# zobrazenia} other {# zobrazení}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visit} other {# visits}}"
+msgstr "{n, plural, one {# návšteva} few {# návštevy} many {# návštevy} other {# návštev}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visitor} other {# visitors}}"
+msgstr "{n, plural, one {# návštevník} few {# návštevníci} many {# návštevníka} other {# návštevníkov}}"
+
+#: src/features/analytics/Events.tsx
+msgid "{n} payments, {avg} on average"
+msgstr "Platieb: {n}, v priemere {avg}"
+
+#: src/features/analytics/Install.tsx
+msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
+msgstr "{name} nie je jednou z platforiem tejto vlastnosti, takže server udalosti aplikácie odmieta. Vlastník alebo správca ju môže zapnúť."
+
+#: src/features/analytics/Funnels.tsx
+msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
+msgstr "{overall} návštevníkov, ktorí dosiahli prvý krok, dosiahlo aj posledný, {from} – {to}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
+msgstr "{rate, plural, one {{dim} {value}: # konverzácia na 1 000 zobrazení, oproti {site} naprieč všetkými stránkami.} few {{dim} {value}: # konverzácie na 1 000 zobrazení, oproti {site} naprieč všetkými stránkami.} many {{dim} {value}: # konverzácie na 1 000 zobrazení, oproti {site} naprieč všetkými stránkami.} other {{dim} {value}: # konverzácií na 1 000 zobrazení, oproti {site} naprieč všetkými stránkami.}}"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
+msgstr "Tento mesiac využité {used} z {limit} analytických udalostí. Udalosti nad limit sa do konca mesiaca zahadzujú."
+
+#: src/features/analytics/Settings.tsx
+msgid "A change applies to new events. Days already counted keep their zone."
+msgstr "Zmena platí pre nové udalosti. Už započítané dni si ponechajú svoje pásmo."
+
+#: src/features/analytics/Goals.tsx
+msgid "A changed goal is counted again over the days the detailed records are kept."
+msgstr "Zmenený cieľ sa počíta znova za dni, počas ktorých sa uchovávajú podrobné záznamy."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel follows each visit step by step, so it covers at most 90 days at once, or 31 days for a property with more than 10 million events a month. Pick a shorter range."
+msgstr "Lievik sleduje každú návštevu krok za krokom, takže pokrýva najviac 90 dní naraz, alebo 31 dní pri vlastnosti s viac než 10 miliónmi udalostí mesačne. Vyberte kratší rozsah."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel is made of two to eight goals in a row. Make at least two goals first."
+msgstr "Lievik sa skladá z dvoch až ôsmich cieľov za sebou. Najprv vytvorte aspoň dva ciele."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are kept since {day}. Earlier days only have totals, so they cannot show a funnel."
+msgstr "Lievik potrebuje kroky každej návštevy, ktoré sa uchovávajú od {day}. Skoršie dni majú len súčty, takže nemôžu ukázať lievik."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are no longer kept for this range."
+msgstr "Lievik potrebuje kroky každej návštevy, ktoré sa pre tento rozsah už neuchovávajú."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel shows how many visitors go from one goal to the next within a visit, and where they leave."
+msgstr "Lievik ukazuje, koľko návštevníkov prejde počas návštevy z jedného cieľa k ďalšiemu a kde odpadá."
+
+#: src/features/analytics/Goals.tsx
+msgid "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
+msgstr "Cieľ počíta návštevníkov, ktorí zobrazia stránku, odošlú udalosť alebo doscrollujú dostatočne ďaleko, a tržby, ktoré prinášajú."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A goal’s conversions yesterday were at most half its daily average of the week before."
+msgstr "Konverzie cieľa včera boli najviac polovičné oproti jeho dennému priemeru z predchádzajúceho týždňa."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A link shows only its views of this property, read-only, without filters or segments. Revoking or deleting it stops it at once."
+msgstr "Odkaz ukazuje len jeho zobrazenia tejto vlastnosti, len na čítanie, bez filtrov a segmentov. Odvolanie alebo odstránenie ho okamžite zastaví."
+
+#: src/features/analytics/Goals.tsx
+msgid "A new goal also counts the days the detailed records are kept, not only from today."
+msgstr "Nový cieľ počíta aj dni, počas ktorých sa uchovávajú podrobné záznamy, nielen od dnes."
+
+#: src/features/analytics/Annotations.tsx
+msgid "A new key was made"
+msgstr "Bol vytvorený nový kľúč"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A new password signs out everyone who unlocked the link."
+msgstr "Nové heslo odhlási všetkých, ktorí odkaz odomkli."
+
+#: src/features/analytics/Goals.tsx
+msgid "A path. * stands for one part of it, ** for any number of them."
+msgstr "Cesta. * znamená jednu jej časť, ** ľubovoľný počet častí."
+
+#: src/features/analytics/Settings.tsx
+msgid "A prop name has at most 300 characters and does not start with $ or yuva_."
+msgstr "Názov propu má najviac 300 znakov a nezačína $ ani yuva_."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A property can have at most 50 share links. Delete one first."
+msgstr "Vlastnosť môže mať najviac 50 zdieľaných odkazov. Najprv jeden odstráňte."
+
+#: src/features/analytics/parts.tsx
+msgid "A range can be at most 400 days long. Pick a shorter one."
+msgstr "Rozsah môže byť najviac 400 dní dlhý. Vyberte kratší."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A site sent 10 or more visits yesterday and none in the 28 days before."
+msgstr "Web včera poslal 10 alebo viac návštev a v predchádzajúcich 28 dňoch žiadnu."
+
+#: src/features/analytics/Settings.tsx
+msgid "A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and it shows as a chip on the Events view."
+msgstr "Sledovaný prop sa uchováva aj v denných súčtoch, takže jeho rozpad pretrvá, aj keď podrobné záznamy zmiznú, a zobrazí sa ako čip v zobrazení Udalosti."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page or screen views without a gap of 30 minutes, within one day."
+msgstr "Zobrazenia stránok alebo obrazoviek návštevníka bez pauzy 30 minút, počas jedného dňa."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page views without a gap of 30 minutes, within one day."
+msgstr "Zobrazenia stránok návštevníka bez pauzy 30 minút, počas jedného dňa."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
+msgstr "Zobrazenia obrazoviek návštevníka bez pauzy 30 minút, počas jedného dňa. Každé spustenie aplikácie začne novú návštevu."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Active"
+msgstr "Aktívne"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add"
+msgstr "Pridať"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add a note to the chart"
+msgstr "Pridať poznámku do grafu"
+
+#: src/features/analytics/Settings.tsx
+msgid "Add a rule"
+msgstr "Pridať pravidlo"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Add a step"
+msgstr "Pridať krok"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/NewProperty.tsx
+msgid "Add a website"
+msgstr "Pridať web"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add a website to count its visitors, pages and sources, without cookies."
+msgstr "Pridajte web a počítajte jeho návštevníkov, stránky a zdroje, bez cookies."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Add and install"
+msgstr "Pridať a nainštalovať"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add note"
+msgstr "Pridať poznámku"
+
+#: src/features/analytics/Install.tsx
+msgid "Add the YuvaAnalytics library of the Yuva package and configure it once at launch. .yuvaScreen counts a SwiftUI screen; in UIKit, call YuvaAnalytics.screen when a screen appears. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "Pridajte knižnicu YuvaAnalytics z balíka Yuva a raz ju nakonfigurujte pri spustení. .yuvaScreen počíta obrazovku SwiftUI; v UIKit zavolajte YuvaAnalytics.screen, keď sa obrazovka zobrazí. Bez pripojenia udalosti čakajú v zariadení až 72 hodín a dorazia so svojimi vlastnými časmi."
+
+#: src/features/analytics/Install.tsx
+msgid "Add yuva-analytics from JitPack and configure it once in Application.onCreate. TrackScreen counts a Compose screen. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "Pridajte yuva-analytics z JitPack a raz ju nakonfigurujte v Application.onCreate. TrackScreen počíta obrazovku Compose. Bez pripojenia udalosti čakajú v zariadení až 72 hodín a dorazia so svojimi vlastnými časmi."
+
+#: src/features/analytics/Settings.tsx
+msgid "Addresses not counted"
+msgstr "Adresy, ktoré sa nepočítajú"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the compared days"
+msgstr "oproti porovnávaným dňom"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the period before"
+msgstr "oproti predchádzajúcemu obdobiu"
+
+#: src/features/analytics/Support.tsx
+msgid "Agents of the inbox can then see this property’s numbers too."
+msgstr "Agenti schránky potom uvidia aj čísla tejto vlastnosti."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Agents of this inbox can see the numbers."
+msgstr "Agenti tejto schránky môžu čísla vidieť."
+
+#: src/features/analytics/text.ts
+msgid "AI assistants"
+msgstr "Asistenti AI"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Alerts"
+msgstr "Upozornenia"
+
+#: src/features/analytics/Settings.tsx
+msgid "Alerts and reports"
+msgstr "Upozornenia a správy"
+
+#: src/features/analytics/Events.tsx
+msgid "All events"
+msgstr "Všetky udalosti"
+
+#: src/features/analytics/Goals.tsx
+msgid "All goals"
+msgstr "Všetky ciele"
+
+#: src/features/analytics/Support.tsx
+msgid "An owner or admin can link one in the property’s settings."
+msgstr "Vlastník alebo správca môže jednu prepojiť v nastaveniach vlastnosti."
+
+#: src/features/analytics/Retention.tsx
+msgid "An owner or admin can turn on the persistent id in the consent features."
+msgstr "Vlastník alebo správca môže zapnúť trvalé ID vo funkciách súhlasu."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics"
+msgstr "Analytika"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Analytics properties"
+msgstr "Analytické vlastnosti"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Analytics steps"
+msgstr "Kroky analytiky"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics views"
+msgstr "Zobrazenia analytiky"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Anyone with the link sees the views you pick, read-only, without signing in."
+msgstr "Ktokoľvek s odkazom uvidí zobrazenia, ktoré vyberiete, len na čítanie, bez prihlásenia."
+
+#: src/features/analytics/text.ts
+msgid "App"
+msgstr "Aplikácia"
+
+#: src/features/analytics/text.ts
+msgid "App version"
+msgstr "Verzia aplikácie"
+
+#: src/features/analytics/Settings.tsx
+msgid "Apps send without a domain, so only the platforms turned on here are counted. Events from your backend need no platform."
+msgstr "Aplikácie odosielajú bez domény, takže sa počítajú len platformy zapnuté tu. Udalosti z vášho backendu platformu nepotrebujú."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Ask for a password"
+msgstr "Žiadať heslo"
+
+#: src/features/analytics/Sharing.tsx
+msgid "At least 8 characters"
+msgstr "Aspoň 8 znakov"
+
+#: src/features/analytics/Settings.tsx
+msgid "At most 10 props can be tracked."
+msgstr "Sledovať možno najviac 10 propov."
+
+#: src/features/analytics/Settings.tsx
+msgid "Audience"
+msgstr "Publikum"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Available until {expires}"
+msgstr "K dispozícii do {expires}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots"
+msgstr "Boti"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
+msgstr "Boti, limity početnosti, vylúčené adresy a cesty, mesačný limit alebo vyťažený server."
+
+#: src/features/analytics/text.ts
+msgid "Bounce rate"
+msgstr "Miera opustenia"
+
+#: src/features/analytics/Events.tsx
+msgid "Break down by prop"
+msgstr "Rozdeliť podľa propu"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Breakdown"
+msgstr "Rozdelenie"
+
+#: src/features/analytics/Exports.tsx
+msgid "Broken down by"
+msgstr "Rozdelené podľa"
+
+#: src/features/analytics/Settings.tsx
+msgid "Broken events, such as a screen address that does not start with app://, a reserved name or too many props."
+msgstr "Poškodené udalosti, napríklad adresa obrazovky, ktorá nezačína app://, rezervovaný názov alebo príliš veľa propov."
+
+#: src/features/analytics/text.ts
+msgid "Browser"
+msgstr "Prehliadač"
+
+#: src/features/analytics/text.ts
+msgid "Browser version"
+msgstr "Verzia prehliadača"
+
+#: src/features/analytics/Install.tsx
+msgid "Call it once in the browser. During server rendering it does nothing."
+msgstr "Zavolajte to raz v prehliadači. Pri vykresľovaní na strane servera to nič nerobí."
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Cancel"
+msgstr "Zrušiť"
+
+#: src/features/analytics/Controls.tsx
+msgid "Change filter: {label}"
+msgstr "Zmeniť filter: {label}"
+
+#: src/features/analytics/Controls.tsx
+msgid "changed"
+msgstr "zmenené"
+
+#: src/features/analytics/text.ts
+msgid "Channel"
+msgstr "Kanál"
+
+#: src/features/analytics/text.ts
+msgid "Chat opened"
+msgstr "Chat otvorený"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Checked every hour. Each alert is sent once and also shows as a note on the chart."
+msgstr "Kontroluje sa každú hodinu. Každé upozornenie sa pošle raz a zobrazí sa aj ako poznámka v grafe."
+
+#: src/features/analytics/Settings.tsx
+msgid "Children"
+msgstr "Deti"
+
+#: src/features/analytics/Support.tsx
+msgid "Choose an inbox"
+msgstr "Vyberte schránku"
+
+#: src/features/analytics/Settings.tsx
+msgid "Choose children for a site made for children."
+msgstr "Pre web určený deťom zvoľte Deti."
+
+#: src/features/analytics/text.ts
+msgid "City"
+msgstr "Mesto"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Clear"
+msgstr "Vymazať"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts by"
+msgstr "Kohorty podľa"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts fill once visitors agree to a persistent id and come back. The numbers are rebuilt every hour."
+msgstr "Kohorty sa plnia, keď návštevníci súhlasia s trvalým ID a vracajú sa. Čísla sa prepočítavajú každú hodinu."
+
+#: src/features/analytics/Settings.tsx
+msgid "Collection"
+msgstr "Kolekcia"
+
+#. placeholder {0}: formatDate(`${c.from}T12:00:00Z`, i18n.locale)
+#. placeholder {1}: formatDate(`${c.to}T12:00:00Z`, i18n.locale)
+#: src/features/analytics/Controls.tsx
+msgid "Compare with {0} – {1}"
+msgstr "Porovnať s {0} – {1}"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with a year earlier"
+msgstr "Porovnať s rokom predtým"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days"
+msgstr "Porovnať s inými dňami"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days…"
+msgstr "Porovnať s inými dňami…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the days"
+msgstr "Porovnať s dňami"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the period before"
+msgstr "Porovnať s predchádzajúcim obdobím"
+
+#: src/features/analytics/Overview.tsx
+msgid "Compared days"
+msgstr "Porovnávané dni"
+
+#: src/features/analytics/Controls.tsx
+msgid "Comparison"
+msgstr "Porovnanie"
+
+#: src/features/analytics/text.ts
+msgid "Completions"
+msgstr "Dokončenia"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consent features"
+msgstr "Funkcie súhlasu"
+
+#: src/features/analytics/Install.tsx
+msgid "Consent mode"
+msgstr "Režim súhlasu"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id, and signed-in users are linked to their contact."
+msgstr "Návštevníci, ktorí súhlasili, si ponechajú trvalé ID a prihlásení používatelia sa prepoja so svojím kontaktom."
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id."
+msgstr "Návštevníci, ktorí súhlasili, si ponechajú trvalé ID."
+
+#: src/features/analytics/parts.tsx
+msgid "Consented visitors only"
+msgstr "Iba návštevníci, ktorí súhlasili"
+
+#: src/features/analytics/text.ts
+msgid "contains"
+msgstr "obsahuje"
+
+#: src/features/analytics/Install.tsx
+msgid "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
+msgstr "Blokátory obsahu často zastavujú skripty z iných domén. Poskytovanie skriptu a jeho koncového bodu z vášho vlastného webu udrží týchto návštevníkov započítaných. Server Yuvy musí dôverovať presmerovanej adrese vášho proxy; inak vyzerajú všetci návštevníci ako jeden."
+
+#: src/features/analytics/text.ts
+msgid "Conversations"
+msgstr "Konverzácie"
+
+#: src/features/analytics/text.ts
+msgid "Conversations per 1,000 views of the page."
+msgstr "Konverzácie na 1 000 zobrazení stránky."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Conversations per 1,000 views yesterday were at least twice the rate of the 28 days before."
+msgstr "Konverzácie na 1 000 zobrazení boli včera aspoň dvojnásobné oproti predchádzajúcim 28 dňom."
+
+#: src/features/analytics/text.ts
+msgid "Conversations started on the page, from the chat of the linked inbox."
+msgstr "Konverzácie začaté na stránke, z chatu prepojenej schránky."
+
+#: src/features/analytics/Support.tsx
+msgid "Conversations, feedback, ratings and discussions of the linked inbox show here next to each page’s views. They are counted per page and day; no visitor is ever matched to a contact."
+msgstr "Konverzácie, spätná väzba, hodnotenia a diskusie prepojenej schránky sa tu zobrazujú vedľa zobrazení každej stránky. Počítajú sa na stránku a deň; žiadny návštevník sa nikdy nepáruje s kontaktom."
+
+#: src/features/analytics/text.ts
+msgid "Conversion rate"
+msgstr "Miera konverzie"
+
+#: src/features/analytics/text.ts
+msgid "Conversions"
+msgstr "Konverzie"
+
+#: src/features/analytics/text.ts
+msgid "Conversions per 100 visitors."
+msgstr "Konverzie na 100 návštevníkov."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
+msgstr "Skopírujte ho hneď; znova sa nezobrazí. Stratené odkazy možno len odvolať a vytvoriť znova."
+
+#: src/features/analytics/Install.tsx
+msgid "Count my visits again"
+msgstr "Znova počítať moje návštevy"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Count visitors, pages, sources, places and devices without cookies and without storing IP addresses."
+msgstr "Počítajte návštevníkov, stránky, zdroje, miesta a zariadenia bez cookies a bez ukladania adries IP."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Count your website’s visitors"
+msgstr "Počítajte návštevníkov svojho webu"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted"
+msgstr "Započítané"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted as"
+msgstr "Započítané ako"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Countries"
+msgstr "Krajiny"
+
+#: src/features/analytics/text.ts
+msgid "Country"
+msgstr "Krajina"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
+msgstr "Počíta každého návštevníka bez pýtania: v zariadení sa nič neukladá a nepamätá sa žiadna adresa IP."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Counts the visitors who reached each step after the ones before it, within one visit on one day. Numbers are at most ten minutes old."
+msgstr "Počíta návštevníkov, ktorí dosiahli každý krok po predchádzajúcich, počas jednej návštevy za jeden deň. Čísla sú najviac desať minút staré."
+
+#: src/features/analytics/Settings.tsx
+msgid "Currency"
+msgstr "Mena"
+
+#: src/features/analytics/Exports.tsx
+msgid "Current view"
+msgstr "Aktuálne zobrazenie"
+
+#: src/features/analytics/text.ts
+msgid "Custom and built-in events."
+msgstr "Vlastné a vstavané udalosti."
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range"
+msgstr "Vlastný rozsah"
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range…"
+msgstr "Vlastný rozsah…"
+
+#: src/features/analytics/Settings.tsx
+msgid "Data"
+msgstr "Údaje"
+
+#: src/features/analytics/Install.tsx
+msgid "data-outbound counts clicks on links to other sites, data-files downloads of documents and archives, and data-chat each time a visitor opens the chat. track() sends your own events with up to 30 props; e-mail addresses in props are dropped. Make goals from events in the Goals view."
+msgstr "data-outbound počíta kliknutia na odkazy na iné weby, data-files stiahnutia dokumentov a archívov a data-chat zakaždým, keď návštevník otvorí chat. track() posiela vaše vlastné udalosti s až 30 propmi; e-mailové adresy v propoch sa zahadzujú. Z udalostí vytvárajte ciele v zobrazení Ciele."
+
+#: src/features/analytics/Settings.tsx
+msgid "Day"
+msgstr "Deň"
+
+#: src/features/analytics/Retention.tsx
+msgid "Day {period}"
+msgstr "Deň {period}"
+
+#: src/features/analytics/Exports.tsx
+msgid "Day by day"
+msgstr "Deň po dni"
+
+#: src/features/analytics/Retention.tsx
+msgid "Days"
+msgstr "Dni"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/SharePage.tsx
+msgid "Days are counted in this time zone"
+msgstr "Dni sa počítajú v tomto časovom pásme"
+
+#: src/features/analytics/Settings.tsx
+msgid "Days are in the property’s time zone. Their totals are counted again without them."
+msgstr "Dni sú v časovom pásme vlastnosti. Ich súčty sa prepočítajú bez nich."
+
+#: src/features/analytics/Settings.tsx
+msgid "Days waiting to be summed up"
+msgstr "Dni čakajúce na sčítanie"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete"
+msgstr "Odstrániť"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete {0}?"
+msgstr "Odstrániť {0}?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete {name}?"
+msgstr "Odstrániť {name}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data"
+msgstr "Odstrániť všetky údaje"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data of {0}?"
+msgstr "Odstrániť všetky údaje {0}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete days"
+msgstr "Odstrániť dni"
+
+#: src/features/analytics/Exports.tsx
+msgid "Delete export"
+msgstr "Odstrániť export"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Delete funnel"
+msgstr "Odstrániť lievik"
+
+#: src/features/analytics/Goals.tsx
+msgid "Delete goal"
+msgstr "Odstrániť cieľ"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete note"
+msgstr "Odstrániť poznámku"
+
+#: src/features/analytics/Controls.tsx
+msgid "Delete segment"
+msgstr "Odstrániť segment"
+
+#. placeholder {0}: funnel.name
+#: src/features/analytics/Funnels.tsx
+msgid "Delete the funnel “{0}”?"
+msgstr "Odstrániť lievik „{0}“?"
+
+#. placeholder {0}: goal.name
+#: src/features/analytics/Goals.tsx
+msgid "Delete the goal “{0}”?"
+msgstr "Odstrániť cieľ „{0}“?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the property"
+msgstr "Odstrániť vlastnosť"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Delete the segment “{0}”?"
+msgstr "Odstrániť segment „{0}“?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the visits and events of {span}?"
+msgstr "Odstrániť návštevy a udalosti z {span}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete these days"
+msgstr "Odstrániť tieto dni"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete this note?"
+msgstr "Odstrániť túto poznámku?"
+
+#: src/features/analytics/Exports.tsx
+msgid "deleted {expires}"
+msgstr "odstránené {expires}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Deleting in the background. The numbers update when it is done."
+msgstr "Odstraňuje sa na pozadí. Čísla sa aktualizujú, keď to bude hotové."
+
+#: src/features/analytics/Goals.tsx
+msgid "Depth in %"
+msgstr "Hĺbka v %"
+
+#: src/features/analytics/text.ts
+msgid "Desktop"
+msgstr "Počítač"
+
+#: src/features/analytics/Exports.tsx
+msgid "Detailed records are kept since {rawDay}."
+msgstr "Podrobné záznamy sa uchovávajú od {rawDay}."
+
+#: src/features/analytics/Settings.tsx
+msgid "Detailed records kept since"
+msgstr "Podrobné záznamy uchovávané od"
+
+#: src/features/analytics/Overview.tsx
+msgid "Details"
+msgstr "Podrobnosti"
+
+#: src/features/analytics/text.ts
+msgid "Device"
+msgstr "Zariadenie"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Devices"
+msgstr "Zariadenia"
+
+#: src/features/analytics/text.ts
+msgid "Direct"
+msgstr "Priamo"
+
+#: src/features/analytics/text.ts
+msgid "Direct / none"
+msgstr "Priamy / žiadny"
+
+#: src/features/analytics/text.ts
+msgid "Discussion threads started on the page."
+msgstr "Diskusné vlákna začaté na stránke."
+
+#: src/features/analytics/text.ts
+msgid "Discussions"
+msgstr "Diskusie"
+
+#: src/features/analytics/text.ts
+msgid "Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again."
+msgstr "Jedineční návštevníci za deň, sčítaní cez dni rozsahu. Kto sa vráti iný deň, počíta sa znova."
+
+#: src/features/analytics/Install.tsx
+msgid "Do not count my visits"
+msgstr "Nepočítať moje návštevy"
+
+#: src/features/analytics/text.ts
+msgid "does not contain"
+msgstr "neobsahuje"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Domains"
+msgstr "Domény"
+
+#: src/features/analytics/Exports.tsx
+msgid "Download"
+msgstr "Stiahnuť"
+
+#: src/features/analytics/parts.tsx
+msgid "Download CSV"
+msgstr "Stiahnuť CSV"
+
+#: src/features/analytics/Settings.tsx
+msgid "Dropped"
+msgstr "Zahodené"
+
+#: src/features/analytics/text.ts
+msgid "E-mail"
+msgstr "E-mail"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that day, each column the share of them who came back that many days later."
+msgstr "Každý riadok obsahuje návštevníkov prvýkrát videných ten deň, každý stĺpec podiel tých, ktorí sa vrátili o toľko dní neskôr."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that month, each column the share of them who came back that many months later."
+msgstr "Každý riadok obsahuje návštevníkov prvýkrát videných ten mesiac, každý stĺpec podiel tých, ktorí sa vrátili o toľko mesiacov neskôr."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that week, each column the share of them who came back that many weeks later."
+msgstr "Každý riadok obsahuje návštevníkov prvýkrát videných ten týždeň, každý stĺpec podiel tých, ktorí sa vrátili o toľko týždňov neskôr."
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Edit"
+msgstr "Upraviť"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Edit funnel"
+msgstr "Upraviť lievik"
+
+#: src/features/analytics/Goals.tsx
+msgid "Edit goal"
+msgstr "Upraviť cieľ"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Edit note"
+msgstr "Upraviť poznámku"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Edit share link"
+msgstr "Upraviť zdieľaný odkaz"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embed"
+msgstr "Vložiť"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embeds"
+msgstr "Vloženia"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Enter the password you were given with the link."
+msgstr "Zadajte heslo, ktoré ste dostali s odkazom."
+
+#: src/features/analytics/text.ts
+msgid "Entry page"
+msgstr "Vstupná stránka"
+
+#: src/features/analytics/Goals.tsx
+msgid "equal to"
+msgstr "rovná sa"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Event"
+msgstr "Udalosť"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event}"
+msgstr "Udalosť {event}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event} with {key} = {value}"
+msgstr "Udalosť {event} s {key} = {value}"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Install.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Events"
+msgstr "Udalosti"
+
+#: src/features/analytics/Settings.tsx
+msgid "Events are arriving."
+msgstr "Udalosti prichádzajú."
+
+#: src/features/analytics/Events.tsx
+msgid "Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when the script has their attributes."
+msgstr "Udalosti pochádzajú z volaní track() na vašich stránkach a v aplikáciách. Odchádzajúce odkazy, stiahnutia a otvorenia chatu sa počítajú, keď má skript ich atribúty."
+
+#: src/features/analytics/Settings.tsx
+msgid "Events count only after the page calls yuva.consent with analytics set to true. Install the script with data-consent=\"required\"."
+msgstr "Udalosti sa počítajú, až keď stránka zavolá yuva.consent s analytics nastaveným na true. Nainštalujte skript s data-consent=\"required\"."
+
+#: src/features/analytics/Settings.tsx
+msgid "events counted"
+msgstr "udalostí započítaných"
+
+#: src/features/analytics/Settings.tsx
+msgid "events dropped"
+msgstr "udalostí zahodených"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every event with its visit’s page, source, place and device, as NDJSON. Visits are numbered within the file; there is no visitor id, address or contact. At most 31 days."
+msgstr "Každá udalosť so stránkou, zdrojom, miestom a zariadením svojej návštevy, ako NDJSON. Návštevy sú číslované v rámci súboru; nie je tam ID návštevníka, adresa ani kontakt. Najviac 31 dní."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Every Monday at 08:00 in {zone}, about the week before."
+msgstr "Každý pondelok o 08:00 v {zone}, o predchádzajúcom týždni."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range and the filters you are looking at, without a comparison."
+msgstr "Každý riadok rozsahu a filtrov, ktoré si prezeráte, bez porovnania."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range you are looking at, without a comparison."
+msgstr "Každý riadok rozsahu, ktorý si prezeráte, bez porovnania."
+
+#: src/features/analytics/Settings.tsx
+msgid "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
+msgstr "Každá návšteva, udalosť a súčet sa odstráni. Vlastnosť a jej kľúč zostanú a počítanie pokračuje."
+
+#: src/features/analytics/Controls.tsx
+msgid "Everyone who sees this property can pick it. You, owners and admins can change it."
+msgstr "Každý, kto túto vlastnosť vidí, ju môže vybrať. Vy, vlastníci a správcovia ju môžete zmeniť."
+
+#: src/features/analytics/Annotations.tsx
+msgid "Everyone who sees this property sees the note, such as a launch or a campaign."
+msgstr "Každý, kto túto vlastnosť vidí, vidí poznámku, napríklad o spustení alebo kampani."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Everything this property raised, newest first, whoever was notified."
+msgstr "Všetko, čo táto vlastnosť vyvolala, od najnovšieho, bez ohľadu na to, kto bol upozornený."
+
+#: src/features/analytics/Settings.tsx
+msgid "Excluded"
+msgstr "Vylúčené"
+
+#: src/features/analytics/text.ts
+msgid "Exit page"
+msgstr "Výstupná stránka"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expired"
+msgstr "Vypršalo"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expires"
+msgstr "Vyprší"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export"
+msgstr "Exportovať"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export progress"
+msgstr "Priebeh exportu"
+
+#: src/features/analytics/Exports.tsx
+msgid "Exports"
+msgstr "Exporty"
+
+#: src/features/analytics/Exports.tsx
+msgid "Failed"
+msgstr "Zlyhalo"
+
+#: src/features/analytics/text.ts
+msgid "Feedback"
+msgstr "Spätná väzba"
+
+#: src/features/analytics/Support.tsx
+msgid "Fewer than 100 views"
+msgstr "Menej než 100 zobrazení"
+
+#: src/features/analytics/text.ts
+msgid "File download"
+msgstr "Stiahnutie súboru"
+
+#: src/features/analytics/Exports.tsx
+msgid "Files are made in the background and deleted seven days later."
+msgstr "Súbory sa vytvárajú na pozadí a o sedem dní neskôr sa odstránia."
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Support.tsx
+msgid "Filter by this"
+msgstr "Filtrovať podľa tohto"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Filters"
+msgstr "Filtre"
+
+#: src/features/analytics/Exports.tsx
+msgid "Filters come from the view: click a row there to add one. <0>Change them in the view</0>"
+msgstr "Filtre pochádzajú zo zobrazenia: kliknite tam na riadok a pridajte jeden. <0>Zmeňte ich v zobrazení</0>"
+
+#: src/features/analytics/Retention.tsx
+msgid "First day"
+msgstr "Prvý deň"
+
+#: src/features/analytics/Retention.tsx
+msgid "First month"
+msgstr "Prvý mesiac"
+
+#: src/features/analytics/text.ts
+msgid "First page or screen"
+msgstr "Prvá stránka alebo obrazovka"
+
+#: src/features/analytics/text.ts
+msgid "First screen"
+msgstr "Prvá obrazovka"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "First visit"
+msgstr "Prvá návšteva"
+
+#: src/features/analytics/Retention.tsx
+msgid "First week"
+msgstr "Prvý týždeň"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Five reports an hour at most. Try again later."
+msgstr "Najviac päť správ za hodinu. Skúste to neskôr."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "For example Fieldnote website"
+msgstr "Napríklad web Fieldnote"
+
+#: src/features/analytics/Settings.tsx
+msgid "For revenue, an ISO code like EUR."
+msgstr "Pre tržby kód ISO, napríklad EUR."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an <0>API key</0> with the analytics:write scope, which stays on your server."
+msgstr "Pre to, čo vidí len váš backend, napríklad registrácia alebo platba. Track odovzdáva adresu a prehliadač návštevníka, takže sa udalosť pripojí k jeho návšteve; požiadavky s Do Not Track alebo Global Privacy Control sa neposielajú. Potrebuje <0>kľúč API</0> s rozsahom analytics:write, ktorý zostáva na vašom serveri."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
+msgstr "Pre to, čo vidí len váš backend, napríklad registrácia alebo platba. Track odovzdáva adresu a prehliadač návštevníka, takže sa udalosť pripojí k jeho návšteve; požiadavky s Do Not Track alebo Global Privacy Control sa neposielajú. Potrebuje kľúč API s rozsahom analytics:write od vlastníka alebo správcu, ktorý zostáva na vašom serveri."
+
+#: src/features/analytics/Exports.tsx
+msgid "Format"
+msgstr "Formát"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "From"
+msgstr "Od"
+
+#: src/features/analytics/Settings.tsx
+msgid "From a site that is not one of the domains, or from an app whose platform is not turned on."
+msgstr "Z webu, ktorý nie je jednou z domén, alebo z aplikácie, ktorej platforma nie je zapnutá."
+
+#: src/features/analytics/Funnels.tsx
+msgid "From pricing to signup"
+msgstr "Od cenníka k registrácii"
+
+#: src/features/analytics/Support.tsx
+msgid "From the inbox {inboxName}. Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "Zo schránky {inboxName}. Zoradené podľa konverzácií na 1 000 zobrazení; stránky s menej než 100 zobrazeniami sú až za ostatnými. Počítané na stránku a deň, nikdy na návštevníka alebo kontakt."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Funnel"
+msgstr "Lievik"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Funnels"
+msgstr "Lieviky"
+
+#: src/features/analytics/Settings.tsx
+msgid "General"
+msgstr "Všeobecné"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Go to goals"
+msgstr "Prejsť na ciele"
+
+#: src/features/analytics/Goals.tsx
+msgid "Goal"
+msgstr "Cieľ"
+
+#. placeholder {0}: a.text
+#: src/features/analytics/Annotations.tsx
+msgid "Goal “{0}” was created"
+msgstr "Cieľ „{0}“ bol vytvorený"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Goal drop"
+msgstr "Pokles cieľa"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Goals"
+msgstr "Ciele"
+
+#: src/features/analytics/Settings.tsx
+msgid "had an address removed"
+msgstr "mal odstránenú adresu"
+
+#: src/features/analytics/Settings.tsx
+msgid "Health"
+msgstr "Zdravie"
+
+#: src/features/analytics/text.ts
+msgid "Helpful"
+msgstr "Užitočné"
+
+#: src/features/analytics/Support.tsx
+msgid "Helpful and not helpful"
+msgstr "Užitočné a neužitočné"
+
+#: src/features/analytics/text.ts
+msgid "Helpful ratings out of all ratings."
+msgstr "Užitočné hodnotenia zo všetkých hodnotení."
+
+#: src/features/analytics/text.ts
+msgid "Helpful share"
+msgstr "Podiel užitočných"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Home shows each website and app like this: visitors today, in the last 30 minutes and this week."
+msgstr "Domov zobrazuje každý web a aplikáciu takto: návštevníci dnes, za posledných 30 minút a tento týždeň."
+
+#: src/features/analytics/text.ts
+msgid "Host"
+msgstr "Hostiteľ"
+
+#: src/features/analytics/text.ts
+msgid "Host or app"
+msgstr "Hostiteľ alebo aplikácia"
+
+#: src/features/analytics/Install.tsx
+msgid "How to install"
+msgstr "Ako nainštalovať"
+
+#: src/features/analytics/Events.tsx
+msgid "How to send events"
+msgstr "Ako posielať udalosti"
+
+#: src/features/analytics/Sharing.tsx
+msgid "I saved it"
+msgstr "Uložil(a) som to"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Support.tsx
+msgid "Inbox"
+msgstr "Schránka"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Install"
+msgstr "Nainštalovať"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/NewProperty.tsx
+msgid "Install on {0}"
+msgstr "Nainštalovať na {0}"
+
+#: src/features/analytics/text.ts
+msgid "Internal"
+msgstr "Interné"
+
+#: src/features/analytics/Settings.tsx
+msgid "Invalid"
+msgstr "Neplatné"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Investors"
+msgstr "Investori"
+
+#: src/features/analytics/text.ts
+msgid "is"
+msgstr "je"
+
+#: src/features/analytics/text.ts
+msgid "is not"
+msgstr "nie je"
+
+#: src/features/analytics/Controls.tsx
+msgid "It is gone for everyone who uses it. The numbers stay."
+msgstr "Zmizne pre všetkých, ktorí ho používajú. Čísla zostanú."
+
+#: src/features/analytics/SharePage.tsx
+msgid "It may have expired or been revoked. Ask the person who shared it for a new one."
+msgstr "Mohol vypršať alebo byť odvolaný. Požiadajte osobu, ktorá ho zdieľala, o nový."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Its goals stay."
+msgstr "Jeho ciele zostanú."
+
+#: src/features/analytics/Goals.tsx
+msgid "Its numbers are deleted too. This cannot be undone."
+msgstr "Odstránia sa aj jeho čísla. Nedá sa vrátiť späť."
+
+#: src/features/analytics/Events.tsx
+msgid "Keep only visits with this value"
+msgstr "Ponechať len návštevy s touto hodnotou"
+
+#: src/features/analytics/Settings.tsx
+msgid "Key"
+msgstr "Kľúč"
+
+#: src/features/analytics/Goals.tsx
+msgid "Kind of goal"
+msgstr "Druh cieľa"
+
+#: src/features/analytics/text.ts
+msgid "Language"
+msgstr "Jazyk"
+
+#: src/features/analytics/text.ts
+msgid "Laptop"
+msgstr "Notebook"
+
+#: src/features/analytics/text.ts
+msgid "Last 12 months"
+msgstr "Posledných 12 mesiacov"
+
+#: src/features/analytics/text.ts
+msgid "Last 28 days"
+msgstr "Posledných 28 dní"
+
+#: src/features/analytics/text.ts
+msgid "Last 30 days"
+msgstr "Posledných 30 dní"
+
+#: src/features/analytics/text.ts
+msgid "Last 6 months"
+msgstr "Posledných 6 mesiacov"
+
+#: src/features/analytics/text.ts
+msgid "Last 7 days"
+msgstr "Posledných 7 dní"
+
+#: src/features/analytics/text.ts
+msgid "Last 90 days"
+msgstr "Posledných 90 dní"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event"
+msgstr "Posledná udalosť"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event: {last}"
+msgstr "Posledná udalosť: {last}"
+
+#: src/features/analytics/text.ts
+msgid "Last month"
+msgstr "Minulý mesiac"
+
+#: src/features/analytics/Sharing.tsx
+msgid "last opened {viewed}"
+msgstr "naposledy otvorené {viewed}"
+
+#: src/features/analytics/text.ts
+msgid "Last page or screen"
+msgstr "Posledná stránka alebo obrazovka"
+
+#: src/features/analytics/text.ts
+msgid "Last screen"
+msgstr "Posledná obrazovka"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Leave empty to keep the current one"
+msgstr "Nechajte prázdne, ak chcete ponechať súčasný"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Link"
+msgstr "Odkaz"
+
+#: src/features/analytics/Support.tsx
+msgid "Link an inbox to see support per page"
+msgstr "Prepojte schránku a uvidíte podporu podľa stránok"
+
+#: src/features/analytics/Support.tsx
+msgid "Link inbox"
+msgstr "Prepojiť schránku"
+
+#: src/features/analytics/Settings.tsx
+msgid "Link signed-in users to their contact"
+msgstr "Prepojiť prihlásených používateľov s ich kontaktom"
+
+#: src/features/analytics/Alerts.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Support.tsx
+msgid "Load more"
+msgstr "Načítať ďalšie"
+
+#: src/features/analytics/Settings.tsx
+msgid "Location database"
+msgstr "Databáza polôh"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Locations"
+msgstr "Polohy"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created}"
+msgstr "Vytvorené {created}"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created} by {by}"
+msgstr "Vytvorené {created}, autor {by}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key"
+msgstr "Vytvoriť nový kľúč"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key?"
+msgstr "Vytvoriť nový kľúč?"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Make at least two goals first."
+msgstr "Najprv vytvorte aspoň dva ciele."
+
+#: src/features/analytics/Goals.tsx
+msgid "Make goal"
+msgstr "Vytvoriť cieľ"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Make link"
+msgstr "Vytvoriť odkaz"
+
+#: src/features/analytics/text.ts
+msgid "matches"
+msgstr "zodpovedá"
+
+#: src/features/analytics/text.ts
+msgid "Mobile"
+msgstr "Mobil"
+
+#: src/features/analytics/Retention.tsx
+msgid "Month {period}"
+msgstr "Mesiac {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Monthly"
+msgstr "Mesačne"
+
+#: src/features/analytics/Settings.tsx
+msgid "Monthly limit"
+msgstr "Mesačný limit"
+
+#: src/features/analytics/Retention.tsx
+msgid "Months"
+msgstr "Mesiace"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move down"
+msgstr "Posunúť nadol"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move up"
+msgstr "Posunúť nahor"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Name"
+msgstr "Názov"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs a linked inbox under General: its identity secret signs the tokens."
+msgstr "Potrebuje prepojenú schránku v časti Všeobecné: jej tajný kľúč identity podpisuje tokeny."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Needs a linked inbox. {help}"
+msgstr "Potrebuje prepojenú schránku. {help}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs the persistent id: a visitor is linked through it."
+msgstr "Potrebuje trvalé ID: návštevník sa prepája cez neho."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Never"
+msgstr "Nikdy"
+
+#: src/features/analytics/Sharing.tsx
+msgid "never opened"
+msgstr "nikdy neotvorené"
+
+#: src/features/analytics/text.ts
+msgid "New"
+msgstr "Nové"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value} with {count}, none in the compared days."
+msgstr "Nový {kind}: {value} s {count}, žiadne v porovnávaných dňoch."
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
+msgstr "Nový {kind}: {value}. {metric}: {now}, žiadne v porovnávaných dňoch."
+
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "Noví a vracajúci sa"
+
+#: src/features/analytics/Funnels.tsx
+msgid "New funnel"
+msgstr "Nový lievik"
+
+#: src/features/analytics/Goals.tsx
+msgid "New goal"
+msgstr "Nový cieľ"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New link"
+msgstr "Nový odkaz"
+
+#: src/features/analytics/text.ts
+msgid "New or returning"
+msgstr "Nový alebo vracajúci sa"
+
+#: src/features/analytics/Annotations.tsx
+msgid "New pricing page"
+msgstr "Nová stránka s cenníkom"
+
+#: src/features/analytics/Alerts.tsx
+msgid "New referrer"
+msgstr "Nový odkazujúci web"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New share link"
+msgstr "Nový zdieľaný odkaz"
+
+#: src/features/analytics/Alerts.tsx
+msgid "No alerts yet."
+msgstr "Zatiaľ žiadne upozornenia."
+
+#: src/features/analytics/Controls.tsx
+msgid "No comparison"
+msgstr "Bez porovnania"
+
+#: src/features/analytics/Settings.tsx
+msgid "No consent features are offered."
+msgstr "Funkcie súhlasu sa nenúkajú."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "V tomto rozsahu nie sú žiadni návštevníci, ktorí súhlasili."
+
+#: src/features/analytics/Retention.tsx
+msgid "No consented visitors yet"
+msgstr "Zatiaľ žiadni návštevníci, ktorí súhlasili"
+
+#: src/features/analytics/Support.tsx
+msgid "No conversations, feedback, ratings or discussions from these pages in this range."
+msgstr "V tomto rozsahu žiadne konverzácie, spätná väzba, hodnotenia ani diskusie z týchto stránok."
+
+#: src/features/analytics/Goals.tsx
+msgid "No conversions in this range."
+msgstr "V tomto rozsahu žiadne konverzie."
+
+#: src/features/analytics/Settings.tsx
+msgid "No event yet."
+msgstr "Zatiaľ žiadna udalosť."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events in the last 24 hours"
+msgstr "Za posledných 24 hodín žiadne udalosti"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events yet"
+msgstr "Zatiaľ žiadne udalosti"
+
+#: src/features/analytics/Exports.tsx
+msgid "No exports yet."
+msgstr "Zatiaľ žiadne exporty."
+
+#: src/features/analytics/Funnels.tsx
+msgid "No funnels yet"
+msgstr "Zatiaľ žiadne lieviky"
+
+#: src/features/analytics/Goals.tsx
+msgid "No goals yet"
+msgstr "Zatiaľ žiadne ciele"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No properties yet"
+msgstr "Zatiaľ žiadne vlastnosti"
+
+#: src/features/analytics/Settings.tsx
+msgid "No props are tracked."
+msgstr "Nesledujú sa žiadne propy."
+
+#: src/features/analytics/Alerts.tsx
+msgid "No scheduled reports."
+msgstr "Žiadne naplánované správy."
+
+#: src/features/analytics/Controls.tsx
+msgid "No segment"
+msgstr "Žiadny segment"
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Make one to show these numbers to people outside the workspace."
+msgstr "Zatiaľ žiadne zdieľané odkazy. Vytvorte jeden a ukážte tieto čísla ľuďom mimo pracovného priestoru."
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Owners and admins make them."
+msgstr "Zatiaľ žiadne zdieľané odkazy. Vytvárajú ich vlastníci a správcovia."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Nobody in the last 30 minutes."
+msgstr "Za posledných 30 minút nikto."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Nobody reached the first step in this range."
+msgstr "V tomto rozsahu nikto nedosiahol prvý krok."
+
+#: src/features/analytics/Alerts.tsx
+msgid "None"
+msgstr "Žiadne"
+
+#: src/features/analytics/Settings.tsx
+msgid "None yet"
+msgstr "Zatiaľ žiadne"
+
+#: src/features/analytics/Exports.tsx
+msgid "None, every visit counts."
+msgstr "Žiadne, počíta sa každá návšteva."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "None, owners and admins only"
+msgstr "Žiadne, len vlastníci a správcovia"
+
+#: src/features/analytics/parts.tsx
+msgid "Not available for this range."
+msgstr "Pre tento rozsah nedostupné."
+
+#: src/features/analytics/text.ts
+msgid "Not helpful"
+msgstr "Neužitočné"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Note"
+msgstr "Poznámka"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Notes"
+msgstr "Poznámky"
+
+#: src/features/analytics/Exports.tsx
+msgid "Nothing"
+msgstr "Nič"
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Nothing counted in this range."
+msgstr "V tomto rozsahu sa nič nespočítalo."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Notify me"
+msgstr "Upozorniť ma"
+
+#: src/features/analytics/Settings.tsx
+msgid "Off"
+msgstr "Vyp."
+
+#: src/features/analytics/Settings.tsx
+msgid "Offered only to visitors who agree in your consent tool. Everyone else is counted exactly as before, one day at a time and without anything stored on the device."
+msgstr "Ponúka sa len návštevníkom, ktorí súhlasia vo vašom nástroji na súhlas. Všetci ostatní sa počítajú presne ako predtým, po jednom dni a bez čohokoľvek uloženého v zariadení."
+
+#: src/features/analytics/Settings.tsx
+msgid "Older than 72 hours. Apps keep events without a connection for at most that long."
+msgstr "Staršie než 72 hodín. Aplikácie uchovávajú udalosti bez pripojenia najviac tak dlho."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On its way to {email}."
+msgstr "Na ceste na {email}."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On the 1st of each month at 08:00 in {zone}, about the month before."
+msgstr "1. dňa každého mesiaca o 08:00 v {zone}, o predchádzajúcom mesiaci."
+
+#: src/features/analytics/Settings.tsx
+msgid "One IP address or range per line, up to 50, such as your office or a monitoring service."
+msgstr "Jedna adresa IP alebo rozsah na riadok, najviac 50, napríklad vaša kancelária alebo monitorovacia služba."
+
+#: src/features/analytics/Settings.tsx
+msgid "One path per line, up to 50. * stands for one part of the path, ** for any number of them."
+msgstr "Jedna cesta na riadok, najviac 50. * znamená jednu časť cesty, ** ľubovoľný počet častí."
+
+#: src/features/analytics/Sharing.tsx
+msgid "One per line, like https://example.com or https://*.example.com. Without any, no other site can show it in a frame."
+msgstr "Jeden na riadok, napríklad https://example.com alebo https://*.example.com. Bez žiadneho ho nemôže zobraziť v ráme žiadny iný web."
+
+#: src/features/analytics/Settings.tsx
+msgid "One per line. *.example.com covers every subdomain, but not example.com itself."
+msgstr "Jeden na riadok. *.example.com pokrýva každú subdoménu, ale nie samotné example.com."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "One per line. Pages on other domains cannot send events. *.example.com covers every subdomain."
+msgstr "Jeden na riadok. Stránky na iných doménach nemôžu posielať udalosti. *.example.com pokrýva každú subdoménu."
+
+#: src/features/analytics/Settings.tsx
+msgid "One prop name per line, up to 10, such as plan."
+msgstr "Jeden názov propu na riadok, najviac 10, napríklad plan."
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
+msgstr "Jeden riadok na deň s návštevníkmi, návštevami, zobrazeniami, mierou opustenia, dĺžkami a hĺbkou scrollovania. Najviac 400 dní."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Only for you, by e-mail to {email}. Reports are plain numbers, with no images and nothing that tracks opening or clicks."
+msgstr "Len pre vás, e-mailom na {email}. Správy sú holé čísla, bez obrázkov a bez čohokoľvek, čo sleduje otvorenia alebo kliknutia."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Only members see it, to tell links apart."
+msgstr "Vidia to len členovia, aby rozlíšili odkazy."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only the country is kept, never the region or city."
+msgstr "Uchováva sa len krajina, nikdy región ani mesto."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Only totals are shown. There is no list of individual visitors."
+msgstr "Zobrazujú sa len súčty. Zoznam jednotlivých návštevníkov neexistuje."
+
+#: src/features/analytics/parts.tsx
+msgid "Only visitors who agreed to a persistent id are counted here. Everyone else is counted one day at a time."
+msgstr "Tu sa počítajú len návštevníci, ktorí súhlasili s trvalým ID. Všetci ostatní sa počítajú po jednom dni."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only with consent"
+msgstr "Iba so súhlasom"
+
+#: src/features/analytics/Goals.tsx
+msgid "Only with prop"
+msgstr "Iba s propom"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
+msgstr "Otvorte stránku svojho webu s úryvkom na mieste. Zozelenie, hneď ako server uloží prvé zobrazenie stránky. Prehliadače s Do Not Track alebo Global Privacy Control nepošlú nič, takže na test použite iný."
+
+#: src/features/analytics/Retention.tsx
+msgid "Open consent features"
+msgstr "Otvoriť funkcie súhlasu"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Open report"
+msgstr "Otvoriť správu"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open the overview"
+msgstr "Otvoriť prehľad"
+
+#: src/features/analytics/Support.tsx
+msgid "Open the property’s settings"
+msgstr "Otvoriť nastavenia vlastnosti"
+
+#: src/features/analytics/text.ts
+msgid "Operating system"
+msgstr "Operačný systém"
+
+#: src/features/analytics/Install.tsx
+msgid "Opt-out link"
+msgstr "Odkaz na odmietnutie"
+
+#: src/features/analytics/text.ts
+msgid "Organic search"
+msgstr "Organické vyhľadávanie"
+
+#: src/features/analytics/text.ts
+msgid "OS version"
+msgstr "Verzia OS"
+
+#: src/features/analytics/text.ts
+msgid "Other"
+msgstr "Iné"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other drops"
+msgstr "Ostatné poklesy"
+
+#: src/features/analytics/Events.tsx
+msgid "Other prop"
+msgstr "Iný prop"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other sites"
+msgstr "Iné weby"
+
+#: src/features/analytics/text.ts
+msgid "Outbound link"
+msgstr "Odchádzajúci odkaz"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Overview"
+msgstr "Prehľad"
+
+#: src/features/analytics/Install.tsx
+msgid "Own domain"
+msgstr "Vlastná doména"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Owners and admins make funnels from goals. They show up here with each step’s drop-off."
+msgstr "Vlastníci a správcovia vytvárajú lieviky z cieľov. Zobrazia sa tu s odpadom v každom kroku."
+
+#: src/features/analytics/Goals.tsx
+msgid "Owners and admins make goals. They show up here with their conversions."
+msgstr "Vlastníci a správcovia vytvárajú ciele. Zobrazia sa tu s ich konverziami."
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Page"
+msgstr "Stránka"
+
+#: src/features/analytics/text.ts
+msgid "Page feedback sent from the page."
+msgstr "Spätná väzba k stránke odoslaná zo stránky."
+
+#: src/features/analytics/text.ts
+msgid "Page not found"
+msgstr "Stránka sa nenašla"
+
+#: src/features/analytics/text.ts
+msgid "Page or screen"
+msgstr "Stránka alebo obrazovka"
+
+#: src/features/analytics/Goals.tsx
+msgid "Page view of {path}"
+msgstr "Zobrazenie stránky {path}"
+
+#: src/features/analytics/text.ts
+msgid "Pages"
+msgstr "Stránky"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens"
+msgstr "Stránky a obrazovky"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens viewed."
+msgstr "Zobrazené stránky a obrazovky."
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages not counted"
+msgstr "Stránky, ktoré sa nepočítajú"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
+msgstr "Stránky zodpovedajúce vzoru sa počítajú pod jednou cestou, takže sa každá stránka objednávky spočíta ako jedna. Adresy v ceste sa vždy nahrádzajú."
+
+#: src/features/analytics/text.ts
+msgid "Pages viewed."
+msgstr "Zobrazené stránky."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Pages, sources, places and devices, without cookies, without storing IP addresses and without a consent banner where the law allows it."
+msgstr "Stránky, zdroje, miesta a zariadenia, bez cookies, bez ukladania adries IP a bez bannera súhlasu tam, kde to zákon dovoľuje."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews"
+msgstr "Zobrazenia stránok"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews divided by visits."
+msgstr "Zobrazenia stránok delené návštevami."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews in the last 30 minutes"
+msgstr "Zobrazenia stránok za posledných 30 minút"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews per minute"
+msgstr "Zobrazenia stránok za minútu"
+
+#: src/features/analytics/text.ts
+msgid "Paid search"
+msgstr "Platené vyhľadávanie"
+
+#: src/features/analytics/text.ts
+msgid "Paid social"
+msgstr "Platené sociálne siete"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Password"
+msgstr "Heslo"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Past alerts"
+msgstr "Skoršie upozornenia"
+
+#: src/features/analytics/Settings.tsx
+msgid "Path rules"
+msgstr "Pravidlá ciest"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pattern"
+msgstr "Vzor"
+
+#: src/features/analytics/Controls.tsx
+msgid "Paying customers from Germany"
+msgstr "Platiaci zákazníci z Nemecka"
+
+#: src/features/analytics/text.ts
+msgid "Per 1,000 views"
+msgstr "Na 1 000 zobrazení"
+
+#: src/features/analytics/Overview.tsx
+msgid "per day"
+msgstr "za deň"
+
+#: src/features/analytics/Settings.tsx
+msgid "Per day"
+msgstr "Za deň"
+
+#: src/features/analytics/Overview.tsx
+msgid "per hour"
+msgstr "za hodinu"
+
+#: src/features/analytics/Overview.tsx
+msgid "per week"
+msgstr "za týždeň"
+
+#: src/features/analytics/Settings.tsx
+msgid "Persistent id"
+msgstr "Trvalé ID"
+
+#: src/features/analytics/text.ts
+msgid "Phone"
+msgstr "Telefón"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Pick a goal"
+msgstr "Vyberte cieľ"
+
+#: src/features/analytics/Events.tsx
+msgid "Pick a prop to see the values this event carried."
+msgstr "Vyberte prop, aby ste videli hodnoty, ktoré táto udalosť niesla."
+
+#: src/features/analytics/Settings.tsx
+msgid "Pick at least one platform."
+msgstr "Vyberte aspoň jednu platformu."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Pick at least one view."
+msgstr "Vyberte aspoň jedno zobrazenie."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
+msgstr "Vyberte, ako je web postavený, a skopírujte úryvok. Kľúč je verejný, ako kľúč chatu: funguje len na doménach vlastnosti."
+
+#: src/features/analytics/text.ts
+msgid "Platform"
+msgstr "Platforma"
+
+#: src/features/analytics/Settings.tsx
+msgid "Platforms"
+msgstr "Platformy"
+
+#: src/features/analytics/text.ts
+msgid "Prop"
+msgstr "Prop"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name"
+msgstr "Názov propu"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name, like plan"
+msgstr "Názov propu, napríklad plan"
+
+#: src/features/analytics/Events.tsx
+msgid "Properties for children keep no props, only the address of outbound links and downloads."
+msgstr "Vlastnosti pre deti neuchovávajú žiadne propy, len adresu odchádzajúcich odkazov a stiahnutí."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children keep no props, so none can be tracked."
+msgstr "Vlastnosti pre deti neuchovávajú žiadne propy, takže žiadne nemožno sledovať."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children never keep an id on the device or link visits to a contact."
+msgstr "Vlastnosti pre deti nikdy neuchovávajú ID v zariadení ani neprepájajú návštevy s kontaktom."
+
+#: src/features/analytics/Retention.tsx
+msgid "Properties for children never keep an id on the device, so they have no retention."
+msgstr "Vlastnosti pre deti nikdy neuchovávajú ID v zariadení, takže nemajú retenciu."
+
+#: src/features/analytics/Settings.tsx
+msgid "Property name"
+msgstr "Názov vlastnosti"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Props"
+msgstr "Propy"
+
+#: src/features/analytics/Events.tsx
+msgid "Props of any name can be broken down for the days the detailed records are kept. Earlier days only have the tracked props."
+msgstr "Propy ľubovoľného názvu možno rozdeliť za dni, počas ktorých sa uchovávajú podrobné záznamy. Skoršie dni majú len sledované propy."
+
+#: src/features/analytics/Install.tsx
+msgid "Put the script in the head of every page. It counts page views, also when a single-page app changes the address, and stores nothing on the visitor’s device."
+msgstr "Vložte skript do head každej stránky. Počíta zobrazenia stránok, aj keď jednostránková aplikácia zmení adresu, a neukladá nič do zariadenia návštevníka."
+
+#: src/features/analytics/Install.tsx
+msgid "Put these links on your privacy page. Opting out is the only thing the script stores on the visitor’s device, and only when they ask for it. Visitors with Do Not Track or Global Privacy Control are never counted."
+msgstr "Vložte tieto odkazy na stránku o ochrane súkromia. Odmietnutie je jediné, čo skript ukladá do zariadenia návštevníka, a len keď o to požiada. Návštevníci s Do Not Track alebo Global Privacy Control sa nikdy nepočítajú."
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Range"
+msgstr "Rozsah"
+
+#: src/features/analytics/Support.tsx
+msgid "Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "Zoradené podľa konverzácií na 1 000 zobrazení; stránky s menej než 100 zobrazeniami sú až za ostatnými. Počítané na stránku a deň, nikdy na návštevníka alebo kontakt."
+
+#: src/features/analytics/Settings.tsx
+msgid "Rate limits"
+msgstr "Limity početnosti"
+
+#: src/features/analytics/Support.tsx
+msgid "Ratings"
+msgstr "Hodnotenia"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw events"
+msgstr "Surové udalosti"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw exports cover at most 31 days."
+msgstr "Surové exporty pokrývajú najviac 31 dní."
+
+#: src/features/analytics/Goals.tsx
+msgid "Reached when a visitor"
+msgstr "Dosiahnuté, keď návštevník"
+
+#: src/features/analytics/Exports.tsx
+msgid "Ready"
+msgstr "Pripravené"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Realtime"
+msgstr "Reálny čas"
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour, last at {builtAt}."
+msgstr "Prepočítava sa každú hodinu, naposledy {builtAt}."
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour."
+msgstr "Prepočítava sa každú hodinu."
+
+#: src/features/analytics/text.ts
+msgid "Referral"
+msgstr "Odkaz z iného webu"
+
+#: src/features/analytics/text.ts
+msgid "Referrer"
+msgstr "Odkazujúci web"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Refreshes every 15 seconds"
+msgstr "Obnovuje sa každých 15 sekúnd"
+
+#: src/features/analytics/Settings.tsx
+msgid "Refused"
+msgstr "Odmietnuté"
+
+#: src/features/analytics/text.ts
+msgid "Region"
+msgstr "Oblasť"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter"
+msgstr "Odstrániť filter"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter: {label}"
+msgstr "Odstrániť filter: {label}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Remove rule"
+msgstr "Odstrániť pravidlo"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Remove step"
+msgstr "Odstrániť krok"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Rename “{0}”…"
+msgstr "Premenovať „{0}“…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Rename segment"
+msgstr "Premenovať segment"
+
+#: src/features/analytics/Install.tsx
+msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
+msgstr "Vykreslite komponent raz, v koreňovom layoute. Nič nevykresľuje; useYuvaAnalytics() poskytuje metódy kdekoľvek pod ním."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Report"
+msgstr "Správa"
+
+#: src/features/analytics/Settings.tsx
+msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
+msgstr "Požiadavky s Do Not Track alebo Global Privacy Control a udalosti bez súhlasu pri vlastnosti, ktorá ho vyžaduje, sa prijímajú, ale tu sa neukladajú ani nepočítajú."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Retention"
+msgstr "Retencia"
+
+#: src/features/analytics/Retention.tsx
+msgid "Retention needs consent features"
+msgstr "Retencia potrebuje funkcie súhlasu"
+
+#: src/features/analytics/text.ts
+msgid "Returning"
+msgstr "Vracajúci sa"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/text.ts
+msgid "Revenue"
+msgstr "Tržby"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke"
+msgstr "Odvolať"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke {name}?"
+msgstr "Odvolať {name}?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoked"
+msgstr "Odvolané"
+
+#: src/features/analytics/Exports.tsx
+msgid "Rows"
+msgstr "Riadky"
+
+#: src/features/analytics/Exports.tsx
+msgid "Running"
+msgstr "Beží"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Save"
+msgstr "Uložiť"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Save the changes to “{0}”"
+msgstr "Uložiť zmeny v „{0}“"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save the filters as a new segment…"
+msgstr "Uložiť filtre ako nový segment…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save these filters as a segment"
+msgstr "Uložiť tieto filtre ako segment"
+
+#: src/features/analytics/Controls.tsx
+msgid "Saved segments"
+msgstr "Uložené segmenty"
+
+#: src/features/analytics/text.ts
+msgid "Screen"
+msgstr "Obrazovka"
+
+#: src/features/analytics/text.ts
+msgid "Screen size"
+msgstr "Veľkosť obrazovky"
+
+#: src/features/analytics/text.ts
+msgid "Screen views"
+msgstr "Zobrazenia obrazoviek"
+
+#: src/features/analytics/text.ts
+msgid "Screen views divided by visits."
+msgstr "Zobrazenia obrazoviek delené návštevami."
+
+#: src/features/analytics/text.ts
+msgid "Screen views in the last 30 minutes"
+msgstr "Zobrazenia obrazoviek za posledných 30 minút"
+
+#: src/features/analytics/text.ts
+msgid "Screen views per minute"
+msgstr "Zobrazenia obrazoviek za minútu"
+
+#: src/features/analytics/text.ts
+msgid "Screens"
+msgstr "Obrazovky"
+
+#: src/features/analytics/text.ts
+msgid "Screens viewed."
+msgstr "Zobrazené obrazovky."
+
+#: src/features/analytics/text.ts
+msgid "Scroll depth"
+msgstr "Hĺbka scrollovania"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolled to {pct} on {path}"
+msgstr "Doscrollované na {pct} na {path}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolls"
+msgstr "Scrollovanie"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segment"
+msgstr "Segment"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segments"
+msgstr "Segmenty"
+
+#: src/features/analytics/Settings.tsx
+msgid "Send a screen or an event from your app or backend while this page is open, and see whether it reached the server. Refreshes every 5 seconds."
+msgstr "Pošlite obrazovku alebo udalosť zo svojej aplikácie alebo backendu, kým je táto stránka otvorená, a uvidíte, či dorazila na server. Obnovuje sa každých 5 sekúnd."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Send me one now"
+msgstr "Pošlite mi jednu teraz"
+
+#: src/features/analytics/Goals.tsx
+msgid "Sends an event"
+msgstr "Posiela udalosť"
+
+#: src/features/analytics/text.ts
+msgid "Server"
+msgstr "Server"
+
+#: src/features/analytics/Settings.tsx
+msgid "Server busy"
+msgstr "Server je vyťažený"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Settings"
+msgstr "Nastavenia"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Share links"
+msgstr "Zdieľané odkazy"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Shared with Yuva"
+msgstr "Zdieľané s Yuvou"
+
+#: src/features/analytics/Settings.tsx
+msgid "Sharing"
+msgstr "Zdieľanie"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Events.tsx
+msgid "Show"
+msgstr "Zobraziť"
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/parts.tsx
+msgid "Show from {day}"
+msgstr "Zobraziť od {day}"
+
+#: src/features/analytics/Events.tsx
+msgid "Show its props"
+msgstr "Zobraziť jeho propy"
+
+#: src/features/analytics/Controls.tsx
+msgid "Show the days"
+msgstr "Zobraziť dni"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Show the last 30 days"
+msgstr "Zobraziť posledných 30 dní"
+
+#: src/features/analytics/Goals.tsx
+msgid "Signed up"
+msgstr "Zaregistroval(a) sa"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Sites that may embed it"
+msgstr "Weby, ktoré ho môžu vkladať"
+
+#: src/features/analytics/text.ts
+msgid "Social"
+msgstr "Sociálne siete"
+
+#: src/features/analytics/Settings.tsx
+msgid "Some events were dropped. The reasons are below."
+msgstr "Niektoré udalosti boli zahodené. Dôvody sú nižšie."
+
+#: src/features/analytics/text.ts
+msgid "Source"
+msgstr "Zdroj"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Realtime.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Sources"
+msgstr "Zdroje"
+
+#: src/features/analytics/Settings.tsx
+msgid "Start over"
+msgstr "Začať znova"
+
+#. placeholder {0}: i + 1
+#: src/features/analytics/Funnels.tsx
+msgid "Step {0}"
+msgstr "Krok {0}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Steps"
+msgstr "Kroky"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Support.tsx
+msgid "Support"
+msgstr "Podpora"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Support load"
+msgstr "Záťaž podpory"
+
+#: src/features/analytics/Support.tsx
+msgid "Support numbers can only be filtered by page and host. The other filters are left out here."
+msgstr "Čísla podpory možno filtrovať len podľa stránky a hostiteľa. Ostatné filtre sa tu vynechávajú."
+
+#: src/features/analytics/text.ts
+msgid "Tablet"
+msgstr "Tablet"
+
+#: src/features/analytics/Settings.tsx
+msgid "Taken and stored. They show up in Realtime within a minute."
+msgstr "Prijaté a uložené. V Reálnom čase sa zobrazia do minúty."
+
+#: src/features/analytics/Settings.tsx
+msgid "Test events"
+msgstr "Testovacie udalosti"
+
+#: src/features/analytics/SharePage.tsx
+msgid "That password is not right."
+msgstr "Toto heslo nie je správne."
+
+#: src/features/analytics/Funnels.tsx
+msgid "The consented counts follow visitors with a persistent id from one visit and day to the next, so a step reached on a later day still counts."
+msgstr "Čísla so súhlasom sledujú návštevníkov s trvalým ID z jednej návštevy a dňa na ďalšie, takže krok dosiahnutý v neskorší deň sa stále počíta."
+
+#: src/features/analytics/Settings.tsx
+msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
+msgstr "Súčasný kľúč funguje ešte 24 hodín, takže môžete aktualizovať stránky bez straty udalostí. Vytvorenie ďalšieho kľúča počas tohto času starý okamžite ukončí."
+
+#: src/features/analytics/text.ts
+msgid "The deepest point reached on the page, per view."
+msgstr "Najhlbší bod dosiahnutý na stránke, na zobrazenie."
+
+#: src/features/analytics/Exports.tsx
+msgid "The export failed on the server."
+msgstr "Export na serveri zlyhal."
+
+#: src/features/analytics/Exports.tsx
+msgid "The file would be larger than 1 GiB. Export a shorter range."
+msgstr "Súbor by bol väčší než 1 GiB. Exportujte kratší rozsah."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "The first event arrived at {at}."
+msgstr "Prvá udalosť dorazila {at}."
+
+#: src/features/analytics/Goals.tsx
+msgid "The goal reports the revenue its events carry, per currency."
+msgstr "Cieľ hlási tržby, ktoré jeho udalosti nesú, podľa meny."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key is public, like a chat key: every page carries it, and it only works on the property’s domains."
+msgstr "Kľúč je verejný, ako kľúč chatu: nesie ho každá stránka a funguje len na doménach vlastnosti."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key stops working at once, and all visits, events and totals are deleted. This cannot be undone."
+msgstr "Kľúč okamžite prestane fungovať a všetky návštevy, udalosti a súčty sa odstránia. Nedá sa vrátiť späť."
+
+#: src/features/analytics/Settings.tsx
+msgid "The last 30 days"
+msgstr "Posledných 30 dní"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and leaves the list."
+msgstr "Odkaz okamžite prestane fungovať a zmizne zo zoznamu."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and stays in the list."
+msgstr "Odkaz okamžite prestane fungovať a zostane v zozname."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked."
+msgstr "Odkaz prestane fungovať na konci tohto dňa v {timezone}. Nechajte prázdne, aby platil do odvolania."
+
+#: src/features/analytics/Install.tsx
+msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
+msgstr "Modul pridáva klientsky plugin a composable useYuvaAnalytics(). NUXT_PUBLIC_YUVA_ANALYTICS_KEY prepíše kľúč za behu."
+
+#: src/features/analytics/Settings.tsx
+msgid "The name does not match. Type it exactly as shown."
+msgstr "Názov nesúhlasí. Napíšte ho presne tak, ako je zobrazený."
+
+#: src/features/analytics/Goals.tsx
+msgid "The name given to track(), or outbound_click, file_download, not_found, chat_open."
+msgstr "Názov odovzdaný funkcii track(), alebo outbound_click, file_download, not_found, chat_open."
+
+#: src/features/analytics/Settings.tsx
+msgid "The previous key keeps working until {at}. Update every page and app before then."
+msgstr "Predchádzajúci kľúč funguje do {at}. Dovtedy aktualizujte každú stránku a aplikáciu."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "The properties of your inboxes show up here once an owner or admin adds them."
+msgstr "Vlastnosti vašich schránok sa tu zobrazia, hneď ako ich vlastník alebo správca pridá."
+
+#: src/features/analytics/Exports.tsx
+msgid "The query could not be run."
+msgstr "Dotaz sa nepodarilo spustiť."
+
+#: src/features/analytics/Exports.tsx
+msgid "The range is outside the detailed records."
+msgstr "Rozsah je mimo podrobných záznamov."
+
+#: src/features/analytics/SharePage.tsx
+msgid "The report could not be loaded"
+msgstr "Správu sa nepodarilo načítať"
+
+#: src/features/analytics/Settings.tsx
+msgid "The server’s own database"
+msgstr "Vlastná databáza servera"
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need detailed records that are no longer kept for this range."
+msgstr "Tieto filtre potrebujú podrobné záznamy, ktoré sa pre tento rozsah už neuchovávajú."
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need the detailed records, which are kept since {day}. Earlier days only have totals per page, source, place and device."
+msgstr "Tieto filtre potrebujú podrobné záznamy, ktoré sa uchovávajú od {day}. Skoršie dni majú len súčty podľa stránky, zdroja, miesta a zariadenia."
+
+#: src/features/analytics/Settings.tsx
+msgid "This cannot be undone."
+msgstr "Nedá sa vrátiť späť."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal has numbers from {since} on. Days before that show none."
+msgstr "Tento cieľ má čísla od {since}. Dni pred tým žiadne neukazujú."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
+msgstr "Tento cieľ je krokom lievika. Najprv ho z lievika vyberte, alebo lievik odstráňte."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This link is not available"
+msgstr "Tento odkaz nie je dostupný"
+
+#: src/features/analytics/text.ts
+msgid "This month"
+msgstr "Tento mesiac"
+
+#: src/features/analytics/Funnels.tsx
+msgid "This property already has a funnel with this name."
+msgstr "Táto vlastnosť už má lievik s týmto názvom."
+
+#: src/features/analytics/Goals.tsx
+msgid "This property already has a goal with this name."
+msgstr "Táto vlastnosť už má cieľ s týmto názvom."
+
+#: src/features/analytics/Controls.tsx
+msgid "This property already has a segment with this name."
+msgstr "Táto vlastnosť už má segment s týmto názvom."
+
+#: src/features/analytics/Exports.tsx
+msgid "This range cannot be exported. Pick a shorter one, or one inside the detailed records."
+msgstr "Tento rozsah nemožno exportovať. Vyberte kratší, alebo taký vo vnútri podrobných záznamov."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This report has a password"
+msgstr "Táto správa má heslo"
+
+#: src/features/analytics/Support.tsx
+msgid "This workspace has no inbox yet."
+msgstr "Tento pracovný priestor zatiaľ nemá žiadnu schránku."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
+msgstr "Tento pracovný priestor dosiahol {limit} analytických udalostí za tento mesiac. Nové udalosti sa do konca mesiaca zahadzujú."
+
+#: src/features/analytics/text.ts
+msgid "This year"
+msgstr "Tento rok"
+
+#: src/features/analytics/Exports.tsx
+msgid "Three exports are already running in this workspace. Try again when one finishes."
+msgstr "V tomto pracovnom priestore už bežia tri exporty. Skúste to znova, keď jeden skončí."
+
+#: src/features/analytics/text.ts
+msgid "Time from the first to the last event of a visit, on average. Bounces count as zero."
+msgstr "Priemerný čas od prvej do poslednej udalosti návštevy. Opustenia sa počítajú ako nula."
+
+#: src/features/analytics/text.ts
+msgid "Time on page"
+msgstr "Čas na stránke"
+
+#: src/features/analytics/text.ts
+msgid "Time the page was visible and in focus, per view."
+msgstr "Čas, počas ktorého bola stránka viditeľná a aktívna, na zobrazenie."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Time zone"
+msgstr "Časové pásmo"
+
+#: src/features/analytics/text.ts
+msgid "Times the goal was reached, also several times by one visitor."
+msgstr "Koľkokrát bol cieľ dosiahnutý, aj viackrát jedným návštevníkom."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated helpful."
+msgstr "Koľkokrát bola stránka ohodnotená ako užitočná."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated not helpful."
+msgstr "Koľkokrát bola stránka ohodnotená ako neužitočná."
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "To"
+msgstr "Komu"
+
+#: src/features/analytics/text.ts
+msgid "Today"
+msgstr "Dnes"
+
+#: src/features/analytics/Settings.tsx
+msgid "Today: {todayCounted} counted, {todayDropped} dropped"
+msgstr "Dnes: {todayCounted} započítaných, {todayDropped} zahodených"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Token"
+msgstr "Token"
+
+#: src/features/analytics/Settings.tsx
+msgid "Too late"
+msgstr "Príliš neskoro"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many requests from your network. Wait a minute and reload the page."
+msgstr "Z vašej siete prišlo príliš veľa požiadaviek. Počkajte minútu a načítajte stránku znova."
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many tries. Wait a minute and try again."
+msgstr "Príliš veľa pokusov. Počkajte minútu a skúste to znova."
+
+#: src/features/analytics/text.ts
+msgid "Top pages"
+msgstr "Najnavštevovanejšie stránky"
+
+#: src/features/analytics/text.ts
+msgid "Top pages and screens"
+msgstr "Najnavštevovanejšie stránky a obrazovky"
+
+#: src/features/analytics/text.ts
+msgid "Top screens"
+msgstr "Najnavštevovanejšie obrazovky"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracked props"
+msgstr "Sledované propy"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracking"
+msgstr "Sledovanie"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic drop"
+msgstr "Pokles návštevnosti"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic spike"
+msgstr "Skok návštevnosti"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Try again"
+msgstr "Skúsiť znova"
+
+#: src/features/analytics/Install.tsx
+msgid "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
+msgstr "Najprv zapnite {name} v časti Platformy vo všeobecných nastaveniach. Dovtedy server udalosti aplikácie odmieta."
+
+#: src/features/analytics/Retention.tsx
+msgid "Turn on the persistent id in the consent features, then call yuva.consent with persistent set to true."
+msgstr "Zapnite trvalé ID vo funkciách súhlasu a potom zavolajte yuva.consent s persistent nastaveným na true."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Two to eight goals, in the order visitors reach them within one visit."
+msgstr "Dva až osem cieľov v poradí, v akom ich návštevníci dosahujú počas jednej návštevy."
+
+#: src/features/analytics/Settings.tsx
+msgid "Type the property’s name to delete it and all its data."
+msgstr "Napíšte názov vlastnosti, aby ste ju a všetky jej údaje odstránili."
+
+#: src/features/analytics/text.ts
+msgid "Unknown"
+msgstr "Neznáme"
+
+#: src/features/analytics/Install.tsx
+msgid "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
+msgstr "Až 100 udalostí na požiadavku, každá s IP adresou a user agentom návštevníka alebo vaším vlastným visitor_key. Nič z toho sa neukladá. Udalosti vynechané ako neplatné sa vrátia v errors so svojou pozíciou; čo dorazilo, uvidíte v Testovacích udalostiach."
+
+#: src/features/analytics/text.ts
+msgid "UTM campaign"
+msgstr "Kampaň UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM content"
+msgstr "Obsah UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM medium"
+msgstr "Médium UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM source"
+msgstr "Zdroj UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM term"
+msgstr "Termín UTM"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Views"
+msgstr "Zobrazenia"
+
+#: src/features/analytics/Goals.tsx
+msgid "Views a page"
+msgstr "Zobrazí stránku"
+
+#: src/features/analytics/text.ts
+msgid "Views divided by visits."
+msgstr "Zobrazenia delené návštevami."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views fell to {now} in two hours, against {usual} usually."
+msgstr "Zobrazenia klesli za dve hodiny na {now}, oproti obvyklým {usual}."
+
+#: src/features/analytics/text.ts
+msgid "Views in the last 30 minutes"
+msgstr "Zobrazenia za posledných 30 minút"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at least three times the same hours of the week before."
+msgstr "Zobrazenia za posledné dve hodiny sú aspoň trojnásobné oproti rovnakým hodinám predchádzajúceho týždňa."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at most half the same hours of the week before."
+msgstr "Zobrazenia za posledné dve hodiny sú najviac polovičné oproti rovnakým hodinám predchádzajúceho týždňa."
+
+#: src/features/analytics/text.ts
+msgid "Views per minute"
+msgstr "Zobrazenia za minútu"
+
+#: src/features/analytics/text.ts
+msgid "Views per visit"
+msgstr "Zobrazenia na návštevu"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views rose to {now} in two hours, against {usual} usually."
+msgstr "Zobrazenia vzrástli za dve hodiny na {now}, oproti obvyklým {usual}."
+
+#: src/features/analytics/text.ts
+msgid "Visit duration"
+msgstr "Dĺžka návštevy"
+
+#: src/features/analytics/Retention.tsx
+#: src/features/analytics/text.ts
+msgid "Visitors"
+msgstr "Návštevníci"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Visitors in the last 30 minutes"
+msgstr "Návštevníci za posledných 30 minút"
+
+#: src/features/analytics/Retention.tsx
+msgid "Visitors who came back"
+msgstr "Návštevníci, ktorí sa vrátili"
+
+#: src/features/analytics/text.ts
+msgid "Visitors who reached the goal, per day, added up over the days of the range."
+msgstr "Návštevníci, ktorí dosiahli cieľ, za deň, sčítaní cez dni rozsahu."
+
+#: src/features/analytics/Settings.tsx
+msgid "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
+msgstr "Návštevníci s Do Not Track alebo Global Privacy Control nič neposielajú, takže sa ani tu nepočítajú. O zahodenej udalosti sa neuchováva nič okrem ich počtu."
+
+#: src/features/analytics/text.ts
+msgid "Visits"
+msgstr "Návštevy"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page or screen view and nothing else."
+msgstr "Návštevy s jedným zobrazením stránky alebo obrazovky a ničím iným."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page view and nothing else."
+msgstr "Návštevy s jedným zobrazením stránky a ničím iným."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one screen view and nothing else."
+msgstr "Návštevy s jedným zobrazením obrazovky a ničím iným."
+
+#: src/features/analytics/Install.tsx
+msgid "Vue, Astro, other"
+msgstr "Vue, Astro, iné"
+
+#: src/features/analytics/Exports.tsx
+msgid "Waiting"
+msgstr "Čaká"
+
+#: src/features/analytics/Settings.tsx
+msgid "Waiting for events since {at}."
+msgstr "Čaká sa na udalosti od {at}."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Waiting for the first event"
+msgstr "Čaká sa na prvú udalosť"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Watch it live"
+msgstr "Sledovať naživo"
+
+#: src/features/analytics/text.ts
+msgid "Web"
+msgstr "Web"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Website or app"
+msgstr "Web alebo aplikácia"
+
+#: src/features/analytics/Retention.tsx
+msgid "Week {period}"
+msgstr "Týždeň {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Weekly"
+msgstr "Týždenne"
+
+#: src/features/analytics/Retention.tsx
+msgid "Weeks"
+msgstr "Týždne"
+
+#: src/features/analytics/Insights.tsx
+msgid "What changed"
+msgstr "Čo sa zmenilo"
+
+#: src/features/analytics/Support.tsx
+msgid "What stands out"
+msgstr "Čo vyčnieva"
+
+#: src/features/analytics/text.ts
+msgid "What the goal's events carried, per currency. Currencies are never converted or added up."
+msgstr "Čo niesli udalosti cieľa, podľa meny. Meny sa nikdy neprevádzajú ani nesčítavajú."
+
+#: src/features/analytics/Exports.tsx
+msgid "What to export"
+msgstr "Čo exportovať"
+
+#: src/features/analytics/Goals.tsx
+msgid "Where conversions come from"
+msgstr "Odkiaľ konverzie pochádzajú"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Where the property’s day starts and ends."
+msgstr "Kde začína a končí deň vlastnosti."
+
+#: src/features/analytics/Install.tsx
+msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."
+msgstr "S data-consent=\"required\" skript nič neposiela, kým váš nástroj na súhlas nepovie, že návštevník súhlasil. Nastavte aj Zber na „Iba so súhlasom“ vo všeobecných nastaveniach, aby server udalosti bez neho odmietal."
+
+#: src/features/analytics/Settings.tsx
+msgid "With yuva.consent and persistent set to true, the device keeps a random id for 13 months. The visitor counts once over several days, is told apart as new or returning, fills retention and is followed across days in funnels. Never under Do Not Track or Global Privacy Control."
+msgstr "S yuva.consent a persistent nastaveným na true si zariadenie uchováva náhodné ID počas 13 mesiacov. Návštevník sa počíta raz cez niekoľko dní, rozlišuje sa ako nový alebo vracajúci sa, napĺňa retenciu a v lievikoch sa sleduje naprieč dňami. Nikdy pri Do Not Track ani Global Privacy Control."
+
+#: src/features/analytics/text.ts
+msgid "Without consent"
+msgstr "Bez súhlasu"
+
+#: src/features/analytics/Retention.tsx
+msgid "Without cookies a visitor is new every day, so nobody can be followed from one day to the next. Only visitors who agree to a persistent id in your consent tool show up here."
+msgstr "Bez cookies je návštevník každý deň nový, takže nikoho nemožno sledovať z jedného dňa na ďalší. Zobrazujú sa tu len návštevníci, ktorí vo vašom nástroji na súhlas súhlasia s trvalým ID."
+
+#: src/features/analytics/Settings.tsx
+msgid "Without cookies, for everyone"
+msgstr "Bez cookies, pre všetkých"
+
+#: src/features/analytics/text.ts
+msgid "Yesterday"
+msgstr "Včera"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Your access ended. Enter the password again to keep reading."
+msgstr "Váš prístup skončil. Zadajte heslo znova, aby ste mohli ďalej čítať."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Your new share link"
+msgstr "Váš nový zdieľaný odkaz"
+
+#: src/features/analytics/Settings.tsx
+msgid "yuva.identify with a token from your backend, signed like a chat session, links the visitor’s visits to their contact. They show on the contact’s page under Recent visits. Forged or reused tokens are ignored."
+msgstr "yuva.identify s tokenom z vášho backendu, podpísaným ako relácia chatu, prepojí návštevy návštevníka s jeho kontaktom. Zobrazia sa na stránke kontaktu v Nedávnych návštevách. Sfalšované alebo znova použité tokeny sa ignorujú."

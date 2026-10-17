@@ -21,14 +21,14 @@ function DialogContent({
       <DialogPrimitive.Popup
         data-slot="dialog-content"
         className={cn(
-          "fixed top-1/2 left-1/2 z-50 grid max-h-[calc(100svh-2rem)] w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-5 overflow-y-auto rounded-2xl border bg-card p-6 text-body text-foreground shadow-[0_24px_60px_-24px_rgb(15_23_42/0.35)] outline-none sm:max-w-md",
+          "fixed top-1/2 start-1/2 z-50 grid max-h-[calc(100svh-2rem)] w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 rtl:translate-x-1/2 gap-5 overflow-y-auto rounded-2xl border bg-card p-6 text-body text-foreground shadow-[0_24px_60px_-24px_rgb(15_23_42/0.35)] outline-none sm:max-w-md",
           className
         )}
         {...props}
       >
         {children}
         {showCloseButton && (
-          <DialogPrimitive.Close render={<Button variant="ghost" size="icon-sm" className="absolute top-4 right-4" />}>
+          <DialogPrimitive.Close render={<Button variant="ghost" size="icon-sm" className="absolute top-4 end-4" />}>
             <XIcon />
             <span className="sr-only">
               <Trans>Close</Trans>

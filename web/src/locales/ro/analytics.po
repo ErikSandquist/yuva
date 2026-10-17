@@ -1,0 +1,2748 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 10:11+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ro\n"
+
+#: src/features/analytics/text.ts
+msgid "(not set)"
+msgstr "(nesetat)"
+
+#. placeholder {0}: e.rows
+#: src/features/analytics/Exports.tsx
+msgid "{0, plural, one {# row} other {# rows}}"
+msgstr "{0, plural, one {# rând} few {# rânduri} other {# de rânduri}}"
+
+#. placeholder {0}: p.visitors_today
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{0, plural, one {visitor today} other {visitors today}}"
+msgstr "{0, plural, one {vizitator azi} few {vizitatori azi} other {de vizitatori azi}}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{consentedCount} consented, across visits and days"
+msgstr "{consentedCount} au consimțit, pe parcursul vizitelor și zilelor"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {{site} sent # visit, and none in the 28 days before.} other {{site} sent # visits, and none in the 28 days before.}}"
+msgstr "{count, plural, one {{site} a trimis # vizită și niciuna în cele 28 de zile dinainte.} few {{site} a trimis # vizite și niciuna în cele 28 de zile dinainte.} other {{site} a trimis # de vizite și niciuna în cele 28 de zile dinainte.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {# conversation per 1,000 views, against {usual} in the 28 days before.} other {# conversations per 1,000 views, against {usual} in the 28 days before.}}"
+msgstr "{count, plural, one {# conversație la 1.000 de vizualizări, față de {usual} în cele 28 de zile dinainte.} few {# conversații la 1.000 de vizualizări, față de {usual} în cele 28 de zile dinainte.} other {# de conversații la 1.000 de vizualizări, față de {usual} în cele 28 de zile dinainte.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {Goal “{goal}” had # conversion, against {usual} a day on average in the week before.} other {Goal “{goal}” had # conversions, against {usual} a day on average in the week before.}}"
+msgstr "{count, plural, one {Obiectivul „{goal}” a avut # conversie, față de {usual} pe zi în medie în săptămâna dinainte.} few {Obiectivul „{goal}” a avut # conversii, față de {usual} pe zi în medie în săptămâna dinainte.} other {Obiectivul „{goal}” a avut # de conversii, față de {usual} pe zi în medie în săptămâna dinainte.}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{count} in this range, none in the compared days."
+msgstr "{count} în acest interval, niciuna în zilele comparate."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {count}, none in the compared days."
+msgstr "{dim} {value}: {count}, niciuna în zilele comparate."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} fell {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} a scăzut cu {change}, {now} față de {before}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} rose {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} a crescut cu {change}, {now} față de {before}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {metric} {now}, none in the compared days."
+msgstr "{dim} {value}: {metric} {now}, niciuna în zilele comparate."
+
+#: src/features/analytics/Annotations.tsx
+msgid "{kind}: {found}"
+msgstr "{kind}: {found}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{lost} left ({lostPct})"
+msgstr "{lost} au plecat ({lostPct})"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} fell {change}: {now}, against {before} in the compared days."
+msgstr "{metric} a scăzut cu {change}: {now}, față de {before} în zilele comparate."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} rose {change}: {now}, against {before} in the compared days."
+msgstr "{metric} a crescut cu {change}: {now}, față de {before} în zilele comparate."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric}: {now}, none in the compared days."
+msgstr "{metric}: {now}, niciuna în zilele comparate."
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversation} other {# conversations}}"
+msgstr "{n, plural, one {# conversație} few {# conversații} other {# de conversații}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversion} other {# conversions}}"
+msgstr "{n, plural, one {# conversie} few {# conversii} other {# de conversii}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# discussion} other {# discussions}}"
+msgstr "{n, plural, one {# discuție} few {# discuții} other {# de discuții}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# event} other {# events}}"
+msgstr "{n, plural, one {# eveniment} few {# evenimente} other {# de evenimente}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# view} other {# views}}"
+msgstr "{n, plural, one {# vizualizare} few {# vizualizări} other {# de vizualizări}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visit} other {# visits}}"
+msgstr "{n, plural, one {# vizită} few {# vizite} other {# de vizite}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visitor} other {# visitors}}"
+msgstr "{n, plural, one {# vizitator} few {# vizitatori} other {# de vizitatori}}"
+
+#: src/features/analytics/Events.tsx
+msgid "{n} payments, {avg} on average"
+msgstr "{n} plăți, {avg} în medie"
+
+#: src/features/analytics/Install.tsx
+msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
+msgstr "{name} nu este una dintre platformele acestei proprietăți, deci serverul refuză evenimentele aplicației. Un proprietar sau administrator o poate activa."
+
+#: src/features/analytics/Funnels.tsx
+msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
+msgstr "{overall} dintre vizitatorii care au ajuns la primul pas au ajuns și la ultimul, {from} – {to}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
+msgstr "{rate, plural, one {{dim} {value}: # conversație la 1.000 de vizualizări, față de {site} pe toate paginile.} few {{dim} {value}: # conversații la 1.000 de vizualizări, față de {site} pe toate paginile.} other {{dim} {value}: # de conversații la 1.000 de vizualizări, față de {site} pe toate paginile.}}"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
+msgstr "{used} din {limit} de evenimente de analiză folosite luna aceasta. Evenimentele peste limită sunt ignorate până se termină luna."
+
+#: src/features/analytics/Settings.tsx
+msgid "A change applies to new events. Days already counted keep their zone."
+msgstr "O schimbare se aplică evenimentelor noi. Zilele deja numărate își păstrează fusul."
+
+#: src/features/analytics/Goals.tsx
+msgid "A changed goal is counted again over the days the detailed records are kept."
+msgstr "Un obiectiv schimbat este numărat din nou pe zilele în care se păstrează înregistrările detaliate."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel follows each visit step by step, so it covers at most 90 days at once, or 31 days for a property with more than 10 million events a month. Pick a shorter range."
+msgstr "O pâlnie urmărește fiecare vizită pas cu pas, deci acoperă cel mult 90 de zile odată sau 31 de zile pentru o proprietate cu peste 10 milioane de evenimente pe lună. Alege un interval mai scurt."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel is made of two to eight goals in a row. Make at least two goals first."
+msgstr "O pâlnie este făcută din două până la opt obiective la rând. Creează mai întâi cel puțin două obiective."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are kept since {day}. Earlier days only have totals, so they cannot show a funnel."
+msgstr "O pâlnie are nevoie de pașii fiecărei vizite, care se păstrează din {day}. Zilele mai vechi au doar totaluri, deci nu pot arăta o pâlnie."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are no longer kept for this range."
+msgstr "O pâlnie are nevoie de pașii fiecărei vizite, care nu se mai păstrează pentru acest interval."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel shows how many visitors go from one goal to the next within a visit, and where they leave."
+msgstr "O pâlnie arată câți vizitatori trec de la un obiectiv la următorul în cadrul unei vizite și unde pleacă."
+
+#: src/features/analytics/Goals.tsx
+msgid "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
+msgstr "Un obiectiv numără vizitatorii care văd o pagină, trimit un eveniment sau derulează suficient de departe, și venitul pe care îl aduc."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A goal’s conversions yesterday were at most half its daily average of the week before."
+msgstr "Conversiile unui obiectiv de ieri au fost cel mult jumătate din media lui zilnică din săptămâna dinainte."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A link shows only its views of this property, read-only, without filters or segments. Revoking or deleting it stops it at once."
+msgstr "Un link arată doar vizualizările lui din această proprietate, doar pentru citire, fără filtre sau segmente. Revocarea sau ștergerea lui îl oprește imediat."
+
+#: src/features/analytics/Goals.tsx
+msgid "A new goal also counts the days the detailed records are kept, not only from today."
+msgstr "Un obiectiv nou numără și zilele în care se păstrează înregistrările detaliate, nu doar de azi încolo."
+
+#: src/features/analytics/Annotations.tsx
+msgid "A new key was made"
+msgstr "A fost creată o cheie nouă"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A new password signs out everyone who unlocked the link."
+msgstr "O parolă nouă deconectează pe oricine a deblocat linkul."
+
+#: src/features/analytics/Goals.tsx
+msgid "A path. * stands for one part of it, ** for any number of them."
+msgstr "O cale. * înlocuiește o parte din ea, ** orice număr de părți."
+
+#: src/features/analytics/Settings.tsx
+msgid "A prop name has at most 300 characters and does not start with $ or yuva_."
+msgstr "Numele unei proprietăți are cel mult 300 de caractere și nu începe cu $ sau yuva_."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A property can have at most 50 share links. Delete one first."
+msgstr "O proprietate poate avea cel mult 50 de linkuri de partajare. Șterge mai întâi unul."
+
+#: src/features/analytics/parts.tsx
+msgid "A range can be at most 400 days long. Pick a shorter one."
+msgstr "Un interval poate avea cel mult 400 de zile. Alege unul mai scurt."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A site sent 10 or more visits yesterday and none in the 28 days before."
+msgstr "Un site a trimis ieri 10 sau mai multe vizite și niciuna în cele 28 de zile dinainte."
+
+#: src/features/analytics/Settings.tsx
+msgid "A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and it shows as a chip on the Events view."
+msgstr "O proprietate urmărită este păstrată și în totalurile zilnice, deci defalcarea ei rămâne după ce înregistrările detaliate dispar, și apare ca un chip în vizualizarea Evenimente."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page or screen views without a gap of 30 minutes, within one day."
+msgstr "Vizualizările de pagini sau ecrane ale unui vizitator, fără pauză de 30 de minute, în aceeași zi."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page views without a gap of 30 minutes, within one day."
+msgstr "Vizualizările de pagini ale unui vizitator, fără pauză de 30 de minute, în aceeași zi."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
+msgstr "Vizualizările de ecrane ale unui vizitator, fără pauză de 30 de minute, în aceeași zi. Fiecare lansare a aplicației începe o vizită nouă."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Active"
+msgstr "Activ"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add"
+msgstr "Adaugă"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add a note to the chart"
+msgstr "Adaugă o notă pe grafic"
+
+#: src/features/analytics/Settings.tsx
+msgid "Add a rule"
+msgstr "Adaugă o regulă"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Add a step"
+msgstr "Adaugă un pas"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/NewProperty.tsx
+msgid "Add a website"
+msgstr "Adaugă un site"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add a website to count its visitors, pages and sources, without cookies."
+msgstr "Adaugă un site ca să îi numeri vizitatorii, paginile și sursele, fără cookieuri."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Add and install"
+msgstr "Adaugă și instalează"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add note"
+msgstr "Adaugă notă"
+
+#: src/features/analytics/Install.tsx
+msgid "Add the YuvaAnalytics library of the Yuva package and configure it once at launch. .yuvaScreen counts a SwiftUI screen; in UIKit, call YuvaAnalytics.screen when a screen appears. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "Adaugă biblioteca YuvaAnalytics din pachetul Yuva și configureaz-o o dată la pornire. .yuvaScreen numără un ecran SwiftUI; în UIKit, apelează YuvaAnalytics.screen când apare un ecran. Fără conexiune, evenimentele așteaptă pe dispozitiv până la 72 de ore și ajung cu propriile ore."
+
+#: src/features/analytics/Install.tsx
+msgid "Add yuva-analytics from JitPack and configure it once in Application.onCreate. TrackScreen counts a Compose screen. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "Adaugă yuva-analytics din JitPack și configureaz-o o dată în Application.onCreate. TrackScreen numără un ecran Compose. Fără conexiune, evenimentele așteaptă pe dispozitiv până la 72 de ore și ajung cu propriile ore."
+
+#: src/features/analytics/Settings.tsx
+msgid "Addresses not counted"
+msgstr "Adrese neluate în calcul"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the compared days"
+msgstr "față de zilele comparate"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the period before"
+msgstr "față de perioada dinainte"
+
+#: src/features/analytics/Support.tsx
+msgid "Agents of the inbox can then see this property’s numbers too."
+msgstr "Agenții căsuței pot vedea atunci și cifrele acestei proprietăți."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Agents of this inbox can see the numbers."
+msgstr "Agenții acestei căsuțe pot vedea cifrele."
+
+#: src/features/analytics/text.ts
+msgid "AI assistants"
+msgstr "Asistenți AI"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Alerts"
+msgstr "Alerte"
+
+#: src/features/analytics/Settings.tsx
+msgid "Alerts and reports"
+msgstr "Alerte și rapoarte"
+
+#: src/features/analytics/Events.tsx
+msgid "All events"
+msgstr "Toate evenimentele"
+
+#: src/features/analytics/Goals.tsx
+msgid "All goals"
+msgstr "Toate obiectivele"
+
+#: src/features/analytics/Support.tsx
+msgid "An owner or admin can link one in the property’s settings."
+msgstr "Un proprietar sau administrator poate lega una în setările proprietății."
+
+#: src/features/analytics/Retention.tsx
+msgid "An owner or admin can turn on the persistent id in the consent features."
+msgstr "Un proprietar sau administrator poate activa id-ul persistent în funcțiile de consimțământ."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics"
+msgstr "Analiză"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Analytics properties"
+msgstr "Proprietăți de analiză"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Analytics steps"
+msgstr "Pași de analiză"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics views"
+msgstr "Vizualizări de analiză"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Anyone with the link sees the views you pick, read-only, without signing in."
+msgstr "Oricine are linkul vede vizualizările alese, doar pentru citire, fără conectare."
+
+#: src/features/analytics/text.ts
+msgid "App"
+msgstr "Aplicație"
+
+#: src/features/analytics/text.ts
+msgid "App version"
+msgstr "Versiunea aplicației"
+
+#: src/features/analytics/Settings.tsx
+msgid "Apps send without a domain, so only the platforms turned on here are counted. Events from your backend need no platform."
+msgstr "Aplicațiile trimit fără domeniu, deci se numără doar platformele activate aici. Evenimentele de la backendul tău nu au nevoie de platformă."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Ask for a password"
+msgstr "Cere o parolă"
+
+#: src/features/analytics/Sharing.tsx
+msgid "At least 8 characters"
+msgstr "Cel puțin 8 caractere"
+
+#: src/features/analytics/Settings.tsx
+msgid "At most 10 props can be tracked."
+msgstr "Pot fi urmărite cel mult 10 proprietăți."
+
+#: src/features/analytics/Settings.tsx
+msgid "Audience"
+msgstr "Public"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Available until {expires}"
+msgstr "Disponibil până {expires}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots"
+msgstr "Boți"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
+msgstr "Boți, limite de rată, adrese și căi excluse, limita lunară sau un server ocupat."
+
+#: src/features/analytics/text.ts
+msgid "Bounce rate"
+msgstr "Rată de respingere"
+
+#: src/features/analytics/Events.tsx
+msgid "Break down by prop"
+msgstr "Defalcă după proprietate"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Breakdown"
+msgstr "Defalcare"
+
+#: src/features/analytics/Exports.tsx
+msgid "Broken down by"
+msgstr "Defalcat după"
+
+#: src/features/analytics/Settings.tsx
+msgid "Broken events, such as a screen address that does not start with app://, a reserved name or too many props."
+msgstr "Evenimente defecte, de exemplu o adresă de ecran care nu începe cu app://, un nume rezervat sau prea multe proprietăți."
+
+#: src/features/analytics/text.ts
+msgid "Browser"
+msgstr "Browser"
+
+#: src/features/analytics/text.ts
+msgid "Browser version"
+msgstr "Versiunea browserului"
+
+#: src/features/analytics/Install.tsx
+msgid "Call it once in the browser. During server rendering it does nothing."
+msgstr "Apeleaz-o o dată în browser. În timpul randării pe server nu face nimic."
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Cancel"
+msgstr "Anulează"
+
+#: src/features/analytics/Controls.tsx
+msgid "Change filter: {label}"
+msgstr "Schimbă filtrul: {label}"
+
+#: src/features/analytics/Controls.tsx
+msgid "changed"
+msgstr "schimbat"
+
+#: src/features/analytics/text.ts
+msgid "Channel"
+msgstr "Canal"
+
+#: src/features/analytics/text.ts
+msgid "Chat opened"
+msgstr "Chat deschis"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Checked every hour. Each alert is sent once and also shows as a note on the chart."
+msgstr "Verificat în fiecare oră. Fiecare alertă este trimisă o dată și apare și ca notă pe grafic."
+
+#: src/features/analytics/Settings.tsx
+msgid "Children"
+msgstr "Copii"
+
+#: src/features/analytics/Support.tsx
+msgid "Choose an inbox"
+msgstr "Alege o căsuță"
+
+#: src/features/analytics/Settings.tsx
+msgid "Choose children for a site made for children."
+msgstr "Alege copii pentru un site făcut pentru copii."
+
+#: src/features/analytics/text.ts
+msgid "City"
+msgstr "Oraș"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Clear"
+msgstr "Șterge"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts by"
+msgstr "Cohorte după"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts fill once visitors agree to a persistent id and come back. The numbers are rebuilt every hour."
+msgstr "Cohortele se umplu după ce vizitatorii acceptă un id persistent și revin. Cifrele sunt recalculate în fiecare oră."
+
+#: src/features/analytics/Settings.tsx
+msgid "Collection"
+msgstr "Colecție"
+
+#. placeholder {0}: formatDate(`${c.from}T12:00:00Z`, i18n.locale)
+#. placeholder {1}: formatDate(`${c.to}T12:00:00Z`, i18n.locale)
+#: src/features/analytics/Controls.tsx
+msgid "Compare with {0} – {1}"
+msgstr "Compară cu {0} – {1}"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with a year earlier"
+msgstr "Compară cu un an mai devreme"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days"
+msgstr "Compară cu alte zile"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days…"
+msgstr "Compară cu alte zile…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the days"
+msgstr "Compară cu zilele"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the period before"
+msgstr "Compară cu perioada dinainte"
+
+#: src/features/analytics/Overview.tsx
+msgid "Compared days"
+msgstr "Zile comparate"
+
+#: src/features/analytics/Controls.tsx
+msgid "Comparison"
+msgstr "Comparație"
+
+#: src/features/analytics/text.ts
+msgid "Completions"
+msgstr "Finalizări"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consent features"
+msgstr "Funcții de consimțământ"
+
+#: src/features/analytics/Install.tsx
+msgid "Consent mode"
+msgstr "Mod de consimțământ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id, and signed-in users are linked to their contact."
+msgstr "Vizitatorii care au consimțit păstrează un id persistent, iar utilizatorii conectați sunt legați de contactul lor."
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id."
+msgstr "Vizitatorii care au consimțit păstrează un id persistent."
+
+#: src/features/analytics/parts.tsx
+msgid "Consented visitors only"
+msgstr "Doar vizitatorii care au consimțit"
+
+#: src/features/analytics/text.ts
+msgid "contains"
+msgstr "conține"
+
+#: src/features/analytics/Install.tsx
+msgid "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
+msgstr "Blocantele de conținut opresc adesea scripturile din alte domenii. Servirea scriptului și a endpointului de pe propriul site păstrează numărarea acestor vizitatori. Serverul Yuva trebuie să aibă încredere în adresa transmisă de proxy-ul tău; altfel toți vizitatorii par unul singur."
+
+#: src/features/analytics/text.ts
+msgid "Conversations"
+msgstr "Conversații"
+
+#: src/features/analytics/text.ts
+msgid "Conversations per 1,000 views of the page."
+msgstr "Conversații la 1.000 de vizualizări ale paginii."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Conversations per 1,000 views yesterday were at least twice the rate of the 28 days before."
+msgstr "Conversațiile la 1.000 de vizualizări de ieri au fost cel puțin dublul ratei din cele 28 de zile dinainte."
+
+#: src/features/analytics/text.ts
+msgid "Conversations started on the page, from the chat of the linked inbox."
+msgstr "Conversații începute pe pagină, din chatul căsuței legate."
+
+#: src/features/analytics/Support.tsx
+msgid "Conversations, feedback, ratings and discussions of the linked inbox show here next to each page’s views. They are counted per page and day; no visitor is ever matched to a contact."
+msgstr "Conversațiile, feedbackul, evaluările și discuțiile căsuței legate apar aici lângă vizualizările fiecărei pagini. Sunt numărate pe pagină și zi; niciun vizitator nu este asociat vreodată cu un contact."
+
+#: src/features/analytics/text.ts
+msgid "Conversion rate"
+msgstr "Rată de conversie"
+
+#: src/features/analytics/text.ts
+msgid "Conversions"
+msgstr "Conversii"
+
+#: src/features/analytics/text.ts
+msgid "Conversions per 100 visitors."
+msgstr "Conversii la 100 de vizitatori."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
+msgstr "Copiază-l acum; nu mai este afișat. Linkurile pierdute pot fi doar revocate și refăcute."
+
+#: src/features/analytics/Install.tsx
+msgid "Count my visits again"
+msgstr "Numără din nou vizitele mele"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Count visitors, pages, sources, places and devices without cookies and without storing IP addresses."
+msgstr "Numără vizitatori, pagini, surse, locuri și dispozitive fără cookieuri și fără a stoca adrese IP."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Count your website’s visitors"
+msgstr "Numără vizitatorii site-ului tău"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted"
+msgstr "Numărat"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted as"
+msgstr "Numărat ca"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Countries"
+msgstr "Țări"
+
+#: src/features/analytics/text.ts
+msgid "Country"
+msgstr "Țară"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
+msgstr "Numără fiecare vizitator fără să întrebe: nu se stochează nimic pe dispozitiv și nu se păstrează nicio adresă IP."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Counts the visitors who reached each step after the ones before it, within one visit on one day. Numbers are at most ten minutes old."
+msgstr "Numără vizitatorii care au ajuns la fiecare pas după cei dinainte, în cadrul unei vizite într-o zi. Cifrele au cel mult zece minute vechime."
+
+#: src/features/analytics/Settings.tsx
+msgid "Currency"
+msgstr "Monedă"
+
+#: src/features/analytics/Exports.tsx
+msgid "Current view"
+msgstr "Vizualizarea curentă"
+
+#: src/features/analytics/text.ts
+msgid "Custom and built-in events."
+msgstr "Evenimente personalizate și încorporate."
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range"
+msgstr "Interval personalizat"
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range…"
+msgstr "Interval personalizat…"
+
+#: src/features/analytics/Settings.tsx
+msgid "Data"
+msgstr "Date"
+
+#: src/features/analytics/Install.tsx
+msgid "data-outbound counts clicks on links to other sites, data-files downloads of documents and archives, and data-chat each time a visitor opens the chat. track() sends your own events with up to 30 props; e-mail addresses in props are dropped. Make goals from events in the Goals view."
+msgstr "data-outbound numără clicurile pe linkuri către alte site-uri, data-files descărcările de documente și arhive, iar data-chat de fiecare dată când un vizitator deschide chatul. track() trimite propriile evenimente cu până la 30 de proprietăți; adresele de e-mail din proprietăți sunt eliminate. Creează obiective din evenimente în vizualizarea Obiective."
+
+#: src/features/analytics/Settings.tsx
+msgid "Day"
+msgstr "Zi"
+
+#: src/features/analytics/Retention.tsx
+msgid "Day {period}"
+msgstr "Ziua {period}"
+
+#: src/features/analytics/Exports.tsx
+msgid "Day by day"
+msgstr "Zi cu zi"
+
+#: src/features/analytics/Retention.tsx
+msgid "Days"
+msgstr "Zile"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/SharePage.tsx
+msgid "Days are counted in this time zone"
+msgstr "Zilele sunt numărate în acest fus orar"
+
+#: src/features/analytics/Settings.tsx
+msgid "Days are in the property’s time zone. Their totals are counted again without them."
+msgstr "Zilele sunt în fusul orar al proprietății. Totalurile lor sunt recalculate fără ele."
+
+#: src/features/analytics/Settings.tsx
+msgid "Days waiting to be summed up"
+msgstr "Zile în așteptarea însumării"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete"
+msgstr "Șterge"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete {0}?"
+msgstr "Ștergi {0}?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete {name}?"
+msgstr "Ștergi {name}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data"
+msgstr "Șterge toate datele"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data of {0}?"
+msgstr "Ștergi toate datele pentru {0}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete days"
+msgstr "Șterge zilele"
+
+#: src/features/analytics/Exports.tsx
+msgid "Delete export"
+msgstr "Șterge exportul"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Delete funnel"
+msgstr "Șterge pâlnia"
+
+#: src/features/analytics/Goals.tsx
+msgid "Delete goal"
+msgstr "Șterge obiectivul"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete note"
+msgstr "Șterge nota"
+
+#: src/features/analytics/Controls.tsx
+msgid "Delete segment"
+msgstr "Șterge segmentul"
+
+#. placeholder {0}: funnel.name
+#: src/features/analytics/Funnels.tsx
+msgid "Delete the funnel “{0}”?"
+msgstr "Ștergi pâlnia „{0}”?"
+
+#. placeholder {0}: goal.name
+#: src/features/analytics/Goals.tsx
+msgid "Delete the goal “{0}”?"
+msgstr "Ștergi obiectivul „{0}”?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the property"
+msgstr "Șterge proprietatea"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Delete the segment “{0}”?"
+msgstr "Ștergi segmentul „{0}”?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the visits and events of {span}?"
+msgstr "Ștergi vizitele și evenimentele din {span}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete these days"
+msgstr "Șterge aceste zile"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete this note?"
+msgstr "Ștergi această notă?"
+
+#: src/features/analytics/Exports.tsx
+msgid "deleted {expires}"
+msgstr "șters {expires}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Deleting in the background. The numbers update when it is done."
+msgstr "Se șterge în fundal. Cifrele se actualizează când se termină."
+
+#: src/features/analytics/Goals.tsx
+msgid "Depth in %"
+msgstr "Adâncime în %"
+
+#: src/features/analytics/text.ts
+msgid "Desktop"
+msgstr "Desktop"
+
+#: src/features/analytics/Exports.tsx
+msgid "Detailed records are kept since {rawDay}."
+msgstr "Înregistrările detaliate se păstrează din {rawDay}."
+
+#: src/features/analytics/Settings.tsx
+msgid "Detailed records kept since"
+msgstr "Înregistrări detaliate păstrate din"
+
+#: src/features/analytics/Overview.tsx
+msgid "Details"
+msgstr "Detalii"
+
+#: src/features/analytics/text.ts
+msgid "Device"
+msgstr "Dispozitiv"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Devices"
+msgstr "Dispozitive"
+
+#: src/features/analytics/text.ts
+msgid "Direct"
+msgstr "Direct"
+
+#: src/features/analytics/text.ts
+msgid "Direct / none"
+msgstr "Direct / niciuna"
+
+#: src/features/analytics/text.ts
+msgid "Discussion threads started on the page."
+msgstr "Fire de discuție începute pe pagină."
+
+#: src/features/analytics/text.ts
+msgid "Discussions"
+msgstr "Discuții"
+
+#: src/features/analytics/text.ts
+msgid "Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again."
+msgstr "Vizitatori distincți pe zi, însumați pe zilele intervalului. Cineva care revine în altă zi este numărat din nou."
+
+#: src/features/analytics/Install.tsx
+msgid "Do not count my visits"
+msgstr "Nu număra vizitele mele"
+
+#: src/features/analytics/text.ts
+msgid "does not contain"
+msgstr "nu conține"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Domains"
+msgstr "Domenii"
+
+#: src/features/analytics/Exports.tsx
+msgid "Download"
+msgstr "Descarcă"
+
+#: src/features/analytics/parts.tsx
+msgid "Download CSV"
+msgstr "Descarcă CSV"
+
+#: src/features/analytics/Settings.tsx
+msgid "Dropped"
+msgstr "Ignorate"
+
+#: src/features/analytics/text.ts
+msgid "E-mail"
+msgstr "E-mail"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that day, each column the share of them who came back that many days later."
+msgstr "Fiecare rând conține vizitatorii văzuți prima dată în acea zi, fiecare coloană ponderea celor care au revenit după atâtea zile."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that month, each column the share of them who came back that many months later."
+msgstr "Fiecare rând conține vizitatorii văzuți prima dată în acea lună, fiecare coloană ponderea celor care au revenit după atâtea luni."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that week, each column the share of them who came back that many weeks later."
+msgstr "Fiecare rând conține vizitatorii văzuți prima dată în acea săptămână, fiecare coloană ponderea celor care au revenit după atâtea săptămâni."
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Edit"
+msgstr "Editează"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Edit funnel"
+msgstr "Editează pâlnia"
+
+#: src/features/analytics/Goals.tsx
+msgid "Edit goal"
+msgstr "Editează obiectivul"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Edit note"
+msgstr "Editează nota"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Edit share link"
+msgstr "Editează linkul de partajare"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embed"
+msgstr "Încorporează"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embeds"
+msgstr "Încorporări"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Enter the password you were given with the link."
+msgstr "Introdu parola primită împreună cu linkul."
+
+#: src/features/analytics/text.ts
+msgid "Entry page"
+msgstr "Pagina de intrare"
+
+#: src/features/analytics/Goals.tsx
+msgid "equal to"
+msgstr "egal cu"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Event"
+msgstr "Eveniment"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event}"
+msgstr "Evenimentul {event}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event} with {key} = {value}"
+msgstr "Evenimentul {event} cu {key} = {value}"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Install.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Events"
+msgstr "Evenimente"
+
+#: src/features/analytics/Settings.tsx
+msgid "Events are arriving."
+msgstr "Evenimentele sosesc."
+
+#: src/features/analytics/Events.tsx
+msgid "Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when the script has their attributes."
+msgstr "Evenimentele vin din apelurile track() de pe paginile și aplicațiile tale. Linkurile externe, descărcările și deschiderile de chat sunt numărate când scriptul are atributele lor."
+
+#: src/features/analytics/Settings.tsx
+msgid "Events count only after the page calls yuva.consent with analytics set to true. Install the script with data-consent=\"required\"."
+msgstr "Evenimentele se numără doar după ce pagina apelează yuva.consent cu analytics setat pe true. Instalează scriptul cu data-consent=\"required\"."
+
+#: src/features/analytics/Settings.tsx
+msgid "events counted"
+msgstr "evenimente numărate"
+
+#: src/features/analytics/Settings.tsx
+msgid "events dropped"
+msgstr "evenimente ignorate"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every event with its visit’s page, source, place and device, as NDJSON. Visits are numbered within the file; there is no visitor id, address or contact. At most 31 days."
+msgstr "Fiecare eveniment cu pagina, sursa, locul și dispozitivul vizitei lui, ca NDJSON. Vizitele sunt numerotate în fișier; nu există id de vizitator, adresă sau contact. Cel mult 31 de zile."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Every Monday at 08:00 in {zone}, about the week before."
+msgstr "În fiecare luni la 08:00 în {zone}, despre săptămâna dinainte."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range and the filters you are looking at, without a comparison."
+msgstr "Fiecare rând al intervalului și al filtrelor pe care le vezi, fără comparație."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range you are looking at, without a comparison."
+msgstr "Fiecare rând al intervalului pe care îl vezi, fără comparație."
+
+#: src/features/analytics/Settings.tsx
+msgid "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
+msgstr "Fiecare vizită, eveniment și total este șters. Proprietatea și cheia ei rămân, iar numărarea continuă."
+
+#: src/features/analytics/Controls.tsx
+msgid "Everyone who sees this property can pick it. You, owners and admins can change it."
+msgstr "Oricine vede această proprietate o poate alege. Tu, proprietarii și administratorii o puteți schimba."
+
+#: src/features/analytics/Annotations.tsx
+msgid "Everyone who sees this property sees the note, such as a launch or a campaign."
+msgstr "Oricine vede această proprietate vede nota, de exemplu o lansare sau o campanie."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Everything this property raised, newest first, whoever was notified."
+msgstr "Tot ce a ridicat această proprietate, cele mai noi primele, indiferent cine a fost notificat."
+
+#: src/features/analytics/Settings.tsx
+msgid "Excluded"
+msgstr "Exclus"
+
+#: src/features/analytics/text.ts
+msgid "Exit page"
+msgstr "Pagina de ieșire"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expired"
+msgstr "Expirat"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expires"
+msgstr "Expiră"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export"
+msgstr "Exportă"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export progress"
+msgstr "Progresul exportului"
+
+#: src/features/analytics/Exports.tsx
+msgid "Exports"
+msgstr "Exporturi"
+
+#: src/features/analytics/Exports.tsx
+msgid "Failed"
+msgstr "Eșuat"
+
+#: src/features/analytics/text.ts
+msgid "Feedback"
+msgstr "Feedback"
+
+#: src/features/analytics/Support.tsx
+msgid "Fewer than 100 views"
+msgstr "Mai puțin de 100 de vizualizări"
+
+#: src/features/analytics/text.ts
+msgid "File download"
+msgstr "Descărcare de fișier"
+
+#: src/features/analytics/Exports.tsx
+msgid "Files are made in the background and deleted seven days later."
+msgstr "Fișierele se creează în fundal și se șterg după șapte zile."
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Support.tsx
+msgid "Filter by this"
+msgstr "Filtrează după aceasta"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Filters"
+msgstr "Filtre"
+
+#: src/features/analytics/Exports.tsx
+msgid "Filters come from the view: click a row there to add one. <0>Change them in the view</0>"
+msgstr "Filtrele vin din vizualizare: dă clic pe un rând de acolo ca să adaugi unul. <0>Schimbă-le în vizualizare</0>"
+
+#: src/features/analytics/Retention.tsx
+msgid "First day"
+msgstr "Prima zi"
+
+#: src/features/analytics/Retention.tsx
+msgid "First month"
+msgstr "Prima lună"
+
+#: src/features/analytics/text.ts
+msgid "First page or screen"
+msgstr "Prima pagină sau primul ecran"
+
+#: src/features/analytics/text.ts
+msgid "First screen"
+msgstr "Primul ecran"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "First visit"
+msgstr "Prima vizită"
+
+#: src/features/analytics/Retention.tsx
+msgid "First week"
+msgstr "Prima săptămână"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Five reports an hour at most. Try again later."
+msgstr "Cel mult cinci rapoarte pe oră. Încearcă mai târziu."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "For example Fieldnote website"
+msgstr "De exemplu site-ul Fieldnote"
+
+#: src/features/analytics/Settings.tsx
+msgid "For revenue, an ISO code like EUR."
+msgstr "Pentru venit, un cod ISO precum EUR."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an <0>API key</0> with the analytics:write scope, which stays on your server."
+msgstr "Pentru ce vede doar backendul tău, de exemplu o înscriere sau o plată. Track transmite adresa și browserul vizitatorului, deci evenimentul se alătură vizitei lui; cererile cu Do Not Track sau Global Privacy Control nu sunt trimise. Are nevoie de o <0>cheie API</0> cu domeniul de acces analytics:write, care rămâne pe serverul tău."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
+msgstr "Pentru ce vede doar backendul tău, de exemplu o înscriere sau o plată. Track transmite adresa și browserul vizitatorului, deci evenimentul se alătură vizitei lui; cererile cu Do Not Track sau Global Privacy Control nu sunt trimise. Are nevoie de o cheie API cu domeniul de acces analytics:write de la un proprietar sau administrator, care rămâne pe serverul tău."
+
+#: src/features/analytics/Exports.tsx
+msgid "Format"
+msgstr "Format"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "From"
+msgstr "De la"
+
+#: src/features/analytics/Settings.tsx
+msgid "From a site that is not one of the domains, or from an app whose platform is not turned on."
+msgstr "De pe un site care nu este unul dintre domenii sau dintr-o aplicație a cărei platformă nu este activată."
+
+#: src/features/analytics/Funnels.tsx
+msgid "From pricing to signup"
+msgstr "De la prețuri la înscriere"
+
+#: src/features/analytics/Support.tsx
+msgid "From the inbox {inboxName}. Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "Din căsuța {inboxName}. Ordonate după conversații la 1.000 de vizualizări; paginile cu mai puțin de 100 de vizualizări vin după celelalte. Numărate pe pagină și zi, niciodată pe vizitator sau contact."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Funnel"
+msgstr "Pâlnie"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Funnels"
+msgstr "Pâlnii"
+
+#: src/features/analytics/Settings.tsx
+msgid "General"
+msgstr "General"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Go to goals"
+msgstr "Mergi la obiective"
+
+#: src/features/analytics/Goals.tsx
+msgid "Goal"
+msgstr "Obiectiv"
+
+#. placeholder {0}: a.text
+#: src/features/analytics/Annotations.tsx
+msgid "Goal “{0}” was created"
+msgstr "Obiectivul „{0}” a fost creat"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Goal drop"
+msgstr "Scădere la obiectiv"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Goals"
+msgstr "Obiective"
+
+#: src/features/analytics/Settings.tsx
+msgid "had an address removed"
+msgstr "a avut o adresă eliminată"
+
+#: src/features/analytics/Settings.tsx
+msgid "Health"
+msgstr "Stare"
+
+#: src/features/analytics/text.ts
+msgid "Helpful"
+msgstr "Util"
+
+#: src/features/analytics/Support.tsx
+msgid "Helpful and not helpful"
+msgstr "Utile și neutile"
+
+#: src/features/analytics/text.ts
+msgid "Helpful ratings out of all ratings."
+msgstr "Evaluări utile din totalul evaluărilor."
+
+#: src/features/analytics/text.ts
+msgid "Helpful share"
+msgstr "Pondere utilă"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Home shows each website and app like this: visitors today, in the last 30 minutes and this week."
+msgstr "Acasă arată fiecare site și aplicație astfel: vizitatori azi, în ultimele 30 de minute și în această săptămână."
+
+#: src/features/analytics/text.ts
+msgid "Host"
+msgstr "Gazdă"
+
+#: src/features/analytics/text.ts
+msgid "Host or app"
+msgstr "Gazdă sau aplicație"
+
+#: src/features/analytics/Install.tsx
+msgid "How to install"
+msgstr "Cum se instalează"
+
+#: src/features/analytics/Events.tsx
+msgid "How to send events"
+msgstr "Cum se trimit evenimente"
+
+#: src/features/analytics/Sharing.tsx
+msgid "I saved it"
+msgstr "Am salvat-o"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Support.tsx
+msgid "Inbox"
+msgstr "Căsuță"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Install"
+msgstr "Instalează"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/NewProperty.tsx
+msgid "Install on {0}"
+msgstr "Instalează pe {0}"
+
+#: src/features/analytics/text.ts
+msgid "Internal"
+msgstr "Intern"
+
+#: src/features/analytics/Settings.tsx
+msgid "Invalid"
+msgstr "Invalid"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Investors"
+msgstr "Investitori"
+
+#: src/features/analytics/text.ts
+msgid "is"
+msgstr "este"
+
+#: src/features/analytics/text.ts
+msgid "is not"
+msgstr "nu este"
+
+#: src/features/analytics/Controls.tsx
+msgid "It is gone for everyone who uses it. The numbers stay."
+msgstr "Dispare pentru toți cei care îl folosesc. Cifrele rămân."
+
+#: src/features/analytics/SharePage.tsx
+msgid "It may have expired or been revoked. Ask the person who shared it for a new one."
+msgstr "Poate a expirat sau a fost revocat. Cere unul nou persoanei care l-a partajat."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Its goals stay."
+msgstr "Obiectivele lui rămân."
+
+#: src/features/analytics/Goals.tsx
+msgid "Its numbers are deleted too. This cannot be undone."
+msgstr "Cifrele lui sunt șterse și ele. Nu se poate anula."
+
+#: src/features/analytics/Events.tsx
+msgid "Keep only visits with this value"
+msgstr "Păstrează doar vizitele cu această valoare"
+
+#: src/features/analytics/Settings.tsx
+msgid "Key"
+msgstr "Cheie"
+
+#: src/features/analytics/Goals.tsx
+msgid "Kind of goal"
+msgstr "Tip de obiectiv"
+
+#: src/features/analytics/text.ts
+msgid "Language"
+msgstr "Limbă"
+
+#: src/features/analytics/text.ts
+msgid "Laptop"
+msgstr "Laptop"
+
+#: src/features/analytics/text.ts
+msgid "Last 12 months"
+msgstr "Ultimele 12 luni"
+
+#: src/features/analytics/text.ts
+msgid "Last 28 days"
+msgstr "Ultimele 28 de zile"
+
+#: src/features/analytics/text.ts
+msgid "Last 30 days"
+msgstr "Ultimele 30 de zile"
+
+#: src/features/analytics/text.ts
+msgid "Last 6 months"
+msgstr "Ultimele 6 luni"
+
+#: src/features/analytics/text.ts
+msgid "Last 7 days"
+msgstr "Ultimele 7 zile"
+
+#: src/features/analytics/text.ts
+msgid "Last 90 days"
+msgstr "Ultimele 90 de zile"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event"
+msgstr "Ultimul eveniment"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event: {last}"
+msgstr "Ultimul eveniment: {last}"
+
+#: src/features/analytics/text.ts
+msgid "Last month"
+msgstr "Luna trecută"
+
+#: src/features/analytics/Sharing.tsx
+msgid "last opened {viewed}"
+msgstr "deschis ultima oară {viewed}"
+
+#: src/features/analytics/text.ts
+msgid "Last page or screen"
+msgstr "Ultima pagină sau ultimul ecran"
+
+#: src/features/analytics/text.ts
+msgid "Last screen"
+msgstr "Ultimul ecran"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Leave empty to keep the current one"
+msgstr "Lasă gol ca să o păstrezi pe cea curentă"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Link"
+msgstr "Link"
+
+#: src/features/analytics/Support.tsx
+msgid "Link an inbox to see support per page"
+msgstr "Leagă o căsuță ca să vezi suportul pe pagină"
+
+#: src/features/analytics/Support.tsx
+msgid "Link inbox"
+msgstr "Leagă căsuța"
+
+#: src/features/analytics/Settings.tsx
+msgid "Link signed-in users to their contact"
+msgstr "Leagă utilizatorii conectați de contactul lor"
+
+#: src/features/analytics/Alerts.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Support.tsx
+msgid "Load more"
+msgstr "Încarcă mai multe"
+
+#: src/features/analytics/Settings.tsx
+msgid "Location database"
+msgstr "Bază de date de locații"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Locations"
+msgstr "Locuri"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created}"
+msgstr "Creat {created}"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created} by {by}"
+msgstr "Creat {created} de {by}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key"
+msgstr "Creează o cheie nouă"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key?"
+msgstr "Creezi o cheie nouă?"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Make at least two goals first."
+msgstr "Creează mai întâi cel puțin două obiective."
+
+#: src/features/analytics/Goals.tsx
+msgid "Make goal"
+msgstr "Creează obiectivul"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Make link"
+msgstr "Creează linkul"
+
+#: src/features/analytics/text.ts
+msgid "matches"
+msgstr "se potrivește"
+
+#: src/features/analytics/text.ts
+msgid "Mobile"
+msgstr "Mobil"
+
+#: src/features/analytics/Retention.tsx
+msgid "Month {period}"
+msgstr "Luna {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Monthly"
+msgstr "Lunar"
+
+#: src/features/analytics/Settings.tsx
+msgid "Monthly limit"
+msgstr "Limită lunară"
+
+#: src/features/analytics/Retention.tsx
+msgid "Months"
+msgstr "Luni"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move down"
+msgstr "Mută în jos"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move up"
+msgstr "Mută în sus"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Name"
+msgstr "Nume"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs a linked inbox under General: its identity secret signs the tokens."
+msgstr "Are nevoie de o căsuță legată la General: secretul ei de identitate semnează tokenurile."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Needs a linked inbox. {help}"
+msgstr "Are nevoie de o căsuță legată. {help}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs the persistent id: a visitor is linked through it."
+msgstr "Are nevoie de id-ul persistent: un vizitator este legat prin el."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Never"
+msgstr "Niciodată"
+
+#: src/features/analytics/Sharing.tsx
+msgid "never opened"
+msgstr "niciodată deschis"
+
+#: src/features/analytics/text.ts
+msgid "New"
+msgstr "Nou"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value} with {count}, none in the compared days."
+msgstr "Nou la {kind}: {value} cu {count}, niciunul în zilele comparate."
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
+msgstr "Nou la {kind}: {value}. {metric}: {now}, niciunul în zilele comparate."
+
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "Noi și recurenți"
+
+#: src/features/analytics/Funnels.tsx
+msgid "New funnel"
+msgstr "Pâlnie nouă"
+
+#: src/features/analytics/Goals.tsx
+msgid "New goal"
+msgstr "Obiectiv nou"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New link"
+msgstr "Link nou"
+
+#: src/features/analytics/text.ts
+msgid "New or returning"
+msgstr "Noi sau recurenți"
+
+#: src/features/analytics/Annotations.tsx
+msgid "New pricing page"
+msgstr "Pagină nouă de prețuri"
+
+#: src/features/analytics/Alerts.tsx
+msgid "New referrer"
+msgstr "Referitor nou"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New share link"
+msgstr "Link nou de partajare"
+
+#: src/features/analytics/Alerts.tsx
+msgid "No alerts yet."
+msgstr "Încă nu există alerte."
+
+#: src/features/analytics/Controls.tsx
+msgid "No comparison"
+msgstr "Fără comparație"
+
+#: src/features/analytics/Settings.tsx
+msgid "No consent features are offered."
+msgstr "Nu se oferă funcții de consimțământ."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "Niciun vizitator care a consimțit în acest interval."
+
+#: src/features/analytics/Retention.tsx
+msgid "No consented visitors yet"
+msgstr "Încă niciun vizitator care a consimțit"
+
+#: src/features/analytics/Support.tsx
+msgid "No conversations, feedback, ratings or discussions from these pages in this range."
+msgstr "Nicio conversație, feedback, evaluare sau discuție de la aceste pagini în acest interval."
+
+#: src/features/analytics/Goals.tsx
+msgid "No conversions in this range."
+msgstr "Nicio conversie în acest interval."
+
+#: src/features/analytics/Settings.tsx
+msgid "No event yet."
+msgstr "Încă niciun eveniment."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events in the last 24 hours"
+msgstr "Niciun eveniment în ultimele 24 de ore"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events yet"
+msgstr "Încă niciun eveniment"
+
+#: src/features/analytics/Exports.tsx
+msgid "No exports yet."
+msgstr "Încă niciun export."
+
+#: src/features/analytics/Funnels.tsx
+msgid "No funnels yet"
+msgstr "Încă nicio pâlnie"
+
+#: src/features/analytics/Goals.tsx
+msgid "No goals yet"
+msgstr "Încă niciun obiectiv"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No properties yet"
+msgstr "Încă nicio proprietate"
+
+#: src/features/analytics/Settings.tsx
+msgid "No props are tracked."
+msgstr "Nicio proprietate nu este urmărită."
+
+#: src/features/analytics/Alerts.tsx
+msgid "No scheduled reports."
+msgstr "Niciun raport programat."
+
+#: src/features/analytics/Controls.tsx
+msgid "No segment"
+msgstr "Fără segment"
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Make one to show these numbers to people outside the workspace."
+msgstr "Încă niciun link de partajare. Creează unul ca să arăți aceste cifre unor persoane din afara spațiului de lucru."
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Owners and admins make them."
+msgstr "Încă niciun link de partajare. Le creează proprietarii și administratorii."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Nobody in the last 30 minutes."
+msgstr "Nimeni în ultimele 30 de minute."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Nobody reached the first step in this range."
+msgstr "Nimeni nu a ajuns la primul pas în acest interval."
+
+#: src/features/analytics/Alerts.tsx
+msgid "None"
+msgstr "Niciunul"
+
+#: src/features/analytics/Settings.tsx
+msgid "None yet"
+msgstr "Încă niciunul"
+
+#: src/features/analytics/Exports.tsx
+msgid "None, every visit counts."
+msgstr "Niciunul, fiecare vizită contează."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "None, owners and admins only"
+msgstr "Niciunul, doar proprietarii și administratorii"
+
+#: src/features/analytics/parts.tsx
+msgid "Not available for this range."
+msgstr "Indisponibil pentru acest interval."
+
+#: src/features/analytics/text.ts
+msgid "Not helpful"
+msgstr "Inutil"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Note"
+msgstr "Notă"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Notes"
+msgstr "Note"
+
+#: src/features/analytics/Exports.tsx
+msgid "Nothing"
+msgstr "Nimic"
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Nothing counted in this range."
+msgstr "Nimic numărat în acest interval."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Notify me"
+msgstr "Notifică-mă"
+
+#: src/features/analytics/Settings.tsx
+msgid "Off"
+msgstr "Oprit"
+
+#: src/features/analytics/Settings.tsx
+msgid "Offered only to visitors who agree in your consent tool. Everyone else is counted exactly as before, one day at a time and without anything stored on the device."
+msgstr "Oferit doar vizitatorilor care sunt de acord în instrumentul tău de consimțământ. Pe toți ceilalți îi numărăm exact ca înainte, câte o zi, fără nimic stocat pe dispozitiv."
+
+#: src/features/analytics/Settings.tsx
+msgid "Older than 72 hours. Apps keep events without a connection for at most that long."
+msgstr "Mai vechi de 72 de ore. Aplicațiile păstrează evenimentele fără conexiune cel mult atât timp."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On its way to {email}."
+msgstr "În drum spre {email}."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On the 1st of each month at 08:00 in {zone}, about the month before."
+msgstr "Pe 1 ale fiecărei luni la 08:00 în {zone}, despre luna dinainte."
+
+#: src/features/analytics/Settings.tsx
+msgid "One IP address or range per line, up to 50, such as your office or a monitoring service."
+msgstr "O adresă IP sau un interval pe rând, până la 50, de exemplu biroul tău sau un serviciu de monitorizare."
+
+#: src/features/analytics/Settings.tsx
+msgid "One path per line, up to 50. * stands for one part of the path, ** for any number of them."
+msgstr "O cale pe rând, până la 50. * înlocuiește o parte din cale, ** orice număr de părți."
+
+#: src/features/analytics/Sharing.tsx
+msgid "One per line, like https://example.com or https://*.example.com. Without any, no other site can show it in a frame."
+msgstr "Câte unul pe rând, ca https://example.com sau https://*.example.com. Fără niciunul, niciun alt site nu îl poate afișa într-un frame."
+
+#: src/features/analytics/Settings.tsx
+msgid "One per line. *.example.com covers every subdomain, but not example.com itself."
+msgstr "Câte unul pe rând. *.example.com acoperă fiecare subdomeniu, dar nu și example.com."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "One per line. Pages on other domains cannot send events. *.example.com covers every subdomain."
+msgstr "Câte unul pe rând. Paginile de pe alte domenii nu pot trimite evenimente. *.example.com acoperă fiecare subdomeniu."
+
+#: src/features/analytics/Settings.tsx
+msgid "One prop name per line, up to 10, such as plan."
+msgstr "Un nume de proprietate pe rând, până la 10, de exemplu plan."
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
+msgstr "Un rând pe zi cu vizitatori, vizite, vizualizări, rată de respingere, durate și adâncimea derulării. Cel mult 400 de zile."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Only for you, by e-mail to {email}. Reports are plain numbers, with no images and nothing that tracks opening or clicks."
+msgstr "Doar pentru tine, prin e-mail la {email}. Rapoartele sunt cifre simple, fără imagini și fără nimic care urmărește deschiderea sau clicurile."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Only members see it, to tell links apart."
+msgstr "Doar membrii îl văd, ca să deosebească linkurile."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only the country is kept, never the region or city."
+msgstr "Se păstrează doar țara, niciodată regiunea sau orașul."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Only totals are shown. There is no list of individual visitors."
+msgstr "Sunt afișate doar totaluri. Nu există o listă de vizitatori individuali."
+
+#: src/features/analytics/parts.tsx
+msgid "Only visitors who agreed to a persistent id are counted here. Everyone else is counted one day at a time."
+msgstr "Aici sunt numărați doar vizitatorii care au acceptat un id persistent. Pe ceilalți îi numărăm câte o zi."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only with consent"
+msgstr "Doar cu consimțământ"
+
+#: src/features/analytics/Goals.tsx
+msgid "Only with prop"
+msgstr "Doar cu proprietatea"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
+msgstr "Deschide o pagină a site-ului tău cu fragmentul instalat. Devine verde de îndată ce serverul a stocat prima vizualizare de pagină. Browserele cu Do Not Track sau Global Privacy Control nu trimit nimic, deci folosește altul pentru test."
+
+#: src/features/analytics/Retention.tsx
+msgid "Open consent features"
+msgstr "Deschide funcțiile de consimțământ"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Open report"
+msgstr "Deschide raportul"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open the overview"
+msgstr "Deschide prezentarea generală"
+
+#: src/features/analytics/Support.tsx
+msgid "Open the property’s settings"
+msgstr "Deschide setările proprietății"
+
+#: src/features/analytics/text.ts
+msgid "Operating system"
+msgstr "Sistem de operare"
+
+#: src/features/analytics/Install.tsx
+msgid "Opt-out link"
+msgstr "Link de renunțare"
+
+#: src/features/analytics/text.ts
+msgid "Organic search"
+msgstr "Căutare organică"
+
+#: src/features/analytics/text.ts
+msgid "OS version"
+msgstr "Versiunea SO"
+
+#: src/features/analytics/text.ts
+msgid "Other"
+msgstr "Altele"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other drops"
+msgstr "Alte scăderi"
+
+#: src/features/analytics/Events.tsx
+msgid "Other prop"
+msgstr "Altă proprietate"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other sites"
+msgstr "Alte site-uri"
+
+#: src/features/analytics/text.ts
+msgid "Outbound link"
+msgstr "Link extern"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Overview"
+msgstr "Prezentare generală"
+
+#: src/features/analytics/Install.tsx
+msgid "Own domain"
+msgstr "Domeniu propriu"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Owners and admins make funnels from goals. They show up here with each step’s drop-off."
+msgstr "Proprietarii și administratorii creează pâlnii din obiective. Apar aici cu pierderea de la fiecare pas."
+
+#: src/features/analytics/Goals.tsx
+msgid "Owners and admins make goals. They show up here with their conversions."
+msgstr "Proprietarii și administratorii creează obiective. Apar aici cu conversiile lor."
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Page"
+msgstr "Pagină"
+
+#: src/features/analytics/text.ts
+msgid "Page feedback sent from the page."
+msgstr "Feedback despre pagină trimis din pagină."
+
+#: src/features/analytics/text.ts
+msgid "Page not found"
+msgstr "Pagina nu a fost găsită"
+
+#: src/features/analytics/text.ts
+msgid "Page or screen"
+msgstr "Pagină sau ecran"
+
+#: src/features/analytics/Goals.tsx
+msgid "Page view of {path}"
+msgstr "Vizualizare de pagină pentru {path}"
+
+#: src/features/analytics/text.ts
+msgid "Pages"
+msgstr "Pagini"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens"
+msgstr "Pagini și ecrane"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens viewed."
+msgstr "Pagini și ecrane vizualizate."
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages not counted"
+msgstr "Pagini neluate în calcul"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
+msgstr "Paginile care se potrivesc cu un model sunt numărate sub o singură cale, deci toate paginile de comandă se adună ca una. Adresele dintr-o cale sunt întotdeauna înlocuite."
+
+#: src/features/analytics/text.ts
+msgid "Pages viewed."
+msgstr "Pagini vizualizate."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Pages, sources, places and devices, without cookies, without storing IP addresses and without a consent banner where the law allows it."
+msgstr "Pagini, surse, locuri și dispozitive, fără cookieuri, fără stocarea adreselor IP și fără banner de consimțământ acolo unde legea permite."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews"
+msgstr "Vizualizări de pagină"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews divided by visits."
+msgstr "Vizualizări de pagină împărțite la vizite."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews in the last 30 minutes"
+msgstr "Vizualizări de pagină în ultimele 30 de minute"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews per minute"
+msgstr "Vizualizări de pagină pe minut"
+
+#: src/features/analytics/text.ts
+msgid "Paid search"
+msgstr "Căutare plătită"
+
+#: src/features/analytics/text.ts
+msgid "Paid social"
+msgstr "Social plătit"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Password"
+msgstr "Parolă"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Past alerts"
+msgstr "Alerte trecute"
+
+#: src/features/analytics/Settings.tsx
+msgid "Path rules"
+msgstr "Reguli de cale"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pattern"
+msgstr "Model"
+
+#: src/features/analytics/Controls.tsx
+msgid "Paying customers from Germany"
+msgstr "Clienți plătitori din Germania"
+
+#: src/features/analytics/text.ts
+msgid "Per 1,000 views"
+msgstr "La 1.000 de vizualizări"
+
+#: src/features/analytics/Overview.tsx
+msgid "per day"
+msgstr "pe zi"
+
+#: src/features/analytics/Settings.tsx
+msgid "Per day"
+msgstr "Pe zi"
+
+#: src/features/analytics/Overview.tsx
+msgid "per hour"
+msgstr "pe oră"
+
+#: src/features/analytics/Overview.tsx
+msgid "per week"
+msgstr "pe săptămână"
+
+#: src/features/analytics/Settings.tsx
+msgid "Persistent id"
+msgstr "Id persistent"
+
+#: src/features/analytics/text.ts
+msgid "Phone"
+msgstr "Telefon"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Pick a goal"
+msgstr "Alege un obiectiv"
+
+#: src/features/analytics/Events.tsx
+msgid "Pick a prop to see the values this event carried."
+msgstr "Alege o proprietate ca să vezi valorile purtate de acest eveniment."
+
+#: src/features/analytics/Settings.tsx
+msgid "Pick at least one platform."
+msgstr "Alege cel puțin o platformă."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Pick at least one view."
+msgstr "Alege cel puțin o vizualizare."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
+msgstr "Alege cum este construit site-ul și copiază fragmentul. Cheia este publică, precum o cheie de chat: funcționează doar pe domeniile proprietății."
+
+#: src/features/analytics/text.ts
+msgid "Platform"
+msgstr "Platformă"
+
+#: src/features/analytics/Settings.tsx
+msgid "Platforms"
+msgstr "Platforme"
+
+#: src/features/analytics/text.ts
+msgid "Prop"
+msgstr "Proprietate"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name"
+msgstr "Numele proprietății"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name, like plan"
+msgstr "Numele proprietății, de exemplu plan"
+
+#: src/features/analytics/Events.tsx
+msgid "Properties for children keep no props, only the address of outbound links and downloads."
+msgstr "Proprietățile pentru copii nu păstrează proprietăți, doar adresa linkurilor externe și a descărcărilor."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children keep no props, so none can be tracked."
+msgstr "Proprietățile pentru copii nu păstrează proprietăți, deci niciuna nu poate fi urmărită."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children never keep an id on the device or link visits to a contact."
+msgstr "Proprietățile pentru copii nu păstrează niciodată un id pe dispozitiv și nu leagă vizitele de un contact."
+
+#: src/features/analytics/Retention.tsx
+msgid "Properties for children never keep an id on the device, so they have no retention."
+msgstr "Proprietățile pentru copii nu păstrează niciodată un id pe dispozitiv, deci nu au retenție."
+
+#: src/features/analytics/Settings.tsx
+msgid "Property name"
+msgstr "Numele proprietății"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Props"
+msgstr "Proprietăți"
+
+#: src/features/analytics/Events.tsx
+msgid "Props of any name can be broken down for the days the detailed records are kept. Earlier days only have the tracked props."
+msgstr "Proprietățile cu orice nume pot fi defalcate pentru zilele în care se păstrează înregistrările detaliate. Zilele mai vechi au doar proprietățile urmărite."
+
+#: src/features/analytics/Install.tsx
+msgid "Put the script in the head of every page. It counts page views, also when a single-page app changes the address, and stores nothing on the visitor’s device."
+msgstr "Pune scriptul în head-ul fiecărei pagini. Numără vizualizările de pagină, inclusiv când o aplicație cu o singură pagină schimbă adresa, și nu stochează nimic pe dispozitivul vizitatorului."
+
+#: src/features/analytics/Install.tsx
+msgid "Put these links on your privacy page. Opting out is the only thing the script stores on the visitor’s device, and only when they ask for it. Visitors with Do Not Track or Global Privacy Control are never counted."
+msgstr "Pune aceste linkuri pe pagina ta de confidențialitate. Renunțarea este singurul lucru pe care scriptul îl stochează pe dispozitivul vizitatorului, și doar când acesta o cere. Vizitatorii cu Do Not Track sau Global Privacy Control nu sunt niciodată numărați."
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Range"
+msgstr "Interval"
+
+#: src/features/analytics/Support.tsx
+msgid "Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "Ordonate după conversații la 1.000 de vizualizări; paginile cu mai puțin de 100 de vizualizări vin după celelalte. Numărate pe pagină și zi, niciodată pe vizitator sau contact."
+
+#: src/features/analytics/Settings.tsx
+msgid "Rate limits"
+msgstr "Limite de rată"
+
+#: src/features/analytics/Support.tsx
+msgid "Ratings"
+msgstr "Evaluări"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw events"
+msgstr "Evenimente brute"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw exports cover at most 31 days."
+msgstr "Exporturile brute acoperă cel mult 31 de zile."
+
+#: src/features/analytics/Goals.tsx
+msgid "Reached when a visitor"
+msgstr "Atins când un vizitator"
+
+#: src/features/analytics/Exports.tsx
+msgid "Ready"
+msgstr "Gata"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Realtime"
+msgstr "Timp real"
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour, last at {builtAt}."
+msgstr "Recalculat în fiecare oră, ultima dată la {builtAt}."
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour."
+msgstr "Recalculat în fiecare oră."
+
+#: src/features/analytics/text.ts
+msgid "Referral"
+msgstr "Trimitere"
+
+#: src/features/analytics/text.ts
+msgid "Referrer"
+msgstr "Referitor"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Refreshes every 15 seconds"
+msgstr "Se reîmprospătează la fiecare 15 secunde"
+
+#: src/features/analytics/Settings.tsx
+msgid "Refused"
+msgstr "Refuzat"
+
+#: src/features/analytics/text.ts
+msgid "Region"
+msgstr "Regiune"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter"
+msgstr "Elimină filtrul"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter: {label}"
+msgstr "Elimină filtrul: {label}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Remove rule"
+msgstr "Elimină regula"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Remove step"
+msgstr "Elimină pasul"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Rename “{0}”…"
+msgstr "Redenumește „{0}”…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Rename segment"
+msgstr "Redenumește segmentul"
+
+#: src/features/analytics/Install.tsx
+msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
+msgstr "Randează componenta o dată, în layoutul rădăcină. Nu randează nimic; useYuvaAnalytics() oferă metodele oriunde sub ea."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Report"
+msgstr "Raport"
+
+#: src/features/analytics/Settings.tsx
+msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
+msgstr "Cererile cu Do Not Track sau Global Privacy Control și evenimentele fără consimțământ pe o proprietate care îl cere sunt primite, dar nici stocate, nici numărate aici."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Retention"
+msgstr "Retenție"
+
+#: src/features/analytics/Retention.tsx
+msgid "Retention needs consent features"
+msgstr "Retenția are nevoie de funcții de consimțământ"
+
+#: src/features/analytics/text.ts
+msgid "Returning"
+msgstr "Recurenți"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/text.ts
+msgid "Revenue"
+msgstr "Venit"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke"
+msgstr "Revocă"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke {name}?"
+msgstr "Revoci {name}?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoked"
+msgstr "Revocat"
+
+#: src/features/analytics/Exports.tsx
+msgid "Rows"
+msgstr "Rânduri"
+
+#: src/features/analytics/Exports.tsx
+msgid "Running"
+msgstr "În curs"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Save"
+msgstr "Salvează"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Save the changes to “{0}”"
+msgstr "Salvează modificările la „{0}”"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save the filters as a new segment…"
+msgstr "Salvează filtrele ca segment nou…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save these filters as a segment"
+msgstr "Salvează aceste filtre ca segment"
+
+#: src/features/analytics/Controls.tsx
+msgid "Saved segments"
+msgstr "Segmente salvate"
+
+#: src/features/analytics/text.ts
+msgid "Screen"
+msgstr "Ecran"
+
+#: src/features/analytics/text.ts
+msgid "Screen size"
+msgstr "Dimensiunea ecranului"
+
+#: src/features/analytics/text.ts
+msgid "Screen views"
+msgstr "Vizualizări de ecran"
+
+#: src/features/analytics/text.ts
+msgid "Screen views divided by visits."
+msgstr "Vizualizări de ecran împărțite la vizite."
+
+#: src/features/analytics/text.ts
+msgid "Screen views in the last 30 minutes"
+msgstr "Vizualizări de ecran în ultimele 30 de minute"
+
+#: src/features/analytics/text.ts
+msgid "Screen views per minute"
+msgstr "Vizualizări de ecran pe minut"
+
+#: src/features/analytics/text.ts
+msgid "Screens"
+msgstr "Ecrane"
+
+#: src/features/analytics/text.ts
+msgid "Screens viewed."
+msgstr "Ecrane vizualizate."
+
+#: src/features/analytics/text.ts
+msgid "Scroll depth"
+msgstr "Adâncimea derulării"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolled to {pct} on {path}"
+msgstr "A derulat până la {pct} pe {path}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolls"
+msgstr "Derulări"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segment"
+msgstr "Segment"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segments"
+msgstr "Segmente"
+
+#: src/features/analytics/Settings.tsx
+msgid "Send a screen or an event from your app or backend while this page is open, and see whether it reached the server. Refreshes every 5 seconds."
+msgstr "Trimite un ecran sau un eveniment din aplicația sau backendul tău cât timp această pagină este deschisă și vezi dacă a ajuns la server. Se reîmprospătează la fiecare 5 secunde."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Send me one now"
+msgstr "Trimite-mi unul acum"
+
+#: src/features/analytics/Goals.tsx
+msgid "Sends an event"
+msgstr "Trimite un eveniment"
+
+#: src/features/analytics/text.ts
+msgid "Server"
+msgstr "Server"
+
+#: src/features/analytics/Settings.tsx
+msgid "Server busy"
+msgstr "Server ocupat"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Settings"
+msgstr "Setări"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Share links"
+msgstr "Linkuri de partajare"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Shared with Yuva"
+msgstr "Partajat cu Yuva"
+
+#: src/features/analytics/Settings.tsx
+msgid "Sharing"
+msgstr "Partajare"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Events.tsx
+msgid "Show"
+msgstr "Arată"
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/parts.tsx
+msgid "Show from {day}"
+msgstr "Arată din {day}"
+
+#: src/features/analytics/Events.tsx
+msgid "Show its props"
+msgstr "Arată proprietățile lui"
+
+#: src/features/analytics/Controls.tsx
+msgid "Show the days"
+msgstr "Arată zilele"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Show the last 30 days"
+msgstr "Arată ultimele 30 de zile"
+
+#: src/features/analytics/Goals.tsx
+msgid "Signed up"
+msgstr "S-a înscris"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Sites that may embed it"
+msgstr "Site-uri care îl pot încorpora"
+
+#: src/features/analytics/text.ts
+msgid "Social"
+msgstr "Social"
+
+#: src/features/analytics/Settings.tsx
+msgid "Some events were dropped. The reasons are below."
+msgstr "Unele evenimente au fost ignorate. Motivele sunt mai jos."
+
+#: src/features/analytics/text.ts
+msgid "Source"
+msgstr "Sursă"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Realtime.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Sources"
+msgstr "Surse"
+
+#: src/features/analytics/Settings.tsx
+msgid "Start over"
+msgstr "Începe din nou"
+
+#. placeholder {0}: i + 1
+#: src/features/analytics/Funnels.tsx
+msgid "Step {0}"
+msgstr "Pasul {0}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Steps"
+msgstr "Pași"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Support.tsx
+msgid "Support"
+msgstr "Suport"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Support load"
+msgstr "Încărcare de suport"
+
+#: src/features/analytics/Support.tsx
+msgid "Support numbers can only be filtered by page and host. The other filters are left out here."
+msgstr "Cifrele de suport pot fi filtrate doar după pagină și gazdă. Celelalte filtre sunt omise aici."
+
+#: src/features/analytics/text.ts
+msgid "Tablet"
+msgstr "Tabletă"
+
+#: src/features/analytics/Settings.tsx
+msgid "Taken and stored. They show up in Realtime within a minute."
+msgstr "Primite și stocate. Apar în Timp real într-un minut."
+
+#: src/features/analytics/Settings.tsx
+msgid "Test events"
+msgstr "Evenimente de test"
+
+#: src/features/analytics/SharePage.tsx
+msgid "That password is not right."
+msgstr "Parola nu este corectă."
+
+#: src/features/analytics/Funnels.tsx
+msgid "The consented counts follow visitors with a persistent id from one visit and day to the next, so a step reached on a later day still counts."
+msgstr "Numerele celor care au consimțit urmăresc vizitatorii cu id persistent de la o vizită și o zi la următoarea, deci un pas atins într-o zi ulterioară se numără în continuare."
+
+#: src/features/analytics/Settings.tsx
+msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
+msgstr "Cheia curentă continuă să funcționeze 24 de ore, ca să îți poți actualiza paginile fără să pierzi evenimente. Crearea altei chei în acest interval o încheie imediat pe cea veche."
+
+#: src/features/analytics/text.ts
+msgid "The deepest point reached on the page, per view."
+msgstr "Cel mai adânc punct atins pe pagină, pe vizualizare."
+
+#: src/features/analytics/Exports.tsx
+msgid "The export failed on the server."
+msgstr "Exportul a eșuat pe server."
+
+#: src/features/analytics/Exports.tsx
+msgid "The file would be larger than 1 GiB. Export a shorter range."
+msgstr "Fișierul ar depăși 1 GiB. Exportă un interval mai scurt."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "The first event arrived at {at}."
+msgstr "Primul eveniment a sosit la {at}."
+
+#: src/features/analytics/Goals.tsx
+msgid "The goal reports the revenue its events carry, per currency."
+msgstr "Obiectivul raportează venitul purtat de evenimentele lui, pe monedă."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key is public, like a chat key: every page carries it, and it only works on the property’s domains."
+msgstr "Cheia este publică, precum o cheie de chat: fiecare pagină o poartă și funcționează doar pe domeniile proprietății."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key stops working at once, and all visits, events and totals are deleted. This cannot be undone."
+msgstr "Cheia încetează imediat să funcționeze, iar toate vizitele, evenimentele și totalurile sunt șterse. Nu se poate anula."
+
+#: src/features/analytics/Settings.tsx
+msgid "The last 30 days"
+msgstr "Ultimele 30 de zile"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and leaves the list."
+msgstr "Linkul încetează imediat să funcționeze și dispare din listă."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and stays in the list."
+msgstr "Linkul încetează imediat să funcționeze și rămâne în listă."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked."
+msgstr "Linkul încetează să funcționeze la sfârșitul acestei zile în {timezone}. Lasă gol ca să îl păstrezi până este revocat."
+
+#: src/features/analytics/Install.tsx
+msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
+msgstr "Modulul adaugă un plugin de client și composable-ul useYuvaAnalytics(). NUXT_PUBLIC_YUVA_ANALYTICS_KEY înlocuiește cheia la rulare."
+
+#: src/features/analytics/Settings.tsx
+msgid "The name does not match. Type it exactly as shown."
+msgstr "Numele nu se potrivește. Tastează-l exact cum este afișat."
+
+#: src/features/analytics/Goals.tsx
+msgid "The name given to track(), or outbound_click, file_download, not_found, chat_open."
+msgstr "Numele dat lui track(), sau outbound_click, file_download, not_found, chat_open."
+
+#: src/features/analytics/Settings.tsx
+msgid "The previous key keeps working until {at}. Update every page and app before then."
+msgstr "Cheia anterioară continuă să funcționeze până la {at}. Actualizează fiecare pagină și aplicație până atunci."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "The properties of your inboxes show up here once an owner or admin adds them."
+msgstr "Proprietățile căsuțelor tale apar aici după ce un proprietar sau administrator le adaugă."
+
+#: src/features/analytics/Exports.tsx
+msgid "The query could not be run."
+msgstr "Interogarea nu a putut fi rulată."
+
+#: src/features/analytics/Exports.tsx
+msgid "The range is outside the detailed records."
+msgstr "Intervalul este în afara înregistrărilor detaliate."
+
+#: src/features/analytics/SharePage.tsx
+msgid "The report could not be loaded"
+msgstr "Raportul nu a putut fi încărcat"
+
+#: src/features/analytics/Settings.tsx
+msgid "The server’s own database"
+msgstr "Baza de date a serverului însuși"
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need detailed records that are no longer kept for this range."
+msgstr "Aceste filtre au nevoie de înregistrări detaliate care nu se mai păstrează pentru acest interval."
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need the detailed records, which are kept since {day}. Earlier days only have totals per page, source, place and device."
+msgstr "Aceste filtre au nevoie de înregistrările detaliate, care se păstrează din {day}. Zilele mai vechi au doar totaluri pe pagină, sursă, loc și dispozitiv."
+
+#: src/features/analytics/Settings.tsx
+msgid "This cannot be undone."
+msgstr "Nu se poate anula."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal has numbers from {since} on. Days before that show none."
+msgstr "Acest obiectiv are cifre din {since}. Zilele dinainte nu arată niciuna."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
+msgstr "Acest obiectiv este un pas al unei pâlnii. Scoate-l mai întâi din pâlnie sau șterge pâlnia."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This link is not available"
+msgstr "Acest link nu este disponibil"
+
+#: src/features/analytics/text.ts
+msgid "This month"
+msgstr "Luna aceasta"
+
+#: src/features/analytics/Funnels.tsx
+msgid "This property already has a funnel with this name."
+msgstr "Această proprietate are deja o pâlnie cu acest nume."
+
+#: src/features/analytics/Goals.tsx
+msgid "This property already has a goal with this name."
+msgstr "Această proprietate are deja un obiectiv cu acest nume."
+
+#: src/features/analytics/Controls.tsx
+msgid "This property already has a segment with this name."
+msgstr "Această proprietate are deja un segment cu acest nume."
+
+#: src/features/analytics/Exports.tsx
+msgid "This range cannot be exported. Pick a shorter one, or one inside the detailed records."
+msgstr "Acest interval nu poate fi exportat. Alege unul mai scurt sau unul din înregistrările detaliate."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This report has a password"
+msgstr "Acest raport are o parolă"
+
+#: src/features/analytics/Support.tsx
+msgid "This workspace has no inbox yet."
+msgstr "Acest spațiu de lucru nu are încă nicio căsuță."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
+msgstr "Acest spațiu de lucru a atins limita de {limit} de evenimente de analiză pentru luna aceasta. Evenimentele noi sunt ignorate până se termină luna."
+
+#: src/features/analytics/text.ts
+msgid "This year"
+msgstr "Anul acesta"
+
+#: src/features/analytics/Exports.tsx
+msgid "Three exports are already running in this workspace. Try again when one finishes."
+msgstr "Trei exporturi rulează deja în acest spațiu de lucru. Încearcă din nou când se termină unul."
+
+#: src/features/analytics/text.ts
+msgid "Time from the first to the last event of a visit, on average. Bounces count as zero."
+msgstr "Timpul mediu de la primul până la ultimul eveniment al unei vizite. Respingerile se numără ca zero."
+
+#: src/features/analytics/text.ts
+msgid "Time on page"
+msgstr "Timp pe pagină"
+
+#: src/features/analytics/text.ts
+msgid "Time the page was visible and in focus, per view."
+msgstr "Timpul în care pagina a fost vizibilă și activă, pe vizualizare."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Time zone"
+msgstr "Fus orar"
+
+#: src/features/analytics/text.ts
+msgid "Times the goal was reached, also several times by one visitor."
+msgstr "De câte ori a fost atins obiectivul, inclusiv de mai multe ori de același vizitator."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated helpful."
+msgstr "De câte ori a fost pagina evaluată ca utilă."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated not helpful."
+msgstr "De câte ori a fost pagina evaluată ca neutilă."
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "To"
+msgstr "Către"
+
+#: src/features/analytics/text.ts
+msgid "Today"
+msgstr "Azi"
+
+#: src/features/analytics/Settings.tsx
+msgid "Today: {todayCounted} counted, {todayDropped} dropped"
+msgstr "Azi: {todayCounted} numărate, {todayDropped} ignorate"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Token"
+msgstr "Token"
+
+#: src/features/analytics/Settings.tsx
+msgid "Too late"
+msgstr "Prea târziu"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many requests from your network. Wait a minute and reload the page."
+msgstr "Prea multe cereri din rețeaua ta. Așteaptă un minut și reîncarcă pagina."
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many tries. Wait a minute and try again."
+msgstr "Prea multe încercări. Așteaptă un minut și încearcă din nou."
+
+#: src/features/analytics/text.ts
+msgid "Top pages"
+msgstr "Cele mai vizitate pagini"
+
+#: src/features/analytics/text.ts
+msgid "Top pages and screens"
+msgstr "Cele mai vizitate pagini și ecrane"
+
+#: src/features/analytics/text.ts
+msgid "Top screens"
+msgstr "Cele mai vizitate ecrane"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracked props"
+msgstr "Proprietăți urmărite"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracking"
+msgstr "Urmărire"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic drop"
+msgstr "Scădere de trafic"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic spike"
+msgstr "Vârf de trafic"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Try again"
+msgstr "Încearcă din nou"
+
+#: src/features/analytics/Install.tsx
+msgid "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
+msgstr "Activează mai întâi {name} la Platforme în setările generale. Până atunci serverul refuză evenimentele aplicației."
+
+#: src/features/analytics/Retention.tsx
+msgid "Turn on the persistent id in the consent features, then call yuva.consent with persistent set to true."
+msgstr "Activează id-ul persistent în funcțiile de consimțământ, apoi apelează yuva.consent cu persistent setat pe true."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Two to eight goals, in the order visitors reach them within one visit."
+msgstr "De la două la opt obiective, în ordinea în care vizitatorii le ating în cadrul unei vizite."
+
+#: src/features/analytics/Settings.tsx
+msgid "Type the property’s name to delete it and all its data."
+msgstr "Tastează numele proprietății ca să o ștergi împreună cu toate datele ei."
+
+#: src/features/analytics/text.ts
+msgid "Unknown"
+msgstr "Necunoscut"
+
+#: src/features/analytics/Install.tsx
+msgid "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
+msgstr "Până la 100 de evenimente pe cerere, fiecare cu adresa IP și user agentul vizitatorului sau propriul tău visitor_key. Niciunul nu este stocat. Evenimentele omise ca invalide revin în errors cu poziția lor; vezi ce a ajuns la Evenimente de test."
+
+#: src/features/analytics/text.ts
+msgid "UTM campaign"
+msgstr "Campanie UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM content"
+msgstr "Conținut UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM medium"
+msgstr "Mediu UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM source"
+msgstr "Sursă UTM"
+
+#: src/features/analytics/text.ts
+msgid "UTM term"
+msgstr "Termen UTM"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Views"
+msgstr "Vizualizări"
+
+#: src/features/analytics/Goals.tsx
+msgid "Views a page"
+msgstr "Vede o pagină"
+
+#: src/features/analytics/text.ts
+msgid "Views divided by visits."
+msgstr "Vizualizări împărțite la vizite."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views fell to {now} in two hours, against {usual} usually."
+msgstr "Vizualizările au scăzut la {now} în două ore, față de {usual} de obicei."
+
+#: src/features/analytics/text.ts
+msgid "Views in the last 30 minutes"
+msgstr "Vizualizări în ultimele 30 de minute"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at least three times the same hours of the week before."
+msgstr "Vizualizările din ultimele două ore sunt de cel puțin trei ori cele din aceleași ore ale săptămânii dinainte."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at most half the same hours of the week before."
+msgstr "Vizualizările din ultimele două ore sunt cel mult jumătate din cele din aceleași ore ale săptămânii dinainte."
+
+#: src/features/analytics/text.ts
+msgid "Views per minute"
+msgstr "Vizualizări pe minut"
+
+#: src/features/analytics/text.ts
+msgid "Views per visit"
+msgstr "Vizualizări pe vizită"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views rose to {now} in two hours, against {usual} usually."
+msgstr "Vizualizările au crescut la {now} în două ore, față de {usual} de obicei."
+
+#: src/features/analytics/text.ts
+msgid "Visit duration"
+msgstr "Durata vizitei"
+
+#: src/features/analytics/Retention.tsx
+#: src/features/analytics/text.ts
+msgid "Visitors"
+msgstr "Vizitatori"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Visitors in the last 30 minutes"
+msgstr "Vizitatori în ultimele 30 de minute"
+
+#: src/features/analytics/Retention.tsx
+msgid "Visitors who came back"
+msgstr "Vizitatori care au revenit"
+
+#: src/features/analytics/text.ts
+msgid "Visitors who reached the goal, per day, added up over the days of the range."
+msgstr "Vizitatori care au atins obiectivul, pe zi, însumați pe zilele intervalului."
+
+#: src/features/analytics/Settings.tsx
+msgid "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
+msgstr "Vizitatorii cu Do Not Track sau Global Privacy Control nu trimit nimic, deci nici ei nu sunt numărați aici. Despre un eveniment ignorat se păstrează doar numărul."
+
+#: src/features/analytics/text.ts
+msgid "Visits"
+msgstr "Vizite"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page or screen view and nothing else."
+msgstr "Vizite cu o singură vizualizare de pagină sau ecran și nimic altceva."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page view and nothing else."
+msgstr "Vizite cu o singură vizualizare de pagină și nimic altceva."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one screen view and nothing else."
+msgstr "Vizite cu o singură vizualizare de ecran și nimic altceva."
+
+#: src/features/analytics/Install.tsx
+msgid "Vue, Astro, other"
+msgstr "Vue, Astro, altele"
+
+#: src/features/analytics/Exports.tsx
+msgid "Waiting"
+msgstr "Așteaptă"
+
+#: src/features/analytics/Settings.tsx
+msgid "Waiting for events since {at}."
+msgstr "Se așteaptă evenimente din {at}."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Waiting for the first event"
+msgstr "Se așteaptă primul eveniment"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Watch it live"
+msgstr "Urmărește live"
+
+#: src/features/analytics/text.ts
+msgid "Web"
+msgstr "Web"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Website or app"
+msgstr "Site sau aplicație"
+
+#: src/features/analytics/Retention.tsx
+msgid "Week {period}"
+msgstr "Săptămâna {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Weekly"
+msgstr "Săptămânal"
+
+#: src/features/analytics/Retention.tsx
+msgid "Weeks"
+msgstr "Săptămâni"
+
+#: src/features/analytics/Insights.tsx
+msgid "What changed"
+msgstr "Ce s-a schimbat"
+
+#: src/features/analytics/Support.tsx
+msgid "What stands out"
+msgstr "Ce iese în evidență"
+
+#: src/features/analytics/text.ts
+msgid "What the goal's events carried, per currency. Currencies are never converted or added up."
+msgstr "Ce au purtat evenimentele obiectivului, pe monedă. Monedele nu sunt niciodată convertite sau însumate."
+
+#: src/features/analytics/Exports.tsx
+msgid "What to export"
+msgstr "Ce să exporți"
+
+#: src/features/analytics/Goals.tsx
+msgid "Where conversions come from"
+msgstr "De unde vin conversiile"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Where the property’s day starts and ends."
+msgstr "Unde începe și se termină ziua proprietății."
+
+#: src/features/analytics/Install.tsx
+msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."
+msgstr "Cu data-consent=\"required\" scriptul nu trimite nimic până când instrumentul tău de consimțământ spune că vizitatorul a fost de acord. Setează și Colectare pe „Doar cu consimțământ” în setările generale, ca serverul să refuze evenimentele fără el."
+
+#: src/features/analytics/Settings.tsx
+msgid "With yuva.consent and persistent set to true, the device keeps a random id for 13 months. The visitor counts once over several days, is told apart as new or returning, fills retention and is followed across days in funnels. Never under Do Not Track or Global Privacy Control."
+msgstr "Cu yuva.consent și persistent setat pe true, dispozitivul păstrează un id aleatoriu 13 luni. Vizitatorul este numărat o dată pe mai multe zile, este deosebit ca nou sau recurent, umple retenția și este urmărit de la o zi la alta în pâlnii. Niciodată cu Do Not Track sau Global Privacy Control."
+
+#: src/features/analytics/text.ts
+msgid "Without consent"
+msgstr "Fără consimțământ"
+
+#: src/features/analytics/Retention.tsx
+msgid "Without cookies a visitor is new every day, so nobody can be followed from one day to the next. Only visitors who agree to a persistent id in your consent tool show up here."
+msgstr "Fără cookieuri, un vizitator este nou în fiecare zi, deci nimeni nu poate fi urmărit de la o zi la alta. Aici apar doar vizitatorii care acceptă un id persistent în instrumentul tău de consimțământ."
+
+#: src/features/analytics/Settings.tsx
+msgid "Without cookies, for everyone"
+msgstr "Fără cookieuri, pentru toți"
+
+#: src/features/analytics/text.ts
+msgid "Yesterday"
+msgstr "Ieri"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Your access ended. Enter the password again to keep reading."
+msgstr "Accesul tău s-a încheiat. Introdu din nou parola ca să continui să citești."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Your new share link"
+msgstr "Noul tău link de partajare"
+
+#: src/features/analytics/Settings.tsx
+msgid "yuva.identify with a token from your backend, signed like a chat session, links the visitor’s visits to their contact. They show on the contact’s page under Recent visits. Forged or reused tokens are ignored."
+msgstr "yuva.identify cu un token de la backendul tău, semnat ca o sesiune de chat, leagă vizitele vizitatorului de contactul lui. Apar pe pagina contactului la Vizite recente. Tokenurile falsificate sau refolosite sunt ignorate."

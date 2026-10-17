@@ -22,14 +22,14 @@ function SheetContent({
         data-side={side}
         className={cn(
           "fixed inset-y-0 z-50 flex w-[min(22rem,88vw)] flex-col bg-card text-body text-foreground shadow-[0_0_60px_-20px_rgb(15_23_42/0.4)] outline-none",
-          side === "right" ? "right-0 border-l" : "left-0 border-r",
+          side === "right" ? "end-0 border-s" : "start-0 border-e",
           className
         )}
         {...props}
       >
         {children}
         {showCloseButton && (
-          <SheetPrimitive.Close render={<Button variant="ghost" size="icon-sm" className="absolute top-3 right-3" />}>
+          <SheetPrimitive.Close render={<Button variant="ghost" size="icon-sm" className="absolute top-3 end-3" />}>
             <XIcon />
             <span className="sr-only">
               <Trans>Close</Trans>

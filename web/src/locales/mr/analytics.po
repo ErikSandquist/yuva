@@ -1,0 +1,2748 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 10:11+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: mr\n"
+
+#: src/features/analytics/text.ts
+msgid "(not set)"
+msgstr "(सेट नाही)"
+
+#. placeholder {0}: e.rows
+#: src/features/analytics/Exports.tsx
+msgid "{0, plural, one {# row} other {# rows}}"
+msgstr "{0, plural, one {# पंक्ती} other {# पंक्ती}}"
+
+#. placeholder {0}: p.visitors_today
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{0, plural, one {visitor today} other {visitors today}}"
+msgstr "{0, plural, one {आजचा व्हिझिटर} other {आजचे व्हिझिटर्स}}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{consentedCount} consented, across visits and days"
+msgstr "{consentedCount} ने संमती दिली, भेटी आणि दिवसांमध्ये"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {{site} sent # visit, and none in the 28 days before.} other {{site} sent # visits, and none in the 28 days before.}}"
+msgstr "{count, plural, one {{site} ने # भेट पाठवली, आणि मागच्या 28 दिवसांत एकही नाही.} other {{site} ने # भेटी पाठवल्या, आणि मागच्या 28 दिवसांत एकही नाही.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {# conversation per 1,000 views, against {usual} in the 28 days before.} other {# conversations per 1,000 views, against {usual} in the 28 days before.}}"
+msgstr "{count, plural, one {प्रति 1,000 व्ह्यू # संभाषण, मागच्या 28 दिवसांच्या {usual} च्या तुलनेत.} other {प्रति 1,000 व्ह्यू # संभाषणे, मागच्या 28 दिवसांच्या {usual} च्या तुलनेत.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {Goal “{goal}” had # conversion, against {usual} a day on average in the week before.} other {Goal “{goal}” had # conversions, against {usual} a day on average in the week before.}}"
+msgstr "{count, plural, one {गोल “{goal}” चे # कन्व्हर्जन होते, मागच्या आठवड्याच्या सरासरी {usual} प्रतिदिन च्या तुलनेत.} other {गोल “{goal}” चे # कन्व्हर्जन होते, मागच्या आठवड्याच्या सरासरी {usual} प्रतिदिन च्या तुलनेत.}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{count} in this range, none in the compared days."
+msgstr "या रेंजमध्ये {count}, तुलनेच्या दिवसांत एकही नाही."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {count}, none in the compared days."
+msgstr "{dim} {value}: {count}, तुलनेच्या दिवसांत एकही नाही."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} fell {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} {change} घटले, {before} च्या तुलनेत {now}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} rose {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} {change} वाढले, {before} च्या तुलनेत {now}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {metric} {now}, none in the compared days."
+msgstr "{dim} {value}: {metric} {now}, तुलनेच्या दिवसांत एकही नाही."
+
+#: src/features/analytics/Annotations.tsx
+msgid "{kind}: {found}"
+msgstr "{kind}: {found}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{lost} left ({lostPct})"
+msgstr "{lost} सोडून गेले ({lostPct})"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} fell {change}: {now}, against {before} in the compared days."
+msgstr "{metric} {change} घटले: {now}, तुलनेच्या दिवसांत {before} च्या तुलनेत."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} rose {change}: {now}, against {before} in the compared days."
+msgstr "{metric} {change} वाढले: {now}, तुलनेच्या दिवसांत {before} च्या तुलनेत."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric}: {now}, none in the compared days."
+msgstr "{metric}: {now}, तुलनेच्या दिवसांत एकही नाही."
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversation} other {# conversations}}"
+msgstr "{n, plural, one {# संभाषण} other {# संभाषणे}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversion} other {# conversions}}"
+msgstr "{n, plural, one {# कन्व्हर्जन} other {# कन्व्हर्जन}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# discussion} other {# discussions}}"
+msgstr "{n, plural, one {# चर्चा} other {# चर्चा}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# event} other {# events}}"
+msgstr "{n, plural, one {# इव्हेंट} other {# इव्हेंट}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# view} other {# views}}"
+msgstr "{n, plural, one {# व्ह्यू} other {# व्ह्यू}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visit} other {# visits}}"
+msgstr "{n, plural, one {# भेट} other {# भेटी}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visitor} other {# visitors}}"
+msgstr "{n, plural, one {# व्हिझिटर} other {# व्हिझिटर्स}}"
+
+#: src/features/analytics/Events.tsx
+msgid "{n} payments, {avg} on average"
+msgstr "{n} पेमेंट, सरासरी {avg}"
+
+#: src/features/analytics/Install.tsx
+msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
+msgstr "{name} या प्रॉपर्टीच्या प्लॅटफॉर्मपैकी नाही, म्हणून सर्व्हर ॲपचे इव्हेंट नाकारतो. ओनर किंवा ॲडमिन ते चालू करू शकतो."
+
+#: src/features/analytics/Funnels.tsx
+msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
+msgstr "पहिल्या पायरीपर्यंत पोहोचलेल्या व्हिझिटर्सपैकी {overall} शेवटच्या पायरीपर्यंतही पोहोचले, {from} – {to}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
+msgstr "{rate, plural, one {{dim} {value}: प्रति 1,000 व्ह्यू # संभाषण, सर्व पेजेसमध्ये {site} च्या तुलनेत.} other {{dim} {value}: प्रति 1,000 व्ह्यू # संभाषणे, सर्व पेजेसमध्ये {site} च्या तुलनेत.}}"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
+msgstr "या महिन्यात {limit} पैकी {used} ॲनालिटिक्स इव्हेंट वापरले. मर्यादेवरील इव्हेंट महिना संपेपर्यंत वगळले जातात."
+
+#: src/features/analytics/Settings.tsx
+msgid "A change applies to new events. Days already counted keep their zone."
+msgstr "बदल नवीन इव्हेंटना लागू होतो. आधीच मोजलेले दिवस त्यांचा झोन राखतात."
+
+#: src/features/analytics/Goals.tsx
+msgid "A changed goal is counted again over the days the detailed records are kept."
+msgstr "बदललेला गोल ज्या दिवसांचे तपशीलवार रेकॉर्ड ठेवले जातात त्यांसाठी पुन्हा मोजला जातो."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel follows each visit step by step, so it covers at most 90 days at once, or 31 days for a property with more than 10 million events a month. Pick a shorter range."
+msgstr "फनेल प्रत्येक भेट पायरी-पायरीने फॉलो करतो, म्हणून तो एकावेळी जास्तीत जास्त 90 दिवस, किंवा महिन्याला 1 कोटींहून जास्त इव्हेंट असलेल्या प्रॉपर्टीसाठी 31 दिवस कव्हर करतो. लहान रेंज निवडा."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel is made of two to eight goals in a row. Make at least two goals first."
+msgstr "फनेल सलग दोन ते आठ गोलचा बनतो. आधी किमान दोन गोल तयार करा."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are kept since {day}. Earlier days only have totals, so they cannot show a funnel."
+msgstr "फनेलला प्रत्येक भेटीच्या पायऱ्या हव्यात, ज्या {day} पासून ठेवल्या जातात. आधीच्या दिवसांकडे फक्त एकूण आहे, म्हणून ते फनेल दाखवू शकत नाहीत."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are no longer kept for this range."
+msgstr "फनेलला प्रत्येक भेटीच्या पायऱ्या हव्यात, ज्या या रेंजसाठी आता ठेवल्या जात नाहीत."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel shows how many visitors go from one goal to the next within a visit, and where they leave."
+msgstr "फनेल दाखवतो की किती व्हिझिटर्स एका भेटीत एका गोलकडून पुढच्याकडे जातात, आणि कुठे सोडतात."
+
+#: src/features/analytics/Goals.tsx
+msgid "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
+msgstr "गोल अशा व्हिझिटर्सना मोजतो जे पेज पाहतात, इव्हेंट पाठवतात किंवा पुरेसे स्क्रोल करतात, आणि त्यांनी आणलेल्या महसुलाला."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A goal’s conversions yesterday were at most half its daily average of the week before."
+msgstr "काल गोलचे कन्व्हर्जन त्याच्या आधीच्या आठवड्याच्या दैनिक सरासरीच्या निम्मे किंवा कमी होते."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A link shows only its views of this property, read-only, without filters or segments. Revoking or deleting it stops it at once."
+msgstr "लिंक या प्रॉपर्टीचे फक्त तुम्ही निवडलेले व्ह्यू दाखवते, फक्त-वाचन, फिल्टर किंवा सेगमेंटशिवाय. रद्द किंवा हटवल्यास ती लगेच थांबते."
+
+#: src/features/analytics/Goals.tsx
+msgid "A new goal also counts the days the detailed records are kept, not only from today."
+msgstr "नवीन गोल ज्या दिवसांचे तपशीलवार रेकॉर्ड ठेवले जातात ते दिवसही मोजतो, फक्त आजपासून नाही."
+
+#: src/features/analytics/Annotations.tsx
+msgid "A new key was made"
+msgstr "नवीन की तयार केली गेली"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A new password signs out everyone who unlocked the link."
+msgstr "नवीन पासवर्ड लिंक अनलॉक केलेल्या सर्वांना साइन आउट करतो."
+
+#: src/features/analytics/Goals.tsx
+msgid "A path. * stands for one part of it, ** for any number of them."
+msgstr "एक पाथ. * त्याच्या एका भागासाठी, ** कितीही भागांसाठी."
+
+#: src/features/analytics/Settings.tsx
+msgid "A prop name has at most 300 characters and does not start with $ or yuva_."
+msgstr "प्रॉपच्या नावात जास्तीत जास्त 300 अक्षरे असतात आणि ते $ किंवा yuva_ ने सुरू होत नाही."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A property can have at most 50 share links. Delete one first."
+msgstr "एका प्रॉपर्टीमध्ये जास्तीत जास्त 50 शेअर लिंक असू शकतात. आधी एक हटवा."
+
+#: src/features/analytics/parts.tsx
+msgid "A range can be at most 400 days long. Pick a shorter one."
+msgstr "रेंज जास्तीत जास्त 400 दिवस लांब असू शकते. लहान एक निवडा."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A site sent 10 or more visits yesterday and none in the 28 days before."
+msgstr "काल एका साइटने 10 किंवा जास्त भेटी पाठवल्या आणि मागच्या 28 दिवसांत एकही नाही."
+
+#: src/features/analytics/Settings.tsx
+msgid "A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and it shows as a chip on the Events view."
+msgstr "ट्रॅक केलेला प्रॉप दैनिक एकूणातही ठेवला जातो, म्हणून तपशीलवार रेकॉर्ड गेल्यानंतरही त्याचे ब्रेकडाउन राहते, आणि तो इव्हेंट व्ह्यूवर चिप म्हणून दिसतो."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page or screen views without a gap of 30 minutes, within one day."
+msgstr "एका व्हिझिटरचे पेज किंवा स्क्रीन व्ह्यू, 30 मिनिटांच्या अंतराशिवाय, एका दिवसात."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page views without a gap of 30 minutes, within one day."
+msgstr "एका व्हिझिटरचे पेज व्ह्यू, 30 मिनिटांच्या अंतराशिवाय, एका दिवसात."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
+msgstr "एका व्हिझिटरचे स्क्रीन व्ह्यू, 30 मिनिटांच्या अंतराशिवाय, एका दिवसात. ॲपचा प्रत्येक लाँच नवीन भेट सुरू करतो."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Active"
+msgstr "सक्रिय"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add"
+msgstr "जोडा"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add a note to the chart"
+msgstr "चार्टमध्ये नोट जोडा"
+
+#: src/features/analytics/Settings.tsx
+msgid "Add a rule"
+msgstr "नियम जोडा"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Add a step"
+msgstr "पायरी जोडा"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/NewProperty.tsx
+msgid "Add a website"
+msgstr "वेबसाइट जोडा"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add a website to count its visitors, pages and sources, without cookies."
+msgstr "वेबसाइटचे व्हिझिटर्स, पेजेस आणि स्रोत कुकीशिवाय मोजण्यासाठी ती जोडा."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Add and install"
+msgstr "जोडा आणि इन्स्टॉल करा"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add note"
+msgstr "नोट जोडा"
+
+#: src/features/analytics/Install.tsx
+msgid "Add the YuvaAnalytics library of the Yuva package and configure it once at launch. .yuvaScreen counts a SwiftUI screen; in UIKit, call YuvaAnalytics.screen when a screen appears. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "Yuva पॅकेजची YuvaAnalytics लायब्ररी जोडा आणि लाँचवर एकदा कॉन्फिगर करा. .yuvaScreen SwiftUI स्क्रीन मोजतो; UIKit मध्ये स्क्रीन दिसल्यावर YuvaAnalytics.screen कॉल करा. कनेक्शनशिवाय इव्हेंट डिव्हाइसवर 72 तासांपर्यंत थांबतात आणि स्वतःच्या वेळेसह पोहोचतात."
+
+#: src/features/analytics/Install.tsx
+msgid "Add yuva-analytics from JitPack and configure it once in Application.onCreate. TrackScreen counts a Compose screen. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "JitPack मधून yuva-analytics जोडा आणि Application.onCreate मध्ये एकदा कॉन्फिगर करा. TrackScreen Compose स्क्रीन मोजतो. कनेक्शनशिवाय इव्हेंट डिव्हाइसवर 72 तासांपर्यंत थांबतात आणि स्वतःच्या वेळेसह पोहोचतात."
+
+#: src/features/analytics/Settings.tsx
+msgid "Addresses not counted"
+msgstr "न मोजलेले पत्ते"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the compared days"
+msgstr "तुलनेच्या दिवसांच्या तुलनेत"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the period before"
+msgstr "आधीच्या कालावधीच्या तुलनेत"
+
+#: src/features/analytics/Support.tsx
+msgid "Agents of the inbox can then see this property’s numbers too."
+msgstr "इनबॉक्सचे एजंट मग या प्रॉपर्टीचे आकडेही पाहू शकतात."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Agents of this inbox can see the numbers."
+msgstr "या इनबॉक्सचे एजंट आकडे पाहू शकतात."
+
+#: src/features/analytics/text.ts
+msgid "AI assistants"
+msgstr "AI असिस्टंट"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Alerts"
+msgstr "अलर्ट"
+
+#: src/features/analytics/Settings.tsx
+msgid "Alerts and reports"
+msgstr "अलर्ट आणि रिपोर्ट"
+
+#: src/features/analytics/Events.tsx
+msgid "All events"
+msgstr "सर्व इव्हेंट"
+
+#: src/features/analytics/Goals.tsx
+msgid "All goals"
+msgstr "सर्व गोल"
+
+#: src/features/analytics/Support.tsx
+msgid "An owner or admin can link one in the property’s settings."
+msgstr "ओनर किंवा ॲडमिन प्रॉपर्टीच्या सेटिंग्जमध्ये एक लिंक करू शकतो."
+
+#: src/features/analytics/Retention.tsx
+msgid "An owner or admin can turn on the persistent id in the consent features."
+msgstr "ओनर किंवा ॲडमिन संमती फीचरमध्ये कायम id चालू करू शकतो."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics"
+msgstr "ॲनालिटिक्स"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Analytics properties"
+msgstr "ॲनालिटिक्स प्रॉपर्टी"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Analytics steps"
+msgstr "ॲनालिटिक्सच्या पायऱ्या"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics views"
+msgstr "ॲनालिटिक्स व्ह्यू"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Anyone with the link sees the views you pick, read-only, without signing in."
+msgstr "लिंक असलेला कोणीही तुम्ही निवडलेले व्ह्यू पाहतो, फक्त-वाचन, साइन इनशिवाय."
+
+#: src/features/analytics/text.ts
+msgid "App"
+msgstr "ॲप"
+
+#: src/features/analytics/text.ts
+msgid "App version"
+msgstr "ॲप आवृत्ती"
+
+#: src/features/analytics/Settings.tsx
+msgid "Apps send without a domain, so only the platforms turned on here are counted. Events from your backend need no platform."
+msgstr "ॲप्स डोमेनशिवाय पाठवतात, म्हणून फक्त इथे चालू असलेले प्लॅटफॉर्म मोजले जातात. तुमच्या बॅकएंडच्या इव्हेंटना प्लॅटफॉर्म लागत नाही."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Ask for a password"
+msgstr "पासवर्ड मागा"
+
+#: src/features/analytics/Sharing.tsx
+msgid "At least 8 characters"
+msgstr "किमान 8 अक्षरे"
+
+#: src/features/analytics/Settings.tsx
+msgid "At most 10 props can be tracked."
+msgstr "जास्तीत जास्त 10 प्रॉप ट्रॅक करता येतात."
+
+#: src/features/analytics/Settings.tsx
+msgid "Audience"
+msgstr "ऑडियन्स"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Available until {expires}"
+msgstr "{expires} पर्यंत उपलब्ध"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots"
+msgstr "बॉट"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
+msgstr "बॉट, रेट मर्यादा, वगळलेले पत्ते आणि पाथ, मासिक मर्यादा किंवा व्यस्त सर्व्हर."
+
+#: src/features/analytics/text.ts
+msgid "Bounce rate"
+msgstr "बाउन्स रेट"
+
+#: src/features/analytics/Events.tsx
+msgid "Break down by prop"
+msgstr "प्रॉपनुसार विभागा"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Breakdown"
+msgstr "ब्रेकडाउन"
+
+#: src/features/analytics/Exports.tsx
+msgid "Broken down by"
+msgstr "यानुसार विभागलेले"
+
+#: src/features/analytics/Settings.tsx
+msgid "Broken events, such as a screen address that does not start with app://, a reserved name or too many props."
+msgstr "तुटलेले इव्हेंट, जसे app:// ने सुरू न होणारा स्क्रीन पत्ता, राखीव नाव किंवा खूप प्रॉप."
+
+#: src/features/analytics/text.ts
+msgid "Browser"
+msgstr "ब्राउझर"
+
+#: src/features/analytics/text.ts
+msgid "Browser version"
+msgstr "ब्राउझर आवृत्ती"
+
+#: src/features/analytics/Install.tsx
+msgid "Call it once in the browser. During server rendering it does nothing."
+msgstr "हे ब्राउझरमध्ये एकदा कॉल करा. सर्व्हर रेंडरिंगदरम्यान ते काहीही करत नाही."
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Cancel"
+msgstr "रद्द करा"
+
+#: src/features/analytics/Controls.tsx
+msgid "Change filter: {label}"
+msgstr "फिल्टर बदला: {label}"
+
+#: src/features/analytics/Controls.tsx
+msgid "changed"
+msgstr "बदलले"
+
+#: src/features/analytics/text.ts
+msgid "Channel"
+msgstr "चॅनेल"
+
+#: src/features/analytics/text.ts
+msgid "Chat opened"
+msgstr "चॅट उघडली"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Checked every hour. Each alert is sent once and also shows as a note on the chart."
+msgstr "दर तासाला तपासले जाते. प्रत्येक अलर्ट एकदा पाठवला जातो आणि चार्टवर नोट म्हणूनही दिसतो."
+
+#: src/features/analytics/Settings.tsx
+msgid "Children"
+msgstr "मुले"
+
+#: src/features/analytics/Support.tsx
+msgid "Choose an inbox"
+msgstr "इनबॉक्स निवडा"
+
+#: src/features/analytics/Settings.tsx
+msgid "Choose children for a site made for children."
+msgstr "मुलांसाठी बनवलेल्या साइटसाठी मुले निवडा."
+
+#: src/features/analytics/text.ts
+msgid "City"
+msgstr "शहर"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Clear"
+msgstr "साफ करा"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts by"
+msgstr "कोहॉर्ट यानुसार"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts fill once visitors agree to a persistent id and come back. The numbers are rebuilt every hour."
+msgstr "कोहॉर्ट तेव्हा भरतात जेव्हा व्हिझिटर्स कायम id ला सहमत होतात आणि परत येतात. आकडे दर तासाला पुन्हा बनतात."
+
+#: src/features/analytics/Settings.tsx
+msgid "Collection"
+msgstr "संग्रह"
+
+#. placeholder {0}: formatDate(`${c.from}T12:00:00Z`, i18n.locale)
+#. placeholder {1}: formatDate(`${c.to}T12:00:00Z`, i18n.locale)
+#: src/features/analytics/Controls.tsx
+msgid "Compare with {0} – {1}"
+msgstr "{0} – {1} शी तुलना करा"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with a year earlier"
+msgstr "एक वर्षापूर्वीशी तुलना करा"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days"
+msgstr "इतर दिवसांशी तुलना करा"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days…"
+msgstr "इतर दिवसांशी तुलना करा…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the days"
+msgstr "या दिवसांशी तुलना करा"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the period before"
+msgstr "आधीच्या कालावधीशी तुलना करा"
+
+#: src/features/analytics/Overview.tsx
+msgid "Compared days"
+msgstr "तुलनेचे दिवस"
+
+#: src/features/analytics/Controls.tsx
+msgid "Comparison"
+msgstr "तुलना"
+
+#: src/features/analytics/text.ts
+msgid "Completions"
+msgstr "पूर्तता"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consent features"
+msgstr "संमती फीचर"
+
+#: src/features/analytics/Install.tsx
+msgid "Consent mode"
+msgstr "संमती मोड"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id, and signed-in users are linked to their contact."
+msgstr "संमती दिलेले व्हिझिटर्स कायम id ठेवतात, आणि साइन-इन केलेले युजर्स त्यांच्या कॉन्टॅक्टशी जोडले जातात."
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id."
+msgstr "संमती दिलेले व्हिझिटर्स कायम id ठेवतात."
+
+#: src/features/analytics/parts.tsx
+msgid "Consented visitors only"
+msgstr "फक्त संमती दिलेले व्हिझिटर्स"
+
+#: src/features/analytics/text.ts
+msgid "contains"
+msgstr "यात आहे"
+
+#: src/features/analytics/Install.tsx
+msgid "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
+msgstr "कंटेंट ब्लॉकर अनेकदा इतर डोमेनच्या स्क्रिप्ट थांबवतात. स्क्रिप्ट आणि तिचा एंडपॉइंट स्वतःच्या साइटवरून दिल्यास ते व्हिझिटर्स मोजले जात राहतात. Yuva सर्व्हरने तुमच्या प्रॉक्सीचा फॉरवर्ड केलेला पत्ता मानला पाहिजे; नाहीतर सर्व व्हिझिटर्स एकसारखे दिसतात."
+
+#: src/features/analytics/text.ts
+msgid "Conversations"
+msgstr "संभाषणे"
+
+#: src/features/analytics/text.ts
+msgid "Conversations per 1,000 views of the page."
+msgstr "पेजच्या प्रति 1,000 व्ह्यूमागे संभाषणे."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Conversations per 1,000 views yesterday were at least twice the rate of the 28 days before."
+msgstr "काल प्रति 1,000 व्ह्यूमागे संभाषणे मागच्या 28 दिवसांच्या दराच्या किमान दुप्पट होती."
+
+#: src/features/analytics/text.ts
+msgid "Conversations started on the page, from the chat of the linked inbox."
+msgstr "पेजवर सुरू झालेली संभाषणे, लिंक केलेल्या इनबॉक्सच्या चॅटमधून."
+
+#: src/features/analytics/Support.tsx
+msgid "Conversations, feedback, ratings and discussions of the linked inbox show here next to each page’s views. They are counted per page and day; no visitor is ever matched to a contact."
+msgstr "लिंक केलेल्या इनबॉक्सची संभाषणे, फीडबॅक, रेटिंग आणि चर्चा इथे प्रत्येक पेजच्या व्ह्यूंशेजारी दिसतात. त्या प्रति पेज आणि दिवस मोजल्या जातात; कोणत्याही व्हिझिटरची कधीही कॉन्टॅक्टशी जुळणी होत नाही."
+
+#: src/features/analytics/text.ts
+msgid "Conversion rate"
+msgstr "कन्व्हर्जन रेट"
+
+#: src/features/analytics/text.ts
+msgid "Conversions"
+msgstr "कन्व्हर्जन"
+
+#: src/features/analytics/text.ts
+msgid "Conversions per 100 visitors."
+msgstr "प्रति 100 व्हिझिटर्स कन्व्हर्जन."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
+msgstr "ते आता कॉपी करा; ते पुन्हा दाखवले जात नाही. हरवलेल्या लिंक फक्त रद्द करून पुन्हा बनवता येतात."
+
+#: src/features/analytics/Install.tsx
+msgid "Count my visits again"
+msgstr "माझ्या भेटी पुन्हा मोजा"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Count visitors, pages, sources, places and devices without cookies and without storing IP addresses."
+msgstr "कुकीशिवाय आणि IP पत्ते साठवल्याशिवाय व्हिझिटर्स, पेजेस, स्रोत, ठिकाणे आणि डिव्हाइस मोजा."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Count your website’s visitors"
+msgstr "तुमच्या वेबसाइटचे व्हिझिटर्स मोजा"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted"
+msgstr "मोजले"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted as"
+msgstr "म्हणून मोजले"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Countries"
+msgstr "देश"
+
+#: src/features/analytics/text.ts
+msgid "Country"
+msgstr "देश"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
+msgstr "विचारल्याशिवाय प्रत्येक व्हिझिटर मोजतो: डिव्हाइसवर काहीही साठवले जात नाही आणि कोणताही IP पत्ता ठेवला जात नाही."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Counts the visitors who reached each step after the ones before it, within one visit on one day. Numbers are at most ten minutes old."
+msgstr "प्रत्येक पायरीपर्यंत त्याआधीच्यांनंतर पोहोचलेल्या व्हिझिटर्सना मोजतो, एका दिवशी एका भेटीत. आकडे जास्तीत जास्त दहा मिनिटे जुने आहेत."
+
+#: src/features/analytics/Settings.tsx
+msgid "Currency"
+msgstr "चलन"
+
+#: src/features/analytics/Exports.tsx
+msgid "Current view"
+msgstr "सध्याचा व्ह्यू"
+
+#: src/features/analytics/text.ts
+msgid "Custom and built-in events."
+msgstr "कस्टम आणि बिल्ट-इन इव्हेंट."
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range"
+msgstr "कस्टम रेंज"
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range…"
+msgstr "कस्टम रेंज…"
+
+#: src/features/analytics/Settings.tsx
+msgid "Data"
+msgstr "डेटा"
+
+#: src/features/analytics/Install.tsx
+msgid "data-outbound counts clicks on links to other sites, data-files downloads of documents and archives, and data-chat each time a visitor opens the chat. track() sends your own events with up to 30 props; e-mail addresses in props are dropped. Make goals from events in the Goals view."
+msgstr "data-outbound इतर साइट्सच्या लिंकवरील क्लिक मोजतो, data-files दस्तऐवज आणि आर्काइव्हचे डाउनलोड, आणि data-chat व्हिझिटर चॅट उघडतो तेव्हा प्रत्येक वेळी. track() 30 प्रॉपपर्यंत तुमचे स्वतःचे इव्हेंट पाठवतो; प्रॉपमधील ई-मेल पत्ते वगळले जातात. इव्हेंटमधून Goals व्ह्यूमध्ये गोल बनवा."
+
+#: src/features/analytics/Settings.tsx
+msgid "Day"
+msgstr "दिवस"
+
+#: src/features/analytics/Retention.tsx
+msgid "Day {period}"
+msgstr "दिवस {period}"
+
+#: src/features/analytics/Exports.tsx
+msgid "Day by day"
+msgstr "दिवसागणिक"
+
+#: src/features/analytics/Retention.tsx
+msgid "Days"
+msgstr "दिवस"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/SharePage.tsx
+msgid "Days are counted in this time zone"
+msgstr "दिवस या टाइम झोनमध्ये मोजले जातात"
+
+#: src/features/analytics/Settings.tsx
+msgid "Days are in the property’s time zone. Their totals are counted again without them."
+msgstr "दिवस प्रॉपर्टीच्या टाइम झोनमध्ये आहेत. त्यांचे एकूण त्यांच्याशिवाय पुन्हा मोजले जातात."
+
+#: src/features/analytics/Settings.tsx
+msgid "Days waiting to be summed up"
+msgstr "बेरीज होण्याची वाट पाहणारे दिवस"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete"
+msgstr "हटवा"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete {0}?"
+msgstr "{0} हटवायचे?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete {name}?"
+msgstr "{name} हटवायचे?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data"
+msgstr "सर्व डेटा हटवा"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data of {0}?"
+msgstr "{0} चा सर्व डेटा हटवायचा?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete days"
+msgstr "दिवस हटवा"
+
+#: src/features/analytics/Exports.tsx
+msgid "Delete export"
+msgstr "एक्सपोर्ट हटवा"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Delete funnel"
+msgstr "फनेल हटवा"
+
+#: src/features/analytics/Goals.tsx
+msgid "Delete goal"
+msgstr "गोल हटवा"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete note"
+msgstr "नोट हटवा"
+
+#: src/features/analytics/Controls.tsx
+msgid "Delete segment"
+msgstr "सेगमेंट हटवा"
+
+#. placeholder {0}: funnel.name
+#: src/features/analytics/Funnels.tsx
+msgid "Delete the funnel “{0}”?"
+msgstr "फनेल “{0}” हटवायचा?"
+
+#. placeholder {0}: goal.name
+#: src/features/analytics/Goals.tsx
+msgid "Delete the goal “{0}”?"
+msgstr "गोल “{0}” हटवायचा?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the property"
+msgstr "प्रॉपर्टी हटवा"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Delete the segment “{0}”?"
+msgstr "सेगमेंट “{0}” हटवायचा?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the visits and events of {span}?"
+msgstr "{span} च्या भेटी आणि इव्हेंट हटवायचे?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete these days"
+msgstr "हे दिवस हटवा"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete this note?"
+msgstr "ही नोट हटवायची?"
+
+#: src/features/analytics/Exports.tsx
+msgid "deleted {expires}"
+msgstr "{expires} ला हटवले"
+
+#: src/features/analytics/Settings.tsx
+msgid "Deleting in the background. The numbers update when it is done."
+msgstr "बॅकग्राउंडमध्ये हटवत आहे. पूर्ण झाल्यावर आकडे अपडेट होतात."
+
+#: src/features/analytics/Goals.tsx
+msgid "Depth in %"
+msgstr "खोली % मध्ये"
+
+#: src/features/analytics/text.ts
+msgid "Desktop"
+msgstr "डेस्कटॉप"
+
+#: src/features/analytics/Exports.tsx
+msgid "Detailed records are kept since {rawDay}."
+msgstr "तपशीलवार रेकॉर्ड {rawDay} पासून ठेवले जातात."
+
+#: src/features/analytics/Settings.tsx
+msgid "Detailed records kept since"
+msgstr "तपशीलवार रेकॉर्ड यापासून ठेवले जातात"
+
+#: src/features/analytics/Overview.tsx
+msgid "Details"
+msgstr "तपशील"
+
+#: src/features/analytics/text.ts
+msgid "Device"
+msgstr "डिव्हाइस"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Devices"
+msgstr "डिव्हाइस"
+
+#: src/features/analytics/text.ts
+msgid "Direct"
+msgstr "थेट"
+
+#: src/features/analytics/text.ts
+msgid "Direct / none"
+msgstr "थेट / काहीही नाही"
+
+#: src/features/analytics/text.ts
+msgid "Discussion threads started on the page."
+msgstr "पेजवर सुरू झालेले चर्चा थ्रेड."
+
+#: src/features/analytics/text.ts
+msgid "Discussions"
+msgstr "चर्चा"
+
+#: src/features/analytics/text.ts
+msgid "Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again."
+msgstr "दररोज वेगळे व्हिझिटर्स, रेंजच्या दिवसांत बेरीज केलेले. दुसऱ्या दिवशी परत येणारा पुन्हा मोजला जातो."
+
+#: src/features/analytics/Install.tsx
+msgid "Do not count my visits"
+msgstr "माझ्या भेटी मोजू नका"
+
+#: src/features/analytics/text.ts
+msgid "does not contain"
+msgstr "यात नाही"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Domains"
+msgstr "डोमेन"
+
+#: src/features/analytics/Exports.tsx
+msgid "Download"
+msgstr "डाउनलोड"
+
+#: src/features/analytics/parts.tsx
+msgid "Download CSV"
+msgstr "CSV डाउनलोड करा"
+
+#: src/features/analytics/Settings.tsx
+msgid "Dropped"
+msgstr "वगळले"
+
+#: src/features/analytics/text.ts
+msgid "E-mail"
+msgstr "ई-मेल"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that day, each column the share of them who came back that many days later."
+msgstr "प्रत्येक पंक्तीत त्या दिवशी पहिल्यांदा दिसलेले व्हिझिटर्स आहेत, प्रत्येक कॉलममध्ये त्यांचा तेवढ्या दिवसांनी परत आलेला हिस्सा."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that month, each column the share of them who came back that many months later."
+msgstr "प्रत्येक पंक्तीत त्या महिन्यात पहिल्यांदा दिसलेले व्हिझिटर्स आहेत, प्रत्येक कॉलममध्ये त्यांचा तेवढ्या महिन्यांनी परत आलेला हिस्सा."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that week, each column the share of them who came back that many weeks later."
+msgstr "प्रत्येक पंक्तीत त्या आठवड्यात पहिल्यांदा दिसलेले व्हिझिटर्स आहेत, प्रत्येक कॉलममध्ये त्यांचा तेवढ्या आठवड्यांनी परत आलेला हिस्सा."
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Edit"
+msgstr "संपादित करा"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Edit funnel"
+msgstr "फनेल संपादित करा"
+
+#: src/features/analytics/Goals.tsx
+msgid "Edit goal"
+msgstr "गोल संपादित करा"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Edit note"
+msgstr "नोट संपादित करा"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Edit share link"
+msgstr "शेअर लिंक संपादित करा"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embed"
+msgstr "एम्बेड"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embeds"
+msgstr "एम्बेड"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Enter the password you were given with the link."
+msgstr "लिंकसोबत मिळालेला पासवर्ड टाका."
+
+#: src/features/analytics/text.ts
+msgid "Entry page"
+msgstr "एंट्री पेज"
+
+#: src/features/analytics/Goals.tsx
+msgid "equal to"
+msgstr "बरोबर"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Event"
+msgstr "इव्हेंट"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event}"
+msgstr "इव्हेंट {event}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event} with {key} = {value}"
+msgstr "{key} = {value} सह इव्हेंट {event}"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Install.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Events"
+msgstr "इव्हेंट"
+
+#: src/features/analytics/Settings.tsx
+msgid "Events are arriving."
+msgstr "इव्हेंट येत आहेत."
+
+#: src/features/analytics/Events.tsx
+msgid "Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when the script has their attributes."
+msgstr "इव्हेंट तुमच्या पेजेस आणि ॲप्सवरील track() कॉलमधून येतात. स्क्रिप्टकडे त्यांचे ॲट्रिब्यूट असतील तेव्हा आउटबाउंड लिंक, डाउनलोड आणि चॅट उघडणे मोजले जाते."
+
+#: src/features/analytics/Settings.tsx
+msgid "Events count only after the page calls yuva.consent with analytics set to true. Install the script with data-consent=\"required\"."
+msgstr "पेजने analytics true सेट करून yuva.consent कॉल केल्यानंतरच इव्हेंट मोजले जातात. स्क्रिप्ट data-consent=\"required\" सह इन्स्टॉल करा."
+
+#: src/features/analytics/Settings.tsx
+msgid "events counted"
+msgstr "इव्हेंट मोजले"
+
+#: src/features/analytics/Settings.tsx
+msgid "events dropped"
+msgstr "इव्हेंट वगळले"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every event with its visit’s page, source, place and device, as NDJSON. Visits are numbered within the file; there is no visitor id, address or contact. At most 31 days."
+msgstr "प्रत्येक इव्हेंट त्याच्या भेटीच्या पेज, स्रोत, ठिकाण आणि डिव्हाइससह, NDJSON म्हणून. भेटी फाइलमध्ये क्रमांकित आहेत; व्हिझिटर id, पत्ता किंवा कॉन्टॅक्ट नाही. जास्तीत जास्त 31 दिवस."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Every Monday at 08:00 in {zone}, about the week before."
+msgstr "दर सोमवारी 08:00 वाजता {zone} मध्ये, मागच्या आठवड्याबद्दल."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range and the filters you are looking at, without a comparison."
+msgstr "तुम्ही पाहत असलेल्या रेंज आणि फिल्टरची प्रत्येक पंक्ती, तुलनेशिवाय."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range you are looking at, without a comparison."
+msgstr "तुम्ही पाहत असलेल्या रेंजची प्रत्येक पंक्ती, तुलनेशिवाय."
+
+#: src/features/analytics/Settings.tsx
+msgid "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
+msgstr "प्रत्येक भेट, इव्हेंट आणि एकूण हटवले जाते. प्रॉपर्टी आणि तिची की राहते, आणि मोजणी चालू राहते."
+
+#: src/features/analytics/Controls.tsx
+msgid "Everyone who sees this property can pick it. You, owners and admins can change it."
+msgstr "ही प्रॉपर्टी पाहणारा प्रत्येकजण ती निवडू शकतो. तुम्ही, ओनर आणि ॲडमिन ती बदलू शकता."
+
+#: src/features/analytics/Annotations.tsx
+msgid "Everyone who sees this property sees the note, such as a launch or a campaign."
+msgstr "ही प्रॉपर्टी पाहणारा प्रत्येकजण नोट पाहतो, जसे लाँच किंवा कॅम्पेन."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Everything this property raised, newest first, whoever was notified."
+msgstr "या प्रॉपर्टीने उठवलेले सर्व, नवीन आधी, कोणालाही कळवले असले तरी."
+
+#: src/features/analytics/Settings.tsx
+msgid "Excluded"
+msgstr "वगळलेले"
+
+#: src/features/analytics/text.ts
+msgid "Exit page"
+msgstr "एक्झिट पेज"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expired"
+msgstr "मुदत संपली"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expires"
+msgstr "मुदत संपते"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export"
+msgstr "एक्सपोर्ट"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export progress"
+msgstr "एक्सपोर्टची प्रगती"
+
+#: src/features/analytics/Exports.tsx
+msgid "Exports"
+msgstr "एक्सपोर्ट"
+
+#: src/features/analytics/Exports.tsx
+msgid "Failed"
+msgstr "अयशस्वी"
+
+#: src/features/analytics/text.ts
+msgid "Feedback"
+msgstr "फीडबॅक"
+
+#: src/features/analytics/Support.tsx
+msgid "Fewer than 100 views"
+msgstr "100 पेक्षा कमी व्ह्यू"
+
+#: src/features/analytics/text.ts
+msgid "File download"
+msgstr "फाइल डाउनलोड"
+
+#: src/features/analytics/Exports.tsx
+msgid "Files are made in the background and deleted seven days later."
+msgstr "फाइल्स बॅकग्राउंडमध्ये तयार होतात आणि सात दिवसांनी हटवल्या जातात."
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Support.tsx
+msgid "Filter by this"
+msgstr "यानुसार फिल्टर करा"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Filters"
+msgstr "फिल्टर"
+
+#: src/features/analytics/Exports.tsx
+msgid "Filters come from the view: click a row there to add one. <0>Change them in the view</0>"
+msgstr "फिल्टर व्ह्यूमधून येतात: तिथे एका पंक्तीवर क्लिक करून एक जोडा. <0>ते व्ह्यूमध्ये बदला</0>"
+
+#: src/features/analytics/Retention.tsx
+msgid "First day"
+msgstr "पहिला दिवस"
+
+#: src/features/analytics/Retention.tsx
+msgid "First month"
+msgstr "पहिला महिना"
+
+#: src/features/analytics/text.ts
+msgid "First page or screen"
+msgstr "पहिले पेज किंवा स्क्रीन"
+
+#: src/features/analytics/text.ts
+msgid "First screen"
+msgstr "पहिली स्क्रीन"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "First visit"
+msgstr "पहिली भेट"
+
+#: src/features/analytics/Retention.tsx
+msgid "First week"
+msgstr "पहिला आठवडा"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Five reports an hour at most. Try again later."
+msgstr "तासाला जास्तीत जास्त पाच रिपोर्ट. नंतर पुन्हा प्रयत्न करा."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "For example Fieldnote website"
+msgstr "उदा. Fieldnote वेबसाइट"
+
+#: src/features/analytics/Settings.tsx
+msgid "For revenue, an ISO code like EUR."
+msgstr "महसुलासाठी, EUR सारखा ISO कोड."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an <0>API key</0> with the analytics:write scope, which stays on your server."
+msgstr "फक्त तुमच्या बॅकएंडला दिसणाऱ्या गोष्टींसाठी, जसे साइनअप किंवा पेमेंट. Track व्हिझिटरचा पत्ता आणि ब्राउझर फॉरवर्ड करतो, म्हणून इव्हेंट त्यांच्या भेटीशी जोडला जातो; Do Not Track किंवा Global Privacy Control असलेल्या विनंत्या पाठवल्या जात नाहीत. त्याला analytics:write स्कोप असलेली <0>API की</0> हवी, जी तुमच्या सर्व्हरवर राहते."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
+msgstr "फक्त तुमच्या बॅकएंडला दिसणाऱ्या गोष्टींसाठी, जसे साइनअप किंवा पेमेंट. Track व्हिझिटरचा पत्ता आणि ब्राउझर फॉरवर्ड करतो, म्हणून इव्हेंट त्यांच्या भेटीशी जोडला जातो; Do Not Track किंवा Global Privacy Control असलेल्या विनंत्या पाठवल्या जात नाहीत. त्याला ओनर किंवा ॲडमिनकडून analytics:write स्कोप असलेली API की हवी, जी तुमच्या सर्व्हरवर राहते."
+
+#: src/features/analytics/Exports.tsx
+msgid "Format"
+msgstr "फॉरमॅट"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "From"
+msgstr "प्रेषक"
+
+#: src/features/analytics/Settings.tsx
+msgid "From a site that is not one of the domains, or from an app whose platform is not turned on."
+msgstr "डोमेनपैकी नसलेल्या साइटवरून, किंवा ज्याचा प्लॅटफॉर्म चालू नाही अशा ॲपवरून."
+
+#: src/features/analytics/Funnels.tsx
+msgid "From pricing to signup"
+msgstr "प्राइसिंगपासून साइनअपपर्यंत"
+
+#: src/features/analytics/Support.tsx
+msgid "From the inbox {inboxName}. Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "इनबॉक्स {inboxName} कडून. प्रति 1,000 व्ह्यूमागे संभाषणांनुसार क्रमवार; 100 पेक्षा कमी व्ह्यू असलेली पेजेस इतरांनंतर येतात. प्रति पेज आणि दिवस मोजले जाते, कधीही प्रति व्हिझिटर किंवा कॉन्टॅक्ट नाही."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Funnel"
+msgstr "फनेल"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Funnels"
+msgstr "फनेल"
+
+#: src/features/analytics/Settings.tsx
+msgid "General"
+msgstr "सामान्य"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Go to goals"
+msgstr "गोलवर जा"
+
+#: src/features/analytics/Goals.tsx
+msgid "Goal"
+msgstr "गोल"
+
+#. placeholder {0}: a.text
+#: src/features/analytics/Annotations.tsx
+msgid "Goal “{0}” was created"
+msgstr "गोल “{0}” तयार केला"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Goal drop"
+msgstr "गोलमधील घट"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Goals"
+msgstr "गोल"
+
+#: src/features/analytics/Settings.tsx
+msgid "had an address removed"
+msgstr "एक पत्ता काढला गेला"
+
+#: src/features/analytics/Settings.tsx
+msgid "Health"
+msgstr "आरोग्य"
+
+#: src/features/analytics/text.ts
+msgid "Helpful"
+msgstr "उपयुक्त"
+
+#: src/features/analytics/Support.tsx
+msgid "Helpful and not helpful"
+msgstr "उपयुक्त आणि उपयुक्त नाही"
+
+#: src/features/analytics/text.ts
+msgid "Helpful ratings out of all ratings."
+msgstr "सर्व रेटिंगपैकी उपयुक्त रेटिंग."
+
+#: src/features/analytics/text.ts
+msgid "Helpful share"
+msgstr "उपयुक्त हिस्सा"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Home shows each website and app like this: visitors today, in the last 30 minutes and this week."
+msgstr "होम प्रत्येक वेबसाइट आणि ॲप असे दाखवते: आजचे व्हिझिटर्स, गेल्या 30 मिनिटांत आणि या आठवड्यात."
+
+#: src/features/analytics/text.ts
+msgid "Host"
+msgstr "होस्ट"
+
+#: src/features/analytics/text.ts
+msgid "Host or app"
+msgstr "होस्ट किंवा ॲप"
+
+#: src/features/analytics/Install.tsx
+msgid "How to install"
+msgstr "इन्स्टॉल कसे करावे"
+
+#: src/features/analytics/Events.tsx
+msgid "How to send events"
+msgstr "इव्हेंट कसे पाठवावेत"
+
+#: src/features/analytics/Sharing.tsx
+msgid "I saved it"
+msgstr "मी सेव्ह केले"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Support.tsx
+msgid "Inbox"
+msgstr "इनबॉक्स"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Install"
+msgstr "इन्स्टॉल करा"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/NewProperty.tsx
+msgid "Install on {0}"
+msgstr "{0} वर इन्स्टॉल करा"
+
+#: src/features/analytics/text.ts
+msgid "Internal"
+msgstr "अंतर्गत"
+
+#: src/features/analytics/Settings.tsx
+msgid "Invalid"
+msgstr "अवैध"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Investors"
+msgstr "गुंतवणूकदार"
+
+#: src/features/analytics/text.ts
+msgid "is"
+msgstr "आहे"
+
+#: src/features/analytics/text.ts
+msgid "is not"
+msgstr "नाही"
+
+#: src/features/analytics/Controls.tsx
+msgid "It is gone for everyone who uses it. The numbers stay."
+msgstr "ते वापरणाऱ्या सर्वांसाठी ते गेले आहे. आकडे राहतात."
+
+#: src/features/analytics/SharePage.tsx
+msgid "It may have expired or been revoked. Ask the person who shared it for a new one."
+msgstr "त्याची मुदत संपली असेल किंवा ते रद्द झाले असेल. ज्याने शेअर केले त्याला नवीन मागा."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Its goals stay."
+msgstr "त्याचे गोल राहतात."
+
+#: src/features/analytics/Goals.tsx
+msgid "Its numbers are deleted too. This cannot be undone."
+msgstr "त्याचे आकडेही हटवले जातात. हे पूर्ववत करता येत नाही."
+
+#: src/features/analytics/Events.tsx
+msgid "Keep only visits with this value"
+msgstr "फक्त या व्हॅल्यू असलेल्या भेटी ठेवा"
+
+#: src/features/analytics/Settings.tsx
+msgid "Key"
+msgstr "की"
+
+#: src/features/analytics/Goals.tsx
+msgid "Kind of goal"
+msgstr "गोलचा प्रकार"
+
+#: src/features/analytics/text.ts
+msgid "Language"
+msgstr "भाषा"
+
+#: src/features/analytics/text.ts
+msgid "Laptop"
+msgstr "लॅपटॉप"
+
+#: src/features/analytics/text.ts
+msgid "Last 12 months"
+msgstr "गेले 12 महिने"
+
+#: src/features/analytics/text.ts
+msgid "Last 28 days"
+msgstr "गेले 28 दिवस"
+
+#: src/features/analytics/text.ts
+msgid "Last 30 days"
+msgstr "गेले 30 दिवस"
+
+#: src/features/analytics/text.ts
+msgid "Last 6 months"
+msgstr "गेले 6 महिने"
+
+#: src/features/analytics/text.ts
+msgid "Last 7 days"
+msgstr "गेले 7 दिवस"
+
+#: src/features/analytics/text.ts
+msgid "Last 90 days"
+msgstr "गेले 90 दिवस"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event"
+msgstr "शेवटचा इव्हेंट"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event: {last}"
+msgstr "शेवटचा इव्हेंट: {last}"
+
+#: src/features/analytics/text.ts
+msgid "Last month"
+msgstr "गेला महिना"
+
+#: src/features/analytics/Sharing.tsx
+msgid "last opened {viewed}"
+msgstr "शेवटचे उघडले {viewed}"
+
+#: src/features/analytics/text.ts
+msgid "Last page or screen"
+msgstr "शेवटचे पेज किंवा स्क्रीन"
+
+#: src/features/analytics/text.ts
+msgid "Last screen"
+msgstr "शेवटची स्क्रीन"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Leave empty to keep the current one"
+msgstr "सध्याचे ठेवण्यासाठी रिकामे ठेवा"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Link"
+msgstr "लिंक"
+
+#: src/features/analytics/Support.tsx
+msgid "Link an inbox to see support per page"
+msgstr "प्रति पेज सपोर्ट पाहण्यासाठी इनबॉक्स लिंक करा"
+
+#: src/features/analytics/Support.tsx
+msgid "Link inbox"
+msgstr "इनबॉक्स लिंक करा"
+
+#: src/features/analytics/Settings.tsx
+msgid "Link signed-in users to their contact"
+msgstr "साइन-इन केलेल्या युजर्सना त्यांच्या कॉन्टॅक्टशी जोडा"
+
+#: src/features/analytics/Alerts.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Support.tsx
+msgid "Load more"
+msgstr "आणखी लोड करा"
+
+#: src/features/analytics/Settings.tsx
+msgid "Location database"
+msgstr "लोकेशन डेटाबेस"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Locations"
+msgstr "ठिकाणे"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created}"
+msgstr "{created} ला तयार केले"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created} by {by}"
+msgstr "{by} यांनी {created} ला तयार केले"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key"
+msgstr "नवीन की तयार करा"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key?"
+msgstr "नवीन की तयार करायची?"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Make at least two goals first."
+msgstr "आधी किमान दोन गोल तयार करा."
+
+#: src/features/analytics/Goals.tsx
+msgid "Make goal"
+msgstr "गोल तयार करा"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Make link"
+msgstr "लिंक तयार करा"
+
+#: src/features/analytics/text.ts
+msgid "matches"
+msgstr "जुळते"
+
+#: src/features/analytics/text.ts
+msgid "Mobile"
+msgstr "मोबाइल"
+
+#: src/features/analytics/Retention.tsx
+msgid "Month {period}"
+msgstr "महिना {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Monthly"
+msgstr "मासिक"
+
+#: src/features/analytics/Settings.tsx
+msgid "Monthly limit"
+msgstr "मासिक मर्यादा"
+
+#: src/features/analytics/Retention.tsx
+msgid "Months"
+msgstr "महिने"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move down"
+msgstr "खाली हलवा"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move up"
+msgstr "वर हलवा"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Name"
+msgstr "नाव"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs a linked inbox under General: its identity secret signs the tokens."
+msgstr "General अंतर्गत लिंक केलेला इनबॉक्स हवा: त्याचे आयडेंटिटी सीक्रेट टोकन साइन करते."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Needs a linked inbox. {help}"
+msgstr "लिंक केलेला इनबॉक्स हवा. {help}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs the persistent id: a visitor is linked through it."
+msgstr "कायम id हवा: व्हिझिटर त्यामार्फत जोडला जातो."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Never"
+msgstr "कधीही नाही"
+
+#: src/features/analytics/Sharing.tsx
+msgid "never opened"
+msgstr "कधीही उघडले नाही"
+
+#: src/features/analytics/text.ts
+msgid "New"
+msgstr "नवीन"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value} with {count}, none in the compared days."
+msgstr "नवीन {kind}: {count} सह {value}, तुलनेच्या दिवसांत एकही नाही."
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
+msgstr "नवीन {kind}: {value}. {metric}: {now}, तुलनेच्या दिवसांत एकही नाही."
+
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "नवीन आणि परत येणारे"
+
+#: src/features/analytics/Funnels.tsx
+msgid "New funnel"
+msgstr "नवीन फनेल"
+
+#: src/features/analytics/Goals.tsx
+msgid "New goal"
+msgstr "नवीन गोल"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New link"
+msgstr "नवीन लिंक"
+
+#: src/features/analytics/text.ts
+msgid "New or returning"
+msgstr "नवीन किंवा परत येणारे"
+
+#: src/features/analytics/Annotations.tsx
+msgid "New pricing page"
+msgstr "नवीन प्राइसिंग पेज"
+
+#: src/features/analytics/Alerts.tsx
+msgid "New referrer"
+msgstr "नवीन रेफरर"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New share link"
+msgstr "नवीन शेअर लिंक"
+
+#: src/features/analytics/Alerts.tsx
+msgid "No alerts yet."
+msgstr "अजून अलर्ट नाहीत."
+
+#: src/features/analytics/Controls.tsx
+msgid "No comparison"
+msgstr "तुलना नाही"
+
+#: src/features/analytics/Settings.tsx
+msgid "No consent features are offered."
+msgstr "कोणतेही संमती फीचर दिले जात नाही."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "या रेंजमध्ये संमती दिलेले व्हिझिटर्स नाहीत."
+
+#: src/features/analytics/Retention.tsx
+msgid "No consented visitors yet"
+msgstr "अजून संमती दिलेले व्हिझिटर्स नाहीत"
+
+#: src/features/analytics/Support.tsx
+msgid "No conversations, feedback, ratings or discussions from these pages in this range."
+msgstr "या रेंजमध्ये या पेजेसवरून संभाषणे, फीडबॅक, रेटिंग किंवा चर्चा नाहीत."
+
+#: src/features/analytics/Goals.tsx
+msgid "No conversions in this range."
+msgstr "या रेंजमध्ये कन्व्हर्जन नाहीत."
+
+#: src/features/analytics/Settings.tsx
+msgid "No event yet."
+msgstr "अजून इव्हेंट नाही."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events in the last 24 hours"
+msgstr "गेल्या 24 तासांत इव्हेंट नाहीत"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events yet"
+msgstr "अजून इव्हेंट नाहीत"
+
+#: src/features/analytics/Exports.tsx
+msgid "No exports yet."
+msgstr "अजून एक्सपोर्ट नाहीत."
+
+#: src/features/analytics/Funnels.tsx
+msgid "No funnels yet"
+msgstr "अजून फनेल नाहीत"
+
+#: src/features/analytics/Goals.tsx
+msgid "No goals yet"
+msgstr "अजून गोल नाहीत"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No properties yet"
+msgstr "अजून प्रॉपर्टी नाहीत"
+
+#: src/features/analytics/Settings.tsx
+msgid "No props are tracked."
+msgstr "कोणतेही प्रॉप ट्रॅक केले जात नाहीत."
+
+#: src/features/analytics/Alerts.tsx
+msgid "No scheduled reports."
+msgstr "शेड्यूल केलेले रिपोर्ट नाहीत."
+
+#: src/features/analytics/Controls.tsx
+msgid "No segment"
+msgstr "सेगमेंट नाही"
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Make one to show these numbers to people outside the workspace."
+msgstr "अजून शेअर लिंक नाहीत. वर्कस्पेसबाहेरच्या लोकांना हे आकडे दाखवण्यासाठी एक बनवा."
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Owners and admins make them."
+msgstr "अजून शेअर लिंक नाहीत. ओनर आणि ॲडमिन त्या बनवतात."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Nobody in the last 30 minutes."
+msgstr "गेल्या 30 मिनिटांत कोणी नाही."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Nobody reached the first step in this range."
+msgstr "या रेंजमध्ये कोणीही पहिल्या पायरीपर्यंत पोहोचले नाही."
+
+#: src/features/analytics/Alerts.tsx
+msgid "None"
+msgstr "काहीही नाही"
+
+#: src/features/analytics/Settings.tsx
+msgid "None yet"
+msgstr "अजून काहीही नाही"
+
+#: src/features/analytics/Exports.tsx
+msgid "None, every visit counts."
+msgstr "काहीही नाही, प्रत्येक भेट मोजली जाते."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "None, owners and admins only"
+msgstr "काहीही नाही, फक्त ओनर आणि ॲडमिन"
+
+#: src/features/analytics/parts.tsx
+msgid "Not available for this range."
+msgstr "या रेंजसाठी उपलब्ध नाही."
+
+#: src/features/analytics/text.ts
+msgid "Not helpful"
+msgstr "उपयुक्त नाही"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Note"
+msgstr "नोट"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Notes"
+msgstr "नोट्स"
+
+#: src/features/analytics/Exports.tsx
+msgid "Nothing"
+msgstr "काहीही नाही"
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Nothing counted in this range."
+msgstr "या रेंजमध्ये काहीही मोजले गेले नाही."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Notify me"
+msgstr "मला कळवा"
+
+#: src/features/analytics/Settings.tsx
+msgid "Off"
+msgstr "बंद"
+
+#: src/features/analytics/Settings.tsx
+msgid "Offered only to visitors who agree in your consent tool. Everyone else is counted exactly as before, one day at a time and without anything stored on the device."
+msgstr "फक्त तुमच्या संमती टूलमध्ये सहमत होणाऱ्या व्हिझिटर्सना दिले जाते. इतर सर्व आधीसारखेच मोजले जातात, एका वेळी एक दिवस आणि डिव्हाइसवर काहीही साठवल्याशिवाय."
+
+#: src/features/analytics/Settings.tsx
+msgid "Older than 72 hours. Apps keep events without a connection for at most that long."
+msgstr "72 तासांपेक्षा जुने. ॲप्स कनेक्शनशिवाय इव्हेंट जास्तीत जास्त इतका वेळ ठेवतात."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On its way to {email}."
+msgstr "{email} कडे जात आहे."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On the 1st of each month at 08:00 in {zone}, about the month before."
+msgstr "दर महिन्याच्या 1 तारखेला 08:00 वाजता {zone} मध्ये, मागच्या महिन्याबद्दल."
+
+#: src/features/analytics/Settings.tsx
+msgid "One IP address or range per line, up to 50, such as your office or a monitoring service."
+msgstr "प्रत्येक ओळीत एक IP पत्ता किंवा रेंज, जास्तीत जास्त 50, जसे तुमचे ऑफिस किंवा मॉनिटरिंग सेवा."
+
+#: src/features/analytics/Settings.tsx
+msgid "One path per line, up to 50. * stands for one part of the path, ** for any number of them."
+msgstr "प्रत्येक ओळीत एक पाथ, जास्तीत जास्त 50. * पाथच्या एका भागासाठी, ** कितीही भागांसाठी."
+
+#: src/features/analytics/Sharing.tsx
+msgid "One per line, like https://example.com or https://*.example.com. Without any, no other site can show it in a frame."
+msgstr "प्रत्येक ओळीत एक, जसे https://example.com किंवा https://*.example.com. काहीही नसेल तर इतर कोणतीही साइट ते फ्रेममध्ये दाखवू शकत नाही."
+
+#: src/features/analytics/Settings.tsx
+msgid "One per line. *.example.com covers every subdomain, but not example.com itself."
+msgstr "प्रत्येक ओळीत एक. *.example.com प्रत्येक सबडोमेन कव्हर करते, पण example.com स्वतः नाही."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "One per line. Pages on other domains cannot send events. *.example.com covers every subdomain."
+msgstr "प्रत्येक ओळीत एक. इतर डोमेनवरील पेजेस इव्हेंट पाठवू शकत नाहीत. *.example.com प्रत्येक सबडोमेन कव्हर करते."
+
+#: src/features/analytics/Settings.tsx
+msgid "One prop name per line, up to 10, such as plan."
+msgstr "प्रत्येक ओळीत एक प्रॉप नाव, जास्तीत जास्त 10, जसे plan."
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
+msgstr "प्रत्येक दिवसासाठी एक पंक्ती: व्हिझिटर्स, भेटी, व्ह्यू, बाउन्स रेट, कालावधी आणि स्क्रोल खोलीसह. जास्तीत जास्त 400 दिवस."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Only for you, by e-mail to {email}. Reports are plain numbers, with no images and nothing that tracks opening or clicks."
+msgstr "फक्त तुमच्यासाठी, {email} ला ई-मेलने. रिपोर्ट साधे आकडे आहेत, प्रतिमांशिवाय आणि उघडणे किंवा क्लिक ट्रॅक करणाऱ्या कशाशिवाय."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Only members see it, to tell links apart."
+msgstr "फक्त सदस्य ते पाहतात, लिंक वेगळ्या ओळखण्यासाठी."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only the country is kept, never the region or city."
+msgstr "फक्त देश ठेवला जातो, प्रदेश किंवा शहर कधीही नाही."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Only totals are shown. There is no list of individual visitors."
+msgstr "फक्त एकूण दाखवले जातात. वैयक्तिक व्हिझिटर्सची यादी नाही."
+
+#: src/features/analytics/parts.tsx
+msgid "Only visitors who agreed to a persistent id are counted here. Everyone else is counted one day at a time."
+msgstr "इथे फक्त कायम id ला सहमत झालेले व्हिझिटर्स मोजले जातात. इतर सर्व एका वेळी एक दिवस मोजले जातात."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only with consent"
+msgstr "फक्त संमतीसह"
+
+#: src/features/analytics/Goals.tsx
+msgid "Only with prop"
+msgstr "फक्त प्रॉपसह"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
+msgstr "स्निपेट बसवलेले तुमच्या साइटचे पेज उघडा. सर्व्हरने पहिला पेज व्ह्यू साठवताच हे हिरवे होते. Do Not Track किंवा Global Privacy Control असलेले ब्राउझर काहीही पाठवत नाहीत, म्हणून चाचणीसाठी दुसरा वापरा."
+
+#: src/features/analytics/Retention.tsx
+msgid "Open consent features"
+msgstr "संमती फीचर उघडा"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Open report"
+msgstr "रिपोर्ट उघडा"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open the overview"
+msgstr "ओव्हरव्ह्यू उघडा"
+
+#: src/features/analytics/Support.tsx
+msgid "Open the property’s settings"
+msgstr "प्रॉपर्टीच्या सेटिंग्ज उघडा"
+
+#: src/features/analytics/text.ts
+msgid "Operating system"
+msgstr "ऑपरेटिंग सिस्टम"
+
+#: src/features/analytics/Install.tsx
+msgid "Opt-out link"
+msgstr "ऑप्ट-आउट लिंक"
+
+#: src/features/analytics/text.ts
+msgid "Organic search"
+msgstr "ऑर्गेनिक सर्च"
+
+#: src/features/analytics/text.ts
+msgid "OS version"
+msgstr "OS आवृत्ती"
+
+#: src/features/analytics/text.ts
+msgid "Other"
+msgstr "इतर"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other drops"
+msgstr "इतर घसरणी"
+
+#: src/features/analytics/Events.tsx
+msgid "Other prop"
+msgstr "इतर प्रॉप"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other sites"
+msgstr "इतर साइट्स"
+
+#: src/features/analytics/text.ts
+msgid "Outbound link"
+msgstr "आउटबाउंड लिंक"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Overview"
+msgstr "ओव्हरव्ह्यू"
+
+#: src/features/analytics/Install.tsx
+msgid "Own domain"
+msgstr "स्वतःचे डोमेन"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Owners and admins make funnels from goals. They show up here with each step’s drop-off."
+msgstr "ओनर आणि ॲडमिन गोलमधून फनेल बनवतात. ते इथे प्रत्येक पायरीच्या घसरणीसह दिसतात."
+
+#: src/features/analytics/Goals.tsx
+msgid "Owners and admins make goals. They show up here with their conversions."
+msgstr "ओनर आणि ॲडमिन गोल बनवतात. ते इथे त्यांच्या कन्व्हर्जनसह दिसतात."
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Page"
+msgstr "पेज"
+
+#: src/features/analytics/text.ts
+msgid "Page feedback sent from the page."
+msgstr "पेजवरून पाठवलेला पेज फीडबॅक."
+
+#: src/features/analytics/text.ts
+msgid "Page not found"
+msgstr "पेज सापडले नाही"
+
+#: src/features/analytics/text.ts
+msgid "Page or screen"
+msgstr "पेज किंवा स्क्रीन"
+
+#: src/features/analytics/Goals.tsx
+msgid "Page view of {path}"
+msgstr "{path} चा पेज व्ह्यू"
+
+#: src/features/analytics/text.ts
+msgid "Pages"
+msgstr "पेजेस"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens"
+msgstr "पेजेस आणि स्क्रीन"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens viewed."
+msgstr "पाहिलेली पेजेस आणि स्क्रीन."
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages not counted"
+msgstr "न मोजलेली पेजेस"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
+msgstr "पॅटर्नशी जुळणारी पेजेस एका पाथखाली मोजली जातात, म्हणून प्रत्येक ऑर्डर पेज एक म्हणून जोडले जाते. पाथमधील पत्ते नेहमी बदलले जातात."
+
+#: src/features/analytics/text.ts
+msgid "Pages viewed."
+msgstr "पाहिलेली पेजेस."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Pages, sources, places and devices, without cookies, without storing IP addresses and without a consent banner where the law allows it."
+msgstr "पेजेस, स्रोत, ठिकाणे आणि डिव्हाइस, कुकीशिवाय, IP पत्ते साठवल्याशिवाय आणि कायदा परवानगी देतो तिथे संमती बॅनरशिवाय."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews"
+msgstr "पेजव्ह्यू"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews divided by visits."
+msgstr "पेजव्ह्यू भेटींनी भागलेले."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews in the last 30 minutes"
+msgstr "गेल्या 30 मिनिटांत पेजव्ह्यू"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews per minute"
+msgstr "प्रति मिनिट पेजव्ह्यू"
+
+#: src/features/analytics/text.ts
+msgid "Paid search"
+msgstr "पेड सर्च"
+
+#: src/features/analytics/text.ts
+msgid "Paid social"
+msgstr "पेड सोशल"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Password"
+msgstr "पासवर्ड"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Past alerts"
+msgstr "मागील अलर्ट"
+
+#: src/features/analytics/Settings.tsx
+msgid "Path rules"
+msgstr "पाथ नियम"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pattern"
+msgstr "पॅटर्न"
+
+#: src/features/analytics/Controls.tsx
+msgid "Paying customers from Germany"
+msgstr "जर्मनीतील पैसे देणारे ग्राहक"
+
+#: src/features/analytics/text.ts
+msgid "Per 1,000 views"
+msgstr "प्रति 1,000 व्ह्यू"
+
+#: src/features/analytics/Overview.tsx
+msgid "per day"
+msgstr "दररोज"
+
+#: src/features/analytics/Settings.tsx
+msgid "Per day"
+msgstr "दररोज"
+
+#: src/features/analytics/Overview.tsx
+msgid "per hour"
+msgstr "दर तासाला"
+
+#: src/features/analytics/Overview.tsx
+msgid "per week"
+msgstr "दर आठवड्याला"
+
+#: src/features/analytics/Settings.tsx
+msgid "Persistent id"
+msgstr "कायम id"
+
+#: src/features/analytics/text.ts
+msgid "Phone"
+msgstr "फोन"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Pick a goal"
+msgstr "गोल निवडा"
+
+#: src/features/analytics/Events.tsx
+msgid "Pick a prop to see the values this event carried."
+msgstr "या इव्हेंटने वाहिलेल्या व्हॅल्यू पाहण्यासाठी प्रॉप निवडा."
+
+#: src/features/analytics/Settings.tsx
+msgid "Pick at least one platform."
+msgstr "किमान एक प्लॅटफॉर्म निवडा."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Pick at least one view."
+msgstr "किमान एक व्ह्यू निवडा."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
+msgstr "साइट कशी बनली आहे ते निवडा आणि स्निपेट कॉपी करा. की सार्वजनिक आहे, चॅट कीसारखी: ती फक्त प्रॉपर्टीच्या डोमेनवर चालते."
+
+#: src/features/analytics/text.ts
+msgid "Platform"
+msgstr "प्लॅटफॉर्म"
+
+#: src/features/analytics/Settings.tsx
+msgid "Platforms"
+msgstr "प्लॅटफॉर्म"
+
+#: src/features/analytics/text.ts
+msgid "Prop"
+msgstr "प्रॉप"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name"
+msgstr "प्रॉपचे नाव"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name, like plan"
+msgstr "प्रॉपचे नाव, जसे plan"
+
+#: src/features/analytics/Events.tsx
+msgid "Properties for children keep no props, only the address of outbound links and downloads."
+msgstr "मुलांच्या प्रॉपर्टी कोणतेही प्रॉप ठेवत नाहीत, फक्त आउटबाउंड लिंक आणि डाउनलोडचा पत्ता."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children keep no props, so none can be tracked."
+msgstr "मुलांच्या प्रॉपर्टी कोणतेही प्रॉप ठेवत नाहीत, म्हणून कोणतेही ट्रॅक करता येत नाही."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children never keep an id on the device or link visits to a contact."
+msgstr "मुलांच्या प्रॉपर्टी डिव्हाइसवर कधीही id ठेवत नाहीत किंवा भेटी कॉन्टॅक्टशी जोडत नाहीत."
+
+#: src/features/analytics/Retention.tsx
+msgid "Properties for children never keep an id on the device, so they have no retention."
+msgstr "मुलांच्या प्रॉपर्टी डिव्हाइसवर कधीही id ठेवत नाहीत, म्हणून त्यांना रिटेन्शन नाही."
+
+#: src/features/analytics/Settings.tsx
+msgid "Property name"
+msgstr "प्रॉपर्टीचे नाव"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Props"
+msgstr "प्रॉप"
+
+#: src/features/analytics/Events.tsx
+msgid "Props of any name can be broken down for the days the detailed records are kept. Earlier days only have the tracked props."
+msgstr "कोणत्याही नावाचे प्रॉप त्या दिवसांसाठी विभागता येतात ज्यांचे तपशीलवार रेकॉर्ड ठेवले जातात. आधीच्या दिवसांकडे फक्त ट्रॅक केलेले प्रॉप आहेत."
+
+#: src/features/analytics/Install.tsx
+msgid "Put the script in the head of every page. It counts page views, also when a single-page app changes the address, and stores nothing on the visitor’s device."
+msgstr "स्क्रिप्ट प्रत्येक पेजच्या head मध्ये ठेवा. ती पेज व्ह्यू मोजते, सिंगल-पेज ॲपने पत्ता बदलला तरीही, आणि व्हिझिटरच्या डिव्हाइसवर काहीही साठवत नाही."
+
+#: src/features/analytics/Install.tsx
+msgid "Put these links on your privacy page. Opting out is the only thing the script stores on the visitor’s device, and only when they ask for it. Visitors with Do Not Track or Global Privacy Control are never counted."
+msgstr "या लिंक तुमच्या प्रायव्हसी पेजवर ठेवा. ऑप्ट-आउट करणे हीच एकमेव गोष्ट आहे जी स्क्रिप्ट व्हिझिटरच्या डिव्हाइसवर साठवते, आणि फक्त त्यांनी मागितल्यावर. Do Not Track किंवा Global Privacy Control असलेले व्हिझिटर्स कधीही मोजले जात नाहीत."
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Range"
+msgstr "रेंज"
+
+#: src/features/analytics/Support.tsx
+msgid "Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "प्रति 1,000 व्ह्यूमागे संभाषणांनुसार क्रमवार; 100 पेक्षा कमी व्ह्यू असलेली पेजेस इतरांनंतर येतात. प्रति पेज आणि दिवस मोजले जाते, कधीही प्रति व्हिझिटर किंवा कॉन्टॅक्ट नाही."
+
+#: src/features/analytics/Settings.tsx
+msgid "Rate limits"
+msgstr "रेट मर्यादा"
+
+#: src/features/analytics/Support.tsx
+msgid "Ratings"
+msgstr "रेटिंग"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw events"
+msgstr "रॉ इव्हेंट"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw exports cover at most 31 days."
+msgstr "रॉ एक्सपोर्ट जास्तीत जास्त 31 दिवस कव्हर करतात."
+
+#: src/features/analytics/Goals.tsx
+msgid "Reached when a visitor"
+msgstr "पोहोचले जाते जेव्हा व्हिझिटर"
+
+#: src/features/analytics/Exports.tsx
+msgid "Ready"
+msgstr "तयार"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Realtime"
+msgstr "रिअलटाइम"
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour, last at {builtAt}."
+msgstr "दर तासाला पुन्हा बनते, शेवटचे {builtAt} ला."
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour."
+msgstr "दर तासाला पुन्हा बनते."
+
+#: src/features/analytics/text.ts
+msgid "Referral"
+msgstr "रेफरल"
+
+#: src/features/analytics/text.ts
+msgid "Referrer"
+msgstr "रेफरर"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Refreshes every 15 seconds"
+msgstr "दर 15 सेकंदांनी रिफ्रेश होते"
+
+#: src/features/analytics/Settings.tsx
+msgid "Refused"
+msgstr "नाकारले"
+
+#: src/features/analytics/text.ts
+msgid "Region"
+msgstr "प्रदेश"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter"
+msgstr "फिल्टर काढा"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter: {label}"
+msgstr "फिल्टर काढा: {label}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Remove rule"
+msgstr "नियम काढा"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Remove step"
+msgstr "पायरी काढा"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Rename “{0}”…"
+msgstr "“{0}” चे नाव बदला…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Rename segment"
+msgstr "सेगमेंटचे नाव बदला"
+
+#: src/features/analytics/Install.tsx
+msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
+msgstr "कॉम्पोनंट रूट लेआउटमध्ये एकदा रेंडर करा. तो काहीही रेंडर करत नाही; useYuvaAnalytics() त्याच्या खाली कुठेही मेथड देते."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Report"
+msgstr "रिपोर्ट"
+
+#: src/features/analytics/Settings.tsx
+msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
+msgstr "Do Not Track किंवा Global Privacy Control असलेल्या विनंत्या, आणि ज्या प्रॉपर्टीला संमती हवी तिथे संमतीशिवायचे इव्हेंट, घेतले जातात पण इथे साठवले किंवा मोजले जात नाहीत."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Retention"
+msgstr "रिटेन्शन"
+
+#: src/features/analytics/Retention.tsx
+msgid "Retention needs consent features"
+msgstr "रिटेन्शनसाठी संमती फीचर हवे"
+
+#: src/features/analytics/text.ts
+msgid "Returning"
+msgstr "परत येणारे"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/text.ts
+msgid "Revenue"
+msgstr "महसूल"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke"
+msgstr "रद्द करा"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke {name}?"
+msgstr "{name} रद्द करायचे?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoked"
+msgstr "रद्द केले"
+
+#: src/features/analytics/Exports.tsx
+msgid "Rows"
+msgstr "पंक्ती"
+
+#: src/features/analytics/Exports.tsx
+msgid "Running"
+msgstr "चालू आहे"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Save"
+msgstr "सेव्ह करा"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Save the changes to “{0}”"
+msgstr "“{0}” मधील बदल सेव्ह करा"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save the filters as a new segment…"
+msgstr "फिल्टर नवीन सेगमेंट म्हणून सेव्ह करा…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save these filters as a segment"
+msgstr "हे फिल्टर सेगमेंट म्हणून सेव्ह करा"
+
+#: src/features/analytics/Controls.tsx
+msgid "Saved segments"
+msgstr "सेव्ह केलेले सेगमेंट"
+
+#: src/features/analytics/text.ts
+msgid "Screen"
+msgstr "स्क्रीन"
+
+#: src/features/analytics/text.ts
+msgid "Screen size"
+msgstr "स्क्रीन आकार"
+
+#: src/features/analytics/text.ts
+msgid "Screen views"
+msgstr "स्क्रीन व्ह्यू"
+
+#: src/features/analytics/text.ts
+msgid "Screen views divided by visits."
+msgstr "स्क्रीन व्ह्यू भेटींनी भागलेले."
+
+#: src/features/analytics/text.ts
+msgid "Screen views in the last 30 minutes"
+msgstr "गेल्या 30 मिनिटांत स्क्रीन व्ह्यू"
+
+#: src/features/analytics/text.ts
+msgid "Screen views per minute"
+msgstr "प्रति मिनिट स्क्रीन व्ह्यू"
+
+#: src/features/analytics/text.ts
+msgid "Screens"
+msgstr "स्क्रीन"
+
+#: src/features/analytics/text.ts
+msgid "Screens viewed."
+msgstr "पाहिलेल्या स्क्रीन."
+
+#: src/features/analytics/text.ts
+msgid "Scroll depth"
+msgstr "स्क्रोल खोली"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolled to {pct} on {path}"
+msgstr "{path} वर {pct} पर्यंत स्क्रोल केले"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolls"
+msgstr "स्क्रोल"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segment"
+msgstr "सेगमेंट"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segments"
+msgstr "सेगमेंट"
+
+#: src/features/analytics/Settings.tsx
+msgid "Send a screen or an event from your app or backend while this page is open, and see whether it reached the server. Refreshes every 5 seconds."
+msgstr "हे पेज उघडे असताना तुमच्या ॲप किंवा बॅकएंडमधून स्क्रीन किंवा इव्हेंट पाठवा, आणि तो सर्व्हरपर्यंत पोहोचला का ते पाहा. दर 5 सेकंदांनी रिफ्रेश होते."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Send me one now"
+msgstr "आता मला एक पाठवा"
+
+#: src/features/analytics/Goals.tsx
+msgid "Sends an event"
+msgstr "इव्हेंट पाठवते"
+
+#: src/features/analytics/text.ts
+msgid "Server"
+msgstr "सर्व्हर"
+
+#: src/features/analytics/Settings.tsx
+msgid "Server busy"
+msgstr "सर्व्हर व्यस्त"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Settings"
+msgstr "सेटिंग्ज"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Share links"
+msgstr "शेअर लिंक"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Shared with Yuva"
+msgstr "Yuva सोबत शेअर केले"
+
+#: src/features/analytics/Settings.tsx
+msgid "Sharing"
+msgstr "शेअरिंग"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Events.tsx
+msgid "Show"
+msgstr "दाखवा"
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/parts.tsx
+msgid "Show from {day}"
+msgstr "{day} पासून दाखवा"
+
+#: src/features/analytics/Events.tsx
+msgid "Show its props"
+msgstr "त्याचे प्रॉप दाखवा"
+
+#: src/features/analytics/Controls.tsx
+msgid "Show the days"
+msgstr "दिवस दाखवा"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Show the last 30 days"
+msgstr "गेले 30 दिवस दाखवा"
+
+#: src/features/analytics/Goals.tsx
+msgid "Signed up"
+msgstr "साइन अप केले"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Sites that may embed it"
+msgstr "ते एम्बेड करू शकणाऱ्या साइट्स"
+
+#: src/features/analytics/text.ts
+msgid "Social"
+msgstr "सोशल"
+
+#: src/features/analytics/Settings.tsx
+msgid "Some events were dropped. The reasons are below."
+msgstr "काही इव्हेंट वगळले गेले. कारणे खाली आहेत."
+
+#: src/features/analytics/text.ts
+msgid "Source"
+msgstr "स्रोत"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Realtime.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Sources"
+msgstr "स्रोत"
+
+#: src/features/analytics/Settings.tsx
+msgid "Start over"
+msgstr "पुन्हा सुरू करा"
+
+#. placeholder {0}: i + 1
+#: src/features/analytics/Funnels.tsx
+msgid "Step {0}"
+msgstr "पायरी {0}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Steps"
+msgstr "पायऱ्या"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Support.tsx
+msgid "Support"
+msgstr "सपोर्ट"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Support load"
+msgstr "सपोर्ट लोड"
+
+#: src/features/analytics/Support.tsx
+msgid "Support numbers can only be filtered by page and host. The other filters are left out here."
+msgstr "सपोर्टचे आकडे फक्त पेज आणि होस्टने फिल्टर करता येतात. इतर फिल्टर इथे वगळले जातात."
+
+#: src/features/analytics/text.ts
+msgid "Tablet"
+msgstr "टॅबलेट"
+
+#: src/features/analytics/Settings.tsx
+msgid "Taken and stored. They show up in Realtime within a minute."
+msgstr "घेतले आणि साठवले. ते एका मिनिटात Realtime मध्ये दिसतात."
+
+#: src/features/analytics/Settings.tsx
+msgid "Test events"
+msgstr "टेस्ट इव्हेंट"
+
+#: src/features/analytics/SharePage.tsx
+msgid "That password is not right."
+msgstr "तो पासवर्ड बरोबर नाही."
+
+#: src/features/analytics/Funnels.tsx
+msgid "The consented counts follow visitors with a persistent id from one visit and day to the next, so a step reached on a later day still counts."
+msgstr "संमती दिलेल्यांची मोजणी कायम id असलेल्या व्हिझिटर्सना एका भेटीपासून आणि दिवसापासून पुढच्यापर्यंत फॉलो करते, म्हणून नंतरच्या दिवशी गाठलेली पायरीही मोजली जाते."
+
+#: src/features/analytics/Settings.tsx
+msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
+msgstr "सध्याची की 24 तास काम करत राहते, म्हणून तुम्ही इव्हेंट न गमावता तुमची पेजेस अपडेट करू शकता. त्या वेळेत दुसरी की तयार केल्यास जुनी लगेच संपते."
+
+#: src/features/analytics/text.ts
+msgid "The deepest point reached on the page, per view."
+msgstr "पेजवर गाठलेला सर्वात खोल बिंदू, प्रति व्ह्यू."
+
+#: src/features/analytics/Exports.tsx
+msgid "The export failed on the server."
+msgstr "सर्व्हरवर एक्सपोर्ट अयशस्वी झाले."
+
+#: src/features/analytics/Exports.tsx
+msgid "The file would be larger than 1 GiB. Export a shorter range."
+msgstr "फाइल 1 GiB पेक्षा मोठी होईल. लहान रेंज एक्सपोर्ट करा."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "The first event arrived at {at}."
+msgstr "पहिला इव्हेंट {at} ला आला."
+
+#: src/features/analytics/Goals.tsx
+msgid "The goal reports the revenue its events carry, per currency."
+msgstr "गोल त्याच्या इव्हेंटने वाहिलेला महसूल सांगतो, प्रति चलन."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key is public, like a chat key: every page carries it, and it only works on the property’s domains."
+msgstr "की सार्वजनिक आहे, चॅट कीसारखी: प्रत्येक पेज ती वाहते, आणि ती फक्त प्रॉपर्टीच्या डोमेनवर चालते."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key stops working at once, and all visits, events and totals are deleted. This cannot be undone."
+msgstr "की लगेच काम करणे थांबवते, आणि सर्व भेटी, इव्हेंट आणि एकूण हटवले जातात. हे पूर्ववत करता येत नाही."
+
+#: src/features/analytics/Settings.tsx
+msgid "The last 30 days"
+msgstr "गेले 30 दिवस"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and leaves the list."
+msgstr "लिंक लगेच काम करणे थांबवते आणि यादीतून जाते."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and stays in the list."
+msgstr "लिंक लगेच काम करणे थांबवते आणि यादीत राहते."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked."
+msgstr "लिंक {timezone} मध्ये या दिवसाच्या शेवटी काम करणे थांबवते. रद्द होईपर्यंत ठेवण्यासाठी रिकामे ठेवा."
+
+#: src/features/analytics/Install.tsx
+msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
+msgstr "मॉड्यूल क्लायंट प्लगइन आणि useYuvaAnalytics() कंपोजेबल जोडते. NUXT_PUBLIC_YUVA_ANALYTICS_KEY रनटाइमला की ओव्हरराइड करते."
+
+#: src/features/analytics/Settings.tsx
+msgid "The name does not match. Type it exactly as shown."
+msgstr "नाव जुळत नाही. दाखवल्याप्रमाणे अचूक टाइप करा."
+
+#: src/features/analytics/Goals.tsx
+msgid "The name given to track(), or outbound_click, file_download, not_found, chat_open."
+msgstr "track() ला दिलेले नाव, किंवा outbound_click, file_download, not_found, chat_open."
+
+#: src/features/analytics/Settings.tsx
+msgid "The previous key keeps working until {at}. Update every page and app before then."
+msgstr "मागची की {at} पर्यंत काम करत राहते. त्याआधी प्रत्येक पेज आणि ॲप अपडेट करा."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "The properties of your inboxes show up here once an owner or admin adds them."
+msgstr "तुमच्या इनबॉक्सच्या प्रॉपर्टी इथे दिसतात जेव्हा ओनर किंवा ॲडमिन त्या जोडतो."
+
+#: src/features/analytics/Exports.tsx
+msgid "The query could not be run."
+msgstr "क्वेरी चालवता आली नाही."
+
+#: src/features/analytics/Exports.tsx
+msgid "The range is outside the detailed records."
+msgstr "रेंज तपशीलवार रेकॉर्डच्या बाहेर आहे."
+
+#: src/features/analytics/SharePage.tsx
+msgid "The report could not be loaded"
+msgstr "रिपोर्ट लोड करता आला नाही"
+
+#: src/features/analytics/Settings.tsx
+msgid "The server’s own database"
+msgstr "सर्व्हरचा स्वतःचा डेटाबेस"
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need detailed records that are no longer kept for this range."
+msgstr "या फिल्टरना तपशीलवार रेकॉर्ड हवे जे या रेंजसाठी आता ठेवले जात नाहीत."
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need the detailed records, which are kept since {day}. Earlier days only have totals per page, source, place and device."
+msgstr "या फिल्टरना तपशीलवार रेकॉर्ड हवे, जे {day} पासून ठेवले जातात. आधीच्या दिवसांकडे फक्त प्रति पेज, स्रोत, ठिकाण आणि डिव्हाइस एकूण आहेत."
+
+#: src/features/analytics/Settings.tsx
+msgid "This cannot be undone."
+msgstr "हे पूर्ववत करता येत नाही."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal has numbers from {since} on. Days before that show none."
+msgstr "या गोलचे आकडे {since} पासून आहेत. त्याआधीचे दिवस काहीही दाखवत नाहीत."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
+msgstr "हा गोल फनेलची एक पायरी आहे. आधी तो फनेलमधून काढा, किंवा फनेल हटवा."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This link is not available"
+msgstr "ही लिंक उपलब्ध नाही"
+
+#: src/features/analytics/text.ts
+msgid "This month"
+msgstr "या महिन्यात"
+
+#: src/features/analytics/Funnels.tsx
+msgid "This property already has a funnel with this name."
+msgstr "या प्रॉपर्टीमध्ये या नावाचा फनेल आधीच आहे."
+
+#: src/features/analytics/Goals.tsx
+msgid "This property already has a goal with this name."
+msgstr "या प्रॉपर्टीमध्ये या नावाचा गोल आधीच आहे."
+
+#: src/features/analytics/Controls.tsx
+msgid "This property already has a segment with this name."
+msgstr "या प्रॉपर्टीमध्ये या नावाचा सेगमेंट आधीच आहे."
+
+#: src/features/analytics/Exports.tsx
+msgid "This range cannot be exported. Pick a shorter one, or one inside the detailed records."
+msgstr "ही रेंज एक्सपोर्ट करता येत नाही. लहान निवडा, किंवा तपशीलवार रेकॉर्डमधील."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This report has a password"
+msgstr "या रिपोर्टवर पासवर्ड आहे"
+
+#: src/features/analytics/Support.tsx
+msgid "This workspace has no inbox yet."
+msgstr "या वर्कस्पेसमध्ये अजून इनबॉक्स नाही."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
+msgstr "या वर्कस्पेसने या महिन्याच्या त्याच्या {limit} ॲनालिटिक्स इव्हेंटपर्यंत मजल मारली. महिना संपेपर्यंत नवीन इव्हेंट वगळले जातात."
+
+#: src/features/analytics/text.ts
+msgid "This year"
+msgstr "या वर्षी"
+
+#: src/features/analytics/Exports.tsx
+msgid "Three exports are already running in this workspace. Try again when one finishes."
+msgstr "या वर्कस्पेसमध्ये तीन एक्सपोर्ट आधीच चालू आहेत. एक संपल्यावर पुन्हा प्रयत्न करा."
+
+#: src/features/analytics/text.ts
+msgid "Time from the first to the last event of a visit, on average. Bounces count as zero."
+msgstr "भेटीच्या पहिल्या ते शेवटच्या इव्हेंटपर्यंतचा सरासरी वेळ. बाउन्स शून्य मोजले जातात."
+
+#: src/features/analytics/text.ts
+msgid "Time on page"
+msgstr "पेजवरील वेळ"
+
+#: src/features/analytics/text.ts
+msgid "Time the page was visible and in focus, per view."
+msgstr "पेज दिसत होते आणि फोकसमध्ये होते तो वेळ, प्रति व्ह्यू."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Time zone"
+msgstr "टाइम झोन"
+
+#: src/features/analytics/text.ts
+msgid "Times the goal was reached, also several times by one visitor."
+msgstr "गोल जितक्या वेळा गाठला गेला, एका व्हिझिटरने अनेकदा केले तरीही."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated helpful."
+msgstr "पेजला उपयुक्त रेट केले गेलेल्या वेळा."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated not helpful."
+msgstr "पेजला उपयुक्त नाही रेट केले गेलेल्या वेळा."
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "To"
+msgstr "प्रति"
+
+#: src/features/analytics/text.ts
+msgid "Today"
+msgstr "आज"
+
+#: src/features/analytics/Settings.tsx
+msgid "Today: {todayCounted} counted, {todayDropped} dropped"
+msgstr "आज: {todayCounted} मोजले, {todayDropped} वगळले"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Token"
+msgstr "टोकन"
+
+#: src/features/analytics/Settings.tsx
+msgid "Too late"
+msgstr "खूप उशीर"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many requests from your network. Wait a minute and reload the page."
+msgstr "तुमच्या नेटवर्कवरून खूप विनंत्या. एक मिनिट थांबा आणि पेज रीलोड करा."
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many tries. Wait a minute and try again."
+msgstr "खूप प्रयत्न. एक मिनिट थांबा आणि पुन्हा प्रयत्न करा."
+
+#: src/features/analytics/text.ts
+msgid "Top pages"
+msgstr "सर्वाधिक पेजेस"
+
+#: src/features/analytics/text.ts
+msgid "Top pages and screens"
+msgstr "सर्वाधिक पेजेस आणि स्क्रीन"
+
+#: src/features/analytics/text.ts
+msgid "Top screens"
+msgstr "सर्वाधिक स्क्रीन"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracked props"
+msgstr "ट्रॅक केलेले प्रॉप"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracking"
+msgstr "ट्रॅकिंग"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic drop"
+msgstr "ट्रॅफिकमधील घट"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic spike"
+msgstr "ट्रॅफिकमधील वाढ"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Try again"
+msgstr "पुन्हा प्रयत्न करा"
+
+#: src/features/analytics/Install.tsx
+msgid "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
+msgstr "आधी सामान्य सेटिंग्जमध्ये Platforms अंतर्गत {name} चालू करा. तोपर्यंत सर्व्हर ॲपचे इव्हेंट नाकारतो."
+
+#: src/features/analytics/Retention.tsx
+msgid "Turn on the persistent id in the consent features, then call yuva.consent with persistent set to true."
+msgstr "संमती फीचरमध्ये कायम id चालू करा, मग persistent true सेट करून yuva.consent कॉल करा."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Two to eight goals, in the order visitors reach them within one visit."
+msgstr "दोन ते आठ गोल, ज्या क्रमाने व्हिझिटर्स एका भेटीत त्यांच्यापर्यंत पोहोचतात."
+
+#: src/features/analytics/Settings.tsx
+msgid "Type the property’s name to delete it and all its data."
+msgstr "प्रॉपर्टी आणि तिचा सर्व डेटा हटवण्यासाठी तिचे नाव टाइप करा."
+
+#: src/features/analytics/text.ts
+msgid "Unknown"
+msgstr "अज्ञात"
+
+#: src/features/analytics/Install.tsx
+msgid "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
+msgstr "प्रति विनंती 100 इव्हेंटपर्यंत, प्रत्येक व्हिझिटरच्या IP पत्त्यासह आणि युजर एजंट किंवा तुमच्या स्वतःच्या visitor_key सह. दोन्हीपैकी काहीही साठवले जात नाही. अवैध म्हणून वगळलेले इव्हेंट त्यांच्या स्थानासह errors मध्ये परत येतात; काय पोहोचले ते Test events अंतर्गत पाहा."
+
+#: src/features/analytics/text.ts
+msgid "UTM campaign"
+msgstr "UTM कॅम्पेन"
+
+#: src/features/analytics/text.ts
+msgid "UTM content"
+msgstr "UTM कंटेंट"
+
+#: src/features/analytics/text.ts
+msgid "UTM medium"
+msgstr "UTM माध्यम"
+
+#: src/features/analytics/text.ts
+msgid "UTM source"
+msgstr "UTM स्रोत"
+
+#: src/features/analytics/text.ts
+msgid "UTM term"
+msgstr "UTM टर्म"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Views"
+msgstr "व्ह्यू"
+
+#: src/features/analytics/Goals.tsx
+msgid "Views a page"
+msgstr "पेज पाहतो"
+
+#: src/features/analytics/text.ts
+msgid "Views divided by visits."
+msgstr "व्ह्यू भेटींनी भागलेले."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views fell to {now} in two hours, against {usual} usually."
+msgstr "व्ह्यू दोन तासांत {now} पर्यंत घटले, सहसा {usual} च्या तुलनेत."
+
+#: src/features/analytics/text.ts
+msgid "Views in the last 30 minutes"
+msgstr "गेल्या 30 मिनिटांत व्ह्यू"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at least three times the same hours of the week before."
+msgstr "गेल्या दोन तासांचे व्ह्यू मागच्या आठवड्याच्या त्याच तासांच्या किमान तिप्पट आहेत."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at most half the same hours of the week before."
+msgstr "गेल्या दोन तासांचे व्ह्यू मागच्या आठवड्याच्या त्याच तासांच्या जास्तीत जास्त निम्मे आहेत."
+
+#: src/features/analytics/text.ts
+msgid "Views per minute"
+msgstr "प्रति मिनिट व्ह्यू"
+
+#: src/features/analytics/text.ts
+msgid "Views per visit"
+msgstr "प्रति भेट व्ह्यू"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views rose to {now} in two hours, against {usual} usually."
+msgstr "व्ह्यू दोन तासांत {now} पर्यंत वाढले, सहसा {usual} च्या तुलनेत."
+
+#: src/features/analytics/text.ts
+msgid "Visit duration"
+msgstr "भेटीचा कालावधी"
+
+#: src/features/analytics/Retention.tsx
+#: src/features/analytics/text.ts
+msgid "Visitors"
+msgstr "व्हिझिटर्स"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Visitors in the last 30 minutes"
+msgstr "गेल्या 30 मिनिटांत व्हिझिटर्स"
+
+#: src/features/analytics/Retention.tsx
+msgid "Visitors who came back"
+msgstr "परत आलेले व्हिझिटर्स"
+
+#: src/features/analytics/text.ts
+msgid "Visitors who reached the goal, per day, added up over the days of the range."
+msgstr "गोलपर्यंत पोहोचलेले व्हिझिटर्स, प्रति दिवस, रेंजच्या दिवसांत बेरीज केलेले."
+
+#: src/features/analytics/Settings.tsx
+msgid "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
+msgstr "Do Not Track किंवा Global Privacy Control असलेले व्हिझिटर्स काहीही पाठवत नाहीत, म्हणून ते इथेही मोजले जात नाहीत. वगळलेल्या इव्हेंटबद्दल त्याच्या मोजणीशिवाय काहीही ठेवले जात नाही."
+
+#: src/features/analytics/text.ts
+msgid "Visits"
+msgstr "भेटी"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page or screen view and nothing else."
+msgstr "एका पेज किंवा स्क्रीन व्ह्यूच्या आणि इतर काहीही नसलेल्या भेटी."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page view and nothing else."
+msgstr "एका पेज व्ह्यूच्या आणि इतर काहीही नसलेल्या भेटी."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one screen view and nothing else."
+msgstr "एका स्क्रीन व्ह्यूच्या आणि इतर काहीही नसलेल्या भेटी."
+
+#: src/features/analytics/Install.tsx
+msgid "Vue, Astro, other"
+msgstr "Vue, Astro, इतर"
+
+#: src/features/analytics/Exports.tsx
+msgid "Waiting"
+msgstr "प्रतीक्षेत"
+
+#: src/features/analytics/Settings.tsx
+msgid "Waiting for events since {at}."
+msgstr "{at} पासून इव्हेंटची वाट पाहत आहे."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Waiting for the first event"
+msgstr "पहिल्या इव्हेंटची वाट पाहत आहे"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Watch it live"
+msgstr "ते लाइव्ह पाहा"
+
+#: src/features/analytics/text.ts
+msgid "Web"
+msgstr "वेब"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Website or app"
+msgstr "वेबसाइट किंवा ॲप"
+
+#: src/features/analytics/Retention.tsx
+msgid "Week {period}"
+msgstr "आठवडा {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Weekly"
+msgstr "साप्ताहिक"
+
+#: src/features/analytics/Retention.tsx
+msgid "Weeks"
+msgstr "आठवडे"
+
+#: src/features/analytics/Insights.tsx
+msgid "What changed"
+msgstr "काय बदलले"
+
+#: src/features/analytics/Support.tsx
+msgid "What stands out"
+msgstr "काय ठळकपणे दिसते"
+
+#: src/features/analytics/text.ts
+msgid "What the goal's events carried, per currency. Currencies are never converted or added up."
+msgstr "गोलच्या इव्हेंटने काय वाहिले, प्रति चलन. चलने कधीही रूपांतरित किंवा बेरीज केली जात नाहीत."
+
+#: src/features/analytics/Exports.tsx
+msgid "What to export"
+msgstr "काय एक्सपोर्ट करायचे"
+
+#: src/features/analytics/Goals.tsx
+msgid "Where conversions come from"
+msgstr "कन्व्हर्जन कुठून येतात"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Where the property’s day starts and ends."
+msgstr "जिथे प्रॉपर्टीचा दिवस सुरू आणि संपतो."
+
+#: src/features/analytics/Install.tsx
+msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."
+msgstr "data-consent=\"required\" सह स्क्रिप्ट तुमचे संमती टूल व्हिझिटर सहमत झाल्याचे सांगेपर्यंत काहीही पाठवत नाही. सामान्य सेटिंग्जमध्ये Collection देखील “Only with consent” करा, म्हणजे सर्व्हर संमतीशिवाय इव्हेंट नाकारतो."
+
+#: src/features/analytics/Settings.tsx
+msgid "With yuva.consent and persistent set to true, the device keeps a random id for 13 months. The visitor counts once over several days, is told apart as new or returning, fills retention and is followed across days in funnels. Never under Do Not Track or Global Privacy Control."
+msgstr "yuva.consent आणि persistent true सह डिव्हाइस 13 महिन्यांसाठी रँडम id ठेवते. व्हिझिटर अनेक दिवसांत एकदा मोजला जातो, नवीन किंवा परत येणारा म्हणून ओळखला जातो, रिटेन्शन भरतो आणि फनेलमध्ये दिवसांपलीकडे फॉलो केला जातो. Do Not Track किंवा Global Privacy Control अंतर्गत कधीही नाही."
+
+#: src/features/analytics/text.ts
+msgid "Without consent"
+msgstr "संमतीशिवाय"
+
+#: src/features/analytics/Retention.tsx
+msgid "Without cookies a visitor is new every day, so nobody can be followed from one day to the next. Only visitors who agree to a persistent id in your consent tool show up here."
+msgstr "कुकीशिवाय व्हिझिटर दररोज नवीन असतो, म्हणून कोणालाही एका दिवसापासून पुढच्या दिवसापर्यंत फॉलो करता येत नाही. फक्त तुमच्या संमती टूलमध्ये कायम id ला सहमत होणारे व्हिझिटर्स इथे दिसतात."
+
+#: src/features/analytics/Settings.tsx
+msgid "Without cookies, for everyone"
+msgstr "कुकीशिवाय, सर्वांसाठी"
+
+#: src/features/analytics/text.ts
+msgid "Yesterday"
+msgstr "काल"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Your access ended. Enter the password again to keep reading."
+msgstr "तुमचा ॲक्सेस संपला. वाचणे सुरू ठेवण्यासाठी पासवर्ड पुन्हा टाका."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Your new share link"
+msgstr "तुमची नवीन शेअर लिंक"
+
+#: src/features/analytics/Settings.tsx
+msgid "yuva.identify with a token from your backend, signed like a chat session, links the visitor’s visits to their contact. They show on the contact’s page under Recent visits. Forged or reused tokens are ignored."
+msgstr "तुमच्या बॅकएंडच्या टोकनसह yuva.identify, चॅट सेशनसारखे साइन केलेले, व्हिझिटरच्या भेटी त्यांच्या कॉन्टॅक्टशी जोडते. त्या कॉन्टॅक्टच्या पेजवर Recent visits अंतर्गत दिसतात. बनावट किंवा पुन्हा वापरलेले टोकन दुर्लक्षित केले जातात."

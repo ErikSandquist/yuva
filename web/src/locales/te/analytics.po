@@ -1,0 +1,2748 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 10:11+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: te\n"
+
+#: src/features/analytics/text.ts
+msgid "(not set)"
+msgstr "(సెట్ చేయలేదు)"
+
+#. placeholder {0}: e.rows
+#: src/features/analytics/Exports.tsx
+msgid "{0, plural, one {# row} other {# rows}}"
+msgstr "{0, plural, one {# అడ్డు వరుస} other {# అడ్డు వరుసలు}}"
+
+#. placeholder {0}: p.visitors_today
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{0, plural, one {visitor today} other {visitors today}}"
+msgstr "{0, plural, one {ఈ రోజు సందర్శకుడు} other {ఈ రోజు సందర్శకులు}}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{consentedCount} consented, across visits and days"
+msgstr "{consentedCount} మంది అంగీకరించారు, సందర్శనలు మరియు రోజుల్లో"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {{site} sent # visit, and none in the 28 days before.} other {{site} sent # visits, and none in the 28 days before.}}"
+msgstr "{count, plural, one {{site} # సందర్శనను పంపింది, మరియు ముందటి 28 రోజుల్లో ఏదీ లేదు.} other {{site} # సందర్శనలను పంపింది, మరియు ముందటి 28 రోజుల్లో ఏదీ లేదు.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {# conversation per 1,000 views, against {usual} in the 28 days before.} other {# conversations per 1,000 views, against {usual} in the 28 days before.}}"
+msgstr "{count, plural, one {1,000 వీక్షణలకు # సంభాషణ, ముందటి 28 రోజుల్లో {usual} కు వ్యతిరేకంగా.} other {1,000 వీక్షణలకు # సంభాషణలు, ముందటి 28 రోజుల్లో {usual} కు వ్యతిరేకంగా.}}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "{count, plural, one {Goal “{goal}” had # conversion, against {usual} a day on average in the week before.} other {Goal “{goal}” had # conversions, against {usual} a day on average in the week before.}}"
+msgstr "{count, plural, one {లక్ష్యం “{goal}” కు # కన్వర్షన్ వచ్చింది, ముందటి వారంలో సగటున రోజుకు {usual} కు వ్యతిరేకంగా.} other {లక్ష్యం “{goal}” కు # కన్వర్షన్‌లు వచ్చాయి, ముందటి వారంలో సగటున రోజుకు {usual} కు వ్యతిరేకంగా.}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{count} in this range, none in the compared days."
+msgstr "ఈ పరిధిలో {count}, పోల్చిన రోజుల్లో ఏదీ లేదు."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {count}, none in the compared days."
+msgstr "{dim} {value}: {count}, పోల్చిన రోజుల్లో ఏదీ లేదు."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} fell {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} {change} తగ్గింది, {before} కు వ్యతిరేకంగా {now}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {lower} rose {change}, {now} against {before}."
+msgstr "{dim} {value}: {lower} {change} పెరిగింది, {before} కు వ్యతిరేకంగా {now}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {metric} {now}, none in the compared days."
+msgstr "{dim} {value}: {metric} {now}, పోల్చిన రోజుల్లో ఏదీ లేదు."
+
+#: src/features/analytics/Annotations.tsx
+msgid "{kind}: {found}"
+msgstr "{kind}: {found}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{lost} left ({lostPct})"
+msgstr "{lost} వెళ్లిపోయారు ({lostPct})"
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} fell {change}: {now}, against {before} in the compared days."
+msgstr "{metric} {change} తగ్గింది: {now}, పోల్చిన రోజుల్లో {before} కు వ్యతిరేకంగా."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric} rose {change}: {now}, against {before} in the compared days."
+msgstr "{metric} {change} పెరిగింది: {now}, పోల్చిన రోజుల్లో {before} కు వ్యతిరేకంగా."
+
+#: src/features/analytics/Insights.tsx
+msgid "{metric}: {now}, none in the compared days."
+msgstr "{metric}: {now}, పోల్చిన రోజుల్లో ఏదీ లేదు."
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversation} other {# conversations}}"
+msgstr "{n, plural, one {# సంభాషణ} other {# సంభాషణలు}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversion} other {# conversions}}"
+msgstr "{n, plural, one {# కన్వర్షన్} other {# కన్వర్షన్‌లు}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# discussion} other {# discussions}}"
+msgstr "{n, plural, one {# చర్చ} other {# చర్చలు}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# event} other {# events}}"
+msgstr "{n, plural, one {# ఈవెంట్} other {# ఈవెంట్‌లు}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# view} other {# views}}"
+msgstr "{n, plural, one {# వీక్షణ} other {# వీక్షణలు}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visit} other {# visits}}"
+msgstr "{n, plural, one {# సందర్శన} other {# సందర్శనలు}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visitor} other {# visitors}}"
+msgstr "{n, plural, one {# సందర్శకుడు} other {# సందర్శకులు}}"
+
+#: src/features/analytics/Events.tsx
+msgid "{n} payments, {avg} on average"
+msgstr "{n} చెల్లింపులు, సగటున {avg}"
+
+#: src/features/analytics/Install.tsx
+msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
+msgstr "{name} ఈ ప్రాపర్టీ ప్లాట్‌ఫామ్‌లలో ఒకటి కాదు, కాబట్టి సర్వర్ యాప్ ఈవెంట్‌లను తిరస్కరిస్తుంది. యజమాని లేదా అడ్మిన్ దీన్ని ఆన్ చేయవచ్చు."
+
+#: src/features/analytics/Funnels.tsx
+msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
+msgstr "మొదటి దశకు చేరిన సందర్శకులలో {overall} మంది చివరి దశకు కూడా చేరారు, {from} – {to}."
+
+#: src/features/analytics/Insights.tsx
+msgid "{rate, plural, one {{dim} {value}: # conversation per 1,000 views, against {site} across all pages.} other {{dim} {value}: # conversations per 1,000 views, against {site} across all pages.}}"
+msgstr "{rate, plural, one {{dim} {value}: 1,000 వీక్షణలకు # సంభాషణ, అన్ని పేజీల్లో {site} కు వ్యతిరేకంగా.} other {{dim} {value}: 1,000 వీక్షణలకు # సంభాషణలు, అన్ని పేజీల్లో {site} కు వ్యతిరేకంగా.}}"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
+msgstr "ఈ నెల {limit} లో {used} అనలిటిక్స్ ఈవెంట్‌లు ఉపయోగించబడ్డాయి. పరిమితి దాటిన ఈవెంట్‌లు నెల ముగిసే వరకు వదిలివేయబడతాయి."
+
+#: src/features/analytics/Settings.tsx
+msgid "A change applies to new events. Days already counted keep their zone."
+msgstr "మార్పు కొత్త ఈవెంట్‌లకు వర్తిస్తుంది. ఇప్పటికే లెక్కించిన రోజులు తమ జోన్‌ను ఉంచుకుంటాయి."
+
+#: src/features/analytics/Goals.tsx
+msgid "A changed goal is counted again over the days the detailed records are kept."
+msgstr "మార్చిన లక్ష్యం వివరణాత్మక రికార్డ్‌లు ఉంచే రోజులపై మళ్లీ లెక్కించబడుతుంది."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel follows each visit step by step, so it covers at most 90 days at once, or 31 days for a property with more than 10 million events a month. Pick a shorter range."
+msgstr "ఫన్నెల్ ప్రతి సందర్శనను దశల వారీగా అనుసరిస్తుంది, కాబట్టి ఒకేసారి గరిష్టంగా 90 రోజులు, లేదా నెలకు 1 కోటి కంటే ఎక్కువ ఈవెంట్‌లు ఉన్న ప్రాపర్టీకి 31 రోజులు కవర్ చేస్తుంది. తక్కువ పరిధిని ఎంచుకోండి."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel is made of two to eight goals in a row. Make at least two goals first."
+msgstr "ఫన్నెల్ వరుసగా రెండు నుండి ఎనిమిది లక్ష్యాలతో తయారవుతుంది. ముందుగా కనీసం రెండు లక్ష్యాలను సృష్టించండి."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are kept since {day}. Earlier days only have totals, so they cannot show a funnel."
+msgstr "ఫన్నెల్‌కు ప్రతి సందర్శన దశలు అవసరం, అవి {day} నుండి ఉంచబడ్డాయి. అంతకు ముందటి రోజులకు మొత్తాలు మాత్రమే ఉన్నాయి, కాబట్టి అవి ఫన్నెల్‌ను చూపలేవు."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are no longer kept for this range."
+msgstr "ఫన్నెల్‌కు ప్రతి సందర్శన దశలు అవసరం, అవి ఈ పరిధికి ఇకపై ఉంచబడవు."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel shows how many visitors go from one goal to the next within a visit, and where they leave."
+msgstr "సందర్శనలో ఎంత మంది సందర్శకులు ఒక లక్ష్యం నుండి తదుపరిదానికి వెళ్తారో, ఎక్కడ వెళ్లిపోతారో ఫన్నెల్ చూపుతుంది."
+
+#: src/features/analytics/Goals.tsx
+msgid "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
+msgstr "పేజీని చూసే, ఈవెంట్ పంపే లేదా తగినంత స్క్రోల్ చేసే సందర్శకులను, మరియు వారు తెచ్చే ఆదాయాన్ని లక్ష్యం లెక్కిస్తుంది."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A goal’s conversions yesterday were at most half its daily average of the week before."
+msgstr "నిన్న లక్ష్యం కన్వర్షన్‌లు ముందటి వారం రోజువారీ సగటులో గరిష్టంగా సగం ఉన్నాయి."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A link shows only its views of this property, read-only, without filters or segments. Revoking or deleting it stops it at once."
+msgstr "లింక్ ఈ ప్రాపర్టీలో మీరు ఎంచుకున్న వీక్షణలను మాత్రమే, చదవడానికి-మాత్రమే, ఫిల్టర్‌లు లేదా సెగ్మెంట్‌లు లేకుండా చూపుతుంది. రద్దు చేస్తే లేదా తొలగిస్తే అది వెంటనే ఆగుతుంది."
+
+#: src/features/analytics/Goals.tsx
+msgid "A new goal also counts the days the detailed records are kept, not only from today."
+msgstr "కొత్త లక్ష్యం ఈ రోజు నుండి మాత్రమే కాకుండా, వివరణాత్మక రికార్డ్‌లు ఉంచే రోజులను కూడా లెక్కిస్తుంది."
+
+#: src/features/analytics/Annotations.tsx
+msgid "A new key was made"
+msgstr "కొత్త కీ తయారైంది"
+
+#: src/features/analytics/Sharing.tsx
+msgid "A new password signs out everyone who unlocked the link."
+msgstr "కొత్త పాస్‌వర్డ్ లింక్‌ను అన్‌లాక్ చేసిన ప్రతి ఒక్కరినీ సైన్ అవుట్ చేస్తుంది."
+
+#: src/features/analytics/Goals.tsx
+msgid "A path. * stands for one part of it, ** for any number of them."
+msgstr "ఒక పాత్. * దానిలో ఒక భాగాన్ని, ** ఎన్ని భాగాలనైనా సూచిస్తాయి."
+
+#: src/features/analytics/Settings.tsx
+msgid "A prop name has at most 300 characters and does not start with $ or yuva_."
+msgstr "ప్రాప్ పేరు గరిష్టంగా 300 అక్షరాలు మరియు $ లేదా yuva_ తో మొదలుకాదు."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A property can have at most 50 share links. Delete one first."
+msgstr "ఒక ప్రాపర్టీకి గరిష్టంగా 50 షేర్ లింక్‌లు ఉండవచ్చు. ముందుగా ఒకదాన్ని తొలగించండి."
+
+#: src/features/analytics/parts.tsx
+msgid "A range can be at most 400 days long. Pick a shorter one."
+msgstr "పరిధి గరిష్టంగా 400 రోజుల పొడవు ఉండవచ్చు. తక్కువది ఎంచుకోండి."
+
+#: src/features/analytics/Alerts.tsx
+msgid "A site sent 10 or more visits yesterday and none in the 28 days before."
+msgstr "ఒక సైట్ నిన్న 10 లేదా అంతకంటే ఎక్కువ సందర్శనలను పంపింది, మరియు ముందటి 28 రోజుల్లో ఏదీ లేదు."
+
+#: src/features/analytics/Settings.tsx
+msgid "A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and it shows as a chip on the Events view."
+msgstr "ట్రాక్ చేసే ప్రాప్ రోజువారీ మొత్తాల్లో కూడా ఉంచబడుతుంది, కాబట్టి వివరణాత్మక రికార్డ్‌లు పోయిన తర్వాత కూడా దాని విభజన నిలిచి ఉంటుంది, మరియు అది Events వీక్షణలో చిప్‌గా కనిపిస్తుంది."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page or screen views without a gap of 30 minutes, within one day."
+msgstr "ఒక రోజులో, 30 నిమిషాల అంతరం లేకుండా, సందర్శకుడి పేజీ లేదా స్క్రీన్ వీక్షణలు."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page views without a gap of 30 minutes, within one day."
+msgstr "ఒక రోజులో, 30 నిమిషాల అంతరం లేకుండా, సందర్శకుడి పేజీ వీక్షణలు."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
+msgstr "ఒక రోజులో, 30 నిమిషాల అంతరం లేకుండా, సందర్శకుడి స్క్రీన్ వీక్షణలు. యాప్ ప్రతి లాంచ్ కొత్త సందర్శనను ప్రారంభిస్తుంది."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Active"
+msgstr "చురుకైనది"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add"
+msgstr "జోడించండి"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add a note to the chart"
+msgstr "చార్ట్‌కు గమనికను జోడించండి"
+
+#: src/features/analytics/Settings.tsx
+msgid "Add a rule"
+msgstr "నియమాన్ని జోడించండి"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Add a step"
+msgstr "దశను జోడించండి"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/NewProperty.tsx
+msgid "Add a website"
+msgstr "వెబ్‌సైట్‌ను జోడించండి"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add a website to count its visitors, pages and sources, without cookies."
+msgstr "దాని సందర్శకులు, పేజీలు మరియు మూలాలను కుకీలు లేకుండా లెక్కించడానికి వెబ్‌సైట్‌ను జోడించండి."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Add and install"
+msgstr "జోడించి ఇన్‌స్టాల్ చేయండి"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Add note"
+msgstr "గమనికను జోడించండి"
+
+#: src/features/analytics/Install.tsx
+msgid "Add the YuvaAnalytics library of the Yuva package and configure it once at launch. .yuvaScreen counts a SwiftUI screen; in UIKit, call YuvaAnalytics.screen when a screen appears. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "Yuva ప్యాకేజీ YuvaAnalytics లైబ్రరీని జోడించి, లాంచ్ వద్ద ఒకసారి కాన్ఫిగర్ చేయండి. .yuvaScreen SwiftUI స్క్రీన్‌ను లెక్కిస్తుంది; UIKit లో, స్క్రీన్ కనిపించినప్పుడు YuvaAnalytics.screen ను పిలవండి. కనెక్షన్ లేకుండా, ఈవెంట్‌లు పరికరంలో 72 గంటల వరకు వేచి ఉండి తమ స్వంత సమయాలతో చేరతాయి."
+
+#: src/features/analytics/Install.tsx
+msgid "Add yuva-analytics from JitPack and configure it once in Application.onCreate. TrackScreen counts a Compose screen. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "JitPack నుండి yuva-analytics ను జోడించి, Application.onCreate లో ఒకసారి కాన్ఫిగర్ చేయండి. TrackScreen Compose స్క్రీన్‌ను లెక్కిస్తుంది. కనెక్షన్ లేకుండా, ఈవెంట్‌లు పరికరంలో 72 గంటల వరకు వేచి ఉండి తమ స్వంత సమయాలతో చేరతాయి."
+
+#: src/features/analytics/Settings.tsx
+msgid "Addresses not counted"
+msgstr "లెక్కించని చిరునామాలు"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the compared days"
+msgstr "పోల్చిన రోజులకు వ్యతిరేకంగా"
+
+#: src/features/analytics/Insights.tsx
+msgid "against the period before"
+msgstr "మునుపటి కాలానికి వ్యతిరేకంగా"
+
+#: src/features/analytics/Support.tsx
+msgid "Agents of the inbox can then see this property’s numbers too."
+msgstr "ఇన్‌బాక్స్ ఏజెంట్‌లు అప్పుడు ఈ ప్రాపర్టీ సంఖ్యలను కూడా చూడవచ్చు."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Agents of this inbox can see the numbers."
+msgstr "ఈ ఇన్‌బాక్స్ ఏజెంట్‌లు సంఖ్యలను చూడవచ్చు."
+
+#: src/features/analytics/text.ts
+msgid "AI assistants"
+msgstr "AI అసిస్టెంట్‌లు"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Alerts"
+msgstr "అలర్ట్‌లు"
+
+#: src/features/analytics/Settings.tsx
+msgid "Alerts and reports"
+msgstr "అలర్ట్‌లు మరియు నివేదిక"
+
+#: src/features/analytics/Events.tsx
+msgid "All events"
+msgstr "అన్ని ఈవెంట్‌లు"
+
+#: src/features/analytics/Goals.tsx
+msgid "All goals"
+msgstr "అన్ని లక్ష్యాలు"
+
+#: src/features/analytics/Support.tsx
+msgid "An owner or admin can link one in the property’s settings."
+msgstr "యజమాని లేదా అడ్మిన్ ప్రాపర్టీ సెట్టింగ్‌లలో ఒకదాన్ని లింక్ చేయవచ్చు."
+
+#: src/features/analytics/Retention.tsx
+msgid "An owner or admin can turn on the persistent id in the consent features."
+msgstr "యజమాని లేదా అడ్మిన్ సమ్మతి ఫీచర్‌లలో శాశ్వత ID ను ఆన్ చేయవచ్చు."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics"
+msgstr "అనలిటిక్స్"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Analytics properties"
+msgstr "అనలిటిక్స్ ప్రాపర్టీలు"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Analytics steps"
+msgstr "అనలిటిక్స్ దశలు"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics views"
+msgstr "అనలిటిక్స్ వీక్షణలు"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Anyone with the link sees the views you pick, read-only, without signing in."
+msgstr "లింక్ ఉన్న ఎవరైనా మీరు ఎంచుకున్న వీక్షణలను, చదవడానికి-మాత్రమే, సైన్ ఇన్ చేయకుండా చూస్తారు."
+
+#: src/features/analytics/text.ts
+msgid "App"
+msgstr "యాప్"
+
+#: src/features/analytics/text.ts
+msgid "App version"
+msgstr "యాప్ వెర్షన్"
+
+#: src/features/analytics/Settings.tsx
+msgid "Apps send without a domain, so only the platforms turned on here are counted. Events from your backend need no platform."
+msgstr "యాప్‌లు డొమైన్ లేకుండా పంపుతాయి, కాబట్టి ఇక్కడ ఆన్ చేసిన ప్లాట్‌ఫామ్‌లు మాత్రమే లెక్కించబడతాయి. మీ బ్యాకెండ్ ఈవెంట్‌లకు ప్లాట్‌ఫామ్ అవసరం లేదు."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Ask for a password"
+msgstr "పాస్‌వర్డ్ అడగండి"
+
+#: src/features/analytics/Sharing.tsx
+msgid "At least 8 characters"
+msgstr "కనీసం 8 అక్షరాలు"
+
+#: src/features/analytics/Settings.tsx
+msgid "At most 10 props can be tracked."
+msgstr "గరిష్టంగా 10 ప్రాప్‌లను ట్రాక్ చేయవచ్చు."
+
+#: src/features/analytics/Settings.tsx
+msgid "Audience"
+msgstr "ప్రేక్షకులు"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Available until {expires}"
+msgstr "{expires} వరకు అందుబాటులో ఉంది"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots"
+msgstr "బాట్‌లు"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
+msgstr "బాట్‌లు, రేట్ పరిమితులు, మినహాయించిన చిరునామాలు మరియు పాత్‌లు, నెలవారీ పరిమితి లేదా బిజీగా ఉన్న సర్వర్."
+
+#: src/features/analytics/text.ts
+msgid "Bounce rate"
+msgstr "బౌన్స్ రేటు"
+
+#: src/features/analytics/Events.tsx
+msgid "Break down by prop"
+msgstr "ప్రాప్ ద్వారా విభజించండి"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Breakdown"
+msgstr "విభజన"
+
+#: src/features/analytics/Exports.tsx
+msgid "Broken down by"
+msgstr "దీని ద్వారా విభజించబడింది"
+
+#: src/features/analytics/Settings.tsx
+msgid "Broken events, such as a screen address that does not start with app://, a reserved name or too many props."
+msgstr "పాడైన ఈవెంట్‌లు, ఉదాహరణకు app:// తో మొదలుకాని స్క్రీన్ చిరునామా, రిజర్వ్ చేసిన పేరు లేదా చాలా ప్రాప్‌లు."
+
+#: src/features/analytics/text.ts
+msgid "Browser"
+msgstr "బ్రౌజర్"
+
+#: src/features/analytics/text.ts
+msgid "Browser version"
+msgstr "బ్రౌజర్ వెర్షన్"
+
+#: src/features/analytics/Install.tsx
+msgid "Call it once in the browser. During server rendering it does nothing."
+msgstr "బ్రౌజర్‌లో ఒకసారి పిలవండి. సర్వర్ రెండరింగ్ సమయంలో అది ఏమీ చేయదు."
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Cancel"
+msgstr "రద్దు చేయండి"
+
+#: src/features/analytics/Controls.tsx
+msgid "Change filter: {label}"
+msgstr "ఫిల్టర్‌ను మార్చండి: {label}"
+
+#: src/features/analytics/Controls.tsx
+msgid "changed"
+msgstr "మారింది"
+
+#: src/features/analytics/text.ts
+msgid "Channel"
+msgstr "ఛానెల్"
+
+#: src/features/analytics/text.ts
+msgid "Chat opened"
+msgstr "చాట్ తెరవబడింది"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Checked every hour. Each alert is sent once and also shows as a note on the chart."
+msgstr "ప్రతి గంటకు తనిఖీ చేయబడుతుంది. ప్రతి అలర్ట్ ఒకసారి పంపబడుతుంది మరియు చార్ట్‌పై గమనికగా కూడా కనిపిస్తుంది."
+
+#: src/features/analytics/Settings.tsx
+msgid "Children"
+msgstr "పిల్లలు"
+
+#: src/features/analytics/Support.tsx
+msgid "Choose an inbox"
+msgstr "ఇన్‌బాక్స్‌ను ఎంచుకోండి"
+
+#: src/features/analytics/Settings.tsx
+msgid "Choose children for a site made for children."
+msgstr "పిల్లల కోసం చేసిన సైట్ కోసం పిల్లలను ఎంచుకోండి."
+
+#: src/features/analytics/text.ts
+msgid "City"
+msgstr "నగరం"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Clear"
+msgstr "క్లియర్ చేయండి"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts by"
+msgstr "దీని ద్వారా కోహార్ట్‌లు"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts fill once visitors agree to a persistent id and come back. The numbers are rebuilt every hour."
+msgstr "సందర్శకులు శాశ్వత ID కి అంగీకరించి తిరిగి వచ్చినప్పుడు కోహార్ట్‌లు నిండుతాయి. సంఖ్యలు ప్రతి గంటకు మళ్లీ రూపొందించబడతాయి."
+
+#: src/features/analytics/Settings.tsx
+msgid "Collection"
+msgstr "సేకరణ"
+
+#. placeholder {0}: formatDate(`${c.from}T12:00:00Z`, i18n.locale)
+#. placeholder {1}: formatDate(`${c.to}T12:00:00Z`, i18n.locale)
+#: src/features/analytics/Controls.tsx
+msgid "Compare with {0} – {1}"
+msgstr "{0} – {1} తో పోల్చండి"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with a year earlier"
+msgstr "ఏడాది క్రితంతో పోల్చండి"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days"
+msgstr "ఇతర రోజులతో పోల్చండి"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days…"
+msgstr "ఇతర రోజులతో పోల్చండి…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the days"
+msgstr "రోజులతో పోల్చండి"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the period before"
+msgstr "మునుపటి కాలంతో పోల్చండి"
+
+#: src/features/analytics/Overview.tsx
+msgid "Compared days"
+msgstr "పోల్చిన రోజులు"
+
+#: src/features/analytics/Controls.tsx
+msgid "Comparison"
+msgstr "పోలిక"
+
+#: src/features/analytics/text.ts
+msgid "Completions"
+msgstr "పూర్తయినవి"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consent features"
+msgstr "సమ్మతి ఫీచర్‌లు"
+
+#: src/features/analytics/Install.tsx
+msgid "Consent mode"
+msgstr "సమ్మతి మోడ్"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id, and signed-in users are linked to their contact."
+msgstr "అంగీకరించిన సందర్శకులు శాశ్వత ID ను ఉంచుకుంటారు, మరియు సైన్ ఇన్ చేసిన వినియోగదారులు వారి కాంటాక్ట్‌కు లింక్ చేయబడతారు."
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id."
+msgstr "అంగీకరించిన సందర్శకులు శాశ్వత ID ను ఉంచుకుంటారు."
+
+#: src/features/analytics/parts.tsx
+msgid "Consented visitors only"
+msgstr "అంగీకరించిన సందర్శకులు మాత్రమే"
+
+#: src/features/analytics/text.ts
+msgid "contains"
+msgstr "కలిగి ఉంది"
+
+#: src/features/analytics/Install.tsx
+msgid "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
+msgstr "కంటెంట్ బ్లాకర్‌లు తరచుగా ఇతర డొమైన్‌ల స్క్రిప్ట్‌లను ఆపుతాయి. స్క్రిప్ట్‌ను మరియు దాని ఎండ్‌పాయింట్‌ను మీ స్వంత సైట్ నుండి అందిస్తే ఆ సందర్శకులు లెక్కించబడుతూనే ఉంటారు. Yuva సర్వర్ మీ ప్రాక్సీ ఫార్వర్డ్ చేసిన చిరునామాను విశ్వసించాలి; లేకపోతే సందర్శకులందరూ ఒక్కరిలా కనిపిస్తారు."
+
+#: src/features/analytics/text.ts
+msgid "Conversations"
+msgstr "సంభాషణలు"
+
+#: src/features/analytics/text.ts
+msgid "Conversations per 1,000 views of the page."
+msgstr "పేజీ 1,000 వీక్షణలకు సంభాషణలు."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Conversations per 1,000 views yesterday were at least twice the rate of the 28 days before."
+msgstr "నిన్న 1,000 వీక్షణలకు సంభాషణలు ముందటి 28 రోజుల రేటు కంటే కనీసం రెండింతలు ఉన్నాయి."
+
+#: src/features/analytics/text.ts
+msgid "Conversations started on the page, from the chat of the linked inbox."
+msgstr "లింక్ చేసిన ఇన్‌బాక్స్ చాట్ నుండి, పేజీలో ప్రారంభమైన సంభాషణలు."
+
+#: src/features/analytics/Support.tsx
+msgid "Conversations, feedback, ratings and discussions of the linked inbox show here next to each page’s views. They are counted per page and day; no visitor is ever matched to a contact."
+msgstr "లింక్ చేసిన ఇన్‌బాక్స్ సంభాషణలు, అభిప్రాయాలు, రేటింగ్‌లు మరియు చర్చలు ఇక్కడ ప్రతి పేజీ వీక్షణల పక్కన కనిపిస్తాయి. అవి పేజీ మరియు రోజు వారీగా లెక్కించబడతాయి; ఏ సందర్శకుడూ ఎప్పుడూ కాంటాక్ట్‌తో సరిపోల్చబడరు."
+
+#: src/features/analytics/text.ts
+msgid "Conversion rate"
+msgstr "కన్వర్షన్ రేటు"
+
+#: src/features/analytics/text.ts
+msgid "Conversions"
+msgstr "కన్వర్షన్‌లు"
+
+#: src/features/analytics/text.ts
+msgid "Conversions per 100 visitors."
+msgstr "100 మంది సందర్శకులకు కన్వర్షన్‌లు."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
+msgstr "దీన్ని ఇప్పుడే కాపీ చేయండి; ఇది మళ్లీ చూపబడదు. పోయిన లింక్‌లను రద్దు చేసి మళ్లీ తయారు చేయడం మాత్రమే సాధ్యం."
+
+#: src/features/analytics/Install.tsx
+msgid "Count my visits again"
+msgstr "నా సందర్శనలను మళ్లీ లెక్కించండి"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Count visitors, pages, sources, places and devices without cookies and without storing IP addresses."
+msgstr "కుకీలు లేకుండా మరియు IP చిరునామాలు నిల్వ చేయకుండా సందర్శకులు, పేజీలు, మూలాలు, స్థలాలు మరియు పరికరాలను లెక్కించండి."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Count your website’s visitors"
+msgstr "మీ వెబ్‌సైట్ సందర్శకులను లెక్కించండి"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted"
+msgstr "లెక్కించబడింది"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted as"
+msgstr "ఇలా లెక్కించబడింది"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Countries"
+msgstr "దేశాలు"
+
+#: src/features/analytics/text.ts
+msgid "Country"
+msgstr "దేశం"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
+msgstr "అడగకుండా ప్రతి సందర్శకుడిని లెక్కిస్తుంది: పరికరంలో ఏదీ నిల్వ చేయబడదు మరియు ఏ IP చిరునామా ఉంచబడదు."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Counts the visitors who reached each step after the ones before it, within one visit on one day. Numbers are at most ten minutes old."
+msgstr "ప్రతి దశకు చేరిన సందర్శకులను, ముందటి దశల తర్వాత, ఒక రోజులో ఒక సందర్శనలో లెక్కిస్తుంది. సంఖ్యలు గరిష్టంగా పది నిమిషాల పాతవి."
+
+#: src/features/analytics/Settings.tsx
+msgid "Currency"
+msgstr "కరెన్సీ"
+
+#: src/features/analytics/Exports.tsx
+msgid "Current view"
+msgstr "ప్రస్తుత వీక్షణ"
+
+#: src/features/analytics/text.ts
+msgid "Custom and built-in events."
+msgstr "కస్టమ్ మరియు అంతర్నిర్మిత ఈవెంట్‌లు."
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range"
+msgstr "కస్టమ్ పరిధి"
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range…"
+msgstr "కస్టమ్ పరిధి…"
+
+#: src/features/analytics/Settings.tsx
+msgid "Data"
+msgstr "డేటా"
+
+#: src/features/analytics/Install.tsx
+msgid "data-outbound counts clicks on links to other sites, data-files downloads of documents and archives, and data-chat each time a visitor opens the chat. track() sends your own events with up to 30 props; e-mail addresses in props are dropped. Make goals from events in the Goals view."
+msgstr "data-outbound ఇతర సైట్‌లకు లింక్‌ల క్లిక్‌లను, data-files పత్రాలు మరియు ఆర్కైవ్‌ల డౌన్‌లోడ్‌లను, data-chat సందర్శకుడు చాట్‌ను తెరిచిన ప్రతిసారీ లెక్కిస్తాయి. track() 30 ప్రాప్‌ల వరకు మీ స్వంత ఈవెంట్‌లను పంపుతుంది; ప్రాప్‌లలోని ఇమెయిల్ చిరునామాలు వదిలివేయబడతాయి. Goals వీక్షణలో ఈవెంట్‌ల నుండి లక్ష్యాలను తయారు చేయండి."
+
+#: src/features/analytics/Settings.tsx
+msgid "Day"
+msgstr "రోజు"
+
+#: src/features/analytics/Retention.tsx
+msgid "Day {period}"
+msgstr "రోజు {period}"
+
+#: src/features/analytics/Exports.tsx
+msgid "Day by day"
+msgstr "రోజు వారీగా"
+
+#: src/features/analytics/Retention.tsx
+msgid "Days"
+msgstr "రోజులు"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/SharePage.tsx
+msgid "Days are counted in this time zone"
+msgstr "రోజులు ఈ సమయ మండలంలో లెక్కించబడతాయి"
+
+#: src/features/analytics/Settings.tsx
+msgid "Days are in the property’s time zone. Their totals are counted again without them."
+msgstr "రోజులు ప్రాపర్టీ సమయ మండలంలో ఉన్నాయి. వాటి మొత్తాలు అవి లేకుండా మళ్లీ లెక్కించబడతాయి."
+
+#: src/features/analytics/Settings.tsx
+msgid "Days waiting to be summed up"
+msgstr "మొత్తం కట్టడానికి వేచి ఉన్న రోజులు"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete"
+msgstr "తొలగించండి"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete {0}?"
+msgstr "{0} ను తొలగించాలా?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete {name}?"
+msgstr "{name} ను తొలగించాలా?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data"
+msgstr "మొత్తం డేటాను తొలగించండి"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data of {0}?"
+msgstr "{0} మొత్తం డేటాను తొలగించాలా?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete days"
+msgstr "రోజులను తొలగించండి"
+
+#: src/features/analytics/Exports.tsx
+msgid "Delete export"
+msgstr "ఎగుమతిని తొలగించండి"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Delete funnel"
+msgstr "ఫన్నెల్‌ను తొలగించండి"
+
+#: src/features/analytics/Goals.tsx
+msgid "Delete goal"
+msgstr "లక్ష్యాన్ని తొలగించండి"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete note"
+msgstr "గమనికను తొలగించండి"
+
+#: src/features/analytics/Controls.tsx
+msgid "Delete segment"
+msgstr "సెగ్మెంట్‌ను తొలగించండి"
+
+#. placeholder {0}: funnel.name
+#: src/features/analytics/Funnels.tsx
+msgid "Delete the funnel “{0}”?"
+msgstr "ఫన్నెల్ “{0}” ను తొలగించాలా?"
+
+#. placeholder {0}: goal.name
+#: src/features/analytics/Goals.tsx
+msgid "Delete the goal “{0}”?"
+msgstr "లక్ష్యం “{0}” ను తొలగించాలా?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the property"
+msgstr "ప్రాపర్టీని తొలగించండి"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Delete the segment “{0}”?"
+msgstr "సెగ్మెంట్ “{0}” ను తొలగించాలా?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the visits and events of {span}?"
+msgstr "{span} సందర్శనలు మరియు ఈవెంట్‌లను తొలగించాలా?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete these days"
+msgstr "ఈ రోజులను తొలగించండి"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete this note?"
+msgstr "ఈ గమనికను తొలగించాలా?"
+
+#: src/features/analytics/Exports.tsx
+msgid "deleted {expires}"
+msgstr "{expires} తొలగించబడింది"
+
+#: src/features/analytics/Settings.tsx
+msgid "Deleting in the background. The numbers update when it is done."
+msgstr "నేపథ్యంలో తొలగిస్తోంది. పూర్తయినప్పుడు సంఖ్యలు అప్‌డేట్ అవుతాయి."
+
+#: src/features/analytics/Goals.tsx
+msgid "Depth in %"
+msgstr "లోతు % లో"
+
+#: src/features/analytics/text.ts
+msgid "Desktop"
+msgstr "డెస్క్‌టాప్"
+
+#: src/features/analytics/Exports.tsx
+msgid "Detailed records are kept since {rawDay}."
+msgstr "వివరణాత్మక రికార్డ్‌లు {rawDay} నుండి ఉంచబడ్డాయి."
+
+#: src/features/analytics/Settings.tsx
+msgid "Detailed records kept since"
+msgstr "వివరణాత్మక రికార్డ్‌లు దీని నుండి ఉంచబడ్డాయి"
+
+#: src/features/analytics/Overview.tsx
+msgid "Details"
+msgstr "వివరాలు"
+
+#: src/features/analytics/text.ts
+msgid "Device"
+msgstr "పరికరం"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Devices"
+msgstr "పరికరాలు"
+
+#: src/features/analytics/text.ts
+msgid "Direct"
+msgstr "నేరుగా"
+
+#: src/features/analytics/text.ts
+msgid "Direct / none"
+msgstr "నేరుగా / ఏదీ లేదు"
+
+#: src/features/analytics/text.ts
+msgid "Discussion threads started on the page."
+msgstr "పేజీలో ప్రారంభమైన చర్చ థ్రెడ్‌లు."
+
+#: src/features/analytics/text.ts
+msgid "Discussions"
+msgstr "చర్చలు"
+
+#: src/features/analytics/text.ts
+msgid "Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again."
+msgstr "రోజుకు ప్రత్యేక సందర్శకులు, పరిధి రోజుల్లో కూడినవి. మరో రోజు తిరిగి వచ్చేవారు మళ్లీ లెక్కించబడతారు."
+
+#: src/features/analytics/Install.tsx
+msgid "Do not count my visits"
+msgstr "నా సందర్శనలను లెక్కించవద్దు"
+
+#: src/features/analytics/text.ts
+msgid "does not contain"
+msgstr "కలిగి లేదు"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Domains"
+msgstr "డొమైన్‌లు"
+
+#: src/features/analytics/Exports.tsx
+msgid "Download"
+msgstr "డౌన్‌లోడ్"
+
+#: src/features/analytics/parts.tsx
+msgid "Download CSV"
+msgstr "CSV ను డౌన్‌లోడ్ చేయండి"
+
+#: src/features/analytics/Settings.tsx
+msgid "Dropped"
+msgstr "వదిలివేసినవి"
+
+#: src/features/analytics/text.ts
+msgid "E-mail"
+msgstr "ఇమెయిల్"
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that day, each column the share of them who came back that many days later."
+msgstr "ప్రతి అడ్డు వరుస ఆ రోజు మొదటిసారి చూసిన సందర్శకులను కలిగి ఉంటుంది, ప్రతి నిలువు వరుస వారిలో అన్ని రోజుల తర్వాత తిరిగి వచ్చిన వారి వాటా."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that month, each column the share of them who came back that many months later."
+msgstr "ప్రతి అడ్డు వరుస ఆ నెలలో మొదటిసారి చూసిన సందర్శకులను కలిగి ఉంటుంది, ప్రతి నిలువు వరుస వారిలో అన్ని నెలల తర్వాత తిరిగి వచ్చిన వారి వాటా."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that week, each column the share of them who came back that many weeks later."
+msgstr "ప్రతి అడ్డు వరుస ఆ వారంలో మొదటిసారి చూసిన సందర్శకులను కలిగి ఉంటుంది, ప్రతి నిలువు వరుస వారిలో అన్ని వారాల తర్వాత తిరిగి వచ్చిన వారి వాటా."
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Edit"
+msgstr "సవరించండి"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Edit funnel"
+msgstr "ఫన్నెల్‌ను సవరించండి"
+
+#: src/features/analytics/Goals.tsx
+msgid "Edit goal"
+msgstr "లక్ష్యాన్ని సవరించండి"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Edit note"
+msgstr "గమనికను సవరించండి"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Edit share link"
+msgstr "షేర్ లింక్‌ను సవరించండి"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embed"
+msgstr "ఎంబెడ్"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embeds"
+msgstr "ఎంబెడ్‌లు"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Enter the password you were given with the link."
+msgstr "లింక్‌తో మీకు ఇచ్చిన పాస్‌వర్డ్‌ను నమోదు చేయండి."
+
+#: src/features/analytics/text.ts
+msgid "Entry page"
+msgstr "ప్రవేశ పేజీ"
+
+#: src/features/analytics/Goals.tsx
+msgid "equal to"
+msgstr "సమానం"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Event"
+msgstr "ఈవెంట్"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event}"
+msgstr "ఈవెంట్ {event}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event} with {key} = {value}"
+msgstr "{key} = {value} తో ఈవెంట్ {event}"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Install.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Events"
+msgstr "ఈవెంట్‌లు"
+
+#: src/features/analytics/Settings.tsx
+msgid "Events are arriving."
+msgstr "ఈవెంట్‌లు వస్తున్నాయి."
+
+#: src/features/analytics/Events.tsx
+msgid "Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when the script has their attributes."
+msgstr "ఈవెంట్‌లు మీ పేజీలు మరియు యాప్‌లలోని track() కాల్‌ల నుండి వస్తాయి. స్క్రిప్ట్‌కు వాటి అట్రిబ్యూట్‌లు ఉన్నప్పుడు అవుట్‌బౌండ్ లింక్‌లు, డౌన్‌లోడ్‌లు మరియు చాట్ తెరవడం లెక్కించబడతాయి."
+
+#: src/features/analytics/Settings.tsx
+msgid "Events count only after the page calls yuva.consent with analytics set to true. Install the script with data-consent=\"required\"."
+msgstr "పేజీ analytics true తో yuva.consent ను పిలిచిన తర్వాత మాత్రమే ఈవెంట్‌లు లెక్కించబడతాయి. స్క్రిప్ట్‌ను data-consent=\"required\" తో ఇన్‌స్టాల్ చేయండి."
+
+#: src/features/analytics/Settings.tsx
+msgid "events counted"
+msgstr "లెక్కించిన ఈవెంట్‌లు"
+
+#: src/features/analytics/Settings.tsx
+msgid "events dropped"
+msgstr "వదిలివేసిన ఈవెంట్‌లు"
+
+#: src/features/analytics/Exports.tsx
+msgid "Every event with its visit’s page, source, place and device, as NDJSON. Visits are numbered within the file; there is no visitor id, address or contact. At most 31 days."
+msgstr "ప్రతి ఈవెంట్ దాని సందర్శన పేజీ, మూలం, స్థలం మరియు పరికరంతో, NDJSON గా. సందర్శనలు ఫైల్‌లో సంఖ్యలు వేయబడ్డాయి; సందర్శకుడి ID, చిరునామా లేదా కాంటాక్ట్ లేదు. గరిష్టంగా 31 రోజులు."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Every Monday at 08:00 in {zone}, about the week before."
+msgstr "ప్రతి సోమవారం {zone} లో 08:00 కు, ముందటి వారం గురించి."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range and the filters you are looking at, without a comparison."
+msgstr "మీరు చూస్తున్న పరిధి మరియు ఫిల్టర్‌ల ప్రతి అడ్డు వరుస, పోలిక లేకుండా."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range you are looking at, without a comparison."
+msgstr "మీరు చూస్తున్న పరిధి ప్రతి అడ్డు వరుస, పోలిక లేకుండా."
+
+#: src/features/analytics/Settings.tsx
+msgid "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
+msgstr "ప్రతి సందర్శన, ఈవెంట్ మరియు మొత్తం తొలగించబడతాయి. ప్రాపర్టీ మరియు దాని కీ ఉంటాయి, మరియు లెక్కింపు కొనసాగుతుంది."
+
+#: src/features/analytics/Controls.tsx
+msgid "Everyone who sees this property can pick it. You, owners and admins can change it."
+msgstr "ఈ ప్రాపర్టీని చూసే ప్రతి ఒక్కరూ దీన్ని ఎంచుకోవచ్చు. మీరు, యజమానులు మరియు అడ్మిన్‌లు మార్చవచ్చు."
+
+#: src/features/analytics/Annotations.tsx
+msgid "Everyone who sees this property sees the note, such as a launch or a campaign."
+msgstr "ఈ ప్రాపర్టీని చూసే ప్రతి ఒక్కరూ గమనికను చూస్తారు, ఉదాహరణకు లాంచ్ లేదా ప్రచారం."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Everything this property raised, newest first, whoever was notified."
+msgstr "ఈ ప్రాపర్టీ లేవనెత్తిన ప్రతిదీ, కొత్తది ముందుగా, ఎవరికి తెలియజేసినా."
+
+#: src/features/analytics/Settings.tsx
+msgid "Excluded"
+msgstr "మినహాయించబడింది"
+
+#: src/features/analytics/text.ts
+msgid "Exit page"
+msgstr "నిష్క్రమణ పేజీ"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expired"
+msgstr "గడువు ముగిసింది"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expires"
+msgstr "గడువు ముగుస్తుంది"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export"
+msgstr "ఎగుమతి"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export progress"
+msgstr "ఎగుమతి పురోగతి"
+
+#: src/features/analytics/Exports.tsx
+msgid "Exports"
+msgstr "ఎగుమతులు"
+
+#: src/features/analytics/Exports.tsx
+msgid "Failed"
+msgstr "విఫలమైంది"
+
+#: src/features/analytics/text.ts
+msgid "Feedback"
+msgstr "అభిప్రాయం"
+
+#: src/features/analytics/Support.tsx
+msgid "Fewer than 100 views"
+msgstr "100 కంటే తక్కువ వీక్షణలు"
+
+#: src/features/analytics/text.ts
+msgid "File download"
+msgstr "ఫైల్ డౌన్‌లోడ్"
+
+#: src/features/analytics/Exports.tsx
+msgid "Files are made in the background and deleted seven days later."
+msgstr "ఫైల్‌లు నేపథ్యంలో తయారవుతాయి మరియు ఏడు రోజుల తర్వాత తొలగించబడతాయి."
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Support.tsx
+msgid "Filter by this"
+msgstr "దీనితో ఫిల్టర్ చేయండి"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Filters"
+msgstr "ఫిల్టర్‌లు"
+
+#: src/features/analytics/Exports.tsx
+msgid "Filters come from the view: click a row there to add one. <0>Change them in the view</0>"
+msgstr "ఫిల్టర్‌లు వీక్షణ నుండి వస్తాయి: ఒకదాన్ని జోడించడానికి అక్కడ అడ్డు వరుసను క్లిక్ చేయండి. <0>వాటిని వీక్షణలో మార్చండి</0>"
+
+#: src/features/analytics/Retention.tsx
+msgid "First day"
+msgstr "మొదటి రోజు"
+
+#: src/features/analytics/Retention.tsx
+msgid "First month"
+msgstr "మొదటి నెల"
+
+#: src/features/analytics/text.ts
+msgid "First page or screen"
+msgstr "మొదటి పేజీ లేదా స్క్రీన్"
+
+#: src/features/analytics/text.ts
+msgid "First screen"
+msgstr "మొదటి స్క్రీన్"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "First visit"
+msgstr "మొదటి సందర్శన"
+
+#: src/features/analytics/Retention.tsx
+msgid "First week"
+msgstr "మొదటి వారం"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Five reports an hour at most. Try again later."
+msgstr "గంటకు గరిష్టంగా ఐదు నివేదికలు. తర్వాత మళ్లీ ప్రయత్నించండి."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "For example Fieldnote website"
+msgstr "ఉదాహరణకు Fieldnote వెబ్‌సైట్"
+
+#: src/features/analytics/Settings.tsx
+msgid "For revenue, an ISO code like EUR."
+msgstr "ఆదాయం కోసం, EUR వంటి ISO కోడ్."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an <0>API key</0> with the analytics:write scope, which stays on your server."
+msgstr "సైన్అప్ లేదా చెల్లింపు వంటి మీ బ్యాకెండ్ మాత్రమే చూసేవాటి కోసం. Track సందర్శకుడి చిరునామా మరియు బ్రౌజర్‌ను ఫార్వర్డ్ చేస్తుంది, కాబట్టి ఈవెంట్ వారి సందర్శనతో చేరుతుంది; Do Not Track లేదా Global Privacy Control ఉన్న అభ్యర్థనలు పంపబడవు. దీనికి analytics:write స్కోప్‌తో <0>API కీ</0> అవసరం, అది మీ సర్వర్‌లోనే ఉంటుంది."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
+msgstr "సైన్అప్ లేదా చెల్లింపు వంటి మీ బ్యాకెండ్ మాత్రమే చూసేవాటి కోసం. Track సందర్శకుడి చిరునామా మరియు బ్రౌజర్‌ను ఫార్వర్డ్ చేస్తుంది, కాబట్టి ఈవెంట్ వారి సందర్శనతో చేరుతుంది; Do Not Track లేదా Global Privacy Control ఉన్న అభ్యర్థనలు పంపబడవు. దీనికి యజమాని లేదా అడ్మిన్ నుండి analytics:write స్కోప్‌తో API కీ అవసరం, అది మీ సర్వర్‌లోనే ఉంటుంది."
+
+#: src/features/analytics/Exports.tsx
+msgid "Format"
+msgstr "ఫార్మాట్"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "From"
+msgstr "From"
+
+#: src/features/analytics/Settings.tsx
+msgid "From a site that is not one of the domains, or from an app whose platform is not turned on."
+msgstr "డొమైన్‌లలో ఒకటి కాని సైట్ నుండి, లేదా ప్లాట్‌ఫామ్ ఆన్ చేయని యాప్ నుండి."
+
+#: src/features/analytics/Funnels.tsx
+msgid "From pricing to signup"
+msgstr "ధర నుండి సైన్అప్ వరకు"
+
+#: src/features/analytics/Support.tsx
+msgid "From the inbox {inboxName}. Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "ఇన్‌బాక్స్ {inboxName} నుండి. 1,000 వీక్షణలకు సంభాషణల క్రమంలో; 100 కంటే తక్కువ వీక్షణలు ఉన్న పేజీలు ఇతరుల తర్వాత వస్తాయి. పేజీ మరియు రోజు వారీగా లెక్కించబడతాయి, సందర్శకుడు లేదా కాంటాక్ట్ వారీగా ఎప్పుడూ కాదు."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Funnel"
+msgstr "ఫన్నెల్"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Funnels"
+msgstr "ఫన్నెల్‌లు"
+
+#: src/features/analytics/Settings.tsx
+msgid "General"
+msgstr "సాధారణం"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Go to goals"
+msgstr "లక్ష్యాలకు వెళ్లండి"
+
+#: src/features/analytics/Goals.tsx
+msgid "Goal"
+msgstr "లక్ష్యం"
+
+#. placeholder {0}: a.text
+#: src/features/analytics/Annotations.tsx
+msgid "Goal “{0}” was created"
+msgstr "లక్ష్యం “{0}” సృష్టించబడింది"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Goal drop"
+msgstr "లక్ష్యంలో తగ్గుదల"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Goals"
+msgstr "లక్ష్యాలు"
+
+#: src/features/analytics/Settings.tsx
+msgid "had an address removed"
+msgstr "ఒక చిరునామా తొలగించబడింది"
+
+#: src/features/analytics/Settings.tsx
+msgid "Health"
+msgstr "ఆరోగ్యం"
+
+#: src/features/analytics/text.ts
+msgid "Helpful"
+msgstr "ఉపయోగకరం"
+
+#: src/features/analytics/Support.tsx
+msgid "Helpful and not helpful"
+msgstr "ఉపయోగకరం మరియు ఉపయోగకరం కాదు"
+
+#: src/features/analytics/text.ts
+msgid "Helpful ratings out of all ratings."
+msgstr "అన్ని రేటింగ్‌లలో ఉపయోగకరమైన రేటింగ్‌లు."
+
+#: src/features/analytics/text.ts
+msgid "Helpful share"
+msgstr "ఉపయోగకరం వాటా"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Home shows each website and app like this: visitors today, in the last 30 minutes and this week."
+msgstr "హోమ్ ప్రతి వెబ్‌సైట్ మరియు యాప్‌ను ఇలా చూపుతుంది: ఈ రోజు, గత 30 నిమిషాల్లో మరియు ఈ వారం సందర్శకులు."
+
+#: src/features/analytics/text.ts
+msgid "Host"
+msgstr "హోస్ట్"
+
+#: src/features/analytics/text.ts
+msgid "Host or app"
+msgstr "హోస్ట్ లేదా యాప్"
+
+#: src/features/analytics/Install.tsx
+msgid "How to install"
+msgstr "ఎలా ఇన్‌స్టాల్ చేయాలి"
+
+#: src/features/analytics/Events.tsx
+msgid "How to send events"
+msgstr "ఈవెంట్‌లను ఎలా పంపాలి"
+
+#: src/features/analytics/Sharing.tsx
+msgid "I saved it"
+msgstr "నేను సేవ్ చేశాను"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Support.tsx
+msgid "Inbox"
+msgstr "ఇన్‌బాక్స్"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Install"
+msgstr "ఇన్‌స్టాల్ చేయండి"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/NewProperty.tsx
+msgid "Install on {0}"
+msgstr "{0} లో ఇన్‌స్టాల్ చేయండి"
+
+#: src/features/analytics/text.ts
+msgid "Internal"
+msgstr "అంతర్గతం"
+
+#: src/features/analytics/Settings.tsx
+msgid "Invalid"
+msgstr "చెల్లనిది"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Investors"
+msgstr "పెట్టుబడిదారులు"
+
+#: src/features/analytics/text.ts
+msgid "is"
+msgstr "ఇది"
+
+#: src/features/analytics/text.ts
+msgid "is not"
+msgstr "కాదు"
+
+#: src/features/analytics/Controls.tsx
+msgid "It is gone for everyone who uses it. The numbers stay."
+msgstr "దీన్ని ఉపయోగించే ప్రతి ఒక్కరికీ ఇది పోయింది. సంఖ్యలు ఉంటాయి."
+
+#: src/features/analytics/SharePage.tsx
+msgid "It may have expired or been revoked. Ask the person who shared it for a new one."
+msgstr "అది గడువు ముగిసి ఉండవచ్చు లేదా రద్దు చేయబడి ఉండవచ్చు. పంచుకున్న వ్యక్తిని కొత్తది అడగండి."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Its goals stay."
+msgstr "దాని లక్ష్యాలు ఉంటాయి."
+
+#: src/features/analytics/Goals.tsx
+msgid "Its numbers are deleted too. This cannot be undone."
+msgstr "దాని సంఖ్యలు కూడా తొలగించబడతాయి. దీన్ని రద్దు చేయలేరు."
+
+#: src/features/analytics/Events.tsx
+msgid "Keep only visits with this value"
+msgstr "ఈ విలువ ఉన్న సందర్శనలను మాత్రమే ఉంచండి"
+
+#: src/features/analytics/Settings.tsx
+msgid "Key"
+msgstr "కీ"
+
+#: src/features/analytics/Goals.tsx
+msgid "Kind of goal"
+msgstr "లక్ష్యం రకం"
+
+#: src/features/analytics/text.ts
+msgid "Language"
+msgstr "భాష"
+
+#: src/features/analytics/text.ts
+msgid "Laptop"
+msgstr "ల్యాప్‌టాప్"
+
+#: src/features/analytics/text.ts
+msgid "Last 12 months"
+msgstr "గత 12 నెలలు"
+
+#: src/features/analytics/text.ts
+msgid "Last 28 days"
+msgstr "గత 28 రోజులు"
+
+#: src/features/analytics/text.ts
+msgid "Last 30 days"
+msgstr "గత 30 రోజులు"
+
+#: src/features/analytics/text.ts
+msgid "Last 6 months"
+msgstr "గత 6 నెలలు"
+
+#: src/features/analytics/text.ts
+msgid "Last 7 days"
+msgstr "గత 7 రోజులు"
+
+#: src/features/analytics/text.ts
+msgid "Last 90 days"
+msgstr "గత 90 రోజులు"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event"
+msgstr "చివరి ఈవెంట్"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event: {last}"
+msgstr "చివరి ఈవెంట్: {last}"
+
+#: src/features/analytics/text.ts
+msgid "Last month"
+msgstr "గత నెల"
+
+#: src/features/analytics/Sharing.tsx
+msgid "last opened {viewed}"
+msgstr "{viewed} చివరిగా తెరిచింది"
+
+#: src/features/analytics/text.ts
+msgid "Last page or screen"
+msgstr "చివరి పేజీ లేదా స్క్రీన్"
+
+#: src/features/analytics/text.ts
+msgid "Last screen"
+msgstr "చివరి స్క్రీన్"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Leave empty to keep the current one"
+msgstr "ప్రస్తుతదాన్ని ఉంచడానికి ఖాళీగా వదలండి"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Link"
+msgstr "లింక్"
+
+#: src/features/analytics/Support.tsx
+msgid "Link an inbox to see support per page"
+msgstr "పేజీ వారీగా సపోర్ట్ చూడటానికి ఇన్‌బాక్స్‌ను లింక్ చేయండి"
+
+#: src/features/analytics/Support.tsx
+msgid "Link inbox"
+msgstr "ఇన్‌బాక్స్‌ను లింక్ చేయండి"
+
+#: src/features/analytics/Settings.tsx
+msgid "Link signed-in users to their contact"
+msgstr "సైన్ ఇన్ చేసిన వినియోగదారులను వారి కాంటాక్ట్‌కు లింక్ చేయండి"
+
+#: src/features/analytics/Alerts.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Support.tsx
+msgid "Load more"
+msgstr "మరిన్ని లోడ్ చేయండి"
+
+#: src/features/analytics/Settings.tsx
+msgid "Location database"
+msgstr "స్థాన డేటాబేస్"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Locations"
+msgstr "స్థలాలు"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created}"
+msgstr "{created} తయారైంది"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created} by {by}"
+msgstr "{by} ద్వారా {created} తయారైంది"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key"
+msgstr "కొత్త కీని తయారు చేయండి"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key?"
+msgstr "కొత్త కీని తయారు చేయాలా?"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Make at least two goals first."
+msgstr "ముందుగా కనీసం రెండు లక్ష్యాలను తయారు చేయండి."
+
+#: src/features/analytics/Goals.tsx
+msgid "Make goal"
+msgstr "లక్ష్యాన్ని తయారు చేయండి"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Make link"
+msgstr "లింక్‌ను తయారు చేయండి"
+
+#: src/features/analytics/text.ts
+msgid "matches"
+msgstr "సరిపోలుతుంది"
+
+#: src/features/analytics/text.ts
+msgid "Mobile"
+msgstr "మొబైల్"
+
+#: src/features/analytics/Retention.tsx
+msgid "Month {period}"
+msgstr "నెల {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Monthly"
+msgstr "నెలవారీ"
+
+#: src/features/analytics/Settings.tsx
+msgid "Monthly limit"
+msgstr "నెలవారీ పరిమితి"
+
+#: src/features/analytics/Retention.tsx
+msgid "Months"
+msgstr "నెలలు"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move down"
+msgstr "కిందకు తరలించండి"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move up"
+msgstr "పైకి తరలించండి"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Name"
+msgstr "పేరు"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs a linked inbox under General: its identity secret signs the tokens."
+msgstr "General కింద లింక్ చేసిన ఇన్‌బాక్స్ అవసరం: దాని ఐడెంటిటీ సీక్రెట్ టోకెన్‌లను సైన్ చేస్తుంది."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Needs a linked inbox. {help}"
+msgstr "లింక్ చేసిన ఇన్‌బాక్స్ అవసరం. {help}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs the persistent id: a visitor is linked through it."
+msgstr "శాశ్వత ID అవసరం: సందర్శకుడు దాని ద్వారా లింక్ అవుతారు."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Never"
+msgstr "ఎప్పుడూ లేదు"
+
+#: src/features/analytics/Sharing.tsx
+msgid "never opened"
+msgstr "ఎప్పుడూ తెరవలేదు"
+
+#: src/features/analytics/text.ts
+msgid "New"
+msgstr "కొత్త"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value} with {count}, none in the compared days."
+msgstr "కొత్త {kind}: {value}, {count} తో, పోల్చిన రోజుల్లో ఏదీ లేదు."
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
+msgstr "కొత్త {kind}: {value}. {metric}: {now}, పోల్చిన రోజుల్లో ఏదీ లేదు."
+
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "కొత్తవారు మరియు తిరిగి వచ్చేవారు"
+
+#: src/features/analytics/Funnels.tsx
+msgid "New funnel"
+msgstr "కొత్త ఫన్నెల్"
+
+#: src/features/analytics/Goals.tsx
+msgid "New goal"
+msgstr "కొత్త లక్ష్యం"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New link"
+msgstr "కొత్త లింక్"
+
+#: src/features/analytics/text.ts
+msgid "New or returning"
+msgstr "కొత్త లేదా తిరిగి వచ్చేవారు"
+
+#: src/features/analytics/Annotations.tsx
+msgid "New pricing page"
+msgstr "కొత్త ధరల పేజీ"
+
+#: src/features/analytics/Alerts.tsx
+msgid "New referrer"
+msgstr "కొత్త రెఫరర్"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New share link"
+msgstr "కొత్త షేర్ లింక్"
+
+#: src/features/analytics/Alerts.tsx
+msgid "No alerts yet."
+msgstr "ఇంకా అలర్ట్‌లు లేవు."
+
+#: src/features/analytics/Controls.tsx
+msgid "No comparison"
+msgstr "పోలిక లేదు"
+
+#: src/features/analytics/Settings.tsx
+msgid "No consent features are offered."
+msgstr "సమ్మతి ఫీచర్‌లు ఏవీ అందించబడలేదు."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "ఈ పరిధిలో అంగీకరించిన సందర్శకులు లేరు."
+
+#: src/features/analytics/Retention.tsx
+msgid "No consented visitors yet"
+msgstr "ఇంకా అంగీకరించిన సందర్శకులు లేరు"
+
+#: src/features/analytics/Support.tsx
+msgid "No conversations, feedback, ratings or discussions from these pages in this range."
+msgstr "ఈ పరిధిలో ఈ పేజీల నుండి సంభాషణలు, అభిప్రాయాలు, రేటింగ్‌లు లేదా చర్చలు లేవు."
+
+#: src/features/analytics/Goals.tsx
+msgid "No conversions in this range."
+msgstr "ఈ పరిధిలో కన్వర్షన్‌లు లేవు."
+
+#: src/features/analytics/Settings.tsx
+msgid "No event yet."
+msgstr "ఇంకా ఈవెంట్ లేదు."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events in the last 24 hours"
+msgstr "గత 24 గంటల్లో ఈవెంట్‌లు లేవు"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events yet"
+msgstr "ఇంకా ఈవెంట్‌లు లేవు"
+
+#: src/features/analytics/Exports.tsx
+msgid "No exports yet."
+msgstr "ఇంకా ఎగుమతులు లేవు."
+
+#: src/features/analytics/Funnels.tsx
+msgid "No funnels yet"
+msgstr "ఇంకా ఫన్నెల్‌లు లేవు"
+
+#: src/features/analytics/Goals.tsx
+msgid "No goals yet"
+msgstr "ఇంకా లక్ష్యాలు లేవు"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No properties yet"
+msgstr "ఇంకా ప్రాపర్టీలు లేవు"
+
+#: src/features/analytics/Settings.tsx
+msgid "No props are tracked."
+msgstr "ప్రాప్‌లు ఏవీ ట్రాక్ చేయబడటం లేదు."
+
+#: src/features/analytics/Alerts.tsx
+msgid "No scheduled reports."
+msgstr "షెడ్యూల్ చేసిన నివేదికలు లేవు."
+
+#: src/features/analytics/Controls.tsx
+msgid "No segment"
+msgstr "సెగ్మెంట్ లేదు"
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Make one to show these numbers to people outside the workspace."
+msgstr "ఇంకా షేర్ లింక్‌లు లేవు. వర్క్‌స్పేస్ బయటి వారికి ఈ సంఖ్యలను చూపడానికి ఒకదాన్ని తయారు చేయండి."
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Owners and admins make them."
+msgstr "ఇంకా షేర్ లింక్‌లు లేవు. యజమానులు మరియు అడ్మిన్‌లు వాటిని తయారు చేస్తారు."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Nobody in the last 30 minutes."
+msgstr "గత 30 నిమిషాల్లో ఎవరూ లేరు."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Nobody reached the first step in this range."
+msgstr "ఈ పరిధిలో ఎవరూ మొదటి దశకు చేరలేదు."
+
+#: src/features/analytics/Alerts.tsx
+msgid "None"
+msgstr "ఏదీ లేదు"
+
+#: src/features/analytics/Settings.tsx
+msgid "None yet"
+msgstr "ఇంకా ఏదీ లేదు"
+
+#: src/features/analytics/Exports.tsx
+msgid "None, every visit counts."
+msgstr "ఏదీ లేదు, ప్రతి సందర్శన లెక్కించబడుతుంది."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "None, owners and admins only"
+msgstr "ఏదీ లేదు, యజమానులు మరియు అడ్మిన్‌లు మాత్రమే"
+
+#: src/features/analytics/parts.tsx
+msgid "Not available for this range."
+msgstr "ఈ పరిధికి అందుబాటులో లేదు."
+
+#: src/features/analytics/text.ts
+msgid "Not helpful"
+msgstr "ఉపయోగకరం కాదు"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Note"
+msgstr "గమనిక"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Notes"
+msgstr "గమనికలు"
+
+#: src/features/analytics/Exports.tsx
+msgid "Nothing"
+msgstr "ఏదీ లేదు"
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Nothing counted in this range."
+msgstr "ఈ పరిధిలో ఏదీ లెక్కించబడలేదు."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Notify me"
+msgstr "నాకు తెలియజేయండి"
+
+#: src/features/analytics/Settings.tsx
+msgid "Off"
+msgstr "ఆఫ్"
+
+#: src/features/analytics/Settings.tsx
+msgid "Offered only to visitors who agree in your consent tool. Everyone else is counted exactly as before, one day at a time and without anything stored on the device."
+msgstr "మీ సమ్మతి సాధనంలో అంగీకరించే సందర్శకులకు మాత్రమే అందించబడుతుంది. మిగతా ప్రతి ఒక్కరూ మునుపటిలాగే, ఒకసారి ఒక రోజు చొప్పున, పరికరంలో ఏదీ నిల్వ చేయకుండా లెక్కించబడతారు."
+
+#: src/features/analytics/Settings.tsx
+msgid "Older than 72 hours. Apps keep events without a connection for at most that long."
+msgstr "72 గంటల కంటే పాతది. కనెక్షన్ లేకుండా యాప్‌లు ఈవెంట్‌లను గరిష్టంగా ఇంతకాలం ఉంచుతాయి."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On its way to {email}."
+msgstr "{email} కు వెళ్తోంది."
+
+#: src/features/analytics/Alerts.tsx
+msgid "On the 1st of each month at 08:00 in {zone}, about the month before."
+msgstr "ప్రతి నెల 1వ తేదీన {zone} లో 08:00 కు, ముందటి నెల గురించి."
+
+#: src/features/analytics/Settings.tsx
+msgid "One IP address or range per line, up to 50, such as your office or a monitoring service."
+msgstr "ఒక్కో లైన్‌కు ఒక IP చిరునామా లేదా పరిధి, 50 వరకు, ఉదాహరణకు మీ కార్యాలయం లేదా మానిటరింగ్ సేవ."
+
+#: src/features/analytics/Settings.tsx
+msgid "One path per line, up to 50. * stands for one part of the path, ** for any number of them."
+msgstr "ఒక్కో లైన్‌కు ఒక పాత్, 50 వరకు. * పాత్‌లోని ఒక భాగాన్ని, ** ఎన్ని భాగాలనైనా సూచిస్తాయి."
+
+#: src/features/analytics/Sharing.tsx
+msgid "One per line, like https://example.com or https://*.example.com. Without any, no other site can show it in a frame."
+msgstr "ఒక్కో లైన్‌కు ఒకటి, https://example.com లేదా https://*.example.com వంటివి. ఏదీ లేకపోతే, మరే సైట్ దీన్ని ఫ్రేమ్‌లో చూపలేదు."
+
+#: src/features/analytics/Settings.tsx
+msgid "One per line. *.example.com covers every subdomain, but not example.com itself."
+msgstr "ఒక్కో లైన్‌కు ఒకటి. *.example.com ప్రతి సబ్‌డొమైన్‌ను కవర్ చేస్తుంది, కానీ example.com ను కాదు."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "One per line. Pages on other domains cannot send events. *.example.com covers every subdomain."
+msgstr "ఒక్కో లైన్‌కు ఒకటి. ఇతర డొమైన్‌లలోని పేజీలు ఈవెంట్‌లను పంపలేవు. *.example.com ప్రతి సబ్‌డొమైన్‌ను కవర్ చేస్తుంది."
+
+#: src/features/analytics/Settings.tsx
+msgid "One prop name per line, up to 10, such as plan."
+msgstr "ఒక్కో లైన్‌కు ఒక ప్రాప్ పేరు, 10 వరకు, ఉదాహరణకు plan."
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
+msgstr "రోజుకు ఒక అడ్డు వరుస: సందర్శకులు, సందర్శనలు, వీక్షణలు, బౌన్స్ రేటు, వ్యవధులు మరియు స్క్రోల్ లోతుతో. గరిష్టంగా 400 రోజులు."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Only for you, by e-mail to {email}. Reports are plain numbers, with no images and nothing that tracks opening or clicks."
+msgstr "మీకు మాత్రమే, {email} కు ఇమెయిల్ ద్వారా. నివేదికలు సాదా సంఖ్యలు, చిత్రాలు లేకుండా మరియు తెరవడం లేదా క్లిక్‌లను ట్రాక్ చేసేది ఏదీ లేకుండా."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Only members see it, to tell links apart."
+msgstr "సభ్యులు మాత్రమే చూస్తారు, లింక్‌లను వేరు చేయడానికి."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only the country is kept, never the region or city."
+msgstr "దేశం మాత్రమే ఉంచబడుతుంది, ప్రాంతం లేదా నగరం ఎప్పుడూ కాదు."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Only totals are shown. There is no list of individual visitors."
+msgstr "మొత్తాలు మాత్రమే చూపబడతాయి. వ్యక్తిగత సందర్శకుల జాబితా లేదు."
+
+#: src/features/analytics/parts.tsx
+msgid "Only visitors who agreed to a persistent id are counted here. Everyone else is counted one day at a time."
+msgstr "ఇక్కడ శాశ్వత ID కి అంగీకరించిన సందర్శకులు మాత్రమే లెక్కించబడతారు. మిగతా ప్రతి ఒక్కరూ ఒకసారి ఒక రోజు చొప్పున లెక్కించబడతారు."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only with consent"
+msgstr "సమ్మతితో మాత్రమే"
+
+#: src/features/analytics/Goals.tsx
+msgid "Only with prop"
+msgstr "ప్రాప్‌తో మాత్రమే"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
+msgstr "స్నిప్పెట్ ఉన్న మీ సైట్ పేజీని తెరవండి. సర్వర్ మొదటి పేజీ వీక్షణను నిల్వ చేసిన వెంటనే ఇది ఆకుపచ్చగా మారుతుంది. Do Not Track లేదా Global Privacy Control ఉన్న బ్రౌజర్‌లు ఏదీ పంపవు, కాబట్టి పరీక్షించడానికి వేరేదాన్ని ఉపయోగించండి."
+
+#: src/features/analytics/Retention.tsx
+msgid "Open consent features"
+msgstr "సమ్మతి ఫీచర్‌లను తెరవండి"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Open report"
+msgstr "నివేదికను తెరవండి"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open the overview"
+msgstr "అవలోకనాన్ని తెరవండి"
+
+#: src/features/analytics/Support.tsx
+msgid "Open the property’s settings"
+msgstr "ప్రాపర్టీ సెట్టింగ్‌లను తెరవండి"
+
+#: src/features/analytics/text.ts
+msgid "Operating system"
+msgstr "ఆపరేటింగ్ సిస్టమ్"
+
+#: src/features/analytics/Install.tsx
+msgid "Opt-out link"
+msgstr "ఆప్ట్-అవుట్ లింక్"
+
+#: src/features/analytics/text.ts
+msgid "Organic search"
+msgstr "ఆర్గానిక్ శోధన"
+
+#: src/features/analytics/text.ts
+msgid "OS version"
+msgstr "OS వెర్షన్"
+
+#: src/features/analytics/text.ts
+msgid "Other"
+msgstr "ఇతర"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other drops"
+msgstr "ఇతర తగ్గుదలలు"
+
+#: src/features/analytics/Events.tsx
+msgid "Other prop"
+msgstr "ఇతర ప్రాప్"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other sites"
+msgstr "ఇతర సైట్‌లు"
+
+#: src/features/analytics/text.ts
+msgid "Outbound link"
+msgstr "అవుట్‌బౌండ్ లింక్"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Overview"
+msgstr "అవలోకనం"
+
+#: src/features/analytics/Install.tsx
+msgid "Own domain"
+msgstr "స్వంత డొమైన్"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Owners and admins make funnels from goals. They show up here with each step’s drop-off."
+msgstr "యజమానులు మరియు అడ్మిన్‌లు లక్ష్యాల నుండి ఫన్నెల్‌లను తయారు చేస్తారు. అవి ప్రతి దశ తగ్గుదలతో ఇక్కడ కనిపిస్తాయి."
+
+#: src/features/analytics/Goals.tsx
+msgid "Owners and admins make goals. They show up here with their conversions."
+msgstr "యజమానులు మరియు అడ్మిన్‌లు లక్ష్యాలను తయారు చేస్తారు. అవి వాటి కన్వర్షన్‌లతో ఇక్కడ కనిపిస్తాయి."
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Page"
+msgstr "పేజీ"
+
+#: src/features/analytics/text.ts
+msgid "Page feedback sent from the page."
+msgstr "పేజీ నుండి పంపిన పేజీ అభిప్రాయం."
+
+#: src/features/analytics/text.ts
+msgid "Page not found"
+msgstr "పేజీ కనుగొనబడలేదు"
+
+#: src/features/analytics/text.ts
+msgid "Page or screen"
+msgstr "పేజీ లేదా స్క్రీన్"
+
+#: src/features/analytics/Goals.tsx
+msgid "Page view of {path}"
+msgstr "{path} పేజీ వీక్షణ"
+
+#: src/features/analytics/text.ts
+msgid "Pages"
+msgstr "పేజీలు"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens"
+msgstr "పేజీలు మరియు స్క్రీన్‌లు"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens viewed."
+msgstr "చూసిన పేజీలు మరియు స్క్రీన్‌లు."
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages not counted"
+msgstr "లెక్కించని పేజీలు"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
+msgstr "నమూనాకు సరిపోలే పేజీలు ఒకే పాత్ కింద లెక్కించబడతాయి, కాబట్టి ప్రతి ఆర్డర్ పేజీ ఒకటిగా కూడుతుంది. పాత్‌లోని చిరునామాలు ఎల్లప్పుడూ భర్తీ చేయబడతాయి."
+
+#: src/features/analytics/text.ts
+msgid "Pages viewed."
+msgstr "చూసిన పేజీలు."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Pages, sources, places and devices, without cookies, without storing IP addresses and without a consent banner where the law allows it."
+msgstr "పేజీలు, మూలాలు, స్థలాలు మరియు పరికరాలు, కుకీలు లేకుండా, IP చిరునామాలు నిల్వ చేయకుండా మరియు చట్టం అనుమతించే చోట సమ్మతి బ్యానర్ లేకుండా."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews"
+msgstr "పేజీ వీక్షణలు"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews divided by visits."
+msgstr "పేజీ వీక్షణలను సందర్శనలతో భాగించగా."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews in the last 30 minutes"
+msgstr "గత 30 నిమిషాల్లో పేజీ వీక్షణలు"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews per minute"
+msgstr "నిమిషానికి పేజీ వీక్షణలు"
+
+#: src/features/analytics/text.ts
+msgid "Paid search"
+msgstr "చెల్లింపు శోధన"
+
+#: src/features/analytics/text.ts
+msgid "Paid social"
+msgstr "చెల్లింపు సోషల్"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Password"
+msgstr "పాస్‌వర్డ్"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Past alerts"
+msgstr "గత అలర్ట్‌లు"
+
+#: src/features/analytics/Settings.tsx
+msgid "Path rules"
+msgstr "పాత్ నియమాలు"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pattern"
+msgstr "నమూనా"
+
+#: src/features/analytics/Controls.tsx
+msgid "Paying customers from Germany"
+msgstr "జర్మనీ నుండి చెల్లించే కస్టమర్‌లు"
+
+#: src/features/analytics/text.ts
+msgid "Per 1,000 views"
+msgstr "1,000 వీక్షణలకు"
+
+#: src/features/analytics/Overview.tsx
+msgid "per day"
+msgstr "రోజుకు"
+
+#: src/features/analytics/Settings.tsx
+msgid "Per day"
+msgstr "రోజుకు"
+
+#: src/features/analytics/Overview.tsx
+msgid "per hour"
+msgstr "గంటకు"
+
+#: src/features/analytics/Overview.tsx
+msgid "per week"
+msgstr "వారానికి"
+
+#: src/features/analytics/Settings.tsx
+msgid "Persistent id"
+msgstr "శాశ్వత ID"
+
+#: src/features/analytics/text.ts
+msgid "Phone"
+msgstr "ఫోన్"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Pick a goal"
+msgstr "లక్ష్యాన్ని ఎంచుకోండి"
+
+#: src/features/analytics/Events.tsx
+msgid "Pick a prop to see the values this event carried."
+msgstr "ఈ ఈవెంట్ మోసుకెళ్లిన విలువలను చూడటానికి ప్రాప్‌ను ఎంచుకోండి."
+
+#: src/features/analytics/Settings.tsx
+msgid "Pick at least one platform."
+msgstr "కనీసం ఒక ప్లాట్‌ఫామ్‌ను ఎంచుకోండి."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Pick at least one view."
+msgstr "కనీసం ఒక వీక్షణను ఎంచుకోండి."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
+msgstr "సైట్ ఎలా నిర్మించబడిందో ఎంచుకుని స్నిప్పెట్‌ను కాపీ చేయండి. కీ చాట్ కీ లాగే పబ్లిక్: అది ప్రాపర్టీ డొమైన్‌లలో మాత్రమే పనిచేస్తుంది."
+
+#: src/features/analytics/text.ts
+msgid "Platform"
+msgstr "ప్లాట్‌ఫామ్"
+
+#: src/features/analytics/Settings.tsx
+msgid "Platforms"
+msgstr "ప్లాట్‌ఫామ్‌లు"
+
+#: src/features/analytics/text.ts
+msgid "Prop"
+msgstr "ప్రాప్"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name"
+msgstr "ప్రాప్ పేరు"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name, like plan"
+msgstr "ప్రాప్ పేరు, plan వంటిది"
+
+#: src/features/analytics/Events.tsx
+msgid "Properties for children keep no props, only the address of outbound links and downloads."
+msgstr "పిల్లల కోసం ప్రాపర్టీలు ప్రాప్‌లను ఉంచవు, అవుట్‌బౌండ్ లింక్‌లు మరియు డౌన్‌లోడ్‌ల చిరునామా మాత్రమే."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children keep no props, so none can be tracked."
+msgstr "పిల్లల కోసం ప్రాపర్టీలు ప్రాప్‌లను ఉంచవు, కాబట్టి ఏదీ ట్రాక్ చేయలేరు."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children never keep an id on the device or link visits to a contact."
+msgstr "పిల్లల కోసం ప్రాపర్టీలు పరికరంలో IDని ఎప్పుడూ ఉంచవు లేదా సందర్శనలను కాంటాక్ట్‌కు లింక్ చేయవు."
+
+#: src/features/analytics/Retention.tsx
+msgid "Properties for children never keep an id on the device, so they have no retention."
+msgstr "పిల్లల కోసం ప్రాపర్టీలు పరికరంలో IDని ఎప్పుడూ ఉంచవు, కాబట్టి వాటికి నిలుపుదల లేదు."
+
+#: src/features/analytics/Settings.tsx
+msgid "Property name"
+msgstr "ప్రాపర్టీ పేరు"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Props"
+msgstr "ప్రాప్‌లు"
+
+#: src/features/analytics/Events.tsx
+msgid "Props of any name can be broken down for the days the detailed records are kept. Earlier days only have the tracked props."
+msgstr "ఏ పేరు ప్రాప్‌లనైనా వివరణాత్మక రికార్డ్‌లు ఉంచే రోజులకు విభజించవచ్చు. అంతకు ముందటి రోజులకు ట్రాక్ చేసిన ప్రాప్‌లు మాత్రమే ఉన్నాయి."
+
+#: src/features/analytics/Install.tsx
+msgid "Put the script in the head of every page. It counts page views, also when a single-page app changes the address, and stores nothing on the visitor’s device."
+msgstr "స్క్రిప్ట్‌ను ప్రతి పేజీ head లో ఉంచండి. ఇది పేజీ వీక్షణలను లెక్కిస్తుంది, సింగిల్-పేజీ యాప్ చిరునామాను మార్చినప్పుడు కూడా, మరియు సందర్శకుడి పరికరంలో ఏదీ నిల్వ చేయదు."
+
+#: src/features/analytics/Install.tsx
+msgid "Put these links on your privacy page. Opting out is the only thing the script stores on the visitor’s device, and only when they ask for it. Visitors with Do Not Track or Global Privacy Control are never counted."
+msgstr "ఈ లింక్‌లను మీ గోప్యతా పేజీలో ఉంచండి. ఆప్ట్-అవుట్ అనేది స్క్రిప్ట్ సందర్శకుడి పరికరంలో నిల్వ చేసే ఒకే ఒక్క విషయం, అది కూడా వారు కోరినప్పుడు మాత్రమే. Do Not Track లేదా Global Privacy Control ఉన్న సందర్శకులు ఎప్పుడూ లెక్కించబడరు."
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+msgid "Range"
+msgstr "పరిధి"
+
+#: src/features/analytics/Support.tsx
+msgid "Ranked by conversations per 1,000 views; pages with fewer than 100 views come after the others. Counted per page and day, never per visitor or contact."
+msgstr "1,000 వీక్షణలకు సంభాషణల క్రమంలో; 100 కంటే తక్కువ వీక్షణలు ఉన్న పేజీలు ఇతరుల తర్వాత వస్తాయి. పేజీ మరియు రోజు వారీగా లెక్కించబడతాయి, సందర్శకుడు లేదా కాంటాక్ట్ వారీగా ఎప్పుడూ కాదు."
+
+#: src/features/analytics/Settings.tsx
+msgid "Rate limits"
+msgstr "రేట్ పరిమితులు"
+
+#: src/features/analytics/Support.tsx
+msgid "Ratings"
+msgstr "రేటింగ్‌లు"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw events"
+msgstr "ముడి ఈవెంట్‌లు"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw exports cover at most 31 days."
+msgstr "ముడి ఎగుమతులు గరిష్టంగా 31 రోజులు కవర్ చేస్తాయి."
+
+#: src/features/analytics/Goals.tsx
+msgid "Reached when a visitor"
+msgstr "సందర్శకుడు ఇలా చేసినప్పుడు చేరబడుతుంది"
+
+#: src/features/analytics/Exports.tsx
+msgid "Ready"
+msgstr "సిద్ధంగా ఉంది"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Realtime"
+msgstr "రియల్‌టైమ్"
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour, last at {builtAt}."
+msgstr "ప్రతి గంటకు మళ్లీ రూపొందించబడుతుంది, చివరిగా {builtAt} కు."
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour."
+msgstr "ప్రతి గంటకు మళ్లీ రూపొందించబడుతుంది."
+
+#: src/features/analytics/text.ts
+msgid "Referral"
+msgstr "రెఫరల్"
+
+#: src/features/analytics/text.ts
+msgid "Referrer"
+msgstr "రెఫరర్"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Refreshes every 15 seconds"
+msgstr "ప్రతి 15 సెకన్లకు రిఫ్రెష్ అవుతుంది"
+
+#: src/features/analytics/Settings.tsx
+msgid "Refused"
+msgstr "తిరస్కరించబడ్డాయి"
+
+#: src/features/analytics/text.ts
+msgid "Region"
+msgstr "ప్రాంతం"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter"
+msgstr "ఫిల్టర్‌ను తొలగించండి"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter: {label}"
+msgstr "ఫిల్టర్‌ను తొలగించండి: {label}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Remove rule"
+msgstr "నియమాన్ని తొలగించండి"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Remove step"
+msgstr "దశను తొలగించండి"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Rename “{0}”…"
+msgstr "“{0}” పేరు మార్చండి…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Rename segment"
+msgstr "సెగ్మెంట్ పేరు మార్చండి"
+
+#: src/features/analytics/Install.tsx
+msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
+msgstr "కాంపోనెంట్‌ను రూట్ లేఅవుట్‌లో ఒకసారి రెండర్ చేయండి. అది ఏదీ రెండర్ చేయదు; useYuvaAnalytics() దాని కింద ఎక్కడైనా పద్ధతులను ఇస్తుంది."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Report"
+msgstr "నివేదిక"
+
+#: src/features/analytics/Settings.tsx
+msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
+msgstr "Do Not Track లేదా Global Privacy Control ఉన్న అభ్యర్థనలు, మరియు సమ్మతి అవసరమైన ప్రాపర్టీలో సమ్మతి లేని ఈవెంట్‌లు, తీసుకోబడతాయి కానీ ఇక్కడ నిల్వ చేయబడవు లేదా లెక్కించబడవు."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Retention"
+msgstr "నిలుపుదల"
+
+#: src/features/analytics/Retention.tsx
+msgid "Retention needs consent features"
+msgstr "నిలుపుదలకు సమ్మతి ఫీచర్‌లు అవసరం"
+
+#: src/features/analytics/text.ts
+msgid "Returning"
+msgstr "తిరిగి వచ్చేవారు"
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/text.ts
+msgid "Revenue"
+msgstr "ఆదాయం"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke"
+msgstr "రద్దు చేయండి"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke {name}?"
+msgstr "{name} ను రద్దు చేయాలా?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoked"
+msgstr "రద్దు చేయబడింది"
+
+#: src/features/analytics/Exports.tsx
+msgid "Rows"
+msgstr "అడ్డు వరుసలు"
+
+#: src/features/analytics/Exports.tsx
+msgid "Running"
+msgstr "నడుస్తోంది"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Save"
+msgstr "సేవ్ చేయండి"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Save the changes to “{0}”"
+msgstr "“{0}” లో మార్పులను సేవ్ చేయండి"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save the filters as a new segment…"
+msgstr "ఫిల్టర్‌లను కొత్త సెగ్మెంట్‌గా సేవ్ చేయండి…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save these filters as a segment"
+msgstr "ఈ ఫిల్టర్‌లను సెగ్మెంట్‌గా సేవ్ చేయండి"
+
+#: src/features/analytics/Controls.tsx
+msgid "Saved segments"
+msgstr "సేవ్ చేసిన సెగ్మెంట్‌లు"
+
+#: src/features/analytics/text.ts
+msgid "Screen"
+msgstr "స్క్రీన్"
+
+#: src/features/analytics/text.ts
+msgid "Screen size"
+msgstr "స్క్రీన్ పరిమాణం"
+
+#: src/features/analytics/text.ts
+msgid "Screen views"
+msgstr "స్క్రీన్ వీక్షణలు"
+
+#: src/features/analytics/text.ts
+msgid "Screen views divided by visits."
+msgstr "స్క్రీన్ వీక్షణలను సందర్శనలతో భాగించగా."
+
+#: src/features/analytics/text.ts
+msgid "Screen views in the last 30 minutes"
+msgstr "గత 30 నిమిషాల్లో స్క్రీన్ వీక్షణలు"
+
+#: src/features/analytics/text.ts
+msgid "Screen views per minute"
+msgstr "నిమిషానికి స్క్రీన్ వీక్షణలు"
+
+#: src/features/analytics/text.ts
+msgid "Screens"
+msgstr "స్క్రీన్‌లు"
+
+#: src/features/analytics/text.ts
+msgid "Screens viewed."
+msgstr "చూసిన స్క్రీన్‌లు."
+
+#: src/features/analytics/text.ts
+msgid "Scroll depth"
+msgstr "స్క్రోల్ లోతు"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolled to {pct} on {path}"
+msgstr "{path} పై {pct} వరకు స్క్రోల్ చేశారు"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolls"
+msgstr "స్క్రోల్‌లు"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segment"
+msgstr "సెగ్మెంట్"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segments"
+msgstr "సెగ్మెంట్‌లు"
+
+#: src/features/analytics/Settings.tsx
+msgid "Send a screen or an event from your app or backend while this page is open, and see whether it reached the server. Refreshes every 5 seconds."
+msgstr "ఈ పేజీ తెరిచి ఉన్నప్పుడు మీ యాప్ లేదా బ్యాకెండ్ నుండి స్క్రీన్ లేదా ఈవెంట్‌ను పంపి, అది సర్వర్‌కు చేరిందో లేదో చూడండి. ప్రతి 5 సెకన్లకు రిఫ్రెష్ అవుతుంది."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Send me one now"
+msgstr "ఇప్పుడే ఒకటి పంపండి"
+
+#: src/features/analytics/Goals.tsx
+msgid "Sends an event"
+msgstr "ఈవెంట్‌ను పంపుతుంది"
+
+#: src/features/analytics/text.ts
+msgid "Server"
+msgstr "సర్వర్"
+
+#: src/features/analytics/Settings.tsx
+msgid "Server busy"
+msgstr "సర్వర్ బిజీ"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Settings"
+msgstr "సెట్టింగ్‌లు"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Share links"
+msgstr "షేర్ లింక్‌లు"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Shared with Yuva"
+msgstr "Yuva తో పంచుకోబడింది"
+
+#: src/features/analytics/Settings.tsx
+msgid "Sharing"
+msgstr "పంచుకోవడం"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Events.tsx
+msgid "Show"
+msgstr "చూపండి"
+
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/parts.tsx
+msgid "Show from {day}"
+msgstr "{day} నుండి చూపండి"
+
+#: src/features/analytics/Events.tsx
+msgid "Show its props"
+msgstr "దాని ప్రాప్‌లను చూపండి"
+
+#: src/features/analytics/Controls.tsx
+msgid "Show the days"
+msgstr "రోజులను చూపండి"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Show the last 30 days"
+msgstr "గత 30 రోజులను చూపండి"
+
+#: src/features/analytics/Goals.tsx
+msgid "Signed up"
+msgstr "సైన్ అప్ చేశారు"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Sites that may embed it"
+msgstr "దీన్ని ఎంబెడ్ చేయగల సైట్‌లు"
+
+#: src/features/analytics/text.ts
+msgid "Social"
+msgstr "సోషల్"
+
+#: src/features/analytics/Settings.tsx
+msgid "Some events were dropped. The reasons are below."
+msgstr "కొన్ని ఈవెంట్‌లు వదిలివేయబడ్డాయి. కారణాలు దిగువ ఉన్నాయి."
+
+#: src/features/analytics/text.ts
+msgid "Source"
+msgstr "మూలం"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Realtime.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Sources"
+msgstr "మూలాలు"
+
+#: src/features/analytics/Settings.tsx
+msgid "Start over"
+msgstr "మళ్లీ మొదలుపెట్టండి"
+
+#. placeholder {0}: i + 1
+#: src/features/analytics/Funnels.tsx
+msgid "Step {0}"
+msgstr "దశ {0}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Steps"
+msgstr "దశలు"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Support.tsx
+msgid "Support"
+msgstr "సపోర్ట్"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Support load"
+msgstr "సపోర్ట్ భారం"
+
+#: src/features/analytics/Support.tsx
+msgid "Support numbers can only be filtered by page and host. The other filters are left out here."
+msgstr "సపోర్ట్ సంఖ్యలను పేజీ మరియు హోస్ట్ ద్వారా మాత్రమే ఫిల్టర్ చేయవచ్చు. ఇతర ఫిల్టర్‌లు ఇక్కడ వదిలివేయబడ్డాయి."
+
+#: src/features/analytics/text.ts
+msgid "Tablet"
+msgstr "టాబ్లెట్"
+
+#: src/features/analytics/Settings.tsx
+msgid "Taken and stored. They show up in Realtime within a minute."
+msgstr "తీసుకోబడ్డాయి మరియు నిల్వ చేయబడ్డాయి. అవి ఒక నిమిషంలో రియల్‌టైమ్‌లో కనిపిస్తాయి."
+
+#: src/features/analytics/Settings.tsx
+msgid "Test events"
+msgstr "టెస్ట్ ఈవెంట్‌లు"
+
+#: src/features/analytics/SharePage.tsx
+msgid "That password is not right."
+msgstr "ఆ పాస్‌వర్డ్ సరైనది కాదు."
+
+#: src/features/analytics/Funnels.tsx
+msgid "The consented counts follow visitors with a persistent id from one visit and day to the next, so a step reached on a later day still counts."
+msgstr "సమ్మతి లెక్కలు శాశ్వత ID ఉన్న సందర్శకులను ఒక సందర్శన మరియు రోజు నుండి తదుపరి దానికి అనుసరిస్తాయి, కాబట్టి తర్వాతి రోజు చేరిన దశ కూడా లెక్కించబడుతుంది."
+
+#: src/features/analytics/Settings.tsx
+msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
+msgstr "ప్రస్తుత కీ 24 గంటలు పనిచేస్తూనే ఉంటుంది, తద్వారా మీరు ఈవెంట్‌లను కోల్పోకుండా మీ పేజీలను అప్‌డేట్ చేయవచ్చు. ఆ సమయంలో మరో కీని తయారు చేస్తే పాతది వెంటనే ముగుస్తుంది."
+
+#: src/features/analytics/text.ts
+msgid "The deepest point reached on the page, per view."
+msgstr "పేజీలో చేరిన లోతైన బిందువు, వీక్షణకు."
+
+#: src/features/analytics/Exports.tsx
+msgid "The export failed on the server."
+msgstr "సర్వర్‌లో ఎగుమతి విఫలమైంది."
+
+#: src/features/analytics/Exports.tsx
+msgid "The file would be larger than 1 GiB. Export a shorter range."
+msgstr "ఫైల్ 1 GiB కంటే పెద్దదిగా ఉంటుంది. తక్కువ పరిధిని ఎగుమతి చేయండి."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "The first event arrived at {at}."
+msgstr "మొదటి ఈవెంట్ {at} కు వచ్చింది."
+
+#: src/features/analytics/Goals.tsx
+msgid "The goal reports the revenue its events carry, per currency."
+msgstr "లక్ష్యం దాని ఈవెంట్‌లు మోసుకెళ్లే ఆదాయాన్ని, కరెన్సీ వారీగా నివేదిస్తుంది."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key is public, like a chat key: every page carries it, and it only works on the property’s domains."
+msgstr "కీ చాట్ కీ లాగే పబ్లిక్: ప్రతి పేజీ దాన్ని కలిగి ఉంటుంది, మరియు అది ప్రాపర్టీ డొమైన్‌లలో మాత్రమే పనిచేస్తుంది."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key stops working at once, and all visits, events and totals are deleted. This cannot be undone."
+msgstr "కీ వెంటనే పనిచేయడం ఆగిపోతుంది, మరియు అన్ని సందర్శనలు, ఈవెంట్‌లు మరియు మొత్తాలు తొలగించబడతాయి. దీన్ని రద్దు చేయలేరు."
+
+#: src/features/analytics/Settings.tsx
+msgid "The last 30 days"
+msgstr "గత 30 రోజులు"
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and leaves the list."
+msgstr "లింక్ వెంటనే పనిచేయడం ఆగిపోయి లిస్ట్ నుండి పోతుంది."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and stays in the list."
+msgstr "లింక్ వెంటనే పనిచేయడం ఆగిపోయి లిస్ట్‌లో ఉంటుంది."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked."
+msgstr "లింక్ {timezone} లో ఈ రోజు చివరన పనిచేయడం ఆగిపోతుంది. రద్దు చేసే వరకు ఉంచడానికి ఖాళీగా వదలండి."
+
+#: src/features/analytics/Install.tsx
+msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
+msgstr "మాడ్యూల్ క్లయింట్ ప్లగిన్ మరియు useYuvaAnalytics() కంపోజబుల్‌ను జోడిస్తుంది. NUXT_PUBLIC_YUVA_ANALYTICS_KEY రన్‌టైమ్‌లో కీని ఓవర్‌రైడ్ చేస్తుంది."
+
+#: src/features/analytics/Settings.tsx
+msgid "The name does not match. Type it exactly as shown."
+msgstr "పేరు సరిపోలడం లేదు. చూపినట్లే ఖచ్చితంగా టైప్ చేయండి."
+
+#: src/features/analytics/Goals.tsx
+msgid "The name given to track(), or outbound_click, file_download, not_found, chat_open."
+msgstr "track() కు ఇచ్చిన పేరు, లేదా outbound_click, file_download, not_found, chat_open."
+
+#: src/features/analytics/Settings.tsx
+msgid "The previous key keeps working until {at}. Update every page and app before then."
+msgstr "మునుపటి కీ {at} వరకు పనిచేస్తూనే ఉంటుంది. అంతకు ముందే ప్రతి పేజీని మరియు యాప్‌ను అప్‌డేట్ చేయండి."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "The properties of your inboxes show up here once an owner or admin adds them."
+msgstr "మీ ఇన్‌బాక్స్‌ల ప్రాపర్టీలు యజమాని లేదా అడ్మిన్ జోడించిన తర్వాత ఇక్కడ కనిపిస్తాయి."
+
+#: src/features/analytics/Exports.tsx
+msgid "The query could not be run."
+msgstr "క్వెరీని నడపలేకపోయాము."
+
+#: src/features/analytics/Exports.tsx
+msgid "The range is outside the detailed records."
+msgstr "పరిధి వివరణాత్మక రికార్డ్‌ల వెలుపల ఉంది."
+
+#: src/features/analytics/SharePage.tsx
+msgid "The report could not be loaded"
+msgstr "నివేదికను లోడ్ చేయలేకపోయాము"
+
+#: src/features/analytics/Settings.tsx
+msgid "The server’s own database"
+msgstr "సర్వర్ స్వంత డేటాబేస్"
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need detailed records that are no longer kept for this range."
+msgstr "ఈ ఫిల్టర్‌లకు వివరణాత్మక రికార్డ్‌లు అవసరం, అవి ఈ పరిధికి ఇకపై ఉంచబడవు."
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need the detailed records, which are kept since {day}. Earlier days only have totals per page, source, place and device."
+msgstr "ఈ ఫిల్టర్‌లకు వివరణాత్మక రికార్డ్‌లు అవసరం, అవి {day} నుండి ఉంచబడతాయి. అంతకు ముందటి రోజులకు పేజీ, మూలం, స్థలం మరియు పరికరం వారీగా మొత్తాలు మాత్రమే ఉన్నాయి."
+
+#: src/features/analytics/Settings.tsx
+msgid "This cannot be undone."
+msgstr "దీన్ని రద్దు చేయలేరు."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal has numbers from {since} on. Days before that show none."
+msgstr "ఈ లక్ష్యానికి {since} నుండి సంఖ్యలు ఉన్నాయి. అంతకు ముందటి రోజులు ఏదీ చూపవు."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
+msgstr "ఈ లక్ష్యం ఒక ఫన్నెల్ దశ. ముందుగా దాన్ని ఫన్నెల్ నుండి తీసివేయండి, లేదా ఫన్నెల్‌ను తొలగించండి."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This link is not available"
+msgstr "ఈ లింక్ అందుబాటులో లేదు"
+
+#: src/features/analytics/text.ts
+msgid "This month"
+msgstr "ఈ నెల"
+
+#: src/features/analytics/Funnels.tsx
+msgid "This property already has a funnel with this name."
+msgstr "ఈ ప్రాపర్టీకి ఈ పేరుతో ఫన్నెల్ ఇప్పటికే ఉంది."
+
+#: src/features/analytics/Goals.tsx
+msgid "This property already has a goal with this name."
+msgstr "ఈ ప్రాపర్టీకి ఈ పేరుతో లక్ష్యం ఇప్పటికే ఉంది."
+
+#: src/features/analytics/Controls.tsx
+msgid "This property already has a segment with this name."
+msgstr "ఈ ప్రాపర్టీకి ఈ పేరుతో సెగ్మెంట్ ఇప్పటికే ఉంది."
+
+#: src/features/analytics/Exports.tsx
+msgid "This range cannot be exported. Pick a shorter one, or one inside the detailed records."
+msgstr "ఈ పరిధిని ఎగుమతి చేయలేరు. తక్కువదాన్ని, లేదా వివరణాత్మక రికార్డ్‌లలోపు ఉన్నదాన్ని ఎంచుకోండి."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This report has a password"
+msgstr "ఈ నివేదికకు పాస్‌వర్డ్ ఉంది"
+
+#: src/features/analytics/Support.tsx
+msgid "This workspace has no inbox yet."
+msgstr "ఈ వర్క్‌స్పేస్‌కు ఇంకా ఇన్‌బాక్స్ లేదు."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
+msgstr "ఈ వర్క్‌స్పేస్ ఈ నెల {limit} అనలిటిక్స్ ఈవెంట్‌ల పరిమితిని చేరుకుంది. నెల ముగిసే వరకు కొత్త ఈవెంట్‌లు వదిలివేయబడతాయి."
+
+#: src/features/analytics/text.ts
+msgid "This year"
+msgstr "ఈ సంవత్సరం"
+
+#: src/features/analytics/Exports.tsx
+msgid "Three exports are already running in this workspace. Try again when one finishes."
+msgstr "ఈ వర్క్‌స్పేస్‌లో మూడు ఎగుమతులు ఇప్పటికే నడుస్తున్నాయి. ఒకటి ముగిసినప్పుడు మళ్లీ ప్రయత్నించండి."
+
+#: src/features/analytics/text.ts
+msgid "Time from the first to the last event of a visit, on average. Bounces count as zero."
+msgstr "సందర్శనలో మొదటి నుండి చివరి ఈవెంట్ వరకు సగటు సమయం. బౌన్స్‌లు సున్నాగా లెక్కించబడతాయి."
+
+#: src/features/analytics/text.ts
+msgid "Time on page"
+msgstr "పేజీలో సమయం"
+
+#: src/features/analytics/text.ts
+msgid "Time the page was visible and in focus, per view."
+msgstr "వీక్షణకు, పేజీ కనిపిస్తూ ఫోకస్‌లో ఉన్న సమయం."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Time zone"
+msgstr "సమయ మండలం"
+
+#: src/features/analytics/text.ts
+msgid "Times the goal was reached, also several times by one visitor."
+msgstr "లక్ష్యం చేరుకున్న సార్లు, ఒకే సందర్శకుడు అనేకసార్లు కూడా."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated helpful."
+msgstr "పేజీ ఉపయోగకరమని రేట్ చేసిన సార్లు."
+
+#: src/features/analytics/text.ts
+msgid "Times the page was rated not helpful."
+msgstr "పేజీ ఉపయోగకరం కాదని రేట్ చేసిన సార్లు."
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
+#: src/features/analytics/Settings.tsx
+msgid "To"
+msgstr "To"
+
+#: src/features/analytics/text.ts
+msgid "Today"
+msgstr "ఈ రోజు"
+
+#: src/features/analytics/Settings.tsx
+msgid "Today: {todayCounted} counted, {todayDropped} dropped"
+msgstr "ఈ రోజు: {todayCounted} లెక్కించబడ్డాయి, {todayDropped} వదిలివేయబడ్డాయి"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Token"
+msgstr "టోకెన్"
+
+#: src/features/analytics/Settings.tsx
+msgid "Too late"
+msgstr "చాలా ఆలస్యం"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many requests from your network. Wait a minute and reload the page."
+msgstr "మీ నెట్‌వర్క్ నుండి చాలా అభ్యర్థనలు. ఒక నిమిషం ఆగి పేజీని రీలోడ్ చేయండి."
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many tries. Wait a minute and try again."
+msgstr "చాలా ప్రయత్నాలు. ఒక నిమిషం ఆగి మళ్లీ ప్రయత్నించండి."
+
+#: src/features/analytics/text.ts
+msgid "Top pages"
+msgstr "అగ్ర పేజీలు"
+
+#: src/features/analytics/text.ts
+msgid "Top pages and screens"
+msgstr "అగ్ర పేజీలు మరియు స్క్రీన్‌లు"
+
+#: src/features/analytics/text.ts
+msgid "Top screens"
+msgstr "అగ్ర స్క్రీన్‌లు"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracked props"
+msgstr "ట్రాక్ చేసే ప్రాప్‌లు"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracking"
+msgstr "ట్రాకింగ్"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic drop"
+msgstr "ట్రాఫిక్ తగ్గుదల"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Traffic spike"
+msgstr "ట్రాఫిక్ పెరుగుదల"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Try again"
+msgstr "మళ్లీ ప్రయత్నించండి"
+
+#: src/features/analytics/Install.tsx
+msgid "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
+msgstr "ముందుగా సాధారణ సెట్టింగ్‌లలో Platforms కింద {name} ను ఆన్ చేయండి. అప్పటి వరకు సర్వర్ యాప్ ఈవెంట్‌లను తిరస్కరిస్తుంది."
+
+#: src/features/analytics/Retention.tsx
+msgid "Turn on the persistent id in the consent features, then call yuva.consent with persistent set to true."
+msgstr "సమ్మతి ఫీచర్‌లలో శాశ్వత ID ను ఆన్ చేసి, ఆపై persistent true తో yuva.consent ను పిలవండి."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Two to eight goals, in the order visitors reach them within one visit."
+msgstr "రెండు నుండి ఎనిమిది లక్ష్యాలు, సందర్శకులు ఒక సందర్శనలో వాటిని చేరే క్రమంలో."
+
+#: src/features/analytics/Settings.tsx
+msgid "Type the property’s name to delete it and all its data."
+msgstr "ప్రాపర్టీని మరియు దాని మొత్తం డేటాను తొలగించడానికి దాని పేరును టైప్ చేయండి."
+
+#: src/features/analytics/text.ts
+msgid "Unknown"
+msgstr "తెలియదు"
+
+#: src/features/analytics/Install.tsx
+msgid "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
+msgstr "ఒక్కో అభ్యర్థనకు 100 ఈవెంట్‌ల వరకు, ప్రతిదీ సందర్శకుడి IP చిరునామా మరియు యూజర్ ఏజెంట్ లేదా మీ స్వంత visitor_key తో. రెండూ నిల్వ చేయబడవు. చెల్లనివిగా వదిలిన ఈవెంట్‌లు వాటి స్థానంతో errors లో తిరిగి వస్తాయి; ఏమి చేరిందో Test events కింద చూడండి."
+
+#: src/features/analytics/text.ts
+msgid "UTM campaign"
+msgstr "UTM ప్రచారం"
+
+#: src/features/analytics/text.ts
+msgid "UTM content"
+msgstr "UTM కంటెంట్"
+
+#: src/features/analytics/text.ts
+msgid "UTM medium"
+msgstr "UTM మాధ్యమం"
+
+#: src/features/analytics/text.ts
+msgid "UTM source"
+msgstr "UTM మూలం"
+
+#: src/features/analytics/text.ts
+msgid "UTM term"
+msgstr "UTM పదం"
+
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+#: src/features/analytics/text.ts
+msgid "Views"
+msgstr "వీక్షణలు"
+
+#: src/features/analytics/Goals.tsx
+msgid "Views a page"
+msgstr "పేజీని చూస్తారు"
+
+#: src/features/analytics/text.ts
+msgid "Views divided by visits."
+msgstr "వీక్షణలను సందర్శనలతో భాగించగా."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views fell to {now} in two hours, against {usual} usually."
+msgstr "వీక్షణలు రెండు గంటల్లో {now} కు తగ్గాయి, సాధారణంగా {usual}."
+
+#: src/features/analytics/text.ts
+msgid "Views in the last 30 minutes"
+msgstr "గత 30 నిమిషాల్లో వీక్షణలు"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at least three times the same hours of the week before."
+msgstr "గత రెండు గంటల వీక్షణలు ముందటి వారం అవే గంటల కంటే కనీసం మూడింతలు."
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views of the last two hours are at most half the same hours of the week before."
+msgstr "గత రెండు గంటల వీక్షణలు ముందటి వారం అవే గంటల్లో గరిష్టంగా సగం."
+
+#: src/features/analytics/text.ts
+msgid "Views per minute"
+msgstr "నిమిషానికి వీక్షణలు"
+
+#: src/features/analytics/text.ts
+msgid "Views per visit"
+msgstr "సందర్శనకు వీక్షణలు"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Views rose to {now} in two hours, against {usual} usually."
+msgstr "వీక్షణలు రెండు గంటల్లో {now} కు పెరిగాయి, సాధారణంగా {usual}."
+
+#: src/features/analytics/text.ts
+msgid "Visit duration"
+msgstr "సందర్శన వ్యవధి"
+
+#: src/features/analytics/Retention.tsx
+#: src/features/analytics/text.ts
+msgid "Visitors"
+msgstr "సందర్శకులు"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Visitors in the last 30 minutes"
+msgstr "గత 30 నిమిషాల్లో సందర్శకులు"
+
+#: src/features/analytics/Retention.tsx
+msgid "Visitors who came back"
+msgstr "తిరిగి వచ్చిన సందర్శకులు"
+
+#: src/features/analytics/text.ts
+msgid "Visitors who reached the goal, per day, added up over the days of the range."
+msgstr "లక్ష్యాన్ని చేరిన సందర్శకులు, రోజుకు, పరిధి రోజుల్లో కూడినవి."
+
+#: src/features/analytics/Settings.tsx
+msgid "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
+msgstr "Do Not Track లేదా Global Privacy Control ఉన్న సందర్శకులు ఏదీ పంపరు, కాబట్టి వారు ఇక్కడ కూడా లెక్కించబడరు. వదిలివేసిన ఈవెంట్ గురించి దాని లెక్క తప్ప ఏదీ ఉంచబడదు."
+
+#: src/features/analytics/text.ts
+msgid "Visits"
+msgstr "సందర్శనలు"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page or screen view and nothing else."
+msgstr "ఒక పేజీ లేదా స్క్రీన్ వీక్షణ మాత్రమే ఉన్న సందర్శనలు."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page view and nothing else."
+msgstr "ఒక పేజీ వీక్షణ మాత్రమే ఉన్న సందర్శనలు."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one screen view and nothing else."
+msgstr "ఒక స్క్రీన్ వీక్షణ మాత్రమే ఉన్న సందర్శనలు."
+
+#: src/features/analytics/Install.tsx
+msgid "Vue, Astro, other"
+msgstr "Vue, Astro, ఇతర"
+
+#: src/features/analytics/Exports.tsx
+msgid "Waiting"
+msgstr "వేచి ఉంది"
+
+#: src/features/analytics/Settings.tsx
+msgid "Waiting for events since {at}."
+msgstr "{at} నుండి ఈవెంట్‌ల కోసం వేచి ఉంది."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Waiting for the first event"
+msgstr "మొదటి ఈవెంట్ కోసం వేచి ఉంది"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Watch it live"
+msgstr "లైవ్‌లో చూడండి"
+
+#: src/features/analytics/text.ts
+msgid "Web"
+msgstr "వెబ్"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Website or app"
+msgstr "వెబ్‌సైట్ లేదా యాప్"
+
+#: src/features/analytics/Retention.tsx
+msgid "Week {period}"
+msgstr "వారం {period}"
+
+#: src/features/analytics/Alerts.tsx
+msgid "Weekly"
+msgstr "వారానికి"
+
+#: src/features/analytics/Retention.tsx
+msgid "Weeks"
+msgstr "వారాలు"
+
+#: src/features/analytics/Insights.tsx
+msgid "What changed"
+msgstr "ఏమి మారింది"
+
+#: src/features/analytics/Support.tsx
+msgid "What stands out"
+msgstr "ఏది ప్రత్యేకంగా కనిపిస్తోంది"
+
+#: src/features/analytics/text.ts
+msgid "What the goal's events carried, per currency. Currencies are never converted or added up."
+msgstr "లక్ష్య ఈవెంట్‌లు మోసుకెళ్లినది, కరెన్సీ వారీగా. కరెన్సీలు ఎప్పుడూ మార్చబడవు లేదా కూడబడవు."
+
+#: src/features/analytics/Exports.tsx
+msgid "What to export"
+msgstr "ఏమి ఎగుమతి చేయాలి"
+
+#: src/features/analytics/Goals.tsx
+msgid "Where conversions come from"
+msgstr "కన్వర్షన్‌లు ఎక్కడి నుండి వస్తాయి"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Where the property’s day starts and ends."
+msgstr "ప్రాపర్టీ రోజు ఎక్కడ మొదలై ముగుస్తుంది."
+
+#: src/features/analytics/Install.tsx
+msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."
+msgstr "data-consent=\"required\" తో, మీ సమ్మతి సాధనం సందర్శకుడు అంగీకరించారని చెప్పే వరకు స్క్రిప్ట్ ఏదీ పంపదు. సాధారణ సెట్టింగ్‌లలో Collection ను కూడా “Only with consent” కు సెట్ చేయండి, తద్వారా సర్వర్ అది లేని ఈవెంట్‌లను తిరస్కరిస్తుంది."
+
+#: src/features/analytics/Settings.tsx
+msgid "With yuva.consent and persistent set to true, the device keeps a random id for 13 months. The visitor counts once over several days, is told apart as new or returning, fills retention and is followed across days in funnels. Never under Do Not Track or Global Privacy Control."
+msgstr "yuva.consent మరియు persistent true తో, పరికరం 13 నెలల పాటు యాదృచ్ఛిక ID ను ఉంచుతుంది. సందర్శకుడు అనేక రోజుల్లో ఒకసారి లెక్కించబడతారు, కొత్త లేదా తిరిగి వచ్చేవారుగా వేరు చేయబడతారు, నిలుపుదలను నింపుతారు మరియు ఫన్నెల్‌లలో రోజుల వెంట అనుసరించబడతారు. Do Not Track లేదా Global Privacy Control ఉంటే ఎప్పుడూ కాదు."
+
+#: src/features/analytics/text.ts
+msgid "Without consent"
+msgstr "సమ్మతి లేకుండా"
+
+#: src/features/analytics/Retention.tsx
+msgid "Without cookies a visitor is new every day, so nobody can be followed from one day to the next. Only visitors who agree to a persistent id in your consent tool show up here."
+msgstr "కుకీలు లేకుండా సందర్శకుడు ప్రతి రోజు కొత్తవారే, కాబట్టి ఎవరినీ ఒక రోజు నుండి మరో రోజుకు అనుసరించలేరు. మీ సమ్మతి సాధనంలో శాశ్వత ID కి అంగీకరించే సందర్శకులు మాత్రమే ఇక్కడ కనిపిస్తారు."
+
+#: src/features/analytics/Settings.tsx
+msgid "Without cookies, for everyone"
+msgstr "కుకీలు లేకుండా, అందరికీ"
+
+#: src/features/analytics/text.ts
+msgid "Yesterday"
+msgstr "నిన్న"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Your access ended. Enter the password again to keep reading."
+msgstr "మీ యాక్సెస్ ముగిసింది. చదవడం కొనసాగించడానికి పాస్‌వర్డ్‌ను మళ్లీ నమోదు చేయండి."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Your new share link"
+msgstr "మీ కొత్త షేర్ లింక్"
+
+#: src/features/analytics/Settings.tsx
+msgid "yuva.identify with a token from your backend, signed like a chat session, links the visitor’s visits to their contact. They show on the contact’s page under Recent visits. Forged or reused tokens are ignored."
+msgstr "మీ బ్యాకెండ్ టోకెన్‌తో yuva.identify, చాట్ సెషన్ లాగే సంతకం చేసినది, సందర్శకుడి సందర్శనలను వారి కాంటాక్ట్‌కు లింక్ చేస్తుంది. అవి కాంటాక్ట్ పేజీలో Recent visits కింద కనిపిస్తాయి. నకిలీ లేదా మళ్లీ వాడిన టోకెన్‌లు విస్మరించబడతాయి."

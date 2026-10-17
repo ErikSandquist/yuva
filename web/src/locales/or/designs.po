@@ -1,0 +1,1333 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 10:11+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: or\n"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "{name} (copy)"
+msgstr "{name} (କପି)"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "{used} of {limit}"
+msgstr "{limit} ମଧ୍ୟରୁ {used}"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "{who} saved it {when}, after you started editing. Your changes are kept on this device until you choose."
+msgstr "ଆପଣ ସମ୍ପାଦନ ଆରମ୍ଭ କରିବା ପରେ {who} ଏହା {when} ସେଭ୍ କଲେ। ଆପଣ ବାଛିବା ପର୍ଯ୍ୟନ୍ତ ଆପଣଙ୍କ ପରିବର୍ତ୍ତନ ଏହି ଡିଭାଇସ୍ରେ ରଖାଯାଏ।"
+
+#: src/features/designs/designer/controls.tsx
+msgid "A button needs a link."
+msgstr "ଏକ ବଟନ୍ ପାଇଁ ଲିଙ୍କ୍ ଦରକାର।"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "A clear heading"
+msgstr "ଏକ ସ୍ପଷ୍ଟ ଶୀର୍ଷକ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "A design can hold at most 200 blocks."
+msgstr "ଏକ ଡିଜାଇନ୍ରେ ସର୍ବାଧିକ 200 ବ୍ଲକ୍ ଥାଇପାରେ।"
+
+#: src/features/designs/DesignsList.tsx
+msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
+msgstr "ଡିଜାଇନ୍ ହେଉଛି ମେଲ୍ର ରୂପ: ଏକ ଟେମ୍ପଲେଟ୍ରୁ ଆରମ୍ଭ କରନ୍ତୁ, ତା'ପରେ ଆପଣଙ୍କ ବ୍ରଡକାଷ୍ଟ ପାଇଁ ବ୍ୟବହାର କରନ୍ତୁ।"
+
+#: src/features/designs/designer/editor.tsx
+msgid "A field without a fallback can leave a gap, like “Hi ,”."
+msgstr "ଫଲବ୍ୟାକ୍ ବିନା ଫିଲ୍ଡ “ନମସ୍କାର ,” ପରି ଖାଲି ସ୍ଥାନ ଛାଡ଼ିପାରେ।"
+
+#: src/features/designs/text.ts
+msgid "A group of blocks on its own background"
+msgstr "ନିଜ ପୃଷ୍ଠଭୂମିରେ ବ୍ଲକ୍ର ଏକ ଗୋଷ୍ଠୀ"
+
+#: src/features/designs/text.ts
+msgid "A link that looks like a button"
+msgstr "ବଟନ୍ ପରି ଦେଖାଯାଉଥିବା ଏକ ଲିଙ୍କ୍"
+
+#: src/features/designs/text.ts
+msgid "A merge field has no fallback, so it can be empty for some people."
+msgstr "ଏକ ମର୍ଜ୍ ଫିଲ୍ଡର ଫଲବ୍ୟାକ୍ ନାହିଁ, ତେଣୁ ଏହା କିଛି ଲୋକଙ୍କ ପାଇଁ ଖାଲି ହୋଇପାରେ।"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "A newer version of Yuva made this design. You can look at it here, but not change it."
+msgstr "Yuva ର ଏକ ନୂଆ ସଂସ୍କରଣ ଏହି ଡିଜାଇନ୍ ତିଆରି କଲା। ଆପଣ ଏହାକୁ ଏଠାରେ ଦେଖିପାରିବେ, କିନ୍ତୁ ବଦଳାଇପାରିବେ ନାହିଁ।"
+
+#: src/features/designs/text.ts
+msgid "A thin line between parts"
+msgstr "ଅଂଶ ମଧ୍ୟରେ ଏକ ପତଳା ରେଖା"
+
+#: src/features/designs/text.ts
+msgid "A title in three sizes"
+msgstr "ତିନି ଆକାରରେ ଏକ ଶୀର୍ଷକ"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "A version is kept at most every ten minutes while you edit, when you save by hand, when you restore one and when someone else's save wins a conflict. The newest 50 stay."
+msgstr "ଆପଣ ସମ୍ପାଦନ କଲାବେଳେ ସର୍ବାଧିକ ପ୍ରତି ଦଶ ମିନିଟ୍ରେ, ହାତରେ ସେଭ୍ କଲାବେଳେ, ଗୋଟିଏ ପୁନଃସ୍ଥାପନ କଲାବେଳେ ଏବଂ ଅନ୍ୟ କାହାର ସେଭ୍ ସଂଘର୍ଷ ଜିତିଲେ ସଂସ୍କରଣ ରଖାଯାଏ। ନବୀନତମ 50 ରହେ।"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Add"
+msgstr "ଯୋଡ଼ନ୍ତୁ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Add a block"
+msgstr "ବ୍ଲକ୍ ଯୋଡ଼ନ୍ତୁ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Add a link"
+msgstr "ଏକ ଲିଙ୍କ୍ ଯୋଡ଼ନ୍ତୁ"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Add your own lines above the required footer"
+msgstr "ଆବଶ୍ୟକ ଫୁଟର୍ ଉପରେ ଆପଣଙ୍କ ନିଜ ଧାଡ଼ି ଯୋଡ଼ନ୍ତୁ"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Added to every mail: your legal name and postal address, why the person gets the mail, and the unsubscribe and preference links."
+msgstr "ପ୍ରତ୍ୟେକ ମେଲ୍ରେ ଯୋଡ଼ାଯାଏ: ଆପଣଙ୍କ ଆଇନଗତ ନାମ ଓ ଡାକ ଠିକଣା, ବ୍ୟକ୍ତି ମେଲ୍ କାହିଁକି ପାଆନ୍ତି, ଏବଂ ଅନସବ୍ସ୍କ୍ରାଇବ୍ ଓ ପସନ୍ଦ ଲିଙ୍କ୍।"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Address"
+msgstr "ଠିକଣା"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Alignment"
+msgstr "ସଂରେଖଣ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Also shown when a mail app blocks images."
+msgstr "ମେଲ୍ ଆପ୍ ଇମେଜ୍ ଅବରୋଧ କଲେ ମଧ୍ୟ ଦେଖାଯାଏ।"
+
+#: src/features/designs/text.ts
+msgid "An uploaded picture, with a link if you like"
+msgstr "ଏକ ଅପଲୋଡ୍ କରାଯାଇଥିବା ଛବି, ଇଚ୍ଛା ହେଲେ ଲିଙ୍କ୍ ସହ"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Animated GIFs can be at most 1,200 pixels wide."
+msgstr "ଆନିମେଟେଡ୍ GIF ସର୍ବାଧିକ 1,200 ପିକ୍ସେଲ୍ ଚଉଡ଼ା ହୋଇପାରେ।"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Announcement"
+msgstr "ଘୋଷଣା"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Apply"
+msgstr "ଲାଗୁ କରନ୍ତୁ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Archive"
+msgstr "ଆର୍କାଇଭ୍ କରନ୍ତୁ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Archive this design?"
+msgstr "ଏହି ଡିଜାଇନ୍ ଆର୍କାଇଭ୍ କରିବେ?"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Attribute key"
+msgstr "ଆଟ୍ରିବ୍ୟୁଟ୍ କୀ"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Automatic"
+msgstr "ସ୍ୱୟଂଚାଳିତ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Back to designs"
+msgstr "ଡିଜାଇନ୍କୁ ଫେରନ୍ତୁ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Background"
+msgstr "ପୃଷ୍ଠଭୂମି"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Block settings"
+msgstr "ବ୍ଲକ୍ ସେଟିଂସ୍"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Panels.tsx
+msgid "Blocks"
+msgstr "ବ୍ଲକ୍"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Blocks and layers"
+msgstr "ବ୍ଲକ୍ ଓ ଲେୟାର୍"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Bold"
+msgstr "ବୋଲ୍ଡ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Bottom"
+msgstr "ତଳ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Brand"
+msgstr "ବ୍ରାଣ୍ଡ"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Build it yourself from blocks"
+msgstr "ବ୍ଲକ୍ରୁ ନିଜେ ତିଆରି କରନ୍ତୁ"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Bulleted list"
+msgstr "ବୁଲେଟ୍ ତାଲିକା"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Button"
+msgstr "ବଟନ୍"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Button colour"
+msgstr "ବଟନ୍ ରଙ୍ଗ"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Button text"
+msgstr "ବଟନ୍ ଟେକ୍ସଟ୍"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Buttons"
+msgstr "ବଟନ୍"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Cancel"
+msgstr "ବାତିଲ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Centre"
+msgstr "କେନ୍ଦ୍ର"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Changed elsewhere"
+msgstr "ଅନ୍ୟତ୍ର ବଦଳିଲା"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Checks"
+msgstr "ଯାଞ୍ଚ"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Choose an image"
+msgstr "ଏକ ଇମେଜ୍ ବାଛନ୍ତୁ"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Clear formatting"
+msgstr "ଫର୍ମାଟିଂ ସଫା କରନ୍ତୁ"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Close"
+msgstr "ବନ୍ଦ କରନ୍ତୁ"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Code"
+msgstr "କୋଡ୍"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Colour"
+msgstr "ରଙ୍ଗ"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Colours"
+msgstr "ରଙ୍ଗ"
+
+#. placeholder {0}: n(i)
+#: src/features/designs/designer/Inspector.tsx
+msgid "Column {0}"
+msgstr "ସ୍ତମ୍ଭ {0}"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Column {n} · {width}%"
+msgstr "ସ୍ତମ୍ଭ {n} · {width}%"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Columns"
+msgstr "ସ୍ତମ୍ଭ"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Contact attribute"
+msgstr "ଯୋଗାଯୋଗ ଆଟ୍ରିବ୍ୟୁଟ୍"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Content background"
+msgstr "ବିଷୟବସ୍ତୁ ପୃଷ୍ଠଭୂମି"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Copy made"
+msgstr "କପି ତିଆରି ହେଲା"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Corner radius"
+msgstr "କୋଣ ବ୍ୟାସାର୍ଦ୍ଧ"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Create and edit"
+msgstr "ତିଆରି ଓ ସମ୍ପାଦନ କରନ୍ତୁ"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Current"
+msgstr "ବର୍ତ୍ତମାନର"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Dark"
+msgstr "ଗାଢ଼"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Dark mode"
+msgstr "ଗାଢ଼ ମୋଡ୍"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Decorative"
+msgstr "ସାଜସଜ୍ଜା"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Default"
+msgstr "ଡିଫଲ୍ଟ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Default spacing"
+msgstr "ଡିଫଲ୍ଟ ବ୍ୟବଧାନ"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/ImageLibrary.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Delete"
+msgstr "ଡିଲିଟ୍ କରନ୍ତୁ"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Delete {name}"
+msgstr "{name} ଡିଲିଟ୍ କରନ୍ତୁ"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Delete anyway"
+msgstr "ତଥାପି ଡିଲିଟ୍ କରନ୍ତୁ"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Delete this image?"
+msgstr "ଏହି ଇମେଜ୍ ଡିଲିଟ୍ କରିବେ?"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Describe the image, or mark it as decorative."
+msgstr "ଇମେଜ୍ର ବର୍ଣ୍ଣନା କରନ୍ତୁ, କିମ୍ବା ଏହାକୁ ସାଜସଜ୍ଜା ଭାବେ ଚିହ୍ନିତ କରନ୍ତୁ।"
+
+#: src/features/designs/text.ts
+msgid "Describe this image for people who cannot see it, or mark it as decorative."
+msgstr "ଯେଉଁମାନେ ଦେଖିପାରନ୍ତି ନାହିଁ ସେମାନଙ୍କ ପାଇଁ ଏହି ଇମେଜ୍ର ବର୍ଣ୍ଣନା କରନ୍ତୁ, କିମ୍ବା ଏହାକୁ ସାଜସଜ୍ଜା ଭାବେ ଚିହ୍ନିତ କରନ୍ତୁ।"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Description for screen readers"
+msgstr "ସ୍କ୍ରିନ୍ ରିଡର୍ ପାଇଁ ବର୍ଣ୍ଣନା"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Design"
+msgstr "ଡିଜାଇନ୍"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Design archived"
+msgstr "ଡିଜାଇନ୍ ଆର୍କାଇଭ୍ ହେଲା"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Design name"
+msgstr "ଡିଜାଇନ୍ ନାମ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Design settings"
+msgstr "ଡିଜାଇନ୍ ସେଟିଂସ୍"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Designer"
+msgstr "ଡିଜାଇନର୍"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Designs"
+msgstr "ଡିଜାଇନ୍"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Desktop"
+msgstr "ଡେସ୍କଟପ୍"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Digest"
+msgstr "ଡାଇଜେଷ୍ଟ"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Direction"
+msgstr "ଦିଗ"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Divider"
+msgstr "ବିଭାଜକ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Done"
+msgstr "ହୋଇଗଲା"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Download JSON"
+msgstr "JSON ଡାଉନଲୋଡ୍ କରନ୍ତୁ"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Download my version as JSON"
+msgstr "ମୋ ସଂସ୍କରଣ JSON ଭାବେ ଡାଉନଲୋଡ୍ କରନ୍ତୁ"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Panels.tsx
+msgid "Drag {kind}"
+msgstr "{kind} ଟାଣନ୍ତୁ"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Drag a block here, or pick one from the list."
+msgstr "ଏକ ବ୍ଲକ୍ ଏଠାକୁ ଟାଣନ୍ତୁ, କିମ୍ବା ତାଲିକାରୁ ଗୋଟିଏ ବାଛନ୍ତୁ।"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Drag a block onto the mail, or press Enter to add it after the selected block."
+msgstr "ଏକ ବ୍ଲକ୍ ମେଲ୍ ଉପରକୁ ଟାଣନ୍ତୁ, କିମ୍ବା ବଛା ବ୍ଲକ୍ ପରେ ଯୋଡ଼ିବାକୁ Enter ଦବାନ୍ତୁ।"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Drop blocks here"
+msgstr "ବ୍ଲକ୍ ଏଠାରେ ଛାଡ଼ନ୍ତୁ"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Duplicate"
+msgstr "ନକଲ କରନ୍ତୁ"
+
+#: src/features/designs/text.ts
+msgid "E-mail address"
+msgstr "ଇମେଲ୍ ଠିକଣା"
+
+#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "E-mail designs"
+msgstr "ଇମେଲ୍ ଡିଜାଇନ୍"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Easy to read: {value}:1"
+msgstr "ପଢ଼ିବାକୁ ସହଜ: {value}:1"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Edit"
+msgstr "ସମ୍ପାଦନ କରନ୍ତୁ"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Empty"
+msgstr "ଖାଲି"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Empty page"
+msgstr "ଖାଲି ପୃଷ୍ଠା"
+
+#: src/features/designs/text.ts
+msgid "Empty room between blocks"
+msgstr "ବ୍ଲକ୍ ମଧ୍ୟରେ ଖାଲି ସ୍ଥାନ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "End"
+msgstr "ଶେଷ"
+
+#: src/features/designs/text.ts
+msgid "English"
+msgstr "ଇଂରାଜୀ"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Event"
+msgstr "ଇଭେଣ୍ଟ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Everywhere"
+msgstr "ସବୁଠାରେ"
+
+#: src/features/designs/text.ts
+msgid "First name"
+msgstr "ପ୍ରଥମ ନାମ"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Fonts already on people’s devices; mails load no web fonts."
+msgstr "ଲୋକଙ୍କ ଡିଭାଇସ୍ରେ ପୂର୍ବରୁ ଥିବା ଫଣ୍ଟ; ମେଲ୍ ୱେବ୍ ଫଣ୍ଟ ଲୋଡ୍ କରେ ନାହିଁ।"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Footer text"
+msgstr "ଫୁଟର୍ ଟେକ୍ସଟ୍"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "For dark logos on a transparent background."
+msgstr "ସ୍ୱଚ୍ଛ ପୃଷ୍ଠଭୂମିରେ ଗାଢ଼ ଲୋଗୋ ପାଇଁ।"
+
+#: src/features/designs/text.ts
+msgid "Full name"
+msgstr "ପୂରା ନାମ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Full width"
+msgstr "ପୂର୍ଣ୍ଣ ଚଉଡ଼ା"
+
+#: src/features/designs/text.ts
+msgid "Geometric"
+msgstr "ଜ୍ୟାମିତିକ"
+
+#: src/features/designs/text.ts
+msgid "German"
+msgstr "ଜର୍ମାନ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Gmail cuts mails off at about 102 KB of HTML, hiding the unsubscribe link."
+msgstr "Gmail ପ୍ରାୟ 102 KB HTML ରେ ମେଲ୍ କାଟିଦିଏ, ଅନସବ୍ସ୍କ୍ରାଇବ୍ ଲିଙ୍କ୍ ଲୁଚାଇ।"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Hard to read: {value}:1, aim for 4.5:1"
+msgstr "ପଢ଼ିବାକୁ କଷ୍ଟ: {value}:1, 4.5:1 ଲକ୍ଷ୍ୟ ରଖନ୍ତୁ"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Has problems"
+msgstr "ସମସ୍ୟା ଅଛି"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Has warnings"
+msgstr "ଚେତାବନୀ ଅଛି"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Heading"
+msgstr "ଶୀର୍ଷକ"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Heading font"
+msgstr "ଶୀର୍ଷକ ଫଣ୍ଟ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Height"
+msgstr "ଉଚ୍ଚତା"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Hidden on phones"
+msgstr "ଫୋନ୍ରେ ଲୁଚାଯାଇଛି"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Hidden on wide screens"
+msgstr "ଚଉଡ଼ା ସ୍କ୍ରିନ୍ରେ ଲୁଚାଯାଇଛି"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Hide dark colours"
+msgstr "ଗାଢ଼ ରଙ୍ଗ ଲୁଚାନ୍ତୁ"
+
+#: src/features/designs/text.ts
+msgid "Humanist"
+msgstr "ମାନବବାଦୀ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Icon colour"
+msgstr "ଆଇକନ୍ ରଙ୍ଗ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Icons"
+msgstr "ଆଇକନ୍"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Image"
+msgstr "ଇମେଜ୍"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Images"
+msgstr "ଇମେଜ୍"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Images can be at most 10 MB."
+msgstr "ଇମେଜ୍ ସର୍ବାଧିକ 10 MB ହୋଇପାରେ।"
+
+#: src/features/designs/designer/ThemePanel.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Inbox"
+msgstr "ଇନବକ୍ସ"
+
+#: src/features/designs/text.ts
+msgid "Inbox name"
+msgstr "ଇନବକ୍ସ ନାମ"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Insert"
+msgstr "ଭରନ୍ତୁ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "It adds nothing to the message, so screen readers skip it."
+msgstr "ଏହା ସଂଦେଶରେ କିଛି ଯୋଡ଼େ ନାହିଁ, ତେଣୁ ସ୍କ୍ରିନ୍ ରିଡର୍ ଏହାକୁ ଛାଡ଼ିଦିଏ।"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "It leaves the list of designs. Its versions are kept, and saving it again brings it back."
+msgstr "ଏହା ଡିଜାଇନ୍ ତାଲିକାରୁ ଚାଲିଯାଏ। ଏହାର ସଂସ୍କରଣ ରଖାଯାଏ, ଏବଂ ପୁଣି ସେଭ୍ କଲେ ଏହା ଫେରେ।"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "It was saved {when} in another tab or by someone else, after you started editing. Your changes are kept on this device until you choose."
+msgstr "ଆପଣ ସମ୍ପାଦନ ଆରମ୍ଭ କରିବା ପରେ ଏହା {when} ଅନ୍ୟ ଟ୍ୟାବ୍ରେ କିମ୍ବା ଅନ୍ୟ କେହି ସେଭ୍ କଲେ। ଆପଣ ବାଛିବା ପର୍ଯ୍ୟନ୍ତ ଆପଣଙ୍କ ପରିବର୍ତ୍ତନ ଏହି ଡିଭାଇସ୍ରେ ରଖାଯାଏ।"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Italic"
+msgstr "ଇଟାଲିକ୍"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Its address stops working at once."
+msgstr "ଏହାର ଠିକଣା ତୁରନ୍ତ କାମ କରିବା ବନ୍ଦ କରେ।"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Its images are copied into your workspace’s images. You can change everything after."
+msgstr "ଏହାର ଇମେଜ୍ ଆପଣଙ୍କ ୱାର୍କସ୍ପେସ୍ର ଇମେଜ୍ରେ କପି ହୁଏ। ଆପଣ ପରେ ସବୁ ବଦଳାଇପାରିବେ।"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Its sender details fill the required footer."
+msgstr "ଏହାର ପ୍ରେରକ ବିବରଣୀ ଆବଶ୍ୟକ ଫୁଟର୍ ଭରେ।"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Keep mine"
+msgstr "ମୋର ରଖନ୍ତୁ"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Kept from a conflict"
+msgstr "ସଂଘର୍ଷରୁ ରଖାଯାଇଛି"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Keyboard shortcuts"
+msgstr "କୀବୋର୍ଡ୍ ସର୍ଟକଟ୍"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Large"
+msgstr "ବଡ଼"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Panels.tsx
+msgid "Layers"
+msgstr "ଲେୟାର୍"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Layout"
+msgstr "ଲେଆଉଟ୍"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Left"
+msgstr "ବାମ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Left panel"
+msgstr "ବାମ ପ୍ୟାନେଲ୍"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Left to right"
+msgstr "ବାମରୁ ଡାହାଣ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Light"
+msgstr "ହାଲୁକା"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Light plate in dark mode"
+msgstr "ଗାଢ଼ ମୋଡ୍ରେ ହାଲୁକା ପ୍ଲେଟ୍"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Lines"
+msgstr "ରେଖା"
+
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Link"
+msgstr "ଲିଙ୍କ୍"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Link address"
+msgstr "ଲିଙ୍କ୍ ଠିକଣା"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Links"
+msgstr "ଲିଙ୍କ୍"
+
+#: src/features/designs/designer/controls.tsx
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/text.ts
+msgid "Links start with https://, http://, mailto: or tel:."
+msgstr "ଲିଙ୍କ୍ https://, http://, mailto: କିମ୍ବା tel: ରେ ଆରମ୍ଭ ହୁଏ।"
+
+#: src/features/designs/text.ts
+msgid "Links to your profiles"
+msgstr "ଆପଣଙ୍କ ପ୍ରୋଫାଇଲ୍ର ଲିଙ୍କ୍"
+
+#: src/features/designs/text.ts
+msgid "List name"
+msgstr "ତାଲିକା ନାମ"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+#: src/features/designs/DesignsList.tsx
+msgid "Load more"
+msgstr "ଆହୁରି ଲୋଡ୍ କରନ୍ତୁ"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Load theirs"
+msgstr "ସେମାନଙ୍କରଟି ଲୋଡ୍ କରନ୍ତୁ"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Loading the image…"
+msgstr "ଇମେଜ୍ ଲୋଡ୍ ହେଉଛି…"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Mail"
+msgstr "ମେଲ୍"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Mail apps in dark mode get darker colours made from yours, with text kept easy to read. Set any of them yourself."
+msgstr "ଗାଢ଼ ମୋଡ୍ରେ ମେଲ୍ ଆପ୍ ଆପଣଙ୍କ ରଙ୍ଗରୁ ତିଆରି ଗାଢ଼ ରଙ୍ଗ ପାଏ, ଟେକ୍ସଟ୍ ପଢ଼ିବାକୁ ସହଜ ରଖି। ସେଗୁଡ଼ିକ ମଧ୍ୟରୁ ଯେକୌଣସିଟି ନିଜେ ସେଟ୍ କରନ୍ତୁ।"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Make a copy"
+msgstr "ଏକ କପି ତିଆରି କରନ୍ତୁ"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Make them all from the light colours"
+msgstr "ସବୁ ହାଲୁକା ରଙ୍ଗରୁ ତିଆରି କରନ୍ତୁ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Medium"
+msgstr "ମଧ୍ୟମ"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Merge field"
+msgstr "ମର୍ଜ୍ ଫିଲ୍ଡ"
+
+#: src/features/designs/text.ts
+msgid "Merge fields can only go in the part of a link after the question mark."
+msgstr "ମର୍ଜ୍ ଫିଲ୍ଡ କେବଳ ଲିଙ୍କ୍ର ପ୍ରଶ୍ନ ଚିହ୍ନ ପରବର୍ତ୍ତୀ ଅଂଶରେ ଯାଇପାରେ।"
+
+#: src/features/designs/text.ts
+msgid "Monospace"
+msgstr "ମୋନୋସ୍ପେସ୍"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "More actions"
+msgstr "ଆହୁରି କାର୍ଯ୍ୟ"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Move down"
+msgstr "ତଳକୁ ଘୁଞ୍ଚାନ୍ତୁ"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Move up"
+msgstr "ଉପରକୁ ଘୁଞ୍ଚାନ୍ତୁ"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Name"
+msgstr "ନାମ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Network"
+msgstr "ନେଟୱାର୍କ"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "New blank design"
+msgstr "ନୂଆ ଖାଲି ଡିଜାଇନ୍"
+
+#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "New design"
+msgstr "ନୂଆ ଡିଜାଇନ୍"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Newsletter"
+msgstr "ନ୍ୟୁଜଲେଟର"
+
+#: src/features/designs/DesignsList.tsx
+msgid "No archived designs"
+msgstr "ଆର୍କାଇଭ୍ ଡିଜାଇନ୍ ନାହିଁ"
+
+#: src/features/designs/DesignsList.tsx
+msgid "No designs match."
+msgstr "କୌଣସି ଡିଜାଇନ୍ ମେଳ ଖାଉନାହିଁ।"
+
+#: src/features/designs/DesignsList.tsx
+msgid "No designs yet"
+msgstr "ଏପର୍ଯ୍ୟନ୍ତ ଡିଜାଇନ୍ ନାହିଁ"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "No images yet. Upload the first one."
+msgstr "ଏପର୍ଯ୍ୟନ୍ତ ଇମେଜ୍ ନାହିଁ। ପ୍ରଥମଟି ଅପଲୋଡ୍ କରନ୍ତୁ।"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "No problems found."
+msgstr "କୌଣସି ସମସ୍ୟା ମିଳିଲା ନାହିଁ।"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "No versions yet. One is kept after ten minutes of editing."
+msgstr "ଏପର୍ଯ୍ୟନ୍ତ ସଂସ୍କରଣ ନାହିଁ। ଦଶ ମିନିଟ୍ ସମ୍ପାଦନ ପରେ ଗୋଟିଏ ରଖାଯାଏ।"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Not saved: fix the marked blocks"
+msgstr "ସେଭ୍ ହୋଇନାହିଁ: ଚିହ୍ନିତ ବ୍ଲକ୍ ଠିକ୍ କରନ୍ତୁ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Not saved. Try again"
+msgstr "ସେଭ୍ ହୋଇନାହିଁ। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Number of columns"
+msgstr "ସ୍ତମ୍ଭ ସଂଖ୍ୟା"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Numbered list"
+msgstr "କ୍ରମାଙ୍କିତ ତାଲିକା"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Offline, kept on this device"
+msgstr "ଅଫଲାଇନ୍, ଏହି ଡିଭାଇସ୍ରେ ରଖାଯାଇଛି"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Offline. Your changes are kept on this device and saved when you are back."
+msgstr "ଅଫଲାଇନ୍। ଆପଣଙ୍କ ପରିବର୍ତ୍ତନ ଏହି ଡିଭାଇସ୍ରେ ରଖାଯାଏ ଏବଂ ଆପଣ ଫେରିଲେ ସେଭ୍ ହୁଏ।"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Onboarding"
+msgstr "ଅନବୋର୍ଡିଂ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "One under the other on narrow screens."
+msgstr "ସଂକୀର୍ଣ୍ଣ ସ୍କ୍ରିନ୍ରେ ଗୋଟିଏ ତଳେ ଗୋଟିଏ।"
+
+#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Owners and admins make e-mail designs and send broadcasts."
+msgstr "ମାଲିକ ଓ ଆଡମିନ୍ ଇମେଲ୍ ଡିଜାଇନ୍ ତିଆରି କରନ୍ତି ଓ ବ୍ରଡକାଷ୍ଟ ପଠାନ୍ତି।"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Page background"
+msgstr "ପୃଷ୍ଠା ପୃଷ୍ଠଭୂମି"
+
+#: src/features/designs/text.ts
+msgid "Paragraphs, lists and links"
+msgstr "ଅନୁଚ୍ଛେଦ, ତାଲିକା ଓ ଲିଙ୍କ୍"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Phone"
+msgstr "ଫୋନ୍"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Phones"
+msgstr "ଫୋନ୍"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Pick a colour"
+msgstr "ଏକ ରଙ୍ଗ ବାଛନ୍ତୁ"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Pick a version to see it."
+msgstr "ଦେଖିବାକୁ ଏକ ସଂସ୍କରଣ ବାଛନ୍ତୁ।"
+
+#: src/features/designs/text.ts
+msgid "Pick an image from your library."
+msgstr "ଆପଣଙ୍କ ଲାଇବ୍ରେରୀରୁ ଏକ ଇମେଜ୍ ବାଛନ୍ତୁ।"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "PNG, JPEG, GIF or WebP up to 10 MB. Uploads are made at most 1,200 pixels wide and lose their location and camera details. SVG files are not allowed."
+msgstr "10 MB ପର୍ଯ୍ୟନ୍ତ PNG, JPEG, GIF କିମ୍ବା WebP। ଅପଲୋଡ୍ ସର୍ବାଧିକ 1,200 ପିକ୍ସେଲ୍ ଚଉଡ଼ାରେ ତିଆରି ହୁଏ ଏବଂ ସେମାନଙ୍କ ସ୍ଥାନ ଓ କ୍ୟାମେରା ବିବରଣୀ ହରାଏ। SVG ଫାଇଲ୍ ଅନୁମତିପ୍ରାପ୍ତ ନୁହେଁ।"
+
+#: src/features/designs/text.ts
+msgid "Preferences link"
+msgstr "ପସନ୍ଦ ଲିଙ୍କ୍"
+
+#: src/features/designs/designer/Preview.tsx
+#: src/features/designs/designer/Versions.tsx
+msgid "Preview"
+msgstr "ପ୍ରିଭ୍ୟୁ"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Preview of {title}"
+msgstr "{title} ର ପ୍ରିଭ୍ୟୁ"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Preview text"
+msgstr "ପ୍ରିଭ୍ୟୁ ଟେକ୍ସଟ୍"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Product"
+msgstr "ଉତ୍ପାଦ"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Put each person’s own details into the mail."
+msgstr "ପ୍ରତ୍ୟେକ ବ୍ୟକ୍ତିଙ୍କ ନିଜ ବିବରଣୀ ମେଲ୍ରେ ରଖନ୍ତୁ।"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Read more"
+msgstr "ଆହୁରି ପଢ଼ନ୍ତୁ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Redo"
+msgstr "ପୁଣି କରନ୍ତୁ"
+
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Remove"
+msgstr "ହଟାନ୍ତୁ"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Remove link"
+msgstr "ଲିଙ୍କ୍ ହଟାନ୍ତୁ"
+
+#: src/features/designs/designer/Preview.tsx
+msgid "Rendering the mail…"
+msgstr "ମେଲ୍ ରେଣ୍ଡର୍ ହେଉଛି…"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Replace"
+msgstr "ବଦଳାନ୍ତୁ"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Restore"
+msgstr "ପୁନଃସ୍ଥାପନ କରନ୍ତୁ"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Restored"
+msgstr "ପୁନଃସ୍ଥାପିତ"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Restoring saves this version as the newest one. You can undo it."
+msgstr "ପୁନଃସ୍ଥାପନ କଲେ ଏହି ସଂସ୍କରଣ ନବୀନତମ ଭାବେ ସେଭ୍ ହୁଏ। ଆପଣ ଏହାକୁ ପୂର୍ବବତ୍ କରିପାରିବେ।"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Right"
+msgstr "ଡାହାଣ"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Right to left"
+msgstr "ଡାହାଣରୁ ବାମ"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Right to left for Arabic, Hebrew and Persian."
+msgstr "ଆରବୀ, ହିବ୍ରୁ ଓ ପର୍ସିଆନ୍ ପାଇଁ ଡାହାଣରୁ ବାମ।"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Same as the text"
+msgstr "ଟେକ୍ସଟ୍ ପରି ସମାନ"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Save mine as a copy"
+msgstr "ମୋରଟିକୁ କପି ଭାବେ ସେଭ୍ କରନ୍ତୁ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Save now and keep a version"
+msgstr "ବର୍ତ୍ତମାନ ସେଭ୍ କରି ଏକ ସଂସ୍କରଣ ରଖନ୍ତୁ"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Save your version over theirs. Theirs is kept in Versions as “Kept from a conflict”."
+msgstr "ଆପଣଙ୍କ ସଂସ୍କରଣକୁ ସେମାନଙ୍କ ଉପରେ ସେଭ୍ କରନ୍ତୁ। ସେମାନଙ୍କରଟି Versions ରେ “ସଂଘର୍ଷରୁ ରଖାଯାଇଛି” ଭାବେ ରଖାଯାଏ।"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Saved"
+msgstr "ସେଭ୍ ହେଲା"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Saved by hand"
+msgstr "ହାତରେ ସେଭ୍ ହେଲା"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Saved while editing"
+msgstr "ସମ୍ପାଦନ ବେଳେ ସେଭ୍ ହେଲା"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Saved, with a version kept"
+msgstr "ସେଭ୍ ହେଲା, ସଂସ୍କରଣ ରଖି"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Saving…"
+msgstr "ସେଭ୍ ହେଉଛି…"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Scheduled to send"
+msgstr "ପଠାଇବା ପାଇଁ ସିଡ୍ୟୁଲ୍ ହୋଇଛି"
+
+#: src/features/designs/DesignsList.tsx
+msgid "Search designs"
+msgstr "ଡିଜାଇନ୍ ସନ୍ଧାନ କରନ୍ତୁ"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Secondary text"
+msgstr "ଦ୍ୱିତୀୟ ଟେକ୍ସଟ୍"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Section"
+msgstr "ବିଭାଗ"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Select a block to change it. These settings apply to the whole mail."
+msgstr "ବଦଳାଇବାକୁ ଏକ ବ୍ଲକ୍ ବାଛନ୍ତୁ। ଏହି ସେଟିଂସ୍ ସମଗ୍ର ମେଲ୍ ପାଇଁ ଲାଗୁ ହୁଏ।"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Sent as a test"
+msgstr "ଟେଷ୍ଟ ଭାବେ ପଠାଗଲା"
+
+#: src/features/designs/text.ts
+msgid "Serif"
+msgstr "ସେରିଫ୍"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Shape"
+msgstr "ଆକୃତି"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Show"
+msgstr "ଦେଖାନ୍ତୁ"
+
+#: src/features/designs/DesignsList.tsx
+msgid "Show archived designs"
+msgstr "ଆର୍କାଇଭ୍ ଡିଜାଇନ୍ ଦେଖାନ୍ତୁ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Show as"
+msgstr "ଏହି ଭାବେ ଦେଖାନ୍ତୁ"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Show dark colours"
+msgstr "ଗାଢ଼ ରଙ୍ଗ ଦେଖାନ୍ତୁ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Show on"
+msgstr "ଏଥିରେ ଦେଖାନ୍ତୁ"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Show their version. Undo brings yours back."
+msgstr "ସେମାନଙ୍କ ସଂସ୍କରଣ ଦେଖାନ୍ତୁ। ପୂର୍ବବତ୍ କଲେ ଆପଣଙ୍କରଟି ଫେରେ।"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Shown after the subject in most inboxes. A broadcast can set its own."
+msgstr "ଅଧିକାଂଶ ଇନବକ୍ସରେ ବିଷୟ ପରେ ଦେଖାଯାଏ। ଏକ ବ୍ରଡକାଷ୍ଟ ନିଜର ସେଟ୍ କରିପାରେ।"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Size"
+msgstr "ଆକାର"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Small"
+msgstr "ଛୋଟ"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Social links"
+msgstr "ସୋସିଆଲ୍ ଲିଙ୍କ୍"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Some mail apps show every block anyway."
+msgstr "କିଛି ମେଲ୍ ଆପ୍ ତଥାପି ପ୍ରତ୍ୟେକ ବ୍ଲକ୍ ଦେଖାଏ।"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Some text for this column."
+msgstr "ଏହି ସ୍ତମ୍ଭ ପାଇଁ କିଛି ଟେକ୍ସଟ୍।"
+
+#: src/features/designs/text.ts
+msgid "Some text is hard to read on its background, in the light or dark colours. Aim for 4.5:1."
+msgstr "କିଛି ଟେକ୍ସଟ୍ ଏହାର ପୃଷ୍ଠଭୂମିରେ, ହାଲୁକା କିମ୍ବା ଗାଢ଼ ରଙ୍ଗରେ, ପଢ଼ିବାକୁ କଷ୍ଟ। 4.5:1 ଲକ୍ଷ୍ୟ ରଖନ୍ତୁ।"
+
+#: src/features/designs/text.ts
+msgid "Something required is empty."
+msgstr "ଆବଶ୍ୟକ କିଛି ଖାଲି ଅଛି।"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Space"
+msgstr "ବ୍ୟବଧାନ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Space between"
+msgstr "ମଝିରେ ବ୍ୟବଧାନ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Stack on phones"
+msgstr "ଫୋନ୍ରେ ଷ୍ଟାକ୍ କରନ୍ତୁ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Start"
+msgstr "ଆରମ୍ଭ କରନ୍ତୁ"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Start from a template or an empty page. Every design gets the footer the law asks for, and you can change everything else."
+msgstr "ଏକ ଟେମ୍ପଲେଟ୍ କିମ୍ବା ଖାଲି ପୃଷ୍ଠାରୁ ଆରମ୍ଭ କରନ୍ତୁ। ପ୍ରତ୍ୟେକ ଡିଜାଇନ୍ ଆଇନ ମାଗୁଥିବା ଫୁଟର୍ ପାଏ, ଏବଂ ବାକି ସବୁ ଆପଣ ବଦଳାଇପାରିବେ।"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Start from an empty mail with simple colours."
+msgstr "ସରଳ ରଙ୍ଗ ସହ ଏକ ଖାଲି ମେଲ୍ରୁ ଆରମ୍ଭ କରନ୍ତୁ।"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Strikethrough"
+msgstr "କଟା ଦାଗ"
+
+#: src/features/designs/text.ts
+msgid "System"
+msgstr "ସିଷ୍ଟମ୍"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Take it out of these designs first, or archive them:"
+msgstr "ପ୍ରଥମେ ଏହାକୁ ଏହି ଡିଜାଇନ୍ରୁ ବାହାର କରନ୍ତୁ, କିମ୍ବା ସେଗୁଡ଼ିକୁ ଆର୍କାଇଭ୍ କରନ୍ତୁ:"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Template language"
+msgstr "ଟେମ୍ପଲେଟ୍ ଭାଷା"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+#: src/features/designs/text.ts
+msgid "Text"
+msgstr "ଟେକ୍ସଟ୍"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Text colour"
+msgstr "ଟେକ୍ସଟ୍ ରଙ୍ଗ"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Text font"
+msgstr "ଟେକ୍ସଟ୍ ଫଣ୍ଟ"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Text formatting"
+msgstr "ଟେକ୍ସଟ୍ ଫର୍ମାଟିଂ"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Text in English"
+msgstr "ଇଂରାଜୀରେ ଟେକ୍ସଟ୍"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Text size"
+msgstr "ଟେକ୍ସଟ୍ ଆକାର"
+
+#: src/features/designs/text.ts
+msgid "The column widths must add up to 100."
+msgstr "ସ୍ତମ୍ଭର ଚଉଡ଼ାର ସମଷ୍ଟି 100 ହେବା ଜରୁରୀ।"
+
+#: src/features/designs/text.ts
+msgid "The inbox has no legal name or postal address for the footer. Add them in the inbox settings before sending."
+msgstr "ଇନବକ୍ସର ଫୁଟର୍ ପାଇଁ ଆଇନଗତ ନାମ କିମ୍ବା ଡାକ ଠିକଣା ନାହିଁ। ପଠାଇବା ପୂର୍ବରୁ ଇନବକ୍ସ ସେଟିଂସରେ ଯୋଡ଼ନ୍ତୁ।"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "The inbox’s sender details fill the footer every mail gets."
+msgstr "ଇନବକ୍ସର ପ୍ରେରକ ବିବରଣୀ ପ୍ରତ୍ୟେକ ମେଲ୍ ପାଉଥିବା ଫୁଟର୍ ଭରେ।"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "The mail is empty. Add a block to start."
+msgstr "ମେଲ୍ ଖାଲି ଅଛି। ଆରମ୍ଭ କରିବାକୁ ଏକ ବ୍ଲକ୍ ଯୋଡ଼ନ୍ତୁ।"
+
+#: src/features/designs/text.ts
+msgid "The mail is over 102 KB, so Gmail will cut it off and hide the unsubscribe link. Remove some blocks."
+msgstr "ମେଲ୍ 102 KB ରୁ ଅଧିକ, ତେଣୁ Gmail ଏହାକୁ କାଟିଦେବ ଏବଂ ଅନସବ୍ସ୍କ୍ରାଇବ୍ ଲିଙ୍କ୍ ଲୁଚାଇବ। କିଛି ବ୍ଲକ୍ ହଟାନ୍ତୁ।"
+
+#: src/features/designs/text.ts
+msgid "The mail is over 90 KB. Gmail cuts mails off at about 102 KB."
+msgstr "ମେଲ୍ 90 KB ରୁ ଅଧିକ। Gmail ପ୍ରାୟ 102 KB ରେ ମେଲ୍ କାଟିଦିଏ।"
+
+#: src/features/designs/text.ts
+msgid "The text has formatting e-mails cannot keep. Clear its formatting and try again."
+msgstr "ଟେକ୍ସଟ୍ରେ ଇମେଲ୍ ରଖିପାରିବ ନାହିଁ ଏପରି ଫର୍ମାଟିଂ ଅଛି। ଏହାର ଫର୍ମାଟିଂ ସଫା କରି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "The widths add up to {sum}, not 100."
+msgstr "ଚଉଡ଼ାର ସମଷ୍ଟି 100 ନୁହେଁ, {sum}।"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "The workspace’s images take all the room this server allows. Delete images you no longer use."
+msgstr "ୱାର୍କସ୍ପେସ୍ର ଇମେଜ୍ ଏହି ସର୍ଭର ଅନୁମତି ଦେଉଥିବା ସମସ୍ତ ସ୍ଥାନ ନେଉଛି। ଆଉ ବ୍ୟବହାର କରୁନଥିବା ଇମେଜ୍ ଡିଲିଟ୍ କରନ୍ତୁ।"
+
+#: src/features/designs/text.ts
+msgid "There are too many items here."
+msgstr "ଏଠାରେ ବହୁତ ଆଇଟମ୍ ଅଛି।"
+
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/text.ts
+msgid "There is no merge field called {field}."
+msgstr "{field} ନାମର କୌଣସି ମର୍ଜ୍ ଫିଲ୍ଡ ନାହିଁ।"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "These lines go above the footer every mail gets: the inbox’s legal name and postal address, why the person gets the mail, and the unsubscribe and preference links. Set the sender’s details in the inbox settings."
+msgstr "ଏହି ଧାଡ଼ି ପ୍ରତ୍ୟେକ ମେଲ୍ ପାଉଥିବା ଫୁଟର୍ ଉପରେ ଯାଏ: ଇନବକ୍ସର ଆଇନଗତ ନାମ ଓ ଡାକ ଠିକଣା, ବ୍ୟକ୍ତି ମେଲ୍ କାହିଁକି ପାଆନ୍ତି, ଏବଂ ଅନସବ୍ସ୍କ୍ରାଇବ୍ ଓ ପସନ୍ଦ ଲିଙ୍କ୍। ପ୍ରେରକଙ୍କ ବିବରଣୀ ଇନବକ୍ସ ସେଟିଂସରେ ସେଟ୍ କରନ୍ତୁ।"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Thickness"
+msgstr "ମୋଟେଇ"
+
+#: src/features/designs/text.ts
+msgid "This block cannot sit inside this one."
+msgstr "ଏହି ବ୍ଲକ୍ ଏହା ଭିତରେ ବସିପାରିବ ନାହିଁ।"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "This design changed somewhere else"
+msgstr "ଏହି ଡିଜାଇନ୍ ଅନ୍ୟତ୍ର ବଦଳିଲା"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This file type is not allowed. Use PNG, JPEG, GIF or WebP; SVG files can carry scripts, so they are refused."
+msgstr "ଏହି ଫାଇଲ୍ ପ୍ରକାର ଅନୁମତିପ୍ରାପ୍ତ ନୁହେଁ। PNG, JPEG, GIF କିମ୍ବା WebP ବ୍ୟବହାର କରନ୍ତୁ; SVG ଫାଇଲ୍ ସ୍କ୍ରିପ୍ଟ ବହନ କରିପାରେ, ତେଣୁ ପ୍ରତ୍ୟାଖ୍ୟାନ ହୁଏ।"
+
+#: src/features/designs/text.ts
+msgid "This image block has no image yet."
+msgstr "ଏହି ଇମେଜ୍ ବ୍ଲକ୍ରେ ଏପର୍ଯ୍ୟନ୍ତ ଇମେଜ୍ ନାହିଁ।"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This image is in use"
+msgstr "ଏହି ଇମେଜ୍ ବ୍ୟବହାରରେ ଅଛି"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This image is too large. Use one under 40 megapixels and 8,000 pixels on a side, and at most 4,000 pixels tall once it is 1,200 wide."
+msgstr "ଏହି ଇମେଜ୍ ବହୁତ ବଡ଼। 40 ମେଗାପିକ୍ସେଲ୍ ରୁ କମ୍ ଓ ପ୍ରତ୍ୟେକ ପାର୍ଶ୍ୱରେ 8,000 ପିକ୍ସେଲ୍ ରୁ କମ୍ ଥିବାଟି ବ୍ୟବହାର କରନ୍ତୁ, ଏବଂ 1,200 ଚଉଡ଼ା ହେଲେ ସର୍ବାଧିକ 4,000 ପିକ୍ସେଲ୍ ଉଚ୍ଚ।"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This image went out in a broadcast. If you delete it, people who open that mail see a broken image."
+msgstr "ଏହି ଇମେଜ୍ ଏକ ବ୍ରଡକାଷ୍ଟରେ ଗଲା। ଯଦି ଆପଣ ଏହାକୁ ଡିଲିଟ୍ କରନ୍ତି, ସେହି ମେଲ୍ ଖୋଲୁଥିବା ଲୋକେ ଭଙ୍ଗା ଇମେଜ୍ ଦେଖନ୍ତି।"
+
+#: src/features/designs/text.ts
+msgid "This is too long."
+msgstr "ଏହା ବହୁତ ଲମ୍ବା।"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "This server does not have the template “{slug}”. It may need a newer Yuva."
+msgstr "ଏହି ସର୍ଭରରେ ଟେମ୍ପଲେଟ୍ “{slug}” ନାହିଁ। ଏହାକୁ ନୂଆ Yuva ଦରକାର ହୋଇପାରେ।"
+
+#: src/features/designs/text.ts
+msgid "This text uses a merge field that does not exist."
+msgstr "ଏହି ଟେକ୍ସଟ୍ ଏପରି ମର୍ଜ୍ ଫିଲ୍ଡ ବ୍ୟବହାର କରେ ଯାହା ନାହିଁ।"
+
+#: src/features/designs/text.ts
+msgid "This uses an image or link that belongs to another workspace."
+msgstr "ଏହା ଅନ୍ୟ ୱାର୍କସ୍ପେସ୍ର ଇମେଜ୍ କିମ୍ବା ଲିଙ୍କ୍ ବ୍ୟବହାର କରେ।"
+
+#: src/features/designs/text.ts
+msgid "This value is not valid."
+msgstr "ଏହି ମୂଲ୍ୟ ବୈଧ ନୁହେଁ।"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Three"
+msgstr "ତିନି"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Top"
+msgstr "ଶୀର୍ଷ"
+
+#: src/features/designs/text.ts
+msgid "Turkish"
+msgstr "ତୁର୍କୀ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Two"
+msgstr "ଦୁଇ"
+
+#: src/features/designs/text.ts
+msgid "Two blocks have the same id."
+msgstr "ଦୁଇ ବ୍ଲକ୍ର ସମାନ ID ଅଛି।"
+
+#: src/features/designs/text.ts
+msgid "Two or three columns that stack on phones"
+msgstr "ଦୁଇ କିମ୍ବା ତିନି ସ୍ତମ୍ଭ ଯାହା ଫୋନ୍ରେ ଷ୍ଟାକ୍ ହୁଏ"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Type"
+msgstr "ପ୍ରକାର"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Underline"
+msgstr "ଅଣ୍ଡରଲାଇନ୍"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Undo"
+msgstr "ପୂର୍ବବତ୍ କରନ୍ତୁ"
+
+#: src/features/designs/text.ts
+msgid "Unsubscribe link"
+msgstr "ଅନସବ୍ସ୍କ୍ରାଇବ୍ ଲିଙ୍କ୍"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Untitled design"
+msgstr "ଶୀର୍ଷକ ବିହୀନ ଡିଜାଇନ୍"
+
+#: src/features/designs/designer/Preview.tsx
+msgid "Updating…"
+msgstr "ଅପଡେଟ୍ ହେଉଛି…"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Upload images, or drop them here"
+msgstr "ଇମେଜ୍ ଅପଲୋଡ୍ କରନ୍ତୁ, କିମ୍ବା ଏଠାରେ ଛାଡ଼ନ୍ତୁ"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Uploading…"
+msgstr "ଅପଲୋଡ୍ ହେଉଛି…"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Use “{title}”"
+msgstr "“{title}” ବ୍ୟବହାର କରନ୍ତୁ"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Use the default"
+msgstr "ଡିଫଲ୍ଟ ବ୍ୟବହାର କରନ୍ତୁ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Version restored"
+msgstr "ସଂସ୍କରଣ ପୁନଃସ୍ଥାପିତ ହେଲା"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Versions.tsx
+msgid "Versions"
+msgstr "ସଂସ୍କରଣ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "View"
+msgstr "ଦେଖନ୍ତୁ"
+
+#: src/features/designs/text.ts
+msgid "Website"
+msgstr "ୱେବସାଇଟ୍"
+
+#: src/features/designs/designer/editor.tsx
+msgid "When it is empty, write"
+msgstr "ଯେତେବେଳେ ଏହା ଖାଲି ଥାଏ, ଲେଖନ୍ତୁ"
+
+#: src/features/designs/designer/ThemePanel.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Whole workspace"
+msgstr "ସମଗ୍ର ୱାର୍କସ୍ପେସ୍"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Wide screens"
+msgstr "ଚଉଡ଼ା ସ୍କ୍ରିନ୍"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Width"
+msgstr "ଚଉଡ଼ା"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Widths in percent"
+msgstr "ପ୍ରତିଶତରେ ଚଉଡ଼ା"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Write a heading"
+msgstr "ଏକ ଶୀର୍ଷକ ଲେଖନ୍ତୁ"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Write something"
+msgstr "କିଛି ଲେଖନ୍ତୁ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Write what you want to tell your readers."
+msgstr "ଆପଣ ଆପଣଙ୍କ ପାଠକଙ୍କୁ ଯାହା କହିବାକୁ ଚାହାଁନ୍ତି ଲେଖନ୍ତୁ।"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "You can reply to this mail; a person reads every answer."
+msgstr "ଆପଣ ଏହି ମେଲ୍କୁ ଉତ୍ତର ଦେଇପାରିବେ; ପ୍ରତ୍ୟେକ ଉତ୍ତର ଜଣେ ବ୍ୟକ୍ତି ପଢ଼ନ୍ତି।"
+
+#: src/features/designs/text.ts
+msgid "Your own lines above the required footer"
+msgstr "ଆବଶ୍ୟକ ଫୁଟର୍ ଉପରେ ଆପଣଙ୍କ ନିଜ ଧାଡ଼ି"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Your version becomes a new design; this one keeps theirs."
+msgstr "ଆପଣଙ୍କ ସଂସ୍କରଣ ଏକ ନୂଆ ଡିଜାଇନ୍ ହୁଏ; ଏହା ସେମାନଙ୍କରଟି ରଖେ।"

@@ -1,0 +1,1333 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 10:11+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ms\n"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "{name} (copy)"
+msgstr "{name} (salinan)"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "{used} of {limit}"
+msgstr "{used} daripada {limit}"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "{who} saved it {when}, after you started editing. Your changes are kept on this device until you choose."
+msgstr "{who} menyimpannya {when}, selepas anda mula menyunting. Perubahan anda disimpan pada peranti ini sehingga anda memilih."
+
+#: src/features/designs/designer/controls.tsx
+msgid "A button needs a link."
+msgstr "Butang memerlukan pautan."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "A clear heading"
+msgstr "Tajuk yang jelas"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "A design can hold at most 200 blocks."
+msgstr "Satu reka bentuk boleh mengandungi paling banyak 200 blok."
+
+#: src/features/designs/DesignsList.tsx
+msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
+msgstr "Reka bentuk ialah rupa mel: mulakan daripada templat, kemudian gunakannya untuk siaran anda."
+
+#: src/features/designs/designer/editor.tsx
+msgid "A field without a fallback can leave a gap, like “Hi ,”."
+msgstr "Medan tanpa nilai ganti boleh meninggalkan ruang kosong, seperti “Hai ,”."
+
+#: src/features/designs/text.ts
+msgid "A group of blocks on its own background"
+msgstr "Sekumpulan blok pada latarnya sendiri"
+
+#: src/features/designs/text.ts
+msgid "A link that looks like a button"
+msgstr "Pautan yang kelihatan seperti butang"
+
+#: src/features/designs/text.ts
+msgid "A merge field has no fallback, so it can be empty for some people."
+msgstr "Medan gabung tiada nilai ganti, jadi ia boleh kosong bagi sesetengah orang."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "A newer version of Yuva made this design. You can look at it here, but not change it."
+msgstr "Versi Yuva yang lebih baharu membuat reka bentuk ini. Anda boleh melihatnya di sini, tetapi tidak mengubahnya."
+
+#: src/features/designs/text.ts
+msgid "A thin line between parts"
+msgstr "Garis nipis di antara bahagian"
+
+#: src/features/designs/text.ts
+msgid "A title in three sizes"
+msgstr "Tajuk dalam tiga saiz"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "A version is kept at most every ten minutes while you edit, when you save by hand, when you restore one and when someone else's save wins a conflict. The newest 50 stay."
+msgstr "Satu versi disimpan paling kerap setiap sepuluh minit semasa anda menyunting, apabila anda menyimpan secara manual, apabila anda memulihkan satu dan apabila simpanan orang lain menang dalam konflik. 50 terbaharu kekal."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Add"
+msgstr "Tambah"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Add a block"
+msgstr "Tambah blok"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Add a link"
+msgstr "Tambah pautan"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Add your own lines above the required footer"
+msgstr "Tambah baris anda sendiri di atas pengaki yang diperlukan"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Added to every mail: your legal name and postal address, why the person gets the mail, and the unsubscribe and preference links."
+msgstr "Ditambah pada setiap mel: nama sah dan alamat surat-menyurat anda, mengapa orang itu mendapat mel, dan pautan nyahlangganan dan keutamaan."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Address"
+msgstr "Alamat"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Alignment"
+msgstr "Penjajaran"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Also shown when a mail app blocks images."
+msgstr "Juga ditunjukkan apabila apl mel menyekat imej"
+
+#: src/features/designs/text.ts
+msgid "An uploaded picture, with a link if you like"
+msgstr "Gambar yang dimuat naik, dengan pautan jika anda mahu"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Animated GIFs can be at most 1,200 pixels wide."
+msgstr "GIF beranimasi boleh selebar paling banyak 1,200 piksel."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Announcement"
+msgstr "Pengumuman"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Apply"
+msgstr "Guna"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Archive"
+msgstr "Arkib"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Archive this design?"
+msgstr "Arkibkan reka bentuk ini?"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Attribute key"
+msgstr "Kunci atribut"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Automatic"
+msgstr "Automatik"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Back to designs"
+msgstr "Kembali ke reka bentuk"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Background"
+msgstr "Latar belakang"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Block settings"
+msgstr "Tetapan blok"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Panels.tsx
+msgid "Blocks"
+msgstr "Blok"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Blocks and layers"
+msgstr "Blok dan lapisan"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Bold"
+msgstr "Tebal"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Bottom"
+msgstr "Bawah"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Brand"
+msgstr "Jenama"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Build it yourself from blocks"
+msgstr "Bina sendiri daripada blok"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Bulleted list"
+msgstr "Senarai berpeluru"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Button"
+msgstr "Butang"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Button colour"
+msgstr "Warna butang"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Button text"
+msgstr "Teks butang"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Buttons"
+msgstr "Butang"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Cancel"
+msgstr "Batal"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Centre"
+msgstr "Tengah"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Changed elsewhere"
+msgstr "Berubah di tempat lain"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Checks"
+msgstr "Semakan"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Choose an image"
+msgstr "Pilih imej"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Clear formatting"
+msgstr "Kosongkan pemformatan"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Close"
+msgstr "Tutup"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Code"
+msgstr "Kod"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Colour"
+msgstr "Warna"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Colours"
+msgstr "Warna"
+
+#. placeholder {0}: n(i)
+#: src/features/designs/designer/Inspector.tsx
+msgid "Column {0}"
+msgstr "Lajur {0}"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Column {n} · {width}%"
+msgstr "Lajur {n} · {width}%"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Columns"
+msgstr "Lajur"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Contact attribute"
+msgstr "Atribut kenalan"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Content background"
+msgstr "Latar belakang kandungan"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Copy made"
+msgstr "Salinan dibuat"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Corner radius"
+msgstr "Jejari sudut"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Create and edit"
+msgstr "Cipta dan sunting"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Current"
+msgstr "Semasa"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Dark"
+msgstr "Gelap"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Dark mode"
+msgstr "Mod gelap"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Decorative"
+msgstr "Hiasan"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Default"
+msgstr "Lalai"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Default spacing"
+msgstr "Jarak lalai"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/ImageLibrary.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Delete"
+msgstr "Padam"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Delete {name}"
+msgstr "Padam {name}"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Delete anyway"
+msgstr "Padam juga"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Delete this image?"
+msgstr "Padam imej ini?"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Describe the image, or mark it as decorative."
+msgstr "Huraikan imej, atau tandakannya sebagai hiasan."
+
+#: src/features/designs/text.ts
+msgid "Describe this image for people who cannot see it, or mark it as decorative."
+msgstr "Huraikan imej ini untuk orang yang tidak dapat melihatnya, atau tandakannya sebagai hiasan."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Description for screen readers"
+msgstr "Penerangan untuk pembaca skrin"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Design"
+msgstr "Reka bentuk"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Design archived"
+msgstr "Reka bentuk diarkibkan"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Design name"
+msgstr "Nama reka bentuk"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Design settings"
+msgstr "Tetapan reka bentuk"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Designer"
+msgstr "Pereka"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Designs"
+msgstr "Reka bentuk"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Desktop"
+msgstr "Desktop"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Digest"
+msgstr "Ringkasan"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Direction"
+msgstr "Arah"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Divider"
+msgstr "Pembahagi"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Done"
+msgstr "Selesai"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Download JSON"
+msgstr "Muat turun JSON"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Download my version as JSON"
+msgstr "Muat turun versi saya sebagai JSON"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Panels.tsx
+msgid "Drag {kind}"
+msgstr "Seret {kind}"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Drag a block here, or pick one from the list."
+msgstr "Seret blok ke sini, atau pilih satu daripada senarai."
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Drag a block onto the mail, or press Enter to add it after the selected block."
+msgstr "Seret blok ke atas mel, atau tekan Enter untuk menambahnya selepas blok yang dipilih."
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Drop blocks here"
+msgstr "Lepaskan blok di sini"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Duplicate"
+msgstr "Gandakan"
+
+#: src/features/designs/text.ts
+msgid "E-mail address"
+msgstr "Alamat e-mel"
+
+#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "E-mail designs"
+msgstr "Reka bentuk e-mel"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Easy to read: {value}:1"
+msgstr "Mudah dibaca: {value}:1"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Edit"
+msgstr "Sunting"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Empty"
+msgstr "Kosong"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Empty page"
+msgstr "Halaman kosong"
+
+#: src/features/designs/text.ts
+msgid "Empty room between blocks"
+msgstr "Ruang kosong antara blok"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "End"
+msgstr "Hujung"
+
+#: src/features/designs/text.ts
+msgid "English"
+msgstr "Inggeris"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Event"
+msgstr "Peristiwa"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Everywhere"
+msgstr "Di mana-mana"
+
+#: src/features/designs/text.ts
+msgid "First name"
+msgstr "Nama pertama"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Fonts already on people’s devices; mails load no web fonts."
+msgstr "Fon yang sudah ada pada peranti orang; mel tidak memuatkan fon web."
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Footer text"
+msgstr "Teks pengaki"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "For dark logos on a transparent background."
+msgstr "Untuk logo gelap pada latar belakang lutsinar."
+
+#: src/features/designs/text.ts
+msgid "Full name"
+msgstr "Nama penuh"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Full width"
+msgstr "Lebar penuh"
+
+#: src/features/designs/text.ts
+msgid "Geometric"
+msgstr "Geometri"
+
+#: src/features/designs/text.ts
+msgid "German"
+msgstr "Jerman"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Gmail cuts mails off at about 102 KB of HTML, hiding the unsubscribe link."
+msgstr "Gmail memotong mel pada kira-kira 102 KB HTML, menyembunyikan pautan nyahlangganan."
+
+#: src/features/designs/designer/controls.tsx
+msgid "Hard to read: {value}:1, aim for 4.5:1"
+msgstr "Sukar dibaca: {value}:1, sasarkan 4.5:1"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Has problems"
+msgstr "Ada masalah"
+
+#: src/features/designs/designer/Panels.tsx
+msgid "Has warnings"
+msgstr "Ada amaran"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Heading"
+msgstr "Tajuk"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Heading font"
+msgstr "Fon tajuk"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Height"
+msgstr "Ketinggian"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Hidden on phones"
+msgstr "Disembunyikan pada telefon"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Hidden on wide screens"
+msgstr "Disembunyikan pada skrin lebar"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Hide dark colours"
+msgstr "Sembunyikan warna gelap"
+
+#: src/features/designs/text.ts
+msgid "Humanist"
+msgstr "Humanis"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Icon colour"
+msgstr "Warna ikon"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Icons"
+msgstr "Ikon"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Image"
+msgstr "Imej"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Images"
+msgstr "Imej"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Images can be at most 10 MB."
+msgstr "Imej boleh sebesar paling banyak 10 MB."
+
+#: src/features/designs/designer/ThemePanel.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Inbox"
+msgstr "Peti masuk"
+
+#: src/features/designs/text.ts
+msgid "Inbox name"
+msgstr "Nama peti masuk"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Insert"
+msgstr "Sisip"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "It adds nothing to the message, so screen readers skip it."
+msgstr "Ia tidak menambah apa-apa pada mesej, jadi pembaca skrin melangkaunya."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "It leaves the list of designs. Its versions are kept, and saving it again brings it back."
+msgstr "Ia keluar daripada senarai reka bentuk. Versinya kekal, dan menyimpannya semula membawanya kembali."
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "It was saved {when} in another tab or by someone else, after you started editing. Your changes are kept on this device until you choose."
+msgstr "Ia disimpan {when} dalam tab lain atau oleh orang lain, selepas anda mula menyunting. Perubahan anda disimpan pada peranti ini sehingga anda memilih."
+
+#: src/features/designs/designer/editor.tsx
+msgid "Italic"
+msgstr "Condong"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Its address stops working at once."
+msgstr "Alamatnya berhenti berfungsi serta-merta."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Its images are copied into your workspace’s images. You can change everything after."
+msgstr "Imejnya disalin ke dalam imej ruang kerja anda. Anda boleh mengubah segalanya selepas itu."
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Its sender details fill the required footer."
+msgstr "Butiran penghantarnya mengisi pengaki yang diperlukan."
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Keep mine"
+msgstr "Kekalkan saya"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Kept from a conflict"
+msgstr "Disimpan daripada konflik"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Keyboard shortcuts"
+msgstr "Pintasan papan kekunci"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Large"
+msgstr "Besar"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Panels.tsx
+msgid "Layers"
+msgstr "Lapisan"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Layout"
+msgstr "Reka letak"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Left"
+msgstr "Kiri"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Left panel"
+msgstr "Panel kiri"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Left to right"
+msgstr "Kiri ke kanan"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Light"
+msgstr "Cerah"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Light plate in dark mode"
+msgstr "Plat cerah dalam mod gelap"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Lines"
+msgstr "Garis"
+
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Link"
+msgstr "Pautan"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Link address"
+msgstr "Alamat pautan"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Links"
+msgstr "Pautan"
+
+#: src/features/designs/designer/controls.tsx
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/text.ts
+msgid "Links start with https://, http://, mailto: or tel:."
+msgstr "Pautan bermula dengan https://, http://, mailto: atau tel:."
+
+#: src/features/designs/text.ts
+msgid "Links to your profiles"
+msgstr "Pautan ke profil anda"
+
+#: src/features/designs/text.ts
+msgid "List name"
+msgstr "Nama senarai"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+#: src/features/designs/DesignsList.tsx
+msgid "Load more"
+msgstr "Muatkan lagi"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Load theirs"
+msgstr "Muatkan milik mereka"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Loading the image…"
+msgstr "Memuatkan imej…"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Mail"
+msgstr "Mel"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Mail apps in dark mode get darker colours made from yours, with text kept easy to read. Set any of them yourself."
+msgstr "Apl mel dalam mod gelap mendapat warna lebih gelap yang dibuat daripada warna anda, dengan teks dikekalkan mudah dibaca. Tetapkan mana-mana sendiri."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Make a copy"
+msgstr "Buat salinan"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Make them all from the light colours"
+msgstr "Jadikan semuanya daripada warna cerah"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Medium"
+msgstr "Sederhana"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Merge field"
+msgstr "Medan gabung"
+
+#: src/features/designs/text.ts
+msgid "Merge fields can only go in the part of a link after the question mark."
+msgstr "Medan gabung hanya boleh berada dalam bahagian pautan selepas tanda soal."
+
+#: src/features/designs/text.ts
+msgid "Monospace"
+msgstr "Monospace"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "More actions"
+msgstr "Tindakan lain"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Move down"
+msgstr "Alih ke bawah"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Move up"
+msgstr "Alih ke atas"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Name"
+msgstr "Nama"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Network"
+msgstr "Rangkaian"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "New blank design"
+msgstr "Reka bentuk kosong baharu"
+
+#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "New design"
+msgstr "Reka bentuk baharu"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Newsletter"
+msgstr "Surat berita"
+
+#: src/features/designs/DesignsList.tsx
+msgid "No archived designs"
+msgstr "Tiada reka bentuk diarkibkan"
+
+#: src/features/designs/DesignsList.tsx
+msgid "No designs match."
+msgstr "Tiada reka bentuk sepadan."
+
+#: src/features/designs/DesignsList.tsx
+msgid "No designs yet"
+msgstr "Belum ada reka bentuk"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "No images yet. Upload the first one."
+msgstr "Belum ada imej. Muat naik yang pertama."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "No problems found."
+msgstr "Tiada masalah ditemui."
+
+#: src/features/designs/designer/Versions.tsx
+msgid "No versions yet. One is kept after ten minutes of editing."
+msgstr "Belum ada versi. Satu disimpan selepas sepuluh minit menyunting."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Not saved: fix the marked blocks"
+msgstr "Tidak disimpan: baiki blok yang ditanda"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Not saved. Try again"
+msgstr "Tidak disimpan. Cuba lagi"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Number of columns"
+msgstr "Bilangan lajur"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Numbered list"
+msgstr "Senarai bernombor"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Offline, kept on this device"
+msgstr "Luar talian, disimpan pada peranti ini"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Offline. Your changes are kept on this device and saved when you are back."
+msgstr "Luar talian. Perubahan anda disimpan pada peranti ini dan disimpan apabila anda kembali."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Onboarding"
+msgstr "Orientasi"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "One under the other on narrow screens."
+msgstr "Satu di bawah yang lain pada skrin sempit."
+
+#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Owners and admins make e-mail designs and send broadcasts."
+msgstr "Pemilik dan pentadbir membuat reka bentuk e-mel dan menghantar siaran."
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Page background"
+msgstr "Latar belakang halaman"
+
+#: src/features/designs/text.ts
+msgid "Paragraphs, lists and links"
+msgstr "Perenggan, senarai dan pautan"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Phone"
+msgstr "Telefon"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Phones"
+msgstr "Telefon"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Pick a colour"
+msgstr "Pilih warna"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Pick a version to see it."
+msgstr "Pilih versi untuk melihatnya."
+
+#: src/features/designs/text.ts
+msgid "Pick an image from your library."
+msgstr "Pilih imej daripada pustaka anda."
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "PNG, JPEG, GIF or WebP up to 10 MB. Uploads are made at most 1,200 pixels wide and lose their location and camera details. SVG files are not allowed."
+msgstr "PNG, JPEG, GIF atau WebP sehingga 10 MB. Muat naik dibuat selebar paling banyak 1,200 piksel dan kehilangan butiran lokasi dan kamera. Fail SVG tidak dibenarkan."
+
+#: src/features/designs/text.ts
+msgid "Preferences link"
+msgstr "Pautan keutamaan"
+
+#: src/features/designs/designer/Preview.tsx
+#: src/features/designs/designer/Versions.tsx
+msgid "Preview"
+msgstr "Pratonton"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Preview of {title}"
+msgstr "Pratonton {title}"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Preview text"
+msgstr "Teks pratonton"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Product"
+msgstr "Produk"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Put each person’s own details into the mail."
+msgstr "Letakkan butiran setiap orang ke dalam mel."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Read more"
+msgstr "Baca lagi"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Redo"
+msgstr "Buat semula"
+
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Remove"
+msgstr "Alih keluar"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Remove link"
+msgstr "Alih keluar pautan"
+
+#: src/features/designs/designer/Preview.tsx
+msgid "Rendering the mail…"
+msgstr "Memaparkan mel…"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Replace"
+msgstr "Ganti"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Restore"
+msgstr "Pulihkan"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Restored"
+msgstr "Dipulihkan"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Restoring saves this version as the newest one. You can undo it."
+msgstr "Memulihkan menyimpan versi ini sebagai yang terbaharu. Anda boleh membuat asal."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Right"
+msgstr "Kanan"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Right to left"
+msgstr "Kanan ke kiri"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Right to left for Arabic, Hebrew and Persian."
+msgstr "Kanan ke kiri untuk bahasa Arab, Ibrani dan Parsi."
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Same as the text"
+msgstr "Sama seperti teks"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Save mine as a copy"
+msgstr "Simpan milik saya sebagai salinan"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Save now and keep a version"
+msgstr "Simpan sekarang dan kekalkan versi"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Save your version over theirs. Theirs is kept in Versions as “Kept from a conflict”."
+msgstr "Simpan versi anda di atas milik mereka. Milik mereka disimpan dalam Versi sebagai “Disimpan daripada konflik”."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Saved"
+msgstr "Disimpan"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Saved by hand"
+msgstr "Disimpan secara manual"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Saved while editing"
+msgstr "Disimpan semasa menyunting"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Saved, with a version kept"
+msgstr "Disimpan, dengan versi dikekalkan"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Saving…"
+msgstr "Menyimpan…"
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Scheduled to send"
+msgstr "Dijadualkan untuk dihantar"
+
+#: src/features/designs/DesignsList.tsx
+msgid "Search designs"
+msgstr "Cari reka bentuk"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Secondary text"
+msgstr "Teks sekunder"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Section"
+msgstr "Bahagian"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Select a block to change it. These settings apply to the whole mail."
+msgstr "Pilih blok untuk mengubahnya. Tetapan ini terpakai pada seluruh mel."
+
+#: src/features/designs/designer/Versions.tsx
+msgid "Sent as a test"
+msgstr "Dihantar sebagai ujian"
+
+#: src/features/designs/text.ts
+msgid "Serif"
+msgstr "Serif"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Shape"
+msgstr "Bentuk"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Show"
+msgstr "Tunjuk"
+
+#: src/features/designs/DesignsList.tsx
+msgid "Show archived designs"
+msgstr "Tunjuk reka bentuk diarkibkan"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Show as"
+msgstr "Tunjuk sebagai"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Show dark colours"
+msgstr "Tunjuk warna gelap"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Show on"
+msgstr "Tunjuk pada"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Show their version. Undo brings yours back."
+msgstr "Tunjuk versi mereka. Buat asal membawa kembali milik anda."
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Shown after the subject in most inboxes. A broadcast can set its own."
+msgstr "Ditunjukkan selepas subjek dalam kebanyakan peti masuk. Siaran boleh menetapkan miliknya sendiri."
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Inspector.tsx
+msgid "Size"
+msgstr "Saiz"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Small"
+msgstr "Kecil"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Social links"
+msgstr "Pautan sosial"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Some mail apps show every block anyway."
+msgstr "Sesetengah apl mel tetap menunjukkan setiap blok."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Some text for this column."
+msgstr "Sedikit teks untuk lajur ini."
+
+#: src/features/designs/text.ts
+msgid "Some text is hard to read on its background, in the light or dark colours. Aim for 4.5:1."
+msgstr "Sesetengah teks sukar dibaca pada latarnya, dalam warna cerah atau gelap. Sasarkan 4.5:1."
+
+#: src/features/designs/text.ts
+msgid "Something required is empty."
+msgstr "Sesuatu yang diperlukan kosong."
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/text.ts
+msgid "Space"
+msgstr "Ruang"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Space between"
+msgstr "Ruang antara"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Stack on phones"
+msgstr "Susun pada telefon"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Start"
+msgstr "Mula"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Start from a template or an empty page. Every design gets the footer the law asks for, and you can change everything else."
+msgstr "Mulakan daripada templat atau halaman kosong. Setiap reka bentuk mendapat pengaki yang dikehendaki undang-undang, dan anda boleh mengubah segalanya yang lain."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Start from an empty mail with simple colours."
+msgstr "Mulakan daripada mel kosong dengan warna ringkas."
+
+#: src/features/designs/designer/editor.tsx
+msgid "Strikethrough"
+msgstr "Garis lintang"
+
+#: src/features/designs/text.ts
+msgid "System"
+msgstr "Sistem"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Take it out of these designs first, or archive them:"
+msgstr "Keluarkannya daripada reka bentuk ini dahulu, atau arkibkannya:"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Template language"
+msgstr "Bahasa templat"
+
+#: src/features/designs/designer/Canvas.tsx
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+#: src/features/designs/text.ts
+msgid "Text"
+msgstr "Teks"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Text colour"
+msgstr "Warna teks"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Text font"
+msgstr "Fon teks"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Text formatting"
+msgstr "Pemformatan teks"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Text in English"
+msgstr "Teks dalam bahasa Inggeris"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Text size"
+msgstr "Saiz teks"
+
+#: src/features/designs/text.ts
+msgid "The column widths must add up to 100."
+msgstr "Lebar lajur mesti berjumlah 100."
+
+#: src/features/designs/text.ts
+msgid "The inbox has no legal name or postal address for the footer. Add them in the inbox settings before sending."
+msgstr "Peti masuk tiada nama sah atau alamat surat-menyurat untuk pengaki. Tambahkannya dalam tetapan peti masuk sebelum menghantar."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "The inbox’s sender details fill the footer every mail gets."
+msgstr "Butiran penghantar peti masuk mengisi pengaki yang diperoleh setiap mel."
+
+#: src/features/designs/designer/Panels.tsx
+msgid "The mail is empty. Add a block to start."
+msgstr "Mel kosong. Tambah blok untuk bermula."
+
+#: src/features/designs/text.ts
+msgid "The mail is over 102 KB, so Gmail will cut it off and hide the unsubscribe link. Remove some blocks."
+msgstr "Mel melebihi 102 KB, jadi Gmail akan memotongnya dan menyembunyikan pautan nyahlangganan. Alih keluar beberapa blok."
+
+#: src/features/designs/text.ts
+msgid "The mail is over 90 KB. Gmail cuts mails off at about 102 KB."
+msgstr "Mel melebihi 90 KB. Gmail memotong mel pada kira-kira 102 KB."
+
+#: src/features/designs/text.ts
+msgid "The text has formatting e-mails cannot keep. Clear its formatting and try again."
+msgstr "Teks mempunyai pemformatan yang tidak dapat dikekalkan e-mel. Kosongkan pemformatannya dan cuba lagi."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "The widths add up to {sum}, not 100."
+msgstr "Lebar berjumlah {sum}, bukan 100."
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "The workspace’s images take all the room this server allows. Delete images you no longer use."
+msgstr "Imej ruang kerja mengambil semua ruang yang dibenarkan pelayan ini. Padam imej yang tidak lagi anda gunakan."
+
+#: src/features/designs/text.ts
+msgid "There are too many items here."
+msgstr "Terlalu banyak item di sini."
+
+#: src/features/designs/designer/editor.tsx
+#: src/features/designs/text.ts
+msgid "There is no merge field called {field}."
+msgstr "Tiada medan gabung bernama {field}."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "These lines go above the footer every mail gets: the inbox’s legal name and postal address, why the person gets the mail, and the unsubscribe and preference links. Set the sender’s details in the inbox settings."
+msgstr "Baris ini berada di atas pengaki yang diperoleh setiap mel: nama sah dan alamat surat-menyurat peti masuk, mengapa orang itu mendapat mel, dan pautan nyahlangganan dan keutamaan. Tetapkan butiran penghantar dalam tetapan peti masuk."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Thickness"
+msgstr "Ketebalan"
+
+#: src/features/designs/text.ts
+msgid "This block cannot sit inside this one."
+msgstr "Blok ini tidak boleh berada di dalam yang ini."
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "This design changed somewhere else"
+msgstr "Reka bentuk ini berubah di tempat lain"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This file type is not allowed. Use PNG, JPEG, GIF or WebP; SVG files can carry scripts, so they are refused."
+msgstr "Jenis fail ini tidak dibenarkan. Gunakan PNG, JPEG, GIF atau WebP; fail SVG boleh membawa skrip, jadi ia ditolak."
+
+#: src/features/designs/text.ts
+msgid "This image block has no image yet."
+msgstr "Blok imej ini belum mempunyai imej."
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This image is in use"
+msgstr "Imej ini sedang digunakan"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This image is too large. Use one under 40 megapixels and 8,000 pixels on a side, and at most 4,000 pixels tall once it is 1,200 wide."
+msgstr "Imej ini terlalu besar. Gunakan yang kurang daripada 40 megapiksel dan 8,000 piksel pada setiap sisi, dan paling tinggi 4,000 piksel apabila lebarnya 1,200."
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "This image went out in a broadcast. If you delete it, people who open that mail see a broken image."
+msgstr "Imej ini telah keluar dalam siaran. Jika anda memadamnya, orang yang membuka mel itu melihat imej yang rosak."
+
+#: src/features/designs/text.ts
+msgid "This is too long."
+msgstr "Ini terlalu panjang."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "This server does not have the template “{slug}”. It may need a newer Yuva."
+msgstr "Pelayan ini tidak mempunyai templat “{slug}”. Ia mungkin memerlukan Yuva yang lebih baharu."
+
+#: src/features/designs/text.ts
+msgid "This text uses a merge field that does not exist."
+msgstr "Teks ini menggunakan medan gabung yang tidak wujud."
+
+#: src/features/designs/text.ts
+msgid "This uses an image or link that belongs to another workspace."
+msgstr "Ini menggunakan imej atau pautan milik ruang kerja lain."
+
+#: src/features/designs/text.ts
+msgid "This value is not valid."
+msgstr "Nilai ini tidak sah."
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Three"
+msgstr "Tiga"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Top"
+msgstr "Atas"
+
+#: src/features/designs/text.ts
+msgid "Turkish"
+msgstr "Turki"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Two"
+msgstr "Dua"
+
+#: src/features/designs/text.ts
+msgid "Two blocks have the same id."
+msgstr "Dua blok mempunyai id yang sama."
+
+#: src/features/designs/text.ts
+msgid "Two or three columns that stack on phones"
+msgstr "Dua atau tiga lajur yang disusun pada telefon"
+
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Type"
+msgstr "Jenis"
+
+#: src/features/designs/designer/editor.tsx
+msgid "Underline"
+msgstr "Garis bawah"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Undo"
+msgstr "Buat asal"
+
+#: src/features/designs/text.ts
+msgid "Unsubscribe link"
+msgstr "Pautan nyahlangganan"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Untitled design"
+msgstr "Reka bentuk tanpa tajuk"
+
+#: src/features/designs/designer/Preview.tsx
+msgid "Updating…"
+msgstr "Mengemas kini…"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Upload images, or drop them here"
+msgstr "Muat naik imej, atau lepaskan di sini"
+
+#: src/features/designs/designer/ImageLibrary.tsx
+msgid "Uploading…"
+msgstr "Memuat naik…"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Use “{title}”"
+msgstr "Gunakan “{title}”"
+
+#: src/features/designs/designer/controls.tsx
+msgid "Use the default"
+msgstr "Gunakan lalai"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Version restored"
+msgstr "Versi dipulihkan"
+
+#: src/features/designs/designer/DesignerPage.tsx
+#: src/features/designs/designer/Versions.tsx
+msgid "Versions"
+msgstr "Versi"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "View"
+msgstr "Lihat"
+
+#: src/features/designs/text.ts
+msgid "Website"
+msgstr "Tapak web"
+
+#: src/features/designs/designer/editor.tsx
+msgid "When it is empty, write"
+msgstr "Apabila kosong, tulis"
+
+#: src/features/designs/designer/ThemePanel.tsx
+#: src/features/designs/GalleryPage.tsx
+msgid "Whole workspace"
+msgstr "Seluruh ruang kerja"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Wide screens"
+msgstr "Skrin lebar"
+
+#: src/features/designs/designer/Inspector.tsx
+#: src/features/designs/designer/ThemePanel.tsx
+msgid "Width"
+msgstr "Lebar"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Widths in percent"
+msgstr "Lebar dalam peratus"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Write a heading"
+msgstr "Tulis tajuk"
+
+#: src/features/designs/designer/Canvas.tsx
+msgid "Write something"
+msgstr "Tulis sesuatu"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Write what you want to tell your readers."
+msgstr "Tulis apa yang anda mahu beritahu pembaca anda."
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "You can reply to this mail; a person reads every answer."
+msgstr "Anda boleh membalas mel ini; seseorang membaca setiap jawapan."
+
+#: src/features/designs/text.ts
+msgid "Your own lines above the required footer"
+msgstr "Baris anda sendiri di atas pengaki yang diperlukan"
+
+#: src/features/designs/designer/ConflictDialog.tsx
+msgid "Your version becomes a new design; this one keeps theirs."
+msgstr "Versi anda menjadi reka bentuk baharu; yang ini mengekalkan milik mereka."
