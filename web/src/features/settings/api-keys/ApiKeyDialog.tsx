@@ -2,8 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
 
-import { BotAvatar, CheckItem, CheckList, Dot, ErrorLine } from "@/components/common"
-import { API_KEY_SCOPES, OPT_IN_SCOPES, useEnumText, WORKSPACE_WIDE_SCOPES } from "@/components/common/text"
+import { BotAvatar, ErrorLine } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -15,73 +14,32 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Field } from "@/features/settings/ui"
-import { api, unwrap, type ApiKey, type ApiKeyCreate, type ApiKeyScope } from "@/lib/api"
+import { api, unwrap, type ApiKey } from "@/lib/api"
 import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
-import { useInboxes } from "@/lib/workspace"
 
-function localDate(d: Date) {
-  const pad = (n: number) => String(n).padStart(2, "0")
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
-}
-
-function toggled<T>(set: Set<T>, v: T, on: boolean) {
-  const next = new Set(set)
-  if (on) next.add(v)
-  else next.delete(v)
-  return next
-}
-
-export function ApiKeyDialog({
-  apiKey,
-  onClose,
-  onCreated,
-}: {
-  apiKey: ApiKey | null
-  onClose: () => void
-  onCreated: (secret: string) => void
-}) {
+export function ApiKeyDialog({ apiKey, onClose }: { apiKey: ApiKey; onClose: () => void }) {
   const { t } = useLingui()
   const qc = useQueryClient()
-  const text = useEnumText()
   const { workspaceId: ws } = useSession()
-  const inboxes = useInboxes().data ?? []
-  const [name, setName] = useState(apiKey?.name ?? "")
-  const [botName, setBotName] = useState(apiKey?.bot_name ?? "")
-  const [avatar, setAvatar] = useState(apiKey?.bot_avatar_url ?? "")
-  const [scopes, setScopes] = useState<Set<ApiKeyScope>>(
-    () => new Set(API_KEY_SCOPES.filter((s) => !OPT_IN_SCOPES.includes(s)))
-  )
-  const [limit, setLimit] = useState<Set<string>>(() => new Set())
-  const [expiry, setExpiry] = useState("")
-  const [today] = useState(() => localDate(new Date()))
-  const [touched, setTouched] = useState(false)
-  const limited = limit.size > 0
-  const allowed = (s: ApiKeyScope) => !limited || !WORKSPACE_WIDE_SCOPES.includes(s)
-  const chosen = API_KEY_SCOPES.filter((s) => scopes.has(s) && allowed(s))
+  const [name, setName] = useState(apiKey.name)
+  const [botName, setBotName] = useState(apiKey.bot_name ?? "")
+  const [avatar, setAvatar] = useState(apiKey.bot_avatar_url ?? "")
   const save = useMutation({
-    mutationFn: async () => {
-      const bot = { bot_name: botName.trim(), bot_avatar_url: avatar.trim() }
-      if (apiKey) {
-        await unwrap(
-          api.PATCH("/v1/api-keys/{apiKeyId}", {
-            params: { path: { apiKeyId: apiKey.id } },
-            body: { name: name.trim(), bot_name: bot.bot_name || null, bot_avatar_url: bot.bot_avatar_url || null },
-          })
-        )
-        return null
-      }
-      const body: ApiKeyCreate = { name: name.trim(), scopes: chosen }
-      if (limited) body.inbox_ids = inboxes.filter((i) => limit.has(i.id)).map((i) => i.id)
-      if (expiry) body.expires_at = new Date(`${expiry}T23:59:59`).toISOString()
-      if (bot.bot_name) body.bot_name = bot.bot_name
-      if (bot.bot_avatar_url) body.bot_avatar_url = bot.bot_avatar_url
-      return (await unwrap(api.POST("/v1/api-keys", { body }))).secret
-    },
-    onSuccess: (secret) => {
+    mutationFn: () =>
+      unwrap(
+        api.PATCH("/v1/api-keys/{apiKeyId}", {
+          params: { path: { apiKeyId: apiKey.id } },
+          body: {
+            name: name.trim(),
+            bot_name: botName.trim() || null,
+            bot_avatar_url: avatar.trim() || null,
+          },
+        })
+      ),
+    onSuccess: () => {
       void qc.invalidateQueries({ queryKey: keys.apiKeys(ws) })
-      if (secret) onCreated(secret)
-      else onClose()
+      onClose()
     },
   })
   const preview = botName.trim() || name.trim() || t`Bot`
@@ -93,19 +51,16 @@ export function ApiKeyDialog({
           className="flex min-w-0 flex-col"
           onSubmit={(e) => {
             e.preventDefault()
-            setTouched(true)
-            if (apiKey || chosen.length > 0) save.mutate()
+            save.mutate()
           }}
         >
           <div className="flex flex-col gap-5 p-6">
             <DialogHeader>
-              <DialogTitle>{apiKey ? <Trans>Edit API key</Trans> : <Trans>New API key</Trans>}</DialogTitle>
+              <DialogTitle>
+                <Trans>Edit API key</Trans>
+              </DialogTitle>
               <DialogDescription>
-                {apiKey ? (
-                  <Trans>Scopes, inboxes and expiry stay as they are. For different ones, create a new key.</Trans>
-                ) : (
-                  <Trans>Scopes, inboxes and expiry cannot be changed later.</Trans>
-                )}
+                <Trans>Scopes, inboxes and expiry stay as they are. For different ones, create a new key.</Trans>
               </DialogDescription>
             </DialogHeader>
             <Field label={<Trans>Name</Trans>} htmlFor="key-name">
@@ -156,83 +111,11 @@ export function ApiKeyDialog({
                 </div>
               </Field>
             </div>
-            {!apiKey && (
-              <>
-                <CheckList
-                  labelId="key-inboxes"
-                  label={<Trans>Inboxes</Trans>}
-                  hint={
-                    <p className="text-caption text-muted-foreground">
-                      {limited ? (
-                        <Trans>
-                          The key sees only these inboxes and cannot manage inboxes, webhooks or the workspace.
-                        </Trans>
-                      ) : (
-                        <Trans>None picked: the key sees every inbox.</Trans>
-                      )}
-                    </p>
-                  }
-                >
-                  {inboxes.map((i) => (
-                    <CheckItem
-                      key={i.id}
-                      checked={limit.has(i.id)}
-                      onChange={(on) => setLimit((s) => toggled(s, i.id, on))}
-                      testId="key-inbox"
-                    >
-                      <span className="flex items-center gap-2 text-body">
-                        <Dot color={i.branding.color} className="size-2" />
-                        <span className="truncate">{i.name}</span>
-                      </span>
-                    </CheckItem>
-                  ))}
-                </CheckList>
-                <CheckList
-                  labelId="key-scopes"
-                  label={<Trans>Scopes</Trans>}
-                  hint={
-                    touched &&
-                    chosen.length === 0 && (
-                      <p role="alert" className="text-caption text-destructive">
-                        <Trans>Pick at least one scope.</Trans>
-                      </p>
-                    )
-                  }
-                >
-                  {API_KEY_SCOPES.map((s) => (
-                    <CheckItem
-                      key={s}
-                      checked={scopes.has(s) && allowed(s)}
-                      disabled={!allowed(s)}
-                      onChange={(on) => setScopes((x) => toggled(x, s, on))}
-                      testId="key-scope"
-                    >
-                      <span className="text-body">{text.scope[s]}</span>
-                      <code className="font-mono text-caption text-faint">{s}</code>
-                    </CheckItem>
-                  ))}
-                </CheckList>
-                <Field
-                  label={<Trans>Expires (optional)</Trans>}
-                  htmlFor="key-expiry"
-                  hint={<Trans>The key stops working at the end of this day.</Trans>}
-                >
-                  <Input
-                    id="key-expiry"
-                    type="date"
-                    min={today}
-                    value={expiry}
-                    onChange={(e) => setExpiry(e.target.value)}
-                    className="sm:max-w-48"
-                  />
-                </Field>
-              </>
-            )}
             <ErrorLine error={save.error} />
           </div>
           <DialogFooter className="sticky bottom-0 border-t bg-card px-6 py-3">
             <Button type="submit" disabled={save.isPending}>
-              {apiKey ? <Trans>Save</Trans> : <Trans>Create key</Trans>}
+              <Trans>Save</Trans>
             </Button>
           </DialogFooter>
         </form>

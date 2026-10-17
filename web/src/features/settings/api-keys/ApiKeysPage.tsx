@@ -2,9 +2,9 @@ import { Trans, useLingui } from "@lingui/react/macro"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { PencilIcon } from "lucide-react"
 import { useState } from "react"
-import { Navigate } from "react-router"
+import { Navigate, useLocation, useNavigate } from "react-router"
 
-import { BotAvatar, ErrorLine, SecretDialog, useConfirm } from "@/components/common"
+import { BotAvatar, ErrorLine, useConfirm } from "@/components/common"
 import { API_KEY_SCOPES, formatDateTime, useEnumText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
@@ -143,8 +143,9 @@ function KeyRow({ k, onEdit, onRevoke }: { k: ApiKey; onEdit: () => void; onRevo
 export function ApiKeysPage() {
   const qc = useQueryClient()
   const { workspaceId: ws, canManage } = useSession()
-  const [editing, setEditing] = useState<ApiKey | "new" | null>(null)
-  const [secret, setSecret] = useState<string | null>(null)
+  const navigate = useNavigate()
+  const location = useLocation()
+  const [editing, setEditing] = useState<ApiKey | null>(null)
   const [confirm, confirmDialog] = useConfirm()
   const list = useQuery({
     queryKey: keys.apiKeys(ws),
@@ -167,7 +168,11 @@ export function ApiKeysPage() {
           </Trans>
         }
         action={
-          <Button size="sm" onClick={() => setEditing("new")} data-testid="api-key-new">
+          <Button
+            size="sm"
+            onClick={() => navigate("/setup/api-key", { state: { back: location.pathname } })}
+            data-testid="api-key-new"
+          >
             <Trans>New key</Trans>
           </Button>
         }
@@ -202,22 +207,7 @@ export function ApiKeysPage() {
           <ErrorLine error={list.error ?? revoke.error} className="px-5 pb-4" />
         </Card>
       </Section>
-      {editing && (
-        <ApiKeyDialog
-          apiKey={editing === "new" ? null : editing}
-          onClose={() => setEditing(null)}
-          onCreated={(s) => {
-            setEditing(null)
-            setSecret(s)
-          }}
-        />
-      )}
-      <SecretDialog
-        secret={secret}
-        title={<Trans>Your new API key</Trans>}
-        description={<Trans>Copy it now and store it safely; it is not shown again.</Trans>}
-        onClose={() => setSecret(null)}
-      />
+      {editing && <ApiKeyDialog apiKey={editing} onClose={() => setEditing(null)} />}
       {confirmDialog}
     </>
   )

@@ -848,6 +848,11 @@ remote images, http(s)):
   Endpoint, Events, Done) with a per-tab draft; the endpoint is created when Events is submitted
   (a private or invalid URL sends the user back to Endpoint), and the signing secret is shown once
   on Done and never stored in the draft.
+  A new API key is a four-step wizard (`/setup/api-key`: Name, Access, Review, Done) with a per-tab
+  draft; Access offers the presets Read only, Support bot, Everything and Custom, and inboxes
+  (workspace-wide scopes drop out when inboxes are limited). The key is created when Review is
+  submitted; its secret and a `curl` line are shown once on Done and never stored in the draft.
+  The key dialog only edits name and bot.
 - Connect an assistant (Settings › Connected apps): one page per client (Claude, Claude Code, Codex,
   ChatGPT, Cursor, VS Code, other MCP clients) with the server's own `/mcp` URL, a copyable command
   or config, install links where the client has them, and the steps; a new grant shows up there live.

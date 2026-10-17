@@ -99,6 +99,12 @@ msgstr "{0} of {1}"
 msgid "{0} replies · {1} closed"
 msgstr "{0} replies · {1} closed"
 
+#. placeholder {0}: done.scopes.length
+#. placeholder {0}: scopes.length
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "{0} scopes"
+msgstr "{0} scopes"
+
 #. placeholder {0}: i.name
 #: src/app/Palette.tsx
 msgid "{0} settings"
@@ -748,6 +754,10 @@ msgstr "1 event"
 msgid "1 imported conversation that nobody wrote in since is deleted with its messages and files. Conversations your team wrote in stay. Nothing changes in {address}."
 msgstr "1 imported conversation that nobody wrote in since is deleted with its messages and files. Conversations your team wrote in stay. Nothing changes in {address}."
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "1 scope"
+msgstr "1 scope"
+
 #: src/features/settings/channels/ChannelSummary.tsx
 msgid "1 setting"
 msgstr "1 setting"
@@ -1054,6 +1064,7 @@ msgid "Accepted answer"
 msgstr "Accepted answer"
 
 #: src/features/oauth/ConsentPage.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/app/AppSections.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -1314,6 +1325,7 @@ msgid "All parts arrived. Reading the file…"
 msgstr "All parts arrived. Reading the file…"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "All scopes"
 msgstr "All scopes"
@@ -1486,6 +1498,7 @@ msgid "An entry in the zip unpacks to more than 100 times its size, so the file 
 msgstr "An entry in the zip unpacks to more than 100 times its size, so the file was refused as unsafe."
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "An https image URL."
 msgstr "An https image URL."
 
@@ -1570,6 +1583,10 @@ msgstr "Another team address"
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Answer (optional)"
 msgstr "Answer (optional)"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Answer and organise conversations, write notes, keep contacts and labels up to date."
+msgstr "Answer and organise conversations, write notes, keep contacts and labels up to date."
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Answer cleared"
@@ -1914,6 +1931,10 @@ msgstr "Away"
 msgid "Back"
 msgstr "Back"
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Back to API keys"
+msgstr "Back to API keys"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Back to columns"
 msgstr "Back to columns"
@@ -1949,6 +1970,7 @@ msgid "Billing"
 msgstr "Billing"
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Billing bot"
 msgstr "Billing bot"
 
@@ -1971,6 +1993,7 @@ msgstr "Blocked contacts"
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Bot"
 msgstr "Bot"
 
@@ -1978,17 +2001,33 @@ msgstr "Bot"
 msgid "Bot avatar"
 msgstr "Bot avatar"
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Bot avatar (optional)"
+msgstr "Bot avatar (optional)"
+
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "Bot name"
 msgstr "Bot name"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Bot name (optional)"
+msgstr "Bot name (optional)"
 
 #: src/features/inbox/SidePanels.tsx
 msgid "Bots"
 msgstr "Bots"
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Bots may not send in this workspace: the key writes drafts and a member sends them."
+msgstr "Bots may not send in this workspace: the key writes drafts and a member sends them."
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Bots may send"
 msgstr "Bots may send"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Bots may send in this workspace, so its messages go out at once."
+msgstr "Bots may send in this workspace, so its messages go out at once."
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Bottom left"
@@ -2124,6 +2163,7 @@ msgstr "Can I schedule a newsletter for each subscriber?"
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Cancel"
 msgstr "Cancel"
@@ -2228,6 +2268,10 @@ msgstr "Change the choice"
 #: src/components/common/text.ts
 msgid "Change the workspace and read usage"
 msgstr "Change the workspace and read usage"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Change this on the API keys page."
+msgstr "Change this on the API keys page."
 
 #: src/components/common/text.ts
 msgid "Change, delete and merge contacts"
@@ -2766,6 +2810,7 @@ msgstr "Content"
 #: src/features/migrations/SignInConnectStep.tsx
 #: src/features/migrations/SourceStep.tsx
 #: src/features/migrations/UploadStep.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/email/EmailAddressStep.tsx
 #: src/features/setup/email/EmailReceiveStep.tsx
@@ -2865,10 +2910,6 @@ msgstr "Copy a message for your admin"
 msgid "Copy it and paste it below."
 msgstr "Copy it and paste it below."
 
-#: src/features/settings/api-keys/ApiKeysPage.tsx
-msgid "Copy it now and store it safely; it is not shown again."
-msgstr "Copy it now and store it safely; it is not shown again."
-
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Copy it now and update your backend; it is not shown again."
 msgstr "Copy it now and update your backend; it is not shown again."
@@ -2948,6 +2989,10 @@ msgstr "Create an app in Help Scout"
 msgid "Create an OAuth client in Zendesk"
 msgstr "Create an OAuth client in Zendesk"
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Create another"
+msgstr "Create another"
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Create channel"
 msgstr "Create channel"
@@ -2960,7 +3005,7 @@ msgstr "Create draft"
 msgid "Create it, then copy its App ID and App Secret and paste them below."
 msgstr "Create it, then copy its App ID and App Secret and paste them below."
 
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Create key"
 msgstr "Create key"
@@ -3010,6 +3055,10 @@ msgstr "Credentials deleted. Yuva can no longer read {address}."
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
 msgstr "CSV file"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Custom"
+msgstr "Custom"
 
 #: src/features/auth/AuthLayout.tsx
 msgid "Custom domain still shows as unverified"
@@ -3429,6 +3478,7 @@ msgstr "Domain not verified"
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -3751,6 +3801,7 @@ msgid "Every imported conversation is closed."
 msgstr "Every imported conversation is closed."
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Every inbox"
 msgstr "Every inbox"
 
@@ -3777,6 +3828,10 @@ msgstr "Every open discussion has an answer."
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Every request to this endpoint, newest first. The newest 100 are kept."
 msgstr "Every request to this endpoint, newest first. The newest 100 are kept."
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Every scope except sending broadcasts."
+msgstr "Every scope except sending broadcasts."
 
 #: src/features/inbox/SourceFilter.tsx
 msgid "Every site"
@@ -3815,6 +3870,7 @@ msgstr "Everyone's posts are published at once, except those of authors you mark
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/Wizard.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Everything"
 msgstr "Everything"
 
@@ -3843,10 +3899,11 @@ msgid "Expired {expires}"
 msgstr "Expired {expires}"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Expires"
 msgstr "Expires"
 
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Expires (optional)"
 msgstr "Expires (optional)"
 
@@ -4758,8 +4815,8 @@ msgstr "Inbox for {name}"
 msgid "Inbox today"
 msgstr "Inbox today"
 
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "Inboxes"
 msgstr "Inboxes"
@@ -5291,6 +5348,10 @@ msgstr "Locked: readers can no longer write here. You still can."
 msgid "Look"
 msgstr "Look"
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Look at conversations, contacts, inboxes, lists, broadcasts and analytics. Change nothing."
+msgstr "Look at conversations, contacts, inboxes, lists, broadcasts and analytics. Change nothing."
+
 #: src/features/contact/ConversationMedia.tsx
 msgid "Look in older messages"
 msgstr "Look in older messages"
@@ -5617,6 +5678,10 @@ msgstr "Messages copied"
 msgid "Messages imported"
 msgstr "Messages imported"
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Messages the key sends show its bot name and picture."
+msgstr "Messages the key sends show its bot name and picture."
+
 #: src/features/migrations/text.ts
 msgid "Microsoft granted more than IMAP access"
 msgstr "Microsoft granted more than IMAP access"
@@ -5782,6 +5847,7 @@ msgstr "My profile"
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/channels/email/Deliverability.tsx
 #: src/features/settings/channels/sections.tsx
@@ -5800,6 +5866,10 @@ msgstr "Name (optional)"
 #: src/features/migrations/text.ts
 msgid "Name it “Yuva” and enter the redirect URL below as its redirection URL."
 msgstr "Name it “Yuva” and enter the redirect URL below as its redirection URL."
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Name it after the backend, script or bot that will use it."
+msgstr "Name it after the backend, script or bot that will use it."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Name it Yuva, paste the server URL and leave authentication on signing in. If Claude asks how to identify itself, keep its published identity. Click <0>Add</0>, then <1>Connect</1>."
@@ -5843,6 +5913,7 @@ msgid "Needs the operator’s approval"
 msgstr "Needs the operator’s approval"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Never"
 msgstr "Never"
 
@@ -5874,10 +5945,6 @@ msgstr "New"
 #: src/features/broadcasts/Import.tsx
 msgid "New addresses that get a confirmation mail"
 msgstr "New addresses that get a confirmation mail"
-
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
-msgid "New API key"
-msgstr "New API key"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
@@ -6435,7 +6502,7 @@ msgstr "None"
 msgid "None (local relays and test servers only)"
 msgstr "None (local relays and test servers only)"
 
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "None picked: the key sees every inbox."
 msgstr "None picked: the key sees every inbox."
 
@@ -7533,13 +7600,17 @@ msgstr "Pick at least one list to see who gets the mail."
 msgid "Pick at least one platform."
 msgstr "Pick at least one platform."
 
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick at least one scope."
 msgstr "Pick at least one scope."
 
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "Pick at least one."
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Pick each scope yourself."
+msgstr "Pick each scope yourself."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
@@ -7716,6 +7787,7 @@ msgid "Product news"
 msgstr "Product news"
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Production backend"
 msgstr "Production backend"
 
@@ -7876,6 +7948,10 @@ msgstr "Read conversations, messages, labels and canned replies"
 #: src/components/common/text.ts
 msgid "Read mailing lists, subscribers and consent records"
 msgstr "Read mailing lists, subscribers and consent records"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Read only"
+msgstr "Read only"
 
 #: src/features/migrations/text.ts
 msgid "Read the folders"
@@ -8342,12 +8418,17 @@ msgstr "Returns you to"
 #: src/features/broadcasts/Import.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Review"
 msgstr "Review"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Review and send"
 msgstr "Review and send"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Review the key"
+msgstr "Review the key"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Review, then send or schedule"
@@ -8549,15 +8630,15 @@ msgstr "Scheduled"
 msgid "Scheduled by"
 msgstr "Scheduled by"
 
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Scopes"
 msgstr "Scopes"
 
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
-msgid "Scopes, inboxes and expiry cannot be changed later."
-msgstr "Scopes, inboxes and expiry cannot be changed later."
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Scopes and inboxes cannot be changed later. For different ones, create a new key."
+msgstr "Scopes and inboxes cannot be changed later. For different ones, create a new key."
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a new key."
@@ -8641,6 +8722,10 @@ msgstr "Search, triage and draft replies from Codex. It acts as you, with the ac
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from your terminal. It acts as you, with the access you allow."
 msgstr "Search, triage and draft replies from your terminal. It acts as you, with the access you allow."
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Secret"
+msgstr "Secret"
 
 #: src/app/Rail.tsx
 msgid "Sections"
@@ -9021,6 +9106,7 @@ msgstr "Setup"
 msgid "Setup guide"
 msgstr "Setup guide"
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Setup steps"
@@ -9109,6 +9195,7 @@ msgid "Shown in the panel."
 msgstr "Shown in the panel."
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Shown on its messages. The key's name when empty."
 msgstr "Shown on its messages. The key's name when empty."
 
@@ -9123,6 +9210,10 @@ msgstr "Shown on your posts in every documentation site. Without one you show as
 #: src/features/account/ConnectPage.tsx
 msgid "Shown on your posts. Leave it empty to show as “Reader”."
 msgstr "Shown on your posts. Leave it empty to show as “Reader”."
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Shown only now. Copy it and store it safely."
+msgstr "Shown only now. Copy it and store it safely."
 
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Shown only now. Copy it and store it with your receiver."
@@ -9665,6 +9756,10 @@ msgstr "Sunday"
 msgid "Support address"
 msgstr "Support address"
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Support bot"
+msgstr "Support bot"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "support@example.com"
 msgstr "support@example.com"
@@ -9796,6 +9891,10 @@ msgstr "Tests go only to members of the workspace, at most five at a time, with 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Text"
 msgstr "Text"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Thanks for waiting. Your invoice is on its way."
+msgstr "Thanks for waiting. Your invoice is on its way."
 
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Thanks for writing"
@@ -10099,11 +10198,15 @@ msgstr "The inbox’s Amazon SES tenant no longer exists. The server creates it 
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "The key is ready"
+msgstr "The key is ready"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "The key sees only these inboxes and cannot manage inboxes, webhooks or the workspace."
 msgstr "The key sees only these inboxes and cannot manage inboxes, webhooks or the workspace."
 
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "The key stops working at the end of this day."
 msgstr "The key stops working at the end of this day."
 
@@ -10312,9 +10415,17 @@ msgstr "The scan is running. You can change these when it is done."
 msgid "The SDKs bring ready-made screens, or a client for your own."
 msgstr "The SDKs bring ready-made screens, or a client for your own."
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "The secret is not shown again. Revoke the key and create a new one if you did not copy it."
+msgstr "The secret is not shown again. Revoke the key and create a new one if you did not copy it."
+
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "The secret is not shown again. Rotate the secret on the endpoint page if you did not copy it."
 msgstr "The secret is not shown again. Rotate the secret on the endpoint page if you did not copy it."
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "The secret is shown once, on the next page."
+msgstr "The secret is shown once, on the next page."
 
 #: src/features/settings/webhooks/sections.tsx
 msgid "The secret is shown once, when it is made. Rotate it to get a new one."
@@ -11308,6 +11419,10 @@ msgstr "Use at most 200 characters."
 msgid "Use at most 500 characters."
 msgstr "Use at most 500 characters."
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Use it as a bearer token against this server."
+msgstr "Use it as a bearer token against this server."
+
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/email/form.ts
 msgid "Use letters, digits, - and _, at most 64."
@@ -11634,6 +11749,14 @@ msgstr "What happened"
 #: src/features/broadcasts/Composer.tsx
 msgid "What is new in October"
 msgstr "What is new in October"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "What is this key for?"
+msgstr "What is this key for?"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "What may it do?"
+msgstr "What may it do?"
 
 #: src/features/setup/NameStep.tsx
 msgid "What should customers see?"
@@ -12144,10 +12267,6 @@ msgstr "Your Microsoft 365 organization lets only an admin consent to apps. Send
 #: src/features/broadcasts/Composer.tsx
 msgid "Your name"
 msgstr "Your name"
-
-#: src/features/settings/api-keys/ApiKeysPage.tsx
-msgid "Your new API key"
-msgstr "Your new API key"
 
 #: src/features/migrations/text.ts
 msgid "Your organization blocked the sign-in"

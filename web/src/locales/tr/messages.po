@@ -99,6 +99,12 @@ msgstr "{0}/{1}"
 msgid "{0} replies · {1} closed"
 msgstr "{0} yanıt · {1} biten"
 
+#. placeholder {0}: done.scopes.length
+#. placeholder {0}: scopes.length
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "{0} scopes"
+msgstr "{0} yetki"
+
 #. placeholder {0}: i.name
 #: src/app/Palette.tsx
 msgid "{0} settings"
@@ -748,6 +754,10 @@ msgstr "1 olay"
 msgid "1 imported conversation that nobody wrote in since is deleted with its messages and files. Conversations your team wrote in stay. Nothing changes in {address}."
 msgstr "O zamandan beri kimsenin yazmadığı 1 aktarılmış konuşma, mesajları ve dosyalarıyla silinir. Ekibinizin yazdığı konuşmalar kalır. {address} içinde hiçbir şey değişmez."
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "1 scope"
+msgstr "1 yetki"
+
 #: src/features/settings/channels/ChannelSummary.tsx
 msgid "1 setting"
 msgstr "1 ayar"
@@ -1054,6 +1064,7 @@ msgid "Accepted answer"
 msgstr "Kabul edilen yanıt"
 
 #: src/features/oauth/ConsentPage.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/app/AppSections.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -1314,6 +1325,7 @@ msgid "All parts arrived. Reading the file…"
 msgstr "Tüm parçalar ulaştı. Dosya okunuyor…"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "All scopes"
 msgstr "Tüm yetkiler"
@@ -1486,6 +1498,7 @@ msgid "An entry in the zip unpacks to more than 100 times its size, so the file 
 msgstr "Zip'teki bir öğe açıldığında boyutunun 100 katından fazlasına çıkıyor; dosya güvenli olmadığı için reddedildi."
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "An https image URL."
 msgstr "https ile başlayan bir görsel adresi."
 
@@ -1570,6 +1583,10 @@ msgstr "Başka bir ekip adresi"
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Answer (optional)"
 msgstr "Yanıt (isteğe bağlı)"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Answer and organise conversations, write notes, keep contacts and labels up to date."
+msgstr "Konuşmaları yanıtlar ve düzenler, not yazar, kişileri ve etiketleri güncel tutar."
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Answer cleared"
@@ -1914,6 +1931,10 @@ msgstr "Uzakta"
 msgid "Back"
 msgstr "Geri"
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Back to API keys"
+msgstr "API anahtarlarına dön"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Back to columns"
 msgstr "Sütunlara dön"
@@ -1949,6 +1970,7 @@ msgid "Billing"
 msgstr "Faturalama"
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Billing bot"
 msgstr "Fatura botu"
 
@@ -1971,6 +1993,7 @@ msgstr "Engellenmiş kişiler"
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Bot"
 msgstr "Bot"
 
@@ -1978,17 +2001,33 @@ msgstr "Bot"
 msgid "Bot avatar"
 msgstr "Bot görseli"
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Bot avatar (optional)"
+msgstr "Bot görseli (isteğe bağlı)"
+
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "Bot name"
 msgstr "Bot adı"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Bot name (optional)"
+msgstr "Bot adı (isteğe bağlı)"
 
 #: src/features/inbox/SidePanels.tsx
 msgid "Bots"
 msgstr "Botlar"
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Bots may not send in this workspace: the key writes drafts and a member sends them."
+msgstr "Bu çalışma alanında botlar gönderemez: anahtar taslak yazar, bir üye gönderir."
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Bots may send"
 msgstr "Botlar gönderebilir"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Bots may send in this workspace, so its messages go out at once."
+msgstr "Bu çalışma alanında botlar gönderebilir; mesajları hemen gider."
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Bottom left"
@@ -2124,6 +2163,7 @@ msgstr "Her abone için ayrı bülten planlayabilir miyim?"
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Cancel"
 msgstr "Vazgeç"
@@ -2228,6 +2268,10 @@ msgstr "Seçimi değiştir"
 #: src/components/common/text.ts
 msgid "Change the workspace and read usage"
 msgstr "Çalışma alanını değiştirme ve kullanımı görme"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Change this on the API keys page."
+msgstr "Bunu API anahtarları sayfasından değiştirin."
 
 #: src/components/common/text.ts
 msgid "Change, delete and merge contacts"
@@ -2766,6 +2810,7 @@ msgstr "İçerik"
 #: src/features/migrations/SignInConnectStep.tsx
 #: src/features/migrations/SourceStep.tsx
 #: src/features/migrations/UploadStep.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/email/EmailAddressStep.tsx
 #: src/features/setup/email/EmailReceiveStep.tsx
@@ -2865,10 +2910,6 @@ msgstr "Yöneticiniz için bir mesaj kopyalayın"
 msgid "Copy it and paste it below."
 msgstr "Kopyalayıp aşağıya yapıştırın."
 
-#: src/features/settings/api-keys/ApiKeysPage.tsx
-msgid "Copy it now and store it safely; it is not shown again."
-msgstr "Şimdi kopyalayıp güvenli bir yerde saklayın; bir daha gösterilmeyecek."
-
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Copy it now and update your backend; it is not shown again."
 msgstr "Şimdi kopyalayıp sunucu tarafınızı güncelleyin; bir daha gösterilmeyecek."
@@ -2948,6 +2989,10 @@ msgstr "Help Scout'ta bir uygulama oluşturun"
 msgid "Create an OAuth client in Zendesk"
 msgstr "Zendesk'te bir OAuth istemcisi oluşturun"
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Create another"
+msgstr "Bir tane daha oluştur"
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Create channel"
 msgstr "Kanalı oluştur"
@@ -2960,7 +3005,7 @@ msgstr "Taslak oluştur"
 msgid "Create it, then copy its App ID and App Secret and paste them below."
 msgstr "Oluşturun, ardından App ID ve App Secret değerlerini kopyalayıp aşağıya yapıştırın."
 
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Create key"
 msgstr "Anahtar oluştur"
@@ -3010,6 +3055,10 @@ msgstr "Erişim bilgileri silindi. Yuva artık {address} adresini okuyamaz."
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
 msgstr "CSV dosyası"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Custom"
+msgstr "Özel"
 
 #: src/features/auth/AuthLayout.tsx
 msgid "Custom domain still shows as unverified"
@@ -3429,6 +3478,7 @@ msgstr "Alan adı doğrulanmadı"
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/NewsletterStep.tsx
@@ -3751,6 +3801,7 @@ msgid "Every imported conversation is closed."
 msgstr "Aktarılan her konuşma kapatılır."
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Every inbox"
 msgstr "Tüm gelen kutuları"
 
@@ -3777,6 +3828,10 @@ msgstr "Açık tartışmaların hepsinin bir yanıtı var."
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Every request to this endpoint, newest first. The newest 100 are kept."
 msgstr "Bu uç noktaya yapılan her istek, en yenisi başta. En yeni 100 tanesi saklanır."
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Every scope except sending broadcasts."
+msgstr "Toplu gönderim dışında her yetki."
 
 #: src/features/inbox/SourceFilter.tsx
 msgid "Every site"
@@ -3815,6 +3870,7 @@ msgstr "Herkesin gönderisi hemen yayımlanır; spam olarak işaretlediğiniz ya
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/Wizard.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Everything"
 msgstr "Her şey"
 
@@ -3843,10 +3899,11 @@ msgid "Expired {expires}"
 msgstr "{expires} tarihinde süresi doldu"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Expires"
 msgstr "Son geçerlilik"
 
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Expires (optional)"
 msgstr "Son geçerlilik (isteğe bağlı)"
 
@@ -4758,8 +4815,8 @@ msgstr "{name} için gelen kutusu"
 msgid "Inbox today"
 msgstr "Bugün gelen kutusu"
 
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "Inboxes"
 msgstr "Gelen kutuları"
@@ -5291,6 +5348,10 @@ msgstr "Kilitli: okuyucular artık buraya yazamaz. Siz hâlâ yazabilirsiniz."
 msgid "Look"
 msgstr "Görünüm"
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Look at conversations, contacts, inboxes, lists, broadcasts and analytics. Change nothing."
+msgstr "Konuşmalara, kişilere, gelen kutularına, listelere, toplu gönderimlere ve analitiğe bakar. Hiçbir şeyi değiştirmez."
+
 #: src/features/contact/ConversationMedia.tsx
 msgid "Look in older messages"
 msgstr "Eski mesajlara da bak"
@@ -5617,6 +5678,10 @@ msgstr "Kopyalanan mesajlar"
 msgid "Messages imported"
 msgstr "Aktarılan mesajlar"
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Messages the key sends show its bot name and picture."
+msgstr "Anahtarın gönderdiği mesajlarda bot adı ve görseli görünür."
+
 #: src/features/migrations/text.ts
 msgid "Microsoft granted more than IMAP access"
 msgstr "Microsoft, IMAP erişiminden fazlasını verdi"
@@ -5782,6 +5847,7 @@ msgstr "Profilim"
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/channels/email/Deliverability.tsx
 #: src/features/settings/channels/sections.tsx
@@ -5800,6 +5866,10 @@ msgstr "Ad (isteğe bağlı)"
 #: src/features/migrations/text.ts
 msgid "Name it “Yuva” and enter the redirect URL below as its redirection URL."
 msgstr "Adını “Yuva” koyun ve yönlendirme URL'si (Redirection URL) olarak aşağıdaki adresi girin."
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Name it after the backend, script or bot that will use it."
+msgstr "Onu kullanacak sunucuya, betiğe ya da bota göre adlandırın."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Name it Yuva, paste the server URL and leave authentication on signing in. If Claude asks how to identify itself, keep its published identity. Click <0>Add</0>, then <1>Connect</1>."
@@ -5843,6 +5913,7 @@ msgid "Needs the operator’s approval"
 msgstr "Sunucu yöneticisinin onayı gerekiyor"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Never"
 msgstr "Hiçbir zaman"
 
@@ -5874,10 +5945,6 @@ msgstr "Yeni"
 #: src/features/broadcasts/Import.tsx
 msgid "New addresses that get a confirmation mail"
 msgstr "Onay e-postası alacak yeni adresler"
-
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
-msgid "New API key"
-msgstr "Yeni API anahtarı"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastList.tsx
@@ -6435,7 +6502,7 @@ msgstr "Yok"
 msgid "None (local relays and test servers only)"
 msgstr "Yok (yalnızca yerel aktarıcılar ve test sunucuları)"
 
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "None picked: the key sees every inbox."
 msgstr "Seçim yoksa anahtar tüm gelen kutularını görür."
 
@@ -7533,13 +7600,17 @@ msgstr "E-postayı kimin alacağını görmek için en az bir liste seçin."
 msgid "Pick at least one platform."
 msgstr "En az bir platform seçin."
 
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick at least one scope."
 msgstr "En az bir yetki seçin."
 
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "En az birini seçin."
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Pick each scope yourself."
+msgstr "Her yetkiyi kendiniz seçin."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
@@ -7716,6 +7787,7 @@ msgid "Product news"
 msgstr "Ürün haberleri"
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Production backend"
 msgstr "Canlı sunucu"
 
@@ -7876,6 +7948,10 @@ msgstr "Konuşmaları, mesajları, etiketleri ve hazır yanıtları görme"
 #: src/components/common/text.ts
 msgid "Read mailing lists, subscribers and consent records"
 msgstr "E-posta listelerini, aboneleri ve izin kayıtlarını okuma"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Read only"
+msgstr "Salt okunur"
 
 #: src/features/migrations/text.ts
 msgid "Read the folders"
@@ -8342,12 +8418,17 @@ msgstr "Dönüş adresi"
 #: src/features/broadcasts/Import.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Review"
 msgstr "Gözden geçir"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Review and send"
 msgstr "Gözden geçir ve gönder"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Review the key"
+msgstr "Anahtarı gözden geçirin"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Review, then send or schedule"
@@ -8549,15 +8630,15 @@ msgstr "Zamanlandı"
 msgid "Scheduled by"
 msgstr "Zamanlayan"
 
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Scopes"
 msgstr "Yetkiler"
 
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
-msgid "Scopes, inboxes and expiry cannot be changed later."
-msgstr "Yetkiler, gelen kutuları ve son geçerlilik sonradan değiştirilemez."
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Scopes and inboxes cannot be changed later. For different ones, create a new key."
+msgstr "Yetkiler ve gelen kutuları sonradan değiştirilemez. Farklıları için yeni bir anahtar oluşturun."
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "Scopes, inboxes and expiry stay as they are. For different ones, create a new key."
@@ -8641,6 +8722,10 @@ msgstr "Codex'ten arayın, konuşmaları ayıklayın ve yanıt taslakları yazı
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Search, triage and draft replies from your terminal. It acts as you, with the access you allow."
 msgstr "Terminalinizden arayın, konuşmaları ayıklayın ve yanıt taslakları yazın. Sizin adınıza, yalnızca izin verdiğiniz erişimle çalışır."
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Secret"
+msgstr "Gizli anahtar"
 
 #: src/app/Rail.tsx
 msgid "Sections"
@@ -9021,6 +9106,7 @@ msgstr "Kurulum"
 msgid "Setup guide"
 msgstr "Kurulum kılavuzu"
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Setup steps"
@@ -9109,6 +9195,7 @@ msgid "Shown in the panel."
 msgstr "Panelde bu adla görünür."
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Shown on its messages. The key's name when empty."
 msgstr "Mesajlarında görünür. Boşsa anahtarın adı kullanılır."
 
@@ -9123,6 +9210,10 @@ msgstr "Tüm dokümantasyon sitelerindeki gönderilerinizde görünür. Ad girme
 #: src/features/account/ConnectPage.tsx
 msgid "Shown on your posts. Leave it empty to show as “Reader”."
 msgstr "Gönderilerinizde görünür. “Okuyucu” olarak görünmek için boş bırakın."
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Shown only now. Copy it and store it safely."
+msgstr "Yalnızca şimdi gösterilir. Kopyalayıp güvenli bir yerde saklayın."
 
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Shown only now. Copy it and store it with your receiver."
@@ -9665,6 +9756,10 @@ msgstr "Pazar"
 msgid "Support address"
 msgstr "Destek adresi"
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Support bot"
+msgstr "Destek botu"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "support@example.com"
 msgstr "destek@ornek.com"
@@ -9796,6 +9891,10 @@ msgstr "Denemeler yalnızca çalışma alanının üyelerine, bir seferde en faz
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Text"
 msgstr "Metin"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Thanks for waiting. Your invoice is on its way."
+msgstr "Beklediğiniz için teşekkürler. Faturanız yolda."
 
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Thanks for writing"
@@ -10099,11 +10198,15 @@ msgstr "Gelen kutusunun Amazon SES kiracısı artık yok. Sunucu onu yeniden olu
 msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
 msgstr "İYS dosyası, İYS'nin sütunlarıyla abone başına bir satır içerir: abone olanlar için ONAY, ayrılanlar için RET. İzinleri İYS'ye kendiniz yüklemeniz içindir. Onay bekleyen abonelikler dosyaya alınmaz."
 
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "The key is ready"
+msgstr "Anahtar hazır"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "The key sees only these inboxes and cannot manage inboxes, webhooks or the workspace."
 msgstr "Anahtar yalnızca bu gelen kutularını görür; gelen kutularını, webhook'ları ve çalışma alanını yönetemez."
 
-#: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "The key stops working at the end of this day."
 msgstr "Anahtar bu günün sonunda çalışmayı bırakır."
 
@@ -10312,9 +10415,17 @@ msgstr "Tarama sürüyor. Bittiğinde bunları değiştirebilirsiniz."
 msgid "The SDKs bring ready-made screens, or a client for your own."
 msgstr "SDK'lar hazır ekranlarla gelir; isterseniz kendi ekranlarınız için yalnızca istemciyi kullanın."
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "The secret is not shown again. Revoke the key and create a new one if you did not copy it."
+msgstr "Gizli anahtar bir daha gösterilmez. Kopyalamadıysanız anahtarı iptal edip yenisini oluşturun."
+
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "The secret is not shown again. Rotate the secret on the endpoint page if you did not copy it."
 msgstr "Gizli anahtar bir daha gösterilmez. Kopyalamadıysanız uç nokta sayfasından yenileyin."
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "The secret is shown once, on the next page."
+msgstr "Gizli anahtar bir kez, sonraki sayfada gösterilir."
 
 #: src/features/settings/webhooks/sections.tsx
 msgid "The secret is shown once, when it is made. Rotate it to get a new one."
@@ -11308,6 +11419,10 @@ msgstr "En fazla 200 karakter girin."
 msgid "Use at most 500 characters."
 msgstr "En fazla 500 karakter kullanın."
 
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "Use it as a bearer token against this server."
+msgstr "Bu sunucuya karşı bearer belirteci olarak kullanın."
+
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/email/form.ts
 msgid "Use letters, digits, - and _, at most 64."
@@ -11634,6 +11749,14 @@ msgstr "Neler oldu"
 #: src/features/broadcasts/Composer.tsx
 msgid "What is new in October"
 msgstr "Ekim'de neler yeni"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "What is this key for?"
+msgstr "Bu anahtar ne için?"
+
+#: src/features/settings/api-keys/ApiKeyWizard.tsx
+msgid "What may it do?"
+msgstr "Neler yapabilir?"
 
 #: src/features/setup/NameStep.tsx
 msgid "What should customers see?"
@@ -12144,10 +12267,6 @@ msgstr "Microsoft 365 kuruluşunuzda uygulamalara yalnızca bir yönetici onay v
 #: src/features/broadcasts/Composer.tsx
 msgid "Your name"
 msgstr "Adınız"
-
-#: src/features/settings/api-keys/ApiKeysPage.tsx
-msgid "Your new API key"
-msgstr "Yeni API anahtarınız"
 
 #: src/features/migrations/text.ts
 msgid "Your organization blocked the sign-in"

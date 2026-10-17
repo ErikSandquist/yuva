@@ -78,6 +78,22 @@ export const API_KEY_SCOPES: ApiKeyScope[] = [
   "analytics:manage",
 ]
 export const OPT_IN_SCOPES: ApiKeyScope[] = ["broadcasts:send"]
+export type ApiKeyPreset = "read" | "support" | "everything" | "custom"
+export const API_KEY_PRESET_SCOPES: Record<Exclude<ApiKeyPreset, "custom">, ApiKeyScope[]> = {
+  read: ["conversations:read", "contacts:read", "inboxes:read", "lists:read", "broadcasts:read", "analytics:read"],
+  support: [
+    "conversations:read",
+    "conversations:write",
+    "messages:write",
+    "notes:write",
+    "contacts:read",
+    "contacts:write",
+    "inboxes:read",
+    "labels:write",
+    "feedback:write",
+  ],
+  everything: API_KEY_SCOPES.filter((s) => !OPT_IN_SCOPES.includes(s)),
+}
 export const WORKSPACE_WIDE_SCOPES: ApiKeyScope[] = [
   "inboxes:manage",
   "webhooks:manage",

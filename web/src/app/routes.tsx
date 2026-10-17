@@ -27,6 +27,12 @@ import { AssistantPage } from "@/features/settings/connected-apps/AssistantPage"
 import { ConnectedAppsPage } from "@/features/settings/connected-apps/ConnectedAppsPage"
 import { InboxPage } from "@/features/settings/inboxes/InboxPage"
 import { ChannelPage } from "@/features/settings/channels/ChannelPage"
+import {
+  ApiKeyAccessStep,
+  ApiKeyDoneStep,
+  ApiKeyNameStep,
+  ApiKeyReviewStep,
+} from "@/features/settings/api-keys/ApiKeyWizard"
 import { InboxWebhooksPage } from "@/features/settings/inboxes/InboxWebhooksPage"
 import { LabelsPage } from "@/features/settings/labels/LabelsPage"
 import { MembersPage } from "@/features/settings/members/MembersPage"
@@ -85,6 +91,10 @@ export function AppRoutes() {
         <Route path="setup/webhook" element={<WebhookEndpointStep />} />
         <Route path="setup/webhook/events" element={<WebhookEventsStep />} />
         <Route path="setup/webhook/done" element={<WebhookDoneStep />} />
+        <Route path="setup/api-key" element={<ApiKeyNameStep />} />
+        <Route path="setup/api-key/access" element={<ApiKeyAccessStep />} />
+        <Route path="setup/api-key/review" element={<ApiKeyReviewStep />} />
+        <Route path="setup/api-key/done" element={<ApiKeyDoneStep />} />
         <Route path="setup/newsletter" element={<SetupPage flow="newsletter" />} />
         <Route path="setup/newsletter/:listId" element={<SetupPage flow="newsletter" />} />
         {["setup/analytics", "setup/analytics/:propertyId"].map((path) => (
