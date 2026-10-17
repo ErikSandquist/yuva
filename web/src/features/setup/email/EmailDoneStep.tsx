@@ -79,6 +79,7 @@ export function EmailDoneStep({ inboxId, channelId }: { inboxId: string; channel
           : []),
       ]
     : []
+  const toList = state.back?.startsWith("/setup/newsletter") ? state.back : undefined
   const back = { back: `/settings/inboxes/${inboxId}` }
   return (
     <EmailLayout
@@ -104,7 +105,17 @@ export function EmailDoneStep({ inboxId, channelId }: { inboxId: string; channel
         <div className="flex flex-col gap-8" data-testid="setup-email-done">
           <SummaryList items={items} />
           <div className="flex flex-wrap gap-2">
-            <Button size="lg" render={<Link to={`/settings/inboxes/${inboxId}`} />} data-testid="setup-open-inbox">
+            {toList && (
+              <Button size="lg" render={<Link to={toList} replace />} data-testid="setup-back-to-origin">
+                <Trans>Back to your list</Trans>
+              </Button>
+            )}
+            <Button
+              size="lg"
+              variant={toList ? "outline" : "default"}
+              render={<Link to={`/settings/inboxes/${inboxId}`} />}
+              data-testid="setup-open-inbox"
+            >
               <Trans>Open the inbox</Trans>
             </Button>
             {!email.smtp && (

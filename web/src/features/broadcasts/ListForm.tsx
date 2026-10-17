@@ -1,42 +1,16 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { useMutation } from "@tanstack/react-query"
 import { MailWarningIcon, TriangleAlertIcon } from "lucide-react"
-import { useState } from "react"
 import { Link } from "react-router"
 
-import { Dot, ErrorLine, Notice } from "@/components/common"
-import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
+import { Dot, Notice } from "@/components/common"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
-import { useInboxChannels, useSetList } from "@/features/broadcasts/queries"
+import { useInboxChannels } from "@/features/broadcasts/queries"
 import { Field, ToggleRow } from "@/features/settings/ui"
-import { api, ApiError, unwrap, type Channel, type MailingList, type MailingListCreate } from "@/lib/api"
+import { ApiError, type Channel } from "@/lib/api"
 import { useInboxes } from "@/lib/workspace"
-
-export type ListValues = Required<Omit<MailingListCreate, "channel_id">> & { channel_id: string }
-
-export function listValues(l: MailingList): ListValues {
-  return {
-    inbox_id: l.inbox_id,
-    name: l.name,
-    description: l.description,
-    double_opt_in: l.double_opt_in,
-    public: l.public,
-    commercial: l.commercial,
-    welcome: l.welcome,
-    channel_id: l.channel_id ?? "",
-  }
-}
 
 const NONE = "none"
 
@@ -65,7 +39,7 @@ export function SenderMissing({ inboxId, className }: { inboxId: string; classNa
   )
 }
 
-function SenderPicker({
+export function SenderPicker({
   inboxId,
   value,
   onChange,
@@ -119,60 +93,68 @@ function SenderPicker({
   )
 }
 
-export function ListFields({
-  values,
-  onChange,
-  creating,
-  error,
-}: {
-  values: ListValues
-  onChange: (patch: Partial<ListValues>) => void
-  creating?: boolean
-  error?: unknown
-}) {
+export function nameTaken(error: unknown) {
+  return error instanceof ApiError && error.code === "name_taken"
+}
+
+export type Rules = { double_opt_in: boolean; public: boolean; welcome: boolean; commercial: boolean }
+
+export function InboxField({ value, onChange }: { value: string; onChange: (id: string) => void }) {
   const { t } = useLingui()
   const inboxes = useInboxes().data ?? []
-  const code = error instanceof ApiError ? error.code : undefined
-  const inboxItems = Object.fromEntries(inboxes.map((i) => [i.id, i.name]))
+  const items = Object.fromEntries(inboxes.map((i) => [i.id, i.name]))
+  return (
+    <Field
+      label={<Trans>Inbox</Trans>}
+      hint={<Trans>The list sends in this inbox's name, and replies to its mail land there.</Trans>}
+    >
+      <Select value={value} items={items} onValueChange={(v) => v && onChange(String(v))}>
+        <SelectTrigger className="w-full min-w-0" aria-label={t`Inbox`} data-testid="list-inbox">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {inboxes.map((i) => (
+            <SelectItem key={i.id} value={i.id}>
+              <Dot color={i.branding.color} className="mt-1.5 size-2 rounded-[3px]" />
+              {i.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </Field>
+  )
+}
+
+export function NameFields({
+  name,
+  description,
+  onChange,
+  taken,
+  autoFocus,
+}: {
+  name: string
+  description: string
+  onChange: (patch: { name?: string; description?: string }) => void
+  taken?: boolean
+  autoFocus?: boolean
+}) {
+  const { t } = useLingui()
   return (
     <>
-      {creating && inboxes.length > 1 && (
-        <Field
-          label={<Trans>Inbox</Trans>}
-          hint={<Trans>The list sends in this inbox's name, and replies to its mail land there.</Trans>}
-        >
-          <Select
-            value={values.inbox_id}
-            items={inboxItems}
-            onValueChange={(v) => v && onChange({ inbox_id: String(v), channel_id: "" })}
-          >
-            <SelectTrigger className="w-full min-w-0" aria-label={t`Inbox`} data-testid="list-inbox">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {inboxes.map((i) => (
-                <SelectItem key={i.id} value={i.id}>
-                  <Dot color={i.branding.color} className="mt-1.5 size-2 rounded-[3px]" />
-                  {i.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </Field>
-      )}
       <Field
         label={<Trans>Name</Trans>}
         htmlFor="list-name"
-        error={code === "name_taken" ? <Trans>This inbox already has a list with this name.</Trans> : undefined}
+        error={taken ? <Trans>This inbox already has a list with this name.</Trans> : undefined}
       >
         <Input
           id="list-name"
           required
+          autoFocus={autoFocus}
           maxLength={100}
-          value={values.name}
+          value={name}
           placeholder={t`Product news`}
           onChange={(e) => onChange({ name: e.target.value })}
-          aria-invalid={code === "name_taken" || undefined}
+          aria-invalid={taken || undefined}
           data-testid="list-name"
         />
       </Field>
@@ -187,175 +169,98 @@ export function ListFields({
           id="list-description"
           rows={2}
           maxLength={500}
-          value={values.description}
+          value={description}
           placeholder={t`One e-mail a month about what is new.`}
           onChange={(e) => onChange({ description: e.target.value })}
+          data-testid="list-description"
         />
       </Field>
-      {values.inbox_id && (
-        <SenderPicker
-          key={values.inbox_id}
-          inboxId={values.inbox_id}
-          value={values.channel_id}
-          onChange={(channel_id) => onChange({ channel_id })}
-          invalid={code === "email_channel_required"}
-        />
-      )}
-      <div className="flex flex-col gap-4">
-        <ToggleRow
-          title={<Trans>Ask for a confirmation</Trans>}
-          hint={
-            <Trans>People who sign up on a form confirm by clicking a link in a mail before they are subscribed.</Trans>
-          }
-        >
-          <Switch
-            checked={values.double_opt_in}
-            onCheckedChange={(on) => onChange({ double_opt_in: on })}
-            aria-label={t`Ask for a confirmation`}
-            data-testid="list-double-opt-in"
-          />
-        </ToggleRow>
-        {!values.double_opt_in && (
-          <Notice tone="warning" icon={TriangleAlertIcon} className="text-small" data-testid="list-single-opt-in">
-            <Trans>
-              Without a confirmation anyone can type someone else's address into your form, and you cannot show that the
-              owner of the address agreed. Keep it on unless your forms are only shown to people whose address you have
-              already verified.
-            </Trans>
-          </Notice>
-        )}
-        <ToggleRow
-          title={<Trans>Public</Trans>}
-          hint={
-            <Trans>
-              Offered on subscribe forms and the preference page. Private lists are filled by the team and the API.
-            </Trans>
-          }
-        >
-          <Switch
-            checked={values.public}
-            onCheckedChange={(on) => onChange({ public: on })}
-            aria-label={t`Public`}
-            data-testid="list-public"
-          />
-        </ToggleRow>
-        <ToggleRow
-          title={<Trans>Marketing content</Trans>}
-          hint={
-            <Trans>
-              Turn off for service announcements to existing customers. Consent is needed either way; this is recorded
-              in the consent export.
-            </Trans>
-          }
-        >
-          <Switch
-            checked={values.commercial}
-            onCheckedChange={(on) => onChange({ commercial: on })}
-            aria-label={t`Marketing content`}
-            data-testid="list-commercial"
-          />
-        </ToggleRow>
-        <ToggleRow
-          title={<Trans>Welcome receipt</Trans>}
-          hint={
-            <Trans>Right after subscribing, people get a short mail that confirms it, with an unsubscribe link.</Trans>
-          }
-        >
-          <Switch
-            checked={values.welcome}
-            onCheckedChange={(on) => onChange({ welcome: on })}
-            aria-label={t`Welcome receipt`}
-            data-testid="list-welcome"
-          />
-        </ToggleRow>
-      </div>
     </>
   )
 }
 
-export function useNewList(inboxId: string, onCreated: (l: MailingList) => void) {
-  const inboxes = useInboxes().data ?? []
-  const setList = useSetList()
-  const [values, setValues] = useState<ListValues>(() => ({
-    inbox_id: inboxId || inboxes[0]?.id || "",
-    name: "",
-    description: "",
-    double_opt_in: true,
-    public: true,
-    commercial: true,
-    welcome: true,
-    channel_id: "",
-  }))
-  const [picked, setPicked] = useState<string | null>(null)
-  const channels = useInboxChannels(values.inbox_id).data
-  const sender = picked ?? channels?.find(canSend)?.id ?? ""
-  const create = useMutation({
-    mutationFn: () => {
-      const body: MailingListCreate = {
-        ...values,
-        name: values.name.trim(),
-        description: values.description.trim(),
-        channel_id: sender || undefined,
-      }
-      return unwrap(api.POST("/v1/lists", { body }))
-    },
-    onSuccess: (l) => {
-      setList(l)
-      onCreated(l)
-    },
-  })
-  const onChange = ({ channel_id, ...patch }: Partial<ListValues>) => {
-    if (channel_id !== undefined) setPicked(patch.inbox_id ? null : channel_id)
-    setValues((v) => ({ ...v, ...patch }))
-  }
-  const submit = () => {
-    if (values.name.trim() && values.inbox_id) create.mutate()
-  }
-  return { values: { ...values, channel_id: sender }, onChange, channels, sender, create, submit }
-}
-
-export function NewListDialog({
-  inboxId,
-  onClose,
-  onCreated,
+export function RulesToggles({
+  values,
+  onChange,
+  disabled,
 }: {
-  inboxId: string
-  onClose: () => void
-  onCreated: (l: MailingList) => void
+  values: Rules
+  onChange: (patch: Partial<Rules>) => void
+  disabled?: boolean
 }) {
-  const { values, onChange, channels, sender, create, submit } = useNewList(inboxId, onCreated)
+  const { t } = useLingui()
   return (
-    <Dialog open onOpenChange={(o) => !o && onClose()}>
-      <DialogContent className="max-h-[90svh] p-0 sm:max-w-lg" data-testid="list-dialog">
-        <form
-          className="flex min-w-0 flex-col"
-          onSubmit={(e) => {
-            e.preventDefault()
-            submit()
-          }}
-        >
-          <div className="flex flex-col gap-5 p-6">
-            <DialogHeader>
-              <DialogTitle>
-                <Trans>New mailing list</Trans>
-              </DialogTitle>
-              <DialogDescription>
-                <Trans>
-                  People join a list on a subscribe form or are added with their consent. Broadcasts go to lists.
-                </Trans>
-              </DialogDescription>
-            </DialogHeader>
-            <ListFields values={values} onChange={onChange} creating error={create.error} />
-            {channels && !sender && <SenderMissing inboxId={values.inbox_id} />}
-            <ErrorLine error={create.error} />
-          </div>
-          <DialogFooter className="sticky bottom-0 border-t bg-card px-6 py-3">
-            <Button type="submit" disabled={create.isPending} data-testid="list-create">
-              <Trans>Create list</Trans>
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <div className="flex flex-col gap-4">
+      <ToggleRow
+        title={<Trans>Ask for a confirmation</Trans>}
+        hint={
+          <Trans>People who sign up on a form confirm by clicking a link in a mail before they are subscribed.</Trans>
+        }
+      >
+        <Switch
+          checked={values.double_opt_in}
+          disabled={disabled}
+          onCheckedChange={(on) => onChange({ double_opt_in: on })}
+          aria-label={t`Ask for a confirmation`}
+          data-testid="list-double-opt-in"
+        />
+      </ToggleRow>
+      {!values.double_opt_in && (
+        <Notice tone="warning" icon={TriangleAlertIcon} className="text-small" data-testid="list-single-opt-in">
+          <Trans>
+            Without a confirmation anyone can type someone else's address into your form, and you cannot show that the
+            owner of the address agreed. Keep it on unless your forms are only shown to people whose address you have
+            already verified.
+          </Trans>
+        </Notice>
+      )}
+      <ToggleRow
+        title={<Trans>Public</Trans>}
+        hint={
+          <Trans>
+            Offered on subscribe forms and the preference page. Private lists are filled by the team and the API.
+          </Trans>
+        }
+      >
+        <Switch
+          checked={values.public}
+          disabled={disabled}
+          onCheckedChange={(on) => onChange({ public: on })}
+          aria-label={t`Public`}
+          data-testid="list-public"
+        />
+      </ToggleRow>
+      <ToggleRow
+        title={<Trans>Marketing content</Trans>}
+        hint={
+          <Trans>
+            Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in
+            the consent export.
+          </Trans>
+        }
+      >
+        <Switch
+          checked={values.commercial}
+          disabled={disabled}
+          onCheckedChange={(on) => onChange({ commercial: on })}
+          aria-label={t`Marketing content`}
+          data-testid="list-commercial"
+        />
+      </ToggleRow>
+      <ToggleRow
+        title={<Trans>Welcome receipt</Trans>}
+        hint={
+          <Trans>Right after subscribing, people get a short mail that confirms it, with an unsubscribe link.</Trans>
+        }
+      >
+        <Switch
+          checked={values.welcome}
+          disabled={disabled}
+          onCheckedChange={(on) => onChange({ welcome: on })}
+          aria-label={t`Welcome receipt`}
+          data-testid="list-welcome"
+        />
+      </ToggleRow>
+    </div>
   )
 }

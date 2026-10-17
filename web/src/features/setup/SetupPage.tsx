@@ -8,7 +8,7 @@ import { EmailRepliesStep } from "@/features/setup/email/EmailRepliesStep"
 import { EmailTestStep } from "@/features/setup/email/EmailTestStep"
 import { InstallStep } from "@/features/setup/InstallStep"
 import { NameStep } from "@/features/setup/NameStep"
-import { NewsletterStep } from "@/features/setup/NewsletterStep"
+import { NewsletterDoneStep, NewsletterListStep } from "@/features/setup/NewsletterStep"
 import { SETUP_KINDS, type SetupKind } from "@/features/setup/setup"
 import { SetupHub } from "@/features/setup/SetupHub"
 import { StartStep } from "@/features/setup/StartStep"
@@ -27,7 +27,8 @@ export function SetupPage({ flow }: { flow?: Flow }) {
   const inboxId = flow === "pick" || flow === "add" ? "new" : flow === "replies" ? (param ?? "new") : param
   if (!canManage) return <Navigate to="/" replace />
   if (flow === "hub") return <SetupHub />
-  if (flow === "newsletter") return <NewsletterStep key={listId ?? ""} listId={listId} />
+  if (flow === "newsletter")
+    return listId ? <NewsletterDoneStep key={listId} listId={listId} /> : <NewsletterListStep />
   if (flow === "start") return isKind(kind) ? <StartStep key={kind} kind={kind} /> : <Navigate to="/setup" replace />
   if (flow === "new") {
     if (kind !== undefined && !isKind(kind)) return <Navigate to="/setup/new" replace />

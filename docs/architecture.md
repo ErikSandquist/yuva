@@ -848,6 +848,12 @@ remote images, http(s)):
   Endpoint, Events, Done) with a per-tab draft; the endpoint is created when Events is submitted
   (a private or invalid URL sends the user back to Endpoint), and the signing secret is shown once
   on Done and never stored in the draft.
+  A mailing list is a four-step wizard (`/setup/newsletter`, `/sender`, `/rules`, then Done; "New list" in
+  Broadcasts opens it): list, sender (the inbox's e-mail channels, "None for now", or a detour to
+  set up e-mail that returns to Sender with the per-tab draft kept), sign-up rules; `POST /v1/lists`
+  runs when the rules are submitted, `name_taken` sends the user back to the first step. A list's
+  settings are sections that save on their own: name and description with Save, the sender and each
+  sign-up switch at once with a toast.
   A new API key is a four-step wizard (`/setup/api-key`: Name, Access, Review, Done) with a per-tab
   draft; Access offers the presets Read only, Support bot, Everything and Custom, and inboxes
   (workspace-wide scopes drop out when inboxes are limited). The key is created when Review is

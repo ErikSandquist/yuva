@@ -141,7 +141,7 @@ export function ListPage() {
       {tab === "import" && <ListImports list={l} />}
       {tab === "growth" && <Growth list={l} />}
       {tab === "form" && <FormSnippets list={l} />}
-      {tab === "settings" && <ListSettings key={l.updated_at} list={l} />}
+      {tab === "settings" && <ListSettings list={l} />}
       {tab === "export" && canManage && <ListExport list={l} />}
     </Pane>
   )

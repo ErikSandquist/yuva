@@ -42,6 +42,7 @@ import { MembersReport, RatingsReport, ReportsPane, TodayReport } from "@/featur
 import { SettingsHome, SettingsPane } from "@/features/settings/SettingsColumn"
 import { WebhookPage } from "@/features/settings/webhooks/WebhookPage"
 import { WebhookDoneStep, WebhookEndpointStep, WebhookEventsStep } from "@/features/settings/webhooks/WebhookWizard"
+import { NewsletterRulesStep, NewsletterSenderStep } from "@/features/setup/NewsletterStep"
 import { WebhooksPage } from "@/features/settings/webhooks/WebhooksPage"
 import { WorkspacePage } from "@/features/settings/workspace/WorkspacePage"
 import { SetupPage } from "@/features/setup/SetupPage"
@@ -96,6 +97,8 @@ export function AppRoutes() {
         <Route path="setup/api-key/review" element={<ApiKeyReviewStep />} />
         <Route path="setup/api-key/done" element={<ApiKeyDoneStep />} />
         <Route path="setup/newsletter" element={<SetupPage flow="newsletter" />} />
+        <Route path="setup/newsletter/sender" element={<NewsletterSenderStep />} />
+        <Route path="setup/newsletter/rules" element={<NewsletterRulesStep />} />
         <Route path="setup/newsletter/:listId" element={<SetupPage flow="newsletter" />} />
         {["setup/analytics", "setup/analytics/:propertyId"].map((path) => (
           <Route

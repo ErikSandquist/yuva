@@ -7,39 +7,118 @@ import { ErrorLine, toast, useConfirm } from "@/components/common"
 import { ExportButtons } from "@/components/common/ExportButtons"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { ListFields, listValues, type ListValues } from "@/features/broadcasts/ListForm"
-import { useDeleteList, useSetList } from "@/features/broadcasts/queries"
+import {
+  canSend,
+  nameTaken,
+  NameFields,
+  RulesToggles,
+  SenderMissing,
+  SenderPicker,
+} from "@/features/broadcasts/ListForm"
+import { useDeleteList, useInboxChannels, useSetList } from "@/features/broadcasts/queries"
+import { PageSection } from "@/features/settings/channels/sections"
 import { Card, FormActions, FormCard, Section } from "@/features/settings/ui"
 import { api, unwrap, type MailingList, type MailingListUpdate } from "@/lib/api"
 import { saveDownload } from "@/lib/download"
 import { useSession } from "@/lib/session"
+
+function usePatchList(list: MailingList) {
+  const setList = useSetList()
+  return useMutation({
+    mutationFn: (body: MailingListUpdate) =>
+      unwrap(api.PATCH("/v1/lists/{listId}", { params: { path: { listId: list.id } }, body })),
+    onSuccess: setList,
+  })
+}
+
+function NameSection({ list }: { list: MailingList }) {
+  const patch = usePatchList(list)
+  const [name, setName] = useState(list.name)
+  const [description, setDescription] = useState(list.description)
+  const dirty = name.trim() !== list.name || description.trim() !== list.description
+  return (
+    <PageSection id="general" title={<Trans>Name</Trans>}>
+      <FormCard
+        onSubmit={() =>
+          name.trim() &&
+          patch.mutate(
+            { name: name.trim(), description: description.trim() },
+            {
+              onSuccess: (saved) => {
+                setName(saved.name)
+                setDescription(saved.description)
+              },
+            }
+          )
+        }
+        footer={
+          <FormActions
+            pending={patch.isPending}
+            saved={patch.isSuccess && !dirty}
+            error={patch.error}
+            disabled={!dirty || !name.trim()}
+          />
+        }
+      >
+        <NameFields
+          name={name}
+          description={description}
+          taken={nameTaken(patch.error)}
+          onChange={(p) => {
+            patch.reset()
+            if (p.name !== undefined) setName(p.name)
+            if (p.description !== undefined) setDescription(p.description)
+          }}
+        />
+      </FormCard>
+    </PageSection>
+  )
+}
+
+function SenderSection({ list }: { list: MailingList }) {
+  const { t } = useLingui()
+  const patch = usePatchList(list)
+  const channels = useInboxChannels(list.inbox_id).data
+  const sender = list.channel_id ? channels?.find((c) => c.id === list.channel_id) : undefined
+  return (
+    <PageSection id="sender" title={<Trans>Sender</Trans>}>
+      <Card>
+        <SenderPicker
+          inboxId={list.inbox_id}
+          value={list.channel_id ?? ""}
+          onChange={(id) => patch.mutate({ channel_id: id || null }, { onSuccess: () => toast(t`Saved`) })}
+          invalid={false}
+        />
+        {channels && !(sender && canSend(sender)) && <SenderMissing inboxId={list.inbox_id} />}
+        <ErrorLine error={patch.error} className="text-caption" />
+      </Card>
+    </PageSection>
+  )
+}
+
+function SignupSection({ list }: { list: MailingList }) {
+  const { t } = useLingui()
+  const patch = usePatchList(list)
+  return (
+    <PageSection id="signup" title={<Trans>Sign-up</Trans>}>
+      <Card>
+        <RulesToggles
+          values={list}
+          disabled={patch.isPending}
+          onChange={(p) => patch.mutate(p, { onSuccess: () => toast(t`Saved`) })}
+        />
+        <ErrorLine error={patch.error} className="text-caption" />
+      </Card>
+    </PageSection>
+  )
+}
 
 export function ListSettings({ list }: { list: MailingList }) {
   const { t } = useLingui()
   const navigate = useNavigate()
   const { canManage } = useSession()
   const setList = useSetList()
-  const [values, setValues] = useState<ListValues>(() => listValues(list))
   const [confirm, confirmDialog] = useConfirm()
-  const save = useMutation({
-    mutationFn: () => {
-      const body: MailingListUpdate = {
-        name: values.name.trim(),
-        description: values.description.trim(),
-        double_opt_in: values.double_opt_in,
-        public: values.public,
-        commercial: values.commercial,
-        welcome: values.welcome,
-        channel_id: values.channel_id || null,
-      }
-      return unwrap(api.PATCH("/v1/lists/{listId}", { params: { path: { listId: list.id } }, body }))
-    },
-    onSuccess: (l) => {
-      setList(l)
-      setValues(listValues(l))
-      toast(t`Saved`)
-    },
-  })
   const archive = useMutation({
     mutationFn: (archived: boolean) =>
       unwrap(api.PATCH("/v1/lists/{listId}", { params: { path: { listId: list.id } }, body: { archived } })),
@@ -52,20 +131,11 @@ export function ListSettings({ list }: { list: MailingList }) {
   const people = list.counts.subscribed + list.counts.pending + list.counts.unsubscribed
   return (
     <>
-      <Section title={<Trans>Settings</Trans>}>
-        <FormCard
-          onSubmit={() => values.name.trim() && save.mutate()}
-          footer={canManage && <FormActions pending={save.isPending} error={save.error} />}
-        >
-          <fieldset disabled={!canManage} className="flex min-w-0 flex-col gap-5" data-testid="list-settings">
-            <ListFields
-              values={values}
-              onChange={(patch) => setValues((v) => ({ ...v, ...patch }))}
-              error={save.error}
-            />
-          </fieldset>
-        </FormCard>
-      </Section>
+      <fieldset disabled={!canManage} className="contents" data-testid="list-settings">
+        <NameSection list={list} />
+        <SenderSection list={list} />
+        <SignupSection list={list} />
+      </fieldset>
       {canManage && (
         <Section
           title={<Trans>Archive</Trans>}

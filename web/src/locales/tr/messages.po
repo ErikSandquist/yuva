@@ -1129,6 +1129,10 @@ msgstr "Yanıt hesabı ekle"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "{address} için, posta kutusuna teslimi sürdürürken e-postaları aşağıdaki adrese de teslim eden bir kural ekleyin."
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "Add a subscriber"
+msgstr "Abone ekle"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Add a subscriber to {listName}"
 msgstr "{listName} listesine abone ekle"
@@ -1961,6 +1965,10 @@ msgstr "Taşımalara dön"
 msgid "Back to waiting"
 msgstr "Bekleyenlere geri al"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Back to your list"
+msgstr "Listenize dön"
+
 #: src/features/migrations/ConnectStep.tsx
 msgid "Before you connect"
 msgstr "Bağlanmadan önce"
@@ -2165,6 +2173,7 @@ msgstr "Her abone için ayrı bülten planlayabilir miyim?"
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
+#: src/features/setup/NewsletterStep.tsx
 msgid "Cancel"
 msgstr "Vazgeç"
 
@@ -2625,6 +2634,10 @@ msgstr "Uyarıyı onaylayıp <0>Create as a plugin</0> seçeneğini seçin. Chat
 msgid "Confirmation and welcome mails, and every broadcast to the list, go out from this address."
 msgstr "Onay ve hoş geldin e-postaları ile listeye giden her bülten bu adresten çıkar."
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "Confirmation and welcome mails, and every broadcast to the list, go out through an e-mail channel."
+msgstr "Onay ve hoş geldin e-postaları ile listeye giden her yayın bir e-posta kanalı üzerinden gönderilir."
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Confirmation asked"
 msgstr "Onay isteniyor"
@@ -2817,6 +2830,7 @@ msgstr "İçerik"
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/setup/InstallStep.tsx
 #: src/features/setup/NameStep.tsx
+#: src/features/setup/NewsletterStep.tsx
 msgid "Continue"
 msgstr "Devam"
 
@@ -3010,7 +3024,6 @@ msgstr "Oluşturun, ardından App ID ve App Secret değerlerini kopyalayıp aşa
 msgid "Create key"
 msgstr "Anahtar oluştur"
 
-#: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/NewsletterStep.tsx
 msgid "Create list"
 msgstr "Listeyi oluştur"
@@ -4511,6 +4524,10 @@ msgstr "Nasıl izin verdiler?"
 msgid "How did your subscribers agree?"
 msgstr "Aboneleriniz nasıl izin verdi?"
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "How do people sign up?"
+msgstr "İnsanlar nasıl abone olur?"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "How far back"
 msgstr "Ne kadar geriye"
@@ -4661,6 +4678,10 @@ msgstr "İçe aktarma bitti"
 #: src/features/broadcasts/Import.tsx
 msgid "Import from a CSV file"
 msgstr "CSV dosyasından içe aktar"
+
+#: src/features/setup/NewsletterStep.tsx
+msgid "Import people"
+msgstr "Kişileri içe aktar"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Import steps"
@@ -5237,6 +5258,7 @@ msgid "Links will point at this server’s link domain instead of your own. Spam
 msgstr "Bağlantılar sizin alan adınız yerine bu sunucunun bağlantı alan adına gider. Spam filtreleri bağlantı alan adlarına bakar."
 
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/setup/NewsletterStep.tsx
 msgid "List"
 msgstr "Liste"
 
@@ -5451,10 +5473,6 @@ msgstr "Posta kutuları"
 #: src/features/migrations/text.ts
 msgid "Maildir in a zip"
 msgstr "Zip içinde Maildir"
-
-#: src/features/setup/NewsletterStep.tsx
-msgid "Mailing list"
-msgstr "E-posta listesi"
 
 #: src/app/Palette.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
@@ -5845,6 +5863,7 @@ msgstr "Profilim"
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/broadcasts/ListSettings.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
@@ -6034,10 +6053,6 @@ msgstr "Yeni etiket “{folder}”"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "New list"
 msgstr "Yeni liste"
-
-#: src/features/broadcasts/ListForm.tsx
-msgid "New mailing list"
-msgstr "Yeni e-posta listesi"
 
 #: src/features/setup/previews.tsx
 #: src/lib/alerts.ts
@@ -6387,6 +6402,10 @@ msgstr "Bugün değerlendirme yok."
 msgid "No replies yet."
 msgstr "Henüz yanıt yok."
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "No reply account"
+msgstr "Yanıt hesabı yok"
+
 #: src/app/Palette.tsx
 msgid "No results"
 msgstr "Sonuç yok"
@@ -6501,6 +6520,10 @@ msgstr "Yok"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "None (local relays and test servers only)"
 msgstr "Yok (yalnızca yerel aktarıcılar ve test sunucuları)"
+
+#: src/features/setup/NewsletterStep.tsx
+msgid "None for now"
+msgstr "Şimdilik yok"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "None picked: the key sees every inbox."
@@ -7468,10 +7491,6 @@ msgstr "Beklemede"
 msgid "Pending deliveries are dropped with it."
 msgstr "Bekleyen gönderimler de onunla birlikte silinir."
 
-#: src/features/broadcasts/ListForm.tsx
-msgid "People join a list on a subscribe form or are added with their consent. Broadcasts go to lists."
-msgstr "Kişiler listeye abonelik formundan katılır ya da izinleriyle eklenir. Bültenler listelere gönderilir."
-
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "Kişiler listeye abonelik formundan katılır ya da izinleriyle eklenir. Bültenler listelere gider."
@@ -7611,6 +7630,10 @@ msgstr "En az birini seçin."
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick each scope yourself."
 msgstr "Her yetkiyi kendiniz seçin."
+
+#: src/features/setup/NewsletterStep.tsx
+msgid "Pick one later in the list settings."
+msgstr "Sonra liste ayarlarından seçebilirsiniz."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
@@ -8879,6 +8902,8 @@ msgid "Send to"
 msgstr "Alıcılar"
 
 #: src/features/broadcasts/Composer.tsx
+#: src/features/broadcasts/ListSettings.tsx
+#: src/features/setup/NewsletterStep.tsx
 msgid "Sender"
 msgstr "Gönderen"
 
@@ -9080,7 +9105,6 @@ msgstr "Kuruluyor…"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/broadcasts/ListSettings.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/sections.tsx
@@ -9330,6 +9354,11 @@ msgstr "Çıkış yap"
 #: src/features/account/AccountPage.tsx
 msgid "Sign-in address"
 msgstr "Oturum açma adresi"
+
+#: src/features/broadcasts/ListSettings.tsx
+#: src/features/setup/NewsletterStep.tsx
+msgid "Sign-up"
+msgstr "Abonelik"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Sign-up sheet at the spring fair"
@@ -10613,6 +10642,10 @@ msgstr "Bu seçimler yalnızca bu cihazda saklanır."
 msgid "These merge fields have no fallback and would be empty for some recipients:"
 msgstr "Bu birleştirme alanlarının yedek metni yok ve bazı alıcılarda boş kalacak:"
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "These rules apply to the subscribe form. You can change them any time in the list settings."
+msgstr "Bu kurallar abonelik formu için geçerlidir. Liste ayarlarından istediğiniz zaman değiştirebilirsiniz."
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They already agreed"
 msgstr "Zaten izin verdiler"
@@ -10752,8 +10785,8 @@ msgid "This inbox already has a list with this name."
 msgstr "Bu gelen kutusunda bu adla bir liste zaten var."
 
 #: src/features/setup/NewsletterStep.tsx
-msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with an SMTP account is picked in its settings."
-msgstr "Bu gelen kutusunda henüz gönderebilen bir e-posta kanalı yok. Listeyi şimdi oluşturabilirsiniz; ayarlarından SMTP hesaplı bir e-posta kanalı seçildiğinde gönderir."
+msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
+msgstr "Bu gelen kutusunda henüz gönderebilen bir e-posta kanalı yok. Listeyi şimdi oluşturabilirsiniz; ayarlarından yanıt hesabı olan bir e-posta kanalı seçildiğinde göndermeye başlar."
 
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
@@ -11865,6 +11898,10 @@ msgstr "{name} müşterileri nereden yazıyor?"
 #: src/features/migrations/MapStep.tsx
 msgid "Where does it go?"
 msgstr "Nereye gidecek?"
+
+#: src/features/setup/NewsletterStep.tsx
+msgid "Where does it send from?"
+msgstr "Nereden gönderilsin?"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "Where is your mail now?"

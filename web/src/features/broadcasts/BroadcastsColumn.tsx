@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { MailWarningIcon, PlusIcon } from "lucide-react"
-import { lazy, Suspense, useEffect, useRef, useState } from "react"
+import { lazy, Suspense, useEffect, useRef } from "react"
 import { Link, useLocation, useMatch, useNavigate } from "react-router"
 
 import { Dot, ErrorLine, Segmented } from "@/components/common"
@@ -9,13 +9,13 @@ import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Switch } from "@/components/ui/switch"
 import { BroadcastList } from "@/features/broadcasts/BroadcastList"
-import { NewListDialog } from "@/features/broadcasts/ListForm"
 import { listLink, useLists, useShowArchived } from "@/features/broadcasts/queries"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { InboxPicker } from "@/features/inbox/InboxPicker"
 import { Label } from "@/components/ui/label"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { useResetState } from "@/hooks/use-reset-state"
+import type { SetupState } from "@/features/setup/setup"
 import type { Inbox, MailingList } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
@@ -151,6 +151,7 @@ function Lists() {
   const { t } = useLingui()
   const navigate = useNavigate()
   const { canManage } = useSession()
+  const { pathname, search } = useLocation()
   const [inboxId] = useInboxFilter()
   const [archived, setArchived] = useShowArchived()
   const inboxes = useInboxes().data ?? []
@@ -159,7 +160,6 @@ function Lists() {
   const groups = inboxes.length > 1 && !inboxId ? group(items, inboxes) : [{ inbox: null, lists: items }]
   const ordered = groups.flatMap((g) => g.lists)
   const currentId = useMatch("/broadcasts/lists/:listId")?.params.listId
-  const [creating, setCreating] = useState(false)
   const [cursor, setCursor] = useResetState(-1, JSON.stringify([inboxId, archived]))
   const list = useRef<HTMLDivElement>(null)
 
@@ -191,7 +191,17 @@ function Lists() {
             <Trans>Mailing lists</Trans>
           </h3>
           {canManage && (
-            <Button variant="outline" size="sm" onClick={() => setCreating(true)} data-testid="new-list">
+            <Button
+              variant="outline"
+              size="sm"
+              render={
+                <Link
+                  to={inboxId ? `/setup/newsletter?inbox=${inboxId}` : "/setup/newsletter"}
+                  state={{ back: pathname + search } satisfies SetupState}
+                />
+              }
+              data-testid="new-list"
+            >
               <PlusIcon />
               <Trans>New list</Trans>
             </Button>
@@ -253,16 +263,6 @@ function Lists() {
           </p>
         )}
       </nav>
-      {creating && (
-        <NewListDialog
-          inboxId={inboxId}
-          onClose={() => setCreating(false)}
-          onCreated={(l) => {
-            setCreating(false)
-            navigate(listLink(l.id))
-          }}
-        />
-      )}
     </>
   )
 }

@@ -1129,6 +1129,10 @@ msgstr "Add a reply account"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "Add a subscriber"
+msgstr "Add a subscriber"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Add a subscriber to {listName}"
 msgstr "Add a subscriber to {listName}"
@@ -1961,6 +1965,10 @@ msgstr "Back to the migrations"
 msgid "Back to waiting"
 msgstr "Back to waiting"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Back to your list"
+msgstr "Back to your list"
+
 #: src/features/migrations/ConnectStep.tsx
 msgid "Before you connect"
 msgstr "Before you connect"
@@ -2165,6 +2173,7 @@ msgstr "Can I schedule a newsletter for each subscriber?"
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
+#: src/features/setup/NewsletterStep.tsx
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -2625,6 +2634,10 @@ msgstr "Confirm the warning and select <0>Create as a plugin</0>. ChatGPT regist
 msgid "Confirmation and welcome mails, and every broadcast to the list, go out from this address."
 msgstr "Confirmation and welcome mails, and every broadcast to the list, go out from this address."
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "Confirmation and welcome mails, and every broadcast to the list, go out through an e-mail channel."
+msgstr "Confirmation and welcome mails, and every broadcast to the list, go out through an e-mail channel."
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Confirmation asked"
 msgstr "Confirmation asked"
@@ -2817,6 +2830,7 @@ msgstr "Content"
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/setup/InstallStep.tsx
 #: src/features/setup/NameStep.tsx
+#: src/features/setup/NewsletterStep.tsx
 msgid "Continue"
 msgstr "Continue"
 
@@ -3010,7 +3024,6 @@ msgstr "Create it, then copy its App ID and App Secret and paste them below."
 msgid "Create key"
 msgstr "Create key"
 
-#: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/NewsletterStep.tsx
 msgid "Create list"
 msgstr "Create list"
@@ -4511,6 +4524,10 @@ msgstr "How did they agree?"
 msgid "How did your subscribers agree?"
 msgstr "How did your subscribers agree?"
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "How do people sign up?"
+msgstr "How do people sign up?"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "How far back"
 msgstr "How far back"
@@ -4661,6 +4678,10 @@ msgstr "Import finished"
 #: src/features/broadcasts/Import.tsx
 msgid "Import from a CSV file"
 msgstr "Import from a CSV file"
+
+#: src/features/setup/NewsletterStep.tsx
+msgid "Import people"
+msgstr "Import people"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Import steps"
@@ -5237,6 +5258,7 @@ msgid "Links will point at this server’s link domain instead of your own. Spam
 msgstr "Links will point at this server’s link domain instead of your own. Spam filters look at link domains."
 
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/setup/NewsletterStep.tsx
 msgid "List"
 msgstr "List"
 
@@ -5451,10 +5473,6 @@ msgstr "Mailboxes"
 #: src/features/migrations/text.ts
 msgid "Maildir in a zip"
 msgstr "Maildir in a zip"
-
-#: src/features/setup/NewsletterStep.tsx
-msgid "Mailing list"
-msgstr "Mailing list"
 
 #: src/app/Palette.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
@@ -5845,6 +5863,7 @@ msgstr "My profile"
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/broadcasts/ListSettings.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
@@ -6034,10 +6053,6 @@ msgstr "New label “{folder}”"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "New list"
 msgstr "New list"
-
-#: src/features/broadcasts/ListForm.tsx
-msgid "New mailing list"
-msgstr "New mailing list"
 
 #: src/features/setup/previews.tsx
 #: src/lib/alerts.ts
@@ -6387,6 +6402,10 @@ msgstr "No ratings today."
 msgid "No replies yet."
 msgstr "No replies yet."
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "No reply account"
+msgstr "No reply account"
+
 #: src/app/Palette.tsx
 msgid "No results"
 msgstr "No results"
@@ -6501,6 +6520,10 @@ msgstr "None"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "None (local relays and test servers only)"
 msgstr "None (local relays and test servers only)"
+
+#: src/features/setup/NewsletterStep.tsx
+msgid "None for now"
+msgstr "None for now"
 
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "None picked: the key sees every inbox."
@@ -7468,10 +7491,6 @@ msgstr "Pending"
 msgid "Pending deliveries are dropped with it."
 msgstr "Pending deliveries are dropped with it."
 
-#: src/features/broadcasts/ListForm.tsx
-msgid "People join a list on a subscribe form or are added with their consent. Broadcasts go to lists."
-msgstr "People join a list on a subscribe form or are added with their consent. Broadcasts go to lists."
-
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
@@ -7611,6 +7630,10 @@ msgstr "Pick at least one."
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Pick each scope yourself."
 msgstr "Pick each scope yourself."
+
+#: src/features/setup/NewsletterStep.tsx
+msgid "Pick one later in the list settings."
+msgstr "Pick one later in the list settings."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
@@ -8879,6 +8902,8 @@ msgid "Send to"
 msgstr "Send to"
 
 #: src/features/broadcasts/Composer.tsx
+#: src/features/broadcasts/ListSettings.tsx
+#: src/features/setup/NewsletterStep.tsx
 msgid "Sender"
 msgstr "Sender"
 
@@ -9080,7 +9105,6 @@ msgstr "Setting up…"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/broadcasts/ListSettings.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/sections.tsx
@@ -9330,6 +9354,11 @@ msgstr "Sign out"
 #: src/features/account/AccountPage.tsx
 msgid "Sign-in address"
 msgstr "Sign-in address"
+
+#: src/features/broadcasts/ListSettings.tsx
+#: src/features/setup/NewsletterStep.tsx
+msgid "Sign-up"
+msgstr "Sign-up"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Sign-up sheet at the spring fair"
@@ -10613,6 +10642,10 @@ msgstr "These choices are kept on this device only."
 msgid "These merge fields have no fallback and would be empty for some recipients:"
 msgstr "These merge fields have no fallback and would be empty for some recipients:"
 
+#: src/features/setup/NewsletterStep.tsx
+msgid "These rules apply to the subscribe form. You can change them any time in the list settings."
+msgstr "These rules apply to the subscribe form. You can change them any time in the list settings."
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They already agreed"
 msgstr "They already agreed"
@@ -10752,8 +10785,8 @@ msgid "This inbox already has a list with this name."
 msgstr "This inbox already has a list with this name."
 
 #: src/features/setup/NewsletterStep.tsx
-msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with an SMTP account is picked in its settings."
-msgstr "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with an SMTP account is picked in its settings."
+msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
+msgstr "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
@@ -11865,6 +11898,10 @@ msgstr "Where do {name} customers write from?"
 #: src/features/migrations/MapStep.tsx
 msgid "Where does it go?"
 msgstr "Where does it go?"
+
+#: src/features/setup/NewsletterStep.tsx
+msgid "Where does it send from?"
+msgstr "Where does it send from?"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "Where is your mail now?"
