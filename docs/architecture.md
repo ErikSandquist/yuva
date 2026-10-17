@@ -837,7 +837,13 @@ remote images, http(s)):
   start the same flow for chat, app or docs on an existing inbox with a trimmed step list (sites or
   platforms, install, first message), and the last step offers inviting the team and the inbox
   settings. Home's checklist links to it (it no longer opens on its own), and adding an
-  inbox later uses the same page (`/setup/new`).
+  inbox later uses the same page (`/setup/new`). E-mail has its own five steps (Address, Replies,
+  Receiving, Test, Done; after Name and Channel for a new inbox): the channel is created when
+  Replies is submitted (Amazon SES, another SMTP server, or receive only), the SMTP password lives
+  in component state and never in the draft, and an `email_address_taken` answer sends the user back
+  to Address. From Receiving on the channel exists, earlier steps are unreachable and Cancel reads
+  "Finish later"; Test reuses the deliverability check, the SES tenant status and the DKIM section.
+  The inbox settings' "+ E-mail" opens this flow; only "+ API channel" is still a dialog.
 - Connect an assistant (Settings › Connected apps): one page per client (Claude, Claude Code, Codex,
   ChatGPT, Cursor, VS Code, other MCP clients) with the server's own `/mcp` URL, a copyable command
   or config, install links where the client has them, and the steps; a new grant shows up there live.

@@ -77,6 +77,7 @@ export function AppRoutes() {
         <Route path="setup" element={<SetupPage flow="hub" />} />
         <Route path="setup/new" element={<SetupPage flow="new" />} />
         <Route path="setup/new/pick" element={<SetupPage flow="pick" />} />
+        <Route path="setup/new/add/email/replies" element={<SetupPage flow="replies" />} />
         <Route path="setup/new/add/:kind" element={<SetupPage flow="add" />} />
         <Route path="setup/new/:kind" element={<SetupPage flow="new" />} />
         <Route path="setup/start/:kind" element={<SetupPage flow="start" />} />
@@ -94,9 +95,12 @@ export function AppRoutes() {
           />
         ))}
         <Route path="setup/:inboxId" element={<SetupPage />} />
+        <Route path="setup/:inboxId/add/email/replies" element={<SetupPage flow="replies" />} />
         <Route path="setup/:inboxId/add/:kind" element={<SetupPage />} />
         <Route path="setup/:inboxId/:channelId" element={<SetupPage />} />
         <Route path="setup/:inboxId/:channelId/wait" element={<SetupPage flow="wait" />} />
+        <Route path="setup/:inboxId/:channelId/test" element={<SetupPage flow="test" />} />
+        <Route path="setup/:inboxId/:channelId/done" element={<SetupPage flow="done" />} />
         <Route path="migrations/new" element={<NewMigrationPage />} />
         <Route path="migrations/:migrationId" element={<MigrationPage />} />
         <Route path="migrations/:migrationId/:step" element={<MigrationPage />} />

@@ -43,7 +43,8 @@ function useLines(c: DeliverabilityCheck): Line[] {
   const read = c.state === "received"
   const from = c.domain
   const lines: Line[] = []
-  const dnsRead = Boolean(c.mx)
+  const running = c.state === "queued" || c.state === "sent"
+  const dnsRead = Boolean(c.mx) && !running
   const readingDns = t`Reading DNS records…`
 
   const spf = c.spf
@@ -153,7 +154,7 @@ function useLines(c: DeliverabilityCheck): Line[] {
     })
   }
 
-  if (c.mx) {
+  if (c.mx && !running) {
     const mxDomain = c.mx.domain
     const hosts = c.mx.hosts.join(", ")
     lines.push(
@@ -185,7 +186,7 @@ function useLines(c: DeliverabilityCheck): Line[] {
   return lines
 }
 
-function Lines({ check }: { check: DeliverabilityCheck }) {
+export function Lines({ check }: { check: DeliverabilityCheck }) {
   const lines = useLines(check)
   return (
     <ul className="flex flex-col divide-y" data-testid="deliverability-lines">
@@ -213,7 +214,7 @@ function Lines({ check }: { check: DeliverabilityCheck }) {
   )
 }
 
-function StateNotice({ check, address }: { check: DeliverabilityCheck; address: string }) {
+export function StateNotice({ check, address }: { check: DeliverabilityCheck; address: string }) {
   const reason = check.error ?? ""
   switch (check.state) {
     case "queued":

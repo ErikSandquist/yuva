@@ -466,6 +466,10 @@ msgstr "{name} is typing…"
 msgid "{name} news"
 msgstr "{name} news"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "{name} receives mail at this address. Here is what you set up."
+msgstr "{name} receives mail at this address. Here is what you set up."
+
 #: src/features/conversation/Collision.tsx
 msgid "{name} replied before you."
 msgstr "{name} replied before you."
@@ -702,6 +706,7 @@ msgid "{zone} · {utc} UTC. The recipients are taken then; you can go back to th
 msgstr "{zone} · {utc} UTC. The recipients are taken then; you can go back to the draft until it starts."
 
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/setup/email/EmailAddressStep.tsx
 msgid "*@example.com receives every address of the domain that no other channel has; replies then go out from the address the customer wrote to."
 msgstr "*@example.com receives every address of the domain that no other channel has; replies then go out from the address the customer wrote to."
 
@@ -800,6 +805,10 @@ msgstr "A chat channel named after the site is created for it, open to anonymous
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "A check sends a test mail through the broadcast account to the channel’s own address and reads how the receiving server judged it, then looks up the domain’s DNS. Up to six checks an hour."
 msgstr "A check sends a test mail through the broadcast account to the channel’s own address and reads how the receiving server judged it, then looks up the domain’s DNS. Up to six checks an hour."
+
+#: src/features/setup/email/EmailTestStep.tsx
+msgid "A check sends a test mail through your reply account and looks up the domain's DNS."
+msgstr "A check sends a test mail through your reply account and looks up the domain's DNS."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "A client that cannot sign in can send an API key as <0>Authorization: Bearer</0>; an owner or admin makes one."
@@ -1095,6 +1104,10 @@ msgstr "Add a passkey"
 msgid "Add a remote server with the Streamable HTTP transport and the server URL. Many clients take a configuration like this:"
 msgstr "Add a remote server with the Streamable HTTP transport and the server URL. Many clients take a configuration like this:"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Add a reply account"
+msgstr "Add a reply account"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
@@ -1131,7 +1144,7 @@ msgstr "Add an OAuth client named “Yuva”, as a confidential client, and ente
 msgid "Add at least one origin."
 msgstr "Add at least one origin."
 
-#: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/ApiChannelDialog.tsx
 msgid "Add channel"
 msgstr "Add channel"
 
@@ -1209,6 +1222,7 @@ msgid "Added by the team"
 msgstr "Added by the team"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/setup/email/EmailLayout.tsx
 msgid "Address"
 msgstr "Address"
 
@@ -1354,8 +1368,15 @@ msgstr "Also send message.created for members' internal notes. Internal events a
 
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/setup/email/EmailRepliesStep.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Amazon SES"
 msgstr "Amazon SES"
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Amazon SES · {region}"
+msgstr "Amazon SES · {region}"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Amazon SES error"
@@ -1370,6 +1391,7 @@ msgid "Amazon SES paused sending for this inbox. Its mail through SES is refused
 msgstr "Amazon SES paused sending for this inbox. Its mail through SES is refused with “Sending disabled” until the server’s operator reinstates it. Other inboxes keep sending."
 
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Amazon SES paused this inbox’s sending. Its replies and broadcasts through the server’s SES account are refused until the operator reinstates it. Other inboxes keep sending."
 msgstr "Amazon SES paused this inbox’s sending. Its replies and broadcasts through the server’s SES account are refused until the operator reinstates it. Other inboxes keep sending."
 
@@ -1509,7 +1531,7 @@ msgstr "Another channel already receives mail at {address}, in this workspace or
 
 #: src/components/common/text.ts
 #: src/features/settings/channels/email/EmailFields.tsx
-#: src/features/setup/AddChannelStep.tsx
+#: src/features/setup/email/EmailAddressStep.tsx
 msgid "Another channel already receives mail at this address."
 msgstr "Another channel already receives mail at this address."
 
@@ -1524,6 +1546,10 @@ msgstr "Another import of this workspace is running. Imports run one at a time; 
 #: src/features/conversation/messages/EventLine.tsx
 msgid "another inbox"
 msgstr "another inbox"
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Another SMTP server"
+msgstr "Another SMTP server"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Another team address"
@@ -1913,7 +1939,7 @@ msgstr "Billing"
 msgid "Billing bot"
 msgstr "Billing bot"
 
-#: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/ApiChannelDialog.tsx
 msgid "Billing events"
 msgstr "Billing events"
 
@@ -1993,6 +2019,10 @@ msgstr "Bring subscribers who already agreed elsewhere. Each address is checked 
 #: src/features/migrations/MigrationsPage.tsx
 msgid "Bring the history of a mailbox you answer from today, then switch its mail over. Yuva only reads the mailbox; nothing there is changed."
 msgstr "Bring the history of a mailbox you answer from today, then switch its mail over. Yuva only reads the mailbox; nothing there is changed."
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Bring your old mail"
+msgstr "Bring your old mail"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Broadcast"
@@ -2201,6 +2231,7 @@ msgid "Changing the sending domain turns DKIM signing off until you enable it ag
 msgstr "Changing the sending domain turns DKIM signing off until you enable it again for the new domain."
 
 #: src/features/contact/ContactDetails.tsx
+#: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Channel"
 msgstr "Channel"
@@ -2214,6 +2245,7 @@ msgid "Channel removed"
 msgstr "Channel removed"
 
 #: src/features/settings/channels/email/Deliverability.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Check again"
 msgstr "Check again"
 
@@ -2237,6 +2269,10 @@ msgstr "Check DNS and start signing"
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
 msgstr "Check that forwarding is turned on and, for Gmail, confirmed with the code."
 
+#: src/features/setup/email/EmailTestStep.tsx
+msgid "Check that it works"
+msgstr "Check that it works"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that no filter or admin rule blocks forwarding to other domains."
 msgstr "Check that no filter or admin rule blocks forwarding to other domains."
@@ -2248,6 +2284,10 @@ msgstr "Check that the forwarding address is exactly the one above."
 #: src/features/auth/SignInForm.tsx
 msgid "Check your e-mail"
 msgstr "Check your e-mail"
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Checked"
+msgstr "Checked"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Checked {when}"
@@ -2278,6 +2318,10 @@ msgstr "Checking what is already on the server…"
 msgid "Checking what is on the server"
 msgstr "Checking what is on the server"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Checking…"
+msgstr "Checking…"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Choose"
 msgstr "Choose"
@@ -2294,6 +2338,10 @@ msgstr "Choose “Forward a copy of incoming mail to” the address, keep Gmail'
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "Choose “Generate app password”, name it “Yuva” and create it."
 
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Choose a region"
+msgstr "Choose a region"
+
 #: src/app/Gate.tsx
 msgid "Choose a workspace"
 msgstr "Choose a workspace"
@@ -2301,6 +2349,14 @@ msgstr "Choose a workspace"
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "Choose one from the list, or move with ↑ ↓ and open it with Enter."
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Choose the account that sends your answers. You can change it later in the channel settings."
+msgstr "Choose the account that sends your answers. You can change it later in the channel settings."
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Choose the region of your Amazon SES account."
+msgstr "Choose the region of your Amazon SES account."
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Choose the selected block’s image"
@@ -2613,6 +2669,7 @@ msgstr "Connected to {storedHost}. Enter the password again only to change it."
 msgid "Connected under another name? All connections are in <0>Connected apps</0>."
 msgstr "Connected under another name? All connections are in <0>Connected apps</0>."
 
+#: src/features/setup/email/EmailTestStep.tsx
 #: src/features/setup/WaitStep.tsx
 msgid "Connecting…"
 msgstr "Connecting…"
@@ -2693,7 +2750,9 @@ msgstr "Content"
 #: src/features/migrations/SignInConnectStep.tsx
 #: src/features/migrations/SourceStep.tsx
 #: src/features/migrations/UploadStep.tsx
-#: src/features/setup/AddChannelStep.tsx
+#: src/features/setup/email/EmailAddressStep.tsx
+#: src/features/setup/email/EmailReceiveStep.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 #: src/features/setup/InstallStep.tsx
 #: src/features/setup/NameStep.tsx
 msgid "Continue"
@@ -2874,6 +2933,10 @@ msgstr "Create an app in Help Scout"
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Create an OAuth client in Zendesk"
 msgstr "Create an OAuth client in Zendesk"
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Create channel"
+msgstr "Create channel"
 
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "Create draft"
@@ -3260,12 +3323,17 @@ msgid "Display name"
 msgstr "Display name"
 
 #: src/features/settings/channels/ChannelPage.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
 msgid "DKIM"
 msgstr "DKIM"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "DKIM does not pass for the sending domain."
 msgstr "DKIM does not pass for the sending domain."
+
+#: src/features/setup/email/EmailTestStep.tsx
+msgid "DKIM for broadcasts"
+msgstr "DKIM for broadcasts"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "DKIM passes for {dkimDomain} and signs the unsubscribe headers."
@@ -3287,10 +3355,6 @@ msgstr "DMARC failed"
 msgid "DMARC fails: neither SPF nor DKIM passes for {from}. Fix the lines above."
 msgstr "DMARC fails: neither SPF nor DKIM passes for {from}. Fix the lines above."
 
-#: src/features/setup/InstallStep.tsx
-msgid "DNS checklist"
-msgstr "DNS checklist"
-
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "DNS does not answer with the key at {name} yet. Publish the record below, then check again."
 msgstr "DNS does not answer with the key at {name} yet. Publish the record below, then check again."
@@ -3298,6 +3362,10 @@ msgstr "DNS does not answer with the key at {name} yet. Publish the record below
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "DNS does not answer with this key at the name above yet. Publish the record, wait a few minutes (some providers take longer) and try again."
 msgstr "DNS does not answer with this key at the name above yet. Publish the record, wait a few minutes (some providers take longer) and try again."
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "DNS only"
+msgstr "DNS only"
 
 #: src/features/conversation/Collision.tsx
 msgid "Do not both write."
@@ -3335,11 +3403,16 @@ msgstr "Documents"
 msgid "Does it work with server-side rendering?"
 msgstr "Does it work with server-side rendering?"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Domain not verified"
+msgstr "Domain not verified"
+
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
+#: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
@@ -3502,8 +3575,9 @@ msgstr "Each goes into its inbox's e-mail channel for its address, else that inb
 msgid "Each message's original source is stored, as for mail that arrives live. Uses more storage."
 msgstr "Each message's original source is stored, as for mail that arrives live. Uses more storage."
 
-#: src/features/setup/AddChannelStep.tsx
-#: src/features/setup/InstallStep.tsx
+#: src/features/setup/email/EmailAddressStep.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Each new e-mail starts a conversation; replies continue it."
 msgstr "Each new e-mail starts a conversation; replies continue it."
 
@@ -3614,6 +3688,14 @@ msgstr "Enter an http or https URL without a user name or password."
 msgid "Enter the address of the mailbox you answer from today. Yuva finds its provider; nothing is read until you connect it."
 msgstr "Enter the address of the mailbox you answer from today. Yuva finds its provider; nothing is read until you connect it."
 
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Enter the SMTP password from the SES console."
+msgstr "Enter the SMTP password from the SES console."
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Enter the SMTP user name from the SES console."
+msgstr "Enter the SMTP user name from the SES console."
+
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
@@ -3621,6 +3703,10 @@ msgstr "Enter your work e-mail and we send you a code. No password; the same cod
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
 msgstr "Entry: {entry}"
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Error"
+msgstr "Error"
 
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Error or answer"
@@ -3766,6 +3852,7 @@ msgstr "External ids"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
 msgid "Failed"
 msgstr "Failed"
 
@@ -3855,6 +3942,10 @@ msgstr "Finish"
 #: src/features/migrations/parts.tsx
 msgid "Finish anyway"
 msgstr "Finish anyway"
+
+#: src/features/setup/email/EmailLayout.tsx
+msgid "Finish later"
+msgstr "Finish later"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Finish now"
@@ -4015,6 +4106,10 @@ msgstr "Forward all incoming mail to the address below and keep a copy in the ma
 msgid "Forward as a note mentioning"
 msgstr "Forward as a note mentioning"
 
+#: src/features/setup/email/EmailReceiveStep.tsx
+msgid "Forward from your mailbox"
+msgstr "Forward from your mailbox"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Forward mail for this address to the Cloudflare Email Worker in edge/ of the Yuva repository, or to any mail server that posts each message to this server's ingress URL, signed with YUVA_INGRESS_SECRET:"
 msgstr "Forward mail for this address to the Cloudflare Email Worker in edge/ of the Yuva repository, or to any mail server that posts each message to this server's ingress URL, signed with YUVA_INGRESS_SECRET:"
@@ -4033,6 +4128,7 @@ msgstr "Forwarding"
 
 #: src/features/migrations/SwitchStep.tsx
 #: src/features/settings/channels/email/ForwardingAddressField.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
 msgid "Forwarding address"
 msgstr "Forwarding address"
 
@@ -4213,7 +4309,7 @@ msgstr "Handed to {name}"
 msgid "Has an open conversation"
 msgstr "Has an open conversation"
 
-#: src/features/setup/WaitStep.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Hello from the setup"
 msgstr "Hello from the setup"
 
@@ -4290,6 +4386,7 @@ msgstr "Hide the selected post"
 
 #: src/components/common/text.ts
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "High"
 msgstr "High"
 
@@ -4338,6 +4435,14 @@ msgstr "How far back"
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "How HTML e-mails open. You can still switch each message."
 msgstr "How HTML e-mails open. You can still switch each message."
+
+#: src/features/setup/email/EmailReceiveStep.tsx
+msgid "How mail reaches Yuva"
+msgstr "How mail reaches Yuva"
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "How should replies go out?"
+msgstr "How should replies go out?"
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "How the newest conversations will look"
@@ -4415,6 +4520,10 @@ msgstr "If nothing reaches only {provider}, the migration finishes on its own {w
 #: src/features/migrations/SwitchStep.tsx
 msgid "If nothing reaches only the old mailbox, the migration finishes on its own {when} ({at})."
 msgstr "If nothing reaches only the old mailbox, the migration finishes on its own {when} ({at})."
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "If this server manages Amazon SES, Yuva keeps this inbox's mail in its own tenant; you see the result on the next steps."
+msgstr "If this server manages Amazon SES, Yuva keeps this inbox's mail in its own tenant; you see the result on the next steps."
 
 #: src/features/migrations/DoneStep.tsx
 msgid "If you made a password just for Yuva, remove it in {provider}."
@@ -4542,6 +4651,10 @@ msgstr "In Fastmail, open Settings › Privacy & Security › Manage app passwor
 #: src/features/migrations/SwitchStep.tsx
 msgid "In Gmail, open Settings › See all settings › Forwarding and POP/IMAP."
 msgstr "In Gmail, open Settings › See all settings › Forwarding and POP/IMAP."
+
+#: src/features/setup/email/EmailReceiveStep.tsx
+msgid "In Gmail, Outlook or your provider, forward {own} to this address."
+msgstr "In Gmail, Outlook or your provider, forward {own} to this address."
 
 #: src/features/migrations/text.ts
 msgid "In GMX, open E-mail settings › POP3 & IMAP and allow access over IMAP."
@@ -4751,6 +4864,8 @@ msgstr "It opens assigned to you; write the first message there."
 msgid "It sends through {address}."
 msgstr "It sends through {address}."
 
+#: src/features/setup/email/EmailReceiveStep.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 #: src/features/setup/WaitStep.tsx
 msgid "It shows up here as soon as it reaches Yuva."
 msgstr "It shows up here as soon as it reaches Yuva."
@@ -4850,10 +4965,6 @@ msgstr "Keys and assistants may not schedule broadcasts in this workspace."
 msgid "Keys and assistants may send broadcasts"
 msgstr "Keys and assistants may send broadcasts"
 
-#: src/features/settings/channels/ChannelDialog.tsx
-msgid "Kind"
-msgstr "Kind"
-
 #: src/features/contact/ContactsColumn.tsx
 msgid "Known"
 msgstr "Known"
@@ -4923,6 +5034,10 @@ msgstr "Last attempt"
 #: src/features/home/HomePage.tsx
 msgid "Last broadcast"
 msgstr "Last broadcast"
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Last check"
+msgstr "Last check"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Last checked"
@@ -5058,6 +5173,10 @@ msgstr "List restored"
 msgid "Listening for the first message…"
 msgstr "Listening for the first message…"
 
+#: src/features/setup/email/EmailTestStep.tsx
+msgid "Listening for the mail…"
+msgstr "Listening for the mail…"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Listing the tickets…"
 msgstr "Listing the tickets…"
@@ -5154,6 +5273,7 @@ msgstr "Looking up the provider…"
 
 #: src/components/common/text.ts
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Low"
 msgstr "Low"
 
@@ -5168,6 +5288,10 @@ msgstr "Lowercase letters, digits and dashes."
 #: src/features/broadcasts/Composer.tsx
 msgid "Lowercase letters, digits, dashes, underscores and dots. Fixed once the broadcast is sent."
 msgstr "Lowercase letters, digits, dashes, underscores and dots. Fixed once the broadcast is sent."
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Mail arrives here; add a reply account when you are ready"
+msgstr "Mail arrives here; add a reply account when you are ready"
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Mail carries the tenant <0>{channelTenant}</0> you typed below."
@@ -5531,6 +5655,10 @@ msgstr "More actions"
 msgid "More actions for {address}"
 msgstr "More actions for {address}"
 
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "More options"
+msgstr "More options"
+
 #: src/features/contact/MergePreview.tsx
 msgid "More than {count} conversations"
 msgstr "More than {count} conversations"
@@ -5621,12 +5749,13 @@ msgstr "My profile"
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
-#: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/channels/email/Deliverability.tsx
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/profile/ProfileForm.tsx
+#: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Name"
 msgstr "Name"
@@ -5687,6 +5816,10 @@ msgstr "Never"
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Never checked. Run a check before the first broadcast; the review warns until you do."
 msgstr "Never checked. Run a check before the first broadcast; the review warns until you do."
+
+#: src/features/setup/email/EmailReceiveStep.tsx
+msgid "Never forward to {own} itself: the mail would loop."
+msgstr "Never forward to {own} itself: the mail would loop."
 
 #: src/features/migrations/text.ts
 msgid "Never imported"
@@ -5752,6 +5885,7 @@ msgstr "New conversation in a live inbox"
 msgid "New conversation in an async inbox"
 msgstr "New conversation in an async inbox"
 
+#: src/features/setup/email/EmailTestStep.tsx
 #: src/features/setup/WaitStep.tsx
 msgid "New conversations show up at the top of your conversation list."
 msgstr "New conversations show up at the top of your conversation list."
@@ -5909,6 +6043,10 @@ msgstr "No {provider} account has that subdomain. Check it in your address: acme
 #: src/features/settings/webhooks/parts.tsx
 msgid "no answer"
 msgstr "no answer"
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "No answer"
+msgstr "No answer"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "No API keys yet."
@@ -6165,10 +6303,6 @@ msgstr "no SMTP account"
 msgid "No SMTP account"
 msgstr "No SMTP account"
 
-#: src/features/setup/InstallStep.tsx
-msgid "No SMTP account yet: mail arrives, but replies cannot go out until you add one in the inbox settings."
-msgstr "No SMTP account yet: mail arrives, but replies cannot go out until you add one in the inbox settings."
-
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/History.tsx
 #: src/features/conversation/RelatedLine.tsx
@@ -6260,6 +6394,7 @@ msgstr "Nobody would get this mail. Pick lists with subscribers, or loosen the c
 #: src/features/contact/MergePreview.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/SettingsColumn.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "None"
 msgstr "None"
 
@@ -6300,6 +6435,10 @@ msgstr "Not an admin"
 msgid "Not an origin: {notOrigins}. Use scheme and host only, such as https://www.example.com."
 msgstr "Not an origin: {notOrigins}. Use scheme and host only, such as https://www.example.com."
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Not checked"
+msgstr "Not checked"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Not confirmed yet"
 msgstr "Not confirmed yet"
@@ -6331,6 +6470,10 @@ msgstr "Not helpful"
 msgid "Not imported"
 msgstr "Not imported"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Not isolated"
+msgstr "Not isolated"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Not offered on this server"
 msgstr "Not offered on this server"
@@ -6351,6 +6494,10 @@ msgstr "Not right? Pick your provider"
 msgid "Not run"
 msgstr "Not run"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Not set up"
+msgstr "Not set up"
+
 #: src/features/home/HomePage.tsx
 msgid "Not set up yet"
 msgstr "Not set up yet"
@@ -6364,6 +6511,7 @@ msgid "Not signing"
 msgstr "Not signing"
 
 #: src/features/settings/channels/email/Deliverability.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not signing yet"
 msgstr "Not signing yet"
 
@@ -6715,6 +6863,14 @@ msgstr "Only people who subscribed get it. Unsubscribed, unconfirmed, bounced an
 msgid "Only read requests are sent. You can close this page; the scan goes on and the list in Settings shows when it is done."
 msgstr "Only read requests are sent. You can close this page; the scan goes on and the list in Settings shows when it is done."
 
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Only receive for now"
+msgstr "Only receive for now"
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Only receives"
+msgstr "Only receives"
+
 #: src/components/common/text.ts
 msgid "Only the person can subscribe again, by confirming a mail."
 msgstr "Only the person can subscribe again, by confirming a mail."
@@ -6897,6 +7053,7 @@ msgstr "Open the discussion"
 
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
 msgid "Open the inbox"
 msgstr "Open the inbox"
 
@@ -7044,6 +7201,10 @@ msgstr "Over time"
 msgid "Overview"
 msgstr "Overview"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Own tenant"
+msgstr "Own tenant"
+
 #: src/components/common/text.ts
 msgid "Owner"
 msgstr "Owner"
@@ -7145,6 +7306,8 @@ msgstr "Pause or resume sending"
 #: src/components/common/text.ts
 #: src/features/migrations/text.ts
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Paused"
 msgstr "Paused"
 
@@ -7743,6 +7906,8 @@ msgstr "receives only, no SMTP account"
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
+#: src/features/setup/email/EmailLayout.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Receiving"
 msgstr "Receiving"
 
@@ -7802,6 +7967,10 @@ msgstr "Reference"
 msgid "Refresh"
 msgstr "Refresh"
 
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Region"
+msgstr "Region"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Register an app in Microsoft Entra"
 msgstr "Register an app in Microsoft Entra"
@@ -7811,6 +7980,7 @@ msgid "Registration"
 msgstr "Registration"
 
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Reinstated"
 msgstr "Reinstated"
 
@@ -7955,7 +8125,7 @@ msgstr "replies"
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
-#: src/features/setup/InstallStep.tsx
+#: src/features/setup/email/EmailLayout.tsx
 msgid "Replies"
 msgstr "Replies"
 
@@ -7968,10 +8138,9 @@ msgstr "Replies and answers in the discussions you follow"
 msgid "Replies and closes"
 msgstr "Replies and closes"
 
-#. placeholder {0}: email.smtp.host
-#: src/features/setup/InstallStep.tsx
-msgid "Replies go out through {0}. Add the SPF and DKIM records your mail provider gives you, so they reach the inbox and not spam."
-msgstr "Replies go out through {0}. Add the SPF and DKIM records your mail provider gives you, so they reach the inbox and not spam."
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Replies cannot go out until you add a reply account."
+msgstr "Replies cannot go out until you add a reply account."
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Replies go out through your own SMTP account. Leave the host empty to only receive mail."
@@ -7998,6 +8167,10 @@ msgstr "Replies to this address are refused until you clear it."
 msgid "replies today"
 msgstr "replies today"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Replies via"
+msgstr "Replies via"
+
 #: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/docs/discussions/QueuePane.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -8007,6 +8180,10 @@ msgstr "Reply"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply ({mod}↵)"
 msgstr "Reply ({mod}↵)"
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Reply account"
+msgstr "Reply account"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
@@ -8079,6 +8256,7 @@ msgid "Reports"
 msgstr "Reports"
 
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Reputation impact"
 msgstr "Reputation impact"
 
@@ -8188,7 +8366,11 @@ msgstr "Rotate the public key?"
 msgid "Rotate the signing secret?"
 msgstr "Rotate the signing secret?"
 
-#: src/features/setup/InstallStep.tsx
+#: src/features/setup/email/EmailReceiveStep.tsx
+msgid "Route your domain"
+msgstr "Route your domain"
+
+#: src/features/setup/email/EmailReceiveStep.tsx
 msgid "Route your mail to Yuva"
 msgstr "Route your mail to Yuva"
 
@@ -8233,7 +8415,7 @@ msgstr "Saturday"
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
-#: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/ui.tsx
 #: src/features/settings/webhooks/WebhookDialog.tsx
@@ -8445,6 +8627,14 @@ msgstr "Send “{name}” now?"
 msgid "Send “{name}” on {when}?"
 msgstr "Send “{name}” on {when}?"
 
+#: src/features/setup/email/EmailTestStep.tsx
+msgid "Send a check"
+msgstr "Send a check"
+
+#: src/features/setup/email/EmailTestStep.tsx
+msgid "Send a mail to {address} from any mailbox."
+msgstr "Send a mail to {address} from any mailbox."
+
 #: src/features/setup/WaitStep.tsx
 msgid "Send a message from your app"
 msgstr "Send a message from your app"
@@ -8461,10 +8651,6 @@ msgstr "Send a test"
 #: src/features/broadcasts/TestSend.tsx
 msgid "Send a test ({key})"
 msgstr "Send a test ({key})"
-
-#: src/features/setup/WaitStep.tsx
-msgid "Send a test e-mail"
-msgstr "Send a test e-mail"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Send a test message"
@@ -8511,11 +8697,6 @@ msgstr "Send events to your own server"
 msgid "Send feedback from a page"
 msgstr "Send feedback from a page"
 
-#. placeholder {0}: email.address
-#: src/features/setup/InstallStep.tsx
-msgid "Send mail for {0} to Yuva"
-msgstr "Send mail for {0} to Yuva"
-
 #: src/features/auth/SignInForm.tsx
 msgid "Send me a code"
 msgstr "Send me a code"
@@ -8556,6 +8737,10 @@ msgstr "Send the reply"
 msgid "Send this file from the start"
 msgstr "Send this file from the start"
 
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Send through your Amazon SES account with its SMTP credentials"
+msgstr "Send through your Amazon SES account with its SMTP credentials"
+
 #: src/features/broadcasts/TestSend.tsx
 msgid "Send to"
 msgstr "Send to"
@@ -8578,10 +8763,12 @@ msgstr "Sender identity"
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Sending"
 msgstr "Sending"
 
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgctxt "SES tenant status"
 msgid "Sending"
 msgstr "Sending"
@@ -8728,6 +8915,10 @@ msgstr "Server URL"
 msgid "SES tenant"
 msgstr "SES tenant"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Set up DKIM"
+msgstr "Set up DKIM"
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "Set up e-mail"
 msgstr "Set up e-mail"
@@ -8744,6 +8935,10 @@ msgstr "Setting up the inbox’s Amazon SES tenant…"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Setting up the tenant…"
 msgstr "Setting up the tenant…"
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Setting up…"
+msgstr "Setting up…"
 
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
@@ -8763,7 +8958,7 @@ msgstr "Settings"
 msgid "Settings ({mod},)"
 msgstr "Settings ({mod},)"
 
-#: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/channels/sections.tsx
 msgid "Settings (JSON)"
 msgstr "Settings (JSON)"
@@ -9023,6 +9218,7 @@ msgid "signed-in users only"
 msgstr "signed-in users only"
 
 #: src/features/settings/channels/email/Deliverability.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
 msgid "Signing"
 msgstr "Signing"
 
@@ -9066,6 +9262,10 @@ msgstr "Site name"
 #: src/features/setup/SetupLayout.tsx
 msgid "Sites"
 msgstr "Sites"
+
+#: src/features/setup/email/EmailTestStep.tsx
+msgid "Skip for now"
+msgstr "Skip for now"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Skip this column"
@@ -9217,6 +9417,10 @@ msgstr "Start"
 msgid "Start a discussion"
 msgstr "Start a discussion"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Start a mailing list"
+msgstr "Start a mailing list"
+
 #: src/features/contact/ContactDetails.tsx
 msgid "Start conversation"
 msgstr "Start conversation"
@@ -9282,7 +9486,7 @@ msgstr "Stay under your provider’s sending rate. Support replies are never slo
 msgid "Step {step} of {count}"
 msgstr "Step {step} of {count}"
 
-#: src/features/setup/InstallStep.tsx
+#: src/features/setup/email/EmailReceiveStep.tsx
 msgid "Step-by-step guide"
 msgstr "Step-by-step guide"
 
@@ -9399,13 +9603,10 @@ msgstr "Sunday"
 
 #: src/features/migrations/SourceStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
-#: src/features/setup/AddChannelStep.tsx
+#: src/features/setup/email/EmailAddressStep.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
 msgid "Support address"
 msgstr "Support address"
-
-#: src/features/settings/channels/ChannelDialog.tsx
-msgid "Support e-mail"
-msgstr "Support e-mail"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "support@example.com"
@@ -9506,6 +9707,7 @@ msgid "teammate@company.com"
 msgstr "teammate@company.com"
 
 #: src/features/broadcasts/Composer.tsx
+#: src/features/setup/email/EmailLayout.tsx
 msgid "Test"
 msgstr "Test"
 
@@ -9547,6 +9749,7 @@ msgid "Thanks for writing. We usually answer within a day."
 msgstr "Thanks for writing. We usually answer within a day."
 
 #: src/features/settings/channels/email/Deliverability.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "That was the sixth check this hour. You can check again at {retry}."
 msgstr "That was the sixth check this hour. You can check again at {retry}."
 
@@ -9681,6 +9884,10 @@ msgstr "The domain takes no mail"
 #: src/components/common/text.ts
 msgid "The e-mail channel is a catch-all without a From address, so it has no address to send this conversation from. Set one in the inbox settings."
 msgstr "The e-mail channel is a catch-all without a From address, so it has no address to send this conversation from. Set one in the inbox settings."
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "The e-mail channel is ready"
+msgstr "The e-mail channel is ready"
 
 #: src/features/broadcasts/ListForm.tsx
 msgid "The e-mail channel that sends the confirmation and welcome mails. It needs an SMTP account."
@@ -9838,7 +10045,7 @@ msgstr "The key sees only these inboxes and cannot manage inboxes, webhooks or t
 msgid "The key stops working at the end of this day."
 msgstr "The key stops working at the end of this day."
 
-#: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/ApiChannelDialog.tsx
 msgid "The kind cannot be changed later."
 msgstr "The kind cannot be changed later."
 
@@ -9869,6 +10076,10 @@ msgstr "The list has no e-mail channel to send through yet. Set up e-mail with a
 #: src/features/broadcasts/ListForm.tsx
 msgid "The list sends in this inbox's name, and replies to its mail land there."
 msgstr "The list sends in this inbox's name, and replies to its mail land there."
+
+#: src/features/setup/email/EmailTestStep.tsx
+msgid "The mail arrived."
+msgstr "The mail arrived."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The mail is {size}, close to the 102 KB where Gmail cuts it off."
@@ -9966,6 +10177,10 @@ msgstr "The passkey sign-in did not complete. Try again or use an e-mailed code.
 msgid "The passkey was not added. Try again."
 msgstr "The passkey was not added. Try again."
 
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "The password is not kept when you leave this page. Enter it again."
+msgstr "The password is not kept when you leave this page. Enter it again."
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "The password is stored encrypted and never shown again."
 msgstr "The password is stored encrypted and never shown again."
@@ -10009,6 +10224,10 @@ msgstr "The recipients are taken when sending starts: people who subscribe later
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "The record at {name} is published."
 msgstr "The record at {name} is published."
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "The region of your SES account."
+msgstr "The region of your SES account."
 
 #: src/components/common/text.ts
 msgid "The review found something that blocks sending. Fix the red items first."
@@ -10375,7 +10594,7 @@ msgstr "This is neither an mbox file nor a zip. Upload the .mbox file itself, or
 msgid "This is not a CSV file. Save the spreadsheet as CSV and upload that."
 msgstr "This is not a CSV file. Save the spreadsheet as CSV and upload that."
 
-#: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/channels/sections.tsx
 msgid "This is not a JSON object."
 msgstr "This is not a JSON object."
@@ -10693,6 +10912,10 @@ msgstr "Try again in a few minutes."
 #: src/features/migrations/text.ts
 msgid "Try again; if this keeps happening, tell the operator of this Yuva server."
 msgstr "Try again; if this keeps happening, tell the operator of this Yuva server."
+
+#: src/features/setup/email/EmailTestStep.tsx
+msgid "Try each part now, or skip and come back from the channel settings."
+msgstr "Try each part now, or skip and come back from the channel settings."
 
 #: src/features/migrations/UploadStep.tsx
 msgid "Trying again"
@@ -11036,11 +11259,15 @@ msgstr "Use the mailbox's user name and password, or an app password if your pro
 msgid "Use the site's address, such as https://docs.example.com."
 msgstr "Use the site's address, such as https://docs.example.com."
 
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Use the SMTP credentials from the SES console."
+msgstr "Use the SMTP credentials from the SES console."
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Use the suggested reply"
 msgstr "Use the suggested reply"
 
-#: src/features/setup/AddChannelStep.tsx
+#: src/features/setup/email/EmailAddressStep.tsx
 msgid "Use the support address you already have. Mail sent to it will arrive here."
 msgstr "Use the support address you already have. Mail sent to it will arrive here."
 
@@ -11445,7 +11672,7 @@ msgstr "Where does it go?"
 msgid "Where is your mail now?"
 msgstr "Where is your mail now?"
 
-#: src/features/setup/AddChannelStep.tsx
+#: src/features/setup/email/EmailAddressStep.tsx
 msgid "Which address do customers write to?"
 msgstr "Which address do customers write to?"
 
@@ -11509,7 +11736,7 @@ msgstr "Windows-1254 (Turkish Excel)"
 msgid "With {name}"
 msgstr "With {name}"
 
-#: src/features/setup/InstallStep.tsx
+#: src/features/setup/email/EmailReceiveStep.tsx
 msgid "With Cloudflare Email Routing, deploy the Email Worker from edge/ of the Yuva repository and add a routing rule for the address with the action Send to a Worker. Any other mail server can post each message, signed with YUVA_INGRESS_SECRET, to:"
 msgstr "With Cloudflare Email Routing, deploy the Email Worker from edge/ of the Yuva repository and add a routing rule for the address with the action Send to a Worker. Any other mail server can post each message, signed with YUVA_INGRESS_SECRET, to:"
 
@@ -11615,7 +11842,7 @@ msgstr "Write a reply"
 msgid "Write a subject of at most 300 characters."
 msgstr "Write a subject of at most 300 characters."
 
-#: src/features/setup/WaitStep.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Write a test e-mail"
 msgstr "Write a test e-mail"
 
@@ -11642,11 +11869,6 @@ msgstr "Write notes"
 #: src/features/settings/channels/email/form.ts
 msgid "Write the auto-reply, or turn it off."
 msgstr "Write the auto-reply, or turn it off."
-
-#. placeholder {0}: channel.email!.address
-#: src/features/setup/WaitStep.tsx
-msgid "Write to {0} from any other address. The conversation appears here the moment the mail arrives."
-msgstr "Write to {0} from any other address. The conversation appears here the moment the mail arrives."
 
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Write to {first}…"
@@ -11826,6 +12048,10 @@ msgstr "Your folders and labels become Yuva labels on the conversations they hol
 msgid "Your mail provider"
 msgstr "Your mail provider"
 
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Your mail provider's or your own SMTP server"
+msgstr "Your mail provider's or your own SMTP server"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Your mailbox"
 msgstr "Your mailbox"
@@ -11950,7 +12176,7 @@ msgstr "Yuva deletes its token when the migration ends."
 msgid "Yuva DKIM"
 msgstr "Yuva DKIM"
 
-#: src/features/setup/InstallStep.tsx
+#: src/features/setup/email/EmailReceiveStep.tsx
 msgid "Yuva does not run a mail server: your domain's mail is passed to it."
 msgstr "Yuva does not run a mail server: your domain's mail is passed to it."
 

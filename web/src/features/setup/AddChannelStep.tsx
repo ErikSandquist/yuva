@@ -1,7 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { ArrowRightIcon } from "lucide-react"
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { Navigate, useLocation, useNavigate } from "react-router"
 
 import { ErrorLine, StepHeader } from "@/components/common"
@@ -14,29 +14,18 @@ import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
 import { appChannelInput, appForm, type AppForm } from "@/features/settings/channels/app/form"
 import { chatChannelInput, chatErrorField, chatForm, type ChatForm } from "@/features/settings/channels/chat/form"
-import { Sending } from "@/features/settings/channels/email/EmailFields"
-import {
-  emailErrorField,
-  emailForm,
-  emailInput,
-  useEmailFieldErrors,
-  type EmailField,
-  type EmailForm,
-} from "@/features/settings/channels/email/form"
 import { FieldError } from "@/features/settings/channels/parts"
 import { useInbox } from "@/features/settings/inboxes/queries"
 import { Field, ToggleRow } from "@/features/settings/ui"
 import { useKindText } from "@/features/setup/ChannelStep"
-import { idempotencyKey, useInboxDraft, useLeaveSetup } from "@/features/setup/draft"
-import { DEFAULT_COLOR, DocsMock, MailMock, PhoneMock, PreviewCaption, SiteMock } from "@/features/setup/previews"
-import { browserTimeZone, isTrimmed, stepNumber, type SetupKind, type SetupState } from "@/features/setup/setup"
+import { idempotencyKey, useEnsureInbox, useInboxDraft, useLeaveSetup } from "@/features/setup/draft"
+import { DEFAULT_COLOR, DocsMock, PhoneMock, PreviewCaption, SiteMock } from "@/features/setup/previews"
+import { isTrimmed, stepNumber, type SetupKind, type SetupState } from "@/features/setup/setup"
 import { SetupLayout } from "@/features/setup/SetupLayout"
-import { api, ApiError, unwrap, type Inbox } from "@/lib/api"
+import { api, unwrap } from "@/lib/api"
 import { keys } from "@/lib/keys"
-import { slugify } from "@/features/settings/inboxes/slugify"
 import { useSession } from "@/lib/session"
 import { useWizardDraft } from "@/hooks/use-wizard-draft"
-import { timeZones } from "@/lib/utils"
 
 function hostOf(origins: string) {
   for (const line of origins.split(/[\n,]+/)) {
@@ -50,10 +39,6 @@ function hostOf(origins: string) {
   return "www.example.com"
 }
 
-function randomSuffix() {
-  return Math.random().toString(36).slice(2, 6)
-}
-
 function originOfUrl(url: string) {
   try {
     const u = new URL(url.trim())
@@ -63,7 +48,7 @@ function originOfUrl(url: string) {
   }
 }
 
-export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: SetupKind }) {
+export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Exclude<SetupKind, "email"> }) {
   const { t } = useLingui()
   const qc = useQueryClient()
   const navigate = useNavigate()
@@ -72,7 +57,8 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
   const leaveSetup = useLeaveSetup()
   const isNew = inboxId === "new"
   const inbox = useInbox(inboxId).data
-  const [inboxDraft, patchInbox, clearInbox] = useInboxDraft()
+  const [inboxDraft, , clearInbox] = useInboxDraft()
+  const ensureInbox = useEnsureInbox()
   const [fields, patchFields, clearFields] = useWizardDraft(`channel:${inboxId}:${kind}`, {
     chat: { ...chatForm(), allowAnonymous: true } as ChatForm,
     app: appForm() as AppForm,
@@ -84,8 +70,6 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
   const setDocs = (f: (d: typeof docs) => typeof docs) => patchFields({ docs: f(docs) })
   const kindText = useKindText()
   const enumText = useEnumText()
-  const fieldErrors = useEmailFieldErrors()
-  const [email, setEmail] = useState<EmailForm>(() => emailForm())
   const secret = useRef<string>(undefined)
   const docsOrigin = kind === "docs" ? originOfUrl(docs.url) : null
   const name = isNew ? inboxDraft.name : (inbox?.name ?? "")
@@ -98,41 +82,14 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
     if (isNew) leaveSetup()
   }
 
-  const createInbox = async () => {
-    const zones = timeZones()
-    const base = slugify(inboxDraft.name) || "inbox"
-    const body = (slug: string) => ({
-      name: inboxDraft.name.trim(),
-      slug,
-      mode: "async" as const,
-      ask_for_rating: false,
-      default_locale: inboxDraft.locale,
-      timezone: zones.includes(inboxDraft.zone) ? inboxDraft.zone : browserTimeZone(),
-    })
-    const post = (slug: string) =>
-      unwrap(
-        api.POST("/v1/inboxes", {
-          params: { header: { "Idempotency-Key": idempotencyKey(inboxDraft.idempotencyKey, "inbox", body(slug)) } },
-          body: body(slug),
-        })
-      )
-    let created
-    try {
-      created = await post(base)
-    } catch (err) {
-      if (!(err instanceof ApiError) || err.status !== 409 || err.code === "idempotency_key_in_use") throw err
-      created = await post(`${base}-${randomSuffix()}`)
-    }
-    secret.current = created.identity_secret
-    patchInbox({ inboxId: created.inbox.id })
-    qc.setQueryData([...keys.inboxes(ws), created.inbox.id], created.inbox satisfies Inbox)
-    void qc.invalidateQueries({ queryKey: keys.inboxes(ws) })
-    return created.inbox.id
-  }
-
   const save = useMutation({
     mutationFn: async () => {
-      const target = isNew ? (inboxDraft.inboxId ?? (await createInbox())) : inboxId
+      let target = inboxId
+      if (isNew) {
+        const created = await ensureInbox()
+        target = created.id
+        secret.current = created.secret ?? secret.current
+      }
       const params = (body: unknown) => ({
         path: { inboxId: target },
         header: { "Idempotency-Key": idempotencyKey(fields.idempotencyKey, "channel", [target, body]) },
@@ -145,15 +102,8 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
         }
         return unwrap(api.POST("/v1/inboxes/{inboxId}/channels", { params: params(body), body }))
       }
-      const typed =
-        kind === "email"
-          ? { email: emailInput(email) }
-          : kind === "chat" && chatInput?.ok
-            ? { chat: chatInput.value }
-            : { app: appInput! }
-      const channelKind = kind as "chat" | "email" | "app"
-      const channelName = kind === "email" ? name || kindText.email.title : kindText[kind].title
-      const body = { kind: channelKind, name: channelName, ...typed }
+      const typed = kind === "chat" && chatInput?.ok ? { chat: chatInput.value } : { app: appInput! }
+      const body = { kind: kind as "chat" | "app", name: kindText[kind].title, ...typed }
       return unwrap(api.POST("/v1/inboxes/{inboxId}/channels", { params: params(body), body }))
     },
     onSuccess: (ch) => {
@@ -168,18 +118,9 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
     },
   })
 
-  const bad = emailErrorField(save.error)
   const badChat = chatErrorField(save.error)
-  const taken = save.error instanceof ApiError && save.error.code === "email_address_taken"
-  const emailError = (f: EmailField) => (bad === f && !taken ? fieldErrors[f] : undefined)
   const valid =
-    kind === "chat"
-      ? chatInput?.ok === true
-      : kind === "app"
-        ? !!appInput
-        : kind === "docs"
-          ? !!docs.name.trim() && !!docsOrigin
-          : email.address.trim() !== ""
+    kind === "chat" ? chatInput?.ok === true : kind === "app" ? !!appInput : !!docs.name.trim() && !!docsOrigin
   const urlError =
     kind !== "docs" ? null : badChat === "allowed_origins" || (docs.touched && docs.url.trim() && !docsOrigin) ? (
       <Trans>Use the site's address, such as https://docs.example.com.</Trans>
@@ -216,13 +157,6 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
           <Trans>Under each page: “Was this page helpful?”, then feedback and the page’s discussions.</Trans>
         </PreviewCaption>
       </>
-    ) : kind === "email" ? (
-      <>
-        <MailMock name={name} to={email.address.trim()} />
-        <PreviewCaption>
-          <Trans>Each new e-mail starts a conversation; replies continue it.</Trans>
-        </PreviewCaption>
-      </>
     ) : (
       <>
         <PhoneMock name={name} color={color} />
@@ -234,13 +168,11 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
 
   const title = {
     chat: <Trans>Which sites will show the chat?</Trans>,
-    email: <Trans>Which address do customers write to?</Trans>,
     app: <Trans>Which apps will use it?</Trans>,
     docs: <Trans>Which documentation site?</Trans>,
   }[kind]
   const lead = {
     chat: <Trans>Only pages on these addresses can open the chat. Enter scheme and host, without a path.</Trans>,
-    email: <Trans>Use the support address you already have. Mail sent to it will arrive here.</Trans>,
     app: <Trans>Pick the platforms; the next step shows the lines to add to each app.</Trans>,
     docs: (
       <Trans>
@@ -252,7 +184,6 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
   }[kind]
   const submit = {
     chat: <Trans>Get the snippet</Trans>,
-    email: <Trans>Continue</Trans>,
     app: <Trans>Get the SDK lines</Trans>,
     docs: <Trans>Get the snippets</Trans>,
   }[kind]
@@ -349,34 +280,6 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
             </Field>
           </>
         )}
-        {kind === "email" && (
-          <>
-            <Field label={<Trans>Support address</Trans>} htmlFor="setup-address">
-              <Input
-                id="setup-address"
-                type="email"
-                autoFocus
-                required
-                maxLength={320}
-                className="h-10 rounded-xl"
-                value={email.address}
-                placeholder="support@example.com"
-                onChange={(e) => setEmail((f) => ({ ...f, address: e.target.value }))}
-                aria-invalid={taken || bad === "address" || undefined}
-                data-testid="setup-address"
-              />
-              <FieldError id="err-address">
-                {taken ? <Trans>Another channel already receives mail at this address.</Trans> : emailError("address")}
-              </FieldError>
-            </Field>
-            <Sending
-              f={email}
-              set={(patch) => setEmail((f) => ({ ...f, ...patch }))}
-              error={emailError}
-              taken={taken}
-            />
-          </>
-        )}
         {kind === "app" && (
           <>
             <Field label={<Trans>Platforms</Trans>}>
@@ -418,7 +321,7 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
             </ToggleRow>
           </>
         )}
-        {!bad && !badChat && <ErrorLine error={save.error} />}
+        {!badChat && <ErrorLine error={save.error} />}
         <Button type="submit" size="lg" className="self-start" disabled={save.isPending} data-testid="setup-add-submit">
           {submit}
           <ArrowRightIcon className="rtl:rotate-180" />

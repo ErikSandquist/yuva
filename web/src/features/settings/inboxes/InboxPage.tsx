@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
-import { ChannelDialog } from "@/features/settings/channels/ChannelDialog"
+import { ApiChannelDialog } from "@/features/settings/channels/ApiChannelDialog"
 import { ChannelSummary } from "@/features/settings/channels/ChannelSummary"
 import { channelLink } from "@/features/settings/channels/email/deliverability"
 import { DeleteInbox, IdentitySecret } from "@/features/settings/inboxes/InboxSecurity"
@@ -112,7 +112,7 @@ function Channels({ inbox }: { inbox: Inbox }) {
   const { t } = useLingui()
   const text = useEnumText()
   const { workspaceId: ws, canManage } = useSession()
-  const [adding, setAdding] = useState<"email" | "api" | null>(null)
+  const [addingApi, setAddingApi] = useState(false)
   const channels = useQuery({
     queryKey: keys.channels(ws, inbox.id),
     queryFn: () =>
@@ -122,6 +122,7 @@ function Channels({ inbox }: { inbox: Inbox }) {
   })
   const { pathname } = useLocation()
   const wizards: [string, string][] = [
+    ["email", t`E-mail`],
     ["chat", t`Website chat`],
     ["app", t`Mobile app`],
     ["docs", t`Documentation site`],
@@ -164,15 +165,6 @@ function Channels({ inbox }: { inbox: Inbox }) {
       </Card>
       {canManage && (
         <div className="mt-1 flex flex-wrap gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            className="bg-card"
-            onClick={() => setAdding("email")}
-            data-testid="add-email"
-          >
-            + <Trans>E-mail</Trans>
-          </Button>
           {wizards.map(([kind, label]) => (
             <Button
               key={kind}
@@ -189,22 +181,20 @@ function Channels({ inbox }: { inbox: Inbox }) {
             variant="outline"
             size="sm"
             className="bg-card"
-            onClick={() => setAdding("api")}
+            onClick={() => setAddingApi(true)}
             data-testid="add-api"
           >
             + <Trans>API channel</Trans>
           </Button>
         </div>
       )}
-      {adding && (
-        <ChannelDialog
-          key={adding}
+      {addingApi && (
+        <ApiChannelDialog
           inboxId={inbox.id}
-          kind={adding}
-          onClose={() => setAdding(null)}
+          onClose={() => setAddingApi(false)}
           onCreated={() => {
             toast(t`Channel added`)
-            setAdding(null)
+            setAddingApi(false)
           }}
         />
       )}

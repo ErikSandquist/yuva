@@ -3,7 +3,7 @@ import type { HomeSetupItem } from "@/lib/api"
 export type SetupKind = "chat" | "email" | "app" | "docs"
 export const SETUP_KINDS: SetupKind[] = ["chat", "email", "app", "docs"]
 
-export type SetupState = { secret?: string; back?: string; existing?: boolean }
+export type SetupState = { secret?: string; back?: string; existing?: boolean; emailError?: "taken" | "invalid" }
 
 export type SetupStage = "name" | "pick" | "fields" | "install" | "wait"
 

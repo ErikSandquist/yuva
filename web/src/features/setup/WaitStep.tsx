@@ -1,6 +1,6 @@
-import { Trans, useLingui } from "@lingui/react/macro"
-import { ArrowRightIcon, MailIcon, PartyPopperIcon, SettingsIcon, UsersIcon } from "lucide-react"
-import { Link, useLocation, useNavigate, useSearchParams } from "react-router"
+import { Trans } from "@lingui/react/macro"
+import { ArrowRightIcon, PartyPopperIcon, SettingsIcon, UsersIcon } from "lucide-react"
+import { Link, Navigate, useLocation, useNavigate, useSearchParams } from "react-router"
 
 import { Notice, StepHeader } from "@/components/common"
 import { Button } from "@/components/ui/button"
@@ -9,14 +9,7 @@ import { useConversations } from "@/features/inbox/queries"
 import { useInbox } from "@/features/settings/inboxes/queries"
 import { hostOfOrigin, setupKind, useChannel } from "@/features/setup/InstallStep"
 import { LiveChat, useForgetPreviewVisitor } from "@/features/setup/LiveChat"
-import {
-  DEFAULT_COLOR,
-  DocsMock,
-  FirstConversation,
-  MailMock,
-  PhoneMock,
-  PreviewCaption,
-} from "@/features/setup/previews"
+import { DEFAULT_COLOR, DocsMock, FirstConversation, PhoneMock, PreviewCaption } from "@/features/setup/previews"
 import { isTrimmed, stepNumber, type SetupState } from "@/features/setup/setup"
 import { SetupLayout } from "@/features/setup/SetupLayout"
 import type { Channel } from "@/lib/api"
@@ -53,7 +46,6 @@ function ChatPreview({ channel }: { channel: Channel }) {
 }
 
 export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: string }) {
-  const { t } = useLingui()
   const navigate = useNavigate()
   const inbox = useInbox(inboxId).data
   const channel = useChannel(channelId).data
@@ -67,6 +59,8 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
   const trimmed = isTrimmed(kind, state.existing)
   const step = trimmed ? stepNumber("wait", true) : first ? 5 : 4
   useForgetPreviewVisitor(channel?.chat?.public_key, `/setup/${inboxId}/${channelId}`)
+
+  if (channel?.email) return <Navigate to={`/setup/${inboxId}/${channelId}/test`} replace state={state} />
 
   const preview = !channel ? null : first ? (
     <>
@@ -84,13 +78,6 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
     </>
   ) : kind === "chat" ? (
     <ChatPreview channel={channel} />
-  ) : kind === "email" ? (
-    <>
-      <MailMock name={name} to={channel.email!.address} waiting />
-      <PreviewCaption>
-        <Trans>It shows up here as soon as it reaches Yuva.</Trans>
-      </PreviewCaption>
-    </>
   ) : (
     <>
       <PhoneMock name={name} color={color} waiting />
@@ -150,8 +137,6 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
                 <Trans>Send feedback from a page</Trans>
               ) : kind === "chat" ? (
                 <Trans>Say hello from your site</Trans>
-              ) : kind === "email" ? (
-                <Trans>Send a test e-mail</Trans>
               ) : (
                 <Trans>Send a message from your app</Trans>
               )
@@ -167,11 +152,6 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
                 Write in the chat in the preview, or on a page with the snippet, as a visitor would. The conversation
                 appears here the moment it starts.
               </Trans>
-            ) : kind === "email" ? (
-              <Trans>
-                Write to {channel.email!.address} from any other address. The conversation appears here the moment the
-                mail arrives.
-              </Trans>
             ) : (
               <Trans>
                 Run your app with the SDK and send a message. The conversation appears here the moment it starts.
@@ -180,19 +160,6 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
           </StepHeader>
           <div className="flex flex-col gap-6">
             <Listening />
-            {kind === "email" && (
-              <Button
-                variant="outline"
-                size="lg"
-                className="self-start"
-                render={
-                  <a href={`mailto:${channel.email!.address}?subject=${encodeURIComponent(t`Hello from the setup`)}`} />
-                }
-              >
-                <MailIcon />
-                <Trans>Write a test e-mail</Trans>
-              </Button>
-            )}
             <Notice className="text-small">
               <Trans>You can leave this page: the conversation will wait for you in your conversation list.</Trans>
             </Notice>

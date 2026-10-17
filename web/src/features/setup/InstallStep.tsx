@@ -8,11 +8,12 @@ import { CodeLine, CopyButton, Notice, Segmented, StepHeader } from "@/component
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useInbox } from "@/features/settings/inboxes/queries"
+import { EmailReceiveStep } from "@/features/setup/email/EmailReceiveStep"
 import { LiveChat, useForgetPreviewVisitor } from "@/features/setup/LiveChat"
-import { DEFAULT_COLOR, DocsMock, MailMock, PhoneMock, PreviewCaption } from "@/features/setup/previews"
+import { DEFAULT_COLOR, DocsMock, PhoneMock, PreviewCaption } from "@/features/setup/previews"
 import { isTrimmed, stepNumber, type SetupKind, type SetupState } from "@/features/setup/setup"
 import { SetupLayout } from "@/features/setup/SetupLayout"
-import { api, unwrap, useVersion, type Channel, type EmailChannel } from "@/lib/api"
+import { api, unwrap, useVersion, type Channel } from "@/lib/api"
 import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
 
@@ -233,56 +234,6 @@ function DocsInstallSteps({ channel, secret }: { channel: Channel; secret?: stri
   )
 }
 
-function EmailInstallSteps({ email }: { email: EmailChannel }) {
-  const ingress = `${window.location.origin}/ingress/email`
-  return (
-    <ol className="flex flex-col gap-7">
-      <Numbered n={1} title={<Trans>Send mail for {email.address} to Yuva</Trans>}>
-        <p className="text-muted-foreground">
-          <Trans>
-            With Cloudflare Email Routing, deploy the Email Worker from edge/ of the Yuva repository and add a routing
-            rule for the address with the action Send to a Worker. Any other mail server can post each message, signed
-            with YUVA_INGRESS_SECRET, to:
-          </Trans>
-        </p>
-        <CodeLine value={ingress} testId="setup-ingress" />
-        <a
-          href={`${DOCS}/email.md#inbound`}
-          target="_blank"
-          rel="noreferrer"
-          className="w-fit text-body text-brand underline-offset-4 hover:underline"
-        >
-          <Trans>Step-by-step guide</Trans>
-        </a>
-      </Numbered>
-      <Numbered n={2} title={<Trans>Replies</Trans>}>
-        {email.smtp ? (
-          <p className="text-muted-foreground">
-            <Trans>
-              Replies go out through {email.smtp.host}. Add the SPF and DKIM records your mail provider gives you, so
-              they reach the inbox and not spam.
-            </Trans>
-          </p>
-        ) : (
-          <Notice tone="warning" className="text-small">
-            <Trans>
-              No SMTP account yet: mail arrives, but replies cannot go out until you add one in the inbox settings.
-            </Trans>
-          </Notice>
-        )}
-        <a
-          href={`${DOCS}/email.md#dns-checklist`}
-          target="_blank"
-          rel="noreferrer"
-          className="w-fit text-body text-brand underline-offset-4 hover:underline"
-        >
-          <Trans>DNS checklist</Trans>
-        </a>
-      </Numbered>
-    </ol>
-  )
-}
-
 type Platform = "ios" | "android" | "js"
 
 function sdkLines(platform: Platform, server: string, key: string, version: string | undefined) {
@@ -373,6 +324,12 @@ function AppInstallSteps({ channel, secret }: { channel: Channel; secret?: strin
 }
 
 export function InstallStep({ inboxId, channelId }: { inboxId: string; channelId: string }) {
+  const email = useChannel(channelId).data?.email
+  if (email) return <EmailReceiveStep inboxId={inboxId} channelId={channelId} />
+  return <InstallBody inboxId={inboxId} channelId={channelId} />
+}
+
+function InstallBody({ inboxId, channelId }: { inboxId: string; channelId: string }) {
   const state = (useLocation().state ?? {}) as SetupState
   const inbox = useInbox(inboxId).data
   const channel = useChannel(channelId).data
@@ -395,13 +352,6 @@ export function InstallStep({ inboxId, channelId }: { inboxId: string; channelId
         <Trans>This is the live chat, as it looks on your site. You can try it here.</Trans>
       </PreviewCaption>
     </>
-  ) : kind === "email" ? (
-    <>
-      <MailMock name={name} to={channel.email!.address} />
-      <PreviewCaption>
-        <Trans>Each new e-mail starts a conversation; replies continue it.</Trans>
-      </PreviewCaption>
-    </>
   ) : (
     <>
       <PhoneMock name={name} color={color} />
@@ -412,7 +362,6 @@ export function InstallStep({ inboxId, channelId }: { inboxId: string; channelId
   )
   const title = {
     chat: <Trans>Add the chat to your site</Trans>,
-    email: <Trans>Route your mail to Yuva</Trans>,
     app: <Trans>Add Yuva to your app</Trans>,
     docs: <Trans>Add Yuva to your documentation</Trans>,
   }
@@ -430,19 +379,14 @@ export function InstallStep({ inboxId, channelId }: { inboxId: string; channelId
         </div>
       ) : (
         <>
-          <StepHeader title={title[kind]}>
-            {kind === "email" ? (
-              <Trans>Yuva does not run a mail server: your domain's mail is passed to it.</Trans>
-            ) : (
-              <Trans>
-                Copy the lines below. They already contain this server's address and the channel's public key, which is
-                not a secret.
-              </Trans>
-            )}
+          <StepHeader title={title[kind as keyof typeof title]}>
+            <Trans>
+              Copy the lines below. They already contain this server's address and the channel's public key, which is
+              not a secret.
+            </Trans>
           </StepHeader>
           <div data-testid={`setup-install-${kind}`}>
             {kind === "chat" && <ChatInstallSteps channel={channel} secret={state.secret} />}
-            {kind === "email" && <EmailInstallSteps email={channel.email!} />}
             {kind === "app" && <AppInstallSteps channel={channel} secret={state.secret} />}
             {kind === "docs" && <DocsInstallSteps channel={channel} secret={state.secret} />}
           </div>

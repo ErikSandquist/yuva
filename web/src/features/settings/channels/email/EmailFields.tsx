@@ -173,97 +173,124 @@ function Password({ f, set, error, taken }: Props) {
   )
 }
 
-export function SendingFields(p: Props) {
+function useTlsText(): Record<SmtpTls, string> {
   const { t } = useLingui()
-  const { f, set, error } = p
-  const invalid = useInvalid(p)
-  const tlsText: Record<SmtpTls, string> = {
+  return {
     starttls: t`STARTTLS (port 587)`,
     tls: t`TLS (port 465)`,
     none: t`None (local relays and test servers only)`,
   }
+}
+
+export function SenderFields(p: Props) {
+  const { t } = useLingui()
+  const { f, set, error } = p
+  const invalid = useInvalid(p)
+  return (
+    <div className="grid gap-5 sm:grid-cols-2">
+      <Field
+        label={<Trans>Display name</Trans>}
+        htmlFor="email-display-name"
+        hint={<Trans>The channel name when empty.</Trans>}
+      >
+        <Input
+          id="email-display-name"
+          maxLength={200}
+          value={f.displayName}
+          placeholder={t`Acme Support`}
+          onChange={(e) => set({ displayName: e.target.value })}
+          {...invalid("display_name")}
+        />
+        <FieldError id="err-display_name">{error("display_name")}</FieldError>
+      </Field>
+      <Field
+        label={<Trans>From address (optional)</Trans>}
+        htmlFor="email-from"
+        hint={<Trans>When your provider sends from another address. Replies still come to the support address.</Trans>}
+      >
+        <Input
+          id="email-from"
+          type="email"
+          maxLength={320}
+          value={f.fromAddress}
+          placeholder="no-reply@example.com"
+          onChange={(e) => set({ fromAddress: e.target.value })}
+          {...invalid("from_address")}
+        />
+        <FieldError id="err-from_address">{error("from_address")}</FieldError>
+      </Field>
+    </div>
+  )
+}
+
+export function SmtpHostField(p: Props) {
+  const { f, set, error } = p
+  const invalid = useInvalid(p)
+  return (
+    <Field label={<Trans>SMTP host</Trans>} htmlFor="smtp-host">
+      <Input
+        id="smtp-host"
+        maxLength={253}
+        value={f.host}
+        placeholder="smtp.example.com"
+        autoComplete="off"
+        onChange={(e) => set({ host: e.target.value })}
+        {...invalid("smtp.host")}
+      />
+      <FieldError id="err-smtp.host">{error("smtp.host")}</FieldError>
+    </Field>
+  )
+}
+
+export function SmtpPortField(p: Props) {
+  const { f, set, error } = p
+  const invalid = useInvalid(p)
+  return (
+    <Field label={<Trans>Port</Trans>} htmlFor="smtp-port">
+      <Input
+        id="smtp-port"
+        type="number"
+        min={1}
+        max={65535}
+        value={f.port}
+        placeholder={f.tls === "tls" ? "465" : "587"}
+        onChange={(e) => set({ port: e.target.value })}
+        {...invalid("smtp.port")}
+      />
+      <FieldError id="err-smtp.port">{error("smtp.port")}</FieldError>
+    </Field>
+  )
+}
+
+export function SmtpEncryptionField(p: Props) {
+  const { t } = useLingui()
+  const { f, set, error } = p
+  const invalid = useInvalid(p)
+  const tlsText = useTlsText()
+  return (
+    <Field label={<Trans>Encryption</Trans>}>
+      <Select value={f.tls} onValueChange={(v) => set({ tls: v as SmtpTls })} items={tlsText}>
+        <SelectTrigger className="w-full" aria-label={t`Encryption`} {...invalid("smtp.tls")}>
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {TLS.map((x) => (
+            <SelectItem key={x} value={x}>
+              {tlsText[x]}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      <FieldError id="err-smtp.tls">{error("smtp.tls")}</FieldError>
+    </Field>
+  )
+}
+
+export function SmtpLoginFields(p: Props) {
+  const { f, set, error } = p
+  const invalid = useInvalid(p)
   return (
     <>
-      <div className="grid gap-5 sm:grid-cols-2">
-        <Field
-          label={<Trans>Display name</Trans>}
-          htmlFor="email-display-name"
-          hint={<Trans>The channel name when empty.</Trans>}
-        >
-          <Input
-            id="email-display-name"
-            maxLength={200}
-            value={f.displayName}
-            placeholder={t`Acme Support`}
-            onChange={(e) => set({ displayName: e.target.value })}
-            {...invalid("display_name")}
-          />
-          <FieldError id="err-display_name">{error("display_name")}</FieldError>
-        </Field>
-        <Field
-          label={<Trans>From address (optional)</Trans>}
-          htmlFor="email-from"
-          hint={
-            <Trans>When your provider sends from another address. Replies still come to the support address.</Trans>
-          }
-        >
-          <Input
-            id="email-from"
-            type="email"
-            maxLength={320}
-            value={f.fromAddress}
-            placeholder="no-reply@example.com"
-            onChange={(e) => set({ fromAddress: e.target.value })}
-            {...invalid("from_address")}
-          />
-          <FieldError id="err-from_address">{error("from_address")}</FieldError>
-        </Field>
-      </div>
-      <p className="text-caption text-muted-foreground">
-        <Trans>Replies go out through your own SMTP account. Leave the host empty to only receive mail.</Trans>
-      </p>
-      <div className="grid gap-5 sm:grid-cols-[1fr_7rem]">
-        <Field label={<Trans>SMTP host</Trans>} htmlFor="smtp-host">
-          <Input
-            id="smtp-host"
-            maxLength={253}
-            value={f.host}
-            placeholder="smtp.example.com"
-            autoComplete="off"
-            onChange={(e) => set({ host: e.target.value })}
-            {...invalid("smtp.host")}
-          />
-          <FieldError id="err-smtp.host">{error("smtp.host")}</FieldError>
-        </Field>
-        <Field label={<Trans>Port</Trans>} htmlFor="smtp-port">
-          <Input
-            id="smtp-port"
-            type="number"
-            min={1}
-            max={65535}
-            value={f.port}
-            placeholder={f.tls === "tls" ? "465" : "587"}
-            onChange={(e) => set({ port: e.target.value })}
-            {...invalid("smtp.port")}
-          />
-          <FieldError id="err-smtp.port">{error("smtp.port")}</FieldError>
-        </Field>
-      </div>
-      <Field label={<Trans>Encryption</Trans>}>
-        <Select value={f.tls} onValueChange={(v) => set({ tls: v as SmtpTls })} items={tlsText}>
-          <SelectTrigger className="w-full" aria-label={t`Encryption`} {...invalid("smtp.tls")}>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {TLS.map((x) => (
-              <SelectItem key={x} value={x}>
-                {tlsText[x]}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <FieldError id="err-smtp.tls">{error("smtp.tls")}</FieldError>
-      </Field>
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label={<Trans>Username</Trans>} htmlFor="smtp-username">
           <Input
@@ -281,6 +308,23 @@ export function SendingFields(p: Props) {
       <p className="text-caption text-muted-foreground">
         <Trans>The password is stored encrypted and never shown again.</Trans>
       </p>
+    </>
+  )
+}
+
+export function SendingFields(p: Props) {
+  return (
+    <>
+      <SenderFields {...p} />
+      <p className="text-caption text-muted-foreground">
+        <Trans>Replies go out through your own SMTP account. Leave the host empty to only receive mail.</Trans>
+      </p>
+      <div className="grid gap-5 sm:grid-cols-[1fr_7rem]">
+        <SmtpHostField {...p} />
+        <SmtpPortField {...p} />
+      </div>
+      <SmtpEncryptionField {...p} />
+      <SmtpLoginFields {...p} />
     </>
   )
 }
@@ -360,11 +404,7 @@ export function BroadcastFields(p: Props) {
   const { t } = useLingui()
   const { f, set, error } = p
   const invalid = useInvalid(p)
-  const tlsText: Record<SmtpTls, string> = {
-    starttls: t`STARTTLS (port 587)`,
-    tls: t`TLS (port 465)`,
-    none: t`None (local relays and test servers only)`,
-  }
+  const tlsText = useTlsText()
   return (
     <>
       <p className="-mt-2 text-caption text-muted-foreground">

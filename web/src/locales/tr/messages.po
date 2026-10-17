@@ -466,6 +466,10 @@ msgstr "{name} yazıyor…"
 msgid "{name} news"
 msgstr "{name} haberleri"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "{name} receives mail at this address. Here is what you set up."
+msgstr "{name}, bu adrese gelen postayı alır. Kurduklarınız şunlar."
+
 #: src/features/conversation/Collision.tsx
 msgid "{name} replied before you."
 msgstr "{name} senden önce yanıtladı."
@@ -702,6 +706,7 @@ msgid "{zone} · {utc} UTC. The recipients are taken then; you can go back to th
 msgstr "{zone} · {utc} UTC. Alıcılar o anda belirlenir; gönderim başlayana kadar taslağa dönebilirsiniz."
 
 #: src/features/settings/channels/email/EmailFields.tsx
+#: src/features/setup/email/EmailAddressStep.tsx
 msgid "*@example.com receives every address of the domain that no other channel has; replies then go out from the address the customer wrote to."
 msgstr "*@example.com, alan adının başka bir kanala ait olmayan tüm adreslerine gelen postaları alır; yanıtlar müşterinin yazdığı adresten gönderilir."
 
@@ -800,6 +805,10 @@ msgstr "Site için onun adını taşıyan, anonim okuyuculara açık ve tartış
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "A check sends a test mail through the broadcast account to the channel’s own address and reads how the receiving server judged it, then looks up the domain’s DNS. Up to six checks an hour."
 msgstr "Denetim, bülten hesabı üzerinden kanalın kendi adresine bir deneme e-postası gönderir, alan sunucunun onu nasıl değerlendirdiğini okur, ardından alan adının DNS kayıtlarına bakar. Saatte en fazla altı denetim yapılabilir."
+
+#: src/features/setup/email/EmailTestStep.tsx
+msgid "A check sends a test mail through your reply account and looks up the domain's DNS."
+msgstr "Denetim, yanıt hesabınızdan bir deneme postası gönderir ve alan adının DNS kayıtlarına bakar."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "A client that cannot sign in can send an API key as <0>Authorization: Bearer</0>; an owner or admin makes one."
@@ -1095,6 +1104,10 @@ msgstr "Geçiş anahtarı ekle"
 msgid "Add a remote server with the Streamable HTTP transport and the server URL. Many clients take a configuration like this:"
 msgstr "Streamable HTTP aktarımıyla ve sunucu adresiyle uzak bir sunucu ekleyin. Birçok istemci şuna benzer bir yapılandırma kabul eder:"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Add a reply account"
+msgstr "Yanıt hesabı ekle"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "{address} için, posta kutusuna teslimi sürdürürken e-postaları aşağıdaki adrese de teslim eden bir kural ekleyin."
@@ -1131,7 +1144,7 @@ msgstr "“Yuva” adında, gizli (confidential) türde bir OAuth istemcisi ekle
 msgid "Add at least one origin."
 msgstr "En az bir kaynak ekleyin."
 
-#: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/ApiChannelDialog.tsx
 msgid "Add channel"
 msgstr "Kanal ekle"
 
@@ -1209,6 +1222,7 @@ msgid "Added by the team"
 msgstr "Ekip ekledi"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/setup/email/EmailLayout.tsx
 msgid "Address"
 msgstr "Adres"
 
@@ -1354,8 +1368,15 @@ msgstr "Üyelerin iç notları için de message.created gönderilir. İç olayla
 
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/setup/email/EmailRepliesStep.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Amazon SES"
 msgstr "Amazon SES"
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Amazon SES · {region}"
+msgstr "Amazon SES · {region}"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Amazon SES error"
@@ -1370,6 +1391,7 @@ msgid "Amazon SES paused sending for this inbox. Its mail through SES is refused
 msgstr "Amazon SES bu gelen kutusunun göndermesini durdurdu. SES üzerinden giden e-postalar, sunucu operatörü yeniden etkinleştirene kadar “Sending disabled” yanıtıyla reddedilir. Diğer gelen kutuları göndermeye devam eder."
 
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Amazon SES paused this inbox’s sending. Its replies and broadcasts through the server’s SES account are refused until the operator reinstates it. Other inboxes keep sending."
 msgstr "Amazon SES bu gelen kutusunun göndermesini durdurdu. Sunucunun SES hesabı üzerinden giden yanıtlar ve bültenler, operatör yeniden etkinleştirene kadar reddedilir. Diğer gelen kutuları göndermeye devam eder."
 
@@ -1509,7 +1531,7 @@ msgstr "{address} adresine gelen e-postaları bu ya da başka bir çalışma ala
 
 #: src/components/common/text.ts
 #: src/features/settings/channels/email/EmailFields.tsx
-#: src/features/setup/AddChannelStep.tsx
+#: src/features/setup/email/EmailAddressStep.tsx
 msgid "Another channel already receives mail at this address."
 msgstr "Bu adrese gelen postayı zaten başka bir kanal alıyor."
 
@@ -1524,6 +1546,10 @@ msgstr "Bu çalışma alanında başka bir içe aktarma sürüyor. İçe aktarma
 #: src/features/conversation/messages/EventLine.tsx
 msgid "another inbox"
 msgstr "başka bir gelen kutusu"
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Another SMTP server"
+msgstr "Başka bir SMTP sunucusu"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Another team address"
@@ -1913,7 +1939,7 @@ msgstr "Faturalama"
 msgid "Billing bot"
 msgstr "Fatura botu"
 
-#: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/ApiChannelDialog.tsx
 msgid "Billing events"
 msgstr "Faturalama olayları"
 
@@ -1993,6 +2019,10 @@ msgstr "Başka bir yerde zaten onay vermiş aboneleri getirin. Her adres önce d
 #: src/features/migrations/MigrationsPage.tsx
 msgid "Bring the history of a mailbox you answer from today, then switch its mail over. Yuva only reads the mailbox; nothing there is changed."
 msgstr "Bugün yanıt verdiğiniz posta kutusunun geçmişini getirin, sonra e-postalarını Yuva'ya yönlendirin. Yuva posta kutusunu yalnızca okur; orada hiçbir şey değişmez."
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Bring your old mail"
+msgstr "Eski postalarınızı getirin"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Broadcast"
@@ -2201,6 +2231,7 @@ msgid "Changing the sending domain turns DKIM signing off until you enable it ag
 msgstr "Gönderim alan adını değiştirmek, yeni alan adı için yeniden açana kadar DKIM imzalamayı kapatır."
 
 #: src/features/contact/ContactDetails.tsx
+#: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Channel"
 msgstr "Kanal"
@@ -2214,6 +2245,7 @@ msgid "Channel removed"
 msgstr "Kanal kaldırıldı"
 
 #: src/features/settings/channels/email/Deliverability.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Check again"
 msgstr "Yeniden denetle"
 
@@ -2237,6 +2269,10 @@ msgstr "DNS'i denetle ve imzalamaya başla"
 msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
 msgstr "Yönlendirmenin açık olduğunu ve Gmail'de kodla onaylandığını kontrol edin."
 
+#: src/features/setup/email/EmailTestStep.tsx
+msgid "Check that it works"
+msgstr "Çalıştığını denetleyin"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Check that no filter or admin rule blocks forwarding to other domains."
 msgstr "Hiçbir filtrenin ya da yönetici kuralının başka alan adlarına yönlendirmeyi engellemediğini kontrol edin."
@@ -2248,6 +2284,10 @@ msgstr "Yönlendirme adresinin tam olarak yukarıdaki adres olduğunu kontrol ed
 #: src/features/auth/SignInForm.tsx
 msgid "Check your e-mail"
 msgstr "E-postanızı kontrol edin"
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Checked"
+msgstr "Denetlendi"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Checked {when}"
@@ -2278,6 +2318,10 @@ msgstr "Sunucuda zaten ne olduğu denetleniyor…"
 msgid "Checking what is on the server"
 msgstr "Sunucuda ne olduğu denetleniyor"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Checking…"
+msgstr "Denetleniyor…"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Choose"
 msgstr "Seç"
@@ -2294,6 +2338,10 @@ msgstr "“Gelen postaların bir kopyasını şuraya yönlendir” seçeneğiyle
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "“Uygulama şifresi oluştur”u seçin, adını “Yuva” koyup oluşturun."
 
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Choose a region"
+msgstr "Bölge seçin"
+
 #: src/app/Gate.tsx
 msgid "Choose a workspace"
 msgstr "Bir çalışma alanı seçin"
@@ -2301,6 +2349,14 @@ msgstr "Bir çalışma alanı seçin"
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "Listeden birini seçin ya da ↑ ↓ ile gezinip Enter ile açın."
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Choose the account that sends your answers. You can change it later in the channel settings."
+msgstr "Yanıtlarınızı gönderecek hesabı seçin. Daha sonra kanal ayarlarından değiştirebilirsiniz."
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Choose the region of your Amazon SES account."
+msgstr "Amazon SES hesabınızın bölgesini seçin."
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Choose the selected block’s image"
@@ -2613,6 +2669,7 @@ msgstr "{storedHost} sunucusuna bağlı. Şifreyi yalnızca değiştirmek için 
 msgid "Connected under another name? All connections are in <0>Connected apps</0>."
 msgstr "Başka bir adla mı bağlandı? Tüm bağlantılar <0>Bağlı uygulamalar</0> sayfasında."
 
+#: src/features/setup/email/EmailTestStep.tsx
 #: src/features/setup/WaitStep.tsx
 msgid "Connecting…"
 msgstr "Bağlanıyor…"
@@ -2693,7 +2750,9 @@ msgstr "İçerik"
 #: src/features/migrations/SignInConnectStep.tsx
 #: src/features/migrations/SourceStep.tsx
 #: src/features/migrations/UploadStep.tsx
-#: src/features/setup/AddChannelStep.tsx
+#: src/features/setup/email/EmailAddressStep.tsx
+#: src/features/setup/email/EmailReceiveStep.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 #: src/features/setup/InstallStep.tsx
 #: src/features/setup/NameStep.tsx
 msgid "Continue"
@@ -2874,6 +2933,10 @@ msgstr "Help Scout'ta bir uygulama oluşturun"
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Create an OAuth client in Zendesk"
 msgstr "Zendesk'te bir OAuth istemcisi oluşturun"
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Create channel"
+msgstr "Kanalı oluştur"
 
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "Create draft"
@@ -3260,12 +3323,17 @@ msgid "Display name"
 msgstr "Görünen ad"
 
 #: src/features/settings/channels/ChannelPage.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
 msgid "DKIM"
 msgstr "DKIM"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "DKIM does not pass for the sending domain."
 msgstr "DKIM, gönderen alan adı için geçmiyor."
+
+#: src/features/setup/email/EmailTestStep.tsx
+msgid "DKIM for broadcasts"
+msgstr "Bültenler için DKIM"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "DKIM passes for {dkimDomain} and signs the unsubscribe headers."
@@ -3287,10 +3355,6 @@ msgstr "DMARC başarısız"
 msgid "DMARC fails: neither SPF nor DKIM passes for {from}. Fix the lines above."
 msgstr "DMARC başarısız: {from} için ne SPF ne de DKIM geçiyor. Yukarıdaki satırları düzeltin."
 
-#: src/features/setup/InstallStep.tsx
-msgid "DNS checklist"
-msgstr "DNS kontrol listesi"
-
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "DNS does not answer with the key at {name} yet. Publish the record below, then check again."
 msgstr "DNS, {name} adında henüz anahtarla yanıt vermiyor. Aşağıdaki kaydı ekleyin, sonra yeniden denetleyin."
@@ -3298,6 +3362,10 @@ msgstr "DNS, {name} adında henüz anahtarla yanıt vermiyor. Aşağıdaki kayd�
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "DNS does not answer with this key at the name above yet. Publish the record, wait a few minutes (some providers take longer) and try again."
 msgstr "DNS, yukarıdaki adda henüz bu anahtarla yanıt vermiyor. Kaydı ekleyin, birkaç dakika bekleyin (bazı sağlayıcılarda daha uzun sürer) ve yeniden deneyin."
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "DNS only"
+msgstr "Yalnızca DNS"
 
 #: src/features/conversation/Collision.tsx
 msgid "Do not both write."
@@ -3335,11 +3403,16 @@ msgstr "Belgeler"
 msgid "Does it work with server-side rendering?"
 msgstr "Sunucu tarafında oluşturmayla çalışıyor mu?"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Domain not verified"
+msgstr "Alan adı doğrulanmadı"
+
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
+#: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
@@ -3502,8 +3575,9 @@ msgstr "Her biri, seçilen gelen kutusunda kendi adresini alan e-posta kanalına
 msgid "Each message's original source is stored, as for mail that arrives live. Uses more storage."
 msgstr "Canlı gelen e-postalarda olduğu gibi her mesajın özgün kaynağı saklanır. Daha fazla depolama kullanır."
 
-#: src/features/setup/AddChannelStep.tsx
-#: src/features/setup/InstallStep.tsx
+#: src/features/setup/email/EmailAddressStep.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Each new e-mail starts a conversation; replies continue it."
 msgstr "Her yeni e-posta bir konuşma başlatır; yanıtlar aynı konuşmada sürer."
 
@@ -3614,6 +3688,14 @@ msgstr "Kullanıcı adı ve parola içermeyen bir http veya https adresi girin."
 msgid "Enter the address of the mailbox you answer from today. Yuva finds its provider; nothing is read until you connect it."
 msgstr "Bugün yanıt verdiğiniz posta kutusunun adresini girin. Yuva sağlayıcısını bulur; siz bağlayana kadar hiçbir şey okunmaz."
 
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Enter the SMTP password from the SES console."
+msgstr "SES konsolundaki SMTP parolasını girin."
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Enter the SMTP user name from the SES console."
+msgstr "SES konsolundaki SMTP kullanıcı adını girin."
+
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "İş e-posta adresinizi yazın, size bir kod gönderelim. Parola yok; sonraki girişlerde de aynı şekilde kodla girersiniz."
@@ -3621,6 +3703,10 @@ msgstr "İş e-posta adresinizi yazın, size bir kod gönderelim. Parola yok; so
 #: src/components/common/text.ts
 msgid "Entry: {entry}"
 msgstr "Öğe: {entry}"
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Error"
+msgstr "Hata"
 
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Error or answer"
@@ -3766,6 +3852,7 @@ msgstr "Harici kimlikler"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
 msgid "Failed"
 msgstr "Başarısız"
 
@@ -3855,6 +3942,10 @@ msgstr "Bitir"
 #: src/features/migrations/parts.tsx
 msgid "Finish anyway"
 msgstr "Yine de bitir"
+
+#: src/features/setup/email/EmailLayout.tsx
+msgid "Finish later"
+msgstr "Sonra bitir"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Finish now"
@@ -4015,6 +4106,10 @@ msgstr "Gelen tüm e-postaları aşağıdaki adrese yönlendirin ve posta kutusu
 msgid "Forward as a note mentioning"
 msgstr "Not olarak ilet ve etiketle:"
 
+#: src/features/setup/email/EmailReceiveStep.tsx
+msgid "Forward from your mailbox"
+msgstr "Posta kutunuzdan yönlendirin"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Forward mail for this address to the Cloudflare Email Worker in edge/ of the Yuva repository, or to any mail server that posts each message to this server's ingress URL, signed with YUVA_INGRESS_SECRET:"
 msgstr "Bu adrese gelen postayı Yuva deposundaki edge/ içindeki Cloudflare Email Worker'a ya da her iletiyi YUVA_INGRESS_SECRET ile imzalayıp bu sunucunun giriş adresine gönderen herhangi bir posta sunucusuna yönlendirin:"
@@ -4033,6 +4128,7 @@ msgstr "Yönlendirme"
 
 #: src/features/migrations/SwitchStep.tsx
 #: src/features/settings/channels/email/ForwardingAddressField.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
 msgid "Forwarding address"
 msgstr "Yönlendirme adresi"
 
@@ -4213,7 +4309,7 @@ msgstr "Verildi: {name}"
 msgid "Has an open conversation"
 msgstr "Açık konuşması olan"
 
-#: src/features/setup/WaitStep.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Hello from the setup"
 msgstr "Kurulumdan merhaba"
 
@@ -4290,6 +4386,7 @@ msgstr "Seçili gönderiyi gizle"
 
 #: src/components/common/text.ts
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "High"
 msgstr "Yüksek"
 
@@ -4338,6 +4435,14 @@ msgstr "Ne kadar geriye"
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "How HTML e-mails open. You can still switch each message."
 msgstr "HTML e-postaların nasıl açılacağı. Her iletiyi yine de ayrı ayrı değiştirebilirsiniz."
+
+#: src/features/setup/email/EmailReceiveStep.tsx
+msgid "How mail reaches Yuva"
+msgstr "Postanın Yuva'ya ulaşma yolu"
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "How should replies go out?"
+msgstr "Yanıtlar nasıl gitsin?"
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "How the newest conversations will look"
@@ -4415,6 +4520,10 @@ msgstr "Yalnızca {provider} hesabına ulaşan bir şey olmazsa taşıma {when} 
 #: src/features/migrations/SwitchStep.tsx
 msgid "If nothing reaches only the old mailbox, the migration finishes on its own {when} ({at})."
 msgstr "Yalnızca eski posta kutusuna ulaşan bir şey olmazsa taşıma {when} kendiliğinden biter ({at})."
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "If this server manages Amazon SES, Yuva keeps this inbox's mail in its own tenant; you see the result on the next steps."
+msgstr "Bu sunucu Amazon SES'i yönetiyorsa Yuva, bu gelen kutusunun postasını kendi kiracısında tutar; sonucu sonraki adımlarda görürsünüz."
 
 #: src/features/migrations/DoneStep.tsx
 msgid "If you made a password just for Yuva, remove it in {provider}."
@@ -4542,6 +4651,10 @@ msgstr "Fastmail'de Ayarlar › Gizlilik ve Güvenlik › Uygulama şifrelerini 
 #: src/features/migrations/SwitchStep.tsx
 msgid "In Gmail, open Settings › See all settings › Forwarding and POP/IMAP."
 msgstr "Gmail'de Ayarlar › Tüm ayarları göster › Yönlendirme ve POP/IMAP'i açın."
+
+#: src/features/setup/email/EmailReceiveStep.tsx
+msgid "In Gmail, Outlook or your provider, forward {own} to this address."
+msgstr "Gmail'de, Outlook'ta veya sağlayıcınızda {own} adresini bu adrese yönlendirin."
 
 #: src/features/migrations/text.ts
 msgid "In GMX, open E-mail settings › POP3 & IMAP and allow access over IMAP."
@@ -4751,6 +4864,8 @@ msgstr "Sana atanmış olarak açılır; ilk mesajı orada yaz."
 msgid "It sends through {address}."
 msgstr "{address} üzerinden gönderir."
 
+#: src/features/setup/email/EmailReceiveStep.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 #: src/features/setup/WaitStep.tsx
 msgid "It shows up here as soon as it reaches Yuva."
 msgstr "Yuva'ya ulaştığı anda burada görünür."
@@ -4850,10 +4965,6 @@ msgstr "Bu çalışma alanında anahtarlar ve asistanlar bülten zamanlayamaz."
 msgid "Keys and assistants may send broadcasts"
 msgstr "Anahtarlar ve asistanlar bülten gönderebilir"
 
-#: src/features/settings/channels/ChannelDialog.tsx
-msgid "Kind"
-msgstr "Tür"
-
 #: src/features/contact/ContactsColumn.tsx
 msgid "Known"
 msgstr "Tanınan"
@@ -4923,6 +5034,10 @@ msgstr "Son deneme"
 #: src/features/home/HomePage.tsx
 msgid "Last broadcast"
 msgstr "Son bülten"
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Last check"
+msgstr "Son denetim"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Last checked"
@@ -5058,6 +5173,10 @@ msgstr "Liste geri alındı"
 msgid "Listening for the first message…"
 msgstr "İlk mesaj bekleniyor…"
 
+#: src/features/setup/email/EmailTestStep.tsx
+msgid "Listening for the mail…"
+msgstr "Posta bekleniyor…"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Listing the tickets…"
 msgstr "Talepler listeleniyor…"
@@ -5154,6 +5273,7 @@ msgstr "Sağlayıcı aranıyor…"
 
 #: src/components/common/text.ts
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Low"
 msgstr "Düşük"
 
@@ -5168,6 +5288,10 @@ msgstr "Küçük harf, rakam ve tire."
 #: src/features/broadcasts/Composer.tsx
 msgid "Lowercase letters, digits, dashes, underscores and dots. Fixed once the broadcast is sent."
 msgstr "Küçük harfler, rakamlar, tire, alt çizgi ve nokta. Bülten gönderildikten sonra değişmez."
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Mail arrives here; add a reply account when you are ready"
+msgstr "Posta buraya gelir; hazır olunca bir yanıt hesabı ekleyin"
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Mail carries the tenant <0>{channelTenant}</0> you typed below."
@@ -5531,6 +5655,10 @@ msgstr "Diğer işlemler"
 msgid "More actions for {address}"
 msgstr "{address} için diğer işlemler"
 
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "More options"
+msgstr "Daha fazla seçenek"
+
 #: src/features/contact/MergePreview.tsx
 msgid "More than {count} conversations"
 msgstr "{count} konuşmadan fazla"
@@ -5621,12 +5749,13 @@ msgstr "Profilim"
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
-#: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/channels/email/Deliverability.tsx
 #: src/features/settings/channels/sections.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/profile/ProfileForm.tsx
+#: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Name"
 msgstr "Ad"
@@ -5687,6 +5816,10 @@ msgstr "Hiçbir zaman"
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Never checked. Run a check before the first broadcast; the review warns until you do."
 msgstr "Hiç denetlenmedi. İlk bültenden önce bir denetim yapın; yapana kadar gözden geçirme uyarır."
+
+#: src/features/setup/email/EmailReceiveStep.tsx
+msgid "Never forward to {own} itself: the mail would loop."
+msgstr "Asla {own} adresinin kendisine yönlendirmeyin: posta döngüye girer."
 
 #: src/features/migrations/text.ts
 msgid "Never imported"
@@ -5752,6 +5885,7 @@ msgstr "Canlı bir gelen kutusunda yeni konuşma"
 msgid "New conversation in an async inbox"
 msgstr "Eşzamansız bir gelen kutusunda yeni konuşma"
 
+#: src/features/setup/email/EmailTestStep.tsx
 #: src/features/setup/WaitStep.tsx
 msgid "New conversations show up at the top of your conversation list."
 msgstr "Yeni konuşmalar konuşma listenizin en üstünde görünür."
@@ -5909,6 +6043,10 @@ msgstr "Bu alt alan adına sahip bir {provider} hesabı yok. Adresinizden kontro
 #: src/features/settings/webhooks/parts.tsx
 msgid "no answer"
 msgstr "yanıt yok"
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "No answer"
+msgstr "Yanıt yok"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "No API keys yet."
@@ -6165,10 +6303,6 @@ msgstr "SMTP hesabı yok"
 msgid "No SMTP account"
 msgstr "SMTP hesabı yok"
 
-#: src/features/setup/InstallStep.tsx
-msgid "No SMTP account yet: mail arrives, but replies cannot go out until you add one in the inbox settings."
-msgstr "Henüz SMTP hesabı yok: postalar gelir, ama gelen kutusu ayarlarından bir hesap ekleyene kadar yanıtlar gönderilemez."
-
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/History.tsx
 #: src/features/conversation/RelatedLine.tsx
@@ -6260,6 +6394,7 @@ msgstr "Bu e-postayı kimse almayacak. Abonesi olan listeler seçin ya da koşul
 #: src/features/contact/MergePreview.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/SettingsColumn.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "None"
 msgstr "Yok"
 
@@ -6300,6 +6435,10 @@ msgstr "Yönetici değil"
 msgid "Not an origin: {notOrigins}. Use scheme and host only, such as https://www.example.com."
 msgstr "Geçerli bir kaynak değil: {notOrigins}. Yalnızca şema ve alan adı yazın, örneğin https://www.example.com."
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Not checked"
+msgstr "Denetlenmedi"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Not confirmed yet"
 msgstr "Henüz onaylamadı"
@@ -6331,6 +6470,10 @@ msgstr "Yararlı değil"
 msgid "Not imported"
 msgstr "Aktarılmayacaklar"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Not isolated"
+msgstr "Yalıtılmamış"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Not offered on this server"
 msgstr "Bu sunucuda sunulmuyor"
@@ -6351,6 +6494,10 @@ msgstr "Doğru değil mi? Sağlayıcınızı seçin"
 msgid "Not run"
 msgstr "Çalıştırılmadı"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Not set up"
+msgstr "Kurulmadı"
+
 #: src/features/home/HomePage.tsx
 msgid "Not set up yet"
 msgstr "Henüz kurulmayanlar"
@@ -6364,6 +6511,7 @@ msgid "Not signing"
 msgstr "İmzalamıyor"
 
 #: src/features/settings/channels/email/Deliverability.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not signing yet"
 msgstr "Henüz imzalamıyor"
 
@@ -6715,6 +6863,14 @@ msgstr "Yalnızca abone olanlar alır. Ayrılan, onaylamayan, geri dönen ve eng
 msgid "Only read requests are sent. You can close this page; the scan goes on and the list in Settings shows when it is done."
 msgstr "Yalnızca okuma istekleri gönderilir. Bu sayfayı kapatabilirsiniz; tarama sürer ve bittiğinde Ayarlar'daki liste bunu gösterir."
 
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Only receive for now"
+msgstr "Şimdilik yalnızca al"
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Only receives"
+msgstr "Yalnızca alır"
+
 #: src/components/common/text.ts
 msgid "Only the person can subscribe again, by confirming a mail."
 msgstr "Yalnızca kişinin kendisi, bir e-postayı onaylayarak yeniden abone olabilir."
@@ -6897,6 +7053,7 @@ msgstr "Tartışmayı aç"
 
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/DoneStep.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
 msgid "Open the inbox"
 msgstr "Gelen kutusunu aç"
 
@@ -7044,6 +7201,10 @@ msgstr "Zaman içinde"
 msgid "Overview"
 msgstr "Genel bakış"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Own tenant"
+msgstr "Kendi kiracısı"
+
 #: src/components/common/text.ts
 msgid "Owner"
 msgstr "Sahip"
@@ -7145,6 +7306,8 @@ msgstr "Gönderimi duraklat ya da sürdür"
 #: src/components/common/text.ts
 #: src/features/migrations/text.ts
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Paused"
 msgstr "Duraklatıldı"
 
@@ -7743,6 +7906,8 @@ msgstr "yalnızca alır, SMTP hesabı yok"
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
+#: src/features/setup/email/EmailLayout.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Receiving"
 msgstr "Alma"
 
@@ -7802,6 +7967,10 @@ msgstr "Referans"
 msgid "Refresh"
 msgstr "Yenile"
 
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Region"
+msgstr "Bölge"
+
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Register an app in Microsoft Entra"
 msgstr "Microsoft Entra'da bir uygulama kaydedin"
@@ -7811,6 +7980,7 @@ msgid "Registration"
 msgstr "Sicil"
 
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Reinstated"
 msgstr "Yeniden etkinleştirildi"
 
@@ -7955,7 +8125,7 @@ msgstr "yanıt"
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailSections.tsx
-#: src/features/setup/InstallStep.tsx
+#: src/features/setup/email/EmailLayout.tsx
 msgid "Replies"
 msgstr "Yanıtlar"
 
@@ -7968,10 +8138,9 @@ msgstr "Takip ettiğiniz tartışmalardaki yanıtlar"
 msgid "Replies and closes"
 msgstr "Yanıtlar ve kapanışlar"
 
-#. placeholder {0}: email.smtp.host
-#: src/features/setup/InstallStep.tsx
-msgid "Replies go out through {0}. Add the SPF and DKIM records your mail provider gives you, so they reach the inbox and not spam."
-msgstr "Yanıtlar {0} üzerinden gider. Spam'e değil gelen kutusuna ulaşmaları için e-posta sağlayıcınızın verdiği SPF ve DKIM kayıtlarını ekleyin."
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Replies cannot go out until you add a reply account."
+msgstr "Bir yanıt hesabı ekleyene kadar yanıtlar gönderilemez."
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Replies go out through your own SMTP account. Leave the host empty to only receive mail."
@@ -7998,6 +8167,10 @@ msgstr "Siz temizleyene kadar bu adrese yanıt gönderilmez."
 msgid "replies today"
 msgstr "bugün yanıt"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Replies via"
+msgstr "Yanıt yolu"
+
 #: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/docs/discussions/QueuePane.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -8007,6 +8180,10 @@ msgstr "Yanıt"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply ({mod}↵)"
 msgstr "Yanıtla ({mod}↵)"
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Reply account"
+msgstr "Yanıt hesabı"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
@@ -8079,6 +8256,7 @@ msgid "Reports"
 msgstr "Raporlar"
 
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Reputation impact"
 msgstr "İtibar etkisi"
 
@@ -8188,7 +8366,11 @@ msgstr "Genel anahtar yenilensin mi?"
 msgid "Rotate the signing secret?"
 msgstr "İmzalama anahtarı yenilensin mi?"
 
-#: src/features/setup/InstallStep.tsx
+#: src/features/setup/email/EmailReceiveStep.tsx
+msgid "Route your domain"
+msgstr "Alan adınızı yönlendirin"
+
+#: src/features/setup/email/EmailReceiveStep.tsx
 msgid "Route your mail to Yuva"
 msgstr "Postalarınızı Yuva'ya yönlendirin"
 
@@ -8233,7 +8415,7 @@ msgstr "Cumartesi"
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
-#: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/ui.tsx
 #: src/features/settings/webhooks/WebhookDialog.tsx
@@ -8445,6 +8627,14 @@ msgstr "“{name}” şimdi gönderilsin mi?"
 msgid "Send “{name}” on {when}?"
 msgstr "“{name}” {when} tarihinde gönderilsin mi?"
 
+#: src/features/setup/email/EmailTestStep.tsx
+msgid "Send a check"
+msgstr "Denetim gönder"
+
+#: src/features/setup/email/EmailTestStep.tsx
+msgid "Send a mail to {address} from any mailbox."
+msgstr "Herhangi bir posta kutusundan {address} adresine bir posta gönderin."
+
 #: src/features/setup/WaitStep.tsx
 msgid "Send a message from your app"
 msgstr "Uygulamanızdan bir mesaj gönderin"
@@ -8461,10 +8651,6 @@ msgstr "Deneme gönder"
 #: src/features/broadcasts/TestSend.tsx
 msgid "Send a test ({key})"
 msgstr "Deneme gönder ({key})"
-
-#: src/features/setup/WaitStep.tsx
-msgid "Send a test e-mail"
-msgstr "Deneme e-postası gönderin"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Send a test message"
@@ -8511,11 +8697,6 @@ msgstr "Olayları kendi sunucuna gönder"
 msgid "Send feedback from a page"
 msgstr "Bir sayfadan geri bildirim gönderin"
 
-#. placeholder {0}: email.address
-#: src/features/setup/InstallStep.tsx
-msgid "Send mail for {0} to Yuva"
-msgstr "{0} adresine gelen postaları Yuva'ya iletin"
-
 #: src/features/auth/SignInForm.tsx
 msgid "Send me a code"
 msgstr "Bana kod gönder"
@@ -8556,6 +8737,10 @@ msgstr "Yanıtı gönder"
 msgid "Send this file from the start"
 msgstr "Bu dosyayı baştan gönder"
 
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Send through your Amazon SES account with its SMTP credentials"
+msgstr "Amazon SES hesabınızdan, SMTP kimlik bilgileriyle gönderin"
+
 #: src/features/broadcasts/TestSend.tsx
 msgid "Send to"
 msgstr "Alıcılar"
@@ -8578,10 +8763,12 @@ msgstr "Gönderen bilgileri"
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Sending"
 msgstr "Gönderme"
 
 #: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgctxt "SES tenant status"
 msgid "Sending"
 msgstr "Gönderiyor"
@@ -8728,6 +8915,10 @@ msgstr "Sunucu adresi"
 msgid "SES tenant"
 msgstr "SES kiracısı"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Set up DKIM"
+msgstr "DKIM kur"
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "Set up e-mail"
 msgstr "E-postayı kur"
@@ -8744,6 +8935,10 @@ msgstr "Gelen kutusunun Amazon SES kiracısı kuruluyor…"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Setting up the tenant…"
 msgstr "Kiracı kuruluyor…"
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Setting up…"
+msgstr "Kuruluyor…"
 
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
@@ -8763,7 +8958,7 @@ msgstr "Ayarlar"
 msgid "Settings ({mod},)"
 msgstr "Ayarlar ({mod},)"
 
-#: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/channels/sections.tsx
 msgid "Settings (JSON)"
 msgstr "Ayarlar (JSON)"
@@ -9023,6 +9218,7 @@ msgid "signed-in users only"
 msgstr "yalnızca oturum açmış kullanıcılar"
 
 #: src/features/settings/channels/email/Deliverability.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
 msgid "Signing"
 msgstr "İmzalıyor"
 
@@ -9066,6 +9262,10 @@ msgstr "Site adı"
 #: src/features/setup/SetupLayout.tsx
 msgid "Sites"
 msgstr "Siteler"
+
+#: src/features/setup/email/EmailTestStep.tsx
+msgid "Skip for now"
+msgstr "Şimdilik atla"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Skip this column"
@@ -9217,6 +9417,10 @@ msgstr "Başla"
 msgid "Start a discussion"
 msgstr "Tartışma başlat"
 
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "Start a mailing list"
+msgstr "Bir posta listesi başlatın"
+
 #: src/features/contact/ContactDetails.tsx
 msgid "Start conversation"
 msgstr "Konuşmayı başlat"
@@ -9282,7 +9486,7 @@ msgstr "Sağlayıcınızın gönderim hızının altında kalın. Destek yanıtl
 msgid "Step {step} of {count}"
 msgstr "Adım {step} / {count}"
 
-#: src/features/setup/InstallStep.tsx
+#: src/features/setup/email/EmailReceiveStep.tsx
 msgid "Step-by-step guide"
 msgstr "Adım adım rehber"
 
@@ -9399,13 +9603,10 @@ msgstr "Pazar"
 
 #: src/features/migrations/SourceStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
-#: src/features/setup/AddChannelStep.tsx
+#: src/features/setup/email/EmailAddressStep.tsx
+#: src/features/setup/email/EmailDoneStep.tsx
 msgid "Support address"
 msgstr "Destek adresi"
-
-#: src/features/settings/channels/ChannelDialog.tsx
-msgid "Support e-mail"
-msgstr "Destek e-postası"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "support@example.com"
@@ -9506,6 +9707,7 @@ msgid "teammate@company.com"
 msgstr "ekiparkadasi@sirket.com"
 
 #: src/features/broadcasts/Composer.tsx
+#: src/features/setup/email/EmailLayout.tsx
 msgid "Test"
 msgstr "Deneme"
 
@@ -9547,6 +9749,7 @@ msgid "Thanks for writing. We usually answer within a day."
 msgstr "Yazdığınız için teşekkürler. Genellikle bir gün içinde yanıt veririz."
 
 #: src/features/settings/channels/email/Deliverability.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "That was the sixth check this hour. You can check again at {retry}."
 msgstr "Bu saatteki altıncı denetimdi. {retry} itibarıyla yeniden denetleyebilirsiniz."
 
@@ -9681,6 +9884,10 @@ msgstr "Alan adı e-posta almıyor"
 #: src/components/common/text.ts
 msgid "The e-mail channel is a catch-all without a From address, so it has no address to send this conversation from. Set one in the inbox settings."
 msgstr "E-posta kanalı alan adının tüm adreslerini (*@) alıyor ve gönderen adresi yok, bu yüzden bu konuşmayı gönderecek bir adres bulunamadı. Gelen kutusu ayarlarından bir gönderen adresi belirleyin."
+
+#: src/features/setup/email/EmailDoneStep.tsx
+msgid "The e-mail channel is ready"
+msgstr "E-posta kanalı hazır"
 
 #: src/features/broadcasts/ListForm.tsx
 msgid "The e-mail channel that sends the confirmation and welcome mails. It needs an SMTP account."
@@ -9838,7 +10045,7 @@ msgstr "Anahtar yalnızca bu gelen kutularını görür; gelen kutularını, web
 msgid "The key stops working at the end of this day."
 msgstr "Anahtar bu günün sonunda çalışmayı bırakır."
 
-#: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/ApiChannelDialog.tsx
 msgid "The kind cannot be changed later."
 msgstr "Tür daha sonra değiştirilemez."
 
@@ -9869,6 +10076,10 @@ msgstr "Listenin gönderebileceği bir e-posta kanalı henüz yok. SMTP hesabıy
 #: src/features/broadcasts/ListForm.tsx
 msgid "The list sends in this inbox's name, and replies to its mail land there."
 msgstr "Liste bu gelen kutusunun adıyla gönderir; e-postalarına gelen yanıtlar da buraya düşer."
+
+#: src/features/setup/email/EmailTestStep.tsx
+msgid "The mail arrived."
+msgstr "Posta ulaştı."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The mail is {size}, close to the 102 KB where Gmail cuts it off."
@@ -9966,6 +10177,10 @@ msgstr "Geçiş anahtarıyla giriş tamamlanmadı. Yeniden deneyin ya da e-posta
 msgid "The passkey was not added. Try again."
 msgstr "Geçiş anahtarı eklenmedi. Yeniden deneyin."
 
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "The password is not kept when you leave this page. Enter it again."
+msgstr "Bu sayfadan ayrılınca parola saklanmaz. Yeniden girin."
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "The password is stored encrypted and never shown again."
 msgstr "Parola şifreli saklanır ve bir daha gösterilmez."
@@ -10009,6 +10224,10 @@ msgstr "Alıcılar gönderim başladığında belirlenir: sonradan abone olanlar
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "The record at {name} is published."
 msgstr "{name} adındaki kayıt yayımlanmış."
+
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "The region of your SES account."
+msgstr "SES hesabınızın bölgesi."
 
 #: src/components/common/text.ts
 msgid "The review found something that blocks sending. Fix the red items first."
@@ -10375,7 +10594,7 @@ msgstr "Bu ne bir mbox dosyası ne de bir zip. .mbox dosyasının kendisini ya d
 msgid "This is not a CSV file. Save the spreadsheet as CSV and upload that."
 msgstr "Bu bir CSV dosyası değil. Tabloyu CSV olarak kaydedip onu yükleyin."
 
-#: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/ApiChannelDialog.tsx
 #: src/features/settings/channels/sections.tsx
 msgid "This is not a JSON object."
 msgstr "Bu bir JSON nesnesi değil."
@@ -10693,6 +10912,10 @@ msgstr "Birkaç dakika sonra yeniden deneyin."
 #: src/features/migrations/text.ts
 msgid "Try again; if this keeps happening, tell the operator of this Yuva server."
 msgstr "Yeniden deneyin; böyle sürerse bu Yuva sunucusunu işletene haber verin."
+
+#: src/features/setup/email/EmailTestStep.tsx
+msgid "Try each part now, or skip and come back from the channel settings."
+msgstr "Her parçayı şimdi deneyin ya da atlayıp kanal ayarlarından dönün."
 
 #: src/features/migrations/UploadStep.tsx
 msgid "Trying again"
@@ -11036,11 +11259,15 @@ msgstr "Posta kutusunun kullanıcı adını ve şifresini, sağlayıcınız sunu
 msgid "Use the site's address, such as https://docs.example.com."
 msgstr "Sitenin adresini girin, örneğin https://docs.example.com."
 
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Use the SMTP credentials from the SES console."
+msgstr "SES konsolundaki SMTP kimlik bilgilerini kullanın."
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Use the suggested reply"
 msgstr "Önerilen yanıtı kullan"
 
-#: src/features/setup/AddChannelStep.tsx
+#: src/features/setup/email/EmailAddressStep.tsx
 msgid "Use the support address you already have. Mail sent to it will arrive here."
 msgstr "Kullandığınız destek adresini yazın. Bu adrese gönderilen postalar buraya gelir."
 
@@ -11445,7 +11672,7 @@ msgstr "Nereye gidecek?"
 msgid "Where is your mail now?"
 msgstr "E-postalarınız şu anda nerede?"
 
-#: src/features/setup/AddChannelStep.tsx
+#: src/features/setup/email/EmailAddressStep.tsx
 msgid "Which address do customers write to?"
 msgstr "Müşteriler hangi adrese yazıyor?"
 
@@ -11509,7 +11736,7 @@ msgstr "Windows-1254 (Türkçe Excel)"
 msgid "With {name}"
 msgstr "{name} ilgileniyor"
 
-#: src/features/setup/InstallStep.tsx
+#: src/features/setup/email/EmailReceiveStep.tsx
 msgid "With Cloudflare Email Routing, deploy the Email Worker from edge/ of the Yuva repository and add a routing rule for the address with the action Send to a Worker. Any other mail server can post each message, signed with YUVA_INGRESS_SECRET, to:"
 msgstr "Cloudflare Email Routing kullanıyorsanız Yuva deposundaki edge/ klasöründen Email Worker'ı yayınlayın ve bu adres için eylemi Send to a Worker olan bir yönlendirme kuralı ekleyin. Başka bir posta sunucusu da her iletiyi YUVA_INGRESS_SECRET ile imzalayıp şu adrese gönderebilir:"
 
@@ -11615,7 +11842,7 @@ msgstr "Yanıt yaz"
 msgid "Write a subject of at most 300 characters."
 msgstr "En fazla 300 karakterlik bir konu yazın."
 
-#: src/features/setup/WaitStep.tsx
+#: src/features/setup/email/EmailTestStep.tsx
 msgid "Write a test e-mail"
 msgstr "Deneme e-postası yaz"
 
@@ -11642,11 +11869,6 @@ msgstr "Not yazma"
 #: src/features/settings/channels/email/form.ts
 msgid "Write the auto-reply, or turn it off."
 msgstr "Otomatik yanıtı yazın ya da kapatın."
-
-#. placeholder {0}: channel.email!.address
-#: src/features/setup/WaitStep.tsx
-msgid "Write to {0} from any other address. The conversation appears here the moment the mail arrives."
-msgstr "Başka bir adresten {0} adresine yazın. Posta geldiği anda konuşma burada görünür."
 
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Write to {first}…"
@@ -11826,6 +12048,10 @@ msgstr "Klasörleriniz ve etiketleriniz, içerdikleri konuşmalarda Yuva etiketi
 msgid "Your mail provider"
 msgstr "E-posta sağlayıcınız"
 
+#: src/features/setup/email/EmailRepliesStep.tsx
+msgid "Your mail provider's or your own SMTP server"
+msgstr "Posta sağlayıcınızın veya kendi SMTP sunucunuz"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Your mailbox"
 msgstr "Posta kutunuz"
@@ -11950,7 +12176,7 @@ msgstr "Taşıma bittiğinde Yuva kendi belirtecini siler."
 msgid "Yuva DKIM"
 msgstr "Yuva DKIM"
 
-#: src/features/setup/InstallStep.tsx
+#: src/features/setup/email/EmailReceiveStep.tsx
 msgid "Yuva does not run a mail server: your domain's mail is passed to it."
 msgstr "Yuva kendi posta sunucusunu çalıştırmaz: alan adınıza gelen postalar ona iletilir."
 
