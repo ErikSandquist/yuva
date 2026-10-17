@@ -1,0 +1,84 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 20:15+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+#: src/subscribe/element.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "Майже готово. Перевірте пошту й підтвердьте підписку."
+
+#: src/subscribe/element.ts
+msgid "Check your inbox to confirm."
+msgstr "Перевірте пошту, щоб підтвердити."
+
+#: src/subscribe/element.ts
+msgid "Choose at least one list."
+msgstr "Виберіть принаймні один список."
+
+#: src/subscribe/element.ts
+msgid "Could not subscribe. Try again."
+msgstr "Не вдалося підписатися. Спробуйте ще раз."
+
+#: src/subscribe/element.ts
+msgid "E-mail address"
+msgstr "Електронна адреса"
+
+#: src/subscribe/element.ts
+msgid "Enter a valid e-mail address."
+msgstr "Введіть дійсну електронну адресу."
+
+#: src/subscribe/element.ts
+msgid "Enter your name."
+msgstr "Введіть ваше ім’я."
+
+#: src/subscribe/element.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "Я хочу отримувати листи про {list} від {inbox}. Я можу відписатися будь-коли."
+
+#: src/subscribe/element.ts
+msgid "Lists"
+msgstr "Списки"
+
+#: src/subscribe/element.ts
+msgid "Privacy policy"
+msgstr "Політика конфіденційності"
+
+#: src/subscribe/element.ts
+msgid "Subscribe"
+msgstr "Підписатися"
+
+#: src/subscribe/element.ts
+msgid "Subscribing…"
+msgstr "Підписка…"
+
+#: src/subscribe/element.ts
+msgid "Thanks! You are subscribed."
+msgstr "Дякуємо! Ви підписані."
+
+#: src/subscribe/element.ts
+msgid "Tick the box to agree."
+msgstr "Поставте позначку, щоб погодитися."
+
+#: src/subscribe/element.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Забагато спроб. Зачекайте трохи й спробуйте ще раз."
+
+#: src/subscribe/element.ts
+msgid "You seem to be offline."
+msgstr "Схоже, ви офлайн."
+
+#: src/subscribe/element.ts
+msgid "Your account has no e-mail address yet."
+msgstr "У вашому обліковому записі ще немає електронної адреси."
+
+#: src/subscribe/element.ts
+msgid "Your name"
+msgstr "Ваше ім’я"
+
+#: src/subscribe/element.ts
+msgid "Your name (optional)"
+msgstr "Ваше ім’я (необов’язково)"

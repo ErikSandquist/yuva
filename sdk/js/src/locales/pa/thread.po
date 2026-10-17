@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: pa\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "ਸਵੀਕਾਰ ਕੀਤਾ ਜਵਾਬ"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "ਸਾਰੀਆਂ ਚਰਚਾਵਾਂ"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "ਸਵਾਲ ਪੁੱਛੋ, ਵਿਚਾਰ ਸਾਂਝਾ ਕਰੋ ਜਾਂ ਇਸ ਪੰਨੇ ਦੀ ਸਮੱਸਿਆ ਦੱਸੋ।"
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "ਰੱਦ ਕਰੋ"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "ਮਿਟਾਓ"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "ਇਹ ਚਰਚਾ ਮਿਟਾਉਣੀ ਹੈ?"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "ਇਹ ਜਵਾਬ ਮਿਟਾਉਣਾ ਹੈ?"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "ਸੰਪਾਦਨ ਕਰੋ"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "ਆਪਣੀ ਪੋਸਟ ਸੰਪਾਦਿਤ ਕਰੋ"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "ਸੰਪਾਦਿਤ"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "ਫਾਲੋ ਕਰੋ"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "ਫਾਲੋ ਕਰ ਰਹੇ ਹੋ"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "ਕੋਈ ਜਵਾਬ ਦੇਵੇ ਜਾਂ ਕੋਈ ਜਵਾਬ ਸਵੀਕਾਰ ਹੋਵੇ ਤਾਂ ਈਮੇਲ ਪਾਓ।"
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "ਰੱਖੋ"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "ਜਵਾਬ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕਰੋ"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "Markdown ਸਮਰਥਿਤ ਹੈ।"
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "ਪ੍ਰੀਵਿਊ ਲਈ ਕੁਝ ਨਹੀਂ ਹੈ।"
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "ਪ੍ਰੀਵਿਊ"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "ਆਪਣੀ ਵੋਟ ਹਟਾਓ (ਵੋਟਾਂ: {0})"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "ਜਵਾਬ: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "ਜਵਾਬ ਦਿਓ"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "ਸੇਵ ਕਰੋ"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "ਭੇਜਿਆ ਜਾ ਰਿਹਾ ਹੈ…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "ਸਾਈਨ ਇਨ ਕਰੋ"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "ਜਵਾਬ ਦੇਣ, ਵੋਟ ਕਰਨ ਅਤੇ ਇਸ ਚਰਚਾ ਨੂੰ ਫਾਲੋ ਕਰਨ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ।"
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "ਚਰਚਾ ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ। ਤੁਹਾਡੀ ਪੋਸਟ ਨਾਲ ਤੁਹਾਡਾ ਨਾਮ ਦਿਖਾਇਆ ਜਾਂਦਾ ਹੈ।"
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "ਚਰਚਾ ਸ਼ੁਰੂ ਕਰੋ"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "ਚਰਚਾ ਸ਼ੁਰੂ ਕਰੋ"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "ਧੰਨਵਾਦ! ਟੀਮ ਦੇ ਮਨਜ਼ੂਰ ਕਰਨ ਤੋਂ ਬਾਅਦ ਤੁਹਾਡੀ ਚਰਚਾ ਸਾਰਿਆਂ ਨੂੰ ਦਿਖੇਗੀ।"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "ਧੰਨਵਾਦ! ਟੀਮ ਦੇ ਮਨਜ਼ੂਰ ਕਰਨ ਤੋਂ ਬਾਅਦ ਤੁਹਾਡਾ ਜਵਾਬ ਸਾਰਿਆਂ ਨੂੰ ਦਿਖੇਗਾ।"
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "ਸ਼ੁਰੂਆਤੀ ਪੋਸਟ ਮਿਟਾ ਦਿੱਤੀ ਗਈ ਸੀ।"
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "ਇਹ ਚਰਚਾ ਲਾਕ ਹੈ। ਨਵੇਂ ਜਵਾਬ ਬੰਦ ਹਨ।"
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "ਇਹ ਚਰਚਾ ਹੁਣ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।"
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "ਇਹ ਜਵਾਬ ਮਿਟਾ ਦਿੱਤਾ ਗਿਆ ਸੀ।"
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "ਸਿਰਲੇਖ"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "ਜਵਾਬ ਦਾ ਨਿਸ਼ਾਨ ਹਟਾਓ"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "ਅੱਪਵੋਟ ਕਰੋ (ਵੋਟਾਂ: {0})"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "ਲਿਖੋ"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "ਜਵਾਬ ਲਿਖੋ…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "ਤੁਹਾਡੀਆਂ ਪਹਿਲੀਆਂ ਪੋਸਟਾਂ ਸਾਰਿਆਂ ਨੂੰ ਦਿਖਣ ਤੋਂ ਪਹਿਲਾਂ ਟੀਮ ਜਾਂਚਦੀ ਹੈ।"
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "ਤੁਹਾਡਾ ਸਵਾਲ ਜਾਂ ਵਿਚਾਰ"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "ਤੁਹਾਡਾ ਜਵਾਬ"

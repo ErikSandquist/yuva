@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "Принятый ответ"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "Все обсуждения"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "Задайте вопрос, поделитесь идеей или опишите проблему на этой странице."
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "Отмена"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "Удалить"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "Удалить это обсуждение?"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "Удалить этот ответ?"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "Изменить"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "Изменить публикацию"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "изменено"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "Подписаться"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "Вы подписаны"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "Получайте e-mail, когда кто-то отвечает или ответ принимается."
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "Оставить"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "Загрузка…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "Отметить как ответ"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "Поддерживается Markdown."
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "Нечего просматривать."
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "Предпросмотр"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "Отозвать ваш голос (голосов: {0})"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "Ответов: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "Ответить"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "Сохранить"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "Отправка…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "Войти"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "Войдите, чтобы отвечать, голосовать и подписаться на это обсуждение."
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "Войдите, чтобы начать обсуждение. Ваше имя отображается рядом с публикацией."
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "Начать обсуждение"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "Начать обсуждение"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "Спасибо! Ваше обсуждение появится для всех после одобрения командой."
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "Спасибо! Ваш ответ появится для всех после одобрения командой."
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "Первая публикация была удалена."
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "Это обсуждение закрыто. Новые ответы недоступны."
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "Это обсуждение больше недоступно."
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "Этот ответ был удалён."
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "Заголовок"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "Снять отметку ответа"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "Проголосовать за (голосов: {0})"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "Написать"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "Напишите ответ…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "Ваши первые публикации проверяет команда, прежде чем они появятся для всех."
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "Ваш вопрос или идея"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "Ваш ответ"

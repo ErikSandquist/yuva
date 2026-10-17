@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: sv\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "Anonym"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "Besvarad"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "Väntar på godkännande"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "Kontrollera rubriken och texten och försök igen."
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "Diskussionerna kunde inte laddas."
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "Diskussionen kunde inte öppnas. Försök igen."
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "Det gick inte att skicka. Försök igen."
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "Borttagen medlem"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "Borttagen läsare"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "Diskussioner"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "Diskussioner om den här sidan"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "Diskussioner är avstängda för den här webbplatsen."
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "E-postadress"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "E-post för svar (valfritt)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "Ange en giltig e-postadress."
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "Varje diskussion på den här sidan har ett svar."
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "Har du en fråga eller en idé? Starta den första."
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "nyss"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "Laddar diskussioner…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "Laddar…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "Låst"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "Ny"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "Nej"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "Det finns inga diskussioner om den här sidan än."
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "Nej tack"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "Väntar"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "Inlägg kan redigeras i 30 minuter efter att de skrivits."
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "Läsare"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "Svar: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "Skicka"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "Skickar…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "Visa fler"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "Logga in"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "Logga in för att delta i diskussionen."
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "Logga in för att skriva till oss."
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "Logga ut"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "Vad tråkigt. Vad saknades eller var oklart?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "Sortera diskussioner"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "Starta en diskussion"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "Team"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "Teammedlem"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "Tack för din feedback."
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "Tack! Är det något vi kan lägga till? (valfritt)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "Den här diskussionen är låst."
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "För många försök. Vänta en stund och försök igen."
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "Populärast"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "Försök igen"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "Obesvarade"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "Röster: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "Var den här sidan till hjälp?"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "Ja"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "Du kan inte göra det."
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "Du verkar vara offline."
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "Din webbläsare blockerade inloggningsfönstret. Tillåt popup-fönster för den här webbplatsen och försök igen."

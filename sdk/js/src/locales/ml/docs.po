@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ml\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "അജ്ഞാതൻ"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "മറുപടി നൽകി"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "അംഗീകാരത്തിനായി കാത്തിരിക്കുന്നു"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "തലക്കെട്ടും വാചകവും പരിശോധിച്ച് വീണ്ടും ശ്രമിക്കൂ."
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "ചർച്ചകൾ ലോഡ് ചെയ്യാനായില്ല."
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "ചർച്ച തുറക്കാനായില്ല. വീണ്ടും ശ്രമിക്കൂ."
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "അയയ്ക്കാനായില്ല. വീണ്ടും ശ്രമിക്കൂ."
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "ഇല്ലാതാക്കിയ അംഗം"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "ഇല്ലാതാക്കിയ വായനക്കാരൻ"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "ചർച്ചകൾ"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "ഈ പേജിനെക്കുറിച്ചുള്ള ചർച്ചകൾ"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "ഈ സൈറ്റിൽ ചർച്ചകൾ ഓഫാക്കിയിരിക്കുന്നു."
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "ഇമെയിൽ വിലാസം"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "മറുപടിക്കുള്ള ഇമെയിൽ (ഓപ്ഷണൽ)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "സാധുവായ ഒരു ഇമെയിൽ വിലാസം നൽകുക."
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "ഈ പേജിലെ എല്ലാ ചർച്ചകൾക്കും മറുപടിയുണ്ട്."
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "ഒരു ചോദ്യമോ ആശയമോ ഉണ്ടോ? ആദ്യത്തെ ചർച്ച തുടങ്ങൂ."
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "ഇപ്പോൾ"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "ചർച്ചകൾ ലോഡ് ചെയ്യുന്നു…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "ലോഡ് ചെയ്യുന്നു…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "ലോക്ക് ചെയ്തു"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "പുതിയത്"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "ഇല്ല"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "ഈ പേജിനെക്കുറിച്ച് ഇതുവരെ ചർച്ചകളില്ല."
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "വേണ്ട, നന്ദി"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "തീർപ്പാക്കാത്തത്"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "പോസ്റ്റുകൾ എഴുതി 30 മിനിറ്റ് വരെ എഡിറ്റ് ചെയ്യാം."
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "വായനക്കാരൻ"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "മറുപടികൾ: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "അയയ്ക്കുക"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "അയയ്ക്കുന്നു…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "കൂടുതൽ കാണിക്കുക"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "സൈൻ ഇൻ"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "ചർച്ചയിൽ പങ്കെടുക്കാൻ സൈൻ ഇൻ ചെയ്യുക."
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "ഞങ്ങൾക്ക് എഴുതാൻ സൈൻ ഇൻ ചെയ്യുക."
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "സൈൻ ഔട്ട്"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "ക്ഷമിക്കണം. എന്താണ് കുറവായിരുന്നത്, അല്ലെങ്കിൽ അവ്യക്തമായിരുന്നത്?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "ചർച്ചകൾ ക്രമീകരിക്കുക"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "ഒരു ചർച്ച തുടങ്ങുക"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "ടീം"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "ടീം അംഗം"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "നിങ്ങളുടെ അഭിപ്രായത്തിന് നന്ദി."
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "നന്ദി! ഞങ്ങൾക്ക് എന്തെങ്കിലും ചേർക്കാനുണ്ടോ? (ഓപ്ഷണൽ)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "ഈ ചർച്ച ലോക്ക് ചെയ്തിരിക്കുന്നു."
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "വളരെയധികം ശ്രമങ്ങൾ. അൽപ്പം കാത്തിരുന്ന് വീണ്ടും ശ്രമിക്കൂ."
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "മുകളിൽ"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "വീണ്ടും ശ്രമിക്കൂ"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "മറുപടിയില്ലാത്തത്"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "വോട്ടുകൾ: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "ഈ പേജ് സഹായകരമായിരുന്നോ?"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "അതെ"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "നിങ്ങൾക്ക് അത് ചെയ്യാനാവില്ല."
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "നിങ്ങൾ ഓഫ്‌ലൈനിലാണെന്ന് തോന്നുന്നു."
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "നിങ്ങളുടെ ബ്രൗസർ സൈൻ-ഇൻ വിൻഡോ തടഞ്ഞു. ഈ സൈറ്റിനായി പോപ്പ്-അപ്പുകൾ അനുവദിച്ച് വീണ്ടും ശ്രമിക്കൂ."

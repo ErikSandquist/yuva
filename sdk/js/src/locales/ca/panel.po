@@ -1,0 +1,213 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 15:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ca\n"
+
+#: src/panel/chat.ts
+msgid "{name} is typing…"
+msgstr "{name} està escrivint…"
+
+#: src/panel/chat.ts
+msgid "All conversations"
+msgstr "Totes les converses"
+
+#: src/panel/chat.ts
+msgid "Anything you'd like to add? (optional)"
+msgstr "Vols afegir res més? (opcional)"
+
+#: src/panel/chat.ts
+msgid "Attach files"
+msgstr "Adjunta fitxers"
+
+#: src/panel/chat.ts
+msgid "Attachment"
+msgstr "Adjunt"
+
+#: src/panel/chat.ts
+msgid "Bad"
+msgstr "Malament"
+
+#: src/panel/chat.ts
+msgid "Chat is not available right now."
+msgstr "El xat no està disponible ara mateix."
+
+#: src/panel/chat.ts
+msgid "Close"
+msgstr "Tanca"
+
+#: src/panel/chat.ts
+msgid "Comment"
+msgstr "Comentari"
+
+#: src/panel/chat.ts
+msgid "Conversation"
+msgstr "Conversa"
+
+#: src/panel/chat.ts
+msgid "Could not save your e-mail address. Try again."
+msgstr "No s'ha pogut desar el teu correu electrònic. Torna-ho a provar."
+
+#: src/panel/chat.ts
+msgid "Could not send your rating. Try again."
+msgstr "No s'ha pogut enviar la teva valoració. Torna-ho a provar."
+
+#: src/panel/chat.ts
+msgid "E-mail address"
+msgstr "Adreça electrònica"
+
+#: src/panel/chat.ts
+msgid "Enter a valid e-mail address."
+msgstr "Introdueix una adreça electrònica vàlida."
+
+#: src/panel/chat.ts
+msgid "Good"
+msgstr "Bé"
+
+#: src/panel/chat.ts
+msgid "How did we do?"
+msgstr "Com ho hem fet?"
+
+#: src/panel/chat.ts
+msgid "Loading…"
+msgstr "Carregant…"
+
+#: src/panel/chat.ts
+msgid "Message"
+msgstr "Missatge"
+
+#: src/panel/chat.ts
+msgid "Messages"
+msgstr "Missatges"
+
+#: src/panel/chat.ts
+msgid "New conversation"
+msgstr "Conversa nova"
+
+#: src/panel/chat.ts
+msgid "No conversations yet"
+msgstr "Encara no hi ha converses"
+
+#: src/panel/chat.ts
+msgid "Nobody is available right now. Leave your e-mail and we'll send the reply there too."
+msgstr "Ara mateix no hi ha ningú disponible. Deixa el teu correu i també t'hi enviarem la resposta."
+
+#: src/panel/chat.ts
+msgid "Not sent."
+msgstr "No enviat."
+
+#: src/panel/chat.ts
+msgid "Online"
+msgstr "En línia"
+
+#: src/panel/chat.ts
+msgid "Reconnecting…"
+msgstr "Reconnectant…"
+
+#. placeholder {0}: file.name
+#: src/panel/chat.ts
+msgid "Remove {0}"
+msgstr "Elimina {0}"
+
+#: src/panel/chat.ts
+msgid "Retry"
+msgstr "Torna-ho a provar"
+
+#: src/panel/chat.ts
+msgid "Save"
+msgstr "Desa"
+
+#: src/panel/chat.ts
+msgid "Seen"
+msgstr "Vist"
+
+#: src/panel/chat.ts
+msgid "Send"
+msgstr "Envia"
+
+#: src/panel/chat.ts
+msgid "Send us a message and we will reply here."
+msgstr "Envia'ns un missatge i et respondrem aquí."
+
+#: src/panel/chat.ts
+msgid "Sending…"
+msgstr "Enviant…"
+
+#: src/panel/chat.ts
+msgid "Sent"
+msgstr "Enviat"
+
+#: src/panel/chat.ts
+msgid "Show older conversations"
+msgstr "Mostra les converses anteriors"
+
+#: src/panel/chat.ts
+msgid "Sign in to chat with us."
+msgstr "Inicia la sessió per xatejar amb nosaltres."
+
+#: src/panel/chat.ts
+msgid "Skip"
+msgstr "Omet"
+
+#: src/panel/chat.ts
+msgid "Thanks for your feedback"
+msgstr "Gràcies pels teus comentaris"
+
+#: src/panel/chat.ts
+msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
+msgstr "Gràcies! T'enviarem un correu a {known} si no hi ets quan et responguem."
+
+#: src/panel/chat.ts
+msgid "The file is too large."
+msgstr "El fitxer és massa gran."
+
+#: src/panel/chat.ts
+msgid "This file type is not accepted."
+msgstr "Aquest tipus de fitxer no s'accepta."
+
+#: src/panel/chat.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Massa intents. Espera un moment i torna-ho a provar."
+
+#: src/panel/chat.ts
+msgid "Try again"
+msgstr "Torna-ho a provar"
+
+#: src/panel/chat.ts
+msgid "Typing…"
+msgstr "Escrivint…"
+
+#: src/panel/chat.ts
+msgid "Usually replies in {duration}"
+msgstr "Sol respondre en {duration}"
+
+#: src/panel/chat.ts
+msgid "We'll reply as soon as we can"
+msgstr "Respondrem tan aviat com puguem"
+
+#: src/panel/chat.ts
+msgid "We're away right now"
+msgstr "Ara mateix no hi som"
+
+#: src/panel/chat.ts
+msgid "Write a message…"
+msgstr "Escriu un missatge…"
+
+#: src/panel/chat.ts
+msgid "You seem to be offline."
+msgstr "Sembla que no tens connexió."
+
+#: src/panel/chat.ts
+msgid "You:"
+msgstr "Tu:"
+
+#: src/panel/chat.ts
+msgid "you@example.com"
+msgstr "you@example.com"
+
+#: src/panel/chat.ts
+msgid "Your sign-in has expired. Reload the page and try again."
+msgstr "La teva sessió ha caducat. Torna a carregar la pàgina i torna-ho a provar."

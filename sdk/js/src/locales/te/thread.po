@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: te\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "అంగీకరించిన సమాధానం"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "అన్ని చర్చలు"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "ప్రశ్న అడగండి, ఆలోచనను పంచుకోండి లేదా ఈ పేజీలోని సమస్యను వివరించండి."
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "రద్దు చేయండి"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "తొలగించండి"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "ఈ చర్చను తొలగించాలా?"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "ఈ సమాధానాన్ని తొలగించాలా?"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "సవరించండి"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "మీ పోస్ట్‌ను సవరించండి"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "సవరించబడింది"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "ఫాలో చేయండి"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "ఫాలో అవుతున్నారు"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "ఎవరైనా సమాధానం ఇచ్చినప్పుడు లేదా సమాధానం అంగీకరించినప్పుడు ఇమెయిల్ పొందండి."
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "ఉంచండి"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "లోడ్ అవుతోంది…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "సమాధానంగా గుర్తించండి"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "Markdown మద్దతు ఉంది."
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "ప్రివ్యూ చేయడానికి ఏమీ లేదు."
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "ప్రివ్యూ"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "మీ ఓటును తొలగించండి (ఓట్లు: {0})"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "సమాధానాలు: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "సమాధానం ఇవ్వండి"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "సేవ్ చేయండి"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "పంపుతోంది…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "సైన్ ఇన్"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "సమాధానం ఇవ్వడానికి, ఓటు వేయడానికి మరియు ఈ చర్చను ఫాలో చేయడానికి సైన్ ఇన్ చేయండి."
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "చర్చను ప్రారంభించడానికి సైన్ ఇన్ చేయండి. మీ పోస్ట్‌తో పాటు మీ పేరు చూపబడుతుంది."
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "చర్చను ప్రారంభించండి"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "చర్చను ప్రారంభించండి"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "ధన్యవాదాలు! బృందం ఆమోదించిన తర్వాత మీ చర్చ అందరికీ కనిపిస్తుంది."
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "ధన్యవాదాలు! బృందం ఆమోదించిన తర్వాత మీ సమాధానం అందరికీ కనిపిస్తుంది."
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "మొదటి పోస్ట్ తొలగించబడింది."
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "ఈ చర్చ లాక్ చేయబడింది. కొత్త సమాధానాలు మూసివేయబడ్డాయి."
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "ఈ చర్చ ఇకపై అందుబాటులో లేదు."
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "ఈ సమాధానం తొలగించబడింది."
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "శీర్షిక"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "సమాధానం గుర్తును తొలగించండి"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "అప్‌వోట్ చేయండి (ఓట్లు: {0})"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "రాయండి"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "సమాధానం రాయండి…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "మీ మొదటి పోస్ట్‌లు అందరికీ కనిపించే ముందు బృందం తనిఖీ చేస్తుంది."
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "మీ ప్రశ్న లేదా ఆలోచన"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "మీ సమాధానం"

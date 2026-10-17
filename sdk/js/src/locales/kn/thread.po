@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: kn\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "ಸ್ವೀಕರಿಸಿದ ಉತ್ತರ"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "ಎಲ್ಲಾ ಚರ್ಚೆಗಳು"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "ಪ್ರಶ್ನೆ ಕೇಳಿ, ಆಲೋಚನೆ ಹಂಚಿಕೊಳ್ಳಿ ಅಥವಾ ಈ ಪುಟದ ಸಮಸ್ಯೆಯನ್ನು ವಿವರಿಸಿ."
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "ರದ್ದುಮಾಡಿ"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "ಅಳಿಸಿ"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "ಈ ಚರ್ಚೆಯನ್ನು ಅಳಿಸಬೇಕೇ?"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "ಈ ಉತ್ತರವನ್ನು ಅಳಿಸಬೇಕೇ?"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "ಸಂಪಾದಿಸಿ"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "ನಿಮ್ಮ ಪೋಸ್ಟ್ ಸಂಪಾದಿಸಿ"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "ಸಂಪಾದಿಸಲಾಗಿದೆ"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "ಅನುಸರಿಸಿ"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "ಅನುಸರಿಸುತ್ತಿದ್ದೀರಿ"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "ಯಾರಾದರೂ ಉತ್ತರಿಸಿದಾಗ ಅಥವಾ ಉತ್ತರ ಸ್ವೀಕರಿಸಿದಾಗ ಇಮೇಲ್ ಪಡೆಯಿರಿ."
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "ಉಳಿಸಿಕೊಳ್ಳಿ"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "ಲೋಡ್ ಆಗುತ್ತಿದೆ…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "ಉತ್ತರವೆಂದು ಗುರುತಿಸಿ"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "Markdown ಬೆಂಬಲಿತವಾಗಿದೆ."
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "ಪೂರ್ವವೀಕ್ಷಿಸಲು ಏನೂ ಇಲ್ಲ."
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "ಪೂರ್ವವೀಕ್ಷಣೆ"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "ನಿಮ್ಮ ಮತವನ್ನು ತೆಗೆದುಹಾಕಿ (ಮತಗಳು: {0})"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "ಉತ್ತರಗಳು: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "ಉತ್ತರಿಸಿ"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "ಉಳಿಸಿ"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "ಸೈನ್ ಇನ್"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "ಉತ್ತರಿಸಲು, ಮತ ಹಾಕಲು ಮತ್ತು ಈ ಚರ್ಚೆಯನ್ನು ಅನುಸರಿಸಲು ಸೈನ್ ಇನ್ ಮಾಡಿ."
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "ಚರ್ಚೆಯನ್ನು ಪ್ರಾರಂಭಿಸಲು ಸೈನ್ ಇನ್ ಮಾಡಿ. ನಿಮ್ಮ ಪೋಸ್ಟ್‌ನೊಂದಿಗೆ ನಿಮ್ಮ ಹೆಸರು ತೋರಿಸಲಾಗುತ್ತದೆ."
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "ಚರ್ಚೆಯನ್ನು ಪ್ರಾರಂಭಿಸಿ"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "ಚರ್ಚೆ ಪ್ರಾರಂಭಿಸಿ"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "ಧನ್ಯವಾದಗಳು! ತಂಡ ಅನುಮೋದಿಸಿದ ನಂತರ ನಿಮ್ಮ ಚರ್ಚೆ ಎಲ್ಲರಿಗೂ ಕಾಣಿಸುತ್ತದೆ."
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "ಧನ್ಯವಾದಗಳು! ತಂಡ ಅನುಮೋದಿಸಿದ ನಂತರ ನಿಮ್ಮ ಉತ್ತರ ಎಲ್ಲರಿಗೂ ಕಾಣಿಸುತ್ತದೆ."
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "ಆರಂಭಿಕ ಪೋಸ್ಟ್ ಅನ್ನು ಅಳಿಸಲಾಗಿದೆ."
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "ಈ ಚರ್ಚೆ ಲಾಕ್ ಆಗಿದೆ. ಹೊಸ ಉತ್ತರಗಳನ್ನು ಮುಚ್ಚಲಾಗಿದೆ."
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "ಈ ಚರ್ಚೆ ಇನ್ನು ಲಭ್ಯವಿಲ್ಲ."
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "ಈ ಉತ್ತರವನ್ನು ಅಳಿಸಲಾಗಿದೆ."
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "ಶೀರ್ಷಿಕೆ"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "ಉತ್ತರದ ಗುರುತು ತೆಗೆಯಿರಿ"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "ಅಪ್‌ವೋಟ್ ಮಾಡಿ (ಮತಗಳು: {0})"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "ಬರೆಯಿರಿ"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "ಉತ್ತರ ಬರೆಯಿರಿ…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "ನಿಮ್ಮ ಮೊದಲ ಪೋಸ್ಟ್‌ಗಳು ಎಲ್ಲರಿಗೂ ಕಾಣಿಸುವ ಮೊದಲು ತಂಡ ಪರಿಶೀಲಿಸುತ್ತದೆ."
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "ನಿಮ್ಮ ಪ್ರಶ್ನೆ ಅಥವಾ ಆಲೋಚನೆ"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "ನಿಮ್ಮ ಉತ್ತರ"

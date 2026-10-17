@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: th\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "ไม่ระบุชื่อ"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "ตอบแล้ว"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "รอการอนุมัติ"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "ตรวจสอบหัวข้อและข้อความ แล้วลองอีกครั้ง"
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "ไม่สามารถโหลดการสนทนาได้"
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "ไม่สามารถเปิดการสนทนาได้ โปรดลองอีกครั้ง"
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "ไม่สามารถส่งได้ โปรดลองอีกครั้ง"
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "สมาชิกที่ถูกลบ"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "ผู้อ่านที่ถูกลบ"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "การสนทนา"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "การสนทนาเกี่ยวกับหน้านี้"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "ปิดการสนทนาสำหรับเว็บไซต์นี้"
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "อีเมล"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "อีเมลสำหรับรับคำตอบ (ไม่บังคับ)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "กรุณากรอกอีเมลที่ถูกต้อง"
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "ทุกการสนทนาในหน้านี้มีคำตอบแล้ว"
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "มีคำถามหรือไอเดียไหม เริ่มการสนทนาแรกได้เลย"
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "เมื่อสักครู่"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "กำลังโหลดการสนทนา…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "กำลังโหลด…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "ล็อกแล้ว"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "ใหม่"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "ไม่"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "ยังไม่มีการสนทนาเกี่ยวกับหน้านี้"
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "ไม่ล่ะ ขอบคุณ"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "รอดำเนินการ"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "แก้ไขโพสต์ได้ภายใน 30 นาทีหลังเขียน"
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "ผู้อ่าน"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "การตอบกลับ: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "ส่ง"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "กำลังส่ง…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "แสดงเพิ่มเติม"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "ลงชื่อเข้าใช้"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "ลงชื่อเข้าใช้เพื่อร่วมการสนทนา"
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "ลงชื่อเข้าใช้เพื่อเขียนถึงเรา"
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "ออกจากระบบ"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "ขออภัย มีอะไรที่ขาดหายไปหรือไม่ชัดเจน"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "จัดเรียงการสนทนา"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "เริ่มการสนทนา"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "ทีม"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "สมาชิกทีม"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "ขอบคุณสำหรับความคิดเห็นของคุณ"
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "ขอบคุณ! มีอะไรที่เราควรเพิ่มไหม (ไม่บังคับ)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "การสนทนานี้ถูกล็อก"
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "ลองหลายครั้งเกินไป โปรดรอสักครู่แล้วลองอีกครั้ง"
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "ยอดนิยม"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "ลองอีกครั้ง"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "ยังไม่มีคำตอบ"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "โหวต: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "หน้านี้เป็นประโยชน์ไหม"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "ใช่"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "คุณทำสิ่งนั้นไม่ได้"
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "ดูเหมือนว่าคุณออฟไลน์อยู่"
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "เบราว์เซอร์ของคุณบล็อกหน้าต่างลงชื่อเข้าใช้ โปรดอนุญาตป๊อปอัปสำหรับเว็บไซต์นี้แล้วลองอีกครั้ง"

@@ -1,0 +1,84 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 20:15+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: fi\n"
+
+#: src/subscribe/element.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "Melkein valmista. Tarkista saapuneet ja vahvista tilauksesi."
+
+#: src/subscribe/element.ts
+msgid "Check your inbox to confirm."
+msgstr "Vahvista tarkistamalla saapuneet."
+
+#: src/subscribe/element.ts
+msgid "Choose at least one list."
+msgstr "Valitse vähintään yksi lista."
+
+#: src/subscribe/element.ts
+msgid "Could not subscribe. Try again."
+msgstr "Tilaus epäonnistui. Yritä uudelleen."
+
+#: src/subscribe/element.ts
+msgid "E-mail address"
+msgstr "Sähköpostiosoite"
+
+#: src/subscribe/element.ts
+msgid "Enter a valid e-mail address."
+msgstr "Anna kelvollinen sähköpostiosoite."
+
+#: src/subscribe/element.ts
+msgid "Enter your name."
+msgstr "Anna nimesi."
+
+#: src/subscribe/element.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "Haluan saada sähköpostia aiheesta {list} lähettäjältä {inbox}. Voin perua tilauksen milloin tahansa."
+
+#: src/subscribe/element.ts
+msgid "Lists"
+msgstr "Listat"
+
+#: src/subscribe/element.ts
+msgid "Privacy policy"
+msgstr "Tietosuojakäytäntö"
+
+#: src/subscribe/element.ts
+msgid "Subscribe"
+msgstr "Tilaa"
+
+#: src/subscribe/element.ts
+msgid "Subscribing…"
+msgstr "Tilataan…"
+
+#: src/subscribe/element.ts
+msgid "Thanks! You are subscribed."
+msgstr "Kiitos! Olet tilaaja."
+
+#: src/subscribe/element.ts
+msgid "Tick the box to agree."
+msgstr "Hyväksy valitsemalla ruutu."
+
+#: src/subscribe/element.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Liian monta yritystä. Odota hetki ja yritä uudelleen."
+
+#: src/subscribe/element.ts
+msgid "You seem to be offline."
+msgstr "Näytät olevan offline-tilassa."
+
+#: src/subscribe/element.ts
+msgid "Your account has no e-mail address yet."
+msgstr "Tililläsi ei ole vielä sähköpostiosoitetta."
+
+#: src/subscribe/element.ts
+msgid "Your name"
+msgstr "Nimesi"
+
+#: src/subscribe/element.ts
+msgid "Your name (optional)"
+msgstr "Nimesi (valinnainen)"

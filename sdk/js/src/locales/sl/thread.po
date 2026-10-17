@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: sl\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "Sprejet odgovor"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "Vse razprave"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "Postavite vprašanje, delite zamisel ali opišite težavo s to stranjo."
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "Prekliči"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "Izbriši"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "Izbrišem to razpravo?"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "Izbrišem ta odgovor?"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "Uredi"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "Uredi objavo"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "urejeno"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "Sledi"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "Sledite"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "Prejmite e-pošto, ko nekdo odgovori ali je odgovor sprejet."
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "Obdrži"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "Nalaganje …"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "Označi kot odgovor"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "Markdown je podprt."
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "Ni ničesar za predogled."
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "Predogled"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "Umakni svoj glas (glasov: {0})"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "Odgovorov: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "Odgovori"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "Shrani"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "Pošiljanje …"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "Prijava"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "Prijavite se, da odgovarjate, glasujete in sledite tej razpravi."
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "Prijavite se, da začnete razpravo. Vaše ime je prikazano ob objavi."
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "Začni razpravo"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "Začni razpravo"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "Hvala! Vaša razprava bo vidna vsem, ko jo ekipa odobri."
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "Hvala! Vaš odgovor bo viden vsem, ko ga ekipa odobri."
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "Uvodna objava je bila izbrisana."
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "Ta razprava je zaklenjena. Novi odgovori so zaprti."
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "Ta razprava ni več na voljo."
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "Ta odgovor je bil izbrisan."
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "Naslov"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "Odstrani oznako odgovora"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "Glasuj za (glasov: {0})"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "Piši"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "Napišite odgovor …"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "Ekipa preveri vaše prve objave, preden so vidne vsem."
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "Vaše vprašanje ali zamisel"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "Vaš odgovor"

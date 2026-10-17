@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: te\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "అజ్ఞాత"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "సమాధానం ఇచ్చారు"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "ఆమోదం కోసం వేచి ఉంది"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "శీర్షిక మరియు వచనాన్ని తనిఖీ చేసి మళ్లీ ప్రయత్నించండి."
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "చర్చలను లోడ్ చేయలేకపోయాము."
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "చర్చను తెరవలేకపోయాము. మళ్లీ ప్రయత్నించండి."
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "పంపలేకపోయాము. మళ్లీ ప్రయత్నించండి."
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "తొలగించిన సభ్యుడు"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "తొలగించిన పాఠకుడు"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "చర్చలు"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "ఈ పేజీ గురించి చర్చలు"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "ఈ సైట్‌కు చర్చలు ఆఫ్ చేయబడ్డాయి."
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "ఇమెయిల్ చిరునామా"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "సమాధానం కోసం ఇమెయిల్ (ఐచ్ఛికం)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "చెల్లుబాటు అయ్యే ఇమెయిల్ చిరునామా నమోదు చేయండి."
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "ఈ పేజీలోని ప్రతి చర్చకు సమాధానం ఉంది."
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "ప్రశ్న లేదా ఆలోచన ఉందా? మొదటి చర్చను ప్రారంభించండి."
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "ఇప్పుడే"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "చర్చలు లోడ్ అవుతున్నాయి…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "లోడ్ అవుతోంది…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "లాక్ చేయబడింది"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "కొత్తది"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "లేదు"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "ఈ పేజీ గురించి ఇంకా చర్చలు లేవు."
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "వద్దు, ధన్యవాదాలు"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "పెండింగ్‌లో ఉంది"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "పోస్ట్‌లను రాసిన 30 నిమిషాల వరకు సవరించవచ్చు."
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "పాఠకుడు"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "సమాధానాలు: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "పంపండి"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "పంపుతోంది…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "మరిన్ని చూపించండి"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "సైన్ ఇన్"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "చర్చలో పాల్గొనడానికి సైన్ ఇన్ చేయండి."
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "మాకు రాయడానికి సైన్ ఇన్ చేయండి."
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "సైన్ అవుట్"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "క్షమించండి. ఏమి లేదు లేదా అస్పష్టంగా ఉంది?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "చర్చలను క్రమబద్ధీకరించండి"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "చర్చను ప్రారంభించండి"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "బృందం"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "బృంద సభ్యుడు"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "మీ అభిప్రాయానికి ధన్యవాదాలు."
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "ధన్యవాదాలు! మేము ఏదైనా జోడించగలమా? (ఐచ్ఛికం)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "ఈ చర్చ లాక్ చేయబడింది."
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "చాలా ప్రయత్నాలు. కాసేపు ఆగి మళ్లీ ప్రయత్నించండి."
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "అగ్ర"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "మళ్లీ ప్రయత్నించండి"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "సమాధానం లేనివి"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "ఓట్లు: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "ఈ పేజీ ఉపయోగకరంగా ఉందా?"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "అవును"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "మీరు అది చేయలేరు."
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "మీరు ఆఫ్‌లైన్‌లో ఉన్నట్లు కనిపిస్తోంది."
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "మీ బ్రౌజర్ సైన్-ఇన్ విండోను నిరోధించింది. ఈ సైట్‌కు పాప్-అప్‌లను అనుమతించి మళ్లీ ప్రయత్నించండి."

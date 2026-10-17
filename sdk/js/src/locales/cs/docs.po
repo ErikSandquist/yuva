@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: cs\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "Anonym"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "Zodpovězeno"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "Čeká na schválení"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "Zkontrolujte nadpis a text a zkuste to znovu."
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "Diskuze se nepodařilo načíst."
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "Diskuzi se nepodařilo otevřít. Zkuste to znovu."
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "Odeslání se nezdařilo. Zkuste to znovu."
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "Smazaný člen"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "Smazaný čtenář"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "Diskuze"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "Diskuze k této stránce"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "Diskuze jsou pro tento web vypnuté."
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "E-mailová adresa"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "E-mail pro odpověď (nepovinné)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "Zadejte platnou e-mailovou adresu."
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "Každá diskuze na této stránce má odpověď."
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "Máte otázku nebo nápad? Začněte první diskuzi."
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "právě teď"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "Načítání diskuzí…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "Načítání…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "Uzamčeno"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "Nové"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "Ne"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "K této stránce zatím nejsou žádné diskuze."
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "Ne, děkuji"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "Čeká"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "Příspěvky lze upravovat 30 minut po napsání."
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "Čtenář"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "Odpovědi: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "Odeslat"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "Odesílání…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "Zobrazit více"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "Přihlásit se"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "Přihlaste se a zapojte se do diskuze."
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "Přihlaste se a napište nám."
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "Odhlásit se"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "Omlouváme se. Co chybělo nebo bylo nejasné?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "Řadit diskuze"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "Zahájit diskuzi"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "Tým"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "Člen týmu"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "Děkujeme za zpětnou vazbu."
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "Děkujeme! Můžeme ještě něco doplnit? (nepovinné)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "Tato diskuze je uzamčená."
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Příliš mnoho pokusů. Chvíli počkejte a zkuste to znovu."
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "Nejlepší"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "Zkusit znovu"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "Nezodpovězené"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "Hlasy: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "Byla tato stránka užitečná?"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "Ano"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "To nemůžete udělat."
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "Zdá se, že jste offline."
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "Váš prohlížeč zablokoval přihlašovací okno. Povolte pro tento web vyskakovací okna a zkuste to znovu."

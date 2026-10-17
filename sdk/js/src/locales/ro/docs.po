@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ro\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "Anonim"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "Cu răspuns"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "Se așteaptă aprobarea"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "Verifică titlul și textul și încearcă din nou."
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "Discuțiile nu au putut fi încărcate."
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "Discuția nu a putut fi deschisă. Încearcă din nou."
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "Nu s-a putut trimite. Încearcă din nou."
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "Membru șters"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "Cititor șters"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "Discuții"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "Discuții despre această pagină"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "Discuțiile sunt dezactivate pentru acest site."
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "Adresa de e-mail"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "E-mail pentru răspuns (opțional)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "Introdu o adresă de e-mail validă."
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "Fiecare discuție de pe această pagină are un răspuns."
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "Ai o întrebare sau o idee? Începe prima discuție."
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "chiar acum"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "Se încarcă discuțiile…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "Se încarcă…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "Blocată"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "Nouă"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "Nu"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "Nu există încă discuții despre această pagină."
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "Nu, mulțumesc"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "În așteptare"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "Postările pot fi editate timp de 30 de minute după ce sunt scrise."
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "Cititor"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "Răspunsuri: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "Trimite"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "Se trimite…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "Arată mai multe"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "Autentifică-te"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "Autentifică-te ca să participi la discuție."
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "Autentifică-te ca să ne scrii."
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "Deconectează-te"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "Ne pare rău. Ce lipsea sau nu era clar?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "Sortează discuțiile"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "Începe o discuție"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "Echipă"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "Membru al echipei"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "Mulțumim pentru feedback."
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "Mulțumim! Am putea adăuga ceva? (opțional)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "Această discuție este blocată."
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Prea multe încercări. Așteaptă puțin și încearcă din nou."
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "Top"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "Încearcă din nou"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "Fără răspuns"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "Voturi: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "Ți-a fost utilă această pagină?"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "Da"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "Nu poți face asta."
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "Pari să fii offline."
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "Browserul a blocat fereastra de autentificare. Permite ferestrele pop-up pentru acest site și încearcă din nou."

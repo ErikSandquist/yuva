@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: id\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "Anonim"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "Terjawab"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "Menunggu persetujuan"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "Periksa judul dan teksnya lalu coba lagi."
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "Diskusi tidak dapat dimuat."
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "Diskusi tidak dapat dibuka. Coba lagi."
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "Tidak dapat mengirim. Coba lagi."
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "Anggota yang dihapus"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "Pembaca yang dihapus"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "Diskusi"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "Diskusi tentang halaman ini"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "Diskusi dimatikan untuk situs ini."
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "Alamat e-mail"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "E-mail untuk balasan (opsional)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "Masukkan alamat e-mail yang valid."
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "Setiap diskusi di halaman ini sudah dijawab."
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "Punya pertanyaan atau ide? Mulai diskusi pertama."
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "baru saja"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "Memuat diskusi…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "Memuat…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "Terkunci"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "Baru"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "Tidak"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "Belum ada diskusi tentang halaman ini."
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "Tidak, terima kasih"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "Tertunda"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "Kiriman dapat diedit selama 30 menit setelah ditulis."
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "Pembaca"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "Balasan: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "Kirim"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "Mengirim…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "Tampilkan lebih banyak"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "Masuk"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "Masuk untuk ikut dalam diskusi."
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "Masuk untuk menulis kepada kami."
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "Keluar"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "Maaf soal itu. Apa yang kurang atau tidak jelas?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "Urutkan diskusi"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "Mulai diskusi"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "Tim"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "Anggota tim"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "Terima kasih atas masukan Anda."
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "Terima kasih! Ada yang bisa kami tambahkan? (opsional)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "Diskusi ini terkunci."
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Terlalu banyak percobaan. Tunggu sebentar lalu coba lagi."
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "Teratas"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "Coba lagi"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "Belum dijawab"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "Suara: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "Apakah halaman ini membantu?"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "Ya"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "Anda tidak dapat melakukannya."
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "Anda tampaknya sedang offline."
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "Browser Anda memblokir jendela masuk. Izinkan pop-up untuk situs ini lalu coba lagi."

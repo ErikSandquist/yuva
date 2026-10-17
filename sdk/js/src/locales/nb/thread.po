@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: nb\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "Akseptert svar"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "Alle diskusjoner"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "Still et spørsmål, del en idé eller beskriv et problem med denne siden."
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "Slett"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "Slette denne diskusjonen?"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "Slette dette svaret?"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "Rediger"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "Rediger innlegget ditt"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "redigert"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "Følg"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "Følger"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "Få en e-post når noen svarer eller et svar godtas."
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "Behold"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "Laster…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "Merk som svar"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "Markdown støttes."
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "Ingenting å forhåndsvise."
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "Forhåndsvisning"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "Fjern stemmen din (stemmer: {0})"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "Svar: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "Svar"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "Lagre"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "Sender…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "Logg inn"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "Logg inn for å svare, stemme og følge denne diskusjonen."
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "Logg inn for å starte en diskusjon. Navnet ditt vises sammen med innlegget."
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "Start en diskusjon"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "Start diskusjon"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "Takk! Diskusjonen din vises for alle når teamet har godkjent den."
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "Takk! Svaret ditt vises for alle når teamet har godkjent det."
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "Det første innlegget ble slettet."
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "Denne diskusjonen er låst. Nye svar er stengt."
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "Denne diskusjonen er ikke lenger tilgjengelig."
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "Dette svaret ble slettet."
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "Tittel"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "Fjern markering som svar"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "Stem opp (stemmer: {0})"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "Skriv"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "Skriv et svar…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "De første innleggene dine sjekkes av teamet før de vises for alle."
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "Spørsmålet eller ideen din"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "Svaret ditt"

@@ -1,0 +1,213 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 15:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: he\n"
+
+#: src/panel/chat.ts
+msgid "{name} is typing…"
+msgstr "{name} מקליד…"
+
+#: src/panel/chat.ts
+msgid "All conversations"
+msgstr "כל השיחות"
+
+#: src/panel/chat.ts
+msgid "Anything you'd like to add? (optional)"
+msgstr "רוצים להוסיף משהו? (אופציונלי)"
+
+#: src/panel/chat.ts
+msgid "Attach files"
+msgstr "צירוף קבצים"
+
+#: src/panel/chat.ts
+msgid "Attachment"
+msgstr "קובץ מצורף"
+
+#: src/panel/chat.ts
+msgid "Bad"
+msgstr "גרוע"
+
+#: src/panel/chat.ts
+msgid "Chat is not available right now."
+msgstr "הצ׳אט אינו זמין כרגע."
+
+#: src/panel/chat.ts
+msgid "Close"
+msgstr "סגירה"
+
+#: src/panel/chat.ts
+msgid "Comment"
+msgstr "תגובה"
+
+#: src/panel/chat.ts
+msgid "Conversation"
+msgstr "שיחה"
+
+#: src/panel/chat.ts
+msgid "Could not save your e-mail address. Try again."
+msgstr "לא ניתן היה לשמור את כתובת האימייל שלכם. נסו שוב."
+
+#: src/panel/chat.ts
+msgid "Could not send your rating. Try again."
+msgstr "לא ניתן היה לשלוח את הדירוג שלכם. נסו שוב."
+
+#: src/panel/chat.ts
+msgid "E-mail address"
+msgstr "כתובת אימייל"
+
+#: src/panel/chat.ts
+msgid "Enter a valid e-mail address."
+msgstr "הזינו כתובת אימייל תקינה."
+
+#: src/panel/chat.ts
+msgid "Good"
+msgstr "טוב"
+
+#: src/panel/chat.ts
+msgid "How did we do?"
+msgstr "איך היינו?"
+
+#: src/panel/chat.ts
+msgid "Loading…"
+msgstr "טוען…"
+
+#: src/panel/chat.ts
+msgid "Message"
+msgstr "הודעה"
+
+#: src/panel/chat.ts
+msgid "Messages"
+msgstr "הודעות"
+
+#: src/panel/chat.ts
+msgid "New conversation"
+msgstr "שיחה חדשה"
+
+#: src/panel/chat.ts
+msgid "No conversations yet"
+msgstr "עדיין אין שיחות"
+
+#: src/panel/chat.ts
+msgid "Nobody is available right now. Leave your e-mail and we'll send the reply there too."
+msgstr "אף אחד לא זמין כרגע. השאירו את האימייל שלכם ונשלח את התשובה גם אליו."
+
+#: src/panel/chat.ts
+msgid "Not sent."
+msgstr "לא נשלחה."
+
+#: src/panel/chat.ts
+msgid "Online"
+msgstr "מחובר"
+
+#: src/panel/chat.ts
+msgid "Reconnecting…"
+msgstr "מתחבר מחדש…"
+
+#. placeholder {0}: file.name
+#: src/panel/chat.ts
+msgid "Remove {0}"
+msgstr "הסרת {0}"
+
+#: src/panel/chat.ts
+msgid "Retry"
+msgstr "נסו שוב"
+
+#: src/panel/chat.ts
+msgid "Save"
+msgstr "שמירה"
+
+#: src/panel/chat.ts
+msgid "Seen"
+msgstr "נקראה"
+
+#: src/panel/chat.ts
+msgid "Send"
+msgstr "שליחה"
+
+#: src/panel/chat.ts
+msgid "Send us a message and we will reply here."
+msgstr "שלחו לנו הודעה ונענה כאן."
+
+#: src/panel/chat.ts
+msgid "Sending…"
+msgstr "שולח…"
+
+#: src/panel/chat.ts
+msgid "Sent"
+msgstr "נשלחה"
+
+#: src/panel/chat.ts
+msgid "Show older conversations"
+msgstr "הצגת שיחות ישנות יותר"
+
+#: src/panel/chat.ts
+msgid "Sign in to chat with us."
+msgstr "התחברו כדי לשוחח איתנו."
+
+#: src/panel/chat.ts
+msgid "Skip"
+msgstr "דילוג"
+
+#: src/panel/chat.ts
+msgid "Thanks for your feedback"
+msgstr "תודה על המשוב"
+
+#: src/panel/chat.ts
+msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
+msgstr "תודה! נשלח אימייל אל {known} אם לא תהיו כאן כשנענה."
+
+#: src/panel/chat.ts
+msgid "The file is too large."
+msgstr "הקובץ גדול מדי."
+
+#: src/panel/chat.ts
+msgid "This file type is not accepted."
+msgstr "סוג הקובץ הזה אינו מתקבל."
+
+#: src/panel/chat.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "יותר מדי ניסיונות. המתינו רגע ונסו שוב."
+
+#: src/panel/chat.ts
+msgid "Try again"
+msgstr "נסו שוב"
+
+#: src/panel/chat.ts
+msgid "Typing…"
+msgstr "מקליד…"
+
+#: src/panel/chat.ts
+msgid "Usually replies in {duration}"
+msgstr "בדרך כלל עונה תוך {duration}"
+
+#: src/panel/chat.ts
+msgid "We'll reply as soon as we can"
+msgstr "נענה בהקדם האפשרי"
+
+#: src/panel/chat.ts
+msgid "We're away right now"
+msgstr "אנחנו לא זמינים כרגע"
+
+#: src/panel/chat.ts
+msgid "Write a message…"
+msgstr "כתבו הודעה…"
+
+#: src/panel/chat.ts
+msgid "You seem to be offline."
+msgstr "נראה שאתם לא מחוברים לאינטרנט."
+
+#: src/panel/chat.ts
+msgid "You:"
+msgstr "את/ה:"
+
+#: src/panel/chat.ts
+msgid "you@example.com"
+msgstr "you@example.com"
+
+#: src/panel/chat.ts
+msgid "Your sign-in has expired. Reload the page and try again."
+msgstr "פג תוקף ההתחברות שלכם. רעננו את הדף ונסו שוב."

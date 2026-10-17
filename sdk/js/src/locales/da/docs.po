@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: da\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "Anonym"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "Besvaret"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "Afventer godkendelse"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "Tjek titlen og teksten, og prøv igen."
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "Diskussionerne kunne ikke indlæses."
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "Diskussionen kunne ikke åbnes. Prøv igen."
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "Kunne ikke sendes. Prøv igen."
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "Slettet medlem"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "Slettet læser"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "Diskussioner"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "Diskussioner om denne side"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "Diskussioner er slået fra på dette websted."
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "E-mailadresse"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "E-mail til svar (valgfrit)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "Indtast en gyldig e-mailadresse."
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "Alle diskussioner på denne side har et svar."
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "Har du et spørgsmål eller en idé? Start den første."
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "lige nu"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "Indlæser diskussioner…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "Indlæser…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "Låst"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "Ny"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "Nej"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "Der er ingen diskussioner om denne side endnu."
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "Nej tak"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "Afventer"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "Indlæg kan redigeres i 30 minutter efter, de er skrevet."
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "Læser"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "Svar: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "Send"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "Sender…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "Vis mere"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "Log ind"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "Log ind for at deltage i diskussionen."
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "Log ind for at skrive til os."
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "Log ud"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "Det beklager vi. Hvad manglede eller var uklart?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "Sortér diskussioner"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "Start en diskussion"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "Team"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "Teammedlem"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "Tak for din feedback."
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "Tak! Er der noget, vi kunne tilføje? (valgfrit)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "Denne diskussion er låst."
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "For mange forsøg. Vent et øjeblik, og prøv igen."
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "Top"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "Prøv igen"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "Ubesvaret"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "Stemmer: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "Var denne side nyttig?"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "Ja"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "Det kan du ikke."
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "Du ser ud til at være offline."
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "Din browser blokerede login-vinduet. Tillad pop op-vinduer for dette websted, og prøv igen."

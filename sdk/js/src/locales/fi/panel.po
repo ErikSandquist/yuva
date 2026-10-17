@@ -1,0 +1,213 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 15:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: fi\n"
+
+#: src/panel/chat.ts
+msgid "{name} is typing…"
+msgstr "{name} kirjoittaa…"
+
+#: src/panel/chat.ts
+msgid "All conversations"
+msgstr "Kaikki keskustelut"
+
+#: src/panel/chat.ts
+msgid "Anything you'd like to add? (optional)"
+msgstr "Haluatko lisätä jotain? (valinnainen)"
+
+#: src/panel/chat.ts
+msgid "Attach files"
+msgstr "Liitä tiedostoja"
+
+#: src/panel/chat.ts
+msgid "Attachment"
+msgstr "Liite"
+
+#: src/panel/chat.ts
+msgid "Bad"
+msgstr "Huono"
+
+#: src/panel/chat.ts
+msgid "Chat is not available right now."
+msgstr "Chat ei ole juuri nyt käytettävissä."
+
+#: src/panel/chat.ts
+msgid "Close"
+msgstr "Sulje"
+
+#: src/panel/chat.ts
+msgid "Comment"
+msgstr "Kommentti"
+
+#: src/panel/chat.ts
+msgid "Conversation"
+msgstr "Keskustelu"
+
+#: src/panel/chat.ts
+msgid "Could not save your e-mail address. Try again."
+msgstr "Sähköpostiosoitettasi ei voitu tallentaa. Yritä uudelleen."
+
+#: src/panel/chat.ts
+msgid "Could not send your rating. Try again."
+msgstr "Arviotasi ei voitu lähettää. Yritä uudelleen."
+
+#: src/panel/chat.ts
+msgid "E-mail address"
+msgstr "Sähköpostiosoite"
+
+#: src/panel/chat.ts
+msgid "Enter a valid e-mail address."
+msgstr "Anna kelvollinen sähköpostiosoite."
+
+#: src/panel/chat.ts
+msgid "Good"
+msgstr "Hyvä"
+
+#: src/panel/chat.ts
+msgid "How did we do?"
+msgstr "Miten meni?"
+
+#: src/panel/chat.ts
+msgid "Loading…"
+msgstr "Ladataan…"
+
+#: src/panel/chat.ts
+msgid "Message"
+msgstr "Viesti"
+
+#: src/panel/chat.ts
+msgid "Messages"
+msgstr "Viestit"
+
+#: src/panel/chat.ts
+msgid "New conversation"
+msgstr "Uusi keskustelu"
+
+#: src/panel/chat.ts
+msgid "No conversations yet"
+msgstr "Ei vielä keskusteluja"
+
+#: src/panel/chat.ts
+msgid "Nobody is available right now. Leave your e-mail and we'll send the reply there too."
+msgstr "Kukaan ei ole juuri nyt paikalla. Jätä sähköpostiosoitteesi, niin lähetämme vastauksen myös sinne."
+
+#: src/panel/chat.ts
+msgid "Not sent."
+msgstr "Ei lähetetty."
+
+#: src/panel/chat.ts
+msgid "Online"
+msgstr "Paikalla"
+
+#: src/panel/chat.ts
+msgid "Reconnecting…"
+msgstr "Yhdistetään uudelleen…"
+
+#. placeholder {0}: file.name
+#: src/panel/chat.ts
+msgid "Remove {0}"
+msgstr "Poista {0}"
+
+#: src/panel/chat.ts
+msgid "Retry"
+msgstr "Yritä uudelleen"
+
+#: src/panel/chat.ts
+msgid "Save"
+msgstr "Tallenna"
+
+#: src/panel/chat.ts
+msgid "Seen"
+msgstr "Nähty"
+
+#: src/panel/chat.ts
+msgid "Send"
+msgstr "Lähetä"
+
+#: src/panel/chat.ts
+msgid "Send us a message and we will reply here."
+msgstr "Lähetä meille viesti, niin vastaamme tässä."
+
+#: src/panel/chat.ts
+msgid "Sending…"
+msgstr "Lähetetään…"
+
+#: src/panel/chat.ts
+msgid "Sent"
+msgstr "Lähetetty"
+
+#: src/panel/chat.ts
+msgid "Show older conversations"
+msgstr "Näytä vanhemmat keskustelut"
+
+#: src/panel/chat.ts
+msgid "Sign in to chat with us."
+msgstr "Kirjaudu sisään keskustellaksesi kanssamme."
+
+#: src/panel/chat.ts
+msgid "Skip"
+msgstr "Ohita"
+
+#: src/panel/chat.ts
+msgid "Thanks for your feedback"
+msgstr "Kiitos palautteestasi"
+
+#: src/panel/chat.ts
+msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
+msgstr "Kiitos! Lähetämme sähköpostia osoitteeseen {known}, jos et ole paikalla vastatessamme."
+
+#: src/panel/chat.ts
+msgid "The file is too large."
+msgstr "Tiedosto on liian suuri."
+
+#: src/panel/chat.ts
+msgid "This file type is not accepted."
+msgstr "Tätä tiedostotyyppiä ei hyväksytä."
+
+#: src/panel/chat.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Liian monta yritystä. Odota hetki ja yritä uudelleen."
+
+#: src/panel/chat.ts
+msgid "Try again"
+msgstr "Yritä uudelleen"
+
+#: src/panel/chat.ts
+msgid "Typing…"
+msgstr "Kirjoittaa…"
+
+#: src/panel/chat.ts
+msgid "Usually replies in {duration}"
+msgstr "Vastaa yleensä {duration} kuluessa"
+
+#: src/panel/chat.ts
+msgid "We'll reply as soon as we can"
+msgstr "Vastaamme niin pian kuin mahdollista"
+
+#: src/panel/chat.ts
+msgid "We're away right now"
+msgstr "Emme ole juuri nyt paikalla"
+
+#: src/panel/chat.ts
+msgid "Write a message…"
+msgstr "Kirjoita viesti…"
+
+#: src/panel/chat.ts
+msgid "You seem to be offline."
+msgstr "Näytät olevan offline-tilassa."
+
+#: src/panel/chat.ts
+msgid "You:"
+msgstr "Sinä:"
+
+#: src/panel/chat.ts
+msgid "you@example.com"
+msgstr "you@example.com"
+
+#: src/panel/chat.ts
+msgid "Your sign-in has expired. Reload the page and try again."
+msgstr "Kirjautumisesi on vanhentunut. Lataa sivu uudelleen ja yritä uudelleen."

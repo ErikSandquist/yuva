@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "Анонім"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "Є відповідь"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "Очікує схвалення"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "Перевірте заголовок і текст і спробуйте ще раз."
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "Не вдалося завантажити обговорення."
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "Не вдалося відкрити обговорення. Спробуйте ще раз."
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "Не вдалося надіслати. Спробуйте ще раз."
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "Видалений учасник"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "Видалений читач"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "Обговорення"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "Обговорення цієї сторінки"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "На цьому сайті обговорення вимкнено."
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "Електронна адреса"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "Електронна адреса для відповіді (необов’язково)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "Введіть дійсну електронну адресу."
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "На всі обговорення цієї сторінки є відповіді."
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "Є запитання чи ідея? Розпочніть перше обговорення."
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "щойно"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "Завантаження обговорень…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "Завантаження…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "Заблоковано"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "Нове"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "Ні"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "Обговорень цієї сторінки ще немає."
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "Ні, дякую"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "Очікує"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "Дописи можна редагувати протягом 30 хвилин після написання."
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "Читач"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "Відповідей: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "Надіслати"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "Надсилання…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "Показати більше"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "Увійти"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "Увійдіть, щоб брати участь в обговоренні."
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "Увійдіть, щоб написати нам."
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "Вийти"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "Шкода. Чого бракувало або що було незрозуміло?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "Сортування обговорень"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "Розпочати обговорення"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "Команда"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "Учасник команди"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "Дякуємо за відгук."
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "Дякуємо! Чи можемо ми щось додати? (необов’язково)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "Це обговорення заблоковано."
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Забагато спроб. Зачекайте трохи й спробуйте ще раз."
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "Найкращі"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "Повторити"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "Без відповіді"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "Голосів: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "Чи була ця сторінка корисною?"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "Так"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "Ви не можете цього зробити."
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "Схоже, ви офлайн."
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "Браузер заблокував вікно входу. Дозвольте спливні вікна для цього сайту й спробуйте ще раз."

@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: hu\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "Névtelen"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "Megválaszolva"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "Jóváhagyásra vár"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "Ellenőrizze a címet és a szöveget, majd próbálja újra."
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "Nem sikerült betölteni a megbeszéléseket."
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "Nem sikerült megnyitni a megbeszélést. Próbálja újra."
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "Nem sikerült elküldeni. Próbálja újra."
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "Törölt tag"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "Törölt olvasó"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "Megbeszélések"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "Megbeszélések erről az oldalról"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "A megbeszélések ki vannak kapcsolva ezen a webhelyen."
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "E-mail-cím"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "E-mail-cím a válaszhoz (nem kötelező)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "Adjon meg egy érvényes e-mail-címet."
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "Az oldal minden megbeszélésére érkezett válasz."
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "Kérdése vagy ötlete van? Indítsa el az elsőt."
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "épp most"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "Megbeszélések betöltése…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "Betöltés…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "Zárolva"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "Új"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "Nem"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "Erről az oldalról még nincsenek megbeszélések."
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "Nem, köszönöm"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "Függőben"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "A hozzászólások az írásuk után 30 percig szerkeszthetők."
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "Olvasó"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "Válaszok: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "Küldés"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "Küldés…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "Továbbiak megjelenítése"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "Bejelentkezés"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "Jelentkezzen be, hogy részt vegyen a megbeszélésben."
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "Jelentkezzen be, hogy írjon nekünk."
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "Kijelentkezés"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "Sajnáljuk. Mi hiányzott, vagy mi volt nem egyértelmű?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "Megbeszélések rendezése"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "Megbeszélés indítása"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "Csapat"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "Csapattag"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "Köszönjük a visszajelzését."
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "Köszönjük! Van valami, amit hozzátehetnénk? (nem kötelező)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "Ez a megbeszélés zárolva van."
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Túl sok próbálkozás. Várjon egy pillanatot, és próbálja újra."
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "Legjobbak"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "Próbálja újra"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "Megválaszolatlan"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "Szavazatok: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "Hasznos volt ez az oldal?"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "Igen"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "Ezt nem teheti meg."
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "Úgy tűnik, offline van."
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "A böngészője blokkolta a bejelentkezési ablakot. Engedélyezze a felugró ablakokat ezen a webhelyen, és próbálja újra."

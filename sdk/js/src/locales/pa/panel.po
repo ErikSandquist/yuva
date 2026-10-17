@@ -1,0 +1,213 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 15:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: pa\n"
+
+#: src/panel/chat.ts
+msgid "{name} is typing…"
+msgstr "{name} ਲਿਖ ਰਹੇ ਹਨ…"
+
+#: src/panel/chat.ts
+msgid "All conversations"
+msgstr "ਸਾਰੀਆਂ ਗੱਲਬਾਤਾਂ"
+
+#: src/panel/chat.ts
+msgid "Anything you'd like to add? (optional)"
+msgstr "ਕੁਝ ਜੋੜਨਾ ਚਾਹੁੰਦੇ ਹੋ? (ਵਿਕਲਪਿਕ)"
+
+#: src/panel/chat.ts
+msgid "Attach files"
+msgstr "ਫ਼ਾਈਲਾਂ ਜੋੜੋ"
+
+#: src/panel/chat.ts
+msgid "Attachment"
+msgstr "ਅਟੈਚਮੈਂਟ"
+
+#: src/panel/chat.ts
+msgid "Bad"
+msgstr "ਮਾੜਾ"
+
+#: src/panel/chat.ts
+msgid "Chat is not available right now."
+msgstr "ਚੈਟ ਇਸ ਵੇਲੇ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।"
+
+#: src/panel/chat.ts
+msgid "Close"
+msgstr "ਬੰਦ ਕਰੋ"
+
+#: src/panel/chat.ts
+msgid "Comment"
+msgstr "ਟਿੱਪਣੀ"
+
+#: src/panel/chat.ts
+msgid "Conversation"
+msgstr "ਗੱਲਬਾਤ"
+
+#: src/panel/chat.ts
+msgid "Could not save your e-mail address. Try again."
+msgstr "ਤੁਹਾਡਾ ਈਮੇਲ ਪਤਾ ਸੇਵ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
+
+#: src/panel/chat.ts
+msgid "Could not send your rating. Try again."
+msgstr "ਤੁਹਾਡੀ ਰੇਟਿੰਗ ਭੇਜੀ ਨਹੀਂ ਜਾ ਸਕੀ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
+
+#: src/panel/chat.ts
+msgid "E-mail address"
+msgstr "ਈਮੇਲ ਪਤਾ"
+
+#: src/panel/chat.ts
+msgid "Enter a valid e-mail address."
+msgstr "ਇੱਕ ਸਹੀ ਈਮੇਲ ਪਤਾ ਦਰਜ ਕਰੋ।"
+
+#: src/panel/chat.ts
+msgid "Good"
+msgstr "ਚੰਗਾ"
+
+#: src/panel/chat.ts
+msgid "How did we do?"
+msgstr "ਅਸੀਂ ਕਿਵੇਂ ਰਹੇ?"
+
+#: src/panel/chat.ts
+msgid "Loading…"
+msgstr "ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ…"
+
+#: src/panel/chat.ts
+msgid "Message"
+msgstr "ਸੁਨੇਹਾ"
+
+#: src/panel/chat.ts
+msgid "Messages"
+msgstr "ਸੁਨੇਹੇ"
+
+#: src/panel/chat.ts
+msgid "New conversation"
+msgstr "ਨਵੀਂ ਗੱਲਬਾਤ"
+
+#: src/panel/chat.ts
+msgid "No conversations yet"
+msgstr "ਅਜੇ ਕੋਈ ਗੱਲਬਾਤ ਨਹੀਂ"
+
+#: src/panel/chat.ts
+msgid "Nobody is available right now. Leave your e-mail and we'll send the reply there too."
+msgstr "ਇਸ ਵੇਲੇ ਕੋਈ ਉਪਲਬਧ ਨਹੀਂ ਹੈ। ਆਪਣਾ ਈਮੇਲ ਛੱਡੋ, ਅਸੀਂ ਜਵਾਬ ਉੱਥੇ ਵੀ ਭੇਜਾਂਗੇ।"
+
+#: src/panel/chat.ts
+msgid "Not sent."
+msgstr "ਭੇਜਿਆ ਨਹੀਂ ਗਿਆ।"
+
+#: src/panel/chat.ts
+msgid "Online"
+msgstr "ਆਨਲਾਈਨ"
+
+#: src/panel/chat.ts
+msgid "Reconnecting…"
+msgstr "ਦੁਬਾਰਾ ਕਨੈਕਟ ਹੋ ਰਿਹਾ ਹੈ…"
+
+#. placeholder {0}: file.name
+#: src/panel/chat.ts
+msgid "Remove {0}"
+msgstr "{0} ਹਟਾਓ"
+
+#: src/panel/chat.ts
+msgid "Retry"
+msgstr "ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ"
+
+#: src/panel/chat.ts
+msgid "Save"
+msgstr "ਸੇਵ ਕਰੋ"
+
+#: src/panel/chat.ts
+msgid "Seen"
+msgstr "ਦੇਖਿਆ"
+
+#: src/panel/chat.ts
+msgid "Send"
+msgstr "ਭੇਜੋ"
+
+#: src/panel/chat.ts
+msgid "Send us a message and we will reply here."
+msgstr "ਸਾਨੂੰ ਸੁਨੇਹਾ ਭੇਜੋ, ਅਸੀਂ ਇੱਥੇ ਜਵਾਬ ਦੇਵਾਂਗੇ।"
+
+#: src/panel/chat.ts
+msgid "Sending…"
+msgstr "ਭੇਜਿਆ ਜਾ ਰਿਹਾ ਹੈ…"
+
+#: src/panel/chat.ts
+msgid "Sent"
+msgstr "ਭੇਜਿਆ ਗਿਆ"
+
+#: src/panel/chat.ts
+msgid "Show older conversations"
+msgstr "ਪੁਰਾਣੀਆਂ ਗੱਲਬਾਤਾਂ ਦਿਖਾਓ"
+
+#: src/panel/chat.ts
+msgid "Sign in to chat with us."
+msgstr "ਸਾਡੇ ਨਾਲ ਚੈਟ ਕਰਨ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ।"
+
+#: src/panel/chat.ts
+msgid "Skip"
+msgstr "ਛੱਡੋ"
+
+#: src/panel/chat.ts
+msgid "Thanks for your feedback"
+msgstr "ਤੁਹਾਡੀ ਫੀਡਬੈਕ ਲਈ ਧੰਨਵਾਦ"
+
+#: src/panel/chat.ts
+msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
+msgstr "ਧੰਨਵਾਦ! ਜੇ ਅਸੀਂ ਜਵਾਬ ਦੇਵਾਂਗੇ ਤਾਂ ਤੁਸੀਂ ਨਾ ਹੋਏ ਤਾਂ ਅਸੀਂ {known} ’ਤੇ ਈਮੇਲ ਕਰਾਂਗੇ।"
+
+#: src/panel/chat.ts
+msgid "The file is too large."
+msgstr "ਫ਼ਾਈਲ ਬਹੁਤ ਵੱਡੀ ਹੈ।"
+
+#: src/panel/chat.ts
+msgid "This file type is not accepted."
+msgstr "ਇਹ ਫ਼ਾਈਲ ਕਿਸਮ ਸਵੀਕਾਰ ਨਹੀਂ ਹੈ।"
+
+#: src/panel/chat.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "ਬਹੁਤ ਵਾਰ ਕੋਸ਼ਿਸ਼ ਹੋ ਗਈ। ਥੋੜ੍ਹਾ ਰੁਕੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
+
+#: src/panel/chat.ts
+msgid "Try again"
+msgstr "ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ"
+
+#: src/panel/chat.ts
+msgid "Typing…"
+msgstr "ਲਿਖ ਰਹੇ ਹਨ…"
+
+#: src/panel/chat.ts
+msgid "Usually replies in {duration}"
+msgstr "ਆਮ ਤੌਰ ’ਤੇ {duration} ਵਿੱਚ ਜਵਾਬ ਦਿੰਦੇ ਹਨ"
+
+#: src/panel/chat.ts
+msgid "We'll reply as soon as we can"
+msgstr "ਅਸੀਂ ਜਲਦੀ ਤੋਂ ਜਲਦੀ ਜਵਾਬ ਦੇਵਾਂਗੇ"
+
+#: src/panel/chat.ts
+msgid "We're away right now"
+msgstr "ਅਸੀਂ ਇਸ ਵੇਲੇ ਉਪਲਬਧ ਨਹੀਂ ਹਾਂ"
+
+#: src/panel/chat.ts
+msgid "Write a message…"
+msgstr "ਸੁਨੇਹਾ ਲਿਖੋ…"
+
+#: src/panel/chat.ts
+msgid "You seem to be offline."
+msgstr "ਲੱਗਦਾ ਹੈ ਤੁਸੀਂ ਆਫ਼ਲਾਈਨ ਹੋ।"
+
+#: src/panel/chat.ts
+msgid "You:"
+msgstr "ਤੁਸੀਂ:"
+
+#: src/panel/chat.ts
+msgid "you@example.com"
+msgstr "you@example.com"
+
+#: src/panel/chat.ts
+msgid "Your sign-in has expired. Reload the page and try again."
+msgstr "ਤੁਹਾਡਾ ਸਾਈਨ-ਇਨ ਮਿਆਦ ਪੁੱਗ ਗਿਆ ਹੈ। ਪੰਨਾ ਮੁੜ-ਲੋਡ ਕਰੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"

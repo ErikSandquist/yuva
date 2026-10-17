@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: cs\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "Přijatá odpověď"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "Všechny diskuze"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "Položte otázku, sdílejte nápad nebo popište problém s touto stránkou."
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "Zrušit"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "Smazat"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "Smazat tuto diskuzi?"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "Smazat tuto odpověď?"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "Upravit"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "Upravit příspěvek"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "upraveno"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "Sledovat"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "Sledujete"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "Dostanete e-mail, když někdo odpoví nebo bude přijata odpověď."
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "Ponechat"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "Načítání…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "Označit jako odpověď"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "Markdown je podporován."
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "Není co zobrazit."
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "Náhled"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "Odebrat váš hlas (hlasy: {0})"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "Odpovědi: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "Odpovědět"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "Uložit"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "Odesílání…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "Přihlásit se"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "Přihlaste se, abyste mohli odpovídat, hlasovat a sledovat tuto diskuzi."
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "Přihlaste se a zahajte diskuzi. Vaše jméno se zobrazí u příspěvku."
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "Zahájit diskuzi"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "Zahájit diskuzi"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "Děkujeme! Vaše diskuze se zobrazí všem, jakmile ji tým schválí."
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "Děkujeme! Vaše odpověď se zobrazí všem, jakmile ji tým schválí."
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "Úvodní příspěvek byl smazán."
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "Tato diskuze je uzamčená. Nové odpovědi jsou zavřené."
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "Tato diskuze už není dostupná."
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "Tato odpověď byla smazána."
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "Název"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "Zrušit označení odpovědi"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "Dát hlas (hlasy: {0})"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "Psát"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "Napište odpověď…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "Vaše první příspěvky tým zkontroluje, než se zobrazí všem."
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "Vaše otázka nebo nápad"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "Vaše odpověď"

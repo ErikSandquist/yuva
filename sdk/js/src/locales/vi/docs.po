@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: vi\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "Ẩn danh"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "Đã trả lời"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "Đang chờ duyệt"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "Hãy kiểm tra tiêu đề và nội dung rồi thử lại."
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "Không thể tải các thảo luận."
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "Không thể mở thảo luận. Hãy thử lại."
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "Không thể gửi. Hãy thử lại."
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "Thành viên đã xóa"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "Người đọc đã xóa"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "Thảo luận"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "Thảo luận về trang này"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "Thảo luận đã bị tắt cho trang web này."
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "Địa chỉ email"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "Email nhận phản hồi (không bắt buộc)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "Nhập địa chỉ email hợp lệ."
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "Mọi thảo luận trên trang này đều đã có câu trả lời."
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "Bạn có câu hỏi hoặc ý tưởng? Hãy bắt đầu thảo luận đầu tiên."
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "vừa xong"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "Đang tải thảo luận…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "Đang tải…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "Đã khóa"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "Mới"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "Không"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "Chưa có thảo luận nào về trang này."
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "Không, cảm ơn"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "Đang chờ"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "Bài viết có thể được chỉnh sửa trong 30 phút sau khi viết."
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "Người đọc"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "Phản hồi: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "Gửi"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "Đang gửi…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "Xem thêm"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "Đăng nhập"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "Đăng nhập để tham gia thảo luận."
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "Đăng nhập để nhắn cho chúng tôi."
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "Đăng xuất"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "Rất tiếc. Điều gì còn thiếu hoặc chưa rõ?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "Sắp xếp thảo luận"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "Bắt đầu thảo luận"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "Nhóm"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "Thành viên nhóm"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "Cảm ơn phản hồi của bạn."
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "Cảm ơn bạn! Chúng tôi có thể bổ sung điều gì không? (không bắt buộc)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "Thảo luận này đã bị khóa."
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Quá nhiều lần thử. Hãy chờ một lát rồi thử lại."
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "Nổi bật"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "Thử lại"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "Chưa có câu trả lời"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "Phiếu bầu: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "Trang này có hữu ích không?"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "Có"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "Bạn không thể làm điều đó."
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "Có vẻ bạn đang ngoại tuyến."
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "Trình duyệt đã chặn cửa sổ đăng nhập. Hãy cho phép cửa sổ bật lên của trang web này rồi thử lại."

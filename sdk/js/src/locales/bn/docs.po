@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: bn\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "বেনামী"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "উত্তর দেওয়া হয়েছে"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "অনুমোদনের অপেক্ষায়"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "শিরোনাম ও লেখাটি দেখে আবার চেষ্টা করুন।"
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "আলোচনাগুলো লোড করা যায়নি।"
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "আলোচনাটি খোলা যায়নি। আবার চেষ্টা করুন।"
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "পাঠানো যায়নি। আবার চেষ্টা করুন।"
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "মুছে ফেলা সদস্য"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "মুছে ফেলা পাঠক"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "আলোচনা"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "এই পৃষ্ঠা নিয়ে আলোচনা"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "এই সাইটে আলোচনা বন্ধ আছে।"
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "ইমেইল ঠিকানা"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "উত্তরের জন্য ইমেইল (ঐচ্ছিক)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "একটি সঠিক ইমেইল ঠিকানা দিন।"
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "এই পৃষ্ঠার প্রতিটি আলোচনার উত্তর আছে।"
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "কোনো প্রশ্ন বা ধারণা আছে? প্রথম আলোচনাটি শুরু করুন।"
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "এইমাত্র"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "আলোচনা লোড হচ্ছে…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "লোড হচ্ছে…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "বন্ধ"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "নতুন"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "না"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "এই পৃষ্ঠা নিয়ে এখনও কোনো আলোচনা নেই।"
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "না, ধন্যবাদ"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "অপেক্ষমাণ"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "পোস্ট লেখার ৩০ মিনিট পর্যন্ত সম্পাদনা করা যায়।"
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "পাঠক"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "উত্তর: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "পাঠান"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "পাঠানো হচ্ছে…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "আরও দেখান"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "সাইন ইন"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "আলোচনায় অংশ নিতে সাইন ইন করুন।"
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "আমাদের লিখতে সাইন ইন করুন।"
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "সাইন আউট"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "দুঃখিত। কী বাদ গিয়েছিল বা অস্পষ্ট ছিল?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "আলোচনা সাজান"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "একটি আলোচনা শুরু করুন"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "টিম"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "টিম সদস্য"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "আপনার মতামতের জন্য ধন্যবাদ।"
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "ধন্যবাদ! আমরা আর কিছু যোগ করতে পারি? (ঐচ্ছিক)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "এই আলোচনাটি বন্ধ।"
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "অনেকবার চেষ্টা করা হয়েছে। একটু অপেক্ষা করে আবার চেষ্টা করুন।"
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "শীর্ষ"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "আবার চেষ্টা করুন"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "উত্তরহীন"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "ভোট: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "এই পৃষ্ঠাটি কি সহায়ক ছিল?"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "হ্যাঁ"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "আপনি এটি করতে পারবেন না।"
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "মনে হচ্ছে আপনি অফলাইনে আছেন।"
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "আপনার ব্রাউজার সাইন-ইন উইন্ডো আটকে দিয়েছে। এই সাইটের জন্য পপ-আপ অনুমতি দিয়ে আবার চেষ্টা করুন।"

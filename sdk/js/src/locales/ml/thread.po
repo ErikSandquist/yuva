@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ml\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "അംഗീകരിച്ച മറുപടി"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "എല്ലാ ചർച്ചകളും"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "ഒരു ചോദ്യം ചോദിക്കൂ, ആശയം പങ്കിടൂ, അല്ലെങ്കിൽ ഈ പേജിലെ പ്രശ്നം വിവരിക്കൂ."
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "റദ്ദാക്കുക"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "ഇല്ലാതാക്കുക"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "ഈ ചർച്ച ഇല്ലാതാക്കണോ?"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "ഈ മറുപടി ഇല്ലാതാക്കണോ?"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "എഡിറ്റ് ചെയ്യുക"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "നിങ്ങളുടെ പോസ്റ്റ് എഡിറ്റ് ചെയ്യുക"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "എഡിറ്റ് ചെയ്തു"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "പിന്തുടരുക"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "പിന്തുടരുന്നു"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "ആരെങ്കിലും മറുപടി നൽകുകയോ ഒരു മറുപടി അംഗീകരിക്കുകയോ ചെയ്താൽ ഇമെയിൽ ലഭിക്കും."
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "നിലനിർത്തുക"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "ലോഡ് ചെയ്യുന്നു…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "മറുപടിയായി അടയാളപ്പെടുത്തുക"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "Markdown പിന്തുണയ്ക്കുന്നു."
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "പ്രിവ്യൂ ചെയ്യാൻ ഒന്നുമില്ല."
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "പ്രിവ്യൂ"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "നിങ്ങളുടെ വോട്ട് നീക്കം ചെയ്യുക (വോട്ടുകൾ: {0})"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "മറുപടികൾ: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "മറുപടി നൽകുക"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "സേവ് ചെയ്യുക"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "അയയ്ക്കുന്നു…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "സൈൻ ഇൻ"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "മറുപടി നൽകാനും വോട്ട് ചെയ്യാനും ഈ ചർച്ച പിന്തുടരാനും സൈൻ ഇൻ ചെയ്യുക."
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "ചർച്ച തുടങ്ങാൻ സൈൻ ഇൻ ചെയ്യുക. നിങ്ങളുടെ പോസ്റ്റിനൊപ്പം നിങ്ങളുടെ പേര് കാണിക്കും."
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "ഒരു ചർച്ച തുടങ്ങുക"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "ചർച്ച തുടങ്ങുക"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "നന്ദി! ടീം അംഗീകരിച്ചാൽ നിങ്ങളുടെ ചർച്ച എല്ലാവർക്കും കാണാം."
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "നന്ദി! ടീം അംഗീകരിച്ചാൽ നിങ്ങളുടെ മറുപടി എല്ലാവർക്കും കാണാം."
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "ആദ്യ പോസ്റ്റ് ഇല്ലാതാക്കി."
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "ഈ ചർച്ച ലോക്ക് ചെയ്തിരിക്കുന്നു. പുതിയ മറുപടികൾ അടച്ചിരിക്കുന്നു."
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "ഈ ചർച്ച ഇനി ലഭ്യമല്ല."
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "ഈ മറുപടി ഇല്ലാതാക്കി."
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "തലക്കെട്ട്"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "മറുപടി അടയാളം നീക്കുക"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "അപ്‌വോട്ട് ചെയ്യുക (വോട്ടുകൾ: {0})"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "എഴുതുക"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "ഒരു മറുപടി എഴുതൂ…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "നിങ്ങളുടെ ആദ്യ പോസ്റ്റുകൾ എല്ലാവർക്കും കാണുംമുമ്പ് ടീം പരിശോധിക്കും."
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "നിങ്ങളുടെ ചോദ്യമോ ആശയമോ"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "നിങ്ങളുടെ മറുപടി"

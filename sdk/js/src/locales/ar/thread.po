@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ar\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "الإجابة المقبولة"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "كل المناقشات"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "اطرح سؤالًا أو شارك فكرة أو صف مشكلة في هذه الصفحة."
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "إلغاء"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "حذف"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "حذف هذه المناقشة؟"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "حذف هذا الرد؟"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "تعديل"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "عدّل منشورك"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "معدَّل"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "متابعة"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "قيد المتابعة"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "احصل على بريد إلكتروني عندما يرد أحد أو تُقبل إجابة."
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "إبقاء"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "جارٍ التحميل…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "تحديد كإجابة"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "يدعم Markdown."
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "لا شيء للمعاينة."
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "معاينة"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "إلغاء صوتك (الأصوات: {0})"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "الردود: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "رد"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "حفظ"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "جارٍ الإرسال…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "تسجيل الدخول"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "سجّل الدخول للرد والتصويت ومتابعة هذه المناقشة."
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "سجّل الدخول لبدء مناقشة. يظهر اسمك مع منشورك."
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "ابدأ مناقشة"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "بدء المناقشة"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "شكرًا! ستظهر مناقشتك للجميع بعد موافقة الفريق."
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "شكرًا! سيظهر ردك للجميع بعد موافقة الفريق."
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "تم حذف المنشور الأول."
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "هذه المناقشة مقفلة. الردود الجديدة مغلقة."
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "هذه المناقشة لم تعد متاحة."
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "تم حذف هذا الرد."
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "العنوان"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "إلغاء تحديد الإجابة"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "تصويت إيجابي (الأصوات: {0})"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "كتابة"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "اكتب ردًا…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "تُراجع منشوراتك الأولى من قبل الفريق قبل أن تظهر للجميع."
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "سؤالك أو فكرتك"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "ردك"

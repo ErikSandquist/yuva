@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: hi\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "अनाम"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "जवाब दिया गया"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "मंज़ूरी की प्रतीक्षा में"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "शीर्षक और टेक्स्ट जाँचें और फिर कोशिश करें।"
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "चर्चाएँ लोड नहीं हो सकीं।"
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "चर्चा खोली नहीं जा सकी। फिर कोशिश करें।"
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "भेजा नहीं जा सका। फिर कोशिश करें।"
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "हटाया गया सदस्य"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "हटाया गया पाठक"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "चर्चाएँ"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "इस पेज के बारे में चर्चाएँ"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "इस साइट के लिए चर्चाएँ बंद हैं।"
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "ईमेल पता"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "जवाब के लिए ईमेल (वैकल्पिक)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "सही ईमेल पता दर्ज करें।"
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "इस पेज की हर चर्चा का जवाब मिल चुका है।"
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "कोई सवाल या विचार है? पहली चर्चा शुरू करें।"
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "अभी-अभी"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "चर्चाएँ लोड हो रही हैं…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "लोड हो रहा है…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "लॉक"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "नई"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "नहीं"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "इस पेज के बारे में अभी तक कोई चर्चा नहीं है।"
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "नहीं, धन्यवाद"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "लंबित"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "पोस्ट लिखने के 30 मिनट बाद तक संपादित की जा सकती हैं।"
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "पाठक"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "जवाब: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "भेजें"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "भेजा जा रहा है…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "और दिखाएँ"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "साइन इन करें"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "चर्चा में भाग लेने के लिए साइन इन करें।"
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "हमें लिखने के लिए साइन इन करें।"
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "साइन आउट करें"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "क्षमा करें। क्या कमी थी या क्या साफ़ नहीं था?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "चर्चाएँ क्रमबद्ध करें"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "चर्चा शुरू करें"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "टीम"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "टीम सदस्य"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "आपकी प्रतिक्रिया के लिए धन्यवाद।"
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "धन्यवाद! क्या हम कुछ और जोड़ सकते हैं? (वैकल्पिक)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "यह चर्चा लॉक है।"
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "बहुत ज़्यादा कोशिशें हो गईं। थोड़ी देर रुकें और फिर कोशिश करें।"
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "शीर्ष"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "फिर कोशिश करें"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "बिना जवाब वाली"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "वोट: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "क्या यह पेज उपयोगी था?"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "हाँ"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "आप ऐसा नहीं कर सकते।"
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "लगता है आप ऑफ़लाइन हैं।"
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "आपके ब्राउज़र ने साइन-इन विंडो रोक दी। इस साइट के लिए पॉप-अप की अनुमति दें और फिर कोशिश करें।"

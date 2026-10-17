@@ -1,0 +1,213 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 15:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: hr\n"
+
+#: src/panel/chat.ts
+msgid "{name} is typing…"
+msgstr "{name} tipka…"
+
+#: src/panel/chat.ts
+msgid "All conversations"
+msgstr "Svi razgovori"
+
+#: src/panel/chat.ts
+msgid "Anything you'd like to add? (optional)"
+msgstr "Želite li nešto dodati? (neobavezno)"
+
+#: src/panel/chat.ts
+msgid "Attach files"
+msgstr "Priloži datoteke"
+
+#: src/panel/chat.ts
+msgid "Attachment"
+msgstr "Privitak"
+
+#: src/panel/chat.ts
+msgid "Bad"
+msgstr "Loše"
+
+#: src/panel/chat.ts
+msgid "Chat is not available right now."
+msgstr "Chat trenutačno nije dostupan."
+
+#: src/panel/chat.ts
+msgid "Close"
+msgstr "Zatvori"
+
+#: src/panel/chat.ts
+msgid "Comment"
+msgstr "Komentar"
+
+#: src/panel/chat.ts
+msgid "Conversation"
+msgstr "Razgovor"
+
+#: src/panel/chat.ts
+msgid "Could not save your e-mail address. Try again."
+msgstr "Vašu e-adresu nije bilo moguće spremiti. Pokušajte ponovno."
+
+#: src/panel/chat.ts
+msgid "Could not send your rating. Try again."
+msgstr "Vašu ocjenu nije bilo moguće poslati. Pokušajte ponovno."
+
+#: src/panel/chat.ts
+msgid "E-mail address"
+msgstr "E-adresa"
+
+#: src/panel/chat.ts
+msgid "Enter a valid e-mail address."
+msgstr "Unesite ispravnu e-adresu."
+
+#: src/panel/chat.ts
+msgid "Good"
+msgstr "Dobro"
+
+#: src/panel/chat.ts
+msgid "How did we do?"
+msgstr "Kako smo prošli?"
+
+#: src/panel/chat.ts
+msgid "Loading…"
+msgstr "Učitavanje…"
+
+#: src/panel/chat.ts
+msgid "Message"
+msgstr "Poruka"
+
+#: src/panel/chat.ts
+msgid "Messages"
+msgstr "Poruke"
+
+#: src/panel/chat.ts
+msgid "New conversation"
+msgstr "Novi razgovor"
+
+#: src/panel/chat.ts
+msgid "No conversations yet"
+msgstr "Još nema razgovora"
+
+#: src/panel/chat.ts
+msgid "Nobody is available right now. Leave your e-mail and we'll send the reply there too."
+msgstr "Trenutačno nitko nije dostupan. Ostavite svoju e-adresu i odgovor ćemo poslati i tamo."
+
+#: src/panel/chat.ts
+msgid "Not sent."
+msgstr "Nije poslano."
+
+#: src/panel/chat.ts
+msgid "Online"
+msgstr "Online"
+
+#: src/panel/chat.ts
+msgid "Reconnecting…"
+msgstr "Ponovno povezivanje…"
+
+#. placeholder {0}: file.name
+#: src/panel/chat.ts
+msgid "Remove {0}"
+msgstr "Ukloni {0}"
+
+#: src/panel/chat.ts
+msgid "Retry"
+msgstr "Pokušaj ponovno"
+
+#: src/panel/chat.ts
+msgid "Save"
+msgstr "Spremi"
+
+#: src/panel/chat.ts
+msgid "Seen"
+msgstr "Viđeno"
+
+#: src/panel/chat.ts
+msgid "Send"
+msgstr "Pošalji"
+
+#: src/panel/chat.ts
+msgid "Send us a message and we will reply here."
+msgstr "Pošaljite nam poruku, a mi ćemo odgovoriti ovdje."
+
+#: src/panel/chat.ts
+msgid "Sending…"
+msgstr "Slanje…"
+
+#: src/panel/chat.ts
+msgid "Sent"
+msgstr "Poslano"
+
+#: src/panel/chat.ts
+msgid "Show older conversations"
+msgstr "Prikaži starije razgovore"
+
+#: src/panel/chat.ts
+msgid "Sign in to chat with us."
+msgstr "Prijavite se kako biste razgovarali s nama."
+
+#: src/panel/chat.ts
+msgid "Skip"
+msgstr "Preskoči"
+
+#: src/panel/chat.ts
+msgid "Thanks for your feedback"
+msgstr "Hvala na povratnim informacijama"
+
+#: src/panel/chat.ts
+msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
+msgstr "Hvala! Poslat ćemo vam e-poruku na {known} ako vas ne bude kad odgovorimo."
+
+#: src/panel/chat.ts
+msgid "The file is too large."
+msgstr "Datoteka je prevelika."
+
+#: src/panel/chat.ts
+msgid "This file type is not accepted."
+msgstr "Ova vrsta datoteke nije prihvaćena."
+
+#: src/panel/chat.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Previše pokušaja. Pričekajte trenutak i pokušajte ponovno."
+
+#: src/panel/chat.ts
+msgid "Try again"
+msgstr "Pokušaj ponovno"
+
+#: src/panel/chat.ts
+msgid "Typing…"
+msgstr "Tipka…"
+
+#: src/panel/chat.ts
+msgid "Usually replies in {duration}"
+msgstr "Obično odgovara za {duration}"
+
+#: src/panel/chat.ts
+msgid "We'll reply as soon as we can"
+msgstr "Odgovorit ćemo čim budemo mogli"
+
+#: src/panel/chat.ts
+msgid "We're away right now"
+msgstr "Trenutačno nas nema"
+
+#: src/panel/chat.ts
+msgid "Write a message…"
+msgstr "Napišite poruku…"
+
+#: src/panel/chat.ts
+msgid "You seem to be offline."
+msgstr "Čini se da ste offline."
+
+#: src/panel/chat.ts
+msgid "You:"
+msgstr "Vi:"
+
+#: src/panel/chat.ts
+msgid "you@example.com"
+msgstr "you@example.com"
+
+#: src/panel/chat.ts
+msgid "Your sign-in has expired. Reload the page and try again."
+msgstr "Vaša je prijava istekla. Ponovno učitajte stranicu i pokušajte ponovno."

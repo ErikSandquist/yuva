@@ -1,0 +1,213 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 15:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ja\n"
+
+#: src/panel/chat.ts
+msgid "{name} is typing…"
+msgstr "{name}が入力中…"
+
+#: src/panel/chat.ts
+msgid "All conversations"
+msgstr "すべての会話"
+
+#: src/panel/chat.ts
+msgid "Anything you'd like to add? (optional)"
+msgstr "ほかに伝えたいことはありますか?(任意)"
+
+#: src/panel/chat.ts
+msgid "Attach files"
+msgstr "ファイルを添付"
+
+#: src/panel/chat.ts
+msgid "Attachment"
+msgstr "添付ファイル"
+
+#: src/panel/chat.ts
+msgid "Bad"
+msgstr "悪い"
+
+#: src/panel/chat.ts
+msgid "Chat is not available right now."
+msgstr "現在チャットはご利用いただけません。"
+
+#: src/panel/chat.ts
+msgid "Close"
+msgstr "閉じる"
+
+#: src/panel/chat.ts
+msgid "Comment"
+msgstr "コメント"
+
+#: src/panel/chat.ts
+msgid "Conversation"
+msgstr "会話"
+
+#: src/panel/chat.ts
+msgid "Could not save your e-mail address. Try again."
+msgstr "メールアドレスを保存できませんでした。もう一度お試しください。"
+
+#: src/panel/chat.ts
+msgid "Could not send your rating. Try again."
+msgstr "評価を送信できませんでした。もう一度お試しください。"
+
+#: src/panel/chat.ts
+msgid "E-mail address"
+msgstr "メールアドレス"
+
+#: src/panel/chat.ts
+msgid "Enter a valid e-mail address."
+msgstr "有効なメールアドレスを入力してください。"
+
+#: src/panel/chat.ts
+msgid "Good"
+msgstr "良い"
+
+#: src/panel/chat.ts
+msgid "How did we do?"
+msgstr "いかがでしたか?"
+
+#: src/panel/chat.ts
+msgid "Loading…"
+msgstr "読み込み中…"
+
+#: src/panel/chat.ts
+msgid "Message"
+msgstr "メッセージ"
+
+#: src/panel/chat.ts
+msgid "Messages"
+msgstr "メッセージ"
+
+#: src/panel/chat.ts
+msgid "New conversation"
+msgstr "新しい会話"
+
+#: src/panel/chat.ts
+msgid "No conversations yet"
+msgstr "まだ会話はありません"
+
+#: src/panel/chat.ts
+msgid "Nobody is available right now. Leave your e-mail and we'll send the reply there too."
+msgstr "現在対応できるスタッフがいません。メールアドレスを残していただければ、そちらにも返信をお送りします。"
+
+#: src/panel/chat.ts
+msgid "Not sent."
+msgstr "未送信です。"
+
+#: src/panel/chat.ts
+msgid "Online"
+msgstr "オンライン"
+
+#: src/panel/chat.ts
+msgid "Reconnecting…"
+msgstr "再接続中…"
+
+#. placeholder {0}: file.name
+#: src/panel/chat.ts
+msgid "Remove {0}"
+msgstr "{0}を削除"
+
+#: src/panel/chat.ts
+msgid "Retry"
+msgstr "再試行"
+
+#: src/panel/chat.ts
+msgid "Save"
+msgstr "保存"
+
+#: src/panel/chat.ts
+msgid "Seen"
+msgstr "既読"
+
+#: src/panel/chat.ts
+msgid "Send"
+msgstr "送信"
+
+#: src/panel/chat.ts
+msgid "Send us a message and we will reply here."
+msgstr "メッセージをお送りください。こちらでご返信します。"
+
+#: src/panel/chat.ts
+msgid "Sending…"
+msgstr "送信中…"
+
+#: src/panel/chat.ts
+msgid "Sent"
+msgstr "送信済み"
+
+#: src/panel/chat.ts
+msgid "Show older conversations"
+msgstr "以前の会話を表示"
+
+#: src/panel/chat.ts
+msgid "Sign in to chat with us."
+msgstr "チャットを利用するにはサインインしてください。"
+
+#: src/panel/chat.ts
+msgid "Skip"
+msgstr "スキップ"
+
+#: src/panel/chat.ts
+msgid "Thanks for your feedback"
+msgstr "フィードバックありがとうございます"
+
+#: src/panel/chat.ts
+msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
+msgstr "ありがとうございます。返信時にご不在の場合は{known}にメールをお送りします。"
+
+#: src/panel/chat.ts
+msgid "The file is too large."
+msgstr "ファイルが大きすぎます。"
+
+#: src/panel/chat.ts
+msgid "This file type is not accepted."
+msgstr "この種類のファイルは受け付けていません。"
+
+#: src/panel/chat.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "試行回数が多すぎます。しばらく待ってから、もう一度お試しください。"
+
+#: src/panel/chat.ts
+msgid "Try again"
+msgstr "再試行"
+
+#: src/panel/chat.ts
+msgid "Typing…"
+msgstr "入力中…"
+
+#: src/panel/chat.ts
+msgid "Usually replies in {duration}"
+msgstr "通常は{duration}以内に返信します"
+
+#: src/panel/chat.ts
+msgid "We'll reply as soon as we can"
+msgstr "できるだけ早く返信します"
+
+#: src/panel/chat.ts
+msgid "We're away right now"
+msgstr "現在不在です"
+
+#: src/panel/chat.ts
+msgid "Write a message…"
+msgstr "メッセージを入力…"
+
+#: src/panel/chat.ts
+msgid "You seem to be offline."
+msgstr "オフラインのようです。"
+
+#: src/panel/chat.ts
+msgid "You:"
+msgstr "あなた:"
+
+#: src/panel/chat.ts
+msgid "you@example.com"
+msgstr "you@example.com"
+
+#: src/panel/chat.ts
+msgid "Your sign-in has expired. Reload the page and try again."
+msgstr "サインインの有効期限が切れました。ページを再読み込みして、もう一度お試しください。"

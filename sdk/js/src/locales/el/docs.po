@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: el\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "Ανώνυμος"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "Απαντήθηκε"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "Αναμένει έγκριση"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "Ελέγξτε τον τίτλο και το κείμενο και δοκιμάστε ξανά."
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "Δεν ήταν δυνατή η φόρτωση των συζητήσεων."
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "Δεν ήταν δυνατό το άνοιγμα της συζήτησης. Δοκιμάστε ξανά."
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "Δεν ήταν δυνατή η αποστολή. Δοκιμάστε ξανά."
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "Διαγραμμένο μέλος"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "Διαγραμμένος αναγνώστης"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "Συζητήσεις"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "Συζητήσεις για αυτή τη σελίδα"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "Οι συζητήσεις είναι απενεργοποιημένες για αυτόν τον ιστότοπο."
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "Διεύθυνση email"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "Email για απάντηση (προαιρετικό)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "Εισαγάγετε μια έγκυρη διεύθυνση email."
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "Κάθε συζήτηση σε αυτή τη σελίδα έχει απάντηση."
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "Έχετε μια ερώτηση ή μια ιδέα; Ξεκινήστε την πρώτη συζήτηση."
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "μόλις τώρα"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "Φόρτωση συζητήσεων…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "Φόρτωση…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "Κλειδωμένη"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "Νέα"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "Όχι"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "Δεν υπάρχουν ακόμη συζητήσεις για αυτή τη σελίδα."
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "Όχι, ευχαριστώ"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "Σε αναμονή"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "Οι αναρτήσεις μπορούν να επεξεργαστούν για 30 λεπτά μετά τη συγγραφή τους."
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "Αναγνώστης"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "Απαντήσεις: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "Αποστολή"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "Αποστολή…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "Εμφάνιση περισσότερων"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "Σύνδεση"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "Συνδεθείτε για να συμμετάσχετε στη συζήτηση."
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "Συνδεθείτε για να μας γράψετε."
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "Αποσύνδεση"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "Λυπούμαστε γι' αυτό. Τι έλειπε ή δεν ήταν σαφές;"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "Ταξινόμηση συζητήσεων"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "Ξεκινήστε μια συζήτηση"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "Ομάδα"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "Μέλος της ομάδας"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "Ευχαριστούμε για τα σχόλιά σας."
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "Ευχαριστούμε! Υπάρχει κάτι που θα μπορούσαμε να προσθέσουμε; (προαιρετικό)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "Αυτή η συζήτηση είναι κλειδωμένη."
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Πάρα πολλές προσπάθειες. Περιμένετε λίγο και δοκιμάστε ξανά."
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "Κορυφαίες"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "Δοκιμή ξανά"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "Αναπάντητες"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "Ψήφοι: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "Ήταν χρήσιμη αυτή η σελίδα;"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "Ναι"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "Δεν μπορείτε να το κάνετε αυτό."
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "Φαίνεται ότι είστε εκτός σύνδεσης."
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "Το πρόγραμμα περιήγησής σας απέκλεισε το παράθυρο σύνδεσης. Επιτρέψτε τα αναδυόμενα παράθυρα για αυτόν τον ιστότοπο και δοκιμάστε ξανά."

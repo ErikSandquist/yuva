@@ -1,0 +1,213 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 15:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: nb\n"
+
+#: src/panel/chat.ts
+msgid "{name} is typing…"
+msgstr "{name} skriver…"
+
+#: src/panel/chat.ts
+msgid "All conversations"
+msgstr "Alle samtaler"
+
+#: src/panel/chat.ts
+msgid "Anything you'd like to add? (optional)"
+msgstr "Vil du legge til noe? (valgfritt)"
+
+#: src/panel/chat.ts
+msgid "Attach files"
+msgstr "Legg ved filer"
+
+#: src/panel/chat.ts
+msgid "Attachment"
+msgstr "Vedlegg"
+
+#: src/panel/chat.ts
+msgid "Bad"
+msgstr "Dårlig"
+
+#: src/panel/chat.ts
+msgid "Chat is not available right now."
+msgstr "Chatten er ikke tilgjengelig akkurat nå."
+
+#: src/panel/chat.ts
+msgid "Close"
+msgstr "Lukk"
+
+#: src/panel/chat.ts
+msgid "Comment"
+msgstr "Kommentar"
+
+#: src/panel/chat.ts
+msgid "Conversation"
+msgstr "Samtale"
+
+#: src/panel/chat.ts
+msgid "Could not save your e-mail address. Try again."
+msgstr "E-postadressen din kunne ikke lagres. Prøv igjen."
+
+#: src/panel/chat.ts
+msgid "Could not send your rating. Try again."
+msgstr "Vurderingen din kunne ikke sendes. Prøv igjen."
+
+#: src/panel/chat.ts
+msgid "E-mail address"
+msgstr "E-postadresse"
+
+#: src/panel/chat.ts
+msgid "Enter a valid e-mail address."
+msgstr "Skriv inn en gyldig e-postadresse."
+
+#: src/panel/chat.ts
+msgid "Good"
+msgstr "Bra"
+
+#: src/panel/chat.ts
+msgid "How did we do?"
+msgstr "Hvordan gikk det?"
+
+#: src/panel/chat.ts
+msgid "Loading…"
+msgstr "Laster…"
+
+#: src/panel/chat.ts
+msgid "Message"
+msgstr "Melding"
+
+#: src/panel/chat.ts
+msgid "Messages"
+msgstr "Meldinger"
+
+#: src/panel/chat.ts
+msgid "New conversation"
+msgstr "Ny samtale"
+
+#: src/panel/chat.ts
+msgid "No conversations yet"
+msgstr "Ingen samtaler ennå"
+
+#: src/panel/chat.ts
+msgid "Nobody is available right now. Leave your e-mail and we'll send the reply there too."
+msgstr "Ingen er tilgjengelige akkurat nå. Legg igjen e-postadressen din, så sender vi svaret dit også."
+
+#: src/panel/chat.ts
+msgid "Not sent."
+msgstr "Ikke sendt."
+
+#: src/panel/chat.ts
+msgid "Online"
+msgstr "Pålogget"
+
+#: src/panel/chat.ts
+msgid "Reconnecting…"
+msgstr "Kobler til igjen…"
+
+#. placeholder {0}: file.name
+#: src/panel/chat.ts
+msgid "Remove {0}"
+msgstr "Fjern {0}"
+
+#: src/panel/chat.ts
+msgid "Retry"
+msgstr "Prøv igjen"
+
+#: src/panel/chat.ts
+msgid "Save"
+msgstr "Lagre"
+
+#: src/panel/chat.ts
+msgid "Seen"
+msgstr "Sett"
+
+#: src/panel/chat.ts
+msgid "Send"
+msgstr "Send"
+
+#: src/panel/chat.ts
+msgid "Send us a message and we will reply here."
+msgstr "Send oss en melding, så svarer vi her."
+
+#: src/panel/chat.ts
+msgid "Sending…"
+msgstr "Sender…"
+
+#: src/panel/chat.ts
+msgid "Sent"
+msgstr "Sendt"
+
+#: src/panel/chat.ts
+msgid "Show older conversations"
+msgstr "Vis eldre samtaler"
+
+#: src/panel/chat.ts
+msgid "Sign in to chat with us."
+msgstr "Logg inn for å chatte med oss."
+
+#: src/panel/chat.ts
+msgid "Skip"
+msgstr "Hopp over"
+
+#: src/panel/chat.ts
+msgid "Thanks for your feedback"
+msgstr "Takk for tilbakemeldingen"
+
+#: src/panel/chat.ts
+msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
+msgstr "Takk! Vi sender deg en e-post på {known} hvis du er borte når vi svarer."
+
+#: src/panel/chat.ts
+msgid "The file is too large."
+msgstr "Filen er for stor."
+
+#: src/panel/chat.ts
+msgid "This file type is not accepted."
+msgstr "Denne filtypen godtas ikke."
+
+#: src/panel/chat.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "For mange forsøk. Vent litt og prøv igjen."
+
+#: src/panel/chat.ts
+msgid "Try again"
+msgstr "Prøv igjen"
+
+#: src/panel/chat.ts
+msgid "Typing…"
+msgstr "Skriver…"
+
+#: src/panel/chat.ts
+msgid "Usually replies in {duration}"
+msgstr "Svarer vanligvis innen {duration}"
+
+#: src/panel/chat.ts
+msgid "We'll reply as soon as we can"
+msgstr "Vi svarer så snart vi kan"
+
+#: src/panel/chat.ts
+msgid "We're away right now"
+msgstr "Vi er borte akkurat nå"
+
+#: src/panel/chat.ts
+msgid "Write a message…"
+msgstr "Skriv en melding…"
+
+#: src/panel/chat.ts
+msgid "You seem to be offline."
+msgstr "Du ser ut til å være frakoblet."
+
+#: src/panel/chat.ts
+msgid "You:"
+msgstr "Du:"
+
+#: src/panel/chat.ts
+msgid "you@example.com"
+msgstr "you@example.com"
+
+#: src/panel/chat.ts
+msgid "Your sign-in has expired. Reload the page and try again."
+msgstr "Påloggingen din har utløpt. Last inn siden på nytt og prøv igjen."

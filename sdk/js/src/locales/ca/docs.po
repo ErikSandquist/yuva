@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ca\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "Anònim"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "Respost"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "Pendent d'aprovació"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "Revisa el títol i el text i torna-ho a provar."
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "No s'han pogut carregar els debats."
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "No s'ha pogut obrir el debat. Torna-ho a provar."
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "No s'ha pogut enviar. Torna-ho a provar."
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "Membre eliminat"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "Lector eliminat"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "Debats"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "Debats sobre aquesta pàgina"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "Els debats estan desactivats en aquest lloc."
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "Adreça electrònica"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "Correu electrònic per rebre resposta (opcional)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "Introdueix una adreça electrònica vàlida."
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "Tots els debats d'aquesta pàgina tenen resposta."
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "Tens una pregunta o una idea? Comença el primer debat."
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "ara mateix"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "Carregant els debats…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "Carregant…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "Bloquejat"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "Nou"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "No"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "Encara no hi ha debats sobre aquesta pàgina."
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "No, gràcies"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "Pendent"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "Les publicacions es poden editar durant 30 minuts després d'escriure-les."
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "Lector"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "Respostes: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "Envia"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "Enviant…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "Mostra'n més"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "Inicia la sessió"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "Inicia la sessió per participar al debat."
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "Inicia la sessió per escriure'ns."
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "Tanca la sessió"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "Ho sentim. Què hi faltava o què no quedava clar?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "Ordena els debats"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "Comença un debat"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "Equip"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "Membre de l'equip"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "Gràcies pels teus comentaris."
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "Gràcies! Hi podríem afegir res més? (opcional)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "Aquest debat està bloquejat."
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Massa intents. Espera un moment i torna-ho a provar."
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "Més votats"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "Torna-ho a provar"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "Sense resposta"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "Vots: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "Ha estat útil aquesta pàgina?"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "Sí"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "No pots fer això."
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "Sembla que no tens connexió."
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "El navegador ha bloquejat la finestra d'inici de sessió. Permet les finestres emergents d'aquest lloc i torna-ho a provar."

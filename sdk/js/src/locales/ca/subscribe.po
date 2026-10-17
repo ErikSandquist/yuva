@@ -1,0 +1,84 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 20:15+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ca\n"
+
+#: src/subscribe/element.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "Gairebé a punt. Mira la safata d'entrada i confirma la subscripció."
+
+#: src/subscribe/element.ts
+msgid "Check your inbox to confirm."
+msgstr "Mira la safata d'entrada per confirmar."
+
+#: src/subscribe/element.ts
+msgid "Choose at least one list."
+msgstr "Tria almenys una llista."
+
+#: src/subscribe/element.ts
+msgid "Could not subscribe. Try again."
+msgstr "No s'ha pogut fer la subscripció. Torna-ho a provar."
+
+#: src/subscribe/element.ts
+msgid "E-mail address"
+msgstr "Adreça electrònica"
+
+#: src/subscribe/element.ts
+msgid "Enter a valid e-mail address."
+msgstr "Introdueix una adreça electrònica vàlida."
+
+#: src/subscribe/element.ts
+msgid "Enter your name."
+msgstr "Introdueix el teu nom."
+
+#: src/subscribe/element.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "Vull rebre correus sobre {list} de {inbox}. Puc cancel·lar la subscripció en qualsevol moment."
+
+#: src/subscribe/element.ts
+msgid "Lists"
+msgstr "Llistes"
+
+#: src/subscribe/element.ts
+msgid "Privacy policy"
+msgstr "Política de privacitat"
+
+#: src/subscribe/element.ts
+msgid "Subscribe"
+msgstr "Subscriu-m'hi"
+
+#: src/subscribe/element.ts
+msgid "Subscribing…"
+msgstr "Subscrivint…"
+
+#: src/subscribe/element.ts
+msgid "Thanks! You are subscribed."
+msgstr "Gràcies! Ja estàs subscrit."
+
+#: src/subscribe/element.ts
+msgid "Tick the box to agree."
+msgstr "Marca la casella per acceptar."
+
+#: src/subscribe/element.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Massa intents. Espera un moment i torna-ho a provar."
+
+#: src/subscribe/element.ts
+msgid "You seem to be offline."
+msgstr "Sembla que no tens connexió."
+
+#: src/subscribe/element.ts
+msgid "Your account has no e-mail address yet."
+msgstr "El teu compte encara no té cap adreça electrònica."
+
+#: src/subscribe/element.ts
+msgid "Your name"
+msgstr "El teu nom"
+
+#: src/subscribe/element.ts
+msgid "Your name (optional)"
+msgstr "El teu nom (opcional)"

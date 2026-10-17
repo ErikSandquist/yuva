@@ -1,0 +1,213 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 15:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ms\n"
+
+#: src/panel/chat.ts
+msgid "{name} is typing…"
+msgstr "{name} sedang menaip…"
+
+#: src/panel/chat.ts
+msgid "All conversations"
+msgstr "Semua perbualan"
+
+#: src/panel/chat.ts
+msgid "Anything you'd like to add? (optional)"
+msgstr "Ada apa-apa yang ingin anda tambah? (pilihan)"
+
+#: src/panel/chat.ts
+msgid "Attach files"
+msgstr "Lampirkan fail"
+
+#: src/panel/chat.ts
+msgid "Attachment"
+msgstr "Lampiran"
+
+#: src/panel/chat.ts
+msgid "Bad"
+msgstr "Teruk"
+
+#: src/panel/chat.ts
+msgid "Chat is not available right now."
+msgstr "Sembang tidak tersedia buat masa ini."
+
+#: src/panel/chat.ts
+msgid "Close"
+msgstr "Tutup"
+
+#: src/panel/chat.ts
+msgid "Comment"
+msgstr "Komen"
+
+#: src/panel/chat.ts
+msgid "Conversation"
+msgstr "Perbualan"
+
+#: src/panel/chat.ts
+msgid "Could not save your e-mail address. Try again."
+msgstr "Alamat e-mel anda tidak dapat disimpan. Cuba lagi."
+
+#: src/panel/chat.ts
+msgid "Could not send your rating. Try again."
+msgstr "Penilaian anda tidak dapat dihantar. Cuba lagi."
+
+#: src/panel/chat.ts
+msgid "E-mail address"
+msgstr "Alamat e-mel"
+
+#: src/panel/chat.ts
+msgid "Enter a valid e-mail address."
+msgstr "Masukkan alamat e-mel yang sah."
+
+#: src/panel/chat.ts
+msgid "Good"
+msgstr "Bagus"
+
+#: src/panel/chat.ts
+msgid "How did we do?"
+msgstr "Bagaimana perkhidmatan kami?"
+
+#: src/panel/chat.ts
+msgid "Loading…"
+msgstr "Memuatkan…"
+
+#: src/panel/chat.ts
+msgid "Message"
+msgstr "Mesej"
+
+#: src/panel/chat.ts
+msgid "Messages"
+msgstr "Mesej"
+
+#: src/panel/chat.ts
+msgid "New conversation"
+msgstr "Perbualan baharu"
+
+#: src/panel/chat.ts
+msgid "No conversations yet"
+msgstr "Belum ada perbualan"
+
+#: src/panel/chat.ts
+msgid "Nobody is available right now. Leave your e-mail and we'll send the reply there too."
+msgstr "Tiada sesiapa tersedia sekarang. Tinggalkan e-mel anda dan kami akan menghantar balasan ke sana juga."
+
+#: src/panel/chat.ts
+msgid "Not sent."
+msgstr "Tidak dihantar."
+
+#: src/panel/chat.ts
+msgid "Online"
+msgstr "Dalam talian"
+
+#: src/panel/chat.ts
+msgid "Reconnecting…"
+msgstr "Menyambung semula…"
+
+#. placeholder {0}: file.name
+#: src/panel/chat.ts
+msgid "Remove {0}"
+msgstr "Alih keluar {0}"
+
+#: src/panel/chat.ts
+msgid "Retry"
+msgstr "Cuba lagi"
+
+#: src/panel/chat.ts
+msgid "Save"
+msgstr "Simpan"
+
+#: src/panel/chat.ts
+msgid "Seen"
+msgstr "Dilihat"
+
+#: src/panel/chat.ts
+msgid "Send"
+msgstr "Hantar"
+
+#: src/panel/chat.ts
+msgid "Send us a message and we will reply here."
+msgstr "Hantarkan mesej kepada kami dan kami akan membalas di sini."
+
+#: src/panel/chat.ts
+msgid "Sending…"
+msgstr "Menghantar…"
+
+#: src/panel/chat.ts
+msgid "Sent"
+msgstr "Dihantar"
+
+#: src/panel/chat.ts
+msgid "Show older conversations"
+msgstr "Tunjukkan perbualan lebih lama"
+
+#: src/panel/chat.ts
+msgid "Sign in to chat with us."
+msgstr "Log masuk untuk bersembang dengan kami."
+
+#: src/panel/chat.ts
+msgid "Skip"
+msgstr "Langkau"
+
+#: src/panel/chat.ts
+msgid "Thanks for your feedback"
+msgstr "Terima kasih atas maklum balas anda"
+
+#: src/panel/chat.ts
+msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
+msgstr "Terima kasih! Kami akan menghantar e-mel ke {known} jika anda tiada semasa kami membalas."
+
+#: src/panel/chat.ts
+msgid "The file is too large."
+msgstr "Fail terlalu besar."
+
+#: src/panel/chat.ts
+msgid "This file type is not accepted."
+msgstr "Jenis fail ini tidak diterima."
+
+#: src/panel/chat.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Terlalu banyak percubaan. Tunggu sebentar dan cuba lagi."
+
+#: src/panel/chat.ts
+msgid "Try again"
+msgstr "Cuba lagi"
+
+#: src/panel/chat.ts
+msgid "Typing…"
+msgstr "Sedang menaip…"
+
+#: src/panel/chat.ts
+msgid "Usually replies in {duration}"
+msgstr "Biasanya membalas dalam masa {duration}"
+
+#: src/panel/chat.ts
+msgid "We'll reply as soon as we can"
+msgstr "Kami akan membalas secepat mungkin"
+
+#: src/panel/chat.ts
+msgid "We're away right now"
+msgstr "Kami tiada buat masa ini"
+
+#: src/panel/chat.ts
+msgid "Write a message…"
+msgstr "Tulis mesej…"
+
+#: src/panel/chat.ts
+msgid "You seem to be offline."
+msgstr "Anda kelihatan di luar talian."
+
+#: src/panel/chat.ts
+msgid "You:"
+msgstr "Anda:"
+
+#: src/panel/chat.ts
+msgid "you@example.com"
+msgstr "you@example.com"
+
+#: src/panel/chat.ts
+msgid "Your sign-in has expired. Reload the page and try again."
+msgstr "Log masuk anda telah tamat tempoh. Muat semula halaman dan cuba lagi."

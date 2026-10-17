@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: zh-Hant\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "匿名使用者"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "已回覆"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "等待審核"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "請檢查標題和內容後再試一次。"
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "無法載入討論。"
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "無法開啟討論。請再試一次。"
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "無法傳送。請再試一次。"
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "已刪除的成員"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "已刪除的讀者"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "討論"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "關於此頁面的討論"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "此網站已關閉討論功能。"
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "電子郵件地址"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "用於接收回覆的電子郵件(選填)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "請輸入有效的電子郵件地址。"
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "此頁面上的每個討論都有解答。"
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "有問題或想法嗎?發起第一個討論吧。"
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "剛剛"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "正在載入討論…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "載入中…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "已鎖定"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "最新"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "否"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "關於此頁面尚無討論。"
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "不用了"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "待處理"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "貼文在發布後 30 分鐘內可以編輯。"
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "讀者"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "回覆:{0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "傳送"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "傳送中…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "顯示更多"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "登入"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "請登入後參與討論。"
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "請登入後留言給我們。"
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "登出"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "很抱歉。缺少了什麼,或是哪裡不清楚?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "討論排序"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "發起討論"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "團隊"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "團隊成員"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "感謝您的意見回饋。"
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "謝謝!還有什麼我們可以補充的嗎?(選填)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "此討論已鎖定。"
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "嘗試次數過多。請稍候片刻後再試一次。"
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "最熱門"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "重試"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "未回答"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "票數:{0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "此頁面對您有幫助嗎?"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "是"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "您無法執行此操作。"
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "您似乎已離線。"
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "您的瀏覽器封鎖了登入視窗。請允許此網站的彈出式視窗後再試一次。"

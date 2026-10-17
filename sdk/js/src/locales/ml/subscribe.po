@@ -1,0 +1,84 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 20:15+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ml\n"
+
+#: src/subscribe/element.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "മിക്കവാറും കഴിഞ്ഞു. ഇൻബോക്സ് പരിശോധിച്ച് സബ്സ്ക്രിപ്ഷൻ സ്ഥിരീകരിക്കൂ."
+
+#: src/subscribe/element.ts
+msgid "Check your inbox to confirm."
+msgstr "സ്ഥിരീകരിക്കാൻ ഇൻബോക്സ് പരിശോധിക്കൂ."
+
+#: src/subscribe/element.ts
+msgid "Choose at least one list."
+msgstr "കുറഞ്ഞത് ഒരു ലിസ്റ്റ് തിരഞ്ഞെടുക്കുക."
+
+#: src/subscribe/element.ts
+msgid "Could not subscribe. Try again."
+msgstr "സബ്സ്ക്രൈബ് ചെയ്യാനായില്ല. വീണ്ടും ശ്രമിക്കൂ."
+
+#: src/subscribe/element.ts
+msgid "E-mail address"
+msgstr "ഇമെയിൽ വിലാസം"
+
+#: src/subscribe/element.ts
+msgid "Enter a valid e-mail address."
+msgstr "സാധുവായ ഒരു ഇമെയിൽ വിലാസം നൽകുക."
+
+#: src/subscribe/element.ts
+msgid "Enter your name."
+msgstr "നിങ്ങളുടെ പേര് നൽകുക."
+
+#: src/subscribe/element.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "{inbox}-ൽ നിന്ന് {list} സംബന്ധിച്ച ഇമെയിലുകൾ ലഭിക്കാൻ ഞാൻ ആഗ്രഹിക്കുന്നു. എപ്പോൾ വേണമെങ്കിലും എനിക്ക് അൺസബ്സ്ക്രൈബ് ചെയ്യാം."
+
+#: src/subscribe/element.ts
+msgid "Lists"
+msgstr "ലിസ്റ്റുകൾ"
+
+#: src/subscribe/element.ts
+msgid "Privacy policy"
+msgstr "സ്വകാര്യതാ നയം"
+
+#: src/subscribe/element.ts
+msgid "Subscribe"
+msgstr "സബ്സ്ക്രൈബ് ചെയ്യുക"
+
+#: src/subscribe/element.ts
+msgid "Subscribing…"
+msgstr "സബ്സ്ക്രൈബ് ചെയ്യുന്നു…"
+
+#: src/subscribe/element.ts
+msgid "Thanks! You are subscribed."
+msgstr "നന്ദി! നിങ്ങൾ സബ്സ്ക്രൈബ് ചെയ്തു."
+
+#: src/subscribe/element.ts
+msgid "Tick the box to agree."
+msgstr "സമ്മതിക്കാൻ ബോക്സിൽ ടിക്ക് ചെയ്യൂ."
+
+#: src/subscribe/element.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "വളരെയധികം ശ്രമങ്ങൾ. അൽപ്പം കാത്തിരുന്ന് വീണ്ടും ശ്രമിക്കൂ."
+
+#: src/subscribe/element.ts
+msgid "You seem to be offline."
+msgstr "നിങ്ങൾ ഓഫ്‌ലൈനിലാണെന്ന് തോന്നുന്നു."
+
+#: src/subscribe/element.ts
+msgid "Your account has no e-mail address yet."
+msgstr "നിങ്ങളുടെ അക്കൗണ്ടിൽ ഇതുവരെ ഇമെയിൽ വിലാസമില്ല."
+
+#: src/subscribe/element.ts
+msgid "Your name"
+msgstr "നിങ്ങളുടെ പേര്"
+
+#: src/subscribe/element.ts
+msgid "Your name (optional)"
+msgstr "നിങ്ങളുടെ പേര് (ഓപ്ഷണൽ)"

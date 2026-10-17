@@ -1,0 +1,84 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 20:15+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: hr\n"
+
+#: src/subscribe/element.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "Još malo. Provjerite pristiglu poštu i potvrdite pretplatu."
+
+#: src/subscribe/element.ts
+msgid "Check your inbox to confirm."
+msgstr "Provjerite pristiglu poštu radi potvrde."
+
+#: src/subscribe/element.ts
+msgid "Choose at least one list."
+msgstr "Odaberite barem jedan popis."
+
+#: src/subscribe/element.ts
+msgid "Could not subscribe. Try again."
+msgstr "Pretplata nije uspjela. Pokušajte ponovno."
+
+#: src/subscribe/element.ts
+msgid "E-mail address"
+msgstr "E-adresa"
+
+#: src/subscribe/element.ts
+msgid "Enter a valid e-mail address."
+msgstr "Unesite ispravnu e-adresu."
+
+#: src/subscribe/element.ts
+msgid "Enter your name."
+msgstr "Unesite svoje ime."
+
+#: src/subscribe/element.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "Želim primati e-poruke o temi {list} od {inbox}. Pretplatu mogu otkazati u bilo kojem trenutku."
+
+#: src/subscribe/element.ts
+msgid "Lists"
+msgstr "Popisi"
+
+#: src/subscribe/element.ts
+msgid "Privacy policy"
+msgstr "Pravila privatnosti"
+
+#: src/subscribe/element.ts
+msgid "Subscribe"
+msgstr "Pretplati se"
+
+#: src/subscribe/element.ts
+msgid "Subscribing…"
+msgstr "Pretplata…"
+
+#: src/subscribe/element.ts
+msgid "Thanks! You are subscribed."
+msgstr "Hvala! Pretplaćeni ste."
+
+#: src/subscribe/element.ts
+msgid "Tick the box to agree."
+msgstr "Označite okvir kako biste se složili."
+
+#: src/subscribe/element.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Previše pokušaja. Pričekajte trenutak i pokušajte ponovno."
+
+#: src/subscribe/element.ts
+msgid "You seem to be offline."
+msgstr "Čini se da ste offline."
+
+#: src/subscribe/element.ts
+msgid "Your account has no e-mail address yet."
+msgstr "Vaš račun još nema e-adresu."
+
+#: src/subscribe/element.ts
+msgid "Your name"
+msgstr "Vaše ime"
+
+#: src/subscribe/element.ts
+msgid "Your name (optional)"
+msgstr "Vaše ime (neobavezno)"

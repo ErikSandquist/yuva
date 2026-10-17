@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: es\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "Anónimo"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "Respondida"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "Pendiente de aprobación"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "Revisa el título y el texto e inténtalo de nuevo."
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "No se pudieron cargar los debates."
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "No se pudo abrir el debate. Inténtalo de nuevo."
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "No se pudo enviar. Inténtalo de nuevo."
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "Miembro eliminado"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "Lector eliminado"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "Debates"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "Debates sobre esta página"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "Los debates están desactivados en este sitio."
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "Correo electrónico"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "Correo para recibir respuesta (opcional)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "Introduce un correo electrónico válido."
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "Todos los debates de esta página tienen respuesta."
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "¿Tienes una pregunta o una idea? Empieza el primero."
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "ahora mismo"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "Cargando debates…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "Cargando…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "Bloqueado"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "Nuevo"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "No"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "Aún no hay debates sobre esta página."
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "No, gracias"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "Pendiente"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "Las publicaciones se pueden editar durante 30 minutos después de escribirlas."
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "Lector"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "Respuestas: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "Enviar"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "Enviando…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "Mostrar más"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "Iniciar sesión"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "Inicia sesión para participar en el debate."
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "Inicia sesión para escribirnos."
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "Cerrar sesión"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "Lo sentimos. ¿Qué faltaba o qué no estaba claro?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "Ordenar debates"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "Iniciar un debate"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "Equipo"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "Miembro del equipo"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "Gracias por tus comentarios."
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "¡Gracias! ¿Algo que podríamos añadir? (opcional)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "Este debate está bloqueado."
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Demasiados intentos. Espera un momento e inténtalo de nuevo."
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "Más votados"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "Inténtalo de nuevo"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "Sin respuesta"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "Votos: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "¿Te ha resultado útil esta página?"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "Sí"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "No puedes hacer eso."
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "Parece que no tienes conexión."
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "Tu navegador bloqueó la ventana de inicio de sesión. Permite las ventanas emergentes de este sitio e inténtalo de nuevo."

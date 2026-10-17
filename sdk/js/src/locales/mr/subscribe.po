@@ -1,0 +1,84 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 20:15+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: mr\n"
+
+#: src/subscribe/element.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "जवळजवळ झाले. तुमचा इनबॉक्स तपासा आणि सदस्यत्वाची खात्री करा."
+
+#: src/subscribe/element.ts
+msgid "Check your inbox to confirm."
+msgstr "खात्री करण्यासाठी तुमचा इनबॉक्स तपासा."
+
+#: src/subscribe/element.ts
+msgid "Choose at least one list."
+msgstr "किमान एक यादी निवडा."
+
+#: src/subscribe/element.ts
+msgid "Could not subscribe. Try again."
+msgstr "सदस्यत्व घेता आले नाही. पुन्हा प्रयत्न करा."
+
+#: src/subscribe/element.ts
+msgid "E-mail address"
+msgstr "ईमेल पत्ता"
+
+#: src/subscribe/element.ts
+msgid "Enter a valid e-mail address."
+msgstr "वैध ईमेल पत्ता टाका."
+
+#: src/subscribe/element.ts
+msgid "Enter your name."
+msgstr "तुमचे नाव टाका."
+
+#: src/subscribe/element.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "मला {inbox} कडून {list} बद्दल ईमेल मिळवायचे आहेत. मी केव्हाही सदस्यत्व रद्द करू शकतो."
+
+#: src/subscribe/element.ts
+msgid "Lists"
+msgstr "याद्या"
+
+#: src/subscribe/element.ts
+msgid "Privacy policy"
+msgstr "गोपनीयता धोरण"
+
+#: src/subscribe/element.ts
+msgid "Subscribe"
+msgstr "सदस्यत्व घ्या"
+
+#: src/subscribe/element.ts
+msgid "Subscribing…"
+msgstr "सदस्यत्व घेत आहे…"
+
+#: src/subscribe/element.ts
+msgid "Thanks! You are subscribed."
+msgstr "धन्यवाद! तुम्ही सदस्य झाला आहात."
+
+#: src/subscribe/element.ts
+msgid "Tick the box to agree."
+msgstr "सहमत होण्यासाठी बॉक्सवर टिक करा."
+
+#: src/subscribe/element.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "खूप प्रयत्न झाले. थोडा वेळ थांबा आणि पुन्हा प्रयत्न करा."
+
+#: src/subscribe/element.ts
+msgid "You seem to be offline."
+msgstr "तुम्ही ऑफलाइन असल्याचे दिसते."
+
+#: src/subscribe/element.ts
+msgid "Your account has no e-mail address yet."
+msgstr "तुमच्या खात्यात अजून ईमेल पत्ता नाही."
+
+#: src/subscribe/element.ts
+msgid "Your name"
+msgstr "तुमचे नाव"
+
+#: src/subscribe/element.ts
+msgid "Your name (optional)"
+msgstr "तुमचे नाव (पर्यायी)"

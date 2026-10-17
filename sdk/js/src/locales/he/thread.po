@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: he\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "תשובה מאושרת"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "כל הדיונים"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "שאלו שאלה, שתפו רעיון או תארו בעיה בדף הזה."
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "ביטול"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "מחיקה"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "למחוק את הדיון הזה?"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "למחוק את התגובה הזו?"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "עריכה"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "עריכת הפוסט"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "נערך"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "מעקב"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "במעקב"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "קבלו אימייל כשמישהו מגיב או כשתשובה מאושרת."
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "להשאיר"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "טוען…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "סימון כתשובה"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "Markdown נתמך."
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "אין מה להציג בתצוגה מקדימה."
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "תצוגה מקדימה"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "הסרת ההצבעה שלכם (הצבעות: {0})"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "תגובות: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "תגובה"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "שמירה"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "שולח…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "התחברות"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "התחברו כדי להגיב, להצביע ולעקוב אחרי הדיון הזה."
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "התחברו כדי לפתוח דיון. השם שלכם מוצג עם הפוסט."
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "פתיחת דיון"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "פתיחת דיון"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "תודה! הדיון שלכם יופיע לכולם לאחר שהצוות יאשר אותו."
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "תודה! התגובה שלכם תופיע לכולם לאחר שהצוות יאשר אותה."
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "הפוסט הפותח נמחק."
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "הדיון הזה נעול. תגובות חדשות סגורות."
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "הדיון הזה אינו זמין עוד."
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "התגובה הזו נמחקה."
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "כותרת"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "ביטול הסימון כתשובה"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "הצבעה בעד (הצבעות: {0})"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "כתיבה"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "כתבו תגובה…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "הפוסטים הראשונים שלכם נבדקים על ידי הצוות לפני שהם מופיעים לכולם."
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "השאלה או הרעיון שלכם"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "התגובה שלכם"

@@ -1,0 +1,213 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 15:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: te\n"
+
+#: src/panel/chat.ts
+msgid "{name} is typing…"
+msgstr "{name} టైప్ చేస్తున్నారు…"
+
+#: src/panel/chat.ts
+msgid "All conversations"
+msgstr "అన్ని సంభాషణలు"
+
+#: src/panel/chat.ts
+msgid "Anything you'd like to add? (optional)"
+msgstr "ఏదైనా జోడించాలనుకుంటున్నారా? (ఐచ్ఛికం)"
+
+#: src/panel/chat.ts
+msgid "Attach files"
+msgstr "ఫైళ్లను జోడించండి"
+
+#: src/panel/chat.ts
+msgid "Attachment"
+msgstr "జోడింపు"
+
+#: src/panel/chat.ts
+msgid "Bad"
+msgstr "చెడు"
+
+#: src/panel/chat.ts
+msgid "Chat is not available right now."
+msgstr "చాట్ ప్రస్తుతం అందుబాటులో లేదు."
+
+#: src/panel/chat.ts
+msgid "Close"
+msgstr "మూసివేయండి"
+
+#: src/panel/chat.ts
+msgid "Comment"
+msgstr "వ్యాఖ్య"
+
+#: src/panel/chat.ts
+msgid "Conversation"
+msgstr "సంభాషణ"
+
+#: src/panel/chat.ts
+msgid "Could not save your e-mail address. Try again."
+msgstr "మీ ఇమెయిల్ చిరునామాను సేవ్ చేయలేకపోయాము. మళ్లీ ప్రయత్నించండి."
+
+#: src/panel/chat.ts
+msgid "Could not send your rating. Try again."
+msgstr "మీ రేటింగ్‌ను పంపలేకపోయాము. మళ్లీ ప్రయత్నించండి."
+
+#: src/panel/chat.ts
+msgid "E-mail address"
+msgstr "ఇమెయిల్ చిరునామా"
+
+#: src/panel/chat.ts
+msgid "Enter a valid e-mail address."
+msgstr "చెల్లుబాటు అయ్యే ఇమెయిల్ చిరునామా నమోదు చేయండి."
+
+#: src/panel/chat.ts
+msgid "Good"
+msgstr "బాగుంది"
+
+#: src/panel/chat.ts
+msgid "How did we do?"
+msgstr "మేము ఎలా చేశాము?"
+
+#: src/panel/chat.ts
+msgid "Loading…"
+msgstr "లోడ్ అవుతోంది…"
+
+#: src/panel/chat.ts
+msgid "Message"
+msgstr "సందేశం"
+
+#: src/panel/chat.ts
+msgid "Messages"
+msgstr "సందేశాలు"
+
+#: src/panel/chat.ts
+msgid "New conversation"
+msgstr "కొత్త సంభాషణ"
+
+#: src/panel/chat.ts
+msgid "No conversations yet"
+msgstr "ఇంకా సంభాషణలు లేవు"
+
+#: src/panel/chat.ts
+msgid "Nobody is available right now. Leave your e-mail and we'll send the reply there too."
+msgstr "ప్రస్తుతం ఎవరూ అందుబాటులో లేరు. మీ ఇమెయిల్ ఇవ్వండి, సమాధానాన్ని అక్కడికి కూడా పంపుతాము."
+
+#: src/panel/chat.ts
+msgid "Not sent."
+msgstr "పంపలేదు."
+
+#: src/panel/chat.ts
+msgid "Online"
+msgstr "ఆన్‌లైన్"
+
+#: src/panel/chat.ts
+msgid "Reconnecting…"
+msgstr "మళ్లీ కనెక్ట్ అవుతోంది…"
+
+#. placeholder {0}: file.name
+#: src/panel/chat.ts
+msgid "Remove {0}"
+msgstr "{0} తొలగించండి"
+
+#: src/panel/chat.ts
+msgid "Retry"
+msgstr "మళ్లీ ప్రయత్నించండి"
+
+#: src/panel/chat.ts
+msgid "Save"
+msgstr "సేవ్ చేయండి"
+
+#: src/panel/chat.ts
+msgid "Seen"
+msgstr "చూశారు"
+
+#: src/panel/chat.ts
+msgid "Send"
+msgstr "పంపండి"
+
+#: src/panel/chat.ts
+msgid "Send us a message and we will reply here."
+msgstr "మాకు సందేశం పంపండి, మేము ఇక్కడే సమాధానం ఇస్తాము."
+
+#: src/panel/chat.ts
+msgid "Sending…"
+msgstr "పంపుతోంది…"
+
+#: src/panel/chat.ts
+msgid "Sent"
+msgstr "పంపబడింది"
+
+#: src/panel/chat.ts
+msgid "Show older conversations"
+msgstr "పాత సంభాషణలు చూపించండి"
+
+#: src/panel/chat.ts
+msgid "Sign in to chat with us."
+msgstr "మాతో చాట్ చేయడానికి సైన్ ఇన్ చేయండి."
+
+#: src/panel/chat.ts
+msgid "Skip"
+msgstr "దాటవేయండి"
+
+#: src/panel/chat.ts
+msgid "Thanks for your feedback"
+msgstr "మీ అభిప్రాయానికి ధన్యవాదాలు"
+
+#: src/panel/chat.ts
+msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
+msgstr "ధన్యవాదాలు! మేము సమాధానం ఇచ్చేటప్పుడు మీరు లేకపోతే {known} కు ఇమెయిల్ చేస్తాము."
+
+#: src/panel/chat.ts
+msgid "The file is too large."
+msgstr "ఫైల్ చాలా పెద్దది."
+
+#: src/panel/chat.ts
+msgid "This file type is not accepted."
+msgstr "ఈ రకం ఫైల్ అంగీకరించబడదు."
+
+#: src/panel/chat.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "చాలా ప్రయత్నాలు. కాసేపు ఆగి మళ్లీ ప్రయత్నించండి."
+
+#: src/panel/chat.ts
+msgid "Try again"
+msgstr "మళ్లీ ప్రయత్నించండి"
+
+#: src/panel/chat.ts
+msgid "Typing…"
+msgstr "టైప్ చేస్తున్నారు…"
+
+#: src/panel/chat.ts
+msgid "Usually replies in {duration}"
+msgstr "సాధారణంగా {duration} లో సమాధానం ఇస్తారు"
+
+#: src/panel/chat.ts
+msgid "We'll reply as soon as we can"
+msgstr "మేము వీలైనంత త్వరగా సమాధానం ఇస్తాము"
+
+#: src/panel/chat.ts
+msgid "We're away right now"
+msgstr "మేము ప్రస్తుతం అందుబాటులో లేము"
+
+#: src/panel/chat.ts
+msgid "Write a message…"
+msgstr "సందేశం రాయండి…"
+
+#: src/panel/chat.ts
+msgid "You seem to be offline."
+msgstr "మీరు ఆఫ్‌లైన్‌లో ఉన్నట్లు కనిపిస్తోంది."
+
+#: src/panel/chat.ts
+msgid "You:"
+msgstr "మీరు:"
+
+#: src/panel/chat.ts
+msgid "you@example.com"
+msgstr "you@example.com"
+
+#: src/panel/chat.ts
+msgid "Your sign-in has expired. Reload the page and try again."
+msgstr "మీ సైన్-ఇన్ గడువు ముగిసింది. పేజీని రీలోడ్ చేసి మళ్లీ ప్రయత్నించండి."

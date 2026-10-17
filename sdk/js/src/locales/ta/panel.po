@@ -1,0 +1,213 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 15:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ta\n"
+
+#: src/panel/chat.ts
+msgid "{name} is typing…"
+msgstr "{name} தட்டச்சு செய்கிறார்…"
+
+#: src/panel/chat.ts
+msgid "All conversations"
+msgstr "அனைத்து உரையாடல்களும்"
+
+#: src/panel/chat.ts
+msgid "Anything you'd like to add? (optional)"
+msgstr "ஏதாவது சேர்க்க விரும்புகிறீர்களா? (விருப்பம்)"
+
+#: src/panel/chat.ts
+msgid "Attach files"
+msgstr "கோப்புகளை இணை"
+
+#: src/panel/chat.ts
+msgid "Attachment"
+msgstr "இணைப்பு"
+
+#: src/panel/chat.ts
+msgid "Bad"
+msgstr "மோசம்"
+
+#: src/panel/chat.ts
+msgid "Chat is not available right now."
+msgstr "அரட்டை தற்போது கிடைக்கவில்லை."
+
+#: src/panel/chat.ts
+msgid "Close"
+msgstr "மூடு"
+
+#: src/panel/chat.ts
+msgid "Comment"
+msgstr "கருத்து"
+
+#: src/panel/chat.ts
+msgid "Conversation"
+msgstr "உரையாடல்"
+
+#: src/panel/chat.ts
+msgid "Could not save your e-mail address. Try again."
+msgstr "உங்கள் மின்னஞ்சல் முகவரியைச் சேமிக்க முடியவில்லை. மீண்டும் முயலுங்கள்."
+
+#: src/panel/chat.ts
+msgid "Could not send your rating. Try again."
+msgstr "உங்கள் மதிப்பீட்டை அனுப்ப முடியவில்லை. மீண்டும் முயலுங்கள்."
+
+#: src/panel/chat.ts
+msgid "E-mail address"
+msgstr "மின்னஞ்சல் முகவரி"
+
+#: src/panel/chat.ts
+msgid "Enter a valid e-mail address."
+msgstr "சரியான மின்னஞ்சல் முகவரியை உள்ளிடுங்கள்."
+
+#: src/panel/chat.ts
+msgid "Good"
+msgstr "நன்று"
+
+#: src/panel/chat.ts
+msgid "How did we do?"
+msgstr "நாங்கள் எப்படிச் செய்தோம்?"
+
+#: src/panel/chat.ts
+msgid "Loading…"
+msgstr "ஏற்றுகிறது…"
+
+#: src/panel/chat.ts
+msgid "Message"
+msgstr "செய்தி"
+
+#: src/panel/chat.ts
+msgid "Messages"
+msgstr "செய்திகள்"
+
+#: src/panel/chat.ts
+msgid "New conversation"
+msgstr "புதிய உரையாடல்"
+
+#: src/panel/chat.ts
+msgid "No conversations yet"
+msgstr "இன்னும் உரையாடல்கள் இல்லை"
+
+#: src/panel/chat.ts
+msgid "Nobody is available right now. Leave your e-mail and we'll send the reply there too."
+msgstr "தற்போது யாரும் இல்லை. உங்கள் மின்னஞ்சலை விடுங்கள், பதிலை அங்கும் அனுப்புவோம்."
+
+#: src/panel/chat.ts
+msgid "Not sent."
+msgstr "அனுப்பப்படவில்லை."
+
+#: src/panel/chat.ts
+msgid "Online"
+msgstr "ஆன்லைன்"
+
+#: src/panel/chat.ts
+msgid "Reconnecting…"
+msgstr "மீண்டும் இணைக்கிறது…"
+
+#. placeholder {0}: file.name
+#: src/panel/chat.ts
+msgid "Remove {0}"
+msgstr "{0} ஐ அகற்று"
+
+#: src/panel/chat.ts
+msgid "Retry"
+msgstr "மீண்டும் முயல்க"
+
+#: src/panel/chat.ts
+msgid "Save"
+msgstr "சேமி"
+
+#: src/panel/chat.ts
+msgid "Seen"
+msgstr "பார்க்கப்பட்டது"
+
+#: src/panel/chat.ts
+msgid "Send"
+msgstr "அனுப்பு"
+
+#: src/panel/chat.ts
+msgid "Send us a message and we will reply here."
+msgstr "எங்களுக்குச் செய்தி அனுப்புங்கள், இங்கேயே பதிலளிப்போம்."
+
+#: src/panel/chat.ts
+msgid "Sending…"
+msgstr "அனுப்புகிறது…"
+
+#: src/panel/chat.ts
+msgid "Sent"
+msgstr "அனுப்பப்பட்டது"
+
+#: src/panel/chat.ts
+msgid "Show older conversations"
+msgstr "பழைய உரையாடல்களைக் காட்டு"
+
+#: src/panel/chat.ts
+msgid "Sign in to chat with us."
+msgstr "எங்களுடன் அரட்டையடிக்க உள்நுழையுங்கள்."
+
+#: src/panel/chat.ts
+msgid "Skip"
+msgstr "தவிர்"
+
+#: src/panel/chat.ts
+msgid "Thanks for your feedback"
+msgstr "உங்கள் கருத்துக்கு நன்றி"
+
+#: src/panel/chat.ts
+msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
+msgstr "நன்றி! நாங்கள் பதிலளிக்கும்போது நீங்கள் இல்லையெனில் {known} முகவரிக்கு மின்னஞ்சல் அனுப்புவோம்."
+
+#: src/panel/chat.ts
+msgid "The file is too large."
+msgstr "கோப்பு மிகப் பெரியது."
+
+#: src/panel/chat.ts
+msgid "This file type is not accepted."
+msgstr "இந்தக் கோப்பு வகை ஏற்கப்படாது."
+
+#: src/panel/chat.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "மிக அதிக முயற்சிகள். சிறிது காத்திருந்து மீண்டும் முயலுங்கள்."
+
+#: src/panel/chat.ts
+msgid "Try again"
+msgstr "மீண்டும் முயல்க"
+
+#: src/panel/chat.ts
+msgid "Typing…"
+msgstr "தட்டச்சு செய்கிறார்…"
+
+#: src/panel/chat.ts
+msgid "Usually replies in {duration}"
+msgstr "பொதுவாக {duration} இல் பதிலளிப்பார்"
+
+#: src/panel/chat.ts
+msgid "We'll reply as soon as we can"
+msgstr "எங்களால் முடிந்தவரை விரைவாகப் பதிலளிப்போம்"
+
+#: src/panel/chat.ts
+msgid "We're away right now"
+msgstr "நாங்கள் தற்போது இல்லை"
+
+#: src/panel/chat.ts
+msgid "Write a message…"
+msgstr "செய்தியை எழுதுங்கள்…"
+
+#: src/panel/chat.ts
+msgid "You seem to be offline."
+msgstr "நீங்கள் ஆஃப்லைனில் இருப்பதாகத் தெரிகிறது."
+
+#: src/panel/chat.ts
+msgid "You:"
+msgstr "நீங்கள்:"
+
+#: src/panel/chat.ts
+msgid "you@example.com"
+msgstr "you@example.com"
+
+#: src/panel/chat.ts
+msgid "Your sign-in has expired. Reload the page and try again."
+msgstr "உங்கள் உள்நுழைவு காலாவதியானது. பக்கத்தை மீண்டும் ஏற்றி மீண்டும் முயலுங்கள்."

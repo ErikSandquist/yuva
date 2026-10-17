@@ -1,10 +1,7 @@
 import type { MessageDescriptor, Messages } from "@lingui/core"
+import { catalogs } from "./catalogs/loader"
 import { messages as en } from "./locales/en/loader"
-import { messages as de } from "./locales/de/loader"
-import { messages as tr } from "./locales/tr/loader"
 import { directionOf, localeIn, sourceLocale, translate } from "./translate"
-
-const catalogs: Record<string, Messages> = { en, tr, de }
 
 export { directionOf, sourceLocale }
 

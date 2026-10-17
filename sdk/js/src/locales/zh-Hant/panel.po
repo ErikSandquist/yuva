@@ -1,0 +1,213 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 15:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: zh-Hant\n"
+
+#: src/panel/chat.ts
+msgid "{name} is typing…"
+msgstr "{name} 正在輸入…"
+
+#: src/panel/chat.ts
+msgid "All conversations"
+msgstr "所有對話"
+
+#: src/panel/chat.ts
+msgid "Anything you'd like to add? (optional)"
+msgstr "還有什麼想補充的嗎?(選填)"
+
+#: src/panel/chat.ts
+msgid "Attach files"
+msgstr "新增附件"
+
+#: src/panel/chat.ts
+msgid "Attachment"
+msgstr "附件"
+
+#: src/panel/chat.ts
+msgid "Bad"
+msgstr "差"
+
+#: src/panel/chat.ts
+msgid "Chat is not available right now."
+msgstr "聊天目前無法使用。"
+
+#: src/panel/chat.ts
+msgid "Close"
+msgstr "關閉"
+
+#: src/panel/chat.ts
+msgid "Comment"
+msgstr "留言"
+
+#: src/panel/chat.ts
+msgid "Conversation"
+msgstr "對話"
+
+#: src/panel/chat.ts
+msgid "Could not save your e-mail address. Try again."
+msgstr "無法儲存您的電子郵件地址。請再試一次。"
+
+#: src/panel/chat.ts
+msgid "Could not send your rating. Try again."
+msgstr "無法傳送您的評價。請再試一次。"
+
+#: src/panel/chat.ts
+msgid "E-mail address"
+msgstr "電子郵件地址"
+
+#: src/panel/chat.ts
+msgid "Enter a valid e-mail address."
+msgstr "請輸入有效的電子郵件地址。"
+
+#: src/panel/chat.ts
+msgid "Good"
+msgstr "好"
+
+#: src/panel/chat.ts
+msgid "How did we do?"
+msgstr "我們表現得如何?"
+
+#: src/panel/chat.ts
+msgid "Loading…"
+msgstr "載入中…"
+
+#: src/panel/chat.ts
+msgid "Message"
+msgstr "訊息"
+
+#: src/panel/chat.ts
+msgid "Messages"
+msgstr "訊息"
+
+#: src/panel/chat.ts
+msgid "New conversation"
+msgstr "新對話"
+
+#: src/panel/chat.ts
+msgid "No conversations yet"
+msgstr "尚無對話"
+
+#: src/panel/chat.ts
+msgid "Nobody is available right now. Leave your e-mail and we'll send the reply there too."
+msgstr "目前沒有人在線上。請留下您的電子郵件,我們也會把回覆寄到那裡。"
+
+#: src/panel/chat.ts
+msgid "Not sent."
+msgstr "未傳送。"
+
+#: src/panel/chat.ts
+msgid "Online"
+msgstr "線上"
+
+#: src/panel/chat.ts
+msgid "Reconnecting…"
+msgstr "正在重新連線…"
+
+#. placeholder {0}: file.name
+#: src/panel/chat.ts
+msgid "Remove {0}"
+msgstr "移除 {0}"
+
+#: src/panel/chat.ts
+msgid "Retry"
+msgstr "重試"
+
+#: src/panel/chat.ts
+msgid "Save"
+msgstr "儲存"
+
+#: src/panel/chat.ts
+msgid "Seen"
+msgstr "已讀"
+
+#: src/panel/chat.ts
+msgid "Send"
+msgstr "傳送"
+
+#: src/panel/chat.ts
+msgid "Send us a message and we will reply here."
+msgstr "傳訊息給我們,我們會在這裡回覆。"
+
+#: src/panel/chat.ts
+msgid "Sending…"
+msgstr "傳送中…"
+
+#: src/panel/chat.ts
+msgid "Sent"
+msgstr "已傳送"
+
+#: src/panel/chat.ts
+msgid "Show older conversations"
+msgstr "顯示較早的對話"
+
+#: src/panel/chat.ts
+msgid "Sign in to chat with us."
+msgstr "請登入後與我們聊天。"
+
+#: src/panel/chat.ts
+msgid "Skip"
+msgstr "略過"
+
+#: src/panel/chat.ts
+msgid "Thanks for your feedback"
+msgstr "感謝您的意見回饋"
+
+#: src/panel/chat.ts
+msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
+msgstr "謝謝!如果我們回覆時您不在,我們會寄電子郵件到 {known}。"
+
+#: src/panel/chat.ts
+msgid "The file is too large."
+msgstr "檔案過大。"
+
+#: src/panel/chat.ts
+msgid "This file type is not accepted."
+msgstr "不支援此檔案類型。"
+
+#: src/panel/chat.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "嘗試次數過多。請稍候片刻後再試一次。"
+
+#: src/panel/chat.ts
+msgid "Try again"
+msgstr "重試"
+
+#: src/panel/chat.ts
+msgid "Typing…"
+msgstr "正在輸入…"
+
+#: src/panel/chat.ts
+msgid "Usually replies in {duration}"
+msgstr "通常會在 {duration} 內回覆"
+
+#: src/panel/chat.ts
+msgid "We'll reply as soon as we can"
+msgstr "我們會盡快回覆"
+
+#: src/panel/chat.ts
+msgid "We're away right now"
+msgstr "我們目前不在"
+
+#: src/panel/chat.ts
+msgid "Write a message…"
+msgstr "輸入訊息…"
+
+#: src/panel/chat.ts
+msgid "You seem to be offline."
+msgstr "您似乎已離線。"
+
+#: src/panel/chat.ts
+msgid "You:"
+msgstr "您:"
+
+#: src/panel/chat.ts
+msgid "you@example.com"
+msgstr "you@example.com"
+
+#: src/panel/chat.ts
+msgid "Your sign-in has expired. Reload the page and try again."
+msgstr "您的登入已過期。請重新整理頁面後再試一次。"

@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: nl\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "Anoniem"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "Beantwoord"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "Wacht op goedkeuring"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "Controleer de titel en de tekst en probeer het opnieuw."
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "De discussies konden niet worden geladen."
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "De discussie kon niet worden geopend. Probeer het opnieuw."
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "Verzenden is niet gelukt. Probeer het opnieuw."
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "Verwijderd lid"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "Verwijderde lezer"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "Discussies"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "Discussies over deze pagina"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "Discussies zijn uitgeschakeld voor deze site."
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "E-mailadres"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "E-mailadres voor een antwoord (optioneel)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "Voer een geldig e-mailadres in."
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "Elke discussie op deze pagina heeft een antwoord."
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "Heb je een vraag of een idee? Begin de eerste discussie."
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "zojuist"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "Discussies laden…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "Laden…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "Vergrendeld"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "Nieuw"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "Nee"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "Er zijn nog geen discussies over deze pagina."
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "Nee, bedankt"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "In behandeling"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "Berichten kunnen 30 minuten na het schrijven worden bewerkt."
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "Lezer"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "Reacties: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "Verstuur"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "Verzenden…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "Meer tonen"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "Inloggen"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "Log in om deel te nemen aan de discussie."
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "Log in om ons te schrijven."
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "Uitloggen"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "Dat spijt ons. Wat ontbrak er of was onduidelijk?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "Discussies sorteren"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "Een discussie starten"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "Team"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "Teamlid"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "Bedankt voor je feedback."
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "Bedankt! Kunnen we nog iets toevoegen? (optioneel)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "Deze discussie is vergrendeld."
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Te veel pogingen. Wacht even en probeer het opnieuw."
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "Beste"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "Opnieuw proberen"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "Onbeantwoord"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "Stemmen: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "Was deze pagina nuttig?"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "Ja"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "Dat kan niet."
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "Je lijkt offline te zijn."
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "Je browser heeft het inlogvenster geblokkeerd. Sta pop-ups toe voor deze site en probeer het opnieuw."

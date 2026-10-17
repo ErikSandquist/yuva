@@ -1,0 +1,84 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 20:15+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: cs\n"
+
+#: src/subscribe/element.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "Skoro hotovo. Zkontrolujte doručenou poštu a potvrďte odběr."
+
+#: src/subscribe/element.ts
+msgid "Check your inbox to confirm."
+msgstr "Potvrďte odběr v doručené poště."
+
+#: src/subscribe/element.ts
+msgid "Choose at least one list."
+msgstr "Vyberte alespoň jeden seznam."
+
+#: src/subscribe/element.ts
+msgid "Could not subscribe. Try again."
+msgstr "Přihlášení k odběru se nezdařilo. Zkuste to znovu."
+
+#: src/subscribe/element.ts
+msgid "E-mail address"
+msgstr "E-mailová adresa"
+
+#: src/subscribe/element.ts
+msgid "Enter a valid e-mail address."
+msgstr "Zadejte platnou e-mailovou adresu."
+
+#: src/subscribe/element.ts
+msgid "Enter your name."
+msgstr "Zadejte své jméno."
+
+#: src/subscribe/element.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "Chci dostávat e-maily o tématu {list} od {inbox}. Odběr mohu kdykoli zrušit."
+
+#: src/subscribe/element.ts
+msgid "Lists"
+msgstr "Seznamy"
+
+#: src/subscribe/element.ts
+msgid "Privacy policy"
+msgstr "Zásady ochrany osobních údajů"
+
+#: src/subscribe/element.ts
+msgid "Subscribe"
+msgstr "Odebírat"
+
+#: src/subscribe/element.ts
+msgid "Subscribing…"
+msgstr "Přihlašování k odběru…"
+
+#: src/subscribe/element.ts
+msgid "Thanks! You are subscribed."
+msgstr "Děkujeme! Odebíráte."
+
+#: src/subscribe/element.ts
+msgid "Tick the box to agree."
+msgstr "Zaškrtnutím souhlasíte."
+
+#: src/subscribe/element.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Příliš mnoho pokusů. Chvíli počkejte a zkuste to znovu."
+
+#: src/subscribe/element.ts
+msgid "You seem to be offline."
+msgstr "Zdá se, že jste offline."
+
+#: src/subscribe/element.ts
+msgid "Your account has no e-mail address yet."
+msgstr "Váš účet zatím nemá žádnou e-mailovou adresu."
+
+#: src/subscribe/element.ts
+msgid "Your name"
+msgstr "Vaše jméno"
+
+#: src/subscribe/element.ts
+msgid "Your name (optional)"
+msgstr "Vaše jméno (nepovinné)"

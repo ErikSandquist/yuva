@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: fi\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "Anonyymi"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "Vastattu"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "Odottaa hyväksyntää"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "Tarkista otsikko ja teksti ja yritä uudelleen."
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "Keskusteluja ei voitu ladata."
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "Keskustelua ei voitu avata. Yritä uudelleen."
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "Lähetys epäonnistui. Yritä uudelleen."
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "Poistettu jäsen"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "Poistettu lukija"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "Keskustelut"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "Keskustelut tästä sivusta"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "Keskustelut on poistettu käytöstä tällä sivustolla."
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "Sähköpostiosoite"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "Sähköposti vastausta varten (valinnainen)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "Anna kelvollinen sähköpostiosoite."
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "Kaikkiin tämän sivun keskusteluihin on vastattu."
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "Onko sinulla kysymys tai idea? Aloita ensimmäinen keskustelu."
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "juuri nyt"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "Ladataan keskusteluja…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "Ladataan…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "Lukittu"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "Uusi"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "Ei"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "Tästä sivusta ei ole vielä keskusteluja."
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "Ei kiitos"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "Odottaa"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "Viestejä voi muokata 30 minuutin ajan kirjoittamisen jälkeen."
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "Lukija"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "Vastauksia: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "Lähetä"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "Lähetetään…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "Näytä lisää"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "Kirjaudu sisään"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "Kirjaudu sisään osallistuaksesi keskusteluun."
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "Kirjaudu sisään kirjoittaaksesi meille."
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "Kirjaudu ulos"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "Pahoittelemme. Mitä puuttui tai oli epäselvää?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "Lajittele keskustelut"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "Aloita keskustelu"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "Tiimi"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "Tiimin jäsen"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "Kiitos palautteestasi."
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "Kiitos! Voisimmeko lisätä jotain? (valinnainen)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "Tämä keskustelu on lukittu."
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Liian monta yritystä. Odota hetki ja yritä uudelleen."
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "Suosituimmat"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "Yritä uudelleen"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "Vastaamattomat"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "Ääniä: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "Oliko tämä sivu hyödyllinen?"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "Kyllä"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "Et voi tehdä sitä."
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "Näytät olevan offline-tilassa."
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "Selaimesi esti kirjautumisikkunan. Salli ponnahdusikkunat tälle sivustolle ja yritä uudelleen."

@@ -1,0 +1,213 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 15:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ro\n"
+
+#: src/panel/chat.ts
+msgid "{name} is typing…"
+msgstr "{name} scrie…"
+
+#: src/panel/chat.ts
+msgid "All conversations"
+msgstr "Toate conversațiile"
+
+#: src/panel/chat.ts
+msgid "Anything you'd like to add? (optional)"
+msgstr "Vrei să adaugi ceva? (opțional)"
+
+#: src/panel/chat.ts
+msgid "Attach files"
+msgstr "Atașează fișiere"
+
+#: src/panel/chat.ts
+msgid "Attachment"
+msgstr "Atașament"
+
+#: src/panel/chat.ts
+msgid "Bad"
+msgstr "Slab"
+
+#: src/panel/chat.ts
+msgid "Chat is not available right now."
+msgstr "Chatul nu este disponibil momentan."
+
+#: src/panel/chat.ts
+msgid "Close"
+msgstr "Închide"
+
+#: src/panel/chat.ts
+msgid "Comment"
+msgstr "Comentariu"
+
+#: src/panel/chat.ts
+msgid "Conversation"
+msgstr "Conversație"
+
+#: src/panel/chat.ts
+msgid "Could not save your e-mail address. Try again."
+msgstr "Adresa ta de e-mail nu a putut fi salvată. Încearcă din nou."
+
+#: src/panel/chat.ts
+msgid "Could not send your rating. Try again."
+msgstr "Evaluarea ta nu a putut fi trimisă. Încearcă din nou."
+
+#: src/panel/chat.ts
+msgid "E-mail address"
+msgstr "Adresa de e-mail"
+
+#: src/panel/chat.ts
+msgid "Enter a valid e-mail address."
+msgstr "Introdu o adresă de e-mail validă."
+
+#: src/panel/chat.ts
+msgid "Good"
+msgstr "Bine"
+
+#: src/panel/chat.ts
+msgid "How did we do?"
+msgstr "Cum ne-am descurcat?"
+
+#: src/panel/chat.ts
+msgid "Loading…"
+msgstr "Se încarcă…"
+
+#: src/panel/chat.ts
+msgid "Message"
+msgstr "Mesaj"
+
+#: src/panel/chat.ts
+msgid "Messages"
+msgstr "Mesaje"
+
+#: src/panel/chat.ts
+msgid "New conversation"
+msgstr "Conversație nouă"
+
+#: src/panel/chat.ts
+msgid "No conversations yet"
+msgstr "Încă nu există conversații"
+
+#: src/panel/chat.ts
+msgid "Nobody is available right now. Leave your e-mail and we'll send the reply there too."
+msgstr "Momentan nu este nimeni disponibil. Lasă-ți adresa de e-mail și vom trimite răspunsul și acolo."
+
+#: src/panel/chat.ts
+msgid "Not sent."
+msgstr "Netrimis."
+
+#: src/panel/chat.ts
+msgid "Online"
+msgstr "Online"
+
+#: src/panel/chat.ts
+msgid "Reconnecting…"
+msgstr "Se reconectează…"
+
+#. placeholder {0}: file.name
+#: src/panel/chat.ts
+msgid "Remove {0}"
+msgstr "Elimină {0}"
+
+#: src/panel/chat.ts
+msgid "Retry"
+msgstr "Încearcă din nou"
+
+#: src/panel/chat.ts
+msgid "Save"
+msgstr "Salvează"
+
+#: src/panel/chat.ts
+msgid "Seen"
+msgstr "Văzut"
+
+#: src/panel/chat.ts
+msgid "Send"
+msgstr "Trimite"
+
+#: src/panel/chat.ts
+msgid "Send us a message and we will reply here."
+msgstr "Trimite-ne un mesaj și îți vom răspunde aici."
+
+#: src/panel/chat.ts
+msgid "Sending…"
+msgstr "Se trimite…"
+
+#: src/panel/chat.ts
+msgid "Sent"
+msgstr "Trimis"
+
+#: src/panel/chat.ts
+msgid "Show older conversations"
+msgstr "Arată conversațiile mai vechi"
+
+#: src/panel/chat.ts
+msgid "Sign in to chat with us."
+msgstr "Autentifică-te ca să vorbești cu noi."
+
+#: src/panel/chat.ts
+msgid "Skip"
+msgstr "Omite"
+
+#: src/panel/chat.ts
+msgid "Thanks for your feedback"
+msgstr "Mulțumim pentru feedback"
+
+#: src/panel/chat.ts
+msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
+msgstr "Mulțumim! Dacă nu ești aici când răspundem, îți vom trimite un e-mail la {known}."
+
+#: src/panel/chat.ts
+msgid "The file is too large."
+msgstr "Fișierul este prea mare."
+
+#: src/panel/chat.ts
+msgid "This file type is not accepted."
+msgstr "Acest tip de fișier nu este acceptat."
+
+#: src/panel/chat.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Prea multe încercări. Așteaptă puțin și încearcă din nou."
+
+#: src/panel/chat.ts
+msgid "Try again"
+msgstr "Încearcă din nou"
+
+#: src/panel/chat.ts
+msgid "Typing…"
+msgstr "Scrie…"
+
+#: src/panel/chat.ts
+msgid "Usually replies in {duration}"
+msgstr "De obicei răspunde în {duration}"
+
+#: src/panel/chat.ts
+msgid "We'll reply as soon as we can"
+msgstr "Vom răspunde cât mai repede posibil"
+
+#: src/panel/chat.ts
+msgid "We're away right now"
+msgstr "Momentan nu suntem disponibili"
+
+#: src/panel/chat.ts
+msgid "Write a message…"
+msgstr "Scrie un mesaj…"
+
+#: src/panel/chat.ts
+msgid "You seem to be offline."
+msgstr "Pari să fii offline."
+
+#: src/panel/chat.ts
+msgid "You:"
+msgstr "Tu:"
+
+#: src/panel/chat.ts
+msgid "you@example.com"
+msgstr "you@example.com"
+
+#: src/panel/chat.ts
+msgid "Your sign-in has expired. Reload the page and try again."
+msgstr "Autentificarea ta a expirat. Reîncarcă pagina și încearcă din nou."

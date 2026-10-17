@@ -1,0 +1,84 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 20:15+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: fr-CA\n"
+
+#: src/subscribe/element.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "Presque terminé. Consultez votre boîte de réception et confirmez votre abonnement."
+
+#: src/subscribe/element.ts
+msgid "Check your inbox to confirm."
+msgstr "Consultez votre boîte de réception pour confirmer."
+
+#: src/subscribe/element.ts
+msgid "Choose at least one list."
+msgstr "Choisissez au moins une liste."
+
+#: src/subscribe/element.ts
+msgid "Could not subscribe. Try again."
+msgstr "Impossible de s’abonner. Réessayez."
+
+#: src/subscribe/element.ts
+msgid "E-mail address"
+msgstr "Adresse courriel"
+
+#: src/subscribe/element.ts
+msgid "Enter a valid e-mail address."
+msgstr "Saisissez une adresse courriel valide."
+
+#: src/subscribe/element.ts
+msgid "Enter your name."
+msgstr "Saisissez votre nom."
+
+#: src/subscribe/element.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "Je souhaite recevoir des courriels sur {list} de la part de {inbox}. Je peux me désabonner à tout moment."
+
+#: src/subscribe/element.ts
+msgid "Lists"
+msgstr "Listes"
+
+#: src/subscribe/element.ts
+msgid "Privacy policy"
+msgstr "Politique de confidentialité"
+
+#: src/subscribe/element.ts
+msgid "Subscribe"
+msgstr "S’abonner"
+
+#: src/subscribe/element.ts
+msgid "Subscribing…"
+msgstr "Abonnement…"
+
+#: src/subscribe/element.ts
+msgid "Thanks! You are subscribed."
+msgstr "Merci ! Vous êtes abonné."
+
+#: src/subscribe/element.ts
+msgid "Tick the box to agree."
+msgstr "Cochez la case pour accepter."
+
+#: src/subscribe/element.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Trop de tentatives. Patientez un instant et réessayez."
+
+#: src/subscribe/element.ts
+msgid "You seem to be offline."
+msgstr "Vous semblez être hors ligne."
+
+#: src/subscribe/element.ts
+msgid "Your account has no e-mail address yet."
+msgstr "Votre compte n’a pas encore d’adresse courriel."
+
+#: src/subscribe/element.ts
+msgid "Your name"
+msgstr "Votre nom"
+
+#: src/subscribe/element.ts
+msgid "Your name (optional)"
+msgstr "Votre nom (facultatif)"

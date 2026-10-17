@@ -1,8 +1,7 @@
-import { setupI18n, type I18n, type MessageDescriptor, type Messages } from "@lingui/core"
+import { setupI18n, type I18n, type MessageDescriptor } from "@lingui/core"
 import { msg } from "@lingui/core/macro"
+import { catalogs } from "../catalogs/panel"
 import { messages as en } from "../locales/en/panel"
-import { messages as de } from "../locales/de/panel"
-import { messages as tr } from "../locales/tr/panel"
 import { launcherOf, readStored, writeStored, type PanelController, type PanelHost } from "../types"
 import {
   ApiError,
@@ -19,7 +18,6 @@ import { addStyles } from "../styles"
 import { styles } from "./styles"
 import { richText } from "./text"
 
-const catalogs: Record<string, Messages> = { en, tr, de }
 const maxFiles = 10
 const groupGap = 5 * 60_000
 

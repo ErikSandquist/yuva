@@ -106,13 +106,33 @@ describe("locale", () => {
   test("resolves to a supported locale", () => {
     expect(resolveLocale("tr-TR")).toBe("tr")
     expect(resolveLocale("de-DE")).toBe("de")
-    expect(resolveLocale("fr", "tr")).toBe("tr")
-    expect(resolveLocale("fr", null)).toBe("en")
+    expect(resolveLocale("fa", "tr")).toBe("tr")
+    expect(resolveLocale("fa", null)).toBe("en")
+  })
+
+  test("matches regional and script tags to catalogs", () => {
+    expect(resolveLocale("pt-BR")).toBe("pt-br")
+    expect(resolveLocale("pt_PT")).toBe("pt-pt")
+    expect(resolveLocale("pt")).toBe("pt-br")
+    expect(resolveLocale("zh-TW")).toBe("zh-hant")
+    expect(resolveLocale("zh-Hant-HK")).toBe("zh-hant")
+    expect(resolveLocale("zh-CN")).toBe("zh-hans")
+    expect(resolveLocale("zh")).toBe("zh-hans")
+    expect(resolveLocale("iw")).toBe("he")
+    expect(resolveLocale("no")).toBe("nb")
+    expect(resolveLocale("es-MX")).toBe("es-mx")
+    expect(resolveLocale("es-419")).toBe("es-mx")
+    expect(resolveLocale("es-ES")).toBe("es")
+    expect(resolveLocale("fr-CA")).toBe("fr-ca")
+    expect(resolveLocale("fr-BE")).toBe("fr")
   })
 
   test("knows text direction", () => {
     expect(directionOf("ar-EG")).toBe("rtl")
     expect(directionOf("tr")).toBe("ltr")
+    expect(directionOf("he")).toBe("rtl")
+    expect(directionOf("ur")).toBe("rtl")
+    expect(directionOf("zh-hant")).toBe("ltr")
   })
 })
 

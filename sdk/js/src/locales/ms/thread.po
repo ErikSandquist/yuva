@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ms\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "Jawapan diterima"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "Semua perbincangan"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "Tanya soalan, kongsi idea atau terangkan masalah pada halaman ini."
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "Batal"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "Padam"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "Padam perbincangan ini?"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "Padam balasan ini?"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "Sunting"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "Sunting siaran anda"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "disunting"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "Ikuti"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "Mengikuti"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "Dapatkan e-mel apabila seseorang membalas atau jawapan diterima."
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "Simpan"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "Memuatkan…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "Tandakan sebagai jawapan"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "Markdown disokong."
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "Tiada apa-apa untuk dipratonton."
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "Pratonton"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "Tarik balik undi anda (undi: {0})"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "Balasan: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "Balas"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "Simpan"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "Menghantar…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "Log masuk"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "Log masuk untuk membalas, mengundi dan mengikuti perbincangan ini."
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "Log masuk untuk memulakan perbincangan. Nama anda dipaparkan bersama siaran anda."
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "Mulakan perbincangan"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "Mulakan perbincangan"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "Terima kasih! Perbincangan anda akan dipaparkan kepada semua orang setelah pasukan meluluskannya."
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "Terima kasih! Balasan anda akan dipaparkan kepada semua orang setelah pasukan meluluskannya."
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "Siaran pembukaan telah dipadam."
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "Perbincangan ini dikunci. Balasan baharu ditutup."
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "Perbincangan ini tidak lagi tersedia."
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "Balasan ini telah dipadam."
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "Tajuk"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "Nyahtanda sebagai jawapan"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "Undi naik (undi: {0})"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "Tulis"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "Tulis balasan…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "Siaran pertama anda disemak oleh pasukan sebelum dipaparkan kepada semua orang."
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "Soalan atau idea anda"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "Balasan anda"

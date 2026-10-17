@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: hr\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "Anonimno"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "Odgovoreno"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "Čeka odobrenje"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "Provjerite naslov i tekst pa pokušajte ponovno."
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "Rasprave nije bilo moguće učitati."
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "Raspravu nije bilo moguće otvoriti. Pokušajte ponovno."
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "Slanje nije uspjelo. Pokušajte ponovno."
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "Izbrisani član"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "Izbrisani čitatelj"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "Rasprave"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "Rasprave o ovoj stranici"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "Rasprave su isključene za ovo web-mjesto."
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "E-adresa"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "E-adresa za odgovor (neobavezno)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "Unesite ispravnu e-adresu."
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "Svaka rasprava na ovoj stranici ima odgovor."
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "Imate pitanje ili ideju? Pokrenite prvu raspravu."
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "upravo sada"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "Učitavanje rasprava…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "Učitavanje…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "Zaključano"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "Novo"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "Ne"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "O ovoj stranici još nema rasprava."
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "Ne, hvala"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "Na čekanju"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "Objave se mogu uređivati 30 minuta nakon pisanja."
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "Čitatelj"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "Odgovora: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "Pošalji"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "Slanje…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "Prikaži više"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "Prijava"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "Prijavite se kako biste sudjelovali u raspravi."
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "Prijavite se kako biste nam pisali."
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "Odjava"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "Žao nam je. Što je nedostajalo ili nije bilo jasno?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "Sortiraj rasprave"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "Pokreni raspravu"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "Tim"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "Član tima"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "Hvala na povratnim informacijama."
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "Hvala! Možemo li nešto dodati? (neobavezno)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "Ova je rasprava zaključana."
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Previše pokušaja. Pričekajte trenutak i pokušajte ponovno."
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "Najbolje"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "Pokušaj ponovno"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "Bez odgovora"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "Glasova: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "Je li vam ova stranica bila korisna?"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "Da"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "To ne možete učiniti."
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "Čini se da ste offline."
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "Vaš je preglednik blokirao prozor za prijavu. Dopustite skočne prozore za ovo web-mjesto i pokušajte ponovno."

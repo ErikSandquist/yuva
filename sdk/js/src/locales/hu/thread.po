@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: hu\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "Elfogadott válasz"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "Összes megbeszélés"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "Tegyen fel kérdést, osszon meg egy ötletet, vagy írjon le egy problémát ezzel az oldallal kapcsolatban."
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "Mégse"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "Törlés"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "Törli ezt a megbeszélést?"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "Törli ezt a választ?"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "Szerkesztés"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "Hozzászólás szerkesztése"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "szerkesztve"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "Követés"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "Követve"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "Kapjon e-mailt, ha valaki válaszol, vagy egy választ elfogadnak."
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "Megtartás"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "Betöltés…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "Megjelölés válaszként"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "A Markdown támogatott."
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "Nincs mit előnézni."
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "Előnézet"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "Szavazat visszavonása (szavazatok: {0})"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "Válaszok: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "Válasz"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "Mentés"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "Küldés…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "Bejelentkezés"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "Jelentkezzen be, hogy válaszolhasson, szavazhasson és követhesse ezt a megbeszélést."
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "Jelentkezzen be a megbeszélés indításához. A neve megjelenik a hozzászólása mellett."
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "Megbeszélés indítása"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "Megbeszélés indítása"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "Köszönjük! A megbeszélése mindenki számára megjelenik, amint a csapat jóváhagyja."
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "Köszönjük! A válasza mindenki számára megjelenik, amint a csapat jóváhagyja."
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "A nyitó hozzászólást törölték."
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "Ez a megbeszélés zárolva van. Új válaszok nem küldhetők."
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "Ez a megbeszélés már nem érhető el."
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "Ezt a választ törölték."
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "Cím"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "Válaszként való megjelölés visszavonása"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "Támogatás (szavazatok: {0})"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "Írás"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "Írjon választ…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "Az első hozzászólásait a csapat ellenőrzi, mielőtt mindenki számára megjelennének."
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "Kérdése vagy ötlete"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "Válasza"

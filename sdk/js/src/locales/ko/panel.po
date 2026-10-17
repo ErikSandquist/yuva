@@ -1,0 +1,213 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 15:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ko\n"
+
+#: src/panel/chat.ts
+msgid "{name} is typing…"
+msgstr "{name} 님이 입력 중…"
+
+#: src/panel/chat.ts
+msgid "All conversations"
+msgstr "모든 대화"
+
+#: src/panel/chat.ts
+msgid "Anything you'd like to add? (optional)"
+msgstr "추가로 하실 말씀이 있나요? (선택 사항)"
+
+#: src/panel/chat.ts
+msgid "Attach files"
+msgstr "파일 첨부"
+
+#: src/panel/chat.ts
+msgid "Attachment"
+msgstr "첨부 파일"
+
+#: src/panel/chat.ts
+msgid "Bad"
+msgstr "나쁨"
+
+#: src/panel/chat.ts
+msgid "Chat is not available right now."
+msgstr "지금은 채팅을 사용할 수 없습니다."
+
+#: src/panel/chat.ts
+msgid "Close"
+msgstr "닫기"
+
+#: src/panel/chat.ts
+msgid "Comment"
+msgstr "댓글"
+
+#: src/panel/chat.ts
+msgid "Conversation"
+msgstr "대화"
+
+#: src/panel/chat.ts
+msgid "Could not save your e-mail address. Try again."
+msgstr "이메일 주소를 저장하지 못했습니다. 다시 시도해 주세요."
+
+#: src/panel/chat.ts
+msgid "Could not send your rating. Try again."
+msgstr "평가를 보내지 못했습니다. 다시 시도해 주세요."
+
+#: src/panel/chat.ts
+msgid "E-mail address"
+msgstr "이메일 주소"
+
+#: src/panel/chat.ts
+msgid "Enter a valid e-mail address."
+msgstr "올바른 이메일 주소를 입력해 주세요."
+
+#: src/panel/chat.ts
+msgid "Good"
+msgstr "좋음"
+
+#: src/panel/chat.ts
+msgid "How did we do?"
+msgstr "어떠셨나요?"
+
+#: src/panel/chat.ts
+msgid "Loading…"
+msgstr "불러오는 중…"
+
+#: src/panel/chat.ts
+msgid "Message"
+msgstr "메시지"
+
+#: src/panel/chat.ts
+msgid "Messages"
+msgstr "메시지"
+
+#: src/panel/chat.ts
+msgid "New conversation"
+msgstr "새 대화"
+
+#: src/panel/chat.ts
+msgid "No conversations yet"
+msgstr "아직 대화가 없습니다"
+
+#: src/panel/chat.ts
+msgid "Nobody is available right now. Leave your e-mail and we'll send the reply there too."
+msgstr "지금은 응대 가능한 담당자가 없습니다. 이메일을 남겨 주시면 답변을 그곳으로도 보내 드리겠습니다."
+
+#: src/panel/chat.ts
+msgid "Not sent."
+msgstr "전송되지 않았습니다."
+
+#: src/panel/chat.ts
+msgid "Online"
+msgstr "온라인"
+
+#: src/panel/chat.ts
+msgid "Reconnecting…"
+msgstr "다시 연결 중…"
+
+#. placeholder {0}: file.name
+#: src/panel/chat.ts
+msgid "Remove {0}"
+msgstr "{0} 삭제"
+
+#: src/panel/chat.ts
+msgid "Retry"
+msgstr "다시 시도"
+
+#: src/panel/chat.ts
+msgid "Save"
+msgstr "저장"
+
+#: src/panel/chat.ts
+msgid "Seen"
+msgstr "읽음"
+
+#: src/panel/chat.ts
+msgid "Send"
+msgstr "보내기"
+
+#: src/panel/chat.ts
+msgid "Send us a message and we will reply here."
+msgstr "메시지를 보내 주시면 여기에서 답변해 드리겠습니다."
+
+#: src/panel/chat.ts
+msgid "Sending…"
+msgstr "보내는 중…"
+
+#: src/panel/chat.ts
+msgid "Sent"
+msgstr "전송됨"
+
+#: src/panel/chat.ts
+msgid "Show older conversations"
+msgstr "이전 대화 보기"
+
+#: src/panel/chat.ts
+msgid "Sign in to chat with us."
+msgstr "채팅하려면 로그인해 주세요."
+
+#: src/panel/chat.ts
+msgid "Skip"
+msgstr "건너뛰기"
+
+#: src/panel/chat.ts
+msgid "Thanks for your feedback"
+msgstr "의견 감사합니다"
+
+#: src/panel/chat.ts
+msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
+msgstr "감사합니다! 답변 드릴 때 자리에 계시지 않으면 {known}(으)로 이메일을 보내 드리겠습니다."
+
+#: src/panel/chat.ts
+msgid "The file is too large."
+msgstr "파일이 너무 큽니다."
+
+#: src/panel/chat.ts
+msgid "This file type is not accepted."
+msgstr "이 파일 형식은 허용되지 않습니다."
+
+#: src/panel/chat.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "시도 횟수가 너무 많습니다. 잠시 기다린 후 다시 시도해 주세요."
+
+#: src/panel/chat.ts
+msgid "Try again"
+msgstr "다시 시도"
+
+#: src/panel/chat.ts
+msgid "Typing…"
+msgstr "입력 중…"
+
+#: src/panel/chat.ts
+msgid "Usually replies in {duration}"
+msgstr "보통 {duration} 이내에 답변합니다"
+
+#: src/panel/chat.ts
+msgid "We'll reply as soon as we can"
+msgstr "최대한 빨리 답변해 드리겠습니다"
+
+#: src/panel/chat.ts
+msgid "We're away right now"
+msgstr "지금은 자리를 비웠습니다"
+
+#: src/panel/chat.ts
+msgid "Write a message…"
+msgstr "메시지를 입력하세요…"
+
+#: src/panel/chat.ts
+msgid "You seem to be offline."
+msgstr "오프라인 상태인 것 같습니다."
+
+#: src/panel/chat.ts
+msgid "You:"
+msgstr "나:"
+
+#: src/panel/chat.ts
+msgid "you@example.com"
+msgstr "you@example.com"
+
+#: src/panel/chat.ts
+msgid "Your sign-in has expired. Reload the page and try again."
+msgstr "로그인이 만료되었습니다. 페이지를 새로고침한 후 다시 시도해 주세요."

@@ -1,0 +1,84 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 20:15+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: th\n"
+
+#: src/subscribe/element.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "เกือบเสร็จแล้ว ตรวจสอบกล่องจดหมายและยืนยันการสมัครรับ"
+
+#: src/subscribe/element.ts
+msgid "Check your inbox to confirm."
+msgstr "ตรวจสอบกล่องจดหมายเพื่อยืนยัน"
+
+#: src/subscribe/element.ts
+msgid "Choose at least one list."
+msgstr "เลือกอย่างน้อยหนึ่งรายการ"
+
+#: src/subscribe/element.ts
+msgid "Could not subscribe. Try again."
+msgstr "ไม่สามารถสมัครรับได้ โปรดลองอีกครั้ง"
+
+#: src/subscribe/element.ts
+msgid "E-mail address"
+msgstr "อีเมล"
+
+#: src/subscribe/element.ts
+msgid "Enter a valid e-mail address."
+msgstr "กรุณากรอกอีเมลที่ถูกต้อง"
+
+#: src/subscribe/element.ts
+msgid "Enter your name."
+msgstr "กรอกชื่อของคุณ"
+
+#: src/subscribe/element.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "ฉันต้องการรับอีเมลเกี่ยวกับ {list} จาก {inbox} และยกเลิกการสมัครรับได้ทุกเมื่อ"
+
+#: src/subscribe/element.ts
+msgid "Lists"
+msgstr "รายการ"
+
+#: src/subscribe/element.ts
+msgid "Privacy policy"
+msgstr "นโยบายความเป็นส่วนตัว"
+
+#: src/subscribe/element.ts
+msgid "Subscribe"
+msgstr "สมัครรับ"
+
+#: src/subscribe/element.ts
+msgid "Subscribing…"
+msgstr "กำลังสมัครรับ…"
+
+#: src/subscribe/element.ts
+msgid "Thanks! You are subscribed."
+msgstr "ขอบคุณ! คุณสมัครรับเรียบร้อยแล้ว"
+
+#: src/subscribe/element.ts
+msgid "Tick the box to agree."
+msgstr "ทำเครื่องหมายในช่องเพื่อยอมรับ"
+
+#: src/subscribe/element.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "ลองหลายครั้งเกินไป โปรดรอสักครู่แล้วลองอีกครั้ง"
+
+#: src/subscribe/element.ts
+msgid "You seem to be offline."
+msgstr "ดูเหมือนว่าคุณออฟไลน์อยู่"
+
+#: src/subscribe/element.ts
+msgid "Your account has no e-mail address yet."
+msgstr "บัญชีของคุณยังไม่มีอีเมล"
+
+#: src/subscribe/element.ts
+msgid "Your name"
+msgstr "ชื่อของคุณ"
+
+#: src/subscribe/element.ts
+msgid "Your name (optional)"
+msgstr "ชื่อของคุณ (ไม่บังคับ)"

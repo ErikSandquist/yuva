@@ -1,0 +1,213 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 15:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+#: src/panel/chat.ts
+msgid "{name} is typing…"
+msgstr "{name} друкує…"
+
+#: src/panel/chat.ts
+msgid "All conversations"
+msgstr "Усі розмови"
+
+#: src/panel/chat.ts
+msgid "Anything you'd like to add? (optional)"
+msgstr "Хочете щось додати? (необов’язково)"
+
+#: src/panel/chat.ts
+msgid "Attach files"
+msgstr "Прикріпити файли"
+
+#: src/panel/chat.ts
+msgid "Attachment"
+msgstr "Вкладення"
+
+#: src/panel/chat.ts
+msgid "Bad"
+msgstr "Погано"
+
+#: src/panel/chat.ts
+msgid "Chat is not available right now."
+msgstr "Чат зараз недоступний."
+
+#: src/panel/chat.ts
+msgid "Close"
+msgstr "Закрити"
+
+#: src/panel/chat.ts
+msgid "Comment"
+msgstr "Коментар"
+
+#: src/panel/chat.ts
+msgid "Conversation"
+msgstr "Розмова"
+
+#: src/panel/chat.ts
+msgid "Could not save your e-mail address. Try again."
+msgstr "Не вдалося зберегти вашу електронну адресу. Спробуйте ще раз."
+
+#: src/panel/chat.ts
+msgid "Could not send your rating. Try again."
+msgstr "Не вдалося надіслати вашу оцінку. Спробуйте ще раз."
+
+#: src/panel/chat.ts
+msgid "E-mail address"
+msgstr "Електронна адреса"
+
+#: src/panel/chat.ts
+msgid "Enter a valid e-mail address."
+msgstr "Введіть дійсну електронну адресу."
+
+#: src/panel/chat.ts
+msgid "Good"
+msgstr "Добре"
+
+#: src/panel/chat.ts
+msgid "How did we do?"
+msgstr "Як ми впоралися?"
+
+#: src/panel/chat.ts
+msgid "Loading…"
+msgstr "Завантаження…"
+
+#: src/panel/chat.ts
+msgid "Message"
+msgstr "Повідомлення"
+
+#: src/panel/chat.ts
+msgid "Messages"
+msgstr "Повідомлення"
+
+#: src/panel/chat.ts
+msgid "New conversation"
+msgstr "Нова розмова"
+
+#: src/panel/chat.ts
+msgid "No conversations yet"
+msgstr "Ще немає розмов"
+
+#: src/panel/chat.ts
+msgid "Nobody is available right now. Leave your e-mail and we'll send the reply there too."
+msgstr "Зараз нікого немає на зв’язку. Залиште свою електронну адресу, і ми надішлемо відповідь і туди."
+
+#: src/panel/chat.ts
+msgid "Not sent."
+msgstr "Не надіслано."
+
+#: src/panel/chat.ts
+msgid "Online"
+msgstr "Онлайн"
+
+#: src/panel/chat.ts
+msgid "Reconnecting…"
+msgstr "Повторне підключення…"
+
+#. placeholder {0}: file.name
+#: src/panel/chat.ts
+msgid "Remove {0}"
+msgstr "Видалити {0}"
+
+#: src/panel/chat.ts
+msgid "Retry"
+msgstr "Повторити"
+
+#: src/panel/chat.ts
+msgid "Save"
+msgstr "Зберегти"
+
+#: src/panel/chat.ts
+msgid "Seen"
+msgstr "Прочитано"
+
+#: src/panel/chat.ts
+msgid "Send"
+msgstr "Надіслати"
+
+#: src/panel/chat.ts
+msgid "Send us a message and we will reply here."
+msgstr "Напишіть нам, і ми відповімо тут."
+
+#: src/panel/chat.ts
+msgid "Sending…"
+msgstr "Надсилання…"
+
+#: src/panel/chat.ts
+msgid "Sent"
+msgstr "Надіслано"
+
+#: src/panel/chat.ts
+msgid "Show older conversations"
+msgstr "Показати старіші розмови"
+
+#: src/panel/chat.ts
+msgid "Sign in to chat with us."
+msgstr "Увійдіть, щоб поспілкуватися з нами."
+
+#: src/panel/chat.ts
+msgid "Skip"
+msgstr "Пропустити"
+
+#: src/panel/chat.ts
+msgid "Thanks for your feedback"
+msgstr "Дякуємо за відгук"
+
+#: src/panel/chat.ts
+msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
+msgstr "Дякуємо! Якщо вас не буде на місці, коли ми відповімо, ми напишемо на {known}."
+
+#: src/panel/chat.ts
+msgid "The file is too large."
+msgstr "Файл завеликий."
+
+#: src/panel/chat.ts
+msgid "This file type is not accepted."
+msgstr "Цей тип файлу не приймається."
+
+#: src/panel/chat.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Забагато спроб. Зачекайте трохи й спробуйте ще раз."
+
+#: src/panel/chat.ts
+msgid "Try again"
+msgstr "Повторити"
+
+#: src/panel/chat.ts
+msgid "Typing…"
+msgstr "Друкує…"
+
+#: src/panel/chat.ts
+msgid "Usually replies in {duration}"
+msgstr "Зазвичай відповідає за {duration}"
+
+#: src/panel/chat.ts
+msgid "We'll reply as soon as we can"
+msgstr "Ми відповімо якомога швидше"
+
+#: src/panel/chat.ts
+msgid "We're away right now"
+msgstr "Нас зараз немає"
+
+#: src/panel/chat.ts
+msgid "Write a message…"
+msgstr "Напишіть повідомлення…"
+
+#: src/panel/chat.ts
+msgid "You seem to be offline."
+msgstr "Схоже, ви офлайн."
+
+#: src/panel/chat.ts
+msgid "You:"
+msgstr "Ви:"
+
+#: src/panel/chat.ts
+msgid "you@example.com"
+msgstr "you@example.com"
+
+#: src/panel/chat.ts
+msgid "Your sign-in has expired. Reload the page and try again."
+msgstr "Термін дії вашого входу минув. Оновіть сторінку й спробуйте ще раз."

@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ro\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "Răspuns acceptat"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "Toate discuțiile"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "Pune o întrebare, împărtășește o idee sau descrie o problemă a acestei pagini."
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "Anulează"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "Șterge"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "Ștergi această discuție?"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "Ștergi acest răspuns?"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "Editează"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "Editează postarea"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "editat"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "Urmărește"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "Urmărești"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "Primește un e-mail când cineva răspunde sau când un răspuns este acceptat."
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "Păstrează"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "Se încarcă…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "Marchează ca răspuns"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "Markdown este acceptat."
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "Nu există nimic de previzualizat."
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "Previzualizare"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "Retrage-ți votul (voturi: {0})"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "Răspunsuri: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "Răspunde"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "Salvează"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "Se trimite…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "Autentifică-te"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "Autentifică-te ca să răspunzi, să votezi și să urmărești această discuție."
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "Autentifică-te ca să începi o discuție. Numele tău apare alături de postare."
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "Începe o discuție"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "Începe discuția"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "Mulțumim! Discuția ta va apărea pentru toți după ce echipa o aprobă."
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "Mulțumim! Răspunsul tău va apărea pentru toți după ce echipa îl aprobă."
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "Postarea inițială a fost ștearsă."
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "Această discuție este blocată. Răspunsurile noi sunt închise."
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "Această discuție nu mai este disponibilă."
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "Acest răspuns a fost șters."
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "Titlu"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "Elimină marcajul de răspuns"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "Votează pozitiv (voturi: {0})"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "Scrie"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "Scrie un răspuns…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "Primele tale postări sunt verificate de echipă înainte să apară pentru toți."
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "Întrebarea sau ideea ta"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "Răspunsul tău"

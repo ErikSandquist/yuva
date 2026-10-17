@@ -1,0 +1,84 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 20:15+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ta\n"
+
+#: src/subscribe/element.ts
+msgid "Almost done. Check your inbox and confirm your subscription."
+msgstr "கிட்டத்தட்ட முடிந்தது. உங்கள் இன்பாக்ஸைப் பார்த்து சந்தாவை உறுதிசெய்யுங்கள்."
+
+#: src/subscribe/element.ts
+msgid "Check your inbox to confirm."
+msgstr "உறுதிசெய்ய உங்கள் இன்பாக்ஸைப் பாருங்கள்."
+
+#: src/subscribe/element.ts
+msgid "Choose at least one list."
+msgstr "குறைந்தது ஒரு பட்டியலைத் தேர்ந்தெடுங்கள்."
+
+#: src/subscribe/element.ts
+msgid "Could not subscribe. Try again."
+msgstr "சந்தாதாரராக முடியவில்லை. மீண்டும் முயலுங்கள்."
+
+#: src/subscribe/element.ts
+msgid "E-mail address"
+msgstr "மின்னஞ்சல் முகவரி"
+
+#: src/subscribe/element.ts
+msgid "Enter a valid e-mail address."
+msgstr "சரியான மின்னஞ்சல் முகவரியை உள்ளிடுங்கள்."
+
+#: src/subscribe/element.ts
+msgid "Enter your name."
+msgstr "உங்கள் பெயரை உள்ளிடுங்கள்."
+
+#: src/subscribe/element.ts
+msgid "I want to receive e-mails about {list} from {inbox}. I can unsubscribe at any time."
+msgstr "{inbox} இடமிருந்து {list} பற்றிய மின்னஞ்சல்களைப் பெற விரும்புகிறேன். எப்போது வேண்டுமானாலும் சந்தாவை ரத்துசெய்யலாம்."
+
+#: src/subscribe/element.ts
+msgid "Lists"
+msgstr "பட்டியல்கள்"
+
+#: src/subscribe/element.ts
+msgid "Privacy policy"
+msgstr "தனியுரிமைக் கொள்கை"
+
+#: src/subscribe/element.ts
+msgid "Subscribe"
+msgstr "சந்தா செலுத்து"
+
+#: src/subscribe/element.ts
+msgid "Subscribing…"
+msgstr "சந்தா ஆகிறது…"
+
+#: src/subscribe/element.ts
+msgid "Thanks! You are subscribed."
+msgstr "நன்றி! நீங்கள் சந்தாதாரராகிவிட்டீர்கள்."
+
+#: src/subscribe/element.ts
+msgid "Tick the box to agree."
+msgstr "ஒப்புக்கொள்ள பெட்டியில் டிக் செய்யுங்கள்."
+
+#: src/subscribe/element.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "மிக அதிக முயற்சிகள். சிறிது காத்திருந்து மீண்டும் முயலுங்கள்."
+
+#: src/subscribe/element.ts
+msgid "You seem to be offline."
+msgstr "நீங்கள் ஆஃப்லைனில் இருப்பதாகத் தெரிகிறது."
+
+#: src/subscribe/element.ts
+msgid "Your account has no e-mail address yet."
+msgstr "உங்கள் கணக்கில் இன்னும் மின்னஞ்சல் முகவரி இல்லை."
+
+#: src/subscribe/element.ts
+msgid "Your name"
+msgstr "உங்கள் பெயர்"
+
+#: src/subscribe/element.ts
+msgid "Your name (optional)"
+msgstr "உங்கள் பெயர் (விருப்பம்)"

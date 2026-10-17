@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: zh-Hant\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "已採納的解答"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "所有討論"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "提出問題、分享想法或描述此頁面的問題。"
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "取消"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "刪除"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "刪除此討論?"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "刪除此回覆?"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "編輯"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "編輯您的貼文"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "已編輯"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "追蹤"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "已追蹤"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "有人回覆或解答被採納時,您會收到電子郵件。"
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "保留"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "載入中…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "標記為解答"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "支援 Markdown。"
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "沒有可預覽的內容。"
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "預覽"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "收回您的投票(票數:{0})"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "回覆:{0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "回覆"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "儲存"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "傳送中…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "登入"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "請登入後回覆、投票並追蹤此討論。"
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "請登入後發起討論。您的姓名會顯示在貼文旁。"
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "發起討論"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "發起討論"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "謝謝!團隊核准後,您的討論將對所有人顯示。"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "謝謝!團隊核准後,您的回覆將對所有人顯示。"
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "首則貼文已被刪除。"
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "此討論已鎖定。無法再回覆。"
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "此討論已無法使用。"
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "此回覆已被刪除。"
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "標題"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "取消標記為解答"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "贊成(票數:{0})"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "撰寫"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "寫下回覆…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "您的前幾則貼文會先由團隊檢查,然後才對所有人顯示。"
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "您的問題或想法"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "您的回覆"

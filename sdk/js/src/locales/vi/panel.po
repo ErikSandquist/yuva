@@ -1,0 +1,213 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 15:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: vi\n"
+
+#: src/panel/chat.ts
+msgid "{name} is typing…"
+msgstr "{name} đang nhập…"
+
+#: src/panel/chat.ts
+msgid "All conversations"
+msgstr "Tất cả cuộc trò chuyện"
+
+#: src/panel/chat.ts
+msgid "Anything you'd like to add? (optional)"
+msgstr "Bạn muốn bổ sung gì không? (không bắt buộc)"
+
+#: src/panel/chat.ts
+msgid "Attach files"
+msgstr "Đính kèm tệp"
+
+#: src/panel/chat.ts
+msgid "Attachment"
+msgstr "Tệp đính kèm"
+
+#: src/panel/chat.ts
+msgid "Bad"
+msgstr "Tệ"
+
+#: src/panel/chat.ts
+msgid "Chat is not available right now."
+msgstr "Hiện không thể trò chuyện."
+
+#: src/panel/chat.ts
+msgid "Close"
+msgstr "Đóng"
+
+#: src/panel/chat.ts
+msgid "Comment"
+msgstr "Bình luận"
+
+#: src/panel/chat.ts
+msgid "Conversation"
+msgstr "Cuộc trò chuyện"
+
+#: src/panel/chat.ts
+msgid "Could not save your e-mail address. Try again."
+msgstr "Không thể lưu địa chỉ email của bạn. Hãy thử lại."
+
+#: src/panel/chat.ts
+msgid "Could not send your rating. Try again."
+msgstr "Không thể gửi đánh giá của bạn. Hãy thử lại."
+
+#: src/panel/chat.ts
+msgid "E-mail address"
+msgstr "Địa chỉ email"
+
+#: src/panel/chat.ts
+msgid "Enter a valid e-mail address."
+msgstr "Nhập địa chỉ email hợp lệ."
+
+#: src/panel/chat.ts
+msgid "Good"
+msgstr "Tốt"
+
+#: src/panel/chat.ts
+msgid "How did we do?"
+msgstr "Chúng tôi phục vụ thế nào?"
+
+#: src/panel/chat.ts
+msgid "Loading…"
+msgstr "Đang tải…"
+
+#: src/panel/chat.ts
+msgid "Message"
+msgstr "Tin nhắn"
+
+#: src/panel/chat.ts
+msgid "Messages"
+msgstr "Tin nhắn"
+
+#: src/panel/chat.ts
+msgid "New conversation"
+msgstr "Cuộc trò chuyện mới"
+
+#: src/panel/chat.ts
+msgid "No conversations yet"
+msgstr "Chưa có cuộc trò chuyện nào"
+
+#: src/panel/chat.ts
+msgid "Nobody is available right now. Leave your e-mail and we'll send the reply there too."
+msgstr "Hiện không có ai trực. Hãy để lại email, chúng tôi sẽ gửi cả câu trả lời đến đó."
+
+#: src/panel/chat.ts
+msgid "Not sent."
+msgstr "Chưa gửi."
+
+#: src/panel/chat.ts
+msgid "Online"
+msgstr "Trực tuyến"
+
+#: src/panel/chat.ts
+msgid "Reconnecting…"
+msgstr "Đang kết nối lại…"
+
+#. placeholder {0}: file.name
+#: src/panel/chat.ts
+msgid "Remove {0}"
+msgstr "Xóa {0}"
+
+#: src/panel/chat.ts
+msgid "Retry"
+msgstr "Thử lại"
+
+#: src/panel/chat.ts
+msgid "Save"
+msgstr "Lưu"
+
+#: src/panel/chat.ts
+msgid "Seen"
+msgstr "Đã xem"
+
+#: src/panel/chat.ts
+msgid "Send"
+msgstr "Gửi"
+
+#: src/panel/chat.ts
+msgid "Send us a message and we will reply here."
+msgstr "Hãy nhắn cho chúng tôi, chúng tôi sẽ trả lời tại đây."
+
+#: src/panel/chat.ts
+msgid "Sending…"
+msgstr "Đang gửi…"
+
+#: src/panel/chat.ts
+msgid "Sent"
+msgstr "Đã gửi"
+
+#: src/panel/chat.ts
+msgid "Show older conversations"
+msgstr "Hiện các cuộc trò chuyện cũ hơn"
+
+#: src/panel/chat.ts
+msgid "Sign in to chat with us."
+msgstr "Đăng nhập để trò chuyện với chúng tôi."
+
+#: src/panel/chat.ts
+msgid "Skip"
+msgstr "Bỏ qua"
+
+#: src/panel/chat.ts
+msgid "Thanks for your feedback"
+msgstr "Cảm ơn phản hồi của bạn"
+
+#: src/panel/chat.ts
+msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
+msgstr "Cảm ơn bạn! Nếu bạn không có mặt khi chúng tôi trả lời, chúng tôi sẽ gửi email đến {known}."
+
+#: src/panel/chat.ts
+msgid "The file is too large."
+msgstr "Tệp quá lớn."
+
+#: src/panel/chat.ts
+msgid "This file type is not accepted."
+msgstr "Không chấp nhận loại tệp này."
+
+#: src/panel/chat.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Quá nhiều lần thử. Hãy chờ một lát rồi thử lại."
+
+#: src/panel/chat.ts
+msgid "Try again"
+msgstr "Thử lại"
+
+#: src/panel/chat.ts
+msgid "Typing…"
+msgstr "Đang nhập…"
+
+#: src/panel/chat.ts
+msgid "Usually replies in {duration}"
+msgstr "Thường trả lời trong {duration}"
+
+#: src/panel/chat.ts
+msgid "We'll reply as soon as we can"
+msgstr "Chúng tôi sẽ trả lời sớm nhất có thể"
+
+#: src/panel/chat.ts
+msgid "We're away right now"
+msgstr "Hiện chúng tôi không có mặt"
+
+#: src/panel/chat.ts
+msgid "Write a message…"
+msgstr "Nhập tin nhắn…"
+
+#: src/panel/chat.ts
+msgid "You seem to be offline."
+msgstr "Có vẻ bạn đang ngoại tuyến."
+
+#: src/panel/chat.ts
+msgid "You:"
+msgstr "Bạn:"
+
+#: src/panel/chat.ts
+msgid "you@example.com"
+msgstr "you@example.com"
+
+#: src/panel/chat.ts
+msgid "Your sign-in has expired. Reload the page and try again."
+msgstr "Phiên đăng nhập của bạn đã hết hạn. Hãy tải lại trang và thử lại."

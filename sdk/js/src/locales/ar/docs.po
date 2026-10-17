@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ar\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "مجهول"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "تمت الإجابة"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "بانتظار الموافقة"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "تحقق من العنوان والنص وحاول مرة أخرى."
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "تعذّر تحميل المناقشات."
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "تعذّر فتح المناقشة. حاول مرة أخرى."
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "تعذّر الإرسال. حاول مرة أخرى."
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "عضو محذوف"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "قارئ محذوف"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "المناقشات"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "مناقشات حول هذه الصفحة"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "المناقشات متوقفة لهذا الموقع."
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "البريد الإلكتروني"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "البريد الإلكتروني للرد (اختياري)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "أدخل بريدًا إلكترونيًا صالحًا."
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "كل مناقشة في هذه الصفحة لها إجابة."
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "لديك سؤال أو فكرة؟ ابدأ أول مناقشة."
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "الآن"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "جارٍ تحميل المناقشات…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "جارٍ التحميل…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "مقفلة"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "جديد"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "لا"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "لا توجد مناقشات حول هذه الصفحة بعد."
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "لا، شكرًا"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "قيد الانتظار"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "يمكن تعديل المنشورات خلال 30 دقيقة من كتابتها."
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "قارئ"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "الردود: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "إرسال"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "جارٍ الإرسال…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "عرض المزيد"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "تسجيل الدخول"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "سجّل الدخول للمشاركة في المناقشة."
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "سجّل الدخول لتكتب لنا."
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "تسجيل الخروج"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "نأسف لذلك. ما الذي كان ناقصًا أو غير واضح؟"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "ترتيب المناقشات"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "ابدأ مناقشة"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "الفريق"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "عضو في الفريق"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "شكرًا على ملاحظاتك."
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "شكرًا! هل هناك ما يمكننا إضافته؟ (اختياري)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "هذه المناقشة مقفلة."
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "محاولات كثيرة جدًا. انتظر قليلًا وحاول مرة أخرى."
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "الأعلى تصويتًا"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "حاول مرة أخرى"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "بلا إجابة"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "الأصوات: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "هل كانت هذه الصفحة مفيدة؟"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "نعم"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "لا يمكنك القيام بذلك."
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "يبدو أنك غير متصل بالإنترنت."
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "حظر المتصفح نافذة تسجيل الدخول. اسمح بالنوافذ المنبثقة لهذا الموقع وحاول مرة أخرى."

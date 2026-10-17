@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: nl\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "Geaccepteerd antwoord"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "Alle discussies"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "Stel een vraag, deel een idee of beschrijf een probleem met deze pagina."
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "Verwijderen"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "Deze discussie verwijderen?"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "Deze reactie verwijderen?"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "Bewerken"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "Je bericht bewerken"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "bewerkt"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "Volgen"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "Volgend"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "Ontvang een e-mail wanneer iemand reageert of een antwoord wordt geaccepteerd."
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "Behouden"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "Laden…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "Markeren als antwoord"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "Markdown wordt ondersteund."
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "Niets om te bekijken."
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "Voorbeeld"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "Je stem intrekken (stemmen: {0})"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "Reacties: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "Reageren"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "Opslaan"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "Verzenden…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "Inloggen"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "Log in om te reageren, te stemmen en deze discussie te volgen."
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "Log in om een discussie te starten. Je naam wordt bij je bericht getoond."
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "Een discussie starten"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "Discussie starten"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "Bedankt! Je discussie wordt voor iedereen zichtbaar zodra het team die goedkeurt."
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "Bedankt! Je reactie wordt voor iedereen zichtbaar zodra het team die goedkeurt."
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "Het openingsbericht is verwijderd."
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "Deze discussie is vergrendeld. Nieuwe reacties zijn gesloten."
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "Deze discussie is niet meer beschikbaar."
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "Deze reactie is verwijderd."
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "Titel"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "Markering als antwoord ongedaan maken"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "Omhoog stemmen (stemmen: {0})"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "Schrijven"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "Schrijf een reactie…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "Je eerste berichten worden door het team gecontroleerd voordat ze voor iedereen zichtbaar zijn."
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "Je vraag of idee"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "Je reactie"

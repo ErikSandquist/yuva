@@ -1,0 +1,213 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 15:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: pt-BR\n"
+
+#: src/panel/chat.ts
+msgid "{name} is typing…"
+msgstr "{name} está digitando…"
+
+#: src/panel/chat.ts
+msgid "All conversations"
+msgstr "Todas as conversas"
+
+#: src/panel/chat.ts
+msgid "Anything you'd like to add? (optional)"
+msgstr "Quer acrescentar algo? (opcional)"
+
+#: src/panel/chat.ts
+msgid "Attach files"
+msgstr "Anexar arquivos"
+
+#: src/panel/chat.ts
+msgid "Attachment"
+msgstr "Anexo"
+
+#: src/panel/chat.ts
+msgid "Bad"
+msgstr "Ruim"
+
+#: src/panel/chat.ts
+msgid "Chat is not available right now."
+msgstr "O chat não está disponível no momento."
+
+#: src/panel/chat.ts
+msgid "Close"
+msgstr "Fechar"
+
+#: src/panel/chat.ts
+msgid "Comment"
+msgstr "Comentário"
+
+#: src/panel/chat.ts
+msgid "Conversation"
+msgstr "Conversa"
+
+#: src/panel/chat.ts
+msgid "Could not save your e-mail address. Try again."
+msgstr "Não foi possível salvar seu e-mail. Tente novamente."
+
+#: src/panel/chat.ts
+msgid "Could not send your rating. Try again."
+msgstr "Não foi possível enviar sua avaliação. Tente novamente."
+
+#: src/panel/chat.ts
+msgid "E-mail address"
+msgstr "Endereço de e-mail"
+
+#: src/panel/chat.ts
+msgid "Enter a valid e-mail address."
+msgstr "Informe um endereço de e-mail válido."
+
+#: src/panel/chat.ts
+msgid "Good"
+msgstr "Bom"
+
+#: src/panel/chat.ts
+msgid "How did we do?"
+msgstr "Como nos saímos?"
+
+#: src/panel/chat.ts
+msgid "Loading…"
+msgstr "Carregando…"
+
+#: src/panel/chat.ts
+msgid "Message"
+msgstr "Mensagem"
+
+#: src/panel/chat.ts
+msgid "Messages"
+msgstr "Mensagens"
+
+#: src/panel/chat.ts
+msgid "New conversation"
+msgstr "Nova conversa"
+
+#: src/panel/chat.ts
+msgid "No conversations yet"
+msgstr "Nenhuma conversa ainda"
+
+#: src/panel/chat.ts
+msgid "Nobody is available right now. Leave your e-mail and we'll send the reply there too."
+msgstr "Ninguém está disponível no momento. Deixe seu e-mail e enviaremos a resposta para lá também."
+
+#: src/panel/chat.ts
+msgid "Not sent."
+msgstr "Não enviada."
+
+#: src/panel/chat.ts
+msgid "Online"
+msgstr "Online"
+
+#: src/panel/chat.ts
+msgid "Reconnecting…"
+msgstr "Reconectando…"
+
+#. placeholder {0}: file.name
+#: src/panel/chat.ts
+msgid "Remove {0}"
+msgstr "Remover {0}"
+
+#: src/panel/chat.ts
+msgid "Retry"
+msgstr "Tentar de novo"
+
+#: src/panel/chat.ts
+msgid "Save"
+msgstr "Salvar"
+
+#: src/panel/chat.ts
+msgid "Seen"
+msgstr "Visto"
+
+#: src/panel/chat.ts
+msgid "Send"
+msgstr "Enviar"
+
+#: src/panel/chat.ts
+msgid "Send us a message and we will reply here."
+msgstr "Envie uma mensagem e responderemos aqui."
+
+#: src/panel/chat.ts
+msgid "Sending…"
+msgstr "Enviando…"
+
+#: src/panel/chat.ts
+msgid "Sent"
+msgstr "Enviada"
+
+#: src/panel/chat.ts
+msgid "Show older conversations"
+msgstr "Mostrar conversas anteriores"
+
+#: src/panel/chat.ts
+msgid "Sign in to chat with us."
+msgstr "Entre para conversar com a gente."
+
+#: src/panel/chat.ts
+msgid "Skip"
+msgstr "Pular"
+
+#: src/panel/chat.ts
+msgid "Thanks for your feedback"
+msgstr "Obrigado pelo seu feedback"
+
+#: src/panel/chat.ts
+msgid "Thanks! We'll e-mail you at {known} if you're gone when we reply."
+msgstr "Obrigado! Se você não estiver por aqui quando respondermos, enviaremos um e-mail para {known}."
+
+#: src/panel/chat.ts
+msgid "The file is too large."
+msgstr "O arquivo é grande demais."
+
+#: src/panel/chat.ts
+msgid "This file type is not accepted."
+msgstr "Este tipo de arquivo não é aceito."
+
+#: src/panel/chat.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Muitas tentativas. Aguarde um momento e tente novamente."
+
+#: src/panel/chat.ts
+msgid "Try again"
+msgstr "Tentar de novo"
+
+#: src/panel/chat.ts
+msgid "Typing…"
+msgstr "Digitando…"
+
+#: src/panel/chat.ts
+msgid "Usually replies in {duration}"
+msgstr "Costuma responder em {duration}"
+
+#: src/panel/chat.ts
+msgid "We'll reply as soon as we can"
+msgstr "Responderemos assim que possível"
+
+#: src/panel/chat.ts
+msgid "We're away right now"
+msgstr "Estamos ausentes no momento"
+
+#: src/panel/chat.ts
+msgid "Write a message…"
+msgstr "Escreva uma mensagem…"
+
+#: src/panel/chat.ts
+msgid "You seem to be offline."
+msgstr "Parece que você está offline."
+
+#: src/panel/chat.ts
+msgid "You:"
+msgstr "Você:"
+
+#: src/panel/chat.ts
+msgid "you@example.com"
+msgstr "you@example.com"
+
+#: src/panel/chat.ts
+msgid "Your sign-in has expired. Reload the page and try again."
+msgstr "Seu login expirou. Recarregue a página e tente novamente."

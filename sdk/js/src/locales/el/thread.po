@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: el\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "Αποδεκτή απάντηση"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "Όλες οι συζητήσεις"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "Κάντε μια ερώτηση, μοιραστείτε μια ιδέα ή περιγράψτε ένα πρόβλημα με αυτή τη σελίδα."
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "Διαγραφή"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "Διαγραφή αυτής της συζήτησης;"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "Διαγραφή αυτής της απάντησης;"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "Επεξεργασία της ανάρτησής σας"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "επεξεργάστηκε"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "Παρακολούθηση"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "Παρακολουθείτε"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "Λάβετε email όταν κάποιος απαντήσει ή γίνει δεκτή μια απάντηση."
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "Διατήρηση"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "Φόρτωση…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "Επισήμανση ως απάντηση"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "Υποστηρίζεται το Markdown."
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "Δεν υπάρχει τίποτα για προεπισκόπηση."
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "Προεπισκόπηση"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "Αφαίρεση της ψήφου σας (ψήφοι: {0})"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "Απαντήσεις: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "Απάντηση"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "Αποθήκευση"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "Αποστολή…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "Σύνδεση"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "Συνδεθείτε για να απαντήσετε, να ψηφίσετε και να παρακολουθήσετε αυτή τη συζήτηση."
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "Συνδεθείτε για να ξεκινήσετε μια συζήτηση. Το όνομά σας εμφανίζεται με την ανάρτησή σας."
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "Ξεκινήστε μια συζήτηση"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "Έναρξη συζήτησης"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "Ευχαριστούμε! Η συζήτησή σας θα εμφανιστεί σε όλους μόλις την εγκρίνει η ομάδα."
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "Ευχαριστούμε! Η απάντησή σας θα εμφανιστεί σε όλους μόλις την εγκρίνει η ομάδα."
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "Η αρχική ανάρτηση διαγράφηκε."
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "Αυτή η συζήτηση είναι κλειδωμένη. Οι νέες απαντήσεις είναι κλειστές."
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "Αυτή η συζήτηση δεν είναι πλέον διαθέσιμη."
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "Αυτή η απάντηση διαγράφηκε."
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "Τίτλος"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "Αφαίρεση επισήμανσης ως απάντηση"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "Θετική ψήφος (ψήφοι: {0})"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "Γραφή"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "Γράψτε μια απάντηση…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "Οι πρώτες σας αναρτήσεις ελέγχονται από την ομάδα πριν εμφανιστούν σε όλους."
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "Η ερώτηση ή η ιδέα σας"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "Η απάντησή σας"

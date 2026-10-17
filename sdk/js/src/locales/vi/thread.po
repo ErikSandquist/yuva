@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: vi\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "Câu trả lời được chấp nhận"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "Tất cả thảo luận"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "Đặt câu hỏi, chia sẻ ý tưởng hoặc mô tả vấn đề với trang này."
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "Hủy"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "Xóa"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "Xóa thảo luận này?"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "Xóa phản hồi này?"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "Chỉnh sửa"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "Chỉnh sửa bài viết của bạn"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "đã chỉnh sửa"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "Theo dõi"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "Đang theo dõi"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "Nhận email khi có người phản hồi hoặc một câu trả lời được chấp nhận."
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "Giữ lại"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "Đang tải…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "Đánh dấu là câu trả lời"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "Hỗ trợ Markdown."
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "Không có gì để xem trước."
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "Xem trước"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "Rút lại phiếu bầu của bạn (phiếu bầu: {0})"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "Phản hồi: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "Phản hồi"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "Lưu"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "Đang gửi…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "Đăng nhập"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "Đăng nhập để phản hồi, bỏ phiếu và theo dõi thảo luận này."
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "Đăng nhập để bắt đầu thảo luận. Tên của bạn được hiển thị cùng bài viết."
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "Bắt đầu thảo luận"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "Bắt đầu thảo luận"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "Cảm ơn bạn! Thảo luận của bạn sẽ hiển thị với mọi người sau khi nhóm duyệt."
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "Cảm ơn bạn! Phản hồi của bạn sẽ hiển thị với mọi người sau khi nhóm duyệt."
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "Bài viết mở đầu đã bị xóa."
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "Thảo luận này đã bị khóa. Không thể phản hồi thêm."
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "Thảo luận này không còn khả dụng."
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "Phản hồi này đã bị xóa."
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "Tiêu đề"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "Bỏ đánh dấu câu trả lời"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "Bỏ phiếu ủng hộ (phiếu bầu: {0})"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "Viết"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "Viết phản hồi…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "Các bài viết đầu tiên của bạn được nhóm kiểm tra trước khi hiển thị với mọi người."
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "Câu hỏi hoặc ý tưởng của bạn"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "Phản hồi của bạn"

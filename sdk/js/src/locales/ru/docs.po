@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-10 21:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "Аноним"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "Есть ответ"
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "Ожидает одобрения"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "Проверьте заголовок и текст и повторите попытку."
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "Не удалось загрузить обсуждения."
+
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "Не удалось открыть обсуждение. Повторите попытку."
+
+#: src/docs/base.ts
+msgid "Could not send. Try again."
+msgstr "Не удалось отправить. Повторите попытку."
+
+#: src/docs/discussions.ts
+msgid "Deleted member"
+msgstr "Удалённый участник"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "Удалённый читатель"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "Обсуждения"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "Обсуждения этой страницы"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "На этом сайте обсуждения отключены."
+
+#: src/docs/feedback.ts
+msgid "E-mail address"
+msgstr "Адрес e-mail"
+
+#: src/docs/feedback.ts
+msgid "E-mail for a reply (optional)"
+msgstr "E-mail для ответа (необязательно)"
+
+#: src/docs/feedback.ts
+msgid "Enter a valid e-mail address."
+msgstr "Введите корректный адрес e-mail."
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "На все обсуждения этой страницы есть ответы."
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "Есть вопрос или идея? Начните первое обсуждение."
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "только что"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "Загрузка обсуждений…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "Загрузка…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "Закрыто"
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "Новое"
+
+#: src/docs/feedback.ts
+msgid "No"
+msgstr "Нет"
+
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "Обсуждений этой страницы пока нет."
+
+#: src/docs/feedback.ts
+msgid "No thanks"
+msgstr "Нет, спасибо"
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "На рассмотрении"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "Сообщения можно редактировать в течение 30 минут после написания."
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "Читатель"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "Ответов: {0}"
+
+#: src/docs/feedback.ts
+msgid "Send"
+msgstr "Отправить"
+
+#: src/docs/feedback.ts
+msgid "Sending…"
+msgstr "Отправка…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "Показать ещё"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "Войти"
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "Войдите, чтобы участвовать в обсуждении."
+
+#: src/docs/base.ts
+msgid "Sign in to write to us."
+msgstr "Войдите, чтобы написать нам."
+
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "Выйти"
+
+#: src/docs/feedback.ts
+msgid "Sorry about that. What was missing or unclear?"
+msgstr "Сожалеем. Чего не хватало или что было непонятно?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "Сортировка обсуждений"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "Начать обсуждение"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "Команда"
+
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "Участник команды"
+
+#: src/docs/feedback.ts
+msgid "Thanks for your feedback."
+msgstr "Спасибо за ваш отзыв."
+
+#: src/docs/feedback.ts
+msgid "Thanks! Anything we could add? (optional)"
+msgstr "Спасибо! Может быть, нам стоит что-то добавить? (необязательно)"
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "Это обсуждение закрыто."
+
+#: src/docs/base.ts
+msgid "Too many attempts. Wait a moment and try again."
+msgstr "Слишком много попыток. Подождите немного и повторите попытку."
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "Лучшие"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "Повторить"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "Без ответа"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "Голосов: {0}"
+
+#: src/docs/feedback.ts
+msgid "Was this page helpful?"
+msgstr "Была ли эта страница полезной?"
+
+#: src/docs/feedback.ts
+msgid "Yes"
+msgstr "Да"
+
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "Вы не можете это сделать."
+
+#: src/docs/base.ts
+msgid "You seem to be offline."
+msgstr "Похоже, вы не в сети."
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "Браузер заблокировал окно входа. Разрешите всплывающие окна для этого сайта и повторите попытку."

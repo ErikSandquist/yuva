@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: th\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "คำตอบที่ยอมรับ"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "การสนทนาทั้งหมด"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "ถามคำถาม แบ่งปันไอเดีย หรืออธิบายปัญหาเกี่ยวกับหน้านี้"
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "ยกเลิก"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "ลบ"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "ลบการสนทนานี้ไหม"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "ลบการตอบกลับนี้ไหม"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "แก้ไข"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "แก้ไขโพสต์ของคุณ"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "แก้ไขแล้ว"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "ติดตาม"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "กำลังติดตาม"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "รับอีเมลเมื่อมีคนตอบกลับหรือมีการยอมรับคำตอบ"
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "เก็บไว้"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "กำลังโหลด…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "ทำเครื่องหมายเป็นคำตอบ"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "รองรับ Markdown"
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "ไม่มีเนื้อหาให้แสดงตัวอย่าง"
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "ตัวอย่าง"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "ถอนโหวตของคุณ (โหวต: {0})"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "การตอบกลับ: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "ตอบกลับ"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "บันทึก"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "กำลังส่ง…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "ลงชื่อเข้าใช้"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "ลงชื่อเข้าใช้เพื่อตอบกลับ โหวต และติดตามการสนทนานี้"
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "ลงชื่อเข้าใช้เพื่อเริ่มการสนทนา ชื่อของคุณจะแสดงพร้อมโพสต์"
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "เริ่มการสนทนา"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "เริ่มการสนทนา"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "ขอบคุณ! การสนทนาของคุณจะแสดงให้ทุกคนเห็นเมื่อทีมอนุมัติ"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "ขอบคุณ! การตอบกลับของคุณจะแสดงให้ทุกคนเห็นเมื่อทีมอนุมัติ"
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "โพสต์แรกถูกลบแล้ว"
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "การสนทนานี้ถูกล็อก ปิดรับการตอบกลับใหม่"
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "การสนทนานี้ไม่พร้อมใช้งานอีกต่อไป"
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "การตอบกลับนี้ถูกลบแล้ว"
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "หัวข้อ"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "ยกเลิกการทำเครื่องหมายเป็นคำตอบ"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "โหวตเห็นด้วย (โหวต: {0})"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "เขียน"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "เขียนการตอบกลับ…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "ทีมจะตรวจสอบโพสต์แรกของคุณก่อนที่จะแสดงให้ทุกคนเห็น"
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "คำถามหรือไอเดียของคุณ"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "การตอบกลับของคุณ"

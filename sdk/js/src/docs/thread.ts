@@ -1,11 +1,10 @@
-import type { MessageDescriptor, Messages } from "@lingui/core"
+import type { MessageDescriptor } from "@lingui/core"
 import { msg } from "@lingui/core/macro"
 import type { Discussion, DiscussionAuthor, DiscussionDetail, DiscussionPost } from "../client/api"
 import type { YuvaClient } from "../client/client"
 import type { ReaderSession } from "../client/reader"
+import { catalogs } from "../catalogs/thread"
 import { messages as en } from "../locales/en/thread"
-import { messages as de } from "../locales/de/thread"
-import { messages as tr } from "../locales/tr/thread"
 import { translate } from "../translate"
 import { el } from "./dom"
 import { preview } from "./preview"
@@ -75,7 +74,6 @@ export interface Thread {
 }
 
 const editWindow = 30 * 60_000
-const catalogs: Record<string, Messages> = { en, tr, de }
 
 const svg = (path: string) =>
   `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>`

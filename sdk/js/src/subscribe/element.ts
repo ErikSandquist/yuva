@@ -12,9 +12,8 @@ import {
 } from "../client/api"
 import type { IdentityTokenSource, YuvaClient, YuvaClientOptions } from "../client/client"
 import { el } from "../docs/dom"
+import { catalogs } from "../catalogs/subscribe"
 import { messages as en } from "../locales/en/subscribe"
-import { messages as de } from "../locales/de/subscribe"
-import { messages as tr } from "../locales/tr/subscribe"
 import { directionOf, localeIn, translate } from "../translate"
 import { setStyles } from "../styles"
 import { contrastOn } from "../types"
@@ -39,7 +38,6 @@ interface Offered {
   state?: SubscriptionState
 }
 
-const catalogs: Record<string, Messages> = { en, tr, de }
 const tokenMinimumAge = 2100
 const fetcher: Fetch = (url, init) => fetch(url, init)
 

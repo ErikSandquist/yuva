@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "Прийнята відповідь"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "Усі обговорення"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "Поставте запитання, поділіться ідеєю або опишіть проблему на цій сторінці."
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "Видалити"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "Видалити це обговорення?"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "Видалити цю відповідь?"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "Редагувати"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "Редагувати допис"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "відредаговано"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "Стежити"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "Ви стежите"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "Отримуйте електронний лист, коли хтось відповідає або відповідь приймається."
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "Залишити"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "Завантаження…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "Позначити як відповідь"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "Підтримується Markdown."
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "Немає що переглядати."
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "Попередній перегляд"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "Скасувати ваш голос (голосів: {0})"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "Відповідей: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "Відповісти"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "Зберегти"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "Надсилання…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "Увійти"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "Увійдіть, щоб відповідати, голосувати й стежити за цим обговоренням."
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "Увійдіть, щоб розпочати обговорення. Ваше ім’я відображається поруч із дописом."
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "Розпочати обговорення"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "Розпочати обговорення"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "Дякуємо! Ваше обговорення з’явиться для всіх після схвалення командою."
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "Дякуємо! Ваша відповідь з’явиться для всіх після схвалення командою."
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "Перший допис видалено."
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "Це обговорення заблоковано. Нові відповіді закрито."
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "Це обговорення більше недоступне."
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "Цю відповідь видалено."
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "Заголовок"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "Зняти позначку відповіді"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "Проголосувати за (голосів: {0})"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "Написати"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "Напишіть відповідь…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "Ваші перші дописи перевіряє команда, перш ніж вони з’являться для всіх."
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "Ваше запитання або ідея"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "Ваша відповідь"
