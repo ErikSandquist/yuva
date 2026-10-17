@@ -6,14 +6,14 @@ import { satteri } from "@astrojs/markdown-satteri"
 import { defineConfig } from "astro/config"
 import { callouts } from "./src/lib/callouts"
 import { repoLinks } from "./src/lib/repo-links"
-import { SITE } from "./src/lib/routes"
+import { defaultLocale, locales, SITE } from "./src/lib/routes"
 
 export default defineConfig({
   site: SITE,
   output: "static",
   i18n: {
-    locales: ["en", "tr", "de"],
-    defaultLocale: "en",
+    locales: [...locales],
+    defaultLocale,
     routing: { prefixDefaultLocale: false },
   },
   build: { format: "directory", assets: "_site", inlineStylesheets: "always" },

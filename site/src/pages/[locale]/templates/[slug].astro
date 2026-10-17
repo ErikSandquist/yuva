@@ -1,0 +1,15 @@
+---
+import { defaultLocale, locales, type Locale } from "@/lib/routes"
+import TemplateView from "@/views/TemplateView.astro"
+import { templates } from "@/lib/templates"
+
+export function getStaticPaths() {
+  return locales
+    .filter((l) => l !== defaultLocale)
+    .flatMap((locale) => templates().map((entry) => ({ params: { locale, slug: entry.slug }, props: { entry } })))
+}
+
+const { locale } = Astro.params as { locale: Locale }
+---
+
+<TemplateView locale={locale} entry={Astro.props.entry} />

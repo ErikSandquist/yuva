@@ -5,7 +5,7 @@ import type { Locale } from "./routes"
 const root = path.resolve("../templates/email")
 const icons = path.resolve("../api/internal/mail/design/icons")
 
-type Text = Record<Locale, string>
+type Text = Partial<Record<Locale, string>> & { en: string }
 export interface Template {
   slug: string
   order: number
@@ -53,6 +53,8 @@ export function socialIcons(): { name: string; file: string }[] {
     .map((name) => ({ name, file: path.join(icons, name) }))
 }
 
+export const text = (value: Text, locale: Locale) => value[locale] ?? value.en
 export const available = (t: Template, locale: Locale) =>
   fs.existsSync(path.join(root, t.slug, `preview.${locale}.html`)) &&
   fs.existsSync(path.join(root, t.slug, `preview.${locale}.webp`))
+export const previewLocale = (t: Template, locale: Locale): Locale => (available(t, locale) ? locale : "en")

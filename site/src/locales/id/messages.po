@@ -1,0 +1,2089 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 22:38+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: id\n"
+
+#: src/layouts/Footer.astro
+msgid "“Yuva” is Turkish for nest, or home."
+msgstr "“Yuva” dalam bahasa Turki berarti sarang atau rumah."
+
+#: src/copy/pages.ts
+msgid "{count} changes"
+msgstr "{count} perubahan"
+
+#: src/copy/docs.ts
+#: src/copy/pages.ts
+msgid "{count} min read"
+msgstr "{count} menit baca"
+
+#: src/copy/contact.ts
+msgid "{count} releases, latest {version}"
+msgstr "{count} rilis, terbaru {version}"
+
+#: src/copy/docs.ts
+msgid "{count} sections"
+msgstr "{count} bagian"
+
+#: src/copy/templates.ts
+msgid "{name} e-mail preview"
+msgstr "Pratinjau email {name}"
+
+#: src/copy/docs.ts
+msgid "{name} endpoints of the Yuva API."
+msgstr "Endpoint {name} dari Yuva API."
+
+#: src/copy/templates.ts
+msgid "{name}: {description} A free Yuva e-mail template."
+msgstr "{name}: {description} Templat email Yuva gratis."
+
+#: src/copy/home.ts
+msgid "a contact and their data"
+msgstr "kontak dan datanya"
+
+#: src/copy/cloudflare-email.ts
+msgid "A customer writes to one of your support addresses, for example support@example.com."
+msgstr "Seorang pelanggan menulis ke salah satu alamat dukungan Anda, misalnya support@example.com."
+
+#: src/copy/home.ts
+msgid "A finished import in the panel: 6 conversations and 12 messages copied from an mbox file, with a note that Yuva has no access to your mailbox."
+msgstr "Impor yang selesai di panel: 6 percakapan dan 12 pesan disalin dari berkas mbox, dengan catatan bahwa Yuva tidak punya akses ke kotak surat Anda."
+
+#: src/copy/contact.ts
+msgid "A hosted service and commercial licenses"
+msgstr "Layanan terkelola dan lisensi komersial"
+
+#: src/copy/cloudflare-email.ts
+msgid "A message can be up to 25 MiB including attachments, which is the Cloudflare Email Routing limit. Yuva keeps up to 50 attachments per message, each within the server's attachment size limit (25 MiB by default) and allowed types; it leaves out the rest."
+msgstr "Sebuah pesan dapat berukuran hingga 25 MiB termasuk lampiran, yaitu batas Cloudflare Email Routing. Yuva menyimpan hingga 50 lampiran per pesan, masing-masing dalam batas ukuran lampiran server (25 MiB secara bawaan) dan jenis yang diizinkan; sisanya diabaikan."
+
+#: src/copy/cloudflare-email.ts
+msgid "A small open-source Worker"
+msgstr "Worker open source yang kecil"
+
+#: src/copy/home.ts
+msgid "Accepted answer"
+msgstr "Jawaban diterima"
+
+#: src/copy/home.ts
+msgid "Add ratings and a discussion area to your own documentation pages."
+msgstr "Tambahkan penilaian dan ruang diskusi ke halaman dokumentasi Anda sendiri."
+
+#: src/copy/brand.ts
+msgid "Add shadows or outlines"
+msgstr "Menambahkan bayangan atau garis tepi"
+
+#: src/copy/ai.ts
+msgid "Add this to .cursor/mcp.json in your project:"
+msgstr "Tambahkan ini ke .cursor/mcp.json di proyek Anda:"
+
+#: src/copy/ai.ts
+msgid "Add this to .vscode/mcp.json in your project:"
+msgstr "Tambahkan ini ke .vscode/mcp.json di proyek Anda:"
+
+#: src/copy/ai.ts
+msgid "Add Yuva in your terminal:"
+msgstr "Tambahkan Yuva di terminal Anda:"
+
+#: src/copy/ai.ts
+msgid "Add Yuva live chat to this site."
+msgstr "Tambahkan live chat Yuva ke situs ini."
+
+#: src/copy/pages.ts
+msgid "Added"
+msgstr "Ditambahkan"
+
+#: src/layouts/Footer.astro
+msgid "AI assistants"
+msgstr "Asisten AI"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "AI assistants and MCP"
+msgstr "Asisten AI dan MCP"
+
+#: src/copy/pages.ts
+msgid "All posts"
+msgstr "Semua tulisan"
+
+#: src/copy/pages.ts
+msgid "All releases on GitHub"
+msgstr "Semua rilis di GitHub"
+
+#: src/copy/templates.ts
+msgid "All templates"
+msgstr "Semua templat"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Analytics"
+msgstr "Analitik"
+
+#: src/copy/home.ts
+msgid "and funnels"
+msgstr "dan corong konversi"
+
+#: src/copy/home.ts
+msgid "and Postgres"
+msgstr "dan Postgres"
+
+#: src/copy/home.ts
+msgid "and the inboxes they can see"
+msgstr "dan kotak masuk yang bisa mereka lihat"
+
+#: src/copy/templates.ts
+msgid "Announcement"
+msgstr "Pengumuman"
+
+#: src/copy/cloudflare-email.ts
+msgid "Any domain you manage in Cloudflare and whose mail no other server handles, because Email Routing becomes its MX. Each e-mail channel has an address, or the catch-all *@example.com for every address of the domain that no channel has exactly. A subaddress such as support+billing@example.com reaches the channel of support@example.com."
+msgstr "Domain apa pun yang Anda kelola di Cloudflare dan yang suratnya tidak ditangani server lain, karena Email Routing menjadi MX-nya. Setiap saluran email punya sebuah alamat, atau catch-all *@example.com untuk setiap alamat domain yang tidak persis dimiliki saluran mana pun. Subalamat seperti support+billing@example.com sampai ke saluran support@example.com."
+
+#: src/copy/contact.ts
+msgid "API"
+msgstr "API"
+
+#: src/layouts/Footer.astro
+msgid "API contract"
+msgstr "Kontrak API"
+
+#: src/copy/docs.ts
+msgid "API key"
+msgstr "Kunci API"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+msgid "API reference"
+msgstr "Referensi API"
+
+#: src/copy/brand.ts
+msgid "App icon"
+msgstr "Ikon aplikasi"
+
+#: src/copy/contact.ts
+msgid "Apps"
+msgstr "Aplikasi"
+
+#: src/copy/home.ts
+msgid "Assign"
+msgstr "Tugaskan"
+
+#: src/copy/home.ts
+msgid "at a glance"
+msgstr "sekilas"
+
+#: src/copy/contact.ts
+msgid "At a glance"
+msgstr "Sekilas"
+
+#: src/copy/home.ts
+msgid "Attributes"
+msgstr "Atribut"
+
+#: src/copy/docs.ts
+msgid "Authentication"
+msgstr "Autentikasi"
+
+#: src/copy/ai.ts
+msgid "Back in the assistant, Yuva is connected. Settings → Connected apps shows it and revokes it."
+msgstr "Kembali di asisten, Yuva sudah terhubung. Pengaturan → Aplikasi terhubung menampilkannya dan bisa mencabutnya."
+
+#: src/pages/404.astro
+msgid "Back to the home page"
+msgstr "Kembali ke beranda"
+
+#: src/copy/docs.ts
+msgid "Back to the website"
+msgstr "Kembali ke situs web"
+
+#: src/copy/home.ts
+msgid "before anything is sent"
+msgstr "sebelum apa pun dikirim"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/copy/pages.ts
+#: src/layouts/Footer.astro
+msgid "Blog"
+msgstr "Blog"
+
+#: src/copy/brand.ts
+msgid "Brand"
+msgstr "Merek"
+
+#: src/copy/brand.ts
+#: src/copy/contact.ts
+#: src/copy/header.ts
+#: src/layouts/Footer.astro
+msgid "Brand assets"
+msgstr "Aset merek"
+
+#: src/copy/pages.ts
+msgid "Breaking changes"
+msgstr "Perubahan yang merusak"
+
+#: src/copy/header.ts
+msgid "Bring your mail and history."
+msgstr "Bawa surat dan riwayat Anda."
+
+#: src/copy/home.ts
+msgid "Bring your mail and support history over. Yuva only reads at the source."
+msgstr "Bawa surat dan riwayat dukungan Anda. Yuva hanya membaca di sumbernya."
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Broadcasts"
+msgstr "Siaran massal"
+
+#: src/copy/home.ts
+msgid "Build e-mails in the designer or start from a free template."
+msgstr "Buat email di desainer atau mulai dari templat gratis."
+
+#: src/copy/contact.ts
+msgid "Built with"
+msgstr "Dibangun dengan"
+
+#: src/copy/contact.ts
+msgid "Business"
+msgstr "Bisnis"
+
+#: src/copy/pages.ts
+#: src/copy/templates.ts
+msgid "By"
+msgstr "Oleh"
+
+#: src/copy/cloudflare-email.ts
+msgid "Can someone forge mail to my Yuva server?"
+msgstr "Bisakah seseorang memalsukan surat ke server Yuva saya?"
+
+#: src/copy/brand.ts
+msgid "Change its colours"
+msgstr "Ubah warnanya"
+
+#: src/copy/pages.ts
+msgid "Changed"
+msgstr "Diubah"
+
+#: src/copy/pages.ts
+msgid "Changelog"
+msgstr "Catatan perubahan"
+
+#: src/copy/pages.ts
+msgid "CHANGELOG.md"
+msgstr "CHANGELOG.md"
+
+#: src/copy/contact.ts
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Channels"
+msgstr "Saluran"
+
+#: src/copy/home.ts
+msgid "checks before you send"
+msgstr "pemeriksaan sebelum Anda kirim"
+
+#: src/copy/ai.ts
+msgid "Choose the workspace and what the assistant may do, then approve."
+msgstr "Pilih ruang kerja dan apa yang boleh dilakukan asisten, lalu setujui."
+
+#: src/copy/header.ts
+msgid "Claude drafts, you send."
+msgstr "Claude menyusun draf, Anda yang mengirim."
+
+#: src/copy/brand.ts
+msgid "Click a colour to copy its hex code."
+msgstr "Klik warna untuk menyalin kode hex-nya."
+
+#: src/copy/header.ts
+#: src/layouts/Footer.astro
+msgid "Cloudflare e-mail"
+msgstr "Email Cloudflare"
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare Email Routing becomes the MX of your domain and receives the mail. Yuva does not listen for SMTP, so there is no mail server to install or keep patched."
+msgstr "Cloudflare Email Routing menjadi MX domain Anda dan menerima surat. Yuva tidak mendengarkan SMTP, jadi tidak ada server surat yang perlu dipasang atau dijaga tetap mutakhir."
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare Email Routing receives the message and passes it to the Yuva Email Worker."
+msgstr "Cloudflare Email Routing menerima pesan dan meneruskannya ke Yuva Email Worker."
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare, the Cloudflare logo and Cloudflare Workers are trademarks and/or registered trademarks of Cloudflare, Inc. in the United States and other jurisdictions. Yuva is an independent open-source project, not affiliated with or endorsed by Cloudflare."
+msgstr "Cloudflare, logo Cloudflare, dan Cloudflare Workers adalah merek dagang dan/atau merek dagang terdaftar dari Cloudflare, Inc. di Amerika Serikat dan yurisdiksi lain. Yuva adalah proyek open source independen, tidak berafiliasi dengan atau didukung oleh Cloudflare."
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare® Email Routing receives the mail for your support addresses, and the open-source Yuva Email Worker hands each message to Yuva, signed. It lands in your shared inbox as a conversation your team answers."
+msgstr "Cloudflare® Email Routing menerima surat untuk alamat dukungan Anda, dan Yuva Email Worker yang open source menyerahkan setiap pesan ke Yuva, bertanda tangan. Pesan itu masuk ke kotak masuk bersama Anda sebagai percakapan yang dijawab tim Anda."
+
+#: src/copy/brand.ts
+msgid "Colours"
+msgstr "Warna"
+
+#: src/copy/contact.ts
+msgid "Commercial license"
+msgstr "Lisensi komersial"
+
+#: src/copy/pages.ts
+msgid "Compare changes"
+msgstr "Bandingkan perubahan"
+
+#: src/copy/home.ts
+msgid "Connect a support address, a chat widget for your website or the SDKs for your apps."
+msgstr "Hubungkan alamat dukungan, widget obrolan untuk situs web Anda, atau SDK untuk aplikasi Anda."
+
+#: src/copy/home.ts
+msgid "Connect Claude, ChatGPT or Cursor. A teammate reviews and sends what they draft."
+msgstr "Hubungkan Claude, ChatGPT, atau Cursor. Rekan tim meninjau dan mengirim apa yang mereka susun."
+
+#: src/copy/ai.ts
+msgid "Connect Yuva"
+msgstr "Hubungkan Yuva"
+
+#: src/copy/ai.ts
+msgid "Connect Yuva to Claude, ChatGPT, Cursor, VS Code or Gemini CLI, then let the assistant look at your project and set Yuva up with you."
+msgstr "Hubungkan Yuva ke Claude, ChatGPT, Cursor, VS Code, atau Gemini CLI, lalu biarkan asisten melihat proyek Anda dan menyiapkan Yuva bersama Anda."
+
+#: src/copy/contact.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Contact"
+msgstr "Kontak"
+
+#: src/copy/docs.ts
+msgid "Contact session"
+msgstr "Sesi kontak"
+
+#: src/copy/contact.ts
+msgid "Contact Yuva"
+msgstr "Hubungi Yuva"
+
+#: src/copy/home.ts
+msgid "Contacts"
+msgstr "Kontak"
+
+#: src/layouts/Footer.astro
+msgid "Contributing"
+msgstr "Berkontribusi"
+
+#: src/copy/ai.ts
+#: src/copy/brand.ts
+#: src/copy/contact.ts
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/pages.ts
+msgid "Copied"
+msgstr "Tersalin"
+
+#: src/copy/ai.ts
+#: src/copy/docs.ts
+msgid "Copy"
+msgstr "Salin"
+
+#: src/copy/contact.ts
+msgid "Copy address"
+msgstr "Salin alamat"
+
+#: src/copy/pages.ts
+msgid "Copy link"
+msgstr "Salin tautan"
+
+#: src/copy/header.ts
+msgid "Copy logo as SVG"
+msgstr "Salin logo sebagai SVG"
+
+#: src/copy/header.ts
+msgid "Copy logo with name as SVG"
+msgstr "Salin logo dengan nama sebagai SVG"
+
+#: src/copy/brand.ts
+msgid "Copy SVG"
+msgstr "Salin SVG"
+
+#: src/copy/home.ts
+#: src/copy/pages.ts
+msgid "Create an account"
+msgstr "Buat akun"
+
+#: src/copy/home.ts
+msgid "Create an account on our service and start without running a server."
+msgstr "Buat akun di layanan kami dan mulai tanpa menjalankan server."
+
+#: src/copy/pages.ts
+msgid "Create an account on our service, or run it on your own server."
+msgstr "Buat akun di layanan kami, atau jalankan di server Anda sendiri."
+
+#: src/copy/templates.ts
+msgid "Dark"
+msgstr "Gelap"
+
+#: src/ui/ThemeToggle.astro
+msgid "Dark theme"
+msgstr "Tema gelap"
+
+#: src/copy/home.ts
+msgid "Delete"
+msgstr "Hapus"
+
+#: src/copy/home.ts
+msgid "Deliverability"
+msgstr "Keterkirimian"
+
+#: src/copy/cloudflare-email.ts
+msgid "Deploy the Worker to your Cloudflare account, using the same secret:"
+msgstr "Deploy Worker ke akun Cloudflare Anda, dengan rahasia yang sama:"
+
+#: src/copy/pages.ts
+msgid "Deprecated"
+msgstr "Usang"
+
+#: src/copy/docs.ts
+msgid "Description"
+msgstr "Deskripsi"
+
+#: src/copy/home.ts
+msgid "Designer"
+msgstr "Desainer"
+
+#: src/copy/home.ts
+msgid "Designs and broadcast drafts"
+msgstr "Desain dan draf siaran massal"
+
+#: src/copy/templates.ts
+msgid "Desktop"
+msgstr "Desktop"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Developers"
+msgstr "Pengembang"
+
+#: src/copy/templates.ts
+msgid "Digest"
+msgstr "Rangkuman"
+
+#: src/copy/home.ts
+msgid "Discussions"
+msgstr "Diskusi"
+
+#: src/copy/brand.ts
+msgid "Do"
+msgstr "Lakukan"
+
+#: src/copy/cloudflare-email.ts
+msgid "Do I need to run a mail server?"
+msgstr "Apakah saya perlu menjalankan server surat?"
+
+#: src/copy/docs.ts
+msgid "Docs"
+msgstr "Dokumen"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Documentation"
+msgstr "Dokumentasi"
+
+#: src/copy/cloudflare-email.ts
+msgid "Does Yuva use the DMARC result from Cloudflare?"
+msgstr "Apakah Yuva memakai hasil DMARC dari Cloudflare?"
+
+#: src/copy/brand.ts
+msgid "Don't"
+msgstr "Jangan"
+
+#: src/copy/header.ts
+msgid "Download logo"
+msgstr "Unduh logo"
+
+#: src/copy/brand.ts
+msgid "Download PNG"
+msgstr "Unduh PNG"
+
+#: src/copy/brand.ts
+msgid "Download SVG"
+msgstr "Unduh SVG"
+
+#: src/copy/brand.ts
+msgid "Download the icon"
+msgstr "Unduh ikon"
+
+#: src/copy/brand.ts
+msgid "Download the Yuva logo as SVG or PNG, copy the brand colours, and read how the name and logo may be used."
+msgstr "Unduh logo Yuva sebagai SVG atau PNG, salin warna merek, dan baca bagaimana nama dan logo boleh digunakan."
+
+#: src/copy/home.ts
+msgid "Draft replies"
+msgstr "Draf balasan"
+
+#: src/copy/contact.ts
+#: src/copy/home.ts
+msgid "E-mail"
+msgstr "Email"
+
+#: src/pages/og/[lang].png.ts
+msgid "E-mail · live chat · in-app · self-hosted"
+msgstr "Email · live chat · dalam aplikasi · dihosting sendiri"
+
+#: src/copy/header.ts
+#: src/copy/templates.ts
+#: src/layouts/Footer.astro
+msgid "E-mail templates"
+msgstr "Templat email"
+
+#: src/copy/home.ts
+msgid "E-mail templates and designer"
+msgstr "Templat email dan desainer"
+
+#: src/copy/header.ts
+msgid "E-mail, live chat and in-app."
+msgstr "Email, live chat, dan dalam aplikasi."
+
+#: src/copy/contact.ts
+msgid "Early and built in the open"
+msgstr "Masih awal dan dibangun secara terbuka"
+
+#: src/copy/docs.ts
+msgid "Edit this page on GitHub"
+msgstr "Edit halaman ini di GitHub"
+
+#: src/copy/cloudflare-email.ts
+msgid "Email Routing becomes the MX of the domain, so use a domain or subdomain that no other mail server handles."
+msgstr "Email Routing menjadi MX domain, jadi gunakan domain atau subdomain yang tidak ditangani server surat lain."
+
+#: src/copy/cloudflare-email.ts
+msgid "Email Routing in front"
+msgstr "Email Routing di depan"
+
+#: src/copy/brand.ts
+msgid "Ember"
+msgstr "Bara"
+
+#: src/copy/templates.ts
+msgid "Enter a full address starting with http:// or https://."
+msgstr "Masukkan alamat lengkap yang diawali http:// atau https://."
+
+#: src/copy/templates.ts
+msgid "Enter the address of your Yuva server to open the template there. It is kept in this browser only."
+msgstr "Masukkan alamat server Yuva Anda untuk membuka templat di sana. Alamat itu hanya disimpan di peramban ini."
+
+#: src/copy/ai.ts
+msgid "Enter this address and sign in:"
+msgstr "Masukkan alamat ini dan masuk:"
+
+#: src/copy/templates.ts
+msgid "Event"
+msgstr "Peristiwa"
+
+#: src/copy/header.ts
+msgid "Every channel in one list."
+msgstr "Semua saluran dalam satu daftar."
+
+#: src/copy/home.ts
+msgid "Every channel lands in one list. Your team answers from one chat-style view."
+msgstr "Setiap saluran masuk ke satu daftar. Tim Anda menjawab dari satu tampilan bergaya obrolan."
+
+#: src/copy/header.ts
+msgid "Every endpoint, to try."
+msgstr "Setiap endpoint, untuk dicoba."
+
+#: src/copy/home.ts
+msgid "Every part of Yuva has a typed contract and a small, documented integration."
+msgstr "Setiap bagian Yuva punya kontrak bertipe dan integrasi kecil yang terdokumentasi."
+
+#: src/copy/home.ts
+msgid "Every support channel, answered as one chat."
+msgstr "Semua saluran dukungan, dijawab sebagai satu obrolan."
+
+#: src/copy/pages.ts
+msgid "Every version of Yuva and what changed in it. Versions follow Semantic Versioning, and until 1.0 any release may change the API and the database schema."
+msgstr "Setiap versi Yuva dan apa yang berubah di dalamnya. Versi mengikuti Semantic Versioning, dan sebelum 1.0 rilis mana pun dapat mengubah API dan skema basis data."
+
+#: src/copy/docs.ts
+msgid "Every Yuva endpoint and webhook event, generated from the OpenAPI 3.1 contract."
+msgstr "Setiap endpoint dan peristiwa webhook Yuva, dihasilkan dari kontrak OpenAPI 3.1."
+
+#: src/copy/docs.ts
+msgid "Every Yuva guide in one place: install, channels, broadcasts, analytics, moving a mailbox in, the developer tools and the API reference."
+msgstr "Semua panduan Yuva di satu tempat: instalasi, saluran, siaran massal, analitik, memindahkan kotak surat, alat pengembang, dan referensi API."
+
+#: src/copy/pages.ts
+msgid "Every Yuva release and what changed in it, from the changelog."
+msgstr "Setiap rilis Yuva dan apa yang berubah di dalamnya, dari catatan perubahan."
+
+#: src/copy/home.ts
+msgid "Feedback"
+msgstr "Masukan"
+
+#: src/copy/home.ts
+msgid "Files"
+msgstr "Berkas"
+
+#: src/copy/cloudflare-email.ts
+msgid "Film: support e-mail from Cloudflare to the Yuva inbox"
+msgstr "Film: email dukungan dari Cloudflare ke kotak masuk Yuva"
+
+#: src/copy/pages.ts
+msgid "Fixed"
+msgstr "Diperbaiki"
+
+#: src/copy/pages.ts
+msgid "Follow the blog"
+msgstr "Ikuti blog"
+
+#: src/copy/brand.ts
+msgid "For app stores and platforms that round the corners themselves."
+msgstr "Untuk toko aplikasi dan platform yang membulatkan sudut sendiri."
+
+#: src/copy/brand.ts
+msgid "For dark backgrounds."
+msgstr "Untuk latar gelap."
+
+#: src/copy/contact.ts
+msgid "For investors"
+msgstr "Untuk investor"
+
+#: src/copy/brand.ts
+msgid "For light backgrounds."
+msgstr "Untuk latar terang."
+
+#: src/copy/home.ts
+msgid "for open conversations"
+msgstr "untuk percakapan yang terbuka"
+
+#: src/copy/home.ts
+msgid "for the usual answers"
+msgstr "untuk jawaban yang biasa"
+
+#: src/copy/home.ts
+msgid "for your newsletters"
+msgstr "untuk buletin Anda"
+
+#: src/copy/home.ts
+msgid "for your own e-mails"
+msgstr "untuk email Anda sendiri"
+
+#: src/copy/header.ts
+msgid "Free designs to copy."
+msgstr "Desain gratis untuk disalin."
+
+#: src/copy/templates.ts
+msgid "Free starter designs for newsletters, product updates, announcements and more. Preview them here and open one in Yuva's e-mail designer."
+msgstr "Desain awal gratis untuk buletin, pembaruan produk, pengumuman, dan lainnya. Pratinjau di sini dan buka salah satunya di desainer email Yuva."
+
+#: src/copy/home.ts
+msgid "from the people you helped"
+msgstr "dari orang-orang yang Anda bantu"
+
+#: src/copy/pages.ts
+msgid "From the team"
+msgstr "Dari tim"
+
+#: src/copy/brand.ts
+msgid "Full-bleed icon"
+msgstr "Ikon penuh"
+
+#: src/copy/home.ts
+msgid "Gallery"
+msgstr "Galeri"
+
+#: src/copy/docs.ts
+msgid "Get started"
+msgstr "Mulai"
+
+#: src/copy/home.ts
+msgid "Give every product's users a way to reach you."
+msgstr "Beri pengguna setiap produk cara untuk menghubungi Anda."
+
+#: src/copy/brand.ts
+msgid "Glow"
+msgstr "Pijar"
+
+#: src/copy/home.ts
+msgid "Gmail, Outlook or any IMAP server"
+msgstr "Gmail, Outlook, atau server IMAP apa pun"
+
+#: src/copy/home.ts
+msgid "Goals"
+msgstr "Sasaran"
+
+#: src/copy/docs.ts
+msgid "Guides"
+msgstr "Panduan"
+
+#: src/copy/header.ts
+msgid "Guides for every part."
+msgstr "Panduan untuk setiap bagian."
+
+#: src/copy/home.ts
+msgid "Help center"
+msgstr "Pusat bantuan"
+
+#: src/copy/home.ts
+msgid "Help desks"
+msgstr "Help desk"
+
+#: src/copy/contact.ts
+msgid "Hi! Tell us a little about yourself and what you have in mind."
+msgstr "Halo! Ceritakan sedikit tentang diri Anda dan apa yang Anda pikirkan."
+
+#: src/copy/home.ts
+msgid "History"
+msgstr "Riwayat"
+
+#: src/copy/home.ts
+msgid "Hosted"
+msgstr "Dihosting"
+
+#: src/copy/contact.ts
+msgid "Hosted service and commercial licenses"
+msgstr "Layanan terkelola dan lisensi komersial"
+
+#: src/copy/cloudflare-email.ts
+msgid "How a message gets from the customer to your team"
+msgstr "Bagaimana pesan sampai dari pelanggan ke tim Anda"
+
+#: src/copy/cloudflare-email.ts
+msgid "How big can a message be?"
+msgstr "Seberapa besar sebuah pesan boleh?"
+
+#: src/copy/contact.ts
+msgid "How the AGPL, the MIT SDKs and the CLA fit together."
+msgstr "Bagaimana AGPL, SDK berlisensi MIT, dan CLA saling melengkapi."
+
+#: src/copy/templates.ts
+msgid "How to add a template"
+msgstr "Cara menambahkan templat"
+
+#: src/copy/templates.ts
+msgid "https://yuva.example.com"
+msgstr "https://yuva.example.com"
+
+#: src/copy/contact.ts
+msgid "I have a question that doesn't fit anywhere else."
+msgstr "Saya punya pertanyaan yang tidak cocok di tempat lain."
+
+#: src/copy/contact.ts
+msgid "I have an idea for working together."
+msgstr "Saya punya ide untuk bekerja sama."
+
+#: src/copy/contact.ts
+msgid "I'd like to talk about investing in Yuva."
+msgstr "Saya ingin membicarakan investasi di Yuva."
+
+#: src/copy/contact.ts
+msgid "I'm writing about Yuva and have a few questions."
+msgstr "Saya menulis tentang Yuva dan punya beberapa pertanyaan."
+
+#: src/copy/home.ts
+msgid "Identity tokens"
+msgstr "Token identitas"
+
+#: src/copy/cloudflare-email.ts
+msgid "If Yuva answers with a server error, does not answer within 20 seconds or cannot be reached, the Worker can forward the message to an address you choose, as long as you set FALLBACK_FORWARD. That address must be a verified destination in Email Routing. The message then arrives as a plain forward and does not appear in Yuva. Without FALLBACK_FORWARD the delivery fails with an error and the sending server may retry later."
+msgstr "Jika Yuva menjawab dengan kesalahan server, tidak menjawab dalam 20 detik, atau tidak dapat dijangkau, Worker dapat meneruskan pesan ke alamat yang Anda pilih, selama Anda mengatur FALLBACK_FORWARD. Alamat itu harus berupa tujuan terverifikasi di Email Routing. Pesan lalu tiba sebagai penerusan biasa dan tidak muncul di Yuva. Tanpa FALLBACK_FORWARD, pengiriman gagal dengan kesalahan dan server pengirim dapat mencoba lagi nanti."
+
+#: src/copy/cloudflare-email.ts
+msgid "If Yuva is unreachable"
+msgstr "Jika Yuva tidak dapat dijangkau"
+
+#: src/copy/ai.ts
+msgid "If Yuva itself misbehaves, the assistant can prepare a GitHub issue with your names, addresses and keys removed. You read it before anything is opened."
+msgstr "Jika Yuva sendiri bermasalah, asisten dapat menyiapkan issue GitHub dengan nama, alamat, dan kunci Anda sudah dihapus. Anda membacanya sebelum apa pun dibuka."
+
+#: src/copy/docs.ts
+msgid "In"
+msgstr "Di"
+
+#: src/copy/ai.ts
+msgid "In claude.ai or Claude Desktop, open Customize → Connectors → Add custom connector."
+msgstr "Di claude.ai atau Claude Desktop, buka Customize → Connectors → Add custom connector."
+
+#: src/copy/cloudflare-email.ts
+msgid "In the Cloudflare dashboard, open your domain → Email → Email Routing and enable it. Cloudflare adds its MX and SPF records."
+msgstr "Di dasbor Cloudflare, buka domain Anda → Email → Email Routing lalu aktifkan. Cloudflare menambahkan rekaman MX dan SPF-nya."
+
+#: src/copy/cloudflare-email.ts
+msgid "In Yuva, open Settings → your inbox → Channels → E-mail and add the support address. Set a secret on the server and restart it:"
+msgstr "Di Yuva, buka Pengaturan → kotak masuk Anda → Saluran → Email lalu tambahkan alamat dukungan. Atur rahasia di server dan mulai ulang:"
+
+#: src/copy/contact.ts
+#: src/copy/home.ts
+msgid "In-app"
+msgstr "Dalam aplikasi"
+
+#: src/copy/home.ts
+msgid "Inbox"
+msgstr "Kotak masuk"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Inbox and conversations"
+msgstr "Kotak masuk dan percakapan"
+
+#: src/copy/brand.ts
+msgid "Ink"
+msgstr "Tinta"
+
+#: src/copy/docs.ts
+msgid "Introduction"
+msgstr "Pengantar"
+
+#: src/copy/contact.ts
+msgid "Investment"
+msgstr "Investasi"
+
+#: src/copy/ai.ts
+msgid "It does the rest with you."
+msgstr "Sisanya dikerjakan bersama Anda."
+
+#: src/copy/brand.ts
+msgid "Keep the logo as it is: do not change its shape, proportions or colours."
+msgstr "Biarkan logo apa adanya: jangan ubah bentuk, proporsi, atau warnanya."
+
+#: src/copy/brand.ts
+msgid "keep the name in a private, internal deployment, modified or not."
+msgstr "mempertahankan nama dalam deployment internal yang privat, dimodifikasi atau tidak."
+
+#: src/copy/home.ts
+msgid "Labels and canned replies"
+msgstr "Label dan balasan siap pakai"
+
+#: src/ui/LangMenu.astro
+msgid "Language"
+msgstr "Bahasa"
+
+#: src/copy/docs.ts
+msgid "Last updated {date}"
+msgstr "Terakhir diperbarui {date}"
+
+#: src/copy/pages.ts
+msgid "Latest"
+msgstr "Terbaru"
+
+#: src/copy/pages.ts
+msgid "Latest post"
+msgstr "Tulisan terbaru"
+
+#: src/copy/contact.ts
+msgid "Let's talk."
+msgstr "Mari berbincang."
+
+#: src/copy/contact.ts
+msgid "License"
+msgstr "Lisensi"
+
+#: src/copy/templates.ts
+msgid "License and contributions"
+msgstr "Lisensi dan kontribusi"
+
+#: src/copy/contact.ts
+#: src/layouts/Footer.astro
+msgid "Licensing"
+msgstr "Perizinan"
+
+#: src/copy/templates.ts
+msgid "Light"
+msgstr "Terang"
+
+#: src/ui/ThemeToggle.astro
+msgid "Light theme"
+msgstr "Tema terang"
+
+#: src/copy/home.ts
+msgid "Lists"
+msgstr "Daftar"
+
+#: src/copy/contact.ts
+#: src/copy/home.ts
+msgid "Live chat"
+msgstr "Live chat"
+
+#: src/copy/templates.ts
+msgid "Live preview"
+msgstr "Pratinjau langsung"
+
+#: src/copy/header.ts
+msgid "Log in"
+msgstr "Masuk"
+
+#: src/copy/brand.ts
+msgid "Logo"
+msgstr "Logo"
+
+#: src/copy/header.ts
+msgid "Logo and icon to download."
+msgstr "Logo dan ikon untuk diunduh."
+
+#: src/copy/header.ts
+msgid "Logo options"
+msgstr "Pilihan logo"
+
+#: src/copy/brand.ts
+msgid "Logo with name"
+msgstr "Logo dengan nama"
+
+#: src/copy/brand.ts
+msgid "Logo with name, white"
+msgstr "Logo dengan nama, putih"
+
+#: src/copy/contact.ts
+msgid "Logos, colours and the rules for the name."
+msgstr "Logo, warna, dan aturan penggunaan nama."
+
+#: src/copy/ai.ts
+msgid "Look at this project and tell me how to add Yuva. Use Yuva's init prompt, recommend a plan, and change nothing until I pick the steps."
+msgstr "Lihat proyek ini dan beri tahu saya cara menambahkan Yuva. Gunakan prompt init Yuva, rekomendasikan rencana, dan jangan ubah apa pun sampai saya memilih langkahnya."
+
+#: src/copy/cloudflare-email.ts
+msgid "Mail to a support address opens or continues a conversation in the inbox, and the team answers from the same panel as chat and app messages."
+msgstr "Surat ke alamat dukungan membuka atau melanjutkan percakapan di kotak masuk, dan tim menjawab dari panel yang sama dengan obrolan dan pesan aplikasi."
+
+#: src/copy/home.ts
+msgid "Mailboxes"
+msgstr "Kotak surat"
+
+#: src/copy/pages.ts
+msgid "Maintainer of Yuva"
+msgstr "Pemelihara Yuva"
+
+#: src/copy/home.ts
+msgid "marked by your team"
+msgstr "ditandai oleh tim Anda"
+
+#: src/ui/ThemeToggle.astro
+msgid "Match the system theme"
+msgstr "Ikuti tema sistem"
+
+#: src/copy/home.ts
+msgid "mbox, Takeout and .eml"
+msgstr "mbox, Takeout, dan .eml"
+
+#: src/copy/docs.ts
+msgid "Member session"
+msgstr "Sesi anggota"
+
+#: src/copy/home.ts
+msgid "Members"
+msgstr "Anggota"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+msgid "Menu"
+msgstr "Menu"
+
+#: src/copy/docs.ts
+msgid "More"
+msgstr "Lainnya"
+
+#: src/copy/pages.ts
+msgid "More posts"
+msgstr "Tulisan lainnya"
+
+#: src/copy/ai.ts
+msgid "Move our support mailbox into Yuva."
+msgstr "Pindahkan kotak surat dukungan kami ke Yuva."
+
+#: src/copy/docs.ts
+msgid "Move to Yuva"
+msgstr "Pindah ke Yuva"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Moving in"
+msgstr "Perpindahan"
+
+#: src/copy/ai.ts
+msgid "My own server"
+msgstr "Server saya sendiri"
+
+#: src/copy/docs.ts
+msgid "Name"
+msgstr "Nama"
+
+#: src/copy/ai.ts
+msgid "Needs a public https address."
+msgstr "Memerlukan alamat https publik."
+
+#: src/copy/pages.ts
+msgid "New posts appear in the RSS feed as soon as they are published."
+msgstr "Tulisan baru muncul di umpan RSS segera setelah dipublikasikan."
+
+#: src/copy/ai.ts
+msgid "New to Yuva? Name your workspace. It takes a few seconds."
+msgstr "Baru di Yuva? Beri nama ruang kerja Anda. Hanya butuh beberapa detik."
+
+#: src/copy/header.ts
+msgid "News and how Yuva is built."
+msgstr "Kabar dan bagaimana Yuva dibangun."
+
+#: src/copy/pages.ts
+msgid "News, release stories and notes from building Yuva, the open-source inbox for every product you run."
+msgstr "Kabar, kisah rilis, dan catatan pembuatan Yuva, kotak masuk open source untuk setiap produk yang Anda jalankan."
+
+#: src/copy/pages.ts
+msgid "News, release stories and notes from building Yuva."
+msgstr "Kabar, kisah rilis, dan catatan pembuatan Yuva."
+
+#: src/copy/templates.ts
+msgid "Newsletter"
+msgstr "Buletin"
+
+#: src/copy/header.ts
+msgid "Newsletters to your lists."
+msgstr "Buletin untuk daftar Anda."
+
+#: src/copy/docs.ts
+#: src/copy/pages.ts
+msgid "Next"
+msgstr "Berikutnya"
+
+#: src/copy/docs.ts
+msgid "No authentication"
+msgstr "Tanpa autentikasi"
+
+#: src/copy/docs.ts
+msgid "No content"
+msgstr "Tanpa konten"
+
+#: src/copy/cloudflare-email.ts
+msgid "No mail server to run."
+msgstr "Tidak ada server surat untuk dijalankan."
+
+#: src/copy/docs.ts
+msgid "No results"
+msgstr "Tidak ada hasil"
+
+#: src/copy/contact.ts
+msgid "Not every message needs an e-mail. Some answers are better in public, and some reports must stay private."
+msgstr "Tidak setiap pesan perlu email. Beberapa jawaban lebih baik di depan umum, dan beberapa laporan harus tetap privat."
+
+#: src/copy/cloudflare-email.ts
+msgid "Not for incoming mail. Yuva does not listen for SMTP; Cloudflare Email Routing receives the mail and the Worker passes it on. Replies need an SMTP account for the e-mail channel, such as Amazon SES, Postmark or your own relay."
+msgstr "Bukan untuk surat masuk. Yuva tidak mendengarkan SMTP; Cloudflare Email Routing menerima surat dan Worker meneruskannya. Balasan memerlukan akun SMTP untuk saluran email, seperti Amazon SES, Postmark, atau relay Anda sendiri."
+
+#: src/copy/cloudflare-email.ts
+msgid "Not tied to Cloudflare"
+msgstr "Tidak terikat pada Cloudflare"
+
+#: src/copy/brand.ts
+msgid "Not without written permission"
+msgstr "Tidak tanpa izin tertulis"
+
+#: src/copy/home.ts
+msgid "Notes and mentions"
+msgstr "Catatan dan sebutan"
+
+#: src/copy/home.ts
+msgid "of every conversation"
+msgstr "dari setiap percakapan"
+
+#: src/copy/home.ts
+msgid "of free templates"
+msgstr "templat gratis"
+
+#: src/copy/brand.ts
+msgid "offer a hosted or managed service, or a product, under the Yuva name or a confusingly similar one;"
+msgstr "menawarkan layanan terkelola atau produk dengan nama Yuva atau nama yang mirip hingga membingungkan;"
+
+#: src/copy/brand.ts
+msgid "On dark backgrounds"
+msgstr "Pada latar gelap"
+
+#: src/copy/home.ts
+msgid "on every page"
+msgstr "di setiap halaman"
+
+#: src/copy/brand.ts
+msgid "On light backgrounds"
+msgstr "Pada latar terang"
+
+#: src/copy/docs.ts
+#: src/copy/pages.ts
+msgid "On this page"
+msgstr "Di halaman ini"
+
+#: src/copy/templates.ts
+msgid "On your own server"
+msgstr "Di server Anda sendiri"
+
+#: src/copy/templates.ts
+msgid "Onboarding"
+msgstr "Orientasi"
+
+#: src/copy/home.ts
+msgid "One binary"
+msgstr "Satu biner"
+
+#: src/copy/header.ts
+msgid "One binary and Postgres."
+msgstr "Satu biner dan Postgres."
+
+#: src/copy/home.ts
+msgid "One Docker image and Postgres on your own server."
+msgstr "Satu image Docker dan Postgres di server Anda sendiri."
+
+#: src/copy/brand.ts
+#: src/pages/og/[lang].png.ts
+msgid "One inbox for every product you run."
+msgstr "Satu kotak masuk untuk setiap produk yang Anda jalankan."
+
+#: src/copy/home.ts
+msgid "One profile for each person, whichever channel they write from."
+msgstr "Satu profil untuk setiap orang, dari saluran mana pun mereka menulis."
+
+#: src/copy/home.ts
+msgid "One small server runs all of it. The server is open source, and the SDKs carry no copyleft."
+msgstr "Satu server kecil menjalankan semuanya. Servernya open source, dan SDK tidak membawa copyleft."
+
+#: src/copy/contact.ts
+msgid "Open a GitHub issue"
+msgstr "Buka issue GitHub"
+
+#: src/copy/home.ts
+msgid "Open AI assistants"
+msgstr "Buka asisten AI"
+
+#: src/copy/contact.ts
+msgid "Open an issue"
+msgstr "Buka issue"
+
+#: src/copy/contact.ts
+msgid "Open an issue on GitHub so others can find the answer too."
+msgstr "Buka issue di GitHub agar yang lain juga bisa menemukan jawabannya."
+
+#: src/copy/templates.ts
+msgid "Open on my server"
+msgstr "Buka di server saya"
+
+#: src/copy/ai.ts
+msgid "Open Plugins, select the plus button, then Add custom MCP server."
+msgstr "Buka Plugins, pilih tombol plus, lalu Add custom MCP server."
+
+#: src/copy/contact.ts
+msgid "Open source that stays open"
+msgstr "Open source yang tetap terbuka"
+
+#: src/copy/home.ts
+msgid "Open the API reference"
+msgstr "Buka referensi API"
+
+#: src/copy/ai.ts
+msgid "Open the assistant in your project's folder. It reads your code on your machine and sends none of it to Yuva."
+msgstr "Buka asisten di folder proyek Anda. Ia membaca kode Anda di mesin Anda dan tidak mengirim apa pun darinya ke Yuva."
+
+#: src/copy/home.ts
+msgid "Open the templates"
+msgstr "Buka templat"
+
+#: src/pages/og/[lang].png.ts
+msgid "Open-source customer messaging"
+msgstr "Pesan pelanggan open source"
+
+#: src/layouts/Footer.astro
+msgid "Open-source customer messaging for teams that run many products."
+msgstr "Pesan pelanggan open source untuk tim yang menjalankan banyak produk."
+
+#: src/copy/docs.ts
+msgid "OpenAPI contract"
+msgstr "Kontrak OpenAPI"
+
+#: src/copy/templates.ts
+msgid "Opens Yuva's e-mail designer with this template. You sign in first if you have not."
+msgstr "Membuka desainer email Yuva dengan templat ini. Anda masuk dulu jika belum."
+
+#: src/copy/cloudflare-email.ts
+msgid "Optional: keep mail during an outage by adding a fallback address to the deploy command:"
+msgstr "Opsional: simpan surat saat gangguan dengan menambahkan alamat cadangan ke perintah deploy:"
+
+#: src/copy/ai.ts
+msgid "Or ask for one thing"
+msgstr "Atau minta satu hal"
+
+#: src/copy/home.ts
+msgid "Or host it yourself"
+msgstr "Atau hosting sendiri"
+
+#: src/copy/ai.ts
+msgid "Or type the sentence:"
+msgstr "Atau ketik kalimatnya:"
+
+#: src/copy/cloudflare-email.ts
+msgid "Other ways to bring mail in"
+msgstr "Cara lain membawa surat masuk"
+
+#: src/copy/contact.ts
+msgid "Other ways to reach us"
+msgstr "Cara lain menghubungi kami"
+
+#: src/copy/docs.ts
+msgid "Overview"
+msgstr "Ikhtisar"
+
+#: src/pages/404.astro
+msgid "Page not found"
+msgstr "Halaman tidak ditemukan"
+
+#: src/copy/home.ts
+msgid "Pages and sources"
+msgstr "Halaman dan sumber"
+
+#: src/copy/docs.ts
+msgid "Parameters"
+msgstr "Parameter"
+
+#: src/copy/contact.ts
+msgid "Partnership"
+msgstr "Kemitraan"
+
+#: src/copy/docs.ts
+msgid "Payload"
+msgstr "Payload"
+
+#: src/copy/pages.ts
+msgid "Performance"
+msgstr "Performa"
+
+#: src/copy/templates.ts
+msgid "Phone"
+msgstr "Ponsel"
+
+#: src/copy/ai.ts
+msgid "Pick your assistant"
+msgstr "Pilih asisten Anda"
+
+#: src/copy/pages.ts
+msgid "Posts are published in English."
+msgstr "Tulisan dipublikasikan dalam bahasa Inggris."
+
+#: src/copy/contact.ts
+msgid "Pre-alpha"
+msgstr "Pra-alfa"
+
+#: src/copy/contact.ts
+msgid "Press"
+msgstr "Pers"
+
+#: src/copy/contact.ts
+msgid "Press and brand"
+msgstr "Pers dan merek"
+
+#: src/copy/home.ts
+msgid "Preview"
+msgstr "Pratinjau"
+
+#: src/copy/templates.ts
+msgid "Preview and use"
+msgstr "Pratinjau dan penggunaan"
+
+#: src/copy/templates.ts
+msgid "Preview colours"
+msgstr "Pratinjau warna"
+
+#: src/copy/home.ts
+#: src/copy/templates.ts
+msgid "Preview of the {name} template"
+msgstr "Pratinjau templat {name}"
+
+#: src/copy/templates.ts
+msgid "Preview width"
+msgstr "Lebar pratinjau"
+
+#: src/copy/docs.ts
+msgid "Previous"
+msgstr "Sebelumnya"
+
+#: src/copy/header.ts
+#: src/copy/templates.ts
+#: src/layouts/Footer.astro
+msgid "Product"
+msgstr "Produk"
+
+#: src/copy/home.ts
+msgid "Product tour"
+msgstr "Tur produk"
+
+#: src/copy/docs.ts
+#: src/layouts/Footer.astro
+msgid "Project"
+msgstr "Proyek"
+
+#: src/copy/brand.ts
+msgid "publish a modified version under the Yuva name — rename your fork;"
+msgstr "menerbitkan versi yang dimodifikasi dengan nama Yuva — ganti nama fork Anda;"
+
+#: src/copy/cloudflare-email.ts
+msgid "Questions and answers"
+msgstr "Tanya jawab"
+
+#: src/copy/contact.ts
+msgid "Questions and bugs"
+msgstr "Pertanyaan dan bug"
+
+#: src/copy/home.ts
+msgid "Ratings"
+msgstr "Penilaian"
+
+#: src/copy/header.ts
+msgid "Reach the people behind Yuva."
+msgstr "Hubungi orang-orang di balik Yuva."
+
+#: src/copy/contact.ts
+msgid "Read LICENSING.md"
+msgstr "Baca LICENSING.md"
+
+#: src/copy/home.ts
+msgid "Read the code, run {version} on your machine, and follow along as it grows."
+msgstr "Baca kodenya, jalankan {version} di mesin Anda, dan ikuti perkembangannya."
+
+#: src/copy/docs.ts
+msgid "Read the English page"
+msgstr "Baca halaman berbahasa Inggris"
+
+#: src/copy/home.ts
+msgid "Read the guide"
+msgstr "Baca panduannya"
+
+#: src/copy/cloudflare-email.ts
+msgid "Read the ingress contract"
+msgstr "Baca kontrak ingress"
+
+#: src/copy/templates.ts
+msgid "Read the license"
+msgstr "Baca lisensinya"
+
+#: src/copy/ai.ts
+msgid "Read the MCP guide"
+msgstr "Baca panduan MCP"
+
+#: src/copy/pages.ts
+msgid "Read the post"
+msgstr "Baca tulisannya"
+
+#: src/copy/home.ts
+#: src/copy/pages.ts
+msgid "Read the quick start"
+msgstr "Baca panduan mulai cepat"
+
+#: src/copy/cloudflare-email.ts
+msgid "Read the setup guide"
+msgstr "Baca panduan penyiapan"
+
+#: src/copy/home.ts
+msgid "read through MCP"
+msgstr "dibaca lewat MCP"
+
+#: src/copy/brand.ts
+msgid "Read TRADEMARK.md"
+msgstr "Baca TRADEMARK.md"
+
+#: src/copy/cloudflare-email.ts
+msgid "Real conversations"
+msgstr "Percakapan nyata"
+
+#: src/copy/home.ts
+msgid "Realtime"
+msgstr "Realtime"
+
+#: src/copy/header.ts
+msgid "Receive mail with no server."
+msgstr "Terima surat tanpa server."
+
+#: src/copy/cloudflare-email.ts
+msgid "Receive your support e-mail in Yuva with Cloudflare Email Routing and the open-source Yuva Email Worker. Signed delivery, threaded conversations, no mail server to run."
+msgstr "Terima email dukungan Anda di Yuva dengan Cloudflare Email Routing dan Yuva Email Worker yang open source. Pengiriman bertanda tangan, percakapan berutas, tanpa server surat untuk dijalankan."
+
+#: src/copy/cloudflare-email.ts
+msgid "Refusals reach the sender"
+msgstr "Penolakan sampai ke pengirim"
+
+#: src/copy/brand.ts
+msgid "Regular, Medium and Semibold"
+msgstr "Regular, Medium, dan Semibold"
+
+#: src/copy/pages.ts
+msgid "Release history"
+msgstr "Riwayat rilis"
+
+#: src/copy/pages.ts
+msgid "Release notes are written in English."
+msgstr "Catatan rilis ditulis dalam bahasa Inggris."
+
+#: src/copy/contact.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/copy/pages.ts
+#: src/layouts/Footer.astro
+msgid "Releases"
+msgstr "Rilis"
+
+#: src/copy/pages.ts
+msgid "Removed"
+msgstr "Dihapus"
+
+#: src/layouts/Footer.astro
+msgid "Report a vulnerability"
+msgstr "Laporkan kerentanan"
+
+#: src/copy/contact.ts
+msgid "Report vulnerabilities privately through GitHub, never in a public issue."
+msgstr "Laporkan kerentanan secara privat lewat GitHub, jangan pernah di issue publik."
+
+#: src/copy/home.ts
+msgid "Reports"
+msgstr "Laporan"
+
+#: src/copy/docs.ts
+msgid "Request"
+msgstr "Permintaan"
+
+#: src/copy/docs.ts
+msgid "Request body"
+msgstr "Isi permintaan"
+
+#: src/copy/docs.ts
+msgid "required"
+msgstr "wajib"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Resources"
+msgstr "Sumber daya"
+
+#: src/copy/docs.ts
+msgid "Response"
+msgstr "Respons"
+
+#: src/copy/docs.ts
+msgid "Responses"
+msgstr "Respons"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Roadmap"
+msgstr "Peta jalan"
+
+#: src/copy/brand.ts
+msgid "Rotate it"
+msgstr "Putar ulang"
+
+#: src/copy/pages.ts
+msgid "RSS feed"
+msgstr "Umpan RSS"
+
+#: src/copy/brand.ts
+msgid "say that your product uses, integrates with or is built on Yuva;"
+msgstr "menyatakan bahwa produk Anda menggunakan, berintegrasi dengan, atau dibangun di atas Yuva;"
+
+#: src/copy/ai.ts
+msgid "Say this"
+msgstr "Katakan ini"
+
+#: src/copy/docs.ts
+msgid "Schemas and every field are in the OpenAPI contract."
+msgstr "Skema dan setiap bidang ada di kontrak OpenAPI."
+
+#: src/copy/home.ts
+msgid "SDKs and API contract"
+msgstr "SDK dan kontrak API"
+
+#: src/copy/docs.ts
+msgid "Search docs"
+msgstr "Cari di dokumen"
+
+#: src/copy/docs.ts
+msgid "Search the docs"
+msgstr "Cari di dokumen"
+
+#: src/copy/header.ts
+msgid "Sections"
+msgstr "Bagian"
+
+#: src/copy/contact.ts
+#: src/copy/pages.ts
+msgid "Security"
+msgstr "Keamanan"
+
+#: src/copy/contact.ts
+msgid "Security policy"
+msgstr "Kebijakan keamanan"
+
+#: src/copy/home.ts
+msgid "See how support is going and who is on the team."
+msgstr "Lihat bagaimana dukungan berjalan dan siapa saja di tim."
+
+#: src/copy/pages.ts
+msgid "See what is planned"
+msgstr "Lihat apa yang direncanakan"
+
+#: src/copy/home.ts
+msgid "See who visits your sites and apps, with no cookies and no stored IP addresses."
+msgstr "Lihat siapa yang mengunjungi situs dan aplikasi Anda, tanpa cookie dan tanpa alamat IP yang disimpan."
+
+#: src/copy/home.ts
+msgid "Self-hosted"
+msgstr "Dihosting sendiri"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+msgid "Self-hosting"
+msgstr "Hosting sendiri"
+
+#: src/copy/home.ts
+msgid "Self-hosting and open source"
+msgstr "Hosting sendiri dan open source"
+
+#: src/copy/cloudflare-email.ts
+msgid "Send a test message and watch the conversation appear in the panel."
+msgstr "Kirim pesan uji dan lihat percakapannya muncul di panel."
+
+#: src/copy/home.ts
+msgid "Send newsletters to your mailing lists and see what readers do with them."
+msgstr "Kirim buletin ke daftar surat Anda dan lihat apa yang pembaca lakukan dengannya."
+
+#: src/copy/home.ts
+msgid "sent by your own app"
+msgstr "dikirim oleh aplikasi Anda sendiri"
+
+#: src/copy/templates.ts
+msgid "Server address"
+msgstr "Alamat server"
+
+#: src/copy/home.ts
+msgid "server and panel"
+msgstr "server dan panel"
+
+#: src/layouts/Footer.astro
+msgid "Server and panel under AGPL-3.0, SDKs and API contract under MIT."
+msgstr "Server dan panel berlisensi AGPL-3.0, SDK dan kontrak API berlisensi MIT."
+
+#: src/copy/cloudflare-email.ts
+msgid "Set it up in a few steps"
+msgstr "Siapkan dalam beberapa langkah"
+
+#: src/copy/ai.ts
+msgid "Set up Yuva analytics for this site, with a goal for sign-ups."
+msgstr "Siapkan analitik Yuva untuk situs ini, dengan sasaran untuk pendaftaran."
+
+#: src/copy/pages.ts
+msgid "Share"
+msgstr "Bagikan"
+
+#: src/copy/ai.ts
+msgid "Sign in from Gemini CLI:"
+msgstr "Masuk dari Gemini CLI:"
+
+#: src/copy/ai.ts
+msgid "Sign in. Your browser opens Yuva:"
+msgstr "Masuk. Peramban Anda membuka Yuva:"
+
+#: src/copy/header.ts
+msgid "Signed events and user tokens."
+msgstr "Peristiwa bertanda tangan dan token pengguna."
+
+#: src/copy/home.ts
+msgid "signed, for every new message"
+msgstr "bertanda tangan, untuk setiap pesan baru"
+
+#: src/copy/brand.ts
+msgid "Sizes"
+msgstr "Ukuran"
+
+#: src/layouts/Base.astro
+msgid "Skip to content"
+msgstr "Lompat ke konten"
+
+#: src/copy/home.ts
+msgid "so users write as themselves"
+msgstr "agar pengguna menulis sebagai diri mereka sendiri"
+
+#: src/copy/contact.ts
+msgid "Something else"
+msgstr "Lainnya"
+
+#: src/layouts/Footer.astro
+msgid "Source code on GitHub"
+msgstr "Kode sumber di GitHub"
+
+#: src/copy/contact.ts
+msgid "Stage"
+msgstr "Tahap"
+
+#: src/copy/header.ts
+msgid "Start free"
+msgstr "Mulai gratis"
+
+#: src/copy/home.ts
+msgid "Start with AI"
+msgstr "Mulai dengan AI"
+
+#: src/copy/templates.ts
+msgid "Starter designs for the e-mail designer, in English, Turkish and German. Preview one, then open it in Yuva and make it yours."
+msgstr "Desain awal untuk desainer email, dalam bahasa Inggris, Turki, dan Jerman. Pratinjau satu, lalu buka di Yuva dan jadikan milik Anda."
+
+#: src/copy/home.ts
+msgid "stay inside the team"
+msgstr "tetap di dalam tim"
+
+#: src/copy/brand.ts
+msgid "Stretch or squash it"
+msgstr "Meregangkan atau memampatkannya"
+
+#: src/copy/cloudflare-email.ts
+msgid "Support e-mail through Cloudflare Email Routing | Yuva"
+msgstr "Email dukungan lewat Cloudflare Email Routing | Yuva"
+
+#: src/copy/cloudflare-email.ts
+msgid "Support e-mail through Cloudflare."
+msgstr "Email dukungan lewat Cloudflare."
+
+#: src/copy/pages.ts
+msgid "Tag on GitHub"
+msgstr "Tag di GitHub"
+
+#: src/copy/home.ts
+msgid "Team and reports"
+msgstr "Tim dan laporan"
+
+#: src/copy/contact.ts
+msgid "Teams can use our hosted service, and because every contribution is made under a CLA, Yuva can also be offered under a commercial license."
+msgstr "Tim dapat menggunakan layanan terkelola kami, dan karena setiap kontribusi dibuat di bawah CLA, Yuva juga dapat ditawarkan dengan lisensi komersial."
+
+#: src/copy/ai.ts
+msgid "Tell your assistant to add Yuva."
+msgstr "Minta asisten Anda menambahkan Yuva."
+
+#: src/copy/templates.ts
+msgid "Template gallery"
+msgstr "Galeri templat"
+
+#: src/copy/templates.ts
+msgid "Templates"
+msgstr "Templat"
+
+#: src/copy/home.ts
+msgid "The analytics overview in the panel: 30 days of visitors, pageviews and bounce rate, a daily chart with a note on the day a newsletter went out, and the top pages and sources."
+msgstr "Ikhtisar analitik di panel: 30 hari pengunjung, tampilan halaman, dan rasio pentalan, grafik harian dengan catatan pada hari buletin dikirim, serta halaman dan sumber teratas."
+
+#: src/copy/ai.ts
+msgid "The assistant acts as you, with no more access than you approve, and asks before it changes anything."
+msgstr "Asisten bertindak sebagai Anda, tanpa akses lebih dari yang Anda setujui, dan bertanya sebelum mengubah apa pun."
+
+#: src/copy/header.ts
+msgid "The code, open source."
+msgstr "Kodenya, open source."
+
+#: src/copy/ai.ts
+msgid "The commands below follow what you type."
+msgstr "Perintah di bawah mengikuti apa yang Anda ketik."
+
+#: src/copy/docs.ts
+msgid "The English page has changed since this translation was last updated."
+msgstr "Halaman berbahasa Inggris telah berubah sejak terjemahan ini terakhir diperbarui."
+
+#: src/copy/docs.ts
+msgid "The events Yuva sends to your webhook endpoints and the payload of each."
+msgstr "Peristiwa yang dikirim Yuva ke endpoint webhook Anda dan payload masing-masing."
+
+#: src/copy/ai.ts
+msgid "The first time the assistant uses Yuva, your browser opens Yuva to sign in."
+msgstr "Saat asisten pertama kali memakai Yuva, peramban Anda membuka Yuva untuk masuk."
+
+#: src/copy/brand.ts
+msgid "The mark is drawn to stay readable from an app store listing down to a 16-pixel browser tab."
+msgstr "Tandanya digambar agar tetap terbaca dari daftar toko aplikasi hingga tab peramban 16 piksel."
+
+#: src/copy/brand.ts
+msgid "The mark on its rounded square. Use it wherever Yuva appears as an app or a link."
+msgstr "Tanda pada persegi bersudut membulat. Gunakan di mana pun Yuva muncul sebagai aplikasi atau tautan."
+
+#: src/copy/brand.ts
+msgid "The name and this site are set in Geist, an open-source typeface under the SIL Open Font License."
+msgstr "Nama dan situs ini disusun dengan Geist, huruf open source di bawah SIL Open Font License."
+
+#: src/copy/home.ts
+msgid "The panel on a phone: the conversation list with each person's channel and latest message, and the tabs at the bottom."
+msgstr "Panel di ponsel: daftar percakapan dengan saluran dan pesan terbaru tiap orang, dan tab di bagian bawah."
+
+#: src/copy/home.ts
+msgid "The panel with feedback sent from a mobile app: a bug report with the app version, device and screen, next to the conversation list."
+msgstr "Panel dengan masukan yang dikirim dari aplikasi seluler: laporan bug dengan versi aplikasi, perangkat, dan layar, di samping daftar percakapan."
+
+#: src/copy/docs.ts
+msgid "The payloads Yuva sends to your webhook endpoints."
+msgstr "Payload yang dikirim Yuva ke endpoint webhook Anda."
+
+#: src/copy/home.ts
+msgid "The report of a sent newsletter in the panel: 240 sent, 5 unsubscribed and 56 who clicked a link, a chart over time and the number of clicks on each link."
+msgstr "Laporan buletin yang terkirim di panel: 240 terkirim, 5 berhenti berlangganan, dan 56 mengeklik tautan, grafik dari waktu ke waktu, dan jumlah klik pada setiap tautan."
+
+#: src/copy/contact.ts
+msgid "The server and panel are AGPL-3.0, the SDKs and API contract MIT. Improvements to the core stay public."
+msgstr "Server dan panel berlisensi AGPL-3.0, SDK dan kontrak API berlisensi MIT. Peningkatan inti tetap publik."
+
+#: src/copy/cloudflare-email.ts
+msgid "The Worker is one way to call /ingress/email. Any mail server or relay can post the raw message with the same signed headers, and a mail server that delivers to a command can pipe the message into yuva ingest-email. The request format is documented in the Worker's README."
+msgstr "Worker adalah salah satu cara memanggil /ingress/email. Server surat atau relay apa pun dapat mengirim pesan mentah dengan header bertanda tangan yang sama, dan server surat yang mengirim ke sebuah perintah dapat menyalurkan pesan ke yuva ingest-email. Format permintaannya didokumentasikan di README Worker."
+
+#: src/copy/cloudflare-email.ts
+msgid "The Worker signs the raw message, both envelope addresses and a timestamp with HMAC-SHA256 under a secret you share with Yuva, and sends them to /ingress/email on your Yuva server."
+msgstr "Worker menandatangani pesan mentah, kedua alamat amplop, dan stempel waktu dengan HMAC-SHA256 menggunakan rahasia yang Anda bagikan dengan Yuva, lalu mengirimnya ke /ingress/email di server Yuva Anda."
+
+#: src/copy/home.ts
+msgid "The Yuva chat widget open on a newsletter tool's website: the visitor's question and a member's reply, with the member shown online."
+msgstr "Widget obrolan Yuva terbuka di situs web alat buletin: pertanyaan pengunjung dan balasan anggota, dengan anggota ditampilkan daring."
+
+#: src/copy/cloudflare-email.ts
+msgid "The Yuva Email Worker reads the raw message and the envelope, signs the request and posts it to Yuva. Parsing, threading and spam decisions stay on the server."
+msgstr "Yuva Email Worker membaca pesan mentah dan amplop, menandatangani permintaan, dan mengirimkannya ke Yuva. Penguraian, pengutasan, dan keputusan spam tetap di server."
+
+#: src/copy/brand.ts
+msgid "The Yuva logo, colours and typeface, ready for articles, integrations and app listings. Please read the rules for the name and logo before you use them."
+msgstr "Logo, warna, dan huruf Yuva, siap untuk artikel, integrasi, dan daftar aplikasi. Harap baca aturan nama dan logo sebelum menggunakannya."
+
+#: src/copy/home.ts
+msgid "The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send."
+msgstr "Panel pesan Yuva: percakapan dari email, live chat, dan aplikasi dalam satu daftar, serta percakapan yang dibuka sebagai obrolan, dengan catatan tim dan balasan yang disusun asisten untuk dikirim rekan tim."
+
+#: src/ui/ThemeToggle.astro
+msgid "Theme"
+msgstr "Tema"
+
+#: src/copy/templates.ts
+msgid "These templates are MIT licensed: use, change and share them in your own mails."
+msgstr "Templat ini berlisensi MIT: gunakan, ubah, dan bagikan di email Anda sendiri."
+
+#: src/copy/templates.ts
+msgid "This browser does not switch the preview to dark mode. Use your system's dark setting to see it, or open the template to check it in the designer."
+msgstr "Peramban ini tidak mengalihkan pratinjau ke mode gelap. Gunakan pengaturan gelap sistem Anda untuk melihatnya, atau buka templat untuk memeriksanya di desainer."
+
+#: src/copy/docs.ts
+msgid "This documentation is written in English."
+msgstr "Dokumentasi ini ditulis dalam bahasa Inggris."
+
+#: src/copy/docs.ts
+msgid "This page is not translated yet. It is shown in English."
+msgstr "Halaman ini belum diterjemahkan. Halaman ditampilkan dalam bahasa Inggris."
+
+#: src/copy/docs.ts
+msgid "This page is only available in English."
+msgstr "Halaman ini hanya tersedia dalam bahasa Inggris."
+
+#: src/copy/home.ts
+msgid "through your own SMTP account"
+msgstr "lewat akun SMTP Anda sendiri"
+
+#: src/copy/home.ts
+msgid "to a teammate"
+msgstr "ke rekan tim"
+
+#: src/copy/home.ts
+msgid "Today"
+msgstr "Hari ini"
+
+#: src/copy/pages.ts
+msgid "Try Yuva"
+msgstr "Coba Yuva"
+
+#: src/copy/docs.ts
+msgid "Type"
+msgstr "Tipe"
+
+#: src/copy/docs.ts
+msgid "Type to search the guides and the API reference"
+msgstr "Ketik untuk mencari di panduan dan referensi API"
+
+#: src/copy/brand.ts
+msgid "Typeface"
+msgstr "Huruf"
+
+#: src/pages/404.astro
+msgid "Undeliverable"
+msgstr "Tidak terkirim"
+
+#: src/copy/cloudflare-email.ts
+msgid "Under Routing rules, send each support address to the Worker yuva-edge. For a catch-all channel, point the catch-all rule at it."
+msgstr "Di Routing rules, arahkan setiap alamat dukungan ke Worker yuva-edge. Untuk saluran catch-all, arahkan aturan catch-all ke sana."
+
+#: src/copy/brand.ts
+msgid "use the logo in a way that suggests endorsement by the project."
+msgstr "menggunakan logo dengan cara yang menyiratkan dukungan dari proyek."
+
+#: src/copy/brand.ts
+msgid "use the name, unchanged, to refer to the unmodified project;"
+msgstr "menggunakan nama, tanpa diubah, untuk merujuk ke proyek yang tidak dimodifikasi;"
+
+#: src/copy/templates.ts
+msgid "Use this template"
+msgstr "Gunakan templat ini"
+
+#: src/copy/brand.ts
+msgid "Using the name and logo"
+msgstr "Penggunaan nama dan logo"
+
+#: src/copy/docs.ts
+msgid "Version {version} of the API, generated from the OpenAPI contract. Use the contract to generate a client in any language."
+msgstr "Versi {version} dari API, dihasilkan dari kontrak OpenAPI. Gunakan kontrak untuk menghasilkan klien dalam bahasa apa pun."
+
+#: src/copy/home.ts
+msgid "View on GitHub"
+msgstr "Lihat di GitHub"
+
+#: src/copy/home.ts
+msgid "visitors"
+msgstr "pengunjung"
+
+#: src/copy/header.ts
+msgid "Visitors without cookies."
+msgstr "Pengunjung tanpa cookie."
+
+#: src/copy/templates.ts
+msgid "Want to add a template? Send a pull request; the guide explains the folder, the rules and the preview."
+msgstr "Ingin menambahkan templat? Kirim pull request; panduan menjelaskan folder, aturan, dan pratinjaunya."
+
+#: src/pages/404.astro
+msgid "We looked in every inbox, but this page is not here. It may have moved, or the link may be wrong."
+msgstr "Kami sudah mencari di setiap kotak masuk, tetapi halaman ini tidak ada di sini. Mungkin sudah dipindahkan, atau tautannya salah."
+
+#: src/copy/contact.ts
+msgid "We would like to use Yuva under a commercial license."
+msgstr "Kami ingin menggunakan Yuva dengan lisensi komersial."
+
+#: src/copy/docs.ts
+msgid "Webhook events"
+msgstr "Peristiwa webhook"
+
+#: src/copy/home.ts
+msgid "Webhooks"
+msgstr "Webhook"
+
+#: src/copy/header.ts
+msgid "Webhooks and identity"
+msgstr "Webhook dan identitas"
+
+#: src/copy/docs.ts
+msgid "Webhooks guide"
+msgstr "Panduan webhook"
+
+#: src/copy/home.ts
+msgid "what came in and what is open"
+msgstr "apa yang masuk dan apa yang terbuka"
+
+#: src/copy/header.ts
+msgid "What changed in each version."
+msgstr "Apa yang berubah di setiap versi."
+
+#: src/copy/ai.ts
+msgid "What happens when you sign in"
+msgstr "Apa yang terjadi saat Anda masuk"
+
+#: src/copy/cloudflare-email.ts
+msgid "What happens when Yuva is down?"
+msgstr "Apa yang terjadi saat Yuva mati?"
+
+#: src/copy/header.ts
+msgid "What is built and what is next."
+msgstr "Apa yang sudah dibangun dan apa selanjutnya."
+
+#: src/copy/contact.ts
+msgid "What is it about?"
+msgstr "Tentang apa ini?"
+
+#: src/copy/cloudflare-email.ts
+msgid "What it is"
+msgstr "Apa itu"
+
+#: src/copy/cloudflare-email.ts
+msgid "When Yuva refuses a message for good, for example an unknown address, a blocked sender or a message that is too large, the Worker rejects it and the sender gets a permanent SMTP error with Yuva's reason."
+msgstr "Saat Yuva menolak sebuah pesan secara permanen, misalnya alamat tidak dikenal, pengirim yang diblokir, atau pesan yang terlalu besar, Worker menolaknya dan pengirim mendapat kesalahan SMTP permanen beserta alasan dari Yuva."
+
+#: src/copy/contact.ts
+msgid "Whether you want to invest in Yuva, build on it together, need a commercial license or are writing about it, write to us. We read every message."
+msgstr "Entah Anda ingin berinvestasi di Yuva, membangun bersama di atasnya, butuh lisensi komersial, atau menulis tentangnya, tulis kepada kami. Kami membaca setiap pesan."
+
+#: src/copy/cloudflare-email.ts
+msgid "Which domains and addresses can I use?"
+msgstr "Domain dan alamat apa yang bisa saya gunakan?"
+
+#: src/copy/brand.ts
+msgid "White"
+msgstr "Putih"
+
+#: src/copy/home.ts
+msgid "with clicks and unsubscribes"
+msgstr "dengan klik dan berhenti berlangganan"
+
+#: src/copy/cloudflare-email.ts
+msgid "With FALLBACK_FORWARD set, the message is forwarded to that address instead. Without it the delivery fails and the sending server may retry. Messages that Yuva refuses on purpose, such as mail to an unknown address, are rejected, not forwarded."
+msgstr "Dengan FALLBACK_FORWARD diatur, pesan diteruskan ke alamat itu. Tanpanya pengiriman gagal dan server pengirim dapat mencoba lagi. Pesan yang sengaja ditolak Yuva, seperti surat ke alamat tidak dikenal, ditolak dan tidak diteruskan."
+
+#: src/copy/home.ts
+msgid "with one script tag"
+msgstr "dengan satu tag script"
+
+#: src/copy/home.ts
+msgid "with recorded consent"
+msgstr "dengan persetujuan yang tercatat"
+
+#: src/copy/home.ts
+msgid "with replies and votes"
+msgstr "dengan balasan dan suara"
+
+#: src/copy/home.ts
+msgid "with the iOS and Android SDKs"
+msgstr "dengan SDK iOS dan Android"
+
+#: src/copy/home.ts
+msgid "with workspace API keys"
+msgstr "dengan kunci API ruang kerja"
+
+#: src/copy/cloudflare-email.ts
+msgid "Worker source on GitHub"
+msgstr "Sumber Worker di GitHub"
+
+#: src/copy/home.ts
+msgid "Works with"
+msgstr "Bekerja dengan"
+
+#: src/copy/contact.ts
+msgid "Write an e-mail"
+msgstr "Tulis email"
+
+#: src/copy/contact.ts
+msgid "Write to the Yuva team about investment, partnerships, commercial licenses or press, or find the right place for questions and security reports."
+msgstr "Tulis kepada tim Yuva tentang investasi, kemitraan, lisensi komersial, atau pers, atau temukan tempat yang tepat untuk pertanyaan dan laporan keamanan."
+
+#: src/copy/cloudflare-email.ts
+msgid "Yes, when you set YUVA_INGRESS_AUTHSERV_ID to mx.cloudflare.net. Yuva then reads the DMARC verdict that Email Routing adds. A new conversation that fails DMARC is marked as spam."
+msgstr "Ya, saat Anda mengatur YUVA_INGRESS_AUTHSERV_ID ke mx.cloudflare.net. Yuva lalu membaca vonis DMARC yang ditambahkan Email Routing. Percakapan baru yang gagal DMARC ditandai sebagai spam."
+
+#: src/copy/brand.ts
+msgid "You may"
+msgstr "Anda boleh"
+
+#: src/copy/cloudflare-email.ts
+msgid "You need a Yuva server and a Cloudflare account that manages the domain."
+msgstr "Anda memerlukan server Yuva dan akun Cloudflare yang mengelola domain."
+
+#: src/copy/ai.ts
+msgid "You stay in charge"
+msgstr "Anda tetap memegang kendali"
+
+#: src/copy/ai.ts
+msgid "Your browser opens Yuva. Sign in with a one-time code; a new e-mail address gets a new account."
+msgstr "Peramban Anda membuka Yuva. Masuk dengan kode sekali pakai; alamat email baru mendapat akun baru."
+
+#: src/copy/ai.ts
+msgid "Your code stays on your machine. Yuva only sees what the assistant creates through it."
+msgstr "Kode Anda tetap di mesin Anda. Yuva hanya melihat apa yang dibuat asisten melaluinya."
+
+#: src/copy/cloudflare-email.ts
+msgid "Your team answers in the panel. The reply is sent through the e-mail channel's own SMTP account, such as Amazon SES, Postmark or your own relay, from the same address and in the same thread. Replies do not go through the Worker."
+msgstr "Tim Anda menjawab di panel. Balasan dikirim lewat akun SMTP milik saluran email itu, seperti Amazon SES, Postmark, atau relay Anda sendiri, dari alamat yang sama dan di utas yang sama. Balasan tidak melewati Worker."
+
+#: src/copy/ai.ts
+msgid "Your Yuva server"
+msgstr "Server Yuva Anda"
+
+#: src/copy/ai.ts
+msgid "Yuva and your AI assistant"
+msgstr "Yuva dan asisten AI Anda"
+
+#: src/copy/pages.ts
+msgid "Yuva blog"
+msgstr "Blog Yuva"
+
+#: src/copy/brand.ts
+msgid "Yuva brand assets: logo, colours and name"
+msgstr "Aset merek Yuva: logo, warna, dan nama"
+
+#: src/copy/docs.ts
+msgid "Yuva brings e-mail, live chat and in-app messages from your customers into one inbox for your team. Start with Get started; every guide is listed below."
+msgstr "Yuva membawa email, live chat, dan pesan dalam aplikasi dari pelanggan Anda ke satu kotak masuk untuk tim Anda. Mulai dari Mulai; semua panduan tercantum di bawah."
+
+#: src/copy/home.ts
+msgid "Yuva brings support e-mail, live chat and in-app conversations from all of your products into one shared inbox, and adds newsletters, mail migration and cookieless analytics. Open source, self-hosted, one Go binary with Postgres."
+msgstr "Yuva membawa email dukungan, live chat, dan percakapan dalam aplikasi dari semua produk Anda ke satu kotak masuk bersama, dan menambahkan buletin, migrasi surat, dan analitik tanpa cookie. Open source, dihosting sendiri, satu biner Go dengan Postgres."
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva checks the signature and that the timestamp is within 5 minutes before it reads the message. A request with a wrong signature is refused."
+msgstr "Yuva memeriksa tanda tangan dan bahwa stempel waktu berada dalam 5 menit sebelum membaca pesan. Permintaan dengan tanda tangan yang salah ditolak."
+
+#: src/copy/ai.ts
+msgid "Yuva cloud"
+msgstr "Yuva cloud"
+
+#: src/copy/docs.ts
+msgid "Yuva documentation"
+msgstr "Dokumentasi Yuva"
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva Email Worker for Cloudflare"
+msgstr "Yuva Email Worker untuk Cloudflare"
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva finds the e-mail channel for the recipient address and threads the message by In-Reply-To and References into the conversation it belongs to. Anything else starts a new conversation. A reply reopens the conversation."
+msgstr "Yuva menemukan saluran email untuk alamat penerima dan mengutaskan pesan berdasarkan In-Reply-To dan References ke percakapan tempatnya berada. Yang lain memulai percakapan baru. Balasan membuka kembali percakapan."
+
+#: src/copy/ai.ts
+msgid "Yuva has a built-in MCP server. Connect it once, and your assistant reads your project, sees what your workspace already has, and sets up live chat, analytics or newsletters, asking before each change."
+msgstr "Yuva memiliki server MCP bawaan. Hubungkan sekali, dan asisten Anda membaca proyek Anda, melihat apa yang sudah ada di ruang kerja Anda, dan menyiapkan live chat, analitik, atau buletin, dengan bertanya sebelum setiap perubahan."
+
+#: src/copy/header.ts
+msgid "Yuva home"
+msgstr "Beranda Yuva"
+
+#: src/copy/ai.ts
+msgid "Yuva in your AI assistant"
+msgstr "Yuva di asisten AI Anda"
+
+#: src/copy/contact.ts
+msgid "Yuva is pre-alpha. Every release, the roadmap and the code are public, so you can see exactly where it stands."
+msgstr "Yuva masih pra-alfa. Setiap rilis, peta jalan, dan kode bersifat publik, jadi Anda bisa melihat dengan tepat di mana posisinya."
+
+#: src/copy/brand.ts
+msgid "Yuva orange"
+msgstr "Oranye Yuva"
+
+#: src/copy/home.ts
+msgid "Yuva puts e-mail, live chat and in-app messages from all of your products into one inbox for your team. Open source, one Go binary with Postgres."
+msgstr "Yuva menempatkan email, live chat, dan pesan dalam aplikasi dari semua produk Anda ke satu kotak masuk untuk tim Anda. Open source, satu biner Go dengan Postgres."
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva refuses any request without a valid HMAC signature or with a timestamp more than 5 minutes off, before it reads the body. Keep the secret to yourself."
+msgstr "Yuva menolak setiap permintaan tanpa tanda tangan HMAC yang valid atau dengan stempel waktu yang meleset lebih dari 5 menit, sebelum membaca isinya. Simpan rahasia untuk Anda sendiri."
+
+#: src/copy/pages.ts
+msgid "Yuva releases"
+msgstr "Rilis Yuva"
+
+#: src/copy/docs.ts
+msgid "Yuva signs every request with Standard Webhooks and retries failed deliveries. Registering an endpoint and verifying a signature are in the webhooks guide."
+msgstr "Yuva menandatangani setiap permintaan dengan Standard Webhooks dan mencoba ulang pengiriman yang gagal. Mendaftarkan endpoint dan memverifikasi tanda tangan ada di panduan webhook."
+
+#: src/copy/contact.ts
+msgid "Yuva team"
+msgstr "Tim Yuva"
+
+#: src/copy/brand.ts
+msgid "Yuva: one inbox for every product"
+msgstr "Yuva: satu kotak masuk untuk setiap produk"
+
+#: src/copy/home.ts
+msgid "Yuva: one open-source inbox for e-mail, live chat and in-app messages"
+msgstr "Yuva: satu kotak masuk open source untuk email, live chat, dan pesan dalam aplikasi"
+
+#: src/copy/home.ts
+msgid "Zendesk and Help Scout"
+msgstr "Zendesk dan Help Scout"

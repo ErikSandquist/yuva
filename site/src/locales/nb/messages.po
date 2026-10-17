@@ -1,0 +1,2089 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 22:38+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: nb\n"
+
+#: src/layouts/Footer.astro
+msgid "“Yuva” is Turkish for nest, or home."
+msgstr "«Yuva» betyr rede, eller hjem, på tyrkisk."
+
+#: src/copy/pages.ts
+msgid "{count} changes"
+msgstr "{count} endringer"
+
+#: src/copy/docs.ts
+#: src/copy/pages.ts
+msgid "{count} min read"
+msgstr "{count} min lesetid"
+
+#: src/copy/contact.ts
+msgid "{count} releases, latest {version}"
+msgstr "{count} utgivelser, siste {version}"
+
+#: src/copy/docs.ts
+msgid "{count} sections"
+msgstr "{count} seksjoner"
+
+#: src/copy/templates.ts
+msgid "{name} e-mail preview"
+msgstr "Forhåndsvisning av e-posten {name}"
+
+#: src/copy/docs.ts
+msgid "{name} endpoints of the Yuva API."
+msgstr "{name}-endepunktene i Yuva-API-et."
+
+#: src/copy/templates.ts
+msgid "{name}: {description} A free Yuva e-mail template."
+msgstr "{name}: {description} En gratis e-postmal fra Yuva."
+
+#: src/copy/home.ts
+msgid "a contact and their data"
+msgstr "en kontakt og dataene dens"
+
+#: src/copy/cloudflare-email.ts
+msgid "A customer writes to one of your support addresses, for example support@example.com."
+msgstr "En kunde skriver til en av støtteadressene dine, for eksempel support@example.com."
+
+#: src/copy/home.ts
+msgid "A finished import in the panel: 6 conversations and 12 messages copied from an mbox file, with a note that Yuva has no access to your mailbox."
+msgstr "En fullført import i panelet: 6 samtaler og 12 meldinger kopiert fra en mbox-fil, med en merknad om at Yuva ikke har tilgang til postkassen din."
+
+#: src/copy/contact.ts
+msgid "A hosted service and commercial licenses"
+msgstr "En driftet tjeneste og kommersielle lisenser"
+
+#: src/copy/cloudflare-email.ts
+msgid "A message can be up to 25 MiB including attachments, which is the Cloudflare Email Routing limit. Yuva keeps up to 50 attachments per message, each within the server's attachment size limit (25 MiB by default) and allowed types; it leaves out the rest."
+msgstr "En melding kan være opptil 25 MiB inkludert vedlegg, som er grensen for Cloudflare Email Routing. Yuva beholder opptil 50 vedlegg per melding, hvert innenfor serverens grense for vedleggsstørrelse (som standard 25 MiB) og de tillatte typene; resten utelater den."
+
+#: src/copy/cloudflare-email.ts
+msgid "A small open-source Worker"
+msgstr "En liten åpen kildekode-Worker"
+
+#: src/copy/home.ts
+msgid "Accepted answer"
+msgstr "Godkjent svar"
+
+#: src/copy/home.ts
+msgid "Add ratings and a discussion area to your own documentation pages."
+msgstr "Legg til vurderinger og et diskusjonsområde på dine egne dokumentasjonssider."
+
+#: src/copy/brand.ts
+msgid "Add shadows or outlines"
+msgstr "Legge til skygger eller omriss"
+
+#: src/copy/ai.ts
+msgid "Add this to .cursor/mcp.json in your project:"
+msgstr "Legg dette til i .cursor/mcp.json i prosjektet ditt:"
+
+#: src/copy/ai.ts
+msgid "Add this to .vscode/mcp.json in your project:"
+msgstr "Legg dette til i .vscode/mcp.json i prosjektet ditt:"
+
+#: src/copy/ai.ts
+msgid "Add Yuva in your terminal:"
+msgstr "Legg til Yuva i terminalen:"
+
+#: src/copy/ai.ts
+msgid "Add Yuva live chat to this site."
+msgstr "Legg til Yuva-livechat på dette nettstedet."
+
+#: src/copy/pages.ts
+msgid "Added"
+msgstr "Lagt til"
+
+#: src/layouts/Footer.astro
+msgid "AI assistants"
+msgstr "KI-assistenter"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "AI assistants and MCP"
+msgstr "KI-assistenter og MCP"
+
+#: src/copy/pages.ts
+msgid "All posts"
+msgstr "Alle innlegg"
+
+#: src/copy/pages.ts
+msgid "All releases on GitHub"
+msgstr "Alle utgivelser på GitHub"
+
+#: src/copy/templates.ts
+msgid "All templates"
+msgstr "Alle maler"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Analytics"
+msgstr "Analyse"
+
+#: src/copy/home.ts
+msgid "and funnels"
+msgstr "og traktanalyser"
+
+#: src/copy/home.ts
+msgid "and Postgres"
+msgstr "og Postgres"
+
+#: src/copy/home.ts
+msgid "and the inboxes they can see"
+msgstr "og innboksene de kan se"
+
+#: src/copy/templates.ts
+msgid "Announcement"
+msgstr "Kunngjøring"
+
+#: src/copy/cloudflare-email.ts
+msgid "Any domain you manage in Cloudflare and whose mail no other server handles, because Email Routing becomes its MX. Each e-mail channel has an address, or the catch-all *@example.com for every address of the domain that no channel has exactly. A subaddress such as support+billing@example.com reaches the channel of support@example.com."
+msgstr "Et hvilket som helst domene du administrerer i Cloudflare, og som ingen annen server håndterer e-post for, fordi Email Routing blir MX-en. Hver e-postkanal har en adresse, eller fanger-alt-adressen *@example.com for alle adresser i domenet som ingen kanal har nøyaktig. En underadresse som support+billing@example.com når kanalen til support@example.com."
+
+#: src/copy/contact.ts
+msgid "API"
+msgstr "API"
+
+#: src/layouts/Footer.astro
+msgid "API contract"
+msgstr "API-kontrakt"
+
+#: src/copy/docs.ts
+msgid "API key"
+msgstr "API-nøkkel"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+msgid "API reference"
+msgstr "API-referanse"
+
+#: src/copy/brand.ts
+msgid "App icon"
+msgstr "App-ikon"
+
+#: src/copy/contact.ts
+msgid "Apps"
+msgstr "Apper"
+
+#: src/copy/home.ts
+msgid "Assign"
+msgstr "Tildel"
+
+#: src/copy/home.ts
+msgid "at a glance"
+msgstr "på et blikk"
+
+#: src/copy/contact.ts
+msgid "At a glance"
+msgstr "På et blikk"
+
+#: src/copy/home.ts
+msgid "Attributes"
+msgstr "Attributter"
+
+#: src/copy/docs.ts
+msgid "Authentication"
+msgstr "Autentisering"
+
+#: src/copy/ai.ts
+msgid "Back in the assistant, Yuva is connected. Settings → Connected apps shows it and revokes it."
+msgstr "Tilbake i assistenten er Yuva tilkoblet. Innstillinger → Tilkoblede apper viser den og kan tilbakekalle den."
+
+#: src/pages/404.astro
+msgid "Back to the home page"
+msgstr "Tilbake til forsiden"
+
+#: src/copy/docs.ts
+msgid "Back to the website"
+msgstr "Tilbake til nettstedet"
+
+#: src/copy/home.ts
+msgid "before anything is sent"
+msgstr "før noe sendes"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/copy/pages.ts
+#: src/layouts/Footer.astro
+msgid "Blog"
+msgstr "Blogg"
+
+#: src/copy/brand.ts
+msgid "Brand"
+msgstr "Merkevare"
+
+#: src/copy/brand.ts
+#: src/copy/contact.ts
+#: src/copy/header.ts
+#: src/layouts/Footer.astro
+msgid "Brand assets"
+msgstr "Merkevareressurser"
+
+#: src/copy/pages.ts
+msgid "Breaking changes"
+msgstr "Brytende endringer"
+
+#: src/copy/header.ts
+msgid "Bring your mail and history."
+msgstr "Ta med e-posten og historikken din."
+
+#: src/copy/home.ts
+msgid "Bring your mail and support history over. Yuva only reads at the source."
+msgstr "Ta med e-posten og støttehistorikken din. Yuva leser bare ved kilden."
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Broadcasts"
+msgstr "Masseutsendelser"
+
+#: src/copy/home.ts
+msgid "Build e-mails in the designer or start from a free template."
+msgstr "Lag e-poster i designeren eller start fra en gratis mal."
+
+#: src/copy/contact.ts
+msgid "Built with"
+msgstr "Bygget med"
+
+#: src/copy/contact.ts
+msgid "Business"
+msgstr "Forretning"
+
+#: src/copy/pages.ts
+#: src/copy/templates.ts
+msgid "By"
+msgstr "Av"
+
+#: src/copy/cloudflare-email.ts
+msgid "Can someone forge mail to my Yuva server?"
+msgstr "Kan noen forfalske e-post til Yuva-serveren min?"
+
+#: src/copy/brand.ts
+msgid "Change its colours"
+msgstr "Endre fargene"
+
+#: src/copy/pages.ts
+msgid "Changed"
+msgstr "Endret"
+
+#: src/copy/pages.ts
+msgid "Changelog"
+msgstr "Endringslogg"
+
+#: src/copy/pages.ts
+msgid "CHANGELOG.md"
+msgstr "CHANGELOG.md"
+
+#: src/copy/contact.ts
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Channels"
+msgstr "Kanaler"
+
+#: src/copy/home.ts
+msgid "checks before you send"
+msgstr "kontroller før du sender"
+
+#: src/copy/ai.ts
+msgid "Choose the workspace and what the assistant may do, then approve."
+msgstr "Velg arbeidsområdet og hva assistenten kan gjøre, og godkjenn."
+
+#: src/copy/header.ts
+msgid "Claude drafts, you send."
+msgstr "Claude lager utkast, du sender."
+
+#: src/copy/brand.ts
+msgid "Click a colour to copy its hex code."
+msgstr "Klikk på en farge for å kopiere heksakoden."
+
+#: src/copy/header.ts
+#: src/layouts/Footer.astro
+msgid "Cloudflare e-mail"
+msgstr "Cloudflare-e-post"
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare Email Routing becomes the MX of your domain and receives the mail. Yuva does not listen for SMTP, so there is no mail server to install or keep patched."
+msgstr "Cloudflare Email Routing blir domenets MX og tar imot e-posten. Yuva lytter ikke etter SMTP, så det er ingen e-postserver å installere eller holde oppdatert."
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare Email Routing receives the message and passes it to the Yuva Email Worker."
+msgstr "Cloudflare Email Routing tar imot meldingen og sender den videre til Yuva Email Worker."
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare, the Cloudflare logo and Cloudflare Workers are trademarks and/or registered trademarks of Cloudflare, Inc. in the United States and other jurisdictions. Yuva is an independent open-source project, not affiliated with or endorsed by Cloudflare."
+msgstr "Cloudflare, Cloudflare-logoen og Cloudflare Workers er varemerker og/eller registrerte varemerker som tilhører Cloudflare, Inc. i USA og andre jurisdiksjoner. Yuva er et uavhengig åpen kildekode-prosjekt, verken tilknyttet eller godkjent av Cloudflare."
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare® Email Routing receives the mail for your support addresses, and the open-source Yuva Email Worker hands each message to Yuva, signed. It lands in your shared inbox as a conversation your team answers."
+msgstr "Cloudflare® Email Routing tar imot e-posten til støtteadressene dine, og den åpne Yuva Email Worker leverer hver melding til Yuva, signert. Den havner i den delte innboksen din som en samtale teamet ditt svarer på."
+
+#: src/copy/brand.ts
+msgid "Colours"
+msgstr "Farger"
+
+#: src/copy/contact.ts
+msgid "Commercial license"
+msgstr "Kommersiell lisens"
+
+#: src/copy/pages.ts
+msgid "Compare changes"
+msgstr "Sammenlign endringer"
+
+#: src/copy/home.ts
+msgid "Connect a support address, a chat widget for your website or the SDKs for your apps."
+msgstr "Koble til en støtteadresse, en chat-widget for nettstedet ditt eller SDK-ene for appene dine."
+
+#: src/copy/home.ts
+msgid "Connect Claude, ChatGPT or Cursor. A teammate reviews and sends what they draft."
+msgstr "Koble til Claude, ChatGPT eller Cursor. En kollega gjennomgår og sender det de lager utkast til."
+
+#: src/copy/ai.ts
+msgid "Connect Yuva"
+msgstr "Koble til Yuva"
+
+#: src/copy/ai.ts
+msgid "Connect Yuva to Claude, ChatGPT, Cursor, VS Code or Gemini CLI, then let the assistant look at your project and set Yuva up with you."
+msgstr "Koble Yuva til Claude, ChatGPT, Cursor, VS Code eller Gemini CLI, og la assistenten se på prosjektet ditt og sette opp Yuva sammen med deg."
+
+#: src/copy/contact.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Contact"
+msgstr "Kontakt"
+
+#: src/copy/docs.ts
+msgid "Contact session"
+msgstr "Kontaktøkt"
+
+#: src/copy/contact.ts
+msgid "Contact Yuva"
+msgstr "Kontakt Yuva"
+
+#: src/copy/home.ts
+msgid "Contacts"
+msgstr "Kontakter"
+
+#: src/layouts/Footer.astro
+msgid "Contributing"
+msgstr "Bidra"
+
+#: src/copy/ai.ts
+#: src/copy/brand.ts
+#: src/copy/contact.ts
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/pages.ts
+msgid "Copied"
+msgstr "Kopiert"
+
+#: src/copy/ai.ts
+#: src/copy/docs.ts
+msgid "Copy"
+msgstr "Kopier"
+
+#: src/copy/contact.ts
+msgid "Copy address"
+msgstr "Kopier adressen"
+
+#: src/copy/pages.ts
+msgid "Copy link"
+msgstr "Kopier lenken"
+
+#: src/copy/header.ts
+msgid "Copy logo as SVG"
+msgstr "Kopier logoen som SVG"
+
+#: src/copy/header.ts
+msgid "Copy logo with name as SVG"
+msgstr "Kopier logoen med navn som SVG"
+
+#: src/copy/brand.ts
+msgid "Copy SVG"
+msgstr "Kopier SVG"
+
+#: src/copy/home.ts
+#: src/copy/pages.ts
+msgid "Create an account"
+msgstr "Opprett en konto"
+
+#: src/copy/home.ts
+msgid "Create an account on our service and start without running a server."
+msgstr "Opprett en konto hos tjenesten vår og kom i gang uten å drifte en server."
+
+#: src/copy/pages.ts
+msgid "Create an account on our service, or run it on your own server."
+msgstr "Opprett en konto hos tjenesten vår, eller kjør den på din egen server."
+
+#: src/copy/templates.ts
+msgid "Dark"
+msgstr "Mørk"
+
+#: src/ui/ThemeToggle.astro
+msgid "Dark theme"
+msgstr "Mørkt tema"
+
+#: src/copy/home.ts
+msgid "Delete"
+msgstr "Slett"
+
+#: src/copy/home.ts
+msgid "Deliverability"
+msgstr "Leveringsevne"
+
+#: src/copy/cloudflare-email.ts
+msgid "Deploy the Worker to your Cloudflare account, using the same secret:"
+msgstr "Distribuer Worker til Cloudflare-kontoen din, med samme hemmelighet:"
+
+#: src/copy/pages.ts
+msgid "Deprecated"
+msgstr "Utfaset"
+
+#: src/copy/docs.ts
+msgid "Description"
+msgstr "Beskrivelse"
+
+#: src/copy/home.ts
+msgid "Designer"
+msgstr "Designer"
+
+#: src/copy/home.ts
+msgid "Designs and broadcast drafts"
+msgstr "Design og utkast til masseutsendelser"
+
+#: src/copy/templates.ts
+msgid "Desktop"
+msgstr "Datamaskin"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Developers"
+msgstr "Utviklere"
+
+#: src/copy/templates.ts
+msgid "Digest"
+msgstr "Oppsummering"
+
+#: src/copy/home.ts
+msgid "Discussions"
+msgstr "Diskusjoner"
+
+#: src/copy/brand.ts
+msgid "Do"
+msgstr "Gjør"
+
+#: src/copy/cloudflare-email.ts
+msgid "Do I need to run a mail server?"
+msgstr "Må jeg drifte en e-postserver?"
+
+#: src/copy/docs.ts
+msgid "Docs"
+msgstr "Dokumenter"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Documentation"
+msgstr "Dokumentasjon"
+
+#: src/copy/cloudflare-email.ts
+msgid "Does Yuva use the DMARC result from Cloudflare?"
+msgstr "Bruker Yuva DMARC-resultatet fra Cloudflare?"
+
+#: src/copy/brand.ts
+msgid "Don't"
+msgstr "Ikke gjør"
+
+#: src/copy/header.ts
+msgid "Download logo"
+msgstr "Last ned logoen"
+
+#: src/copy/brand.ts
+msgid "Download PNG"
+msgstr "Last ned PNG"
+
+#: src/copy/brand.ts
+msgid "Download SVG"
+msgstr "Last ned SVG"
+
+#: src/copy/brand.ts
+msgid "Download the icon"
+msgstr "Last ned ikonet"
+
+#: src/copy/brand.ts
+msgid "Download the Yuva logo as SVG or PNG, copy the brand colours, and read how the name and logo may be used."
+msgstr "Last ned Yuva-logoen som SVG eller PNG, kopier merkevarefargene og les hvordan navnet og logoen kan brukes."
+
+#: src/copy/home.ts
+msgid "Draft replies"
+msgstr "Svarutkast"
+
+#: src/copy/contact.ts
+#: src/copy/home.ts
+msgid "E-mail"
+msgstr "E-post"
+
+#: src/pages/og/[lang].png.ts
+msgid "E-mail · live chat · in-app · self-hosted"
+msgstr "E-post · livechat · i appen · selvdriftet"
+
+#: src/copy/header.ts
+#: src/copy/templates.ts
+#: src/layouts/Footer.astro
+msgid "E-mail templates"
+msgstr "E-postmaler"
+
+#: src/copy/home.ts
+msgid "E-mail templates and designer"
+msgstr "E-postmaler og designer"
+
+#: src/copy/header.ts
+msgid "E-mail, live chat and in-app."
+msgstr "E-post, livechat og i appen."
+
+#: src/copy/contact.ts
+msgid "Early and built in the open"
+msgstr "Tidlig og bygget i det åpne"
+
+#: src/copy/docs.ts
+msgid "Edit this page on GitHub"
+msgstr "Rediger denne siden på GitHub"
+
+#: src/copy/cloudflare-email.ts
+msgid "Email Routing becomes the MX of the domain, so use a domain or subdomain that no other mail server handles."
+msgstr "Email Routing blir domenets MX, så bruk et domene eller underdomene som ingen annen e-postserver håndterer."
+
+#: src/copy/cloudflare-email.ts
+msgid "Email Routing in front"
+msgstr "Email Routing foran"
+
+#: src/copy/brand.ts
+msgid "Ember"
+msgstr "Glør"
+
+#: src/copy/templates.ts
+msgid "Enter a full address starting with http:// or https://."
+msgstr "Skriv inn en full adresse som begynner med http:// eller https://."
+
+#: src/copy/templates.ts
+msgid "Enter the address of your Yuva server to open the template there. It is kept in this browser only."
+msgstr "Skriv inn adressen til Yuva-serveren din for å åpne malen der. Den lagres bare i denne nettleseren."
+
+#: src/copy/ai.ts
+msgid "Enter this address and sign in:"
+msgstr "Skriv inn denne adressen og logg inn:"
+
+#: src/copy/templates.ts
+msgid "Event"
+msgstr "Hendelse"
+
+#: src/copy/header.ts
+msgid "Every channel in one list."
+msgstr "Alle kanaler i én liste."
+
+#: src/copy/home.ts
+msgid "Every channel lands in one list. Your team answers from one chat-style view."
+msgstr "Hver kanal havner i én liste. Teamet ditt svarer fra én visning i chat-stil."
+
+#: src/copy/header.ts
+msgid "Every endpoint, to try."
+msgstr "Hvert endepunkt, til å prøve."
+
+#: src/copy/home.ts
+msgid "Every part of Yuva has a typed contract and a small, documented integration."
+msgstr "Hver del av Yuva har en typet kontrakt og en liten, dokumentert integrasjon."
+
+#: src/copy/home.ts
+msgid "Every support channel, answered as one chat."
+msgstr "Alle støttekanaler, besvart som én chat."
+
+#: src/copy/pages.ts
+msgid "Every version of Yuva and what changed in it. Versions follow Semantic Versioning, and until 1.0 any release may change the API and the database schema."
+msgstr "Hver versjon av Yuva og hva som endret seg i den. Versjonene følger semantisk versjonering, og frem til 1.0 kan enhver utgivelse endre API-et og databaseskjemaet."
+
+#: src/copy/docs.ts
+msgid "Every Yuva endpoint and webhook event, generated from the OpenAPI 3.1 contract."
+msgstr "Hvert Yuva-endepunkt og webhook-hendelse, generert fra OpenAPI 3.1-kontrakten."
+
+#: src/copy/docs.ts
+msgid "Every Yuva guide in one place: install, channels, broadcasts, analytics, moving a mailbox in, the developer tools and the API reference."
+msgstr "Alle Yuva-veiledninger på ett sted: installasjon, kanaler, masseutsendelser, analyse, flytting av en postkasse, utviklerverktøyene og API-referansen."
+
+#: src/copy/pages.ts
+msgid "Every Yuva release and what changed in it, from the changelog."
+msgstr "Hver Yuva-utgivelse og hva som endret seg i den, fra endringsloggen."
+
+#: src/copy/home.ts
+msgid "Feedback"
+msgstr "Tilbakemeldinger"
+
+#: src/copy/home.ts
+msgid "Files"
+msgstr "Filer"
+
+#: src/copy/cloudflare-email.ts
+msgid "Film: support e-mail from Cloudflare to the Yuva inbox"
+msgstr "Film: støtte-e-post fra Cloudflare til Yuva-innboksen"
+
+#: src/copy/pages.ts
+msgid "Fixed"
+msgstr "Rettet"
+
+#: src/copy/pages.ts
+msgid "Follow the blog"
+msgstr "Følg bloggen"
+
+#: src/copy/brand.ts
+msgid "For app stores and platforms that round the corners themselves."
+msgstr "For appbutikker og plattformer som runder hjørnene selv."
+
+#: src/copy/brand.ts
+msgid "For dark backgrounds."
+msgstr "For mørke bakgrunner."
+
+#: src/copy/contact.ts
+msgid "For investors"
+msgstr "For investorer"
+
+#: src/copy/brand.ts
+msgid "For light backgrounds."
+msgstr "For lyse bakgrunner."
+
+#: src/copy/home.ts
+msgid "for open conversations"
+msgstr "for åpne samtaler"
+
+#: src/copy/home.ts
+msgid "for the usual answers"
+msgstr "for de vanlige svarene"
+
+#: src/copy/home.ts
+msgid "for your newsletters"
+msgstr "for nyhetsbrevene dine"
+
+#: src/copy/home.ts
+msgid "for your own e-mails"
+msgstr "for dine egne e-poster"
+
+#: src/copy/header.ts
+msgid "Free designs to copy."
+msgstr "Gratis design å kopiere."
+
+#: src/copy/templates.ts
+msgid "Free starter designs for newsletters, product updates, announcements and more. Preview them here and open one in Yuva's e-mail designer."
+msgstr "Gratis startdesign for nyhetsbrev, produktoppdateringer, kunngjøringer og mer. Se dem her og åpne ett i Yuvas e-postdesigner."
+
+#: src/copy/home.ts
+msgid "from the people you helped"
+msgstr "fra menneskene du har hjulpet"
+
+#: src/copy/pages.ts
+msgid "From the team"
+msgstr "Fra teamet"
+
+#: src/copy/brand.ts
+msgid "Full-bleed icon"
+msgstr "Ikon helt ut til kanten"
+
+#: src/copy/home.ts
+msgid "Gallery"
+msgstr "Galleri"
+
+#: src/copy/docs.ts
+msgid "Get started"
+msgstr "Kom i gang"
+
+#: src/copy/home.ts
+msgid "Give every product's users a way to reach you."
+msgstr "Gi brukerne av hvert produkt en måte å nå deg på."
+
+#: src/copy/brand.ts
+msgid "Glow"
+msgstr "Glød"
+
+#: src/copy/home.ts
+msgid "Gmail, Outlook or any IMAP server"
+msgstr "Gmail, Outlook eller en hvilken som helst IMAP-server"
+
+#: src/copy/home.ts
+msgid "Goals"
+msgstr "Mål"
+
+#: src/copy/docs.ts
+msgid "Guides"
+msgstr "Veiledninger"
+
+#: src/copy/header.ts
+msgid "Guides for every part."
+msgstr "Veiledninger for hver del."
+
+#: src/copy/home.ts
+msgid "Help center"
+msgstr "Hjelpesenter"
+
+#: src/copy/home.ts
+msgid "Help desks"
+msgstr "Kundestøtteverktøy"
+
+#: src/copy/contact.ts
+msgid "Hi! Tell us a little about yourself and what you have in mind."
+msgstr "Hei! Fortell oss litt om deg selv og hva du har i tankene."
+
+#: src/copy/home.ts
+msgid "History"
+msgstr "Historikk"
+
+#: src/copy/home.ts
+msgid "Hosted"
+msgstr "Driftet"
+
+#: src/copy/contact.ts
+msgid "Hosted service and commercial licenses"
+msgstr "Driftet tjeneste og kommersielle lisenser"
+
+#: src/copy/cloudflare-email.ts
+msgid "How a message gets from the customer to your team"
+msgstr "Hvordan en melding kommer fra kunden til teamet ditt"
+
+#: src/copy/cloudflare-email.ts
+msgid "How big can a message be?"
+msgstr "Hvor stor kan en melding være?"
+
+#: src/copy/contact.ts
+msgid "How the AGPL, the MIT SDKs and the CLA fit together."
+msgstr "Hvordan AGPL, MIT-SDK-ene og CLA-en henger sammen."
+
+#: src/copy/templates.ts
+msgid "How to add a template"
+msgstr "Slik legger du til en mal"
+
+#: src/copy/templates.ts
+msgid "https://yuva.example.com"
+msgstr "https://yuva.example.com"
+
+#: src/copy/contact.ts
+msgid "I have a question that doesn't fit anywhere else."
+msgstr "Jeg har et spørsmål som ikke passer noe annet sted."
+
+#: src/copy/contact.ts
+msgid "I have an idea for working together."
+msgstr "Jeg har en idé om samarbeid."
+
+#: src/copy/contact.ts
+msgid "I'd like to talk about investing in Yuva."
+msgstr "Jeg vil gjerne snakke om å investere i Yuva."
+
+#: src/copy/contact.ts
+msgid "I'm writing about Yuva and have a few questions."
+msgstr "Jeg skriver om Yuva og har noen spørsmål."
+
+#: src/copy/home.ts
+msgid "Identity tokens"
+msgstr "Identitetstokener"
+
+#: src/copy/cloudflare-email.ts
+msgid "If Yuva answers with a server error, does not answer within 20 seconds or cannot be reached, the Worker can forward the message to an address you choose, as long as you set FALLBACK_FORWARD. That address must be a verified destination in Email Routing. The message then arrives as a plain forward and does not appear in Yuva. Without FALLBACK_FORWARD the delivery fails with an error and the sending server may retry later."
+msgstr "Hvis Yuva svarer med en serverfeil, ikke svarer innen 20 sekunder eller ikke kan nås, kan Worker videresende meldingen til en adresse du velger, så lenge du har satt FALLBACK_FORWARD. Adressen må være et verifisert mål i Email Routing. Meldingen kommer da som en vanlig videresending og vises ikke i Yuva. Uten FALLBACK_FORWARD mislykkes leveringen med en feil, og avsenderserveren kan prøve igjen senere."
+
+#: src/copy/cloudflare-email.ts
+msgid "If Yuva is unreachable"
+msgstr "Hvis Yuva ikke kan nås"
+
+#: src/copy/ai.ts
+msgid "If Yuva itself misbehaves, the assistant can prepare a GitHub issue with your names, addresses and keys removed. You read it before anything is opened."
+msgstr "Hvis Yuva selv feiler, kan assistenten forberede en GitHub-issue der navnene, adressene og nøklene dine er fjernet. Du leser den før noe åpnes."
+
+#: src/copy/docs.ts
+msgid "In"
+msgstr "I"
+
+#: src/copy/ai.ts
+msgid "In claude.ai or Claude Desktop, open Customize → Connectors → Add custom connector."
+msgstr "I claude.ai eller Claude Desktop åpner du Customize → Connectors → Add custom connector."
+
+#: src/copy/cloudflare-email.ts
+msgid "In the Cloudflare dashboard, open your domain → Email → Email Routing and enable it. Cloudflare adds its MX and SPF records."
+msgstr "I Cloudflare-dashbordet åpner du domenet ditt → Email → Email Routing og aktiverer det. Cloudflare legger til sine MX- og SPF-poster."
+
+#: src/copy/cloudflare-email.ts
+msgid "In Yuva, open Settings → your inbox → Channels → E-mail and add the support address. Set a secret on the server and restart it:"
+msgstr "I Yuva åpner du Innstillinger → innboksen din → Kanaler → E-post og legger til støtteadressen. Sett en hemmelighet på serveren og start den på nytt:"
+
+#: src/copy/contact.ts
+#: src/copy/home.ts
+msgid "In-app"
+msgstr "I appen"
+
+#: src/copy/home.ts
+msgid "Inbox"
+msgstr "Innboks"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Inbox and conversations"
+msgstr "Innboks og samtaler"
+
+#: src/copy/brand.ts
+msgid "Ink"
+msgstr "Blekk"
+
+#: src/copy/docs.ts
+msgid "Introduction"
+msgstr "Introduksjon"
+
+#: src/copy/contact.ts
+msgid "Investment"
+msgstr "Investering"
+
+#: src/copy/ai.ts
+msgid "It does the rest with you."
+msgstr "Den gjør resten sammen med deg."
+
+#: src/copy/brand.ts
+msgid "Keep the logo as it is: do not change its shape, proportions or colours."
+msgstr "La logoen være som den er: ikke endre formen, proporsjonene eller fargene."
+
+#: src/copy/brand.ts
+msgid "keep the name in a private, internal deployment, modified or not."
+msgstr "beholde navnet i en privat, intern installasjon, endret eller ikke."
+
+#: src/copy/home.ts
+msgid "Labels and canned replies"
+msgstr "Etiketter og ferdige svar"
+
+#: src/ui/LangMenu.astro
+msgid "Language"
+msgstr "Språk"
+
+#: src/copy/docs.ts
+msgid "Last updated {date}"
+msgstr "Sist oppdatert {date}"
+
+#: src/copy/pages.ts
+msgid "Latest"
+msgstr "Nyeste"
+
+#: src/copy/pages.ts
+msgid "Latest post"
+msgstr "Nyeste innlegg"
+
+#: src/copy/contact.ts
+msgid "Let's talk."
+msgstr "La oss snakke."
+
+#: src/copy/contact.ts
+msgid "License"
+msgstr "Lisens"
+
+#: src/copy/templates.ts
+msgid "License and contributions"
+msgstr "Lisens og bidrag"
+
+#: src/copy/contact.ts
+#: src/layouts/Footer.astro
+msgid "Licensing"
+msgstr "Lisensiering"
+
+#: src/copy/templates.ts
+msgid "Light"
+msgstr "Lys"
+
+#: src/ui/ThemeToggle.astro
+msgid "Light theme"
+msgstr "Lyst tema"
+
+#: src/copy/home.ts
+msgid "Lists"
+msgstr "Lister"
+
+#: src/copy/contact.ts
+#: src/copy/home.ts
+msgid "Live chat"
+msgstr "Livechat"
+
+#: src/copy/templates.ts
+msgid "Live preview"
+msgstr "Live forhåndsvisning"
+
+#: src/copy/header.ts
+msgid "Log in"
+msgstr "Logg inn"
+
+#: src/copy/brand.ts
+msgid "Logo"
+msgstr "Logo"
+
+#: src/copy/header.ts
+msgid "Logo and icon to download."
+msgstr "Logo og ikon å laste ned."
+
+#: src/copy/header.ts
+msgid "Logo options"
+msgstr "Logoalternativer"
+
+#: src/copy/brand.ts
+msgid "Logo with name"
+msgstr "Logo med navn"
+
+#: src/copy/brand.ts
+msgid "Logo with name, white"
+msgstr "Logo med navn, hvit"
+
+#: src/copy/contact.ts
+msgid "Logos, colours and the rules for the name."
+msgstr "Logoer, farger og reglene for navnet."
+
+#: src/copy/ai.ts
+msgid "Look at this project and tell me how to add Yuva. Use Yuva's init prompt, recommend a plan, and change nothing until I pick the steps."
+msgstr "Se på dette prosjektet og fortell meg hvordan jeg legger til Yuva. Bruk Yuvas init-prompt, anbefal en plan, og ikke endre noe før jeg har valgt trinnene."
+
+#: src/copy/cloudflare-email.ts
+msgid "Mail to a support address opens or continues a conversation in the inbox, and the team answers from the same panel as chat and app messages."
+msgstr "E-post til en støtteadresse åpner eller fortsetter en samtale i innboksen, og teamet svarer fra samme panel som chat og appmeldinger."
+
+#: src/copy/home.ts
+msgid "Mailboxes"
+msgstr "Postkasser"
+
+#: src/copy/pages.ts
+msgid "Maintainer of Yuva"
+msgstr "Vedlikeholder av Yuva"
+
+#: src/copy/home.ts
+msgid "marked by your team"
+msgstr "merket av teamet ditt"
+
+#: src/ui/ThemeToggle.astro
+msgid "Match the system theme"
+msgstr "Følg systemets tema"
+
+#: src/copy/home.ts
+msgid "mbox, Takeout and .eml"
+msgstr "mbox, Takeout og .eml"
+
+#: src/copy/docs.ts
+msgid "Member session"
+msgstr "Medlemsøkt"
+
+#: src/copy/home.ts
+msgid "Members"
+msgstr "Medlemmer"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+msgid "Menu"
+msgstr "Meny"
+
+#: src/copy/docs.ts
+msgid "More"
+msgstr "Mer"
+
+#: src/copy/pages.ts
+msgid "More posts"
+msgstr "Flere innlegg"
+
+#: src/copy/ai.ts
+msgid "Move our support mailbox into Yuva."
+msgstr "Flytt støttepostkassen vår til Yuva."
+
+#: src/copy/docs.ts
+msgid "Move to Yuva"
+msgstr "Flytt til Yuva"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Moving in"
+msgstr "Flytting"
+
+#: src/copy/ai.ts
+msgid "My own server"
+msgstr "Min egen server"
+
+#: src/copy/docs.ts
+msgid "Name"
+msgstr "Navn"
+
+#: src/copy/ai.ts
+msgid "Needs a public https address."
+msgstr "Krever en offentlig https-adresse."
+
+#: src/copy/pages.ts
+msgid "New posts appear in the RSS feed as soon as they are published."
+msgstr "Nye innlegg vises i RSS-strømmen så snart de er publisert."
+
+#: src/copy/ai.ts
+msgid "New to Yuva? Name your workspace. It takes a few seconds."
+msgstr "Ny hos Yuva? Gi arbeidsområdet ditt et navn. Det tar noen sekunder."
+
+#: src/copy/header.ts
+msgid "News and how Yuva is built."
+msgstr "Nyheter og hvordan Yuva bygges."
+
+#: src/copy/pages.ts
+msgid "News, release stories and notes from building Yuva, the open-source inbox for every product you run."
+msgstr "Nyheter, utgivelseshistorier og notater fra byggingen av Yuva, innboksen med åpen kildekode for alle produktene du driver."
+
+#: src/copy/pages.ts
+msgid "News, release stories and notes from building Yuva."
+msgstr "Nyheter, utgivelseshistorier og notater fra byggingen av Yuva."
+
+#: src/copy/templates.ts
+msgid "Newsletter"
+msgstr "Nyhetsbrev"
+
+#: src/copy/header.ts
+msgid "Newsletters to your lists."
+msgstr "Nyhetsbrev til listene dine."
+
+#: src/copy/docs.ts
+#: src/copy/pages.ts
+msgid "Next"
+msgstr "Neste"
+
+#: src/copy/docs.ts
+msgid "No authentication"
+msgstr "Ingen autentisering"
+
+#: src/copy/docs.ts
+msgid "No content"
+msgstr "Ingen innhold"
+
+#: src/copy/cloudflare-email.ts
+msgid "No mail server to run."
+msgstr "Ingen e-postserver å drifte."
+
+#: src/copy/docs.ts
+msgid "No results"
+msgstr "Ingen resultater"
+
+#: src/copy/contact.ts
+msgid "Not every message needs an e-mail. Some answers are better in public, and some reports must stay private."
+msgstr "Ikke alle meldinger trenger en e-post. Noen svar er bedre offentlig, og noen rapporter må forbli private."
+
+#: src/copy/cloudflare-email.ts
+msgid "Not for incoming mail. Yuva does not listen for SMTP; Cloudflare Email Routing receives the mail and the Worker passes it on. Replies need an SMTP account for the e-mail channel, such as Amazon SES, Postmark or your own relay."
+msgstr "Ikke for innkommende e-post. Yuva lytter ikke etter SMTP; Cloudflare Email Routing tar imot e-posten og Worker sender den videre. Svar trenger en SMTP-konto for e-postkanalen, som Amazon SES, Postmark eller ditt eget relé."
+
+#: src/copy/cloudflare-email.ts
+msgid "Not tied to Cloudflare"
+msgstr "Ikke bundet til Cloudflare"
+
+#: src/copy/brand.ts
+msgid "Not without written permission"
+msgstr "Ikke uten skriftlig tillatelse"
+
+#: src/copy/home.ts
+msgid "Notes and mentions"
+msgstr "Notater og omtaler"
+
+#: src/copy/home.ts
+msgid "of every conversation"
+msgstr "av hver samtale"
+
+#: src/copy/home.ts
+msgid "of free templates"
+msgstr "av gratis maler"
+
+#: src/copy/brand.ts
+msgid "offer a hosted or managed service, or a product, under the Yuva name or a confusingly similar one;"
+msgstr "tilby en driftet eller administrert tjeneste, eller et produkt, under navnet Yuva eller et navn som kan forveksles med det;"
+
+#: src/copy/brand.ts
+msgid "On dark backgrounds"
+msgstr "På mørke bakgrunner"
+
+#: src/copy/home.ts
+msgid "on every page"
+msgstr "på hver side"
+
+#: src/copy/brand.ts
+msgid "On light backgrounds"
+msgstr "På lyse bakgrunner"
+
+#: src/copy/docs.ts
+#: src/copy/pages.ts
+msgid "On this page"
+msgstr "På denne siden"
+
+#: src/copy/templates.ts
+msgid "On your own server"
+msgstr "På din egen server"
+
+#: src/copy/templates.ts
+msgid "Onboarding"
+msgstr "Onboarding"
+
+#: src/copy/home.ts
+msgid "One binary"
+msgstr "Én binærfil"
+
+#: src/copy/header.ts
+msgid "One binary and Postgres."
+msgstr "Én binærfil og Postgres."
+
+#: src/copy/home.ts
+msgid "One Docker image and Postgres on your own server."
+msgstr "Ett Docker-image og Postgres på din egen server."
+
+#: src/copy/brand.ts
+#: src/pages/og/[lang].png.ts
+msgid "One inbox for every product you run."
+msgstr "Én innboks for hvert produkt du driver."
+
+#: src/copy/home.ts
+msgid "One profile for each person, whichever channel they write from."
+msgstr "Én profil for hver person, uansett hvilken kanal de skriver fra."
+
+#: src/copy/home.ts
+msgid "One small server runs all of it. The server is open source, and the SDKs carry no copyleft."
+msgstr "Én liten server kjører alt. Serveren er åpen kildekode, og SDK-ene har ingen copyleft."
+
+#: src/copy/contact.ts
+msgid "Open a GitHub issue"
+msgstr "Åpne en GitHub-issue"
+
+#: src/copy/home.ts
+msgid "Open AI assistants"
+msgstr "Åpne KI-assistenter"
+
+#: src/copy/contact.ts
+msgid "Open an issue"
+msgstr "Åpne en issue"
+
+#: src/copy/contact.ts
+msgid "Open an issue on GitHub so others can find the answer too."
+msgstr "Åpne en issue på GitHub slik at andre også kan finne svaret."
+
+#: src/copy/templates.ts
+msgid "Open on my server"
+msgstr "Åpne på serveren min"
+
+#: src/copy/ai.ts
+msgid "Open Plugins, select the plus button, then Add custom MCP server."
+msgstr "Åpne Plugins, velg plussknappen og deretter Add custom MCP server."
+
+#: src/copy/contact.ts
+msgid "Open source that stays open"
+msgstr "Åpen kildekode som forblir åpen"
+
+#: src/copy/home.ts
+msgid "Open the API reference"
+msgstr "Åpne API-referansen"
+
+#: src/copy/ai.ts
+msgid "Open the assistant in your project's folder. It reads your code on your machine and sends none of it to Yuva."
+msgstr "Åpne assistenten i prosjektmappen din. Den leser koden din på maskinen din og sender ingenting av den til Yuva."
+
+#: src/copy/home.ts
+msgid "Open the templates"
+msgstr "Åpne malene"
+
+#: src/pages/og/[lang].png.ts
+msgid "Open-source customer messaging"
+msgstr "Kundekommunikasjon med åpen kildekode"
+
+#: src/layouts/Footer.astro
+msgid "Open-source customer messaging for teams that run many products."
+msgstr "Kundekommunikasjon med åpen kildekode for team som driver mange produkter."
+
+#: src/copy/docs.ts
+msgid "OpenAPI contract"
+msgstr "OpenAPI-kontrakt"
+
+#: src/copy/templates.ts
+msgid "Opens Yuva's e-mail designer with this template. You sign in first if you have not."
+msgstr "Åpner Yuvas e-postdesigner med denne malen. Du logger inn først hvis du ikke allerede har gjort det."
+
+#: src/copy/cloudflare-email.ts
+msgid "Optional: keep mail during an outage by adding a fallback address to the deploy command:"
+msgstr "Valgfritt: behold e-post under et utfall ved å legge til en reserveadresse i distribusjonskommandoen:"
+
+#: src/copy/ai.ts
+msgid "Or ask for one thing"
+msgstr "Eller be om én ting"
+
+#: src/copy/home.ts
+msgid "Or host it yourself"
+msgstr "Eller drift det selv"
+
+#: src/copy/ai.ts
+msgid "Or type the sentence:"
+msgstr "Eller skriv setningen:"
+
+#: src/copy/cloudflare-email.ts
+msgid "Other ways to bring mail in"
+msgstr "Andre måter å få inn e-post på"
+
+#: src/copy/contact.ts
+msgid "Other ways to reach us"
+msgstr "Andre måter å nå oss på"
+
+#: src/copy/docs.ts
+msgid "Overview"
+msgstr "Oversikt"
+
+#: src/pages/404.astro
+msgid "Page not found"
+msgstr "Siden ble ikke funnet"
+
+#: src/copy/home.ts
+msgid "Pages and sources"
+msgstr "Sider og kilder"
+
+#: src/copy/docs.ts
+msgid "Parameters"
+msgstr "Parametere"
+
+#: src/copy/contact.ts
+msgid "Partnership"
+msgstr "Partnerskap"
+
+#: src/copy/docs.ts
+msgid "Payload"
+msgstr "Nyttelast"
+
+#: src/copy/pages.ts
+msgid "Performance"
+msgstr "Ytelse"
+
+#: src/copy/templates.ts
+msgid "Phone"
+msgstr "Telefon"
+
+#: src/copy/ai.ts
+msgid "Pick your assistant"
+msgstr "Velg assistenten din"
+
+#: src/copy/pages.ts
+msgid "Posts are published in English."
+msgstr "Innlegg publiseres på engelsk."
+
+#: src/copy/contact.ts
+msgid "Pre-alpha"
+msgstr "Pre-alfa"
+
+#: src/copy/contact.ts
+msgid "Press"
+msgstr "Presse"
+
+#: src/copy/contact.ts
+msgid "Press and brand"
+msgstr "Presse og merkevare"
+
+#: src/copy/home.ts
+msgid "Preview"
+msgstr "Forhåndsvisning"
+
+#: src/copy/templates.ts
+msgid "Preview and use"
+msgstr "Forhåndsvisning og bruk"
+
+#: src/copy/templates.ts
+msgid "Preview colours"
+msgstr "Forhåndsvis fargene"
+
+#: src/copy/home.ts
+#: src/copy/templates.ts
+msgid "Preview of the {name} template"
+msgstr "Forhåndsvisning av malen {name}"
+
+#: src/copy/templates.ts
+msgid "Preview width"
+msgstr "Bredde på forhåndsvisningen"
+
+#: src/copy/docs.ts
+msgid "Previous"
+msgstr "Forrige"
+
+#: src/copy/header.ts
+#: src/copy/templates.ts
+#: src/layouts/Footer.astro
+msgid "Product"
+msgstr "Produkt"
+
+#: src/copy/home.ts
+msgid "Product tour"
+msgstr "Produktomvisning"
+
+#: src/copy/docs.ts
+#: src/layouts/Footer.astro
+msgid "Project"
+msgstr "Prosjekt"
+
+#: src/copy/brand.ts
+msgid "publish a modified version under the Yuva name — rename your fork;"
+msgstr "publisere en endret versjon under navnet Yuva — gi forken din nytt navn;"
+
+#: src/copy/cloudflare-email.ts
+msgid "Questions and answers"
+msgstr "Spørsmål og svar"
+
+#: src/copy/contact.ts
+msgid "Questions and bugs"
+msgstr "Spørsmål og feil"
+
+#: src/copy/home.ts
+msgid "Ratings"
+msgstr "Vurderinger"
+
+#: src/copy/header.ts
+msgid "Reach the people behind Yuva."
+msgstr "Ta kontakt med menneskene bak Yuva."
+
+#: src/copy/contact.ts
+msgid "Read LICENSING.md"
+msgstr "Les LICENSING.md"
+
+#: src/copy/home.ts
+msgid "Read the code, run {version} on your machine, and follow along as it grows."
+msgstr "Les koden, kjør {version} på maskinen din og følg med mens den vokser."
+
+#: src/copy/docs.ts
+msgid "Read the English page"
+msgstr "Les den engelske siden"
+
+#: src/copy/home.ts
+msgid "Read the guide"
+msgstr "Les veiledningen"
+
+#: src/copy/cloudflare-email.ts
+msgid "Read the ingress contract"
+msgstr "Les ingress-kontrakten"
+
+#: src/copy/templates.ts
+msgid "Read the license"
+msgstr "Les lisensen"
+
+#: src/copy/ai.ts
+msgid "Read the MCP guide"
+msgstr "Les MCP-veiledningen"
+
+#: src/copy/pages.ts
+msgid "Read the post"
+msgstr "Les innlegget"
+
+#: src/copy/home.ts
+#: src/copy/pages.ts
+msgid "Read the quick start"
+msgstr "Les hurtigstarten"
+
+#: src/copy/cloudflare-email.ts
+msgid "Read the setup guide"
+msgstr "Les oppsettveiledningen"
+
+#: src/copy/home.ts
+msgid "read through MCP"
+msgstr "lest via MCP"
+
+#: src/copy/brand.ts
+msgid "Read TRADEMARK.md"
+msgstr "Les TRADEMARK.md"
+
+#: src/copy/cloudflare-email.ts
+msgid "Real conversations"
+msgstr "Ekte samtaler"
+
+#: src/copy/home.ts
+msgid "Realtime"
+msgstr "Sanntid"
+
+#: src/copy/header.ts
+msgid "Receive mail with no server."
+msgstr "Motta e-post uten server."
+
+#: src/copy/cloudflare-email.ts
+msgid "Receive your support e-mail in Yuva with Cloudflare Email Routing and the open-source Yuva Email Worker. Signed delivery, threaded conversations, no mail server to run."
+msgstr "Motta støtte-e-posten din i Yuva med Cloudflare Email Routing og den åpne Yuva Email Worker. Signert levering, tråder i samtalene, ingen e-postserver å drifte."
+
+#: src/copy/cloudflare-email.ts
+msgid "Refusals reach the sender"
+msgstr "Avvisninger når avsenderen"
+
+#: src/copy/brand.ts
+msgid "Regular, Medium and Semibold"
+msgstr "Regular, Medium og Semibold"
+
+#: src/copy/pages.ts
+msgid "Release history"
+msgstr "Utgivelseshistorikk"
+
+#: src/copy/pages.ts
+msgid "Release notes are written in English."
+msgstr "Utgivelsesnotatene er skrevet på engelsk."
+
+#: src/copy/contact.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/copy/pages.ts
+#: src/layouts/Footer.astro
+msgid "Releases"
+msgstr "Utgivelser"
+
+#: src/copy/pages.ts
+msgid "Removed"
+msgstr "Fjernet"
+
+#: src/layouts/Footer.astro
+msgid "Report a vulnerability"
+msgstr "Rapporter en sårbarhet"
+
+#: src/copy/contact.ts
+msgid "Report vulnerabilities privately through GitHub, never in a public issue."
+msgstr "Rapporter sårbarheter privat via GitHub, aldri i en offentlig issue."
+
+#: src/copy/home.ts
+msgid "Reports"
+msgstr "Rapporter"
+
+#: src/copy/docs.ts
+msgid "Request"
+msgstr "Forespørsel"
+
+#: src/copy/docs.ts
+msgid "Request body"
+msgstr "Forespørselens innhold"
+
+#: src/copy/docs.ts
+msgid "required"
+msgstr "påkrevd"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Resources"
+msgstr "Ressurser"
+
+#: src/copy/docs.ts
+msgid "Response"
+msgstr "Svar"
+
+#: src/copy/docs.ts
+msgid "Responses"
+msgstr "Svar"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Roadmap"
+msgstr "Veikart"
+
+#: src/copy/brand.ts
+msgid "Rotate it"
+msgstr "Roter den"
+
+#: src/copy/pages.ts
+msgid "RSS feed"
+msgstr "RSS-strøm"
+
+#: src/copy/brand.ts
+msgid "say that your product uses, integrates with or is built on Yuva;"
+msgstr "si at produktet ditt bruker, integreres med eller er bygget på Yuva;"
+
+#: src/copy/ai.ts
+msgid "Say this"
+msgstr "Si dette"
+
+#: src/copy/docs.ts
+msgid "Schemas and every field are in the OpenAPI contract."
+msgstr "Skjemaer og alle felt finnes i OpenAPI-kontrakten."
+
+#: src/copy/home.ts
+msgid "SDKs and API contract"
+msgstr "SDK-er og API-kontrakt"
+
+#: src/copy/docs.ts
+msgid "Search docs"
+msgstr "Søk i dokumentasjonen"
+
+#: src/copy/docs.ts
+msgid "Search the docs"
+msgstr "Søk i dokumentasjonen"
+
+#: src/copy/header.ts
+msgid "Sections"
+msgstr "Seksjoner"
+
+#: src/copy/contact.ts
+#: src/copy/pages.ts
+msgid "Security"
+msgstr "Sikkerhet"
+
+#: src/copy/contact.ts
+msgid "Security policy"
+msgstr "Sikkerhetspolicy"
+
+#: src/copy/home.ts
+msgid "See how support is going and who is on the team."
+msgstr "Se hvordan støtten går og hvem som er på teamet."
+
+#: src/copy/pages.ts
+msgid "See what is planned"
+msgstr "Se hva som er planlagt"
+
+#: src/copy/home.ts
+msgid "See who visits your sites and apps, with no cookies and no stored IP addresses."
+msgstr "Se hvem som besøker nettstedene og appene dine, uten informasjonskapsler og uten lagrede IP-adresser."
+
+#: src/copy/home.ts
+msgid "Self-hosted"
+msgstr "Selvdriftet"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+msgid "Self-hosting"
+msgstr "Selvdrift"
+
+#: src/copy/home.ts
+msgid "Self-hosting and open source"
+msgstr "Selvdrift og åpen kildekode"
+
+#: src/copy/cloudflare-email.ts
+msgid "Send a test message and watch the conversation appear in the panel."
+msgstr "Send en testmelding og se samtalen dukke opp i panelet."
+
+#: src/copy/home.ts
+msgid "Send newsletters to your mailing lists and see what readers do with them."
+msgstr "Send nyhetsbrev til e-postlistene dine og se hva leserne gjør med dem."
+
+#: src/copy/home.ts
+msgid "sent by your own app"
+msgstr "sendt av din egen app"
+
+#: src/copy/templates.ts
+msgid "Server address"
+msgstr "Serveradresse"
+
+#: src/copy/home.ts
+msgid "server and panel"
+msgstr "server og panel"
+
+#: src/layouts/Footer.astro
+msgid "Server and panel under AGPL-3.0, SDKs and API contract under MIT."
+msgstr "Server og panel under AGPL-3.0, SDK-er og API-kontrakt under MIT."
+
+#: src/copy/cloudflare-email.ts
+msgid "Set it up in a few steps"
+msgstr "Sett det opp i noen få trinn"
+
+#: src/copy/ai.ts
+msgid "Set up Yuva analytics for this site, with a goal for sign-ups."
+msgstr "Sett opp Yuva-analyse for dette nettstedet, med et mål for registreringer."
+
+#: src/copy/pages.ts
+msgid "Share"
+msgstr "Del"
+
+#: src/copy/ai.ts
+msgid "Sign in from Gemini CLI:"
+msgstr "Logg inn fra Gemini CLI:"
+
+#: src/copy/ai.ts
+msgid "Sign in. Your browser opens Yuva:"
+msgstr "Logg inn. Nettleseren åpner Yuva:"
+
+#: src/copy/header.ts
+msgid "Signed events and user tokens."
+msgstr "Signerte hendelser og brukertokener."
+
+#: src/copy/home.ts
+msgid "signed, for every new message"
+msgstr "signert, for hver nye melding"
+
+#: src/copy/brand.ts
+msgid "Sizes"
+msgstr "Størrelser"
+
+#: src/layouts/Base.astro
+msgid "Skip to content"
+msgstr "Gå til innholdet"
+
+#: src/copy/home.ts
+msgid "so users write as themselves"
+msgstr "slik at brukerne skriver som seg selv"
+
+#: src/copy/contact.ts
+msgid "Something else"
+msgstr "Noe annet"
+
+#: src/layouts/Footer.astro
+msgid "Source code on GitHub"
+msgstr "Kildekode på GitHub"
+
+#: src/copy/contact.ts
+msgid "Stage"
+msgstr "Fase"
+
+#: src/copy/header.ts
+msgid "Start free"
+msgstr "Start gratis"
+
+#: src/copy/home.ts
+msgid "Start with AI"
+msgstr "Start med KI"
+
+#: src/copy/templates.ts
+msgid "Starter designs for the e-mail designer, in English, Turkish and German. Preview one, then open it in Yuva and make it yours."
+msgstr "Startdesign for e-postdesigneren, på engelsk, tyrkisk og tysk. Forhåndsvis ett, og åpne det i Yuva for å gjøre det til ditt eget."
+
+#: src/copy/home.ts
+msgid "stay inside the team"
+msgstr "blir værende i teamet"
+
+#: src/copy/brand.ts
+msgid "Stretch or squash it"
+msgstr "Strekk eller klem den"
+
+#: src/copy/cloudflare-email.ts
+msgid "Support e-mail through Cloudflare Email Routing | Yuva"
+msgstr "Støtte-e-post via Cloudflare Email Routing | Yuva"
+
+#: src/copy/cloudflare-email.ts
+msgid "Support e-mail through Cloudflare."
+msgstr "Støtte-e-post via Cloudflare."
+
+#: src/copy/pages.ts
+msgid "Tag on GitHub"
+msgstr "Tagg på GitHub"
+
+#: src/copy/home.ts
+msgid "Team and reports"
+msgstr "Team og rapporter"
+
+#: src/copy/contact.ts
+msgid "Teams can use our hosted service, and because every contribution is made under a CLA, Yuva can also be offered under a commercial license."
+msgstr "Team kan bruke den driftede tjenesten vår, og fordi hvert bidrag gis under en CLA, kan Yuva også tilbys under en kommersiell lisens."
+
+#: src/copy/ai.ts
+msgid "Tell your assistant to add Yuva."
+msgstr "Be assistenten din legge til Yuva."
+
+#: src/copy/templates.ts
+msgid "Template gallery"
+msgstr "Malgalleri"
+
+#: src/copy/templates.ts
+msgid "Templates"
+msgstr "Maler"
+
+#: src/copy/home.ts
+msgid "The analytics overview in the panel: 30 days of visitors, pageviews and bounce rate, a daily chart with a note on the day a newsletter went out, and the top pages and sources."
+msgstr "Analyseoversikten i panelet: 30 dagers besøkende, sidevisninger og fluktfrekvens, et daglig diagram med en merknad på dagen et nyhetsbrev gikk ut, og de mest besøkte sidene og kildene."
+
+#: src/copy/ai.ts
+msgid "The assistant acts as you, with no more access than you approve, and asks before it changes anything."
+msgstr "Assistenten handler som deg, uten mer tilgang enn du godkjenner, og spør før den endrer noe."
+
+#: src/copy/header.ts
+msgid "The code, open source."
+msgstr "Koden, åpen kildekode."
+
+#: src/copy/ai.ts
+msgid "The commands below follow what you type."
+msgstr "Kommandoene nedenfor følger det du skriver."
+
+#: src/copy/docs.ts
+msgid "The English page has changed since this translation was last updated."
+msgstr "Den engelske siden er endret siden denne oversettelsen sist ble oppdatert."
+
+#: src/copy/docs.ts
+msgid "The events Yuva sends to your webhook endpoints and the payload of each."
+msgstr "Hendelsene Yuva sender til webhook-endepunktene dine og nyttelasten til hver av dem."
+
+#: src/copy/ai.ts
+msgid "The first time the assistant uses Yuva, your browser opens Yuva to sign in."
+msgstr "Første gang assistenten bruker Yuva, åpner nettleseren din Yuva slik at du kan logge inn."
+
+#: src/copy/brand.ts
+msgid "The mark is drawn to stay readable from an app store listing down to a 16-pixel browser tab."
+msgstr "Merket er tegnet for å forbli lesbart fra en appbutikkoppføring og ned til en nettleserfane på 16 piksler."
+
+#: src/copy/brand.ts
+msgid "The mark on its rounded square. Use it wherever Yuva appears as an app or a link."
+msgstr "Merket på sin avrundede firkant. Bruk det overalt der Yuva vises som en app eller en lenke."
+
+#: src/copy/brand.ts
+msgid "The name and this site are set in Geist, an open-source typeface under the SIL Open Font License."
+msgstr "Navnet og dette nettstedet er satt i Geist, en skrifttype med åpen kildekode under SIL Open Font License."
+
+#: src/copy/home.ts
+msgid "The panel on a phone: the conversation list with each person's channel and latest message, and the tabs at the bottom."
+msgstr "Panelet på en telefon: samtalelisten med hver persons kanal og siste melding, og fanene nederst."
+
+#: src/copy/home.ts
+msgid "The panel with feedback sent from a mobile app: a bug report with the app version, device and screen, next to the conversation list."
+msgstr "Panelet med tilbakemelding sendt fra en mobilapp: en feilrapport med appversjon, enhet og skjerm ved siden av samtalelisten."
+
+#: src/copy/docs.ts
+msgid "The payloads Yuva sends to your webhook endpoints."
+msgstr "Nyttelastene Yuva sender til webhook-endepunktene dine."
+
+#: src/copy/home.ts
+msgid "The report of a sent newsletter in the panel: 240 sent, 5 unsubscribed and 56 who clicked a link, a chart over time and the number of clicks on each link."
+msgstr "Rapporten for et sendt nyhetsbrev i panelet: 240 sendt, 5 avmeldt og 56 som klikket på en lenke, et diagram over tid og antall klikk på hver lenke."
+
+#: src/copy/contact.ts
+msgid "The server and panel are AGPL-3.0, the SDKs and API contract MIT. Improvements to the core stay public."
+msgstr "Serveren og panelet er AGPL-3.0, SDK-ene og API-kontrakten MIT. Forbedringer av kjernen forblir offentlige."
+
+#: src/copy/cloudflare-email.ts
+msgid "The Worker is one way to call /ingress/email. Any mail server or relay can post the raw message with the same signed headers, and a mail server that delivers to a command can pipe the message into yuva ingest-email. The request format is documented in the Worker's README."
+msgstr "Worker er én måte å kalle /ingress/email på. Enhver e-postserver eller ethvert relé kan sende rå melding med de samme signerte hodene, og en e-postserver som leverer til en kommando kan sende meldingen videre til yuva ingest-email. Forespørselsformatet er dokumentert i Workers README."
+
+#: src/copy/cloudflare-email.ts
+msgid "The Worker signs the raw message, both envelope addresses and a timestamp with HMAC-SHA256 under a secret you share with Yuva, and sends them to /ingress/email on your Yuva server."
+msgstr "Worker signerer den rå meldingen, begge konvoluttadressene og et tidsstempel med HMAC-SHA256 under en hemmelighet du deler med Yuva, og sender dem til /ingress/email på Yuva-serveren din."
+
+#: src/copy/home.ts
+msgid "The Yuva chat widget open on a newsletter tool's website: the visitor's question and a member's reply, with the member shown online."
+msgstr "Yuva-chat-widgeten åpen på nettstedet til et nyhetsbrevverktøy: besøkendes spørsmål og et medlems svar, med medlemmet vist som pålogget."
+
+#: src/copy/cloudflare-email.ts
+msgid "The Yuva Email Worker reads the raw message and the envelope, signs the request and posts it to Yuva. Parsing, threading and spam decisions stay on the server."
+msgstr "Yuva Email Worker leser den rå meldingen og konvolutten, signerer forespørselen og sender den til Yuva. Parsing, trådsetting og søppelpostavgjørelser blir på serveren."
+
+#: src/copy/brand.ts
+msgid "The Yuva logo, colours and typeface, ready for articles, integrations and app listings. Please read the rules for the name and logo before you use them."
+msgstr "Yuva-logoen, fargene og skrifttypen, klare for artikler, integrasjoner og apposjoner. Les reglene for navnet og logoen før du bruker dem."
+
+#: src/copy/home.ts
+msgid "The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send."
+msgstr "Yuvas meldingspanel: samtaler fra e-post, livechat og apper i én liste, og en samtale åpnet som chat, med et teamnotat og et svar en assistent har laget utkast til for at en kollega skal sende det."
+
+#: src/ui/ThemeToggle.astro
+msgid "Theme"
+msgstr "Tema"
+
+#: src/copy/templates.ts
+msgid "These templates are MIT licensed: use, change and share them in your own mails."
+msgstr "Disse malene har MIT-lisens: bruk, endre og del dem i dine egne e-poster."
+
+#: src/copy/templates.ts
+msgid "This browser does not switch the preview to dark mode. Use your system's dark setting to see it, or open the template to check it in the designer."
+msgstr "Denne nettleseren bytter ikke forhåndsvisningen til mørk modus. Bruk systemets mørke innstilling for å se den, eller åpne malen for å sjekke den i designeren."
+
+#: src/copy/docs.ts
+msgid "This documentation is written in English."
+msgstr "Denne dokumentasjonen er skrevet på engelsk."
+
+#: src/copy/docs.ts
+msgid "This page is not translated yet. It is shown in English."
+msgstr "Denne siden er ikke oversatt ennå. Den vises på engelsk."
+
+#: src/copy/docs.ts
+msgid "This page is only available in English."
+msgstr "Denne siden er bare tilgjengelig på engelsk."
+
+#: src/copy/home.ts
+msgid "through your own SMTP account"
+msgstr "via din egen SMTP-konto"
+
+#: src/copy/home.ts
+msgid "to a teammate"
+msgstr "til en kollega"
+
+#: src/copy/home.ts
+msgid "Today"
+msgstr "I dag"
+
+#: src/copy/pages.ts
+msgid "Try Yuva"
+msgstr "Prøv Yuva"
+
+#: src/copy/docs.ts
+msgid "Type"
+msgstr "Type"
+
+#: src/copy/docs.ts
+msgid "Type to search the guides and the API reference"
+msgstr "Skriv for å søke i veiledningene og API-referansen"
+
+#: src/copy/brand.ts
+msgid "Typeface"
+msgstr "Skrifttype"
+
+#: src/pages/404.astro
+msgid "Undeliverable"
+msgstr "Kan ikke leveres"
+
+#: src/copy/cloudflare-email.ts
+msgid "Under Routing rules, send each support address to the Worker yuva-edge. For a catch-all channel, point the catch-all rule at it."
+msgstr "Under Routing rules sender du hver støtteadresse til Worker yuva-edge. For en fanger-alt-kanal peker du fanger-alt-regelen til den."
+
+#: src/copy/brand.ts
+msgid "use the logo in a way that suggests endorsement by the project."
+msgstr "bruke logoen på en måte som antyder at prosjektet står bak."
+
+#: src/copy/brand.ts
+msgid "use the name, unchanged, to refer to the unmodified project;"
+msgstr "bruke navnet, uendret, for å referere til det uendrede prosjektet;"
+
+#: src/copy/templates.ts
+msgid "Use this template"
+msgstr "Bruk denne malen"
+
+#: src/copy/brand.ts
+msgid "Using the name and logo"
+msgstr "Bruk av navnet og logoen"
+
+#: src/copy/docs.ts
+msgid "Version {version} of the API, generated from the OpenAPI contract. Use the contract to generate a client in any language."
+msgstr "Versjon {version} av API-et, generert fra OpenAPI-kontrakten. Bruk kontrakten til å generere en klient i et hvilket som helst språk."
+
+#: src/copy/home.ts
+msgid "View on GitHub"
+msgstr "Se på GitHub"
+
+#: src/copy/home.ts
+msgid "visitors"
+msgstr "besøkende"
+
+#: src/copy/header.ts
+msgid "Visitors without cookies."
+msgstr "Besøkende uten informasjonskapsler."
+
+#: src/copy/templates.ts
+msgid "Want to add a template? Send a pull request; the guide explains the folder, the rules and the preview."
+msgstr "Vil du legge til en mal? Send en pull request; veiledningen forklarer mappen, reglene og forhåndsvisningen."
+
+#: src/pages/404.astro
+msgid "We looked in every inbox, but this page is not here. It may have moved, or the link may be wrong."
+msgstr "Vi har sett i alle innbokser, men siden er ikke her. Den kan ha flyttet, eller lenken kan være feil."
+
+#: src/copy/contact.ts
+msgid "We would like to use Yuva under a commercial license."
+msgstr "Vi vil gjerne bruke Yuva under en kommersiell lisens."
+
+#: src/copy/docs.ts
+msgid "Webhook events"
+msgstr "Webhook-hendelser"
+
+#: src/copy/home.ts
+msgid "Webhooks"
+msgstr "Webhooks"
+
+#: src/copy/header.ts
+msgid "Webhooks and identity"
+msgstr "Webhooks og identitet"
+
+#: src/copy/docs.ts
+msgid "Webhooks guide"
+msgstr "Webhook-veiledning"
+
+#: src/copy/home.ts
+msgid "what came in and what is open"
+msgstr "hva som har kommet inn og hva som er åpent"
+
+#: src/copy/header.ts
+msgid "What changed in each version."
+msgstr "Hva som endret seg i hver versjon."
+
+#: src/copy/ai.ts
+msgid "What happens when you sign in"
+msgstr "Hva som skjer når du logger inn"
+
+#: src/copy/cloudflare-email.ts
+msgid "What happens when Yuva is down?"
+msgstr "Hva skjer når Yuva er nede?"
+
+#: src/copy/header.ts
+msgid "What is built and what is next."
+msgstr "Hva som er bygget og hva som kommer."
+
+#: src/copy/contact.ts
+msgid "What is it about?"
+msgstr "Hva handler det om?"
+
+#: src/copy/cloudflare-email.ts
+msgid "What it is"
+msgstr "Hva det er"
+
+#: src/copy/cloudflare-email.ts
+msgid "When Yuva refuses a message for good, for example an unknown address, a blocked sender or a message that is too large, the Worker rejects it and the sender gets a permanent SMTP error with Yuva's reason."
+msgstr "Når Yuva avviser en melding for godt, for eksempel en ukjent adresse, en blokkert avsender eller en for stor melding, avviser Worker den, og avsenderen får en permanent SMTP-feil med Yuvas begrunnelse."
+
+#: src/copy/contact.ts
+msgid "Whether you want to invest in Yuva, build on it together, need a commercial license or are writing about it, write to us. We read every message."
+msgstr "Enten du vil investere i Yuva, bygge videre på den sammen med oss, trenger en kommersiell lisens eller skriver om den, skriv til oss. Vi leser hver melding."
+
+#: src/copy/cloudflare-email.ts
+msgid "Which domains and addresses can I use?"
+msgstr "Hvilke domener og adresser kan jeg bruke?"
+
+#: src/copy/brand.ts
+msgid "White"
+msgstr "Hvit"
+
+#: src/copy/home.ts
+msgid "with clicks and unsubscribes"
+msgstr "med klikk og avmeldinger"
+
+#: src/copy/cloudflare-email.ts
+msgid "With FALLBACK_FORWARD set, the message is forwarded to that address instead. Without it the delivery fails and the sending server may retry. Messages that Yuva refuses on purpose, such as mail to an unknown address, are rejected, not forwarded."
+msgstr "Når FALLBACK_FORWARD er satt, videresendes meldingen i stedet til den adressen. Uten den mislykkes leveringen, og avsenderserveren kan prøve igjen. Meldinger Yuva avviser med vilje, som e-post til en ukjent adresse, avvises og videresendes ikke."
+
+#: src/copy/home.ts
+msgid "with one script tag"
+msgstr "med én script-tagg"
+
+#: src/copy/home.ts
+msgid "with recorded consent"
+msgstr "med registrert samtykke"
+
+#: src/copy/home.ts
+msgid "with replies and votes"
+msgstr "med svar og stemmer"
+
+#: src/copy/home.ts
+msgid "with the iOS and Android SDKs"
+msgstr "med iOS- og Android-SDK-ene"
+
+#: src/copy/home.ts
+msgid "with workspace API keys"
+msgstr "med API-nøkler for arbeidsområdet"
+
+#: src/copy/cloudflare-email.ts
+msgid "Worker source on GitHub"
+msgstr "Workerens kildekode på GitHub"
+
+#: src/copy/home.ts
+msgid "Works with"
+msgstr "Fungerer med"
+
+#: src/copy/contact.ts
+msgid "Write an e-mail"
+msgstr "Skriv en e-post"
+
+#: src/copy/contact.ts
+msgid "Write to the Yuva team about investment, partnerships, commercial licenses or press, or find the right place for questions and security reports."
+msgstr "Skriv til Yuva-teamet om investering, partnerskap, kommersielle lisenser eller presse, eller finn det rette stedet for spørsmål og sikkerhetsrapporter."
+
+#: src/copy/cloudflare-email.ts
+msgid "Yes, when you set YUVA_INGRESS_AUTHSERV_ID to mx.cloudflare.net. Yuva then reads the DMARC verdict that Email Routing adds. A new conversation that fails DMARC is marked as spam."
+msgstr "Ja, når du setter YUVA_INGRESS_AUTHSERV_ID til mx.cloudflare.net. Yuva leser da DMARC-avgjørelsen som Email Routing legger til. En ny samtale som ikke består DMARC, merkes som søppelpost."
+
+#: src/copy/brand.ts
+msgid "You may"
+msgstr "Du kan"
+
+#: src/copy/cloudflare-email.ts
+msgid "You need a Yuva server and a Cloudflare account that manages the domain."
+msgstr "Du trenger en Yuva-server og en Cloudflare-konto som administrerer domenet."
+
+#: src/copy/ai.ts
+msgid "You stay in charge"
+msgstr "Du har kontrollen"
+
+#: src/copy/ai.ts
+msgid "Your browser opens Yuva. Sign in with a one-time code; a new e-mail address gets a new account."
+msgstr "Nettleseren din åpner Yuva. Logg inn med en engangskode; en ny e-postadresse får en ny konto."
+
+#: src/copy/ai.ts
+msgid "Your code stays on your machine. Yuva only sees what the assistant creates through it."
+msgstr "Koden din blir værende på maskinen din. Yuva ser bare det assistenten oppretter gjennom den."
+
+#: src/copy/cloudflare-email.ts
+msgid "Your team answers in the panel. The reply is sent through the e-mail channel's own SMTP account, such as Amazon SES, Postmark or your own relay, from the same address and in the same thread. Replies do not go through the Worker."
+msgstr "Teamet ditt svarer i panelet. Svaret sendes gjennom e-postkanalens egen SMTP-konto, som Amazon SES, Postmark eller ditt eget relé, fra samme adresse og i samme tråd. Svar går ikke gjennom Worker."
+
+#: src/copy/ai.ts
+msgid "Your Yuva server"
+msgstr "Yuva-serveren din"
+
+#: src/copy/ai.ts
+msgid "Yuva and your AI assistant"
+msgstr "Yuva og KI-assistenten din"
+
+#: src/copy/pages.ts
+msgid "Yuva blog"
+msgstr "Yuva-bloggen"
+
+#: src/copy/brand.ts
+msgid "Yuva brand assets: logo, colours and name"
+msgstr "Yuvas merkevareressurser: logo, farger og navn"
+
+#: src/copy/docs.ts
+msgid "Yuva brings e-mail, live chat and in-app messages from your customers into one inbox for your team. Start with Get started; every guide is listed below."
+msgstr "Yuva samler e-post, livechat og meldinger i appen fra kundene dine i én innboks for teamet ditt. Start med Kom i gang; alle veiledningene står nedenfor."
+
+#: src/copy/home.ts
+msgid "Yuva brings support e-mail, live chat and in-app conversations from all of your products into one shared inbox, and adds newsletters, mail migration and cookieless analytics. Open source, self-hosted, one Go binary with Postgres."
+msgstr "Yuva samler støtte-e-post, livechat og samtaler i appen fra alle produktene dine i én delt innboks, og legger til nyhetsbrev, e-postflytting og analyse uten informasjonskapsler. Åpen kildekode, selvdriftet, én Go-binærfil med Postgres."
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva checks the signature and that the timestamp is within 5 minutes before it reads the message. A request with a wrong signature is refused."
+msgstr "Yuva sjekker signaturen og at tidsstempelet er innenfor 5 minutter før den leser meldingen. En forespørsel med feil signatur avvises."
+
+#: src/copy/ai.ts
+msgid "Yuva cloud"
+msgstr "Yuva Cloud"
+
+#: src/copy/docs.ts
+msgid "Yuva documentation"
+msgstr "Yuva-dokumentasjon"
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva Email Worker for Cloudflare"
+msgstr "Yuva Email Worker for Cloudflare"
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva finds the e-mail channel for the recipient address and threads the message by In-Reply-To and References into the conversation it belongs to. Anything else starts a new conversation. A reply reopens the conversation."
+msgstr "Yuva finner e-postkanalen for mottakeradressen og setter meldingen i tråd etter In-Reply-To og References i samtalen den tilhører. Alt annet starter en ny samtale. Et svar åpner samtalen igjen."
+
+#: src/copy/ai.ts
+msgid "Yuva has a built-in MCP server. Connect it once, and your assistant reads your project, sees what your workspace already has, and sets up live chat, analytics or newsletters, asking before each change."
+msgstr "Yuva har en innebygd MCP-server. Koble den til én gang, så leser assistenten prosjektet ditt, ser hva arbeidsområdet ditt allerede har og setter opp livechat, analyse eller nyhetsbrev, og spør før hver endring."
+
+#: src/copy/header.ts
+msgid "Yuva home"
+msgstr "Yuva-forside"
+
+#: src/copy/ai.ts
+msgid "Yuva in your AI assistant"
+msgstr "Yuva i KI-assistenten din"
+
+#: src/copy/contact.ts
+msgid "Yuva is pre-alpha. Every release, the roadmap and the code are public, so you can see exactly where it stands."
+msgstr "Yuva er pre-alfa. Hver utgivelse, veikartet og koden er offentlige, så du kan se nøyaktig hvor det står."
+
+#: src/copy/brand.ts
+msgid "Yuva orange"
+msgstr "Yuva-oransje"
+
+#: src/copy/home.ts
+msgid "Yuva puts e-mail, live chat and in-app messages from all of your products into one inbox for your team. Open source, one Go binary with Postgres."
+msgstr "Yuva samler e-post, livechat og meldinger i appen fra alle produktene dine i én innboks for teamet ditt. Åpen kildekode, én Go-binærfil med Postgres."
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva refuses any request without a valid HMAC signature or with a timestamp more than 5 minutes off, before it reads the body. Keep the secret to yourself."
+msgstr "Yuva avviser enhver forespørsel uten gyldig HMAC-signatur eller med et tidsstempel som avviker mer enn 5 minutter, før den leser innholdet. Hold hemmeligheten for deg selv."
+
+#: src/copy/pages.ts
+msgid "Yuva releases"
+msgstr "Yuva-utgivelser"
+
+#: src/copy/docs.ts
+msgid "Yuva signs every request with Standard Webhooks and retries failed deliveries. Registering an endpoint and verifying a signature are in the webhooks guide."
+msgstr "Yuva signerer hver forespørsel med Standard Webhooks og prøver mislykkede leveringer på nytt. Registrering av et endepunkt og verifisering av en signatur står i webhook-veiledningen."
+
+#: src/copy/contact.ts
+msgid "Yuva team"
+msgstr "Yuva-teamet"
+
+#: src/copy/brand.ts
+msgid "Yuva: one inbox for every product"
+msgstr "Yuva: én innboks for hvert produkt"
+
+#: src/copy/home.ts
+msgid "Yuva: one open-source inbox for e-mail, live chat and in-app messages"
+msgstr "Yuva: én innboks med åpen kildekode for e-post, livechat og meldinger i appen"
+
+#: src/copy/home.ts
+msgid "Zendesk and Help Scout"
+msgstr "Zendesk og Help Scout"

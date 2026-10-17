@@ -285,3 +285,10 @@
   @apply text-lg leading-relaxed text-ink;
 }
 
+
+pre,
+code,
+kbd {
+  direction: ltr;
+  unicode-bidi: isolate;
+}

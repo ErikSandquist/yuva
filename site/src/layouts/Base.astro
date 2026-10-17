@@ -4,11 +4,12 @@ import "@fontsource-variable/geist-mono"
 import "@/styles/global.css"
 import geistLatin from "@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url"
 import geistLatinExt from "@fontsource-variable/geist/files/geist-latin-ext-wght-normal.woff2?url"
+import geistCyrillic from "@fontsource-variable/geist/files/geist-cyrillic-wght-normal.woff2?url"
 import { msg } from "@lingui/core/macro"
 import Footer from "@/layouts/Footer.astro"
 import Header from "@/layouts/Header.astro"
 import { i18nFor } from "@/i18n"
-import { absolute, bcp47, home, locales, ogLocale, type Locale } from "@/lib/routes"
+import { absolute, bcp47, dir, home, locales, ogLocale, type Locale } from "@/lib/routes"
 
 interface Props {
   locale: Locale
@@ -41,11 +42,17 @@ const i18n = i18nFor(locale)
 const canonical = absolute(paths[locale])
 const ogImage = absolute(image ?? `/og/${locale}.png`)
 const serialize = (o: object) => JSON.stringify(o).replace(/</g, "\\u003c")
-const preload = locale === "tr" ? [geistLatin, geistLatinExt] : [geistLatin]
+const latinExt: Locale[] = ["tr", "pl", "cs", "sk", "hr", "sl", "ro", "hu"]
+const cyrillic: Locale[] = ["ru", "uk"]
+const preload = [
+  geistLatin,
+  ...(latinExt.includes(locale) ? [geistLatinExt] : []),
+  ...(cyrillic.includes(locale) ? [geistCyrillic] : []),
+]
 ---
 
 <!doctype html>
-<html lang={bcp47[locale]}>
+<html lang={bcp47[locale]} dir={dir(locale)}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

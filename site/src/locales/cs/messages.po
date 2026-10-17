@@ -1,0 +1,2089 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 22:38+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: cs\n"
+
+#: src/layouts/Footer.astro
+msgid "“Yuva” is Turkish for nest, or home."
+msgstr "„Yuva“ je turecky hnízdo nebo domov."
+
+#: src/copy/pages.ts
+msgid "{count} changes"
+msgstr "{count} změn"
+
+#: src/copy/docs.ts
+#: src/copy/pages.ts
+msgid "{count} min read"
+msgstr "{count} min čtení"
+
+#: src/copy/contact.ts
+msgid "{count} releases, latest {version}"
+msgstr "{count} vydání, poslední {version}"
+
+#: src/copy/docs.ts
+msgid "{count} sections"
+msgstr "{count} sekcí"
+
+#: src/copy/templates.ts
+msgid "{name} e-mail preview"
+msgstr "Náhled e-mailu {name}"
+
+#: src/copy/docs.ts
+msgid "{name} endpoints of the Yuva API."
+msgstr "Endpointy {name} API Yuva."
+
+#: src/copy/templates.ts
+msgid "{name}: {description} A free Yuva e-mail template."
+msgstr "{name}: {description} Bezplatná e-mailová šablona Yuva."
+
+#: src/copy/home.ts
+msgid "a contact and their data"
+msgstr "kontakt a jeho údaje"
+
+#: src/copy/cloudflare-email.ts
+msgid "A customer writes to one of your support addresses, for example support@example.com."
+msgstr "Zákazník píše na jednu z vašich adres podpory, například support@example.com."
+
+#: src/copy/home.ts
+msgid "A finished import in the panel: 6 conversations and 12 messages copied from an mbox file, with a note that Yuva has no access to your mailbox."
+msgstr "Dokončený import v panelu: 6 konverzací a 12 zpráv zkopírovaných ze souboru mbox s poznámkou, že Yuva nemá přístup k vaší schránce."
+
+#: src/copy/contact.ts
+msgid "A hosted service and commercial licenses"
+msgstr "Hostovaná služba a komerční licence"
+
+#: src/copy/cloudflare-email.ts
+msgid "A message can be up to 25 MiB including attachments, which is the Cloudflare Email Routing limit. Yuva keeps up to 50 attachments per message, each within the server's attachment size limit (25 MiB by default) and allowed types; it leaves out the rest."
+msgstr "Zpráva může mít včetně příloh až 25 MiB, což je limit Cloudflare Email Routing. Yuva uchovává až 50 příloh na zprávu, každou v rámci limitu velikosti příloh serveru (výchozí 25 MiB) a povolených typů; zbytek vynechá."
+
+#: src/copy/cloudflare-email.ts
+msgid "A small open-source Worker"
+msgstr "Malý open-source Worker"
+
+#: src/copy/home.ts
+msgid "Accepted answer"
+msgstr "Přijatá odpověď"
+
+#: src/copy/home.ts
+msgid "Add ratings and a discussion area to your own documentation pages."
+msgstr "Přidejte hodnocení a diskuzní prostor do vlastních stránek dokumentace."
+
+#: src/copy/brand.ts
+msgid "Add shadows or outlines"
+msgstr "Přidávat stíny nebo obrysy"
+
+#: src/copy/ai.ts
+msgid "Add this to .cursor/mcp.json in your project:"
+msgstr "Přidejte to do .cursor/mcp.json ve svém projektu:"
+
+#: src/copy/ai.ts
+msgid "Add this to .vscode/mcp.json in your project:"
+msgstr "Přidejte to do .vscode/mcp.json ve svém projektu:"
+
+#: src/copy/ai.ts
+msgid "Add Yuva in your terminal:"
+msgstr "Přidejte Yuva v terminálu:"
+
+#: src/copy/ai.ts
+msgid "Add Yuva live chat to this site."
+msgstr "Přidejte na tento web živý chat Yuva."
+
+#: src/copy/pages.ts
+msgid "Added"
+msgstr "Přidáno"
+
+#: src/layouts/Footer.astro
+msgid "AI assistants"
+msgstr "AI asistenti"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "AI assistants and MCP"
+msgstr "AI asistenti a MCP"
+
+#: src/copy/pages.ts
+msgid "All posts"
+msgstr "Všechny příspěvky"
+
+#: src/copy/pages.ts
+msgid "All releases on GitHub"
+msgstr "Všechna vydání na GitHubu"
+
+#: src/copy/templates.ts
+msgid "All templates"
+msgstr "Všechny šablony"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Analytics"
+msgstr "Analytika"
+
+#: src/copy/home.ts
+msgid "and funnels"
+msgstr "a trychtýře"
+
+#: src/copy/home.ts
+msgid "and Postgres"
+msgstr "a Postgres"
+
+#: src/copy/home.ts
+msgid "and the inboxes they can see"
+msgstr "a schránky, které vidí"
+
+#: src/copy/templates.ts
+msgid "Announcement"
+msgstr "Oznámení"
+
+#: src/copy/cloudflare-email.ts
+msgid "Any domain you manage in Cloudflare and whose mail no other server handles, because Email Routing becomes its MX. Each e-mail channel has an address, or the catch-all *@example.com for every address of the domain that no channel has exactly. A subaddress such as support+billing@example.com reaches the channel of support@example.com."
+msgstr "Libovolná doména, kterou spravujete v Cloudflare a jejíž poštu nezpracovává jiný server, protože se Email Routing stane jejím MX. Každý e-mailový kanál má adresu, nebo zachytávací *@example.com pro všechny adresy domény, které žádný kanál nemá přesně. Subadresa jako support+billing@example.com dorazí do kanálu support@example.com."
+
+#: src/copy/contact.ts
+msgid "API"
+msgstr "API"
+
+#: src/layouts/Footer.astro
+msgid "API contract"
+msgstr "Kontrakt API"
+
+#: src/copy/docs.ts
+msgid "API key"
+msgstr "Klíč API"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+msgid "API reference"
+msgstr "Reference API"
+
+#: src/copy/brand.ts
+msgid "App icon"
+msgstr "Ikona aplikace"
+
+#: src/copy/contact.ts
+msgid "Apps"
+msgstr "Aplikace"
+
+#: src/copy/home.ts
+msgid "Assign"
+msgstr "Přiřadit"
+
+#: src/copy/home.ts
+msgid "at a glance"
+msgstr "ve zkratce"
+
+#: src/copy/contact.ts
+msgid "At a glance"
+msgstr "Ve zkratce"
+
+#: src/copy/home.ts
+msgid "Attributes"
+msgstr "Atributy"
+
+#: src/copy/docs.ts
+msgid "Authentication"
+msgstr "Autentizace"
+
+#: src/copy/ai.ts
+msgid "Back in the assistant, Yuva is connected. Settings → Connected apps shows it and revokes it."
+msgstr "Zpět v asistentovi je Yuva připojená. Nastavení → Připojené aplikace ji ukazuje a umožňuje odvolat."
+
+#: src/pages/404.astro
+msgid "Back to the home page"
+msgstr "Zpět na domovskou stránku"
+
+#: src/copy/docs.ts
+msgid "Back to the website"
+msgstr "Zpět na web"
+
+#: src/copy/home.ts
+msgid "before anything is sent"
+msgstr "než se cokoli odešle"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/copy/pages.ts
+#: src/layouts/Footer.astro
+msgid "Blog"
+msgstr "Blog"
+
+#: src/copy/brand.ts
+msgid "Brand"
+msgstr "Značka"
+
+#: src/copy/brand.ts
+#: src/copy/contact.ts
+#: src/copy/header.ts
+#: src/layouts/Footer.astro
+msgid "Brand assets"
+msgstr "Materiály značky"
+
+#: src/copy/pages.ts
+msgid "Breaking changes"
+msgstr "Zásadní změny"
+
+#: src/copy/header.ts
+msgid "Bring your mail and history."
+msgstr "Přineste svou poštu a historii."
+
+#: src/copy/home.ts
+msgid "Bring your mail and support history over. Yuva only reads at the source."
+msgstr "Přineste svou poštu a historii podpory. Yuva ve zdroji jen čte."
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Broadcasts"
+msgstr "Rozesílky"
+
+#: src/copy/home.ts
+msgid "Build e-mails in the designer or start from a free template."
+msgstr "Vytvářejte e-maily v designéru nebo začněte z bezplatné šablony."
+
+#: src/copy/contact.ts
+msgid "Built with"
+msgstr "Postaveno na"
+
+#: src/copy/contact.ts
+msgid "Business"
+msgstr "Byznys"
+
+#: src/copy/pages.ts
+#: src/copy/templates.ts
+msgid "By"
+msgstr "Autor"
+
+#: src/copy/cloudflare-email.ts
+msgid "Can someone forge mail to my Yuva server?"
+msgstr "Může někdo podvrhnout poštu na můj server Yuva?"
+
+#: src/copy/brand.ts
+msgid "Change its colours"
+msgstr "Změňte její barvy"
+
+#: src/copy/pages.ts
+msgid "Changed"
+msgstr "Změněno"
+
+#: src/copy/pages.ts
+msgid "Changelog"
+msgstr "Seznam změn"
+
+#: src/copy/pages.ts
+msgid "CHANGELOG.md"
+msgstr "CHANGELOG.md"
+
+#: src/copy/contact.ts
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Channels"
+msgstr "Kanály"
+
+#: src/copy/home.ts
+msgid "checks before you send"
+msgstr "kontroly před odesláním"
+
+#: src/copy/ai.ts
+msgid "Choose the workspace and what the assistant may do, then approve."
+msgstr "Vyberte pracovní prostor a co smí asistent dělat, a pak to schvalte."
+
+#: src/copy/header.ts
+msgid "Claude drafts, you send."
+msgstr "Claude navrhuje, vy odesíláte."
+
+#: src/copy/brand.ts
+msgid "Click a colour to copy its hex code."
+msgstr "Kliknutím na barvu zkopírujete její hex kód."
+
+#: src/copy/header.ts
+#: src/layouts/Footer.astro
+msgid "Cloudflare e-mail"
+msgstr "E-mail přes Cloudflare"
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare Email Routing becomes the MX of your domain and receives the mail. Yuva does not listen for SMTP, so there is no mail server to install or keep patched."
+msgstr "Cloudflare Email Routing se stane MX vaší domény a přijímá poštu. Yuva nenaslouchá na SMTP, takže není co instalovat ani záplatovat."
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare Email Routing receives the message and passes it to the Yuva Email Worker."
+msgstr "Cloudflare Email Routing zprávu přijme a předá ji Yuva Email Workeru."
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare, the Cloudflare logo and Cloudflare Workers are trademarks and/or registered trademarks of Cloudflare, Inc. in the United States and other jurisdictions. Yuva is an independent open-source project, not affiliated with or endorsed by Cloudflare."
+msgstr "Cloudflare, logo Cloudflare a Cloudflare Workers jsou ochranné známky a/nebo registrované ochranné známky společnosti Cloudflare, Inc. ve Spojených státech a dalších jurisdikcích. Yuva je nezávislý open-source projekt, není s Cloudflare nijak spojen ani jí schválen."
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare® Email Routing receives the mail for your support addresses, and the open-source Yuva Email Worker hands each message to Yuva, signed. It lands in your shared inbox as a conversation your team answers."
+msgstr "Cloudflare® Email Routing přijímá poštu pro vaše adresy podpory a open-source Yuva Email Worker předá každou zprávu Yuvě podepsanou. Dorazí do vaší sdílené schránky jako konverzace, kterou odpovídá váš tým."
+
+#: src/copy/brand.ts
+msgid "Colours"
+msgstr "Barvy"
+
+#: src/copy/contact.ts
+msgid "Commercial license"
+msgstr "Komerční licence"
+
+#: src/copy/pages.ts
+msgid "Compare changes"
+msgstr "Porovnat změny"
+
+#: src/copy/home.ts
+msgid "Connect a support address, a chat widget for your website or the SDKs for your apps."
+msgstr "Připojte adresu podpory, chatovací widget pro svůj web nebo SDK pro své aplikace."
+
+#: src/copy/home.ts
+msgid "Connect Claude, ChatGPT or Cursor. A teammate reviews and sends what they draft."
+msgstr "Připojte Claude, ChatGPT nebo Cursor. Kolega zkontroluje a odešle, co navrhnou."
+
+#: src/copy/ai.ts
+msgid "Connect Yuva"
+msgstr "Připojit Yuva"
+
+#: src/copy/ai.ts
+msgid "Connect Yuva to Claude, ChatGPT, Cursor, VS Code or Gemini CLI, then let the assistant look at your project and set Yuva up with you."
+msgstr "Připojte Yuva ke Claude, ChatGPT, Cursoru, VS Code nebo Gemini CLI a nechte asistenta prohlédnout váš projekt a nastavit Yuva společně s vámi."
+
+#: src/copy/contact.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Contact"
+msgstr "Kontakt"
+
+#: src/copy/docs.ts
+msgid "Contact session"
+msgstr "Relace kontaktu"
+
+#: src/copy/contact.ts
+msgid "Contact Yuva"
+msgstr "Kontaktujte Yuva"
+
+#: src/copy/home.ts
+msgid "Contacts"
+msgstr "Kontakty"
+
+#: src/layouts/Footer.astro
+msgid "Contributing"
+msgstr "Přispívání"
+
+#: src/copy/ai.ts
+#: src/copy/brand.ts
+#: src/copy/contact.ts
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/pages.ts
+msgid "Copied"
+msgstr "Zkopírováno"
+
+#: src/copy/ai.ts
+#: src/copy/docs.ts
+msgid "Copy"
+msgstr "Kopírovat"
+
+#: src/copy/contact.ts
+msgid "Copy address"
+msgstr "Kopírovat adresu"
+
+#: src/copy/pages.ts
+msgid "Copy link"
+msgstr "Kopírovat odkaz"
+
+#: src/copy/header.ts
+msgid "Copy logo as SVG"
+msgstr "Kopírovat logo jako SVG"
+
+#: src/copy/header.ts
+msgid "Copy logo with name as SVG"
+msgstr "Kopírovat logo s názvem jako SVG"
+
+#: src/copy/brand.ts
+msgid "Copy SVG"
+msgstr "Kopírovat SVG"
+
+#: src/copy/home.ts
+#: src/copy/pages.ts
+msgid "Create an account"
+msgstr "Vytvořit účet"
+
+#: src/copy/home.ts
+msgid "Create an account on our service and start without running a server."
+msgstr "Vytvořte si účet v naší službě a začněte bez provozu serveru."
+
+#: src/copy/pages.ts
+msgid "Create an account on our service, or run it on your own server."
+msgstr "Vytvořte si účet v naší službě, nebo si ji provozujte na vlastním serveru."
+
+#: src/copy/templates.ts
+msgid "Dark"
+msgstr "Tmavý"
+
+#: src/ui/ThemeToggle.astro
+msgid "Dark theme"
+msgstr "Tmavý motiv"
+
+#: src/copy/home.ts
+msgid "Delete"
+msgstr "Smazat"
+
+#: src/copy/home.ts
+msgid "Deliverability"
+msgstr "Doručitelnost"
+
+#: src/copy/cloudflare-email.ts
+msgid "Deploy the Worker to your Cloudflare account, using the same secret:"
+msgstr "Nasaďte Worker do svého účtu Cloudflare se stejným tajným klíčem:"
+
+#: src/copy/pages.ts
+msgid "Deprecated"
+msgstr "Zastaralé"
+
+#: src/copy/docs.ts
+msgid "Description"
+msgstr "Popis"
+
+#: src/copy/home.ts
+msgid "Designer"
+msgstr "Designér"
+
+#: src/copy/home.ts
+msgid "Designs and broadcast drafts"
+msgstr "Návrhy a koncepty rozesílek"
+
+#: src/copy/templates.ts
+msgid "Desktop"
+msgstr "Počítač"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Developers"
+msgstr "Vývojáři"
+
+#: src/copy/templates.ts
+msgid "Digest"
+msgstr "Souhrn"
+
+#: src/copy/home.ts
+msgid "Discussions"
+msgstr "Diskuze"
+
+#: src/copy/brand.ts
+msgid "Do"
+msgstr "Dělejte"
+
+#: src/copy/cloudflare-email.ts
+msgid "Do I need to run a mail server?"
+msgstr "Musím provozovat poštovní server?"
+
+#: src/copy/docs.ts
+msgid "Docs"
+msgstr "Dokumentace"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Documentation"
+msgstr "Dokumentace"
+
+#: src/copy/cloudflare-email.ts
+msgid "Does Yuva use the DMARC result from Cloudflare?"
+msgstr "Používá Yuva výsledek DMARC z Cloudflare?"
+
+#: src/copy/brand.ts
+msgid "Don't"
+msgstr "Nedělejte"
+
+#: src/copy/header.ts
+msgid "Download logo"
+msgstr "Stáhnout logo"
+
+#: src/copy/brand.ts
+msgid "Download PNG"
+msgstr "Stáhnout PNG"
+
+#: src/copy/brand.ts
+msgid "Download SVG"
+msgstr "Stáhnout SVG"
+
+#: src/copy/brand.ts
+msgid "Download the icon"
+msgstr "Stáhnout ikonu"
+
+#: src/copy/brand.ts
+msgid "Download the Yuva logo as SVG or PNG, copy the brand colours, and read how the name and logo may be used."
+msgstr "Stáhněte si logo Yuva jako SVG nebo PNG, zkopírujte barvy značky a přečtěte si, jak lze používat název a logo."
+
+#: src/copy/home.ts
+msgid "Draft replies"
+msgstr "Návrhy odpovědí"
+
+#: src/copy/contact.ts
+#: src/copy/home.ts
+msgid "E-mail"
+msgstr "E-mail"
+
+#: src/pages/og/[lang].png.ts
+msgid "E-mail · live chat · in-app · self-hosted"
+msgstr "E-mail · živý chat · v aplikaci · self-hosted"
+
+#: src/copy/header.ts
+#: src/copy/templates.ts
+#: src/layouts/Footer.astro
+msgid "E-mail templates"
+msgstr "E-mailové šablony"
+
+#: src/copy/home.ts
+msgid "E-mail templates and designer"
+msgstr "E-mailové šablony a designér"
+
+#: src/copy/header.ts
+msgid "E-mail, live chat and in-app."
+msgstr "E-mail, živý chat a v aplikaci."
+
+#: src/copy/contact.ts
+msgid "Early and built in the open"
+msgstr "Brzy a budované veřejně"
+
+#: src/copy/docs.ts
+msgid "Edit this page on GitHub"
+msgstr "Upravit tuto stránku na GitHubu"
+
+#: src/copy/cloudflare-email.ts
+msgid "Email Routing becomes the MX of the domain, so use a domain or subdomain that no other mail server handles."
+msgstr "Email Routing se stane MX domény, proto použijte doménu nebo subdoménu, kterou nezpracovává žádný jiný poštovní server."
+
+#: src/copy/cloudflare-email.ts
+msgid "Email Routing in front"
+msgstr "Email Routing vpředu"
+
+#: src/copy/brand.ts
+msgid "Ember"
+msgstr "Žhář"
+
+#: src/copy/templates.ts
+msgid "Enter a full address starting with http:// or https://."
+msgstr "Zadejte úplnou adresu začínající http:// nebo https://."
+
+#: src/copy/templates.ts
+msgid "Enter the address of your Yuva server to open the template there. It is kept in this browser only."
+msgstr "Zadejte adresu svého serveru Yuva, abyste na něm šablonu otevřeli. Uloží se jen v tomto prohlížeči."
+
+#: src/copy/ai.ts
+msgid "Enter this address and sign in:"
+msgstr "Zadejte tuto adresu a přihlaste se:"
+
+#: src/copy/templates.ts
+msgid "Event"
+msgstr "Událost"
+
+#: src/copy/header.ts
+msgid "Every channel in one list."
+msgstr "Všechny kanály v jednom seznamu."
+
+#: src/copy/home.ts
+msgid "Every channel lands in one list. Your team answers from one chat-style view."
+msgstr "Všechny kanály končí v jednom seznamu. Váš tým odpovídá z jediného pohledu ve stylu chatu."
+
+#: src/copy/header.ts
+msgid "Every endpoint, to try."
+msgstr "Každý endpoint k vyzkoušení."
+
+#: src/copy/home.ts
+msgid "Every part of Yuva has a typed contract and a small, documented integration."
+msgstr "Každá část Yuvy má typovaný kontrakt a malou, zdokumentovanou integraci."
+
+#: src/copy/home.ts
+msgid "Every support channel, answered as one chat."
+msgstr "Všechny kanály podpory, obsloužené jako jeden chat."
+
+#: src/copy/pages.ts
+msgid "Every version of Yuva and what changed in it. Versions follow Semantic Versioning, and until 1.0 any release may change the API and the database schema."
+msgstr "Každá verze Yuvy a co se v ní změnilo. Verze se řídí sémantickým verzováním a do 1.0 může kterékoli vydání změnit API i schéma databáze."
+
+#: src/copy/docs.ts
+msgid "Every Yuva endpoint and webhook event, generated from the OpenAPI 3.1 contract."
+msgstr "Každý endpoint a událost webhooku Yuvy, vygenerované z kontraktu OpenAPI 3.1."
+
+#: src/copy/docs.ts
+msgid "Every Yuva guide in one place: install, channels, broadcasts, analytics, moving a mailbox in, the developer tools and the API reference."
+msgstr "Všechny příručky Yuvy na jednom místě: instalace, kanály, rozesílky, analytika, přenos schránky, nástroje pro vývojáře a reference API."
+
+#: src/copy/pages.ts
+msgid "Every Yuva release and what changed in it, from the changelog."
+msgstr "Každé vydání Yuvy a co se v něm změnilo, ze seznamu změn."
+
+#: src/copy/home.ts
+msgid "Feedback"
+msgstr "Zpětná vazba"
+
+#: src/copy/home.ts
+msgid "Files"
+msgstr "Soubory"
+
+#: src/copy/cloudflare-email.ts
+msgid "Film: support e-mail from Cloudflare to the Yuva inbox"
+msgstr "Video: e-mail podpory z Cloudflare do schránky Yuva"
+
+#: src/copy/pages.ts
+msgid "Fixed"
+msgstr "Opraveno"
+
+#: src/copy/pages.ts
+msgid "Follow the blog"
+msgstr "Sledujte blog"
+
+#: src/copy/brand.ts
+msgid "For app stores and platforms that round the corners themselves."
+msgstr "Pro obchody s aplikacemi a platformy, které rohy zaoblují samy."
+
+#: src/copy/brand.ts
+msgid "For dark backgrounds."
+msgstr "Pro tmavá pozadí."
+
+#: src/copy/contact.ts
+msgid "For investors"
+msgstr "Pro investory"
+
+#: src/copy/brand.ts
+msgid "For light backgrounds."
+msgstr "Pro světlá pozadí."
+
+#: src/copy/home.ts
+msgid "for open conversations"
+msgstr "otevřených konverzací"
+
+#: src/copy/home.ts
+msgid "for the usual answers"
+msgstr "pro obvyklé odpovědi"
+
+#: src/copy/home.ts
+msgid "for your newsletters"
+msgstr "pro vaše newslettery"
+
+#: src/copy/home.ts
+msgid "for your own e-mails"
+msgstr "pro vaše vlastní e-maily"
+
+#: src/copy/header.ts
+msgid "Free designs to copy."
+msgstr "Bezplatné návrhy ke zkopírování."
+
+#: src/copy/templates.ts
+msgid "Free starter designs for newsletters, product updates, announcements and more. Preview them here and open one in Yuva's e-mail designer."
+msgstr "Bezplatné výchozí návrhy pro newslettery, aktualizace produktu, oznámení a další. Prohlédněte si je zde a jeden otevřete v e-mailovém designéru Yuvy."
+
+#: src/copy/home.ts
+msgid "from the people you helped"
+msgstr "od lidí, kterým jste pomohli"
+
+#: src/copy/pages.ts
+msgid "From the team"
+msgstr "Od týmu"
+
+#: src/copy/brand.ts
+msgid "Full-bleed icon"
+msgstr "Ikona do krajů"
+
+#: src/copy/home.ts
+msgid "Gallery"
+msgstr "Galerie"
+
+#: src/copy/docs.ts
+msgid "Get started"
+msgstr "Začít"
+
+#: src/copy/home.ts
+msgid "Give every product's users a way to reach you."
+msgstr "Dejte uživatelům každého produktu způsob, jak vás zastihnout."
+
+#: src/copy/brand.ts
+msgid "Glow"
+msgstr "Záře"
+
+#: src/copy/home.ts
+msgid "Gmail, Outlook or any IMAP server"
+msgstr "Gmail, Outlook nebo jakýkoli server IMAP"
+
+#: src/copy/home.ts
+msgid "Goals"
+msgstr "Cíle"
+
+#: src/copy/docs.ts
+msgid "Guides"
+msgstr "Příručky"
+
+#: src/copy/header.ts
+msgid "Guides for every part."
+msgstr "Příručky ke každé části."
+
+#: src/copy/home.ts
+msgid "Help center"
+msgstr "Centrum nápovědy"
+
+#: src/copy/home.ts
+msgid "Help desks"
+msgstr "Helpdesky"
+
+#: src/copy/contact.ts
+msgid "Hi! Tell us a little about yourself and what you have in mind."
+msgstr "Ahoj! Řekněte nám něco o sobě a o tom, co máte v plánu."
+
+#: src/copy/home.ts
+msgid "History"
+msgstr "Historie"
+
+#: src/copy/home.ts
+msgid "Hosted"
+msgstr "Hostované"
+
+#: src/copy/contact.ts
+msgid "Hosted service and commercial licenses"
+msgstr "Hostovaná služba a komerční licence"
+
+#: src/copy/cloudflare-email.ts
+msgid "How a message gets from the customer to your team"
+msgstr "Jak se zpráva dostane od zákazníka k vašemu týmu"
+
+#: src/copy/cloudflare-email.ts
+msgid "How big can a message be?"
+msgstr "Jak velká může být zpráva?"
+
+#: src/copy/contact.ts
+msgid "How the AGPL, the MIT SDKs and the CLA fit together."
+msgstr "Jak do sebe zapadají AGPL, SDK pod licencí MIT a CLA."
+
+#: src/copy/templates.ts
+msgid "How to add a template"
+msgstr "Jak přidat šablonu"
+
+#: src/copy/templates.ts
+msgid "https://yuva.example.com"
+msgstr "https://yuva.example.com"
+
+#: src/copy/contact.ts
+msgid "I have a question that doesn't fit anywhere else."
+msgstr "Mám otázku, která nikam jinam nezapadá."
+
+#: src/copy/contact.ts
+msgid "I have an idea for working together."
+msgstr "Mám nápad na spolupráci."
+
+#: src/copy/contact.ts
+msgid "I'd like to talk about investing in Yuva."
+msgstr "Chtěl(a) bych mluvit o investici do Yuvy."
+
+#: src/copy/contact.ts
+msgid "I'm writing about Yuva and have a few questions."
+msgstr "Píšu o Yuvě a mám několik otázek."
+
+#: src/copy/home.ts
+msgid "Identity tokens"
+msgstr "Identity tokeny"
+
+#: src/copy/cloudflare-email.ts
+msgid "If Yuva answers with a server error, does not answer within 20 seconds or cannot be reached, the Worker can forward the message to an address you choose, as long as you set FALLBACK_FORWARD. That address must be a verified destination in Email Routing. The message then arrives as a plain forward and does not appear in Yuva. Without FALLBACK_FORWARD the delivery fails with an error and the sending server may retry later."
+msgstr "Pokud Yuva odpoví chybou serveru, neodpoví do 20 sekund nebo není dosažitelná, může Worker zprávu přeposlat na adresu, kterou zvolíte, pokud nastavíte FALLBACK_FORWARD. Tato adresa musí být ověřeným cílem v Email Routing. Zpráva pak dorazí jako obyčejné přeposlání a v Yuvě se neobjeví. Bez FALLBACK_FORWARD doručení selže s chybou a odesílající server to může později zkusit znovu."
+
+#: src/copy/cloudflare-email.ts
+msgid "If Yuva is unreachable"
+msgstr "Pokud je Yuva nedostupná"
+
+#: src/copy/ai.ts
+msgid "If Yuva itself misbehaves, the assistant can prepare a GitHub issue with your names, addresses and keys removed. You read it before anything is opened."
+msgstr "Pokud se Yuva sama chová špatně, může asistent připravit issue na GitHubu s odstraněnými jmény, adresami a klíči. Přečtete si ho, než se cokoli otevře."
+
+#: src/copy/docs.ts
+msgid "In"
+msgstr "V"
+
+#: src/copy/ai.ts
+msgid "In claude.ai or Claude Desktop, open Customize → Connectors → Add custom connector."
+msgstr "V claude.ai nebo Claude Desktop otevřete Customize → Connectors → Add custom connector."
+
+#: src/copy/cloudflare-email.ts
+msgid "In the Cloudflare dashboard, open your domain → Email → Email Routing and enable it. Cloudflare adds its MX and SPF records."
+msgstr "V panelu Cloudflare otevřete svou doménu → Email → Email Routing a zapněte ho. Cloudflare přidá své záznamy MX a SPF."
+
+#: src/copy/cloudflare-email.ts
+msgid "In Yuva, open Settings → your inbox → Channels → E-mail and add the support address. Set a secret on the server and restart it:"
+msgstr "V Yuvě otevřete Nastavení → vaše schránka → Kanály → E-mail a přidejte adresu podpory. Nastavte na serveru tajný klíč a restartujte ho:"
+
+#: src/copy/contact.ts
+#: src/copy/home.ts
+msgid "In-app"
+msgstr "V aplikaci"
+
+#: src/copy/home.ts
+msgid "Inbox"
+msgstr "Schránka"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Inbox and conversations"
+msgstr "Schránka a konverzace"
+
+#: src/copy/brand.ts
+msgid "Ink"
+msgstr "Inkoust"
+
+#: src/copy/docs.ts
+msgid "Introduction"
+msgstr "Úvod"
+
+#: src/copy/contact.ts
+msgid "Investment"
+msgstr "Investice"
+
+#: src/copy/ai.ts
+msgid "It does the rest with you."
+msgstr "Zbytek udělá s vámi."
+
+#: src/copy/brand.ts
+msgid "Keep the logo as it is: do not change its shape, proportions or colours."
+msgstr "Nechte logo, jak je: neměňte jeho tvar, proporce ani barvy."
+
+#: src/copy/brand.ts
+msgid "keep the name in a private, internal deployment, modified or not."
+msgstr "ponechat název v soukromém interním nasazení, upraveném či ne."
+
+#: src/copy/home.ts
+msgid "Labels and canned replies"
+msgstr "Štítky a připravené odpovědi"
+
+#: src/ui/LangMenu.astro
+msgid "Language"
+msgstr "Jazyk"
+
+#: src/copy/docs.ts
+msgid "Last updated {date}"
+msgstr "Naposledy aktualizováno {date}"
+
+#: src/copy/pages.ts
+msgid "Latest"
+msgstr "Nejnovější"
+
+#: src/copy/pages.ts
+msgid "Latest post"
+msgstr "Nejnovější příspěvek"
+
+#: src/copy/contact.ts
+msgid "Let's talk."
+msgstr "Pojďme si promluvit."
+
+#: src/copy/contact.ts
+msgid "License"
+msgstr "Licence"
+
+#: src/copy/templates.ts
+msgid "License and contributions"
+msgstr "Licence a příspěvky"
+
+#: src/copy/contact.ts
+#: src/layouts/Footer.astro
+msgid "Licensing"
+msgstr "Licencování"
+
+#: src/copy/templates.ts
+msgid "Light"
+msgstr "Světlý"
+
+#: src/ui/ThemeToggle.astro
+msgid "Light theme"
+msgstr "Světlý motiv"
+
+#: src/copy/home.ts
+msgid "Lists"
+msgstr "Seznamy"
+
+#: src/copy/contact.ts
+#: src/copy/home.ts
+msgid "Live chat"
+msgstr "Živý chat"
+
+#: src/copy/templates.ts
+msgid "Live preview"
+msgstr "Živý náhled"
+
+#: src/copy/header.ts
+msgid "Log in"
+msgstr "Přihlásit se"
+
+#: src/copy/brand.ts
+msgid "Logo"
+msgstr "Logo"
+
+#: src/copy/header.ts
+msgid "Logo and icon to download."
+msgstr "Logo a ikona ke stažení."
+
+#: src/copy/header.ts
+msgid "Logo options"
+msgstr "Varianty loga"
+
+#: src/copy/brand.ts
+msgid "Logo with name"
+msgstr "Logo s názvem"
+
+#: src/copy/brand.ts
+msgid "Logo with name, white"
+msgstr "Logo s názvem, bílé"
+
+#: src/copy/contact.ts
+msgid "Logos, colours and the rules for the name."
+msgstr "Loga, barvy a pravidla pro název."
+
+#: src/copy/ai.ts
+msgid "Look at this project and tell me how to add Yuva. Use Yuva's init prompt, recommend a plan, and change nothing until I pick the steps."
+msgstr "Podívej se na tento projekt a řekni mi, jak přidat Yuva. Použij init prompt Yuvy, doporuč plán a nic neměň, dokud nevyberu kroky."
+
+#: src/copy/cloudflare-email.ts
+msgid "Mail to a support address opens or continues a conversation in the inbox, and the team answers from the same panel as chat and app messages."
+msgstr "Pošta na adresu podpory otevře nebo naváže konverzaci ve schránce a tým odpovídá ze stejného panelu jako u chatu a zpráv z aplikací."
+
+#: src/copy/home.ts
+msgid "Mailboxes"
+msgstr "Schránky"
+
+#: src/copy/pages.ts
+msgid "Maintainer of Yuva"
+msgstr "Správce Yuvy"
+
+#: src/copy/home.ts
+msgid "marked by your team"
+msgstr "označené vaším týmem"
+
+#: src/ui/ThemeToggle.astro
+msgid "Match the system theme"
+msgstr "Podle motivu systému"
+
+#: src/copy/home.ts
+msgid "mbox, Takeout and .eml"
+msgstr "mbox, Takeout a .eml"
+
+#: src/copy/docs.ts
+msgid "Member session"
+msgstr "Relace člena"
+
+#: src/copy/home.ts
+msgid "Members"
+msgstr "Členové"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+msgid "Menu"
+msgstr "Nabídka"
+
+#: src/copy/docs.ts
+msgid "More"
+msgstr "Více"
+
+#: src/copy/pages.ts
+msgid "More posts"
+msgstr "Další příspěvky"
+
+#: src/copy/ai.ts
+msgid "Move our support mailbox into Yuva."
+msgstr "Přeneste naši schránku podpory do Yuvy."
+
+#: src/copy/docs.ts
+msgid "Move to Yuva"
+msgstr "Přejít na Yuva"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Moving in"
+msgstr "Přechod"
+
+#: src/copy/ai.ts
+msgid "My own server"
+msgstr "Můj vlastní server"
+
+#: src/copy/docs.ts
+msgid "Name"
+msgstr "Jméno"
+
+#: src/copy/ai.ts
+msgid "Needs a public https address."
+msgstr "Vyžaduje veřejnou adresu https."
+
+#: src/copy/pages.ts
+msgid "New posts appear in the RSS feed as soon as they are published."
+msgstr "Nové příspěvky se objeví v RSS kanálu hned po zveřejnění."
+
+#: src/copy/ai.ts
+msgid "New to Yuva? Name your workspace. It takes a few seconds."
+msgstr "Poprvé v Yuvě? Pojmenujte svůj pracovní prostor. Zabere to pár vteřin."
+
+#: src/copy/header.ts
+msgid "News and how Yuva is built."
+msgstr "Novinky a jak se Yuva staví."
+
+#: src/copy/pages.ts
+msgid "News, release stories and notes from building Yuva, the open-source inbox for every product you run."
+msgstr "Novinky, příběhy vydání a poznámky ze stavby Yuvy, open-source schránky pro každý produkt, který provozujete."
+
+#: src/copy/pages.ts
+msgid "News, release stories and notes from building Yuva."
+msgstr "Novinky, příběhy vydání a poznámky ze stavby Yuvy."
+
+#: src/copy/templates.ts
+msgid "Newsletter"
+msgstr "Newsletter"
+
+#: src/copy/header.ts
+msgid "Newsletters to your lists."
+msgstr "Newslettery vašim seznamům."
+
+#: src/copy/docs.ts
+#: src/copy/pages.ts
+msgid "Next"
+msgstr "Další"
+
+#: src/copy/docs.ts
+msgid "No authentication"
+msgstr "Bez autentizace"
+
+#: src/copy/docs.ts
+msgid "No content"
+msgstr "Bez obsahu"
+
+#: src/copy/cloudflare-email.ts
+msgid "No mail server to run."
+msgstr "Žádný poštovní server k provozu."
+
+#: src/copy/docs.ts
+msgid "No results"
+msgstr "Žádné výsledky"
+
+#: src/copy/contact.ts
+msgid "Not every message needs an e-mail. Some answers are better in public, and some reports must stay private."
+msgstr "Ne každá zpráva potřebuje e-mail. Některé odpovědi jsou lepší veřejně a některá hlášení musí zůstat soukromá."
+
+#: src/copy/cloudflare-email.ts
+msgid "Not for incoming mail. Yuva does not listen for SMTP; Cloudflare Email Routing receives the mail and the Worker passes it on. Replies need an SMTP account for the e-mail channel, such as Amazon SES, Postmark or your own relay."
+msgstr "Ne pro příchozí poštu. Yuva nenaslouchá na SMTP; poštu přijímá Cloudflare Email Routing a Worker ji předá dál. Odpovědi potřebují SMTP účet pro e-mailový kanál, například Amazon SES, Postmark nebo vlastní relay."
+
+#: src/copy/cloudflare-email.ts
+msgid "Not tied to Cloudflare"
+msgstr "Není vázáno na Cloudflare"
+
+#: src/copy/brand.ts
+msgid "Not without written permission"
+msgstr "Ne bez písemného souhlasu"
+
+#: src/copy/home.ts
+msgid "Notes and mentions"
+msgstr "Poznámky a zmínky"
+
+#: src/copy/home.ts
+msgid "of every conversation"
+msgstr "každé konverzace"
+
+#: src/copy/home.ts
+msgid "of free templates"
+msgstr "bezplatných šablon"
+
+#: src/copy/brand.ts
+msgid "offer a hosted or managed service, or a product, under the Yuva name or a confusingly similar one;"
+msgstr "nabízet hostovanou nebo spravovanou službu či produkt pod názvem Yuva nebo zaměnitelně podobným;"
+
+#: src/copy/brand.ts
+msgid "On dark backgrounds"
+msgstr "Na tmavých pozadích"
+
+#: src/copy/home.ts
+msgid "on every page"
+msgstr "na každé stránce"
+
+#: src/copy/brand.ts
+msgid "On light backgrounds"
+msgstr "Na světlých pozadích"
+
+#: src/copy/docs.ts
+#: src/copy/pages.ts
+msgid "On this page"
+msgstr "Na této stránce"
+
+#: src/copy/templates.ts
+msgid "On your own server"
+msgstr "Na vlastním serveru"
+
+#: src/copy/templates.ts
+msgid "Onboarding"
+msgstr "Zaučení"
+
+#: src/copy/home.ts
+msgid "One binary"
+msgstr "Jeden binární soubor"
+
+#: src/copy/header.ts
+msgid "One binary and Postgres."
+msgstr "Jeden binární soubor a Postgres."
+
+#: src/copy/home.ts
+msgid "One Docker image and Postgres on your own server."
+msgstr "Jeden obraz Dockeru a Postgres na vlastním serveru."
+
+#: src/copy/brand.ts
+#: src/pages/og/[lang].png.ts
+msgid "One inbox for every product you run."
+msgstr "Jedna schránka pro každý produkt, který provozujete."
+
+#: src/copy/home.ts
+msgid "One profile for each person, whichever channel they write from."
+msgstr "Jeden profil pro každého člověka, ať píše z kteréhokoli kanálu."
+
+#: src/copy/home.ts
+msgid "One small server runs all of it. The server is open source, and the SDKs carry no copyleft."
+msgstr "Vše běží na jednom malém serveru. Server je open source a SDK nemají copyleft."
+
+#: src/copy/contact.ts
+msgid "Open a GitHub issue"
+msgstr "Otevřít issue na GitHubu"
+
+#: src/copy/home.ts
+msgid "Open AI assistants"
+msgstr "Otevřít AI asistenty"
+
+#: src/copy/contact.ts
+msgid "Open an issue"
+msgstr "Otevřít issue"
+
+#: src/copy/contact.ts
+msgid "Open an issue on GitHub so others can find the answer too."
+msgstr "Otevřete issue na GitHubu, ať odpověď najdou i ostatní."
+
+#: src/copy/templates.ts
+msgid "Open on my server"
+msgstr "Otevřít na mém serveru"
+
+#: src/copy/ai.ts
+msgid "Open Plugins, select the plus button, then Add custom MCP server."
+msgstr "Otevřete Plugins, vyberte tlačítko plus a pak Add custom MCP server."
+
+#: src/copy/contact.ts
+msgid "Open source that stays open"
+msgstr "Open source, který zůstane otevřený"
+
+#: src/copy/home.ts
+msgid "Open the API reference"
+msgstr "Otevřít referenci API"
+
+#: src/copy/ai.ts
+msgid "Open the assistant in your project's folder. It reads your code on your machine and sends none of it to Yuva."
+msgstr "Otevřete asistenta ve složce svého projektu. Čte váš kód na vašem počítači a nic z něj neposílá do Yuvy."
+
+#: src/copy/home.ts
+msgid "Open the templates"
+msgstr "Otevřít šablony"
+
+#: src/pages/og/[lang].png.ts
+msgid "Open-source customer messaging"
+msgstr "Open-source zákaznická komunikace"
+
+#: src/layouts/Footer.astro
+msgid "Open-source customer messaging for teams that run many products."
+msgstr "Open-source zákaznická komunikace pro týmy, které provozují mnoho produktů."
+
+#: src/copy/docs.ts
+msgid "OpenAPI contract"
+msgstr "Kontrakt OpenAPI"
+
+#: src/copy/templates.ts
+msgid "Opens Yuva's e-mail designer with this template. You sign in first if you have not."
+msgstr "Otevře e-mailový designér Yuvy s touto šablonou. Pokud nejste přihlášeni, nejdřív se přihlásíte."
+
+#: src/copy/cloudflare-email.ts
+msgid "Optional: keep mail during an outage by adding a fallback address to the deploy command:"
+msgstr "Volitelné: zachovejte poštu během výpadku přidáním záložní adresy do příkazu k nasazení:"
+
+#: src/copy/ai.ts
+msgid "Or ask for one thing"
+msgstr "Nebo si řekněte o jednu věc"
+
+#: src/copy/home.ts
+msgid "Or host it yourself"
+msgstr "Nebo si to hostujte sami"
+
+#: src/copy/ai.ts
+msgid "Or type the sentence:"
+msgstr "Nebo opište větu:"
+
+#: src/copy/cloudflare-email.ts
+msgid "Other ways to bring mail in"
+msgstr "Další způsoby, jak přenést poštu"
+
+#: src/copy/contact.ts
+msgid "Other ways to reach us"
+msgstr "Další způsoby, jak nás zastihnout"
+
+#: src/copy/docs.ts
+msgid "Overview"
+msgstr "Přehled"
+
+#: src/pages/404.astro
+msgid "Page not found"
+msgstr "Stránka nenalezena"
+
+#: src/copy/home.ts
+msgid "Pages and sources"
+msgstr "Stránky a zdroje"
+
+#: src/copy/docs.ts
+msgid "Parameters"
+msgstr "Parametry"
+
+#: src/copy/contact.ts
+msgid "Partnership"
+msgstr "Partnerství"
+
+#: src/copy/docs.ts
+msgid "Payload"
+msgstr "Obsah požadavku"
+
+#: src/copy/pages.ts
+msgid "Performance"
+msgstr "Výkon"
+
+#: src/copy/templates.ts
+msgid "Phone"
+msgstr "Telefon"
+
+#: src/copy/ai.ts
+msgid "Pick your assistant"
+msgstr "Vyberte svého asistenta"
+
+#: src/copy/pages.ts
+msgid "Posts are published in English."
+msgstr "Příspěvky vycházejí v angličtině."
+
+#: src/copy/contact.ts
+msgid "Pre-alpha"
+msgstr "Pre-alfa"
+
+#: src/copy/contact.ts
+msgid "Press"
+msgstr "Pro média"
+
+#: src/copy/contact.ts
+msgid "Press and brand"
+msgstr "Média a značka"
+
+#: src/copy/home.ts
+msgid "Preview"
+msgstr "Náhled"
+
+#: src/copy/templates.ts
+msgid "Preview and use"
+msgstr "Náhled a použití"
+
+#: src/copy/templates.ts
+msgid "Preview colours"
+msgstr "Náhled barev"
+
+#: src/copy/home.ts
+#: src/copy/templates.ts
+msgid "Preview of the {name} template"
+msgstr "Náhled šablony {name}"
+
+#: src/copy/templates.ts
+msgid "Preview width"
+msgstr "Šířka náhledu"
+
+#: src/copy/docs.ts
+msgid "Previous"
+msgstr "Předchozí"
+
+#: src/copy/header.ts
+#: src/copy/templates.ts
+#: src/layouts/Footer.astro
+msgid "Product"
+msgstr "Produkt"
+
+#: src/copy/home.ts
+msgid "Product tour"
+msgstr "Prohlídka produktu"
+
+#: src/copy/docs.ts
+#: src/layouts/Footer.astro
+msgid "Project"
+msgstr "Projekt"
+
+#: src/copy/brand.ts
+msgid "publish a modified version under the Yuva name — rename your fork;"
+msgstr "zveřejnit upravenou verzi pod názvem Yuva — přejmenujte svůj fork;"
+
+#: src/copy/cloudflare-email.ts
+msgid "Questions and answers"
+msgstr "Otázky a odpovědi"
+
+#: src/copy/contact.ts
+msgid "Questions and bugs"
+msgstr "Otázky a chyby"
+
+#: src/copy/home.ts
+msgid "Ratings"
+msgstr "Hodnocení"
+
+#: src/copy/header.ts
+msgid "Reach the people behind Yuva."
+msgstr "Spojte se s lidmi za Yuvou."
+
+#: src/copy/contact.ts
+msgid "Read LICENSING.md"
+msgstr "Přečíst LICENSING.md"
+
+#: src/copy/home.ts
+msgid "Read the code, run {version} on your machine, and follow along as it grows."
+msgstr "Přečtěte si kód, spusťte {version} na svém počítači a sledujte, jak roste."
+
+#: src/copy/docs.ts
+msgid "Read the English page"
+msgstr "Přečíst anglickou stránku"
+
+#: src/copy/home.ts
+msgid "Read the guide"
+msgstr "Přečíst příručku"
+
+#: src/copy/cloudflare-email.ts
+msgid "Read the ingress contract"
+msgstr "Přečíst kontrakt ingress"
+
+#: src/copy/templates.ts
+msgid "Read the license"
+msgstr "Přečíst licenci"
+
+#: src/copy/ai.ts
+msgid "Read the MCP guide"
+msgstr "Přečíst příručku k MCP"
+
+#: src/copy/pages.ts
+msgid "Read the post"
+msgstr "Přečíst příspěvek"
+
+#: src/copy/home.ts
+#: src/copy/pages.ts
+msgid "Read the quick start"
+msgstr "Přečíst rychlý start"
+
+#: src/copy/cloudflare-email.ts
+msgid "Read the setup guide"
+msgstr "Přečíst příručku k nastavení"
+
+#: src/copy/home.ts
+msgid "read through MCP"
+msgstr "čtení přes MCP"
+
+#: src/copy/brand.ts
+msgid "Read TRADEMARK.md"
+msgstr "Přečíst TRADEMARK.md"
+
+#: src/copy/cloudflare-email.ts
+msgid "Real conversations"
+msgstr "Skutečné konverzace"
+
+#: src/copy/home.ts
+msgid "Realtime"
+msgstr "Reálný čas"
+
+#: src/copy/header.ts
+msgid "Receive mail with no server."
+msgstr "Přijímejte poštu bez serveru."
+
+#: src/copy/cloudflare-email.ts
+msgid "Receive your support e-mail in Yuva with Cloudflare Email Routing and the open-source Yuva Email Worker. Signed delivery, threaded conversations, no mail server to run."
+msgstr "Přijímejte e-maily podpory v Yuvě pomocí Cloudflare Email Routing a open-source Yuva Email Workeru. Podepsané doručení, konverzace ve vláknech, žádný poštovní server k provozu."
+
+#: src/copy/cloudflare-email.ts
+msgid "Refusals reach the sender"
+msgstr "Odmítnutí se dostanou k odesílateli"
+
+#: src/copy/brand.ts
+msgid "Regular, Medium and Semibold"
+msgstr "Regular, Medium a Semibold"
+
+#: src/copy/pages.ts
+msgid "Release history"
+msgstr "Historie vydání"
+
+#: src/copy/pages.ts
+msgid "Release notes are written in English."
+msgstr "Poznámky k vydání jsou psány anglicky."
+
+#: src/copy/contact.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/copy/pages.ts
+#: src/layouts/Footer.astro
+msgid "Releases"
+msgstr "Vydání"
+
+#: src/copy/pages.ts
+msgid "Removed"
+msgstr "Odstraněno"
+
+#: src/layouts/Footer.astro
+msgid "Report a vulnerability"
+msgstr "Nahlásit zranitelnost"
+
+#: src/copy/contact.ts
+msgid "Report vulnerabilities privately through GitHub, never in a public issue."
+msgstr "Zranitelnosti hlaste soukromě přes GitHub, nikdy ne ve veřejném issue."
+
+#: src/copy/home.ts
+msgid "Reports"
+msgstr "Reporty"
+
+#: src/copy/docs.ts
+msgid "Request"
+msgstr "Požadavek"
+
+#: src/copy/docs.ts
+msgid "Request body"
+msgstr "Tělo požadavku"
+
+#: src/copy/docs.ts
+msgid "required"
+msgstr "povinné"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Resources"
+msgstr "Zdroje"
+
+#: src/copy/docs.ts
+msgid "Response"
+msgstr "Odpověď"
+
+#: src/copy/docs.ts
+msgid "Responses"
+msgstr "Odpovědi"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Roadmap"
+msgstr "Roadmapa"
+
+#: src/copy/brand.ts
+msgid "Rotate it"
+msgstr "Obměňujte ho"
+
+#: src/copy/pages.ts
+msgid "RSS feed"
+msgstr "RSS kanál"
+
+#: src/copy/brand.ts
+msgid "say that your product uses, integrates with or is built on Yuva;"
+msgstr "uvést, že váš produkt Yuva používá, integruje se s ní nebo je na ní postaven;"
+
+#: src/copy/ai.ts
+msgid "Say this"
+msgstr "Říkejte"
+
+#: src/copy/docs.ts
+msgid "Schemas and every field are in the OpenAPI contract."
+msgstr "Schémata a všechna pole jsou v kontraktu OpenAPI."
+
+#: src/copy/home.ts
+msgid "SDKs and API contract"
+msgstr "SDK a kontrakt API"
+
+#: src/copy/docs.ts
+msgid "Search docs"
+msgstr "Hledat v dokumentaci"
+
+#: src/copy/docs.ts
+msgid "Search the docs"
+msgstr "Prohledat dokumentaci"
+
+#: src/copy/header.ts
+msgid "Sections"
+msgstr "Sekce"
+
+#: src/copy/contact.ts
+#: src/copy/pages.ts
+msgid "Security"
+msgstr "Zabezpečení"
+
+#: src/copy/contact.ts
+msgid "Security policy"
+msgstr "Bezpečnostní politika"
+
+#: src/copy/home.ts
+msgid "See how support is going and who is on the team."
+msgstr "Podívejte se, jak podpora jde a kdo je v týmu."
+
+#: src/copy/pages.ts
+msgid "See what is planned"
+msgstr "Podívat se, co je v plánu"
+
+#: src/copy/home.ts
+msgid "See who visits your sites and apps, with no cookies and no stored IP addresses."
+msgstr "Podívejte se, kdo navštěvuje vaše weby a aplikace, bez cookies a bez ukládání IP adres."
+
+#: src/copy/home.ts
+msgid "Self-hosted"
+msgstr "Self-hosted"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+msgid "Self-hosting"
+msgstr "Vlastní hosting"
+
+#: src/copy/home.ts
+msgid "Self-hosting and open source"
+msgstr "Vlastní hosting a open source"
+
+#: src/copy/cloudflare-email.ts
+msgid "Send a test message and watch the conversation appear in the panel."
+msgstr "Odešlete testovací zprávu a sledujte, jak se v panelu objeví konverzace."
+
+#: src/copy/home.ts
+msgid "Send newsletters to your mailing lists and see what readers do with them."
+msgstr "Posílejte newslettery svým seznamům a sledujte, co s nimi čtenáři dělají."
+
+#: src/copy/home.ts
+msgid "sent by your own app"
+msgstr "odeslané vaší vlastní aplikací"
+
+#: src/copy/templates.ts
+msgid "Server address"
+msgstr "Adresa serveru"
+
+#: src/copy/home.ts
+msgid "server and panel"
+msgstr "server a panel"
+
+#: src/layouts/Footer.astro
+msgid "Server and panel under AGPL-3.0, SDKs and API contract under MIT."
+msgstr "Server a panel pod AGPL-3.0, SDK a kontrakt API pod MIT."
+
+#: src/copy/cloudflare-email.ts
+msgid "Set it up in a few steps"
+msgstr "Nastavte to v několika krocích"
+
+#: src/copy/ai.ts
+msgid "Set up Yuva analytics for this site, with a goal for sign-ups."
+msgstr "Nastav analytiku Yuva pro tento web s cílem pro registrace."
+
+#: src/copy/pages.ts
+msgid "Share"
+msgstr "Sdílet"
+
+#: src/copy/ai.ts
+msgid "Sign in from Gemini CLI:"
+msgstr "Přihlaste se z Gemini CLI:"
+
+#: src/copy/ai.ts
+msgid "Sign in. Your browser opens Yuva:"
+msgstr "Přihlaste se. Prohlížeč otevře Yuvu:"
+
+#: src/copy/header.ts
+msgid "Signed events and user tokens."
+msgstr "Podepsané události a uživatelské tokeny."
+
+#: src/copy/home.ts
+msgid "signed, for every new message"
+msgstr "podepsané, pro každou novou zprávu"
+
+#: src/copy/brand.ts
+msgid "Sizes"
+msgstr "Velikosti"
+
+#: src/layouts/Base.astro
+msgid "Skip to content"
+msgstr "Přeskočit na obsah"
+
+#: src/copy/home.ts
+msgid "so users write as themselves"
+msgstr "aby uživatelé psali sami za sebe"
+
+#: src/copy/contact.ts
+msgid "Something else"
+msgstr "Něco jiného"
+
+#: src/layouts/Footer.astro
+msgid "Source code on GitHub"
+msgstr "Zdrojový kód na GitHubu"
+
+#: src/copy/contact.ts
+msgid "Stage"
+msgstr "Fáze"
+
+#: src/copy/header.ts
+msgid "Start free"
+msgstr "Začít zdarma"
+
+#: src/copy/home.ts
+msgid "Start with AI"
+msgstr "Začít s AI"
+
+#: src/copy/templates.ts
+msgid "Starter designs for the e-mail designer, in English, Turkish and German. Preview one, then open it in Yuva and make it yours."
+msgstr "Výchozí návrhy pro e-mailový designér, v angličtině, turečtině a němčině. Prohlédněte si jeden a otevřete ho v Yuvě, ať je váš."
+
+#: src/copy/home.ts
+msgid "stay inside the team"
+msgstr "zůstávají uvnitř týmu"
+
+#: src/copy/brand.ts
+msgid "Stretch or squash it"
+msgstr "Roztahovat nebo zplošťovat"
+
+#: src/copy/cloudflare-email.ts
+msgid "Support e-mail through Cloudflare Email Routing | Yuva"
+msgstr "E-mail podpory přes Cloudflare Email Routing | Yuva"
+
+#: src/copy/cloudflare-email.ts
+msgid "Support e-mail through Cloudflare."
+msgstr "E-mail podpory přes Cloudflare."
+
+#: src/copy/pages.ts
+msgid "Tag on GitHub"
+msgstr "Tag na GitHubu"
+
+#: src/copy/home.ts
+msgid "Team and reports"
+msgstr "Tým a reporty"
+
+#: src/copy/contact.ts
+msgid "Teams can use our hosted service, and because every contribution is made under a CLA, Yuva can also be offered under a commercial license."
+msgstr "Týmy mohou používat naši hostovanou službu a protože každý příspěvek vzniká pod CLA, lze Yuvu nabízet i pod komerční licencí."
+
+#: src/copy/ai.ts
+msgid "Tell your assistant to add Yuva."
+msgstr "Řekněte svému asistentovi, ať přidá Yuva."
+
+#: src/copy/templates.ts
+msgid "Template gallery"
+msgstr "Galerie šablon"
+
+#: src/copy/templates.ts
+msgid "Templates"
+msgstr "Šablony"
+
+#: src/copy/home.ts
+msgid "The analytics overview in the panel: 30 days of visitors, pageviews and bounce rate, a daily chart with a note on the day a newsletter went out, and the top pages and sources."
+msgstr "Přehled analytiky v panelu: 30 dní návštěvníků, zobrazení stránek a míry opuštění, denní graf s poznámkou ke dni odeslání newsletteru a nejnavštěvovanější stránky a zdroje."
+
+#: src/copy/ai.ts
+msgid "The assistant acts as you, with no more access than you approve, and asks before it changes anything."
+msgstr "Asistent jedná jako vy, bez většího přístupu, než schválíte, a před každou změnou se ptá."
+
+#: src/copy/header.ts
+msgid "The code, open source."
+msgstr "Kód, open source."
+
+#: src/copy/ai.ts
+msgid "The commands below follow what you type."
+msgstr "Příkazy níže se řídí tím, co zadáte."
+
+#: src/copy/docs.ts
+msgid "The English page has changed since this translation was last updated."
+msgstr "Anglická stránka se od poslední aktualizace tohoto překladu změnila."
+
+#: src/copy/docs.ts
+msgid "The events Yuva sends to your webhook endpoints and the payload of each."
+msgstr "Události, které Yuva posílá na vaše endpointy webhooků, a obsah každé z nich."
+
+#: src/copy/ai.ts
+msgid "The first time the assistant uses Yuva, your browser opens Yuva to sign in."
+msgstr "Při prvním použití Yuvy asistentem se v prohlížeči otevře Yuva k přihlášení."
+
+#: src/copy/brand.ts
+msgid "The mark is drawn to stay readable from an app store listing down to a 16-pixel browser tab."
+msgstr "Značka je nakreslena tak, aby zůstala čitelná od karty v obchodě s aplikacemi až po 16pixelový panel prohlížeče."
+
+#: src/copy/brand.ts
+msgid "The mark on its rounded square. Use it wherever Yuva appears as an app or a link."
+msgstr "Značka na zaobleném čtverci. Použijte ji všude, kde se Yuva objevuje jako aplikace nebo odkaz."
+
+#: src/copy/brand.ts
+msgid "The name and this site are set in Geist, an open-source typeface under the SIL Open Font License."
+msgstr "Název a tento web jsou sázeny písmem Geist, open-source písmem pod licencí SIL Open Font License."
+
+#: src/copy/home.ts
+msgid "The panel on a phone: the conversation list with each person's channel and latest message, and the tabs at the bottom."
+msgstr "Panel na telefonu: seznam konverzací s kanálem a poslední zprávou každého člověka a záložky dole."
+
+#: src/copy/home.ts
+msgid "The panel with feedback sent from a mobile app: a bug report with the app version, device and screen, next to the conversation list."
+msgstr "Panel se zpětnou vazbou odeslanou z mobilní aplikace: hlášení chyby s verzí aplikace, zařízením a obrazovkou vedle seznamu konverzací."
+
+#: src/copy/docs.ts
+msgid "The payloads Yuva sends to your webhook endpoints."
+msgstr "Obsahy požadavků, které Yuva posílá na vaše endpointy webhooků."
+
+#: src/copy/home.ts
+msgid "The report of a sent newsletter in the panel: 240 sent, 5 unsubscribed and 56 who clicked a link, a chart over time and the number of clicks on each link."
+msgstr "Report odeslaného newsletteru v panelu: 240 odesláno, 5 odhlášeno a 56 kliknutí na odkaz, graf v čase a počet kliknutí na každý odkaz."
+
+#: src/copy/contact.ts
+msgid "The server and panel are AGPL-3.0, the SDKs and API contract MIT. Improvements to the core stay public."
+msgstr "Server a panel jsou AGPL-3.0, SDK a kontrakt API MIT. Vylepšení jádra zůstávají veřejná."
+
+#: src/copy/cloudflare-email.ts
+msgid "The Worker is one way to call /ingress/email. Any mail server or relay can post the raw message with the same signed headers, and a mail server that delivers to a command can pipe the message into yuva ingest-email. The request format is documented in the Worker's README."
+msgstr "Worker je jeden ze způsobů, jak volat /ingress/email. Kterýkoli poštovní server nebo relay může odeslat surovou zprávu se stejnými podepsanými hlavičkami a poštovní server, který doručuje příkazu, může zprávu předat do yuva ingest-email. Formát požadavku je zdokumentován v README Workeru."
+
+#: src/copy/cloudflare-email.ts
+msgid "The Worker signs the raw message, both envelope addresses and a timestamp with HMAC-SHA256 under a secret you share with Yuva, and sends them to /ingress/email on your Yuva server."
+msgstr "Worker podepíše surovou zprávu, obě obálkové adresy a časové razítko pomocí HMAC-SHA256 s tajným klíčem, který sdílíte s Yuvou, a odešle je na /ingress/email na vašem serveru Yuva."
+
+#: src/copy/home.ts
+msgid "The Yuva chat widget open on a newsletter tool's website: the visitor's question and a member's reply, with the member shown online."
+msgstr "Chatovací widget Yuva otevřený na webu nástroje pro newslettery: dotaz návštěvníka a odpověď člena, člen je zobrazen online."
+
+#: src/copy/cloudflare-email.ts
+msgid "The Yuva Email Worker reads the raw message and the envelope, signs the request and posts it to Yuva. Parsing, threading and spam decisions stay on the server."
+msgstr "Yuva Email Worker přečte surovou zprávu a obálku, podepíše požadavek a odešle ho Yuvě. Parsování, vlákna a rozhodování o spamu zůstávají na serveru."
+
+#: src/copy/brand.ts
+msgid "The Yuva logo, colours and typeface, ready for articles, integrations and app listings. Please read the rules for the name and logo before you use them."
+msgstr "Logo, barvy a písmo Yuvy, připravené pro články, integrace a výpisy aplikací. Před použitím si přečtěte pravidla pro název a logo."
+
+#: src/copy/home.ts
+msgid "The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send."
+msgstr "Panel zpráv Yuva: konverzace z e-mailu, živého chatu a aplikací v jednom seznamu a konverzace otevřená jako chat s poznámkou týmu a odpovědí, kterou asistent navrhl kolegovi k odeslání."
+
+#: src/ui/ThemeToggle.astro
+msgid "Theme"
+msgstr "Motiv"
+
+#: src/copy/templates.ts
+msgid "These templates are MIT licensed: use, change and share them in your own mails."
+msgstr "Tyto šablony jsou pod licencí MIT: používejte je, upravujte a sdílejte ve vlastních e-mailech."
+
+#: src/copy/templates.ts
+msgid "This browser does not switch the preview to dark mode. Use your system's dark setting to see it, or open the template to check it in the designer."
+msgstr "Tento prohlížeč náhled nepřepne do tmavého režimu. Zobrazte ho tmavým nastavením systému, nebo šablonu otevřete a zkontrolujte v designéru."
+
+#: src/copy/docs.ts
+msgid "This documentation is written in English."
+msgstr "Tato dokumentace je psána anglicky."
+
+#: src/copy/docs.ts
+msgid "This page is not translated yet. It is shown in English."
+msgstr "Tato stránka zatím není přeložena. Zobrazuje se anglicky."
+
+#: src/copy/docs.ts
+msgid "This page is only available in English."
+msgstr "Tato stránka je dostupná jen anglicky."
+
+#: src/copy/home.ts
+msgid "through your own SMTP account"
+msgstr "přes váš vlastní SMTP účet"
+
+#: src/copy/home.ts
+msgid "to a teammate"
+msgstr "kolegovi"
+
+#: src/copy/home.ts
+msgid "Today"
+msgstr "Dnes"
+
+#: src/copy/pages.ts
+msgid "Try Yuva"
+msgstr "Vyzkoušet Yuva"
+
+#: src/copy/docs.ts
+msgid "Type"
+msgstr "Typ"
+
+#: src/copy/docs.ts
+msgid "Type to search the guides and the API reference"
+msgstr "Pište pro hledání v příručkách a referenci API"
+
+#: src/copy/brand.ts
+msgid "Typeface"
+msgstr "Písmo"
+
+#: src/pages/404.astro
+msgid "Undeliverable"
+msgstr "Nedoručitelné"
+
+#: src/copy/cloudflare-email.ts
+msgid "Under Routing rules, send each support address to the Worker yuva-edge. For a catch-all channel, point the catch-all rule at it."
+msgstr "V části Routing rules pošlete každou adresu podpory Workeru yuva-edge. U zachytávacího kanálu na něj nasměrujte zachytávací pravidlo."
+
+#: src/copy/brand.ts
+msgid "use the logo in a way that suggests endorsement by the project."
+msgstr "používat logo způsobem, který naznačuje podporu ze strany projektu."
+
+#: src/copy/brand.ts
+msgid "use the name, unchanged, to refer to the unmodified project;"
+msgstr "používat název beze změny k označení neupraveného projektu;"
+
+#: src/copy/templates.ts
+msgid "Use this template"
+msgstr "Použít tuto šablonu"
+
+#: src/copy/brand.ts
+msgid "Using the name and logo"
+msgstr "Používání názvu a loga"
+
+#: src/copy/docs.ts
+msgid "Version {version} of the API, generated from the OpenAPI contract. Use the contract to generate a client in any language."
+msgstr "Verze {version} API, vygenerovaná z kontraktu OpenAPI. Pomocí kontraktu vygenerujte klienta v libovolném jazyce."
+
+#: src/copy/home.ts
+msgid "View on GitHub"
+msgstr "Zobrazit na GitHubu"
+
+#: src/copy/home.ts
+msgid "visitors"
+msgstr "návštěvníci"
+
+#: src/copy/header.ts
+msgid "Visitors without cookies."
+msgstr "Návštěvníci bez cookies."
+
+#: src/copy/templates.ts
+msgid "Want to add a template? Send a pull request; the guide explains the folder, the rules and the preview."
+msgstr "Chcete přidat šablonu? Pošlete pull request; příručka vysvětluje složku, pravidla a náhled."
+
+#: src/pages/404.astro
+msgid "We looked in every inbox, but this page is not here. It may have moved, or the link may be wrong."
+msgstr "Prohledali jsme všechny schránky, ale tahle stránka tu není. Možná se přesunula nebo je odkaz špatný."
+
+#: src/copy/contact.ts
+msgid "We would like to use Yuva under a commercial license."
+msgstr "Rádi bychom používali Yuva na základě komerční licence."
+
+#: src/copy/docs.ts
+msgid "Webhook events"
+msgstr "Události webhooků"
+
+#: src/copy/home.ts
+msgid "Webhooks"
+msgstr "Webhooky"
+
+#: src/copy/header.ts
+msgid "Webhooks and identity"
+msgstr "Webhooky a identita"
+
+#: src/copy/docs.ts
+msgid "Webhooks guide"
+msgstr "Příručka k webhookům"
+
+#: src/copy/home.ts
+msgid "what came in and what is open"
+msgstr "co přišlo a co je otevřené"
+
+#: src/copy/header.ts
+msgid "What changed in each version."
+msgstr "Co se změnilo v jednotlivých verzích."
+
+#: src/copy/ai.ts
+msgid "What happens when you sign in"
+msgstr "Co se stane při přihlášení"
+
+#: src/copy/cloudflare-email.ts
+msgid "What happens when Yuva is down?"
+msgstr "Co se stane, když Yuva nefunguje?"
+
+#: src/copy/header.ts
+msgid "What is built and what is next."
+msgstr "Co je hotové a co bude dál."
+
+#: src/copy/contact.ts
+msgid "What is it about?"
+msgstr "O čem to je?"
+
+#: src/copy/cloudflare-email.ts
+msgid "What it is"
+msgstr "Co to je"
+
+#: src/copy/cloudflare-email.ts
+msgid "When Yuva refuses a message for good, for example an unknown address, a blocked sender or a message that is too large, the Worker rejects it and the sender gets a permanent SMTP error with Yuva's reason."
+msgstr "Když Yuva zprávu natrvalo odmítne, například kvůli neznámé adrese, blokovanému odesílateli nebo příliš velké zprávě, Worker ji odmítne a odesílatel dostane trvalou chybu SMTP s důvodem od Yuvy."
+
+#: src/copy/contact.ts
+msgid "Whether you want to invest in Yuva, build on it together, need a commercial license or are writing about it, write to us. We read every message."
+msgstr "Ať už chcete do Yuvy investovat, stavět na ní společně, potřebujete komerční licenci, nebo o ní píšete, napište nám. Čteme každou zprávu."
+
+#: src/copy/cloudflare-email.ts
+msgid "Which domains and addresses can I use?"
+msgstr "Které domény a adresy mohu použít?"
+
+#: src/copy/brand.ts
+msgid "White"
+msgstr "Bílý"
+
+#: src/copy/home.ts
+msgid "with clicks and unsubscribes"
+msgstr "s kliknutími a odhlášeními"
+
+#: src/copy/cloudflare-email.ts
+msgid "With FALLBACK_FORWARD set, the message is forwarded to that address instead. Without it the delivery fails and the sending server may retry. Messages that Yuva refuses on purpose, such as mail to an unknown address, are rejected, not forwarded."
+msgstr "Při nastaveném FALLBACK_FORWARD se zpráva přepošle na tuto adresu. Bez něj doručení selže a odesílající server to může zkusit znovu. Zprávy, které Yuva odmítne záměrně, například pošta na neznámou adresu, se odmítnou, nepřepošlou."
+
+#: src/copy/home.ts
+msgid "with one script tag"
+msgstr "jedním tagem script"
+
+#: src/copy/home.ts
+msgid "with recorded consent"
+msgstr "se zaznamenaným souhlasem"
+
+#: src/copy/home.ts
+msgid "with replies and votes"
+msgstr "s odpověďmi a hlasy"
+
+#: src/copy/home.ts
+msgid "with the iOS and Android SDKs"
+msgstr "se SDK pro iOS a Android"
+
+#: src/copy/home.ts
+msgid "with workspace API keys"
+msgstr "s API klíči pracovního prostoru"
+
+#: src/copy/cloudflare-email.ts
+msgid "Worker source on GitHub"
+msgstr "Zdroj Workeru na GitHubu"
+
+#: src/copy/home.ts
+msgid "Works with"
+msgstr "Funguje s"
+
+#: src/copy/contact.ts
+msgid "Write an e-mail"
+msgstr "Napsat e-mail"
+
+#: src/copy/contact.ts
+msgid "Write to the Yuva team about investment, partnerships, commercial licenses or press, or find the right place for questions and security reports."
+msgstr "Napište týmu Yuva ohledně investic, partnerství, komerčních licencí nebo médií, nebo najděte správné místo pro otázky a hlášení zabezpečení."
+
+#: src/copy/cloudflare-email.ts
+msgid "Yes, when you set YUVA_INGRESS_AUTHSERV_ID to mx.cloudflare.net. Yuva then reads the DMARC verdict that Email Routing adds. A new conversation that fails DMARC is marked as spam."
+msgstr "Ano, pokud nastavíte YUVA_INGRESS_AUTHSERV_ID na mx.cloudflare.net. Yuva pak čte verdikt DMARC, který přidává Email Routing. Nová konverzace, která v DMARC neprojde, je označena jako spam."
+
+#: src/copy/brand.ts
+msgid "You may"
+msgstr "Smíte"
+
+#: src/copy/cloudflare-email.ts
+msgid "You need a Yuva server and a Cloudflare account that manages the domain."
+msgstr "Potřebujete server Yuva a účet Cloudflare, který spravuje doménu."
+
+#: src/copy/ai.ts
+msgid "You stay in charge"
+msgstr "Máte vše pod kontrolou"
+
+#: src/copy/ai.ts
+msgid "Your browser opens Yuva. Sign in with a one-time code; a new e-mail address gets a new account."
+msgstr "V prohlížeči se otevře Yuva. Přihlaste se jednorázovým kódem; nová e-mailová adresa dostane nový účet."
+
+#: src/copy/ai.ts
+msgid "Your code stays on your machine. Yuva only sees what the assistant creates through it."
+msgstr "Váš kód zůstává na vašem počítači. Yuva vidí jen to, co asistent prostřednictvím ní vytvoří."
+
+#: src/copy/cloudflare-email.ts
+msgid "Your team answers in the panel. The reply is sent through the e-mail channel's own SMTP account, such as Amazon SES, Postmark or your own relay, from the same address and in the same thread. Replies do not go through the Worker."
+msgstr "Váš tým odpovídá v panelu. Odpověď se odešle přes vlastní SMTP účet e-mailového kanálu, například Amazon SES, Postmark nebo váš vlastní relay, ze stejné adresy a ve stejném vlákně. Odpovědi neprocházejí Workerem."
+
+#: src/copy/ai.ts
+msgid "Your Yuva server"
+msgstr "Váš server Yuva"
+
+#: src/copy/ai.ts
+msgid "Yuva and your AI assistant"
+msgstr "Yuva a váš AI asistent"
+
+#: src/copy/pages.ts
+msgid "Yuva blog"
+msgstr "Blog Yuvy"
+
+#: src/copy/brand.ts
+msgid "Yuva brand assets: logo, colours and name"
+msgstr "Materiály značky Yuva: logo, barvy a název"
+
+#: src/copy/docs.ts
+msgid "Yuva brings e-mail, live chat and in-app messages from your customers into one inbox for your team. Start with Get started; every guide is listed below."
+msgstr "Yuva sbírá e-maily, živý chat a zprávy z aplikací od vašich zákazníků do jedné schránky pro váš tým. Začněte kapitolou Začít; všechny příručky jsou uvedeny níže."
+
+#: src/copy/home.ts
+msgid "Yuva brings support e-mail, live chat and in-app conversations from all of your products into one shared inbox, and adds newsletters, mail migration and cookieless analytics. Open source, self-hosted, one Go binary with Postgres."
+msgstr "Yuva sbírá e-maily podpory, živý chat a konverzace z aplikací ze všech vašich produktů do jedné sdílené schránky a přidává newslettery, přenos pošty a analytiku bez cookies. Open source, self-hosted, jeden binární soubor v Go s Postgres."
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva checks the signature and that the timestamp is within 5 minutes before it reads the message. A request with a wrong signature is refused."
+msgstr "Yuva před čtením zprávy ověří podpis a to, že časové razítko je v rozmezí 5 minut. Požadavek se špatným podpisem je odmítnut."
+
+#: src/copy/ai.ts
+msgid "Yuva cloud"
+msgstr "Yuva cloud"
+
+#: src/copy/docs.ts
+msgid "Yuva documentation"
+msgstr "Dokumentace Yuvy"
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva Email Worker for Cloudflare"
+msgstr "Yuva Email Worker pro Cloudflare"
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva finds the e-mail channel for the recipient address and threads the message by In-Reply-To and References into the conversation it belongs to. Anything else starts a new conversation. A reply reopens the conversation."
+msgstr "Yuva najde e-mailový kanál podle adresy příjemce a zprávu zařadí podle In-Reply-To a References do konverzace, do které patří. Cokoli jiného zahájí novou konverzaci. Odpověď konverzaci znovu otevře."
+
+#: src/copy/ai.ts
+msgid "Yuva has a built-in MCP server. Connect it once, and your assistant reads your project, sees what your workspace already has, and sets up live chat, analytics or newsletters, asking before each change."
+msgstr "Yuva má vestavěný server MCP. Připojte ho jednou a váš asistent si přečte projekt, uvidí, co váš pracovní prostor už má, a nastaví živý chat, analytiku nebo newslettery, přičemž se před každou změnou zeptá."
+
+#: src/copy/header.ts
+msgid "Yuva home"
+msgstr "Domů Yuva"
+
+#: src/copy/ai.ts
+msgid "Yuva in your AI assistant"
+msgstr "Yuva ve vašem AI asistentovi"
+
+#: src/copy/contact.ts
+msgid "Yuva is pre-alpha. Every release, the roadmap and the code are public, so you can see exactly where it stands."
+msgstr "Yuva je pre-alfa. Každé vydání, roadmapa i kód jsou veřejné, takže přesně vidíte, kde stojí."
+
+#: src/copy/brand.ts
+msgid "Yuva orange"
+msgstr "Oranžová Yuva"
+
+#: src/copy/home.ts
+msgid "Yuva puts e-mail, live chat and in-app messages from all of your products into one inbox for your team. Open source, one Go binary with Postgres."
+msgstr "Yuva sbírá e-maily, živý chat a zprávy z aplikací ze všech vašich produktů do jedné schránky pro váš tým. Open source, jeden binární soubor v Go s Postgres."
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva refuses any request without a valid HMAC signature or with a timestamp more than 5 minutes off, before it reads the body. Keep the secret to yourself."
+msgstr "Yuva odmítne každý požadavek bez platného podpisu HMAC nebo s časovým razítkem o více než 5 minut mimo, a to dřív, než přečte tělo. Tajný klíč nikomu neprozrazujte."
+
+#: src/copy/pages.ts
+msgid "Yuva releases"
+msgstr "Vydání Yuvy"
+
+#: src/copy/docs.ts
+msgid "Yuva signs every request with Standard Webhooks and retries failed deliveries. Registering an endpoint and verifying a signature are in the webhooks guide."
+msgstr "Yuva podepisuje každý požadavek podle Standard Webhooks a neúspěšná doručení opakuje. Registrace endpointu a ověření podpisu jsou v příručce k webhookům."
+
+#: src/copy/contact.ts
+msgid "Yuva team"
+msgstr "Tým Yuva"
+
+#: src/copy/brand.ts
+msgid "Yuva: one inbox for every product"
+msgstr "Yuva: jedna schránka pro každý produkt"
+
+#: src/copy/home.ts
+msgid "Yuva: one open-source inbox for e-mail, live chat and in-app messages"
+msgstr "Yuva: jedna open-source schránka pro e-mail, živý chat a zprávy v aplikaci"
+
+#: src/copy/home.ts
+msgid "Zendesk and Help Scout"
+msgstr "Zendesk a Help Scout"

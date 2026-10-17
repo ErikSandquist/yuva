@@ -1,0 +1,2089 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 22:38+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: fi\n"
+
+#: src/layouts/Footer.astro
+msgid "“Yuva” is Turkish for nest, or home."
+msgstr "”Yuva” on turkkia ja tarkoittaa pesää tai kotia."
+
+#: src/copy/pages.ts
+msgid "{count} changes"
+msgstr "{count} muutosta"
+
+#: src/copy/docs.ts
+#: src/copy/pages.ts
+msgid "{count} min read"
+msgstr "{count} min lukuaika"
+
+#: src/copy/contact.ts
+msgid "{count} releases, latest {version}"
+msgstr "{count} julkaisua, viimeisin {version}"
+
+#: src/copy/docs.ts
+msgid "{count} sections"
+msgstr "{count} osiota"
+
+#: src/copy/templates.ts
+msgid "{name} e-mail preview"
+msgstr "Sähköpostin {name} esikatselu"
+
+#: src/copy/docs.ts
+msgid "{name} endpoints of the Yuva API."
+msgstr "Yuva API:n {name}-päätepisteet."
+
+#: src/copy/templates.ts
+msgid "{name}: {description} A free Yuva e-mail template."
+msgstr "{name}: {description} Ilmainen Yuva-sähköpostipohja."
+
+#: src/copy/home.ts
+msgid "a contact and their data"
+msgstr "yhteystieto ja sen tiedot"
+
+#: src/copy/cloudflare-email.ts
+msgid "A customer writes to one of your support addresses, for example support@example.com."
+msgstr "Asiakas kirjoittaa johonkin tukiosoitteistasi, esimerkiksi support@example.com."
+
+#: src/copy/home.ts
+msgid "A finished import in the panel: 6 conversations and 12 messages copied from an mbox file, with a note that Yuva has no access to your mailbox."
+msgstr "Valmis tuonti paneelissa: 6 keskustelua ja 12 viestiä kopioitu mbox-tiedostosta sekä huomautus siitä, ettei Yuvalla ole pääsyä postilaatikkoosi."
+
+#: src/copy/contact.ts
+msgid "A hosted service and commercial licenses"
+msgstr "Isännöity palvelu ja kaupalliset lisenssit"
+
+#: src/copy/cloudflare-email.ts
+msgid "A message can be up to 25 MiB including attachments, which is the Cloudflare Email Routing limit. Yuva keeps up to 50 attachments per message, each within the server's attachment size limit (25 MiB by default) and allowed types; it leaves out the rest."
+msgstr "Viesti voi olla enintään 25 MiB liitteineen, mikä on Cloudflare Email Routingin raja. Yuva säilyttää enintään 50 liitettä viestiä kohden, kunkin palvelimen liitekokorajan (oletuksena 25 MiB) ja sallittujen tyyppien rajoissa; loput se jättää pois."
+
+#: src/copy/cloudflare-email.ts
+msgid "A small open-source Worker"
+msgstr "Pieni avoimen lähdekoodin Worker"
+
+#: src/copy/home.ts
+msgid "Accepted answer"
+msgstr "Hyväksytty vastaus"
+
+#: src/copy/home.ts
+msgid "Add ratings and a discussion area to your own documentation pages."
+msgstr "Lisää arvostelut ja keskustelualue omille dokumentaatiosivuillesi."
+
+#: src/copy/brand.ts
+msgid "Add shadows or outlines"
+msgstr "Lisää varjoja tai ääriviivoja"
+
+#: src/copy/ai.ts
+msgid "Add this to .cursor/mcp.json in your project:"
+msgstr "Lisää tämä projektisi tiedostoon .cursor/mcp.json:"
+
+#: src/copy/ai.ts
+msgid "Add this to .vscode/mcp.json in your project:"
+msgstr "Lisää tämä projektisi tiedostoon .vscode/mcp.json:"
+
+#: src/copy/ai.ts
+msgid "Add Yuva in your terminal:"
+msgstr "Lisää Yuva päätteessä:"
+
+#: src/copy/ai.ts
+msgid "Add Yuva live chat to this site."
+msgstr "Lisää Yuva-livechat tälle sivustolle."
+
+#: src/copy/pages.ts
+msgid "Added"
+msgstr "Lisätty"
+
+#: src/layouts/Footer.astro
+msgid "AI assistants"
+msgstr "Tekoälyavustajat"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "AI assistants and MCP"
+msgstr "Tekoälyavustajat ja MCP"
+
+#: src/copy/pages.ts
+msgid "All posts"
+msgstr "Kaikki kirjoitukset"
+
+#: src/copy/pages.ts
+msgid "All releases on GitHub"
+msgstr "Kaikki julkaisut GitHubissa"
+
+#: src/copy/templates.ts
+msgid "All templates"
+msgstr "Kaikki pohjat"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Analytics"
+msgstr "Analytiikka"
+
+#: src/copy/home.ts
+msgid "and funnels"
+msgstr "ja suppilot"
+
+#: src/copy/home.ts
+msgid "and Postgres"
+msgstr "ja Postgres"
+
+#: src/copy/home.ts
+msgid "and the inboxes they can see"
+msgstr "ja postilaatikot, jotka he näkevät"
+
+#: src/copy/templates.ts
+msgid "Announcement"
+msgstr "Tiedote"
+
+#: src/copy/cloudflare-email.ts
+msgid "Any domain you manage in Cloudflare and whose mail no other server handles, because Email Routing becomes its MX. Each e-mail channel has an address, or the catch-all *@example.com for every address of the domain that no channel has exactly. A subaddress such as support+billing@example.com reaches the channel of support@example.com."
+msgstr "Mikä tahansa Cloudflaressa hallinnoimasi verkkotunnus, jonka postia ei käsittele mikään muu palvelin, koska Email Routingista tulee sen MX. Jokaisella sähköpostikanavalla on osoite tai kaikenkattava *@example.com verkkotunnuksen kaikille osoitteille, joita millään kanavalla ei ole täsmälleen. Aliosoite kuten support+billing@example.com päätyy osoitteen support@example.com kanavalle."
+
+#: src/copy/contact.ts
+msgid "API"
+msgstr "API"
+
+#: src/layouts/Footer.astro
+msgid "API contract"
+msgstr "API-sopimus"
+
+#: src/copy/docs.ts
+msgid "API key"
+msgstr "API-avain"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+msgid "API reference"
+msgstr "API-viite"
+
+#: src/copy/brand.ts
+msgid "App icon"
+msgstr "Sovelluskuvake"
+
+#: src/copy/contact.ts
+msgid "Apps"
+msgstr "Sovellukset"
+
+#: src/copy/home.ts
+msgid "Assign"
+msgstr "Osoita"
+
+#: src/copy/home.ts
+msgid "at a glance"
+msgstr "yhdellä silmäyksellä"
+
+#: src/copy/contact.ts
+msgid "At a glance"
+msgstr "Yhdellä silmäyksellä"
+
+#: src/copy/home.ts
+msgid "Attributes"
+msgstr "Attribuutit"
+
+#: src/copy/docs.ts
+msgid "Authentication"
+msgstr "Todennus"
+
+#: src/copy/ai.ts
+msgid "Back in the assistant, Yuva is connected. Settings → Connected apps shows it and revokes it."
+msgstr "Takaisin avustajassa Yuva on yhdistetty. Asetukset → Yhdistetyt sovellukset näyttää sen ja peruu sen."
+
+#: src/pages/404.astro
+msgid "Back to the home page"
+msgstr "Takaisin etusivulle"
+
+#: src/copy/docs.ts
+msgid "Back to the website"
+msgstr "Takaisin verkkosivustolle"
+
+#: src/copy/home.ts
+msgid "before anything is sent"
+msgstr "ennen kuin mitään lähetetään"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/copy/pages.ts
+#: src/layouts/Footer.astro
+msgid "Blog"
+msgstr "Blogi"
+
+#: src/copy/brand.ts
+msgid "Brand"
+msgstr "Brändi"
+
+#: src/copy/brand.ts
+#: src/copy/contact.ts
+#: src/copy/header.ts
+#: src/layouts/Footer.astro
+msgid "Brand assets"
+msgstr "Brändimateriaalit"
+
+#: src/copy/pages.ts
+msgid "Breaking changes"
+msgstr "Yhteensopimattomat muutokset"
+
+#: src/copy/header.ts
+msgid "Bring your mail and history."
+msgstr "Tuo postisi ja historiasi."
+
+#: src/copy/home.ts
+msgid "Bring your mail and support history over. Yuva only reads at the source."
+msgstr "Tuo postisi ja tukihistoriasi. Yuva vain lukee lähteestä."
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Broadcasts"
+msgstr "Joukkolähetykset"
+
+#: src/copy/home.ts
+msgid "Build e-mails in the designer or start from a free template."
+msgstr "Rakenna sähköpostit suunnittelijassa tai aloita ilmaisesta pohjasta."
+
+#: src/copy/contact.ts
+msgid "Built with"
+msgstr "Rakennettu työkaluilla"
+
+#: src/copy/contact.ts
+msgid "Business"
+msgstr "Liiketoiminta"
+
+#: src/copy/pages.ts
+#: src/copy/templates.ts
+msgid "By"
+msgstr "Tekijä"
+
+#: src/copy/cloudflare-email.ts
+msgid "Can someone forge mail to my Yuva server?"
+msgstr "Voiko joku väärentää postia Yuva-palvelimelleni?"
+
+#: src/copy/brand.ts
+msgid "Change its colours"
+msgstr "Vaihda sen värit"
+
+#: src/copy/pages.ts
+msgid "Changed"
+msgstr "Muutettu"
+
+#: src/copy/pages.ts
+msgid "Changelog"
+msgstr "Muutosloki"
+
+#: src/copy/pages.ts
+msgid "CHANGELOG.md"
+msgstr "CHANGELOG.md"
+
+#: src/copy/contact.ts
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Channels"
+msgstr "Kanavat"
+
+#: src/copy/home.ts
+msgid "checks before you send"
+msgstr "tarkistukset ennen lähettämistä"
+
+#: src/copy/ai.ts
+msgid "Choose the workspace and what the assistant may do, then approve."
+msgstr "Valitse työtila ja mitä avustaja saa tehdä, ja hyväksy."
+
+#: src/copy/header.ts
+msgid "Claude drafts, you send."
+msgstr "Claude laatii luonnokset, sinä lähetät."
+
+#: src/copy/brand.ts
+msgid "Click a colour to copy its hex code."
+msgstr "Napsauta väriä kopioidaksesi sen heksakoodin."
+
+#: src/copy/header.ts
+#: src/layouts/Footer.astro
+msgid "Cloudflare e-mail"
+msgstr "Cloudflare-sähköposti"
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare Email Routing becomes the MX of your domain and receives the mail. Yuva does not listen for SMTP, so there is no mail server to install or keep patched."
+msgstr "Cloudflare Email Routingista tulee verkkotunnuksesi MX, ja se vastaanottaa postin. Yuva ei kuuntele SMTP:tä, joten sähköpostipalvelinta ei tarvitse asentaa eikä pitää ajan tasalla."
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare Email Routing receives the message and passes it to the Yuva Email Worker."
+msgstr "Cloudflare Email Routing vastaanottaa viestin ja välittää sen Yuva Email Workerille."
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare, the Cloudflare logo and Cloudflare Workers are trademarks and/or registered trademarks of Cloudflare, Inc. in the United States and other jurisdictions. Yuva is an independent open-source project, not affiliated with or endorsed by Cloudflare."
+msgstr "Cloudflare, Cloudflare-logo ja Cloudflare Workers ovat Cloudflare, Inc:n tavaramerkkejä ja/tai rekisteröityjä tavaramerkkejä Yhdysvalloissa ja muilla lainkäyttöalueilla. Yuva on itsenäinen avoimen lähdekoodin projekti, joka ei ole Cloudflaren sidosryhmä eikä sen hyväksymä."
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare® Email Routing receives the mail for your support addresses, and the open-source Yuva Email Worker hands each message to Yuva, signed. It lands in your shared inbox as a conversation your team answers."
+msgstr "Cloudflare® Email Routing vastaanottaa tukiosoitteidesi postin, ja avoimen lähdekoodin Yuva Email Worker toimittaa jokaisen viestin Yuvalle allekirjoitettuna. Se päätyy jaettuun postilaatikkoosi keskusteluna, johon tiimisi vastaa."
+
+#: src/copy/brand.ts
+msgid "Colours"
+msgstr "Värit"
+
+#: src/copy/contact.ts
+msgid "Commercial license"
+msgstr "Kaupallinen lisenssi"
+
+#: src/copy/pages.ts
+msgid "Compare changes"
+msgstr "Vertaa muutoksia"
+
+#: src/copy/home.ts
+msgid "Connect a support address, a chat widget for your website or the SDKs for your apps."
+msgstr "Yhdistä tukiosoite, chat-widget verkkosivustollesi tai SDK:t sovelluksiisi."
+
+#: src/copy/home.ts
+msgid "Connect Claude, ChatGPT or Cursor. A teammate reviews and sends what they draft."
+msgstr "Yhdistä Claude, ChatGPT tai Cursor. Tiimin jäsen tarkistaa ja lähettää niiden laatimat luonnokset."
+
+#: src/copy/ai.ts
+msgid "Connect Yuva"
+msgstr "Yhdistä Yuva"
+
+#: src/copy/ai.ts
+msgid "Connect Yuva to Claude, ChatGPT, Cursor, VS Code or Gemini CLI, then let the assistant look at your project and set Yuva up with you."
+msgstr "Yhdistä Yuva Claudeen, ChatGPT:hen, Cursoriin, VS Codeen tai Gemini CLI:hin ja anna avustajan tutustua projektiisi ja määrittää Yuva kanssasi."
+
+#: src/copy/contact.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Contact"
+msgstr "Yhteystiedot"
+
+#: src/copy/docs.ts
+msgid "Contact session"
+msgstr "Yhteystiedon istunto"
+
+#: src/copy/contact.ts
+msgid "Contact Yuva"
+msgstr "Ota yhteyttä Yuvaan"
+
+#: src/copy/home.ts
+msgid "Contacts"
+msgstr "Yhteystiedot"
+
+#: src/layouts/Footer.astro
+msgid "Contributing"
+msgstr "Osallistuminen"
+
+#: src/copy/ai.ts
+#: src/copy/brand.ts
+#: src/copy/contact.ts
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/pages.ts
+msgid "Copied"
+msgstr "Kopioitu"
+
+#: src/copy/ai.ts
+#: src/copy/docs.ts
+msgid "Copy"
+msgstr "Kopioi"
+
+#: src/copy/contact.ts
+msgid "Copy address"
+msgstr "Kopioi osoite"
+
+#: src/copy/pages.ts
+msgid "Copy link"
+msgstr "Kopioi linkki"
+
+#: src/copy/header.ts
+msgid "Copy logo as SVG"
+msgstr "Kopioi logo SVG:nä"
+
+#: src/copy/header.ts
+msgid "Copy logo with name as SVG"
+msgstr "Kopioi logo nimen kanssa SVG:nä"
+
+#: src/copy/brand.ts
+msgid "Copy SVG"
+msgstr "Kopioi SVG"
+
+#: src/copy/home.ts
+#: src/copy/pages.ts
+msgid "Create an account"
+msgstr "Luo tili"
+
+#: src/copy/home.ts
+msgid "Create an account on our service and start without running a server."
+msgstr "Luo tili palveluumme ja aloita ilman palvelimen ylläpitoa."
+
+#: src/copy/pages.ts
+msgid "Create an account on our service, or run it on your own server."
+msgstr "Luo tili palveluumme tai aja sitä omalla palvelimellasi."
+
+#: src/copy/templates.ts
+msgid "Dark"
+msgstr "Tumma"
+
+#: src/ui/ThemeToggle.astro
+msgid "Dark theme"
+msgstr "Tumma teema"
+
+#: src/copy/home.ts
+msgid "Delete"
+msgstr "Poista"
+
+#: src/copy/home.ts
+msgid "Deliverability"
+msgstr "Toimitettavuus"
+
+#: src/copy/cloudflare-email.ts
+msgid "Deploy the Worker to your Cloudflare account, using the same secret:"
+msgstr "Ota Worker käyttöön Cloudflare-tililläsi samalla salaisuudella:"
+
+#: src/copy/pages.ts
+msgid "Deprecated"
+msgstr "Poistettu käytöstä"
+
+#: src/copy/docs.ts
+msgid "Description"
+msgstr "Kuvaus"
+
+#: src/copy/home.ts
+msgid "Designer"
+msgstr "Suunnittelija"
+
+#: src/copy/home.ts
+msgid "Designs and broadcast drafts"
+msgstr "Mallit ja joukkolähetysten luonnokset"
+
+#: src/copy/templates.ts
+msgid "Desktop"
+msgstr "Työpöytä"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Developers"
+msgstr "Kehittäjät"
+
+#: src/copy/templates.ts
+msgid "Digest"
+msgstr "Yhteenveto"
+
+#: src/copy/home.ts
+msgid "Discussions"
+msgstr "Keskustelut"
+
+#: src/copy/brand.ts
+msgid "Do"
+msgstr "Tee näin"
+
+#: src/copy/cloudflare-email.ts
+msgid "Do I need to run a mail server?"
+msgstr "Tarvitsenko sähköpostipalvelimen?"
+
+#: src/copy/docs.ts
+msgid "Docs"
+msgstr "Ohjeet"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Documentation"
+msgstr "Dokumentaatio"
+
+#: src/copy/cloudflare-email.ts
+msgid "Does Yuva use the DMARC result from Cloudflare?"
+msgstr "Käyttääkö Yuva Cloudflaren DMARC-tulosta?"
+
+#: src/copy/brand.ts
+msgid "Don't"
+msgstr "Älä tee näin"
+
+#: src/copy/header.ts
+msgid "Download logo"
+msgstr "Lataa logo"
+
+#: src/copy/brand.ts
+msgid "Download PNG"
+msgstr "Lataa PNG"
+
+#: src/copy/brand.ts
+msgid "Download SVG"
+msgstr "Lataa SVG"
+
+#: src/copy/brand.ts
+msgid "Download the icon"
+msgstr "Lataa kuvake"
+
+#: src/copy/brand.ts
+msgid "Download the Yuva logo as SVG or PNG, copy the brand colours, and read how the name and logo may be used."
+msgstr "Lataa Yuva-logo SVG- tai PNG-muodossa, kopioi brändivärit ja lue, miten nimeä ja logoa saa käyttää."
+
+#: src/copy/home.ts
+msgid "Draft replies"
+msgstr "Vastausluonnokset"
+
+#: src/copy/contact.ts
+#: src/copy/home.ts
+msgid "E-mail"
+msgstr "Sähköposti"
+
+#: src/pages/og/[lang].png.ts
+msgid "E-mail · live chat · in-app · self-hosted"
+msgstr "Sähköposti · livechat · sovelluksessa · itse isännöity"
+
+#: src/copy/header.ts
+#: src/copy/templates.ts
+#: src/layouts/Footer.astro
+msgid "E-mail templates"
+msgstr "Sähköpostipohjat"
+
+#: src/copy/home.ts
+msgid "E-mail templates and designer"
+msgstr "Sähköpostipohjat ja suunnittelija"
+
+#: src/copy/header.ts
+msgid "E-mail, live chat and in-app."
+msgstr "Sähköposti, livechat ja sovelluksessa."
+
+#: src/copy/contact.ts
+msgid "Early and built in the open"
+msgstr "Aikainen ja rakennettu avoimesti"
+
+#: src/copy/docs.ts
+msgid "Edit this page on GitHub"
+msgstr "Muokkaa tätä sivua GitHubissa"
+
+#: src/copy/cloudflare-email.ts
+msgid "Email Routing becomes the MX of the domain, so use a domain or subdomain that no other mail server handles."
+msgstr "Email Routingista tulee verkkotunnuksen MX, joten käytä verkkotunnusta tai alidomainia, jota mikään muu sähköpostipalvelin ei käsittele."
+
+#: src/copy/cloudflare-email.ts
+msgid "Email Routing in front"
+msgstr "Email Routing edessä"
+
+#: src/copy/brand.ts
+msgid "Ember"
+msgstr "Hehku"
+
+#: src/copy/templates.ts
+msgid "Enter a full address starting with http:// or https://."
+msgstr "Anna täydellinen osoite, joka alkaa merkinnällä http:// tai https://."
+
+#: src/copy/templates.ts
+msgid "Enter the address of your Yuva server to open the template there. It is kept in this browser only."
+msgstr "Anna Yuva-palvelimesi osoite avataksesi pohjan siellä. Se tallennetaan vain tähän selaimeen."
+
+#: src/copy/ai.ts
+msgid "Enter this address and sign in:"
+msgstr "Anna tämä osoite ja kirjaudu sisään:"
+
+#: src/copy/templates.ts
+msgid "Event"
+msgstr "Tapahtuma"
+
+#: src/copy/header.ts
+msgid "Every channel in one list."
+msgstr "Kaikki kanavat yhdessä luettelossa."
+
+#: src/copy/home.ts
+msgid "Every channel lands in one list. Your team answers from one chat-style view."
+msgstr "Jokainen kanava päätyy yhteen luetteloon. Tiimisi vastaa yhdestä chat-tyylisestä näkymästä."
+
+#: src/copy/header.ts
+msgid "Every endpoint, to try."
+msgstr "Jokainen päätepiste kokeiltavaksi."
+
+#: src/copy/home.ts
+msgid "Every part of Yuva has a typed contract and a small, documented integration."
+msgstr "Jokaisella Yuvan osalla on tyypitetty sopimus ja pieni, dokumentoitu integraatio."
+
+#: src/copy/home.ts
+msgid "Every support channel, answered as one chat."
+msgstr "Kaikki tukikanavat, joihin vastataan yhtenä chattina."
+
+#: src/copy/pages.ts
+msgid "Every version of Yuva and what changed in it. Versions follow Semantic Versioning, and until 1.0 any release may change the API and the database schema."
+msgstr "Jokainen Yuvan versio ja mitä siinä muuttui. Versiot noudattavat semanttista versiointia, ja ennen versiota 1.0 mikä tahansa julkaisu voi muuttaa API:a ja tietokantaskeemaa."
+
+#: src/copy/docs.ts
+msgid "Every Yuva endpoint and webhook event, generated from the OpenAPI 3.1 contract."
+msgstr "Jokainen Yuvan päätepiste ja webhook-tapahtuma, luotu OpenAPI 3.1 -sopimuksesta."
+
+#: src/copy/docs.ts
+msgid "Every Yuva guide in one place: install, channels, broadcasts, analytics, moving a mailbox in, the developer tools and the API reference."
+msgstr "Kaikki Yuvan oppaat yhdessä paikassa: asennus, kanavat, joukkolähetykset, analytiikka, postilaatikon tuonti, kehittäjätyökalut ja API-viite."
+
+#: src/copy/pages.ts
+msgid "Every Yuva release and what changed in it, from the changelog."
+msgstr "Jokainen Yuva-julkaisu ja mitä siinä muuttui, muutoslokista."
+
+#: src/copy/home.ts
+msgid "Feedback"
+msgstr "Palaute"
+
+#: src/copy/home.ts
+msgid "Files"
+msgstr "Tiedostot"
+
+#: src/copy/cloudflare-email.ts
+msgid "Film: support e-mail from Cloudflare to the Yuva inbox"
+msgstr "Video: tukisähköposti Cloudflaresta Yuvan postilaatikkoon"
+
+#: src/copy/pages.ts
+msgid "Fixed"
+msgstr "Korjattu"
+
+#: src/copy/pages.ts
+msgid "Follow the blog"
+msgstr "Seuraa blogia"
+
+#: src/copy/brand.ts
+msgid "For app stores and platforms that round the corners themselves."
+msgstr "Sovelluskaupoille ja alustoille, jotka pyöristävät kulmat itse."
+
+#: src/copy/brand.ts
+msgid "For dark backgrounds."
+msgstr "Tummille taustoille."
+
+#: src/copy/contact.ts
+msgid "For investors"
+msgstr "Sijoittajille"
+
+#: src/copy/brand.ts
+msgid "For light backgrounds."
+msgstr "Vaaleille taustoille."
+
+#: src/copy/home.ts
+msgid "for open conversations"
+msgstr "avoimista keskusteluista"
+
+#: src/copy/home.ts
+msgid "for the usual answers"
+msgstr "tavallisille vastauksille"
+
+#: src/copy/home.ts
+msgid "for your newsletters"
+msgstr "uutiskirjeillesi"
+
+#: src/copy/home.ts
+msgid "for your own e-mails"
+msgstr "omille sähköposteillesi"
+
+#: src/copy/header.ts
+msgid "Free designs to copy."
+msgstr "Ilmaisia malleja kopioitavaksi."
+
+#: src/copy/templates.ts
+msgid "Free starter designs for newsletters, product updates, announcements and more. Preview them here and open one in Yuva's e-mail designer."
+msgstr "Ilmaisia aloitusmalleja uutiskirjeisiin, tuotepäivityksiin, tiedotteisiin ja muuhun. Esikatsele niitä täällä ja avaa yksi Yuvan sähköpostisuunnittelijassa."
+
+#: src/copy/home.ts
+msgid "from the people you helped"
+msgstr "auttamiltasi ihmisiltä"
+
+#: src/copy/pages.ts
+msgid "From the team"
+msgstr "Tiimiltä"
+
+#: src/copy/brand.ts
+msgid "Full-bleed icon"
+msgstr "Reunasta reunaan -kuvake"
+
+#: src/copy/home.ts
+msgid "Gallery"
+msgstr "Galleria"
+
+#: src/copy/docs.ts
+msgid "Get started"
+msgstr "Aloita"
+
+#: src/copy/home.ts
+msgid "Give every product's users a way to reach you."
+msgstr "Anna jokaisen tuotteen käyttäjille tapa tavoittaa sinut."
+
+#: src/copy/brand.ts
+msgid "Glow"
+msgstr "Hohde"
+
+#: src/copy/home.ts
+msgid "Gmail, Outlook or any IMAP server"
+msgstr "Gmail, Outlook tai mikä tahansa IMAP-palvelin"
+
+#: src/copy/home.ts
+msgid "Goals"
+msgstr "Tavoitteet"
+
+#: src/copy/docs.ts
+msgid "Guides"
+msgstr "Oppaat"
+
+#: src/copy/header.ts
+msgid "Guides for every part."
+msgstr "Oppaat jokaiseen osaan."
+
+#: src/copy/home.ts
+msgid "Help center"
+msgstr "Ohjekeskus"
+
+#: src/copy/home.ts
+msgid "Help desks"
+msgstr "Tukijärjestelmät"
+
+#: src/copy/contact.ts
+msgid "Hi! Tell us a little about yourself and what you have in mind."
+msgstr "Hei! Kerro meille vähän itsestäsi ja siitä, mitä sinulla on mielessä."
+
+#: src/copy/home.ts
+msgid "History"
+msgstr "Historia"
+
+#: src/copy/home.ts
+msgid "Hosted"
+msgstr "Isännöity"
+
+#: src/copy/contact.ts
+msgid "Hosted service and commercial licenses"
+msgstr "Isännöity palvelu ja kaupalliset lisenssit"
+
+#: src/copy/cloudflare-email.ts
+msgid "How a message gets from the customer to your team"
+msgstr "Miten viesti pääsee asiakkaalta tiimillesi"
+
+#: src/copy/cloudflare-email.ts
+msgid "How big can a message be?"
+msgstr "Kuinka suuri viesti voi olla?"
+
+#: src/copy/contact.ts
+msgid "How the AGPL, the MIT SDKs and the CLA fit together."
+msgstr "Miten AGPL, MIT-lisensoidut SDK:t ja CLA sopivat yhteen."
+
+#: src/copy/templates.ts
+msgid "How to add a template"
+msgstr "Miten lisäät pohjan"
+
+#: src/copy/templates.ts
+msgid "https://yuva.example.com"
+msgstr "https://yuva.example.com"
+
+#: src/copy/contact.ts
+msgid "I have a question that doesn't fit anywhere else."
+msgstr "Minulla on kysymys, joka ei sovi mihinkään muualle."
+
+#: src/copy/contact.ts
+msgid "I have an idea for working together."
+msgstr "Minulla on idea yhteistyöstä."
+
+#: src/copy/contact.ts
+msgid "I'd like to talk about investing in Yuva."
+msgstr "Haluaisin keskustella sijoittamisesta Yuvaan."
+
+#: src/copy/contact.ts
+msgid "I'm writing about Yuva and have a few questions."
+msgstr "Kirjoitan Yuvasta ja minulla on muutama kysymys."
+
+#: src/copy/home.ts
+msgid "Identity tokens"
+msgstr "Identiteettitunnisteet"
+
+#: src/copy/cloudflare-email.ts
+msgid "If Yuva answers with a server error, does not answer within 20 seconds or cannot be reached, the Worker can forward the message to an address you choose, as long as you set FALLBACK_FORWARD. That address must be a verified destination in Email Routing. The message then arrives as a plain forward and does not appear in Yuva. Without FALLBACK_FORWARD the delivery fails with an error and the sending server may retry later."
+msgstr "Jos Yuva vastaa palvelinvirheellä, ei vastaa 20 sekunnissa tai ei ole tavoitettavissa, Worker voi välittää viestin valitsemaasi osoitteeseen, kunhan olet asettanut FALLBACK_FORWARDin. Osoitteen on oltava vahvistettu kohde Email Routingissa. Viesti saapuu silloin tavallisena edelleenlähetyksenä eikä näy Yuvassa. Ilman FALLBACK_FORWARDia toimitus epäonnistuu virheeseen ja lähettävä palvelin voi yrittää myöhemmin uudelleen."
+
+#: src/copy/cloudflare-email.ts
+msgid "If Yuva is unreachable"
+msgstr "Jos Yuvaa ei tavoiteta"
+
+#: src/copy/ai.ts
+msgid "If Yuva itself misbehaves, the assistant can prepare a GitHub issue with your names, addresses and keys removed. You read it before anything is opened."
+msgstr "Jos Yuva itse toimii väärin, avustaja voi valmistella GitHub-issuen, josta nimesi, osoitteesi ja avaimesi on poistettu. Luet sen ennen kuin mitään avataan."
+
+#: src/copy/docs.ts
+msgid "In"
+msgstr "Sijainti"
+
+#: src/copy/ai.ts
+msgid "In claude.ai or Claude Desktop, open Customize → Connectors → Add custom connector."
+msgstr "Avaa claude.ai:ssa tai Claude Desktopissa Customize → Connectors → Add custom connector."
+
+#: src/copy/cloudflare-email.ts
+msgid "In the Cloudflare dashboard, open your domain → Email → Email Routing and enable it. Cloudflare adds its MX and SPF records."
+msgstr "Avaa Cloudflaren hallintapaneelissa verkkotunnuksesi → Email → Email Routing ja ota se käyttöön. Cloudflare lisää omat MX- ja SPF-tietueensa."
+
+#: src/copy/cloudflare-email.ts
+msgid "In Yuva, open Settings → your inbox → Channels → E-mail and add the support address. Set a secret on the server and restart it:"
+msgstr "Avaa Yuvassa Asetukset → postilaatikkosi → Kanavat → Sähköposti ja lisää tukiosoite. Aseta palvelimelle salaisuus ja käynnistä se uudelleen:"
+
+#: src/copy/contact.ts
+#: src/copy/home.ts
+msgid "In-app"
+msgstr "Sovelluksessa"
+
+#: src/copy/home.ts
+msgid "Inbox"
+msgstr "Saapuneet"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Inbox and conversations"
+msgstr "Postilaatikko ja keskustelut"
+
+#: src/copy/brand.ts
+msgid "Ink"
+msgstr "Muste"
+
+#: src/copy/docs.ts
+msgid "Introduction"
+msgstr "Johdanto"
+
+#: src/copy/contact.ts
+msgid "Investment"
+msgstr "Sijoitus"
+
+#: src/copy/ai.ts
+msgid "It does the rest with you."
+msgstr "Se hoitaa lopun kanssasi."
+
+#: src/copy/brand.ts
+msgid "Keep the logo as it is: do not change its shape, proportions or colours."
+msgstr "Jätä logo sellaiseksi kuin se on: älä muuta sen muotoa, mittasuhteita tai värejä."
+
+#: src/copy/brand.ts
+msgid "keep the name in a private, internal deployment, modified or not."
+msgstr "säilytä nimi yksityisessä, sisäisessä käyttöönotossa, muokattuna tai ei."
+
+#: src/copy/home.ts
+msgid "Labels and canned replies"
+msgstr "Tunnisteet ja valmiit vastaukset"
+
+#: src/ui/LangMenu.astro
+msgid "Language"
+msgstr "Kieli"
+
+#: src/copy/docs.ts
+msgid "Last updated {date}"
+msgstr "Päivitetty viimeksi {date}"
+
+#: src/copy/pages.ts
+msgid "Latest"
+msgstr "Uusin"
+
+#: src/copy/pages.ts
+msgid "Latest post"
+msgstr "Uusin kirjoitus"
+
+#: src/copy/contact.ts
+msgid "Let's talk."
+msgstr "Jutellaan."
+
+#: src/copy/contact.ts
+msgid "License"
+msgstr "Lisenssi"
+
+#: src/copy/templates.ts
+msgid "License and contributions"
+msgstr "Lisenssi ja osallistuminen"
+
+#: src/copy/contact.ts
+#: src/layouts/Footer.astro
+msgid "Licensing"
+msgstr "Lisensointi"
+
+#: src/copy/templates.ts
+msgid "Light"
+msgstr "Vaalea"
+
+#: src/ui/ThemeToggle.astro
+msgid "Light theme"
+msgstr "Vaalea teema"
+
+#: src/copy/home.ts
+msgid "Lists"
+msgstr "Listat"
+
+#: src/copy/contact.ts
+#: src/copy/home.ts
+msgid "Live chat"
+msgstr "Livechat"
+
+#: src/copy/templates.ts
+msgid "Live preview"
+msgstr "Reaaliaikainen esikatselu"
+
+#: src/copy/header.ts
+msgid "Log in"
+msgstr "Kirjaudu sisään"
+
+#: src/copy/brand.ts
+msgid "Logo"
+msgstr "Logo"
+
+#: src/copy/header.ts
+msgid "Logo and icon to download."
+msgstr "Logo ja kuvake ladattavaksi."
+
+#: src/copy/header.ts
+msgid "Logo options"
+msgstr "Logovaihtoehdot"
+
+#: src/copy/brand.ts
+msgid "Logo with name"
+msgstr "Logo nimen kanssa"
+
+#: src/copy/brand.ts
+msgid "Logo with name, white"
+msgstr "Logo nimen kanssa, valkoinen"
+
+#: src/copy/contact.ts
+msgid "Logos, colours and the rules for the name."
+msgstr "Logot, värit ja nimen käyttösäännöt."
+
+#: src/copy/ai.ts
+msgid "Look at this project and tell me how to add Yuva. Use Yuva's init prompt, recommend a plan, and change nothing until I pick the steps."
+msgstr "Tutustu tähän projektiin ja kerro, miten lisään Yuvan. Käytä Yuvan init-kehotetta, suosittele suunnitelma äläkä muuta mitään ennen kuin valitsen vaiheet."
+
+#: src/copy/cloudflare-email.ts
+msgid "Mail to a support address opens or continues a conversation in the inbox, and the team answers from the same panel as chat and app messages."
+msgstr "Tukiosoitteeseen tuleva posti avaa tai jatkaa keskustelua postilaatikossa, ja tiimi vastaa samasta paneelista kuin chattiin ja sovellusviesteihin."
+
+#: src/copy/home.ts
+msgid "Mailboxes"
+msgstr "Postilaatikot"
+
+#: src/copy/pages.ts
+msgid "Maintainer of Yuva"
+msgstr "Yuvan ylläpitäjä"
+
+#: src/copy/home.ts
+msgid "marked by your team"
+msgstr "tiimisi merkitsemät"
+
+#: src/ui/ThemeToggle.astro
+msgid "Match the system theme"
+msgstr "Seuraa järjestelmän teemaa"
+
+#: src/copy/home.ts
+msgid "mbox, Takeout and .eml"
+msgstr "mbox, Takeout ja .eml"
+
+#: src/copy/docs.ts
+msgid "Member session"
+msgstr "Jäsenen istunto"
+
+#: src/copy/home.ts
+msgid "Members"
+msgstr "Jäsenet"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+msgid "Menu"
+msgstr "Valikko"
+
+#: src/copy/docs.ts
+msgid "More"
+msgstr "Lisää"
+
+#: src/copy/pages.ts
+msgid "More posts"
+msgstr "Lisää kirjoituksia"
+
+#: src/copy/ai.ts
+msgid "Move our support mailbox into Yuva."
+msgstr "Tuo tukipostilaatikkomme Yuvaan."
+
+#: src/copy/docs.ts
+msgid "Move to Yuva"
+msgstr "Siirry Yuvaan"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Moving in"
+msgstr "Siirtyminen"
+
+#: src/copy/ai.ts
+msgid "My own server"
+msgstr "Oma palvelimeni"
+
+#: src/copy/docs.ts
+msgid "Name"
+msgstr "Nimi"
+
+#: src/copy/ai.ts
+msgid "Needs a public https address."
+msgstr "Vaatii julkisen https-osoitteen."
+
+#: src/copy/pages.ts
+msgid "New posts appear in the RSS feed as soon as they are published."
+msgstr "Uudet kirjoitukset ilmestyvät RSS-syötteeseen heti julkaisun jälkeen."
+
+#: src/copy/ai.ts
+msgid "New to Yuva? Name your workspace. It takes a few seconds."
+msgstr "Uusi Yuvassa? Anna työtilallesi nimi. Siihen menee muutama sekunti."
+
+#: src/copy/header.ts
+msgid "News and how Yuva is built."
+msgstr "Uutisia ja miten Yuvaa rakennetaan."
+
+#: src/copy/pages.ts
+msgid "News, release stories and notes from building Yuva, the open-source inbox for every product you run."
+msgstr "Uutisia, julkaisutarinoita ja muistiinpanoja Yuvan rakentamisesta, avoimen lähdekoodin postilaatikosta jokaiselle ylläpitämällesi tuotteelle."
+
+#: src/copy/pages.ts
+msgid "News, release stories and notes from building Yuva."
+msgstr "Uutisia, julkaisutarinoita ja muistiinpanoja Yuvan rakentamisesta."
+
+#: src/copy/templates.ts
+msgid "Newsletter"
+msgstr "Uutiskirje"
+
+#: src/copy/header.ts
+msgid "Newsletters to your lists."
+msgstr "Uutiskirjeet listoillesi."
+
+#: src/copy/docs.ts
+#: src/copy/pages.ts
+msgid "Next"
+msgstr "Seuraava"
+
+#: src/copy/docs.ts
+msgid "No authentication"
+msgstr "Ei todennusta"
+
+#: src/copy/docs.ts
+msgid "No content"
+msgstr "Ei sisältöä"
+
+#: src/copy/cloudflare-email.ts
+msgid "No mail server to run."
+msgstr "Ei sähköpostipalvelinta ylläpidettäväksi."
+
+#: src/copy/docs.ts
+msgid "No results"
+msgstr "Ei tuloksia"
+
+#: src/copy/contact.ts
+msgid "Not every message needs an e-mail. Some answers are better in public, and some reports must stay private."
+msgstr "Kaikki viestit eivät tarvitse sähköpostia. Jotkin vastaukset sopivat paremmin julkisiksi, ja jotkin ilmoitukset on pidettävä yksityisinä."
+
+#: src/copy/cloudflare-email.ts
+msgid "Not for incoming mail. Yuva does not listen for SMTP; Cloudflare Email Routing receives the mail and the Worker passes it on. Replies need an SMTP account for the e-mail channel, such as Amazon SES, Postmark or your own relay."
+msgstr "Ei saapuvalle postille. Yuva ei kuuntele SMTP:tä; Cloudflare Email Routing vastaanottaa postin ja Worker välittää sen eteenpäin. Vastauksiin tarvitaan sähköpostikanavan SMTP-tili, kuten Amazon SES, Postmark tai oma relay."
+
+#: src/copy/cloudflare-email.ts
+msgid "Not tied to Cloudflare"
+msgstr "Ei sidottu Cloudflareen"
+
+#: src/copy/brand.ts
+msgid "Not without written permission"
+msgstr "Ei ilman kirjallista lupaa"
+
+#: src/copy/home.ts
+msgid "Notes and mentions"
+msgstr "Muistiinpanot ja maininnat"
+
+#: src/copy/home.ts
+msgid "of every conversation"
+msgstr "jokaisesta keskustelusta"
+
+#: src/copy/home.ts
+msgid "of free templates"
+msgstr "ilmaisia pohjia"
+
+#: src/copy/brand.ts
+msgid "offer a hosted or managed service, or a product, under the Yuva name or a confusingly similar one;"
+msgstr "tarjota isännöityä tai hallinnoitua palvelua tai tuotetta nimellä Yuva tai sekaannuttavan samankaltaisella nimellä;"
+
+#: src/copy/brand.ts
+msgid "On dark backgrounds"
+msgstr "Tummilla taustoilla"
+
+#: src/copy/home.ts
+msgid "on every page"
+msgstr "jokaisella sivulla"
+
+#: src/copy/brand.ts
+msgid "On light backgrounds"
+msgstr "Vaaleilla taustoilla"
+
+#: src/copy/docs.ts
+#: src/copy/pages.ts
+msgid "On this page"
+msgstr "Tällä sivulla"
+
+#: src/copy/templates.ts
+msgid "On your own server"
+msgstr "Omalla palvelimellasi"
+
+#: src/copy/templates.ts
+msgid "Onboarding"
+msgstr "Perehdytys"
+
+#: src/copy/home.ts
+msgid "One binary"
+msgstr "Yksi binääri"
+
+#: src/copy/header.ts
+msgid "One binary and Postgres."
+msgstr "Yksi binääri ja Postgres."
+
+#: src/copy/home.ts
+msgid "One Docker image and Postgres on your own server."
+msgstr "Yksi Docker-image ja Postgres omalla palvelimellasi."
+
+#: src/copy/brand.ts
+#: src/pages/og/[lang].png.ts
+msgid "One inbox for every product you run."
+msgstr "Yksi postilaatikko jokaiselle ylläpitämällesi tuotteelle."
+
+#: src/copy/home.ts
+msgid "One profile for each person, whichever channel they write from."
+msgstr "Yksi profiili jokaiselle ihmiselle, miltä kanavalta tahansa he kirjoittavatkin."
+
+#: src/copy/home.ts
+msgid "One small server runs all of it. The server is open source, and the SDKs carry no copyleft."
+msgstr "Yksi pieni palvelin ajaa kaiken. Palvelin on avointa lähdekoodia, eikä SDK:issa ole copyleftiä."
+
+#: src/copy/contact.ts
+msgid "Open a GitHub issue"
+msgstr "Avaa GitHub-issue"
+
+#: src/copy/home.ts
+msgid "Open AI assistants"
+msgstr "Avaa tekoälyavustajat"
+
+#: src/copy/contact.ts
+msgid "Open an issue"
+msgstr "Avaa issue"
+
+#: src/copy/contact.ts
+msgid "Open an issue on GitHub so others can find the answer too."
+msgstr "Avaa issue GitHubissa, jotta muutkin löytävät vastauksen."
+
+#: src/copy/templates.ts
+msgid "Open on my server"
+msgstr "Avaa omalla palvelimellani"
+
+#: src/copy/ai.ts
+msgid "Open Plugins, select the plus button, then Add custom MCP server."
+msgstr "Avaa Plugins, valitse plus-painike ja sitten Add custom MCP server."
+
+#: src/copy/contact.ts
+msgid "Open source that stays open"
+msgstr "Avoin lähdekoodi, joka pysyy avoimena"
+
+#: src/copy/home.ts
+msgid "Open the API reference"
+msgstr "Avaa API-viite"
+
+#: src/copy/ai.ts
+msgid "Open the assistant in your project's folder. It reads your code on your machine and sends none of it to Yuva."
+msgstr "Avaa avustaja projektisi kansiossa. Se lukee koodisi koneellasi eikä lähetä siitä mitään Yuvalle."
+
+#: src/copy/home.ts
+msgid "Open the templates"
+msgstr "Avaa pohjat"
+
+#: src/pages/og/[lang].png.ts
+msgid "Open-source customer messaging"
+msgstr "Avoimen lähdekoodin asiakasviestintä"
+
+#: src/layouts/Footer.astro
+msgid "Open-source customer messaging for teams that run many products."
+msgstr "Avoimen lähdekoodin asiakasviestintä tiimeille, jotka ylläpitävät monia tuotteita."
+
+#: src/copy/docs.ts
+msgid "OpenAPI contract"
+msgstr "OpenAPI-sopimus"
+
+#: src/copy/templates.ts
+msgid "Opens Yuva's e-mail designer with this template. You sign in first if you have not."
+msgstr "Avaa Yuvan sähköpostisuunnittelijan tällä pohjalla. Kirjaudut ensin sisään, jos et ole vielä kirjautunut."
+
+#: src/copy/cloudflare-email.ts
+msgid "Optional: keep mail during an outage by adding a fallback address to the deploy command:"
+msgstr "Valinnainen: säilytä posti katkon aikana lisäämällä varaosoite käyttöönottokomentoon:"
+
+#: src/copy/ai.ts
+msgid "Or ask for one thing"
+msgstr "Tai pyydä yhtä asiaa"
+
+#: src/copy/home.ts
+msgid "Or host it yourself"
+msgstr "Tai isännöi se itse"
+
+#: src/copy/ai.ts
+msgid "Or type the sentence:"
+msgstr "Tai kirjoita lause:"
+
+#: src/copy/cloudflare-email.ts
+msgid "Other ways to bring mail in"
+msgstr "Muita tapoja tuoda postia"
+
+#: src/copy/contact.ts
+msgid "Other ways to reach us"
+msgstr "Muita tapoja tavoittaa meidät"
+
+#: src/copy/docs.ts
+msgid "Overview"
+msgstr "Yleiskatsaus"
+
+#: src/pages/404.astro
+msgid "Page not found"
+msgstr "Sivua ei löydy"
+
+#: src/copy/home.ts
+msgid "Pages and sources"
+msgstr "Sivut ja lähteet"
+
+#: src/copy/docs.ts
+msgid "Parameters"
+msgstr "Parametrit"
+
+#: src/copy/contact.ts
+msgid "Partnership"
+msgstr "Kumppanuus"
+
+#: src/copy/docs.ts
+msgid "Payload"
+msgstr "Hyötykuorma"
+
+#: src/copy/pages.ts
+msgid "Performance"
+msgstr "Suorituskyky"
+
+#: src/copy/templates.ts
+msgid "Phone"
+msgstr "Puhelin"
+
+#: src/copy/ai.ts
+msgid "Pick your assistant"
+msgstr "Valitse avustajasi"
+
+#: src/copy/pages.ts
+msgid "Posts are published in English."
+msgstr "Kirjoitukset julkaistaan englanniksi."
+
+#: src/copy/contact.ts
+msgid "Pre-alpha"
+msgstr "Esialfa"
+
+#: src/copy/contact.ts
+msgid "Press"
+msgstr "Lehdistö"
+
+#: src/copy/contact.ts
+msgid "Press and brand"
+msgstr "Lehdistö ja brändi"
+
+#: src/copy/home.ts
+msgid "Preview"
+msgstr "Esikatselu"
+
+#: src/copy/templates.ts
+msgid "Preview and use"
+msgstr "Esikatselu ja käyttö"
+
+#: src/copy/templates.ts
+msgid "Preview colours"
+msgstr "Esikatsele värejä"
+
+#: src/copy/home.ts
+#: src/copy/templates.ts
+msgid "Preview of the {name} template"
+msgstr "Pohjan {name} esikatselu"
+
+#: src/copy/templates.ts
+msgid "Preview width"
+msgstr "Esikatselun leveys"
+
+#: src/copy/docs.ts
+msgid "Previous"
+msgstr "Edellinen"
+
+#: src/copy/header.ts
+#: src/copy/templates.ts
+#: src/layouts/Footer.astro
+msgid "Product"
+msgstr "Tuote"
+
+#: src/copy/home.ts
+msgid "Product tour"
+msgstr "Tuotekierros"
+
+#: src/copy/docs.ts
+#: src/layouts/Footer.astro
+msgid "Project"
+msgstr "Projekti"
+
+#: src/copy/brand.ts
+msgid "publish a modified version under the Yuva name — rename your fork;"
+msgstr "julkaise muokattu versio nimellä Yuva — nimeä oma forkkisi uudelleen;"
+
+#: src/copy/cloudflare-email.ts
+msgid "Questions and answers"
+msgstr "Kysymykset ja vastaukset"
+
+#: src/copy/contact.ts
+msgid "Questions and bugs"
+msgstr "Kysymykset ja viat"
+
+#: src/copy/home.ts
+msgid "Ratings"
+msgstr "Arvostelut"
+
+#: src/copy/header.ts
+msgid "Reach the people behind Yuva."
+msgstr "Tavoita Yuvan takana olevat ihmiset."
+
+#: src/copy/contact.ts
+msgid "Read LICENSING.md"
+msgstr "Lue LICENSING.md"
+
+#: src/copy/home.ts
+msgid "Read the code, run {version} on your machine, and follow along as it grows."
+msgstr "Lue koodi, aja {version} koneellasi ja seuraa, kun se kasvaa."
+
+#: src/copy/docs.ts
+msgid "Read the English page"
+msgstr "Lue englanninkielinen sivu"
+
+#: src/copy/home.ts
+msgid "Read the guide"
+msgstr "Lue opas"
+
+#: src/copy/cloudflare-email.ts
+msgid "Read the ingress contract"
+msgstr "Lue ingress-sopimus"
+
+#: src/copy/templates.ts
+msgid "Read the license"
+msgstr "Lue lisenssi"
+
+#: src/copy/ai.ts
+msgid "Read the MCP guide"
+msgstr "Lue MCP-opas"
+
+#: src/copy/pages.ts
+msgid "Read the post"
+msgstr "Lue kirjoitus"
+
+#: src/copy/home.ts
+#: src/copy/pages.ts
+msgid "Read the quick start"
+msgstr "Lue pikaopas"
+
+#: src/copy/cloudflare-email.ts
+msgid "Read the setup guide"
+msgstr "Lue käyttöönotto-opas"
+
+#: src/copy/home.ts
+msgid "read through MCP"
+msgstr "luettavissa MCP:n kautta"
+
+#: src/copy/brand.ts
+msgid "Read TRADEMARK.md"
+msgstr "Lue TRADEMARK.md"
+
+#: src/copy/cloudflare-email.ts
+msgid "Real conversations"
+msgstr "Oikeita keskusteluja"
+
+#: src/copy/home.ts
+msgid "Realtime"
+msgstr "Reaaliaika"
+
+#: src/copy/header.ts
+msgid "Receive mail with no server."
+msgstr "Vastaanota postia ilman palvelinta."
+
+#: src/copy/cloudflare-email.ts
+msgid "Receive your support e-mail in Yuva with Cloudflare Email Routing and the open-source Yuva Email Worker. Signed delivery, threaded conversations, no mail server to run."
+msgstr "Vastaanota tukisähköpostisi Yuvassa Cloudflare Email Routingilla ja avoimen lähdekoodin Yuva Email Workerilla. Allekirjoitettu toimitus, ketjutetut keskustelut, ei sähköpostipalvelinta ylläpidettäväksi."
+
+#: src/copy/cloudflare-email.ts
+msgid "Refusals reach the sender"
+msgstr "Hylkäykset tavoittavat lähettäjän"
+
+#: src/copy/brand.ts
+msgid "Regular, Medium and Semibold"
+msgstr "Regular, Medium ja Semibold"
+
+#: src/copy/pages.ts
+msgid "Release history"
+msgstr "Julkaisuhistoria"
+
+#: src/copy/pages.ts
+msgid "Release notes are written in English."
+msgstr "Julkaisutiedot on kirjoitettu englanniksi."
+
+#: src/copy/contact.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/copy/pages.ts
+#: src/layouts/Footer.astro
+msgid "Releases"
+msgstr "Julkaisut"
+
+#: src/copy/pages.ts
+msgid "Removed"
+msgstr "Poistettu"
+
+#: src/layouts/Footer.astro
+msgid "Report a vulnerability"
+msgstr "Ilmoita haavoittuvuudesta"
+
+#: src/copy/contact.ts
+msgid "Report vulnerabilities privately through GitHub, never in a public issue."
+msgstr "Ilmoita haavoittuvuuksista yksityisesti GitHubin kautta, ei koskaan julkisessa issuessa."
+
+#: src/copy/home.ts
+msgid "Reports"
+msgstr "Raportit"
+
+#: src/copy/docs.ts
+msgid "Request"
+msgstr "Pyyntö"
+
+#: src/copy/docs.ts
+msgid "Request body"
+msgstr "Pyynnön runko"
+
+#: src/copy/docs.ts
+msgid "required"
+msgstr "pakollinen"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Resources"
+msgstr "Resurssit"
+
+#: src/copy/docs.ts
+msgid "Response"
+msgstr "Vastaus"
+
+#: src/copy/docs.ts
+msgid "Responses"
+msgstr "Vastaukset"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Roadmap"
+msgstr "Tiekartta"
+
+#: src/copy/brand.ts
+msgid "Rotate it"
+msgstr "Vaihda se"
+
+#: src/copy/pages.ts
+msgid "RSS feed"
+msgstr "RSS-syöte"
+
+#: src/copy/brand.ts
+msgid "say that your product uses, integrates with or is built on Yuva;"
+msgstr "sanoa, että tuotteesi käyttää Yuvaa, integroituu siihen tai on rakennettu sen päälle;"
+
+#: src/copy/ai.ts
+msgid "Say this"
+msgstr "Sano tämä"
+
+#: src/copy/docs.ts
+msgid "Schemas and every field are in the OpenAPI contract."
+msgstr "Skeemat ja kaikki kentät ovat OpenAPI-sopimuksessa."
+
+#: src/copy/home.ts
+msgid "SDKs and API contract"
+msgstr "SDK:t ja API-sopimus"
+
+#: src/copy/docs.ts
+msgid "Search docs"
+msgstr "Hae ohjeista"
+
+#: src/copy/docs.ts
+msgid "Search the docs"
+msgstr "Hae ohjeista"
+
+#: src/copy/header.ts
+msgid "Sections"
+msgstr "Osiot"
+
+#: src/copy/contact.ts
+#: src/copy/pages.ts
+msgid "Security"
+msgstr "Tietoturva"
+
+#: src/copy/contact.ts
+msgid "Security policy"
+msgstr "Tietoturvakäytäntö"
+
+#: src/copy/home.ts
+msgid "See how support is going and who is on the team."
+msgstr "Katso, miten tuki sujuu ja ketkä ovat tiimissä."
+
+#: src/copy/pages.ts
+msgid "See what is planned"
+msgstr "Katso, mitä on suunnitteilla"
+
+#: src/copy/home.ts
+msgid "See who visits your sites and apps, with no cookies and no stored IP addresses."
+msgstr "Katso, ketkä vierailevat sivustoillasi ja sovelluksissasi, ilman evästeitä ja ilman tallennettuja IP-osoitteita."
+
+#: src/copy/home.ts
+msgid "Self-hosted"
+msgstr "Itse isännöity"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+msgid "Self-hosting"
+msgstr "Itse isännöinti"
+
+#: src/copy/home.ts
+msgid "Self-hosting and open source"
+msgstr "Itse isännöinti ja avoin lähdekoodi"
+
+#: src/copy/cloudflare-email.ts
+msgid "Send a test message and watch the conversation appear in the panel."
+msgstr "Lähetä testiviesti ja katso keskustelun ilmestyvän paneeliin."
+
+#: src/copy/home.ts
+msgid "Send newsletters to your mailing lists and see what readers do with them."
+msgstr "Lähetä uutiskirjeitä postituslistoillesi ja katso, mitä lukijat tekevät niille."
+
+#: src/copy/home.ts
+msgid "sent by your own app"
+msgstr "oman sovelluksesi lähettämiä"
+
+#: src/copy/templates.ts
+msgid "Server address"
+msgstr "Palvelimen osoite"
+
+#: src/copy/home.ts
+msgid "server and panel"
+msgstr "palvelin ja paneeli"
+
+#: src/layouts/Footer.astro
+msgid "Server and panel under AGPL-3.0, SDKs and API contract under MIT."
+msgstr "Palvelin ja paneeli AGPL-3.0:lla, SDK:t ja API-sopimus MIT:llä."
+
+#: src/copy/cloudflare-email.ts
+msgid "Set it up in a few steps"
+msgstr "Määritä se muutamassa vaiheessa"
+
+#: src/copy/ai.ts
+msgid "Set up Yuva analytics for this site, with a goal for sign-ups."
+msgstr "Ota Yuva-analytiikka käyttöön tällä sivustolla ja lisää tavoite rekisteröitymisille."
+
+#: src/copy/pages.ts
+msgid "Share"
+msgstr "Jaa"
+
+#: src/copy/ai.ts
+msgid "Sign in from Gemini CLI:"
+msgstr "Kirjaudu sisään Gemini CLI:stä:"
+
+#: src/copy/ai.ts
+msgid "Sign in. Your browser opens Yuva:"
+msgstr "Kirjaudu sisään. Selaimesi avaa Yuvan:"
+
+#: src/copy/header.ts
+msgid "Signed events and user tokens."
+msgstr "Allekirjoitetut tapahtumat ja käyttäjätunnisteet."
+
+#: src/copy/home.ts
+msgid "signed, for every new message"
+msgstr "allekirjoitettuina, jokaisesta uudesta viestistä"
+
+#: src/copy/brand.ts
+msgid "Sizes"
+msgstr "Koot"
+
+#: src/layouts/Base.astro
+msgid "Skip to content"
+msgstr "Siirry sisältöön"
+
+#: src/copy/home.ts
+msgid "so users write as themselves"
+msgstr "jotta käyttäjät kirjoittavat omana itsenään"
+
+#: src/copy/contact.ts
+msgid "Something else"
+msgstr "Jokin muu"
+
+#: src/layouts/Footer.astro
+msgid "Source code on GitHub"
+msgstr "Lähdekoodi GitHubissa"
+
+#: src/copy/contact.ts
+msgid "Stage"
+msgstr "Vaihe"
+
+#: src/copy/header.ts
+msgid "Start free"
+msgstr "Aloita ilmaiseksi"
+
+#: src/copy/home.ts
+msgid "Start with AI"
+msgstr "Aloita tekoälyllä"
+
+#: src/copy/templates.ts
+msgid "Starter designs for the e-mail designer, in English, Turkish and German. Preview one, then open it in Yuva and make it yours."
+msgstr "Aloitusmalleja sähköpostisuunnittelijaan englanniksi, turkiksi ja saksaksi. Esikatsele yksi ja avaa se Yuvassa tehdäksesi siitä omasi."
+
+#: src/copy/home.ts
+msgid "stay inside the team"
+msgstr "pysyvät tiimin sisällä"
+
+#: src/copy/brand.ts
+msgid "Stretch or squash it"
+msgstr "Venyttää tai litistää sitä"
+
+#: src/copy/cloudflare-email.ts
+msgid "Support e-mail through Cloudflare Email Routing | Yuva"
+msgstr "Tukisähköposti Cloudflare Email Routingin kautta | Yuva"
+
+#: src/copy/cloudflare-email.ts
+msgid "Support e-mail through Cloudflare."
+msgstr "Tukisähköposti Cloudflaren kautta."
+
+#: src/copy/pages.ts
+msgid "Tag on GitHub"
+msgstr "Tagi GitHubissa"
+
+#: src/copy/home.ts
+msgid "Team and reports"
+msgstr "Tiimi ja raportit"
+
+#: src/copy/contact.ts
+msgid "Teams can use our hosted service, and because every contribution is made under a CLA, Yuva can also be offered under a commercial license."
+msgstr "Tiimit voivat käyttää isännöityä palveluamme, ja koska jokainen panos tehdään CLA:n alaisena, Yuvaa voidaan tarjota myös kaupallisella lisenssillä."
+
+#: src/copy/ai.ts
+msgid "Tell your assistant to add Yuva."
+msgstr "Pyydä avustajaasi lisäämään Yuva."
+
+#: src/copy/templates.ts
+msgid "Template gallery"
+msgstr "Pohjagalleria"
+
+#: src/copy/templates.ts
+msgid "Templates"
+msgstr "Pohjat"
+
+#: src/copy/home.ts
+msgid "The analytics overview in the panel: 30 days of visitors, pageviews and bounce rate, a daily chart with a note on the day a newsletter went out, and the top pages and sources."
+msgstr "Analytiikan yleiskatsaus paneelissa: 30 päivän kävijät, sivunäytöt ja poistumisprosentti, päiväkohtainen kaavio, jossa merkintä uutiskirjeen lähetyspäivästä, sekä suosituimmat sivut ja lähteet."
+
+#: src/copy/ai.ts
+msgid "The assistant acts as you, with no more access than you approve, and asks before it changes anything."
+msgstr "Avustaja toimii puolestasi, ilman laajempaa pääsyä kuin hyväksyt, ja kysyy ennen kuin muuttaa mitään."
+
+#: src/copy/header.ts
+msgid "The code, open source."
+msgstr "Koodi, avoin lähdekoodi."
+
+#: src/copy/ai.ts
+msgid "The commands below follow what you type."
+msgstr "Alla olevat komennot mukautuvat kirjoittamaasi."
+
+#: src/copy/docs.ts
+msgid "The English page has changed since this translation was last updated."
+msgstr "Englanninkielinen sivu on muuttunut tämän käännöksen viimeisimmän päivityksen jälkeen."
+
+#: src/copy/docs.ts
+msgid "The events Yuva sends to your webhook endpoints and the payload of each."
+msgstr "Tapahtumat, joita Yuva lähettää webhook-päätepisteisiisi, ja kunkin hyötykuorma."
+
+#: src/copy/ai.ts
+msgid "The first time the assistant uses Yuva, your browser opens Yuva to sign in."
+msgstr "Kun avustaja käyttää Yuvaa ensimmäisen kerran, selaimesi avaa Yuvan kirjautumista varten."
+
+#: src/copy/brand.ts
+msgid "The mark is drawn to stay readable from an app store listing down to a 16-pixel browser tab."
+msgstr "Tunnus on piirretty pysymään luettavana sovelluskaupan listauksesta 16 pikselin selainvälilehteen asti."
+
+#: src/copy/brand.ts
+msgid "The mark on its rounded square. Use it wherever Yuva appears as an app or a link."
+msgstr "Tunnus pyöristetyllä neliöllään. Käytä sitä missä tahansa, missä Yuva esiintyy sovelluksena tai linkkinä."
+
+#: src/copy/brand.ts
+msgid "The name and this site are set in Geist, an open-source typeface under the SIL Open Font License."
+msgstr "Nimi ja tämä sivusto on sidottu Geist-kirjasimella, joka on avoimen lähdekoodin SIL Open Font License -lisenssin alainen."
+
+#: src/copy/home.ts
+msgid "The panel on a phone: the conversation list with each person's channel and latest message, and the tabs at the bottom."
+msgstr "Paneeli puhelimella: keskusteluluettelo, jossa kunkin henkilön kanava ja viimeisin viesti, sekä välilehdet alareunassa."
+
+#: src/copy/home.ts
+msgid "The panel with feedback sent from a mobile app: a bug report with the app version, device and screen, next to the conversation list."
+msgstr "Paneeli, jossa mobiilisovelluksesta lähetettyä palautetta: virheilmoitus sovellusversion, laitteen ja näytön kanssa keskusteluluettelon vieressä."
+
+#: src/copy/docs.ts
+msgid "The payloads Yuva sends to your webhook endpoints."
+msgstr "Hyötykuormat, joita Yuva lähettää webhook-päätepisteisiisi."
+
+#: src/copy/home.ts
+msgid "The report of a sent newsletter in the panel: 240 sent, 5 unsubscribed and 56 who clicked a link, a chart over time and the number of clicks on each link."
+msgstr "Lähetetyn uutiskirjeen raportti paneelissa: 240 lähetetty, 5 perunut tilauksen ja 56 napsauttanut linkkiä, aikakaavio ja kunkin linkin napsautusmäärä."
+
+#: src/copy/contact.ts
+msgid "The server and panel are AGPL-3.0, the SDKs and API contract MIT. Improvements to the core stay public."
+msgstr "Palvelin ja paneeli ovat AGPL-3.0, SDK:t ja API-sopimus MIT. Ytimen parannukset pysyvät julkisina."
+
+#: src/copy/cloudflare-email.ts
+msgid "The Worker is one way to call /ingress/email. Any mail server or relay can post the raw message with the same signed headers, and a mail server that delivers to a command can pipe the message into yuva ingest-email. The request format is documented in the Worker's README."
+msgstr "Worker on yksi tapa kutsua /ingress/email. Mikä tahansa sähköpostipalvelin tai relay voi lähettää raakaviestin samoilla allekirjoitetuilla otsakkeilla, ja komennolle toimittava sähköpostipalvelin voi putkittaa viestin komentoon yuva ingest-email. Pyyntömuoto on dokumentoitu Workerin README:ssä."
+
+#: src/copy/cloudflare-email.ts
+msgid "The Worker signs the raw message, both envelope addresses and a timestamp with HMAC-SHA256 under a secret you share with Yuva, and sends them to /ingress/email on your Yuva server."
+msgstr "Worker allekirjoittaa raakaviestin, molemmat kirjekuoriosoitteet ja aikaleiman HMAC-SHA256:lla Yuvan kanssa jakamallasi salaisuudella ja lähettää ne Yuva-palvelimesi osoitteeseen /ingress/email."
+
+#: src/copy/home.ts
+msgid "The Yuva chat widget open on a newsletter tool's website: the visitor's question and a member's reply, with the member shown online."
+msgstr "Yuva-chat-widget auki uutiskirjetyökalun verkkosivustolla: kävijän kysymys ja jäsenen vastaus, jäsen näkyy paikalla olevana."
+
+#: src/copy/cloudflare-email.ts
+msgid "The Yuva Email Worker reads the raw message and the envelope, signs the request and posts it to Yuva. Parsing, threading and spam decisions stay on the server."
+msgstr "Yuva Email Worker lukee raakaviestin ja kirjekuoren, allekirjoittaa pyynnön ja lähettää sen Yuvalle. Jäsentäminen, ketjutus ja roskapostipäätökset pysyvät palvelimella."
+
+#: src/copy/brand.ts
+msgid "The Yuva logo, colours and typeface, ready for articles, integrations and app listings. Please read the rules for the name and logo before you use them."
+msgstr "Yuvan logo, värit ja kirjasin valmiina artikkeleihin, integraatioihin ja sovelluslistauksiin. Lue nimen ja logon säännöt ennen käyttöä."
+
+#: src/copy/home.ts
+msgid "The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send."
+msgstr "Yuvan viestipaneeli: sähköpostin, livechatin ja sovellusten keskustelut yhdessä luettelossa sekä keskustelu auki chattina, tiimin muistiinpano ja avustajan laatima vastaus, jonka tiimin jäsen lähettää."
+
+#: src/ui/ThemeToggle.astro
+msgid "Theme"
+msgstr "Teema"
+
+#: src/copy/templates.ts
+msgid "These templates are MIT licensed: use, change and share them in your own mails."
+msgstr "Nämä pohjat ovat MIT-lisensoituja: käytä, muokkaa ja jaa niitä omissa sähköposteissasi."
+
+#: src/copy/templates.ts
+msgid "This browser does not switch the preview to dark mode. Use your system's dark setting to see it, or open the template to check it in the designer."
+msgstr "Tämä selain ei vaihda esikatselua tummaan tilaan. Näet sen järjestelmäsi tummalla asetuksella tai avaa pohja ja tarkista se suunnittelijassa."
+
+#: src/copy/docs.ts
+msgid "This documentation is written in English."
+msgstr "Tämä dokumentaatio on kirjoitettu englanniksi."
+
+#: src/copy/docs.ts
+msgid "This page is not translated yet. It is shown in English."
+msgstr "Tätä sivua ei ole vielä käännetty. Se näytetään englanniksi."
+
+#: src/copy/docs.ts
+msgid "This page is only available in English."
+msgstr "Tämä sivu on saatavilla vain englanniksi."
+
+#: src/copy/home.ts
+msgid "through your own SMTP account"
+msgstr "oman SMTP-tilisi kautta"
+
+#: src/copy/home.ts
+msgid "to a teammate"
+msgstr "tiimin jäsenelle"
+
+#: src/copy/home.ts
+msgid "Today"
+msgstr "Tänään"
+
+#: src/copy/pages.ts
+msgid "Try Yuva"
+msgstr "Kokeile Yuvaa"
+
+#: src/copy/docs.ts
+msgid "Type"
+msgstr "Tyyppi"
+
+#: src/copy/docs.ts
+msgid "Type to search the guides and the API reference"
+msgstr "Kirjoita hakeaksesi oppaista ja API-viitteestä"
+
+#: src/copy/brand.ts
+msgid "Typeface"
+msgstr "Kirjasin"
+
+#: src/pages/404.astro
+msgid "Undeliverable"
+msgstr "Toimittamaton"
+
+#: src/copy/cloudflare-email.ts
+msgid "Under Routing rules, send each support address to the Worker yuva-edge. For a catch-all channel, point the catch-all rule at it."
+msgstr "Reititys-säännöissä (Routing rules) ohjaa jokainen tukiosoite Workerille yuva-edge. Kaikenkattavalle kanavalle osoita kaikenkattava sääntö siihen."
+
+#: src/copy/brand.ts
+msgid "use the logo in a way that suggests endorsement by the project."
+msgstr "käyttää logoa tavalla, joka antaa ymmärtää projektin hyväksyvän sen."
+
+#: src/copy/brand.ts
+msgid "use the name, unchanged, to refer to the unmodified project;"
+msgstr "käyttää nimeä muuttamattomana viittaamaan muokkaamattomaan projektiin;"
+
+#: src/copy/templates.ts
+msgid "Use this template"
+msgstr "Käytä tätä pohjaa"
+
+#: src/copy/brand.ts
+msgid "Using the name and logo"
+msgstr "Nimen ja logon käyttö"
+
+#: src/copy/docs.ts
+msgid "Version {version} of the API, generated from the OpenAPI contract. Use the contract to generate a client in any language."
+msgstr "API:n versio {version}, luotu OpenAPI-sopimuksesta. Käytä sopimusta asiakkaan luomiseen millä tahansa kielellä."
+
+#: src/copy/home.ts
+msgid "View on GitHub"
+msgstr "Näytä GitHubissa"
+
+#: src/copy/home.ts
+msgid "visitors"
+msgstr "kävijää"
+
+#: src/copy/header.ts
+msgid "Visitors without cookies."
+msgstr "Kävijät ilman evästeitä."
+
+#: src/copy/templates.ts
+msgid "Want to add a template? Send a pull request; the guide explains the folder, the rules and the preview."
+msgstr "Haluatko lisätä pohjan? Lähetä pull request; opas selittää kansion, säännöt ja esikatselun."
+
+#: src/pages/404.astro
+msgid "We looked in every inbox, but this page is not here. It may have moved, or the link may be wrong."
+msgstr "Katsoimme jokaisen postilaatikon, mutta tätä sivua ei ole täällä. Se on saatettu siirtää, tai linkki on väärä."
+
+#: src/copy/contact.ts
+msgid "We would like to use Yuva under a commercial license."
+msgstr "Haluaisimme käyttää Yuvaa kaupallisella lisenssillä."
+
+#: src/copy/docs.ts
+msgid "Webhook events"
+msgstr "Webhook-tapahtumat"
+
+#: src/copy/home.ts
+msgid "Webhooks"
+msgstr "Webhookit"
+
+#: src/copy/header.ts
+msgid "Webhooks and identity"
+msgstr "Webhookit ja identiteetti"
+
+#: src/copy/docs.ts
+msgid "Webhooks guide"
+msgstr "Webhook-opas"
+
+#: src/copy/home.ts
+msgid "what came in and what is open"
+msgstr "mitä on tullut ja mikä on avoinna"
+
+#: src/copy/header.ts
+msgid "What changed in each version."
+msgstr "Mitä kussakin versiossa muuttui."
+
+#: src/copy/ai.ts
+msgid "What happens when you sign in"
+msgstr "Mitä tapahtuu, kun kirjaudut sisään"
+
+#: src/copy/cloudflare-email.ts
+msgid "What happens when Yuva is down?"
+msgstr "Mitä tapahtuu, kun Yuva on alhaalla?"
+
+#: src/copy/header.ts
+msgid "What is built and what is next."
+msgstr "Mitä on rakennettu ja mitä seuraavaksi."
+
+#: src/copy/contact.ts
+msgid "What is it about?"
+msgstr "Mistä on kyse?"
+
+#: src/copy/cloudflare-email.ts
+msgid "What it is"
+msgstr "Mikä se on"
+
+#: src/copy/cloudflare-email.ts
+msgid "When Yuva refuses a message for good, for example an unknown address, a blocked sender or a message that is too large, the Worker rejects it and the sender gets a permanent SMTP error with Yuva's reason."
+msgstr "Kun Yuva hylkää viestin lopullisesti, esimerkiksi tuntemattoman osoitteen, estetyn lähettäjän tai liian suuren viestin vuoksi, Worker hylkää sen ja lähettäjä saa pysyvän SMTP-virheen Yuvan perusteluineen."
+
+#: src/copy/contact.ts
+msgid "Whether you want to invest in Yuva, build on it together, need a commercial license or are writing about it, write to us. We read every message."
+msgstr "Haluatpa sijoittaa Yuvaan, rakentaa sen päälle yhdessä, tarvitset kaupallisen lisenssin tai kirjoitat siitä, kirjoita meille. Luemme jokaisen viestin."
+
+#: src/copy/cloudflare-email.ts
+msgid "Which domains and addresses can I use?"
+msgstr "Mitä verkkotunnuksia ja osoitteita voin käyttää?"
+
+#: src/copy/brand.ts
+msgid "White"
+msgstr "Valkoinen"
+
+#: src/copy/home.ts
+msgid "with clicks and unsubscribes"
+msgstr "napsautuksineen ja tilauksen perumisineen"
+
+#: src/copy/cloudflare-email.ts
+msgid "With FALLBACK_FORWARD set, the message is forwarded to that address instead. Without it the delivery fails and the sending server may retry. Messages that Yuva refuses on purpose, such as mail to an unknown address, are rejected, not forwarded."
+msgstr "Kun FALLBACK_FORWARD on asetettu, viesti välitetään sen sijaan siihen osoitteeseen. Ilman sitä toimitus epäonnistuu ja lähettävä palvelin voi yrittää uudelleen. Viestit, jotka Yuva hylkää tarkoituksella, kuten posti tuntemattomaan osoitteeseen, hylätään eikä niitä välitetä."
+
+#: src/copy/home.ts
+msgid "with one script tag"
+msgstr "yhdellä script-tagilla"
+
+#: src/copy/home.ts
+msgid "with recorded consent"
+msgstr "tallennetulla suostumuksella"
+
+#: src/copy/home.ts
+msgid "with replies and votes"
+msgstr "vastauksineen ja äänineen"
+
+#: src/copy/home.ts
+msgid "with the iOS and Android SDKs"
+msgstr "iOS- ja Android-SDK:illa"
+
+#: src/copy/home.ts
+msgid "with workspace API keys"
+msgstr "työtilan API-avaimilla"
+
+#: src/copy/cloudflare-email.ts
+msgid "Worker source on GitHub"
+msgstr "Workerin lähdekoodi GitHubissa"
+
+#: src/copy/home.ts
+msgid "Works with"
+msgstr "Toimii yhdessä"
+
+#: src/copy/contact.ts
+msgid "Write an e-mail"
+msgstr "Kirjoita sähköposti"
+
+#: src/copy/contact.ts
+msgid "Write to the Yuva team about investment, partnerships, commercial licenses or press, or find the right place for questions and security reports."
+msgstr "Kirjoita Yuva-tiimille sijoituksesta, kumppanuuksista, kaupallisista lisensseistä tai lehdistöstä tai löydä oikea paikka kysymyksille ja tietoturvailmoituksille."
+
+#: src/copy/cloudflare-email.ts
+msgid "Yes, when you set YUVA_INGRESS_AUTHSERV_ID to mx.cloudflare.net. Yuva then reads the DMARC verdict that Email Routing adds. A new conversation that fails DMARC is marked as spam."
+msgstr "Kyllä, kun asetat YUVA_INGRESS_AUTHSERV_ID:n arvoksi mx.cloudflare.net. Yuva lukee silloin DMARC-tuomion, jonka Email Routing lisää. Uusi keskustelu, joka ei läpäise DMARC:ia, merkitään roskapostiksi."
+
+#: src/copy/brand.ts
+msgid "You may"
+msgstr "Saat"
+
+#: src/copy/cloudflare-email.ts
+msgid "You need a Yuva server and a Cloudflare account that manages the domain."
+msgstr "Tarvitset Yuva-palvelimen ja Cloudflare-tilin, joka hallinnoi verkkotunnusta."
+
+#: src/copy/ai.ts
+msgid "You stay in charge"
+msgstr "Sinä päätät"
+
+#: src/copy/ai.ts
+msgid "Your browser opens Yuva. Sign in with a one-time code; a new e-mail address gets a new account."
+msgstr "Selaimesi avaa Yuvan. Kirjaudu sisään kertakäyttökoodilla; uusi sähköpostiosoite saa uuden tilin."
+
+#: src/copy/ai.ts
+msgid "Your code stays on your machine. Yuva only sees what the assistant creates through it."
+msgstr "Koodisi pysyy koneellasi. Yuva näkee vain sen, mitä avustaja luo sen kautta."
+
+#: src/copy/cloudflare-email.ts
+msgid "Your team answers in the panel. The reply is sent through the e-mail channel's own SMTP account, such as Amazon SES, Postmark or your own relay, from the same address and in the same thread. Replies do not go through the Worker."
+msgstr "Tiimisi vastaa paneelissa. Vastaus lähetetään sähköpostikanavan oman SMTP-tilin kautta, kuten Amazon SES, Postmark tai oma relay, samasta osoitteesta ja samassa ketjussa. Vastaukset eivät kulje Workerin kautta."
+
+#: src/copy/ai.ts
+msgid "Your Yuva server"
+msgstr "Yuva-palvelimesi"
+
+#: src/copy/ai.ts
+msgid "Yuva and your AI assistant"
+msgstr "Yuva ja tekoälyavustajasi"
+
+#: src/copy/pages.ts
+msgid "Yuva blog"
+msgstr "Yuva-blogi"
+
+#: src/copy/brand.ts
+msgid "Yuva brand assets: logo, colours and name"
+msgstr "Yuvan brändimateriaalit: logo, värit ja nimi"
+
+#: src/copy/docs.ts
+msgid "Yuva brings e-mail, live chat and in-app messages from your customers into one inbox for your team. Start with Get started; every guide is listed below."
+msgstr "Yuva tuo asiakkaidesi sähköpostit, livechatin ja sovellusviestit yhteen postilaatikkoon tiimillesi. Aloita kohdasta Aloita; kaikki oppaat on lueteltu alla."
+
+#: src/copy/home.ts
+msgid "Yuva brings support e-mail, live chat and in-app conversations from all of your products into one shared inbox, and adds newsletters, mail migration and cookieless analytics. Open source, self-hosted, one Go binary with Postgres."
+msgstr "Yuva tuo kaikkien tuotteidesi tukisähköpostit, livechatin ja sovelluksen keskustelut yhteen jaettuun postilaatikkoon ja lisää uutiskirjeet, postin siirron ja evästeettömän analytiikan. Avoin lähdekoodi, itse isännöity, yksi Go-binääri ja Postgres."
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva checks the signature and that the timestamp is within 5 minutes before it reads the message. A request with a wrong signature is refused."
+msgstr "Yuva tarkistaa allekirjoituksen ja sen, että aikaleima on 5 minuutin sisällä, ennen kuin se lukee viestin. Pyyntö, jonka allekirjoitus on väärä, hylätään."
+
+#: src/copy/ai.ts
+msgid "Yuva cloud"
+msgstr "Yuva-pilvi"
+
+#: src/copy/docs.ts
+msgid "Yuva documentation"
+msgstr "Yuvan dokumentaatio"
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva Email Worker for Cloudflare"
+msgstr "Yuva Email Worker Cloudflarelle"
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva finds the e-mail channel for the recipient address and threads the message by In-Reply-To and References into the conversation it belongs to. Anything else starts a new conversation. A reply reopens the conversation."
+msgstr "Yuva löytää vastaanottajan osoitteen sähköpostikanavan ja ketjuttaa viestin In-Reply-To- ja References-otsakkeiden perusteella keskusteluun, johon se kuuluu. Kaikki muu aloittaa uuden keskustelun. Vastaus avaa keskustelun uudelleen."
+
+#: src/copy/ai.ts
+msgid "Yuva has a built-in MCP server. Connect it once, and your assistant reads your project, sees what your workspace already has, and sets up live chat, analytics or newsletters, asking before each change."
+msgstr "Yuvassa on sisäänrakennettu MCP-palvelin. Yhdistä se kerran, niin avustajasi lukee projektisi, näkee mitä työtilassasi jo on ja määrittää livechatin, analytiikan tai uutiskirjeet kysyen ennen jokaista muutosta."
+
+#: src/copy/header.ts
+msgid "Yuva home"
+msgstr "Yuvan etusivu"
+
+#: src/copy/ai.ts
+msgid "Yuva in your AI assistant"
+msgstr "Yuva tekoälyavustajassasi"
+
+#: src/copy/contact.ts
+msgid "Yuva is pre-alpha. Every release, the roadmap and the code are public, so you can see exactly where it stands."
+msgstr "Yuva on esialfavaiheessa. Jokainen julkaisu, tiekartta ja koodi ovat julkisia, joten näet tarkasti, missä se on."
+
+#: src/copy/brand.ts
+msgid "Yuva orange"
+msgstr "Yuvan oranssi"
+
+#: src/copy/home.ts
+msgid "Yuva puts e-mail, live chat and in-app messages from all of your products into one inbox for your team. Open source, one Go binary with Postgres."
+msgstr "Yuva tuo kaikkien tuotteidesi sähköpostit, livechatin ja sovellusviestit yhteen postilaatikkoon tiimillesi. Avoin lähdekoodi, yksi Go-binääri ja Postgres."
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva refuses any request without a valid HMAC signature or with a timestamp more than 5 minutes off, before it reads the body. Keep the secret to yourself."
+msgstr "Yuva hylkää jokaisen pyynnön, jolla ei ole kelvollista HMAC-allekirjoitusta tai jonka aikaleima poikkeaa yli 5 minuuttia, ennen kuin se lukee rungon. Pidä salaisuus itselläsi."
+
+#: src/copy/pages.ts
+msgid "Yuva releases"
+msgstr "Yuva-julkaisut"
+
+#: src/copy/docs.ts
+msgid "Yuva signs every request with Standard Webhooks and retries failed deliveries. Registering an endpoint and verifying a signature are in the webhooks guide."
+msgstr "Yuva allekirjoittaa jokaisen pyynnön Standard Webhooksilla ja yrittää epäonnistuneita toimituksia uudelleen. Päätepisteen rekisteröinti ja allekirjoituksen tarkistus ovat webhook-oppaassa."
+
+#: src/copy/contact.ts
+msgid "Yuva team"
+msgstr "Yuva-tiimi"
+
+#: src/copy/brand.ts
+msgid "Yuva: one inbox for every product"
+msgstr "Yuva: yksi postilaatikko jokaiselle tuotteelle"
+
+#: src/copy/home.ts
+msgid "Yuva: one open-source inbox for e-mail, live chat and in-app messages"
+msgstr "Yuva: yksi avoimen lähdekoodin postilaatikko sähköpostille, livechatille ja sovellusviesteille"
+
+#: src/copy/home.ts
+msgid "Zendesk and Help Scout"
+msgstr "Zendesk ja Help Scout"

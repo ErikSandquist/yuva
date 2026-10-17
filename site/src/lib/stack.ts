@@ -15,7 +15,7 @@ import {
   siVuedotjs,
 } from "simple-icons"
 import { h3Mark, nitroMark } from "@/lib/marks"
-import { ai, cloudflareEmail, doc, docsPath, type Locale } from "@/lib/routes"
+import { ai, cloudflareEmail, doc, docsPath, locales, type Locale } from "@/lib/routes"
 
 export interface StackItem {
   name: string
@@ -24,7 +24,8 @@ export interface StackItem {
   href: Record<Locale, string>
 }
 
-const same = (href: string): Record<Locale, string> => ({ en: href, tr: href, de: href })
+const same = (href: string): Record<Locale, string> =>
+  Object.fromEntries(locales.map((l) => [l, href])) as Record<Locale, string>
 const docs = (rel: string) => docsPath(rel)
 
 export const stack: StackItem[] = [

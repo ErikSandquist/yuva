@@ -1,0 +1,17 @@
+---
+import { ordered, slugOf, type Doc } from "@/lib/docs"
+import { defaultLocale, locales, type Locale } from "@/lib/routes"
+import DocPageView from "@/views/docs/DocPageView.astro"
+
+export async function getStaticPaths() {
+  const out = []
+  for (const locale of locales.filter((l) => l !== defaultLocale))
+    for (const entry of await ordered(locale)) out.push({ params: { locale, slug: slugOf(entry) }, props: { entry } })
+  return out
+}
+
+const { locale } = Astro.params as { locale: Locale }
+const { entry } = Astro.props as { entry: Doc }
+---
+
+<DocPageView entry={entry} locale={locale} />

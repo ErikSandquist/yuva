@@ -3,7 +3,7 @@ import { templatesCopy } from "@/copy/templates"
 import { i18nFor } from "@/i18n"
 import Base from "@/layouts/Base.astro"
 import { APP_URL, links, template as pagePaths, templates as galleryPaths, type Locale } from "@/lib/routes"
-import { previewHtml, type Template } from "@/lib/templates"
+import { previewHtml, previewLocale, text, type Template } from "@/lib/templates"
 
 interface Props {
   locale: Locale
@@ -12,8 +12,9 @@ interface Props {
 
 const { locale, entry } = Astro.props
 const t = templatesCopy(i18nFor(locale))
-const name = entry.name[locale]
-const designer = `/broadcasts/designs/new?template=${entry.slug}&locale=${locale}`
+const name = text(entry.name, locale)
+const preview = previewLocale(entry, locale)
+const designer = `/broadcasts/designs/new?template=${entry.slug}&locale=${preview}`
 const seg = "inline-flex rounded-full border border-rule-strong p-0.5"
 const segButton =
   "h-8 rounded-full px-3.5 text-sm font-medium text-ink-soft transition-colors hover:text-ink aria-pressed:bg-ink aria-pressed:text-paper disabled:cursor-not-allowed disabled:opacity-40"
@@ -23,7 +24,7 @@ const link = "font-medium text-brand hover:underline"
 <Base
   locale={locale}
   title={`${name} · ${t.metaTitle}`}
-  description={t.pageDescription(name, entry.description[locale])}
+  description={t.pageDescription(name, text(entry.description, locale))}
   paths={pagePaths(entry.slug)}
 >
   <div class="mx-auto max-w-6xl px-5 pt-12 pb-24 sm:px-8 sm:pt-16">
@@ -33,14 +34,14 @@ const link = "font-medium text-brand hover:underline"
     <header class="mt-6 max-w-2xl">
       <p class="text-sm font-medium text-brand">{t.category(entry.category)}</p>
       <h1 class="mt-2 text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">{name}</h1>
-      <p class="mt-4 text-lg leading-relaxed text-ink-soft">{entry.description[locale]}</p>
+      <p class="mt-4 text-lg leading-relaxed text-ink-soft">{text(entry.description, locale)}</p>
     </header>
 
     <div
       class="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_20rem]"
       data-template
       data-slug={entry.slug}
-      data-locale={locale}
+      data-locale={preview}
       data-invalid={t.serverInvalid}
     >
       <section class="min-w-0" aria-label={t.live}>
@@ -70,7 +71,7 @@ const link = "font-medium text-brand hover:underline"
             class="mx-auto block h-[min(80vh,56rem)] w-full max-w-[40rem] border-0 bg-white sm:rounded-lg"
             style="color-scheme: light"
             title={t.frameTitle(name)}
-            src={previewHtml(entry.slug, locale)}
+            src={previewHtml(entry.slug, preview)}
             sandbox=""
             loading="lazy"
             data-frame

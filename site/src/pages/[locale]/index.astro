@@ -1,0 +1,9 @@
+---
+import HomeView from "@/views/HomeView.astro"
+import { localePaths, type Locale } from "@/lib/routes"
+
+export const getStaticPaths = localePaths
+const { locale } = Astro.params as { locale: Locale }
+---
+
+<HomeView locale={locale} />

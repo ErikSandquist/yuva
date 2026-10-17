@@ -1,0 +1,2089 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 22:38+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: zh-Hans\n"
+
+#: src/layouts/Footer.astro
+msgid "“Yuva” is Turkish for nest, or home."
+msgstr "“Yuva”在土耳其语中意为巢，也有家的意思。"
+
+#: src/copy/pages.ts
+msgid "{count} changes"
+msgstr "{count} 项更改"
+
+#: src/copy/docs.ts
+#: src/copy/pages.ts
+msgid "{count} min read"
+msgstr "阅读约 {count} 分钟"
+
+#: src/copy/contact.ts
+msgid "{count} releases, latest {version}"
+msgstr "{count} 个版本，最新为 {version}"
+
+#: src/copy/docs.ts
+msgid "{count} sections"
+msgstr "{count} 个部分"
+
+#: src/copy/templates.ts
+msgid "{name} e-mail preview"
+msgstr "邮件“{name}”预览"
+
+#: src/copy/docs.ts
+msgid "{name} endpoints of the Yuva API."
+msgstr "Yuva API 的 {name} 端点。"
+
+#: src/copy/templates.ts
+msgid "{name}: {description} A free Yuva e-mail template."
+msgstr "{name}：{description} Yuva 免费邮件模板。"
+
+#: src/copy/home.ts
+msgid "a contact and their data"
+msgstr "一个联系人及其数据"
+
+#: src/copy/cloudflare-email.ts
+msgid "A customer writes to one of your support addresses, for example support@example.com."
+msgstr "客户给你的某个支持地址发信，例如 support@example.com。"
+
+#: src/copy/home.ts
+msgid "A finished import in the panel: 6 conversations and 12 messages copied from an mbox file, with a note that Yuva has no access to your mailbox."
+msgstr "面板中一次已完成的导入：从 mbox 文件复制了 6 个对话和 12 条消息，并注明 Yuva 无法访问你的邮箱。"
+
+#: src/copy/contact.ts
+msgid "A hosted service and commercial licenses"
+msgstr "托管服务与商业许可"
+
+#: src/copy/cloudflare-email.ts
+msgid "A message can be up to 25 MiB including attachments, which is the Cloudflare Email Routing limit. Yuva keeps up to 50 attachments per message, each within the server's attachment size limit (25 MiB by default) and allowed types; it leaves out the rest."
+msgstr "邮件连同附件最大 25 MiB，这是 Cloudflare Email Routing 的限制。Yuva 每封邮件最多保留 50 个附件，每个附件须在服务器的附件大小限制（默认 25 MiB）和允许的类型之内，其余的会被忽略。"
+
+#: src/copy/cloudflare-email.ts
+msgid "A small open-source Worker"
+msgstr "一个小巧的开源 Worker"
+
+#: src/copy/home.ts
+msgid "Accepted answer"
+msgstr "已采纳的回答"
+
+#: src/copy/home.ts
+msgid "Add ratings and a discussion area to your own documentation pages."
+msgstr "为你自己的文档页面添加评分和讨论区。"
+
+#: src/copy/brand.ts
+msgid "Add shadows or outlines"
+msgstr "添加阴影或描边"
+
+#: src/copy/ai.ts
+msgid "Add this to .cursor/mcp.json in your project:"
+msgstr "将以下内容添加到项目中的 .cursor/mcp.json："
+
+#: src/copy/ai.ts
+msgid "Add this to .vscode/mcp.json in your project:"
+msgstr "将以下内容添加到项目中的 .vscode/mcp.json："
+
+#: src/copy/ai.ts
+msgid "Add Yuva in your terminal:"
+msgstr "在终端中添加 Yuva："
+
+#: src/copy/ai.ts
+msgid "Add Yuva live chat to this site."
+msgstr "将 Yuva 在线聊天添加到这个网站。"
+
+#: src/copy/pages.ts
+msgid "Added"
+msgstr "新增"
+
+#: src/layouts/Footer.astro
+msgid "AI assistants"
+msgstr "AI 助手"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "AI assistants and MCP"
+msgstr "AI 助手与 MCP"
+
+#: src/copy/pages.ts
+msgid "All posts"
+msgstr "所有文章"
+
+#: src/copy/pages.ts
+msgid "All releases on GitHub"
+msgstr "GitHub 上的所有版本"
+
+#: src/copy/templates.ts
+msgid "All templates"
+msgstr "所有模板"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Analytics"
+msgstr "分析"
+
+#: src/copy/home.ts
+msgid "and funnels"
+msgstr "和转化漏斗"
+
+#: src/copy/home.ts
+msgid "and Postgres"
+msgstr "和 Postgres"
+
+#: src/copy/home.ts
+msgid "and the inboxes they can see"
+msgstr "以及他们能看到的收件箱"
+
+#: src/copy/templates.ts
+msgid "Announcement"
+msgstr "公告"
+
+#: src/copy/cloudflare-email.ts
+msgid "Any domain you manage in Cloudflare and whose mail no other server handles, because Email Routing becomes its MX. Each e-mail channel has an address, or the catch-all *@example.com for every address of the domain that no channel has exactly. A subaddress such as support+billing@example.com reaches the channel of support@example.com."
+msgstr "任何你在 Cloudflare 中管理、且没有其他服务器处理其邮件的域名，因为 Email Routing 会成为它的 MX。每个邮件渠道有一个地址，或者用兜底地址 *@example.com 接收该域名下所有没有渠道精确对应的地址。support+billing@example.com 这样的子地址会送到 support@example.com 的渠道。"
+
+#: src/copy/contact.ts
+msgid "API"
+msgstr "API"
+
+#: src/layouts/Footer.astro
+msgid "API contract"
+msgstr "API 契约"
+
+#: src/copy/docs.ts
+msgid "API key"
+msgstr "API 密钥"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+msgid "API reference"
+msgstr "API 参考"
+
+#: src/copy/brand.ts
+msgid "App icon"
+msgstr "应用图标"
+
+#: src/copy/contact.ts
+msgid "Apps"
+msgstr "应用"
+
+#: src/copy/home.ts
+msgid "Assign"
+msgstr "分配"
+
+#: src/copy/home.ts
+msgid "at a glance"
+msgstr "一览"
+
+#: src/copy/contact.ts
+msgid "At a glance"
+msgstr "一览"
+
+#: src/copy/home.ts
+msgid "Attributes"
+msgstr "属性"
+
+#: src/copy/docs.ts
+msgid "Authentication"
+msgstr "身份验证"
+
+#: src/copy/ai.ts
+msgid "Back in the assistant, Yuva is connected. Settings → Connected apps shows it and revokes it."
+msgstr "回到助手后，Yuva 已连接。设置 → 已连接的应用会显示它，并可在那里撤销。"
+
+#: src/pages/404.astro
+msgid "Back to the home page"
+msgstr "返回首页"
+
+#: src/copy/docs.ts
+msgid "Back to the website"
+msgstr "返回网站"
+
+#: src/copy/home.ts
+msgid "before anything is sent"
+msgstr "在任何内容发出之前"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/copy/pages.ts
+#: src/layouts/Footer.astro
+msgid "Blog"
+msgstr "博客"
+
+#: src/copy/brand.ts
+msgid "Brand"
+msgstr "品牌"
+
+#: src/copy/brand.ts
+#: src/copy/contact.ts
+#: src/copy/header.ts
+#: src/layouts/Footer.astro
+msgid "Brand assets"
+msgstr "品牌资源"
+
+#: src/copy/pages.ts
+msgid "Breaking changes"
+msgstr "不兼容的更改"
+
+#: src/copy/header.ts
+msgid "Bring your mail and history."
+msgstr "带上你的邮件和历史记录。"
+
+#: src/copy/home.ts
+msgid "Bring your mail and support history over. Yuva only reads at the source."
+msgstr "带上你的邮件和支持历史记录。Yuva 只在来源处读取。"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Broadcasts"
+msgstr "群发"
+
+#: src/copy/home.ts
+msgid "Build e-mails in the designer or start from a free template."
+msgstr "在设计器中制作邮件，或从免费模板开始。"
+
+#: src/copy/contact.ts
+msgid "Built with"
+msgstr "构建于"
+
+#: src/copy/contact.ts
+msgid "Business"
+msgstr "商业"
+
+#: src/copy/pages.ts
+#: src/copy/templates.ts
+msgid "By"
+msgstr "作者"
+
+#: src/copy/cloudflare-email.ts
+msgid "Can someone forge mail to my Yuva server?"
+msgstr "有人能伪造发往我的 Yuva 服务器的邮件吗？"
+
+#: src/copy/brand.ts
+msgid "Change its colours"
+msgstr "更改它的颜色"
+
+#: src/copy/pages.ts
+msgid "Changed"
+msgstr "已更改"
+
+#: src/copy/pages.ts
+msgid "Changelog"
+msgstr "更新日志"
+
+#: src/copy/pages.ts
+msgid "CHANGELOG.md"
+msgstr "CHANGELOG.md"
+
+#: src/copy/contact.ts
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Channels"
+msgstr "渠道"
+
+#: src/copy/home.ts
+msgid "checks before you send"
+msgstr "发送前的检查"
+
+#: src/copy/ai.ts
+msgid "Choose the workspace and what the assistant may do, then approve."
+msgstr "选择工作区以及助手可以做什么，然后批准。"
+
+#: src/copy/header.ts
+msgid "Claude drafts, you send."
+msgstr "Claude 起草，你来发送。"
+
+#: src/copy/brand.ts
+msgid "Click a colour to copy its hex code."
+msgstr "点击一种颜色即可复制其十六进制代码。"
+
+#: src/copy/header.ts
+#: src/layouts/Footer.astro
+msgid "Cloudflare e-mail"
+msgstr "通过 Cloudflare 收邮件"
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare Email Routing becomes the MX of your domain and receives the mail. Yuva does not listen for SMTP, so there is no mail server to install or keep patched."
+msgstr "Cloudflare Email Routing 成为你域名的 MX 并接收邮件。Yuva 不监听 SMTP，所以无需安装或维护邮件服务器。"
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare Email Routing receives the message and passes it to the Yuva Email Worker."
+msgstr "Cloudflare Email Routing 接收邮件并交给 Yuva Email Worker。"
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare, the Cloudflare logo and Cloudflare Workers are trademarks and/or registered trademarks of Cloudflare, Inc. in the United States and other jurisdictions. Yuva is an independent open-source project, not affiliated with or endorsed by Cloudflare."
+msgstr "Cloudflare、Cloudflare 徽标和 Cloudflare Workers 是 Cloudflare, Inc. 在美国和其他司法管辖区的商标和/或注册商标。Yuva 是独立的开源项目，与 Cloudflare 无关联，也未获其认可。"
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare® Email Routing receives the mail for your support addresses, and the open-source Yuva Email Worker hands each message to Yuva, signed. It lands in your shared inbox as a conversation your team answers."
+msgstr "Cloudflare® Email Routing 接收你支持地址的邮件，开源的 Yuva Email Worker 为每封邮件签名后交给 Yuva。它会作为一个由你的团队回复的对话，出现在共享收件箱里。"
+
+#: src/copy/brand.ts
+msgid "Colours"
+msgstr "颜色"
+
+#: src/copy/contact.ts
+msgid "Commercial license"
+msgstr "商业许可"
+
+#: src/copy/pages.ts
+msgid "Compare changes"
+msgstr "比较更改"
+
+#: src/copy/home.ts
+msgid "Connect a support address, a chat widget for your website or the SDKs for your apps."
+msgstr "连接支持地址、网站的聊天小组件，或应用的 SDK。"
+
+#: src/copy/home.ts
+msgid "Connect Claude, ChatGPT or Cursor. A teammate reviews and sends what they draft."
+msgstr "连接 Claude、ChatGPT 或 Cursor。它们起草的内容由团队成员审阅后发送。"
+
+#: src/copy/ai.ts
+msgid "Connect Yuva"
+msgstr "连接 Yuva"
+
+#: src/copy/ai.ts
+msgid "Connect Yuva to Claude, ChatGPT, Cursor, VS Code or Gemini CLI, then let the assistant look at your project and set Yuva up with you."
+msgstr "将 Yuva 连接到 Claude、ChatGPT、Cursor、VS Code 或 Gemini CLI，然后让助手查看你的项目，并与你一起设置 Yuva。"
+
+#: src/copy/contact.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Contact"
+msgstr "联系我们"
+
+#: src/copy/docs.ts
+msgid "Contact session"
+msgstr "联系人会话"
+
+#: src/copy/contact.ts
+msgid "Contact Yuva"
+msgstr "联系 Yuva"
+
+#: src/copy/home.ts
+msgid "Contacts"
+msgstr "联系人"
+
+#: src/layouts/Footer.astro
+msgid "Contributing"
+msgstr "参与贡献"
+
+#: src/copy/ai.ts
+#: src/copy/brand.ts
+#: src/copy/contact.ts
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/pages.ts
+msgid "Copied"
+msgstr "已复制"
+
+#: src/copy/ai.ts
+#: src/copy/docs.ts
+msgid "Copy"
+msgstr "复制"
+
+#: src/copy/contact.ts
+msgid "Copy address"
+msgstr "复制地址"
+
+#: src/copy/pages.ts
+msgid "Copy link"
+msgstr "复制链接"
+
+#: src/copy/header.ts
+msgid "Copy logo as SVG"
+msgstr "将徽标复制为 SVG"
+
+#: src/copy/header.ts
+msgid "Copy logo with name as SVG"
+msgstr "将带名称的徽标复制为 SVG"
+
+#: src/copy/brand.ts
+msgid "Copy SVG"
+msgstr "复制 SVG"
+
+#: src/copy/home.ts
+#: src/copy/pages.ts
+msgid "Create an account"
+msgstr "创建账号"
+
+#: src/copy/home.ts
+msgid "Create an account on our service and start without running a server."
+msgstr "在我们的服务上创建账号，无需运行服务器即可开始。"
+
+#: src/copy/pages.ts
+msgid "Create an account on our service, or run it on your own server."
+msgstr "在我们的服务上创建账号，或在你自己的服务器上运行。"
+
+#: src/copy/templates.ts
+msgid "Dark"
+msgstr "深色"
+
+#: src/ui/ThemeToggle.astro
+msgid "Dark theme"
+msgstr "深色主题"
+
+#: src/copy/home.ts
+msgid "Delete"
+msgstr "删除"
+
+#: src/copy/home.ts
+msgid "Deliverability"
+msgstr "送达率"
+
+#: src/copy/cloudflare-email.ts
+msgid "Deploy the Worker to your Cloudflare account, using the same secret:"
+msgstr "使用同一个密钥，将 Worker 部署到你的 Cloudflare 账号："
+
+#: src/copy/pages.ts
+msgid "Deprecated"
+msgstr "已弃用"
+
+#: src/copy/docs.ts
+msgid "Description"
+msgstr "描述"
+
+#: src/copy/home.ts
+msgid "Designer"
+msgstr "设计器"
+
+#: src/copy/home.ts
+msgid "Designs and broadcast drafts"
+msgstr "设计和群发草稿"
+
+#: src/copy/templates.ts
+msgid "Desktop"
+msgstr "桌面端"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Developers"
+msgstr "开发者"
+
+#: src/copy/templates.ts
+msgid "Digest"
+msgstr "摘要"
+
+#: src/copy/home.ts
+msgid "Discussions"
+msgstr "讨论"
+
+#: src/copy/brand.ts
+msgid "Do"
+msgstr "建议"
+
+#: src/copy/cloudflare-email.ts
+msgid "Do I need to run a mail server?"
+msgstr "我需要运行邮件服务器吗？"
+
+#: src/copy/docs.ts
+msgid "Docs"
+msgstr "文档"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Documentation"
+msgstr "文档"
+
+#: src/copy/cloudflare-email.ts
+msgid "Does Yuva use the DMARC result from Cloudflare?"
+msgstr "Yuva 会使用 Cloudflare 的 DMARC 结果吗？"
+
+#: src/copy/brand.ts
+msgid "Don't"
+msgstr "避免"
+
+#: src/copy/header.ts
+msgid "Download logo"
+msgstr "下载徽标"
+
+#: src/copy/brand.ts
+msgid "Download PNG"
+msgstr "下载 PNG"
+
+#: src/copy/brand.ts
+msgid "Download SVG"
+msgstr "下载 SVG"
+
+#: src/copy/brand.ts
+msgid "Download the icon"
+msgstr "下载图标"
+
+#: src/copy/brand.ts
+msgid "Download the Yuva logo as SVG or PNG, copy the brand colours, and read how the name and logo may be used."
+msgstr "下载 SVG 或 PNG 格式的 Yuva 徽标，复制品牌颜色，并了解名称和徽标的使用方式。"
+
+#: src/copy/home.ts
+msgid "Draft replies"
+msgstr "回复草稿"
+
+#: src/copy/contact.ts
+#: src/copy/home.ts
+msgid "E-mail"
+msgstr "邮件"
+
+#: src/pages/og/[lang].png.ts
+msgid "E-mail · live chat · in-app · self-hosted"
+msgstr "邮件 · 在线聊天 · 应用内 · 自托管"
+
+#: src/copy/header.ts
+#: src/copy/templates.ts
+#: src/layouts/Footer.astro
+msgid "E-mail templates"
+msgstr "邮件模板"
+
+#: src/copy/home.ts
+msgid "E-mail templates and designer"
+msgstr "邮件模板和设计器"
+
+#: src/copy/header.ts
+msgid "E-mail, live chat and in-app."
+msgstr "邮件、在线聊天和应用内消息。"
+
+#: src/copy/contact.ts
+msgid "Early and built in the open"
+msgstr "处于早期，公开构建"
+
+#: src/copy/docs.ts
+msgid "Edit this page on GitHub"
+msgstr "在 GitHub 上编辑此页面"
+
+#: src/copy/cloudflare-email.ts
+msgid "Email Routing becomes the MX of the domain, so use a domain or subdomain that no other mail server handles."
+msgstr "Email Routing 会成为域名的 MX，所以请使用没有其他邮件服务器处理的域名或子域名。"
+
+#: src/copy/cloudflare-email.ts
+msgid "Email Routing in front"
+msgstr "前置 Email Routing"
+
+#: src/copy/brand.ts
+msgid "Ember"
+msgstr "余烬"
+
+#: src/copy/templates.ts
+msgid "Enter a full address starting with http:// or https://."
+msgstr "输入以 http:// 或 https:// 开头的完整地址。"
+
+#: src/copy/templates.ts
+msgid "Enter the address of your Yuva server to open the template there. It is kept in this browser only."
+msgstr "输入你的 Yuva 服务器地址，以便在那里打开模板。它只保存在这个浏览器中。"
+
+#: src/copy/ai.ts
+msgid "Enter this address and sign in:"
+msgstr "输入此地址并登录："
+
+#: src/copy/templates.ts
+msgid "Event"
+msgstr "事件"
+
+#: src/copy/header.ts
+msgid "Every channel in one list."
+msgstr "所有渠道集中在一个列表中。"
+
+#: src/copy/home.ts
+msgid "Every channel lands in one list. Your team answers from one chat-style view."
+msgstr "所有渠道汇入同一个列表。你的团队在一个聊天式视图中回复。"
+
+#: src/copy/header.ts
+msgid "Every endpoint, to try."
+msgstr "每个端点，都可以试用。"
+
+#: src/copy/home.ts
+msgid "Every part of Yuva has a typed contract and a small, documented integration."
+msgstr "Yuva 的每个部分都有类型化的契约和一个小而有文档的集成。"
+
+#: src/copy/home.ts
+msgid "Every support channel, answered as one chat."
+msgstr "所有支持渠道，像一个聊天一样回复。"
+
+#: src/copy/pages.ts
+msgid "Every version of Yuva and what changed in it. Versions follow Semantic Versioning, and until 1.0 any release may change the API and the database schema."
+msgstr "Yuva 的每个版本及其变更。版本遵循语义化版本，在 1.0 之前，任何版本都可能更改 API 和数据库架构。"
+
+#: src/copy/docs.ts
+msgid "Every Yuva endpoint and webhook event, generated from the OpenAPI 3.1 contract."
+msgstr "Yuva 的每个端点和 Webhook 事件，均由 OpenAPI 3.1 契约生成。"
+
+#: src/copy/docs.ts
+msgid "Every Yuva guide in one place: install, channels, broadcasts, analytics, moving a mailbox in, the developer tools and the API reference."
+msgstr "Yuva 的全部指南集中在一处：安装、渠道、群发、分析、迁入邮箱、开发者工具和 API 参考。"
+
+#: src/copy/pages.ts
+msgid "Every Yuva release and what changed in it, from the changelog."
+msgstr "Yuva 的每个版本及其变更，来自更新日志。"
+
+#: src/copy/home.ts
+msgid "Feedback"
+msgstr "反馈"
+
+#: src/copy/home.ts
+msgid "Files"
+msgstr "文件"
+
+#: src/copy/cloudflare-email.ts
+msgid "Film: support e-mail from Cloudflare to the Yuva inbox"
+msgstr "视频：支持邮件从 Cloudflare 到 Yuva 收件箱"
+
+#: src/copy/pages.ts
+msgid "Fixed"
+msgstr "已修复"
+
+#: src/copy/pages.ts
+msgid "Follow the blog"
+msgstr "关注博客"
+
+#: src/copy/brand.ts
+msgid "For app stores and platforms that round the corners themselves."
+msgstr "适用于会自行处理圆角的应用商店和平台。"
+
+#: src/copy/brand.ts
+msgid "For dark backgrounds."
+msgstr "适用于深色背景。"
+
+#: src/copy/contact.ts
+msgid "For investors"
+msgstr "致投资者"
+
+#: src/copy/brand.ts
+msgid "For light backgrounds."
+msgstr "适用于浅色背景。"
+
+#: src/copy/home.ts
+msgid "for open conversations"
+msgstr "处理中的对话"
+
+#: src/copy/home.ts
+msgid "for the usual answers"
+msgstr "用于常见回复"
+
+#: src/copy/home.ts
+msgid "for your newsletters"
+msgstr "用于你的新闻邮件"
+
+#: src/copy/home.ts
+msgid "for your own e-mails"
+msgstr "用于你自己的邮件"
+
+#: src/copy/header.ts
+msgid "Free designs to copy."
+msgstr "可复制的免费设计。"
+
+#: src/copy/templates.ts
+msgid "Free starter designs for newsletters, product updates, announcements and more. Preview them here and open one in Yuva's e-mail designer."
+msgstr "适用于新闻邮件、产品更新、公告等的免费入门设计。在这里预览，并在 Yuva 的邮件设计器中打开一个。"
+
+#: src/copy/home.ts
+msgid "from the people you helped"
+msgstr "来自你帮助过的人"
+
+#: src/copy/pages.ts
+msgid "From the team"
+msgstr "来自团队"
+
+#: src/copy/brand.ts
+msgid "Full-bleed icon"
+msgstr "满版图标"
+
+#: src/copy/home.ts
+msgid "Gallery"
+msgstr "图库"
+
+#: src/copy/docs.ts
+msgid "Get started"
+msgstr "开始使用"
+
+#: src/copy/home.ts
+msgid "Give every product's users a way to reach you."
+msgstr "给每个产品的用户一个联系你的方式。"
+
+#: src/copy/brand.ts
+msgid "Glow"
+msgstr "光晕"
+
+#: src/copy/home.ts
+msgid "Gmail, Outlook or any IMAP server"
+msgstr "Gmail、Outlook 或任何 IMAP 服务器"
+
+#: src/copy/home.ts
+msgid "Goals"
+msgstr "目标"
+
+#: src/copy/docs.ts
+msgid "Guides"
+msgstr "指南"
+
+#: src/copy/header.ts
+msgid "Guides for every part."
+msgstr "每个部分的指南。"
+
+#: src/copy/home.ts
+msgid "Help center"
+msgstr "帮助中心"
+
+#: src/copy/home.ts
+msgid "Help desks"
+msgstr "帮助台"
+
+#: src/copy/contact.ts
+msgid "Hi! Tell us a little about yourself and what you have in mind."
+msgstr "你好！请简单介绍一下你自己，以及你的想法。"
+
+#: src/copy/home.ts
+msgid "History"
+msgstr "历史"
+
+#: src/copy/home.ts
+msgid "Hosted"
+msgstr "托管"
+
+#: src/copy/contact.ts
+msgid "Hosted service and commercial licenses"
+msgstr "托管服务与商业许可"
+
+#: src/copy/cloudflare-email.ts
+msgid "How a message gets from the customer to your team"
+msgstr "一封邮件如何从客户送达你的团队"
+
+#: src/copy/cloudflare-email.ts
+msgid "How big can a message be?"
+msgstr "邮件最大可以多大？"
+
+#: src/copy/contact.ts
+msgid "How the AGPL, the MIT SDKs and the CLA fit together."
+msgstr "AGPL、采用 MIT 许可的 SDK 与 CLA 如何配合。"
+
+#: src/copy/templates.ts
+msgid "How to add a template"
+msgstr "如何添加模板"
+
+#: src/copy/templates.ts
+msgid "https://yuva.example.com"
+msgstr "https://yuva.example.com"
+
+#: src/copy/contact.ts
+msgid "I have a question that doesn't fit anywhere else."
+msgstr "我有个问题，不属于其他任何类别。"
+
+#: src/copy/contact.ts
+msgid "I have an idea for working together."
+msgstr "我有一个合作的想法。"
+
+#: src/copy/contact.ts
+msgid "I'd like to talk about investing in Yuva."
+msgstr "我想聊聊投资 Yuva 的事。"
+
+#: src/copy/contact.ts
+msgid "I'm writing about Yuva and have a few questions."
+msgstr "我正在撰写关于 Yuva 的文章，有几个问题。"
+
+#: src/copy/home.ts
+msgid "Identity tokens"
+msgstr "身份令牌"
+
+#: src/copy/cloudflare-email.ts
+msgid "If Yuva answers with a server error, does not answer within 20 seconds or cannot be reached, the Worker can forward the message to an address you choose, as long as you set FALLBACK_FORWARD. That address must be a verified destination in Email Routing. The message then arrives as a plain forward and does not appear in Yuva. Without FALLBACK_FORWARD the delivery fails with an error and the sending server may retry later."
+msgstr "如果 Yuva 返回服务器错误、20 秒内没有响应或无法访问，只要你设置了 FALLBACK_FORWARD，Worker 就可以把邮件转发到你选择的地址。该地址必须是 Email Routing 中已验证的目标地址。邮件会作为普通转发邮件送达，不会出现在 Yuva 中。没有 FALLBACK_FORWARD 时，投递会失败并报错，发送方服务器可能稍后重试。"
+
+#: src/copy/cloudflare-email.ts
+msgid "If Yuva is unreachable"
+msgstr "如果无法访问 Yuva"
+
+#: src/copy/ai.ts
+msgid "If Yuva itself misbehaves, the assistant can prepare a GitHub issue with your names, addresses and keys removed. You read it before anything is opened."
+msgstr "如果 Yuva 本身出了问题，助手可以准备一个已移除你的姓名、地址和密钥的 GitHub issue。在任何内容被创建之前，你会先读到它。"
+
+#: src/copy/docs.ts
+msgid "In"
+msgstr "位置"
+
+#: src/copy/ai.ts
+msgid "In claude.ai or Claude Desktop, open Customize → Connectors → Add custom connector."
+msgstr "在 claude.ai 或 Claude Desktop 中，打开 Customize → Connectors → Add custom connector。"
+
+#: src/copy/cloudflare-email.ts
+msgid "In the Cloudflare dashboard, open your domain → Email → Email Routing and enable it. Cloudflare adds its MX and SPF records."
+msgstr "在 Cloudflare 控制台中，打开你的域名 → Email → Email Routing 并启用。Cloudflare 会添加它的 MX 和 SPF 记录。"
+
+#: src/copy/cloudflare-email.ts
+msgid "In Yuva, open Settings → your inbox → Channels → E-mail and add the support address. Set a secret on the server and restart it:"
+msgstr "在 Yuva 中，打开设置 → 你的收件箱 → 渠道 → 邮件，添加支持地址。在服务器上设置一个密钥并重启："
+
+#: src/copy/contact.ts
+#: src/copy/home.ts
+msgid "In-app"
+msgstr "应用内"
+
+#: src/copy/home.ts
+msgid "Inbox"
+msgstr "收件箱"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Inbox and conversations"
+msgstr "收件箱与对话"
+
+#: src/copy/brand.ts
+msgid "Ink"
+msgstr "墨色"
+
+#: src/copy/docs.ts
+msgid "Introduction"
+msgstr "简介"
+
+#: src/copy/contact.ts
+msgid "Investment"
+msgstr "投资"
+
+#: src/copy/ai.ts
+msgid "It does the rest with you."
+msgstr "剩下的它与你一起完成。"
+
+#: src/copy/brand.ts
+msgid "Keep the logo as it is: do not change its shape, proportions or colours."
+msgstr "保持徽标原样：不要改变它的形状、比例或颜色。"
+
+#: src/copy/brand.ts
+msgid "keep the name in a private, internal deployment, modified or not."
+msgstr "在私有的内部部署中保留名称，无论是否经过修改。"
+
+#: src/copy/home.ts
+msgid "Labels and canned replies"
+msgstr "标签与预设回复"
+
+#: src/ui/LangMenu.astro
+msgid "Language"
+msgstr "语言"
+
+#: src/copy/docs.ts
+msgid "Last updated {date}"
+msgstr "最后更新于 {date}"
+
+#: src/copy/pages.ts
+msgid "Latest"
+msgstr "最新"
+
+#: src/copy/pages.ts
+msgid "Latest post"
+msgstr "最新文章"
+
+#: src/copy/contact.ts
+msgid "Let's talk."
+msgstr "聊聊吧。"
+
+#: src/copy/contact.ts
+msgid "License"
+msgstr "许可"
+
+#: src/copy/templates.ts
+msgid "License and contributions"
+msgstr "许可与贡献"
+
+#: src/copy/contact.ts
+#: src/layouts/Footer.astro
+msgid "Licensing"
+msgstr "许可说明"
+
+#: src/copy/templates.ts
+msgid "Light"
+msgstr "浅色"
+
+#: src/ui/ThemeToggle.astro
+msgid "Light theme"
+msgstr "浅色主题"
+
+#: src/copy/home.ts
+msgid "Lists"
+msgstr "列表"
+
+#: src/copy/contact.ts
+#: src/copy/home.ts
+msgid "Live chat"
+msgstr "在线聊天"
+
+#: src/copy/templates.ts
+msgid "Live preview"
+msgstr "实时预览"
+
+#: src/copy/header.ts
+msgid "Log in"
+msgstr "登录"
+
+#: src/copy/brand.ts
+msgid "Logo"
+msgstr "徽标"
+
+#: src/copy/header.ts
+msgid "Logo and icon to download."
+msgstr "可下载的徽标和图标。"
+
+#: src/copy/header.ts
+msgid "Logo options"
+msgstr "徽标选项"
+
+#: src/copy/brand.ts
+msgid "Logo with name"
+msgstr "带名称的徽标"
+
+#: src/copy/brand.ts
+msgid "Logo with name, white"
+msgstr "带名称的徽标，白色"
+
+#: src/copy/contact.ts
+msgid "Logos, colours and the rules for the name."
+msgstr "徽标、颜色以及名称的使用规则。"
+
+#: src/copy/ai.ts
+msgid "Look at this project and tell me how to add Yuva. Use Yuva's init prompt, recommend a plan, and change nothing until I pick the steps."
+msgstr "看看这个项目，告诉我怎么添加 Yuva。使用 Yuva 的 init 提示词，推荐一个方案，在我选定步骤之前不要改动任何东西。"
+
+#: src/copy/cloudflare-email.ts
+msgid "Mail to a support address opens or continues a conversation in the inbox, and the team answers from the same panel as chat and app messages."
+msgstr "发到支持地址的邮件会在收件箱中开启或延续一个对话，团队在与聊天和应用内消息相同的面板中回复。"
+
+#: src/copy/home.ts
+msgid "Mailboxes"
+msgstr "邮箱"
+
+#: src/copy/pages.ts
+msgid "Maintainer of Yuva"
+msgstr "Yuva 维护者"
+
+#: src/copy/home.ts
+msgid "marked by your team"
+msgstr "由你的团队标记"
+
+#: src/ui/ThemeToggle.astro
+msgid "Match the system theme"
+msgstr "跟随系统主题"
+
+#: src/copy/home.ts
+msgid "mbox, Takeout and .eml"
+msgstr "mbox、Takeout 和 .eml"
+
+#: src/copy/docs.ts
+msgid "Member session"
+msgstr "成员会话"
+
+#: src/copy/home.ts
+msgid "Members"
+msgstr "成员"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+msgid "Menu"
+msgstr "菜单"
+
+#: src/copy/docs.ts
+msgid "More"
+msgstr "更多"
+
+#: src/copy/pages.ts
+msgid "More posts"
+msgstr "更多文章"
+
+#: src/copy/ai.ts
+msgid "Move our support mailbox into Yuva."
+msgstr "把我们的支持邮箱迁入 Yuva。"
+
+#: src/copy/docs.ts
+msgid "Move to Yuva"
+msgstr "迁移到 Yuva"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Moving in"
+msgstr "迁入"
+
+#: src/copy/ai.ts
+msgid "My own server"
+msgstr "我自己的服务器"
+
+#: src/copy/docs.ts
+msgid "Name"
+msgstr "名称"
+
+#: src/copy/ai.ts
+msgid "Needs a public https address."
+msgstr "需要公开的 https 地址。"
+
+#: src/copy/pages.ts
+msgid "New posts appear in the RSS feed as soon as they are published."
+msgstr "新文章一发布就会出现在 RSS 订阅中。"
+
+#: src/copy/ai.ts
+msgid "New to Yuva? Name your workspace. It takes a few seconds."
+msgstr "第一次用 Yuva？给你的工作区起个名字，只需几秒钟。"
+
+#: src/copy/header.ts
+msgid "News and how Yuva is built."
+msgstr "新闻，以及 Yuva 是如何构建的。"
+
+#: src/copy/pages.ts
+msgid "News, release stories and notes from building Yuva, the open-source inbox for every product you run."
+msgstr "新闻、发布故事和构建 Yuva 的笔记。Yuva 是适用于你运营的每个产品的开源收件箱。"
+
+#: src/copy/pages.ts
+msgid "News, release stories and notes from building Yuva."
+msgstr "新闻、发布故事和构建 Yuva 的笔记。"
+
+#: src/copy/templates.ts
+msgid "Newsletter"
+msgstr "新闻邮件"
+
+#: src/copy/header.ts
+msgid "Newsletters to your lists."
+msgstr "发给你的列表的新闻邮件。"
+
+#: src/copy/docs.ts
+#: src/copy/pages.ts
+msgid "Next"
+msgstr "下一页"
+
+#: src/copy/docs.ts
+msgid "No authentication"
+msgstr "无需身份验证"
+
+#: src/copy/docs.ts
+msgid "No content"
+msgstr "无内容"
+
+#: src/copy/cloudflare-email.ts
+msgid "No mail server to run."
+msgstr "无需运行邮件服务器。"
+
+#: src/copy/docs.ts
+msgid "No results"
+msgstr "没有结果"
+
+#: src/copy/contact.ts
+msgid "Not every message needs an e-mail. Some answers are better in public, and some reports must stay private."
+msgstr "并非每条消息都需要邮件。有些回答适合公开，有些报告必须保密。"
+
+#: src/copy/cloudflare-email.ts
+msgid "Not for incoming mail. Yuva does not listen for SMTP; Cloudflare Email Routing receives the mail and the Worker passes it on. Replies need an SMTP account for the e-mail channel, such as Amazon SES, Postmark or your own relay."
+msgstr "不适用于收件。Yuva 不监听 SMTP；邮件由 Cloudflare Email Routing 接收，再由 Worker 转交。回复需要邮件渠道的 SMTP 账号，例如 Amazon SES、Postmark 或你自己的中继。"
+
+#: src/copy/cloudflare-email.ts
+msgid "Not tied to Cloudflare"
+msgstr "不与 Cloudflare 绑定"
+
+#: src/copy/brand.ts
+msgid "Not without written permission"
+msgstr "没有书面许可不可以"
+
+#: src/copy/home.ts
+msgid "Notes and mentions"
+msgstr "备注与提及"
+
+#: src/copy/home.ts
+msgid "of every conversation"
+msgstr "的每个对话"
+
+#: src/copy/home.ts
+msgid "of free templates"
+msgstr "的免费模板"
+
+#: src/copy/brand.ts
+msgid "offer a hosted or managed service, or a product, under the Yuva name or a confusingly similar one;"
+msgstr "以 Yuva 之名或容易混淆的相似名称提供托管或托管式服务或产品；"
+
+#: src/copy/brand.ts
+msgid "On dark backgrounds"
+msgstr "在深色背景上"
+
+#: src/copy/home.ts
+msgid "on every page"
+msgstr "在每个页面上"
+
+#: src/copy/brand.ts
+msgid "On light backgrounds"
+msgstr "在浅色背景上"
+
+#: src/copy/docs.ts
+#: src/copy/pages.ts
+msgid "On this page"
+msgstr "本页内容"
+
+#: src/copy/templates.ts
+msgid "On your own server"
+msgstr "在你自己的服务器上"
+
+#: src/copy/templates.ts
+msgid "Onboarding"
+msgstr "新手引导"
+
+#: src/copy/home.ts
+msgid "One binary"
+msgstr "单个二进制文件"
+
+#: src/copy/header.ts
+msgid "One binary and Postgres."
+msgstr "单个二进制文件和 Postgres。"
+
+#: src/copy/home.ts
+msgid "One Docker image and Postgres on your own server."
+msgstr "在你自己的服务器上运行一个 Docker 镜像和 Postgres。"
+
+#: src/copy/brand.ts
+#: src/pages/og/[lang].png.ts
+msgid "One inbox for every product you run."
+msgstr "为你运营的每个产品提供一个收件箱。"
+
+#: src/copy/home.ts
+msgid "One profile for each person, whichever channel they write from."
+msgstr "每个人一份资料，无论从哪个渠道来信。"
+
+#: src/copy/home.ts
+msgid "One small server runs all of it. The server is open source, and the SDKs carry no copyleft."
+msgstr "一台小服务器就能运行全部。服务器是开源的，SDK 不带 copyleft。"
+
+#: src/copy/contact.ts
+msgid "Open a GitHub issue"
+msgstr "创建 GitHub issue"
+
+#: src/copy/home.ts
+msgid "Open AI assistants"
+msgstr "打开 AI 助手"
+
+#: src/copy/contact.ts
+msgid "Open an issue"
+msgstr "创建 issue"
+
+#: src/copy/contact.ts
+msgid "Open an issue on GitHub so others can find the answer too."
+msgstr "在 GitHub 上创建 issue，让其他人也能找到答案。"
+
+#: src/copy/templates.ts
+msgid "Open on my server"
+msgstr "在我的服务器上打开"
+
+#: src/copy/ai.ts
+msgid "Open Plugins, select the plus button, then Add custom MCP server."
+msgstr "打开 Plugins，选择加号按钮，然后选择 Add custom MCP server。"
+
+#: src/copy/contact.ts
+msgid "Open source that stays open"
+msgstr "始终保持开放的开源"
+
+#: src/copy/home.ts
+msgid "Open the API reference"
+msgstr "打开 API 参考"
+
+#: src/copy/ai.ts
+msgid "Open the assistant in your project's folder. It reads your code on your machine and sends none of it to Yuva."
+msgstr "在项目文件夹中打开助手。它在你的机器上读取代码，不会把任何内容发送给 Yuva。"
+
+#: src/copy/home.ts
+msgid "Open the templates"
+msgstr "打开模板"
+
+#: src/pages/og/[lang].png.ts
+msgid "Open-source customer messaging"
+msgstr "开源客户消息平台"
+
+#: src/layouts/Footer.astro
+msgid "Open-source customer messaging for teams that run many products."
+msgstr "为运营多个产品的团队打造的开源客户消息平台。"
+
+#: src/copy/docs.ts
+msgid "OpenAPI contract"
+msgstr "OpenAPI 契约"
+
+#: src/copy/templates.ts
+msgid "Opens Yuva's e-mail designer with this template. You sign in first if you have not."
+msgstr "用这个模板打开 Yuva 的邮件设计器。如果尚未登录，会先要求登录。"
+
+#: src/copy/cloudflare-email.ts
+msgid "Optional: keep mail during an outage by adding a fallback address to the deploy command:"
+msgstr "可选：在部署命令中添加备用地址，以便在故障期间保留邮件："
+
+#: src/copy/ai.ts
+msgid "Or ask for one thing"
+msgstr "或者只提一个需求"
+
+#: src/copy/home.ts
+msgid "Or host it yourself"
+msgstr "或者自行托管"
+
+#: src/copy/ai.ts
+msgid "Or type the sentence:"
+msgstr "或者输入这句话："
+
+#: src/copy/cloudflare-email.ts
+msgid "Other ways to bring mail in"
+msgstr "其他迁入邮件的方式"
+
+#: src/copy/contact.ts
+msgid "Other ways to reach us"
+msgstr "其他联系我们的方式"
+
+#: src/copy/docs.ts
+msgid "Overview"
+msgstr "概览"
+
+#: src/pages/404.astro
+msgid "Page not found"
+msgstr "找不到页面"
+
+#: src/copy/home.ts
+msgid "Pages and sources"
+msgstr "页面和来源"
+
+#: src/copy/docs.ts
+msgid "Parameters"
+msgstr "参数"
+
+#: src/copy/contact.ts
+msgid "Partnership"
+msgstr "合作"
+
+#: src/copy/docs.ts
+msgid "Payload"
+msgstr "载荷"
+
+#: src/copy/pages.ts
+msgid "Performance"
+msgstr "性能"
+
+#: src/copy/templates.ts
+msgid "Phone"
+msgstr "手机"
+
+#: src/copy/ai.ts
+msgid "Pick your assistant"
+msgstr "选择你的助手"
+
+#: src/copy/pages.ts
+msgid "Posts are published in English."
+msgstr "文章以英文发布。"
+
+#: src/copy/contact.ts
+msgid "Pre-alpha"
+msgstr "预览前期"
+
+#: src/copy/contact.ts
+msgid "Press"
+msgstr "媒体"
+
+#: src/copy/contact.ts
+msgid "Press and brand"
+msgstr "媒体与品牌"
+
+#: src/copy/home.ts
+msgid "Preview"
+msgstr "预览"
+
+#: src/copy/templates.ts
+msgid "Preview and use"
+msgstr "预览与使用"
+
+#: src/copy/templates.ts
+msgid "Preview colours"
+msgstr "预览颜色"
+
+#: src/copy/home.ts
+#: src/copy/templates.ts
+msgid "Preview of the {name} template"
+msgstr "模板“{name}”预览"
+
+#: src/copy/templates.ts
+msgid "Preview width"
+msgstr "预览宽度"
+
+#: src/copy/docs.ts
+msgid "Previous"
+msgstr "上一页"
+
+#: src/copy/header.ts
+#: src/copy/templates.ts
+#: src/layouts/Footer.astro
+msgid "Product"
+msgstr "产品"
+
+#: src/copy/home.ts
+msgid "Product tour"
+msgstr "产品导览"
+
+#: src/copy/docs.ts
+#: src/layouts/Footer.astro
+msgid "Project"
+msgstr "项目"
+
+#: src/copy/brand.ts
+msgid "publish a modified version under the Yuva name — rename your fork;"
+msgstr "以 Yuva 之名发布修改后的版本——请为你的 fork 重新命名；"
+
+#: src/copy/cloudflare-email.ts
+msgid "Questions and answers"
+msgstr "问与答"
+
+#: src/copy/contact.ts
+msgid "Questions and bugs"
+msgstr "问题与缺陷"
+
+#: src/copy/home.ts
+msgid "Ratings"
+msgstr "评分"
+
+#: src/copy/header.ts
+msgid "Reach the people behind Yuva."
+msgstr "联系 Yuva 背后的人。"
+
+#: src/copy/contact.ts
+msgid "Read LICENSING.md"
+msgstr "阅读 LICENSING.md"
+
+#: src/copy/home.ts
+msgid "Read the code, run {version} on your machine, and follow along as it grows."
+msgstr "阅读代码，在你的机器上运行 {version}，见证它的成长。"
+
+#: src/copy/docs.ts
+msgid "Read the English page"
+msgstr "阅读英文页面"
+
+#: src/copy/home.ts
+msgid "Read the guide"
+msgstr "阅读指南"
+
+#: src/copy/cloudflare-email.ts
+msgid "Read the ingress contract"
+msgstr "阅读 ingress 契约"
+
+#: src/copy/templates.ts
+msgid "Read the license"
+msgstr "阅读许可"
+
+#: src/copy/ai.ts
+msgid "Read the MCP guide"
+msgstr "阅读 MCP 指南"
+
+#: src/copy/pages.ts
+msgid "Read the post"
+msgstr "阅读文章"
+
+#: src/copy/home.ts
+#: src/copy/pages.ts
+msgid "Read the quick start"
+msgstr "阅读快速入门"
+
+#: src/copy/cloudflare-email.ts
+msgid "Read the setup guide"
+msgstr "阅读设置指南"
+
+#: src/copy/home.ts
+msgid "read through MCP"
+msgstr "通过 MCP 读取"
+
+#: src/copy/brand.ts
+msgid "Read TRADEMARK.md"
+msgstr "阅读 TRADEMARK.md"
+
+#: src/copy/cloudflare-email.ts
+msgid "Real conversations"
+msgstr "真实的对话"
+
+#: src/copy/home.ts
+msgid "Realtime"
+msgstr "实时"
+
+#: src/copy/header.ts
+msgid "Receive mail with no server."
+msgstr "无需服务器即可收信。"
+
+#: src/copy/cloudflare-email.ts
+msgid "Receive your support e-mail in Yuva with Cloudflare Email Routing and the open-source Yuva Email Worker. Signed delivery, threaded conversations, no mail server to run."
+msgstr "使用 Cloudflare Email Routing 和开源的 Yuva Email Worker，在 Yuva 中接收支持邮件。带签名的投递、按线程组织的对话，无需运行邮件服务器。"
+
+#: src/copy/cloudflare-email.ts
+msgid "Refusals reach the sender"
+msgstr "拒收会反馈给发件人"
+
+#: src/copy/brand.ts
+msgid "Regular, Medium and Semibold"
+msgstr "Regular、Medium 和 Semibold"
+
+#: src/copy/pages.ts
+msgid "Release history"
+msgstr "发布历史"
+
+#: src/copy/pages.ts
+msgid "Release notes are written in English."
+msgstr "发布说明以英文撰写。"
+
+#: src/copy/contact.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/copy/pages.ts
+#: src/layouts/Footer.astro
+msgid "Releases"
+msgstr "版本发布"
+
+#: src/copy/pages.ts
+msgid "Removed"
+msgstr "已移除"
+
+#: src/layouts/Footer.astro
+msgid "Report a vulnerability"
+msgstr "报告安全漏洞"
+
+#: src/copy/contact.ts
+msgid "Report vulnerabilities privately through GitHub, never in a public issue."
+msgstr "请通过 GitHub 私下报告漏洞，切勿在公开 issue 中报告。"
+
+#: src/copy/home.ts
+msgid "Reports"
+msgstr "报告"
+
+#: src/copy/docs.ts
+msgid "Request"
+msgstr "请求"
+
+#: src/copy/docs.ts
+msgid "Request body"
+msgstr "请求体"
+
+#: src/copy/docs.ts
+msgid "required"
+msgstr "必填"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Resources"
+msgstr "资源"
+
+#: src/copy/docs.ts
+msgid "Response"
+msgstr "响应"
+
+#: src/copy/docs.ts
+msgid "Responses"
+msgstr "响应"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Roadmap"
+msgstr "路线图"
+
+#: src/copy/brand.ts
+msgid "Rotate it"
+msgstr "轮换它"
+
+#: src/copy/pages.ts
+msgid "RSS feed"
+msgstr "RSS 订阅"
+
+#: src/copy/brand.ts
+msgid "say that your product uses, integrates with or is built on Yuva;"
+msgstr "说明你的产品使用 Yuva、与 Yuva 集成或构建于 Yuva 之上；"
+
+#: src/copy/ai.ts
+msgid "Say this"
+msgstr "可以这样说"
+
+#: src/copy/docs.ts
+msgid "Schemas and every field are in the OpenAPI contract."
+msgstr "架构和每个字段都在 OpenAPI 契约中。"
+
+#: src/copy/home.ts
+msgid "SDKs and API contract"
+msgstr "SDK 和 API 契约"
+
+#: src/copy/docs.ts
+msgid "Search docs"
+msgstr "搜索文档"
+
+#: src/copy/docs.ts
+msgid "Search the docs"
+msgstr "搜索文档"
+
+#: src/copy/header.ts
+msgid "Sections"
+msgstr "章节"
+
+#: src/copy/contact.ts
+#: src/copy/pages.ts
+msgid "Security"
+msgstr "安全"
+
+#: src/copy/contact.ts
+msgid "Security policy"
+msgstr "安全政策"
+
+#: src/copy/home.ts
+msgid "See how support is going and who is on the team."
+msgstr "了解支持进展如何，以及团队里有谁。"
+
+#: src/copy/pages.ts
+msgid "See what is planned"
+msgstr "查看规划"
+
+#: src/copy/home.ts
+msgid "See who visits your sites and apps, with no cookies and no stored IP addresses."
+msgstr "无需 Cookie、不存储 IP 地址，看看谁访问了你的网站和应用。"
+
+#: src/copy/home.ts
+msgid "Self-hosted"
+msgstr "自托管"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+msgid "Self-hosting"
+msgstr "自托管"
+
+#: src/copy/home.ts
+msgid "Self-hosting and open source"
+msgstr "自托管与开源"
+
+#: src/copy/cloudflare-email.ts
+msgid "Send a test message and watch the conversation appear in the panel."
+msgstr "发送一条测试消息，看对话出现在面板中。"
+
+#: src/copy/home.ts
+msgid "Send newsletters to your mailing lists and see what readers do with them."
+msgstr "向你的邮件列表发送新闻邮件，看看读者如何互动。"
+
+#: src/copy/home.ts
+msgid "sent by your own app"
+msgstr "由你自己的应用发送"
+
+#: src/copy/templates.ts
+msgid "Server address"
+msgstr "服务器地址"
+
+#: src/copy/home.ts
+msgid "server and panel"
+msgstr "服务器和面板"
+
+#: src/layouts/Footer.astro
+msgid "Server and panel under AGPL-3.0, SDKs and API contract under MIT."
+msgstr "服务器和面板采用 AGPL-3.0，SDK 和 API 契约采用 MIT。"
+
+#: src/copy/cloudflare-email.ts
+msgid "Set it up in a few steps"
+msgstr "几步即可完成设置"
+
+#: src/copy/ai.ts
+msgid "Set up Yuva analytics for this site, with a goal for sign-ups."
+msgstr "为这个网站设置 Yuva 分析，并为注册设一个目标。"
+
+#: src/copy/pages.ts
+msgid "Share"
+msgstr "分享"
+
+#: src/copy/ai.ts
+msgid "Sign in from Gemini CLI:"
+msgstr "从 Gemini CLI 登录："
+
+#: src/copy/ai.ts
+msgid "Sign in. Your browser opens Yuva:"
+msgstr "登录。浏览器会打开 Yuva："
+
+#: src/copy/header.ts
+msgid "Signed events and user tokens."
+msgstr "带签名的事件和用户令牌。"
+
+#: src/copy/home.ts
+msgid "signed, for every new message"
+msgstr "带签名，每封新邮件都有"
+
+#: src/copy/brand.ts
+msgid "Sizes"
+msgstr "尺寸"
+
+#: src/layouts/Base.astro
+msgid "Skip to content"
+msgstr "跳到内容"
+
+#: src/copy/home.ts
+msgid "so users write as themselves"
+msgstr "让用户以自己的身份发言"
+
+#: src/copy/contact.ts
+msgid "Something else"
+msgstr "其他"
+
+#: src/layouts/Footer.astro
+msgid "Source code on GitHub"
+msgstr "GitHub 上的源代码"
+
+#: src/copy/contact.ts
+msgid "Stage"
+msgstr "阶段"
+
+#: src/copy/header.ts
+msgid "Start free"
+msgstr "免费开始"
+
+#: src/copy/home.ts
+msgid "Start with AI"
+msgstr "用 AI 开始"
+
+#: src/copy/templates.ts
+msgid "Starter designs for the e-mail designer, in English, Turkish and German. Preview one, then open it in Yuva and make it yours."
+msgstr "适用于邮件设计器的入门设计，提供英语、土耳其语和德语版本。预览一个，然后在 Yuva 中打开并改成你的风格。"
+
+#: src/copy/home.ts
+msgid "stay inside the team"
+msgstr "只留在团队内部"
+
+#: src/copy/brand.ts
+msgid "Stretch or squash it"
+msgstr "拉伸或挤压它"
+
+#: src/copy/cloudflare-email.ts
+msgid "Support e-mail through Cloudflare Email Routing | Yuva"
+msgstr "通过 Cloudflare Email Routing 接收支持邮件 | Yuva"
+
+#: src/copy/cloudflare-email.ts
+msgid "Support e-mail through Cloudflare."
+msgstr "通过 Cloudflare 接收支持邮件。"
+
+#: src/copy/pages.ts
+msgid "Tag on GitHub"
+msgstr "GitHub 上的标签"
+
+#: src/copy/home.ts
+msgid "Team and reports"
+msgstr "团队与报告"
+
+#: src/copy/contact.ts
+msgid "Teams can use our hosted service, and because every contribution is made under a CLA, Yuva can also be offered under a commercial license."
+msgstr "团队可以使用我们的托管服务；由于每项贡献都在 CLA 下进行，Yuva 也可以按商业许可提供。"
+
+#: src/copy/ai.ts
+msgid "Tell your assistant to add Yuva."
+msgstr "告诉你的助手添加 Yuva。"
+
+#: src/copy/templates.ts
+msgid "Template gallery"
+msgstr "模板库"
+
+#: src/copy/templates.ts
+msgid "Templates"
+msgstr "模板"
+
+#: src/copy/home.ts
+msgid "The analytics overview in the panel: 30 days of visitors, pageviews and bounce rate, a daily chart with a note on the day a newsletter went out, and the top pages and sources."
+msgstr "面板中的分析概览：30 天的访客、页面浏览量和跳出率，一张在新闻邮件发出当天带有标注的每日图表，以及热门页面和来源。"
+
+#: src/copy/ai.ts
+msgid "The assistant acts as you, with no more access than you approve, and asks before it changes anything."
+msgstr "助手以你的身份行事，权限不超过你的批准范围，更改任何内容前都会先询问。"
+
+#: src/copy/header.ts
+msgid "The code, open source."
+msgstr "代码，开源。"
+
+#: src/copy/ai.ts
+msgid "The commands below follow what you type."
+msgstr "下面的命令会随你的输入而变化。"
+
+#: src/copy/docs.ts
+msgid "The English page has changed since this translation was last updated."
+msgstr "自本译文上次更新以来，英文页面已有改动。"
+
+#: src/copy/docs.ts
+msgid "The events Yuva sends to your webhook endpoints and the payload of each."
+msgstr "Yuva 发送到你的 Webhook 端点的事件，以及每个事件的载荷。"
+
+#: src/copy/ai.ts
+msgid "The first time the assistant uses Yuva, your browser opens Yuva to sign in."
+msgstr "助手第一次使用 Yuva 时，浏览器会打开 Yuva 供你登录。"
+
+#: src/copy/brand.ts
+msgid "The mark is drawn to stay readable from an app store listing down to a 16-pixel browser tab."
+msgstr "这个标志的绘制确保从应用商店列表到 16 像素的浏览器标签页都清晰可辨。"
+
+#: src/copy/brand.ts
+msgid "The mark on its rounded square. Use it wherever Yuva appears as an app or a link."
+msgstr "置于圆角方形上的标志。凡是 Yuva 以应用或链接形式出现的地方都可以使用。"
+
+#: src/copy/brand.ts
+msgid "The name and this site are set in Geist, an open-source typeface under the SIL Open Font License."
+msgstr "名称和本网站使用 Geist 排版，这是一款采用 SIL Open Font License 的开源字体。"
+
+#: src/copy/home.ts
+msgid "The panel on a phone: the conversation list with each person's channel and latest message, and the tabs at the bottom."
+msgstr "手机上的面板：对话列表显示每个人的渠道和最新消息，底部是标签栏。"
+
+#: src/copy/home.ts
+msgid "The panel with feedback sent from a mobile app: a bug report with the app version, device and screen, next to the conversation list."
+msgstr "显示从移动应用发来的反馈的面板：对话列表旁是一份带有应用版本、设备和屏幕的缺陷报告。"
+
+#: src/copy/docs.ts
+msgid "The payloads Yuva sends to your webhook endpoints."
+msgstr "Yuva 发送到你的 Webhook 端点的载荷。"
+
+#: src/copy/home.ts
+msgid "The report of a sent newsletter in the panel: 240 sent, 5 unsubscribed and 56 who clicked a link, a chart over time and the number of clicks on each link."
+msgstr "面板中已发送新闻邮件的报告：发送 240 封，5 人退订，56 人点击了链接，一张随时间变化的图表以及每个链接的点击次数。"
+
+#: src/copy/contact.ts
+msgid "The server and panel are AGPL-3.0, the SDKs and API contract MIT. Improvements to the core stay public."
+msgstr "服务器和面板采用 AGPL-3.0，SDK 和 API 契约采用 MIT。核心的改进保持公开。"
+
+#: src/copy/cloudflare-email.ts
+msgid "The Worker is one way to call /ingress/email. Any mail server or relay can post the raw message with the same signed headers, and a mail server that delivers to a command can pipe the message into yuva ingest-email. The request format is documented in the Worker's README."
+msgstr "Worker 是调用 /ingress/email 的一种方式。任何邮件服务器或中继都可以用相同的签名标头发送原始邮件，而投递给命令的邮件服务器可以把邮件通过管道交给 yuva ingest-email。请求格式记录在 Worker 的 README 中。"
+
+#: src/copy/cloudflare-email.ts
+msgid "The Worker signs the raw message, both envelope addresses and a timestamp with HMAC-SHA256 under a secret you share with Yuva, and sends them to /ingress/email on your Yuva server."
+msgstr "Worker 使用你与 Yuva 共享的密钥，以 HMAC-SHA256 对原始邮件、两个信封地址和时间戳签名，并发送到你 Yuva 服务器的 /ingress/email。"
+
+#: src/copy/home.ts
+msgid "The Yuva chat widget open on a newsletter tool's website: the visitor's question and a member's reply, with the member shown online."
+msgstr "在一个新闻邮件工具网站上打开的 Yuva 聊天小组件：访客的提问和一位成员的回复，成员显示为在线。"
+
+#: src/copy/cloudflare-email.ts
+msgid "The Yuva Email Worker reads the raw message and the envelope, signs the request and posts it to Yuva. Parsing, threading and spam decisions stay on the server."
+msgstr "Yuva Email Worker 读取原始邮件和信封，为请求签名并发给 Yuva。解析、线程归并和垃圾邮件判断都留在服务器上。"
+
+#: src/copy/brand.ts
+msgid "The Yuva logo, colours and typeface, ready for articles, integrations and app listings. Please read the rules for the name and logo before you use them."
+msgstr "Yuva 的徽标、颜色和字体，可直接用于文章、集成和应用商店页面。使用前请阅读名称和徽标的使用规则。"
+
+#: src/copy/home.ts
+msgid "The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send."
+msgstr "Yuva 消息面板：来自邮件、在线聊天和应用的对话汇在一个列表中，其中一个对话以聊天形式打开，带有团队备注和一条助手起草、供同事发送的回复。"
+
+#: src/ui/ThemeToggle.astro
+msgid "Theme"
+msgstr "主题"
+
+#: src/copy/templates.ts
+msgid "These templates are MIT licensed: use, change and share them in your own mails."
+msgstr "这些模板采用 MIT 许可：可在你自己的邮件中使用、修改和分享。"
+
+#: src/copy/templates.ts
+msgid "This browser does not switch the preview to dark mode. Use your system's dark setting to see it, or open the template to check it in the designer."
+msgstr "这个浏览器不会把预览切换到深色模式。请使用系统的深色设置查看，或打开模板在设计器中查看。"
+
+#: src/copy/docs.ts
+msgid "This documentation is written in English."
+msgstr "本文档以英文撰写。"
+
+#: src/copy/docs.ts
+msgid "This page is not translated yet. It is shown in English."
+msgstr "本页尚未翻译，以英文显示。"
+
+#: src/copy/docs.ts
+msgid "This page is only available in English."
+msgstr "本页仅提供英文版本。"
+
+#: src/copy/home.ts
+msgid "through your own SMTP account"
+msgstr "通过你自己的 SMTP 账号"
+
+#: src/copy/home.ts
+msgid "to a teammate"
+msgstr "给同事"
+
+#: src/copy/home.ts
+msgid "Today"
+msgstr "今天"
+
+#: src/copy/pages.ts
+msgid "Try Yuva"
+msgstr "试用 Yuva"
+
+#: src/copy/docs.ts
+msgid "Type"
+msgstr "类型"
+
+#: src/copy/docs.ts
+msgid "Type to search the guides and the API reference"
+msgstr "输入关键词，搜索指南和 API 参考"
+
+#: src/copy/brand.ts
+msgid "Typeface"
+msgstr "字体"
+
+#: src/pages/404.astro
+msgid "Undeliverable"
+msgstr "无法投递"
+
+#: src/copy/cloudflare-email.ts
+msgid "Under Routing rules, send each support address to the Worker yuva-edge. For a catch-all channel, point the catch-all rule at it."
+msgstr "在 Routing rules 下，把每个支持地址发送到名为 yuva-edge 的 Worker。对于兜底渠道，把兜底规则指向它。"
+
+#: src/copy/brand.ts
+msgid "use the logo in a way that suggests endorsement by the project."
+msgstr "以暗示获得项目认可的方式使用徽标。"
+
+#: src/copy/brand.ts
+msgid "use the name, unchanged, to refer to the unmodified project;"
+msgstr "原样使用名称，以指代未经修改的项目；"
+
+#: src/copy/templates.ts
+msgid "Use this template"
+msgstr "使用此模板"
+
+#: src/copy/brand.ts
+msgid "Using the name and logo"
+msgstr "名称和徽标的使用"
+
+#: src/copy/docs.ts
+msgid "Version {version} of the API, generated from the OpenAPI contract. Use the contract to generate a client in any language."
+msgstr "API 的 {version} 版本，由 OpenAPI 契约生成。可用该契约生成任何语言的客户端。"
+
+#: src/copy/home.ts
+msgid "View on GitHub"
+msgstr "在 GitHub 上查看"
+
+#: src/copy/home.ts
+msgid "visitors"
+msgstr "访客"
+
+#: src/copy/header.ts
+msgid "Visitors without cookies."
+msgstr "无 Cookie 的访客。"
+
+#: src/copy/templates.ts
+msgid "Want to add a template? Send a pull request; the guide explains the folder, the rules and the preview."
+msgstr "想添加模板？请提交 pull request；指南说明了文件夹、规则和预览。"
+
+#: src/pages/404.astro
+msgid "We looked in every inbox, but this page is not here. It may have moved, or the link may be wrong."
+msgstr "我们找遍了所有收件箱，但这个页面不在这里。它可能已被移动，或者链接有误。"
+
+#: src/copy/contact.ts
+msgid "We would like to use Yuva under a commercial license."
+msgstr "我们希望以商业许可使用 Yuva。"
+
+#: src/copy/docs.ts
+msgid "Webhook events"
+msgstr "Webhook 事件"
+
+#: src/copy/home.ts
+msgid "Webhooks"
+msgstr "Webhook"
+
+#: src/copy/header.ts
+msgid "Webhooks and identity"
+msgstr "Webhook 与身份"
+
+#: src/copy/docs.ts
+msgid "Webhooks guide"
+msgstr "Webhook 指南"
+
+#: src/copy/home.ts
+msgid "what came in and what is open"
+msgstr "收到了什么、还有什么待处理"
+
+#: src/copy/header.ts
+msgid "What changed in each version."
+msgstr "每个版本有哪些变化。"
+
+#: src/copy/ai.ts
+msgid "What happens when you sign in"
+msgstr "登录时会发生什么"
+
+#: src/copy/cloudflare-email.ts
+msgid "What happens when Yuva is down?"
+msgstr "Yuva 宕机时会怎样？"
+
+#: src/copy/header.ts
+msgid "What is built and what is next."
+msgstr "已经做了什么，接下来是什么。"
+
+#: src/copy/contact.ts
+msgid "What is it about?"
+msgstr "是关于什么的？"
+
+#: src/copy/cloudflare-email.ts
+msgid "What it is"
+msgstr "是什么"
+
+#: src/copy/cloudflare-email.ts
+msgid "When Yuva refuses a message for good, for example an unknown address, a blocked sender or a message that is too large, the Worker rejects it and the sender gets a permanent SMTP error with Yuva's reason."
+msgstr "当 Yuva 永久拒绝一封邮件时，例如地址未知、发件人被屏蔽或邮件过大，Worker 会拒收它，发件人会收到带有 Yuva 所给原因的永久性 SMTP 错误。"
+
+#: src/copy/contact.ts
+msgid "Whether you want to invest in Yuva, build on it together, need a commercial license or are writing about it, write to us. We read every message."
+msgstr "无论你想投资 Yuva、一起基于它构建、需要商业许可，还是在撰写相关报道，都请联系我们。我们会阅读每一条消息。"
+
+#: src/copy/cloudflare-email.ts
+msgid "Which domains and addresses can I use?"
+msgstr "我可以使用哪些域名和地址？"
+
+#: src/copy/brand.ts
+msgid "White"
+msgstr "白色"
+
+#: src/copy/home.ts
+msgid "with clicks and unsubscribes"
+msgstr "含点击和退订"
+
+#: src/copy/cloudflare-email.ts
+msgid "With FALLBACK_FORWARD set, the message is forwarded to that address instead. Without it the delivery fails and the sending server may retry. Messages that Yuva refuses on purpose, such as mail to an unknown address, are rejected, not forwarded."
+msgstr "设置了 FALLBACK_FORWARD 后，邮件会改为转发到该地址。没有它则投递失败，发送方服务器可能会重试。Yuva 有意拒收的邮件，例如发往未知地址的邮件，会被拒收而不是转发。"
+
+#: src/copy/home.ts
+msgid "with one script tag"
+msgstr "只需一个 script 标签"
+
+#: src/copy/home.ts
+msgid "with recorded consent"
+msgstr "含已记录的同意"
+
+#: src/copy/home.ts
+msgid "with replies and votes"
+msgstr "含回复和投票"
+
+#: src/copy/home.ts
+msgid "with the iOS and Android SDKs"
+msgstr "通过 iOS 和 Android SDK"
+
+#: src/copy/home.ts
+msgid "with workspace API keys"
+msgstr "使用工作区 API 密钥"
+
+#: src/copy/cloudflare-email.ts
+msgid "Worker source on GitHub"
+msgstr "GitHub 上的 Worker 源代码"
+
+#: src/copy/home.ts
+msgid "Works with"
+msgstr "适配"
+
+#: src/copy/contact.ts
+msgid "Write an e-mail"
+msgstr "写邮件"
+
+#: src/copy/contact.ts
+msgid "Write to the Yuva team about investment, partnerships, commercial licenses or press, or find the right place for questions and security reports."
+msgstr "就投资、合作、商业许可或媒体事宜联系 Yuva 团队，或找到提问和报告安全问题的合适去处。"
+
+#: src/copy/cloudflare-email.ts
+msgid "Yes, when you set YUVA_INGRESS_AUTHSERV_ID to mx.cloudflare.net. Yuva then reads the DMARC verdict that Email Routing adds. A new conversation that fails DMARC is marked as spam."
+msgstr "会，前提是你把 YUVA_INGRESS_AUTHSERV_ID 设为 mx.cloudflare.net。此时 Yuva 会读取 Email Routing 添加的 DMARC 结论。未通过 DMARC 的新对话会被标记为垃圾邮件。"
+
+#: src/copy/brand.ts
+msgid "You may"
+msgstr "你可以"
+
+#: src/copy/cloudflare-email.ts
+msgid "You need a Yuva server and a Cloudflare account that manages the domain."
+msgstr "你需要一台 Yuva 服务器，以及一个管理该域名的 Cloudflare 账号。"
+
+#: src/copy/ai.ts
+msgid "You stay in charge"
+msgstr "由你掌控"
+
+#: src/copy/ai.ts
+msgid "Your browser opens Yuva. Sign in with a one-time code; a new e-mail address gets a new account."
+msgstr "浏览器会打开 Yuva。用一次性验证码登录；新的邮箱地址会获得新账号。"
+
+#: src/copy/ai.ts
+msgid "Your code stays on your machine. Yuva only sees what the assistant creates through it."
+msgstr "你的代码留在你的机器上。Yuva 只能看到助手通过它创建的内容。"
+
+#: src/copy/cloudflare-email.ts
+msgid "Your team answers in the panel. The reply is sent through the e-mail channel's own SMTP account, such as Amazon SES, Postmark or your own relay, from the same address and in the same thread. Replies do not go through the Worker."
+msgstr "你的团队在面板中回复。回复通过邮件渠道自己的 SMTP 账号发送，例如 Amazon SES、Postmark 或你自己的中继，使用同一个地址并在同一个线程中。回复不经过 Worker。"
+
+#: src/copy/ai.ts
+msgid "Your Yuva server"
+msgstr "你的 Yuva 服务器"
+
+#: src/copy/ai.ts
+msgid "Yuva and your AI assistant"
+msgstr "Yuva 与你的 AI 助手"
+
+#: src/copy/pages.ts
+msgid "Yuva blog"
+msgstr "Yuva 博客"
+
+#: src/copy/brand.ts
+msgid "Yuva brand assets: logo, colours and name"
+msgstr "Yuva 品牌资源：徽标、颜色和名称"
+
+#: src/copy/docs.ts
+msgid "Yuva brings e-mail, live chat and in-app messages from your customers into one inbox for your team. Start with Get started; every guide is listed below."
+msgstr "Yuva 把客户的邮件、在线聊天和应用内消息汇入团队的同一个收件箱。从“开始使用”入手；所有指南都列在下面。"
+
+#: src/copy/home.ts
+msgid "Yuva brings support e-mail, live chat and in-app conversations from all of your products into one shared inbox, and adds newsletters, mail migration and cookieless analytics. Open source, self-hosted, one Go binary with Postgres."
+msgstr "Yuva 把你所有产品的支持邮件、在线聊天和应用内对话汇入一个共享收件箱，并增加新闻邮件、邮件迁移和无 Cookie 分析。开源、自托管，一个 Go 二进制文件加 Postgres。"
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva checks the signature and that the timestamp is within 5 minutes before it reads the message. A request with a wrong signature is refused."
+msgstr "在读取邮件之前，Yuva 会检查签名以及时间戳是否在 5 分钟之内。签名错误的请求会被拒绝。"
+
+#: src/copy/ai.ts
+msgid "Yuva cloud"
+msgstr "Yuva 云"
+
+#: src/copy/docs.ts
+msgid "Yuva documentation"
+msgstr "Yuva 文档"
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva Email Worker for Cloudflare"
+msgstr "适用于 Cloudflare 的 Yuva Email Worker"
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva finds the e-mail channel for the recipient address and threads the message by In-Reply-To and References into the conversation it belongs to. Anything else starts a new conversation. A reply reopens the conversation."
+msgstr "Yuva 根据收件地址找到邮件渠道，并按 In-Reply-To 和 References 把邮件归入它所属的对话。其他情况会开启新对话。回复会重新打开对话。"
+
+#: src/copy/ai.ts
+msgid "Yuva has a built-in MCP server. Connect it once, and your assistant reads your project, sees what your workspace already has, and sets up live chat, analytics or newsletters, asking before each change."
+msgstr "Yuva 内置 MCP 服务器。连接一次，你的助手就能读取项目，查看工作区已有的内容，并在每次更改前先询问，然后设置在线聊天、分析或新闻邮件。"
+
+#: src/copy/header.ts
+msgid "Yuva home"
+msgstr "Yuva 首页"
+
+#: src/copy/ai.ts
+msgid "Yuva in your AI assistant"
+msgstr "你的 AI 助手中的 Yuva"
+
+#: src/copy/contact.ts
+msgid "Yuva is pre-alpha. Every release, the roadmap and the code are public, so you can see exactly where it stands."
+msgstr "Yuva 处于预览前期。每个版本、路线图和代码都是公开的，所以你能清楚看到它的进展。"
+
+#: src/copy/brand.ts
+msgid "Yuva orange"
+msgstr "Yuva 橙"
+
+#: src/copy/home.ts
+msgid "Yuva puts e-mail, live chat and in-app messages from all of your products into one inbox for your team. Open source, one Go binary with Postgres."
+msgstr "Yuva 把你所有产品的邮件、在线聊天和应用内消息汇入团队的同一个收件箱。开源，一个 Go 二进制文件加 Postgres。"
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva refuses any request without a valid HMAC signature or with a timestamp more than 5 minutes off, before it reads the body. Keep the secret to yourself."
+msgstr "Yuva 会在读取正文之前，拒绝任何没有有效 HMAC 签名或时间戳偏差超过 5 分钟的请求。请妥善保管密钥。"
+
+#: src/copy/pages.ts
+msgid "Yuva releases"
+msgstr "Yuva 版本发布"
+
+#: src/copy/docs.ts
+msgid "Yuva signs every request with Standard Webhooks and retries failed deliveries. Registering an endpoint and verifying a signature are in the webhooks guide."
+msgstr "Yuva 用 Standard Webhooks 为每个请求签名，并重试失败的投递。注册端点和验证签名的方法见 Webhook 指南。"
+
+#: src/copy/contact.ts
+msgid "Yuva team"
+msgstr "Yuva 团队"
+
+#: src/copy/brand.ts
+msgid "Yuva: one inbox for every product"
+msgstr "Yuva：每个产品一个收件箱"
+
+#: src/copy/home.ts
+msgid "Yuva: one open-source inbox for e-mail, live chat and in-app messages"
+msgstr "Yuva：一个面向邮件、在线聊天和应用内消息的开源收件箱"
+
+#: src/copy/home.ts
+msgid "Zendesk and Help Scout"
+msgstr "Zendesk 和 Help Scout"

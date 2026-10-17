@@ -1,0 +1,9 @@
+---
+import CloudflareEmailView from "@/views/CloudflareEmailView.astro"
+import { localePaths, type Locale } from "@/lib/routes"
+
+export const getStaticPaths = localePaths
+const { locale } = Astro.params as { locale: Locale }
+---
+
+<CloudflareEmailView locale={locale} />

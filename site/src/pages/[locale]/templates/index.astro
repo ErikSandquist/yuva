@@ -1,0 +1,9 @@
+---
+import TemplatesView from "@/views/TemplatesView.astro"
+import { localePaths, type Locale } from "@/lib/routes"
+
+export const getStaticPaths = localePaths
+const { locale } = Astro.params as { locale: Locale }
+---
+
+<TemplatesView locale={locale} />

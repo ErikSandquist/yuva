@@ -60,9 +60,7 @@ const en: Shots = {
   ios: iosEn,
 }
 
-const byLocale: Record<Locale, Shots> = {
-  en,
-  de: en,
+const byLocale: Partial<Record<Locale, Shots>> = {
   tr: {
     analytics: { light: analyticsTrLight, dark: analyticsTrDark },
     broadcast: { light: broadcastTrLight, dark: broadcastTrDark },
@@ -77,5 +75,5 @@ const byLocale: Record<Locale, Shots> = {
 }
 
 export function shots(locale: Locale): Shots {
-  return byLocale[locale]
+  return byLocale[locale] ?? en
 }

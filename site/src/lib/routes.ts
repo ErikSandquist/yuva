@@ -1,35 +1,131 @@
-export const locales = ["en", "tr", "de"] as const
+export const locales = [
+  "en",
+  "ar",
+  "bn",
+  "ca",
+  "cs",
+  "da",
+  "de",
+  "el",
+  "es",
+  "es-MX",
+  "fi",
+  "fr",
+  "fr-CA",
+  "gu",
+  "he",
+  "hi",
+  "hr",
+  "hu",
+  "id",
+  "it",
+  "ja",
+  "kn",
+  "ko",
+  "ml",
+  "mr",
+  "ms",
+  "nb",
+  "nl",
+  "or",
+  "pa",
+  "pl",
+  "pt-BR",
+  "pt-PT",
+  "ro",
+  "ru",
+  "sk",
+  "sl",
+  "sv",
+  "ta",
+  "te",
+  "th",
+  "tr",
+  "uk",
+  "ur",
+  "vi",
+  "zh-Hans",
+  "zh-Hant",
+] as const
 export type Locale = (typeof locales)[number]
 export const defaultLocale: Locale = "en"
+export const rtl: readonly Locale[] = ["ar", "he", "ur"]
+export const dir = (locale: Locale) => (rtl.includes(locale) ? "rtl" : "ltr")
 
 export const SITE = process.env.SITE_URL ?? "http://localhost:4321"
-export const bcp47: Record<Locale, string> = { en: "en-US", tr: "tr-TR", de: "de-DE" }
-export const ogLocale: Record<Locale, string> = { en: "en_US", tr: "tr_TR", de: "de_DE" }
-export const home: Record<Locale, string> = { en: "/", tr: "/tr/", de: "/de/" }
-export const brand: Record<Locale, string> = { en: "/brand/", tr: "/tr/brand/", de: "/de/brand/" }
-export const blog: Record<Locale, string> = { en: "/blog/", tr: "/tr/blog/", de: "/de/blog/" }
-export const releases: Record<Locale, string> = { en: "/releases/", tr: "/tr/releases/", de: "/de/releases/" }
-export const contact: Record<Locale, string> = { en: "/contact/", tr: "/tr/contact/", de: "/de/contact/" }
-export const ai: Record<Locale, string> = { en: "/ai/", tr: "/tr/ai/", de: "/de/ai/" }
-export const cloudflareEmail: Record<Locale, string> = {
-  en: "/cloudflare-email/",
-  tr: "/tr/cloudflare-email/",
-  de: "/de/cloudflare-email/",
+const tags: Partial<Record<Locale, string>> = { en: "en-US", tr: "tr-TR", de: "de-DE" }
+const regions: Record<string, string> = {
+  en: "US",
+  ar: "AR",
+  bn: "IN",
+  ca: "ES",
+  cs: "CZ",
+  da: "DK",
+  de: "DE",
+  el: "GR",
+  es: "ES",
+  "es-MX": "MX",
+  fi: "FI",
+  fr: "FR",
+  "fr-CA": "CA",
+  gu: "IN",
+  he: "IL",
+  hi: "IN",
+  hr: "HR",
+  hu: "HU",
+  id: "ID",
+  it: "IT",
+  ja: "JP",
+  kn: "IN",
+  ko: "KR",
+  ml: "IN",
+  mr: "IN",
+  ms: "MY",
+  nb: "NO",
+  nl: "NL",
+  or: "IN",
+  pa: "IN",
+  pl: "PL",
+  "pt-BR": "BR",
+  "pt-PT": "PT",
+  ro: "RO",
+  ru: "RU",
+  sk: "SK",
+  sl: "SI",
+  sv: "SE",
+  ta: "IN",
+  te: "IN",
+  th: "TH",
+  tr: "TR",
+  uk: "UA",
+  ur: "PK",
+  vi: "VN",
+  "zh-Hans": "CN",
+  "zh-Hant": "TW",
 }
-export const templates: Record<Locale, string> = { en: "/templates/", tr: "/tr/templates/", de: "/de/templates/" }
-export const template = (slug: string): Record<Locale, string> => ({
-  en: `/templates/${slug}/`,
-  tr: `/tr/templates/${slug}/`,
-  de: `/de/templates/${slug}/`,
-})
+export const bcp47 = Object.fromEntries(locales.map((l) => [l, tags[l] ?? l])) as Record<Locale, string>
+export const ogLocale = Object.fromEntries(locales.map((l) => [l, `${l.split("-")[0]}_${regions[l]}`])) as Record<
+  Locale,
+  string
+>
+
+export const prefix = (locale: Locale) => (locale === defaultLocale ? "" : `/${locale}`)
+export const localized = (rel: string): Record<Locale, string> =>
+  Object.fromEntries(locales.map((l) => [l, `${prefix(l)}${rel}`])) as Record<Locale, string>
+export const home = localized("/")
+export const brand = localized("/brand/")
+export const blog = localized("/blog/")
+export const releases = localized("/releases/")
+export const contact = localized("/contact/")
+export const ai = localized("/ai/")
+export const cloudflareEmail = localized("/cloudflare-email/")
+export const templates = localized("/templates/")
+export const template = (slug: string): Record<Locale, string> => localized(`/templates/${slug}/`)
+export const localePaths = () => locales.filter((l) => l !== defaultLocale).map((locale) => ({ params: { locale } }))
 export const APP_URL = "https://app.useyuva.com"
 export const post = (slug: string) => `/blog/${slug}/`
-export const docsRoot = (locale: Locale) => (locale === "en" ? "/docs/" : `/${locale}/docs/`)
-export const docsPath = (rel: string): Record<Locale, string> => ({
-  en: `/docs/${rel}`,
-  tr: `/tr/docs/${rel}`,
-  de: `/de/docs/${rel}`,
-})
+export const docsRoot = (locale: Locale) => `${prefix(locale)}/docs/`
+export const docsPath = (rel: string): Record<Locale, string> => localized(`/docs/${rel}`)
 export const brandAssets = {
   icon: "/brand/yuva-icon.svg",
   iconSquare: "/brand/yuva-icon-square.svg",

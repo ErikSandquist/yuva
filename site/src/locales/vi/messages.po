@@ -1,0 +1,2089 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 22:38+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: vi\n"
+
+#: src/layouts/Footer.astro
+msgid "“Yuva” is Turkish for nest, or home."
+msgstr "“Yuva” trong tiếng Thổ Nhĩ Kỳ có nghĩa là tổ ấm, hay mái nhà."
+
+#: src/copy/pages.ts
+msgid "{count} changes"
+msgstr "{count} thay đổi"
+
+#: src/copy/docs.ts
+#: src/copy/pages.ts
+msgid "{count} min read"
+msgstr "Đọc trong {count} phút"
+
+#: src/copy/contact.ts
+msgid "{count} releases, latest {version}"
+msgstr "{count} bản phát hành, mới nhất là {version}"
+
+#: src/copy/docs.ts
+msgid "{count} sections"
+msgstr "{count} mục"
+
+#: src/copy/templates.ts
+msgid "{name} e-mail preview"
+msgstr "Xem trước email {name}"
+
+#: src/copy/docs.ts
+msgid "{name} endpoints of the Yuva API."
+msgstr "Các endpoint {name} của API Yuva."
+
+#: src/copy/templates.ts
+msgid "{name}: {description} A free Yuva e-mail template."
+msgstr "{name}: {description} Mẫu email Yuva miễn phí."
+
+#: src/copy/home.ts
+msgid "a contact and their data"
+msgstr "một liên hệ và dữ liệu của họ"
+
+#: src/copy/cloudflare-email.ts
+msgid "A customer writes to one of your support addresses, for example support@example.com."
+msgstr "Một khách hàng viết đến một trong các địa chỉ hỗ trợ của bạn, ví dụ support@example.com."
+
+#: src/copy/home.ts
+msgid "A finished import in the panel: 6 conversations and 12 messages copied from an mbox file, with a note that Yuva has no access to your mailbox."
+msgstr "Một lần nhập đã hoàn tất trong bảng điều khiển: 6 cuộc trò chuyện và 12 tin nhắn được sao chép từ tệp mbox, kèm ghi chú rằng Yuva không có quyền truy cập hộp thư của bạn."
+
+#: src/copy/contact.ts
+msgid "A hosted service and commercial licenses"
+msgstr "Dịch vụ được lưu trữ và giấy phép thương mại"
+
+#: src/copy/cloudflare-email.ts
+msgid "A message can be up to 25 MiB including attachments, which is the Cloudflare Email Routing limit. Yuva keeps up to 50 attachments per message, each within the server's attachment size limit (25 MiB by default) and allowed types; it leaves out the rest."
+msgstr "Một thư có thể nặng tới 25 MiB kể cả tệp đính kèm, đó là giới hạn của Cloudflare Email Routing. Yuva giữ tối đa 50 tệp đính kèm mỗi thư, mỗi tệp nằm trong giới hạn dung lượng tệp đính kèm của máy chủ (mặc định 25 MiB) và thuộc các loại được phép; phần còn lại bị bỏ qua."
+
+#: src/copy/cloudflare-email.ts
+msgid "A small open-source Worker"
+msgstr "Một Worker mã nguồn mở nhỏ gọn"
+
+#: src/copy/home.ts
+msgid "Accepted answer"
+msgstr "Câu trả lời được chấp nhận"
+
+#: src/copy/home.ts
+msgid "Add ratings and a discussion area to your own documentation pages."
+msgstr "Thêm đánh giá và khu thảo luận vào các trang tài liệu của riêng bạn."
+
+#: src/copy/brand.ts
+msgid "Add shadows or outlines"
+msgstr "Thêm bóng đổ hoặc viền"
+
+#: src/copy/ai.ts
+msgid "Add this to .cursor/mcp.json in your project:"
+msgstr "Thêm đoạn này vào .cursor/mcp.json trong dự án của bạn:"
+
+#: src/copy/ai.ts
+msgid "Add this to .vscode/mcp.json in your project:"
+msgstr "Thêm đoạn này vào .vscode/mcp.json trong dự án của bạn:"
+
+#: src/copy/ai.ts
+msgid "Add Yuva in your terminal:"
+msgstr "Thêm Yuva trong terminal của bạn:"
+
+#: src/copy/ai.ts
+msgid "Add Yuva live chat to this site."
+msgstr "Thêm chat trực tiếp của Yuva vào trang web này."
+
+#: src/copy/pages.ts
+msgid "Added"
+msgstr "Đã thêm"
+
+#: src/layouts/Footer.astro
+msgid "AI assistants"
+msgstr "Trợ lý AI"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "AI assistants and MCP"
+msgstr "Trợ lý AI và MCP"
+
+#: src/copy/pages.ts
+msgid "All posts"
+msgstr "Tất cả bài viết"
+
+#: src/copy/pages.ts
+msgid "All releases on GitHub"
+msgstr "Tất cả bản phát hành trên GitHub"
+
+#: src/copy/templates.ts
+msgid "All templates"
+msgstr "Tất cả mẫu"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Analytics"
+msgstr "Phân tích"
+
+#: src/copy/home.ts
+msgid "and funnels"
+msgstr "và phễu chuyển đổi"
+
+#: src/copy/home.ts
+msgid "and Postgres"
+msgstr "và Postgres"
+
+#: src/copy/home.ts
+msgid "and the inboxes they can see"
+msgstr "và các hộp thư họ có thể xem"
+
+#: src/copy/templates.ts
+msgid "Announcement"
+msgstr "Thông báo"
+
+#: src/copy/cloudflare-email.ts
+msgid "Any domain you manage in Cloudflare and whose mail no other server handles, because Email Routing becomes its MX. Each e-mail channel has an address, or the catch-all *@example.com for every address of the domain that no channel has exactly. A subaddress such as support+billing@example.com reaches the channel of support@example.com."
+msgstr "Bất kỳ tên miền nào bạn quản lý trong Cloudflare mà không máy chủ nào khác xử lý thư, vì Email Routing trở thành MX của nó. Mỗi kênh email có một địa chỉ, hoặc địa chỉ bắt tất cả *@example.com cho mọi địa chỉ của tên miền mà không kênh nào có chính xác. Một địa chỉ phụ như support+billing@example.com sẽ đến kênh của support@example.com."
+
+#: src/copy/contact.ts
+msgid "API"
+msgstr "API"
+
+#: src/layouts/Footer.astro
+msgid "API contract"
+msgstr "Hợp đồng API"
+
+#: src/copy/docs.ts
+msgid "API key"
+msgstr "Khóa API"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+msgid "API reference"
+msgstr "Tài liệu tham khảo API"
+
+#: src/copy/brand.ts
+msgid "App icon"
+msgstr "Biểu tượng ứng dụng"
+
+#: src/copy/contact.ts
+msgid "Apps"
+msgstr "Ứng dụng"
+
+#: src/copy/home.ts
+msgid "Assign"
+msgstr "Giao"
+
+#: src/copy/home.ts
+msgid "at a glance"
+msgstr "trong nháy mắt"
+
+#: src/copy/contact.ts
+msgid "At a glance"
+msgstr "Trong nháy mắt"
+
+#: src/copy/home.ts
+msgid "Attributes"
+msgstr "Thuộc tính"
+
+#: src/copy/docs.ts
+msgid "Authentication"
+msgstr "Xác thực"
+
+#: src/copy/ai.ts
+msgid "Back in the assistant, Yuva is connected. Settings → Connected apps shows it and revokes it."
+msgstr "Khi quay lại trợ lý, Yuva đã được kết nối. Cài đặt → Ứng dụng đã kết nối sẽ hiển thị và cho phép thu hồi nó."
+
+#: src/pages/404.astro
+msgid "Back to the home page"
+msgstr "Quay lại trang chủ"
+
+#: src/copy/docs.ts
+msgid "Back to the website"
+msgstr "Quay lại trang web"
+
+#: src/copy/home.ts
+msgid "before anything is sent"
+msgstr "trước khi bất cứ thứ gì được gửi đi"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/copy/pages.ts
+#: src/layouts/Footer.astro
+msgid "Blog"
+msgstr "Blog"
+
+#: src/copy/brand.ts
+msgid "Brand"
+msgstr "Thương hiệu"
+
+#: src/copy/brand.ts
+#: src/copy/contact.ts
+#: src/copy/header.ts
+#: src/layouts/Footer.astro
+msgid "Brand assets"
+msgstr "Tài nguyên thương hiệu"
+
+#: src/copy/pages.ts
+msgid "Breaking changes"
+msgstr "Thay đổi gây lỗi tương thích"
+
+#: src/copy/header.ts
+msgid "Bring your mail and history."
+msgstr "Mang thư và lịch sử của bạn sang."
+
+#: src/copy/home.ts
+msgid "Bring your mail and support history over. Yuva only reads at the source."
+msgstr "Mang thư và lịch sử hỗ trợ của bạn sang. Yuva chỉ đọc tại nguồn."
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Broadcasts"
+msgstr "Gửi hàng loạt"
+
+#: src/copy/home.ts
+msgid "Build e-mails in the designer or start from a free template."
+msgstr "Soạn email trong trình thiết kế hoặc bắt đầu từ một mẫu miễn phí."
+
+#: src/copy/contact.ts
+msgid "Built with"
+msgstr "Xây dựng với"
+
+#: src/copy/contact.ts
+msgid "Business"
+msgstr "Doanh nghiệp"
+
+#: src/copy/pages.ts
+#: src/copy/templates.ts
+msgid "By"
+msgstr "Bởi"
+
+#: src/copy/cloudflare-email.ts
+msgid "Can someone forge mail to my Yuva server?"
+msgstr "Có ai giả mạo được thư gửi đến máy chủ Yuva của tôi không?"
+
+#: src/copy/brand.ts
+msgid "Change its colours"
+msgstr "Đổi màu của nó"
+
+#: src/copy/pages.ts
+msgid "Changed"
+msgstr "Đã thay đổi"
+
+#: src/copy/pages.ts
+msgid "Changelog"
+msgstr "Nhật ký thay đổi"
+
+#: src/copy/pages.ts
+msgid "CHANGELOG.md"
+msgstr "CHANGELOG.md"
+
+#: src/copy/contact.ts
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Channels"
+msgstr "Kênh"
+
+#: src/copy/home.ts
+msgid "checks before you send"
+msgstr "kiểm tra trước khi gửi"
+
+#: src/copy/ai.ts
+msgid "Choose the workspace and what the assistant may do, then approve."
+msgstr "Chọn không gian làm việc và những gì trợ lý được phép làm, rồi phê duyệt."
+
+#: src/copy/header.ts
+msgid "Claude drafts, you send."
+msgstr "Claude soạn nháp, bạn gửi."
+
+#: src/copy/brand.ts
+msgid "Click a colour to copy its hex code."
+msgstr "Nhấp vào một màu để sao chép mã hex của nó."
+
+#: src/copy/header.ts
+#: src/layouts/Footer.astro
+msgid "Cloudflare e-mail"
+msgstr "Email qua Cloudflare"
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare Email Routing becomes the MX of your domain and receives the mail. Yuva does not listen for SMTP, so there is no mail server to install or keep patched."
+msgstr "Cloudflare Email Routing trở thành MX của tên miền bạn và nhận thư. Yuva không lắng nghe SMTP, nên không có máy chủ thư nào để cài đặt hay cập nhật."
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare Email Routing receives the message and passes it to the Yuva Email Worker."
+msgstr "Cloudflare Email Routing nhận thư và chuyển cho Yuva Email Worker."
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare, the Cloudflare logo and Cloudflare Workers are trademarks and/or registered trademarks of Cloudflare, Inc. in the United States and other jurisdictions. Yuva is an independent open-source project, not affiliated with or endorsed by Cloudflare."
+msgstr "Cloudflare, logo Cloudflare và Cloudflare Workers là nhãn hiệu và/hoặc nhãn hiệu đã đăng ký của Cloudflare, Inc. tại Hoa Kỳ và các khu vực pháp lý khác. Yuva là dự án mã nguồn mở độc lập, không liên kết với hay được Cloudflare chứng thực."
+
+#: src/copy/cloudflare-email.ts
+msgid "Cloudflare® Email Routing receives the mail for your support addresses, and the open-source Yuva Email Worker hands each message to Yuva, signed. It lands in your shared inbox as a conversation your team answers."
+msgstr "Cloudflare® Email Routing nhận thư gửi đến các địa chỉ hỗ trợ của bạn, và Yuva Email Worker mã nguồn mở chuyển từng thư cho Yuva, kèm chữ ký. Thư đến hộp thư chung của bạn dưới dạng một cuộc trò chuyện mà nhóm bạn trả lời."
+
+#: src/copy/brand.ts
+msgid "Colours"
+msgstr "Màu sắc"
+
+#: src/copy/contact.ts
+msgid "Commercial license"
+msgstr "Giấy phép thương mại"
+
+#: src/copy/pages.ts
+msgid "Compare changes"
+msgstr "So sánh thay đổi"
+
+#: src/copy/home.ts
+msgid "Connect a support address, a chat widget for your website or the SDKs for your apps."
+msgstr "Kết nối một địa chỉ hỗ trợ, một widget chat cho trang web của bạn hoặc các SDK cho ứng dụng của bạn."
+
+#: src/copy/home.ts
+msgid "Connect Claude, ChatGPT or Cursor. A teammate reviews and sends what they draft."
+msgstr "Kết nối Claude, ChatGPT hoặc Cursor. Một đồng nghiệp xem lại và gửi những gì chúng soạn."
+
+#: src/copy/ai.ts
+msgid "Connect Yuva"
+msgstr "Kết nối Yuva"
+
+#: src/copy/ai.ts
+msgid "Connect Yuva to Claude, ChatGPT, Cursor, VS Code or Gemini CLI, then let the assistant look at your project and set Yuva up with you."
+msgstr "Kết nối Yuva với Claude, ChatGPT, Cursor, VS Code hoặc Gemini CLI, rồi để trợ lý xem dự án của bạn và cùng bạn thiết lập Yuva."
+
+#: src/copy/contact.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Contact"
+msgstr "Liên hệ"
+
+#: src/copy/docs.ts
+msgid "Contact session"
+msgstr "Phiên liên hệ"
+
+#: src/copy/contact.ts
+msgid "Contact Yuva"
+msgstr "Liên hệ Yuva"
+
+#: src/copy/home.ts
+msgid "Contacts"
+msgstr "Liên hệ"
+
+#: src/layouts/Footer.astro
+msgid "Contributing"
+msgstr "Đóng góp"
+
+#: src/copy/ai.ts
+#: src/copy/brand.ts
+#: src/copy/contact.ts
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/pages.ts
+msgid "Copied"
+msgstr "Đã sao chép"
+
+#: src/copy/ai.ts
+#: src/copy/docs.ts
+msgid "Copy"
+msgstr "Sao chép"
+
+#: src/copy/contact.ts
+msgid "Copy address"
+msgstr "Sao chép địa chỉ"
+
+#: src/copy/pages.ts
+msgid "Copy link"
+msgstr "Sao chép liên kết"
+
+#: src/copy/header.ts
+msgid "Copy logo as SVG"
+msgstr "Sao chép logo dạng SVG"
+
+#: src/copy/header.ts
+msgid "Copy logo with name as SVG"
+msgstr "Sao chép logo kèm tên dạng SVG"
+
+#: src/copy/brand.ts
+msgid "Copy SVG"
+msgstr "Sao chép SVG"
+
+#: src/copy/home.ts
+#: src/copy/pages.ts
+msgid "Create an account"
+msgstr "Tạo tài khoản"
+
+#: src/copy/home.ts
+msgid "Create an account on our service and start without running a server."
+msgstr "Tạo tài khoản trên dịch vụ của chúng tôi và bắt đầu mà không cần chạy máy chủ."
+
+#: src/copy/pages.ts
+msgid "Create an account on our service, or run it on your own server."
+msgstr "Tạo tài khoản trên dịch vụ của chúng tôi, hoặc chạy trên máy chủ của riêng bạn."
+
+#: src/copy/templates.ts
+msgid "Dark"
+msgstr "Tối"
+
+#: src/ui/ThemeToggle.astro
+msgid "Dark theme"
+msgstr "Giao diện tối"
+
+#: src/copy/home.ts
+msgid "Delete"
+msgstr "Xóa"
+
+#: src/copy/home.ts
+msgid "Deliverability"
+msgstr "Khả năng gửi thư"
+
+#: src/copy/cloudflare-email.ts
+msgid "Deploy the Worker to your Cloudflare account, using the same secret:"
+msgstr "Triển khai Worker vào tài khoản Cloudflare của bạn, với cùng một khóa bí mật:"
+
+#: src/copy/pages.ts
+msgid "Deprecated"
+msgstr "Không còn dùng"
+
+#: src/copy/docs.ts
+msgid "Description"
+msgstr "Mô tả"
+
+#: src/copy/home.ts
+msgid "Designer"
+msgstr "Trình thiết kế"
+
+#: src/copy/home.ts
+msgid "Designs and broadcast drafts"
+msgstr "Thiết kế và bản nháp gửi hàng loạt"
+
+#: src/copy/templates.ts
+msgid "Desktop"
+msgstr "Máy tính"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Developers"
+msgstr "Nhà phát triển"
+
+#: src/copy/templates.ts
+msgid "Digest"
+msgstr "Bản tóm tắt"
+
+#: src/copy/home.ts
+msgid "Discussions"
+msgstr "Thảo luận"
+
+#: src/copy/brand.ts
+msgid "Do"
+msgstr "Nên"
+
+#: src/copy/cloudflare-email.ts
+msgid "Do I need to run a mail server?"
+msgstr "Tôi có cần chạy máy chủ thư không?"
+
+#: src/copy/docs.ts
+msgid "Docs"
+msgstr "Tài liệu"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Documentation"
+msgstr "Tài liệu hướng dẫn"
+
+#: src/copy/cloudflare-email.ts
+msgid "Does Yuva use the DMARC result from Cloudflare?"
+msgstr "Yuva có dùng kết quả DMARC từ Cloudflare không?"
+
+#: src/copy/brand.ts
+msgid "Don't"
+msgstr "Không nên"
+
+#: src/copy/header.ts
+msgid "Download logo"
+msgstr "Tải logo"
+
+#: src/copy/brand.ts
+msgid "Download PNG"
+msgstr "Tải PNG"
+
+#: src/copy/brand.ts
+msgid "Download SVG"
+msgstr "Tải SVG"
+
+#: src/copy/brand.ts
+msgid "Download the icon"
+msgstr "Tải biểu tượng"
+
+#: src/copy/brand.ts
+msgid "Download the Yuva logo as SVG or PNG, copy the brand colours, and read how the name and logo may be used."
+msgstr "Tải logo Yuva dạng SVG hoặc PNG, sao chép màu thương hiệu và đọc cách dùng tên và logo."
+
+#: src/copy/home.ts
+msgid "Draft replies"
+msgstr "Bản nháp trả lời"
+
+#: src/copy/contact.ts
+#: src/copy/home.ts
+msgid "E-mail"
+msgstr "Email"
+
+#: src/pages/og/[lang].png.ts
+msgid "E-mail · live chat · in-app · self-hosted"
+msgstr "Email · chat trực tiếp · trong ứng dụng · tự lưu trữ"
+
+#: src/copy/header.ts
+#: src/copy/templates.ts
+#: src/layouts/Footer.astro
+msgid "E-mail templates"
+msgstr "Mẫu email"
+
+#: src/copy/home.ts
+msgid "E-mail templates and designer"
+msgstr "Mẫu email và trình thiết kế"
+
+#: src/copy/header.ts
+msgid "E-mail, live chat and in-app."
+msgstr "Email, chat trực tiếp và trong ứng dụng."
+
+#: src/copy/contact.ts
+msgid "Early and built in the open"
+msgstr "Còn non trẻ và được xây dựng công khai"
+
+#: src/copy/docs.ts
+msgid "Edit this page on GitHub"
+msgstr "Chỉnh sửa trang này trên GitHub"
+
+#: src/copy/cloudflare-email.ts
+msgid "Email Routing becomes the MX of the domain, so use a domain or subdomain that no other mail server handles."
+msgstr "Email Routing trở thành MX của tên miền, vì vậy hãy dùng tên miền hoặc tên miền phụ mà không máy chủ thư nào khác xử lý."
+
+#: src/copy/cloudflare-email.ts
+msgid "Email Routing in front"
+msgstr "Email Routing ở phía trước"
+
+#: src/copy/brand.ts
+msgid "Ember"
+msgstr "Than hồng"
+
+#: src/copy/templates.ts
+msgid "Enter a full address starting with http:// or https://."
+msgstr "Nhập địa chỉ đầy đủ bắt đầu bằng http:// hoặc https://."
+
+#: src/copy/templates.ts
+msgid "Enter the address of your Yuva server to open the template there. It is kept in this browser only."
+msgstr "Nhập địa chỉ máy chủ Yuva của bạn để mở mẫu ở đó. Nó chỉ được lưu trong trình duyệt này."
+
+#: src/copy/ai.ts
+msgid "Enter this address and sign in:"
+msgstr "Nhập địa chỉ này và đăng nhập:"
+
+#: src/copy/templates.ts
+msgid "Event"
+msgstr "Sự kiện"
+
+#: src/copy/header.ts
+msgid "Every channel in one list."
+msgstr "Mọi kênh trong một danh sách."
+
+#: src/copy/home.ts
+msgid "Every channel lands in one list. Your team answers from one chat-style view."
+msgstr "Mọi kênh đổ về một danh sách. Nhóm của bạn trả lời từ một giao diện kiểu chat duy nhất."
+
+#: src/copy/header.ts
+msgid "Every endpoint, to try."
+msgstr "Mọi endpoint, để thử."
+
+#: src/copy/home.ts
+msgid "Every part of Yuva has a typed contract and a small, documented integration."
+msgstr "Mỗi phần của Yuva có một hợp đồng định kiểu và một tích hợp nhỏ gọn có tài liệu."
+
+#: src/copy/home.ts
+msgid "Every support channel, answered as one chat."
+msgstr "Mọi kênh hỗ trợ, được trả lời như một cuộc chat."
+
+#: src/copy/pages.ts
+msgid "Every version of Yuva and what changed in it. Versions follow Semantic Versioning, and until 1.0 any release may change the API and the database schema."
+msgstr "Mỗi phiên bản của Yuva và những gì đã thay đổi. Các phiên bản theo Semantic Versioning, và cho đến 1.0 bất kỳ bản phát hành nào cũng có thể thay đổi API và lược đồ cơ sở dữ liệu."
+
+#: src/copy/docs.ts
+msgid "Every Yuva endpoint and webhook event, generated from the OpenAPI 3.1 contract."
+msgstr "Mọi endpoint và sự kiện webhook của Yuva, được tạo từ hợp đồng OpenAPI 3.1."
+
+#: src/copy/docs.ts
+msgid "Every Yuva guide in one place: install, channels, broadcasts, analytics, moving a mailbox in, the developer tools and the API reference."
+msgstr "Tất cả hướng dẫn của Yuva ở một nơi: cài đặt, kênh, gửi hàng loạt, phân tích, chuyển hộp thư, công cụ cho nhà phát triển và tài liệu tham khảo API."
+
+#: src/copy/pages.ts
+msgid "Every Yuva release and what changed in it, from the changelog."
+msgstr "Mỗi bản phát hành của Yuva và những gì đã thay đổi, từ nhật ký thay đổi."
+
+#: src/copy/home.ts
+msgid "Feedback"
+msgstr "Phản hồi"
+
+#: src/copy/home.ts
+msgid "Files"
+msgstr "Tệp"
+
+#: src/copy/cloudflare-email.ts
+msgid "Film: support e-mail from Cloudflare to the Yuva inbox"
+msgstr "Video: email hỗ trợ từ Cloudflare đến hộp thư Yuva"
+
+#: src/copy/pages.ts
+msgid "Fixed"
+msgstr "Đã sửa"
+
+#: src/copy/pages.ts
+msgid "Follow the blog"
+msgstr "Theo dõi blog"
+
+#: src/copy/brand.ts
+msgid "For app stores and platforms that round the corners themselves."
+msgstr "Dành cho các cửa hàng ứng dụng và nền tảng tự bo tròn góc."
+
+#: src/copy/brand.ts
+msgid "For dark backgrounds."
+msgstr "Dành cho nền tối."
+
+#: src/copy/contact.ts
+msgid "For investors"
+msgstr "Dành cho nhà đầu tư"
+
+#: src/copy/brand.ts
+msgid "For light backgrounds."
+msgstr "Dành cho nền sáng."
+
+#: src/copy/home.ts
+msgid "for open conversations"
+msgstr "của các cuộc trò chuyện đang mở"
+
+#: src/copy/home.ts
+msgid "for the usual answers"
+msgstr "cho các câu trả lời quen thuộc"
+
+#: src/copy/home.ts
+msgid "for your newsletters"
+msgstr "cho bản tin của bạn"
+
+#: src/copy/home.ts
+msgid "for your own e-mails"
+msgstr "cho email của riêng bạn"
+
+#: src/copy/header.ts
+msgid "Free designs to copy."
+msgstr "Thiết kế miễn phí để sao chép."
+
+#: src/copy/templates.ts
+msgid "Free starter designs for newsletters, product updates, announcements and more. Preview them here and open one in Yuva's e-mail designer."
+msgstr "Thiết kế khởi đầu miễn phí cho bản tin, cập nhật sản phẩm, thông báo và hơn thế nữa. Xem trước ở đây và mở một mẫu trong trình thiết kế email của Yuva."
+
+#: src/copy/home.ts
+msgid "from the people you helped"
+msgstr "từ những người bạn đã giúp"
+
+#: src/copy/pages.ts
+msgid "From the team"
+msgstr "Từ nhóm"
+
+#: src/copy/brand.ts
+msgid "Full-bleed icon"
+msgstr "Biểu tượng tràn viền"
+
+#: src/copy/home.ts
+msgid "Gallery"
+msgstr "Thư viện"
+
+#: src/copy/docs.ts
+msgid "Get started"
+msgstr "Bắt đầu"
+
+#: src/copy/home.ts
+msgid "Give every product's users a way to reach you."
+msgstr "Cho người dùng của mọi sản phẩm một cách để liên hệ với bạn."
+
+#: src/copy/brand.ts
+msgid "Glow"
+msgstr "Ánh rực"
+
+#: src/copy/home.ts
+msgid "Gmail, Outlook or any IMAP server"
+msgstr "Gmail, Outlook hoặc bất kỳ máy chủ IMAP nào"
+
+#: src/copy/home.ts
+msgid "Goals"
+msgstr "Mục tiêu"
+
+#: src/copy/docs.ts
+msgid "Guides"
+msgstr "Hướng dẫn"
+
+#: src/copy/header.ts
+msgid "Guides for every part."
+msgstr "Hướng dẫn cho từng phần."
+
+#: src/copy/home.ts
+msgid "Help center"
+msgstr "Trung tâm trợ giúp"
+
+#: src/copy/home.ts
+msgid "Help desks"
+msgstr "Hệ thống hỗ trợ"
+
+#: src/copy/contact.ts
+msgid "Hi! Tell us a little about yourself and what you have in mind."
+msgstr "Xin chào! Hãy kể đôi chút về bạn và điều bạn đang nghĩ đến."
+
+#: src/copy/home.ts
+msgid "History"
+msgstr "Lịch sử"
+
+#: src/copy/home.ts
+msgid "Hosted"
+msgstr "Được lưu trữ"
+
+#: src/copy/contact.ts
+msgid "Hosted service and commercial licenses"
+msgstr "Dịch vụ được lưu trữ và giấy phép thương mại"
+
+#: src/copy/cloudflare-email.ts
+msgid "How a message gets from the customer to your team"
+msgstr "Một thư đi từ khách hàng đến nhóm của bạn như thế nào"
+
+#: src/copy/cloudflare-email.ts
+msgid "How big can a message be?"
+msgstr "Một thư có thể lớn đến mức nào?"
+
+#: src/copy/contact.ts
+msgid "How the AGPL, the MIT SDKs and the CLA fit together."
+msgstr "AGPL, các SDK theo giấy phép MIT và CLA khớp với nhau như thế nào."
+
+#: src/copy/templates.ts
+msgid "How to add a template"
+msgstr "Cách thêm một mẫu"
+
+#: src/copy/templates.ts
+msgid "https://yuva.example.com"
+msgstr "https://yuva.example.com"
+
+#: src/copy/contact.ts
+msgid "I have a question that doesn't fit anywhere else."
+msgstr "Tôi có một câu hỏi không hợp với mục nào khác."
+
+#: src/copy/contact.ts
+msgid "I have an idea for working together."
+msgstr "Tôi có một ý tưởng hợp tác."
+
+#: src/copy/contact.ts
+msgid "I'd like to talk about investing in Yuva."
+msgstr "Tôi muốn trao đổi về việc đầu tư vào Yuva."
+
+#: src/copy/contact.ts
+msgid "I'm writing about Yuva and have a few questions."
+msgstr "Tôi đang viết về Yuva và có vài câu hỏi."
+
+#: src/copy/home.ts
+msgid "Identity tokens"
+msgstr "Token danh tính"
+
+#: src/copy/cloudflare-email.ts
+msgid "If Yuva answers with a server error, does not answer within 20 seconds or cannot be reached, the Worker can forward the message to an address you choose, as long as you set FALLBACK_FORWARD. That address must be a verified destination in Email Routing. The message then arrives as a plain forward and does not appear in Yuva. Without FALLBACK_FORWARD the delivery fails with an error and the sending server may retry later."
+msgstr "Nếu Yuva trả lời bằng lỗi máy chủ, không phản hồi trong 20 giây hoặc không thể truy cập, Worker có thể chuyển tiếp thư đến một địa chỉ bạn chọn, miễn là bạn đặt FALLBACK_FORWARD. Địa chỉ đó phải là đích đã xác minh trong Email Routing. Khi đó thư đến dưới dạng thư chuyển tiếp thông thường và không xuất hiện trong Yuva. Không có FALLBACK_FORWARD, việc gửi thất bại kèm lỗi và máy chủ gửi có thể thử lại sau."
+
+#: src/copy/cloudflare-email.ts
+msgid "If Yuva is unreachable"
+msgstr "Nếu không truy cập được Yuva"
+
+#: src/copy/ai.ts
+msgid "If Yuva itself misbehaves, the assistant can prepare a GitHub issue with your names, addresses and keys removed. You read it before anything is opened."
+msgstr "Nếu chính Yuva gặp sự cố, trợ lý có thể chuẩn bị một issue trên GitHub với tên, địa chỉ và khóa của bạn đã được gỡ bỏ. Bạn đọc nó trước khi bất cứ thứ gì được mở."
+
+#: src/copy/docs.ts
+msgid "In"
+msgstr "Vị trí"
+
+#: src/copy/ai.ts
+msgid "In claude.ai or Claude Desktop, open Customize → Connectors → Add custom connector."
+msgstr "Trong claude.ai hoặc Claude Desktop, mở Customize → Connectors → Add custom connector."
+
+#: src/copy/cloudflare-email.ts
+msgid "In the Cloudflare dashboard, open your domain → Email → Email Routing and enable it. Cloudflare adds its MX and SPF records."
+msgstr "Trong bảng điều khiển Cloudflare, mở tên miền của bạn → Email → Email Routing và bật nó lên. Cloudflare thêm các bản ghi MX và SPF của nó."
+
+#: src/copy/cloudflare-email.ts
+msgid "In Yuva, open Settings → your inbox → Channels → E-mail and add the support address. Set a secret on the server and restart it:"
+msgstr "Trong Yuva, mở Cài đặt → hộp thư của bạn → Kênh → Email và thêm địa chỉ hỗ trợ. Đặt một khóa bí mật trên máy chủ và khởi động lại nó:"
+
+#: src/copy/contact.ts
+#: src/copy/home.ts
+msgid "In-app"
+msgstr "Trong ứng dụng"
+
+#: src/copy/home.ts
+msgid "Inbox"
+msgstr "Hộp thư đến"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Inbox and conversations"
+msgstr "Hộp thư và các cuộc trò chuyện"
+
+#: src/copy/brand.ts
+msgid "Ink"
+msgstr "Mực"
+
+#: src/copy/docs.ts
+msgid "Introduction"
+msgstr "Giới thiệu"
+
+#: src/copy/contact.ts
+msgid "Investment"
+msgstr "Đầu tư"
+
+#: src/copy/ai.ts
+msgid "It does the rest with you."
+msgstr "Phần còn lại nó làm cùng bạn."
+
+#: src/copy/brand.ts
+msgid "Keep the logo as it is: do not change its shape, proportions or colours."
+msgstr "Giữ nguyên logo: không thay đổi hình dạng, tỷ lệ hay màu sắc."
+
+#: src/copy/brand.ts
+msgid "keep the name in a private, internal deployment, modified or not."
+msgstr "giữ tên trong một bản triển khai nội bộ riêng tư, dù có chỉnh sửa hay không."
+
+#: src/copy/home.ts
+msgid "Labels and canned replies"
+msgstr "Nhãn và câu trả lời soạn sẵn"
+
+#: src/ui/LangMenu.astro
+msgid "Language"
+msgstr "Ngôn ngữ"
+
+#: src/copy/docs.ts
+msgid "Last updated {date}"
+msgstr "Cập nhật lần cuối {date}"
+
+#: src/copy/pages.ts
+msgid "Latest"
+msgstr "Mới nhất"
+
+#: src/copy/pages.ts
+msgid "Latest post"
+msgstr "Bài viết mới nhất"
+
+#: src/copy/contact.ts
+msgid "Let's talk."
+msgstr "Cùng trò chuyện nào."
+
+#: src/copy/contact.ts
+msgid "License"
+msgstr "Giấy phép"
+
+#: src/copy/templates.ts
+msgid "License and contributions"
+msgstr "Giấy phép và đóng góp"
+
+#: src/copy/contact.ts
+#: src/layouts/Footer.astro
+msgid "Licensing"
+msgstr "Cấp phép"
+
+#: src/copy/templates.ts
+msgid "Light"
+msgstr "Sáng"
+
+#: src/ui/ThemeToggle.astro
+msgid "Light theme"
+msgstr "Giao diện sáng"
+
+#: src/copy/home.ts
+msgid "Lists"
+msgstr "Danh sách"
+
+#: src/copy/contact.ts
+#: src/copy/home.ts
+msgid "Live chat"
+msgstr "Chat trực tiếp"
+
+#: src/copy/templates.ts
+msgid "Live preview"
+msgstr "Xem trước trực tiếp"
+
+#: src/copy/header.ts
+msgid "Log in"
+msgstr "Đăng nhập"
+
+#: src/copy/brand.ts
+msgid "Logo"
+msgstr "Logo"
+
+#: src/copy/header.ts
+msgid "Logo and icon to download."
+msgstr "Logo và biểu tượng để tải về."
+
+#: src/copy/header.ts
+msgid "Logo options"
+msgstr "Tùy chọn logo"
+
+#: src/copy/brand.ts
+msgid "Logo with name"
+msgstr "Logo kèm tên"
+
+#: src/copy/brand.ts
+msgid "Logo with name, white"
+msgstr "Logo kèm tên, màu trắng"
+
+#: src/copy/contact.ts
+msgid "Logos, colours and the rules for the name."
+msgstr "Logo, màu sắc và quy tắc dùng tên."
+
+#: src/copy/ai.ts
+msgid "Look at this project and tell me how to add Yuva. Use Yuva's init prompt, recommend a plan, and change nothing until I pick the steps."
+msgstr "Hãy xem dự án này và cho tôi biết cách thêm Yuva. Dùng prompt init của Yuva, đề xuất một kế hoạch và đừng thay đổi gì cho đến khi tôi chọn các bước."
+
+#: src/copy/cloudflare-email.ts
+msgid "Mail to a support address opens or continues a conversation in the inbox, and the team answers from the same panel as chat and app messages."
+msgstr "Thư gửi đến địa chỉ hỗ trợ mở hoặc tiếp nối một cuộc trò chuyện trong hộp thư, và nhóm trả lời từ cùng một bảng điều khiển với chat và tin nhắn trong ứng dụng."
+
+#: src/copy/home.ts
+msgid "Mailboxes"
+msgstr "Hộp thư"
+
+#: src/copy/pages.ts
+msgid "Maintainer of Yuva"
+msgstr "Người bảo trì Yuva"
+
+#: src/copy/home.ts
+msgid "marked by your team"
+msgstr "do nhóm của bạn đánh dấu"
+
+#: src/ui/ThemeToggle.astro
+msgid "Match the system theme"
+msgstr "Theo giao diện hệ thống"
+
+#: src/copy/home.ts
+msgid "mbox, Takeout and .eml"
+msgstr "mbox, Takeout và .eml"
+
+#: src/copy/docs.ts
+msgid "Member session"
+msgstr "Phiên thành viên"
+
+#: src/copy/home.ts
+msgid "Members"
+msgstr "Thành viên"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+msgid "Menu"
+msgstr "Menu"
+
+#: src/copy/docs.ts
+msgid "More"
+msgstr "Thêm"
+
+#: src/copy/pages.ts
+msgid "More posts"
+msgstr "Thêm bài viết"
+
+#: src/copy/ai.ts
+msgid "Move our support mailbox into Yuva."
+msgstr "Chuyển hộp thư hỗ trợ của chúng tôi sang Yuva."
+
+#: src/copy/docs.ts
+msgid "Move to Yuva"
+msgstr "Chuyển sang Yuva"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Moving in"
+msgstr "Chuyển đổi"
+
+#: src/copy/ai.ts
+msgid "My own server"
+msgstr "Máy chủ của riêng tôi"
+
+#: src/copy/docs.ts
+msgid "Name"
+msgstr "Tên"
+
+#: src/copy/ai.ts
+msgid "Needs a public https address."
+msgstr "Cần địa chỉ https công khai."
+
+#: src/copy/pages.ts
+msgid "New posts appear in the RSS feed as soon as they are published."
+msgstr "Bài viết mới xuất hiện trong nguồn cấp RSS ngay khi được đăng."
+
+#: src/copy/ai.ts
+msgid "New to Yuva? Name your workspace. It takes a few seconds."
+msgstr "Mới dùng Yuva? Hãy đặt tên cho không gian làm việc của bạn. Chỉ mất vài giây."
+
+#: src/copy/header.ts
+msgid "News and how Yuva is built."
+msgstr "Tin tức và cách Yuva được xây dựng."
+
+#: src/copy/pages.ts
+msgid "News, release stories and notes from building Yuva, the open-source inbox for every product you run."
+msgstr "Tin tức, câu chuyện phát hành và ghi chú từ quá trình xây dựng Yuva, hộp thư mã nguồn mở cho mọi sản phẩm bạn vận hành."
+
+#: src/copy/pages.ts
+msgid "News, release stories and notes from building Yuva."
+msgstr "Tin tức, câu chuyện phát hành và ghi chú từ quá trình xây dựng Yuva."
+
+#: src/copy/templates.ts
+msgid "Newsletter"
+msgstr "Bản tin"
+
+#: src/copy/header.ts
+msgid "Newsletters to your lists."
+msgstr "Bản tin gửi đến danh sách của bạn."
+
+#: src/copy/docs.ts
+#: src/copy/pages.ts
+msgid "Next"
+msgstr "Tiếp"
+
+#: src/copy/docs.ts
+msgid "No authentication"
+msgstr "Không xác thực"
+
+#: src/copy/docs.ts
+msgid "No content"
+msgstr "Không có nội dung"
+
+#: src/copy/cloudflare-email.ts
+msgid "No mail server to run."
+msgstr "Không có máy chủ thư nào để chạy."
+
+#: src/copy/docs.ts
+msgid "No results"
+msgstr "Không có kết quả"
+
+#: src/copy/contact.ts
+msgid "Not every message needs an e-mail. Some answers are better in public, and some reports must stay private."
+msgstr "Không phải thư nào cũng cần email. Một số câu trả lời nên công khai, và một số báo cáo phải được giữ riêng tư."
+
+#: src/copy/cloudflare-email.ts
+msgid "Not for incoming mail. Yuva does not listen for SMTP; Cloudflare Email Routing receives the mail and the Worker passes it on. Replies need an SMTP account for the e-mail channel, such as Amazon SES, Postmark or your own relay."
+msgstr "Không dành cho thư đến. Yuva không lắng nghe SMTP; Cloudflare Email Routing nhận thư và Worker chuyển tiếp. Việc trả lời cần một tài khoản SMTP cho kênh email, như Amazon SES, Postmark hoặc relay của riêng bạn."
+
+#: src/copy/cloudflare-email.ts
+msgid "Not tied to Cloudflare"
+msgstr "Không gắn chặt với Cloudflare"
+
+#: src/copy/brand.ts
+msgid "Not without written permission"
+msgstr "Không, nếu không có sự cho phép bằng văn bản"
+
+#: src/copy/home.ts
+msgid "Notes and mentions"
+msgstr "Ghi chú và lượt nhắc"
+
+#: src/copy/home.ts
+msgid "of every conversation"
+msgstr "của mọi cuộc trò chuyện"
+
+#: src/copy/home.ts
+msgid "of free templates"
+msgstr "mẫu miễn phí"
+
+#: src/copy/brand.ts
+msgid "offer a hosted or managed service, or a product, under the Yuva name or a confusingly similar one;"
+msgstr "cung cấp một dịch vụ được lưu trữ hoặc được quản lý, hay một sản phẩm, dưới tên Yuva hoặc một tên giống đến mức gây nhầm lẫn;"
+
+#: src/copy/brand.ts
+msgid "On dark backgrounds"
+msgstr "Trên nền tối"
+
+#: src/copy/home.ts
+msgid "on every page"
+msgstr "trên mọi trang"
+
+#: src/copy/brand.ts
+msgid "On light backgrounds"
+msgstr "Trên nền sáng"
+
+#: src/copy/docs.ts
+#: src/copy/pages.ts
+msgid "On this page"
+msgstr "Trên trang này"
+
+#: src/copy/templates.ts
+msgid "On your own server"
+msgstr "Trên máy chủ của riêng bạn"
+
+#: src/copy/templates.ts
+msgid "Onboarding"
+msgstr "Làm quen"
+
+#: src/copy/home.ts
+msgid "One binary"
+msgstr "Một tệp nhị phân duy nhất"
+
+#: src/copy/header.ts
+msgid "One binary and Postgres."
+msgstr "Một tệp nhị phân và Postgres."
+
+#: src/copy/home.ts
+msgid "One Docker image and Postgres on your own server."
+msgstr "Một image Docker và Postgres trên máy chủ của riêng bạn."
+
+#: src/copy/brand.ts
+#: src/pages/og/[lang].png.ts
+msgid "One inbox for every product you run."
+msgstr "Một hộp thư cho mỗi sản phẩm bạn vận hành."
+
+#: src/copy/home.ts
+msgid "One profile for each person, whichever channel they write from."
+msgstr "Một hồ sơ cho mỗi người, dù họ viết từ kênh nào."
+
+#: src/copy/home.ts
+msgid "One small server runs all of it. The server is open source, and the SDKs carry no copyleft."
+msgstr "Một máy chủ nhỏ chạy tất cả. Máy chủ là mã nguồn mở, và các SDK không mang copyleft."
+
+#: src/copy/contact.ts
+msgid "Open a GitHub issue"
+msgstr "Mở một issue trên GitHub"
+
+#: src/copy/home.ts
+msgid "Open AI assistants"
+msgstr "Mở các trợ lý AI"
+
+#: src/copy/contact.ts
+msgid "Open an issue"
+msgstr "Mở một issue"
+
+#: src/copy/contact.ts
+msgid "Open an issue on GitHub so others can find the answer too."
+msgstr "Mở một issue trên GitHub để người khác cũng tìm thấy câu trả lời."
+
+#: src/copy/templates.ts
+msgid "Open on my server"
+msgstr "Mở trên máy chủ của tôi"
+
+#: src/copy/ai.ts
+msgid "Open Plugins, select the plus button, then Add custom MCP server."
+msgstr "Mở Plugins, chọn nút dấu cộng, rồi Add custom MCP server."
+
+#: src/copy/contact.ts
+msgid "Open source that stays open"
+msgstr "Mã nguồn mở luôn mở"
+
+#: src/copy/home.ts
+msgid "Open the API reference"
+msgstr "Mở tài liệu tham khảo API"
+
+#: src/copy/ai.ts
+msgid "Open the assistant in your project's folder. It reads your code on your machine and sends none of it to Yuva."
+msgstr "Mở trợ lý trong thư mục dự án của bạn. Nó đọc mã của bạn trên máy của bạn và không gửi gì về Yuva."
+
+#: src/copy/home.ts
+msgid "Open the templates"
+msgstr "Mở các mẫu"
+
+#: src/pages/og/[lang].png.ts
+msgid "Open-source customer messaging"
+msgstr "Nhắn tin với khách hàng mã nguồn mở"
+
+#: src/layouts/Footer.astro
+msgid "Open-source customer messaging for teams that run many products."
+msgstr "Nhắn tin với khách hàng mã nguồn mở dành cho các nhóm vận hành nhiều sản phẩm."
+
+#: src/copy/docs.ts
+msgid "OpenAPI contract"
+msgstr "Hợp đồng OpenAPI"
+
+#: src/copy/templates.ts
+msgid "Opens Yuva's e-mail designer with this template. You sign in first if you have not."
+msgstr "Mở trình thiết kế email của Yuva với mẫu này. Nếu chưa đăng nhập, bạn sẽ đăng nhập trước."
+
+#: src/copy/cloudflare-email.ts
+msgid "Optional: keep mail during an outage by adding a fallback address to the deploy command:"
+msgstr "Tùy chọn: giữ thư trong lúc gián đoạn bằng cách thêm một địa chỉ dự phòng vào lệnh triển khai:"
+
+#: src/copy/ai.ts
+msgid "Or ask for one thing"
+msgstr "Hoặc chỉ yêu cầu một việc"
+
+#: src/copy/home.ts
+msgid "Or host it yourself"
+msgstr "Hoặc tự lưu trữ"
+
+#: src/copy/ai.ts
+msgid "Or type the sentence:"
+msgstr "Hoặc gõ câu sau:"
+
+#: src/copy/cloudflare-email.ts
+msgid "Other ways to bring mail in"
+msgstr "Những cách khác để mang thư sang"
+
+#: src/copy/contact.ts
+msgid "Other ways to reach us"
+msgstr "Những cách khác để liên hệ với chúng tôi"
+
+#: src/copy/docs.ts
+msgid "Overview"
+msgstr "Tổng quan"
+
+#: src/pages/404.astro
+msgid "Page not found"
+msgstr "Không tìm thấy trang"
+
+#: src/copy/home.ts
+msgid "Pages and sources"
+msgstr "Trang và nguồn"
+
+#: src/copy/docs.ts
+msgid "Parameters"
+msgstr "Tham số"
+
+#: src/copy/contact.ts
+msgid "Partnership"
+msgstr "Hợp tác"
+
+#: src/copy/docs.ts
+msgid "Payload"
+msgstr "Payload"
+
+#: src/copy/pages.ts
+msgid "Performance"
+msgstr "Hiệu năng"
+
+#: src/copy/templates.ts
+msgid "Phone"
+msgstr "Điện thoại"
+
+#: src/copy/ai.ts
+msgid "Pick your assistant"
+msgstr "Chọn trợ lý của bạn"
+
+#: src/copy/pages.ts
+msgid "Posts are published in English."
+msgstr "Bài viết được đăng bằng tiếng Anh."
+
+#: src/copy/contact.ts
+msgid "Pre-alpha"
+msgstr "Tiền alpha"
+
+#: src/copy/contact.ts
+msgid "Press"
+msgstr "Báo chí"
+
+#: src/copy/contact.ts
+msgid "Press and brand"
+msgstr "Báo chí và thương hiệu"
+
+#: src/copy/home.ts
+msgid "Preview"
+msgstr "Xem trước"
+
+#: src/copy/templates.ts
+msgid "Preview and use"
+msgstr "Xem trước và sử dụng"
+
+#: src/copy/templates.ts
+msgid "Preview colours"
+msgstr "Xem trước màu"
+
+#: src/copy/home.ts
+#: src/copy/templates.ts
+msgid "Preview of the {name} template"
+msgstr "Xem trước mẫu {name}"
+
+#: src/copy/templates.ts
+msgid "Preview width"
+msgstr "Chiều rộng xem trước"
+
+#: src/copy/docs.ts
+msgid "Previous"
+msgstr "Trước"
+
+#: src/copy/header.ts
+#: src/copy/templates.ts
+#: src/layouts/Footer.astro
+msgid "Product"
+msgstr "Sản phẩm"
+
+#: src/copy/home.ts
+msgid "Product tour"
+msgstr "Tham quan sản phẩm"
+
+#: src/copy/docs.ts
+#: src/layouts/Footer.astro
+msgid "Project"
+msgstr "Dự án"
+
+#: src/copy/brand.ts
+msgid "publish a modified version under the Yuva name — rename your fork;"
+msgstr "phát hành một phiên bản đã chỉnh sửa dưới tên Yuva — hãy đổi tên bản fork của bạn;"
+
+#: src/copy/cloudflare-email.ts
+msgid "Questions and answers"
+msgstr "Hỏi và đáp"
+
+#: src/copy/contact.ts
+msgid "Questions and bugs"
+msgstr "Câu hỏi và lỗi"
+
+#: src/copy/home.ts
+msgid "Ratings"
+msgstr "Đánh giá"
+
+#: src/copy/header.ts
+msgid "Reach the people behind Yuva."
+msgstr "Liên hệ với những người đứng sau Yuva."
+
+#: src/copy/contact.ts
+msgid "Read LICENSING.md"
+msgstr "Đọc LICENSING.md"
+
+#: src/copy/home.ts
+msgid "Read the code, run {version} on your machine, and follow along as it grows."
+msgstr "Đọc mã, chạy {version} trên máy của bạn và theo dõi khi nó lớn lên."
+
+#: src/copy/docs.ts
+msgid "Read the English page"
+msgstr "Đọc trang tiếng Anh"
+
+#: src/copy/home.ts
+msgid "Read the guide"
+msgstr "Đọc hướng dẫn"
+
+#: src/copy/cloudflare-email.ts
+msgid "Read the ingress contract"
+msgstr "Đọc hợp đồng ingress"
+
+#: src/copy/templates.ts
+msgid "Read the license"
+msgstr "Đọc giấy phép"
+
+#: src/copy/ai.ts
+msgid "Read the MCP guide"
+msgstr "Đọc hướng dẫn MCP"
+
+#: src/copy/pages.ts
+msgid "Read the post"
+msgstr "Đọc bài viết"
+
+#: src/copy/home.ts
+#: src/copy/pages.ts
+msgid "Read the quick start"
+msgstr "Đọc phần bắt đầu nhanh"
+
+#: src/copy/cloudflare-email.ts
+msgid "Read the setup guide"
+msgstr "Đọc hướng dẫn thiết lập"
+
+#: src/copy/home.ts
+msgid "read through MCP"
+msgstr "đọc qua MCP"
+
+#: src/copy/brand.ts
+msgid "Read TRADEMARK.md"
+msgstr "Đọc TRADEMARK.md"
+
+#: src/copy/cloudflare-email.ts
+msgid "Real conversations"
+msgstr "Những cuộc trò chuyện thật"
+
+#: src/copy/home.ts
+msgid "Realtime"
+msgstr "Thời gian thực"
+
+#: src/copy/header.ts
+msgid "Receive mail with no server."
+msgstr "Nhận thư mà không cần máy chủ."
+
+#: src/copy/cloudflare-email.ts
+msgid "Receive your support e-mail in Yuva with Cloudflare Email Routing and the open-source Yuva Email Worker. Signed delivery, threaded conversations, no mail server to run."
+msgstr "Nhận email hỗ trợ của bạn trong Yuva bằng Cloudflare Email Routing và Yuva Email Worker mã nguồn mở. Gửi có chữ ký, cuộc trò chuyện theo chuỗi, không cần chạy máy chủ thư."
+
+#: src/copy/cloudflare-email.ts
+msgid "Refusals reach the sender"
+msgstr "Từ chối được báo đến người gửi"
+
+#: src/copy/brand.ts
+msgid "Regular, Medium and Semibold"
+msgstr "Regular, Medium và Semibold"
+
+#: src/copy/pages.ts
+msgid "Release history"
+msgstr "Lịch sử phát hành"
+
+#: src/copy/pages.ts
+msgid "Release notes are written in English."
+msgstr "Ghi chú phát hành được viết bằng tiếng Anh."
+
+#: src/copy/contact.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/copy/pages.ts
+#: src/layouts/Footer.astro
+msgid "Releases"
+msgstr "Bản phát hành"
+
+#: src/copy/pages.ts
+msgid "Removed"
+msgstr "Đã gỡ bỏ"
+
+#: src/layouts/Footer.astro
+msgid "Report a vulnerability"
+msgstr "Báo cáo lỗ hổng bảo mật"
+
+#: src/copy/contact.ts
+msgid "Report vulnerabilities privately through GitHub, never in a public issue."
+msgstr "Hãy báo cáo lỗ hổng riêng tư qua GitHub, đừng bao giờ trong một issue công khai."
+
+#: src/copy/home.ts
+msgid "Reports"
+msgstr "Báo cáo"
+
+#: src/copy/docs.ts
+msgid "Request"
+msgstr "Yêu cầu"
+
+#: src/copy/docs.ts
+msgid "Request body"
+msgstr "Nội dung yêu cầu"
+
+#: src/copy/docs.ts
+msgid "required"
+msgstr "bắt buộc"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+#: src/copy/home.ts
+msgid "Resources"
+msgstr "Tài nguyên"
+
+#: src/copy/docs.ts
+msgid "Response"
+msgstr "Phản hồi"
+
+#: src/copy/docs.ts
+msgid "Responses"
+msgstr "Các phản hồi"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/layouts/Footer.astro
+msgid "Roadmap"
+msgstr "Lộ trình"
+
+#: src/copy/brand.ts
+msgid "Rotate it"
+msgstr "Hãy xoay khóa"
+
+#: src/copy/pages.ts
+msgid "RSS feed"
+msgstr "Nguồn cấp RSS"
+
+#: src/copy/brand.ts
+msgid "say that your product uses, integrates with or is built on Yuva;"
+msgstr "nói rằng sản phẩm của bạn dùng, tích hợp với hoặc được xây dựng trên Yuva;"
+
+#: src/copy/ai.ts
+msgid "Say this"
+msgstr "Hãy nói"
+
+#: src/copy/docs.ts
+msgid "Schemas and every field are in the OpenAPI contract."
+msgstr "Các lược đồ và mọi trường đều có trong hợp đồng OpenAPI."
+
+#: src/copy/home.ts
+msgid "SDKs and API contract"
+msgstr "SDK và hợp đồng API"
+
+#: src/copy/docs.ts
+msgid "Search docs"
+msgstr "Tìm trong tài liệu"
+
+#: src/copy/docs.ts
+msgid "Search the docs"
+msgstr "Tìm trong tài liệu"
+
+#: src/copy/header.ts
+msgid "Sections"
+msgstr "Các mục"
+
+#: src/copy/contact.ts
+#: src/copy/pages.ts
+msgid "Security"
+msgstr "Bảo mật"
+
+#: src/copy/contact.ts
+msgid "Security policy"
+msgstr "Chính sách bảo mật"
+
+#: src/copy/home.ts
+msgid "See how support is going and who is on the team."
+msgstr "Xem việc hỗ trợ đang diễn ra thế nào và ai đang ở trong nhóm."
+
+#: src/copy/pages.ts
+msgid "See what is planned"
+msgstr "Xem những gì được lên kế hoạch"
+
+#: src/copy/home.ts
+msgid "See who visits your sites and apps, with no cookies and no stored IP addresses."
+msgstr "Xem ai đang truy cập các trang web và ứng dụng của bạn, không cookie và không lưu địa chỉ IP."
+
+#: src/copy/home.ts
+msgid "Self-hosted"
+msgstr "Tự lưu trữ"
+
+#: src/copy/docs.ts
+#: src/copy/header.ts
+msgid "Self-hosting"
+msgstr "Tự lưu trữ"
+
+#: src/copy/home.ts
+msgid "Self-hosting and open source"
+msgstr "Tự lưu trữ và mã nguồn mở"
+
+#: src/copy/cloudflare-email.ts
+msgid "Send a test message and watch the conversation appear in the panel."
+msgstr "Gửi một tin nhắn thử và xem cuộc trò chuyện xuất hiện trong bảng điều khiển."
+
+#: src/copy/home.ts
+msgid "Send newsletters to your mailing lists and see what readers do with them."
+msgstr "Gửi bản tin đến danh sách gửi thư của bạn và xem người đọc làm gì với chúng."
+
+#: src/copy/home.ts
+msgid "sent by your own app"
+msgstr "do chính ứng dụng của bạn gửi"
+
+#: src/copy/templates.ts
+msgid "Server address"
+msgstr "Địa chỉ máy chủ"
+
+#: src/copy/home.ts
+msgid "server and panel"
+msgstr "máy chủ và bảng điều khiển"
+
+#: src/layouts/Footer.astro
+msgid "Server and panel under AGPL-3.0, SDKs and API contract under MIT."
+msgstr "Máy chủ và bảng điều khiển theo AGPL-3.0, SDK và hợp đồng API theo MIT."
+
+#: src/copy/cloudflare-email.ts
+msgid "Set it up in a few steps"
+msgstr "Thiết lập chỉ trong vài bước"
+
+#: src/copy/ai.ts
+msgid "Set up Yuva analytics for this site, with a goal for sign-ups."
+msgstr "Thiết lập phân tích Yuva cho trang web này, với một mục tiêu cho lượt đăng ký."
+
+#: src/copy/pages.ts
+msgid "Share"
+msgstr "Chia sẻ"
+
+#: src/copy/ai.ts
+msgid "Sign in from Gemini CLI:"
+msgstr "Đăng nhập từ Gemini CLI:"
+
+#: src/copy/ai.ts
+msgid "Sign in. Your browser opens Yuva:"
+msgstr "Đăng nhập. Trình duyệt của bạn mở Yuva:"
+
+#: src/copy/header.ts
+msgid "Signed events and user tokens."
+msgstr "Sự kiện có chữ ký và token người dùng."
+
+#: src/copy/home.ts
+msgid "signed, for every new message"
+msgstr "có chữ ký, cho mỗi thư mới"
+
+#: src/copy/brand.ts
+msgid "Sizes"
+msgstr "Kích thước"
+
+#: src/layouts/Base.astro
+msgid "Skip to content"
+msgstr "Chuyển đến nội dung"
+
+#: src/copy/home.ts
+msgid "so users write as themselves"
+msgstr "để người dùng viết bằng chính danh nghĩa của họ"
+
+#: src/copy/contact.ts
+msgid "Something else"
+msgstr "Việc khác"
+
+#: src/layouts/Footer.astro
+msgid "Source code on GitHub"
+msgstr "Mã nguồn trên GitHub"
+
+#: src/copy/contact.ts
+msgid "Stage"
+msgstr "Giai đoạn"
+
+#: src/copy/header.ts
+msgid "Start free"
+msgstr "Bắt đầu miễn phí"
+
+#: src/copy/home.ts
+msgid "Start with AI"
+msgstr "Bắt đầu với AI"
+
+#: src/copy/templates.ts
+msgid "Starter designs for the e-mail designer, in English, Turkish and German. Preview one, then open it in Yuva and make it yours."
+msgstr "Thiết kế khởi đầu cho trình thiết kế email, bằng tiếng Anh, tiếng Thổ Nhĩ Kỳ và tiếng Đức. Xem trước một mẫu, rồi mở trong Yuva và biến nó thành của bạn."
+
+#: src/copy/home.ts
+msgid "stay inside the team"
+msgstr "ở lại trong nhóm"
+
+#: src/copy/brand.ts
+msgid "Stretch or squash it"
+msgstr "Kéo giãn hoặc nén nó"
+
+#: src/copy/cloudflare-email.ts
+msgid "Support e-mail through Cloudflare Email Routing | Yuva"
+msgstr "Email hỗ trợ qua Cloudflare Email Routing | Yuva"
+
+#: src/copy/cloudflare-email.ts
+msgid "Support e-mail through Cloudflare."
+msgstr "Email hỗ trợ qua Cloudflare."
+
+#: src/copy/pages.ts
+msgid "Tag on GitHub"
+msgstr "Thẻ trên GitHub"
+
+#: src/copy/home.ts
+msgid "Team and reports"
+msgstr "Nhóm và báo cáo"
+
+#: src/copy/contact.ts
+msgid "Teams can use our hosted service, and because every contribution is made under a CLA, Yuva can also be offered under a commercial license."
+msgstr "Các nhóm có thể dùng dịch vụ được lưu trữ của chúng tôi, và vì mọi đóng góp đều theo CLA, Yuva cũng có thể được cung cấp theo giấy phép thương mại."
+
+#: src/copy/ai.ts
+msgid "Tell your assistant to add Yuva."
+msgstr "Bảo trợ lý của bạn thêm Yuva."
+
+#: src/copy/templates.ts
+msgid "Template gallery"
+msgstr "Thư viện mẫu"
+
+#: src/copy/templates.ts
+msgid "Templates"
+msgstr "Mẫu"
+
+#: src/copy/home.ts
+msgid "The analytics overview in the panel: 30 days of visitors, pageviews and bounce rate, a daily chart with a note on the day a newsletter went out, and the top pages and sources."
+msgstr "Tổng quan phân tích trong bảng điều khiển: 30 ngày lượt khách, lượt xem trang và tỷ lệ thoát, biểu đồ theo ngày có ghi chú vào ngày gửi bản tin, cùng các trang và nguồn hàng đầu."
+
+#: src/copy/ai.ts
+msgid "The assistant acts as you, with no more access than you approve, and asks before it changes anything."
+msgstr "Trợ lý hành động như bạn, không có quyền truy cập nhiều hơn mức bạn phê duyệt, và hỏi trước khi thay đổi bất cứ điều gì."
+
+#: src/copy/header.ts
+msgid "The code, open source."
+msgstr "Mã nguồn, mở."
+
+#: src/copy/ai.ts
+msgid "The commands below follow what you type."
+msgstr "Các lệnh bên dưới thay đổi theo những gì bạn gõ."
+
+#: src/copy/docs.ts
+msgid "The English page has changed since this translation was last updated."
+msgstr "Trang tiếng Anh đã thay đổi kể từ lần cập nhật cuối của bản dịch này."
+
+#: src/copy/docs.ts
+msgid "The events Yuva sends to your webhook endpoints and the payload of each."
+msgstr "Các sự kiện Yuva gửi đến endpoint webhook của bạn và payload của từng sự kiện."
+
+#: src/copy/ai.ts
+msgid "The first time the assistant uses Yuva, your browser opens Yuva to sign in."
+msgstr "Lần đầu trợ lý dùng Yuva, trình duyệt của bạn mở Yuva để đăng nhập."
+
+#: src/copy/brand.ts
+msgid "The mark is drawn to stay readable from an app store listing down to a 16-pixel browser tab."
+msgstr "Biểu tượng được vẽ để vẫn đọc rõ từ một trang cửa hàng ứng dụng đến một tab trình duyệt 16 pixel."
+
+#: src/copy/brand.ts
+msgid "The mark on its rounded square. Use it wherever Yuva appears as an app or a link."
+msgstr "Biểu tượng trên hình vuông bo góc. Dùng nó ở bất cứ nơi nào Yuva xuất hiện như một ứng dụng hay liên kết."
+
+#: src/copy/brand.ts
+msgid "The name and this site are set in Geist, an open-source typeface under the SIL Open Font License."
+msgstr "Tên và trang web này được dàn trang bằng Geist, một phông chữ mã nguồn mở theo giấy phép SIL Open Font License."
+
+#: src/copy/home.ts
+msgid "The panel on a phone: the conversation list with each person's channel and latest message, and the tabs at the bottom."
+msgstr "Bảng điều khiển trên điện thoại: danh sách cuộc trò chuyện với kênh và tin nhắn mới nhất của mỗi người, và các tab ở dưới."
+
+#: src/copy/home.ts
+msgid "The panel with feedback sent from a mobile app: a bug report with the app version, device and screen, next to the conversation list."
+msgstr "Bảng điều khiển với phản hồi gửi từ ứng dụng di động: một báo cáo lỗi kèm phiên bản ứng dụng, thiết bị và màn hình, bên cạnh danh sách cuộc trò chuyện."
+
+#: src/copy/docs.ts
+msgid "The payloads Yuva sends to your webhook endpoints."
+msgstr "Các payload Yuva gửi đến endpoint webhook của bạn."
+
+#: src/copy/home.ts
+msgid "The report of a sent newsletter in the panel: 240 sent, 5 unsubscribed and 56 who clicked a link, a chart over time and the number of clicks on each link."
+msgstr "Báo cáo của một bản tin đã gửi trong bảng điều khiển: 240 đã gửi, 5 hủy đăng ký và 56 lượt nhấp liên kết, biểu đồ theo thời gian và số lượt nhấp trên từng liên kết."
+
+#: src/copy/contact.ts
+msgid "The server and panel are AGPL-3.0, the SDKs and API contract MIT. Improvements to the core stay public."
+msgstr "Máy chủ và bảng điều khiển theo AGPL-3.0, SDK và hợp đồng API theo MIT. Các cải tiến cho phần lõi vẫn công khai."
+
+#: src/copy/cloudflare-email.ts
+msgid "The Worker is one way to call /ingress/email. Any mail server or relay can post the raw message with the same signed headers, and a mail server that delivers to a command can pipe the message into yuva ingest-email. The request format is documented in the Worker's README."
+msgstr "Worker là một cách để gọi /ingress/email. Bất kỳ máy chủ thư hay relay nào cũng có thể gửi thư thô với cùng các tiêu đề có chữ ký, và một máy chủ thư giao cho một lệnh có thể chuyển thư qua pipe vào yuva ingest-email. Định dạng yêu cầu được mô tả trong README của Worker."
+
+#: src/copy/cloudflare-email.ts
+msgid "The Worker signs the raw message, both envelope addresses and a timestamp with HMAC-SHA256 under a secret you share with Yuva, and sends them to /ingress/email on your Yuva server."
+msgstr "Worker ký thư thô, cả hai địa chỉ phong bì và một dấu thời gian bằng HMAC-SHA256 với khóa bí mật bạn chia sẻ với Yuva, rồi gửi chúng đến /ingress/email trên máy chủ Yuva của bạn."
+
+#: src/copy/home.ts
+msgid "The Yuva chat widget open on a newsletter tool's website: the visitor's question and a member's reply, with the member shown online."
+msgstr "Widget chat của Yuva mở trên trang web của một công cụ bản tin: câu hỏi của khách truy cập và câu trả lời của một thành viên, thành viên hiển thị đang trực tuyến."
+
+#: src/copy/cloudflare-email.ts
+msgid "The Yuva Email Worker reads the raw message and the envelope, signs the request and posts it to Yuva. Parsing, threading and spam decisions stay on the server."
+msgstr "Yuva Email Worker đọc thư thô và phong bì, ký yêu cầu và gửi cho Yuva. Việc phân tích, gom chuỗi và quyết định về thư rác vẫn nằm trên máy chủ."
+
+#: src/copy/brand.ts
+msgid "The Yuva logo, colours and typeface, ready for articles, integrations and app listings. Please read the rules for the name and logo before you use them."
+msgstr "Logo, màu sắc và phông chữ của Yuva, sẵn sàng cho bài viết, tích hợp và trang ứng dụng. Vui lòng đọc quy tắc về tên và logo trước khi dùng."
+
+#: src/copy/home.ts
+msgid "The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send."
+msgstr "Bảng nhắn tin của Yuva: các cuộc trò chuyện từ email, chat trực tiếp và ứng dụng trong một danh sách, và một cuộc trò chuyện mở dạng chat, với ghi chú của nhóm và một câu trả lời trợ lý đã soạn để đồng nghiệp gửi."
+
+#: src/ui/ThemeToggle.astro
+msgid "Theme"
+msgstr "Giao diện"
+
+#: src/copy/templates.ts
+msgid "These templates are MIT licensed: use, change and share them in your own mails."
+msgstr "Các mẫu này theo giấy phép MIT: dùng, chỉnh sửa và chia sẻ trong email của riêng bạn."
+
+#: src/copy/templates.ts
+msgid "This browser does not switch the preview to dark mode. Use your system's dark setting to see it, or open the template to check it in the designer."
+msgstr "Trình duyệt này không chuyển bản xem trước sang chế độ tối. Hãy dùng cài đặt tối của hệ thống để xem, hoặc mở mẫu để kiểm tra trong trình thiết kế."
+
+#: src/copy/docs.ts
+msgid "This documentation is written in English."
+msgstr "Tài liệu này được viết bằng tiếng Anh."
+
+#: src/copy/docs.ts
+msgid "This page is not translated yet. It is shown in English."
+msgstr "Trang này chưa được dịch. Nó được hiển thị bằng tiếng Anh."
+
+#: src/copy/docs.ts
+msgid "This page is only available in English."
+msgstr "Trang này chỉ có bằng tiếng Anh."
+
+#: src/copy/home.ts
+msgid "through your own SMTP account"
+msgstr "qua tài khoản SMTP của riêng bạn"
+
+#: src/copy/home.ts
+msgid "to a teammate"
+msgstr "cho một đồng nghiệp"
+
+#: src/copy/home.ts
+msgid "Today"
+msgstr "Hôm nay"
+
+#: src/copy/pages.ts
+msgid "Try Yuva"
+msgstr "Dùng thử Yuva"
+
+#: src/copy/docs.ts
+msgid "Type"
+msgstr "Kiểu"
+
+#: src/copy/docs.ts
+msgid "Type to search the guides and the API reference"
+msgstr "Gõ để tìm trong các hướng dẫn và tài liệu tham khảo API"
+
+#: src/copy/brand.ts
+msgid "Typeface"
+msgstr "Phông chữ"
+
+#: src/pages/404.astro
+msgid "Undeliverable"
+msgstr "Không thể gửi tới"
+
+#: src/copy/cloudflare-email.ts
+msgid "Under Routing rules, send each support address to the Worker yuva-edge. For a catch-all channel, point the catch-all rule at it."
+msgstr "Trong Routing rules, gửi mỗi địa chỉ hỗ trợ đến Worker yuva-edge. Với kênh bắt tất cả, hãy trỏ quy tắc bắt tất cả đến nó."
+
+#: src/copy/brand.ts
+msgid "use the logo in a way that suggests endorsement by the project."
+msgstr "dùng logo theo cách gợi ý dự án chứng thực."
+
+#: src/copy/brand.ts
+msgid "use the name, unchanged, to refer to the unmodified project;"
+msgstr "dùng tên, không thay đổi, để nhắc đến dự án chưa chỉnh sửa;"
+
+#: src/copy/templates.ts
+msgid "Use this template"
+msgstr "Dùng mẫu này"
+
+#: src/copy/brand.ts
+msgid "Using the name and logo"
+msgstr "Cách dùng tên và logo"
+
+#: src/copy/docs.ts
+msgid "Version {version} of the API, generated from the OpenAPI contract. Use the contract to generate a client in any language."
+msgstr "Phiên bản {version} của API, được tạo từ hợp đồng OpenAPI. Dùng hợp đồng để tạo client bằng bất kỳ ngôn ngữ nào."
+
+#: src/copy/home.ts
+msgid "View on GitHub"
+msgstr "Xem trên GitHub"
+
+#: src/copy/home.ts
+msgid "visitors"
+msgstr "lượt khách"
+
+#: src/copy/header.ts
+msgid "Visitors without cookies."
+msgstr "Lượt khách không cookie."
+
+#: src/copy/templates.ts
+msgid "Want to add a template? Send a pull request; the guide explains the folder, the rules and the preview."
+msgstr "Muốn thêm một mẫu? Hãy gửi pull request; hướng dẫn giải thích thư mục, quy tắc và bản xem trước."
+
+#: src/pages/404.astro
+msgid "We looked in every inbox, but this page is not here. It may have moved, or the link may be wrong."
+msgstr "Chúng tôi đã tìm trong mọi hộp thư, nhưng trang này không có ở đây. Có thể nó đã được chuyển đi, hoặc liên kết bị sai."
+
+#: src/copy/contact.ts
+msgid "We would like to use Yuva under a commercial license."
+msgstr "Chúng tôi muốn dùng Yuva theo giấy phép thương mại."
+
+#: src/copy/docs.ts
+msgid "Webhook events"
+msgstr "Sự kiện webhook"
+
+#: src/copy/home.ts
+msgid "Webhooks"
+msgstr "Webhook"
+
+#: src/copy/header.ts
+msgid "Webhooks and identity"
+msgstr "Webhook và danh tính"
+
+#: src/copy/docs.ts
+msgid "Webhooks guide"
+msgstr "Hướng dẫn webhook"
+
+#: src/copy/home.ts
+msgid "what came in and what is open"
+msgstr "những gì đã đến và những gì đang mở"
+
+#: src/copy/header.ts
+msgid "What changed in each version."
+msgstr "Những gì đã thay đổi trong từng phiên bản."
+
+#: src/copy/ai.ts
+msgid "What happens when you sign in"
+msgstr "Điều gì xảy ra khi bạn đăng nhập"
+
+#: src/copy/cloudflare-email.ts
+msgid "What happens when Yuva is down?"
+msgstr "Điều gì xảy ra khi Yuva ngừng hoạt động?"
+
+#: src/copy/header.ts
+msgid "What is built and what is next."
+msgstr "Những gì đã xây dựng và những gì tiếp theo."
+
+#: src/copy/contact.ts
+msgid "What is it about?"
+msgstr "Nói về điều gì?"
+
+#: src/copy/cloudflare-email.ts
+msgid "What it is"
+msgstr "Đó là gì"
+
+#: src/copy/cloudflare-email.ts
+msgid "When Yuva refuses a message for good, for example an unknown address, a blocked sender or a message that is too large, the Worker rejects it and the sender gets a permanent SMTP error with Yuva's reason."
+msgstr "Khi Yuva từ chối một thư vĩnh viễn, ví dụ địa chỉ không xác định, người gửi bị chặn hoặc thư quá lớn, Worker từ chối nó và người gửi nhận lỗi SMTP vĩnh viễn kèm lý do của Yuva."
+
+#: src/copy/contact.ts
+msgid "Whether you want to invest in Yuva, build on it together, need a commercial license or are writing about it, write to us. We read every message."
+msgstr "Dù bạn muốn đầu tư vào Yuva, cùng xây dựng trên nó, cần giấy phép thương mại hay đang viết về nó, hãy viết cho chúng tôi. Chúng tôi đọc mọi tin nhắn."
+
+#: src/copy/cloudflare-email.ts
+msgid "Which domains and addresses can I use?"
+msgstr "Tôi có thể dùng những tên miền và địa chỉ nào?"
+
+#: src/copy/brand.ts
+msgid "White"
+msgstr "Trắng"
+
+#: src/copy/home.ts
+msgid "with clicks and unsubscribes"
+msgstr "kèm lượt nhấp và hủy đăng ký"
+
+#: src/copy/cloudflare-email.ts
+msgid "With FALLBACK_FORWARD set, the message is forwarded to that address instead. Without it the delivery fails and the sending server may retry. Messages that Yuva refuses on purpose, such as mail to an unknown address, are rejected, not forwarded."
+msgstr "Khi đã đặt FALLBACK_FORWARD, thư được chuyển tiếp đến địa chỉ đó. Nếu không, việc gửi thất bại và máy chủ gửi có thể thử lại. Những thư Yuva cố ý từ chối, như thư đến một địa chỉ không xác định, bị từ chối chứ không được chuyển tiếp."
+
+#: src/copy/home.ts
+msgid "with one script tag"
+msgstr "chỉ với một thẻ script"
+
+#: src/copy/home.ts
+msgid "with recorded consent"
+msgstr "kèm sự đồng ý được ghi lại"
+
+#: src/copy/home.ts
+msgid "with replies and votes"
+msgstr "kèm câu trả lời và lượt bình chọn"
+
+#: src/copy/home.ts
+msgid "with the iOS and Android SDKs"
+msgstr "với các SDK iOS và Android"
+
+#: src/copy/home.ts
+msgid "with workspace API keys"
+msgstr "bằng khóa API của không gian làm việc"
+
+#: src/copy/cloudflare-email.ts
+msgid "Worker source on GitHub"
+msgstr "Mã nguồn Worker trên GitHub"
+
+#: src/copy/home.ts
+msgid "Works with"
+msgstr "Hoạt động với"
+
+#: src/copy/contact.ts
+msgid "Write an e-mail"
+msgstr "Viết email"
+
+#: src/copy/contact.ts
+msgid "Write to the Yuva team about investment, partnerships, commercial licenses or press, or find the right place for questions and security reports."
+msgstr "Viết cho nhóm Yuva về đầu tư, hợp tác, giấy phép thương mại hoặc báo chí, hoặc tìm đúng nơi cho câu hỏi và báo cáo bảo mật."
+
+#: src/copy/cloudflare-email.ts
+msgid "Yes, when you set YUVA_INGRESS_AUTHSERV_ID to mx.cloudflare.net. Yuva then reads the DMARC verdict that Email Routing adds. A new conversation that fails DMARC is marked as spam."
+msgstr "Có, khi bạn đặt YUVA_INGRESS_AUTHSERV_ID thành mx.cloudflare.net. Khi đó Yuva đọc kết luận DMARC mà Email Routing thêm vào. Một cuộc trò chuyện mới không qua được DMARC sẽ bị đánh dấu là thư rác."
+
+#: src/copy/brand.ts
+msgid "You may"
+msgstr "Bạn được phép"
+
+#: src/copy/cloudflare-email.ts
+msgid "You need a Yuva server and a Cloudflare account that manages the domain."
+msgstr "Bạn cần một máy chủ Yuva và một tài khoản Cloudflare quản lý tên miền."
+
+#: src/copy/ai.ts
+msgid "You stay in charge"
+msgstr "Bạn nắm quyền kiểm soát"
+
+#: src/copy/ai.ts
+msgid "Your browser opens Yuva. Sign in with a one-time code; a new e-mail address gets a new account."
+msgstr "Trình duyệt của bạn mở Yuva. Đăng nhập bằng mã dùng một lần; một địa chỉ email mới sẽ có tài khoản mới."
+
+#: src/copy/ai.ts
+msgid "Your code stays on your machine. Yuva only sees what the assistant creates through it."
+msgstr "Mã của bạn ở lại trên máy của bạn. Yuva chỉ thấy những gì trợ lý tạo ra qua nó."
+
+#: src/copy/cloudflare-email.ts
+msgid "Your team answers in the panel. The reply is sent through the e-mail channel's own SMTP account, such as Amazon SES, Postmark or your own relay, from the same address and in the same thread. Replies do not go through the Worker."
+msgstr "Nhóm của bạn trả lời trong bảng điều khiển. Câu trả lời được gửi qua chính tài khoản SMTP của kênh email, như Amazon SES, Postmark hoặc relay của riêng bạn, từ cùng địa chỉ và trong cùng chuỗi. Câu trả lời không đi qua Worker."
+
+#: src/copy/ai.ts
+msgid "Your Yuva server"
+msgstr "Máy chủ Yuva của bạn"
+
+#: src/copy/ai.ts
+msgid "Yuva and your AI assistant"
+msgstr "Yuva và trợ lý AI của bạn"
+
+#: src/copy/pages.ts
+msgid "Yuva blog"
+msgstr "Blog Yuva"
+
+#: src/copy/brand.ts
+msgid "Yuva brand assets: logo, colours and name"
+msgstr "Tài nguyên thương hiệu Yuva: logo, màu sắc và tên"
+
+#: src/copy/docs.ts
+msgid "Yuva brings e-mail, live chat and in-app messages from your customers into one inbox for your team. Start with Get started; every guide is listed below."
+msgstr "Yuva gom email, chat trực tiếp và tin nhắn trong ứng dụng từ khách hàng của bạn vào một hộp thư cho nhóm bạn. Hãy bắt đầu với Bắt đầu; mọi hướng dẫn được liệt kê bên dưới."
+
+#: src/copy/home.ts
+msgid "Yuva brings support e-mail, live chat and in-app conversations from all of your products into one shared inbox, and adds newsletters, mail migration and cookieless analytics. Open source, self-hosted, one Go binary with Postgres."
+msgstr "Yuva gom email hỗ trợ, chat trực tiếp và các cuộc trò chuyện trong ứng dụng từ mọi sản phẩm của bạn vào một hộp thư chung, và bổ sung bản tin, chuyển thư và phân tích không cookie. Mã nguồn mở, tự lưu trữ, một tệp nhị phân Go cùng Postgres."
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva checks the signature and that the timestamp is within 5 minutes before it reads the message. A request with a wrong signature is refused."
+msgstr "Yuva kiểm tra chữ ký và dấu thời gian nằm trong vòng 5 phút trước khi đọc thư. Yêu cầu có chữ ký sai bị từ chối."
+
+#: src/copy/ai.ts
+msgid "Yuva cloud"
+msgstr "Yuva Cloud"
+
+#: src/copy/docs.ts
+msgid "Yuva documentation"
+msgstr "Tài liệu Yuva"
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva Email Worker for Cloudflare"
+msgstr "Yuva Email Worker cho Cloudflare"
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva finds the e-mail channel for the recipient address and threads the message by In-Reply-To and References into the conversation it belongs to. Anything else starts a new conversation. A reply reopens the conversation."
+msgstr "Yuva tìm kênh email theo địa chỉ người nhận và gom thư theo In-Reply-To và References vào cuộc trò chuyện mà nó thuộc về. Mọi trường hợp khác bắt đầu một cuộc trò chuyện mới. Một câu trả lời mở lại cuộc trò chuyện."
+
+#: src/copy/ai.ts
+msgid "Yuva has a built-in MCP server. Connect it once, and your assistant reads your project, sees what your workspace already has, and sets up live chat, analytics or newsletters, asking before each change."
+msgstr "Yuva có sẵn máy chủ MCP. Kết nối một lần, và trợ lý của bạn đọc dự án, xem không gian làm việc của bạn đã có gì, rồi thiết lập chat trực tiếp, phân tích hoặc bản tin, hỏi trước mỗi thay đổi."
+
+#: src/copy/header.ts
+msgid "Yuva home"
+msgstr "Trang chủ Yuva"
+
+#: src/copy/ai.ts
+msgid "Yuva in your AI assistant"
+msgstr "Yuva trong trợ lý AI của bạn"
+
+#: src/copy/contact.ts
+msgid "Yuva is pre-alpha. Every release, the roadmap and the code are public, so you can see exactly where it stands."
+msgstr "Yuva đang ở giai đoạn tiền alpha. Mọi bản phát hành, lộ trình và mã nguồn đều công khai, nên bạn thấy chính xác nó đang ở đâu."
+
+#: src/copy/brand.ts
+msgid "Yuva orange"
+msgstr "Cam Yuva"
+
+#: src/copy/home.ts
+msgid "Yuva puts e-mail, live chat and in-app messages from all of your products into one inbox for your team. Open source, one Go binary with Postgres."
+msgstr "Yuva đưa email, chat trực tiếp và tin nhắn trong ứng dụng từ mọi sản phẩm của bạn vào một hộp thư cho nhóm bạn. Mã nguồn mở, một tệp nhị phân Go cùng Postgres."
+
+#: src/copy/cloudflare-email.ts
+msgid "Yuva refuses any request without a valid HMAC signature or with a timestamp more than 5 minutes off, before it reads the body. Keep the secret to yourself."
+msgstr "Yuva từ chối mọi yêu cầu không có chữ ký HMAC hợp lệ hoặc có dấu thời gian lệch hơn 5 phút, trước khi đọc nội dung. Hãy giữ bí mật cho riêng bạn."
+
+#: src/copy/pages.ts
+msgid "Yuva releases"
+msgstr "Bản phát hành Yuva"
+
+#: src/copy/docs.ts
+msgid "Yuva signs every request with Standard Webhooks and retries failed deliveries. Registering an endpoint and verifying a signature are in the webhooks guide."
+msgstr "Yuva ký mọi yêu cầu theo Standard Webhooks và thử lại các lần gửi thất bại. Đăng ký một endpoint và xác minh chữ ký có trong hướng dẫn webhook."
+
+#: src/copy/contact.ts
+msgid "Yuva team"
+msgstr "Nhóm Yuva"
+
+#: src/copy/brand.ts
+msgid "Yuva: one inbox for every product"
+msgstr "Yuva: một hộp thư cho mỗi sản phẩm"
+
+#: src/copy/home.ts
+msgid "Yuva: one open-source inbox for e-mail, live chat and in-app messages"
+msgstr "Yuva: một hộp thư mã nguồn mở cho email, chat trực tiếp và tin nhắn trong ứng dụng"
+
+#: src/copy/home.ts
+msgid "Zendesk and Help Scout"
+msgstr "Zendesk và Help Scout"

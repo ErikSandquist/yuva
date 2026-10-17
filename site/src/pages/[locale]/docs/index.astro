@@ -1,0 +1,9 @@
+---
+import DocsHomeView from "@/views/docs/DocsHomeView.astro"
+import { localePaths, type Locale } from "@/lib/routes"
+
+export const getStaticPaths = localePaths
+const { locale } = Astro.params as { locale: Locale }
+---
+
+<DocsHomeView locale={locale} />

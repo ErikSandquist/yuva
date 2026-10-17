@@ -1,0 +1,9 @@
+---
+import AiView from "@/views/AiView.astro"
+import { localePaths, type Locale } from "@/lib/routes"
+
+export const getStaticPaths = localePaths
+const { locale } = Astro.params as { locale: Locale }
+---
+
+<AiView locale={locale} />
