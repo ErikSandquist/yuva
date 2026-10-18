@@ -884,16 +884,18 @@ func (q *Queries) ListContactConversationIDs(ctx context.Context, arg ListContac
 const listContactConversations = `-- name: ListContactConversations :many
 SELECT c.id, c.workspace_id, c.inbox_id, c.contact_id, c.channel_id, c.subject, c.status, c.snooze_until, c.priority, c.assignee_id, c.last_message_at, c.last_activity_at, c.created_at, c.updated_at, c.spam, c.email_token, c.related_conversation_id, c.continuity_through, c.continuity_sent_at, c.kind, c.feedback, c.email_address, c.closed_at, c.rating, c.rating_comment, c.rated_at, c.rating_requested_at, c.last_read_by_contact_at, c.page_url, c.page_title, c.channel_kind, c.broadcast_id, c.migration_id, c.imported_at FROM conversations c
 WHERE c.workspace_id = $1 AND c.inbox_id = $2 AND c.contact_id = $3
-  AND ($4::timestamptz IS NULL
-       OR (coalesce(c.last_message_at, c.created_at), c.id) < ($4::timestamptz, $5::uuid))
+  AND ($4::text[] IS NULL OR c.kind = ANY($4::text[]))
+  AND ($5::timestamptz IS NULL
+       OR (coalesce(c.last_message_at, c.created_at), c.id) < ($5::timestamptz, $6::uuid))
 ORDER BY coalesce(c.last_message_at, c.created_at) DESC, c.id DESC
-LIMIT $6
+LIMIT $7
 `
 
 type ListContactConversationsParams struct {
 	WorkspaceID uuid.UUID
 	InboxID     uuid.UUID
 	ContactID   uuid.UUID
+	Kinds       []string
 	CursorAt    *time.Time
 	CursorID    *uuid.UUID
 	Lim         int32
@@ -904,6 +906,7 @@ func (q *Queries) ListContactConversations(ctx context.Context, arg ListContactC
 		arg.WorkspaceID,
 		arg.InboxID,
 		arg.ContactID,
+		arg.Kinds,
 		arg.CursorAt,
 		arg.CursorID,
 		arg.Lim,

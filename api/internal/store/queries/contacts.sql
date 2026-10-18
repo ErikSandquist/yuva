@@ -122,7 +122,7 @@ GROUP BY a.conversation_id, a.asked_at;
 -- name: ContactRatings :many
 SELECT cv.rating::text AS rating, count(*) AS n
 FROM conversations cv
-WHERE cv.workspace_id = @workspace_id AND cv.contact_id = @contact_id AND NOT cv.spam AND cv.rating IS NOT NULL
+WHERE cv.workspace_id = @workspace_id AND cv.contact_id = @contact_id AND NOT cv.spam AND cv.kind <> 'feedback' AND cv.rating IS NOT NULL
   AND (@all_inboxes::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
       WHERE iv.workspace_id = cv.workspace_id AND iv.inbox_id = cv.inbox_id AND iv.viewer_id = @viewer_id::uuid))

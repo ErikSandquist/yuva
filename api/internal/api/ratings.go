@@ -23,8 +23,12 @@ var (
 )
 
 // ratingState tells whether a conversation may be rated now and the rating given since its last
-// close; since is when the inbox started asking for ratings, nil when it does not.
-func ratingState(since *time.Time, status string, closedAt, ratedAt *time.Time, rating *string, now time.Time) (bool, *oas.Rating) {
+// close; since is when the inbox started asking for ratings, nil when it does not. Feedback is
+// never rated.
+func ratingState(since *time.Time, kind, status string, closedAt, ratedAt *time.Time, rating *string, now time.Time) (bool, *oas.Rating) {
+	if kind == string(oas.ConversationKindFeedback) {
+		return false, nil
+	}
 	var current *oas.Rating
 	rated := closedAt != nil && ratedAt != nil && !ratedAt.Before(*closedAt)
 	if rated && status == string(oas.ConversationStatusClosed) && rating != nil {
@@ -53,7 +57,10 @@ func (s *Server) rate(ctx context.Context, q *store.Queries, events *eventBatch,
 	if len([]rune(comment)) > maxRatingComment {
 		return c, errValidation("comment must be at most 2000 characters")
 	}
-	can, current := ratingState(in.RatingSince, c.Status, c.ClosedAt, c.RatedAt, c.Rating, now)
+	if c.Kind == string(oas.ConversationKindFeedback) {
+		return c, errRatingUnavailable
+	}
+	can, current := ratingState(in.RatingSince, c.Kind, c.Status, c.ClosedAt, c.RatedAt, c.Rating, now)
 	if current != nil {
 		return c, errAlreadyRated
 	}

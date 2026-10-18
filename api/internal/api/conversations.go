@@ -457,21 +457,25 @@ func (s *Server) ListConversations(ctx context.Context, req oas.ListConversation
 	return oas.ListConversations200JSONResponse{Items: items, NextCursor: next}, nil
 }
 
-func (s *Server) GetConversationCounts(ctx context.Context, _ oas.GetConversationCountsRequestObject) (oas.GetConversationCountsResponseObject, error) {
+func (s *Server) GetConversationCounts(ctx context.Context, req oas.GetConversationCountsRequestObject) (oas.GetConversationCountsResponseObject, error) {
 	p := principalFrom(ctx)
+	kinds, err := enumList(req.Params.Kind, "kind must be conversation or feedback")
+	if err != nil {
+		return nil, err
+	}
 	var member *uuid.UUID
 	if !p.isKey() {
 		member = &p.memberID
 	}
-	rows, err := s.st.CountOpenConversations(ctx, store.CountOpenConversationsParams{WorkspaceID: p.workspaceID, AllInboxes: p.seesAllInboxes(), ViewerID: p.viewerID()})
+	rows, err := s.st.CountOpenConversations(ctx, store.CountOpenConversationsParams{WorkspaceID: p.workspaceID, AllInboxes: p.seesAllInboxes(), ViewerID: p.viewerID(), Kinds: kinds})
 	if err != nil {
 		return nil, err
 	}
-	byLabel, err := s.st.CountOpenConversationsByLabel(ctx, store.CountOpenConversationsByLabelParams{WorkspaceID: p.workspaceID, AllInboxes: p.seesAllInboxes(), ViewerID: p.viewerID()})
+	byLabel, err := s.st.CountOpenConversationsByLabel(ctx, store.CountOpenConversationsByLabelParams{WorkspaceID: p.workspaceID, AllInboxes: p.seesAllInboxes(), ViewerID: p.viewerID(), Kinds: kinds})
 	if err != nil {
 		return nil, err
 	}
-	feedback, err := s.st.CountOpenFeedback(ctx, store.CountOpenFeedbackParams{WorkspaceID: p.workspaceID, AllInboxes: p.seesAllInboxes(), ViewerID: p.viewerID()})
+	feedback, err := s.st.CountOpenFeedback(ctx, store.CountOpenFeedbackParams{WorkspaceID: p.workspaceID, AllInboxes: p.seesAllInboxes(), ViewerID: p.viewerID(), Kinds: kinds})
 	if err != nil {
 		return nil, err
 	}

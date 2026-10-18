@@ -109,6 +109,7 @@ WHERE c.workspace_id = @workspace_id AND c.status = 'open'
   AND (@all_inboxes::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
       WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = @viewer_id::uuid))
+  AND (sqlc.narg(kinds)::text[] IS NULL OR c.kind = ANY(sqlc.narg(kinds)::text[]))
 GROUP BY 1, 2, 3;
 
 -- name: CountOpenConversationsByLabel :many
@@ -119,6 +120,7 @@ WHERE c.workspace_id = @workspace_id AND c.status = 'open' AND NOT c.spam
   AND (@all_inboxes::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
       WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = @viewer_id::uuid))
+  AND (sqlc.narg(kinds)::text[] IS NULL OR c.kind = ANY(sqlc.narg(kinds)::text[]))
 GROUP BY cl.label_id
 ORDER BY cl.label_id;
 
@@ -129,6 +131,7 @@ WHERE c.workspace_id = @workspace_id AND c.status = 'open' AND NOT c.spam AND c.
   AND (@all_inboxes::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
       WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = @viewer_id::uuid))
+  AND (sqlc.narg(kinds)::text[] IS NULL OR c.kind = ANY(sqlc.narg(kinds)::text[]))
 GROUP BY 1
 ORDER BY 1;
 
@@ -161,3 +164,10 @@ RETURNING *;
 
 -- name: InboxChannelOfKind :one
 SELECT * FROM channels WHERE workspace_id = $1 AND inbox_id = $2 AND kind = $3 ORDER BY created_at, id LIMIT 1;
+
+-- name: SetFeedbackFirstMessage :one
+UPDATE conversations c SET feedback = c.feedback || jsonb_build_object(
+    'text', @text::text,
+    'attachment_count', (SELECT count(*) FROM attachments a WHERE a.workspace_id = c.workspace_id AND a.message_id = @message_id::uuid))
+WHERE c.workspace_id = @workspace_id AND c.id = @id AND c.kind = 'feedback'
+RETURNING *;

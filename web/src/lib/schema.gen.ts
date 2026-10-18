@@ -1552,6 +1552,10 @@ export interface paths {
          *     label. Inboxes, assignees and labels without open conversations are left out of their lists. Conversations flagged as
          *     spam are counted only in `spam`.
          *
+         *     `kind` limits every count to conversations of those kinds, as on `GET /v1/conversations`:
+         *     the panel's Conversations view sends `kind=conversation`, its Feedback section
+         *     `kind=feedback`. Without it every kind is counted.
+         *
          *     Scope: `conversations:read`.
          */
         get: operations["getConversationCounts"];
@@ -1613,7 +1617,7 @@ export interface paths {
          *     now: replies sent by members (messages members wrote or drafts they sent; not notes, not
          *     bots' own messages), conversations closed, the median time from a contact's first
          *     message to the first member reply, over the conversations whose first reply falls in the
-         *     window, and the ratings contacts gave in it. `members` breaks replies and closes down per member, leaving out members with
+         *     window, and the ratings contacts gave in it (feedback is never rated and left out). `members` breaks replies and closes down per member, leaving out members with
          *     neither. Nothing is stored for it; it is counted from the messages each time.
          *
          *     `since` defaults to the start of today in `timezone` (an IANA name, `UTC` by default); the
@@ -6050,7 +6054,8 @@ export interface paths {
         /**
          * List the contact's conversations
          * @description The contact's conversations in the session's inbox, on any channel, latest message first.
-         *     Members' notes and internal events are never shown to contacts.
+         *     Members' notes and internal events are never shown to contacts. `kind` keeps only
+         *     conversations of those kinds, e.g. `kind=feedback` for the feedback the contact sent.
          */
         get: operations["listClientConversations"];
         put?: never;
@@ -6160,7 +6165,7 @@ export interface paths {
          *     whose `can_rate` is true. It is stored once per close: members see it in the thread as a
          *     `rated` event and on the conversation, and it sends the `conversation.rated` webhook.
          *     Answers `409 rating_unavailable` when `can_rate` is false (the inbox does not ask for
-         *     ratings, the conversation is open, the close is older than 30 days) and
+         *     ratings, the conversation is open or a `feedback`, the close is older than 30 days) and
          *     `409 already_rated` when the contact already rated this close.
          */
         post: operations["rateClientConversation"];
@@ -7663,6 +7668,7 @@ export interface components {
              *     the widget and the mobile SDKs offer it, and e-mail contacts get a request with two
              *     links after a member's conversation is closed. Off by default. Only conversations
              *     closed after it was turned on can be rated; turning it off and on again starts over.
+             *     Feedback is never rated.
              */
             ask_for_rating: boolean;
             sender: components["schemas"]["InboxSender"];
@@ -10864,6 +10870,16 @@ export interface components {
         /** @description What a `feedback` conversation was sent with. Absent fields were not sent. */
         Feedback: {
             category: components["schemas"]["FeedbackCategory"];
+            /**
+             * @description The first line of the contact's first message, trimmed and cut to 200 characters; empty
+             *     when that message has no text. For a triage row; the message itself is in the thread.
+             */
+            text: string;
+            /**
+             * Format: int32
+             * @description Files (e.g. screenshots) attached to the contact's first message.
+             */
+            attachment_count: number;
             /** @description The contact allowed replies by e-mail. */
             allow_email: boolean;
             app_version?: string;
@@ -12714,7 +12730,8 @@ export interface components {
             last_read_by_member_at?: string;
             /**
              * @description The contact may rate it now with `POST /client/v1/conversations/{id}/rating`: the inbox
-             *     asks for ratings (`ask_for_rating`), the conversation is closed, was closed at most 30
+             *     asks for ratings (`ask_for_rating`), the conversation is not a `feedback` (feedback is
+             *     never rated), it is closed, was closed at most 30
              *     days ago and after the inbox started asking, and has no rating since it was closed. A message from the contact reopens it,
              *     and the next close allows a new rating.
              */
@@ -15275,6 +15292,12 @@ export interface components {
         Search: string;
         /** @description The `next_cursor` of the previous page. */
         Cursor: string;
+        /**
+         * @description Only conversations of these kinds, e.g. `feedback` for the feedback view. Repeat the
+         *     parameter (`kind=feedback&kind=conversation`) or give a comma-separated list
+         *     (`kind=feedback,conversation`).
+         */
+        ConversationKinds: components["schemas"]["ConversationKind"][];
         /** @description Page size, 1 to 100; 25 by default. */
         Limit: number;
     };
@@ -17657,7 +17680,7 @@ export interface operations {
                  *     parameter (`kind=feedback&kind=conversation`) or give a comma-separated list
                  *     (`kind=feedback,conversation`).
                  */
-                kind?: components["schemas"]["ConversationKind"][];
+                kind?: components["parameters"]["ConversationKinds"];
                 /**
                  * @description Only conversations that started on a channel of these kinds (`channel_kind` on the
                  *     conversation). Repeat the parameter or give a comma-separated list. Conversations
@@ -17752,7 +17775,14 @@ export interface operations {
     };
     getConversationCounts: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description Only conversations of these kinds, e.g. `feedback` for the feedback view. Repeat the
+                 *     parameter (`kind=feedback&kind=conversation`) or give a comma-separated list
+                 *     (`kind=feedback,conversation`).
+                 */
+                kind?: components["parameters"]["ConversationKinds"];
+            };
             header?: {
                 /** @description The workspace to act on; see "Workspace selection". */
                 "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
@@ -24335,6 +24365,12 @@ export interface operations {
     listClientConversations: {
         parameters: {
             query?: {
+                /**
+                 * @description Only conversations of these kinds, e.g. `feedback` for the feedback view. Repeat the
+                 *     parameter (`kind=feedback&kind=conversation`) or give a comma-separated list
+                 *     (`kind=feedback,conversation`).
+                 */
+                kind?: components["parameters"]["ConversationKinds"];
                 /** @description The `next_cursor` of the previous page. */
                 cursor?: components["parameters"]["Cursor"];
                 /** @description Page size, 1 to 100; 25 by default. */

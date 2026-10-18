@@ -7532,7 +7532,8 @@ type ClientContact struct {
 // ClientConversation defines model for ClientConversation.
 type ClientConversation struct {
 	// CanRate The contact may rate it now with `POST /client/v1/conversations/{id}/rating`: the inbox
-	// asks for ratings (`ask_for_rating`), the conversation is closed, was closed at most 30
+	// asks for ratings (`ask_for_rating`), the conversation is not a `feedback` (feedback is
+	// never rated), it is closed, was closed at most 30
 	// days ago and after the inbox started asking, and has no rating since it was closed. A message from the contact reopens it,
 	// and the next close allows a new rating.
 	CanRate   bool      `json:"can_rate"`
@@ -10380,10 +10381,13 @@ type ExternalId struct {
 // Feedback What a `feedback` conversation was sent with. Absent fields were not sent.
 type Feedback struct {
 	// AllowEmail The contact allowed replies by e-mail.
-	AllowEmail bool             `json:"allow_email"`
-	AppVersion *string          `json:"app_version,omitempty"`
-	Build      *string          `json:"build,omitempty"`
-	Category   FeedbackCategory `json:"category"`
+	AllowEmail bool    `json:"allow_email"`
+	AppVersion *string `json:"app_version,omitempty"`
+
+	// AttachmentCount Files (e.g. screenshots) attached to the contact's first message.
+	AttachmentCount int32            `json:"attachment_count"`
+	Build           *string          `json:"build,omitempty"`
+	Category        FeedbackCategory `json:"category"`
 
 	// DeviceModel Examples: iPhone17,1
 	DeviceModel *string `json:"device_model,omitempty"`
@@ -10405,6 +10409,10 @@ type Feedback struct {
 
 	// Screen The app screen or route the feedback was sent from.
 	Screen *string `json:"screen,omitempty"`
+
+	// Text The first line of the contact's first message, trimmed and cut to 200 characters; empty
+	// when that message has no text. For a triage row; the message itself is in the thread.
+	Text string `json:"text"`
 }
 
 // FeedbackCategory defines model for FeedbackCategory.
@@ -10613,6 +10621,7 @@ type Inbox struct {
 	// the widget and the mobile SDKs offer it, and e-mail contacts get a request with two
 	// links after a member's conversation is closed. Off by default. Only conversations
 	// closed after it was turned on can be rated; turning it off and on again starts over.
+	// Feedback is never rated.
 	AskForRating bool          `json:"ask_for_rating"`
 	Branding     InboxBranding `json:"branding"`
 
@@ -14309,6 +14318,9 @@ type ContactId = uuid.UUID
 // ConversationId defines model for ConversationId.
 type ConversationId = uuid.UUID
 
+// ConversationKinds defines model for ConversationKinds.
+type ConversationKinds = []ConversationKind
+
 // Cursor defines model for Cursor.
 type Cursor = string
 
@@ -14426,6 +14438,11 @@ type ListClientDiscussionsParams struct {
 
 // ListClientConversationsParams defines parameters for ListClientConversations.
 type ListClientConversationsParams struct {
+	// Kind Only conversations of these kinds, e.g. `feedback` for the feedback view. Repeat the
+	// parameter (`kind=feedback&kind=conversation`) or give a comma-separated list
+	// (`kind=feedback,conversation`).
+	Kind *ConversationKinds `form:"kind,omitempty" json:"kind,omitempty"`
+
 	// Cursor The `next_cursor` of the previous page.
 	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
 
@@ -15277,7 +15294,7 @@ type ListConversationsParams struct {
 	// Kind Only conversations of these kinds, e.g. `feedback` for the feedback view. Repeat the
 	// parameter (`kind=feedback&kind=conversation`) or give a comma-separated list
 	// (`kind=feedback,conversation`).
-	Kind *[]ConversationKind `form:"kind,omitempty" json:"kind,omitempty"`
+	Kind *ConversationKinds `form:"kind,omitempty" json:"kind,omitempty"`
 
 	// ChannelKind Only conversations that started on a channel of these kinds (`channel_kind` on the
 	// conversation). Repeat the parameter or give a comma-separated list. Conversations
@@ -15336,6 +15353,11 @@ type BulkUpdateConversationsParams struct {
 
 // GetConversationCountsParams defines parameters for GetConversationCounts.
 type GetConversationCountsParams struct {
+	// Kind Only conversations of these kinds, e.g. `feedback` for the feedback view. Repeat the
+	// parameter (`kind=feedback&kind=conversation`) or give a comma-separated list
+	// (`kind=feedback,conversation`).
+	Kind *ConversationKinds `form:"kind,omitempty" json:"kind,omitempty"`
+
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -21591,6 +21613,19 @@ func (siw *ServerInterfaceWrapper) ListClientConversations(w http.ResponseWriter
 
 	// Parameter object where we will unmarshal all parameters from the context
 	var params ListClientConversationsParams
+
+	// ------------- Optional query parameter "kind" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "kind", r.URL.Query(), &params.Kind, runtime.BindQueryParameterOptions{Type: "array", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "kind"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "kind", Err: err})
+		}
+		return
+	}
 
 	// ------------- Optional query parameter "cursor" -------------
 
@@ -28761,6 +28796,19 @@ func (siw *ServerInterfaceWrapper) GetConversationCounts(w http.ResponseWriter, 
 
 	// Parameter object where we will unmarshal all parameters from the context
 	var params GetConversationCountsParams
+
+	// ------------- Optional query parameter "kind" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "kind", r.URL.Query(), &params.Kind, runtime.BindQueryParameterOptions{Type: "array", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "kind"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "kind", Err: err})
+		}
+		return
+	}
 
 	headers := r.Header
 

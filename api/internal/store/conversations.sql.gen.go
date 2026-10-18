@@ -35,6 +35,7 @@ WHERE c.workspace_id = $1 AND c.status = 'open'
   AND ($2::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
       WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = $3::uuid))
+  AND ($4::text[] IS NULL OR c.kind = ANY($4::text[]))
 GROUP BY 1, 2, 3
 `
 
@@ -42,6 +43,7 @@ type CountOpenConversationsParams struct {
 	WorkspaceID uuid.UUID
 	AllInboxes  bool
 	ViewerID    uuid.UUID
+	Kinds       []string
 }
 
 type CountOpenConversationsRow struct {
@@ -52,7 +54,12 @@ type CountOpenConversationsRow struct {
 }
 
 func (q *Queries) CountOpenConversations(ctx context.Context, arg CountOpenConversationsParams) ([]CountOpenConversationsRow, error) {
-	rows, err := q.db.Query(ctx, countOpenConversations, arg.WorkspaceID, arg.AllInboxes, arg.ViewerID)
+	rows, err := q.db.Query(ctx, countOpenConversations,
+		arg.WorkspaceID,
+		arg.AllInboxes,
+		arg.ViewerID,
+		arg.Kinds,
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -84,6 +91,7 @@ WHERE c.workspace_id = $1 AND c.status = 'open' AND NOT c.spam
   AND ($2::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
       WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = $3::uuid))
+  AND ($4::text[] IS NULL OR c.kind = ANY($4::text[]))
 GROUP BY cl.label_id
 ORDER BY cl.label_id
 `
@@ -92,6 +100,7 @@ type CountOpenConversationsByLabelParams struct {
 	WorkspaceID uuid.UUID
 	AllInboxes  bool
 	ViewerID    uuid.UUID
+	Kinds       []string
 }
 
 type CountOpenConversationsByLabelRow struct {
@@ -100,7 +109,12 @@ type CountOpenConversationsByLabelRow struct {
 }
 
 func (q *Queries) CountOpenConversationsByLabel(ctx context.Context, arg CountOpenConversationsByLabelParams) ([]CountOpenConversationsByLabelRow, error) {
-	rows, err := q.db.Query(ctx, countOpenConversationsByLabel, arg.WorkspaceID, arg.AllInboxes, arg.ViewerID)
+	rows, err := q.db.Query(ctx, countOpenConversationsByLabel,
+		arg.WorkspaceID,
+		arg.AllInboxes,
+		arg.ViewerID,
+		arg.Kinds,
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -126,6 +140,7 @@ WHERE c.workspace_id = $1 AND c.status = 'open' AND NOT c.spam AND c.kind = 'fee
   AND ($2::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
       WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = $3::uuid))
+  AND ($4::text[] IS NULL OR c.kind = ANY($4::text[]))
 GROUP BY 1
 ORDER BY 1
 `
@@ -134,6 +149,7 @@ type CountOpenFeedbackParams struct {
 	WorkspaceID uuid.UUID
 	AllInboxes  bool
 	ViewerID    uuid.UUID
+	Kinds       []string
 }
 
 type CountOpenFeedbackRow struct {
@@ -142,7 +158,12 @@ type CountOpenFeedbackRow struct {
 }
 
 func (q *Queries) CountOpenFeedback(ctx context.Context, arg CountOpenFeedbackParams) ([]CountOpenFeedbackRow, error) {
-	rows, err := q.db.Query(ctx, countOpenFeedback, arg.WorkspaceID, arg.AllInboxes, arg.ViewerID)
+	rows, err := q.db.Query(ctx, countOpenFeedback,
+		arg.WorkspaceID,
+		arg.AllInboxes,
+		arg.ViewerID,
+		arg.Kinds,
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -827,6 +848,68 @@ type RemoveConversationLabelParams struct {
 func (q *Queries) RemoveConversationLabel(ctx context.Context, arg RemoveConversationLabelParams) error {
 	_, err := q.db.Exec(ctx, removeConversationLabel, arg.WorkspaceID, arg.ConversationID, arg.LabelID)
 	return err
+}
+
+const setFeedbackFirstMessage = `-- name: SetFeedbackFirstMessage :one
+UPDATE conversations c SET feedback = c.feedback || jsonb_build_object(
+    'text', $1::text,
+    'attachment_count', (SELECT count(*) FROM attachments a WHERE a.workspace_id = c.workspace_id AND a.message_id = $2::uuid))
+WHERE c.workspace_id = $3 AND c.id = $4 AND c.kind = 'feedback'
+RETURNING id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id, migration_id, imported_at
+`
+
+type SetFeedbackFirstMessageParams struct {
+	Text        string
+	MessageID   uuid.UUID
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) SetFeedbackFirstMessage(ctx context.Context, arg SetFeedbackFirstMessageParams) (Conversation, error) {
+	row := q.db.QueryRow(ctx, setFeedbackFirstMessage,
+		arg.Text,
+		arg.MessageID,
+		arg.WorkspaceID,
+		arg.ID,
+	)
+	var i Conversation
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.InboxID,
+		&i.ContactID,
+		&i.ChannelID,
+		&i.Subject,
+		&i.Status,
+		&i.SnoozeUntil,
+		&i.Priority,
+		&i.AssigneeID,
+		&i.LastMessageAt,
+		&i.LastActivityAt,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.Spam,
+		&i.EmailToken,
+		&i.RelatedConversationID,
+		&i.ContinuityThrough,
+		&i.ContinuitySentAt,
+		&i.Kind,
+		&i.Feedback,
+		&i.EmailAddress,
+		&i.ClosedAt,
+		&i.Rating,
+		&i.RatingComment,
+		&i.RatedAt,
+		&i.RatingRequestedAt,
+		&i.LastReadByContactAt,
+		&i.PageUrl,
+		&i.PageTitle,
+		&i.ChannelKind,
+		&i.BroadcastID,
+		&i.MigrationID,
+		&i.ImportedAt,
+	)
+	return i, err
 }
 
 const touchConversation = `-- name: TouchConversation :exec

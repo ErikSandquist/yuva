@@ -7530,7 +7530,8 @@ type ClientContact struct {
 // ClientConversation defines model for ClientConversation.
 type ClientConversation struct {
 	// CanRate The contact may rate it now with `POST /client/v1/conversations/{id}/rating`: the inbox
-	// asks for ratings (`ask_for_rating`), the conversation is closed, was closed at most 30
+	// asks for ratings (`ask_for_rating`), the conversation is not a `feedback` (feedback is
+	// never rated), it is closed, was closed at most 30
 	// days ago and after the inbox started asking, and has no rating since it was closed. A message from the contact reopens it,
 	// and the next close allows a new rating.
 	CanRate   bool      `json:"can_rate"`
@@ -10378,10 +10379,13 @@ type ExternalId struct {
 // Feedback What a `feedback` conversation was sent with. Absent fields were not sent.
 type Feedback struct {
 	// AllowEmail The contact allowed replies by e-mail.
-	AllowEmail bool             `json:"allow_email"`
-	AppVersion *string          `json:"app_version,omitempty"`
-	Build      *string          `json:"build,omitempty"`
-	Category   FeedbackCategory `json:"category"`
+	AllowEmail bool    `json:"allow_email"`
+	AppVersion *string `json:"app_version,omitempty"`
+
+	// AttachmentCount Files (e.g. screenshots) attached to the contact's first message.
+	AttachmentCount int32            `json:"attachment_count"`
+	Build           *string          `json:"build,omitempty"`
+	Category        FeedbackCategory `json:"category"`
 
 	// DeviceModel Examples: iPhone17,1
 	DeviceModel *string `json:"device_model,omitempty"`
@@ -10403,6 +10407,10 @@ type Feedback struct {
 
 	// Screen The app screen or route the feedback was sent from.
 	Screen *string `json:"screen,omitempty"`
+
+	// Text The first line of the contact's first message, trimmed and cut to 200 characters; empty
+	// when that message has no text. For a triage row; the message itself is in the thread.
+	Text string `json:"text"`
 }
 
 // FeedbackCategory defines model for FeedbackCategory.
@@ -10611,6 +10619,7 @@ type Inbox struct {
 	// the widget and the mobile SDKs offer it, and e-mail contacts get a request with two
 	// links after a member's conversation is closed. Off by default. Only conversations
 	// closed after it was turned on can be rated; turning it off and on again starts over.
+	// Feedback is never rated.
 	AskForRating bool          `json:"ask_for_rating"`
 	Branding     InboxBranding `json:"branding"`
 
@@ -14307,6 +14316,9 @@ type ContactId = uuid.UUID
 // ConversationId defines model for ConversationId.
 type ConversationId = uuid.UUID
 
+// ConversationKinds defines model for ConversationKinds.
+type ConversationKinds = []ConversationKind
+
 // Cursor defines model for Cursor.
 type Cursor = string
 
@@ -14424,6 +14436,11 @@ type ListClientDiscussionsParams struct {
 
 // ListClientConversationsParams defines parameters for ListClientConversations.
 type ListClientConversationsParams struct {
+	// Kind Only conversations of these kinds, e.g. `feedback` for the feedback view. Repeat the
+	// parameter (`kind=feedback&kind=conversation`) or give a comma-separated list
+	// (`kind=feedback,conversation`).
+	Kind *ConversationKinds `form:"kind,omitempty" json:"kind,omitempty"`
+
 	// Cursor The `next_cursor` of the previous page.
 	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
 
@@ -15275,7 +15292,7 @@ type ListConversationsParams struct {
 	// Kind Only conversations of these kinds, e.g. `feedback` for the feedback view. Repeat the
 	// parameter (`kind=feedback&kind=conversation`) or give a comma-separated list
 	// (`kind=feedback,conversation`).
-	Kind *[]ConversationKind `form:"kind,omitempty" json:"kind,omitempty"`
+	Kind *ConversationKinds `form:"kind,omitempty" json:"kind,omitempty"`
 
 	// ChannelKind Only conversations that started on a channel of these kinds (`channel_kind` on the
 	// conversation). Repeat the parameter or give a comma-separated list. Conversations
@@ -15334,6 +15351,11 @@ type BulkUpdateConversationsParams struct {
 
 // GetConversationCountsParams defines parameters for GetConversationCounts.
 type GetConversationCountsParams struct {
+	// Kind Only conversations of these kinds, e.g. `feedback` for the feedback view. Repeat the
+	// parameter (`kind=feedback&kind=conversation`) or give a comma-separated list
+	// (`kind=feedback,conversation`).
+	Kind *ConversationKinds `form:"kind,omitempty" json:"kind,omitempty"`
+
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -20825,7 +20847,8 @@ type ClientInterface interface {
 	// ListClientConversations List the contact's conversations
 	//
 	// The contact's conversations in the session's inbox, on any channel, latest message first.
-	// Members' notes and internal events are never shown to contacts.
+	// Members' notes and internal events are never shown to contacts. `kind` keeps only
+	// conversations of those kinds, e.g. `kind=feedback` for the feedback the contact sent.
 	//
 	// Corresponds with GET /client/v1/conversations (the `ListClientConversations` operationId).
 	ListClientConversations(ctx context.Context, params *ListClientConversationsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -20911,7 +20934,7 @@ type ClientInterface interface {
 	// whose `can_rate` is true. It is stored once per close: members see it in the thread as a
 	// `rated` event and on the conversation, and it sends the `conversation.rated` webhook.
 	// Answers `409 rating_unavailable` when `can_rate` is false (the inbox does not ask for
-	// ratings, the conversation is open, the close is older than 30 days) and
+	// ratings, the conversation is open or a `feedback`, the close is older than 30 days) and
 	// `409 already_rated` when the contact already rated this close.
 	//
 	// Takes any type of body and a specified content type.
@@ -20925,7 +20948,7 @@ type ClientInterface interface {
 	// whose `can_rate` is true. It is stored once per close: members see it in the thread as a
 	// `rated` event and on the conversation, and it sends the `conversation.rated` webhook.
 	// Answers `409 rating_unavailable` when `can_rate` is false (the inbox does not ask for
-	// ratings, the conversation is open, the close is older than 30 days) and
+	// ratings, the conversation is open or a `feedback`, the close is older than 30 days) and
 	// `409 already_rated` when the contact already rated this close.
 	//
 	// Takes a body of the `application/json` content type.
@@ -23265,6 +23288,10 @@ type ClientInterface interface {
 	// calling member (`0` for API keys), unassigned ones, and per inbox, per assignee and per
 	// label. Inboxes, assignees and labels without open conversations are left out of their lists. Conversations flagged as
 	// spam are counted only in `spam`.
+	//
+	// `kind` limits every count to conversations of those kinds, as on `GET /v1/conversations`:
+	// the panel's Conversations view sends `kind=conversation`, its Feedback section
+	// `kind=feedback`. Without it every kind is counted.
 	//
 	// Scope: `conversations:read`.
 	//
@@ -25866,7 +25893,7 @@ type ClientInterface interface {
 	// now: replies sent by members (messages members wrote or drafts they sent; not notes, not
 	// bots' own messages), conversations closed, the median time from a contact's first
 	// message to the first member reply, over the conversations whose first reply falls in the
-	// window, and the ratings contacts gave in it. `members` breaks replies and closes down per member, leaving out members with
+	// window, and the ratings contacts gave in it (feedback is never rated and left out). `members` breaks replies and closes down per member, leaving out members with
 	// neither. Nothing is stored for it; it is counted from the messages each time.
 	//
 	// `since` defaults to the start of today in `timezone` (an IANA name, `UTC` by default); the
@@ -26834,7 +26861,8 @@ func (c *Client) SetClientContactEmail(ctx context.Context, body SetClientContac
 // ListClientConversations List the contact's conversations
 //
 // The contact's conversations in the session's inbox, on any channel, latest message first.
-// Members' notes and internal events are never shown to contacts.
+// Members' notes and internal events are never shown to contacts. `kind` keeps only
+// conversations of those kinds, e.g. `kind=feedback` for the feedback the contact sent.
 //
 // Corresponds with GET /client/v1/conversations (the `ListClientConversations` operationId).
 func (c *Client) ListClientConversations(ctx context.Context, params *ListClientConversationsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -26990,7 +27018,7 @@ func (c *Client) CreateClientMessage(ctx context.Context, conversationId Convers
 // whose `can_rate` is true. It is stored once per close: members see it in the thread as a
 // `rated` event and on the conversation, and it sends the `conversation.rated` webhook.
 // Answers `409 rating_unavailable` when `can_rate` is false (the inbox does not ask for
-// ratings, the conversation is open, the close is older than 30 days) and
+// ratings, the conversation is open or a `feedback`, the close is older than 30 days) and
 // `409 already_rated` when the contact already rated this close.
 //
 // Takes any type of body and a specified content type.
@@ -27014,7 +27042,7 @@ func (c *Client) RateClientConversationWithBody(ctx context.Context, conversatio
 // whose `can_rate` is true. It is stored once per close: members see it in the thread as a
 // `rated` event and on the conversation, and it sends the `conversation.rated` webhook.
 // Answers `409 rating_unavailable` when `can_rate` is false (the inbox does not ask for
-// ratings, the conversation is open, the close is older than 30 days) and
+// ratings, the conversation is open or a `feedback`, the close is older than 30 days) and
 // `409 already_rated` when the contact already rated this close.
 //
 // Takes a body of the `application/json` content type.
@@ -31164,6 +31192,10 @@ func (c *Client) BulkUpdateConversations(ctx context.Context, params *BulkUpdate
 // calling member (`0` for API keys), unassigned ones, and per inbox, per assignee and per
 // label. Inboxes, assignees and labels without open conversations are left out of their lists. Conversations flagged as
 // spam are counted only in `spam`.
+//
+// `kind` limits every count to conversations of those kinds, as on `GET /v1/conversations`:
+// the panel's Conversations view sends `kind=conversation`, its Feedback section
+// `kind=feedback`. Without it every kind is counted.
 //
 // Scope: `conversations:read`.
 //
@@ -35645,7 +35677,7 @@ func (c *Client) GetVapidPublicKey(ctx context.Context, reqEditors ...RequestEdi
 // now: replies sent by members (messages members wrote or drafts they sent; not notes, not
 // bots' own messages), conversations closed, the median time from a contact's first
 // message to the first member reply, over the conversations whose first reply falls in the
-// window, and the ratings contacts gave in it. `members` breaks replies and closes down per member, leaving out members with
+// window, and the ratings contacts gave in it (feedback is never rated and left out). `members` breaks replies and closes down per member, leaving out members with
 // neither. Nothing is stored for it; it is counted from the messages each time.
 //
 // `since` defaults to the start of today in `timezone` (an IANA name, `UTC` by default); the
@@ -36798,6 +36830,18 @@ func NewListClientConversationsRequest(server string, params *ListClientConversa
 		// styled parameters, preserving literal commas as delimiters
 		// per the OpenAPI spec (e.g. "color=blue,black,brown").
 		var rawQueryFragments []string
+
+		if params.Kind != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "kind", *params.Kind, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "array", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
 
 		if params.Cursor != nil {
 
@@ -44911,6 +44955,33 @@ func NewGetConversationCountsRequest(server string, params *GetConversationCount
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Kind != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "kind", *params.Kind, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "array", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
 	}
 
 	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
@@ -55212,7 +55283,8 @@ type ClientWithResponsesInterface interface {
 	// ListClientConversationsWithResponse List the contact's conversations
 	//
 	// The contact's conversations in the session's inbox, on any channel, latest message first.
-	// Members' notes and internal events are never shown to contacts.
+	// Members' notes and internal events are never shown to contacts. `kind` keeps only
+	// conversations of those kinds, e.g. `kind=feedback` for the feedback the contact sent.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -55304,7 +55376,7 @@ type ClientWithResponsesInterface interface {
 	// whose `can_rate` is true. It is stored once per close: members see it in the thread as a
 	// `rated` event and on the conversation, and it sends the `conversation.rated` webhook.
 	// Answers `409 rating_unavailable` when `can_rate` is false (the inbox does not ask for
-	// ratings, the conversation is open, the close is older than 30 days) and
+	// ratings, the conversation is open or a `feedback`, the close is older than 30 days) and
 	// `409 already_rated` when the contact already rated this close.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
@@ -55318,7 +55390,7 @@ type ClientWithResponsesInterface interface {
 	// whose `can_rate` is true. It is stored once per close: members see it in the thread as a
 	// `rated` event and on the conversation, and it sends the `conversation.rated` webhook.
 	// Answers `409 rating_unavailable` when `can_rate` is false (the inbox does not ask for
-	// ratings, the conversation is open, the close is older than 30 days) and
+	// ratings, the conversation is open or a `feedback`, the close is older than 30 days) and
 	// `409 already_rated` when the contact already rated this close.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
@@ -57822,6 +57894,10 @@ type ClientWithResponsesInterface interface {
 	// calling member (`0` for API keys), unassigned ones, and per inbox, per assignee and per
 	// label. Inboxes, assignees and labels without open conversations are left out of their lists. Conversations flagged as
 	// spam are counted only in `spam`.
+	//
+	// `kind` limits every count to conversations of those kinds, as on `GET /v1/conversations`:
+	// the panel's Conversations view sends `kind=conversation`, its Feedback section
+	// `kind=feedback`. Without it every kind is counted.
 	//
 	// Scope: `conversations:read`.
 	//
@@ -60613,7 +60689,7 @@ type ClientWithResponsesInterface interface {
 	// now: replies sent by members (messages members wrote or drafts they sent; not notes, not
 	// bots' own messages), conversations closed, the median time from a contact's first
 	// message to the first member reply, over the conversations whose first reply falls in the
-	// window, and the ratings contacts gave in it. `members` breaks replies and closes down per member, leaving out members with
+	// window, and the ratings contacts gave in it (feedback is never rated and left out). `members` breaks replies and closes down per member, leaving out members with
 	// neither. Nothing is stored for it; it is counted from the messages each time.
 	//
 	// `since` defaults to the start of today in `timezone` (an IANA name, `UTC` by default); the
@@ -82077,7 +82153,8 @@ func (c *ClientWithResponses) SetClientContactEmailWithResponse(ctx context.Cont
 // ListClientConversationsWithResponse List the contact's conversations
 //
 // The contact's conversations in the session's inbox, on any channel, latest message first.
-// Members' notes and internal events are never shown to contacts.
+// Members' notes and internal events are never shown to contacts. `kind` keeps only
+// conversations of those kinds, e.g. `kind=feedback` for the feedback the contact sent.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -82211,7 +82288,7 @@ func (c *ClientWithResponses) CreateClientMessageWithResponse(ctx context.Contex
 // whose `can_rate` is true. It is stored once per close: members see it in the thread as a
 // `rated` event and on the conversation, and it sends the `conversation.rated` webhook.
 // Answers `409 rating_unavailable` when `can_rate` is false (the inbox does not ask for
-// ratings, the conversation is open, the close is older than 30 days) and
+// ratings, the conversation is open or a `feedback`, the close is older than 30 days) and
 // `409 already_rated` when the contact already rated this close.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
@@ -82231,7 +82308,7 @@ func (c *ClientWithResponses) RateClientConversationWithBodyWithResponse(ctx con
 // whose `can_rate` is true. It is stored once per close: members see it in the thread as a
 // `rated` event and on the conversation, and it sends the `conversation.rated` webhook.
 // Answers `409 rating_unavailable` when `can_rate` is false (the inbox does not ask for
-// ratings, the conversation is open, the close is older than 30 days) and
+// ratings, the conversation is open or a `feedback`, the close is older than 30 days) and
 // `409 already_rated` when the contact already rated this close.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
@@ -85821,6 +85898,10 @@ func (c *ClientWithResponses) BulkUpdateConversationsWithResponse(ctx context.Co
 // calling member (`0` for API keys), unassigned ones, and per inbox, per assignee and per
 // label. Inboxes, assignees and labels without open conversations are left out of their lists. Conversations flagged as
 // spam are counted only in `spam`.
+//
+// `kind` limits every count to conversations of those kinds, as on `GET /v1/conversations`:
+// the panel's Conversations view sends `kind=conversation`, its Feedback section
+// `kind=feedback`. Without it every kind is counted.
 //
 // Scope: `conversations:read`.
 //
@@ -89740,7 +89821,7 @@ func (c *ClientWithResponses) GetVapidPublicKeyWithResponse(ctx context.Context,
 // now: replies sent by members (messages members wrote or drafts they sent; not notes, not
 // bots' own messages), conversations closed, the median time from a contact's first
 // message to the first member reply, over the conversations whose first reply falls in the
-// window, and the ratings contacts gave in it. `members` breaks replies and closes down per member, leaving out members with
+// window, and the ratings contacts gave in it (feedback is never rated and left out). `members` breaks replies and closes down per member, leaving out members with
 // neither. Nothing is stored for it; it is counted from the messages each time.
 //
 // `since` defaults to the start of today in `timezone` (an IANA name, `UTC` by default); the

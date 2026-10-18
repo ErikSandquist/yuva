@@ -134,6 +134,7 @@ SELECT count(*) FROM contact_emails WHERE workspace_id = $1 AND contact_id = $2;
 -- name: ListContactConversations :many
 SELECT c.* FROM conversations c
 WHERE c.workspace_id = @workspace_id AND c.inbox_id = @inbox_id AND c.contact_id = @contact_id
+  AND (sqlc.narg(kinds)::text[] IS NULL OR c.kind = ANY(sqlc.narg(kinds)::text[]))
   AND (sqlc.narg(cursor_at)::timestamptz IS NULL
        OR (coalesce(c.last_message_at, c.created_at), c.id) < (sqlc.narg(cursor_at)::timestamptz, sqlc.narg(cursor_id)::uuid))
 ORDER BY coalesce(c.last_message_at, c.created_at) DESC, c.id DESC

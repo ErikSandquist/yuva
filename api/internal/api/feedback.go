@@ -14,6 +14,8 @@ import (
 	"github.com/productdevbook/yuva/api/internal/store"
 )
 
+const feedbackTextRunes = 200
+
 var feedbackCategories = []oas.FeedbackCategory{oas.Bug, oas.Idea, oas.Praise, oas.Other}
 
 var (
@@ -64,6 +66,16 @@ func conversationFeedback(c store.Conversation) *oas.Feedback {
 		return nil
 	}
 	return &f
+}
+
+// feedbackText is the first line of a feedback's first message, as the 00061 migration computes it.
+func feedbackText(body string) string {
+	line, _, _ := strings.Cut(strings.TrimSpace(body), "\n")
+	line = strings.TrimSpace(line)
+	if r := []rune(line); len(r) > feedbackTextRunes {
+		line = strings.TrimSpace(string(r[:feedbackTextRunes]))
+	}
+	return line
 }
 
 // emailsReplies tells whether members' replies the contact has not read go out by e-mail: always
@@ -207,12 +219,17 @@ func (s *Server) CreateClientFeedback(ctx context.Context, req oas.CreateClientF
 			}
 			events.add(realtime.ContactUpdated, nil, nil, body)
 		}
-		c, err := s.createFeedbackConversation(ctx, q, events, cp.workspaceID, cp.inboxID, cp.contactID, cp.channelID, in.subject, fb)
+		mark := len(events.items)
+		c, err := s.createFeedbackConversation(ctx, q, cp.workspaceID, cp.inboxID, cp.contactID, cp.channelID, in.subject, fb)
 		if err != nil {
 			return err
 		}
 		msg, _, err := s.addContactMessage(ctx, q, events, cp, c, in, true)
+		if err != nil {
+			return err
+		}
 		convID, msgID = c.ID, msg.ID
+		_, err = s.feedbackCreated(ctx, q, events, mark, c, msg)
 		return err
 	})
 	if err != nil {
@@ -229,7 +246,7 @@ func (s *Server) CreateClientFeedback(ctx context.Context, req oas.CreateClientF
 	return oas.CreateClientFeedback201JSONResponse(out), nil
 }
 
-func (s *Server) createFeedbackConversation(ctx context.Context, q *store.Queries, events *eventBatch, ws, inboxID, contactID, channelID uuid.UUID, subject *string, fb oas.Feedback) (store.Conversation, error) {
+func (s *Server) createFeedbackConversation(ctx context.Context, q *store.Queries, ws, inboxID, contactID, channelID uuid.UUID, subject *string, fb oas.Feedback) (store.Conversation, error) {
 	subj := ""
 	if subject != nil {
 		subj = *subject
@@ -239,10 +256,17 @@ func (s *Server) createFeedbackConversation(ctx context.Context, q *store.Querie
 		ID: newID(), WorkspaceID: ws, InboxID: inboxID, ContactID: contactID, ChannelID: &channelID,
 		Subject: subj, Priority: string(oas.Normal), Kind: &kind, Feedback: mustJSON(fb), PageUrl: fb.PageUrl, PageTitle: fb.PageTitle, Now: s.now(),
 	})
+	return c, err
+}
+
+// feedbackCreated keeps the first message's text and attachment count on the feedback as stored,
+// and queues conversation.created at mark, ahead of the message's own event.
+func (s *Server) feedbackCreated(ctx context.Context, q *store.Queries, events *eventBatch, mark int, c store.Conversation, msg messageRow) (store.Conversation, error) {
+	c, err := q.SetFeedbackFirstMessage(ctx, store.SetFeedbackFirstMessageParams{WorkspaceID: c.WorkspaceID, ID: c.ID, Text: feedbackText(msg.Body), MessageID: msg.ID})
 	if err != nil {
 		return c, err
 	}
-	events.conversation(realtime.ConversationCreated, c, conversationBody(c, nil))
+	events.conversationAt(mark, realtime.ConversationCreated, c, conversationBody(c, nil))
 	return c, nil
 }
 
@@ -326,13 +350,17 @@ func (s *Server) CreateFeedback(ctx context.Context, req oas.CreateFeedbackReque
 		if err != nil {
 			return err
 		}
-		c, err := s.createFeedbackConversation(ctx, q, events, p.workspaceID, inbox.ID, contact.ID, ch.ID, in.subject, fb)
+		mark := len(events.items)
+		c, err := s.createFeedbackConversation(ctx, q, p.workspaceID, inbox.ID, contact.ID, ch.ID, in.subject, fb)
 		if err != nil {
 			return err
 		}
 		cp := contactPrincipal{workspaceID: p.workspaceID, inboxID: inbox.ID, channelID: ch.ID, contactID: contact.ID}
 		msg, atts, err := s.addContactMessage(ctx, q, events, cp, c, in, true)
 		if err != nil {
+			return err
+		}
+		if c, err = s.feedbackCreated(ctx, q, events, mark, c, msg); err != nil {
 			return err
 		}
 		out.Message = messageBody(msg, atts)

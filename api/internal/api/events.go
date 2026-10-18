@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"slices"
 	"uuid"
 
 	"github.com/jackc/pgx/v5"
@@ -46,6 +47,15 @@ func (b *eventBatch) add(typ string, inboxID, conversationID *uuid.UUID, data an
 		return
 	}
 	b.items = append(b.items, pendingEvent{typ: typ, inboxID: inboxID, conversationID: conversationID, data: mustJSON(data)})
+}
+
+// conversationAt queues a conversation event at position i, before events queued after i.
+func (b *eventBatch) conversationAt(i int, typ string, c store.Conversation, data any) {
+	if b.quiet {
+		return
+	}
+	inbox, conv := c.InboxID, c.ID
+	b.items = slices.Insert(b.items, i, pendingEvent{typ: typ, inboxID: &inbox, conversationID: &conv, data: mustJSON(data)})
 }
 
 func (b *eventBatch) conversation(typ string, c store.Conversation, data any) {

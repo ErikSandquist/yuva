@@ -130,7 +130,7 @@ func (q *Queries) ContactFirstReplies(ctx context.Context, arg ContactFirstRepli
 const contactRatings = `-- name: ContactRatings :many
 SELECT cv.rating::text AS rating, count(*) AS n
 FROM conversations cv
-WHERE cv.workspace_id = $1 AND cv.contact_id = $2 AND NOT cv.spam AND cv.rating IS NOT NULL
+WHERE cv.workspace_id = $1 AND cv.contact_id = $2 AND NOT cv.spam AND cv.kind <> 'feedback' AND cv.rating IS NOT NULL
   AND ($3::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
       WHERE iv.workspace_id = cv.workspace_id AND iv.inbox_id = cv.inbox_id AND iv.viewer_id = $4::uuid))
