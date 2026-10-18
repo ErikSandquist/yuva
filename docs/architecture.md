@@ -75,6 +75,18 @@ is called change. Decisions:
   feedback shows the category and state in its header and, when resolved, a line saying the team
   marked it resolved, with the composer still open. The feedback form's sent screen has View
   feedback next to Done, which opens that thread.
+- **Progress.** A member can tell the contact where a feedback stands: `feedback.progress` is one of
+  `planned`, `in_progress`, `done`, `wont_do`, or absent when nobody set it. It is separate from the
+  status: a feedback can be `done` and still open, or resolved with no progress. Members set and clear
+  it in the panel's feedback header and on the conversation update; each change is a conversation
+  event (`feedback_progress`) in the timeline, the contact sees it as a line in the thread, and the
+  contact's row shows the progress (Planned, In progress, Done, Won't do) instead of Sent or Answered
+  while it is set. The panel's feedback row shows it as a chip.
+- **SDK look.** The Swift and Kotlin views look like a native messaging app, not a settings list: rows
+  edge to edge with a round avatar or category icon, a short time (14:32, Yesterday), unread in bold
+  with a dot, the team name and reply time as the title's subtitle, the feedback state as a small
+  colored tag, a thread of bubbles with the composer riding the keyboard. There is no theming API;
+  apps that want their own look build on `YuvaClient`.
 
 Members change up to 100 conversations in one request (`POST /v1/conversations/bulk`: status,
 assignee, labels to add and remove); each is checked against the caller's inbox access and

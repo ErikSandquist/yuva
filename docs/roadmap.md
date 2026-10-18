@@ -301,9 +301,12 @@ Status: in progress; API, panel and SDKs done, the Swift and Kotlin samples not 
 - Swift and Kotlin: Messages and Feedback tabs, feedback states (Sent, Answered, Resolved), the
   resolved line in the thread, View feedback after sending. The widget calls a resolved feedback
   Resolved.
+- Progress on feedback (Planned, In progress, Done, Won't do) set in the panel, shown to the contact
+  in the list and the thread; the Swift and Kotlin views redrawn as a native messaging app.
 
 Accept: in the Swift and Kotlin samples a user sends a bug report with a screenshot and finds it under
 Feedback as Sent; a member finds it in the panel's Feedback section under Bug, not in Conversations,
 answers it and the app shows Answered, then resolves it with Reply and resolve and the app shows
 Resolved with no rating asked; the user writes again and it is open in the panel again; an agent sees
-only feedback of inboxes they may see.
+only feedback of inboxes they may see; a member sets In progress and then Done and the app shows each
+in the row and as a line in the thread.
