@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">Kirim masukan</string>
     <string name="yuva_presence_away">Kami akan membalas secepat mungkin</string>
     <string name="yuva_presence_online">Kami online</string>
-    <string name="yuva_presence_reply_in">Biasanya membalas dalam %1$d menit</string>
+    <string name="yuva_presence_reply_in">Biasanya membalas dalam %1$s</string>
     <string name="yuva_rating_bad">Buruk</string>
     <string name="yuva_rating_comment_placeholder">Ada yang ingin ditambahkan? (opsional)</string>
     <string name="yuva_rating_good">Baik</string>

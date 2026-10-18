@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">అభిప్రాయం పంపండి</string>
     <string name="yuva_presence_away">మేము వీలైనంత త్వరగా సమాధానం ఇస్తాము</string>
     <string name="yuva_presence_online">మేము ఆన్‌లైన్‌లో ఉన్నాము</string>
-    <string name="yuva_presence_reply_in">సాధారణంగా %1$d నిమిషాల్లో సమాధానం ఇస్తారు</string>
+    <string name="yuva_presence_reply_in">సాధారణంగా %1$s లో సమాధానం ఇస్తారు</string>
     <string name="yuva_rating_bad">చెడు</string>
     <string name="yuva_rating_comment_placeholder">ఏదైనా జోడించాలనుకుంటున్నారా? (ఐచ్ఛికం)</string>
     <string name="yuva_rating_good">బాగుంది</string>

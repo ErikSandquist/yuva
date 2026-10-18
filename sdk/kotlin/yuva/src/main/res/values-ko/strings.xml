@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">의견 보내기</string>
     <string name="yuva_presence_away">최대한 빨리 답변드리겠습니다</string>
     <string name="yuva_presence_online">온라인</string>
-    <string name="yuva_presence_reply_in">보통 %1$d분 이내에 답변합니다</string>
+    <string name="yuva_presence_reply_in">보통 %1$s 이내에 답변합니다</string>
     <string name="yuva_rating_bad">나쁨</string>
     <string name="yuva_rating_comment_placeholder">덧붙이실 말씀이 있나요? (선택 사항)</string>
     <string name="yuva_rating_good">좋음</string>

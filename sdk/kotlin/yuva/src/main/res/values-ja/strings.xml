@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">フィードバックを送信</string>
     <string name="yuva_presence_away">できるだけ早く返信します</string>
     <string name="yuva_presence_online">オンラインです</string>
-    <string name="yuva_presence_reply_in">通常は%1$d分以内に返信します</string>
+    <string name="yuva_presence_reply_in">通常は%1$s以内に返信します</string>
     <string name="yuva_rating_bad">悪い</string>
     <string name="yuva_rating_comment_placeholder">ほかに伝えたいことはありますか?(任意)</string>
     <string name="yuva_rating_good">良い</string>

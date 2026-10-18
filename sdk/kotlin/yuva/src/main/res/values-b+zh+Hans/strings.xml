@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">发送反馈</string>
     <string name="yuva_presence_away">我们会尽快回复</string>
     <string name="yuva_presence_online">我们在线</string>
-    <string name="yuva_presence_reply_in">通常在 %1$d 分钟内回复</string>
+    <string name="yuva_presence_reply_in">通常在 %1$s 内回复</string>
     <string name="yuva_rating_bad">差</string>
     <string name="yuva_rating_comment_placeholder">还有什么想补充的吗？（选填）</string>
     <string name="yuva_rating_good">好</string>

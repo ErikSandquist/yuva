@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">Geri bildirim gönder</string>
     <string name="yuva_presence_away">En kısa sürede yanıt vereceğiz</string>
     <string name="yuva_presence_online">Çevrimiçiyiz</string>
-    <string name="yuva_presence_reply_in">Genellikle %1$d dakika içinde yanıt verir</string>
+    <string name="yuva_presence_reply_in">Genellikle %1$s içinde yanıt verir</string>
     <string name="yuva_rating_bad">Kötü</string>
     <string name="yuva_rating_comment_placeholder">Eklemek istediğiniz bir şey var mı? (isteğe bağlı)</string>
     <string name="yuva_rating_good">İyi</string>

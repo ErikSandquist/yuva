@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">फ़ीडबैक भेजें</string>
     <string name="yuva_presence_away">हम जल्द से जल्द जवाब देंगे</string>
     <string name="yuva_presence_online">हम ऑनलाइन हैं</string>
-    <string name="yuva_presence_reply_in">आम तौर पर %1$d मिनट में जवाब मिलता है</string>
+    <string name="yuva_presence_reply_in">आमतौर पर %1$s में जवाब देते हैं</string>
     <string name="yuva_rating_bad">खराब</string>
     <string name="yuva_rating_comment_placeholder">कुछ और जोड़ना चाहेंगे? (वैकल्पिक)</string>
     <string name="yuva_rating_good">अच्छा</string>

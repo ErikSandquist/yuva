@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">שליחת משוב</string>
     <string name="yuva_presence_away">נחזור אליכם בהקדם האפשרי</string>
     <string name="yuva_presence_online">אנחנו אונליין</string>
-    <string name="yuva_presence_reply_in">בדרך כלל עונים תוך %1$d דק׳</string>
+    <string name="yuva_presence_reply_in">בדרך כלל עונה תוך %1$s</string>
     <string name="yuva_rating_bad">גרוע</string>
     <string name="yuva_rating_comment_placeholder">רוצים להוסיף משהו? (אופציונלי)</string>
     <string name="yuva_rating_good">טוב</string>

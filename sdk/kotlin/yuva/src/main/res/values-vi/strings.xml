@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">Gửi phản hồi</string>
     <string name="yuva_presence_away">Chúng tôi sẽ trả lời sớm nhất có thể</string>
     <string name="yuva_presence_online">Chúng tôi đang trực tuyến</string>
-    <string name="yuva_presence_reply_in">Thường trả lời trong vòng %1$d phút</string>
+    <string name="yuva_presence_reply_in">Thường trả lời trong %1$s</string>
     <string name="yuva_rating_bad">Tệ</string>
     <string name="yuva_rating_comment_placeholder">Bạn muốn bổ sung điều gì không? (không bắt buộc)</string>
     <string name="yuva_rating_good">Tốt</string>

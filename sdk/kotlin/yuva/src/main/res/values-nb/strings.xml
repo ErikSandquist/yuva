@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">Send tilbakemelding</string>
     <string name="yuva_presence_away">Vi svarer så snart vi kan</string>
     <string name="yuva_presence_online">Vi er pålogget</string>
-    <string name="yuva_presence_reply_in">Svarer vanligvis innen %1$d min</string>
+    <string name="yuva_presence_reply_in">Svarer vanligvis innen %1$s</string>
     <string name="yuva_rating_bad">Dårlig</string>
     <string name="yuva_rating_comment_placeholder">Er det noe du vil legge til? (valgfritt)</string>
     <string name="yuva_rating_good">Bra</string>

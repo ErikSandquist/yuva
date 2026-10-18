@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">ഫീഡ്ബാക്ക് അയയ്ക്കുക</string>
     <string name="yuva_presence_away">ഞങ്ങൾ കഴിയുന്നത്ര വേഗം മറുപടി നൽകും</string>
     <string name="yuva_presence_online">ഞങ്ങൾ ഓൺലൈനിലുണ്ട്</string>
-    <string name="yuva_presence_reply_in">സാധാരണയായി %1$d മിനിറ്റിനുള്ളിൽ മറുപടി നൽകും</string>
+    <string name="yuva_presence_reply_in">സാധാരണയായി %1$s-നുള്ളിൽ മറുപടി നൽകും</string>
     <string name="yuva_rating_bad">മോശം</string>
     <string name="yuva_rating_comment_placeholder">കൂട്ടിച്ചേർക്കാൻ എന്തെങ്കിലുമുണ്ടോ? (ഓപ്ഷണൽ)</string>
     <string name="yuva_rating_good">നല്ലത്</string>

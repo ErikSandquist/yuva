@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">Αποστολή σχολίων</string>
     <string name="yuva_presence_away">Θα απαντήσουμε το συντομότερο</string>
     <string name="yuva_presence_online">Είμαστε online</string>
-    <string name="yuva_presence_reply_in">Συνήθως απαντά σε %1$d λεπτά</string>
+    <string name="yuva_presence_reply_in">Συνήθως απαντά σε %1$s</string>
     <string name="yuva_rating_bad">Άσχημα</string>
     <string name="yuva_rating_comment_placeholder">Θέλετε να προσθέσετε κάτι; (προαιρετικό)</string>
     <string name="yuva_rating_good">Καλά</string>

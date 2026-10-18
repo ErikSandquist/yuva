@@ -1,5 +1,9 @@
 package dev.yuva.ui
 
+import android.icu.text.MeasureFormat
+import android.icu.util.Measure
+import android.icu.util.MeasureUnit
+import android.icu.util.ULocale
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +22,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.Button
@@ -71,6 +76,8 @@ import dev.yuva.YuvaSession
 import kotlinx.coroutines.launch
 
 internal enum class ConversationsTab { MESSAGES, FEEDBACK }
+
+enum class YuvaConversationsSection { MESSAGES, FEEDBACK }
 
 internal class ConversationsState(private val client: YuvaClient) {
     val messages = mutableStateListOf<YuvaConversation>()
@@ -140,7 +147,7 @@ internal class ConversationsState(private val client: YuvaClient) {
         runCatching { client.conversation(id) }.getOrNull()?.let(::upsert)
     }
 
-    private fun upsert(conversation: YuvaConversation) {
+    fun upsert(conversation: YuvaConversation) {
         messages.removeAll { it.id == conversation.id }
         feedback.removeAll { it.id == conversation.id }
         val list = if (conversation.isFeedback) feedback else messages
@@ -151,6 +158,7 @@ internal class ConversationsState(private val client: YuvaClient) {
 
 private sealed interface Route {
     data class Thread(val id: String?) : Route
+    data object FeedbackForm : Route
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -160,10 +168,13 @@ fun YuvaConversationsView(
     modifier: Modifier = Modifier,
     openConversationId: String? = null,
     onClose: (() -> Unit)? = null,
+    section: YuvaConversationsSection? = null,
 ) {
     val state = remember(client) { ConversationsState(client) }
     var route by remember { mutableStateOf<Route?>(null) }
-    var tab by remember { mutableStateOf(ConversationsTab.MESSAGES) }
+    var tab by remember {
+        mutableStateOf(if (section == YuvaConversationsSection.FEEDBACK) ConversationsTab.FEEDBACK else ConversationsTab.MESSAGES)
+    }
     val scope = rememberCoroutineScope()
     LaunchedEffect(client) { state.load() }
     LaunchedEffect(client) { state.listen() }
@@ -175,19 +186,48 @@ fun YuvaConversationsView(
         YuvaThreadView(client, current.id, modifier, onBack = { route = null })
         return
     }
+    if (current == Route.FeedbackForm) {
+        BackHandler { route = null }
+        YuvaFeedbackView(
+            client,
+            modifier,
+            onViewFeedback = { conversation ->
+                state.upsert(conversation)
+                route = Route.Thread(conversation.id)
+            },
+            onDone = {
+                route = null
+                scope.launch { state.load() }
+            },
+        )
+        return
+    }
     Scaffold(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.yuva_conversations_title)) },
+                title = {
+                    Text(
+                        stringResource(
+                            if (section == YuvaConversationsSection.FEEDBACK) R.string.yuva_feedback_kind
+                            else R.string.yuva_conversations_title,
+                        ),
+                    )
+                },
                 navigationIcon = {
                     if (onClose != null) {
                         IconButton(onClick = onClose) { Icon(Icons.Default.Close, contentDescription = null) }
                     }
                 },
                 actions = {
-                    IconButton(onClick = { route = Route.Thread(null) }, modifier = Modifier.testTag("yuva.conversations.new")) {
-                        Icon(Icons.Default.Create, contentDescription = stringResource(R.string.yuva_conversations_new))
+                    if (section == YuvaConversationsSection.FEEDBACK) {
+                        IconButton(onClick = { route = Route.FeedbackForm }, modifier = Modifier.testTag("yuva.feedback.new")) {
+                            Icon(Icons.Default.Add, contentDescription = stringResource(R.string.yuva_feedback_title))
+                        }
+                    } else {
+                        IconButton(onClick = { route = Route.Thread(null) }, modifier = Modifier.testTag("yuva.conversations.new")) {
+                            Icon(Icons.Default.Create, contentDescription = stringResource(R.string.yuva_conversations_new))
+                        }
                     }
                 },
             )
@@ -201,14 +241,20 @@ fun YuvaConversationsView(
                     action = stringResource(R.string.yuva_error_retry),
                     onAction = { scope.launch { state.load() } },
                 )
-                state.messages.isEmpty() && !state.hasFeedback -> Placeholder(
+                section == YuvaConversationsSection.FEEDBACK && state.feedback.isEmpty() -> Placeholder(
+                    title = stringResource(R.string.yuva_feedback_kind),
+                    action = stringResource(R.string.yuva_feedback_title),
+                    onAction = { route = Route.FeedbackForm },
+                )
+                section == YuvaConversationsSection.MESSAGES && state.messages.isEmpty() ||
+                    section == null && state.messages.isEmpty() && !state.hasFeedback -> Placeholder(
                     title = stringResource(R.string.yuva_conversations_empty),
                     hint = stringResource(R.string.yuva_conversations_empty_hint),
                     action = stringResource(R.string.yuva_conversations_new),
                     onAction = { route = Route.Thread(null) },
                 )
                 else -> Column(Modifier.fillMaxSize()) {
-                    if (state.hasFeedback) {
+                    if (section == null && state.hasFeedback) {
                         SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp)) {
                             ConversationsTab.entries.forEachIndexed { index, option ->
                                 SegmentedButton(
@@ -312,7 +358,16 @@ internal fun presenceText(inbox: YuvaInbox): String {
         return stringResource(if (inbox.presence?.available == true) R.string.yuva_presence_online else R.string.yuva_presence_away)
     }
     val minutes = inbox.expectedReplyMinutes ?: return stringResource(R.string.yuva_presence_away)
-    return stringResource(R.string.yuva_presence_reply_in, minutes)
+    return stringResource(R.string.yuva_presence_reply_in, replyDuration(minutes))
+}
+
+private fun replyDuration(minutes: Int): String {
+    val (value, unit) = when {
+        minutes < 60 -> minutes to MeasureUnit.MINUTE
+        minutes < 1440 -> Math.round(minutes / 60.0).toInt() to MeasureUnit.HOUR
+        else -> Math.round(minutes / 1440.0).toInt() to MeasureUnit.DAY
+    }
+    return MeasureFormat.getInstance(ULocale.getDefault(), MeasureFormat.FormatWidth.WIDE).format(Measure(value, unit))
 }
 
 @Composable

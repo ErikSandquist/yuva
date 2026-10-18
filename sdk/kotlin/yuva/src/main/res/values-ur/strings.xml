@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">رائے بھیجیں</string>
     <string name="yuva_presence_away">ہم جلد از جلد جواب دیں گے</string>
     <string name="yuva_presence_online">ہم آن لائن ہیں</string>
-    <string name="yuva_presence_reply_in">عموماً %1$d منٹ کے اندر جواب دیتے ہیں</string>
+    <string name="yuva_presence_reply_in">عموماً %1$s میں جواب دیتے ہیں</string>
     <string name="yuva_rating_bad">خراب</string>
     <string name="yuva_rating_comment_placeholder">کچھ اور شامل کرنا چاہتے ہیں؟ (اختیاری)</string>
     <string name="yuva_rating_good">اچھا</string>

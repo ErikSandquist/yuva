@@ -94,7 +94,7 @@ yuva.unsubscribe(list.id)
 
 | View | Shows |
 |---|---|
-| `YuvaConversationsView` | The user's conversations; opens and starts threads. |
+| `YuvaConversationsView` | The user's conversations; opens and starts threads. Messages and Feedback as tabs, or one of them alone with `section` (`.messages` / `.feedback`, Kotlin `YuvaConversationsSection.MESSAGES` / `FEEDBACK`); the Feedback section's + opens the feedback form. |
 | `YuvaThreadView` (iOS) | One thread. |
 | `YuvaFeedbackView` | Feedback with a category, optional screenshots and device details. Takes `screen` and `onDone`. |
 

@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">Отправить отзыв</string>
     <string name="yuva_presence_away">Мы ответим как можно скорее</string>
     <string name="yuva_presence_online">Мы на связи</string>
-    <string name="yuva_presence_reply_in">Обычно отвечает за: %1$d мин</string>
+    <string name="yuva_presence_reply_in">Обычно отвечает за %1$s</string>
     <string name="yuva_rating_bad">Плохо</string>
     <string name="yuva_rating_comment_placeholder">Хотите что-то добавить? (необязательно)</string>
     <string name="yuva_rating_good">Хорошо</string>

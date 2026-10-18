@@ -9885,283 +9885,283 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Usually replies within %d minutes"
+            "value": "Usually replies in %@"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Genellikle %d dakika içinde yanıt verir"
+            "value": "Genellikle %@ içinde yanıt verir"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يرد عادةً خلال %d د"
+            "value": "يرد عادةً خلال %@"
           }
         },
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "সাধারণত %d মিনিটের মধ্যে উত্তর দেয়"
+            "value": "সাধারণত %@-এর মধ্যে উত্তর দেয়"
           }
         },
         "ca": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sol respondre en %d min"
+            "value": "Sol respondre en %@"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Obvykle odpovídá do: %d min"
+            "value": "Obvykle odpovídá do %@"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Svarer normalt inden for %d min."
+            "value": "Svarer normalt inden for %@"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Antwortet in der Regel innerhalb von %d Min."
+            "value": "Übliche Antwortzeit: %@"
           }
         },
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Συνήθως απαντά σε %d λεπτά"
+            "value": "Συνήθως απαντά σε %@"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Suele responder en %d min"
+            "value": "Suele responder en %@"
           }
         },
         "es-MX": {
           "stringUnit": {
             "state": "translated",
-            "value": "Suele responder en %d min"
+            "value": "Suele responder en %@"
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vastaa yleensä: %d min"
+            "value": "Vastaa yleensä %@ kuluessa"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Répond généralement en %d min"
+            "value": "Répond généralement en %@"
           }
         },
         "fr-CA": {
           "stringUnit": {
             "state": "translated",
-            "value": "Répond habituellement en %d min"
+            "value": "Répond généralement en %@"
           }
         },
         "gu": {
           "stringUnit": {
             "state": "translated",
-            "value": "સામાન્ય રીતે %d મિનિટમાં જવાબ મળે છે"
+            "value": "સામાન્ય રીતે %@માં જવાબ આપે છે"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "בדרך כלל עונים תוך %d דק׳"
+            "value": "בדרך כלל עונה תוך %@"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "आम तौर पर %d मिनट में जवाब मिलता है"
+            "value": "आमतौर पर %@ में जवाब देते हैं"
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Obično odgovara za: %d min"
+            "value": "Obično odgovara za %@"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Általában %d percen belül válaszol"
+            "value": "Általában %@ alatt válaszol"
           }
         },
         "id": {
           "stringUnit": {
             "state": "translated",
-            "value": "Biasanya membalas dalam %d menit"
+            "value": "Biasanya membalas dalam %@"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Di solito risponde entro %d min"
+            "value": "Di solito risponde entro %@"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "通常は%d分以内に返信します"
+            "value": "通常は%@以内に返信します"
           }
         },
         "kn": {
           "stringUnit": {
             "state": "translated",
-            "value": "ಸಾಮಾನ್ಯವಾಗಿ %d ನಿಮಿಷಗಳಲ್ಲಿ ಉತ್ತರಿಸುತ್ತಾರೆ"
+            "value": "ಸಾಮಾನ್ಯವಾಗಿ %@ ಒಳಗೆ ಉತ್ತರಿಸುತ್ತಾರೆ"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "보통 %d분 이내에 답변합니다"
+            "value": "보통 %@ 이내에 답변합니다"
           }
         },
         "ml": {
           "stringUnit": {
             "state": "translated",
-            "value": "സാധാരണയായി %d മിനിറ്റിനുള്ളിൽ മറുപടി നൽകും"
+            "value": "സാധാരണയായി %@-നുള്ളിൽ മറുപടി നൽകും"
           }
         },
         "mr": {
           "stringUnit": {
             "state": "translated",
-            "value": "साधारणपणे %d मिनिटांत उत्तर मिळते"
+            "value": "सहसा %@ मध्ये उत्तर देतात"
           }
         },
         "ms": {
           "stringUnit": {
             "state": "translated",
-            "value": "Biasanya membalas dalam %d min"
+            "value": "Biasanya membalas dalam masa %@"
           }
         },
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Svarer vanligvis innen %d min"
+            "value": "Svarer vanligvis innen %@"
           }
         },
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Antwoordt meestal binnen %d min."
+            "value": "Antwoordt meestal binnen %@"
           }
         },
         "or": {
           "stringUnit": {
             "state": "translated",
-            "value": "ସାଧାରଣତଃ %d ମିନିଟ୍ ଭିତରେ ଉତ୍ତର ମିଳେ"
+            "value": "ସାଧାରଣତଃ %@ ମଧ୍ୟରେ ଉତ୍ତର ଦିଅନ୍ତି"
           }
         },
         "pa": {
           "stringUnit": {
             "state": "translated",
-            "value": "ਆਮ ਤੌਰ ਤੇ %d ਮਿੰਟ ਵਿੱਚ ਜਵਾਬ ਮਿਲਦਾ ਹੈ"
+            "value": "ਆਮ ਤੌਰ ’ਤੇ %@ ਵਿੱਚ ਜਵਾਬ ਦਿੰਦੇ ਹਨ"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zwykle odpowiada w ciągu: %d min"
+            "value": "Zwykle odpowiada w ciągu %@"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Costuma responder em %d min"
+            "value": "Costuma responder em %@"
           }
         },
         "pt-PT": {
           "stringUnit": {
             "state": "translated",
-            "value": "Costuma responder em %d min"
+            "value": "Costuma responder em %@"
           }
         },
         "ro": {
           "stringUnit": {
             "state": "translated",
-            "value": "De obicei răspunde în %d min"
+            "value": "De obicei răspunde în %@"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Обычно отвечает за: %d мин"
+            "value": "Обычно отвечает за %@"
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zvyčajne odpovedá do: %d min"
+            "value": "Zvyčajne odpovedá do %@"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Običajno odgovori v: %d min"
+            "value": "Običajno odgovori v %@"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Svarar vanligtvis inom %d min"
+            "value": "Svarar vanligtvis inom %@"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "பொதுவாக %d நிமிடங்களுக்குள் பதிலளிப்போம்"
+            "value": "பொதுவாக %@ இல் பதிலளிப்பார்"
           }
         },
         "te": {
           "stringUnit": {
             "state": "translated",
-            "value": "సాధారణంగా %d నిమిషాల్లో సమాధానం ఇస్తారు"
+            "value": "సాధారణంగా %@ లో సమాధానం ఇస్తారు"
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "โดยปกติตอบกลับภายใน %d นาที"
+            "value": "โดยปกติจะตอบภายใน %@"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Зазвичай відповідає за: %d хв"
+            "value": "Зазвичай відповідає за %@"
           }
         },
         "ur": {
           "stringUnit": {
             "state": "translated",
-            "value": "عموماً %d منٹ کے اندر جواب دیتے ہیں"
+            "value": "عموماً %@ میں جواب دیتے ہیں"
           }
         },
         "vi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Thường trả lời trong vòng %d phút"
+            "value": "Thường trả lời trong %@"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "通常在 %d 分钟内回复"
+            "value": "通常在 %@ 内回复"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "通常在 %d 分鐘內回覆"
+            "value": "通常會在 %@ 內回覆"
           }
         }
       }

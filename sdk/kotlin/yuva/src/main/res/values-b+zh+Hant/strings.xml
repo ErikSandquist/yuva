@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">傳送意見回饋</string>
     <string name="yuva_presence_away">我們會盡快回覆</string>
     <string name="yuva_presence_online">我們在線上</string>
-    <string name="yuva_presence_reply_in">通常在 %1$d 分鐘內回覆</string>
+    <string name="yuva_presence_reply_in">通常會在 %1$s 內回覆</string>
     <string name="yuva_rating_bad">差</string>
     <string name="yuva_rating_comment_placeholder">還有什麼想補充的嗎？（選填）</string>
     <string name="yuva_rating_good">好</string>

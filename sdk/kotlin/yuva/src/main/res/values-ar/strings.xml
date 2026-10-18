@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">إرسال ملاحظات</string>
     <string name="yuva_presence_away">سنرد في أقرب وقت ممكن</string>
     <string name="yuva_presence_online">نحن متصلون</string>
-    <string name="yuva_presence_reply_in">يرد عادةً خلال %1$d د</string>
+    <string name="yuva_presence_reply_in">يرد عادةً خلال %1$s</string>
     <string name="yuva_rating_bad">سيئ</string>
     <string name="yuva_rating_comment_placeholder">هل تريد إضافة شيء؟ (اختياري)</string>
     <string name="yuva_rating_good">جيد</string>

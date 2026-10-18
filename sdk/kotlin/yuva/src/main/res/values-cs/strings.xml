@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">Odeslat zpětnou vazbu</string>
     <string name="yuva_presence_away">Odpovíme, jakmile to půjde</string>
     <string name="yuva_presence_online">Jsme online</string>
-    <string name="yuva_presence_reply_in">Obvykle odpovídá do: %1$d min</string>
+    <string name="yuva_presence_reply_in">Obvykle odpovídá do %1$s</string>
     <string name="yuva_rating_bad">Špatné</string>
     <string name="yuva_rating_comment_placeholder">Chcete ještě něco dodat? (nepovinné)</string>
     <string name="yuva_rating_good">Dobré</string>

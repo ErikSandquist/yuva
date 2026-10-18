@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">Send feedback</string>
     <string name="yuva_presence_away">Vi svarer, så snart vi kan</string>
     <string name="yuva_presence_online">Vi er online</string>
-    <string name="yuva_presence_reply_in">Svarer normalt inden for %1$d min.</string>
+    <string name="yuva_presence_reply_in">Svarer normalt inden for %1$s</string>
     <string name="yuva_rating_bad">Dårligt</string>
     <string name="yuva_rating_comment_placeholder">Er der noget, du vil tilføje? (valgfrit)</string>
     <string name="yuva_rating_good">Godt</string>

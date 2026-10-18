@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">ส่งความคิดเห็น</string>
     <string name="yuva_presence_away">เราจะตอบกลับโดยเร็วที่สุด</string>
     <string name="yuva_presence_online">เราออนไลน์อยู่</string>
-    <string name="yuva_presence_reply_in">โดยปกติตอบกลับภายใน %1$d นาที</string>
+    <string name="yuva_presence_reply_in">โดยปกติจะตอบภายใน %1$s</string>
     <string name="yuva_rating_bad">แย่</string>
     <string name="yuva_rating_comment_placeholder">มีอะไรอยากเพิ่มเติมไหม (ไม่บังคับ)</string>
     <string name="yuva_rating_good">ดี</string>

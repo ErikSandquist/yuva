@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">Feedback sturen</string>
     <string name="yuva_presence_away">We antwoorden zo snel mogelijk</string>
     <string name="yuva_presence_online">We zijn online</string>
-    <string name="yuva_presence_reply_in">Antwoordt meestal binnen %1$d min.</string>
+    <string name="yuva_presence_reply_in">Antwoordt meestal binnen %1$s</string>
     <string name="yuva_rating_bad">Slecht</string>
     <string name="yuva_rating_comment_placeholder">Wil je nog iets toevoegen? (optioneel)</string>
     <string name="yuva_rating_good">Goed</string>

@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">Lähetä palautetta</string>
     <string name="yuva_presence_away">Vastaamme mahdollisimman pian</string>
     <string name="yuva_presence_online">Olemme paikalla</string>
-    <string name="yuva_presence_reply_in">Vastaa yleensä: %1$d min</string>
+    <string name="yuva_presence_reply_in">Vastaa yleensä %1$s kuluessa</string>
     <string name="yuva_rating_bad">Huono</string>
     <string name="yuva_rating_comment_placeholder">Haluatko lisätä jotain? (valinnainen)</string>
     <string name="yuva_rating_good">Hyvä</string>

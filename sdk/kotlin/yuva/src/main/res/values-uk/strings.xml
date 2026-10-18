@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">Надіслати відгук</string>
     <string name="yuva_presence_away">Ми відповімо якнайшвидше</string>
     <string name="yuva_presence_online">Ми онлайн</string>
-    <string name="yuva_presence_reply_in">Зазвичай відповідає за: %1$d хв</string>
+    <string name="yuva_presence_reply_in">Зазвичай відповідає за %1$s</string>
     <string name="yuva_rating_bad">Погано</string>
     <string name="yuva_rating_comment_placeholder">Хочете щось додати? (необов’язково)</string>
     <string name="yuva_rating_good">Добре</string>

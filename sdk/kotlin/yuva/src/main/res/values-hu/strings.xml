@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">Visszajelzés küldése</string>
     <string name="yuva_presence_away">A lehető leghamarabb válaszolunk</string>
     <string name="yuva_presence_online">Elérhetők vagyunk</string>
-    <string name="yuva_presence_reply_in">Általában %1$d percen belül válaszol</string>
+    <string name="yuva_presence_reply_in">Általában %1$s alatt válaszol</string>
     <string name="yuva_rating_bad">Rossz</string>
     <string name="yuva_rating_comment_placeholder">Szeretne még valamit hozzátenni? (nem kötelező)</string>
     <string name="yuva_rating_good">Jó</string>

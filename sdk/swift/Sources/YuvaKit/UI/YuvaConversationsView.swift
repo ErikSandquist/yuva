@@ -4,6 +4,10 @@ enum ConversationsTab: Hashable {
     case messages, feedback
 }
 
+public enum YuvaConversationsSection: Sendable {
+    case messages, feedback
+}
+
 @MainActor
 @Observable
 final class ConversationsModel {
@@ -87,7 +91,7 @@ final class ConversationsModel {
         if let conversation = try? await client.conversation(id: id) { upsert(conversation) }
     }
 
-    private func upsert(_ conversation: YuvaConversation) {
+    func upsert(_ conversation: YuvaConversation) {
         messages.removeAll { $0.id == conversation.id }
         feedback.removeAll { $0.id == conversation.id }
         if conversation.isFeedback {
@@ -114,32 +118,61 @@ public struct YuvaConversationsView: View {
     private let client: YuvaClient
     @State private var model: ConversationsModel
     @State private var path: [ThreadRoute] = []
-    @State private var tab: ConversationsTab = .messages
+    @State private var tab: ConversationsTab
+    @State private var sendingFeedback = false
     @Binding private var openConversationId: String?
+    private let section: YuvaConversationsSection?
 
-    public init(client: YuvaClient, openConversationId: Binding<String?> = .constant(nil)) {
+    public init(
+        client: YuvaClient, openConversationId: Binding<String?> = .constant(nil),
+        section: YuvaConversationsSection? = nil
+    ) {
         self.client = client
+        self.section = section
         _model = State(initialValue: ConversationsModel(client: client))
+        _tab = State(initialValue: section == .feedback ? .feedback : .messages)
         _openConversationId = openConversationId
     }
 
     public var body: some View {
         NavigationStack(path: $path) {
             content
-                .navigationTitle(L.t("conversations.title"))
+                .navigationTitle(section == .feedback ? L.t("feedback.kind") : L.t("conversations.title"))
                 .toolbar {
                     ToolbarItem(placement: .primaryAction) {
-                        Button {
-                            path.append(.new)
-                        } label: {
-                            Label(L.t("conversations.new"), systemImage: "square.and.pencil")
+                        if section == .feedback {
+                            Button {
+                                sendingFeedback = true
+                            } label: {
+                                Label(L.t("feedback.title"), systemImage: "plus")
+                            }
+                            .accessibilityIdentifier("yuva.feedback.new")
+                        } else {
+                            Button {
+                                path.append(.new)
+                            } label: {
+                                Label(L.t("conversations.new"), systemImage: "square.and.pencil")
+                            }
+                            .accessibilityIdentifier("yuva.conversations.new")
                         }
-                        .accessibilityIdentifier("yuva.conversations.new")
                     }
                 }
                 .navigationDestination(for: ThreadRoute.self) { route in
                     YuvaThreadView(client: client, conversationId: route.id)
                 }
+        }
+        .sheet(isPresented: $sendingFeedback) {
+            YuvaFeedbackView(
+                client: client,
+                onDone: {
+                    sendingFeedback = false
+                    Task { await model.load() }
+                },
+                onViewFeedback: { conversation in
+                    sendingFeedback = false
+                    model.upsert(conversation)
+                    path = [.conversation(conversation.id)]
+                })
         }
         .task { await model.load() }
         .task { await model.listen() }
@@ -160,7 +193,15 @@ public struct YuvaConversationsView: View {
             } actions: {
                 Button(L.t("error.retry")) { Task { await model.load() } }
             }
-        } else if model.messages.isEmpty && !model.hasFeedback {
+        } else if section == .feedback && model.feedback.isEmpty {
+            ContentUnavailableView {
+                Label(L.t("feedback.kind"), systemImage: "lightbulb")
+            } actions: {
+                Button(L.t("feedback.title")) { sendingFeedback = true }
+                    .buttonStyle(.borderedProminent)
+            }
+        } else if section == .messages && model.messages.isEmpty
+            || section == nil && model.messages.isEmpty && !model.hasFeedback {
             ContentUnavailableView {
                 Label(L.t("conversations.empty"), systemImage: "bubble.left.and.bubble.right")
             } description: {
@@ -172,7 +213,7 @@ public struct YuvaConversationsView: View {
         } else {
             let items = model.items(tab)
             List {
-                if model.hasFeedback {
+                if section == nil && model.hasFeedback {
                     Picker("", selection: $tab) {
                         Text(L.t("conversations.messages")).tag(ConversationsTab.messages)
                         Text(L.t("feedback.kind")).tag(ConversationsTab.feedback)
@@ -227,7 +268,7 @@ struct PresenceHeader: View {
         if inbox.mode == .live {
             return inbox.presence?.available == true ? L.t("presence.online") : L.t("presence.away")
         }
-        if let minutes = inbox.expectedReplyMinutes { return L.f("presence.replyIn", Int32(minutes)) }
+        if let minutes = inbox.expectedReplyMinutes { return L.f("presence.replyIn", replyDuration(minutes)) }
         return L.t("presence.away")
     }
 }
@@ -317,4 +358,19 @@ struct FeedbackRow: View {
         let text = !own.isEmpty ? own : (conversation.subject.isEmpty ? (conversation.lastMessage?.text ?? "") : conversation.subject)
         return text.split(whereSeparator: \.isNewline).first.map(String.init) ?? text
     }
+}
+
+private func replyDuration(_ minutes: Int) -> String {
+    let (value, unit): (Int, NSCalendar.Unit) =
+        minutes < 60 ? (minutes, .minute) : minutes < 1440 ? ((minutes + 30) / 60, .hour) : ((minutes + 720) / 1440, .day)
+    let formatter = DateComponentsFormatter()
+    formatter.unitsStyle = .full
+    formatter.allowedUnits = unit
+    var components = DateComponents()
+    switch unit {
+    case .hour: components.hour = value
+    case .day: components.day = value
+    default: components.minute = value
+    }
+    return formatter.string(from: components) ?? "\(value)"
 }

@@ -34,7 +34,7 @@
     <string name="yuva_feedback_title">Pošlji povratne informacije</string>
     <string name="yuva_presence_away">Odgovorili bomo, takoj ko bomo mogli</string>
     <string name="yuva_presence_online">Smo na spletu</string>
-    <string name="yuva_presence_reply_in">Običajno odgovori v: %1$d min</string>
+    <string name="yuva_presence_reply_in">Običajno odgovori v %1$s</string>
     <string name="yuva_rating_bad">Slabo</string>
     <string name="yuva_rating_comment_placeholder">Želite kaj dodati? (neobvezno)</string>
     <string name="yuva_rating_good">Dobro</string>
