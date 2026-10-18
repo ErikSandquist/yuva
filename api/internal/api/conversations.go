@@ -2,12 +2,14 @@ package api
 
 import (
 	"context"
+	"net/http"
 	"slices"
 	"strings"
 	"time"
 	"unicode"
 	"uuid"
 
+	"github.com/oapi-codegen/nullable"
 	"github.com/productdevbook/yuva/api/internal/oas"
 	"github.com/productdevbook/yuva/api/internal/realtime"
 	"github.com/productdevbook/yuva/api/internal/store"
@@ -20,7 +22,10 @@ const (
 	previewRunes       = 140
 )
 
-var errAssigneeAccess = errValidation("assignee_id must be a member with access to the inbox")
+var (
+	errAssigneeAccess = errValidation("assignee_id must be a member with access to the inbox")
+	errNotFeedback    = problem(http.StatusConflict, "not_feedback", "feedback_progress is only for feedback conversations")
+)
 
 func searchQuery(q *string) (*string, error) {
 	if q == nil {
@@ -312,6 +317,16 @@ func (s *Server) recordChanges(ctx context.Context, q *store.Queries, events *ev
 			return err
 		}
 	}
+	if !sameString(before.FeedbackProgress, after.FeedbackProgress) {
+		ev := oas.MessageEvent{Type: oas.EventTypeFeedbackProgress, FeedbackProgress: nullable.NewNullNullable[oas.FeedbackProgress](),
+			PreviousFeedbackProgress: (*oas.FeedbackProgress)(before.FeedbackProgress)}
+		if after.FeedbackProgress != nil {
+			ev.FeedbackProgress = nullable.NewNullableWithValue(oas.FeedbackProgress(*after.FeedbackProgress))
+		}
+		if err := s.writeEvent(ctx, q, events, p, after, ev, at); err != nil {
+			return err
+		}
+	}
 	if len(added) > 0 || len(removed) > 0 {
 		if added == nil {
 			added = []uuid.UUID{}
@@ -328,7 +343,14 @@ func (s *Server) recordChanges(ctx context.Context, q *store.Queries, events *ev
 
 func conversationChanged(a, b store.Conversation) bool {
 	return a.Subject != b.Subject || a.Status != b.Status || a.Priority != b.Priority || a.Spam != b.Spam ||
-		!sameID(a.AssigneeID, b.AssigneeID) || !sameTime(a.SnoozeUntil, b.SnoozeUntil)
+		!sameID(a.AssigneeID, b.AssigneeID) || !sameTime(a.SnoozeUntil, b.SnoozeUntil) || !sameString(a.FeedbackProgress, b.FeedbackProgress)
+}
+
+func sameString(a, b *string) bool {
+	if a == nil || b == nil {
+		return a == nil && b == nil
+	}
+	return *a == *b
 }
 
 func sameTime(a, b *time.Time) bool {
@@ -683,6 +705,19 @@ func (s *Server) changeConversation(ctx context.Context, q *store.Queries, event
 			next.AssigneeID = &id
 		}
 	}
+	if b.FeedbackProgress.IsSpecified() {
+		if cur.Kind != string(oas.ConversationKindFeedback) && !b.FeedbackProgress.IsNull() {
+			return out, errNotFeedback
+		}
+		next.FeedbackProgress = nil
+		if !b.FeedbackProgress.IsNull() {
+			v := b.FeedbackProgress.MustGet()
+			if !v.Valid() {
+				return out, errValidation("feedback_progress must be planned, in_progress, done, wont_do or null")
+			}
+			next.FeedbackProgress = new(string(v))
+		}
+	}
 	labelMap, err := conversationLabels(ctx, q, p.workspaceID, []uuid.UUID{cur.ID})
 	if err != nil {
 		return out, err
@@ -726,7 +761,7 @@ func (s *Server) changeConversation(ctx context.Context, q *store.Queries, event
 	}
 	updated, err := q.UpdateConversation(ctx, store.UpdateConversationParams{
 		WorkspaceID: p.workspaceID, ID: cur.ID, Subject: next.Subject, Status: next.Status, SnoozeUntil: next.SnoozeUntil,
-		Priority: next.Priority, AssigneeID: next.AssigneeID, Spam: next.Spam, Now: now,
+		Priority: next.Priority, AssigneeID: next.AssigneeID, Spam: next.Spam, FeedbackProgress: next.FeedbackProgress, Now: now,
 	})
 	if err != nil {
 		return out, err

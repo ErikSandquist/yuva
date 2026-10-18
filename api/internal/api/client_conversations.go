@@ -334,7 +334,7 @@ func (s *Server) addContactMessage(ctx context.Context, q *store.Queries, events
 	if c.Status != string(oas.ConversationStatusOpen) {
 		updated, err := q.UpdateConversation(ctx, store.UpdateConversationParams{
 			WorkspaceID: cp.workspaceID, ID: c.ID, Subject: c.Subject, Status: string(oas.ConversationStatusOpen), Priority: c.Priority,
-			AssigneeID: c.AssigneeID, Spam: c.Spam, Now: now,
+			AssigneeID: c.AssigneeID, Spam: c.Spam, FeedbackProgress: c.FeedbackProgress, Now: now,
 		})
 		if err != nil {
 			return msg, nil, err

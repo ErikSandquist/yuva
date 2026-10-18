@@ -847,7 +847,7 @@ func (q *Queries) ListChatChannels(ctx context.Context, arg ListChatChannelsPara
 }
 
 const listContactConversationIDs = `-- name: ListContactConversationIDs :many
-SELECT id, status FROM conversations WHERE workspace_id = $1 AND inbox_id = $2 AND contact_id = $3
+SELECT id, status, feedback_progress FROM conversations WHERE workspace_id = $1 AND inbox_id = $2 AND contact_id = $3
 `
 
 type ListContactConversationIDsParams struct {
@@ -857,8 +857,9 @@ type ListContactConversationIDsParams struct {
 }
 
 type ListContactConversationIDsRow struct {
-	ID     uuid.UUID
-	Status string
+	ID               uuid.UUID
+	Status           string
+	FeedbackProgress *string
 }
 
 func (q *Queries) ListContactConversationIDs(ctx context.Context, arg ListContactConversationIDsParams) ([]ListContactConversationIDsRow, error) {
@@ -870,7 +871,7 @@ func (q *Queries) ListContactConversationIDs(ctx context.Context, arg ListContac
 	var items []ListContactConversationIDsRow
 	for rows.Next() {
 		var i ListContactConversationIDsRow
-		if err := rows.Scan(&i.ID, &i.Status); err != nil {
+		if err := rows.Scan(&i.ID, &i.Status, &i.FeedbackProgress); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
@@ -882,7 +883,7 @@ func (q *Queries) ListContactConversationIDs(ctx context.Context, arg ListContac
 }
 
 const listContactConversations = `-- name: ListContactConversations :many
-SELECT c.id, c.workspace_id, c.inbox_id, c.contact_id, c.channel_id, c.subject, c.status, c.snooze_until, c.priority, c.assignee_id, c.last_message_at, c.last_activity_at, c.created_at, c.updated_at, c.spam, c.email_token, c.related_conversation_id, c.continuity_through, c.continuity_sent_at, c.kind, c.feedback, c.email_address, c.closed_at, c.rating, c.rating_comment, c.rated_at, c.rating_requested_at, c.last_read_by_contact_at, c.page_url, c.page_title, c.channel_kind, c.broadcast_id, c.migration_id, c.imported_at FROM conversations c
+SELECT c.id, c.workspace_id, c.inbox_id, c.contact_id, c.channel_id, c.subject, c.status, c.snooze_until, c.priority, c.assignee_id, c.last_message_at, c.last_activity_at, c.created_at, c.updated_at, c.spam, c.email_token, c.related_conversation_id, c.continuity_through, c.continuity_sent_at, c.kind, c.feedback, c.email_address, c.closed_at, c.rating, c.rating_comment, c.rated_at, c.rating_requested_at, c.last_read_by_contact_at, c.page_url, c.page_title, c.channel_kind, c.broadcast_id, c.migration_id, c.imported_at, c.feedback_progress FROM conversations c
 WHERE c.workspace_id = $1 AND c.inbox_id = $2 AND c.contact_id = $3
   AND ($4::text[] IS NULL OR c.kind = ANY($4::text[]))
   AND ($5::timestamptz IS NULL
@@ -953,6 +954,7 @@ func (q *Queries) ListContactConversations(ctx context.Context, arg ListContactC
 			&i.BroadcastID,
 			&i.MigrationID,
 			&i.ImportedAt,
+			&i.FeedbackProgress,
 		); err != nil {
 			return nil, err
 		}
@@ -1502,7 +1504,7 @@ const moveContactConversations = `-- name: MoveContactConversations :many
 WITH moved AS (
     UPDATE conversations SET contact_id = $1, updated_at = $2
     WHERE conversations.workspace_id = $3 AND conversations.contact_id = $4
-    RETURNING id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id, migration_id, imported_at),
+    RETURNING id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id, migration_id, imported_at, feedback_progress),
 seen AS (
     UPDATE contacts t SET last_active_at = greatest(t.last_active_at, f.last_active_at)
     FROM contacts f
@@ -1511,7 +1513,7 @@ seen AS (
 notes AS (
     UPDATE contact_notes SET contact_id = $1
     WHERE contact_notes.workspace_id = $3 AND contact_notes.contact_id = $4)
-SELECT id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id, migration_id, imported_at FROM moved
+SELECT id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id, migration_id, imported_at, feedback_progress FROM moved
 `
 
 type MoveContactConversationsParams struct {
@@ -1556,6 +1558,7 @@ type MoveContactConversationsRow struct {
 	BroadcastID           *uuid.UUID
 	MigrationID           *uuid.UUID
 	ImportedAt            *time.Time
+	FeedbackProgress      *string
 }
 
 func (q *Queries) MoveContactConversations(ctx context.Context, arg MoveContactConversationsParams) ([]MoveContactConversationsRow, error) {
@@ -1607,6 +1610,7 @@ func (q *Queries) MoveContactConversations(ctx context.Context, arg MoveContactC
 			&i.BroadcastID,
 			&i.MigrationID,
 			&i.ImportedAt,
+			&i.FeedbackProgress,
 		); err != nil {
 			return nil, err
 		}
@@ -1901,7 +1905,7 @@ const setConversationContactRead = `-- name: SetConversationContactRead :one
 UPDATE conversations SET last_read_by_contact_at = $1
 WHERE workspace_id = $2 AND id = $3
   AND (last_read_by_contact_at IS NULL OR last_read_by_contact_at < $1)
-RETURNING id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id, migration_id, imported_at
+RETURNING id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id, migration_id, imported_at, feedback_progress
 `
 
 type SetConversationContactReadParams struct {
@@ -1948,6 +1952,7 @@ func (q *Queries) SetConversationContactRead(ctx context.Context, arg SetConvers
 		&i.BroadcastID,
 		&i.MigrationID,
 		&i.ImportedAt,
+		&i.FeedbackProgress,
 	)
 	return i, err
 }

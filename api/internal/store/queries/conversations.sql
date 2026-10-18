@@ -18,7 +18,7 @@ SELECT * FROM conversations WHERE workspace_id = $1 AND id = $2 FOR UPDATE;
 
 -- name: UpdateConversation :one
 UPDATE conversations SET subject = @subject, status = @status, snooze_until = @snooze_until,
-    priority = @priority, assignee_id = @assignee_id, spam = @spam, updated_at = @now,
+    priority = @priority, assignee_id = @assignee_id, spam = @spam, feedback_progress = @feedback_progress, updated_at = @now,
     closed_at = CASE WHEN @status = 'closed' AND status <> 'closed' THEN @now ELSE closed_at END
 WHERE workspace_id = @workspace_id AND id = @id
 RETURNING *;

@@ -141,7 +141,7 @@ ORDER BY coalesce(c.last_message_at, c.created_at) DESC, c.id DESC
 LIMIT @lim;
 
 -- name: ListContactConversationIDs :many
-SELECT id, status FROM conversations WHERE workspace_id = $1 AND inbox_id = $2 AND contact_id = $3;
+SELECT id, status, feedback_progress FROM conversations WHERE workspace_id = $1 AND inbox_id = $2 AND contact_id = $3;
 
 -- name: ListUnreadForContact :many
 SELECT c.id FROM conversations c

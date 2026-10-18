@@ -28,6 +28,7 @@ type mcpConversation struct {
 	Unread           *bool                  `json:"unread,omitempty" jsonschema:"whether the calling member has unread messages here"`
 	SnoozeUntil      *time.Time             `json:"snooze_until,omitempty"`
 	FeedbackCategory string                 `json:"feedback_category,omitempty" jsonschema:"bug, idea, praise or other, for feedback"`
+	FeedbackProgress string                 `json:"feedback_progress,omitempty" jsonschema:"planned, in_progress, done or wont_do, for feedback whose progress a member set"`
 	CreatedAt        time.Time              `json:"created_at"`
 	LastActivityAt   time.Time              `json:"last_activity_at"`
 	CustomerContent  mcpConversationContent `json:"customer_content"`
@@ -51,6 +52,10 @@ func feedbackContent(f *oas.Feedback) (string, map[string]string) {
 
 func conversationOut(c oas.Conversation) mcpConversation {
 	cat, fb := feedbackContent(c.Feedback)
+	progress := ""
+	if c.Feedback != nil && c.Feedback.Progress != nil {
+		progress = string(*c.Feedback.Progress)
+	}
 	labels := c.Labels
 	if labels == nil {
 		labels = []uuid.UUID{}
@@ -58,7 +63,7 @@ func conversationOut(c oas.Conversation) mcpConversation {
 	return mcpConversation{
 		ID: c.Id, InboxID: c.InboxId, ContactID: c.ContactId, Kind: string(c.Kind), Status: string(c.Status),
 		Priority: string(c.Priority), AssigneeID: c.AssigneeId, Labels: labels, Spam: c.Spam, SnoozeUntil: c.SnoozeUntil,
-		FeedbackCategory: cat, CreatedAt: c.CreatedAt, LastActivityAt: c.LastActivityAt,
+		FeedbackCategory: cat, FeedbackProgress: progress, CreatedAt: c.CreatedAt, LastActivityAt: c.LastActivityAt,
 		CustomerContent: mcpConversationContent{Subject: c.Subject, Feedback: fb},
 	}
 }
@@ -121,13 +126,15 @@ type mcpMessageContent struct {
 }
 
 type mcpEvent struct {
-	Type           string      `json:"type"`
-	Status         string      `json:"status,omitempty"`
-	PreviousStatus string      `json:"previous_status,omitempty"`
-	AssigneeID     *uuid.UUID  `json:"assignee_id,omitempty"`
-	InboxID        *uuid.UUID  `json:"inbox_id,omitempty"`
-	AddedLabels    []uuid.UUID `json:"added_labels,omitempty"`
-	RemovedLabels  []uuid.UUID `json:"removed_labels,omitempty"`
+	Type                     string      `json:"type"`
+	Status                   string      `json:"status,omitempty"`
+	PreviousStatus           string      `json:"previous_status,omitempty"`
+	AssigneeID               *uuid.UUID  `json:"assignee_id,omitempty"`
+	InboxID                  *uuid.UUID  `json:"inbox_id,omitempty"`
+	AddedLabels              []uuid.UUID `json:"added_labels,omitempty"`
+	RemovedLabels            []uuid.UUID `json:"removed_labels,omitempty"`
+	FeedbackProgress         *string     `json:"feedback_progress,omitempty" jsonschema:"feedback_progress events: the new progress, empty when it was cleared"`
+	PreviousFeedbackProgress string      `json:"previous_feedback_progress,omitempty"`
 }
 
 type mcpMessage struct {
@@ -173,6 +180,15 @@ func messageOut(m oas.Message) mcpMessage {
 		}
 		if m.Event.RemovedLabels != nil {
 			ev.RemovedLabels = *m.Event.RemovedLabels
+		}
+		if m.Event.Type == oas.EventTypeFeedbackProgress {
+			ev.FeedbackProgress = new("")
+			if v, err := m.Event.FeedbackProgress.Get(); err == nil {
+				ev.FeedbackProgress = new(string(v))
+			}
+		}
+		if m.Event.PreviousFeedbackProgress != nil {
+			ev.PreviousFeedbackProgress = string(*m.Event.PreviousFeedbackProgress)
 		}
 		out.Event = ev
 	}

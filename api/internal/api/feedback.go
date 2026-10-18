@@ -65,6 +65,7 @@ func conversationFeedback(c store.Conversation) *oas.Feedback {
 	if json.Unmarshal(c.Feedback, &f) != nil {
 		return nil
 	}
+	f.Progress = (*oas.FeedbackProgress)(c.FeedbackProgress)
 	return &f
 }
 

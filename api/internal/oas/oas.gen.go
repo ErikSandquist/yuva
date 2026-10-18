@@ -2485,13 +2485,14 @@ func (e EmailThemeDirection) Valid() bool {
 
 // Defines values for EventType.
 const (
-	Assigned       EventType = "assigned"
-	BroadcastReply EventType = "broadcast_reply"
-	LabelsChanged  EventType = "labels_changed"
-	Moved          EventType = "moved"
-	Rated          EventType = "rated"
-	StatusChanged  EventType = "status_changed"
-	Unassigned     EventType = "unassigned"
+	Assigned                  EventType = "assigned"
+	BroadcastReply            EventType = "broadcast_reply"
+	EventTypeFeedbackProgress EventType = "feedback_progress"
+	LabelsChanged             EventType = "labels_changed"
+	Moved                     EventType = "moved"
+	Rated                     EventType = "rated"
+	StatusChanged             EventType = "status_changed"
+	Unassigned                EventType = "unassigned"
 )
 
 // Valid indicates whether the value is a known member of the EventType enum.
@@ -2500,6 +2501,8 @@ func (e EventType) Valid() bool {
 	case Assigned:
 		return true
 	case BroadcastReply:
+		return true
+	case EventTypeFeedbackProgress:
 		return true
 	case LabelsChanged:
 		return true
@@ -2534,6 +2537,30 @@ func (e FeedbackCategory) Valid() bool {
 	case Other:
 		return true
 	case Praise:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for FeedbackProgress.
+const (
+	FeedbackProgressDone       FeedbackProgress = "done"
+	FeedbackProgressInProgress FeedbackProgress = "in_progress"
+	FeedbackProgressPlanned    FeedbackProgress = "planned"
+	FeedbackProgressWontDo     FeedbackProgress = "wont_do"
+)
+
+// Valid indicates whether the value is a known member of the FeedbackProgress enum.
+func (e FeedbackProgress) Valid() bool {
+	switch e {
+	case FeedbackProgressDone:
+		return true
+	case FeedbackProgressInProgress:
+		return true
+	case FeedbackProgressPlanned:
+		return true
+	case FeedbackProgressWontDo:
 		return true
 	default:
 		return false
@@ -7621,14 +7648,19 @@ type ClientConversationPage struct {
 // ClientConversationStatus defines model for ClientConversationStatus.
 type ClientConversationStatus struct {
 	// CanRate As on `ClientConversation`.
-	CanRate   bool               `json:"can_rate"`
-	Id        uuid.UUID          `json:"id"`
-	Rating    *Rating            `json:"rating,omitempty"`
-	Status    ConversationStatus `json:"status"`
-	UpdatedAt time.Time          `json:"updated_at"`
+	CanRate bool `json:"can_rate"`
+
+	// FeedbackProgress `feedback` conversations only: `feedback.progress` now. Every frame carries the current
+	// value, so an absent `feedback_progress` means none (cleared): replace the shown progress
+	// with the frame's, do not merge.
+	FeedbackProgress *FeedbackProgress  `json:"feedback_progress,omitempty"`
+	Id               uuid.UUID          `json:"id"`
+	Rating           *Rating            `json:"rating,omitempty"`
+	Status           ConversationStatus `json:"status"`
+	UpdatedAt        time.Time          `json:"updated_at"`
 }
 
-// ClientConversationUpdatedEvent The conversation's status changed.
+// ClientConversationUpdatedEvent The conversation's status or a feedback's progress changed.
 type ClientConversationUpdatedEvent struct {
 	ConversationId uuid.UUID                          `json:"conversation_id"`
 	CreatedAt      time.Time                          `json:"created_at"`
@@ -8796,6 +8828,10 @@ type ConversationSummary struct {
 type ConversationUpdate struct {
 	// AssigneeId A member with access to the inbox; `null` unassigns.
 	AssigneeId nullable.Nullable[uuid.UUID] `json:"assignee_id,omitempty"`
+
+	// FeedbackProgress `feedback` conversations only: sets `feedback.progress`; `null` clears it. A value on
+	// another kind is refused with `409 not_feedback`; `null` there changes nothing.
+	FeedbackProgress nullable.Nullable[FeedbackProgress] `json:"feedback_progress,omitempty"`
 
 	// Labels Replaces the labels.
 	Labels      *[]uuid.UUID `json:"labels,omitempty"`
@@ -10404,6 +10440,9 @@ type Feedback struct {
 	// PageUrl Feedback sent from a documentation page; the URL without query and fragment.
 	PageUrl *string `json:"page_url,omitempty"`
 
+	// Progress Set by a member with `PATCH /v1/conversations/{id}`; absent when nobody set it.
+	Progress *FeedbackProgress `json:"progress,omitempty"`
+
 	// Rating The visitor's rating of the page the feedback follows.
 	Rating *PageRating `json:"rating,omitempty"`
 
@@ -10471,6 +10510,10 @@ type FeedbackFields struct {
 	OsVersion      *string `json:"os_version,omitempty"`
 	Screen         *string `json:"screen,omitempty"`
 }
+
+// FeedbackProgress Where a feedback stands, set by members and shown to the contact: Planned, In progress,
+// Done, Won't do. Separate from the status: a feedback can be `done` and still open.
+type FeedbackProgress string
 
 // Health defines model for Health.
 type Health struct {
@@ -11607,11 +11650,17 @@ type MessageEvent struct {
 	// Broadcast `broadcast_reply` only: the broadcast the contact answered; the first entry of the conversation.
 	Broadcast *BroadcastRef `json:"broadcast,omitempty"`
 
+	// FeedbackProgress `feedback_progress` only: the new progress, `null` when it was cleared.
+	FeedbackProgress nullable.Nullable[FeedbackProgress] `json:"feedback_progress,omitempty"`
+
 	// InboxId The inbox it moved to (`moved`).
 	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
 
 	// PreviousAssigneeId The previous assignee (`assigned`, `unassigned`).
 	PreviousAssigneeId *uuid.UUID `json:"previous_assignee_id,omitempty"`
+
+	// PreviousFeedbackProgress `feedback_progress` only: the progress before; absent when it was not set.
+	PreviousFeedbackProgress *FeedbackProgress `json:"previous_feedback_progress,omitempty"`
 
 	// PreviousInboxId The inbox it moved from (`moved`).
 	PreviousInboxId *uuid.UUID          `json:"previous_inbox_id,omitempty"`
@@ -51579,6 +51628,20 @@ func (response UpdateConversation404ApplicationProblemPlusJSONResponse) VisitUpd
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateConversation409ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateConversation409ApplicationProblemPlusJSONResponse) VisitUpdateConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
 	_, err := buf.WriteTo(w)
 	return err
 }

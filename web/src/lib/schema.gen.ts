@@ -1682,8 +1682,10 @@ export interface paths {
         head?: never;
         /**
          * Update a conversation
-         * @description Changes to the assignee, the status and the labels are recorded as `event` messages.
-         *     `snooze_until` is required with status `snoozed` and cleared by any other status.
+         * @description Changes to the assignee, the status, the labels and a feedback's progress are recorded as
+         *     `event` messages. `snooze_until` is required with status `snoozed` and cleared by any other
+         *     status. A `feedback_progress` value is refused with `409 not_feedback` on a conversation whose
+         *     `kind` is not `feedback`.
          *
          *     Scope: `conversations:write`.
          */
@@ -6476,7 +6478,8 @@ export interface paths {
          *     of `ready.last_event_id` and the last `id` received, reconnect with `?last_event_id=`, and
          *     reload over HTTP on `resync_required`. `typing`, `presence` and `inbox.updated` have no
          *     `id` and are not replayed. `message.*` carries only messages (no notes or internal events),
-         *     and `conversation.updated` only the status. `typing` (a member typing), `read` (how far
+         *     and `conversation.updated` only the status and a feedback's progress (a change to either
+         *     sends it; show a progress change as a line in the thread). `typing` (a member typing), `read` (how far
          *     members have read) and `presence` (whether someone is available; sent after `ready` and
          *     whenever it changes) come only for `live` inboxes. `inbox.updated` carries the inbox's
          *     public settings, the same `ClientInbox` as `GET /client/v1/channels/{channel_key}`, whenever
@@ -8597,6 +8600,11 @@ export interface components {
             assignee_id?: string | null;
             /** @description Replaces the labels. */
             labels?: string[];
+            /**
+             * @description `feedback` conversations only: sets `feedback.progress`; `null` clears it. A value on
+             *     another kind is refused with `409 not_feedback`; `null` there changes nothing.
+             */
+            feedback_progress?: components["schemas"]["FeedbackProgress"] | null;
         };
         ConversationBulkUpdate: {
             conversation_ids: string[];
@@ -9017,7 +9025,7 @@ export interface components {
             via?: string;
         };
         /** @enum {string} */
-        EventType: "assigned" | "unassigned" | "status_changed" | "labels_changed" | "moved" | "rated" | "broadcast_reply";
+        EventType: "assigned" | "unassigned" | "status_changed" | "labels_changed" | "moved" | "rated" | "broadcast_reply" | "feedback_progress";
         MessageEvent: {
             type: components["schemas"]["EventType"];
             /**
@@ -9048,6 +9056,10 @@ export interface components {
             rating?: components["schemas"]["Rating"];
             /** @description `broadcast_reply` only: the broadcast the contact answered; the first entry of the conversation. */
             broadcast?: components["schemas"]["BroadcastRef"];
+            /** @description `feedback_progress` only: the new progress, `null` when it was cleared. */
+            feedback_progress?: components["schemas"]["FeedbackProgress"] | null;
+            /** @description `feedback_progress` only: the progress before; absent when it was not set. */
+            previous_feedback_progress?: components["schemas"]["FeedbackProgress"];
         };
         Attachment: {
             /**
@@ -10867,9 +10879,17 @@ export interface components {
         ConversationKind: "conversation" | "feedback";
         /** @enum {string} */
         FeedbackCategory: "bug" | "idea" | "praise" | "other";
+        /**
+         * @description Where a feedback stands, set by members and shown to the contact: Planned, In progress,
+         *     Done, Won't do. Separate from the status: a feedback can be `done` and still open.
+         * @enum {string}
+         */
+        FeedbackProgress: "planned" | "in_progress" | "done" | "wont_do";
         /** @description What a `feedback` conversation was sent with. Absent fields were not sent. */
         Feedback: {
             category: components["schemas"]["FeedbackCategory"];
+            /** @description Set by a member with `PATCH /v1/conversations/{id}`; absent when nobody set it. */
+            progress?: components["schemas"]["FeedbackProgress"];
             /**
              * @description The first line of the contact's first message, trimmed and cut to 200 characters; empty
              *     when that message has no text. For a triage row; the message itself is in the thread.
@@ -12693,6 +12713,12 @@ export interface components {
             /** Format: uuid */
             id: string;
             status: components["schemas"]["ConversationStatus"];
+            /**
+             * @description `feedback` conversations only: `feedback.progress` now. Every frame carries the current
+             *     value, so an absent `feedback_progress` means none (cleared): replace the shown progress
+             *     with the frame's, do not merge.
+             */
+            feedback_progress?: components["schemas"]["FeedbackProgress"];
             /** @description As on `ClientConversation`. */
             can_rate: boolean;
             rating?: components["schemas"]["Rating"];
@@ -12871,7 +12897,7 @@ export interface components {
             created_at: string;
             data: components["schemas"]["ClientConversation"];
         };
-        /** @description The conversation's status changed. */
+        /** @description The conversation's status or a feedback's progress changed. */
         ClientConversationUpdatedEvent: {
             /** Format: int64 */
             id: number;
@@ -17960,6 +17986,7 @@ export interface operations {
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
         };
     };
     moveConversation: {

@@ -2961,8 +2961,10 @@ paths:
       operationId: updateConversation
       summary: Update a conversation
       description: |
-        Changes to the assignee, the status and the labels are recorded as `event` messages.
-        `snooze_until` is required with status `snoozed` and cleared by any other status.
+        Changes to the assignee, the status, the labels and a feedback's progress are recorded as
+        `event` messages. `snooze_until` is required with status `snoozed` and cleared by any other
+        status. A `feedback_progress` value is refused with `409 not_feedback` on a conversation whose
+        `kind` is not `feedback`.
 
         Scope: `conversations:write`.
       tags: [conversations]
@@ -2989,6 +2991,8 @@ paths:
         "403":
           $ref: "#/components/responses/Problem"
         "404":
+          $ref: "#/components/responses/Problem"
+        "409":
           $ref: "#/components/responses/Problem"
   /v1/conversations/{conversationId}/move:
     post:
@@ -10728,7 +10732,8 @@ paths:
         of `ready.last_event_id` and the last `id` received, reconnect with `?last_event_id=`, and
         reload over HTTP on `resync_required`. `typing`, `presence` and `inbox.updated` have no
         `id` and are not replayed. `message.*` carries only messages (no notes or internal events),
-        and `conversation.updated` only the status. `typing` (a member typing), `read` (how far
+        and `conversation.updated` only the status and a feedback's progress (a change to either
+        sends it; show a progress change as a line in the thread). `typing` (a member typing), `read` (how far
         members have read) and `presence` (whether someone is available; sent after `ready` and
         whenever it changes) come only for `live` inboxes. `inbox.updated` carries the inbox's
         public settings, the same `ClientInbox` as `GET /client/v1/channels/{channel_key}`, whenever
@@ -14290,6 +14295,13 @@ components:
           items:
             type: string
             format: uuid
+        feedback_progress:
+          anyOf:
+            - $ref: "#/components/schemas/FeedbackProgress"
+            - type: "null"
+          description: |
+            `feedback` conversations only: sets `feedback.progress`; `null` clears it. A value on
+            another kind is refused with `409 not_feedback`; `null` there changes nothing.
     ConversationBulkUpdate:
       type: object
       required: [conversation_ids]
@@ -14905,7 +14917,8 @@ components:
             "Ayşe via Claude Code"; absent for the panel, API keys and contacts.
     EventType:
       type: string
-      enum: [assigned, unassigned, status_changed, labels_changed, moved, rated, broadcast_reply]
+      enum: [assigned, unassigned, status_changed, labels_changed, moved, rated, broadcast_reply, feedback_progress]
+      x-enum-varnames: [Assigned, Unassigned, StatusChanged, LabelsChanged, Moved, Rated, BroadcastReply, EventTypeFeedbackProgress]
     MessageEvent:
       type: object
       required: [type]
@@ -14948,6 +14961,14 @@ components:
         broadcast:
           $ref: "#/components/schemas/BroadcastRef"
           description: "`broadcast_reply` only: the broadcast the contact answered; the first entry of the conversation."
+        feedback_progress:
+          anyOf:
+            - $ref: "#/components/schemas/FeedbackProgress"
+            - type: "null"
+          description: "`feedback_progress` only: the new progress, `null` when it was cleared."
+        previous_feedback_progress:
+          $ref: "#/components/schemas/FeedbackProgress"
+          description: "`feedback_progress` only: the progress before; absent when it was not set."
     Attachment:
       type: object
       required: [id, filename, content_type, size, inline, created_at]
@@ -17565,6 +17586,12 @@ components:
     FeedbackCategory:
       type: string
       enum: [bug, idea, praise, other]
+    FeedbackProgress:
+      type: string
+      description: |
+        Where a feedback stands, set by members and shown to the contact: Planned, In progress,
+        Done, Won't do. Separate from the status: a feedback can be `done` and still open.
+      enum: [planned, in_progress, done, wont_do]
     Feedback:
       type: object
       description: What a `feedback` conversation was sent with. Absent fields were not sent.
@@ -17572,6 +17599,9 @@ components:
       properties:
         category:
           $ref: "#/components/schemas/FeedbackCategory"
+        progress:
+          $ref: "#/components/schemas/FeedbackProgress"
+          description: Set by a member with `PATCH /v1/conversations/{id}`; absent when nobody set it.
         text:
           type: string
           maxLength: 200
@@ -20451,6 +20481,12 @@ components:
           format: uuid
         status:
           $ref: "#/components/schemas/ConversationStatus"
+        feedback_progress:
+          $ref: "#/components/schemas/FeedbackProgress"
+          description: |
+            `feedback` conversations only: `feedback.progress` now. Every frame carries the current
+            value, so an absent `feedback_progress` means none (cleared): replace the shown progress
+            with the frame's, do not merge.
         can_rate:
           type: boolean
           description: As on `ClientConversation`.
@@ -20757,7 +20793,7 @@ components:
           $ref: "#/components/schemas/ClientConversation"
     ClientConversationUpdatedEvent:
       type: object
-      description: The conversation's status changed.
+      description: The conversation's status or a feedback's progress changed.
       required: [id, type, conversation_id, created_at, data]
       properties:
         id:

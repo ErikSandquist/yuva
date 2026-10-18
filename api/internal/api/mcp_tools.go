@@ -316,6 +316,11 @@ type setStatusIn struct {
 	Status         string    `json:"status"`
 }
 
+type setFeedbackProgressIn struct {
+	ConversationID uuid.UUID `json:"conversation_id"`
+	Progress       string    `json:"progress" jsonschema:"planned, in_progress, done or wont_do; none clears it"`
+}
+
 type snoozeIn struct {
 	ConversationID uuid.UUID `json:"conversation_id"`
 	Until          time.Time `json:"until" jsonschema:"when the conversation opens again, in the future"`
@@ -639,6 +644,16 @@ var mcpTools = append([]mcpTool{
 				return mcpConversation{}, errValidation("use snooze to snooze a conversation")
 			}
 			return c.updateConversation(ctx, in.ConversationID, oas.ConversationUpdate{Status: &st})
+		}),
+	defineTool("set_feedback_progress", "Set a feedback's progress",
+		"Tells the customer where a feedback stands (planned, in progress, done, won't do), or clears it with none. Separate from the status; feedback only. Maps to PATCH /v1/conversations/{id} with feedback_progress.",
+		idempotent, map[string][]any{"progress": {"planned", "in_progress", "done", "wont_do", "none"}}, mcpTool{ops: []string{"UpdateConversation"}},
+		func(ctx context.Context, c *mcpCall, in setFeedbackProgressIn) (mcpConversation, error) {
+			b := oas.ConversationUpdate{FeedbackProgress: nullable.NewNullNullable[oas.FeedbackProgress]()}
+			if in.Progress != "none" {
+				b.FeedbackProgress = nullable.NewNullableWithValue(oas.FeedbackProgress(in.Progress))
+			}
+			return c.updateConversation(ctx, in.ConversationID, b)
 		}),
 	defineTool("snooze", "Snooze a conversation",
 		"Snoozes a conversation until a time; it opens again then. Maps to PATCH /v1/conversations/{id}.",

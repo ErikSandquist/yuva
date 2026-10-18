@@ -709,6 +709,7 @@ type Conversation struct {
 	BroadcastID           *uuid.UUID
 	MigrationID           *uuid.UUID
 	ImportedAt            *time.Time
+	FeedbackProgress      *string
 }
 
 type ConversationLabel struct {

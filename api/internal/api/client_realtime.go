@@ -268,12 +268,19 @@ func (f *clientFilter) load(ctx context.Context, resuming bool) error {
 	}
 	f.convs = make(map[uuid.UUID]string, len(rows))
 	for _, r := range rows {
-		f.convs[r.ID] = r.Status
+		f.convs[r.ID] = clientConvState(r.Status, r.FeedbackProgress)
 		if resuming {
 			f.convs[r.ID] = statusUnsent
 		}
 	}
 	return nil
+}
+
+func clientConvState(status string, progress *string) string {
+	if progress == nil {
+		return status
+	}
+	return status + "/" + *progress
 }
 
 func (f *clientFilter) live() bool { return f.inbox.Mode == string(oas.Live) }
@@ -383,16 +390,21 @@ func (f *clientFilter) transform(ctx context.Context, e realtime.Event) ([]any, 
 			delete(f.convs, c.Id)
 			return nil, nil
 		}
-		f.convs[c.Id] = string(c.Status)
+		var progress *oas.FeedbackProgress
+		if c.Feedback != nil {
+			progress = c.Feedback.Progress
+		}
+		state := clientConvState(string(c.Status), (*string)(progress))
+		f.convs[c.Id] = state
 		if !known || e.Type == realtime.ConversationCreated {
 			return frameAs(realtime.ConversationCreated, oas.ClientConversation{
 				Id: c.Id, Kind: c.Kind, Feedback: c.Feedback, Subject: c.Subject, Status: c.Status, LastMessageAt: c.LastMessageAt, CreatedAt: c.CreatedAt,
 			}), nil
 		}
-		if prev != statusUnsent && prev == string(c.Status) {
+		if prev != statusUnsent && prev == state {
 			return nil, nil
 		}
-		st := oas.ClientConversationStatus{Id: c.Id, Status: c.Status, UpdatedAt: c.UpdatedAt}
+		st := oas.ClientConversationStatus{Id: c.Id, Status: c.Status, FeedbackProgress: progress, UpdatedAt: c.UpdatedAt}
 		var ratedAt *time.Time
 		var rating *string
 		if c.Rating != nil {
