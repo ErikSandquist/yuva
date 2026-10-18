@@ -292,3 +292,15 @@ kbd {
   direction: ltr;
   unicode-bidi: isolate;
 }
+
+.prose .shots {
+  @apply my-10 grid grid-cols-2 gap-4 sm:gap-6;
+}
+
+.prose .shots img {
+  @apply my-0 h-auto w-full rounded-[1.75rem] border border-rule;
+}
+
+.prose .shots figcaption {
+  @apply col-span-2 mt-0 text-center text-sm;
+}
