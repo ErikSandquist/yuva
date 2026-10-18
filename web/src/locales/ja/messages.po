@@ -8463,6 +8463,7 @@ msgid "Resolve (E)"
 msgstr "解決にする (E)"
 
 #: src/components/common/text.ts
+#: src/features/conversation/ConversationStatus.tsx
 #: src/features/feedback/FeedbackList.tsx
 msgid "Resolved"
 msgstr "解決済み"

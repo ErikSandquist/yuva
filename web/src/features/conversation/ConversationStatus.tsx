@@ -57,7 +57,7 @@ export function Status({ c, lastInbound }: { c: Conversation; lastInbound?: Mess
   const rating = currentRating(c)
   return (
     <span className="inline-flex items-center gap-1.5">
-      <Trans>Done</Trans>
+      {c.kind === "feedback" ? <Trans>Resolved</Trans> : <Trans>Done</Trans>}
       {rating && <RatingMark rating={rating.rating} comment={rating.comment} />}
     </span>
   )

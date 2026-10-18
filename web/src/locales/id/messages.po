@@ -8463,6 +8463,7 @@ msgid "Resolve (E)"
 msgstr "Selesaikan (E)"
 
 #: src/components/common/text.ts
+#: src/features/conversation/ConversationStatus.tsx
 #: src/features/feedback/FeedbackList.tsx
 msgid "Resolved"
 msgstr "Terselesaikan"

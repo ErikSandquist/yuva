@@ -8463,6 +8463,7 @@ msgid "Resolve (E)"
 msgstr "Rezolvă (E)"
 
 #: src/components/common/text.ts
+#: src/features/conversation/ConversationStatus.tsx
 #: src/features/feedback/FeedbackList.tsx
 msgid "Resolved"
 msgstr "Rezolvat"
