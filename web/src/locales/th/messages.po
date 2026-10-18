@@ -123,8 +123,16 @@ msgid "{actor} assigned this to {assignee}"
 msgstr "{actor} มอบหมายให้ {assignee}"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} cleared the progress"
+msgstr "{actor} cleared the progress"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} closed the conversation"
 msgstr "{actor} ปิดการสนทนา"
+
+#: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this {progress}"
+msgstr "{actor} marked this {progress}"
 
 #: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} marked this as resolved"
@@ -2448,6 +2456,7 @@ msgid "claude.ai and Claude Desktop"
 msgstr "claude.ai และ Claude Desktop"
 
 #: src/features/contact/ContactDetails.tsx
+#: src/features/conversation/HeaderActions.tsx
 msgid "Clear"
 msgstr "ล้าง"
 
@@ -3509,6 +3518,11 @@ msgstr "ยังไม่ได้ยืนยันโดเมน"
 #: src/features/setup/SetupLayout.tsx
 msgid "Done"
 msgstr "เสร็จแล้ว"
+
+#: src/components/common/text.ts
+msgctxt "feedback progress"
+msgid "Done"
+msgstr "Done"
 
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
@@ -4798,6 +4812,10 @@ msgstr "ใน Help Scout เปิด Your Profile › My Apps แล้วเ�
 #: src/features/migrations/SwitchStep.tsx
 msgid "In Microsoft 365 that is mailbox forwarding or a mail flow rule; an admin may first have to allow external forwarding."
 msgstr "ใน Microsoft 365 คือการส่งต่อกล่องจดหมายหรือกฎการไหลของอีเมล ผู้ดูแลอาจต้องอนุญาตการส่งต่อภายนอกก่อน"
+
+#: src/components/common/text.ts
+msgid "In progress"
+msgstr "In progress"
 
 #: src/features/conversation/Feedback.tsx
 msgid "In the app and by e-mail"
@@ -7755,6 +7773,10 @@ msgstr "ปักหมุดแล้ว"
 msgid "Pinned to the top of your list"
 msgstr "ปักหมุดไว้ด้านบนของรายการของคุณ"
 
+#: src/components/common/text.ts
+msgid "Planned"
+msgstr "Planned"
+
 #: src/features/migrations/ReviewStep.tsx
 msgid "Planning the import with your choices…"
 msgstr "กำลังวางแผนการนำเข้าตามตัวเลือกของคุณ…"
@@ -7859,9 +7881,14 @@ msgstr "แบ็กเอนด์โปรดักชัน"
 msgid "Profile"
 msgstr "โปรไฟล์"
 
+#: src/features/conversation/HeaderActions.tsx
 #: src/features/migrations/CopyStep.tsx
 msgid "Progress"
 msgstr "ความคืบหน้า"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Progress (O)"
+msgstr "Progress (O)"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Export the mailbox with Proton Mail's export tool, put the folder in a .zip and upload it as an export file below."
@@ -9144,6 +9171,15 @@ msgstr "URL เซิร์ฟเวอร์"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "SES tenant"
 msgstr "tenant SES"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Set progress"
+msgstr "Set progress"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Set the feedback progress"
+msgstr "Set the feedback progress"
 
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Set up DKIM"
@@ -12099,6 +12135,10 @@ msgstr "ภายในไม่กี่นาที"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Without a confirmation anyone can type someone else's address into your form, and you cannot show that the owner of the address agreed. Keep it on unless your forms are only shown to people whose address you have already verified."
 msgstr "หากไม่มีการยืนยัน ใครก็พิมพ์ที่อยู่ของคนอื่นลงในแบบฟอร์มของคุณได้ และคุณแสดงไม่ได้ว่าเจ้าของที่อยู่ยินยอม ควรเปิดไว้ เว้นแต่แบบฟอร์มของคุณแสดงเฉพาะกับผู้ที่คุณตรวจสอบที่อยู่แล้ว"
+
+#: src/components/common/text.ts
+msgid "Won't do"
+msgstr "Won't do"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Work with conversations from agent mode in VS Code. It acts as you, with the access you allow."

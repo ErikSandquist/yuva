@@ -42,7 +42,14 @@ import { ConversationMenu } from "@/features/conversation/ConversationMenu"
 import { CategoryChip } from "@/features/conversation/Feedback"
 import { FromConversationDialog } from "@/features/docs/discussions/FromConversation"
 import { conversationPage, PageLine } from "@/features/docs/PageContext"
-import { CloseButton, HandMenu, LabelsMenu, SnoozeMenu, type HeaderMenu } from "@/features/conversation/HeaderActions"
+import {
+  CloseButton,
+  HandMenu,
+  LabelsMenu,
+  ProgressMenu,
+  SnoozeMenu,
+  type HeaderMenu,
+} from "@/features/conversation/HeaderActions"
 import { History } from "@/features/conversation/History"
 import type { ThreadContext } from "@/features/conversation/messages/context"
 import { foldText, quoteOf } from "@/features/conversation/messages/MessageActions"
@@ -329,6 +336,7 @@ function Loaded({
     snooze: () => setMenu("snooze"),
     hand: () => setMenu("hand"),
     labels: () => setMenu("labels"),
+    progress: () => c.kind === "feedback" && setMenu("progress"),
     close: () => (c.status === "closed" ? actions.reopen() : actions.close()),
     contact: togglePanel,
     more: () => setMoreOpen(true),
@@ -343,6 +351,7 @@ function Loaded({
     [SHORTCUTS.snooze]: handlers.snooze,
     [SHORTCUTS.hand]: handlers.hand,
     [SHORTCUTS.labels]: handlers.labels,
+    [SHORTCUTS.progress]: handlers.progress,
     [SHORTCUTS.close]: handlers.close,
     [SHORTCUTS.leave]: () => showCollision && leaveTo(),
     [SHORTCUTS.history]: handlers.history,
@@ -492,6 +501,9 @@ function Loaded({
           <span className="phone:hidden @max-xl/person:hidden">
             <LabelsMenu c={c} update={update} open={menu === "labels"} onOpenChange={openMenu("labels")} />
           </span>
+          {c.kind === "feedback" && (
+            <ProgressMenu c={c} update={update} open={menu === "progress"} onOpenChange={openMenu("progress")} />
+          )}
           <CloseButton c={c} actions={actions} />
           <Button
             variant="ghost"

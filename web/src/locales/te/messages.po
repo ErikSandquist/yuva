@@ -123,8 +123,16 @@ msgid "{actor} assigned this to {assignee}"
 msgstr "{actor} దీన్ని {assignee} కు కేటాయించారు"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} cleared the progress"
+msgstr "{actor} cleared the progress"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} closed the conversation"
 msgstr "{actor} సంభాషణను మూసివేశారు"
+
+#: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this {progress}"
+msgstr "{actor} marked this {progress}"
 
 #: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} marked this as resolved"
@@ -2448,6 +2456,7 @@ msgid "claude.ai and Claude Desktop"
 msgstr "claude.ai మరియు Claude Desktop"
 
 #: src/features/contact/ContactDetails.tsx
+#: src/features/conversation/HeaderActions.tsx
 msgid "Clear"
 msgstr "క్లియర్ చేయండి"
 
@@ -3509,6 +3518,11 @@ msgstr "డొమైన్ ధృవీకరించబడలేదు"
 #: src/features/setup/SetupLayout.tsx
 msgid "Done"
 msgstr "పూర్తయింది"
+
+#: src/components/common/text.ts
+msgctxt "feedback progress"
+msgid "Done"
+msgstr "Done"
 
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
@@ -4798,6 +4812,10 @@ msgstr "Help Scout లో Your Profile › My Apps తెరిచి Create App
 #: src/features/migrations/SwitchStep.tsx
 msgid "In Microsoft 365 that is mailbox forwarding or a mail flow rule; an admin may first have to allow external forwarding."
 msgstr "Microsoft 365 లో అది మెయిల్‌బాక్స్ ఫార్వర్డింగ్ లేదా మెయిల్ ఫ్లో నియమం; అడ్మిన్ ముందుగా బాహ్య ఫార్వర్డింగ్‌ను అనుమతించాల్సి రావచ్చు."
+
+#: src/components/common/text.ts
+msgid "In progress"
+msgstr "In progress"
 
 #: src/features/conversation/Feedback.tsx
 msgid "In the app and by e-mail"
@@ -7755,6 +7773,10 @@ msgstr "పిన్ చేయబడింది"
 msgid "Pinned to the top of your list"
 msgstr "మీ లిస్ట్ పైన పిన్ చేయబడింది"
 
+#: src/components/common/text.ts
+msgid "Planned"
+msgstr "Planned"
+
 #: src/features/migrations/ReviewStep.tsx
 msgid "Planning the import with your choices…"
 msgstr "మీ ఎంపికలతో దిగుమతిని ప్రణాళిక చేస్తోంది…"
@@ -7859,9 +7881,14 @@ msgstr "ప్రొడక్షన్ బ్యాకెండ్"
 msgid "Profile"
 msgstr "ప్రొఫైల్"
 
+#: src/features/conversation/HeaderActions.tsx
 #: src/features/migrations/CopyStep.tsx
 msgid "Progress"
 msgstr "పురోగతి"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Progress (O)"
+msgstr "Progress (O)"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Export the mailbox with Proton Mail's export tool, put the folder in a .zip and upload it as an export file below."
@@ -9144,6 +9171,15 @@ msgstr "సర్వర్ URL"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "SES tenant"
 msgstr "SES టెనెంట్"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Set progress"
+msgstr "Set progress"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Set the feedback progress"
+msgstr "Set the feedback progress"
 
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Set up DKIM"
@@ -12099,6 +12135,10 @@ msgstr "నిమిషాల్లో"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Without a confirmation anyone can type someone else's address into your form, and you cannot show that the owner of the address agreed. Keep it on unless your forms are only shown to people whose address you have already verified."
 msgstr "నిర్ధారణ లేకుండా ఎవరైనా మీ ఫారమ్‌లో మరొకరి చిరునామాను టైప్ చేయవచ్చు, మరియు చిరునామా యజమాని అంగీకరించారని మీరు చూపలేరు. మీ ఫారమ్‌లు ఇప్పటికే చిరునామాను ధృవీకరించిన వారికి మాత్రమే చూపబడితే తప్ప, దీన్ని ఆన్‌లో ఉంచండి."
+
+#: src/components/common/text.ts
+msgid "Won't do"
+msgstr "Won't do"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Work with conversations from agent mode in VS Code. It acts as you, with the access you allow."

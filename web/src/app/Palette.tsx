@@ -39,7 +39,8 @@ function useItems(open: boolean): Item[] {
   const channels = useChannelMap()
   const [inboxId, setFilter] = useInboxFilter()
   const recent = useConversations({ status: ["open"], inbox_id: inboxId || undefined }, open)
-  const commands = open && hasCommands() && pathname.startsWith("/conversations/")
+  const commands =
+    open && hasCommands() && (pathname.startsWith("/conversations/") || pathname.startsWith("/feedback/"))
   return useMemo(() => {
     if (!open) return []
     const inboxes = inboxList ?? []
@@ -70,6 +71,7 @@ function useItems(open: boolean): Item[] {
       act("hand", t`Assign or hand to a teammate`, SHORTCUTS.hand)
       act("snooze", t`Snooze`, SHORTCUTS.snooze)
       act("labels", t`Labels`, SHORTCUTS.labels)
+      if (pathname.startsWith("/feedback/")) act("progress", t`Set the feedback progress`, SHORTCUTS.progress)
       act("close", t`Close or reopen`, SHORTCUTS.close)
       act("history", t`Other conversations`, SHORTCUTS.history)
       act("contact", t`Contact details`, SHORTCUTS.contact)

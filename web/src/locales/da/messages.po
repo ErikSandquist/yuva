@@ -123,8 +123,16 @@ msgid "{actor} assigned this to {assignee}"
 msgstr "{actor} tildelte dette til {assignee}"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} cleared the progress"
+msgstr "{actor} fjernede fremdriften"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} closed the conversation"
 msgstr "{actor} lukkede samtalen"
+
+#: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this {progress}"
+msgstr "{actor} markerede dette som “{progress}”"
 
 #: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} marked this as resolved"
@@ -2448,6 +2456,7 @@ msgid "claude.ai and Claude Desktop"
 msgstr "claude.ai og Claude Desktop"
 
 #: src/features/contact/ContactDetails.tsx
+#: src/features/conversation/HeaderActions.tsx
 msgid "Clear"
 msgstr "Ryd"
 
@@ -3507,6 +3516,11 @@ msgstr "Domænet er ikke bekræftet"
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
+msgid "Done"
+msgstr "Færdig"
+
+#: src/components/common/text.ts
+msgctxt "feedback progress"
 msgid "Done"
 msgstr "Færdig"
 
@@ -4798,6 +4812,10 @@ msgstr "I Help Scout, åbn Din profil › My Apps, og vælg Create App."
 #: src/features/migrations/SwitchStep.tsx
 msgid "In Microsoft 365 that is mailbox forwarding or a mail flow rule; an admin may first have to allow external forwarding."
 msgstr "I Microsoft 365 er det postkassevideresendelse eller en mailflowregel; en admin skal måske først tillade ekstern videresendelse."
+
+#: src/components/common/text.ts
+msgid "In progress"
+msgstr "I gang"
 
 #: src/features/conversation/Feedback.tsx
 msgid "In the app and by e-mail"
@@ -7755,6 +7773,10 @@ msgstr "Fastgjort"
 msgid "Pinned to the top of your list"
 msgstr "Fastgjort øverst på din liste"
 
+#: src/components/common/text.ts
+msgid "Planned"
+msgstr "Planlagt"
+
 #: src/features/migrations/ReviewStep.tsx
 msgid "Planning the import with your choices…"
 msgstr "Planlægger importen med dine valg…"
@@ -7859,9 +7881,14 @@ msgstr "Produktionsbackend"
 msgid "Profile"
 msgstr "Profil"
 
+#: src/features/conversation/HeaderActions.tsx
 #: src/features/migrations/CopyStep.tsx
 msgid "Progress"
 msgstr "Fremdrift"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Progress (O)"
+msgstr "Fremdrift (O)"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Export the mailbox with Proton Mail's export tool, put the folder in a .zip and upload it as an export file below."
@@ -9144,6 +9171,15 @@ msgstr "Server-URL"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "SES tenant"
 msgstr "SES-tenant"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Set progress"
+msgstr "Angiv fremdrift"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Set the feedback progress"
+msgstr "Angiv feedbackens fremdrift"
 
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Set up DKIM"
@@ -12099,6 +12135,10 @@ msgstr "Inden for minutter"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Without a confirmation anyone can type someone else's address into your form, and you cannot show that the owner of the address agreed. Keep it on unless your forms are only shown to people whose address you have already verified."
 msgstr "Uden bekræftelse kan enhver skrive en andens adresse i din formular, og du kan ikke vise, at adressens ejer sagde ja. Lad den være slået til, medmindre dine formularer kun vises for personer, hvis adresse du allerede har verificeret."
+
+#: src/components/common/text.ts
+msgid "Won't do"
+msgstr "Bliver ikke gjort"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Work with conversations from agent mode in VS Code. It acts as you, with the access you allow."

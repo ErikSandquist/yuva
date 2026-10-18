@@ -123,8 +123,16 @@ msgid "{actor} assigned this to {assignee}"
 msgstr "{actor} osoitti tämän henkilölle {assignee}"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} cleared the progress"
+msgstr "{actor} tyhjensi etenemisen"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} closed the conversation"
 msgstr "{actor} sulki keskustelun"
+
+#: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this {progress}"
+msgstr "{actor} merkitsi tämän tilaan ”{progress}”"
 
 #: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} marked this as resolved"
@@ -2448,6 +2456,7 @@ msgid "claude.ai and Claude Desktop"
 msgstr "claude.ai ja Claude Desktop"
 
 #: src/features/contact/ContactDetails.tsx
+#: src/features/conversation/HeaderActions.tsx
 msgid "Clear"
 msgstr "Tyhjennä"
 
@@ -3507,6 +3516,11 @@ msgstr "Verkkotunnusta ei ole vahvistettu"
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
+msgid "Done"
+msgstr "Valmis"
+
+#: src/components/common/text.ts
+msgctxt "feedback progress"
 msgid "Done"
 msgstr "Valmis"
 
@@ -4798,6 +4812,10 @@ msgstr "Avaa Help Scoutissa Your Profile › My Apps ja valitse Create App."
 #: src/features/migrations/SwitchStep.tsx
 msgid "In Microsoft 365 that is mailbox forwarding or a mail flow rule; an admin may first have to allow external forwarding."
 msgstr "Microsoft 365:ssä se on postilaatikon ohjaus tai postinkulun sääntö; ylläpitäjän on ehkä ensin sallittava ulkoinen ohjaus."
+
+#: src/components/common/text.ts
+msgid "In progress"
+msgstr "Työn alla"
 
 #: src/features/conversation/Feedback.tsx
 msgid "In the app and by e-mail"
@@ -7755,6 +7773,10 @@ msgstr "Kiinnitetty"
 msgid "Pinned to the top of your list"
 msgstr "Kiinnitetty listasi ylälaitaan"
 
+#: src/components/common/text.ts
+msgid "Planned"
+msgstr "Suunniteltu"
+
 #: src/features/migrations/ReviewStep.tsx
 msgid "Planning the import with your choices…"
 msgstr "Suunnitellaan tuontia valintojesi mukaan …"
@@ -7859,9 +7881,14 @@ msgstr "Tuotannon taustajärjestelmä"
 msgid "Profile"
 msgstr "Profiili"
 
+#: src/features/conversation/HeaderActions.tsx
 #: src/features/migrations/CopyStep.tsx
 msgid "Progress"
 msgstr "Edistyminen"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Progress (O)"
+msgstr "Eteneminen (O)"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Export the mailbox with Proton Mail's export tool, put the folder in a .zip and upload it as an export file below."
@@ -9144,6 +9171,15 @@ msgstr "Palvelimen URL"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "SES tenant"
 msgstr "SES-tenant"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Set progress"
+msgstr "Aseta eteneminen"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Set the feedback progress"
+msgstr "Aseta palautteen eteneminen"
 
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Set up DKIM"
@@ -12099,6 +12135,10 @@ msgstr "Minuuttien sisällä"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Without a confirmation anyone can type someone else's address into your form, and you cannot show that the owner of the address agreed. Keep it on unless your forms are only shown to people whose address you have already verified."
 msgstr "Ilman vahvistusta kuka tahansa voi kirjoittaa lomakkeeseesi jonkun toisen osoitteen, etkä voi osoittaa, että osoitteen omistaja suostui. Pidä se päällä, ellei lomakkeitasi näytetä vain ihmisille, joiden osoite olet jo vahvistanut."
+
+#: src/components/common/text.ts
+msgid "Won't do"
+msgstr "Ei tehdä"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Work with conversations from agent mode in VS Code. It acts as you, with the access you allow."

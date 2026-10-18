@@ -1,12 +1,23 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { BugIcon, CheckIcon, CopyIcon, HeartIcon, LightbulbIcon, MessageSquareMoreIcon } from "lucide-react"
+import {
+  BugIcon,
+  CheckIcon,
+  CircleCheckIcon,
+  CircleDashedIcon,
+  CircleDotIcon,
+  CircleSlashIcon,
+  CopyIcon,
+  HeartIcon,
+  LightbulbIcon,
+  MessageSquareMoreIcon,
+} from "lucide-react"
 
 import { useCopy } from "@/components/common"
 import { SHORTCUTS } from "@/components/common/ShortcutSheet"
 import { useEnumText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { useHotkeys } from "@/hooks/use-hotkeys"
-import type { Feedback, FeedbackCategory } from "@/lib/api"
+import type { Feedback, FeedbackCategory, FeedbackProgress } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
 const categoryIcons: Record<FeedbackCategory, React.ComponentType<{ className?: string }>> = {
@@ -34,6 +45,39 @@ export function CategoryChip({ category, className }: { category: FeedbackCatego
     >
       <Icon className={cn("size-3.5", categoryClass[category])} />
       {text.category[category]}
+    </span>
+  )
+}
+
+export const progressIcons: Record<FeedbackProgress, React.ComponentType<{ className?: string }>> = {
+  planned: CircleDashedIcon,
+  in_progress: CircleDotIcon,
+  done: CircleCheckIcon,
+  wont_do: CircleSlashIcon,
+}
+
+const progressClass: Record<FeedbackProgress, string> = {
+  planned: "bg-muted text-muted-foreground",
+  in_progress: "bg-brand-wash text-brand",
+  done: "bg-success/10 text-success",
+  wont_do: "bg-muted text-faint",
+}
+
+export function ProgressChip({ progress, className }: { progress: FeedbackProgress; className?: string }) {
+  const text = useEnumText()
+  const Icon = progressIcons[progress]
+  return (
+    <span
+      className={cn(
+        "inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-px text-caption font-medium",
+        progressClass[progress],
+        className
+      )}
+      data-testid="progress-chip"
+      data-progress={progress}
+    >
+      <Icon className="size-3" />
+      {text.progress[progress]}
     </span>
   )
 }

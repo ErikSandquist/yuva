@@ -91,6 +91,17 @@ export function EventLine({ m, ctx }: { m: Message; ctx: ThreadContext }) {
       )
       break
     }
+    case "feedback_progress": {
+      const progress = e.feedback_progress ? text.progress[e.feedback_progress] : ""
+      body = e.feedback_progress ? (
+        <Trans>
+          {actor} marked this {progress}
+        </Trans>
+      ) : (
+        <Trans>{actor} cleared the progress</Trans>
+      )
+      break
+    }
     case "moved": {
       const from = ctx.inboxes.find((i) => i.id === e.previous_inbox_id)?.name ?? t`another inbox`
       body = <Trans>Moved from {from}</Trans>

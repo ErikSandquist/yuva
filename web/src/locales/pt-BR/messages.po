@@ -123,8 +123,16 @@ msgid "{actor} assigned this to {assignee}"
 msgstr "{actor} atribuiu isto a {assignee}"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} cleared the progress"
+msgstr "{actor} limpou o andamento"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} closed the conversation"
 msgstr "{actor} fechou a conversa"
+
+#: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this {progress}"
+msgstr "{actor} marcou isto como “{progress}”"
 
 #: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} marked this as resolved"
@@ -2448,6 +2456,7 @@ msgid "claude.ai and Claude Desktop"
 msgstr "claude.ai e Claude Desktop"
 
 #: src/features/contact/ContactDetails.tsx
+#: src/features/conversation/HeaderActions.tsx
 msgid "Clear"
 msgstr "Limpar"
 
@@ -3509,6 +3518,11 @@ msgstr "Domínio não verificado"
 #: src/features/setup/SetupLayout.tsx
 msgid "Done"
 msgstr "Pronto"
+
+#: src/components/common/text.ts
+msgctxt "feedback progress"
+msgid "Done"
+msgstr "Concluído"
 
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
@@ -4798,6 +4812,10 @@ msgstr "No Help Scout, abra Seu perfil › My Apps e escolha Create App."
 #: src/features/migrations/SwitchStep.tsx
 msgid "In Microsoft 365 that is mailbox forwarding or a mail flow rule; an admin may first have to allow external forwarding."
 msgstr "No Microsoft 365 isso é o encaminhamento da caixa ou uma regra de fluxo de e-mail; um administrador pode precisar permitir antes o encaminhamento externo."
+
+#: src/components/common/text.ts
+msgid "In progress"
+msgstr "Em andamento"
 
 #: src/features/conversation/Feedback.tsx
 msgid "In the app and by e-mail"
@@ -7755,6 +7773,10 @@ msgstr "Fixada"
 msgid "Pinned to the top of your list"
 msgstr "Fixada no topo da sua lista"
 
+#: src/components/common/text.ts
+msgid "Planned"
+msgstr "Planejado"
+
 #: src/features/migrations/ReviewStep.tsx
 msgid "Planning the import with your choices…"
 msgstr "Planejando a importação com suas escolhas…"
@@ -7859,9 +7881,14 @@ msgstr "Backend de produção"
 msgid "Profile"
 msgstr "Perfil"
 
+#: src/features/conversation/HeaderActions.tsx
 #: src/features/migrations/CopyStep.tsx
 msgid "Progress"
 msgstr "Progresso"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Progress (O)"
+msgstr "Andamento (O)"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Export the mailbox with Proton Mail's export tool, put the folder in a .zip and upload it as an export file below."
@@ -9144,6 +9171,15 @@ msgstr "URL do servidor"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "SES tenant"
 msgstr "Tenant do SES"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Set progress"
+msgstr "Definir andamento"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Set the feedback progress"
+msgstr "Definir o andamento do feedback"
 
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Set up DKIM"
@@ -12099,6 +12135,10 @@ msgstr "Em minutos"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Without a confirmation anyone can type someone else's address into your form, and you cannot show that the owner of the address agreed. Keep it on unless your forms are only shown to people whose address you have already verified."
 msgstr "Sem confirmação, qualquer um pode digitar o endereço de outra pessoa no seu formulário, e você não consegue mostrar que o dono do endereço aceitou. Mantenha ativada, a menos que seus formulários só sejam mostrados a pessoas cujo endereço você já verificou."
+
+#: src/components/common/text.ts
+msgid "Won't do"
+msgstr "Não será feito"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Work with conversations from agent mode in VS Code. It acts as you, with the access you allow."

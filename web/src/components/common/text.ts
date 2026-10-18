@@ -12,6 +12,7 @@ import {
   type ConsentEventKind,
   type ConversationStatus,
   type FeedbackCategory,
+  type FeedbackProgress,
   type InboxMode,
   type MigrationFileRefusal,
   type Priority,
@@ -136,6 +137,12 @@ export function useEnumText() {
       FeedbackCategory,
       string
     >,
+    progress: {
+      planned: t`Planned`,
+      in_progress: t`In progress`,
+      done: t({ message: "Done", context: "feedback progress" }),
+      wont_do: t`Won't do`,
+    } satisfies Record<FeedbackProgress, string>,
     platform: { ios: "iOS", android: "Android" } satisfies Record<AppPlatform, string>,
     event: {
       "conversation.created": t`A conversation started`,

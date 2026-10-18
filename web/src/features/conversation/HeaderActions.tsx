@@ -1,8 +1,18 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
-import { CheckIcon, ClockIcon, RotateCcwIcon, TagIcon, UserRoundCheckIcon, UserRoundPlusIcon } from "lucide-react"
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ClockIcon,
+  FlagIcon,
+  RotateCcwIcon,
+  TagIcon,
+  UserRoundCheckIcon,
+  UserRoundPlusIcon,
+} from "lucide-react"
 import { useState, type RefObject } from "react"
 
 import { Dot, Kbd, MemberAvatar } from "@/components/common"
+import { useEnumText } from "@/components/common/text"
 import { keyLabel, SHORTCUTS } from "@/components/common/ShortcutSheet"
 import { Button } from "@/components/ui/button"
 import {
@@ -12,6 +22,7 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
   popupClass,
 } from "@/components/ui/dropdown-menu"
@@ -20,13 +31,14 @@ import { Item } from "@/components/ui/item"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Separator } from "@/components/ui/separator"
 import { firstName, type ConversationActions } from "@/features/conversation/actions"
+import { progressIcons } from "@/features/conversation/Feedback"
 import { useCounts } from "@/features/inbox/queries"
-import type { Conversation, ConversationUpdate } from "@/lib/api"
+import type { Conversation, ConversationUpdate, FeedbackProgress } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 import { useAssignableMembers, useLabels } from "@/lib/workspace"
 
-export type HeaderMenu = "snooze" | "hand" | "labels" | null
+export type HeaderMenu = "snooze" | "hand" | "labels" | "progress" | null
 
 const iconButton = <Button variant="ghost" size="icon-sm" />
 
@@ -266,6 +278,67 @@ export function LabelsMenu({
             {l.name}
           </DropdownMenuCheckboxItem>
         ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
+const PROGRESS: FeedbackProgress[] = ["planned", "in_progress", "done", "wont_do"]
+
+export function ProgressMenu({
+  c,
+  update,
+  open,
+  onOpenChange,
+}: {
+  c: Conversation
+  update: (body: ConversationUpdate) => void
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}) {
+  const { t } = useLingui()
+  const text = useEnumText()
+  const current = c.feedback?.progress
+  const Icon = current ? progressIcons[current] : FlagIcon
+  return (
+    <DropdownMenu open={open} onOpenChange={onOpenChange}>
+      <DropdownMenuTrigger
+        render={<Button variant="outline" size="sm" />}
+        aria-label={t`Progress (O)`}
+        title={t`Progress (O)`}
+        data-testid="progress-menu"
+        data-progress={current}
+      >
+        <Icon />
+        <span className="phone:hidden @max-xl/person:hidden">
+          {current ? text.progress[current] : <Trans>Set progress</Trans>}
+        </span>
+        <ChevronDownIcon className="phone:hidden @max-xl/person:hidden" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="min-w-48">
+        <DropdownMenuGroup>
+          <DropdownMenuLabel>
+            <Trans>Progress</Trans>
+          </DropdownMenuLabel>
+          {PROGRESS.map((p) => {
+            const PIcon = progressIcons[p]
+            return (
+              <DropdownMenuItem key={p} onClick={() => update({ feedback_progress: p })} data-testid={`progress-${p}`}>
+                <PIcon className="size-4 text-muted-foreground" />
+                <span className="flex-1">{text.progress[p]}</span>
+                {current === p && <CheckIcon className="size-4 text-brand" />}
+              </DropdownMenuItem>
+            )
+          })}
+        </DropdownMenuGroup>
+        {current && (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => update({ feedback_progress: null })} data-testid="progress-clear">
+              <Trans>Clear</Trans>
+            </DropdownMenuItem>
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   )

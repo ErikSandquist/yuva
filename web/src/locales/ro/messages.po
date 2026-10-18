@@ -123,8 +123,16 @@ msgid "{actor} assigned this to {assignee}"
 msgstr "{actor} a atribuit conversația lui {assignee}"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} cleared the progress"
+msgstr "{actor} a șters progresul"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} closed the conversation"
 msgstr "{actor} a închis conversația"
+
+#: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this {progress}"
+msgstr "{actor} a marcat aceasta ca „{progress}”"
 
 #: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} marked this as resolved"
@@ -2448,6 +2456,7 @@ msgid "claude.ai and Claude Desktop"
 msgstr "claude.ai și Claude Desktop"
 
 #: src/features/contact/ContactDetails.tsx
+#: src/features/conversation/HeaderActions.tsx
 msgid "Clear"
 msgstr "Șterge"
 
@@ -3509,6 +3518,11 @@ msgstr "Domeniu neverificat"
 #: src/features/setup/SetupLayout.tsx
 msgid "Done"
 msgstr "Gata"
+
+#: src/components/common/text.ts
+msgctxt "feedback progress"
+msgid "Done"
+msgstr "Finalizat"
 
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
@@ -4798,6 +4812,10 @@ msgstr "În Help Scout, deschide Your Profile › My Apps și alege Create App."
 #: src/features/migrations/SwitchStep.tsx
 msgid "In Microsoft 365 that is mailbox forwarding or a mail flow rule; an admin may first have to allow external forwarding."
 msgstr "În Microsoft 365 aceasta este redirecționarea căsuței sau o regulă de flux de e-mail; un admin ar putea trebui să permită mai întâi redirecționarea externă."
+
+#: src/components/common/text.ts
+msgid "In progress"
+msgstr "În lucru"
 
 #: src/features/conversation/Feedback.tsx
 msgid "In the app and by e-mail"
@@ -7755,6 +7773,10 @@ msgstr "Fixat"
 msgid "Pinned to the top of your list"
 msgstr "Fixat în partea de sus a listei tale"
 
+#: src/components/common/text.ts
+msgid "Planned"
+msgstr "Planificat"
+
 #: src/features/migrations/ReviewStep.tsx
 msgid "Planning the import with your choices…"
 msgstr "Se planifică importul cu alegerile tale…"
@@ -7859,9 +7881,14 @@ msgstr "Backend de producție"
 msgid "Profile"
 msgstr "Profil"
 
+#: src/features/conversation/HeaderActions.tsx
 #: src/features/migrations/CopyStep.tsx
 msgid "Progress"
 msgstr "Progres"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Progress (O)"
+msgstr "Progres (O)"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Export the mailbox with Proton Mail's export tool, put the folder in a .zip and upload it as an export file below."
@@ -9144,6 +9171,15 @@ msgstr "URL server"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "SES tenant"
 msgstr "Tenant SES"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Set progress"
+msgstr "Setează progresul"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Set the feedback progress"
+msgstr "Setează progresul feedbackului"
 
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Set up DKIM"
@@ -12099,6 +12135,10 @@ msgstr "În câteva minute"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Without a confirmation anyone can type someone else's address into your form, and you cannot show that the owner of the address agreed. Keep it on unless your forms are only shown to people whose address you have already verified."
 msgstr "Fără o confirmare, oricine poate tasta adresa altcuiva în formularul tău și nu poți arăta că proprietarul adresei a fost de acord. Păstrează-o activată, cu excepția cazului în care formularele tale sunt arătate doar persoanelor a căror adresă ai verificat-o deja."
+
+#: src/components/common/text.ts
+msgid "Won't do"
+msgstr "Nu se va face"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Work with conversations from agent mode in VS Code. It acts as you, with the access you allow."

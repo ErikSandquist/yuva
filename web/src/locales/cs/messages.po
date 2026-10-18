@@ -123,8 +123,16 @@ msgid "{actor} assigned this to {assignee}"
 msgstr "{actor} přiřadil(a) konverzaci uživateli {assignee}"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} cleared the progress"
+msgstr "{actor} smazal(a) stav zpracování"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} closed the conversation"
 msgstr "{actor} uzavřel(a) konverzaci"
+
+#: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this {progress}"
+msgstr "{actor} označil(a) toto jako „{progress}“"
 
 #: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} marked this as resolved"
@@ -2448,6 +2456,7 @@ msgid "claude.ai and Claude Desktop"
 msgstr "claude.ai a Claude Desktop"
 
 #: src/features/contact/ContactDetails.tsx
+#: src/features/conversation/HeaderActions.tsx
 msgid "Clear"
 msgstr "Vymazat"
 
@@ -3507,6 +3516,11 @@ msgstr "Doména neověřena"
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
+msgid "Done"
+msgstr "Hotovo"
+
+#: src/components/common/text.ts
+msgctxt "feedback progress"
 msgid "Done"
 msgstr "Hotovo"
 
@@ -4798,6 +4812,10 @@ msgstr "V Help Scout otevřete Your Profile › My Apps a vyberte Create App."
 #: src/features/migrations/SwitchStep.tsx
 msgid "In Microsoft 365 that is mailbox forwarding or a mail flow rule; an admin may first have to allow external forwarding."
 msgstr "V Microsoft 365 je to přeposílání schránky nebo pravidlo toku pošty; správce možná nejprve musí povolit externí přeposílání."
+
+#: src/components/common/text.ts
+msgid "In progress"
+msgstr "Rozpracováno"
 
 #: src/features/conversation/Feedback.tsx
 msgid "In the app and by e-mail"
@@ -7755,6 +7773,10 @@ msgstr "Připnuto"
 msgid "Pinned to the top of your list"
 msgstr "Připnuto nahoře ve vašem seznamu"
 
+#: src/components/common/text.ts
+msgid "Planned"
+msgstr "Plánováno"
+
 #: src/features/migrations/ReviewStep.tsx
 msgid "Planning the import with your choices…"
 msgstr "Plánuje se import podle vašich voleb…"
@@ -7859,9 +7881,14 @@ msgstr "Produkční backend"
 msgid "Profile"
 msgstr "Profil"
 
+#: src/features/conversation/HeaderActions.tsx
 #: src/features/migrations/CopyStep.tsx
 msgid "Progress"
 msgstr "Průběh"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Progress (O)"
+msgstr "Stav zpracování (O)"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Export the mailbox with Proton Mail's export tool, put the folder in a .zip and upload it as an export file below."
@@ -9144,6 +9171,15 @@ msgstr "URL serveru"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "SES tenant"
 msgstr "Tenant SES"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Set progress"
+msgstr "Nastavit stav zpracování"
+
+#: src/app/Palette.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Set the feedback progress"
+msgstr "Nastavit stav zpracování zpětné vazby"
 
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Set up DKIM"
@@ -12099,6 +12135,10 @@ msgstr "Do několika minut"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Without a confirmation anyone can type someone else's address into your form, and you cannot show that the owner of the address agreed. Keep it on unless your forms are only shown to people whose address you have already verified."
 msgstr "Bez potvrzení může kdokoli zadat do vašeho formuláře cizí adresu a vy nemůžete prokázat, že majitel adresy souhlasil. Ponechte zapnuto, pokud se vaše formuláře nezobrazují jen lidem, jejichž adresu jste už ověřili."
+
+#: src/components/common/text.ts
+msgid "Won't do"
+msgstr "Nebude se dělat"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Work with conversations from agent mode in VS Code. It acts as you, with the access you allow."
