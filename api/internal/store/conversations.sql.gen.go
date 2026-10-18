@@ -516,7 +516,7 @@ WHERE c.workspace_id = $1
   AND ($10::text IS NULL OR left(c.page_url, length($10::text) + 1) = $10::text || '/')
   AND ($11::text IS NULL OR c.feedback->>'category' = $11::text)
   AND ($12::text IS NULL OR c.page_url = $12::text)
-  AND ($13::text IS NULL OR c.status = $13::text)
+  AND ($13::text[] IS NULL OR c.status = ANY($13::text[]))
   AND (NOT $14::bool OR c.assignee_id IS NULL)
   AND ($15::uuid IS NULL OR c.assignee_id = $15::uuid)
   AND ($16::uuid IS NULL OR EXISTS (
@@ -565,7 +565,7 @@ type ListConversationsParams struct {
 	Site         *string
 	Category     *string
 	Page         *string
-	Status       *string
+	Statuses     []string
 	Unassigned   bool
 	AssigneeID   *uuid.UUID
 	LabelID      *uuid.UUID
@@ -592,7 +592,7 @@ func (q *Queries) ListConversations(ctx context.Context, arg ListConversationsPa
 		arg.Site,
 		arg.Category,
 		arg.Page,
-		arg.Status,
+		arg.Statuses,
 		arg.Unassigned,
 		arg.AssigneeID,
 		arg.LabelID,

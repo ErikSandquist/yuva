@@ -15280,8 +15280,12 @@ type ListConversationsParams struct {
 	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
 
 	// ContactId Only this contact's conversations. A contact of another workspace answers `404`.
-	ContactId *uuid.UUID          `form:"contact_id,omitempty" json:"contact_id,omitempty"`
-	Status    *ConversationStatus `form:"status,omitempty" json:"status,omitempty"`
+	ContactId *uuid.UUID `form:"contact_id,omitempty" json:"contact_id,omitempty"`
+
+	// Status Only conversations in these statuses, e.g. `status=open,pending` for what is still to
+	// do. Repeat the parameter or give a comma-separated list. Without it every status is
+	// listed, snoozed included.
+	Status *[]ConversationStatus `form:"status,omitempty" json:"status,omitempty"`
 
 	// Assignee A member id, `me` (member sessions only) or `unassigned`.
 	Assignee *string    `form:"assignee,omitempty" json:"assignee,omitempty"`
@@ -28456,7 +28460,7 @@ func (siw *ServerInterfaceWrapper) ListConversations(w http.ResponseWriter, r *h
 
 	// ------------- Optional query parameter "status" -------------
 
-	err = runtime.BindQueryParameterWithOptions("form", true, false, "status", r.URL.Query(), &params.Status, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "status", r.URL.Query(), &params.Status, runtime.BindQueryParameterOptions{Type: "array", Format: ""})
 	if err != nil {
 		var requiredError *runtime.RequiredParameterError
 		if errors.As(err, &requiredError) {

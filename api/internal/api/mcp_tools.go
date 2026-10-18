@@ -153,6 +153,13 @@ func optString[T ~string](v string) *T {
 	return &t
 }
 
+func optList[T any](v *T) *[]T {
+	if v == nil {
+		return nil
+	}
+	return &[]T{*v}
+}
+
 func optLimit(v int32) *int32 {
 	if v == 0 {
 		return nil
@@ -445,7 +452,7 @@ var mcpTools = append([]mcpTool{
 		readOnly, map[string][]any{"status": conversationStatuses}, mcpTool{ops: []string{"ListConversations"}},
 		func(ctx context.Context, c *mcpCall, in searchConversationsIn) (mcpPage[mcpConversation], error) {
 			params := oas.ListConversationsParams{
-				InboxId: in.InboxID, ContactId: in.ContactID, LabelId: in.LabelID, Status: optString[oas.ConversationStatus](in.Status),
+				InboxId: in.InboxID, ContactId: in.ContactID, LabelId: in.LabelID, Status: optList(optString[oas.ConversationStatus](in.Status)),
 				Assignee: optString[string](in.Assignee), Q: optString[string](in.Query), Cursor: optString[string](in.Cursor), Limit: optLimit(in.Limit),
 			}
 			if in.Spam {
@@ -569,7 +576,7 @@ var mcpTools = append([]mcpTool{
 			kinds := []oas.ConversationKind{oas.ConversationKindFeedback}
 			return c.listConversations(ctx, oas.ListConversationsParams{
 				Kind: &kinds, InboxId: in.InboxID, Category: optString[oas.FeedbackCategory](in.Category),
-				Status: optString[oas.ConversationStatus](in.Status), Q: optString[string](in.Query),
+				Status: optList(optString[oas.ConversationStatus](in.Status)), Q: optString[string](in.Query),
 				Cursor: optString[string](in.Cursor), Limit: optLimit(in.Limit),
 			})
 		}),

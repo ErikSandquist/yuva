@@ -17666,7 +17666,12 @@ export interface operations {
                 inbox_id?: string;
                 /** @description Only this contact's conversations. A contact of another workspace answers `404`. */
                 contact_id?: string;
-                status?: components["schemas"]["ConversationStatus"];
+                /**
+                 * @description Only conversations in these statuses, e.g. `status=open,pending` for what is still to
+                 *     do. Repeat the parameter or give a comma-separated list. Without it every status is
+                 *     listed, snoozed included.
+                 */
+                status?: components["schemas"]["ConversationStatus"][];
                 /** @description A member id, `me` (member sessions only) or `unassigned`. */
                 assignee?: string;
                 label_id?: string;

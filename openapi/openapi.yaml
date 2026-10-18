@@ -2654,8 +2654,14 @@ paths:
             format: uuid
         - name: status
           in: query
+          description: |
+            Only conversations in these statuses, e.g. `status=open,pending` for what is still to
+            do. Repeat the parameter or give a comma-separated list. Without it every status is
+            listed, snoozed included.
           schema:
-            $ref: "#/components/schemas/ConversationStatus"
+            type: array
+            items:
+              $ref: "#/components/schemas/ConversationStatus"
         - name: assignee
           in: query
           description: A member id, `me` (member sessions only) or `unassigned`.

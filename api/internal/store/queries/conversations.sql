@@ -45,7 +45,7 @@ WHERE c.workspace_id = @workspace_id
   AND (sqlc.narg(site)::text IS NULL OR left(c.page_url, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/')
   AND (sqlc.narg(category)::text IS NULL OR c.feedback->>'category' = sqlc.narg(category)::text)
   AND (sqlc.narg(page)::text IS NULL OR c.page_url = sqlc.narg(page)::text)
-  AND (sqlc.narg(status)::text IS NULL OR c.status = sqlc.narg(status)::text)
+  AND (sqlc.narg(statuses)::text[] IS NULL OR c.status = ANY(sqlc.narg(statuses)::text[]))
   AND (NOT @unassigned::bool OR c.assignee_id IS NULL)
   AND (sqlc.narg(assignee_id)::uuid IS NULL OR c.assignee_id = sqlc.narg(assignee_id)::uuid)
   AND (sqlc.narg(label_id)::uuid IS NULL OR EXISTS (

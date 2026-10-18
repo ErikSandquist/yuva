@@ -15278,8 +15278,12 @@ type ListConversationsParams struct {
 	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
 
 	// ContactId Only this contact's conversations. A contact of another workspace answers `404`.
-	ContactId *uuid.UUID          `form:"contact_id,omitempty" json:"contact_id,omitempty"`
-	Status    *ConversationStatus `form:"status,omitempty" json:"status,omitempty"`
+	ContactId *uuid.UUID `form:"contact_id,omitempty" json:"contact_id,omitempty"`
+
+	// Status Only conversations in these statuses, e.g. `status=open,pending` for what is still to
+	// do. Repeat the parameter or give a comma-separated list. Without it every status is
+	// listed, snoozed included.
+	Status *[]ConversationStatus `form:"status,omitempty" json:"status,omitempty"`
 
 	// Assignee A member id, `me` (member sessions only) or `unassigned`.
 	Assignee *string    `form:"assignee,omitempty" json:"assignee,omitempty"`
@@ -44611,7 +44615,7 @@ func NewListConversationsRequest(server string, params *ListConversationsParams)
 
 		if params.Status != nil {
 
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "status", *params.Status, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "status", *params.Status, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "array", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {

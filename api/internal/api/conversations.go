@@ -416,12 +416,8 @@ func (s *Server) ListConversations(ctx context.Context, req oas.ListConversation
 		}
 		arg.Pinned, arg.PinnedBy = prm.Pinned, &p.memberID
 	}
-	if prm.Status != nil {
-		if !prm.Status.Valid() {
-			return nil, errValidation("status must be open, pending, snoozed or closed")
-		}
-		st := string(*prm.Status)
-		arg.Status = &st
+	if arg.Statuses, err = enumList(prm.Status, "status must be open, pending, snoozed or closed"); err != nil {
+		return nil, err
 	}
 	if prm.Assignee != nil {
 		switch a := strings.TrimSpace(*prm.Assignee); a {

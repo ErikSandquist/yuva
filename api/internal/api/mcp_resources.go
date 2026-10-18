@@ -122,7 +122,7 @@ func (c *mcpCall) resource(ctx context.Context, uri string) (any, error) {
 		}
 		out := mcpInboxResource{Inbox: inboxOut(oas.Inbox(res.(oas.GetInbox200JSONResponse)))}
 		if keyMayCall(c.p, "ListConversations") == nil {
-			open := oas.ConversationStatusOpen
+			open := []oas.ConversationStatus{oas.ConversationStatusOpen}
 			page, err := c.listConversations(ctx, oas.ListConversationsParams{InboxId: &id, Status: &open})
 			if err != nil {
 				return nil, err
