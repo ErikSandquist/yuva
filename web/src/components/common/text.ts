@@ -114,11 +114,17 @@ export const BROADCAST_DELIVERY_STATES: BroadcastDeliveryState[] = [
 
 export function useEnumText() {
   const { t } = useLingui()
+  const status: Record<ConversationStatus, string> = {
+    open: t`Open`,
+    pending: t`Pending`,
+    snoozed: t`Snoozed`,
+    closed: t`Closed`,
+  }
+  const resolved = t`Resolved`
   return {
-    status: { open: t`Open`, pending: t`Pending`, snoozed: t`Snoozed`, closed: t`Closed` } satisfies Record<
-      ConversationStatus,
-      string
-    >,
+    status,
+    statusOf: (state: ConversationStatus, kind?: string) =>
+      state === "closed" && kind === "feedback" ? resolved : status[state],
     priority: { urgent: t`Urgent`, high: t`High`, normal: t`Normal`, low: t`Low` } satisfies Record<Priority, string>,
     role: { owner: t`Owner`, admin: t`Admin`, agent: t`Agent` } satisfies Record<Role, string>,
     channel: { email: t`E-mail`, chat: t`Web chat`, app: t`Mobile app`, api: t`API` } satisfies Record<

@@ -127,6 +127,10 @@ msgid "{actor} closed the conversation"
 msgstr "{actor} uzavrel(a) konverzáciu"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this as resolved"
+msgstr "{actor} to označil(a) ako vyriešené"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} rated the conversation 👍"
 msgstr "{actor} ohodnotil(a) konverzáciu 👍"
 
@@ -1015,8 +1019,8 @@ msgid "A sign-in must come back within 10 minutes and works once. Sign in again.
 msgstr "Prihlásenie sa musí vrátiť do 10 minút a funguje raz. Prihláste sa znova."
 
 #: src/features/inbox/SourceFilter.tsx
-msgid "A site shows the conversations and feedback sent from its pages."
-msgstr "Web zobrazuje konverzácie a spätnú väzbu odoslané z jeho stránok."
+msgid "A site shows the conversations sent from its pages."
+msgstr "Web zobrazuje konverzácie odoslané z jeho stránok."
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1293,6 +1297,7 @@ msgstr "Upozorniť, keď je karta na pozadí"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -1598,6 +1603,7 @@ msgstr "Odpoveď vymazaná"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Answered"
 msgstr "Zodpovedané"
 
@@ -2122,6 +2128,7 @@ msgid "Browser"
 msgstr "Prehliadač"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Bug"
 msgstr "Chyba"
 
@@ -2251,6 +2258,7 @@ msgid "Catch-all without a From address"
 msgstr "Zachytávacia adresa bez adresy Od"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "Kategória"
 
@@ -2414,6 +2422,7 @@ msgstr "Vyberte oblasť"
 msgid "Choose a workspace"
 msgstr "Vyberte pracovný priestor"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "Vyberte zo zoznamu, alebo sa pohybujte šípkami ↑ ↓ a otvorte Enterom."
@@ -2449,6 +2458,7 @@ msgstr "Vymazať odpoveď"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Clear the search"
 msgstr "Vymazať hľadanie"
@@ -3963,8 +3973,12 @@ msgstr "Zlyháva"
 msgid "feedback"
 msgstr "spätná väzba"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "Spätná väzba"
@@ -3981,6 +3995,10 @@ msgstr "Spätná väzba a diskusie za deň"
 msgid "Feedback arrived"
 msgstr "Dorazila spätná väzba"
 
+#: src/features/conversation/actions.ts
+msgid "Feedback resolved"
+msgstr "Spätná väzba vyriešená"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from a documentation page"
 msgstr "Spätná väzba odoslaná zo stránky dokumentácie"
@@ -3988,6 +4006,10 @@ msgstr "Spätná väzba odoslaná zo stránky dokumentácie"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "Spätná väzba odoslaná z aplikácie"
+
+#: src/app/Rail.tsx
+msgid "Feedback, {feedback} open"
+msgstr "Spätná väzba, otvorených: {feedback}"
 
 #: src/features/migrations/Wizard.tsx
 msgid "File"
@@ -4593,6 +4615,7 @@ msgid "I'm back"
 msgstr "Som späť"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Idea"
 msgstr "Nápad"
 
@@ -6373,6 +6396,10 @@ msgstr "Nikto vás zatiaľ nezmienil v poznámke. Keď kolega napíše @ a vaše
 msgid "No open conversations. New ones show up here and in the inbox as they arrive."
 msgstr "Žiadne otvorené konverzácie. Nové sa zobrazia tu aj v schránke, ako prídu."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "No open feedback."
+msgstr "Žiadna otvorená spätná väzba."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Žiadny iný kontakt nezodpovedá."
@@ -6727,6 +6754,10 @@ msgstr "Nič sa nestratí: keď sa znova prihlásite cez Microsoft, kopírovanie
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Nič sa nestratí: keď bude pokračovať, kopírovanie nadviaže tam, kde prestalo."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Nothing is resolved yet."
+msgstr "Zatiaľ nie je nič vyriešené."
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "Nič nie je odložené."
@@ -6740,6 +6771,7 @@ msgstr "Nič nečaká na schválenie."
 msgid "Nothing matches these filters."
 msgstr "Týmto filtrom nič nezodpovedá."
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "Vášmu hľadaniu tu nič nezodpovedá."
@@ -7029,6 +7061,7 @@ msgstr "otvorené"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Open"
@@ -7277,6 +7310,7 @@ msgid "Original"
 msgstr "Originál"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Other"
 msgstr "Iné"
 
@@ -7577,6 +7611,10 @@ msgstr "Najprv vyberte návrh."
 msgid "Pick a design that renders without errors."
 msgstr "Vyberte návrh, ktorý sa vykreslí bez chýb."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Pick a piece of feedback"
+msgstr "Vyberte spätnú väzbu"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "Vyberte odosielateľa v nastaveniach"
@@ -7757,6 +7795,7 @@ msgid "Posted by you and marked as the accepted answer."
 msgstr "Odoslané vami a označené ako prijatá odpoveď."
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Praise"
 msgstr "Pochvala"
 
@@ -8332,6 +8371,10 @@ msgstr "Odpovedať ({mod}↵)"
 msgid "Reply account"
 msgstr "Účet pre odpovede"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Reply and resolve"
+msgstr "Odpovedať a vyriešiť"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "Odpoveď zverejnená"
@@ -8410,6 +8453,19 @@ msgstr "Vplyv na reputáciu"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
 msgstr "Obnoviť predvolené"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve"
+msgstr "Vyriešiť"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve (E)"
+msgstr "Vyriešiť (E)"
+
+#: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
+msgid "Resolved"
+msgstr "Vyriešené"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -8671,7 +8727,12 @@ msgstr "Rozsahy, schránky a vypršanie zostávajú, ako sú. Pre iné vytvorte 
 msgid "Screen"
 msgstr "Obrazovka"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Screenshots attached"
+msgstr "Priložené snímky obrazovky"
+
 #: src/app/Palette.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Search"
 msgstr "Hľadať"
@@ -8706,6 +8767,10 @@ msgstr "Hľadať emoji"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji (in English)"
 msgstr "Hľadať emoji (po anglicky)"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "Search feedback"
+msgstr "Hľadať v spätnej väzbe"
 
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
@@ -9045,6 +9110,10 @@ msgstr "Odoslané používateľovi {first}"
 #: src/features/conversation/actions.ts
 msgid "Sent to {first} and closed"
 msgstr "Odoslané používateľovi {first} a uzavreté"
+
+#: src/features/conversation/actions.ts
+msgid "Sent to {first} and resolved"
+msgstr "Odoslané používateľovi {first} a vyriešené"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent} of {limit} allowed. The day starts at 00:00 UTC."
@@ -9650,6 +9719,7 @@ msgstr "STARTTLS (port 587)"
 msgid "State"
 msgstr "Stav"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
@@ -11294,6 +11364,7 @@ msgstr "Odopnúť"
 msgid "Unpinned"
 msgstr "Odopnuté"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Unread"
 msgstr "Neprečítané"
@@ -11870,6 +11941,10 @@ msgstr "Kedy sa má vrátiť?"
 #: src/features/settings/notifications/events.ts
 msgid "When someone else assigns it to you."
 msgstr "Keď vám ju pridelí niekto iný."
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "When someone sends feedback, it will be in the list."
+msgstr "Keď niekto pošle spätnú väzbu, zobrazí sa v zozname."
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"

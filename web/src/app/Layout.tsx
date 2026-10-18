@@ -6,6 +6,7 @@ import { isInboxRoot, isSectionHome } from "@/app/shell"
 import { BroadcastsColumn } from "@/features/broadcasts/BroadcastsColumn"
 import { ContactsColumn } from "@/features/contact/ContactsColumn"
 import { DocsColumn } from "@/features/docs/DocsColumn"
+import { FeedbackList } from "@/features/feedback/FeedbackList"
 import { ChatList } from "@/features/inbox/ChatList"
 import { setRailView, useRailView } from "@/features/inbox/railView"
 import { AssistantsPanel, MentionsPanel } from "@/features/inbox/SidePanels"
@@ -23,6 +24,8 @@ function LeftColumn({ keepList }: { keepList: boolean }) {
   const navigate = useNavigate()
   const currentId = useMatch("/conversations/:conversationId")?.params.conversationId ?? null
   const open = useCallback((id: string) => navigate(`/conversations/${id}`), [navigate])
+  const feedbackId = useMatch("/feedback/:conversationId")?.params.conversationId ?? null
+  const openFeedback = useCallback((id: string) => navigate(`/feedback/${id}`), [navigate])
   const chats = section === "conversations"
   return (
     <>
@@ -31,6 +34,7 @@ function LeftColumn({ keepList }: { keepList: boolean }) {
           <ChatList currentId={currentId} onOpen={open} active={chats} />
         </div>
       )}
+      {section === "feedback" && <FeedbackList currentId={feedbackId} onOpen={openFeedback} />}
       {section === "mentions" && <MentionsPanel />}
       {section === "assistants" && <AssistantsPanel />}
       {section === "contacts" && <ContactsColumn />}

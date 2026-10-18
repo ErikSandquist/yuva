@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 
 export type Source = ChannelKind | "feedback"
 
-export const SOURCE_FILTERS: Source[] = ["chat", "email", "app", "feedback"]
+export const SOURCE_FILTERS: ChannelKind[] = ["chat", "email", "app"]
 
 const icons: Record<Source, React.ComponentType<{ className?: string }>> = {
   chat: MessageCircleIcon,

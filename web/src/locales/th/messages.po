@@ -127,6 +127,10 @@ msgid "{actor} closed the conversation"
 msgstr "{actor} ปิดการสนทนา"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this as resolved"
+msgstr "{actor} marked this as resolved"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} rated the conversation 👍"
 msgstr "{actor} ให้คะแนนการสนทนา 👍"
 
@@ -1015,8 +1019,8 @@ msgid "A sign-in must come back within 10 minutes and works once. Sign in again.
 msgstr "การลงชื่อเข้าใช้ต้องกลับมาภายใน 10 นาทีและใช้ได้ครั้งเดียว ลงชื่อเข้าใช้อีกครั้ง"
 
 #: src/features/inbox/SourceFilter.tsx
-msgid "A site shows the conversations and feedback sent from its pages."
-msgstr "ไซต์จะแสดงการสนทนาและความคิดเห็นที่ส่งมาจากหน้าต่าง ๆ ของไซต์"
+msgid "A site shows the conversations sent from its pages."
+msgstr "A site shows the conversations sent from its pages."
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1293,6 +1297,7 @@ msgstr "แจ้งเตือนฉันขณะที่แท็บทำ
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -1598,6 +1603,7 @@ msgstr "ล้างคำตอบแล้ว"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Answered"
 msgstr "ตอบแล้ว"
 
@@ -2122,6 +2128,7 @@ msgid "Browser"
 msgstr "เบราว์เซอร์"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Bug"
 msgstr "บั๊ก"
 
@@ -2251,6 +2258,7 @@ msgid "Catch-all without a From address"
 msgstr "Catch-all ที่ไม่มีที่อยู่ From"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "หมวดหมู่"
 
@@ -2414,6 +2422,7 @@ msgstr "เลือกภูมิภาค"
 msgid "Choose a workspace"
 msgstr "เลือกพื้นที่ทำงาน"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "เลือกจากรายการ หรือเลื่อนด้วย ↑ ↓ แล้วเปิดด้วย Enter"
@@ -2449,6 +2458,7 @@ msgstr "ล้างคำตอบ"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Clear the search"
 msgstr "ล้างการค้นหา"
@@ -3963,8 +3973,12 @@ msgstr "ล้มเหลวอยู่"
 msgid "feedback"
 msgstr "ความคิดเห็น"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "ความคิดเห็น"
@@ -3981,6 +3995,10 @@ msgstr "ความคิดเห็นและกระทู้ต่อว
 msgid "Feedback arrived"
 msgstr "ได้รับความคิดเห็น"
 
+#: src/features/conversation/actions.ts
+msgid "Feedback resolved"
+msgstr "Feedback resolved"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from a documentation page"
 msgstr "ความคิดเห็นที่ส่งจากหน้าเอกสาร"
@@ -3988,6 +4006,10 @@ msgstr "ความคิดเห็นที่ส่งจากหน้า
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "ความคิดเห็นที่ส่งจากแอป"
+
+#: src/app/Rail.tsx
+msgid "Feedback, {feedback} open"
+msgstr "Feedback, {feedback} open"
 
 #: src/features/migrations/Wizard.tsx
 msgid "File"
@@ -4593,6 +4615,7 @@ msgid "I'm back"
 msgstr "ฉันกลับมาแล้ว"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Idea"
 msgstr "ไอเดีย"
 
@@ -6373,6 +6396,10 @@ msgstr "ยังไม่มีใครกล่าวถึงคุณใน
 msgid "No open conversations. New ones show up here and in the inbox as they arrive."
 msgstr "ไม่มีการสนทนาที่เปิดอยู่ การสนทนาใหม่จะแสดงที่นี่และในกล่องข้อความเมื่อมาถึง"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "No open feedback."
+msgstr "No open feedback."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "ไม่มีผู้ติดต่ออื่นที่ตรงกัน"
@@ -6727,6 +6754,10 @@ msgstr "ไม่มีอะไรสูญหาย เมื่อคุณ�
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "ไม่มีอะไรสูญหาย เมื่อดำเนินต่อ การคัดลอกจะต่อจากจุดที่หยุด"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Nothing is resolved yet."
+msgstr "Nothing is resolved yet."
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "ไม่มีอะไรที่เลื่อนไว้"
@@ -6740,6 +6771,7 @@ msgstr "ไม่มีอะไรรออนุมัติ"
 msgid "Nothing matches these filters."
 msgstr "ไม่มีอะไรตรงกับตัวกรองเหล่านี้"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "ไม่มีอะไรตรงกับการค้นหาของคุณที่นี่"
@@ -7029,6 +7061,7 @@ msgstr "เปิดอยู่"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Open"
@@ -7277,6 +7310,7 @@ msgid "Original"
 msgstr "ต้นฉบับ"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Other"
 msgstr "อื่น ๆ"
 
@@ -7577,6 +7611,10 @@ msgstr "เลือกดีไซน์ก่อน"
 msgid "Pick a design that renders without errors."
 msgstr "เลือกดีไซน์ที่เรนเดอร์ได้โดยไม่มีข้อผิดพลาด"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Pick a piece of feedback"
+msgstr "Pick a piece of feedback"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "เลือกผู้ส่งในการตั้งค่า"
@@ -7757,6 +7795,7 @@ msgid "Posted by you and marked as the accepted answer."
 msgstr "โพสต์โดยคุณและทำเครื่องหมายเป็นคำตอบที่ยอมรับ"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Praise"
 msgstr "คำชม"
 
@@ -8332,6 +8371,10 @@ msgstr "ตอบกลับ ({mod}↵)"
 msgid "Reply account"
 msgstr "บัญชีตอบกลับ"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Reply and resolve"
+msgstr "Reply and resolve"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "โพสต์การตอบกลับแล้ว"
@@ -8410,6 +8453,19 @@ msgstr "ผลต่อชื่อเสียง"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
 msgstr "รีเซ็ตเป็นค่าเริ่มต้น"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve"
+msgstr "Resolve"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve (E)"
+msgstr "Resolve (E)"
+
+#: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
+msgid "Resolved"
+msgstr "Resolved"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -8671,7 +8727,12 @@ msgstr "ขอบเขต กล่องข้อความ และวั�
 msgid "Screen"
 msgstr "หน้าจอ"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Screenshots attached"
+msgstr "Screenshots attached"
+
 #: src/app/Palette.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Search"
 msgstr "ค้นหา"
@@ -8706,6 +8767,10 @@ msgstr "ค้นหาอีโมจิ"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji (in English)"
 msgstr "ค้นหาอีโมจิ (เป็นภาษาอังกฤษ)"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "Search feedback"
+msgstr "Search feedback"
 
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
@@ -9045,6 +9110,10 @@ msgstr "ส่งถึง {first}"
 #: src/features/conversation/actions.ts
 msgid "Sent to {first} and closed"
 msgstr "ส่งถึง {first} และปิดแล้ว"
+
+#: src/features/conversation/actions.ts
+msgid "Sent to {first} and resolved"
+msgstr "Sent to {first} and resolved"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent} of {limit} allowed. The day starts at 00:00 UTC."
@@ -9650,6 +9719,7 @@ msgstr "STARTTLS (พอร์ต 587)"
 msgid "State"
 msgstr "สถานะ"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
@@ -11294,6 +11364,7 @@ msgstr "เลิกปักหมุด"
 msgid "Unpinned"
 msgstr "เลิกปักหมุดแล้ว"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Unread"
 msgstr "ยังไม่อ่าน"
@@ -11870,6 +11941,10 @@ msgstr "ควรกลับมาเมื่อใด"
 #: src/features/settings/notifications/events.ts
 msgid "When someone else assigns it to you."
 msgstr "เมื่อคนอื่นมอบหมายให้คุณ"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "When someone sends feedback, it will be in the list."
+msgstr "When someone sends feedback, it will be in the list."
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"

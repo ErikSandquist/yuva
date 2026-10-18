@@ -1,6 +1,6 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
-import { api, unwrap, type ConversationBulkUpdate } from "@/lib/api"
+import { api, unwrap, type ConversationBulkUpdate, type ConversationKind } from "@/lib/api"
 import { keys, type ConversationFilters, type DraftFilters } from "@/lib/keys"
 import { applyEvent } from "@/lib/live"
 import { isLive } from "@/lib/realtime"
@@ -19,11 +19,11 @@ export function useConversations(filters: ConversationFilters, enabled = true) {
   })
 }
 
-export function useCounts() {
+export function useCounts(kind?: ConversationKind[]) {
   const { workspaceId: ws } = useSession()
   return useQuery({
-    queryKey: keys.counts(ws),
-    queryFn: () => unwrap(api.GET("/v1/conversations/counts")),
+    queryKey: [...keys.counts(ws), kind ?? "all"],
+    queryFn: () => unwrap(api.GET("/v1/conversations/counts", { params: { query: { kind } } })),
   })
 }
 

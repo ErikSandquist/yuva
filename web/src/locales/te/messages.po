@@ -127,6 +127,10 @@ msgid "{actor} closed the conversation"
 msgstr "{actor} సంభాషణను మూసివేశారు"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this as resolved"
+msgstr "{actor} marked this as resolved"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} rated the conversation 👍"
 msgstr "{actor} సంభాషణకు 👍 రేటింగ్ ఇచ్చారు"
 
@@ -1015,8 +1019,8 @@ msgid "A sign-in must come back within 10 minutes and works once. Sign in again.
 msgstr "సైన్ ఇన్ 10 నిమిషాల్లో తిరిగి రావాలి మరియు ఒక్కసారి మాత్రమే పనిచేస్తుంది. మళ్లీ సైన్ ఇన్ చేయండి."
 
 #: src/features/inbox/SourceFilter.tsx
-msgid "A site shows the conversations and feedback sent from its pages."
-msgstr "సైట్ తన పేజీల నుండి పంపిన సంభాషణలు మరియు అభిప్రాయాలను చూపుతుంది."
+msgid "A site shows the conversations sent from its pages."
+msgstr "A site shows the conversations sent from its pages."
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1293,6 +1297,7 @@ msgstr "ట్యాబ్ బ్యాక్‌గ్రౌండ్‌లో �
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -1598,6 +1603,7 @@ msgstr "జవాబు తొలగించబడింది"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Answered"
 msgstr "జవాబివ్వబడింది"
 
@@ -2122,6 +2128,7 @@ msgid "Browser"
 msgstr "బ్రౌజర్"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Bug"
 msgstr "బగ్"
 
@@ -2251,6 +2258,7 @@ msgid "Catch-all without a From address"
 msgstr "From చిరునామా లేని క్యాచ్-ఆల్"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "వర్గం"
 
@@ -2414,6 +2422,7 @@ msgstr "ప్రాంతాన్ని ఎంచుకోండి"
 msgid "Choose a workspace"
 msgstr "వర్క్‌స్పేస్‌ను ఎంచుకోండి"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "లిస్ట్ నుండి ఒకదాన్ని ఎంచుకోండి, లేదా ↑ ↓ తో కదిలి Enter తో తెరవండి."
@@ -2449,6 +2458,7 @@ msgstr "జవాబును క్లియర్ చేయండి"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Clear the search"
 msgstr "శోధనను క్లియర్ చేయండి"
@@ -3963,8 +3973,12 @@ msgstr "విఫలమవుతోంది"
 msgid "feedback"
 msgstr "అభిప్రాయం"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "అభిప్రాయం"
@@ -3981,6 +3995,10 @@ msgstr "రోజుకు అభిప్రాయాలు మరియు చ
 msgid "Feedback arrived"
 msgstr "అభిప్రాయం వచ్చింది"
 
+#: src/features/conversation/actions.ts
+msgid "Feedback resolved"
+msgstr "Feedback resolved"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from a documentation page"
 msgstr "డాక్యుమెంటేషన్ పేజీ నుండి పంపిన అభిప్రాయం"
@@ -3988,6 +4006,10 @@ msgstr "డాక్యుమెంటేషన్ పేజీ నుండి 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "యాప్ నుండి పంపిన అభిప్రాయం"
+
+#: src/app/Rail.tsx
+msgid "Feedback, {feedback} open"
+msgstr "Feedback, {feedback} open"
 
 #: src/features/migrations/Wizard.tsx
 msgid "File"
@@ -4593,6 +4615,7 @@ msgid "I'm back"
 msgstr "నేను తిరిగి వచ్చాను"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Idea"
 msgstr "ఆలోచన"
 
@@ -6373,6 +6396,10 @@ msgstr "ఇంకా ఎవరూ గమనికలో మిమ్మల్న
 msgid "No open conversations. New ones show up here and in the inbox as they arrive."
 msgstr "తెరిచి ఉన్న సంభాషణలు లేవు. కొత్తవి వచ్చినప్పుడు ఇక్కడ మరియు ఇన్‌బాక్స్‌లో కనిపిస్తాయి."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "No open feedback."
+msgstr "No open feedback."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "మరే కాంటాక్ట్ సరిపోలడం లేదు."
@@ -6727,6 +6754,10 @@ msgstr "ఏదీ కోల్పోదు: మీరు Microsoft తో మళ
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "ఏదీ కోల్పోదు: అది కొనసాగినప్పుడు, కాపీ చేయడం ఆగిన చోట నుండి కొనసాగుతుంది."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Nothing is resolved yet."
+msgstr "Nothing is resolved yet."
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "ఏదీ స్నూజ్‌లో లేదు."
@@ -6740,6 +6771,7 @@ msgstr "ఏదీ ఆమోదం కోసం వేచి లేదు."
 msgid "Nothing matches these filters."
 msgstr "ఈ ఫిల్టర్‌లకు ఏదీ సరిపోలడం లేదు."
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "ఇక్కడ మీ శోధనకు ఏదీ సరిపోలడం లేదు."
@@ -7029,6 +7061,7 @@ msgstr "తెరిచినవి"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Open"
@@ -7277,6 +7310,7 @@ msgid "Original"
 msgstr "అసలు"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Other"
 msgstr "ఇతర"
 
@@ -7577,6 +7611,10 @@ msgstr "ముందుగా డిజైన్‌ను ఎంచుకోం�
 msgid "Pick a design that renders without errors."
 msgstr "లోపాలు లేకుండా రెండర్ అయ్యే డిజైన్‌ను ఎంచుకోండి."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Pick a piece of feedback"
+msgstr "Pick a piece of feedback"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "సెట్టింగ్‌లలో పంపేవారిని ఎంచుకోండి"
@@ -7757,6 +7795,7 @@ msgid "Posted by you and marked as the accepted answer."
 msgstr "మీరు పోస్ట్ చేసి ఆమోదించిన జవాబుగా గుర్తించారు."
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Praise"
 msgstr "ప్రశంస"
 
@@ -8332,6 +8371,10 @@ msgstr "జవాబివ్వండి ({mod}↵)"
 msgid "Reply account"
 msgstr "జవాబు ఖాతా"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Reply and resolve"
+msgstr "Reply and resolve"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "జవాబు పోస్ట్ చేయబడింది"
@@ -8410,6 +8453,19 @@ msgstr "ప్రతిష్ఠపై ప్రభావం"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
 msgstr "డిఫాల్ట్‌లకు రీసెట్ చేయండి"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve"
+msgstr "Resolve"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve (E)"
+msgstr "Resolve (E)"
+
+#: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
+msgid "Resolved"
+msgstr "Resolved"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -8671,7 +8727,12 @@ msgstr "స్కోప్‌లు, ఇన్‌బాక్స్‌లు మ
 msgid "Screen"
 msgstr "స్క్రీన్"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Screenshots attached"
+msgstr "Screenshots attached"
+
 #: src/app/Palette.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Search"
 msgstr "శోధించండి"
@@ -8706,6 +8767,10 @@ msgstr "ఎమోజీని శోధించండి"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji (in English)"
 msgstr "ఎమోజీని శోధించండి (ఆంగ్లంలో)"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "Search feedback"
+msgstr "Search feedback"
 
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
@@ -9045,6 +9110,10 @@ msgstr "{first} కు పంపబడింది"
 #: src/features/conversation/actions.ts
 msgid "Sent to {first} and closed"
 msgstr "{first} కు పంపి మూసివేయబడింది"
+
+#: src/features/conversation/actions.ts
+msgid "Sent to {first} and resolved"
+msgstr "Sent to {first} and resolved"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent} of {limit} allowed. The day starts at 00:00 UTC."
@@ -9650,6 +9719,7 @@ msgstr "STARTTLS (పోర్ట్ 587)"
 msgid "State"
 msgstr "స్థితి"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
@@ -11294,6 +11364,7 @@ msgstr "అన్‌పిన్ చేయండి"
 msgid "Unpinned"
 msgstr "అన్‌పిన్ చేయబడింది"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Unread"
 msgstr "చదవనివి"
@@ -11870,6 +11941,10 @@ msgstr "అది ఎప్పుడు తిరిగి రావాలి?"
 #: src/features/settings/notifications/events.ts
 msgid "When someone else assigns it to you."
 msgstr "మరొకరు దాన్ని మీకు కేటాయించినప్పుడు."
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "When someone sends feedback, it will be in the list."
+msgstr "When someone sends feedback, it will be in the list."
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"

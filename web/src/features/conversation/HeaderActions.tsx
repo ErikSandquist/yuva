@@ -273,6 +273,7 @@ export function LabelsMenu({
 
 export function CloseButton({ c, actions }: { c: Conversation; actions: ConversationActions }) {
   const { t } = useLingui()
+  const feedback = c.kind === "feedback"
   if (c.status === "closed") {
     return (
       <Button variant="outline" size="sm" onClick={actions.reopen} data-testid="reopen-conversation">
@@ -284,10 +285,16 @@ export function CloseButton({ c, actions }: { c: Conversation; actions: Conversa
     )
   }
   return (
-    <Button variant="outline" size="sm" onClick={actions.close} title={t`Close (E)`} data-testid="close-conversation">
+    <Button
+      variant="outline"
+      size="sm"
+      onClick={actions.close}
+      title={feedback ? t`Resolve (E)` : t`Close (E)`}
+      data-testid="close-conversation"
+    >
       <CheckIcon />
       <span className="phone:hidden @max-xl/person:hidden">
-        <Trans context="conversation">Close</Trans>
+        {feedback ? <Trans>Resolve</Trans> : <Trans context="conversation">Close</Trans>}
       </span>
       <Kbd className="phone:hidden @max-xl/person:hidden">{keyLabel(SHORTCUTS.close)[0]}</Kbd>
     </Button>

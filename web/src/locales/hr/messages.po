@@ -127,6 +127,10 @@ msgid "{actor} closed the conversation"
 msgstr "{actor} je zatvorio/la razgovor"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this as resolved"
+msgstr "{actor} je ovo označio/la kao riješeno"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} rated the conversation 👍"
 msgstr "{actor} je ocijenio/la razgovor 👍"
 
@@ -1015,8 +1019,8 @@ msgid "A sign-in must come back within 10 minutes and works once. Sign in again.
 msgstr "Prijava se mora vratiti unutar 10 minuta i vrijedi jednom. Prijavite se ponovno."
 
 #: src/features/inbox/SourceFilter.tsx
-msgid "A site shows the conversations and feedback sent from its pages."
-msgstr "Web-mjesto prikazuje razgovore i povratne informacije poslane s njegovih stranica."
+msgid "A site shows the conversations sent from its pages."
+msgstr "Web-mjesto prikazuje razgovore poslane s njegovih stranica."
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1293,6 +1297,7 @@ msgstr "Upozori me dok je kartica u pozadini"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -1598,6 +1603,7 @@ msgstr "Odgovor očišćen"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Answered"
 msgstr "Odgovoreno"
 
@@ -2122,6 +2128,7 @@ msgid "Browser"
 msgstr "Preglednik"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Bug"
 msgstr "Greška"
 
@@ -2251,6 +2258,7 @@ msgid "Catch-all without a From address"
 msgstr "Sveobuhvatna adresa bez adrese Od"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "Kategorija"
 
@@ -2414,6 +2422,7 @@ msgstr "Odaberite regiju"
 msgid "Choose a workspace"
 msgstr "Odaberite radni prostor"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "Odaberite s popisa ili se krećite tipkama ↑ ↓ i otvorite Enterom."
@@ -2449,6 +2458,7 @@ msgstr "Očisti odgovor"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Clear the search"
 msgstr "Očisti pretragu"
@@ -3963,8 +3973,12 @@ msgstr "Ne uspijeva"
 msgid "feedback"
 msgstr "povratne informacije"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "Povratne informacije"
@@ -3981,6 +3995,10 @@ msgstr "Povratne informacije i rasprave po danu"
 msgid "Feedback arrived"
 msgstr "Povratna informacija je stigla"
 
+#: src/features/conversation/actions.ts
+msgid "Feedback resolved"
+msgstr "Povratna informacija riješena"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from a documentation page"
 msgstr "Povratna informacija poslana sa stranice dokumentacije"
@@ -3988,6 +4006,10 @@ msgstr "Povratna informacija poslana sa stranice dokumentacije"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "Povratna informacija poslana iz aplikacije"
+
+#: src/app/Rail.tsx
+msgid "Feedback, {feedback} open"
+msgstr "Povratne informacije, otvorenih: {feedback}"
 
 #: src/features/migrations/Wizard.tsx
 msgid "File"
@@ -4593,6 +4615,7 @@ msgid "I'm back"
 msgstr "Vratio/la sam se"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Idea"
 msgstr "Ideja"
 
@@ -6373,6 +6396,10 @@ msgstr "Nitko vas još nije spomenuo u bilješci. Kad kolega napiše @ i vaše i
 msgid "No open conversations. New ones show up here and in the inbox as they arrive."
 msgstr "Nema otvorenih razgovora. Novi se pojavljuju ovdje i u pretincu kad stignu."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "No open feedback."
+msgstr "Nema otvorenih povratnih informacija."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Nijedan drugi kontakt ne odgovara."
@@ -6727,6 +6754,10 @@ msgstr "Ništa se ne gubi: kad se ponovno prijavite putem Microsofta, kopiranje 
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Ništa se ne gubi: kad nastavi, kopiranje preuzima gdje je stalo."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Nothing is resolved yet."
+msgstr "Još ništa nije riješeno."
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "Ništa nije odgođeno."
@@ -6740,6 +6771,7 @@ msgstr "Ništa ne čeka odobrenje."
 msgid "Nothing matches these filters."
 msgstr "Ništa ne odgovara ovim filtrima."
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "Ništa ovdje ne odgovara vašoj pretrazi."
@@ -7029,6 +7061,7 @@ msgstr "otvoreno"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Open"
@@ -7277,6 +7310,7 @@ msgid "Original"
 msgstr "Original"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Other"
 msgstr "Ostalo"
 
@@ -7577,6 +7611,10 @@ msgstr "Prvo odaberite dizajn."
 msgid "Pick a design that renders without errors."
 msgstr "Odaberite dizajn koji se prikazuje bez pogrešaka."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Pick a piece of feedback"
+msgstr "Odaberite povratnu informaciju"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "Odaberite pošiljatelja u postavkama"
@@ -7757,6 +7795,7 @@ msgid "Posted by you and marked as the accepted answer."
 msgstr "Objavili ste i označeno kao prihvaćen odgovor."
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Praise"
 msgstr "Pohvala"
 
@@ -8332,6 +8371,10 @@ msgstr "Odgovori ({mod}↵)"
 msgid "Reply account"
 msgstr "Račun za odgovore"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Reply and resolve"
+msgstr "Odgovori i riješi"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "Odgovor objavljen"
@@ -8410,6 +8453,19 @@ msgstr "Utjecaj na ugled"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
 msgstr "Vrati na zadano"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve"
+msgstr "Riješi"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve (E)"
+msgstr "Riješi (E)"
+
+#: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
+msgid "Resolved"
+msgstr "Riješeno"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -8671,7 +8727,12 @@ msgstr "Dosezi, pretinci i istek ostaju kakvi jesu. Za drugačije izradite novi 
 msgid "Screen"
 msgstr "Zaslon"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Screenshots attached"
+msgstr "Priložene snimke zaslona"
+
 #: src/app/Palette.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Search"
 msgstr "Traži"
@@ -8706,6 +8767,10 @@ msgstr "Traži emoji"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji (in English)"
 msgstr "Traži emoji (na engleskom)"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "Search feedback"
+msgstr "Pretraži povratne informacije"
 
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
@@ -9045,6 +9110,10 @@ msgstr "Poslano korisniku {first}"
 #: src/features/conversation/actions.ts
 msgid "Sent to {first} and closed"
 msgstr "Poslano korisniku {first} i zatvoreno"
+
+#: src/features/conversation/actions.ts
+msgid "Sent to {first} and resolved"
+msgstr "Poslano korisniku {first} i riješeno"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent} of {limit} allowed. The day starts at 00:00 UTC."
@@ -9650,6 +9719,7 @@ msgstr "STARTTLS (port 587)"
 msgid "State"
 msgstr "Stanje"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
@@ -11294,6 +11364,7 @@ msgstr "Otkvači"
 msgid "Unpinned"
 msgstr "Otkvačeno"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Unread"
 msgstr "Nepročitano"
@@ -11870,6 +11941,10 @@ msgstr "Kada se treba vratiti?"
 #: src/features/settings/notifications/events.ts
 msgid "When someone else assigns it to you."
 msgstr "Kad vam je netko drugi dodijeli."
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "When someone sends feedback, it will be in the list."
+msgstr "Kad netko pošalje povratnu informaciju, pojavit će se na popisu."
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"

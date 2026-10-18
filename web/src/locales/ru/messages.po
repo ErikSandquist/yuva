@@ -127,6 +127,10 @@ msgid "{actor} closed the conversation"
 msgstr "{actor} закрыл(а) диалог"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this as resolved"
+msgstr "{actor} отметил(а) это как решённое"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} rated the conversation 👍"
 msgstr "{actor} оценил(а) диалог 👍"
 
@@ -1015,8 +1019,8 @@ msgid "A sign-in must come back within 10 minutes and works once. Sign in again.
 msgstr "Вход должен вернуться в течение 10 минут и работает один раз. Войдите снова."
 
 #: src/features/inbox/SourceFilter.tsx
-msgid "A site shows the conversations and feedback sent from its pages."
-msgstr "Сайт показывает диалоги и отзывы, отправленные с его страниц."
+msgid "A site shows the conversations sent from its pages."
+msgstr "Сайт показывает диалоги, отправленные с его страниц."
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1293,6 +1297,7 @@ msgstr "Оповещать, пока вкладка в фоне"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -1598,6 +1603,7 @@ msgstr "Ответ сброшен"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Answered"
 msgstr "Отвечено"
 
@@ -2122,6 +2128,7 @@ msgid "Browser"
 msgstr "Браузер"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Bug"
 msgstr "Ошибка"
 
@@ -2251,6 +2258,7 @@ msgid "Catch-all without a From address"
 msgstr "Универсальный адрес без адреса отправителя"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "Категория"
 
@@ -2414,6 +2422,7 @@ msgstr "Выберите регион"
 msgid "Choose a workspace"
 msgstr "Выберите рабочее пространство"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "Выберите из списка или перемещайтесь клавишами ↑ ↓ и открывайте Enter."
@@ -2449,6 +2458,7 @@ msgstr "Сбросить ответ"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Clear the search"
 msgstr "Очистить поиск"
@@ -3963,8 +3973,12 @@ msgstr "Сбои"
 msgid "feedback"
 msgstr "отзывы"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "Отзывы"
@@ -3981,6 +3995,10 @@ msgstr "Отзывы и обсуждения по дням"
 msgid "Feedback arrived"
 msgstr "Пришёл отзыв"
 
+#: src/features/conversation/actions.ts
+msgid "Feedback resolved"
+msgstr "Отзыв решён"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from a documentation page"
 msgstr "Отзыв, отправленный со страницы документации"
@@ -3988,6 +4006,10 @@ msgstr "Отзыв, отправленный со страницы докуме�
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "Отзыв, отправленный из приложения"
+
+#: src/app/Rail.tsx
+msgid "Feedback, {feedback} open"
+msgstr "Отзывы, открытых: {feedback}"
 
 #: src/features/migrations/Wizard.tsx
 msgid "File"
@@ -4593,6 +4615,7 @@ msgid "I'm back"
 msgstr "Я вернулся"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Idea"
 msgstr "Идея"
 
@@ -6373,6 +6396,10 @@ msgstr "Вас пока никто не упоминал в заметках. К
 msgid "No open conversations. New ones show up here and in the inbox as they arrive."
 msgstr "Открытых диалогов нет. Новые появятся здесь и во входящих по мере поступления."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "No open feedback."
+msgstr "Нет открытых отзывов."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Других подходящих контактов нет."
@@ -6727,6 +6754,10 @@ msgstr "Ничего не теряется: когда вы снова войд�
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Ничего не теряется: когда оно продолжится, копирование начнётся с того места, где остановилось."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Nothing is resolved yet."
+msgstr "Пока ничего не решено."
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "Ничего не отложено."
@@ -6740,6 +6771,7 @@ msgstr "Ничего не ждёт одобрения."
 msgid "Nothing matches these filters."
 msgstr "Ничего не соответствует этим фильтрам."
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "Ничего не соответствует вашему поиску."
@@ -7029,6 +7061,7 @@ msgstr "открытые"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Open"
@@ -7277,6 +7310,7 @@ msgid "Original"
 msgstr "Оригинал"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Other"
 msgstr "Другое"
 
@@ -7577,6 +7611,10 @@ msgstr "Сначала выберите дизайн."
 msgid "Pick a design that renders without errors."
 msgstr "Выберите дизайн, который отображается без ошибок."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Pick a piece of feedback"
+msgstr "Выберите отзыв"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "Выберите отправителя в настройках"
@@ -7757,6 +7795,7 @@ msgid "Posted by you and marked as the accepted answer."
 msgstr "Опубликовано вами и отмечено как принятое решение."
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Praise"
 msgstr "Похвала"
 
@@ -8332,6 +8371,10 @@ msgstr "Ответить ({mod}↵)"
 msgid "Reply account"
 msgstr "Аккаунт для ответов"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Reply and resolve"
+msgstr "Ответить и решить"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "Ответ опубликован"
@@ -8410,6 +8453,19 @@ msgstr "Влияние на репутацию"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
 msgstr "Сбросить к значениям по умолчанию"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve"
+msgstr "Решить"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve (E)"
+msgstr "Решить (E)"
+
+#: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
+msgid "Resolved"
+msgstr "Решено"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -8671,7 +8727,12 @@ msgstr "Области доступа, ящики и срок действия �
 msgid "Screen"
 msgstr "Экран"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Screenshots attached"
+msgstr "Приложены скриншоты"
+
 #: src/app/Palette.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Search"
 msgstr "Поиск"
@@ -8706,6 +8767,10 @@ msgstr "Поиск эмодзи"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji (in English)"
 msgstr "Поиск эмодзи (по-английски)"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "Search feedback"
+msgstr "Поиск по отзывам"
 
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
@@ -9045,6 +9110,10 @@ msgstr "Отправлено: {first}"
 #: src/features/conversation/actions.ts
 msgid "Sent to {first} and closed"
 msgstr "Отправлено {first} и закрыто"
+
+#: src/features/conversation/actions.ts
+msgid "Sent to {first} and resolved"
+msgstr "Отправлено {first}, отзыв решён"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent} of {limit} allowed. The day starts at 00:00 UTC."
@@ -9650,6 +9719,7 @@ msgstr "STARTTLS (порт 587)"
 msgid "State"
 msgstr "Состояние"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
@@ -11294,6 +11364,7 @@ msgstr "Открепить"
 msgid "Unpinned"
 msgstr "Откреплено"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Unread"
 msgstr "Непрочитанные"
@@ -11870,6 +11941,10 @@ msgstr "Когда он должен вернуться?"
 #: src/features/settings/notifications/events.ts
 msgid "When someone else assigns it to you."
 msgstr "Когда его назначает вам кто-то другой."
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "When someone sends feedback, it will be in the list."
+msgstr "Когда кто-то отправит отзыв, он появится в списке."
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"

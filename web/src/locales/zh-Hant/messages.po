@@ -127,6 +127,10 @@ msgid "{actor} closed the conversation"
 msgstr "{actor} 關閉了對話"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this as resolved"
+msgstr "{actor} 將此標示為已解決"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} rated the conversation 👍"
 msgstr "{actor} 給對話點了 👍"
 
@@ -1015,8 +1019,8 @@ msgid "A sign-in must come back within 10 minutes and works once. Sign in again.
 msgstr "登入必須在 10 分鐘內返回,且只能使用一次。請重新登入。"
 
 #: src/features/inbox/SourceFilter.tsx
-msgid "A site shows the conversations and feedback sent from its pages."
-msgstr "站點會顯示從其頁面發來的對話和反饋。"
+msgid "A site shows the conversations sent from its pages."
+msgstr "網站會顯示從其頁面傳送的對話。"
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1293,6 +1297,7 @@ msgstr "標籤頁在後臺時提醒我"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -1598,6 +1603,7 @@ msgstr "已清除回答"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Answered"
 msgstr "已回答"
 
@@ -2122,6 +2128,7 @@ msgid "Browser"
 msgstr "瀏覽器"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Bug"
 msgstr "缺陷"
 
@@ -2251,6 +2258,7 @@ msgid "Catch-all without a From address"
 msgstr "不帶發件人地址的全部接收"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "類別"
 
@@ -2414,6 +2422,7 @@ msgstr "選擇區域"
 msgid "Choose a workspace"
 msgstr "選擇工作區"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "從列表中選擇,或用 ↑ ↓ 移動並按 Enter 開啟。"
@@ -2449,6 +2458,7 @@ msgstr "清除回答"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Clear the search"
 msgstr "清除搜尋"
@@ -3963,8 +3973,12 @@ msgstr "失敗中"
 msgid "feedback"
 msgstr "反饋"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "反饋"
@@ -3981,6 +3995,10 @@ msgstr "每天的反饋和討論"
 msgid "Feedback arrived"
 msgstr "收到反饋"
 
+#: src/features/conversation/actions.ts
+msgid "Feedback resolved"
+msgstr "意見回饋已解決"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from a documentation page"
 msgstr "從文件頁面傳送的反饋"
@@ -3988,6 +4006,10 @@ msgstr "從文件頁面傳送的反饋"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "從應用程式傳送的反饋"
+
+#: src/app/Rail.tsx
+msgid "Feedback, {feedback} open"
+msgstr "意見回饋，{feedback} 則未解決"
 
 #: src/features/migrations/Wizard.tsx
 msgid "File"
@@ -4593,6 +4615,7 @@ msgid "I'm back"
 msgstr "我回來了"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Idea"
 msgstr "想法"
 
@@ -6373,6 +6396,10 @@ msgstr "還沒有人在備註中提及你。當團隊成員輸入 @ 和你的名
 msgid "No open conversations. New ones show up here and in the inbox as they arrive."
 msgstr "沒有未關閉的對話。新對話到達時會顯示在這裡和收件匣中。"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "No open feedback."
+msgstr "沒有未解決的意見回饋。"
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "沒有其他匹配的聯絡人。"
@@ -6727,6 +6754,10 @@ msgstr "不會丟失任何內容:一旦再次使用 Microsoft 登入,複製會�
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "不會丟失任何內容:繼續後,複製會從中斷處接著進行。"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Nothing is resolved yet."
+msgstr "尚無已解決的項目。"
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "沒有被推遲的內容。"
@@ -6740,6 +6771,7 @@ msgstr "沒有等待稽覈的內容。"
 msgid "Nothing matches these filters."
 msgstr "沒有符合這些篩選條件的內容。"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "這裡沒有符合你搜尋的內容。"
@@ -7029,6 +7061,7 @@ msgstr "未關閉"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Open"
@@ -7277,6 +7310,7 @@ msgid "Original"
 msgstr "原件"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Other"
 msgstr "其他"
 
@@ -7577,6 +7611,10 @@ msgstr "請先選擇設計。"
 msgid "Pick a design that renders without errors."
 msgstr "請選擇能無錯誤渲染的設計。"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Pick a piece of feedback"
+msgstr "選擇一則意見回饋"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "在設定中選擇發件人"
@@ -7757,6 +7795,7 @@ msgid "Posted by you and marked as the accepted answer."
 msgstr "由你釋出,並已標為被採納的回答。"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Praise"
 msgstr "表揚"
 
@@ -8332,6 +8371,10 @@ msgstr "回覆({mod}↵)"
 msgid "Reply account"
 msgstr "回覆帳號"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Reply and resolve"
+msgstr "回覆並標示為已解決"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "回覆已釋出"
@@ -8410,6 +8453,19 @@ msgstr "信譽影響"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
 msgstr "恢復預設設定"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve"
+msgstr "標示為已解決"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve (E)"
+msgstr "標示為已解決 (E)"
+
+#: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
+msgid "Resolved"
+msgstr "已解決"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -8671,7 +8727,12 @@ msgstr "許可權範圍、收件匣和有效期保持不變。如需不同的設
 msgid "Screen"
 msgstr "螢幕"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Screenshots attached"
+msgstr "附有螢幕截圖"
+
 #: src/app/Palette.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Search"
 msgstr "搜尋"
@@ -8706,6 +8767,10 @@ msgstr "搜尋表情符號"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji (in English)"
 msgstr "搜尋表情符號(英文)"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "Search feedback"
+msgstr "搜尋意見回饋"
 
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
@@ -9045,6 +9110,10 @@ msgstr "已傳送給 {first}"
 #: src/features/conversation/actions.ts
 msgid "Sent to {first} and closed"
 msgstr "已傳送給 {first} 並關閉"
+
+#: src/features/conversation/actions.ts
+msgid "Sent to {first} and resolved"
+msgstr "已傳送給 {first} 並標示為已解決"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent} of {limit} allowed. The day starts at 00:00 UTC."
@@ -9650,6 +9719,7 @@ msgstr "STARTTLS(埠 587)"
 msgid "State"
 msgstr "狀態"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
@@ -11294,6 +11364,7 @@ msgstr "取消置頂"
 msgid "Unpinned"
 msgstr "已取消置頂"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Unread"
 msgstr "未讀"
@@ -11870,6 +11941,10 @@ msgstr "什麼時候回來?"
 #: src/features/settings/notifications/events.ts
 msgid "When someone else assigns it to you."
 msgstr "當其他人把它指派給你時。"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "When someone sends feedback, it will be in the list."
+msgstr "有人傳送意見回饋後，會顯示在清單中。"
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"

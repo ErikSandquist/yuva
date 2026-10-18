@@ -235,6 +235,7 @@ function Loaded({
     labels,
     inboxes,
     subject: c.subject,
+    feedback: c.kind === "feedback",
     expandQuoted,
     inboxId: c.inbox_id,
     contactReadAt: c.last_read_by_contact_at,
@@ -308,7 +309,7 @@ function Loaded({
   const markUnread = () => {
     marked.current = lastId ?? null
     listActions.markUnread(c.id)
-    navigate(inboxRoot(canManage))
+    navigate(c.kind === "feedback" ? "/feedback" : inboxRoot(canManage))
   }
   const openFind = () => {
     setFinding(true)

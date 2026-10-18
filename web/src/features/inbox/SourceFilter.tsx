@@ -2,18 +2,19 @@ import { Trans, useLingui } from "@lingui/react/macro"
 import { CheckIcon, ListFilterIcon, MegaphoneIcon } from "lucide-react"
 import { useMemo, useSyncExternalStore } from "react"
 
-import { hostOf, SOURCE_FILTERS, SourceIcon, useSourceText, type Source } from "@/components/common"
+import { hostOf, SOURCE_FILTERS, SourceIcon, useSourceText } from "@/components/common"
 import { popupClass } from "@/components/ui/dropdown-menu"
 import { Item } from "@/components/ui/item"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Separator } from "@/components/ui/separator"
 import { useBroadcasts } from "@/features/broadcasts/broadcastQueries"
 import { useDocsSites } from "@/features/docs/queries"
+import type { ChannelKind } from "@/lib/api"
 import type { ConversationFilters } from "@/lib/keys"
 import { cn } from "@/lib/utils"
 import { useChannelMap } from "@/lib/workspace"
 
-export type SourceFilterValue = { source?: Source; site?: string; broadcast?: { id: string; name: string } }
+export type SourceFilterValue = { source?: ChannelKind; site?: string; broadcast?: { id: string; name: string } }
 
 let value: SourceFilterValue = {}
 const listeners = new Set<() => void>()
@@ -35,8 +36,7 @@ export function useSourceFilter() {
 
 export function sourceFilters(v: SourceFilterValue): ConversationFilters {
   const f: ConversationFilters = {}
-  if (v.source === "feedback") f.kind = [v.source]
-  else if (v.source) {
+  if (v.source) {
     f.kind = ["conversation"]
     f.channel_kind = [v.source]
   }
@@ -209,7 +209,7 @@ export function SourceFilter({ inboxId, onChange }: { inboxId: string; onChange:
               </Choice>
             ))}
             <p className="px-2.5 pt-1 pb-1.5 text-caption text-faint">
-              <Trans>A site shows the conversations and feedback sent from its pages.</Trans>
+              <Trans>A site shows the conversations sent from its pages.</Trans>
             </p>
           </>
         )}

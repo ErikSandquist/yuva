@@ -37,7 +37,7 @@ export function languageName(tag: string, locale: string) {
 }
 
 export function useContactConversations(contactId: string, status?: ConversationStatus) {
-  const q = useConversations({ contact_id: contactId, status })
+  const q = useConversations({ contact_id: contactId, status: status ? [status] : undefined })
   const items = q.data?.pages.flatMap((p) => p.items) ?? []
   return { ...q, items }
 }
@@ -340,7 +340,7 @@ export function ConversationRows({
                       open ? "text-brand" : "text-faint"
                     )}
                   >
-                    {text.status[c.status]}
+                    {text.statusOf(c.status, c.kind)}
                     {rating && <RatingMark rating={rating.rating} comment={rating.comment} />}
                   </span>
                 </span>

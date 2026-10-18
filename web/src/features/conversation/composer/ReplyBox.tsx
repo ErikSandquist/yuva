@@ -531,7 +531,7 @@ export const ReplyBox = forwardRef<
               disabled={!hasContent}
               data-testid="composer-send-close"
             >
-              <Trans>Send and close</Trans>
+              {c.kind === "feedback" ? <Trans>Reply and resolve</Trans> : <Trans>Send and close</Trans>}
             </Button>
           </>
         )}

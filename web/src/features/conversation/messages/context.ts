@@ -8,6 +8,7 @@ export type ThreadContext = {
   labels: Label[]
   inboxes: Inbox[]
   subject: string
+  feedback?: boolean
   expandQuoted: boolean
   inboxId?: string
   contactReadAt?: string

@@ -184,7 +184,7 @@ function ConversationRow({ c }: { c: ConversationListItem }) {
             {c.feedback?.rating && <PageRatingMark rating={c.feedback.rating} />}
             {c.feedback?.category && c.feedback.category !== "other" && <CategoryChip category={c.feedback.category} />}
             <span className={cn("shrink-0 text-caption", c.status === "open" ? "text-brand" : "text-faint")}>
-              {text.status[c.status]}
+              {text.statusOf(c.status, c.kind)}
             </span>
           </span>
         </span>

@@ -8,6 +8,7 @@ import {
   ChartLineIcon,
   HouseIcon,
   MegaphoneIcon,
+  MessageSquareHeartIcon,
   MessagesSquareIcon,
   SettingsIcon,
   UsersIcon,
@@ -19,7 +20,7 @@ import { UserMenu } from "@/app/UserMenu"
 import { mod, SHORTCUTS, keyLabel } from "@/components/common/ShortcutSheet"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { useAnalyticsVisible } from "@/features/analytics/properties"
-import { useConversations, useDrafts, useMentions } from "@/features/inbox/queries"
+import { useConversations, useCounts, useDrafts, useMentions } from "@/features/inbox/queries"
 import { setRailView, useRailView } from "@/features/inbox/railView"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
@@ -34,13 +35,14 @@ type Entry = {
 }
 
 export function useUnreadCount() {
-  const list = useConversations({})
+  const list = useConversations({ kind: ["conversation"] })
   return (list.data?.pages.flatMap((p) => p.items) ?? []).filter((c) => c.unread).length
 }
 
 function useEntries(): Entry[] {
   const { t } = useLingui()
   const unread = useUnreadCount()
+  const feedback = Number(useCounts().data?.feedback ?? 0)
   const unseen = Number(useMentions().data?.pages[0]?.unseen ?? 0)
   const drafts = Number(useDrafts({}).data?.pages[0]?.total ?? 0)
   const analytics = useAnalyticsVisible()
@@ -62,6 +64,14 @@ function useEntries(): Entry[] {
       shortcut: SHORTCUTS.mentions,
       badge: unseen,
       badgeLabel: t`Mentions, ${unseen} unseen`,
+    },
+    {
+      key: "feedback",
+      label: t`Feedback`,
+      icon: MessageSquareHeartIcon,
+      shortcut: SHORTCUTS.feedback,
+      badge: feedback,
+      badgeLabel: t`Feedback, ${feedback} open`,
     },
     { key: "contacts", label: t`Contacts`, icon: BookUserIcon, shortcut: SHORTCUTS.contacts },
     { key: "team", label: t`Team`, icon: UsersIcon, shortcut: SHORTCUTS.team },

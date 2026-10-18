@@ -189,7 +189,7 @@ export function useConversationActions(c: Conversation, contactName: string) {
   return {
     chat,
     live,
-    close: () => finish({ status: "closed" }, t`Conversation closed`),
+    close: () => finish({ status: "closed" }, c.kind === "feedback" ? t`Feedback resolved` : t`Conversation closed`),
     reopen: () => finish({ status: "open" }, t`Conversation reopened`),
     snooze: (at: Date, when: string) =>
       finish({ status: "snoozed", snooze_until: at.toISOString() }, t`${first} comes back ${when}`),
@@ -232,7 +232,10 @@ export function useConversationActions(c: Conversation, contactName: string) {
         inLine(c.id, () => deliver(req)).then(
           () =>
             patch({ status: "closed" }).then(
-              () => toast(t`Sent to ${first} and closed`, () => patch(revertOf(c)).catch(failed)),
+              () =>
+                toast(c.kind === "feedback" ? t`Sent to ${first} and resolved` : t`Sent to ${first} and closed`, () =>
+                  patch(revertOf(c)).catch(failed)
+                ),
               failed
             ),
           (err) => notSent(req, err)
@@ -269,14 +272,21 @@ export function useConversationActions(c: Conversation, contactName: string) {
           }
         )
       })
-      toast(close ? t`Sent to ${first} and closed` : t`Sent to ${first}`, () => {
-        if (cancel(key)) {
-          drop()
-          restoreDraftOf(c.id, req.body, req.files)
-        } else {
-          patch(revertOf(c)).catch(failed)
+      toast(
+        close
+          ? c.kind === "feedback"
+            ? t`Sent to ${first} and resolved`
+            : t`Sent to ${first} and closed`
+          : t`Sent to ${first}`,
+        () => {
+          if (cancel(key)) {
+            drop()
+            restoreDraftOf(c.id, req.body, req.files)
+          } else {
+            patch(revertOf(c)).catch(failed)
+          }
         }
-      })
+      )
       return undefined
     },
   }

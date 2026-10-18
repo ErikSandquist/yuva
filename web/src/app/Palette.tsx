@@ -38,7 +38,7 @@ function useItems(open: boolean): Item[] {
   const inboxList = useInboxes().data
   const channels = useChannelMap()
   const [inboxId, setFilter] = useInboxFilter()
-  const recent = useConversations({ status: "open", inbox_id: inboxId || undefined }, open)
+  const recent = useConversations({ status: ["open"], inbox_id: inboxId || undefined }, open)
   const commands = open && hasCommands() && pathname.startsWith("/conversations/")
   return useMemo(() => {
     if (!open) return []
@@ -92,6 +92,7 @@ function useItems(open: boolean): Item[] {
       },
     })
     if (canManage) go(t`Home`, "/", keyLabel(SHORTCUTS.home))
+    go(t`Feedback`, "/feedback", keyLabel(SHORTCUTS.feedback))
     go(t`Contacts`, "/contacts", keyLabel(SHORTCUTS.contacts))
     go(t`Docs`, "/docs", keyLabel(SHORTCUTS.docs))
     go(t`Discussions`, "/docs/discussions")

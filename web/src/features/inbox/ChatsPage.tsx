@@ -8,6 +8,7 @@ import { formatDuration } from "@/components/common/text"
 import { ContactPanel } from "@/features/contact/ContactSheet"
 import { ChatView } from "@/features/conversation/ChatView"
 import { useConversation } from "@/features/conversation/queries"
+import { EmptyFeedback } from "@/features/feedback/FeedbackList"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { useCounts, useStats } from "@/features/inbox/queries"
 import { useRailView } from "@/features/inbox/railView"
@@ -77,7 +78,7 @@ function DayStats() {
 }
 
 function EmptyChat() {
-  const counts = useCounts().data
+  const counts = useCounts(["conversation"]).data
   const answered = counts !== undefined && counts.mine + counts.unassigned === 0
   return (
     <div
@@ -102,19 +103,20 @@ function EmptyChat() {
   )
 }
 
-export function ChatsPage() {
+export function ChatsPage({ section = "conversations" }: { section?: "conversations" | "feedback" }) {
   const { conversationId } = useParams()
   const navigate = useNavigate()
   const phone = useIsPhone()
   const roomy = useMediaQuery("(min-width: 1200px)")
   const [panel, setPanel] = usePanel()
   const { canManage } = useSession()
-  const back = useRailView() === "mentions" ? "/mentions" : inboxRoot(canManage)
+  const rail = useRailView()
+  const back = section === "feedback" ? "/feedback" : rail === "mentions" ? "/mentions" : inboxRoot(canManage)
   const id = conversationId ?? null
   const contactId = useConversation(id ?? undefined).data?.contact_id
   useViewing(id ?? undefined)
 
-  if (!id) return <EmptyChat />
+  if (!id) return section === "feedback" ? <EmptyFeedback /> : <EmptyChat />
   if (phone) {
     return (
       <main className="flex min-h-0 flex-1 flex-col" data-testid="chats">

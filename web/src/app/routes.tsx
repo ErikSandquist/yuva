@@ -134,6 +134,8 @@ export function AppRoutes() {
           <Route path="conversations" element={<ChatsPage />} />
           <Route path="conversations/:conversationId" element={<ChatsPage />} />
           <Route path="mentions" element={<ChatsPage />} />
+          <Route path="feedback" element={<ChatsPage section="feedback" />} />
+          <Route path="feedback/:conversationId" element={<ChatsPage section="feedback" />} />
           <Route path="contacts" element={<ContactsHome />} />
           <Route path="contacts/:contactId" element={<ContactPage />} />
           <Route path="team" element={<TeamHome />} />

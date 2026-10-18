@@ -54,7 +54,7 @@ export function AppShell() {
         pathname.startsWith("/broadcasts/") &&
         document.querySelector<HTMLInputElement>("[data-testid=subscribers-search]")
       if (subscribers) return subscribers.focus()
-      if (!chats) navigate(inboxRoot(canManage))
+      if (!chats && !pathname.startsWith("/feedback")) navigate(inboxRoot(canManage))
       focusListSearch()
     },
     [SHORTCUTS.home]: () => canManage && go("home"),
@@ -67,6 +67,7 @@ export function AppShell() {
     [SHORTCUTS.analytics]: () => analytics && go("analytics"),
     [SHORTCUTS.assistants]: () => go("assistants"),
     [SHORTCUTS.mentions]: () => go("mentions"),
+    [SHORTCUTS.feedback]: () => go("feedback"),
   })
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {

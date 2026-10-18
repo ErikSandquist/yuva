@@ -27,6 +27,7 @@ export type Section =
   | "home"
   | "conversations"
   | "mentions"
+  | "feedback"
   | "assistants"
   | "contacts"
   | "team"
@@ -36,7 +37,17 @@ export type Section =
   | "analytics"
   | "settings"
 
-const routed = ["mentions", "contacts", "team", "reports", "docs", "broadcasts", "analytics", "settings"] as const
+const routed = [
+  "mentions",
+  "feedback",
+  "contacts",
+  "team",
+  "reports",
+  "docs",
+  "broadcasts",
+  "analytics",
+  "settings",
+] as const
 
 export function sectionOf(pathname: string, view: Section, manager: boolean): Section {
   if (manager && pathname === "/") return "home"

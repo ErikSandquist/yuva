@@ -127,6 +127,10 @@ msgid "{actor} closed the conversation"
 msgstr "{actor} a închis conversația"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this as resolved"
+msgstr "{actor} a marcat aceasta ca rezolvată"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} rated the conversation 👍"
 msgstr "{actor} a evaluat conversația 👍"
 
@@ -1015,8 +1019,8 @@ msgid "A sign-in must come back within 10 minutes and works once. Sign in again.
 msgstr "O conectare trebuie să revină în 10 minute și funcționează o singură dată. Conectează-te din nou."
 
 #: src/features/inbox/SourceFilter.tsx
-msgid "A site shows the conversations and feedback sent from its pages."
-msgstr "Un site arată conversațiile și feedbackul trimise de pe paginile sale."
+msgid "A site shows the conversations sent from its pages."
+msgstr "Un site afișează conversațiile trimise de pe paginile sale."
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1293,6 +1297,7 @@ msgstr "Alertează-mă cât timp fila e în fundal"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -1598,6 +1603,7 @@ msgstr "Răspuns șters"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Answered"
 msgstr "Cu răspuns"
 
@@ -2122,6 +2128,7 @@ msgid "Browser"
 msgstr "Browser"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Bug"
 msgstr "Eroare"
 
@@ -2251,6 +2258,7 @@ msgid "Catch-all without a From address"
 msgstr "Colector general fără adresă De la"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "Categorie"
 
@@ -2414,6 +2422,7 @@ msgstr "Alege o regiune"
 msgid "Choose a workspace"
 msgstr "Alege un spațiu de lucru"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "Alege din listă sau mută-te cu ↑ ↓ și deschide cu Enter."
@@ -2449,6 +2458,7 @@ msgstr "Șterge răspunsul"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Clear the search"
 msgstr "Șterge căutarea"
@@ -3963,8 +3973,12 @@ msgstr "Eșuează"
 msgid "feedback"
 msgstr "feedback"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "Feedback"
@@ -3981,6 +3995,10 @@ msgstr "Feedback și discuții pe zi"
 msgid "Feedback arrived"
 msgstr "Feedback sosit"
 
+#: src/features/conversation/actions.ts
+msgid "Feedback resolved"
+msgstr "Feedback rezolvat"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from a documentation page"
 msgstr "Feedback trimis dintr-o pagină de documentație"
@@ -3988,6 +4006,10 @@ msgstr "Feedback trimis dintr-o pagină de documentație"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "Feedback trimis din aplicație"
+
+#: src/app/Rail.tsx
+msgid "Feedback, {feedback} open"
+msgstr "Feedback, {feedback} deschise"
 
 #: src/features/migrations/Wizard.tsx
 msgid "File"
@@ -4593,6 +4615,7 @@ msgid "I'm back"
 msgstr "M-am întors"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Idea"
 msgstr "Idee"
 
@@ -6373,6 +6396,10 @@ msgstr "Nimeni nu te-a menționat încă într-o notă. Când un coleg scrie @ �
 msgid "No open conversations. New ones show up here and in the inbox as they arrive."
 msgstr "Nicio conversație deschisă. Cele noi apar aici și în căsuță pe măsură ce sosesc."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "No open feedback."
+msgstr "Niciun feedback deschis."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Niciun alt contact nu se potrivește."
@@ -6727,6 +6754,10 @@ msgstr "Nu se pierde nimic: după ce te conectezi din nou cu Microsoft, copierea
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Nu se pierde nimic: când continuă, copierea reia de unde s-a oprit."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Nothing is resolved yet."
+msgstr "Încă nimic nu este rezolvat."
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "Nimic nu este amânat."
@@ -6740,6 +6771,7 @@ msgstr "Nimic nu așteaptă aprobarea."
 msgid "Nothing matches these filters."
 msgstr "Nimic nu se potrivește cu aceste filtre."
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "Nimic nu se potrivește aici cu căutarea ta."
@@ -7029,6 +7061,7 @@ msgstr "deschis"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Open"
@@ -7277,6 +7310,7 @@ msgid "Original"
 msgstr "Original"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Other"
 msgstr "Altele"
 
@@ -7577,6 +7611,10 @@ msgstr "Alege mai întâi un design."
 msgid "Pick a design that renders without errors."
 msgstr "Alege un design care se randează fără erori."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Pick a piece of feedback"
+msgstr "Alegeți un feedback"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "Alege un expeditor în setări"
@@ -7757,6 +7795,7 @@ msgid "Posted by you and marked as the accepted answer."
 msgstr "Postat de tine și marcat ca răspuns acceptat."
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Praise"
 msgstr "Laudă"
 
@@ -8332,6 +8371,10 @@ msgstr "Răspunde ({mod}↵)"
 msgid "Reply account"
 msgstr "Cont de răspuns"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Reply and resolve"
+msgstr "Răspunde și rezolvă"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "Răspuns publicat"
@@ -8410,6 +8453,19 @@ msgstr "Impact asupra reputației"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
 msgstr "Resetează la valorile implicite"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve"
+msgstr "Rezolvă"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve (E)"
+msgstr "Rezolvă (E)"
+
+#: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
+msgid "Resolved"
+msgstr "Rezolvat"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -8671,7 +8727,12 @@ msgstr "Domeniile de acces, căsuțele și expirarea rămân cum sunt. Pentru al
 msgid "Screen"
 msgstr "Ecran"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Screenshots attached"
+msgstr "Capturi de ecran atașate"
+
 #: src/app/Palette.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Search"
 msgstr "Caută"
@@ -8706,6 +8767,10 @@ msgstr "Caută emoji"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji (in English)"
 msgstr "Caută emoji (în engleză)"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "Search feedback"
+msgstr "Caută în feedback"
 
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
@@ -9045,6 +9110,10 @@ msgstr "Trimis lui {first}"
 #: src/features/conversation/actions.ts
 msgid "Sent to {first} and closed"
 msgstr "Trimis lui {first} și închis"
+
+#: src/features/conversation/actions.ts
+msgid "Sent to {first} and resolved"
+msgstr "Trimis lui {first} și rezolvat"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent} of {limit} allowed. The day starts at 00:00 UTC."
@@ -9650,6 +9719,7 @@ msgstr "STARTTLS (portul 587)"
 msgid "State"
 msgstr "Stare"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
@@ -11294,6 +11364,7 @@ msgstr "Anulează fixarea"
 msgid "Unpinned"
 msgstr "Fixare anulată"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Unread"
 msgstr "Necitit"
@@ -11870,6 +11941,10 @@ msgstr "Când ar trebui să revină?"
 #: src/features/settings/notifications/events.ts
 msgid "When someone else assigns it to you."
 msgstr "Când ți-l atribuie altcineva."
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "When someone sends feedback, it will be in the list."
+msgstr "Când cineva trimite feedback, va apărea în listă."
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"

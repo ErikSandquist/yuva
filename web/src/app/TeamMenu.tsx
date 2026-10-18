@@ -21,7 +21,7 @@ import { Item } from "@/components/ui/item"
 
 export function useConversationName() {
   const { t } = useLingui()
-  const open = useConversations({ status: "open" })
+  const open = useConversations({ status: ["open"] })
   const items = open.data?.pages.flatMap((p) => p.items) ?? []
   return (id: string) => {
     const c = items.find((x) => x.id === id)

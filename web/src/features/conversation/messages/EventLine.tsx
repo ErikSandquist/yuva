@@ -34,9 +34,11 @@ export function EventLine({ m, ctx }: { m: Message; ctx: ThreadContext }) {
       body = <Trans>{actor} removed the assignee</Trans>
       break
     case "status_changed": {
-      const status = text.status[e.status ?? "open"]
+      const status = text.statusOf(e.status ?? "open", ctx.feedback ? "feedback" : undefined)
       body =
-        e.status === "closed" ? (
+        e.status === "closed" && ctx.feedback ? (
+          <Trans>{actor} marked this as resolved</Trans>
+        ) : e.status === "closed" ? (
           <Trans>{actor} closed the conversation</Trans>
         ) : e.status === "open" ? (
           <Trans>{actor} reopened the conversation</Trans>

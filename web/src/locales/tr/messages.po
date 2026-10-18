@@ -127,6 +127,10 @@ msgid "{actor} closed the conversation"
 msgstr "{actor} konuşmayı kapattı"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this as resolved"
+msgstr "{actor} bunu çözüldü olarak işaretledi"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} rated the conversation 👍"
 msgstr "{actor} konuşmayı değerlendirdi 👍"
 
@@ -1015,8 +1019,8 @@ msgid "A sign-in must come back within 10 minutes and works once. Sign in again.
 msgstr "Oturum açma işlemi 10 dakika içinde geri dönmeli ve yalnızca bir kez kullanılabilir. Yeniden oturum açın."
 
 #: src/features/inbox/SourceFilter.tsx
-msgid "A site shows the conversations and feedback sent from its pages."
-msgstr "Bir site, sayfalarından gönderilen konuşmaları ve geri bildirimleri gösterir."
+msgid "A site shows the conversations sent from its pages."
+msgstr "Bir site, sayfalarından gönderilen konuşmaları gösterir."
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1293,6 +1297,7 @@ msgstr "Sekme arka plandayken beni uyar"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -1598,6 +1603,7 @@ msgstr "Kabul edilen yanıt kaldırıldı"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Answered"
 msgstr "Yanıtlandı"
 
@@ -2122,6 +2128,7 @@ msgid "Browser"
 msgstr "Tarayıcı"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Bug"
 msgstr "Hata"
 
@@ -2251,6 +2258,7 @@ msgid "Catch-all without a From address"
 msgstr "Gönderen adresi olmayan tümünü yakalayan adres"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "Kategori"
 
@@ -2414,6 +2422,7 @@ msgstr "Bölge seçin"
 msgid "Choose a workspace"
 msgstr "Bir çalışma alanı seçin"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "Listeden birini seçin ya da ↑ ↓ ile gezinip Enter ile açın."
@@ -2449,6 +2458,7 @@ msgstr "Kabulü kaldır"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Clear the search"
 msgstr "Aramayı temizle"
@@ -3963,8 +3973,12 @@ msgstr "Başarısız oluyor"
 msgid "feedback"
 msgstr "geri bildirim"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "Geri bildirim"
@@ -3981,6 +3995,10 @@ msgstr "Günlük geri bildirim ve tartışmalar"
 msgid "Feedback arrived"
 msgstr "Geri bildirim geldi"
 
+#: src/features/conversation/actions.ts
+msgid "Feedback resolved"
+msgstr "Geri bildirim çözüldü"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from a documentation page"
 msgstr "Bir dokümantasyon sayfasından gönderilen geri bildirim"
@@ -3988,6 +4006,10 @@ msgstr "Bir dokümantasyon sayfasından gönderilen geri bildirim"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "Uygulamadan gönderilen geri bildirim"
+
+#: src/app/Rail.tsx
+msgid "Feedback, {feedback} open"
+msgstr "Geri bildirim, {feedback} açık"
 
 #: src/features/migrations/Wizard.tsx
 msgid "File"
@@ -4593,6 +4615,7 @@ msgid "I'm back"
 msgstr "Geri döndüm"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Idea"
 msgstr "Fikir"
 
@@ -6373,6 +6396,10 @@ msgstr "Henüz kimse bir notta sizden bahsetmedi. Bir ekip arkadaşı @ ve adın
 msgid "No open conversations. New ones show up here and in the inbox as they arrive."
 msgstr "Açık konuşma yok. Yenileri geldikçe burada ve gelen kutusunda görünür."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "No open feedback."
+msgstr "Açık geri bildirim yok."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Eşleşen başka kişi yok."
@@ -6727,6 +6754,10 @@ msgstr "Hiçbir şey kaybolmaz: Microsoft ile yeniden oturum açtığınızda ko
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Hiçbir şey kaybolmaz: kopyalama sürdüğünde kaldığı yerden devam eder."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Nothing is resolved yet."
+msgstr "Henüz çözülen yok."
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "Ertelenmiş bir şey yok."
@@ -6740,6 +6771,7 @@ msgstr "Onay bekleyen bir şey yok."
 msgid "Nothing matches these filters."
 msgstr "Bu filtrelere uyan konuşma yok."
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "Burada aramana uyan bir şey yok."
@@ -7029,6 +7061,7 @@ msgstr "açık"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Open"
@@ -7277,6 +7310,7 @@ msgid "Original"
 msgstr "Orijinal"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Other"
 msgstr "Diğer"
 
@@ -7577,6 +7611,10 @@ msgstr "Önce bir tasarım seçin."
 msgid "Pick a design that renders without errors."
 msgstr "Hatasız oluşturulan bir tasarım seçin."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Pick a piece of feedback"
+msgstr "Bir geri bildirim seçin"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "Ayarlardan bir gönderen seçin"
@@ -7757,6 +7795,7 @@ msgid "Posted by you and marked as the accepted answer."
 msgstr "Sizin adınıza gönderilir ve kabul edilen yanıt olarak işaretlenir."
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Praise"
 msgstr "Övgü"
 
@@ -8332,6 +8371,10 @@ msgstr "Yanıtla ({mod}↵)"
 msgid "Reply account"
 msgstr "Yanıt hesabı"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Reply and resolve"
+msgstr "Yanıtla ve çözüldü say"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "Yanıt gönderildi"
@@ -8410,6 +8453,19 @@ msgstr "İtibar etkisi"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
 msgstr "Varsayılanlara dön"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve"
+msgstr "Çözüldü say"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve (E)"
+msgstr "Çözüldü say (E)"
+
+#: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
+msgid "Resolved"
+msgstr "Çözüldü"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -8671,7 +8727,12 @@ msgstr "Yetkiler, gelen kutuları ve son geçerlilik olduğu gibi kalır. Farkl�
 msgid "Screen"
 msgstr "Ekran"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Screenshots attached"
+msgstr "Ekran görüntüsü eklendi"
+
 #: src/app/Palette.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Search"
 msgstr "Ara"
@@ -8706,6 +8767,10 @@ msgstr "Emoji ara"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji (in English)"
 msgstr "Emoji ara (İngilizce)"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "Search feedback"
+msgstr "Geri bildirimlerde ara"
 
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
@@ -9045,6 +9110,10 @@ msgstr "Gönderildi: {first}"
 #: src/features/conversation/actions.ts
 msgid "Sent to {first} and closed"
 msgstr "Gönderildi ve bitti: {first}"
+
+#: src/features/conversation/actions.ts
+msgid "Sent to {first} and resolved"
+msgstr "Gönderildi ve çözüldü: {first}"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent} of {limit} allowed. The day starts at 00:00 UTC."
@@ -9650,6 +9719,7 @@ msgstr "STARTTLS (port 587)"
 msgid "State"
 msgstr "Durum"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
@@ -11294,6 +11364,7 @@ msgstr "Sabitlemeyi kaldır"
 msgid "Unpinned"
 msgstr "Sabitleme kaldırıldı"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Unread"
 msgstr "Okunmamış"
@@ -11870,6 +11941,10 @@ msgstr "Ne zaman geri gelsin?"
 #: src/features/settings/notifications/events.ts
 msgid "When someone else assigns it to you."
 msgstr "Başka biri onu sana atadığında."
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "When someone sends feedback, it will be in the list."
+msgstr "Biri geri bildirim gönderdiğinde listede görünür."
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"

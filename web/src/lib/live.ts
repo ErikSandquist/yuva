@@ -56,7 +56,7 @@ function pageOrigin(url?: string) {
 function matches(c: Conversation & { pinned_at?: string }, f: ConversationFilters, memberId: string) {
   if (!!f.spam !== c.spam) return false
   if (f.pinned !== undefined && !!c.pinned_at !== f.pinned) return false
-  if (f.status && c.status !== f.status) return false
+  if (f.status?.length && !f.status.includes(c.status)) return false
   if (f.kind?.length && !f.kind.includes(c.kind)) return false
   if (f.category && c.kind !== "feedback") return false
   if (f.channel_kind?.length && !(c.channel_kind && f.channel_kind.includes(c.channel_kind))) return false

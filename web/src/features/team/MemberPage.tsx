@@ -35,7 +35,7 @@ export function MemberPage() {
   const { load } = useTeamLoad()
   const [inboxId] = useInboxFilter()
   const stats = useStats(inboxId).data
-  const open = useConversations({ assignee: memberId, status: "open" })
+  const open = useConversations({ assignee: memberId, status: ["open"] })
   const m = members.data?.find((x) => x.id === memberId)
   const fmt = new Intl.NumberFormat(i18n.locale)
 

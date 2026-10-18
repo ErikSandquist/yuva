@@ -127,6 +127,10 @@ msgid "{actor} closed the conversation"
 msgstr "{actor} menutup percakapan"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this as resolved"
+msgstr "{actor} menandai ini sebagai terselesaikan"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} rated the conversation 👍"
 msgstr "{actor} menilai percakapan 👍"
 
@@ -1015,8 +1019,8 @@ msgid "A sign-in must come back within 10 minutes and works once. Sign in again.
 msgstr "Proses masuk harus kembali dalam 10 menit dan hanya berlaku sekali. Masuk lagi."
 
 #: src/features/inbox/SourceFilter.tsx
-msgid "A site shows the conversations and feedback sent from its pages."
-msgstr "Situs menampilkan percakapan dan masukan yang dikirim dari halamannya."
+msgid "A site shows the conversations sent from its pages."
+msgstr "Situs menampilkan percakapan yang dikirim dari halamannya."
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1293,6 +1297,7 @@ msgstr "Beri tahu saya saat tab ada di latar belakang"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -1598,6 +1603,7 @@ msgstr "Jawaban dihapus"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Answered"
 msgstr "Dijawab"
 
@@ -2122,6 +2128,7 @@ msgid "Browser"
 msgstr "Browser"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Bug"
 msgstr "Bug"
 
@@ -2251,6 +2258,7 @@ msgid "Catch-all without a From address"
 msgstr "Catch-all tanpa alamat Dari"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "Kategori"
 
@@ -2414,6 +2422,7 @@ msgstr "Pilih wilayah"
 msgid "Choose a workspace"
 msgstr "Pilih ruang kerja"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "Pilih dari daftar, atau bergerak dengan ↑ ↓ dan buka dengan Enter."
@@ -2449,6 +2458,7 @@ msgstr "Hapus jawaban"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Clear the search"
 msgstr "Hapus pencarian"
@@ -3963,8 +3973,12 @@ msgstr "Gagal terus"
 msgid "feedback"
 msgstr "masukan"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "Masukan"
@@ -3981,6 +3995,10 @@ msgstr "Masukan dan diskusi per hari"
 msgid "Feedback arrived"
 msgstr "Masukan tiba"
 
+#: src/features/conversation/actions.ts
+msgid "Feedback resolved"
+msgstr "Masukan terselesaikan"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from a documentation page"
 msgstr "Masukan yang dikirim dari halaman dokumentasi"
@@ -3988,6 +4006,10 @@ msgstr "Masukan yang dikirim dari halaman dokumentasi"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "Masukan yang dikirim dari aplikasi"
+
+#: src/app/Rail.tsx
+msgid "Feedback, {feedback} open"
+msgstr "Masukan, {feedback} terbuka"
 
 #: src/features/migrations/Wizard.tsx
 msgid "File"
@@ -4593,6 +4615,7 @@ msgid "I'm back"
 msgstr "Saya kembali"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Idea"
 msgstr "Ide"
 
@@ -6373,6 +6396,10 @@ msgstr "Belum ada yang menyebut Anda di catatan. Saat rekan tim menulis @ dan na
 msgid "No open conversations. New ones show up here and in the inbox as they arrive."
 msgstr "Tidak ada percakapan terbuka. Yang baru muncul di sini dan di kotak masuk begitu tiba."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "No open feedback."
+msgstr "Tidak ada masukan terbuka."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Tidak ada kontak lain yang cocok."
@@ -6727,6 +6754,10 @@ msgstr "Tidak ada yang hilang: setelah Anda masuk dengan Microsoft lagi, penyali
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Tidak ada yang hilang: saat berlanjut, penyalinan melanjutkan dari tempat berhenti."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Nothing is resolved yet."
+msgstr "Belum ada yang terselesaikan."
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "Tidak ada yang ditunda."
@@ -6740,6 +6771,7 @@ msgstr "Tidak ada yang menunggu persetujuan."
 msgid "Nothing matches these filters."
 msgstr "Tidak ada yang cocok dengan filter ini."
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "Tidak ada yang cocok dengan pencarian Anda di sini."
@@ -7029,6 +7061,7 @@ msgstr "terbuka"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Open"
@@ -7277,6 +7310,7 @@ msgid "Original"
 msgstr "Asli"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Other"
 msgstr "Lainnya"
 
@@ -7577,6 +7611,10 @@ msgstr "Pilih desain dulu."
 msgid "Pick a design that renders without errors."
 msgstr "Pilih desain yang dirender tanpa kesalahan."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Pick a piece of feedback"
+msgstr "Pilih satu masukan"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "Pilih pengirim di pengaturan"
@@ -7757,6 +7795,7 @@ msgid "Posted by you and marked as the accepted answer."
 msgstr "Ditulis oleh Anda dan ditandai sebagai jawaban yang diterima."
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Praise"
 msgstr "Pujian"
 
@@ -8332,6 +8371,10 @@ msgstr "Balas ({mod}↵)"
 msgid "Reply account"
 msgstr "Akun balasan"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Reply and resolve"
+msgstr "Balas dan selesaikan"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "Balasan diposting"
@@ -8410,6 +8453,19 @@ msgstr "Dampak pada reputasi"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
 msgstr "Atur ulang ke default"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve"
+msgstr "Selesaikan"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve (E)"
+msgstr "Selesaikan (E)"
+
+#: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
+msgid "Resolved"
+msgstr "Terselesaikan"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -8671,7 +8727,12 @@ msgstr "Cakupan, kotak masuk, dan masa berlaku tetap seperti adanya. Untuk yang 
 msgid "Screen"
 msgstr "Layar"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Screenshots attached"
+msgstr "Tangkapan layar terlampir"
+
 #: src/app/Palette.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Search"
 msgstr "Cari"
@@ -8706,6 +8767,10 @@ msgstr "Cari emoji"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji (in English)"
 msgstr "Cari emoji (dalam bahasa Inggris)"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "Search feedback"
+msgstr "Cari masukan"
 
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
@@ -9045,6 +9110,10 @@ msgstr "Dikirim ke {first}"
 #: src/features/conversation/actions.ts
 msgid "Sent to {first} and closed"
 msgstr "Dikirim ke {first} dan ditutup"
+
+#: src/features/conversation/actions.ts
+msgid "Sent to {first} and resolved"
+msgstr "Terkirim ke {first} dan terselesaikan"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent} of {limit} allowed. The day starts at 00:00 UTC."
@@ -9650,6 +9719,7 @@ msgstr "STARTTLS (port 587)"
 msgid "State"
 msgstr "Status"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
@@ -11294,6 +11364,7 @@ msgstr "Lepas sematan"
 msgid "Unpinned"
 msgstr "Sematan dilepas"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Unread"
 msgstr "Belum dibaca"
@@ -11870,6 +11941,10 @@ msgstr "Kapan harus kembali?"
 #: src/features/settings/notifications/events.ts
 msgid "When someone else assigns it to you."
 msgstr "Saat orang lain menugaskannya kepada Anda."
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "When someone sends feedback, it will be in the list."
+msgstr "Saat seseorang mengirim masukan, masukan itu akan muncul di daftar."
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"

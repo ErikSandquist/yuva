@@ -127,6 +127,10 @@ msgid "{actor} closed the conversation"
 msgstr "{actor} đã đóng cuộc trò chuyện"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this as resolved"
+msgstr "{actor} đã đánh dấu mục này là đã giải quyết"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} rated the conversation 👍"
 msgstr "{actor} đã đánh giá cuộc trò chuyện 👍"
 
@@ -1015,8 +1019,8 @@ msgid "A sign-in must come back within 10 minutes and works once. Sign in again.
 msgstr "Lần đăng nhập phải quay lại trong vòng 10 phút và chỉ dùng được một lần. Hãy đăng nhập lại."
 
 #: src/features/inbox/SourceFilter.tsx
-msgid "A site shows the conversations and feedback sent from its pages."
-msgstr "Một trang web hiển thị các cuộc trò chuyện và phản hồi gửi từ các trang của nó."
+msgid "A site shows the conversations sent from its pages."
+msgstr "Một trang web hiển thị các cuộc trò chuyện gửi từ các trang của nó."
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1293,6 +1297,7 @@ msgstr "Cảnh báo tôi khi tab đang chạy nền"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -1598,6 +1603,7 @@ msgstr "Đã xóa câu trả lời"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Answered"
 msgstr "Đã trả lời"
 
@@ -2122,6 +2128,7 @@ msgid "Browser"
 msgstr "Trình duyệt"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Bug"
 msgstr "Lỗi"
 
@@ -2251,6 +2258,7 @@ msgid "Catch-all without a From address"
 msgstr "Catch-all không có địa chỉ From"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "Danh mục"
 
@@ -2414,6 +2422,7 @@ msgstr "Chọn khu vực"
 msgid "Choose a workspace"
 msgstr "Chọn không gian làm việc"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "Chọn một mục trong danh sách, hoặc di chuyển bằng ↑ ↓ và mở bằng Enter."
@@ -2449,6 +2458,7 @@ msgstr "Xóa câu trả lời"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Clear the search"
 msgstr "Xóa tìm kiếm"
@@ -3963,8 +3973,12 @@ msgstr "Đang lỗi"
 msgid "feedback"
 msgstr "phản hồi"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "Phản hồi"
@@ -3981,6 +3995,10 @@ msgstr "Phản hồi và thảo luận mỗi ngày"
 msgid "Feedback arrived"
 msgstr "Đã nhận phản hồi"
 
+#: src/features/conversation/actions.ts
+msgid "Feedback resolved"
+msgstr "Góp ý đã được giải quyết"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from a documentation page"
 msgstr "Phản hồi gửi từ một trang tài liệu"
@@ -3988,6 +4006,10 @@ msgstr "Phản hồi gửi từ một trang tài liệu"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "Phản hồi gửi từ ứng dụng"
+
+#: src/app/Rail.tsx
+msgid "Feedback, {feedback} open"
+msgstr "Góp ý, {feedback} đang mở"
 
 #: src/features/migrations/Wizard.tsx
 msgid "File"
@@ -4593,6 +4615,7 @@ msgid "I'm back"
 msgstr "Tôi đã quay lại"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Idea"
 msgstr "Ý tưởng"
 
@@ -6373,6 +6396,10 @@ msgstr "Chưa ai nhắc đến bạn trong ghi chú. Khi đồng nghiệp viết
 msgid "No open conversations. New ones show up here and in the inbox as they arrive."
 msgstr "Không có cuộc trò chuyện đang mở. Cuộc mới sẽ hiện ở đây và trong hộp thư khi chúng đến."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "No open feedback."
+msgstr "Không có góp ý nào đang mở."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Không có liên hệ nào khác khớp."
@@ -6727,6 +6754,10 @@ msgstr "Không mất gì: khi bạn đăng nhập lại bằng Microsoft, việc
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Không mất gì: khi nó tiếp tục, việc sao chép tiếp tục từ chỗ đã dừng."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Nothing is resolved yet."
+msgstr "Chưa có gì được giải quyết."
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "Không có gì đang tạm hoãn."
@@ -6740,6 +6771,7 @@ msgstr "Không có gì đang chờ duyệt."
 msgid "Nothing matches these filters."
 msgstr "Không có gì khớp với các bộ lọc này."
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "Không có gì khớp với tìm kiếm của bạn ở đây."
@@ -7029,6 +7061,7 @@ msgstr "mở"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Open"
@@ -7277,6 +7310,7 @@ msgid "Original"
 msgstr "Bản gốc"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Other"
 msgstr "Khác"
 
@@ -7577,6 +7611,10 @@ msgstr "Hãy chọn một thiết kế trước."
 msgid "Pick a design that renders without errors."
 msgstr "Hãy chọn một thiết kế hiển thị không lỗi."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Pick a piece of feedback"
+msgstr "Chọn một góp ý"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "Chọn người gửi trong cài đặt"
@@ -7757,6 +7795,7 @@ msgid "Posted by you and marked as the accepted answer."
 msgstr "Do bạn đăng và được đánh dấu là câu trả lời được chấp nhận."
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Praise"
 msgstr "Khen ngợi"
 
@@ -8332,6 +8371,10 @@ msgstr "Phản hồi ({mod}↵)"
 msgid "Reply account"
 msgstr "Tài khoản phản hồi"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Reply and resolve"
+msgstr "Trả lời và giải quyết"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "Đã đăng phản hồi"
@@ -8410,6 +8453,19 @@ msgstr "Ảnh hưởng đến uy tín"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
 msgstr "Đặt lại mặc định"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve"
+msgstr "Giải quyết"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve (E)"
+msgstr "Giải quyết (E)"
+
+#: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
+msgid "Resolved"
+msgstr "Đã giải quyết"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -8671,7 +8727,12 @@ msgstr "Phạm vi, hộp thư và thời hạn giữ nguyên. Muốn khác, hãy
 msgid "Screen"
 msgstr "Màn hình"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Screenshots attached"
+msgstr "Đã đính kèm ảnh chụp màn hình"
+
 #: src/app/Palette.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Search"
 msgstr "Tìm kiếm"
@@ -8706,6 +8767,10 @@ msgstr "Tìm emoji"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji (in English)"
 msgstr "Tìm emoji (bằng tiếng Anh)"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "Search feedback"
+msgstr "Tìm trong góp ý"
 
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
@@ -9045,6 +9110,10 @@ msgstr "Đã gửi tới {first}"
 #: src/features/conversation/actions.ts
 msgid "Sent to {first} and closed"
 msgstr "Đã gửi tới {first} và đóng"
+
+#: src/features/conversation/actions.ts
+msgid "Sent to {first} and resolved"
+msgstr "Đã gửi cho {first} và giải quyết"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent} of {limit} allowed. The day starts at 00:00 UTC."
@@ -9650,6 +9719,7 @@ msgstr "STARTTLS (cổng 587)"
 msgid "State"
 msgstr "Trạng thái"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
@@ -11294,6 +11364,7 @@ msgstr "Bỏ ghim"
 msgid "Unpinned"
 msgstr "Đã bỏ ghim"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Unread"
 msgstr "Chưa đọc"
@@ -11870,6 +11941,10 @@ msgstr "Khi nào nên quay lại?"
 #: src/features/settings/notifications/events.ts
 msgid "When someone else assigns it to you."
 msgstr "Khi người khác giao nó cho bạn."
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "When someone sends feedback, it will be in the list."
+msgstr "Khi có người gửi góp ý, nó sẽ xuất hiện trong danh sách."
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"

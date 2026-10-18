@@ -127,6 +127,10 @@ msgid "{actor} closed the conversation"
 msgstr "{actor} lukkede samtalen"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this as resolved"
+msgstr "{actor} markerede dette som løst"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} rated the conversation 👍"
 msgstr "{actor} vurderede samtalen 👍"
 
@@ -1015,8 +1019,8 @@ msgid "A sign-in must come back within 10 minutes and works once. Sign in again.
 msgstr "Et login skal komme tilbage inden for 10 minutter og virker én gang. Log ind igen."
 
 #: src/features/inbox/SourceFilter.tsx
-msgid "A site shows the conversations and feedback sent from its pages."
-msgstr "Et websted viser de samtaler og den feedback, der er sendt fra dets sider."
+msgid "A site shows the conversations sent from its pages."
+msgstr "Et websted viser de samtaler, der er sendt fra dets sider."
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1293,6 +1297,7 @@ msgstr "Giv mig besked, mens fanen er i baggrunden"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -1598,6 +1603,7 @@ msgstr "Svar ryddet"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Answered"
 msgstr "Besvaret"
 
@@ -2122,6 +2128,7 @@ msgid "Browser"
 msgstr "Browser"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Bug"
 msgstr "Fejl"
 
@@ -2251,6 +2258,7 @@ msgid "Catch-all without a From address"
 msgstr "Catch-all uden afsenderadresse"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "Kategori"
 
@@ -2414,6 +2422,7 @@ msgstr "Vælg en region"
 msgid "Choose a workspace"
 msgstr "Vælg et arbejdsområde"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "Vælg en fra listen, eller bevæg dig med ↑ ↓ og åbn den med Enter."
@@ -2449,6 +2458,7 @@ msgstr "Ryd svaret"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Clear the search"
 msgstr "Ryd søgningen"
@@ -3963,8 +3973,12 @@ msgstr "Fejler"
 msgid "feedback"
 msgstr "feedback"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "Feedback"
@@ -3981,6 +3995,10 @@ msgstr "Feedback og diskussioner pr. dag"
 msgid "Feedback arrived"
 msgstr "Feedback ankom"
 
+#: src/features/conversation/actions.ts
+msgid "Feedback resolved"
+msgstr "Feedback løst"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from a documentation page"
 msgstr "Feedback sendt fra en dokumentationsside"
@@ -3988,6 +4006,10 @@ msgstr "Feedback sendt fra en dokumentationsside"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "Feedback sendt fra appen"
+
+#: src/app/Rail.tsx
+msgid "Feedback, {feedback} open"
+msgstr "Feedback, {feedback} åbne"
 
 #: src/features/migrations/Wizard.tsx
 msgid "File"
@@ -4593,6 +4615,7 @@ msgid "I'm back"
 msgstr "Jeg er tilbage"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Idea"
 msgstr "Idé"
 
@@ -6373,6 +6396,10 @@ msgstr "Ingen har endnu nævnt dig i en note. Når en kollega skriver @ og dit n
 msgid "No open conversations. New ones show up here and in the inbox as they arrive."
 msgstr "Ingen åbne samtaler. Nye vises her og i postkassen, efterhånden som de ankommer."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "No open feedback."
+msgstr "Ingen åben feedback."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Ingen anden kontakt matcher."
@@ -6727,6 +6754,10 @@ msgstr "Intet går tabt: når du logger ind med Microsoft igen, fortsætter kopi
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Intet går tabt: når den fortsætter, tager kopieringen op, hvor den stoppede."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Nothing is resolved yet."
+msgstr "Intet er løst endnu."
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "Intet er udsat."
@@ -6740,6 +6771,7 @@ msgstr "Intet venter på godkendelse."
 msgid "Nothing matches these filters."
 msgstr "Intet matcher disse filtre."
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "Intet matcher din søgning her."
@@ -7029,6 +7061,7 @@ msgstr "åbne"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Open"
@@ -7277,6 +7310,7 @@ msgid "Original"
 msgstr "Original"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Other"
 msgstr "Andet"
 
@@ -7577,6 +7611,10 @@ msgstr "Vælg først et design."
 msgid "Pick a design that renders without errors."
 msgstr "Vælg et design, der gengives uden fejl."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Pick a piece of feedback"
+msgstr "Vælg en feedback"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "Vælg en afsender i indstillingerne"
@@ -7757,6 +7795,7 @@ msgid "Posted by you and marked as the accepted answer."
 msgstr "Postet af dig og markeret som accepteret svar."
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Praise"
 msgstr "Ros"
 
@@ -8332,6 +8371,10 @@ msgstr "Svar ({mod}↵)"
 msgid "Reply account"
 msgstr "Svarkonto"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Reply and resolve"
+msgstr "Svar og løs"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "Svar udgivet"
@@ -8410,6 +8453,19 @@ msgstr "Indvirkning på omdømmet"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
 msgstr "Nulstil til standard"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve"
+msgstr "Løs"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve (E)"
+msgstr "Løs (E)"
+
+#: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
+msgid "Resolved"
+msgstr "Løst"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -8671,7 +8727,12 @@ msgstr "Scopes, postkasser og udløb forbliver, som de er. Opret en ny nøgle ti
 msgid "Screen"
 msgstr "Skærm"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Screenshots attached"
+msgstr "Skærmbilleder vedhæftet"
+
 #: src/app/Palette.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Search"
 msgstr "Søg"
@@ -8706,6 +8767,10 @@ msgstr "Søg efter emoji"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji (in English)"
 msgstr "Søg efter emoji (på engelsk)"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "Search feedback"
+msgstr "Søg i feedback"
 
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
@@ -9045,6 +9110,10 @@ msgstr "Sendt til {first}"
 #: src/features/conversation/actions.ts
 msgid "Sent to {first} and closed"
 msgstr "Sendt til {first} og lukket"
+
+#: src/features/conversation/actions.ts
+msgid "Sent to {first} and resolved"
+msgstr "Sendt til {first} og løst"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent} of {limit} allowed. The day starts at 00:00 UTC."
@@ -9650,6 +9719,7 @@ msgstr "STARTTLS (port 587)"
 msgid "State"
 msgstr "Tilstand"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
@@ -11294,6 +11364,7 @@ msgstr "Frigør"
 msgid "Unpinned"
 msgstr "Frigjort"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Unread"
 msgstr "Ulæst"
@@ -11870,6 +11941,10 @@ msgstr "Hvornår skal den vende tilbage?"
 #: src/features/settings/notifications/events.ts
 msgid "When someone else assigns it to you."
 msgstr "Når en anden tildeler den til dig."
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "When someone sends feedback, it will be in the list."
+msgstr "Når nogen sender feedback, vises den på listen."
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"

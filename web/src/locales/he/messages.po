@@ -127,6 +127,10 @@ msgid "{actor} closed the conversation"
 msgstr "{actor} סגר/ה את השיחה"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this as resolved"
+msgstr "{actor} marked this as resolved"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} rated the conversation 👍"
 msgstr "{actor} דירג/ה את השיחה 👍"
 
@@ -1015,8 +1019,8 @@ msgid "A sign-in must come back within 10 minutes and works once. Sign in again.
 msgstr "כניסה חייבת לחזור תוך 10 דקות ופועלת פעם אחת. היכנס שוב."
 
 #: src/features/inbox/SourceFilter.tsx
-msgid "A site shows the conversations and feedback sent from its pages."
-msgstr "אתר מציג את השיחות והמשובים שנשלחו מהדפים שלו."
+msgid "A site shows the conversations sent from its pages."
+msgstr "A site shows the conversations sent from its pages."
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1293,6 +1297,7 @@ msgstr "התרע לי כשהלשונית ברקע"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -1598,6 +1603,7 @@ msgstr "התשובה נוקתה"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Answered"
 msgstr "נענה"
 
@@ -2122,6 +2128,7 @@ msgid "Browser"
 msgstr "דפדפן"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Bug"
 msgstr "באג"
 
@@ -2251,6 +2258,7 @@ msgid "Catch-all without a From address"
 msgstr "קליטת הכול בלי כתובת שולח"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "קטגוריה"
 
@@ -2414,6 +2422,7 @@ msgstr "בחר אזור"
 msgid "Choose a workspace"
 msgstr "בחר סביבת עבודה"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "בחר אחד מהרשימה, או נווט עם ↑ ↓ ופתח אותו עם Enter."
@@ -2449,6 +2458,7 @@ msgstr "ניקוי התשובה"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Clear the search"
 msgstr "ניקוי החיפוש"
@@ -3963,8 +3973,12 @@ msgstr "נכשל"
 msgid "feedback"
 msgstr "משוב"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "משוב"
@@ -3981,6 +3995,10 @@ msgstr "משוב ודיונים ביום"
 msgid "Feedback arrived"
 msgstr "משוב הגיע"
 
+#: src/features/conversation/actions.ts
+msgid "Feedback resolved"
+msgstr "Feedback resolved"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from a documentation page"
 msgstr "משוב שנשלח מדף תיעוד"
@@ -3988,6 +4006,10 @@ msgstr "משוב שנשלח מדף תיעוד"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "משוב שנשלח מהאפליקציה"
+
+#: src/app/Rail.tsx
+msgid "Feedback, {feedback} open"
+msgstr "Feedback, {feedback} open"
 
 #: src/features/migrations/Wizard.tsx
 msgid "File"
@@ -4593,6 +4615,7 @@ msgid "I'm back"
 msgstr "חזרתי"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Idea"
 msgstr "רעיון"
 
@@ -6373,6 +6396,10 @@ msgstr "עדיין אף אחד לא תייג אותך בהערה. כשחבר צ�
 msgid "No open conversations. New ones show up here and in the inbox as they arrive."
 msgstr "אין שיחות פתוחות. חדשות יופיעו כאן ובתיבת הדואר ברגע שיגיעו."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "No open feedback."
+msgstr "No open feedback."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "אף איש קשר אחר לא מתאים."
@@ -6727,6 +6754,10 @@ msgstr "שום דבר לא הולך לאיבוד: ברגע שנכנסים שוב
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "שום דבר לא הולך לאיבוד: כשזה ממשיך, ההעתקה נמשכת מהמקום שבו נעצרה."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Nothing is resolved yet."
+msgstr "Nothing is resolved yet."
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "שום דבר לא נדחה."
@@ -6740,6 +6771,7 @@ msgstr "שום דבר לא ממתין לאישור."
 msgid "Nothing matches these filters."
 msgstr "שום דבר לא מתאים למסננים האלה."
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "שום דבר לא מתאים לחיפוש שלך כאן."
@@ -7029,6 +7061,7 @@ msgstr "פתוחות"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Open"
@@ -7277,6 +7310,7 @@ msgid "Original"
 msgstr "מקורי"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Other"
 msgstr "אחר"
 
@@ -7577,6 +7611,10 @@ msgstr "בחר קודם עיצוב."
 msgid "Pick a design that renders without errors."
 msgstr "בחר עיצוב שמוצג בלי שגיאות."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Pick a piece of feedback"
+msgstr "Pick a piece of feedback"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "בחר שולח בהגדרות"
@@ -7757,6 +7795,7 @@ msgid "Posted by you and marked as the accepted answer."
 msgstr "פורסם על ידך וסומן כתשובה מאושרת."
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Praise"
 msgstr "שבח"
 
@@ -8332,6 +8371,10 @@ msgstr "תשובה ({mod}↵)"
 msgid "Reply account"
 msgstr "חשבון תשובות"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Reply and resolve"
+msgstr "Reply and resolve"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "התגובה פורסמה"
@@ -8410,6 +8453,19 @@ msgstr "השפעה על המוניטין"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
 msgstr "איפוס לברירות מחדל"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve"
+msgstr "Resolve"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve (E)"
+msgstr "Resolve (E)"
+
+#: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
+msgid "Resolved"
+msgstr "Resolved"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -8671,7 +8727,12 @@ msgstr "היקפים, תיבות דואר ותפוגה נשארים כפי שה�
 msgid "Screen"
 msgstr "מסך"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Screenshots attached"
+msgstr "Screenshots attached"
+
 #: src/app/Palette.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Search"
 msgstr "חיפוש"
@@ -8706,6 +8767,10 @@ msgstr "חיפוש אמוג׳י"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji (in English)"
 msgstr "חיפוש אמוג׳י (באנגלית)"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "Search feedback"
+msgstr "Search feedback"
 
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
@@ -9045,6 +9110,10 @@ msgstr "נשלח אל {first}"
 #: src/features/conversation/actions.ts
 msgid "Sent to {first} and closed"
 msgstr "נשלח אל {first} ונסגר"
+
+#: src/features/conversation/actions.ts
+msgid "Sent to {first} and resolved"
+msgstr "Sent to {first} and resolved"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent} of {limit} allowed. The day starts at 00:00 UTC."
@@ -9650,6 +9719,7 @@ msgstr "STARTTLS (פורט 587)"
 msgid "State"
 msgstr "מצב"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
@@ -11294,6 +11364,7 @@ msgstr "ביטול הצמדה"
 msgid "Unpinned"
 msgstr "ההצמדה בוטלה"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Unread"
 msgstr "לא נקראו"
@@ -11870,6 +11941,10 @@ msgstr "מתי זה צריך לחזור?"
 #: src/features/settings/notifications/events.ts
 msgid "When someone else assigns it to you."
 msgstr "כשמישהו אחר משייך אותה אליך."
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "When someone sends feedback, it will be in the list."
+msgstr "When someone sends feedback, it will be in the list."
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"

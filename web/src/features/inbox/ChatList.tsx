@@ -61,13 +61,13 @@ import { useLiveIds } from "@/features/conversation/liveness"
 import { Ticks } from "@/features/conversation/messages/MessageActions"
 import { currentRating, RatingMark } from "@/features/conversation/rating"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
+import { useListCursor } from "@/features/inbox/listCursor"
 import { ImportBanner } from "@/features/migrations/ImportBanner"
 import { InboxPicker } from "@/features/inbox/InboxPicker"
 import { useListActions } from "@/features/inbox/memberState"
 import { setListQuery, useListSearch } from "@/features/inbox/listSearch"
 import { SourceFilter, sourceFilters, useSourceFilter } from "@/features/inbox/SourceFilter"
 import { useBulkUpdateConversations, useConversations, useCounts } from "@/features/inbox/queries"
-import { useHotkeys } from "@/hooks/use-hotkeys"
 import { useIsPhone } from "@/hooks/use-media-query"
 import type { Contact, ConversationListItem } from "@/lib/api"
 import type { ConversationFilters } from "@/lib/keys"
@@ -83,10 +83,10 @@ const CHIPS: Chip[] = ["all", "unread", "mine", "unassigned", "snoozed", "done"]
 const chipFilters: Record<Chip, ConversationFilters> = {
   all: {},
   unread: {},
-  mine: { status: "open", assignee: "me" },
-  unassigned: { status: "open", assignee: "unassigned" },
-  snoozed: { status: "snoozed" },
-  done: { status: "closed" },
+  mine: { status: ["open"], assignee: "me" },
+  unassigned: { status: ["open"], assignee: "unassigned" },
+  snoozed: { status: ["snoozed"] },
+  done: { status: ["closed"] },
 }
 
 let remembered: Chip = "all"
@@ -325,8 +325,8 @@ function CleanupBanner({ onReview }: { onReview: (id: string) => void }) {
   const { t } = useLingui()
   const errorText = useErrorText()
   const [inboxId] = useInboxFilter()
-  const counts = useCounts().data
-  const spam = useConversations({ status: "open", spam: true }, !!counts?.spam)
+  const counts = useCounts(["conversation"]).data
+  const spam = useConversations({ status: ["open"], spam: true, kind: ["conversation"] }, !!counts?.spam)
   const bulk = useBulkUpdateConversations()
   const items = (spam.data?.pages.flatMap((p) => p.items) ?? []).filter((c) => !inboxId || c.inbox_id === inboxId)
   if (!counts?.spam || items.length === 0) return null
@@ -505,7 +505,6 @@ export function ChatList({
   const q = useDebounced(query.trim(), 250)
   const [inboxId] = useInboxFilter()
   const [chip, setChipState] = useState<Chip>(remembered)
-  const [cursorId, setCursorId] = useState<string | null>(null)
   const search = useRef<HTMLInputElement>(null)
   const scroller = useRef<HTMLDivElement>(null)
   const sentinel = useRef<HTMLDivElement>(null)
@@ -513,7 +512,13 @@ export function ChatList({
 
   const [source] = useSourceFilter()
   const narrowed = !!source.source || !!source.site
-  const filters = { ...chipFilters[chip], ...sourceFilters(source), inbox_id: inboxId || undefined, q: q || undefined }
+  const filters = {
+    kind: ["conversation" as const],
+    ...chipFilters[chip],
+    ...sourceFilters(source),
+    inbox_id: inboxId || undefined,
+    q: q || undefined,
+  }
   const list = useConversations(filters)
   const pinnedList = useConversations({ ...filters, pinned: true })
   const loaded = useMemo(() => list.data?.pages.flatMap((p) => p.items) ?? [], [list.data])
@@ -525,6 +530,7 @@ export function ChatList({
   const mainRows = loaded.filter((c) => !c.pinned_at && keep(c))
   const rows = [...pinnedRows, ...mainRows]
   const live = useLiveIds(rows.filter((c) => c.status !== "closed"))
+  const { cursorId, setCursorId, moveCursor, openCursor } = useListCursor(rows, currentId, onOpen, active, scroller)
 
   useEffect(() => {
     if (focus <= focused) return
@@ -554,43 +560,6 @@ export function ChatList({
     setCursorId(null)
     scroller.current?.scrollTo({ top: 0 })
   }
-
-  const reveal = (id: string) =>
-    requestAnimationFrame(() =>
-      scroller.current?.querySelector(`[data-conversation-id="${id}"]`)?.scrollIntoView({ block: "nearest" })
-    )
-  const index = (id: string | null) => (id ? rows.findIndex((c) => c.id === id) : -1)
-  const moveCursor = (d: 1 | -1) => {
-    if (rows.length === 0) return
-    const from = index(cursorId) >= 0 ? index(cursorId) : index(currentId)
-    const next = rows[Math.min(rows.length - 1, Math.max(0, from < 0 ? (d === 1 ? 0 : rows.length - 1) : from + d))]
-    setCursorId(next.id)
-    reveal(next.id)
-  }
-  const openCursor = () => {
-    const id = cursorId && index(cursorId) >= 0 ? cursorId : rows[0]?.id
-    if (!id) return
-    setCursorId(null)
-    onOpen(id)
-  }
-  const step = (d: 1 | -1) => {
-    if (rows.length === 0) return
-    const i = index(currentId)
-    const next = rows[Math.min(rows.length - 1, Math.max(0, i < 0 ? 0 : i + d))]
-    setCursorId(null)
-    onOpen(next.id)
-    reveal(next.id)
-  }
-  useHotkeys(
-    {
-      ArrowDown: () => moveCursor(1),
-      ArrowUp: () => moveCursor(-1),
-      Enter: () => cursorId && openCursor(),
-      [SHORTCUTS.next]: () => step(1),
-      [SHORTCUTS.previous]: () => step(-1),
-    },
-    active
-  )
 
   const labels: Record<Chip, string> = {
     all: t`All`,

@@ -127,6 +127,10 @@ msgid "{actor} closed the conversation"
 msgstr "{actor} কথোপকথন বন্ধ করেছেন"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this as resolved"
+msgstr "{actor} marked this as resolved"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} rated the conversation 👍"
 msgstr "{actor} কথোপকথনকে 👍 রেটিং দিয়েছেন"
 
@@ -1015,8 +1019,8 @@ msgid "A sign-in must come back within 10 minutes and works once. Sign in again.
 msgstr "সাইন-ইন 10 মিনিটের মধ্যে ফিরে আসতে হবে এবং একবারই কাজ করে। আবার সাইন ইন করুন।"
 
 #: src/features/inbox/SourceFilter.tsx
-msgid "A site shows the conversations and feedback sent from its pages."
-msgstr "একটি সাইট তার পেজ থেকে পাঠানো কথোপকথন ও ফিডব্যাক দেখায়।"
+msgid "A site shows the conversations sent from its pages."
+msgstr "A site shows the conversations sent from its pages."
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1293,6 +1297,7 @@ msgstr "ট্যাব ব্যাকগ্রাউন্ডে থাকল�
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -1598,6 +1603,7 @@ msgstr "উত্তর মুছে ফেলা হয়েছে"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Answered"
 msgstr "উত্তর দেওয়া হয়েছে"
 
@@ -2122,6 +2128,7 @@ msgid "Browser"
 msgstr "ব্রাউজার"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Bug"
 msgstr "বাগ"
 
@@ -2251,6 +2258,7 @@ msgid "Catch-all without a From address"
 msgstr "From ঠিকানা ছাড়া ক্যাচ-অল"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "বিভাগ"
 
@@ -2414,6 +2422,7 @@ msgstr "একটি অঞ্চল বেছে নিন"
 msgid "Choose a workspace"
 msgstr "একটি ওয়ার্কস্পেস বেছে নিন"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "তালিকা থেকে একটি বেছে নিন, বা ↑ ↓ দিয়ে সরান এবং Enter দিয়ে খুলুন।"
@@ -2449,6 +2458,7 @@ msgstr "উত্তর মুছে ফেলুন"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Clear the search"
 msgstr "অনুসন্ধান মুছে ফেলুন"
@@ -3963,8 +3973,12 @@ msgstr "ব্যর্থ হচ্ছে"
 msgid "feedback"
 msgstr "ফিডব্যাক"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "ফিডব্যাক"
@@ -3981,6 +3995,10 @@ msgstr "দৈনিক ফিডব্যাক ও আলোচনা"
 msgid "Feedback arrived"
 msgstr "ফিডব্যাক এসেছে"
 
+#: src/features/conversation/actions.ts
+msgid "Feedback resolved"
+msgstr "Feedback resolved"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from a documentation page"
 msgstr "ডকুমেন্টেশন পেজ থেকে পাঠানো ফিডব্যাক"
@@ -3988,6 +4006,10 @@ msgstr "ডকুমেন্টেশন পেজ থেকে পাঠান
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "অ্যাপ থেকে পাঠানো ফিডব্যাক"
+
+#: src/app/Rail.tsx
+msgid "Feedback, {feedback} open"
+msgstr "Feedback, {feedback} open"
 
 #: src/features/migrations/Wizard.tsx
 msgid "File"
@@ -4593,6 +4615,7 @@ msgid "I'm back"
 msgstr "আমি ফিরে এসেছি"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Idea"
 msgstr "আইডিয়া"
 
@@ -6373,6 +6396,10 @@ msgstr "এখনও কেউ নোটে আপনাকে উল্লে�
 msgid "No open conversations. New ones show up here and in the inbox as they arrive."
 msgstr "কোনো খোলা কথোপকথন নেই। নতুনগুলো আসামাত্র এখানে ও ইনবক্সে দেখা যাবে।"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "No open feedback."
+msgstr "No open feedback."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "আর কোনো কনট্যাক্ট মেলে না।"
@@ -6727,6 +6754,10 @@ msgstr "কিছু হারায় না: Microsoft দিয়ে আব
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "কিছু হারায় না: চালু হলে কপি যেখানে থেমেছিল সেখান থেকে এগোবে।"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Nothing is resolved yet."
+msgstr "Nothing is resolved yet."
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "কিছু স্নুজ করা নেই।"
@@ -6740,6 +6771,7 @@ msgstr "অনুমোদনের অপেক্ষায় কিছু ন
 msgid "Nothing matches these filters."
 msgstr "এই ফিল্টারের সঙ্গে কিছু মেলে না।"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "আপনার অনুসন্ধানের সঙ্গে এখানে কিছু মেলে না।"
@@ -7029,6 +7061,7 @@ msgstr "খোলা"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Open"
@@ -7277,6 +7310,7 @@ msgid "Original"
 msgstr "মূল"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Other"
 msgstr "অন্যান্য"
 
@@ -7577,6 +7611,10 @@ msgstr "আগে একটি ডিজাইন বেছে নিন।"
 msgid "Pick a design that renders without errors."
 msgstr "ত্রুটি ছাড়া রেন্ডার হয় এমন ডিজাইন বেছে নিন।"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Pick a piece of feedback"
+msgstr "Pick a piece of feedback"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "সেটিংসে একজন প্রেরক বেছে নিন"
@@ -7757,6 +7795,7 @@ msgid "Posted by you and marked as the accepted answer."
 msgstr "আপনি পোস্ট করেছেন এবং গৃহীত উত্তর হিসেবে চিহ্নিত করেছেন।"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Praise"
 msgstr "প্রশংসা"
 
@@ -8332,6 +8371,10 @@ msgstr "উত্তর দিন ({mod}↵)"
 msgid "Reply account"
 msgstr "উত্তরের অ্যাকাউন্ট"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Reply and resolve"
+msgstr "Reply and resolve"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "উত্তর পোস্ট করা হয়েছে"
@@ -8410,6 +8453,19 @@ msgstr "সুনামে প্রভাব"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
 msgstr "ডিফল্টে ফিরিয়ে দিন"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve"
+msgstr "Resolve"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve (E)"
+msgstr "Resolve (E)"
+
+#: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
+msgid "Resolved"
+msgstr "Resolved"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -8671,7 +8727,12 @@ msgstr "স্কোপ, ইনবক্স ও মেয়াদ যেমন 
 msgid "Screen"
 msgstr "স্ক্রিন"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Screenshots attached"
+msgstr "Screenshots attached"
+
 #: src/app/Palette.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Search"
 msgstr "অনুসন্ধান"
@@ -8706,6 +8767,10 @@ msgstr "ইমোজি অনুসন্ধান করুন"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji (in English)"
 msgstr "ইমোজি অনুসন্ধান করুন (ইংরেজিতে)"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "Search feedback"
+msgstr "Search feedback"
 
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
@@ -9045,6 +9110,10 @@ msgstr "{first}-কে পাঠানো হয়েছে"
 #: src/features/conversation/actions.ts
 msgid "Sent to {first} and closed"
 msgstr "{first}-কে পাঠানো ও বন্ধ করা হয়েছে"
+
+#: src/features/conversation/actions.ts
+msgid "Sent to {first} and resolved"
+msgstr "Sent to {first} and resolved"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent} of {limit} allowed. The day starts at 00:00 UTC."
@@ -9650,6 +9719,7 @@ msgstr "STARTTLS (পোর্ট 587)"
 msgid "State"
 msgstr "অবস্থা"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
@@ -11294,6 +11364,7 @@ msgstr "আনপিন করুন"
 msgid "Unpinned"
 msgstr "আনপিন করা হয়েছে"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Unread"
 msgstr "অপঠিত"
@@ -11870,6 +11941,10 @@ msgstr "এটি কখন ফিরে আসবে?"
 #: src/features/settings/notifications/events.ts
 msgid "When someone else assigns it to you."
 msgstr "যখন অন্য কেউ এটি আপনাকে অ্যাসাইন করে।"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "When someone sends feedback, it will be in the list."
+msgstr "When someone sends feedback, it will be in the list."
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"

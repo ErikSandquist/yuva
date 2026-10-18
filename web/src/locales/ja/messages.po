@@ -127,6 +127,10 @@ msgid "{actor} closed the conversation"
 msgstr "{actor} が会話を完了にしました"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this as resolved"
+msgstr "{actor} さんが解決済みにしました"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} rated the conversation 👍"
 msgstr "{actor} が会話を 👍 と評価しました"
 
@@ -1015,8 +1019,8 @@ msgid "A sign-in must come back within 10 minutes and works once. Sign in again.
 msgstr "サインインは 10 分以内に戻る必要があり、1 回のみ有効です。もう一度サインインしてください。"
 
 #: src/features/inbox/SourceFilter.tsx
-msgid "A site shows the conversations and feedback sent from its pages."
-msgstr "サイトには、そのページから送信された会話とフィードバックが表示されます。"
+msgid "A site shows the conversations sent from its pages."
+msgstr "サイトには、そのページから送信された会話が表示されます。"
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1293,6 +1297,7 @@ msgstr "タブがバックグラウンドのときに通知する"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -1598,6 +1603,7 @@ msgstr "回答を解除しました"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Answered"
 msgstr "回答済み"
 
@@ -2122,6 +2128,7 @@ msgid "Browser"
 msgstr "ブラウザー"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Bug"
 msgstr "バグ"
 
@@ -2251,6 +2258,7 @@ msgid "Catch-all without a From address"
 msgstr "From アドレスなしのキャッチオール"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "カテゴリ"
 
@@ -2414,6 +2422,7 @@ msgstr "リージョンを選択"
 msgid "Choose a workspace"
 msgstr "ワークスペースを選択"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "リストから選ぶか、↑ ↓ で移動して Enter で開きます。"
@@ -2449,6 +2458,7 @@ msgstr "回答を解除"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Clear the search"
 msgstr "検索をクリア"
@@ -3963,8 +3973,12 @@ msgstr "失敗中"
 msgid "feedback"
 msgstr "フィードバック"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "フィードバック"
@@ -3981,6 +3995,10 @@ msgstr "1 日あたりのフィードバックとディスカッション"
 msgid "Feedback arrived"
 msgstr "フィードバックが届きました"
 
+#: src/features/conversation/actions.ts
+msgid "Feedback resolved"
+msgstr "フィードバックを解決しました"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from a documentation page"
 msgstr "ドキュメントページから送られたフィードバック"
@@ -3988,6 +4006,10 @@ msgstr "ドキュメントページから送られたフィードバック"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "アプリから送られたフィードバック"
+
+#: src/app/Rail.tsx
+msgid "Feedback, {feedback} open"
+msgstr "フィードバック、未解決 {feedback} 件"
 
 #: src/features/migrations/Wizard.tsx
 msgid "File"
@@ -4593,6 +4615,7 @@ msgid "I'm back"
 msgstr "戻りました"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Idea"
 msgstr "アイデア"
 
@@ -6373,6 +6396,10 @@ msgstr "まだメモであなたにメンションした人はいません。チ
 msgid "No open conversations. New ones show up here and in the inbox as they arrive."
 msgstr "未完了の会話はありません。新しい会話は届き次第、ここと受信トレイに表示されます。"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "No open feedback."
+msgstr "未解決のフィードバックはありません。"
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "一致する他の連絡先はありません。"
@@ -6727,6 +6754,10 @@ msgstr "何も失われません。もう一度 Microsoft でサインインす�
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "何も失われません。再開すると、コピーは中断した場所から続きます。"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Nothing is resolved yet."
+msgstr "解決済みのものはまだありません。"
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "スヌーズ中のものはありません。"
@@ -6740,6 +6771,7 @@ msgstr "承認待ちのものはありません。"
 msgid "Nothing matches these filters."
 msgstr "これらの条件に一致するものはありません。"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "検索に一致するものはありません。"
@@ -7029,6 +7061,7 @@ msgstr "未完了"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Open"
@@ -7277,6 +7310,7 @@ msgid "Original"
 msgstr "元のメール"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Other"
 msgstr "その他"
 
@@ -7577,6 +7611,10 @@ msgstr "先にデザインを選択してください。"
 msgid "Pick a design that renders without errors."
 msgstr "エラーなくレンダリングされるデザインを選択してください。"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Pick a piece of feedback"
+msgstr "フィードバックを選択してください"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "設定で送信元を選択"
@@ -7757,6 +7795,7 @@ msgid "Posted by you and marked as the accepted answer."
 msgstr "あなたが投稿し、承認済みの回答としてマークされました。"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Praise"
 msgstr "称賛"
 
@@ -8332,6 +8371,10 @@ msgstr "返信({mod}↵)"
 msgid "Reply account"
 msgstr "返信用アカウント"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Reply and resolve"
+msgstr "返信して解決"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "返信を投稿しました"
@@ -8410,6 +8453,19 @@ msgstr "評価への影響"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
 msgstr "デフォルトに戻す"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve"
+msgstr "解決にする"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve (E)"
+msgstr "解決にする (E)"
+
+#: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
+msgid "Resolved"
+msgstr "解決済み"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -8671,7 +8727,12 @@ msgstr "スコープ、受信トレイ、有効期限はそのままです。変
 msgid "Screen"
 msgstr "画面"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Screenshots attached"
+msgstr "スクリーンショットあり"
+
 #: src/app/Palette.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Search"
 msgstr "検索"
@@ -8706,6 +8767,10 @@ msgstr "絵文字を検索"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji (in English)"
 msgstr "絵文字を検索(英語)"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "Search feedback"
+msgstr "フィードバックを検索"
 
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
@@ -9045,6 +9110,10 @@ msgstr "{first} に送信"
 #: src/features/conversation/actions.ts
 msgid "Sent to {first} and closed"
 msgstr "{first} に送信して完了"
+
+#: src/features/conversation/actions.ts
+msgid "Sent to {first} and resolved"
+msgstr "{first} さんに送信して解決しました"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent} of {limit} allowed. The day starts at 00:00 UTC."
@@ -9650,6 +9719,7 @@ msgstr "STARTTLS(ポート 587)"
 msgid "State"
 msgstr "状態"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
@@ -11294,6 +11364,7 @@ msgstr "固定を解除"
 msgid "Unpinned"
 msgstr "固定を解除しました"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Unread"
 msgstr "未読"
@@ -11870,6 +11941,10 @@ msgstr "いつ戻しますか?"
 #: src/features/settings/notifications/events.ts
 msgid "When someone else assigns it to you."
 msgstr "他の人があなたに割り当てたとき。"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "When someone sends feedback, it will be in the list."
+msgstr "フィードバックが送信されると、ここに表示されます。"
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"

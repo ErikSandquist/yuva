@@ -127,6 +127,10 @@ msgid "{actor} closed the conversation"
 msgstr "{actor} உரையாடலை மூடினார்"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this as resolved"
+msgstr "{actor} marked this as resolved"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} rated the conversation 👍"
 msgstr "{actor} உரையாடலுக்கு 👍 மதிப்பிட்டார்"
 
@@ -1015,8 +1019,8 @@ msgid "A sign-in must come back within 10 minutes and works once. Sign in again.
 msgstr "உள்நுழைவு 10 நிமிடங்களுக்குள் திரும்ப வேண்டும்; அது ஒருமுறை மட்டுமே வேலை செய்யும். மீண்டும் உள்நுழையுங்கள்."
 
 #: src/features/inbox/SourceFilter.tsx
-msgid "A site shows the conversations and feedback sent from its pages."
-msgstr "ஒரு தளம், அதன் பக்கங்களிலிருந்து அனுப்பப்பட்ட உரையாடல்களையும் கருத்துகளையும் காட்டுகிறது."
+msgid "A site shows the conversations sent from its pages."
+msgstr "A site shows the conversations sent from its pages."
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1293,6 +1297,7 @@ msgstr "தாவல் பின்னணியில் இருக்கு�
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -1598,6 +1603,7 @@ msgstr "பதில் அழிக்கப்பட்டது"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Answered"
 msgstr "பதிலளிக்கப்பட்டது"
 
@@ -2122,6 +2128,7 @@ msgid "Browser"
 msgstr "உலாவி"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Bug"
 msgstr "பிழை"
 
@@ -2251,6 +2258,7 @@ msgid "Catch-all without a From address"
 msgstr "From முகவரி இல்லாத அனைத்தும் பிடிப்பான்"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "வகை"
 
@@ -2414,6 +2422,7 @@ msgstr "பிராந்தியத்தைத் தேர்ந்தெ�
 msgid "Choose a workspace"
 msgstr "பணியிடத்தைத் தேர்ந்தெடுங்கள்"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "பட்டியலிலிருந்து ஒன்றைத் தேர்ந்தெடுங்கள், அல்லது ↑ ↓ மூலம் நகர்ந்து Enter மூலம் திறவுங்கள்."
@@ -2449,6 +2458,7 @@ msgstr "பதிலை அழி"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Clear the search"
 msgstr "தேடலை அழி"
@@ -3963,8 +3973,12 @@ msgstr "தோல்வியடைகிறது"
 msgid "feedback"
 msgstr "கருத்து"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "கருத்து"
@@ -3981,6 +3995,10 @@ msgstr "நாளுக்கு கருத்துகளும் விவ�
 msgid "Feedback arrived"
 msgstr "கருத்து வந்தது"
 
+#: src/features/conversation/actions.ts
+msgid "Feedback resolved"
+msgstr "Feedback resolved"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from a documentation page"
 msgstr "ஆவணப் பக்கத்திலிருந்து அனுப்பப்பட்ட கருத்து"
@@ -3988,6 +4006,10 @@ msgstr "ஆவணப் பக்கத்திலிருந்து அன�
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "ஆப்பிலிருந்து அனுப்பப்பட்ட கருத்து"
+
+#: src/app/Rail.tsx
+msgid "Feedback, {feedback} open"
+msgstr "Feedback, {feedback} open"
 
 #: src/features/migrations/Wizard.tsx
 msgid "File"
@@ -4593,6 +4615,7 @@ msgid "I'm back"
 msgstr "நான் திரும்பிவிட்டேன்"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Idea"
 msgstr "யோசனை"
 
@@ -6373,6 +6396,10 @@ msgstr "இன்னும் யாரும் குறிப்பில் 
 msgid "No open conversations. New ones show up here and in the inbox as they arrive."
 msgstr "திறந்த உரையாடல்கள் இல்லை. புதியவை வரும்போது இங்கும் இன்பாக்ஸிலும் தோன்றும்."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "No open feedback."
+msgstr "No open feedback."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "வேறு தொடர்பு பொருந்தவில்லை."
@@ -6727,6 +6754,10 @@ msgstr "எதுவும் இழக்கப்படாது: நீங்
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "எதுவும் இழக்கப்படாது: அது தொடரும்போது, நகலெடுப்பு நின்ற இடத்திலிருந்து தொடரும்."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Nothing is resolved yet."
+msgstr "Nothing is resolved yet."
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "எதுவும் உறக்கநிலையில் இல்லை."
@@ -6740,6 +6771,7 @@ msgstr "எதுவும் ஒப்புதலுக்காகக் க�
 msgid "Nothing matches these filters."
 msgstr "இந்த வடிப்பான்களுடன் எதுவும் பொருந்தவில்லை."
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "இங்கே உங்கள் தேடலுடன் எதுவும் பொருந்தவில்லை."
@@ -7029,6 +7061,7 @@ msgstr "திறந்தவை"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Open"
@@ -7277,6 +7310,7 @@ msgid "Original"
 msgstr "அசல்"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Other"
 msgstr "பிற"
 
@@ -7577,6 +7611,10 @@ msgstr "முதலில் ஒரு வடிவமைப்பைத் த
 msgid "Pick a design that renders without errors."
 msgstr "பிழையின்றி வழங்கப்படும் வடிவமைப்பைத் தேர்ந்தெடுங்கள்."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Pick a piece of feedback"
+msgstr "Pick a piece of feedback"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "அமைப்புகளில் ஓர் அனுப்புநரைத் தேர்ந்தெடுங்கள்"
@@ -7757,6 +7795,7 @@ msgid "Posted by you and marked as the accepted answer."
 msgstr "நீங்கள் இடுகையிட்டு ஏற்கப்பட்ட பதில் எனக் குறித்தது."
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Praise"
 msgstr "பாராட்டு"
 
@@ -8332,6 +8371,10 @@ msgstr "பதிலளி ({mod}↵)"
 msgid "Reply account"
 msgstr "பதில் கணக்கு"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Reply and resolve"
+msgstr "Reply and resolve"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "பதில் இடுகையிடப்பட்டது"
@@ -8410,6 +8453,19 @@ msgstr "நற்பெயர் மீதான தாக்கம்"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
 msgstr "இயல்புநிலைக்கு மீட்டமை"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve"
+msgstr "Resolve"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve (E)"
+msgstr "Resolve (E)"
+
+#: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
+msgid "Resolved"
+msgstr "Resolved"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -8671,7 +8727,12 @@ msgstr "நோக்கெல்லைகள், இன்பாக்ஸ்க�
 msgid "Screen"
 msgstr "திரை"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Screenshots attached"
+msgstr "Screenshots attached"
+
 #: src/app/Palette.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Search"
 msgstr "தேடு"
@@ -8706,6 +8767,10 @@ msgstr "ஈமோஜியைத் தேடு"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji (in English)"
 msgstr "ஈமோஜியைத் தேடு (ஆங்கிலத்தில்)"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "Search feedback"
+msgstr "Search feedback"
 
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
@@ -9045,6 +9110,10 @@ msgstr "{first}-க்கு அனுப்பப்பட்டது"
 #: src/features/conversation/actions.ts
 msgid "Sent to {first} and closed"
 msgstr "{first}-க்கு அனுப்பி மூடப்பட்டது"
+
+#: src/features/conversation/actions.ts
+msgid "Sent to {first} and resolved"
+msgstr "Sent to {first} and resolved"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent} of {limit} allowed. The day starts at 00:00 UTC."
@@ -9650,6 +9719,7 @@ msgstr "STARTTLS (போர்ட் 587)"
 msgid "State"
 msgstr "நிலை"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
@@ -11294,6 +11364,7 @@ msgstr "பொருத்தலை நீக்கு"
 msgid "Unpinned"
 msgstr "பொருத்தல் நீக்கப்பட்டது"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Unread"
 msgstr "படிக்காதவை"
@@ -11870,6 +11941,10 @@ msgstr "அது எப்போது திரும்ப வேண்டு
 #: src/features/settings/notifications/events.ts
 msgid "When someone else assigns it to you."
 msgstr "வேறு யாராவது அதை உங்களுக்கு ஒதுக்கும்போது."
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "When someone sends feedback, it will be in the list."
+msgstr "When someone sends feedback, it will be in the list."
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"

@@ -127,6 +127,10 @@ msgid "{actor} closed the conversation"
 msgstr "Ο/Η {actor} έκλεισε τη συνομιλία"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this as resolved"
+msgstr "Ο/Η {actor} το σημείωσε ως επιλυμένο"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} rated the conversation 👍"
 msgstr "Ο/Η {actor} βαθμολόγησε τη συνομιλία 👍"
 
@@ -1015,8 +1019,8 @@ msgid "A sign-in must come back within 10 minutes and works once. Sign in again.
 msgstr "Μια σύνδεση πρέπει να επιστρέψει εντός 10 λεπτών και λειτουργεί μία φορά. Συνδεθείτε ξανά."
 
 #: src/features/inbox/SourceFilter.tsx
-msgid "A site shows the conversations and feedback sent from its pages."
-msgstr "Ένας ιστότοπος εμφανίζει τις συνομιλίες και τα σχόλια που στάλθηκαν από τις σελίδες του."
+msgid "A site shows the conversations sent from its pages."
+msgstr "Ένας ιστότοπος εμφανίζει τις συζητήσεις που στάλθηκαν από τις σελίδες του."
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1293,6 +1297,7 @@ msgstr "Ειδοποίησέ με όσο η καρτέλα είναι στο π�
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -1598,6 +1603,7 @@ msgstr "Η απάντηση διαγράφηκε"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Answered"
 msgstr "Απαντήθηκε"
 
@@ -2122,6 +2128,7 @@ msgid "Browser"
 msgstr "Πρόγραμμα περιήγησης"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Bug"
 msgstr "Σφάλμα"
 
@@ -2251,6 +2258,7 @@ msgid "Catch-all without a From address"
 msgstr "Catch-all χωρίς διεύθυνση From"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "Κατηγορία"
 
@@ -2414,6 +2422,7 @@ msgstr "Επιλέξτε περιοχή"
 msgid "Choose a workspace"
 msgstr "Επιλέξτε χώρο εργασίας"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "Επιλέξτε από τη λίστα ή μετακινηθείτε με ↑ ↓ και ανοίξτε με Enter."
@@ -2449,6 +2458,7 @@ msgstr "Διαγραφή της απάντησης"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Clear the search"
 msgstr "Εκκαθάριση της αναζήτησης"
@@ -3963,8 +3973,12 @@ msgstr "Αποτυγχάνει"
 msgid "feedback"
 msgstr "σχόλια"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "Σχόλια"
@@ -3981,6 +3995,10 @@ msgstr "Σχόλια και συζητήσεις ανά ημέρα"
 msgid "Feedback arrived"
 msgstr "Έφτασε σχόλιο"
 
+#: src/features/conversation/actions.ts
+msgid "Feedback resolved"
+msgstr "Το σχόλιο επιλύθηκε"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from a documentation page"
 msgstr "Σχόλια που στάλθηκαν από σελίδα τεκμηρίωσης"
@@ -3988,6 +4006,10 @@ msgstr "Σχόλια που στάλθηκαν από σελίδα τεκμηρ�
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "Σχόλια που στάλθηκαν από την εφαρμογή"
+
+#: src/app/Rail.tsx
+msgid "Feedback, {feedback} open"
+msgstr "Σχόλια, {feedback} ανοιχτά"
 
 #: src/features/migrations/Wizard.tsx
 msgid "File"
@@ -4593,6 +4615,7 @@ msgid "I'm back"
 msgstr "Επέστρεψα"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Idea"
 msgstr "Ιδέα"
 
@@ -6373,6 +6396,10 @@ msgstr "Κανείς δεν σας έχει αναφέρει ακόμη σε σ�
 msgid "No open conversations. New ones show up here and in the inbox as they arrive."
 msgstr "Δεν υπάρχουν ανοιχτές συνομιλίες. Οι νέες εμφανίζονται εδώ και στα εισερχόμενα μόλις φτάσουν."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "No open feedback."
+msgstr "Δεν υπάρχουν ανοιχτά σχόλια."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Καμία άλλη επαφή δεν ταιριάζει."
@@ -6727,6 +6754,10 @@ msgstr "Δεν χάνεται τίποτα: μόλις συνδεθείτε ξα
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Δεν χάνεται τίποτα: όταν συνεχιστεί, η αντιγραφή ξαναρχίζει από εκεί που σταμάτησε."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Nothing is resolved yet."
+msgstr "Τίποτα δεν έχει επιλυθεί ακόμη."
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "Δεν έχει αναβληθεί τίποτα."
@@ -6740,6 +6771,7 @@ msgstr "Τίποτα δεν περιμένει έγκριση."
 msgid "Nothing matches these filters."
 msgstr "Τίποτα δεν ταιριάζει με αυτά τα φίλτρα."
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "Τίποτα δεν ταιριάζει με την αναζήτησή σας εδώ."
@@ -7029,6 +7061,7 @@ msgstr "ανοιχτές"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Open"
@@ -7277,6 +7310,7 @@ msgid "Original"
 msgstr "Πρωτότυπο"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Other"
 msgstr "Άλλο"
 
@@ -7577,6 +7611,10 @@ msgstr "Επιλέξτε πρώτα σχέδιο."
 msgid "Pick a design that renders without errors."
 msgstr "Επιλέξτε σχέδιο που αποδίδεται χωρίς σφάλματα."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Pick a piece of feedback"
+msgstr "Επιλέξτε ένα σχόλιο"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "Επιλέξτε αποστολέα στις ρυθμίσεις"
@@ -7757,6 +7795,7 @@ msgid "Posted by you and marked as the accepted answer."
 msgstr "Αναρτήθηκε από εσάς και σημάνθηκε ως η αποδεκτή απάντηση."
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Praise"
 msgstr "Έπαινος"
 
@@ -8332,6 +8371,10 @@ msgstr "Απάντηση ({mod}↵)"
 msgid "Reply account"
 msgstr "Λογαριασμός απαντήσεων"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Reply and resolve"
+msgstr "Απάντηση και επίλυση"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "Η απάντηση αναρτήθηκε"
@@ -8410,6 +8453,19 @@ msgstr "Επίπτωση στη φήμη"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
 msgstr "Επαναφορά στις προεπιλογές"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve"
+msgstr "Επίλυση"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve (E)"
+msgstr "Επίλυση (E)"
+
+#: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
+msgid "Resolved"
+msgstr "Επιλύθηκε"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -8671,7 +8727,12 @@ msgstr "Τα εύρη πρόσβασης, τα εισερχόμενα και η 
 msgid "Screen"
 msgstr "Οθόνη"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Screenshots attached"
+msgstr "Συνημμένα στιγμιότυπα οθόνης"
+
 #: src/app/Palette.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Search"
 msgstr "Αναζήτηση"
@@ -8706,6 +8767,10 @@ msgstr "Αναζήτηση emoji"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji (in English)"
 msgstr "Αναζήτηση emoji (στα αγγλικά)"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "Search feedback"
+msgstr "Αναζήτηση σχολίων"
 
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
@@ -9045,6 +9110,10 @@ msgstr "Στάλθηκε στον/στην {first}"
 #: src/features/conversation/actions.ts
 msgid "Sent to {first} and closed"
 msgstr "Στάλθηκε στον/στην {first} και έκλεισε"
+
+#: src/features/conversation/actions.ts
+msgid "Sent to {first} and resolved"
+msgstr "Στάλθηκε στον/στην {first} και επιλύθηκε"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent} of {limit} allowed. The day starts at 00:00 UTC."
@@ -9650,6 +9719,7 @@ msgstr "STARTTLS (θύρα 587)"
 msgid "State"
 msgstr "Κατάσταση"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
@@ -11294,6 +11364,7 @@ msgstr "Ξεκαρφίτσωμα"
 msgid "Unpinned"
 msgstr "Ξεκαρφιτσώθηκε"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Unread"
 msgstr "Αδιάβαστα"
@@ -11870,6 +11941,10 @@ msgstr "Πότε να επιστρέψει;"
 #: src/features/settings/notifications/events.ts
 msgid "When someone else assigns it to you."
 msgstr "Όταν σας το αναθέσει κάποιος άλλος."
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "When someone sends feedback, it will be in the list."
+msgstr "Όταν κάποιος στείλει σχόλιο, θα εμφανιστεί στη λίστα."
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"

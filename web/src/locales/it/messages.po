@@ -127,6 +127,10 @@ msgid "{actor} closed the conversation"
 msgstr "{actor} ha chiuso la conversazione"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this as resolved"
+msgstr "{actor} lo ha segnato come risolto"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} rated the conversation 👍"
 msgstr "{actor} ha valutato la conversazione 👍"
 
@@ -1015,8 +1019,8 @@ msgid "A sign-in must come back within 10 minutes and works once. Sign in again.
 msgstr "Un accesso deve tornare entro 10 minuti e funziona una sola volta. Accedi di nuovo."
 
 #: src/features/inbox/SourceFilter.tsx
-msgid "A site shows the conversations and feedback sent from its pages."
-msgstr "Un sito mostra le conversazioni e i feedback inviati dalle sue pagine."
+msgid "A site shows the conversations sent from its pages."
+msgstr "Un sito mostra le conversazioni inviate dalle sue pagine."
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1293,6 +1297,7 @@ msgstr "Avvisami mentre la scheda è in secondo piano"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -1598,6 +1603,7 @@ msgstr "Risposta rimossa"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Answered"
 msgstr "Con risposta"
 
@@ -2122,6 +2128,7 @@ msgid "Browser"
 msgstr "Browser"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Bug"
 msgstr "Bug"
 
@@ -2251,6 +2258,7 @@ msgid "Catch-all without a From address"
 msgstr "Catch-all senza indirizzo mittente"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "Categoria"
 
@@ -2414,6 +2422,7 @@ msgstr "Scegli una regione"
 msgid "Choose a workspace"
 msgstr "Scegli uno spazio di lavoro"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "Scegline uno dalla lista, oppure spostati con ↑ ↓ e aprilo con Invio."
@@ -2449,6 +2458,7 @@ msgstr "Cancella la risposta"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Clear the search"
 msgstr "Cancella la ricerca"
@@ -3963,8 +3973,12 @@ msgstr "In errore"
 msgid "feedback"
 msgstr "feedback"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "Feedback"
@@ -3981,6 +3995,10 @@ msgstr "Feedback e discussioni al giorno"
 msgid "Feedback arrived"
 msgstr "È arrivato un feedback"
 
+#: src/features/conversation/actions.ts
+msgid "Feedback resolved"
+msgstr "Feedback risolto"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from a documentation page"
 msgstr "Feedback inviato da una pagina di documentazione"
@@ -3988,6 +4006,10 @@ msgstr "Feedback inviato da una pagina di documentazione"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "Feedback inviato dall’app"
+
+#: src/app/Rail.tsx
+msgid "Feedback, {feedback} open"
+msgstr "Feedback, {feedback} aperti"
 
 #: src/features/migrations/Wizard.tsx
 msgid "File"
@@ -4593,6 +4615,7 @@ msgid "I'm back"
 msgstr "Sono tornato"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Idea"
 msgstr "Idea"
 
@@ -6373,6 +6396,10 @@ msgstr "Nessuno ti ha ancora menzionato in una nota. Quando un collega scrive @ 
 msgid "No open conversations. New ones show up here and in the inbox as they arrive."
 msgstr "Nessuna conversazione aperta. Le nuove compaiono qui e nella casella appena arrivano."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "No open feedback."
+msgstr "Nessun feedback aperto."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Nessun altro contatto corrisponde."
@@ -6727,6 +6754,10 @@ msgstr "Non si perde nulla: appena accedi di nuovo con Microsoft, la copia ripre
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Non si perde nulla: quando riprende, la copia riparte da dove si era fermata."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Nothing is resolved yet."
+msgstr "Ancora niente di risolto."
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "Nulla è posticipato."
@@ -6740,6 +6771,7 @@ msgstr "Nulla è in attesa di approvazione."
 msgid "Nothing matches these filters."
 msgstr "Nulla corrisponde a questi filtri."
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "Nulla corrisponde alla tua ricerca qui."
@@ -7029,6 +7061,7 @@ msgstr "aperte"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Open"
@@ -7277,6 +7310,7 @@ msgid "Original"
 msgstr "Originale"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Other"
 msgstr "Altro"
 
@@ -7577,6 +7611,10 @@ msgstr "Scegli prima un design."
 msgid "Pick a design that renders without errors."
 msgstr "Scegli un design che si visualizzi senza errori."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Pick a piece of feedback"
+msgstr "Scegli un feedback"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "Scegli un mittente nelle impostazioni"
@@ -7757,6 +7795,7 @@ msgid "Posted by you and marked as the accepted answer."
 msgstr "Pubblicata da te e segnata come risposta accettata."
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Praise"
 msgstr "Elogio"
 
@@ -8332,6 +8371,10 @@ msgstr "Rispondi ({mod}↵)"
 msgid "Reply account"
 msgstr "Account per le risposte"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Reply and resolve"
+msgstr "Rispondi e risolvi"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "Risposta pubblicata"
@@ -8410,6 +8453,19 @@ msgstr "Impatto sulla reputazione"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
 msgstr "Ripristina i valori predefiniti"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve"
+msgstr "Risolvi"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve (E)"
+msgstr "Risolvi (E)"
+
+#: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
+msgid "Resolved"
+msgstr "Risolto"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -8671,7 +8727,12 @@ msgstr "Scope, caselle e scadenza restano come sono. Per altri, crea una nuova c
 msgid "Screen"
 msgstr "Schermata"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Screenshots attached"
+msgstr "Screenshot allegati"
+
 #: src/app/Palette.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Search"
 msgstr "Cerca"
@@ -8706,6 +8767,10 @@ msgstr "Cerca emoji"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji (in English)"
 msgstr "Cerca emoji (in inglese)"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "Search feedback"
+msgstr "Cerca nei feedback"
 
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
@@ -9045,6 +9110,10 @@ msgstr "Inviato a {first}"
 #: src/features/conversation/actions.ts
 msgid "Sent to {first} and closed"
 msgstr "Inviato a {first} e chiuso"
+
+#: src/features/conversation/actions.ts
+msgid "Sent to {first} and resolved"
+msgstr "Inviato a {first} e risolto"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent} of {limit} allowed. The day starts at 00:00 UTC."
@@ -9650,6 +9719,7 @@ msgstr "STARTTLS (porta 587)"
 msgid "State"
 msgstr "Stato"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
@@ -11294,6 +11364,7 @@ msgstr "Rimuovi dall’alto"
 msgid "Unpinned"
 msgstr "Rimossa dall’alto"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Unread"
 msgstr "Da leggere"
@@ -11870,6 +11941,10 @@ msgstr "Quando deve tornare?"
 #: src/features/settings/notifications/events.ts
 msgid "When someone else assigns it to you."
 msgstr "Quando qualcun altro te la assegna."
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "When someone sends feedback, it will be in the list."
+msgstr "Quando qualcuno invia un feedback, comparirà nell'elenco."
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"

@@ -58,7 +58,7 @@ export function History({
             <span className="mb-1.5 flex items-baseline gap-2">
               <b className="min-w-0 truncate font-medium text-foreground">{o.subject || <Trans>No subject</Trans>}</b>
               <span className="ms-auto shrink-0 text-caption text-faint">
-                {date} · {text.status[o.status]}
+                {date} · {text.statusOf(o.status, o.kind)}
               </span>
             </span>
             {o.last_message && (

@@ -127,6 +127,10 @@ msgid "{actor} closed the conversation"
 msgstr "{actor} sulki keskustelun"
 
 #: src/features/conversation/messages/EventLine.tsx
+msgid "{actor} marked this as resolved"
+msgstr "{actor} merkitsi tämän ratkaistuksi"
+
+#: src/features/conversation/messages/EventLine.tsx
 msgid "{actor} rated the conversation 👍"
 msgstr "{actor} arvioi keskustelun 👍"
 
@@ -1015,8 +1019,8 @@ msgid "A sign-in must come back within 10 minutes and works once. Sign in again.
 msgstr "Kirjautumisen on palattava 10 minuutissa ja se toimii kerran. Kirjaudu uudelleen."
 
 #: src/features/inbox/SourceFilter.tsx
-msgid "A site shows the conversations and feedback sent from its pages."
-msgstr "Sivusto näyttää sen sivuilta lähetetyt keskustelut ja palautteen."
+msgid "A site shows the conversations sent from its pages."
+msgstr "Sivusto näyttää sen sivuilta lähetetyt keskustelut."
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1293,6 +1297,7 @@ msgstr "Hälytä, kun välilehti on taustalla"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -1598,6 +1603,7 @@ msgstr "Vastaus tyhjennetty"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Answered"
 msgstr "Vastattu"
 
@@ -2122,6 +2128,7 @@ msgid "Browser"
 msgstr "Selain"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Bug"
 msgstr "Virhe"
 
@@ -2251,6 +2258,7 @@ msgid "Catch-all without a From address"
 msgstr "Kaikki vastaanottava osoite ilman Lähettäjä-osoitetta"
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackList.tsx
 msgid "Category"
 msgstr "Luokka"
 
@@ -2414,6 +2422,7 @@ msgstr "Valitse alue"
 msgid "Choose a workspace"
 msgstr "Valitse työtila"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatsPage.tsx
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "Valitse luettelosta tai liiku painikkeilla ↑ ↓ ja avaa Enterillä."
@@ -2449,6 +2458,7 @@ msgstr "Tyhjennä vastaus"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Clear the search"
 msgstr "Tyhjennä haku"
@@ -3963,8 +3973,12 @@ msgstr "Epäonnistuu"
 msgid "feedback"
 msgstr "palaute"
 
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "Palaute"
@@ -3981,6 +3995,10 @@ msgstr "Palaute ja keskustelut päivittäin"
 msgid "Feedback arrived"
 msgstr "Palaute saapui"
 
+#: src/features/conversation/actions.ts
+msgid "Feedback resolved"
+msgstr "Palaute ratkaistu"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from a documentation page"
 msgstr "Dokumentaatiosivulta lähetetty palaute"
@@ -3988,6 +4006,10 @@ msgstr "Dokumentaatiosivulta lähetetty palaute"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "Sovelluksesta lähetetty palaute"
+
+#: src/app/Rail.tsx
+msgid "Feedback, {feedback} open"
+msgstr "Palaute, {feedback} avointa"
 
 #: src/features/migrations/Wizard.tsx
 msgid "File"
@@ -4593,6 +4615,7 @@ msgid "I'm back"
 msgstr "Olen takaisin"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Idea"
 msgstr "Idea"
 
@@ -6373,6 +6396,10 @@ msgstr "Kukaan ei ole vielä maininnut sinua muistiinpanossa. Kun tiimiläinen k
 msgid "No open conversations. New ones show up here and in the inbox as they arrive."
 msgstr "Ei avoimia keskusteluja. Uudet näkyvät tässä ja postilaatikossa niiden saapuessa."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "No open feedback."
+msgstr "Ei avointa palautetta."
+
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Mikään muu kontakti ei täsmää."
@@ -6727,6 +6754,10 @@ msgstr "Mitään ei katoa: kun kirjaudut Microsoftilla uudelleen, kopiointi jatk
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Mitään ei katoa: kun se jatkuu, kopiointi jatkuu siitä, mihin se jäi."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Nothing is resolved yet."
+msgstr "Mitään ei ole vielä ratkaistu."
+
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "Mitään ei ole torkulla."
@@ -6740,6 +6771,7 @@ msgstr "Mikään ei odota hyväksyntää."
 msgid "Nothing matches these filters."
 msgstr "Mikään ei vastaa näitä suodattimia."
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "Mikään ei vastaa hakuasi täällä."
@@ -7029,6 +7061,7 @@ msgstr "avoin"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Open"
@@ -7277,6 +7310,7 @@ msgid "Original"
 msgstr "Alkuperäinen"
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Other"
 msgstr "Muu"
 
@@ -7577,6 +7611,10 @@ msgstr "Valitse ensin ulkoasu."
 msgid "Pick a design that renders without errors."
 msgstr "Valitse ulkoasu, joka renderöityy ilman virheitä."
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Pick a piece of feedback"
+msgstr "Valitse palaute"
+
 #: src/features/broadcasts/ListPage.tsx
 msgid "Pick a sender in the settings"
 msgstr "Valitse lähettäjä asetuksissa"
@@ -7757,6 +7795,7 @@ msgid "Posted by you and marked as the accepted answer."
 msgstr "Julkaisit sen ja se on merkitty hyväksytyksi vastaukseksi."
 
 #: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
 msgid "Praise"
 msgstr "Kehu"
 
@@ -8332,6 +8371,10 @@ msgstr "Vastaa ({mod}↵)"
 msgid "Reply account"
 msgstr "Vastaustili"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Reply and resolve"
+msgstr "Vastaa ja ratkaise"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply posted"
 msgstr "Vastaus julkaistu"
@@ -8410,6 +8453,19 @@ msgstr "Vaikutus maineeseen"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Reset to defaults"
 msgstr "Palauta oletukset"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve"
+msgstr "Ratkaise"
+
+#: src/features/conversation/HeaderActions.tsx
+msgid "Resolve (E)"
+msgstr "Ratkaise (E)"
+
+#: src/components/common/text.ts
+#: src/features/feedback/FeedbackList.tsx
+msgid "Resolved"
+msgstr "Ratkaistu"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Restore"
@@ -8671,7 +8727,12 @@ msgstr "Scopet, postilaatikot ja vanheneminen pysyvät ennallaan. Muita varten l
 msgid "Screen"
 msgstr "Näyttö"
 
+#: src/features/feedback/FeedbackList.tsx
+msgid "Screenshots attached"
+msgstr "Kuvakaappauksia liitetty"
+
 #: src/app/Palette.tsx
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Search"
 msgstr "Haku"
@@ -8706,6 +8767,10 @@ msgstr "Hae emojia"
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji (in English)"
 msgstr "Hae emojia (englanniksi)"
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "Search feedback"
+msgstr "Hae palautteesta"
 
 #: src/features/conversation/ChatView.tsx
 msgid "Search in the loaded messages"
@@ -9045,6 +9110,10 @@ msgstr "Lähetetty henkilölle {first}"
 #: src/features/conversation/actions.ts
 msgid "Sent to {first} and closed"
 msgstr "Lähetetty henkilölle {first} ja suljettu"
+
+#: src/features/conversation/actions.ts
+msgid "Sent to {first} and resolved"
+msgstr "Lähetetty henkilölle {first} ja ratkaistu"
 
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent} of {limit} allowed. The day starts at 00:00 UTC."
@@ -9650,6 +9719,7 @@ msgstr "STARTTLS (portti 587)"
 msgid "State"
 msgstr "Tila"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
@@ -11294,6 +11364,7 @@ msgstr "Irrota"
 msgid "Unpinned"
 msgstr "Irrotettu"
 
+#: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Unread"
 msgstr "Lukematon"
@@ -11870,6 +11941,10 @@ msgstr "Milloin sen pitäisi palata?"
 #: src/features/settings/notifications/events.ts
 msgid "When someone else assigns it to you."
 msgstr "Kun joku muu osoittaa sen sinulle."
+
+#: src/features/feedback/FeedbackList.tsx
+msgid "When someone sends feedback, it will be in the list."
+msgstr "Kun joku lähettää palautetta, se näkyy luettelossa."
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"
