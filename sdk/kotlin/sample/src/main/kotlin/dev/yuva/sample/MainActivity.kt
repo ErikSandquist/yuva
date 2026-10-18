@@ -52,6 +52,7 @@ import dev.yuva.YuvaSubscription
 import dev.yuva.YuvaSubscriptionState
 import dev.yuva.YuvaUpload
 import dev.yuva.analytics.TrackScreen
+import dev.yuva.ui.YuvaConversationsSection
 import dev.yuva.ui.YuvaConversationsView
 import dev.yuva.ui.YuvaFeedbackView
 import java.net.URL
@@ -151,6 +152,12 @@ private fun Sample(context: Context, request: Request?) {
         "messages" -> {
             BackHandler { screen = null }
             YuvaConversationsView(current!!, openConversationId = openConversation, onClose = { screen = null })
+            return
+        }
+        "messages-only", "feedback-list" -> {
+            BackHandler { screen = null }
+            val section = if (screen == "messages-only") YuvaConversationsSection.MESSAGES else YuvaConversationsSection.FEEDBACK
+            YuvaConversationsView(current!!, openConversationId = openConversation, onClose = { screen = null }, section = section)
             return
         }
         "feedback" -> {

@@ -7,7 +7,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -131,9 +136,9 @@ fun YuvaFeedbackView(
                 },
                 actions = {
                     if (!sent) {
-                        TextButton(
+                        FilledTonalButton(
                             enabled = canSend,
-                            modifier = Modifier.testTag("yuva.feedback.send"),
+                            modifier = Modifier.padding(end = 8.dp).testTag("yuva.feedback.send"),
                             onClick = {
                                 scope.launch {
                                     sending = true
@@ -195,7 +200,9 @@ fun YuvaFeedbackView(
                         onClick = { category = option },
                         enabled = !sending,
                         label = { Text(stringResource(categoryLabel(option)), maxLines = 1) },
-                        leadingIcon = { Text(style.emoji) },
+                        leadingIcon = {
+                            Icon(style.icon, contentDescription = null, tint = style.tint, modifier = Modifier.size(FilterChipDefaults.IconSize))
+                        },
                         shape = CircleShape,
                     )
                 }
@@ -213,7 +220,7 @@ fun YuvaFeedbackView(
             Text(stringResource(R.string.yuva_feedback_screenshot), style = MaterialTheme.typography.labelLarge)
             screenshots.forEachIndexed { index, upload ->
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    UploadImage(upload, Modifier.height(160.dp).clip(RoundedCornerShape(8.dp)))
+                    UploadImage(upload, Modifier.height(160.dp).clip(MaterialTheme.shapes.small))
                     Spacer(Modifier.weight(1f))
                     IconButton(onClick = { screenshots.removeAt(index) }) {
                         Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.yuva_feedback_remove_screenshot))
@@ -223,7 +230,11 @@ fun YuvaFeedbackView(
             OutlinedButton(
                 onClick = { picker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) },
                 enabled = !sending,
-            ) { Text(stringResource(R.string.yuva_feedback_choose_screenshot)) }
+            ) {
+                Icon(YuvaIcons.Attach, contentDescription = null, modifier = Modifier.size(ButtonDefaults.IconSize))
+                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                Text(stringResource(R.string.yuva_feedback_choose_screenshot))
+            }
             Row(
                 Modifier.fillMaxWidth().toggleable(
                     value = allowEmail,
@@ -234,7 +245,14 @@ fun YuvaFeedbackView(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(stringResource(R.string.yuva_feedback_allow_email), modifier = Modifier.weight(1f))
-                Switch(checked = allowEmail, onCheckedChange = null, enabled = !sending)
+                Switch(
+                    checked = allowEmail,
+                    onCheckedChange = null,
+                    enabled = !sending,
+                    thumbContent = if (allowEmail) {
+                        { Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(SwitchDefaults.IconSize)) }
+                    } else null,
+                )
             }
             if (needsEmail) {
                 OutlinedTextField(

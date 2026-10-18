@@ -29,6 +29,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Badge
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -39,6 +40,7 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -57,8 +59,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.background
 import dev.yuva.R
@@ -206,10 +209,12 @@ fun YuvaConversationsView(
     }
     val showsFeedback = section == YuvaConversationsSection.FEEDBACK ||
         section == null && tab == ConversationsTab.FEEDBACK
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBar(
+                scrollBehavior = scrollBehavior,
                 title = {
                     val inbox = state.session?.inbox
                     if (showsFeedback || inbox == null) {
@@ -260,14 +265,14 @@ fun YuvaConversationsView(
                 )
                 section == YuvaConversationsSection.FEEDBACK && state.feedback.isEmpty() -> Placeholder(
                     title = stringResource(R.string.yuva_feedback_kind),
-                    icon = "\uD83D\uDCA1",
+                    icon = YuvaIcons.Lightbulb,
                     action = stringResource(R.string.yuva_feedback_title),
                     onAction = { route = Route.FeedbackForm },
                 )
                 section == YuvaConversationsSection.MESSAGES && state.messages.isEmpty() ||
                     section == null && state.messages.isEmpty() && !state.hasFeedback -> Placeholder(
                     title = stringResource(R.string.yuva_conversations_empty),
-                    icon = "\uD83D\uDCAC",
+                    icon = YuvaIcons.Chat,
                     hint = stringResource(R.string.yuva_conversations_empty_hint),
                     action = stringResource(R.string.yuva_conversations_new),
                     onAction = { route = Route.Thread(null) },
@@ -315,7 +320,7 @@ fun YuvaConversationsView(
 @Composable
 internal fun Placeholder(
     title: String,
-    icon: String? = null,
+    icon: ImageVector? = null,
     hint: String? = null,
     action: String? = null,
     onAction: () -> Unit = {},
@@ -329,9 +334,16 @@ internal fun Placeholder(
     ) {
         if (icon != null) {
             Box(
-                Modifier.size(80.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primaryContainer),
+                Modifier.size(88.dp).clip(MaterialTheme.shapes.extraLarge).background(MaterialTheme.colorScheme.primaryContainer),
                 contentAlignment = Alignment.Center,
-            ) { Text(icon, fontSize = 36.sp) }
+            ) {
+                Icon(
+                    icon,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                    modifier = Modifier.size(40.dp),
+                )
+            }
             Spacer(Modifier.height(16.dp))
         }
         Text(title, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
@@ -439,9 +451,9 @@ private fun ConversationListRow(
                 )
                 if (unread) {
                     val label = stringResource(R.string.yuva_conversations_unread)
-                    Box(
-                        Modifier.padding(start = 8.dp, top = 5.dp).size(10.dp).clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.primary).semantics { contentDescription = label },
+                    Badge(
+                        Modifier.padding(start = 8.dp, top = 5.dp).semantics { contentDescription = label },
+                        containerColor = MaterialTheme.colorScheme.primary,
                     )
                 }
             }
@@ -528,10 +540,11 @@ private fun FeedbackRow(conversation: YuvaConversation, onClick: () -> Unit) {
             }
             if ((conversation.feedback?.attachmentCount ?: 0) > 0) {
                 val label = stringResource(R.string.yuva_feedback_attachments)
-                Text(
-                    "\uD83D\uDCCE",
-                    style = MaterialTheme.typography.labelMedium,
-                    modifier = Modifier.padding(start = 8.dp).semantics { contentDescription = label },
+                Icon(
+                    YuvaIcons.Attach,
+                    contentDescription = label,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(start = 8.dp).size(16.dp),
                 )
             }
         }

@@ -13,7 +13,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +32,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
@@ -87,13 +91,13 @@ internal object LogoCache {
     }
 }
 
-internal data class CategoryStyle(val emoji: String, val tint: Color)
+internal data class CategoryStyle(val icon: ImageVector, val tint: Color)
 
 internal fun categoryStyle(category: YuvaFeedbackCategory?): CategoryStyle = when (category) {
-    YuvaFeedbackCategory.BUG -> CategoryStyle("\uD83D\uDC1E", Color(0xFFE5484D))
-    YuvaFeedbackCategory.IDEA -> CategoryStyle("\uD83D\uDCA1", Color(0xFFF5A524))
-    YuvaFeedbackCategory.PRAISE -> CategoryStyle("\u2764\uFE0F", Color(0xFFE5528A))
-    YuvaFeedbackCategory.OTHER, null -> CategoryStyle("\uD83D\uDCAC", Color(0xFF8B8D98))
+    YuvaFeedbackCategory.BUG -> CategoryStyle(YuvaIcons.Bug, Color(0xFFE5484D))
+    YuvaFeedbackCategory.IDEA -> CategoryStyle(YuvaIcons.Lightbulb, Color(0xFFF5A524))
+    YuvaFeedbackCategory.PRAISE -> CategoryStyle(Icons.Filled.Favorite, Color(0xFFE5528A))
+    YuvaFeedbackCategory.OTHER, null -> CategoryStyle(YuvaIcons.Chat, Color(0xFF8B8D98))
 }
 
 @Composable
@@ -102,7 +106,7 @@ internal fun CategoryIcon(category: YuvaFeedbackCategory?, size: Dp = 48.dp) {
     Box(
         Modifier.size(size).clip(CircleShape).background(style.tint.copy(alpha = 0.18f)),
         contentAlignment = Alignment.Center,
-    ) { Text(style.emoji, fontSize = (size.value * 0.46f).sp) }
+    ) { Icon(style.icon, contentDescription = null, tint = style.tint, modifier = Modifier.size(size * 0.5f)) }
 }
 
 @Composable

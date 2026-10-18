@@ -48,7 +48,8 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.ui.draw.alpha
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -69,6 +70,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import dev.yuva.R
@@ -475,7 +477,7 @@ fun YuvaThreadView(
                 }
                 if (state.loading) CircularProgressIndicator(Modifier.align(Alignment.Center))
             }
-            Surface(tonalElevation = 1.dp) {
+            Surface(color = MaterialTheme.colorScheme.surfaceContainer) {
                 Column(Modifier.padding(vertical = 8.dp)) {
                     if (uploads.isNotEmpty()) {
                         LazyRow(
@@ -503,7 +505,7 @@ fun YuvaThreadView(
                             Icon(Icons.Default.Add, contentDescription = stringResource(R.string.yuva_thread_attach))
                         }
                         val canSend = text.isNotBlank() || uploads.isNotEmpty()
-                        OutlinedTextField(
+                        TextField(
                             value = text,
                             onValueChange = {
                                 text = it
@@ -511,11 +513,12 @@ fun YuvaThreadView(
                             },
                             placeholder = { Text(stringResource(R.string.yuva_thread_placeholder)) },
                             maxLines = 5,
-                            shape = RoundedCornerShape(24.dp),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
-                                unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-                                focusedContainerColor = MaterialTheme.colorScheme.surface,
+                            shape = MaterialTheme.shapes.extraLarge,
+                            colors = TextFieldDefaults.colors(
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent,
+                                disabledIndicatorColor = Color.Transparent,
+                                errorIndicatorColor = Color.Transparent,
                             ),
                             trailingIcon = {
                                 IconButton(
@@ -597,8 +600,8 @@ private fun RatingCard(state: ThreadState) {
         Modifier
             .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp, top = 8.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
+            .clip(MaterialTheme.shapes.large)
+            .background(MaterialTheme.colorScheme.surfaceContainerHigh)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -807,12 +810,11 @@ private fun FileChip(client: YuvaClient, attachment: YuvaAttachment) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var loading by remember { mutableStateOf(false) }
-    Text(
-        "📎 ${attachment.filename} · ${fileSize(context, attachment.size)}",
-        style = MaterialTheme.typography.labelMedium,
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .clip(RoundedCornerShape(16.dp))
-            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .clip(MaterialTheme.shapes.medium)
+            .background(MaterialTheme.colorScheme.secondaryContainer)
             .clickable(enabled = !loading) {
                 scope.launch {
                     loading = true
@@ -821,7 +823,15 @@ private fun FileChip(client: YuvaClient, attachment: YuvaAttachment) {
                 }
             }
             .padding(horizontal = 10.dp, vertical = 6.dp),
-    )
+    ) {
+        Icon(YuvaIcons.Attach, contentDescription = null, modifier = Modifier.size(16.dp), tint = MaterialTheme.colorScheme.onSecondaryContainer)
+        Spacer(Modifier.size(6.dp))
+        Text(
+            "${attachment.filename} · ${fileSize(context, attachment.size)}",
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
+        )
+    }
 }
 
 private suspend fun open(context: Context, client: YuvaClient, attachment: YuvaAttachment) {
