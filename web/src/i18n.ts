@@ -100,9 +100,51 @@ function localeFromAddress(): Locale | null {
   }
 }
 
+const cookieName = "yuva_locale"
+
+function localeFromCookie(): Locale | null {
+  try {
+    for (const part of document.cookie.split(";")) {
+      const [name, ...rest] = part.trim().split("=")
+      if (name !== cookieName) continue
+      const value = decodeURIComponent(rest.join("="))
+      if (isLocale(value)) return value
+    }
+  } catch {
+    // Cookies can be blocked.
+  }
+  return null
+}
+
+let cookieReady = false
+let cookieDomain = ""
+
+function writeCookie(locale: string) {
+  const base = `${cookieName}=${encodeURIComponent(locale)}; Path=/; SameSite=Lax`
+  const secure = window.location.protocol === "https:" ? "; Secure" : ""
+  try {
+    if (cookieDomain) {
+      document.cookie = `${cookieName}=; Path=/; Max-Age=0; SameSite=Lax${secure}`
+      document.cookie = `${base}; Domain=${cookieDomain}; Max-Age=31536000${secure}`
+    } else {
+      document.cookie = `${base}; Max-Age=31536000${secure}`
+    }
+  } catch {
+    // Cookies can be blocked; the choice then stays in localStorage.
+  }
+}
+
+export function setLocaleCookieDomain(domain: string | undefined) {
+  cookieDomain = domain?.trim().replace(/^\./, "") ?? ""
+  cookieReady = true
+  if (i18n.locale) writeCookie(i18n.locale)
+}
+
 export function initialLocale(): Locale {
   const fromAddress = localeFromAddress()
   if (fromAddress) return fromAddress
+  const fromCookie = localeFromCookie()
+  if (fromCookie) return fromCookie
   try {
     const saved = localStorage.getItem("locale")
     if (isLocale(saved)) return saved
@@ -123,6 +165,7 @@ export async function activate(tag: string) {
   const root = document.documentElement
   root.lang = locale
   root.dir = rtlLocales.includes(locale) ? "rtl" : "ltr"
+  if (cookieReady) writeCookie(locale)
   try {
     localStorage.setItem("locale", locale)
   } catch {

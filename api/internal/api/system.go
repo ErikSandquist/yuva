@@ -27,5 +27,9 @@ func (s *Server) GetVersion(context.Context, oas.GetVersionRequestObject) (oas.G
 	if s.auth.Signup.Open {
 		signup = oas.VersionSignupOpen
 	}
-	return oas.GetVersion200JSONResponse{Version: s.version, Signup: signup}, nil
+	out := oas.GetVersion200JSONResponse{Version: s.version, Signup: signup}
+	if s.auth.LocaleCookieDomain != "" {
+		out.LocaleCookieDomain = &s.auth.LocaleCookieDomain
+	}
+	return out, nil
 }

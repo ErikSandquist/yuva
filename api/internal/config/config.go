@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"net/mail"
+	"net"
 	"net/netip"
 	"net/url"
 	"os"
@@ -20,10 +21,12 @@ type Config struct {
 	MetricsAddr string
 	DatabaseURL string
 
-	PublicURL      string
-	CookieSecure   bool
-	ClientIPHeader string
-	TrustedProxies []netip.Prefix
+	PublicURL string
+	// LocaleCookieDomain is lowercase without a leading dot; empty when unset.
+	LocaleCookieDomain string
+	CookieSecure       bool
+	ClientIPHeader     string
+	TrustedProxies     []netip.Prefix
 
 	WebAuthnRPID    string
 	WebAuthnRPName  string
@@ -220,6 +223,9 @@ func Load(version string) (Config, error) {
 	public, err := url.Parse(c.PublicURL)
 	if err != nil || (public.Scheme != "http" && public.Scheme != "https") || public.Host == "" {
 		return c, fmt.Errorf("YUVA_PUBLIC_URL must be an absolute http(s) URL, got %q", c.PublicURL)
+	}
+	if c.LocaleCookieDomain, err = localeCookieDomain(env("YUVA_LOCALE_COOKIE_DOMAIN", ""), public.Hostname()); err != nil {
+		return c, err
 	}
 	c.WebAuthnRPID = env("YUVA_WEBAUTHN_RP_ID", public.Hostname())
 	c.WebAuthnOrigins = list(env("YUVA_WEBAUTHN_ORIGINS", public.Scheme+"://"+public.Host))
@@ -663,4 +669,16 @@ func list(v string) []string {
 		}
 	}
 	return out
+}
+
+func localeCookieDomain(v, host string) (string, error) {
+	d := strings.ToLower(strings.TrimPrefix(strings.TrimSpace(v), "."))
+	if d == "" {
+		return "", nil
+	}
+	host = strings.ToLower(host)
+	if !strings.Contains(d, ".") || net.ParseIP(d) != nil || (host != d && !strings.HasSuffix(host, "."+d)) {
+		return "", fmt.Errorf("YUVA_LOCALE_COOKIE_DOMAIN must be a domain with a dot that the host of YUVA_PUBLIC_URL (%s) is inside of, e.g. example.com, got %q", host, v)
+	}
+	return d, nil
 }

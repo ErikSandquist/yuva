@@ -177,9 +177,10 @@ type AttachmentSettings struct {
 }
 
 type AuthSettings struct {
-	PublicURL      string
-	CookieSecure   bool
-	ClientIPHeader string
+	PublicURL          string
+	CookieSecure       bool
+	LocaleCookieDomain string
+	ClientIPHeader     string
 	// TrustedProxies are the proxies whose entries in ClientIPHeader are skipped from the right.
 	TrustedProxies []netip.Prefix
 	// CodeReplyDelay is how long every sign-in code request takes; 0 means 800 ms.

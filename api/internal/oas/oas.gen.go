@@ -13793,6 +13793,14 @@ type VapidPublicKey struct {
 
 // Version defines model for Version.
 type Version struct {
+	// LocaleCookieDomain The domain, without a leading dot, on which the panel writes its `yuva_locale` cookie so
+	// a site on the same domain can open in the person's language. Omitted when
+	// `YUVA_LOCALE_COOKIE_DOMAIN` is not set.
+	//
+	//
+	// Examples: example.com
+	LocaleCookieDomain *string `json:"locale_cookie_domain,omitempty"`
+
 	// Signup `invite`: only people with an invite (or an existing account) can sign in to the panel.
 	// `open`: anyone can sign in with an e-mailed code and create a workspace
 	// (`POST /v1/workspaces`). Set with `YUVA_SIGNUP`.

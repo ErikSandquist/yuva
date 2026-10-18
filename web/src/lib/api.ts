@@ -311,13 +311,15 @@ export function rawMessageUrl(messageId: string, ws: string) {
   return `/v1/messages/${encodeURIComponent(messageId)}/raw?workspace_id=${encodeURIComponent(ws)}`
 }
 
+export const versionQuery = {
+  queryKey: ["version"],
+  queryFn: () => unwrap(api.GET("/v1/version")),
+  staleTime: Infinity,
+  retry: false,
+}
+
 export function useVersion() {
-  return useQuery({
-    queryKey: ["version"],
-    queryFn: () => unwrap(api.GET("/v1/version")),
-    staleTime: Infinity,
-    retry: false,
-  })
+  return useQuery(versionQuery)
 }
 
 export function useSignup() {

@@ -9,8 +9,8 @@ import { AppRoutes } from "@/app/routes"
 import { PageViews } from "@/components/common/PageViews"
 import { ServiceWorkerBridge } from "@/components/common/ServiceWorkerBridge"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { activate, i18n, initialLocale } from "@/i18n"
-import { ApiError } from "@/lib/api"
+import { activate, i18n, initialLocale, setLocaleCookieDomain } from "@/i18n"
+import { ApiError, versionQuery } from "@/lib/api"
 import { startPwa } from "@/lib/pwa"
 import { startTheme } from "@/lib/theme"
 import { meKey } from "@/lib/session"
@@ -29,6 +29,11 @@ const queryClient: QueryClient = new QueryClient({
   }),
   defaultOptions: { queries: { retry: (count, err) => !(err instanceof ApiError) && count < 2 } },
 })
+
+queryClient
+  .fetchQuery(versionQuery)
+  .then((v) => setLocaleCookieDomain(v.locale_cookie_domain))
+  .catch(() => setLocaleCookieDomain(undefined))
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

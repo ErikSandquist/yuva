@@ -228,10 +228,11 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 		Mailer:   mail.Async{Mailer: mailer, Log: log, Timeout: 30 * time.Second},
 		WebAuthn: wa,
 		Auth: api.AuthSettings{
-			PublicURL:      cfg.PublicURL,
-			CookieSecure:   cfg.CookieSecure,
-			ClientIPHeader: cfg.ClientIPHeader,
-			TrustedProxies: cfg.TrustedProxies,
+			PublicURL:          cfg.PublicURL,
+			CookieSecure:       cfg.CookieSecure,
+			LocaleCookieDomain: cfg.LocaleCookieDomain,
+			ClientIPHeader:     cfg.ClientIPHeader,
+			TrustedProxies:     cfg.TrustedProxies,
 			Signup: api.SignupSettings{
 				Open:                cfg.SignupOpen,
 				WorkspacesPerPerson: cfg.SignupWorkspacesPerPerson,

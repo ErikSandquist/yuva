@@ -14575,6 +14575,13 @@ export interface components {
              * @enum {string}
              */
             signup: "invite" | "open";
+            /**
+             * @description The domain, without a leading dot, on which the panel writes its `yuva_locale` cookie so
+             *     a site on the same domain can open in the person's language. Omitted when
+             *     `YUVA_LOCALE_COOKIE_DOMAIN` is not set.
+             * @example example.com
+             */
+            locale_cookie_domain?: string;
         };
         /** @example #2563eb */
         EmailColor: string;
