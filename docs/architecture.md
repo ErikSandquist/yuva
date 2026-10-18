@@ -49,6 +49,33 @@ they allowed it (`allow_email`): members' replies the contact has not read go ou
 delayed e-mail as chat replies. The panel
 filters conversations by `kind` and feedback `category` and counts open feedback per category.
 
+Feedback has its own place (M18). It stays a conversation, so replies, notes, assignment, e-mail
+fallback, events and webhooks are the ones every conversation has; only where it is shown and what it
+is called change. Decisions:
+
+- **Panel.** A Feedback entry in the rail (`/feedback`, its own shortcut, a badge with open feedback
+  from the `feedback` count) opens a list with Open and Resolved tabs and category tabs with their
+  open counts (All, Bug, Idea, Praise, Other), filtered by inbox like the inbox. A row is a triage
+  line, not a chat preview: category, the first line of the text, the contact, app version, OS and
+  device (or the page's title for page feedback), a mark when screenshots are attached, a mark when
+  the team has answered, and the time. Opening a row shows the existing conversation view beside the
+  list. The Conversations view, its counts and its unread badge show every kind except `feedback`,
+  and its source filter loses the Feedback option. `GET /v1/conversations/counts` takes `kind` like
+  the list does.
+- **Resolved.** For a feedback, `closed` is called Resolved everywhere a person reads it (panel,
+  SDKs, widget); there is no new status. The panel's Close and Reopen read Resolve and Reopen, and
+  Send and close reads Reply and resolve. A contact who writes to a resolved feedback reopens it, as
+  any conversation: a fix that did not work comes back to the same thread.
+- **No rating.** Feedback never asks for a satisfaction rating: `can_rate` is false for `kind`
+  `feedback`, and ratings reports leave it out.
+- **Contact side.** `GET /client/v1/conversations` takes `kind` (several values, like `/v1`). The
+  Swift and Kotlin conversation lists show Messages and Feedback as two tabs when the contact has
+  sent feedback, one list otherwise. A feedback row shows its category, the first line and a state:
+  Sent (no answer yet), Answered (the team's message is the last one), Resolved. The thread of a
+  feedback shows the category and state in its header and, when resolved, a line saying the team
+  marked it resolved, with the composer still open. The feedback form's sent screen has View
+  feedback next to Done, which opens that thread.
+
 Members change up to 100 conversations in one request (`POST /v1/conversations/bulk`: status,
 assignee, labels to add and remove); each is checked against the caller's inbox access and
 changed in its own transaction with the same events and webhooks as a single change, and the

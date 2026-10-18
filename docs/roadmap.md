@@ -289,3 +289,21 @@ Status: planned; issue #74, decisions in `architecture.md` › Panel (`web/`) �
 Accept: a new workspace's owner lands on Home, sets up chat and analytics from `/setup` and sees both
 turn done; Home shows the inbox counts, each site's visitors and the last broadcast from one request;
 an agent opens the inbox at `/` and never sees an inbox or property they may not see.
+
+## M18 — Feedback on its own
+
+Status: planned; issue #93, decisions in `architecture.md` › Feedback (M18).
+
+- `kind` on `GET /v1/conversations/counts` and `GET /client/v1/conversations`; `can_rate` false for
+  feedback.
+- A Feedback section in the panel: Open and Resolved, category tabs with counts, triage rows, the
+  conversation beside the list; Conversations without feedback; Resolve, Reopen, Reply and resolve.
+- Swift and Kotlin: Messages and Feedback tabs, feedback states (Sent, Answered, Resolved), the
+  resolved line in the thread, View feedback after sending. The widget calls a resolved feedback
+  Resolved.
+
+Accept: in the Swift and Kotlin samples a user sends a bug report with a screenshot and finds it under
+Feedback as Sent; a member finds it in the panel's Feedback section under Bug, not in Conversations,
+answers it and the app shows Answered, then resolves it with Reply and resolve and the app shows
+Resolved with no rating asked; the user writes again and it is open in the panel again; an agent sees
+only feedback of inboxes they may see.
