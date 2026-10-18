@@ -4,6 +4,10 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.FilterChip
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,9 +33,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -65,7 +66,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun YuvaFeedbackView(
     client: YuvaClient,
@@ -186,14 +187,17 @@ fun YuvaFeedbackView(
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Text(stringResource(R.string.yuva_feedback_category), style = MaterialTheme.typography.labelLarge)
-            SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
-                categories.forEachIndexed { index, option ->
-                    SegmentedButton(
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                categories.forEach { option ->
+                    val style = categoryStyle(option)
+                    FilterChip(
                         selected = option == category,
                         onClick = { category = option },
-                        shape = SegmentedButtonDefaults.itemShape(index, categories.size),
                         enabled = !sending,
-                    ) { Text(stringResource(categoryLabel(option)), maxLines = 1) }
+                        label = { Text(stringResource(categoryLabel(option)), maxLines = 1) },
+                        leadingIcon = { Text(style.emoji) },
+                        shape = CircleShape,
+                    )
                 }
             }
             OutlinedTextField(

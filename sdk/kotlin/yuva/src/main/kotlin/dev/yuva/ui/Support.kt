@@ -4,11 +4,13 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.text.format.DateUtils
 import android.text.format.Formatter
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
@@ -18,12 +20,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -32,18 +38,24 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.widthIn
 import dev.yuva.R
+import dev.yuva.YuvaFeedbackCategory
+import dev.yuva.YuvaFeedbackState
 import dev.yuva.YuvaClient
 import dev.yuva.YuvaException
 import dev.yuva.YuvaUpload
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.net.URL
+import java.time.Instant
+import java.time.ZoneId
+import java.time.temporal.ChronoUnit
 import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 @Composable
-internal fun Avatar(initials: String, size: Dp = 28.dp) {
+internal fun Avatar(initials: String, size: Dp = 28.dp, imageUrl: String? = null) {
     Box(
         modifier = Modifier.size(size).clip(CircleShape).background(MaterialTheme.colorScheme.primary),
         contentAlignment = Alignment.Center,
@@ -54,7 +66,92 @@ internal fun Avatar(initials: String, size: Dp = 28.dp) {
             fontSize = (size.value * 0.4f).sp,
             style = MaterialTheme.typography.labelMedium,
         )
+        val logo = imageUrl?.let { url -> produceState<Bitmap?>(null, url) { value = LogoCache.image(url) }.value }
+        if (logo != null) {
+            Image(logo.asImageBitmap(), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.size(size))
+        }
     }
+}
+
+internal object LogoCache {
+    private val images = ConcurrentHashMap<String, Bitmap>()
+
+    suspend fun image(url: String): Bitmap? {
+        if (!url.startsWith("http")) return null
+        images[url]?.let { return it }
+        val bitmap = withContext(Dispatchers.IO) {
+            runCatching { URL(url).openStream().use { it.readBytes() } }.getOrNull()?.let { decodeScaled(it, 256) }
+        } ?: return null
+        images[url] = bitmap
+        return bitmap
+    }
+}
+
+internal data class CategoryStyle(val emoji: String, val tint: Color)
+
+internal fun categoryStyle(category: YuvaFeedbackCategory?): CategoryStyle = when (category) {
+    YuvaFeedbackCategory.BUG -> CategoryStyle("\uD83D\uDC1E", Color(0xFFE5484D))
+    YuvaFeedbackCategory.IDEA -> CategoryStyle("\uD83D\uDCA1", Color(0xFFF5A524))
+    YuvaFeedbackCategory.PRAISE -> CategoryStyle("\u2764\uFE0F", Color(0xFFE5528A))
+    YuvaFeedbackCategory.OTHER, null -> CategoryStyle("\uD83D\uDCAC", Color(0xFF8B8D98))
+}
+
+@Composable
+internal fun CategoryIcon(category: YuvaFeedbackCategory?, size: Dp = 48.dp) {
+    val style = categoryStyle(category)
+    Box(
+        Modifier.size(size).clip(CircleShape).background(style.tint.copy(alpha = 0.18f)),
+        contentAlignment = Alignment.Center,
+    ) { Text(style.emoji, fontSize = (size.value * 0.46f).sp) }
+}
+
+@Composable
+internal fun FeedbackTag(text: String, tint: Color, modifier: Modifier = Modifier) {
+    Text(
+        text,
+        style = MaterialTheme.typography.labelSmall,
+        fontWeight = FontWeight.SemiBold,
+        color = tint,
+        modifier = modifier.clip(CircleShape).background(tint.copy(alpha = 0.14f)).padding(horizontal = 8.dp, vertical = 2.dp),
+    )
+}
+
+@Composable
+internal fun stateTint(state: YuvaFeedbackState): Color = when (state) {
+    YuvaFeedbackState.SENT -> MaterialTheme.colorScheme.onSurfaceVariant
+    YuvaFeedbackState.ANSWERED -> MaterialTheme.colorScheme.primary
+    YuvaFeedbackState.RESOLVED -> if (MaterialTheme.colorScheme.surface.luminance() < 0.5f) Color(0xFF4ADE80) else Color(0xFF1E8E3E)
+}
+
+internal object ShortTime {
+    private fun day(instant: Instant, zone: ZoneId) = instant.atZone(zone).toLocalDate()
+
+    fun list(context: Context, instant: Instant, now: Instant = Instant.now(), zone: ZoneId = ZoneId.systemDefault()): String {
+        val ms = instant.toEpochMilli()
+        val days = ChronoUnit.DAYS.between(day(instant, zone), day(now, zone))
+        return when {
+            days <= 0 -> DateUtils.formatDateTime(context, ms, DateUtils.FORMAT_SHOW_TIME)
+            days == 1L -> DateUtils.getRelativeTimeSpanString(ms, now.toEpochMilli(), DateUtils.DAY_IN_MILLIS).toString()
+            days < 7 -> DateUtils.formatDateTime(context, ms, DateUtils.FORMAT_SHOW_WEEKDAY)
+            else -> DateUtils.formatDateTime(context, ms, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_NUMERIC_DATE)
+        }
+    }
+
+    fun separator(context: Context, instant: Instant, now: Instant = Instant.now(), zone: ZoneId = ZoneId.systemDefault()): String {
+        val ms = instant.toEpochMilli()
+        val days = ChronoUnit.DAYS.between(day(instant, zone), day(now, zone))
+        return when {
+            days == 0L || days == 1L ->
+                DateUtils.getRelativeTimeSpanString(ms, now.toEpochMilli(), DateUtils.DAY_IN_MILLIS).toString()
+            days in 2..6 -> DateUtils.formatDateTime(context, ms, DateUtils.FORMAT_SHOW_WEEKDAY)
+            else -> DateUtils.formatDateTime(context, ms, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR)
+        }
+    }
+
+    fun clock(context: Context, instant: Instant): String =
+        DateUtils.formatDateTime(context, instant.toEpochMilli(), DateUtils.FORMAT_SHOW_TIME)
+
+    fun sameDay(a: Instant, b: Instant, zone: ZoneId = ZoneId.systemDefault()) = day(a, zone) == day(b, zone)
 }
 
 internal object AttachmentCache {

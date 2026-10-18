@@ -58,8 +58,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.background
-import android.text.format.DateUtils
 import dev.yuva.R
 import dev.yuva.YuvaAuthorType
 import dev.yuva.YuvaClient
@@ -202,17 +203,32 @@ fun YuvaConversationsView(
         )
         return
     }
+    val showsFeedback = section == YuvaConversationsSection.FEEDBACK ||
+        section == null && tab == ConversationsTab.FEEDBACK
     Scaffold(
         modifier = modifier,
         topBar = {
             TopAppBar(
                 title = {
-                    Text(
-                        stringResource(
-                            if (section == YuvaConversationsSection.FEEDBACK) R.string.yuva_feedback_kind
-                            else R.string.yuva_conversations_title,
-                        ),
-                    )
+                    val inbox = state.session?.inbox
+                    if (showsFeedback || inbox == null) {
+                        Text(
+                            stringResource(if (showsFeedback) R.string.yuva_feedback_kind else R.string.yuva_conversations_title),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    } else {
+                        Column {
+                            Text(inbox.name, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(
+                                presenceText(inbox),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        }
+                    }
                 },
                 navigationIcon = {
                     if (onClose != null) {
@@ -243,12 +259,14 @@ fun YuvaConversationsView(
                 )
                 section == YuvaConversationsSection.FEEDBACK && state.feedback.isEmpty() -> Placeholder(
                     title = stringResource(R.string.yuva_feedback_kind),
+                    icon = "\uD83D\uDCA1",
                     action = stringResource(R.string.yuva_feedback_title),
                     onAction = { route = Route.FeedbackForm },
                 )
                 section == YuvaConversationsSection.MESSAGES && state.messages.isEmpty() ||
                     section == null && state.messages.isEmpty() && !state.hasFeedback -> Placeholder(
                     title = stringResource(R.string.yuva_conversations_empty),
+                    icon = "\uD83D\uDCAC",
                     hint = stringResource(R.string.yuva_conversations_empty_hint),
                     action = stringResource(R.string.yuva_conversations_new),
                     onAction = { route = Route.Thread(null) },
@@ -275,18 +293,13 @@ fun YuvaConversationsView(
                     }
                     val items = state.items(tab)
                     LazyColumn(Modifier.fillMaxSize()) {
-                        if (tab == ConversationsTab.MESSAGES) {
-                            state.session?.inbox?.let { inbox ->
-                                item { PresenceHeader(inbox, Modifier.padding(16.dp)) }
-                            }
-                        }
                         items(items, key = { it.id }) { conversation ->
                             if (conversation.isFeedback) {
                                 FeedbackRow(conversation) { route = Route.Thread(conversation.id) }
                             } else {
-                                ConversationRow(conversation) { route = Route.Thread(conversation.id) }
+                                ConversationRow(conversation, state.session?.inbox) { route = Route.Thread(conversation.id) }
                             }
-                            HorizontalDivider()
+                            HorizontalDivider(Modifier.padding(start = RowAvatar + 16.dp + 12.dp))
                             if (conversation.id == items.lastOrNull()?.id) {
                                 LaunchedEffect(conversation.id, tab) { state.loadMore(tab) }
                             }
@@ -301,6 +314,7 @@ fun YuvaConversationsView(
 @Composable
 internal fun Placeholder(
     title: String,
+    icon: String? = null,
     hint: String? = null,
     action: String? = null,
     onAction: () -> Unit = {},
@@ -312,6 +326,13 @@ internal fun Placeholder(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        if (icon != null) {
+            Box(
+                Modifier.size(80.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primaryContainer),
+                contentAlignment = Alignment.Center,
+            ) { Text(icon, fontSize = 36.sp) }
+            Spacer(Modifier.height(16.dp))
+        }
         Text(title, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
         if (hint != null) {
             Spacer(Modifier.height(8.dp))
@@ -370,48 +391,83 @@ private fun replyDuration(minutes: Int): String {
     return MeasureFormat.getInstance(ULocale.getDefault(), MeasureFormat.FormatWidth.WIDE).format(Measure(value, unit))
 }
 
+internal val RowAvatar = 48.dp
+
 @Composable
-private fun ConversationRow(conversation: YuvaConversation, onClick: () -> Unit) {
-    val title = when {
-        conversation.subject.isNotEmpty() -> conversation.subject
-        conversation.feedback != null -> stringResource(R.string.yuva_feedback_kind) + " · " +
-            stringResource(categoryLabel(conversation.feedback.category))
-        else -> stringResource(R.string.yuva_thread_title)
+private fun ConversationListRow(
+    title: String,
+    preview: String,
+    previewLines: Int,
+    time: String,
+    unread: Boolean,
+    onClick: () -> Unit,
+    leading: @Composable () -> Unit,
+    extra: @Composable () -> Unit = {},
+) {
+    Row(
+        Modifier.fillMaxWidth().clickable(onClick = onClick).padding(horizontal = 16.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.Top,
+    ) {
+        leading()
+        Spacer(Modifier.width(12.dp))
+        Column(Modifier.weight(1f)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    title,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = if (unread) FontWeight.Bold else FontWeight.Medium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f),
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    time,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = if (unread) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            Row(verticalAlignment = Alignment.Top) {
+                Text(
+                    preview,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = previewLines,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f),
+                )
+                if (unread) {
+                    val label = stringResource(R.string.yuva_conversations_unread)
+                    Box(
+                        Modifier.padding(start = 8.dp, top = 5.dp).size(10.dp).clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.primary).semantics { contentDescription = label },
+                    )
+                }
+            }
+            extra()
+        }
     }
+}
+
+@Composable
+private fun ConversationRow(conversation: YuvaConversation, inbox: YuvaInbox?, onClick: () -> Unit) {
+    val context = LocalContext.current
+    val title = conversation.subject.ifEmpty { inbox?.name ?: stringResource(R.string.yuva_thread_title) }
     val last = conversation.lastMessage
     val preview = when {
         last == null -> ""
         last.authorType == YuvaAuthorType.CONTACT -> stringResource(R.string.yuva_thread_you) + ": " + last.text
         else -> last.text
     }
-    Column(Modifier.fillMaxWidth().clickable(onClick = onClick).padding(horizontal = 16.dp, vertical = 12.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                title,
-                style = MaterialTheme.typography.titleMedium,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.weight(1f),
-            )
-            Text(
-                DateUtils.getRelativeTimeSpanString((conversation.lastMessageAt ?: conversation.createdAt).toEpochMilli()).toString(),
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                preview,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.weight(1f),
-            )
-            if (conversation.unread) {
-                Box(Modifier.padding(start = 8.dp).size(10.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary))
-            }
-        }
+    ConversationListRow(
+        title = title,
+        preview = preview,
+        previewLines = 2,
+        time = ShortTime.list(context, conversation.lastMessageAt ?: conversation.createdAt),
+        unread = conversation.unread,
+        onClick = onClick,
+        leading = { Avatar((inbox?.name ?: title).take(1).uppercase(), RowAvatar, inbox?.branding?.logoUrl) },
+    ) {
         if (conversation.status == YuvaConversationStatus.CLOSED) {
             Text(
                 stringResource(R.string.yuva_status_closed),
@@ -443,35 +499,28 @@ internal fun stateLabel(state: YuvaFeedbackState): Int = when (state) {
 
 @Composable
 private fun FeedbackRow(conversation: YuvaConversation, onClick: () -> Unit) {
+    val context = LocalContext.current
     val title = conversation.feedback?.let { stringResource(categoryLabel(it.category)) }
         ?: stringResource(R.string.yuva_feedback_kind)
     val text = conversation.feedback?.text?.takeIf { it.isNotEmpty() }
         ?: conversation.subject.ifEmpty { conversation.lastMessage?.text.orEmpty() }
-    val firstLine = text.lineSequence().firstOrNull().orEmpty()
-    Column(Modifier.fillMaxWidth().clickable(onClick = onClick).padding(horizontal = 16.dp, vertical = 12.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                title,
-                style = MaterialTheme.typography.titleMedium,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.weight(1f),
-            )
-            Text(
-                DateUtils.getRelativeTimeSpanString((conversation.lastMessageAt ?: conversation.createdAt).toEpochMilli()).toString(),
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                firstLine,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.weight(1f),
-            )
+    ConversationListRow(
+        title = title,
+        preview = text.lineSequence().firstOrNull().orEmpty(),
+        previewLines = 1,
+        time = ShortTime.list(context, conversation.lastMessageAt ?: conversation.createdAt),
+        unread = conversation.unread,
+        onClick = onClick,
+        leading = { CategoryIcon(conversation.feedback?.category, RowAvatar) },
+    ) {
+        Row(Modifier.padding(top = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+            conversation.feedbackState?.let { state ->
+                FeedbackTag(
+                    stringResource(stateLabel(state)),
+                    stateTint(state),
+                    Modifier.testTag("yuva.feedback.state." + state.name.lowercase()),
+                )
+            }
             if ((conversation.feedback?.attachmentCount ?: 0) > 0) {
                 val label = stringResource(R.string.yuva_feedback_attachments)
                 Text(
@@ -480,17 +529,6 @@ private fun FeedbackRow(conversation: YuvaConversation, onClick: () -> Unit) {
                     modifier = Modifier.padding(start = 8.dp).semantics { contentDescription = label },
                 )
             }
-            if (conversation.unread) {
-                Box(Modifier.padding(start = 8.dp).size(10.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary))
-            }
-        }
-        conversation.feedbackState?.let { state ->
-            Text(
-                stringResource(stateLabel(state)),
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.testTag("yuva.feedback.state." + state.name.lowercase()),
-            )
         }
     }
 }

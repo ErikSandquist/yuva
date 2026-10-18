@@ -5,7 +5,14 @@ public enum YuvaConversationStatus: String, Codable, Sendable {
 }
 
 public enum YuvaAuthorType: String, Codable, Sendable {
-    case contact, member, system
+    case contact, member, bot, system
+
+    public init(from decoder: any Decoder) throws {
+        let raw = try decoder.singleValueContainer().decode(String.self)
+        self = Self(rawValue: raw) ?? .system
+    }
+
+    var isTeam: Bool { self == .member || self == .bot }
 }
 
 public enum YuvaDirection: String, Codable, Sendable {

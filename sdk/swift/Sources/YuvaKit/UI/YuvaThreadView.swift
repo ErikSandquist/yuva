@@ -82,7 +82,7 @@ final class ThreadModel {
             case .messageCreated(let message), .messageUpdated(let message):
                 guard message.conversationId == conversationId else { continue }
                 upsert(message)
-                if message.author.type == .member {
+                if message.author.type.isTeam {
                     typingName = nil
                     await markRead()
                 }
@@ -197,7 +197,7 @@ final class ThreadModel {
 
     func markRead() async {
         guard visible, let id = conversationId,
-              let last = items.last(where: { $0.message?.author.type == .member })?.message
+              let last = items.last(where: { $0.message?.author.type.isTeam == true })?.message
         else { return }
         _ = try? await client.markRead(conversationId: id, messageId: last.id)
     }
@@ -248,8 +248,8 @@ public struct YuvaThreadView: View {
                 FeedbackHeader(category: model.conversation?.feedback?.category, state: state)
             }
             messages
-            composer
         }
+        .safeAreaInset(edge: .bottom, spacing: 0) { composer }
         .navigationTitle(title)
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
@@ -275,26 +275,34 @@ public struct YuvaThreadView: View {
     private var messages: some View {
         ScrollViewReader { proxy in
             ScrollView {
-                LazyVStack(spacing: 6) {
+                LazyVStack(spacing: 0) {
                     if model.canLoadOlder {
                         ProgressView().padding().onAppear { Task { await model.loadOlder() } }
                     }
                     if model.items.isEmpty && !model.loading {
                         greeting
                     }
-                    ForEach(model.items) { item in
-                        MessageRow(
-                            item: item, client: model.client, seen: item.id == model.seenMessageId,
-                            showStatus: item.mine && (item.id == model.items.last(where: \.mine)?.id || item.state != .sent)
-                        ) {
-                            model.retry(item.id)
+                    ForEach(ThreadLayout.rows(model.items)) { row in
+                        if row.startsDay {
+                            Text(ShortTime.daySeparator(row.item.createdAt))
+                                .font(.caption.weight(.medium)).foregroundStyle(.secondary)
+                                .frame(maxWidth: .infinity).padding(.top, 16).padding(.bottom, 8)
                         }
-                        .id(item.id)
+                        MessageRow(
+                            item: row.item, client: model.client, seen: row.item.id == model.seenMessageId,
+                            showStatus: row.item.mine
+                                && (row.item.id == model.items.last(where: \.mine)?.id || row.item.state != .sent),
+                            first: row.first, last: row.last
+                        ) {
+                            model.retry(row.item.id)
+                        }
+                        .padding(.top, row.first && !row.startsDay ? 10 : 2)
+                        .id(row.item.id)
                     }
                     if model.feedbackState == .resolved {
-                        Text(L.t("feedback.resolvedNote"))
+                        Label(L.t("feedback.resolvedNote"), systemImage: "checkmark.circle.fill")
                             .font(.footnote).foregroundStyle(.secondary).multilineTextAlignment(.center)
-                            .frame(maxWidth: .infinity).padding(.horizontal, 24).padding(.vertical, 8)
+                            .frame(maxWidth: .infinity).padding(.horizontal, 24).padding(.vertical, 16)
                             .id("resolved")
                             .accessibilityIdentifier("yuva.feedback.resolvedNote")
                     }
@@ -313,6 +321,7 @@ public struct YuvaThreadView: View {
                 }
                 .padding(.vertical, 8)
             }
+            .scrollDismissesKeyboard(.interactively)
             .defaultScrollAnchor(.bottom)
             .overlay { if model.loading { ProgressView() } }
             .onChange(of: model.items.last?.id) { _, id in
@@ -340,6 +349,10 @@ public struct YuvaThreadView: View {
         .padding(24)
     }
 
+    private var canSend: Bool {
+        !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || !uploads.isEmpty
+    }
+
     private var composer: some View {
         VStack(spacing: 6) {
             if !uploads.isEmpty {
@@ -365,28 +378,33 @@ public struct YuvaThreadView: View {
             }
             HStack(alignment: .bottom, spacing: 8) {
                 PhotosPicker(selection: $picked, maxSelectionCount: 10, matching: .images) {
-                    Image(systemName: "photo").font(.title3).padding(.bottom, 6)
+                    Image(systemName: "photo").font(.title3).frame(width: 34, height: 34)
                 }
                 .accessibilityLabel(L.t("thread.attach"))
-                TextField(L.t("thread.placeholder"), text: $text, axis: .vertical)
-                    .lineLimit(1...5)
-                    .textFieldStyle(.plain)
-                    .padding(.horizontal, 12).padding(.vertical, 8)
-                    .background(RoundedRectangle(cornerRadius: 18).fill(.quaternary))
-                    .onChange(of: text) { _, value in model.typing(value) }
-                    .accessibilityIdentifier("yuva.thread.input")
-                Button {
-                    model.send(text, uploads: uploads)
-                    text = ""
-                    uploads = []
-                } label: {
-                    Image(systemName: "arrow.up.circle.fill").font(.title)
+                HStack(alignment: .bottom, spacing: 4) {
+                    TextField(L.t("thread.placeholder"), text: $text, axis: .vertical)
+                        .lineLimit(1...5)
+                        .textFieldStyle(.plain)
+                        .padding(.leading, 14).padding(.vertical, 7)
+                        .onChange(of: text) { _, value in model.typing(value) }
+                        .accessibilityIdentifier("yuva.thread.input")
+                    Button {
+                        model.send(text, uploads: uploads)
+                        text = ""
+                        uploads = []
+                    } label: {
+                        Image(systemName: "arrow.up.circle.fill").font(.system(size: 30))
+                            .foregroundStyle(canSend ? Color.accentColor : Color.secondary.opacity(0.4))
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(!canSend)
+                    .padding(.trailing, 3).padding(.bottom, 2)
+                    .accessibilityLabel(L.t("thread.send"))
+                    .accessibilityIdentifier("yuva.thread.send")
                 }
-                .disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && uploads.isEmpty)
-                .accessibilityLabel(L.t("thread.send"))
-                .accessibilityIdentifier("yuva.thread.send")
+                .background(RoundedRectangle(cornerRadius: 20).stroke(.separator, lineWidth: 1))
             }
-            .padding(.horizontal)
+            .padding(.horizontal, 12)
         }
         .padding(.vertical, 8)
         .background(.bar)
@@ -409,18 +427,18 @@ struct FeedbackHeader: View {
     let state: YuvaFeedbackState
 
     var body: some View {
-        HStack {
+        HStack(spacing: 10) {
+            CategoryIcon(category: category, size: 28)
             if let category {
                 Text(L.t("feedback.category." + category.rawValue)).font(.subheadline.weight(.semibold))
             }
             Spacer()
-            Text(state.label).font(.caption.weight(.medium))
-                .padding(.horizontal, 10).padding(.vertical, 4)
-                .background(Capsule().fill(.quaternary))
+            FeedbackTag(text: state.label, tint: state.tint)
                 .accessibilityIdentifier("yuva.feedback.state." + state.rawValue)
         }
-        .padding(.horizontal).padding(.vertical, 8)
+        .padding(.horizontal, 16).padding(.vertical, 8)
         .background(.bar)
+        .overlay(alignment: .bottom) { Divider() }
     }
 }
 
@@ -494,41 +512,100 @@ struct RatingCard: View {
     }
 }
 
+struct ThreadRowInfo: Identifiable {
+    let item: ThreadItem
+    let startsDay: Bool
+    let first: Bool
+    let last: Bool
+
+    var id: String { item.id }
+}
+
+enum ThreadLayout {
+    static let groupGap: TimeInterval = 5 * 60
+
+    static func rows(_ items: [ThreadItem], calendar: Calendar = .current) -> [ThreadRowInfo] {
+        items.indices.map { index in
+            let item = items[index]
+            let previous = index > 0 ? items[index - 1] : nil
+            let next = index + 1 < items.count ? items[index + 1] : nil
+            let startsDay = previous.map { !calendar.isDate($0.createdAt, inSameDayAs: item.createdAt) } ?? true
+            let joinsPrevious = previous.map { !startsDay && joined($0, item) } ?? false
+            let joinsNext = next.map { calendar.isDate($0.createdAt, inSameDayAs: item.createdAt) && joined(item, $0) } ?? false
+            return ThreadRowInfo(item: item, startsDay: startsDay, first: !joinsPrevious, last: !joinsNext)
+        }
+    }
+
+    private static func joined(_ a: ThreadItem, _ b: ThreadItem) -> Bool {
+        key(a) == key(b) && b.createdAt.timeIntervalSince(a.createdAt) < groupGap
+    }
+
+    private static func key(_ item: ThreadItem) -> String {
+        if item.mine { return "me" }
+        guard let author = item.message?.author else { return "" }
+        return author.type.rawValue + ":" + (author.name ?? "")
+    }
+}
+
 struct MessageRow: View {
     let item: ThreadItem
     let client: YuvaClient
     let seen: Bool
     let showStatus: Bool
+    let first: Bool
+    let last: Bool
     let retry: () -> Void
 
+    private let avatarSize: CGFloat = 28
+    private static let radius: CGFloat = 18
+    private static let joined: CGFloat = 5
+
     var body: some View {
-        VStack(alignment: item.mine ? .trailing : .leading, spacing: 3) {
-            HStack(alignment: .bottom, spacing: 6) {
-                if item.mine { Spacer(minLength: 48) }
-                if !item.mine, let author = item.message?.author, author.type == .member {
-                    AvatarView(initials: author.initials ?? "")
+        HStack(alignment: .bottom, spacing: 8) {
+            if item.mine {
+                Spacer(minLength: 56)
+            } else if let author = item.message?.author {
+                if first {
+                    AvatarView(initials: authorInitials(author), size: avatarSize)
+                } else {
+                    Color.clear.frame(width: avatarSize, height: avatarSize)
                 }
-                VStack(alignment: item.mine ? .trailing : .leading, spacing: 4) {
-                    if !item.mine, let name = item.message?.author.name, !name.isEmpty {
-                        Text(name).font(.caption2).foregroundStyle(.secondary)
-                    }
-                    attachments
-                    if !item.body.isEmpty {
-                        Text(item.body)
-                            .textSelection(.enabled)
-                            .padding(.horizontal, 12).padding(.vertical, 8)
-                            .foregroundStyle(item.mine ? Color.white : Color.primary)
-                            .background(
-                                RoundedRectangle(cornerRadius: 18)
-                                    .fill(item.mine ? AnyShapeStyle(Color.accentColor) : AnyShapeStyle(.quaternary)))
-                    }
-                }
-                .opacity(item.state == .sending ? 0.6 : 1)
-                if !item.mine { Spacer(minLength: 48) }
             }
-            if showStatus { status }
+            VStack(alignment: item.mine ? .trailing : .leading, spacing: 4) {
+                if first, !item.mine, let name = item.message?.author.name, !name.isEmpty {
+                    Text(name).font(.caption).foregroundStyle(.secondary).padding(.horizontal, 4)
+                }
+                attachments
+                if !item.body.isEmpty {
+                    Text(item.body)
+                        .textSelection(.enabled)
+                        .padding(.horizontal, 12).padding(.vertical, 8)
+                        .foregroundStyle(item.mine ? Color.white : Color.primary)
+                        .background(
+                            UnevenRoundedRectangle(cornerRadii: corners, style: .continuous)
+                                .fill(item.mine ? Color.accentColor : Color.secondary.opacity(0.18)))
+                }
+                if last || item.state != .sent { footer }
+            }
+            .opacity(item.state == .sending ? 0.6 : 1)
+            if !item.mine { Spacer(minLength: 56) }
         }
-        .padding(.horizontal)
+        .padding(.horizontal, 12)
+    }
+
+    private var corners: RectangleCornerRadii {
+        let big = Self.radius, small = Self.joined
+        if item.mine {
+            return .init(
+                topLeading: big, bottomLeading: big, bottomTrailing: last ? big : small, topTrailing: first ? big : small)
+        }
+        return .init(
+            topLeading: first ? big : small, bottomLeading: last ? big : small, bottomTrailing: big, topTrailing: big)
+    }
+
+    private func authorInitials(_ author: YuvaMessageAuthor) -> String {
+        if let initials = author.initials, !initials.isEmpty { return initials }
+        return String((author.name ?? "").prefix(1)).uppercased()
     }
 
     @ViewBuilder
@@ -545,24 +622,33 @@ struct MessageRow: View {
             ForEach(Array(item.uploads.enumerated()), id: \.offset) { _, upload in
                 if let image = PlatformImage(data: upload.data) {
                     Image(platformImage: image).resizable().scaledToFit()
-                        .frame(maxWidth: 220, maxHeight: 260).clipShape(RoundedRectangle(cornerRadius: 12))
+                        .frame(maxWidth: 220, maxHeight: 260).clipShape(RoundedRectangle(cornerRadius: 14))
                 }
             }
         }
+    }
+
+    private var footer: some View {
+        HStack(spacing: 4) {
+            Text(ShortTime.clock(item.createdAt))
+            if showStatus { status }
+        }
+        .font(.caption2).foregroundStyle(.secondary)
+        .padding(.horizontal, 4)
     }
 
     @ViewBuilder
     private var status: some View {
         switch item.state {
         case .sending:
-            Text(L.t("thread.sending")).font(.caption2).foregroundStyle(.secondary)
+            Text("· " + L.t("thread.sending"))
         case .failed:
             Button(action: retry) {
                 Label(L.t("thread.failed"), systemImage: "exclamationmark.circle")
             }
-            .font(.caption2).foregroundStyle(.red).buttonStyle(.plain)
+            .foregroundStyle(.red).buttonStyle(.plain)
         case .sent:
-            Text(seen ? L.t("thread.seen") : L.t("thread.sent")).font(.caption2).foregroundStyle(.secondary)
+            Text("· " + (seen ? L.t("thread.seen") : L.t("thread.sent")))
                 .accessibilityIdentifier(seen ? "yuva.thread.seen" : "yuva.thread.sent")
         }
     }

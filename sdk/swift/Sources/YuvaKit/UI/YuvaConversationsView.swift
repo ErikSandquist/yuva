@@ -137,8 +137,12 @@ public struct YuvaConversationsView: View {
     public var body: some View {
         NavigationStack(path: $path) {
             content
-                .navigationTitle(section == .feedback ? L.t("feedback.kind") : L.t("conversations.title"))
+                .navigationTitle(navigationTitle)
+                #if os(iOS)
+                .navigationBarTitleDisplayMode(.inline)
+                #endif
                 .toolbar {
+                    ToolbarItem(placement: .principal) { titleView }
                     ToolbarItem(placement: .primaryAction) {
                         if section == .feedback {
                             Button {
@@ -183,6 +187,27 @@ public struct YuvaConversationsView: View {
         }
     }
 
+    private var showsFeedback: Bool { section == .feedback || section == nil && tab == .feedback }
+
+    private var navigationTitle: String {
+        if showsFeedback { return L.t("feedback.kind") }
+        return model.session?.inbox.name ?? L.t("conversations.title")
+    }
+
+    @ViewBuilder
+    private var titleView: some View {
+        if !showsFeedback, let inbox = model.session?.inbox {
+            VStack(spacing: 0) {
+                Text(inbox.name).font(.headline).lineLimit(1)
+                Text(PresenceHeader.status(inbox)).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+            }
+            .accessibilityElement(children: .combine)
+            .accessibilityAddTraits(.isHeader)
+        } else {
+            Text(navigationTitle).font(.headline).lineLimit(1).accessibilityAddTraits(.isHeader)
+        }
+    }
+
     @ViewBuilder
     private var content: some View {
         if model.loading {
@@ -195,7 +220,7 @@ public struct YuvaConversationsView: View {
             }
         } else if section == .feedback && model.feedback.isEmpty {
             ContentUnavailableView {
-                Label(L.t("feedback.kind"), systemImage: "lightbulb")
+                Label(L.t("feedback.kind"), systemImage: "lightbulb.fill")
             } actions: {
                 Button(L.t("feedback.title")) { sendingFeedback = true }
                     .buttonStyle(.borderedProminent)
@@ -203,7 +228,7 @@ public struct YuvaConversationsView: View {
         } else if section == .messages && model.messages.isEmpty
             || section == nil && model.messages.isEmpty && !model.hasFeedback {
             ContentUnavailableView {
-                Label(L.t("conversations.empty"), systemImage: "bubble.left.and.bubble.right")
+                Label(L.t("conversations.empty"), systemImage: "bubble.left.and.bubble.right.fill")
             } description: {
                 Text(L.t("conversations.emptyHint"))
             } actions: {
@@ -212,7 +237,7 @@ public struct YuvaConversationsView: View {
             }
         } else {
             let items = model.items(tab)
-            List {
+            VStack(spacing: 0) {
                 if section == nil && model.hasFeedback {
                     Picker("", selection: $tab) {
                         Text(L.t("conversations.messages")).tag(ConversationsTab.messages)
@@ -220,28 +245,37 @@ public struct YuvaConversationsView: View {
                     }
                     .pickerStyle(.segmented)
                     .labelsHidden()
-                    .listRowSeparator(.hidden)
+                    .padding(.horizontal, 16).padding(.bottom, 8)
                     .accessibilityIdentifier("yuva.conversations.tabs")
                 }
-                if tab == .messages, let inbox = model.session?.inbox {
-                    PresenceHeader(inbox: inbox)
-                }
-                ForEach(items) { conversation in
-                    NavigationLink(value: ThreadRoute.conversation(conversation.id)) {
+                List(items) { conversation in
+                    Button {
+                        path.append(.conversation(conversation.id))
+                    } label: {
                         if conversation.isFeedback {
                             FeedbackRow(conversation: conversation)
                         } else {
-                            ConversationRow(conversation: conversation)
+                            ConversationRow(conversation: conversation, inbox: model.session?.inbox)
                         }
                     }
+                    .buttonStyle(.plain)
+                    .listRowInsets(EdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 16))
+                    .alignmentGuide(.listRowSeparatorLeading) { $0[.leading] + ConversationRowMetrics.separatorInset }
                     .onAppear {
                         if conversation.id == items.last?.id { Task { await model.loadMore(tab) } }
                     }
                 }
+                .listStyle(.plain)
+                .refreshable { await model.load() }
             }
-            .refreshable { await model.load() }
         }
     }
+}
+
+enum ConversationRowMetrics {
+    static let avatar: CGFloat = 48
+    static let spacing: CGFloat = 12
+    static let separatorInset: CGFloat = avatar + spacing
 }
 
 struct PresenceHeader: View {
@@ -273,39 +307,68 @@ struct PresenceHeader: View {
     }
 }
 
-struct ConversationRow: View {
-    let conversation: YuvaConversation
+struct UnreadDot: View {
+    var body: some View {
+        Circle().fill(Color.accentColor).frame(width: 10, height: 10)
+            .accessibilityLabel(L.t("conversations.unread"))
+    }
+}
+
+struct RowLayout<Leading: View, Extra: View>: View {
+    let title: String
+    let preview: String
+    let date: Date
+    let unread: Bool
+    var previewLines = 2
+    @ViewBuilder let leading: Leading
+    @ViewBuilder let extra: Extra
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack {
-                Text(title).font(.headline).lineLimit(1)
-                Spacer()
-                if let date = conversation.lastMessageAt ?? Optional(conversation.createdAt) {
-                    Text(date, format: .relative(presentation: .named)).font(.caption).foregroundStyle(.secondary)
+        HStack(alignment: .top, spacing: ConversationRowMetrics.spacing) {
+            leading
+            VStack(alignment: .leading, spacing: 2) {
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Text(title).font(.headline.weight(unread ? .bold : .semibold)).lineLimit(1)
+                    Spacer(minLength: 0)
+                    Text(ShortTime.string(date)).font(.subheadline)
+                        .foregroundStyle(unread ? Color.accentColor : .secondary)
                 }
-            }
-            HStack {
-                Text(preview).font(.subheadline).foregroundStyle(.secondary).lineLimit(2)
-                Spacer()
-                if conversation.unread {
-                    Circle().fill(Color.accentColor).frame(width: 10, height: 10)
-                        .accessibilityLabel(L.t("conversations.unread"))
+                HStack(alignment: .top, spacing: 8) {
+                    Text(preview).font(.subheadline).foregroundStyle(.secondary)
+                        .lineLimit(previewLines, reservesSpace: false)
+                        .multilineTextAlignment(.leading)
+                    Spacer(minLength: 0)
+                    if unread { UnreadDot().padding(.top, 4) }
                 }
+                extra
             }
+        }
+        .contentShape(Rectangle())
+    }
+}
+
+struct ConversationRow: View {
+    let conversation: YuvaConversation
+    var inbox: YuvaInbox?
+
+    var body: some View {
+        RowLayout(
+            title: title, preview: preview, date: conversation.lastMessageAt ?? conversation.createdAt,
+            unread: conversation.unread
+        ) {
+            AvatarView(
+                initials: String((inbox?.name ?? title).prefix(1)).uppercased(),
+                size: ConversationRowMetrics.avatar, imageURL: inbox?.branding.logoUrl)
+        } extra: {
             if conversation.status == .closed {
                 Text(L.t("status.closed")).font(.caption2).foregroundStyle(.secondary)
             }
         }
-        .padding(.vertical, 2)
     }
 
     private var title: String {
         if !conversation.subject.isEmpty { return conversation.subject }
-        if let feedback = conversation.feedback {
-            return L.t("feedback.kind") + " · " + L.t("feedback.category." + feedback.category.rawValue)
-        }
-        return L.t("thread.title")
+        return inbox?.name ?? L.t("thread.title")
     }
 
     private var preview: String {
@@ -314,43 +377,29 @@ struct ConversationRow: View {
     }
 }
 
-extension YuvaFeedbackState {
-    var label: String { L.t("feedback.state." + rawValue) }
-}
-
 struct FeedbackRow: View {
     let conversation: YuvaConversation
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack {
-                if let feedback = conversation.feedback {
-                    Text(L.t("feedback.category." + feedback.category.rawValue)).font(.headline).lineLimit(1)
-                } else {
-                    Text(L.t("feedback.kind")).font(.headline).lineLimit(1)
+        RowLayout(
+            title: conversation.feedback.map { L.t("feedback.category." + $0.category.rawValue) } ?? L.t("feedback.kind"),
+            preview: firstLine, date: conversation.lastMessageAt ?? conversation.createdAt,
+            unread: conversation.unread, previewLines: 1
+        ) {
+            CategoryIcon(category: conversation.feedback?.category, size: ConversationRowMetrics.avatar)
+        } extra: {
+            HStack(spacing: 8) {
+                if let state = conversation.feedbackState {
+                    FeedbackTag(text: state.label, tint: state.tint)
+                        .accessibilityIdentifier("yuva.feedback.state." + state.rawValue)
                 }
-                Spacer()
-                Text(conversation.lastMessageAt ?? conversation.createdAt, format: .relative(presentation: .named))
-                    .font(.caption).foregroundStyle(.secondary)
-            }
-            HStack {
-                Text(firstLine).font(.subheadline).foregroundStyle(.secondary).lineLimit(1)
-                Spacer()
                 if (conversation.feedback?.attachmentCount ?? 0) > 0 {
                     Image(systemName: "paperclip").font(.caption).foregroundStyle(.secondary)
                         .accessibilityLabel(L.t("feedback.attachments"))
                 }
-                if conversation.unread {
-                    Circle().fill(Color.accentColor).frame(width: 10, height: 10)
-                        .accessibilityLabel(L.t("conversations.unread"))
-                }
             }
-            if let state = conversation.feedbackState {
-                Text(state.label).font(.caption2.weight(.medium)).foregroundStyle(.secondary)
-                    .accessibilityIdentifier("yuva.feedback.state." + state.rawValue)
-            }
+            .padding(.top, 2)
         }
-        .padding(.vertical, 2)
     }
 
     private var firstLine: String {

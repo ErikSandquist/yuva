@@ -102,13 +102,13 @@ public struct YuvaFeedbackView: View {
     private var form: some View {
         Form {
             Section(L.t("feedback.category")) {
-                Picker(L.t("feedback.category"), selection: $category) {
-                    ForEach(categories, id: \.self) { category in
-                        Text(L.t("feedback.category." + category.rawValue)).tag(category)
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 130), spacing: 8)], spacing: 8) {
+                    ForEach(categories, id: \.self) { option in
+                        categoryChip(option)
                     }
                 }
-                .pickerStyle(.segmented)
-                .labelsHidden()
+                .listRowInsets(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
+                .listRowBackground(Color.clear)
             }
             Section(L.t("feedback.message")) {
                 TextField(L.t("feedback.placeholder"), text: $message, axis: .vertical)
@@ -170,6 +170,25 @@ public struct YuvaFeedbackView: View {
                 }
             }
         }
+    }
+
+    private func categoryChip(_ option: YuvaFeedbackCategory) -> some View {
+        let selected = option == category
+        return Button {
+            category = option
+        } label: {
+            Label(L.t("feedback.category." + option.rawValue), systemImage: option.symbol)
+                .font(.subheadline.weight(.medium))
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 10)
+                .foregroundStyle(selected ? Color.white : option.tint)
+                .background(RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(selected ? option.tint : option.tint.opacity(0.14)))
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(selected ? .isSelected : [])
     }
 
     private func send() async {

@@ -58,7 +58,7 @@ enum class YuvaFeedbackState {
     companion object {
         fun of(status: YuvaConversationStatus, lastAuthor: YuvaAuthorType?): YuvaFeedbackState = when {
             status == YuvaConversationStatus.CLOSED -> RESOLVED
-            lastAuthor == YuvaAuthorType.MEMBER -> ANSWERED
+            lastAuthor?.isTeam == true -> ANSWERED
             else -> SENT
         }
     }

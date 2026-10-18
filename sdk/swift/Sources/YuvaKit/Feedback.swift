@@ -92,7 +92,7 @@ public enum YuvaFeedbackState: String, Sendable {
 
     public static func of(status: YuvaConversationStatus, lastAuthor: YuvaAuthorType?) -> YuvaFeedbackState {
         if status == .closed { return .resolved }
-        return lastAuthor == .member ? .answered : .sent
+        return lastAuthor?.isTeam == true ? .answered : .sent
     }
 }
 

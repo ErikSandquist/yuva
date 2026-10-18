@@ -44,6 +44,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.ui.draw.alpha
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -204,7 +209,7 @@ internal class ThreadState(val client: YuvaClient, conversationId: String?, priv
     private suspend fun onMessage(message: YuvaMessage) {
         if (message.conversationId != conversationId) return
         upsert(message)
-        if (message.author.type == YuvaAuthorType.MEMBER) {
+        if (message.author.type.isTeam) {
             typingName = null
             markRead()
         }
@@ -291,7 +296,7 @@ internal class ThreadState(val client: YuvaClient, conversationId: String?, priv
     suspend fun markRead() {
         val id = conversationId ?: return
         if (!visible) return
-        val last = items.lastOrNull { it.message?.author?.type == YuvaAuthorType.MEMBER }?.message ?: return
+        val last = items.lastOrNull { it.message?.author?.type?.isTeam == true }?.message ?: return
         runCatching { client.markRead(id, last.id) }
     }
 
@@ -387,7 +392,7 @@ fun YuvaThreadView(
                 LazyColumn(
                     state = listState,
                     modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(6.dp, Alignment.Bottom),
+                    verticalArrangement = Arrangement.Bottom,
                 ) {
                     if (state.olderCursor != null) {
                         item(key = "older") {
@@ -402,25 +407,51 @@ fun YuvaThreadView(
                     }
                     val lastMine = state.items.lastOrNull { it.mine }?.id
                     val seen = state.seenMessageId
-                    items(state.items, key = { it.id }) { item ->
+                    val rows = threadRows(state.items)
+                    items(rows, key = { it.item.id }) { row ->
+                        val item = row.item
+                        if (row.startsDay) {
+                            Text(
+                                ShortTime.separator(context, item.createdAt),
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.fillMaxWidth().padding(top = 16.dp, bottom = 8.dp),
+                            )
+                        }
                         MessageRow(
                             item = item,
                             client = client,
+                            first = row.first,
+                            last = row.last,
                             seen = item.id == seen,
                             showStatus = item.mine && (item.id == lastMine || item.state != DeliveryState.SENT),
                             onRetry = { state.retry(item.id) },
+                            modifier = Modifier.padding(top = if (row.first && !row.startsDay) 10.dp else 2.dp),
                         )
                     }
                     if (state.feedbackState == YuvaFeedbackState.RESOLVED) {
                         item(key = "resolved") {
-                            Text(
-                                stringResource(R.string.yuva_feedback_resolved_note),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 8.dp)
+                            Row(
+                                Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 16.dp)
                                     .testTag("yuva.feedback.resolvedNote"),
-                            )
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Icon(
+                                    Icons.Default.CheckCircle,
+                                    contentDescription = null,
+                                    tint = stateTint(YuvaFeedbackState.RESOLVED),
+                                    modifier = Modifier.size(18.dp),
+                                )
+                                Spacer(Modifier.size(8.dp))
+                                Text(
+                                    stringResource(R.string.yuva_feedback_resolved_note),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    textAlign = TextAlign.Center,
+                                )
+                            }
                         }
                     }
                     if (state.showsRating) {
@@ -440,7 +471,7 @@ fun YuvaThreadView(
                 }
                 if (state.loading) CircularProgressIndicator(Modifier.align(Alignment.Center))
             }
-            Surface(tonalElevation = 2.dp) {
+            Surface(tonalElevation = 1.dp) {
                 Column(Modifier.padding(vertical = 8.dp)) {
                     if (uploads.isNotEmpty()) {
                         LazyRow(
@@ -461,12 +492,13 @@ fun YuvaThreadView(
                             }
                         }
                     }
-                    Row(Modifier.padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Row(Modifier.padding(horizontal = 8.dp), verticalAlignment = Alignment.Bottom) {
                         IconButton(onClick = {
                             picker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                         }) {
                             Icon(Icons.Default.Add, contentDescription = stringResource(R.string.yuva_thread_attach))
                         }
+                        val canSend = text.isNotBlank() || uploads.isNotEmpty()
                         OutlinedTextField(
                             value = text,
                             onValueChange = {
@@ -475,20 +507,32 @@ fun YuvaThreadView(
                             },
                             placeholder = { Text(stringResource(R.string.yuva_thread_placeholder)) },
                             maxLines = 5,
-                            shape = RoundedCornerShape(20.dp),
+                            shape = RoundedCornerShape(24.dp),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+                                unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                                focusedContainerColor = MaterialTheme.colorScheme.surface,
+                            ),
+                            trailingIcon = {
+                                IconButton(
+                                    onClick = {
+                                        state.send(text, uploads.toList())
+                                        text = ""
+                                        uploads.clear()
+                                    },
+                                    enabled = canSend,
+                                    colors = IconButtonDefaults.filledIconButtonColors(),
+                                    modifier = Modifier.testTag("yuva.thread.send"),
+                                ) {
+                                    Icon(
+                                        Icons.AutoMirrored.Filled.Send,
+                                        contentDescription = stringResource(R.string.yuva_thread_send),
+                                        modifier = Modifier.size(20.dp),
+                                    )
+                                }
+                            },
                             modifier = Modifier.weight(1f).testTag("yuva.thread.input"),
                         )
-                        IconButton(
-                            onClick = {
-                                state.send(text, uploads.toList())
-                                text = ""
-                                uploads.clear()
-                            },
-                            enabled = text.isNotBlank() || uploads.isNotEmpty(),
-                            modifier = Modifier.testTag("yuva.thread.send"),
-                        ) {
-                            Icon(Icons.AutoMirrored.Filled.Send, contentDescription = stringResource(R.string.yuva_thread_send))
-                        }
                     }
                 }
             }
@@ -498,21 +542,26 @@ fun YuvaThreadView(
 
 @Composable
 private fun FeedbackHeader(category: YuvaFeedbackCategory?, state: YuvaFeedbackState) {
-    Row(
-        Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            category?.let { stringResource(categoryLabel(it)) }.orEmpty(),
-            style = MaterialTheme.typography.titleSmall,
-            modifier = Modifier.weight(1f),
-        )
-        Text(
-            stringResource(stateLabel(state)),
-            style = MaterialTheme.typography.labelLarge,
-            modifier = Modifier.testTag("yuva.feedback.state." + state.name.lowercase()),
-        )
+    Column {
+        Row(
+            Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surfaceContainer)
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            CategoryIcon(category, 32.dp)
+            Spacer(Modifier.size(10.dp))
+            Text(
+                category?.let { stringResource(categoryLabel(it)) }.orEmpty(),
+                style = MaterialTheme.typography.titleSmall,
+                modifier = Modifier.weight(1f),
+            )
+            FeedbackTag(
+                stringResource(stateLabel(state)),
+                stateTint(state),
+                Modifier.testTag("yuva.feedback.state." + state.name.lowercase()),
+            )
+        }
+        HorizontalDivider()
     }
 }
 
@@ -614,69 +663,128 @@ private fun ratingEmoji(rating: YuvaRating) = if (rating == YuvaRating.GOOD) "�
 private fun ratingLabel(rating: YuvaRating) =
     if (rating == YuvaRating.GOOD) R.string.yuva_rating_good else R.string.yuva_rating_bad
 
+internal data class ThreadRowInfo(val item: ThreadItem, val startsDay: Boolean, val first: Boolean, val last: Boolean)
+
+private const val GROUP_GAP_MS = 5 * 60 * 1000L
+
+private fun senderKey(item: ThreadItem): String {
+    if (item.mine) return "me"
+    val author = item.message?.author ?: return ""
+    return author.type.wire + ":" + author.name.orEmpty()
+}
+
+private fun joined(a: ThreadItem, b: ThreadItem): Boolean =
+    senderKey(a) == senderKey(b) && b.createdAt.toEpochMilli() - a.createdAt.toEpochMilli() < GROUP_GAP_MS
+
+internal fun threadRows(items: List<ThreadItem>): List<ThreadRowInfo> = items.mapIndexed { index, item ->
+    val previous = items.getOrNull(index - 1)
+    val next = items.getOrNull(index + 1)
+    val startsDay = previous == null || !ShortTime.sameDay(previous.createdAt, item.createdAt)
+    val joinsPrevious = previous != null && !startsDay && joined(previous, item)
+    val joinsNext = next != null && ShortTime.sameDay(item.createdAt, next.createdAt) && joined(item, next)
+    ThreadRowInfo(item, startsDay, first = !joinsPrevious, last = !joinsNext)
+}
+
+private val BubbleRadius = 18.dp
+private val BubbleJoined = 5.dp
+private val ThreadAvatar = 28.dp
+
 @Composable
-private fun MessageRow(item: ThreadItem, client: YuvaClient, seen: Boolean, showStatus: Boolean, onRetry: () -> Unit) {
+private fun MessageRow(
+    item: ThreadItem,
+    client: YuvaClient,
+    first: Boolean,
+    last: Boolean,
+    seen: Boolean,
+    showStatus: Boolean,
+    onRetry: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val context = LocalContext.current
     val mine = item.mine
-    Column(
-        Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-        horizontalAlignment = if (mine) Alignment.End else Alignment.Start,
+    val author = item.message?.author
+    Row(
+        modifier.fillMaxWidth().padding(horizontal = 12.dp),
+        horizontalArrangement = if (mine) Arrangement.End else Arrangement.Start,
+        verticalAlignment = Alignment.Bottom,
     ) {
-        Row(verticalAlignment = Alignment.Bottom) {
-            val author = item.message?.author
-            if (!mine && author?.type == YuvaAuthorType.MEMBER) {
-                Avatar(author.initials.orEmpty())
-                Spacer(Modifier.size(6.dp))
+        if (!mine && author != null) {
+            if (first) {
+                Avatar(author.initials?.takeIf { it.isNotEmpty() } ?: author.name.orEmpty().take(1).uppercase(), ThreadAvatar)
+            } else {
+                Spacer(Modifier.size(ThreadAvatar))
             }
-            Column(
-                horizontalAlignment = if (mine) Alignment.End else Alignment.Start,
-                modifier = Modifier.widthIn(max = 300.dp),
-            ) {
-                val authorName = author?.name
-                if (!mine && !authorName.isNullOrEmpty()) {
-                    Text(authorName, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-                val message = item.message
-                if (message != null) {
-                    message.attachments.forEach { attachment ->
-                        if (attachment.isImage) AttachmentImage(client, attachment.id) else FileChip(client, attachment)
-                        Spacer(Modifier.size(4.dp))
-                    }
-                } else {
-                    item.uploads.forEach { upload ->
-                        UploadImage(upload, Modifier.widthIn(max = 220.dp).heightIn(max = 260.dp).clip(RoundedCornerShape(12.dp)))
-                        Spacer(Modifier.size(4.dp))
-                    }
-                }
-                if (item.body.isNotEmpty()) {
-                    SelectionContainer {
-                        Text(
-                            item.body,
-                            color = if (mine) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(18.dp))
-                                .background(if (mine) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant)
-                                .padding(horizontal = 12.dp, vertical = 8.dp),
-                        )
-                    }
-                }
-            }
+            Spacer(Modifier.size(8.dp))
         }
-        if (showStatus) {
-            val style = MaterialTheme.typography.labelSmall
-            when (item.state) {
-                DeliveryState.SENDING -> Text(stringResource(R.string.yuva_thread_sending), style = style)
-                DeliveryState.FAILED -> Text(
-                    stringResource(R.string.yuva_thread_failed),
-                    style = style,
-                    color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.clickable(onClick = onRetry),
-                )
-                DeliveryState.SENT -> Text(
-                    stringResource(if (seen) R.string.yuva_thread_seen else R.string.yuva_thread_sent),
-                    style = style,
+        Column(
+            horizontalAlignment = if (mine) Alignment.End else Alignment.Start,
+            modifier = Modifier.widthIn(max = 300.dp),
+        ) {
+            val authorName = author?.name
+            if (first && !mine && !authorName.isNullOrEmpty()) {
+                Text(
+                    authorName,
+                    style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.testTag(if (seen) "yuva.thread.seen" else "yuva.thread.sent"),
+                    modifier = Modifier.padding(start = 4.dp, bottom = 2.dp),
                 )
+            }
+            val message = item.message
+            if (message != null) {
+                message.attachments.forEach { attachment ->
+                    if (attachment.isImage) AttachmentImage(client, attachment.id) else FileChip(client, attachment)
+                    Spacer(Modifier.size(4.dp))
+                }
+            } else {
+                item.uploads.forEach { upload ->
+                    UploadImage(upload, Modifier.widthIn(max = 220.dp).heightIn(max = 260.dp).clip(RoundedCornerShape(14.dp)))
+                    Spacer(Modifier.size(4.dp))
+                }
+            }
+            if (item.body.isNotEmpty()) {
+                val big = BubbleRadius
+                val small = BubbleJoined
+                val shape = if (mine) {
+                    RoundedCornerShape(topStart = big, topEnd = if (first) big else small, bottomEnd = if (last) big else small, bottomStart = big)
+                } else {
+                    RoundedCornerShape(topStart = if (first) big else small, topEnd = big, bottomEnd = big, bottomStart = if (last) big else small)
+                }
+                SelectionContainer {
+                    Text(
+                        item.body,
+                        color = if (mine) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier
+                            .alpha(if (item.state == DeliveryState.SENDING) 0.6f else 1f)
+                            .clip(shape)
+                            .background(if (mine) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceContainerHigh)
+                            .padding(horizontal = 12.dp, vertical = 8.dp),
+                    )
+                }
+            }
+            if (last || item.state != DeliveryState.SENT) {
+                val style = MaterialTheme.typography.labelSmall
+                val subtle = MaterialTheme.colorScheme.onSurfaceVariant
+                Row(Modifier.padding(horizontal = 4.dp, vertical = 2.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Text(ShortTime.clock(context, item.createdAt), style = style, color = subtle)
+                    if (showStatus) {
+                        when (item.state) {
+                            DeliveryState.SENDING ->
+                                Text(" · " + stringResource(R.string.yuva_thread_sending), style = style, color = subtle)
+                            DeliveryState.FAILED -> Text(
+                                " · " + stringResource(R.string.yuva_thread_failed),
+                                style = style,
+                                color = MaterialTheme.colorScheme.error,
+                                modifier = Modifier.clickable(onClick = onRetry),
+                            )
+                            DeliveryState.SENT -> Text(
+                                " · " + stringResource(if (seen) R.string.yuva_thread_seen else R.string.yuva_thread_sent),
+                                style = style,
+                                color = subtle,
+                                modifier = Modifier.testTag(if (seen) "yuva.thread.seen" else "yuva.thread.sent"),
+                            )
+                        }
+                    }
+                }
             }
         }
     }

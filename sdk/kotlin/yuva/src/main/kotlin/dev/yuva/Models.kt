@@ -24,11 +24,23 @@ enum class YuvaConversationStatus {
     @SerialName("closed") CLOSED,
 }
 
-@Serializable
-enum class YuvaAuthorType {
-    @SerialName("contact") CONTACT,
-    @SerialName("member") MEMBER,
-    @SerialName("system") SYSTEM,
+@Serializable(with = AuthorTypeSerializer::class)
+enum class YuvaAuthorType(internal val wire: String) {
+    CONTACT("contact"),
+    MEMBER("member"),
+    BOT("bot"),
+    SYSTEM("system");
+
+    internal val isTeam: Boolean get() = this == MEMBER || this == BOT
+}
+
+internal object AuthorTypeSerializer : KSerializer<YuvaAuthorType> {
+    override val descriptor = PrimitiveSerialDescriptor("YuvaAuthorType", PrimitiveKind.STRING)
+    override fun serialize(encoder: Encoder, value: YuvaAuthorType) = encoder.encodeString(value.wire)
+    override fun deserialize(decoder: Decoder): YuvaAuthorType {
+        val raw = decoder.decodeString()
+        return YuvaAuthorType.entries.firstOrNull { it.wire == raw } ?: YuvaAuthorType.SYSTEM
+    }
 }
 
 @Serializable

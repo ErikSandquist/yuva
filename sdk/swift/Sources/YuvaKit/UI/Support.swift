@@ -72,6 +72,7 @@ enum ImageUpload {
 struct AvatarView: View {
     let initials: String
     var size: CGFloat = 28
+    var imageURL: String?
 
     var body: some View {
         Text(initials.isEmpty ? "?" : initials)
@@ -79,6 +80,107 @@ struct AvatarView: View {
             .foregroundStyle(.white)
             .frame(width: size, height: size)
             .background(Circle().fill(Color.accentColor.gradient))
+            .overlay {
+                if let url = imageURL.flatMap(URL.init(string:)), url.scheme?.hasPrefix("http") == true {
+                    AsyncImage(url: url) { phase in
+                        if let image = phase.image { image.resizable().scaledToFill() }
+                    }
+                    .clipShape(Circle())
+                }
+            }
+            .accessibilityHidden(true)
+    }
+}
+
+struct CategoryIcon: View {
+    let category: YuvaFeedbackCategory?
+    var size: CGFloat = 44
+
+    var body: some View {
+        Image(systemName: category?.symbol ?? "bubble.left.fill")
+            .font(.system(size: size * 0.42, weight: .semibold))
+            .foregroundStyle(.white)
+            .frame(width: size, height: size)
+            .background(Circle().fill((category?.tint ?? .gray).gradient))
+            .accessibilityHidden(true)
+    }
+}
+
+extension YuvaFeedbackCategory {
+    var symbol: String {
+        switch self {
+        case .bug: "ladybug.fill"
+        case .idea: "lightbulb.fill"
+        case .praise: "heart.fill"
+        case .other: "ellipsis.bubble.fill"
+        }
+    }
+
+    var tint: Color {
+        switch self {
+        case .bug: .red
+        case .idea: .orange
+        case .praise: .pink
+        case .other: .gray
+        }
+    }
+}
+
+struct FeedbackTag: View {
+    let text: String
+    let tint: Color
+
+    var body: some View {
+        Text(text)
+            .font(.caption2.weight(.semibold))
+            .foregroundStyle(tint)
+            .padding(.horizontal, 8).padding(.vertical, 3)
+            .background(Capsule().fill(tint.opacity(0.15)))
+    }
+}
+
+extension YuvaFeedbackState {
+    var label: String { L.t("feedback.state." + rawValue) }
+
+    var tint: Color {
+        switch self {
+        case .sent: .secondary
+        case .answered: .accentColor
+        case .resolved: .green
+        }
+    }
+}
+
+enum ShortTime {
+    static func string(_ date: Date, now: Date = Date(), calendar: Calendar = .current) -> String {
+        if calendar.isDate(date, inSameDayAs: now) {
+            return date.formatted(date: .omitted, time: .shortened)
+        }
+        if calendar.isDate(date, inSameDayAs: calendar.date(byAdding: .day, value: -1, to: now) ?? now) {
+            return relativeDay(date, style: .short)
+        }
+        let start = calendar.startOfDay(for: now)
+        if let days = calendar.dateComponents([.day], from: calendar.startOfDay(for: date), to: start).day,
+           days > 0, days < 7 {
+            return date.formatted(.dateTime.weekday(.wide))
+        }
+        return date.formatted(date: .numeric, time: .omitted)
+    }
+
+    static func daySeparator(_ date: Date) -> String {
+        relativeDay(date, style: .medium)
+    }
+
+    static func clock(_ date: Date) -> String {
+        date.formatted(date: .omitted, time: .shortened)
+    }
+
+    private static func relativeDay(_ date: Date, style: DateFormatter.Style) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = style
+        formatter.timeStyle = .none
+        formatter.doesRelativeDateFormatting = true
+        return formatter.string(from: date)
     }
 }
 
