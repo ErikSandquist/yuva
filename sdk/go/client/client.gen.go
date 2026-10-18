@@ -7648,7 +7648,9 @@ type ClientConversationStatus struct {
 	// CanRate As on `ClientConversation`.
 	CanRate bool `json:"can_rate"`
 
-	// FeedbackProgress `feedback` conversations only: `feedback.progress` now; absent when not set.
+	// FeedbackProgress `feedback` conversations only: `feedback.progress` now. Every frame carries the current
+	// value, so an absent `feedback_progress` means none (cleared): replace the shown progress
+	// with the frame's, do not merge.
 	FeedbackProgress *FeedbackProgress  `json:"feedback_progress,omitempty"`
 	Id               uuid.UUID          `json:"id"`
 	Rating           *Rating            `json:"rating,omitempty"`
@@ -8825,8 +8827,8 @@ type ConversationUpdate struct {
 	// AssigneeId A member with access to the inbox; `null` unassigns.
 	AssigneeId nullable.Nullable[uuid.UUID] `json:"assignee_id,omitempty"`
 
-	// FeedbackProgress `feedback` conversations only (`409 not_feedback` otherwise): sets `feedback.progress`;
-	// `null` clears it.
+	// FeedbackProgress `feedback` conversations only: sets `feedback.progress`; `null` clears it. A value on
+	// another kind is refused with `409 not_feedback`; `null` there changes nothing.
 	FeedbackProgress nullable.Nullable[FeedbackProgress] `json:"feedback_progress,omitempty"`
 
 	// Labels Replaces the labels.
@@ -23360,7 +23362,7 @@ type ClientInterface interface {
 	//
 	// Changes to the assignee, the status, the labels and a feedback's progress are recorded as
 	// `event` messages. `snooze_until` is required with status `snoozed` and cleared by any other
-	// status. `feedback_progress` is refused with `409 not_feedback` on a conversation whose
+	// status. A `feedback_progress` value is refused with `409 not_feedback` on a conversation whose
 	// `kind` is not `feedback`.
 	//
 	// Scope: `conversations:write`.
@@ -23374,7 +23376,7 @@ type ClientInterface interface {
 	//
 	// Changes to the assignee, the status, the labels and a feedback's progress are recorded as
 	// `event` messages. `snooze_until` is required with status `snoozed` and cleared by any other
-	// status. `feedback_progress` is refused with `409 not_feedback` on a conversation whose
+	// status. A `feedback_progress` value is refused with `409 not_feedback` on a conversation whose
 	// `kind` is not `feedback`.
 	//
 	// Scope: `conversations:write`.
@@ -31288,7 +31290,7 @@ func (c *Client) GetConversation(ctx context.Context, conversationId Conversatio
 //
 // Changes to the assignee, the status, the labels and a feedback's progress are recorded as
 // `event` messages. `snooze_until` is required with status `snoozed` and cleared by any other
-// status. `feedback_progress` is refused with `409 not_feedback` on a conversation whose
+// status. A `feedback_progress` value is refused with `409 not_feedback` on a conversation whose
 // `kind` is not `feedback`.
 //
 // Scope: `conversations:write`.
@@ -31312,7 +31314,7 @@ func (c *Client) UpdateConversationWithBody(ctx context.Context, conversationId 
 //
 // Changes to the assignee, the status, the labels and a feedback's progress are recorded as
 // `event` messages. `snooze_until` is required with status `snoozed` and cleared by any other
-// status. `feedback_progress` is refused with `409 not_feedback` on a conversation whose
+// status. A `feedback_progress` value is refused with `409 not_feedback` on a conversation whose
 // `kind` is not `feedback`.
 //
 // Scope: `conversations:write`.
@@ -57978,7 +57980,7 @@ type ClientWithResponsesInterface interface {
 	//
 	// Changes to the assignee, the status, the labels and a feedback's progress are recorded as
 	// `event` messages. `snooze_until` is required with status `snoozed` and cleared by any other
-	// status. `feedback_progress` is refused with `409 not_feedback` on a conversation whose
+	// status. A `feedback_progress` value is refused with `409 not_feedback` on a conversation whose
 	// `kind` is not `feedback`.
 	//
 	// Scope: `conversations:write`.
@@ -57992,7 +57994,7 @@ type ClientWithResponsesInterface interface {
 	//
 	// Changes to the assignee, the status, the labels and a feedback's progress are recorded as
 	// `event` messages. `snooze_until` is required with status `snoozed` and cleared by any other
-	// status. `feedback_progress` is refused with `409 not_feedback` on a conversation whose
+	// status. A `feedback_progress` value is refused with `409 not_feedback` on a conversation whose
 	// `kind` is not `feedback`.
 	//
 	// Scope: `conversations:write`.
@@ -86005,7 +86007,7 @@ func (c *ClientWithResponses) GetConversationWithResponse(ctx context.Context, c
 //
 // Changes to the assignee, the status, the labels and a feedback's progress are recorded as
 // `event` messages. `snooze_until` is required with status `snoozed` and cleared by any other
-// status. `feedback_progress` is refused with `409 not_feedback` on a conversation whose
+// status. A `feedback_progress` value is refused with `409 not_feedback` on a conversation whose
 // `kind` is not `feedback`.
 //
 // Scope: `conversations:write`.
@@ -86025,7 +86027,7 @@ func (c *ClientWithResponses) UpdateConversationWithBodyWithResponse(ctx context
 //
 // Changes to the assignee, the status, the labels and a feedback's progress are recorded as
 // `event` messages. `snooze_until` is required with status `snoozed` and cleared by any other
-// status. `feedback_progress` is refused with `409 not_feedback` on a conversation whose
+// status. A `feedback_progress` value is refused with `409 not_feedback` on a conversation whose
 // `kind` is not `feedback`.
 //
 // Scope: `conversations:write`.
