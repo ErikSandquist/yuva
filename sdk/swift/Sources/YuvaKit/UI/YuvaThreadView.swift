@@ -120,8 +120,14 @@ final class ThreadModel {
     }
 
     var showsRating: Bool {
-        guard let conversation, conversation.status == .closed else { return false }
+        guard let conversation, !conversation.isFeedback, conversation.status == .closed else { return false }
         return conversation.canRate || conversation.rating != nil
+    }
+
+    var feedbackState: YuvaFeedbackState? {
+        guard let conversation, conversation.isFeedback else { return nil }
+        let last = items.last(where: { $0.message != nil })?.message?.author.type ?? conversation.lastMessage?.authorType
+        return .of(status: conversation.status, lastAuthor: last)
     }
 
     func rate(_ rating: YuvaRating, comment: String?) async {
@@ -238,6 +244,9 @@ public struct YuvaThreadView: View {
                     .font(.caption).foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity).padding(4).background(.bar)
             }
+            if let state = model.feedbackState {
+                FeedbackHeader(category: model.conversation?.feedback?.category, state: state)
+            }
             messages
             composer
         }
@@ -259,6 +268,7 @@ public struct YuvaThreadView: View {
 
     private var title: String {
         if let subject = model.conversation?.subject, !subject.isEmpty { return subject }
+        if model.conversation?.isFeedback == true { return L.t("feedback.kind") }
         return model.inbox?.name ?? L.t("thread.title")
     }
 
@@ -280,6 +290,13 @@ public struct YuvaThreadView: View {
                             model.retry(item.id)
                         }
                         .id(item.id)
+                    }
+                    if model.feedbackState == .resolved {
+                        Text(L.t("feedback.resolvedNote"))
+                            .font(.footnote).foregroundStyle(.secondary).multilineTextAlignment(.center)
+                            .frame(maxWidth: .infinity).padding(.horizontal, 24).padding(.vertical, 8)
+                            .id("resolved")
+                            .accessibilityIdentifier("yuva.feedback.resolvedNote")
                     }
                     if model.showsRating {
                         RatingCard(model: model).id("rating")
@@ -384,6 +401,26 @@ public struct YuvaThreadView: View {
                 }
             }
         }
+    }
+}
+
+struct FeedbackHeader: View {
+    let category: YuvaFeedbackCategory?
+    let state: YuvaFeedbackState
+
+    var body: some View {
+        HStack {
+            if let category {
+                Text(L.t("feedback.category." + category.rawValue)).font(.subheadline.weight(.semibold))
+            }
+            Spacer()
+            Text(state.label).font(.caption.weight(.medium))
+                .padding(.horizontal, 10).padding(.vertical, 4)
+                .background(Capsule().fill(.quaternary))
+                .accessibilityIdentifier("yuva.feedback.state." + state.rawValue)
+        }
+        .padding(.horizontal).padding(.vertical, 8)
+        .background(.bar)
     }
 }
 

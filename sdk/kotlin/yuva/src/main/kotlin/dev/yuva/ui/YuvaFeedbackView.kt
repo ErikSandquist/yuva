@@ -1,5 +1,6 @@
 package dev.yuva.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -53,6 +54,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import dev.yuva.R
 import dev.yuva.YuvaClient
+import dev.yuva.YuvaConversation
 import dev.yuva.YuvaEvent
 import dev.yuva.YuvaFeedback
 import dev.yuva.YuvaFeedbackCategory
@@ -70,6 +72,7 @@ fun YuvaFeedbackView(
     modifier: Modifier = Modifier,
     screenshot: YuvaUpload? = null,
     screen: String? = null,
+    onViewFeedback: ((YuvaConversation) -> Unit)? = null,
     onDone: () -> Unit = {},
 ) {
     val context = LocalContext.current
@@ -83,6 +86,8 @@ fun YuvaFeedbackView(
     var email by remember { mutableStateOf("") }
     var sending by remember { mutableStateOf(false) }
     var sent by remember { mutableStateOf(false) }
+    var started by remember { mutableStateOf<YuvaConversation?>(null) }
+    var viewing by remember { mutableStateOf<String?>(null) }
     var failure by remember { mutableStateOf<Int?>(null) }
     val clientId = remember { UUID.randomUUID().toString() }
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(10)) { uris ->
@@ -109,6 +114,12 @@ fun YuvaFeedbackView(
     val needsEmail = allowEmail && knownEmail == null
     val canSend = !sending && (message.isNotBlank() || screenshots.isNotEmpty()) && (!needsEmail || "@" in email)
 
+    viewing?.let { id ->
+        BackHandler { viewing = null }
+        YuvaThreadView(client, id, modifier, onBack = { viewing = null })
+        return
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -127,7 +138,7 @@ fun YuvaFeedbackView(
                                     sending = true
                                     failure = null
                                     try {
-                                        client.sendFeedback(
+                                        val result = client.sendFeedback(
                                             YuvaFeedback(
                                                 category = category,
                                                 body = message.trim(),
@@ -138,6 +149,7 @@ fun YuvaFeedbackView(
                                                 clientId = clientId,
                                             ),
                                         )
+                                        started = result.conversation
                                         sent = true
                                     } catch (error: CancellationException) {
                                         throw error
@@ -161,6 +173,10 @@ fun YuvaFeedbackView(
                     hint = stringResource(R.string.yuva_feedback_sent_hint),
                     action = stringResource(R.string.yuva_feedback_done),
                     onAction = onDone,
+                    secondaryAction = stringResource(R.string.yuva_feedback_view).takeIf { started != null },
+                    onSecondaryAction = {
+                        started?.let { if (onViewFeedback != null) onViewFeedback(it) else viewing = it.id }
+                    },
                 )
             }
             return@Scaffold

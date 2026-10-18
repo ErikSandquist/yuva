@@ -54,4 +54,11 @@
     <string name="yuva_thread_typing">%1$s yazıyor…</string>
     <string name="yuva_thread_typing_someone">Yazıyor…</string>
     <string name="yuva_thread_you">Siz</string>
+    <string name="yuva_conversations_messages">Mesajlar</string>
+    <string name="yuva_feedback_state_sent">Gönderildi</string>
+    <string name="yuva_feedback_state_answered">Yanıtlandı</string>
+    <string name="yuva_feedback_state_resolved">Çözüldü</string>
+    <string name="yuva_feedback_resolved_note">Ekip bu geri bildirimi çözüldü olarak işaretledi. Yeniden açmak için yanıt yazın.</string>
+    <string name="yuva_feedback_view">Geri bildirimi görüntüle</string>
+    <string name="yuva_feedback_attachments">Ekler var</string>
 </resources>

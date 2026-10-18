@@ -1,43 +1,65 @@
 import SwiftUI
 
+enum ConversationsTab: Hashable {
+    case messages, feedback
+}
+
 @MainActor
 @Observable
 final class ConversationsModel {
     let client: YuvaClient
-    var conversations: [YuvaConversation] = []
+    var messages: [YuvaConversation] = []
+    var feedback: [YuvaConversation] = []
     var session: YuvaSession?
     var loading = false
     var failed = false
-    private var nextCursor: String?
+    private var messagesCursor: String?
+    private var feedbackCursor: String?
 
     init(client: YuvaClient) {
         self.client = client
     }
 
+    var hasFeedback: Bool { !feedback.isEmpty }
+
+    func items(_ tab: ConversationsTab) -> [YuvaConversation] {
+        tab == .messages ? messages : feedback
+    }
+
     func load() async {
-        loading = conversations.isEmpty
+        loading = messages.isEmpty && feedback.isEmpty
         defer { loading = false }
         do {
             session = try await client.start()
-            let page = try await client.conversations()
-            conversations = page.items
-            nextCursor = page.nextCursor
+            async let sent = client.conversations(kind: [.feedback])
+            let page = try await client.conversations(kind: [.conversation])
+            let sentPage = try await sent
+            messages = page.items
+            messagesCursor = page.nextCursor
+            feedback = sentPage.items
+            feedbackCursor = sentPage.nextCursor
             failed = false
         } catch {
-            failed = conversations.isEmpty
+            failed = messages.isEmpty && feedback.isEmpty
         }
     }
 
-    func loadMore() async {
-        guard let cursor = nextCursor else { return }
-        nextCursor = nil
-        guard let page = try? await client.conversations(cursor: cursor) else {
-            nextCursor = cursor
+    func loadMore(_ tab: ConversationsTab) async {
+        guard let cursor = tab == .messages ? messagesCursor : feedbackCursor else { return }
+        setCursor(nil, tab)
+        let kind: YuvaConversationKind = tab == .messages ? .conversation : .feedback
+        guard let page = try? await client.conversations(kind: [kind], cursor: cursor) else {
+            setCursor(cursor, tab)
             return
         }
-        let known = Set(conversations.map(\.id))
-        conversations += page.items.filter { !known.contains($0.id) }
-        nextCursor = page.nextCursor
+        let known = Set(items(tab).map(\.id))
+        let added = page.items.filter { !known.contains($0.id) }
+        if tab == .messages { messages += added } else { feedback += added }
+        setCursor(page.nextCursor, tab)
+    }
+
+    private func setCursor(_ cursor: String?, _ tab: ConversationsTab) {
+        if tab == .messages { messagesCursor = cursor } else { feedbackCursor = cursor }
     }
 
     func listen() async {
@@ -66,9 +88,15 @@ final class ConversationsModel {
     }
 
     private func upsert(_ conversation: YuvaConversation) {
-        conversations.removeAll { $0.id == conversation.id }
-        conversations.append(conversation)
-        conversations.sort { ($0.lastMessageAt ?? $0.createdAt) > ($1.lastMessageAt ?? $1.createdAt) }
+        messages.removeAll { $0.id == conversation.id }
+        feedback.removeAll { $0.id == conversation.id }
+        if conversation.isFeedback {
+            feedback.append(conversation)
+            feedback.sort { ($0.lastMessageAt ?? $0.createdAt) > ($1.lastMessageAt ?? $1.createdAt) }
+        } else {
+            messages.append(conversation)
+            messages.sort { ($0.lastMessageAt ?? $0.createdAt) > ($1.lastMessageAt ?? $1.createdAt) }
+        }
     }
 }
 
@@ -86,6 +114,7 @@ public struct YuvaConversationsView: View {
     private let client: YuvaClient
     @State private var model: ConversationsModel
     @State private var path: [ThreadRoute] = []
+    @State private var tab: ConversationsTab = .messages
     @Binding private var openConversationId: String?
 
     public init(client: YuvaClient, openConversationId: Binding<String?> = .constant(nil)) {
@@ -131,7 +160,7 @@ public struct YuvaConversationsView: View {
             } actions: {
                 Button(L.t("error.retry")) { Task { await model.load() } }
             }
-        } else if model.conversations.isEmpty {
+        } else if model.messages.isEmpty && !model.hasFeedback {
             ContentUnavailableView {
                 Label(L.t("conversations.empty"), systemImage: "bubble.left.and.bubble.right")
             } description: {
@@ -141,16 +170,31 @@ public struct YuvaConversationsView: View {
                     .buttonStyle(.borderedProminent)
             }
         } else {
+            let items = model.items(tab)
             List {
-                if let inbox = model.session?.inbox {
+                if model.hasFeedback {
+                    Picker("", selection: $tab) {
+                        Text(L.t("conversations.messages")).tag(ConversationsTab.messages)
+                        Text(L.t("feedback.kind")).tag(ConversationsTab.feedback)
+                    }
+                    .pickerStyle(.segmented)
+                    .labelsHidden()
+                    .listRowSeparator(.hidden)
+                    .accessibilityIdentifier("yuva.conversations.tabs")
+                }
+                if tab == .messages, let inbox = model.session?.inbox {
                     PresenceHeader(inbox: inbox)
                 }
-                ForEach(model.conversations) { conversation in
+                ForEach(items) { conversation in
                     NavigationLink(value: ThreadRoute.conversation(conversation.id)) {
-                        ConversationRow(conversation: conversation)
+                        if conversation.isFeedback {
+                            FeedbackRow(conversation: conversation)
+                        } else {
+                            ConversationRow(conversation: conversation)
+                        }
                     }
                     .onAppear {
-                        if conversation.id == model.conversations.last?.id { Task { await model.loadMore() } }
+                        if conversation.id == items.last?.id { Task { await model.loadMore(tab) } }
                     }
                 }
             }
@@ -226,5 +270,51 @@ struct ConversationRow: View {
     private var preview: String {
         guard let last = conversation.lastMessage else { return "" }
         return last.authorType == .contact ? L.t("thread.you") + ": " + last.text : last.text
+    }
+}
+
+extension YuvaFeedbackState {
+    var label: String { L.t("feedback.state." + rawValue) }
+}
+
+struct FeedbackRow: View {
+    let conversation: YuvaConversation
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                if let feedback = conversation.feedback {
+                    Text(L.t("feedback.category." + feedback.category.rawValue)).font(.headline).lineLimit(1)
+                } else {
+                    Text(L.t("feedback.kind")).font(.headline).lineLimit(1)
+                }
+                Spacer()
+                Text(conversation.lastMessageAt ?? conversation.createdAt, format: .relative(presentation: .named))
+                    .font(.caption).foregroundStyle(.secondary)
+            }
+            HStack {
+                Text(firstLine).font(.subheadline).foregroundStyle(.secondary).lineLimit(1)
+                Spacer()
+                if (conversation.feedback?.attachmentCount ?? 0) > 0 {
+                    Image(systemName: "paperclip").font(.caption).foregroundStyle(.secondary)
+                        .accessibilityLabel(L.t("feedback.attachments"))
+                }
+                if conversation.unread {
+                    Circle().fill(Color.accentColor).frame(width: 10, height: 10)
+                        .accessibilityLabel(L.t("conversations.unread"))
+                }
+            }
+            if let state = conversation.feedbackState {
+                Text(state.label).font(.caption2.weight(.medium)).foregroundStyle(.secondary)
+                    .accessibilityIdentifier("yuva.feedback.state." + state.rawValue)
+            }
+        }
+        .padding(.vertical, 2)
+    }
+
+    private var firstLine: String {
+        let own = conversation.feedback?.text ?? ""
+        let text = !own.isEmpty ? own : (conversation.subject.isEmpty ? (conversation.lastMessage?.text ?? "") : conversation.subject)
+        return text.split(whereSeparator: \.isNewline).first.map(String.init) ?? text
     }
 }

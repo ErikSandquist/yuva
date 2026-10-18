@@ -5,6 +5,7 @@ public struct YuvaFeedbackView: View {
     private let client: YuvaClient
     private let screen: String?
     private let onDone: () -> Void
+    private let onViewFeedback: ((YuvaConversation) -> Void)?
     @State private var categories: [YuvaFeedbackCategory] = YuvaFeedbackCategory.allCases
     @State private var category: YuvaFeedbackCategory = .bug
     @State private var message = ""
@@ -17,16 +18,22 @@ public struct YuvaFeedbackView: View {
     @State private var sent = false
     @State private var failure: String?
     @State private var clientId = UUID().uuidString
+    @State private var started: YuvaConversation?
+    @State private var path: [String] = []
 
-    public init(client: YuvaClient, screenshot: YuvaUpload? = nil, screen: String? = nil, onDone: @escaping () -> Void = {}) {
+    public init(
+        client: YuvaClient, screenshot: YuvaUpload? = nil, screen: String? = nil,
+        onDone: @escaping () -> Void = {}, onViewFeedback: ((YuvaConversation) -> Void)? = nil
+    ) {
         self.client = client
         self.screen = screen
         self.onDone = onDone
+        self.onViewFeedback = onViewFeedback
         _screenshots = State(initialValue: screenshot.map { [$0] } ?? [])
     }
 
     public var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             Group {
                 if sent {
                     ContentUnavailableView {
@@ -35,10 +42,19 @@ public struct YuvaFeedbackView: View {
                         Text(L.t("feedback.sentHint"))
                     } actions: {
                         Button(L.t("feedback.done"), action: onDone).buttonStyle(.borderedProminent)
+                        if let started {
+                            Button(L.t("feedback.view")) {
+                                if let onViewFeedback { onViewFeedback(started) } else { path.append(started.id) }
+                            }
+                            .accessibilityIdentifier("yuva.feedback.view")
+                        }
                     }
                 } else {
                     form
                 }
+            }
+            .navigationDestination(for: String.self) { id in
+                YuvaThreadView(client: client, conversationId: id)
             }
             .navigationTitle(L.t("feedback.title"))
             #if os(iOS)
@@ -161,11 +177,12 @@ public struct YuvaFeedbackView: View {
         failure = nil
         defer { sending = false }
         do {
-            try await client.sendFeedback(
+            let result = try await client.sendFeedback(
                 YuvaFeedback(
                     category: category, body: message.trimmingCharacters(in: .whitespacesAndNewlines),
                     screenshots: screenshots, allowEmail: allowEmail, email: needsEmail ? email : nil, screen: screen,
                     clientId: clientId))
+            started = result.conversation
             sent = true
         } catch {
             failure = L.message(for: error)

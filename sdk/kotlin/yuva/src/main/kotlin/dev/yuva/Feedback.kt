@@ -51,3 +51,20 @@ data class YuvaDeviceInfo(
         }
     }
 }
+
+enum class YuvaFeedbackState {
+    SENT, ANSWERED, RESOLVED;
+
+    companion object {
+        fun of(status: YuvaConversationStatus, lastAuthor: YuvaAuthorType?): YuvaFeedbackState = when {
+            status == YuvaConversationStatus.CLOSED -> RESOLVED
+            lastAuthor == YuvaAuthorType.MEMBER -> ANSWERED
+            else -> SENT
+        }
+    }
+}
+
+val YuvaConversation.isFeedback: Boolean get() = kind == YuvaConversationKind.FEEDBACK || feedback != null
+
+val YuvaConversation.feedbackState: YuvaFeedbackState?
+    get() = if (isFeedback) YuvaFeedbackState.of(status, lastMessage?.authorType) else null

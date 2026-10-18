@@ -135,8 +135,14 @@ class YuvaClient internal constructor(
         if (shared.subscriptionCount.value > 0) startRealtime()
     }
 
-    suspend fun conversations(cursor: String? = null, limit: Int? = null): YuvaPage<YuvaConversation> =
-        request("GET", "client/v1/conversations", query = paging(cursor, limit))
+    suspend fun conversations(
+        kind: List<YuvaConversationKind> = emptyList(),
+        cursor: String? = null,
+        limit: Int? = null,
+    ): YuvaPage<YuvaConversation> {
+        val kinds = if (kind.isEmpty()) emptyList() else listOf("kind" to kind.joinToString(",") { it.value })
+        return request("GET", "client/v1/conversations", query = paging(cursor, limit) + kinds)
+    }
 
     suspend fun conversation(id: String): YuvaConversation = request("GET", "client/v1/conversations/$id")
 

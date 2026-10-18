@@ -28,7 +28,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,6 +46,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -53,46 +59,66 @@ import dev.yuva.R
 import dev.yuva.YuvaAuthorType
 import dev.yuva.YuvaClient
 import dev.yuva.YuvaConversation
+import dev.yuva.YuvaConversationKind
 import dev.yuva.YuvaConversationStatus
+import dev.yuva.YuvaFeedbackState
+import dev.yuva.feedbackState
+import dev.yuva.isFeedback
 import dev.yuva.YuvaEvent
 import dev.yuva.YuvaInbox
 import dev.yuva.YuvaInboxMode
 import dev.yuva.YuvaSession
 import kotlinx.coroutines.launch
 
+internal enum class ConversationsTab { MESSAGES, FEEDBACK }
+
 internal class ConversationsState(private val client: YuvaClient) {
-    val conversations = mutableStateListOf<YuvaConversation>()
+    val messages = mutableStateListOf<YuvaConversation>()
+    val feedback = mutableStateListOf<YuvaConversation>()
     var session by mutableStateOf<YuvaSession?>(null)
     var loading by mutableStateOf(true)
     var failed by mutableStateOf(false)
-    private var nextCursor: String? = null
+    private var messagesCursor: String? = null
+    private var feedbackCursor: String? = null
+
+    val hasFeedback: Boolean get() = feedback.isNotEmpty()
+
+    fun items(tab: ConversationsTab): List<YuvaConversation> =
+        if (tab == ConversationsTab.MESSAGES) messages else feedback
 
     suspend fun load() {
-        loading = conversations.isEmpty()
+        loading = messages.isEmpty() && feedback.isEmpty()
         try {
             session = client.start()
-            val page = client.conversations()
-            conversations.clear()
-            conversations.addAll(page.items)
-            nextCursor = page.nextCursor
+            val sent = client.conversations(kind = listOf(YuvaConversationKind.FEEDBACK))
+            val page = client.conversations(kind = listOf(YuvaConversationKind.CONVERSATION))
+            messages.clear()
+            messages.addAll(page.items)
+            messagesCursor = page.nextCursor
+            feedback.clear()
+            feedback.addAll(sent.items)
+            feedbackCursor = sent.nextCursor
             failed = false
         } catch (_: Exception) {
-            failed = conversations.isEmpty()
+            failed = messages.isEmpty() && feedback.isEmpty()
         } finally {
             loading = false
         }
     }
 
-    suspend fun loadMore() {
-        val cursor = nextCursor ?: return
-        nextCursor = null
-        val page = runCatching { client.conversations(cursor = cursor) }.getOrNull() ?: run {
-            nextCursor = cursor
+    suspend fun loadMore(tab: ConversationsTab) {
+        val messagesTab = tab == ConversationsTab.MESSAGES
+        val cursor = (if (messagesTab) messagesCursor else feedbackCursor) ?: return
+        if (messagesTab) messagesCursor = null else feedbackCursor = null
+        val kind = if (messagesTab) YuvaConversationKind.CONVERSATION else YuvaConversationKind.FEEDBACK
+        val page = runCatching { client.conversations(kind = listOf(kind), cursor = cursor) }.getOrNull() ?: run {
+            if (messagesTab) messagesCursor = cursor else feedbackCursor = cursor
             return
         }
-        val known = conversations.map { it.id }.toSet()
-        conversations.addAll(page.items.filter { it.id !in known })
-        nextCursor = page.nextCursor
+        val list = if (messagesTab) messages else feedback
+        val known = list.map { it.id }.toSet()
+        list.addAll(page.items.filter { it.id !in known })
+        if (messagesTab) messagesCursor = page.nextCursor else feedbackCursor = page.nextCursor
     }
 
     suspend fun listen() {
@@ -115,9 +141,11 @@ internal class ConversationsState(private val client: YuvaClient) {
     }
 
     private fun upsert(conversation: YuvaConversation) {
-        conversations.removeAll { it.id == conversation.id }
-        conversations.add(conversation)
-        conversations.sortByDescending { it.lastMessageAt ?: it.createdAt }
+        messages.removeAll { it.id == conversation.id }
+        feedback.removeAll { it.id == conversation.id }
+        val list = if (conversation.isFeedback) feedback else messages
+        list.add(conversation)
+        list.sortByDescending { it.lastMessageAt ?: it.createdAt }
     }
 }
 
@@ -135,6 +163,7 @@ fun YuvaConversationsView(
 ) {
     val state = remember(client) { ConversationsState(client) }
     var route by remember { mutableStateOf<Route?>(null) }
+    var tab by remember { mutableStateOf(ConversationsTab.MESSAGES) }
     val scope = rememberCoroutineScope()
     LaunchedEffect(client) { state.load() }
     LaunchedEffect(client) { state.listen() }
@@ -172,21 +201,49 @@ fun YuvaConversationsView(
                     action = stringResource(R.string.yuva_error_retry),
                     onAction = { scope.launch { state.load() } },
                 )
-                state.conversations.isEmpty() -> Placeholder(
+                state.messages.isEmpty() && !state.hasFeedback -> Placeholder(
                     title = stringResource(R.string.yuva_conversations_empty),
                     hint = stringResource(R.string.yuva_conversations_empty_hint),
                     action = stringResource(R.string.yuva_conversations_new),
                     onAction = { route = Route.Thread(null) },
                 )
-                else -> LazyColumn(Modifier.fillMaxSize()) {
-                    state.session?.inbox?.let { inbox ->
-                        item { PresenceHeader(inbox, Modifier.padding(16.dp)) }
+                else -> Column(Modifier.fillMaxSize()) {
+                    if (state.hasFeedback) {
+                        SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp)) {
+                            ConversationsTab.entries.forEachIndexed { index, option ->
+                                SegmentedButton(
+                                    selected = option == tab,
+                                    onClick = { tab = option },
+                                    shape = SegmentedButtonDefaults.itemShape(index, ConversationsTab.entries.size),
+                                    modifier = Modifier.testTag("yuva.conversations.tab." + option.name.lowercase()),
+                                ) {
+                                    Text(
+                                        stringResource(
+                                            if (option == ConversationsTab.MESSAGES) R.string.yuva_conversations_messages
+                                            else R.string.yuva_feedback_kind,
+                                        ),
+                                    )
+                                }
+                            }
+                        }
                     }
-                    items(state.conversations, key = { it.id }) { conversation ->
-                        ConversationRow(conversation) { route = Route.Thread(conversation.id) }
-                        HorizontalDivider()
-                        if (conversation.id == state.conversations.lastOrNull()?.id) {
-                            LaunchedEffect(conversation.id) { state.loadMore() }
+                    val items = state.items(tab)
+                    LazyColumn(Modifier.fillMaxSize()) {
+                        if (tab == ConversationsTab.MESSAGES) {
+                            state.session?.inbox?.let { inbox ->
+                                item { PresenceHeader(inbox, Modifier.padding(16.dp)) }
+                            }
+                        }
+                        items(items, key = { it.id }) { conversation ->
+                            if (conversation.isFeedback) {
+                                FeedbackRow(conversation) { route = Route.Thread(conversation.id) }
+                            } else {
+                                ConversationRow(conversation) { route = Route.Thread(conversation.id) }
+                            }
+                            HorizontalDivider()
+                            if (conversation.id == items.lastOrNull()?.id) {
+                                LaunchedEffect(conversation.id, tab) { state.loadMore(tab) }
+                            }
                         }
                     }
                 }
@@ -196,7 +253,14 @@ fun YuvaConversationsView(
 }
 
 @Composable
-internal fun Placeholder(title: String, hint: String? = null, action: String? = null, onAction: () -> Unit = {}) {
+internal fun Placeholder(
+    title: String,
+    hint: String? = null,
+    action: String? = null,
+    onAction: () -> Unit = {},
+    secondaryAction: String? = null,
+    onSecondaryAction: () -> Unit = {},
+) {
     Column(
         Modifier.fillMaxSize().padding(32.dp),
         verticalArrangement = Arrangement.Center,
@@ -215,6 +279,9 @@ internal fun Placeholder(title: String, hint: String? = null, action: String? = 
         if (action != null) {
             Spacer(Modifier.height(16.dp))
             Button(onClick = onAction) { Text(action) }
+        }
+        if (secondaryAction != null) {
+            TextButton(onClick = onSecondaryAction, modifier = Modifier.testTag("yuva.feedback.view")) { Text(secondaryAction) }
         }
     }
 }
@@ -312,3 +379,63 @@ internal fun categoryLabel(category: dev.yuva.YuvaFeedbackCategory): Int = when 
     dev.yuva.YuvaFeedbackCategory.OTHER -> R.string.yuva_feedback_category_other
 }
 
+
+internal fun stateLabel(state: YuvaFeedbackState): Int = when (state) {
+    YuvaFeedbackState.SENT -> R.string.yuva_feedback_state_sent
+    YuvaFeedbackState.ANSWERED -> R.string.yuva_feedback_state_answered
+    YuvaFeedbackState.RESOLVED -> R.string.yuva_feedback_state_resolved
+}
+
+@Composable
+private fun FeedbackRow(conversation: YuvaConversation, onClick: () -> Unit) {
+    val title = conversation.feedback?.let { stringResource(categoryLabel(it.category)) }
+        ?: stringResource(R.string.yuva_feedback_kind)
+    val text = conversation.feedback?.text?.takeIf { it.isNotEmpty() }
+        ?: conversation.subject.ifEmpty { conversation.lastMessage?.text.orEmpty() }
+    val firstLine = text.lineSequence().firstOrNull().orEmpty()
+    Column(Modifier.fillMaxWidth().clickable(onClick = onClick).padding(horizontal = 16.dp, vertical = 12.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                title,
+                style = MaterialTheme.typography.titleMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(1f),
+            )
+            Text(
+                DateUtils.getRelativeTimeSpanString((conversation.lastMessageAt ?: conversation.createdAt).toEpochMilli()).toString(),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                firstLine,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(1f),
+            )
+            if ((conversation.feedback?.attachmentCount ?: 0) > 0) {
+                val label = stringResource(R.string.yuva_feedback_attachments)
+                Text(
+                    "\uD83D\uDCCE",
+                    style = MaterialTheme.typography.labelMedium,
+                    modifier = Modifier.padding(start = 8.dp).semantics { contentDescription = label },
+                )
+            }
+            if (conversation.unread) {
+                Box(Modifier.padding(start = 8.dp).size(10.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary))
+            }
+        }
+        conversation.feedbackState?.let { state ->
+            Text(
+                stringResource(stateLabel(state)),
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.testTag("yuva.feedback.state." + state.name.lowercase()),
+            )
+        }
+    }
+}

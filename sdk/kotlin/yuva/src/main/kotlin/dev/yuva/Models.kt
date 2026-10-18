@@ -44,9 +44,9 @@ enum class YuvaInboxMode {
 }
 
 @Serializable
-enum class YuvaConversationKind {
-    @SerialName("conversation") CONVERSATION,
-    @SerialName("feedback") FEEDBACK,
+enum class YuvaConversationKind(val value: String) {
+    @SerialName("conversation") CONVERSATION("conversation"),
+    @SerialName("feedback") FEEDBACK("feedback"),
 }
 
 @Serializable
@@ -132,6 +132,8 @@ data class YuvaMessagePreview(
 data class YuvaFeedbackInfo(
     val category: YuvaFeedbackCategory,
     val allowEmail: Boolean = false,
+    val text: String? = null,
+    val attachmentCount: Int = 0,
     val appVersion: String? = null,
     val build: String? = null,
     val os: String? = null,

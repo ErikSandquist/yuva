@@ -863,6 +863,23 @@
         }
       }
     },
+    "conversations.messages": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Messages"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mesajlar"
+          }
+        }
+      }
+    },
     "conversations.new": {
       "extractionState": "manual",
       "localizations": {
@@ -3729,6 +3746,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "也請透過電子郵件回覆我"
+          }
+        }
+      }
+    },
+    "feedback.attachments": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Has attachments"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ekler var"
           }
         }
       }
@@ -7751,6 +7785,23 @@
         }
       }
     },
+    "feedback.resolvedNote": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The team marked this feedback as resolved. Reply to reopen it."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ekip bu geri bildirimi çözüldü olarak işaretledi. Yeniden açmak için yanıt yazın."
+          }
+        }
+      }
+    },
     "feedback.screenshot": {
       "extractionState": "manual",
       "localizations": {
@@ -8899,6 +8950,57 @@
         }
       }
     },
+    "feedback.state.answered": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Answered"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yanıtlandı"
+          }
+        }
+      }
+    },
+    "feedback.state.resolved": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resolved"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Çözüldü"
+          }
+        }
+      }
+    },
+    "feedback.state.sent": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sent"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gönderildi"
+          }
+        }
+      }
+    },
     "feedback.title": {
       "extractionState": "manual",
       "localizations": {
@@ -9182,6 +9284,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "傳送意見回饋"
+          }
+        }
+      }
+    },
+    "feedback.view": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "View feedback"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geri bildirimi görüntüle"
           }
         }
       }

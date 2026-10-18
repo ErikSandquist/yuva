@@ -72,6 +72,9 @@ import dev.yuva.YuvaClient
 import dev.yuva.YuvaConversation
 import dev.yuva.YuvaConversationStatus
 import dev.yuva.YuvaEvent
+import dev.yuva.YuvaFeedbackCategory
+import dev.yuva.YuvaFeedbackState
+import dev.yuva.isFeedback
 import dev.yuva.YuvaException
 import dev.yuva.YuvaInbox
 import dev.yuva.YuvaMessage
@@ -210,7 +213,15 @@ internal class ThreadState(val client: YuvaClient, conversationId: String?, priv
     val showsRating: Boolean
         get() {
             val current = conversation ?: return false
+            if (current.isFeedback) return false
             return current.status == YuvaConversationStatus.CLOSED && (current.canRate || current.rating != null)
+        }
+
+    val feedbackState: YuvaFeedbackState?
+        get() {
+            val current = conversation?.takeIf { it.isFeedback } ?: return null
+            val last = items.lastOrNull { it.message != null }?.message?.author?.type ?: current.lastMessage?.authorType
+            return YuvaFeedbackState.of(current.status, last)
         }
 
     fun rate(rating: YuvaRating, comment: String?) {
@@ -345,12 +356,13 @@ fun YuvaThreadView(
         }
     }
     val lastId = state.items.lastOrNull()?.id
-    LaunchedEffect(lastId, state.typingName, state.showsRating) {
+    LaunchedEffect(lastId, state.typingName, state.showsRating, state.feedbackState) {
         val count = listState.layoutInfo.totalItemsCount
         if (count > 0) listState.animateScrollToItem(count - 1)
     }
 
     val title = state.conversation?.subject?.takeIf { it.isNotEmpty() }
+        ?: if (state.conversation?.isFeedback == true) stringResource(R.string.yuva_feedback_kind) else null
         ?: state.inbox?.name
         ?: stringResource(R.string.yuva_thread_title)
     Scaffold(
@@ -370,6 +382,7 @@ fun YuvaThreadView(
                     modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surfaceVariant).padding(4.dp),
                 )
             }
+            state.feedbackState?.let { FeedbackHeader(state.conversation?.feedback?.category, it) }
             Box(Modifier.weight(1f)) {
                 LazyColumn(
                     state = listState,
@@ -397,6 +410,18 @@ fun YuvaThreadView(
                             showStatus = item.mine && (item.id == lastMine || item.state != DeliveryState.SENT),
                             onRetry = { state.retry(item.id) },
                         )
+                    }
+                    if (state.feedbackState == YuvaFeedbackState.RESOLVED) {
+                        item(key = "resolved") {
+                            Text(
+                                stringResource(R.string.yuva_feedback_resolved_note),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 8.dp)
+                                    .testTag("yuva.feedback.resolvedNote"),
+                            )
+                        }
                     }
                     if (state.showsRating) {
                         item(key = "rating") { RatingCard(state) }
@@ -468,6 +493,26 @@ fun YuvaThreadView(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun FeedbackHeader(category: YuvaFeedbackCategory?, state: YuvaFeedbackState) {
+    Row(
+        Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            category?.let { stringResource(categoryLabel(it)) }.orEmpty(),
+            style = MaterialTheme.typography.titleSmall,
+            modifier = Modifier.weight(1f),
+        )
+        Text(
+            stringResource(stateLabel(state)),
+            style = MaterialTheme.typography.labelLarge,
+            modifier = Modifier.testTag("yuva.feedback.state." + state.name.lowercase()),
+        )
     }
 }
 

@@ -54,4 +54,11 @@
     <string name="yuva_thread_typing">%1$s લખી રહ્યા છે…</string>
     <string name="yuva_thread_typing_someone">લખી રહ્યા છે…</string>
     <string name="yuva_thread_you">તમે</string>
+    <string name="yuva_conversations_messages">Messages</string>
+    <string name="yuva_feedback_state_sent">Sent</string>
+    <string name="yuva_feedback_state_answered">Answered</string>
+    <string name="yuva_feedback_state_resolved">Resolved</string>
+    <string name="yuva_feedback_resolved_note">The team marked this feedback as resolved. Reply to reopen it.</string>
+    <string name="yuva_feedback_view">View feedback</string>
+    <string name="yuva_feedback_attachments">Has attachments</string>
 </resources>

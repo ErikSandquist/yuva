@@ -87,9 +87,28 @@ public enum YuvaConversationKind: String, Codable, Sendable {
     case conversation, feedback
 }
 
+public enum YuvaFeedbackState: String, Sendable {
+    case sent, answered, resolved
+
+    public static func of(status: YuvaConversationStatus, lastAuthor: YuvaAuthorType?) -> YuvaFeedbackState {
+        if status == .closed { return .resolved }
+        return lastAuthor == .member ? .answered : .sent
+    }
+}
+
+extension YuvaConversation {
+    public var isFeedback: Bool { kind == .feedback || feedback != nil }
+
+    public var feedbackState: YuvaFeedbackState? {
+        isFeedback ? .of(status: status, lastAuthor: lastMessage?.authorType) : nil
+    }
+}
+
 public struct YuvaFeedbackInfo: Codable, Sendable, Hashable {
     public let category: YuvaFeedbackCategory
     public let allowEmail: Bool
+    public let text: String?
+    public let attachmentCount: Int?
     public let appVersion: String?
     public let build: String?
     public let os: String?

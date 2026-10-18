@@ -94,8 +94,12 @@ public actor YuvaClient {
         if !subscribers.isEmpty { startRealtime() }
     }
 
-    public func conversations(cursor: String? = nil, limit: Int? = nil) async throws -> YuvaPage<YuvaConversation> {
-        let page: Page<YuvaConversation> = try await request("GET", "client/v1/conversations", query: paging(cursor, limit))
+    public func conversations(
+        kind: [YuvaConversationKind] = [], cursor: String? = nil, limit: Int? = nil
+    ) async throws -> YuvaPage<YuvaConversation> {
+        var query = paging(cursor, limit)
+        if !kind.isEmpty { query.append(URLQueryItem(name: "kind", value: kind.map(\.rawValue).joined(separator: ","))) }
+        let page: Page<YuvaConversation> = try await request("GET", "client/v1/conversations", query: query)
         return YuvaPage(items: page.items, nextCursor: page.nextCursor)
     }
 
