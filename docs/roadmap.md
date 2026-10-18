@@ -292,7 +292,7 @@ an agent opens the inbox at `/` and never sees an inbox or property they may not
 
 ## M18 — Feedback on its own
 
-Status: planned; issue #93, decisions in `architecture.md` › Feedback (M18).
+Status: in progress; API, panel and SDKs done, the Swift and Kotlin samples not yet run against a server. Issue #93, decisions in `architecture.md` › Feedback (M18).
 
 - `kind` on `GET /v1/conversations/counts` and `GET /client/v1/conversations`; `can_rate` false for
   feedback.
