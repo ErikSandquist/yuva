@@ -5,7 +5,6 @@ import android.icu.util.Measure
 import android.icu.util.MeasureUnit
 import android.icu.util.ULocale
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,8 +17,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
@@ -28,18 +27,35 @@ import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.Surface
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.unit.Dp
 import androidx.compose.material3.Badge
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -209,32 +225,27 @@ fun YuvaConversationsView(
     }
     val showsFeedback = section == YuvaConversationsSection.FEEDBACK ||
         section == null && tab == ConversationsTab.FEEDBACK
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val background = MaterialTheme.colorScheme.surfaceContainer
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        containerColor = background,
         topBar = {
-            TopAppBar(
+            LargeTopAppBar(
                 scrollBehavior = scrollBehavior,
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = background, scrolledContainerColor = background),
                 title = {
                     val inbox = state.session?.inbox
-                    if (showsFeedback || inbox == null) {
-                        Text(
-                            stringResource(if (showsFeedback) R.string.yuva_feedback_kind else R.string.yuva_conversations_title),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    } else {
-                        Column {
-                            Text(inbox.name, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                            Text(
-                                presenceText(inbox),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                            )
-                        }
-                    }
+                    Text(
+                        if (showsFeedback || inbox == null) {
+                            stringResource(if (showsFeedback) R.string.yuva_feedback_kind else R.string.yuva_conversations_title)
+                        } else {
+                            inbox.name
+                        },
+                        fontWeight = FontWeight.SemiBold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
                 },
                 navigationIcon = {
                     if (onClose != null) {
@@ -243,11 +254,17 @@ fun YuvaConversationsView(
                 },
                 actions = {
                     if (section == YuvaConversationsSection.FEEDBACK) {
-                        IconButton(onClick = { route = Route.FeedbackForm }, modifier = Modifier.testTag("yuva.feedback.new")) {
+                        FilledTonalIconButton(
+                            onClick = { route = Route.FeedbackForm },
+                            modifier = Modifier.padding(end = 8.dp).testTag("yuva.feedback.new"),
+                        ) {
                             Icon(Icons.Default.Add, contentDescription = stringResource(R.string.yuva_feedback_title))
                         }
                     } else {
-                        IconButton(onClick = { route = Route.Thread(null) }, modifier = Modifier.testTag("yuva.conversations.new")) {
+                        FilledTonalIconButton(
+                            onClick = { route = Route.Thread(null) },
+                            modifier = Modifier.padding(end = 8.dp).testTag("yuva.conversations.new"),
+                        ) {
                             Icon(Icons.Default.Create, contentDescription = stringResource(R.string.yuva_conversations_new))
                         }
                     }
@@ -277,35 +294,45 @@ fun YuvaConversationsView(
                     action = stringResource(R.string.yuva_conversations_new),
                     onAction = { route = Route.Thread(null) },
                 )
-                else -> Column(Modifier.fillMaxSize()) {
-                    if (section == null && state.hasFeedback) {
-                        SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp)) {
-                            ConversationsTab.entries.forEachIndexed { index, option ->
-                                SegmentedButton(
-                                    selected = option == tab,
-                                    onClick = { tab = option },
-                                    shape = SegmentedButtonDefaults.itemShape(index, ConversationsTab.entries.size),
-                                    modifier = Modifier.testTag("yuva.conversations.tab." + option.name.lowercase()),
-                                ) {
-                                    Text(
+                else -> {
+                    val items = state.items(tab)
+                    LazyColumn(
+                        Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 24.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
+                        val inbox = state.session?.inbox
+                        if (!showsFeedback && inbox != null) {
+                            item(key = "presence") { PresenceLine(inbox, Modifier.padding(start = 4.dp, bottom = 12.dp)) }
+                        }
+                        if (section == null && state.hasFeedback) {
+                            item(key = "tabs") {
+                                ConnectedToggleGroup(
+                                    options = ConversationsTab.entries,
+                                    selected = tab,
+                                    onSelect = { tab = it },
+                                    label = {
                                         stringResource(
-                                            if (option == ConversationsTab.MESSAGES) R.string.yuva_conversations_messages
+                                            if (it == ConversationsTab.MESSAGES) R.string.yuva_conversations_messages
                                             else R.string.yuva_feedback_kind,
-                                        ),
-                                    )
-                                }
+                                        )
+                                    },
+                                    tag = { "yuva.conversations.tab." + it.name.lowercase() },
+                                    modifier = Modifier.padding(bottom = 16.dp),
+                                )
                             }
                         }
-                    }
-                    val items = state.items(tab)
-                    LazyColumn(Modifier.fillMaxSize()) {
-                        items(items, key = { it.id }) { conversation ->
+                        itemsIndexed(items, key = { _, it -> it.id }) { index, conversation ->
+                            val shape = groupShape(index, items.size)
+                            val tile = Modifier.animateItem(
+                                fadeInSpec = spring(stiffness = Spring.StiffnessMediumLow),
+                                placementSpec = spring(dampingRatio = 0.75f, stiffness = Spring.StiffnessMediumLow),
+                            )
                             if (conversation.isFeedback) {
-                                FeedbackRow(conversation) { route = Route.Thread(conversation.id) }
+                                FeedbackRow(conversation, shape, tile) { route = Route.Thread(conversation.id) }
                             } else {
-                                ConversationRow(conversation, state.session?.inbox) { route = Route.Thread(conversation.id) }
+                                ConversationRow(conversation, state.session?.inbox, shape, tile) { route = Route.Thread(conversation.id) }
                             }
-                            HorizontalDivider(Modifier.padding(start = RowAvatar + 16.dp + 12.dp))
                             if (conversation.id == items.lastOrNull()?.id) {
                                 LaunchedEffect(conversation.id, tab) { state.loadMore(tab) }
                             }
@@ -314,6 +341,87 @@ fun YuvaConversationsView(
                 }
             }
         }
+    }
+}
+
+internal fun groupShape(index: Int, count: Int, large: Dp = 24.dp, small: Dp = 6.dp): Shape {
+    val top = if (index == 0) large else small
+    val bottom = if (index == count - 1) large else small
+    return RoundedCornerShape(topStart = top, topEnd = top, bottomStart = bottom, bottomEnd = bottom)
+}
+
+@Composable
+internal fun <T> ConnectedToggleGroup(
+    options: List<T>,
+    selected: T,
+    onSelect: (T) -> Unit,
+    label: @Composable (T) -> String,
+    tag: (T) -> String,
+    modifier: Modifier = Modifier,
+) {
+    Row(modifier.fillMaxWidth().selectableGroup(), horizontalArrangement = Arrangement.spacedBy(3.dp)) {
+        options.forEachIndexed { index, option ->
+            val isSelected = option == selected
+            val inner by animateDpAsState(
+                if (isSelected) 26.dp else 8.dp,
+                spring(dampingRatio = 0.6f, stiffness = Spring.StiffnessMedium),
+                label = "corner",
+            )
+            val start = if (index == 0) 26.dp else inner
+            val end = if (index == options.lastIndex) 26.dp else inner
+            val container by animateColorAsState(
+                if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceBright,
+                spring(stiffness = Spring.StiffnessMediumLow),
+                label = "container",
+            )
+            val content by animateColorAsState(
+                if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
+                spring(stiffness = Spring.StiffnessMediumLow),
+                label = "content",
+            )
+            Surface(
+                shape = RoundedCornerShape(topStart = start, bottomStart = start, topEnd = end, bottomEnd = end),
+                color = container,
+                contentColor = content,
+                modifier = Modifier.weight(1f).heightIn(min = 52.dp)
+                    .selectable(selected = isSelected, role = Role.Tab, onClick = { onSelect(option) })
+                    .testTag(tag(option)),
+            ) {
+                Row(
+                    Modifier.padding(horizontal = 12.dp, vertical = 14.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    AnimatedVisibility(
+                        isSelected,
+                        enter = scaleIn(spring(dampingRatio = 0.5f, stiffness = Spring.StiffnessMedium)) + expandHorizontally(),
+                        exit = scaleOut() + shrinkHorizontally(),
+                    ) {
+                        Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.padding(end = 8.dp).size(18.dp))
+                    }
+                    Text(label(option), style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.SemiBold, maxLines = 1)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun PresenceLine(inbox: YuvaInbox, modifier: Modifier = Modifier) {
+    val online = inbox.mode == YuvaInboxMode.LIVE && inbox.presence?.available == true
+    Row(modifier, verticalAlignment = Alignment.CenterVertically) {
+        Box(
+            Modifier.size(8.dp).clip(CircleShape)
+                .background(if (online) Color(0xFF34A853) else MaterialTheme.colorScheme.outline),
+        )
+        Spacer(Modifier.width(8.dp))
+        Text(
+            presenceText(inbox),
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
     }
 }
 
@@ -334,19 +442,19 @@ internal fun Placeholder(
     ) {
         if (icon != null) {
             Box(
-                Modifier.size(88.dp).clip(MaterialTheme.shapes.extraLarge).background(MaterialTheme.colorScheme.primaryContainer),
+                Modifier.size(112.dp).clip(PlaceholderShape).background(MaterialTheme.colorScheme.primaryContainer),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
                     icon,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                    modifier = Modifier.size(40.dp),
+                    modifier = Modifier.size(48.dp),
                 )
             }
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(24.dp))
         }
-        Text(title, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
+        Text(title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center)
         if (hint != null) {
             Spacer(Modifier.height(8.dp))
             Text(
@@ -357,8 +465,11 @@ internal fun Placeholder(
             )
         }
         if (action != null) {
-            Spacer(Modifier.height(16.dp))
-            Button(onClick = onAction) { Text(action) }
+            Spacer(Modifier.height(24.dp))
+            Button(
+                onClick = onAction,
+                contentPadding = PaddingValues(horizontal = 28.dp, vertical = 16.dp),
+            ) { Text(action, style = MaterialTheme.typography.titleSmall) }
         }
         if (secondaryAction != null) {
             TextButton(onClick = onSecondaryAction, modifier = Modifier.testTag("yuva.feedback.view")) { Text(secondaryAction) }
@@ -404,7 +515,9 @@ private fun replyDuration(minutes: Int): String {
     return MeasureFormat.getInstance(ULocale.getDefault(), MeasureFormat.FormatWidth.WIDE).format(Measure(value, unit))
 }
 
-internal val RowAvatar = 48.dp
+internal val RowAvatar = 52.dp
+
+private val PlaceholderShape = LobedShape(9, 0.08f)
 
 @Composable
 private fun ConversationListRow(
@@ -413,57 +526,72 @@ private fun ConversationListRow(
     previewLines: Int,
     time: String,
     unread: Boolean,
+    shape: Shape,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     leading: @Composable () -> Unit,
     extra: @Composable () -> Unit = {},
 ) {
-    Row(
-        Modifier.fillMaxWidth().clickable(onClick = onClick).padding(horizontal = 16.dp, vertical = 10.dp),
-        verticalAlignment = Alignment.Top,
+    Surface(
+        onClick = onClick,
+        shape = shape,
+        color = MaterialTheme.colorScheme.surfaceBright,
+        modifier = modifier.fillMaxWidth(),
     ) {
-        leading()
-        Spacer(Modifier.width(12.dp))
-        Column(Modifier.weight(1f)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    title,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = if (unread) FontWeight.Bold else FontWeight.Medium,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.weight(1f),
-                )
-                Spacer(Modifier.width(8.dp))
-                Text(
-                    time,
-                    style = MaterialTheme.typography.labelMedium,
-                    color = if (unread) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-            Row(verticalAlignment = Alignment.Top) {
-                Text(
-                    preview,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = previewLines,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.weight(1f),
-                )
-                if (unread) {
-                    val label = stringResource(R.string.yuva_conversations_unread)
-                    Badge(
-                        Modifier.padding(start = 8.dp, top = 5.dp).semantics { contentDescription = label },
-                        containerColor = MaterialTheme.colorScheme.primary,
+        Row(Modifier.padding(horizontal = 16.dp, vertical = 16.dp), verticalAlignment = Alignment.Top) {
+            leading()
+            Spacer(Modifier.width(16.dp))
+            Column(Modifier.weight(1f)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        title,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = if (unread) FontWeight.Bold else FontWeight.SemiBold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f),
+                    )
+                    Spacer(Modifier.width(8.dp))
+                    Text(
+                        time,
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = if (unread) FontWeight.Bold else FontWeight.Normal,
+                        color = if (unread) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
+                Spacer(Modifier.height(2.dp))
+                Row(verticalAlignment = Alignment.Top) {
+                    Text(
+                        preview,
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = if (unread) FontWeight.Medium else FontWeight.Normal,
+                        color = if (unread) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = previewLines,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f),
+                    )
+                    if (unread) {
+                        val label = stringResource(R.string.yuva_conversations_unread)
+                        Badge(
+                            Modifier.padding(start = 8.dp, top = 5.dp).size(10.dp).semantics { contentDescription = label },
+                            containerColor = MaterialTheme.colorScheme.primary,
+                        )
+                    }
+                }
+                extra()
             }
-            extra()
         }
     }
 }
 
 @Composable
-private fun ConversationRow(conversation: YuvaConversation, inbox: YuvaInbox?, onClick: () -> Unit) {
+private fun ConversationRow(
+    conversation: YuvaConversation,
+    inbox: YuvaInbox?,
+    shape: Shape,
+    modifier: Modifier,
+    onClick: () -> Unit,
+) {
     val context = LocalContext.current
     val title = conversation.subject.ifEmpty { inbox?.name ?: stringResource(R.string.yuva_thread_title) }
     val last = conversation.lastMessage
@@ -478,14 +606,16 @@ private fun ConversationRow(conversation: YuvaConversation, inbox: YuvaInbox?, o
         previewLines = 2,
         time = ShortTime.list(context, conversation.lastMessageAt ?: conversation.createdAt),
         unread = conversation.unread,
+        shape = shape,
         onClick = onClick,
+        modifier = modifier,
         leading = { Avatar((inbox?.name ?: title).take(1).uppercase(), RowAvatar, inbox?.branding?.logoUrl) },
     ) {
         if (conversation.status == YuvaConversationStatus.CLOSED) {
-            Text(
+            FeedbackTag(
                 stringResource(R.string.yuva_status_closed),
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                MaterialTheme.colorScheme.onSurfaceVariant,
+                Modifier.padding(top = 8.dp),
             )
         }
     }
@@ -515,7 +645,7 @@ internal fun stateLabel(state: YuvaFeedbackState): Int = when (state) {
 }
 
 @Composable
-private fun FeedbackRow(conversation: YuvaConversation, onClick: () -> Unit) {
+private fun FeedbackRow(conversation: YuvaConversation, shape: Shape, modifier: Modifier, onClick: () -> Unit) {
     val context = LocalContext.current
     val title = conversation.feedback?.let { stringResource(categoryLabel(it.category)) }
         ?: stringResource(R.string.yuva_feedback_kind)
@@ -527,10 +657,12 @@ private fun FeedbackRow(conversation: YuvaConversation, onClick: () -> Unit) {
         previewLines = 1,
         time = ShortTime.list(context, conversation.lastMessageAt ?: conversation.createdAt),
         unread = conversation.unread,
+        shape = shape,
         onClick = onClick,
+        modifier = modifier,
         leading = { CategoryIcon(conversation.feedback?.category, RowAvatar) },
     ) {
-        Row(Modifier.padding(top = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.padding(top = 8.dp), verticalAlignment = Alignment.CenterVertically) {
             conversation.feedbackState?.let { state ->
                 FeedbackTag(
                     stringResource(stateLabel(state)),

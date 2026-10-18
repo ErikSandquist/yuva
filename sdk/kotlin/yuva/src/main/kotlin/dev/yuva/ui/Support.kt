@@ -30,6 +30,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -61,13 +70,14 @@ import kotlinx.coroutines.withContext
 @Composable
 internal fun Avatar(initials: String, size: Dp = 28.dp, imageUrl: String? = null) {
     Box(
-        modifier = Modifier.size(size).clip(CircleShape).background(MaterialTheme.colorScheme.primary),
+        modifier = Modifier.size(size).clip(AvatarShape).background(MaterialTheme.colorScheme.primaryContainer),
         contentAlignment = Alignment.Center,
     ) {
         Text(
             initials.ifEmpty { "?" },
-            color = MaterialTheme.colorScheme.onPrimary,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
             fontSize = (size.value * 0.4f).sp,
+            fontWeight = FontWeight.SemiBold,
             style = MaterialTheme.typography.labelMedium,
         )
         val logo = imageUrl?.let { url -> produceState<Bitmap?>(null, url) { value = LogoCache.image(url) }.value }
@@ -75,6 +85,41 @@ internal fun Avatar(initials: String, size: Dp = 28.dp, imageUrl: String? = null
             Image(logo.asImageBitmap(), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.size(size))
         }
     }
+}
+
+internal class LobedShape(private val lobes: Int, private val depth: Float, private val rotation: Float = 0f) : Shape {
+    override fun createOutline(size: Size, layoutDirection: LayoutDirection, density: Density): Outline {
+        val radius = minOf(size.width, size.height) / 2f
+        val cx = size.width / 2f
+        val cy = size.height / 2f
+        val steps = 180
+        val path = Path()
+        for (i in 0..steps) {
+            val theta = 2.0 * PI * i / steps
+            val r = radius * (1f - depth * (1f - cos(lobes * theta).toFloat()) / 2f)
+            val x = cx + r * cos(theta + rotation).toFloat()
+            val y = cy + r * sin(theta + rotation).toFloat()
+            if (i == 0) path.moveTo(x, y) else path.lineTo(x, y)
+        }
+        path.close()
+        return Outline.Generic(path)
+    }
+
+    override fun equals(other: Any?) =
+        other is LobedShape && other.lobes == lobes && other.depth == depth && other.rotation == rotation
+
+    override fun hashCode() = (lobes * 31 + depth.hashCode()) * 31 + rotation.hashCode()
+}
+
+internal val AvatarShape: Shape = LobedShape(9, 0.09f)
+
+internal data class CategoryShape(val lobes: Int, val depth: Float, val rotation: Float = 0f)
+
+internal fun categoryShape(category: YuvaFeedbackCategory?): CategoryShape = when (category) {
+    YuvaFeedbackCategory.BUG -> CategoryShape(8, 0.13f)
+    YuvaFeedbackCategory.IDEA -> CategoryShape(12, 0.08f)
+    YuvaFeedbackCategory.PRAISE -> CategoryShape(4, 0.2f, (PI / 4).toFloat())
+    YuvaFeedbackCategory.OTHER, null -> CategoryShape(4, 0.07f, (PI / 4).toFloat())
 }
 
 internal object LogoCache {
@@ -100,23 +145,51 @@ internal fun categoryStyle(category: YuvaFeedbackCategory?): CategoryStyle = whe
     YuvaFeedbackCategory.OTHER, null -> CategoryStyle(YuvaIcons.Chat, Color(0xFF8B8D98))
 }
 
+internal data class TonalColors(val container: Color, val content: Color)
+
 @Composable
-internal fun CategoryIcon(category: YuvaFeedbackCategory?, size: Dp = 48.dp) {
+internal fun isDarkSurface(): Boolean = MaterialTheme.colorScheme.surface.luminance() < 0.5f
+
+@Composable
+internal fun categoryColors(category: YuvaFeedbackCategory?): TonalColors {
+    val dark = isDarkSurface()
+    return when (category) {
+        YuvaFeedbackCategory.BUG ->
+            if (dark) TonalColors(Color(0xFF5F1A1C), Color(0xFFFFB4AB)) else TonalColors(Color(0xFFFFDAD6), Color(0xFFA4161A))
+        YuvaFeedbackCategory.IDEA ->
+            if (dark) TonalColors(Color(0xFF4D3A00), Color(0xFFF8C54A)) else TonalColors(Color(0xFFFFE08A), Color(0xFF6B4F00))
+        YuvaFeedbackCategory.PRAISE ->
+            if (dark) TonalColors(Color(0xFF64193F), Color(0xFFFFB0CF)) else TonalColors(Color(0xFFFFD8E6), Color(0xFFA0175A))
+        YuvaFeedbackCategory.OTHER, null ->
+            TonalColors(MaterialTheme.colorScheme.secondaryContainer, MaterialTheme.colorScheme.onSecondaryContainer)
+    }
+}
+
+@Composable
+internal fun CategoryIcon(
+    category: YuvaFeedbackCategory?,
+    size: Dp = 48.dp,
+    morph: Float = 1f,
+    colors: TonalColors = categoryColors(category),
+) {
     val style = categoryStyle(category)
+    val shape = categoryShape(category)
     Box(
-        Modifier.size(size).clip(CircleShape).background(style.tint.copy(alpha = 0.18f)),
+        Modifier.size(size).clip(LobedShape(shape.lobes, shape.depth * morph, shape.rotation)).background(colors.container),
         contentAlignment = Alignment.Center,
-    ) { Icon(style.icon, contentDescription = null, tint = style.tint, modifier = Modifier.size(size * 0.5f)) }
+    ) { Icon(style.icon, contentDescription = null, tint = colors.content, modifier = Modifier.size(size * 0.5f)) }
 }
 
 @Composable
 internal fun FeedbackTag(text: String, tint: Color, modifier: Modifier = Modifier) {
     Text(
         text,
-        style = MaterialTheme.typography.labelSmall,
+        style = MaterialTheme.typography.labelMedium,
         fontWeight = FontWeight.SemiBold,
         color = tint,
-        modifier = modifier.clip(CircleShape).background(tint.copy(alpha = 0.14f)).padding(horizontal = 8.dp, vertical = 2.dp),
+        maxLines = 1,
+        modifier = modifier.clip(CircleShape).background(tint.copy(alpha = if (isDarkSurface()) 0.2f else 0.13f))
+            .padding(horizontal = 10.dp, vertical = 4.dp),
     )
 }
 
