@@ -513,7 +513,7 @@ class YuvaClient internal constructor(
             "conversation.created" -> payload { YuvaEvent.ConversationCreated(json.decodeFromJsonElement(it)) }
             "conversation.updated" -> payload {
                 val status = json.decodeFromJsonElement<StatusData>(it)
-                YuvaEvent.ConversationUpdated(status.id, status.status, status.canRate, status.rating)
+                YuvaEvent.ConversationUpdated(status.id, status.status, status.canRate, status.rating, status.feedbackProgress)
             }
             "message.created" -> payload { YuvaEvent.MessageCreated(json.decodeFromJsonElement(it)) }
             "message.updated" -> payload { YuvaEvent.MessageUpdated(json.decodeFromJsonElement(it)) }
@@ -543,6 +543,7 @@ class YuvaClient internal constructor(
         val status: YuvaConversationStatus,
         val canRate: Boolean = false,
         val rating: YuvaRating? = null,
+        val feedbackProgress: YuvaFeedbackProgress? = null,
     )
 
     @kotlinx.serialization.Serializable

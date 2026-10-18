@@ -498,6 +498,7 @@ public actor YuvaClient {
         let status: YuvaConversationStatus
         let canRate: Bool?
         let rating: String?
+        let feedbackProgress: String?
     }
 
     private struct ReadData: Decodable {
@@ -531,7 +532,8 @@ public actor YuvaClient {
             if let status = payload(StatusData.self) {
                 broadcast(.conversationUpdated(
                     conversationId: status.id, status: status.status, canRate: status.canRate ?? false,
-                    rating: status.rating.flatMap(YuvaRating.init(rawValue:))))
+                    rating: status.rating.flatMap(YuvaRating.init(rawValue:)),
+                    feedbackProgress: status.feedbackProgress.flatMap(YuvaFeedbackProgress.init(rawValue:))))
             }
         case "message.created":
             if let message = payload(YuvaMessage.self) { broadcast(.messageCreated(message)) }

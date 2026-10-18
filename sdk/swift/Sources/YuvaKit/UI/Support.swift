@@ -146,7 +146,10 @@ extension YuvaFeedbackState {
         switch self {
         case .sent: .secondary
         case .answered: .accentColor
-        case .resolved: .green
+        case .resolved, .done: .green
+        case .planned: Color(red: 0.35, green: 0.40, blue: 0.85)
+        case .inProgress: .orange
+        case .wontDo: .gray
         }
     }
 }

@@ -61,4 +61,12 @@
     <string name="yuva_feedback_resolved_note">The team marked this feedback as resolved. Reply to reopen it.</string>
     <string name="yuva_feedback_view">View feedback</string>
     <string name="yuva_feedback_attachments">Has attachments</string>
+    <string name="yuva_feedback_state_planned">Planeado</string>
+    <string name="yuva_feedback_state_in_progress">Em curso</string>
+    <string name="yuva_feedback_state_done">Concluído</string>
+    <string name="yuva_feedback_state_wont_do">Não será feito</string>
+    <string name="yuva_feedback_note_planned">A equipa marcou isto como planeado.</string>
+    <string name="yuva_feedback_note_in_progress">A equipa marcou isto como em curso.</string>
+    <string name="yuva_feedback_note_done">A equipa marcou isto como concluído.</string>
+    <string name="yuva_feedback_note_wont_do">A equipa marcou isto como não será feito.</string>
 </resources>

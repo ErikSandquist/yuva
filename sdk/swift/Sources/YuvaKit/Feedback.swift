@@ -87,20 +87,44 @@ public enum YuvaConversationKind: String, Codable, Sendable {
     case conversation, feedback
 }
 
+public enum YuvaFeedbackProgress: String, Codable, Sendable, CaseIterable {
+    case planned
+    case inProgress = "in_progress"
+    case done
+    case wontDo = "wont_do"
+}
+
 public enum YuvaFeedbackState: String, Sendable {
     case sent, answered, resolved
+    case planned
+    case inProgress = "in_progress"
+    case done
+    case wontDo = "wont_do"
 
-    public static func of(status: YuvaConversationStatus, lastAuthor: YuvaAuthorType?) -> YuvaFeedbackState {
+    public static func of(
+        status: YuvaConversationStatus, lastAuthor: YuvaAuthorType?, progress: YuvaFeedbackProgress? = nil
+    ) -> YuvaFeedbackState {
+        if let progress { return YuvaFeedbackState(rawValue: progress.rawValue) ?? .sent }
         if status == .closed { return .resolved }
         return lastAuthor?.isTeam == true ? .answered : .sent
     }
+
+    public var isProgress: Bool { YuvaFeedbackProgress(rawValue: rawValue) != nil }
 }
 
 extension YuvaConversation {
+    func settingFeedbackProgress(_ progress: YuvaFeedbackProgress?) -> YuvaConversation {
+        guard let feedback else { return self }
+        return YuvaConversation(
+            id: id, kind: kind, feedback: feedback.settingProgress(progress), subject: subject, status: status,
+            lastMessage: lastMessage, lastMessageAt: lastMessageAt, unread: unread,
+            lastReadByMemberAt: lastReadByMemberAt, canRate: canRate, rating: rating, createdAt: createdAt)
+    }
+
     public var isFeedback: Bool { kind == .feedback || feedback != nil }
 
     public var feedbackState: YuvaFeedbackState? {
-        isFeedback ? .of(status: status, lastAuthor: lastMessage?.authorType) : nil
+        isFeedback ? .of(status: status, lastAuthor: lastMessage?.authorType, progress: feedback?.progress) : nil
     }
 }
 
@@ -117,6 +141,22 @@ public struct YuvaFeedbackInfo: Codable, Sendable, Hashable {
     public let locale: String?
     public let screen: String?
     public let installationId: String?
+    private let progressName: String?
+
+    public var progress: YuvaFeedbackProgress? { progressName.flatMap(YuvaFeedbackProgress.init(rawValue:)) }
+
+    func settingProgress(_ progress: YuvaFeedbackProgress?) -> YuvaFeedbackInfo {
+        YuvaFeedbackInfo(
+            category: category, allowEmail: allowEmail, text: text, attachmentCount: attachmentCount,
+            appVersion: appVersion, build: build, os: os, osVersion: osVersion, deviceModel: deviceModel,
+            locale: locale, screen: screen, installationId: installationId, progressName: progress?.rawValue)
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case category, allowEmail, text, attachmentCount, appVersion, build, os, osVersion, deviceModel, locale
+        case screen, installationId
+        case progressName = "progress"
+    }
 }
 
 extension YuvaClient {

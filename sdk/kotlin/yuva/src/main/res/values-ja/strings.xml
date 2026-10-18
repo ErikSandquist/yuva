@@ -61,4 +61,12 @@
     <string name="yuva_feedback_resolved_note">The team marked this feedback as resolved. Reply to reopen it.</string>
     <string name="yuva_feedback_view">View feedback</string>
     <string name="yuva_feedback_attachments">Has attachments</string>
+    <string name="yuva_feedback_state_planned">予定</string>
+    <string name="yuva_feedback_state_in_progress">対応中</string>
+    <string name="yuva_feedback_state_done">完了</string>
+    <string name="yuva_feedback_state_wont_do">対応しない</string>
+    <string name="yuva_feedback_note_planned">チームがこれを「予定」にしました。</string>
+    <string name="yuva_feedback_note_in_progress">チームがこれを「対応中」にしました。</string>
+    <string name="yuva_feedback_note_done">チームがこれを「完了」にしました。</string>
+    <string name="yuva_feedback_note_wont_do">チームがこれを「対応しない」にしました。</string>
 </resources>

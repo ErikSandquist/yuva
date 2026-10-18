@@ -45,6 +45,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -79,6 +80,7 @@ import dev.yuva.YuvaConversationStatus
 import dev.yuva.YuvaEvent
 import dev.yuva.YuvaFeedbackCategory
 import dev.yuva.YuvaFeedbackState
+import dev.yuva.withFeedbackProgress
 import dev.yuva.isFeedback
 import dev.yuva.YuvaException
 import dev.yuva.YuvaInbox
@@ -177,7 +179,8 @@ internal class ThreadState(val client: YuvaClient, conversationId: String?, priv
                 is YuvaEvent.MessageCreated -> onMessage(event.message)
                 is YuvaEvent.MessageUpdated -> onMessage(event.message)
                 is YuvaEvent.ConversationUpdated -> if (event.conversationId == conversationId) {
-                    conversation = runCatching { client.conversation(event.conversationId) }.getOrNull() ?: conversation
+                    conversation = runCatching { client.conversation(event.conversationId) }.getOrNull()
+                        ?.withFeedbackProgress(event.feedbackProgress) ?: conversation
                 }
                 is YuvaEvent.Read -> if (event.conversationId == conversationId) {
                     memberReadAt = maxOf(memberReadAt ?: event.readAt, event.readAt)
@@ -226,7 +229,7 @@ internal class ThreadState(val client: YuvaClient, conversationId: String?, priv
         get() {
             val current = conversation?.takeIf { it.isFeedback } ?: return null
             val last = items.lastOrNull { it.message != null }?.message?.author?.type ?: current.lastMessage?.authorType
-            return YuvaFeedbackState.of(current.status, last)
+            return YuvaFeedbackState.of(current.status, last, current.feedback?.progress)
         }
 
     fun rate(rating: YuvaRating, comment: String?) {
@@ -430,7 +433,8 @@ fun YuvaThreadView(
                             modifier = Modifier.padding(top = if (row.first && !row.startsDay) 10.dp else 2.dp),
                         )
                     }
-                    if (state.feedbackState == YuvaFeedbackState.RESOLVED) {
+                    val noteState = state.feedbackState ?: YuvaFeedbackState.SENT
+                    if (noteState == YuvaFeedbackState.RESOLVED || noteState.isProgress) {
                         item(key = "resolved") {
                             Row(
                                 Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 16.dp)
@@ -439,14 +443,14 @@ fun YuvaThreadView(
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
                                 Icon(
-                                    Icons.Default.CheckCircle,
+                                    if (noteState.isProgress) Icons.Default.Info else Icons.Default.CheckCircle,
                                     contentDescription = null,
-                                    tint = stateTint(YuvaFeedbackState.RESOLVED),
+                                    tint = stateTint(noteState),
                                     modifier = Modifier.size(18.dp),
                                 )
                                 Spacer(Modifier.size(8.dp))
                                 Text(
-                                    stringResource(R.string.yuva_feedback_resolved_note),
+                                    stringResource(noteLabel(noteState)),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     textAlign = TextAlign.Center,
@@ -538,6 +542,14 @@ fun YuvaThreadView(
             }
         }
     }
+}
+
+private fun noteLabel(state: YuvaFeedbackState): Int = when (state) {
+    YuvaFeedbackState.PLANNED -> R.string.yuva_feedback_note_planned
+    YuvaFeedbackState.IN_PROGRESS -> R.string.yuva_feedback_note_in_progress
+    YuvaFeedbackState.DONE -> R.string.yuva_feedback_note_done
+    YuvaFeedbackState.WONT_DO -> R.string.yuva_feedback_note_wont_do
+    else -> R.string.yuva_feedback_resolved_note
 }
 
 @Composable

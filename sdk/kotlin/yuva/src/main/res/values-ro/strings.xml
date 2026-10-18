@@ -61,4 +61,12 @@
     <string name="yuva_feedback_resolved_note">The team marked this feedback as resolved. Reply to reopen it.</string>
     <string name="yuva_feedback_view">View feedback</string>
     <string name="yuva_feedback_attachments">Has attachments</string>
+    <string name="yuva_feedback_state_planned">Planificat</string>
+    <string name="yuva_feedback_state_in_progress">În lucru</string>
+    <string name="yuva_feedback_state_done">Făcut</string>
+    <string name="yuva_feedback_state_wont_do">Nu se va face</string>
+    <string name="yuva_feedback_note_planned">Echipa a marcat aceasta ca planificat.</string>
+    <string name="yuva_feedback_note_in_progress">Echipa a marcat aceasta ca în lucru.</string>
+    <string name="yuva_feedback_note_done">Echipa a marcat aceasta ca făcut.</string>
+    <string name="yuva_feedback_note_wont_do">Echipa a marcat aceasta ca nu se va face.</string>
 </resources>

@@ -71,7 +71,9 @@ final class ConversationsModel {
             switch event {
             case .conversationCreated(let conversation):
                 upsert(conversation)
-            case .conversationUpdated(let id, _, _, _), .read(let id, _):
+            case .conversationUpdated(let id, _, _, _, let progress):
+                await refresh(id, progress: .some(progress))
+            case .read(let id, _):
                 await refresh(id)
             case .messageCreated(let message):
                 await refresh(message.conversationId)
@@ -87,8 +89,10 @@ final class ConversationsModel {
         }
     }
 
-    private func refresh(_ id: String) async {
-        if let conversation = try? await client.conversation(id: id) { upsert(conversation) }
+    private func refresh(_ id: String, progress: YuvaFeedbackProgress?? = nil) async {
+        guard var conversation = try? await client.conversation(id: id) else { return }
+        if let progress { conversation = conversation.settingFeedbackProgress(progress) }
+        upsert(conversation)
     }
 
     func upsert(_ conversation: YuvaConversation) {

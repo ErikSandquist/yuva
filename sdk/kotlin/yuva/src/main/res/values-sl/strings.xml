@@ -61,4 +61,12 @@
     <string name="yuva_feedback_resolved_note">The team marked this feedback as resolved. Reply to reopen it.</string>
     <string name="yuva_feedback_view">View feedback</string>
     <string name="yuva_feedback_attachments">Has attachments</string>
+    <string name="yuva_feedback_state_planned">Načrtovano</string>
+    <string name="yuva_feedback_state_in_progress">V teku</string>
+    <string name="yuva_feedback_state_done">Končano</string>
+    <string name="yuva_feedback_state_wont_do">Ne bo narejeno</string>
+    <string name="yuva_feedback_note_planned">Ekipa je to označila kot načrtovano.</string>
+    <string name="yuva_feedback_note_in_progress">Ekipa je to označila kot v teku.</string>
+    <string name="yuva_feedback_note_done">Ekipa je to označila kot končano.</string>
+    <string name="yuva_feedback_note_wont_do">Ekipa je to označila kot ne bo narejeno.</string>
 </resources>

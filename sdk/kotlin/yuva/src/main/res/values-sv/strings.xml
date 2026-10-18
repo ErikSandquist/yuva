@@ -61,4 +61,12 @@
     <string name="yuva_feedback_resolved_note">The team marked this feedback as resolved. Reply to reopen it.</string>
     <string name="yuva_feedback_view">View feedback</string>
     <string name="yuva_feedback_attachments">Has attachments</string>
+    <string name="yuva_feedback_state_planned">Planerad</string>
+    <string name="yuva_feedback_state_in_progress">Pågår</string>
+    <string name="yuva_feedback_state_done">Klar</string>
+    <string name="yuva_feedback_state_wont_do">Görs inte</string>
+    <string name="yuva_feedback_note_planned">Teamet markerade detta som planerat.</string>
+    <string name="yuva_feedback_note_in_progress">Teamet markerade detta som pågår.</string>
+    <string name="yuva_feedback_note_done">Teamet markerade detta som klart.</string>
+    <string name="yuva_feedback_note_wont_do">Teamet markerade detta som görs inte.</string>
 </resources>

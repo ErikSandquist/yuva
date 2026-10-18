@@ -86,8 +86,10 @@ final class ThreadModel {
                     typingName = nil
                     await markRead()
                 }
-            case .conversationUpdated(let id, _, _, _):
-                if id == conversationId, let updated = try? await client.conversation(id: id) { conversation = updated }
+            case .conversationUpdated(let id, _, _, _, let progress):
+                if id == conversationId, let updated = try? await client.conversation(id: id) {
+                    conversation = updated.settingFeedbackProgress(progress)
+                }
             case .read(let id, let readAt):
                 if id == conversationId { memberReadAt = max(memberReadAt ?? readAt, readAt) }
             case .typing(let id, let typing, let author):
@@ -127,7 +129,7 @@ final class ThreadModel {
     var feedbackState: YuvaFeedbackState? {
         guard let conversation, conversation.isFeedback else { return nil }
         let last = items.last(where: { $0.message != nil })?.message?.author.type ?? conversation.lastMessage?.authorType
-        return .of(status: conversation.status, lastAuthor: last)
+        return .of(status: conversation.status, lastAuthor: last, progress: conversation.feedback?.progress)
     }
 
     func rate(_ rating: YuvaRating, comment: String?) async {
@@ -299,8 +301,10 @@ public struct YuvaThreadView: View {
                         .padding(.top, row.first && !row.startsDay ? 10 : 2)
                         .id(row.item.id)
                     }
-                    if model.feedbackState == .resolved {
-                        Label(L.t("feedback.resolvedNote"), systemImage: "checkmark.circle.fill")
+                    if let state = model.feedbackState, state == .resolved || state.isProgress {
+                        Label(
+                            L.t(state.isProgress ? "feedback.progressNote." + state.rawValue : "feedback.resolvedNote"),
+                            systemImage: state.isProgress ? "flag.fill" : "checkmark.circle.fill")
                             .font(.footnote).foregroundStyle(.secondary).multilineTextAlignment(.center)
                             .frame(maxWidth: .infinity).padding(.horizontal, 24).padding(.vertical, 16)
                             .id("resolved")

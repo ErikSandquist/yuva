@@ -120,7 +120,11 @@ internal fun FeedbackTag(text: String, tint: Color, modifier: Modifier = Modifie
 internal fun stateTint(state: YuvaFeedbackState): Color = when (state) {
     YuvaFeedbackState.SENT -> MaterialTheme.colorScheme.onSurfaceVariant
     YuvaFeedbackState.ANSWERED -> MaterialTheme.colorScheme.primary
-    YuvaFeedbackState.RESOLVED -> if (MaterialTheme.colorScheme.surface.luminance() < 0.5f) Color(0xFF4ADE80) else Color(0xFF1E8E3E)
+    YuvaFeedbackState.RESOLVED, YuvaFeedbackState.DONE ->
+        if (MaterialTheme.colorScheme.surface.luminance() < 0.5f) Color(0xFF4ADE80) else Color(0xFF1E8E3E)
+    YuvaFeedbackState.PLANNED -> if (MaterialTheme.colorScheme.surface.luminance() < 0.5f) Color(0xFF8C9EFF) else Color(0xFF3F51B5)
+    YuvaFeedbackState.IN_PROGRESS -> if (MaterialTheme.colorScheme.surface.luminance() < 0.5f) Color(0xFFFFB74D) else Color(0xFFE65100)
+    YuvaFeedbackState.WONT_DO -> MaterialTheme.colorScheme.outline
 }
 
 internal object ShortTime {

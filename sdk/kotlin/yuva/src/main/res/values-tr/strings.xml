@@ -61,4 +61,12 @@
     <string name="yuva_feedback_resolved_note">Ekip bu geri bildirimi çözüldü olarak işaretledi. Yeniden açmak için yanıt yazın.</string>
     <string name="yuva_feedback_view">Geri bildirimi görüntüle</string>
     <string name="yuva_feedback_attachments">Ekler var</string>
+    <string name="yuva_feedback_state_planned">Planlandı</string>
+    <string name="yuva_feedback_state_in_progress">Üzerinde çalışılıyor</string>
+    <string name="yuva_feedback_state_done">Yapıldı</string>
+    <string name="yuva_feedback_state_wont_do">Yapılmayacak</string>
+    <string name="yuva_feedback_note_planned">Ekip bunu planlandı olarak işaretledi.</string>
+    <string name="yuva_feedback_note_in_progress">Ekip bunu üzerinde çalışılıyor olarak işaretledi.</string>
+    <string name="yuva_feedback_note_done">Ekip bunu yapıldı olarak işaretledi.</string>
+    <string name="yuva_feedback_note_wont_do">Ekip bunu yapılmayacak olarak işaretledi.</string>
 </resources>

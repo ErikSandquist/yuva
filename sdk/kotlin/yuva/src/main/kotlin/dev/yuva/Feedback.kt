@@ -53,10 +53,20 @@ data class YuvaDeviceInfo(
 }
 
 enum class YuvaFeedbackState {
-    SENT, ANSWERED, RESOLVED;
+    SENT, ANSWERED, RESOLVED, PLANNED, IN_PROGRESS, DONE, WONT_DO;
+
+    val isProgress: Boolean get() = this == PLANNED || this == IN_PROGRESS || this == DONE || this == WONT_DO
 
     companion object {
-        fun of(status: YuvaConversationStatus, lastAuthor: YuvaAuthorType?): YuvaFeedbackState = when {
+        fun of(
+            status: YuvaConversationStatus,
+            lastAuthor: YuvaAuthorType?,
+            progress: YuvaFeedbackProgress? = null,
+        ): YuvaFeedbackState = when {
+            progress == YuvaFeedbackProgress.PLANNED -> PLANNED
+            progress == YuvaFeedbackProgress.IN_PROGRESS -> IN_PROGRESS
+            progress == YuvaFeedbackProgress.DONE -> DONE
+            progress == YuvaFeedbackProgress.WONT_DO -> WONT_DO
             status == YuvaConversationStatus.CLOSED -> RESOLVED
             lastAuthor?.isTeam == true -> ANSWERED
             else -> SENT
@@ -67,4 +77,7 @@ enum class YuvaFeedbackState {
 val YuvaConversation.isFeedback: Boolean get() = kind == YuvaConversationKind.FEEDBACK || feedback != null
 
 val YuvaConversation.feedbackState: YuvaFeedbackState?
-    get() = if (isFeedback) YuvaFeedbackState.of(status, lastMessage?.authorType) else null
+    get() = if (isFeedback) YuvaFeedbackState.of(status, lastMessage?.authorType, feedback?.progress) else null
+
+internal fun YuvaConversation.withFeedbackProgress(progress: YuvaFeedbackProgress?): YuvaConversation =
+    if (feedback == null) this else copy(feedback = feedback.copy(progress = progress))

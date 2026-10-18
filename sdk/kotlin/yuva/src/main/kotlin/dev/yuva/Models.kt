@@ -69,6 +69,23 @@ enum class YuvaFeedbackCategory(val value: String) {
     @SerialName("other") OTHER("other"),
 }
 
+@Serializable(YuvaFeedbackProgressSerializer::class)
+enum class YuvaFeedbackProgress(val value: String) {
+    PLANNED("planned"),
+    IN_PROGRESS("in_progress"),
+    DONE("done"),
+    WONT_DO("wont_do"),
+}
+
+internal object YuvaFeedbackProgressSerializer : KSerializer<YuvaFeedbackProgress?> {
+    override val descriptor = PrimitiveSerialDescriptor("YuvaFeedbackProgress", PrimitiveKind.STRING)
+    override fun serialize(encoder: Encoder, value: YuvaFeedbackProgress?) = encoder.encodeString(value?.value.orEmpty())
+    override fun deserialize(decoder: Decoder): YuvaFeedbackProgress? {
+        val raw = decoder.decodeString()
+        return YuvaFeedbackProgress.entries.firstOrNull { it.value == raw }
+    }
+}
+
 @Serializable
 enum class YuvaRating(val value: String) {
     @SerialName("good") GOOD("good"),
@@ -154,6 +171,7 @@ data class YuvaFeedbackInfo(
     val locale: String? = null,
     val screen: String? = null,
     val installationId: String? = null,
+    val progress: YuvaFeedbackProgress? = null,
 )
 
 @Serializable
@@ -239,6 +257,7 @@ sealed interface YuvaEvent {
         val status: YuvaConversationStatus,
         val canRate: Boolean = false,
         val rating: YuvaRating? = null,
+        val feedbackProgress: YuvaFeedbackProgress? = null,
     ) : YuvaEvent
     data class MessageCreated(val message: YuvaMessage) : YuvaEvent
     data class MessageUpdated(val message: YuvaMessage) : YuvaEvent

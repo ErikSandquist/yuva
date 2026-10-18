@@ -222,7 +222,9 @@ struct SubscriptionStatus: Codable, Sendable {
 
 public enum YuvaEvent: Sendable {
     case conversationCreated(YuvaConversation)
-    case conversationUpdated(conversationId: String, status: YuvaConversationStatus, canRate: Bool, rating: YuvaRating?)
+    case conversationUpdated(
+        conversationId: String, status: YuvaConversationStatus, canRate: Bool, rating: YuvaRating?,
+        feedbackProgress: YuvaFeedbackProgress?)
     case messageCreated(YuvaMessage)
     case messageUpdated(YuvaMessage)
     case read(conversationId: String, readAt: Date)

@@ -69,6 +69,7 @@ import dev.yuva.YuvaConversationKind
 import dev.yuva.YuvaConversationStatus
 import dev.yuva.YuvaFeedbackState
 import dev.yuva.feedbackState
+import dev.yuva.withFeedbackProgress
 import dev.yuva.isFeedback
 import dev.yuva.YuvaEvent
 import dev.yuva.YuvaInbox
@@ -133,7 +134,7 @@ internal class ConversationsState(private val client: YuvaClient) {
         client.events().collect { event ->
             when (event) {
                 is YuvaEvent.ConversationCreated -> upsert(event.conversation)
-                is YuvaEvent.ConversationUpdated -> refresh(event.conversationId)
+                is YuvaEvent.ConversationUpdated -> refresh(event.conversationId) { it.withFeedbackProgress(event.feedbackProgress) }
                 is YuvaEvent.Read -> refresh(event.conversationId)
                 is YuvaEvent.MessageCreated -> refresh(event.message.conversationId)
                 is YuvaEvent.Presence -> runCatching { session = client.refreshSession() }
@@ -144,8 +145,8 @@ internal class ConversationsState(private val client: YuvaClient) {
         }
     }
 
-    private suspend fun refresh(id: String) {
-        runCatching { client.conversation(id) }.getOrNull()?.let(::upsert)
+    private suspend fun refresh(id: String, adjust: (YuvaConversation) -> YuvaConversation = { it }) {
+        runCatching { client.conversation(id) }.getOrNull()?.let { upsert(adjust(it)) }
     }
 
     fun upsert(conversation: YuvaConversation) {
@@ -495,6 +496,10 @@ internal fun stateLabel(state: YuvaFeedbackState): Int = when (state) {
     YuvaFeedbackState.SENT -> R.string.yuva_feedback_state_sent
     YuvaFeedbackState.ANSWERED -> R.string.yuva_feedback_state_answered
     YuvaFeedbackState.RESOLVED -> R.string.yuva_feedback_state_resolved
+    YuvaFeedbackState.PLANNED -> R.string.yuva_feedback_state_planned
+    YuvaFeedbackState.IN_PROGRESS -> R.string.yuva_feedback_state_in_progress
+    YuvaFeedbackState.DONE -> R.string.yuva_feedback_state_done
+    YuvaFeedbackState.WONT_DO -> R.string.yuva_feedback_state_wont_do
 }
 
 @Composable
