@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">L\'equip ho ha marcat com a en curs.</string>
     <string name="yuva_feedback_note_done">L\'equip ho ha marcat com a fet.</string>
     <string name="yuva_feedback_note_wont_do">L\'equip ho ha marcat com a no es farà.</string>
+    <string name="yuva_thread_scroll_bottom">Ves al més recent</string>
+    <string name="yuva_thread_open_image">Obre la imatge</string>
+    <string name="yuva_thread_close">Tanca</string>
 </resources>

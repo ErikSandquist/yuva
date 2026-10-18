@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">Ekip bunu üzerinde çalışılıyor olarak işaretledi.</string>
     <string name="yuva_feedback_note_done">Ekip bunu yapıldı olarak işaretledi.</string>
     <string name="yuva_feedback_note_wont_do">Ekip bunu yapılmayacak olarak işaretledi.</string>
+    <string name="yuva_thread_scroll_bottom">En yeniye git</string>
+    <string name="yuva_thread_open_image">Görseli aç</string>
+    <string name="yuva_thread_close">Kapat</string>
 </resources>

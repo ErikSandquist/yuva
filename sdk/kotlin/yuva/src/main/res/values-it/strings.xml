@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">Il team lo ha contrassegnato come in corso.</string>
     <string name="yuva_feedback_note_done">Il team lo ha contrassegnato come fatto.</string>
     <string name="yuva_feedback_note_wont_do">Il team lo ha contrassegnato come non si farà.</string>
+    <string name="yuva_thread_scroll_bottom">Vai ai più recenti</string>
+    <string name="yuva_thread_open_image">Apri immagine</string>
+    <string name="yuva_thread_close">Chiudi</string>
 </resources>

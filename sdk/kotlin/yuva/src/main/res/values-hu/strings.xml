@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">A csapat folyamatban lévőnek jelölte ezt.</string>
     <string name="yuva_feedback_note_done">A csapat késznek jelölte ezt.</string>
     <string name="yuva_feedback_note_wont_do">A csapat nem megvalósítandónak jelölte ezt.</string>
+    <string name="yuva_thread_scroll_bottom">Ugrás a legújabbra</string>
+    <string name="yuva_thread_open_image">Kép megnyitása</string>
+    <string name="yuva_thread_close">Bezárás</string>
 </resources>

@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">Tim menandai ini sebagai sedang dikerjakan.</string>
     <string name="yuva_feedback_note_done">Tim menandai ini sebagai selesai.</string>
     <string name="yuva_feedback_note_wont_do">Tim menandai ini sebagai tidak akan dikerjakan.</string>
+    <string name="yuva_thread_scroll_bottom">Lompat ke terbaru</string>
+    <string name="yuva_thread_open_image">Buka gambar</string>
+    <string name="yuva_thread_close">Tutup</string>
 </resources>

@@ -3,13 +3,25 @@ import UIKit
 import YuvaKit
 
 enum Screen: Identifiable {
-    case messages
+    case conversations(YuvaConversationsSection?)
     case feedback(YuvaUpload?)
 
     var id: String {
         switch self {
-        case .messages: "messages"
+        case .conversations(.none): "all"
+        case .conversations(.messages): "messages"
+        case .conversations(.feedback): "feedbackList"
         case .feedback: "feedback"
+        }
+    }
+
+    init?(launchArgument: String?) {
+        switch launchArgument {
+        case "all", "messages": self = .conversations(nil)
+        case "onlyMessages": self = .conversations(.messages)
+        case "onlyFeedback": self = .conversations(.feedback)
+        case "feedback": self = .feedback(nil)
+        default: return nil
         }
     }
 }
@@ -20,6 +32,8 @@ struct ContentView: View {
     @AppStorage("identified") private var identified = false
     @State private var client: YuvaClient?
     @State private var swap: Task<Void, Never>?
+    @State private var screen: Screen?
+    @State private var openConversationId: String?
 
     init(config: ExampleConfig) {
         self.config = config
@@ -29,13 +43,11 @@ struct ContentView: View {
                 config: config, identified: defaults.bool(forKey: "identified"),
                 userId: defaults.string(forKey: "userId") ?? ""))
     }
-    @State private var screen: Screen?
-    @State private var openConversationId: String?
 
     var body: some View {
         NavigationStack {
             Form {
-                Section("Mode") {
+                Section {
                     Picker("Mode", selection: $identified) {
                         Text("Anonymous").tag(false)
                         Text("Identified").tag(true)
@@ -46,12 +58,28 @@ struct ContentView: View {
                             .textInputAutocapitalization(.never)
                             .autocorrectionDisabled()
                     }
+                } header: {
+                    Text("Mode")
+                } footer: {
+                    Text(identified ? "Signed in through the identity token URL." : "A device session without sign-in.")
                 }
-                Section {
-                    Button("Open messages") { screen = .messages }
-                        .accessibilityIdentifier("example.messages")
-                    Button("Send feedback") { screen = .feedback(captureScreen()) }
-                        .accessibilityIdentifier("example.feedback")
+                Section("Support") {
+                    ScreenRow("Messages and feedback", systemImage: "bubble.left.and.bubble.right.fill", tint: .blue) {
+                        screen = .conversations(nil)
+                    }
+                    .accessibilityIdentifier("example.messages")
+                    ScreenRow("Messages only", systemImage: "bubble.left.fill", tint: .teal) {
+                        screen = .conversations(.messages)
+                    }
+                    .accessibilityIdentifier("example.messagesOnly")
+                    ScreenRow("Feedback only", systemImage: "lightbulb.fill", tint: .orange) {
+                        screen = .conversations(.feedback)
+                    }
+                    .accessibilityIdentifier("example.feedbackList")
+                    ScreenRow("Send feedback", systemImage: "paperplane.fill", tint: .pink) {
+                        screen = .feedback(captureScreen())
+                    }
+                    .accessibilityIdentifier("example.feedback")
                 }
                 .disabled(client == nil)
                 if identified, !userId.isEmpty, let client {
@@ -68,8 +96,8 @@ struct ContentView: View {
         .sheet(item: $screen) { screen in
             if let client {
                 switch screen {
-                case .messages:
-                    YuvaConversationsView(client: client, openConversationId: $openConversationId)
+                case .conversations(let section):
+                    YuvaConversationsView(client: client, openConversationId: $openConversationId, section: section)
                 case .feedback(let screenshot):
                     YuvaFeedbackView(client: client, screenshot: screenshot, screen: "example.home") { self.screen = nil }
                 }
@@ -83,11 +111,9 @@ struct ContentView: View {
         }
         .onAppear {
             let defaults = UserDefaults.standard
-            switch defaults.string(forKey: "YuvaOpen") {
-            case "messages": screen = .messages
-            case "feedback": screen = .feedback(nil)
-            default: break
-            }
+            openConversationId = defaults.string(forKey: "YuvaThread")
+            screen = Screen(launchArgument: defaults.string(forKey: "YuvaOpen"))
+                ?? (openConversationId == nil ? nil : .conversations(nil))
         }
     }
 
@@ -116,6 +142,55 @@ struct ContentView: View {
         }
         return YuvaClient(
             configuration: YuvaConfiguration(serverURL: config.serverURL, channelKey: config.channelKey, identityToken: provider))
+    }
+}
+
+struct ScreenRow: View {
+    let title: String
+    let systemImage: String
+    let tint: Color
+    let opensScreen: Bool
+    let action: () -> Void
+
+    init(
+        _ title: String, systemImage: String, tint: Color, opensScreen: Bool = true, action: @escaping () -> Void
+    ) {
+        self.title = title
+        self.systemImage = systemImage
+        self.tint = tint
+        self.opensScreen = opensScreen
+        self.action = action
+    }
+
+    var body: some View {
+        Button(action: action) {
+            HStack {
+                Label {
+                    Text(title).foregroundStyle(.primary)
+                } icon: {
+                    SettingsIcon(systemImage: systemImage, tint: tint)
+                }
+                Spacer()
+                if opensScreen {
+                    Image(systemName: "chevron.forward").font(.footnote.weight(.semibold)).foregroundStyle(.tertiary)
+                }
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+struct SettingsIcon: View {
+    let systemImage: String
+    let tint: Color
+
+    var body: some View {
+        Image(systemName: systemImage)
+            .font(.system(size: 14, weight: .semibold))
+            .foregroundStyle(.white)
+            .frame(width: 30, height: 30)
+            .background(tint.gradient, in: RoundedRectangle(cornerRadius: 8, style: .continuous))
     }
 }
 

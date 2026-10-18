@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">Ekipa je to označila kot v teku.</string>
     <string name="yuva_feedback_note_done">Ekipa je to označila kot končano.</string>
     <string name="yuva_feedback_note_wont_do">Ekipa je to označila kot ne bo narejeno.</string>
+    <string name="yuva_thread_scroll_bottom">Skoči na najnovejše</string>
+    <string name="yuva_thread_open_image">Odpri sliko</string>
+    <string name="yuva_thread_close">Zapri</string>
 </resources>

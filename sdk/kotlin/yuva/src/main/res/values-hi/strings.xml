@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">टीम ने इसे प्रगति में चिह्नित किया।</string>
     <string name="yuva_feedback_note_done">टीम ने इसे हो गया चिह्नित किया।</string>
     <string name="yuva_feedback_note_wont_do">टीम ने इसे नहीं किया जाएगा चिह्नित किया।</string>
+    <string name="yuva_thread_scroll_bottom">नवीनतम पर जाएं</string>
+    <string name="yuva_thread_open_image">छवि खोलें</string>
+    <string name="yuva_thread_close">बंद करें</string>
 </resources>

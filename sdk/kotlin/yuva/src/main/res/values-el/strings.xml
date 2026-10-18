@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">Η ομάδα το σημείωσε ως σε εξέλιξη.</string>
     <string name="yuva_feedback_note_done">Η ομάδα το σημείωσε ως ολοκληρωμένο.</string>
     <string name="yuva_feedback_note_wont_do">Η ομάδα το σημείωσε ως δεν θα γίνει.</string>
+    <string name="yuva_thread_scroll_bottom">Μετάβαση στα πιο πρόσφατα</string>
+    <string name="yuva_thread_open_image">Άνοιγμα εικόνας</string>
+    <string name="yuva_thread_close">Κλείσιμο</string>
 </resources>

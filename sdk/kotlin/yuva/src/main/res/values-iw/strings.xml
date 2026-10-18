@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">הצוות סימן זאת כבתהליך.</string>
     <string name="yuva_feedback_note_done">הצוות סימן זאת כבוצע.</string>
     <string name="yuva_feedback_note_wont_do">הצוות סימן זאת כלא ייעשה.</string>
+    <string name="yuva_thread_scroll_bottom">מעבר להודעה האחרונה</string>
+    <string name="yuva_thread_open_image">פתיחת תמונה</string>
+    <string name="yuva_thread_close">סגירה</string>
 </resources>

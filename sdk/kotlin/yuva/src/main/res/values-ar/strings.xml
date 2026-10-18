@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">وضع الفريق علامة "قيد التنفيذ" على هذا.</string>
     <string name="yuva_feedback_note_done">وضع الفريق علامة "تم" على هذا.</string>
     <string name="yuva_feedback_note_wont_do">وضع الفريق علامة "لن يُنفَّذ" على هذا.</string>
+    <string name="yuva_thread_scroll_bottom">الانتقال إلى الأحدث</string>
+    <string name="yuva_thread_open_image">فتح الصورة</string>
+    <string name="yuva_thread_close">إغلاق</string>
 </resources>

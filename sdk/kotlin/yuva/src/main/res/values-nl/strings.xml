@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">Het team heeft dit als in uitvoering gemarkeerd.</string>
     <string name="yuva_feedback_note_done">Het team heeft dit als klaar gemarkeerd.</string>
     <string name="yuva_feedback_note_wont_do">Het team heeft dit als wordt niet gedaan gemarkeerd.</string>
+    <string name="yuva_thread_scroll_bottom">Naar nieuwste</string>
+    <string name="yuva_thread_open_image">Afbeelding openen</string>
+    <string name="yuva_thread_close">Sluiten</string>
 </resources>

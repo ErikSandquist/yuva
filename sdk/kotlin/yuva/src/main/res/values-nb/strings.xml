@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">Teamet markerte dette som pågår.</string>
     <string name="yuva_feedback_note_done">Teamet markerte dette som ferdig.</string>
     <string name="yuva_feedback_note_wont_do">Teamet markerte dette som blir ikke gjort.</string>
+    <string name="yuva_thread_scroll_bottom">Gå til nyeste</string>
+    <string name="yuva_thread_open_image">Åpne bilde</string>
+    <string name="yuva_thread_close">Lukk</string>
 </resources>

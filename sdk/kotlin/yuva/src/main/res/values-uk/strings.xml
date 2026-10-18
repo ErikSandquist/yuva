@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">Команда позначила це як «у роботі».</string>
     <string name="yuva_feedback_note_done">Команда позначила це як готове.</string>
     <string name="yuva_feedback_note_wont_do">Команда позначила це як «не буде зроблено».</string>
+    <string name="yuva_thread_scroll_bottom">До останніх</string>
+    <string name="yuva_thread_open_image">Відкрити зображення</string>
+    <string name="yuva_thread_close">Закрити</string>
 </resources>

@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">Tím to označil ako prebiehajúce.</string>
     <string name="yuva_feedback_note_done">Tím to označil ako hotové.</string>
     <string name="yuva_feedback_note_wont_do">Tím to označil ako nebude urobené.</string>
+    <string name="yuva_thread_scroll_bottom">Prejsť na najnovšie</string>
+    <string name="yuva_thread_open_image">Otvoriť obrázok</string>
+    <string name="yuva_thread_close">Zavrieť</string>
 </resources>

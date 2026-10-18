@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">Echipa a marcat aceasta ca în lucru.</string>
     <string name="yuva_feedback_note_done">Echipa a marcat aceasta ca făcut.</string>
     <string name="yuva_feedback_note_wont_do">Echipa a marcat aceasta ca nu se va face.</string>
+    <string name="yuva_thread_scroll_bottom">Salt la cele mai recente</string>
+    <string name="yuva_thread_open_image">Deschide imaginea</string>
+    <string name="yuva_thread_close">Închide</string>
 </resources>

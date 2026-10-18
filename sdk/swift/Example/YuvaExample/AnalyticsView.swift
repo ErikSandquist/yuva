@@ -15,29 +15,36 @@ struct AnalyticsView: View {
             Form {
                 if config.analyticsKey == nil {
                     Section {
-                        Text("Add AnalyticsKey to Config.plist to send analytics.").foregroundStyle(.secondary)
+                        Label("Add AnalyticsKey to Config.plist to send analytics.", systemImage: "info.circle")
+                            .foregroundStyle(.secondary)
                     }
                 }
                 Section("Events") {
-                    Button("Track Purchase (9.99 EUR)") {
+                    ScreenRow("Track Purchase (9.99 EUR)", systemImage: "cart.fill", tint: .green, opensScreen: false) {
                         YuvaAnalytics.track(
                             "Purchase", props: ["plan": "pro", "seats": 3],
                             revenue: YuvaRevenue(amount: Decimal(string: "9.99")!, currency: "EUR"))
                         note("Purchase")
                     }
                     .accessibilityIdentifier("example.analytics.purchase")
-                    Button("Track Signup") {
+                    ScreenRow("Track Signup", systemImage: "person.crop.circle.badge.plus", tint: .indigo, opensScreen: false) {
                         YuvaAnalytics.track("Signup", props: ["source": "example"])
                         note("Signup")
                     }
                     .accessibilityIdentifier("example.analytics.signup")
-                    NavigationLink("Open Product Detail") {
+                    NavigationLink {
                         Text("Product Detail")
                             .font(.title2)
                             .yuvaScreen("Product Detail")
+                    } label: {
+                        Label {
+                            Text("Open Product Detail")
+                        } icon: {
+                            SettingsIcon(systemImage: "shippingbox.fill", tint: .brown)
+                        }
                     }
                     .accessibilityIdentifier("example.analytics.product")
-                    Button("Send now") {
+                    ScreenRow("Send now", systemImage: "arrow.up.circle.fill", tint: .blue, opensScreen: false) {
                         YuvaAnalytics.flush()
                         note("Send now")
                     }

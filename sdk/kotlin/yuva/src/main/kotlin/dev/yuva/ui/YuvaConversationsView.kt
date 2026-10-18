@@ -42,7 +42,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Surface
 import androidx.compose.ui.graphics.Color
@@ -79,6 +78,16 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.foundation.background
 import dev.yuva.R
 import dev.yuva.YuvaAuthorType
@@ -201,32 +210,75 @@ fun YuvaConversationsView(
     LaunchedEffect(client) { state.listen() }
     LaunchedEffect(openConversationId) { if (openConversationId != null) route = Route.Thread(openConversationId) }
 
-    val current = route
-    if (current is Route.Thread) {
-        BackHandler { route = null }
-        YuvaThreadView(client, current.id, modifier, onBack = { route = null })
-        return
+    AnimatedContent(
+        targetState = route,
+        transitionSpec = {
+            val forward = initialState == null
+            val motion = spring<IntOffset>(dampingRatio = 0.9f, stiffness = Spring.StiffnessMediumLow)
+            (slideInHorizontally(motion) { if (forward) it / 4 else -it / 4 } + fadeIn(spring(stiffness = Spring.StiffnessMediumLow)))
+                .togetherWith(
+                    slideOutHorizontally(motion) { if (forward) -it / 4 else it / 4 } + fadeOut(spring(stiffness = Spring.StiffnessMedium)),
+                )
+        },
+        label = "route",
+    ) { current ->
+        when (current) {
+            is Route.Thread -> {
+                BackHandler { route = null }
+                YuvaThreadView(client, current.id, modifier, onBack = { route = null })
+            }
+            Route.FeedbackForm -> {
+                BackHandler { route = null }
+                YuvaFeedbackView(
+                    client,
+                    modifier,
+                    onViewFeedback = { conversation ->
+                        state.upsert(conversation)
+                        route = Route.Thread(conversation.id)
+                    },
+                    onDone = {
+                        route = null
+                        scope.launch { state.load() }
+                    },
+                )
+            }
+            null -> ConversationsList(
+                state = state,
+                section = section,
+                tab = tab,
+                onTab = { tab = it },
+                onRoute = { route = it },
+                onClose = onClose,
+                modifier = modifier,
+            )
+        }
     }
-    if (current == Route.FeedbackForm) {
-        BackHandler { route = null }
-        YuvaFeedbackView(
-            client,
-            modifier,
-            onViewFeedback = { conversation ->
-                state.upsert(conversation)
-                route = Route.Thread(conversation.id)
-            },
-            onDone = {
-                route = null
-                scope.launch { state.load() }
-            },
-        )
-        return
-    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ConversationsList(
+    state: ConversationsState,
+    section: YuvaConversationsSection?,
+    tab: ConversationsTab,
+    onTab: (ConversationsTab) -> Unit,
+    onRoute: (Route) -> Unit,
+    onClose: (() -> Unit)?,
+    modifier: Modifier,
+) {
+    val scope = rememberCoroutineScope()
+    val listState = rememberLazyListState()
+    val expanded by remember { derivedStateOf { listState.firstVisibleItemIndex == 0 } }
+    val dark = isDarkSurface()
     val showsFeedback = section == YuvaConversationsSection.FEEDBACK ||
         section == null && tab == ConversationsTab.FEEDBACK
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-    val background = MaterialTheme.colorScheme.surfaceContainer
+    val background = if (dark) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.surfaceContainerHigh
+    val tileColor = if (dark) MaterialTheme.colorScheme.surfaceContainerHigh else MaterialTheme.colorScheme.surfaceContainerLowest
+    val showsList = !state.loading && !state.failed &&
+        !(section == YuvaConversationsSection.FEEDBACK && state.feedback.isEmpty()) &&
+        !(section == YuvaConversationsSection.MESSAGES && state.messages.isEmpty() ||
+            section == null && state.messages.isEmpty() && !state.hasFeedback)
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         containerColor = background,
@@ -252,24 +304,32 @@ fun YuvaConversationsView(
                         IconButton(onClick = onClose) { Icon(Icons.Default.Close, contentDescription = null) }
                     }
                 },
-                actions = {
-                    if (section == YuvaConversationsSection.FEEDBACK) {
-                        FilledTonalIconButton(
-                            onClick = { route = Route.FeedbackForm },
-                            modifier = Modifier.padding(end = 8.dp).testTag("yuva.feedback.new"),
-                        ) {
-                            Icon(Icons.Default.Add, contentDescription = stringResource(R.string.yuva_feedback_title))
-                        }
-                    } else {
-                        FilledTonalIconButton(
-                            onClick = { route = Route.Thread(null) },
-                            modifier = Modifier.padding(end = 8.dp).testTag("yuva.conversations.new"),
-                        ) {
-                            Icon(Icons.Default.Create, contentDescription = stringResource(R.string.yuva_conversations_new))
-                        }
-                    }
-                },
             )
+        },
+        floatingActionButton = {
+            AnimatedVisibility(
+                showsList,
+                enter = scaleIn(spring(dampingRatio = 0.6f, stiffness = Spring.StiffnessMediumLow)) + fadeIn(),
+                exit = scaleOut() + fadeOut(),
+            ) {
+                if (section == YuvaConversationsSection.FEEDBACK) {
+                    ExtendedFloatingActionButton(
+                        text = { Text(stringResource(R.string.yuva_feedback_title)) },
+                        icon = { Icon(Icons.Default.Add, contentDescription = null) },
+                        expanded = expanded,
+                        onClick = { onRoute(Route.FeedbackForm) },
+                        modifier = Modifier.testTag("yuva.feedback.new"),
+                    )
+                } else {
+                    ExtendedFloatingActionButton(
+                        text = { Text(stringResource(R.string.yuva_conversations_new)) },
+                        icon = { Icon(Icons.Default.Create, contentDescription = null) },
+                        expanded = expanded,
+                        onClick = { onRoute(Route.Thread(null)) },
+                        modifier = Modifier.testTag("yuva.conversations.new"),
+                    )
+                }
+            }
         },
     ) { padding ->
         Box(Modifier.fillMaxSize().padding(padding)) {
@@ -284,7 +344,7 @@ fun YuvaConversationsView(
                     title = stringResource(R.string.yuva_feedback_kind),
                     icon = YuvaIcons.Lightbulb,
                     action = stringResource(R.string.yuva_feedback_title),
-                    onAction = { route = Route.FeedbackForm },
+                    onAction = { onRoute(Route.FeedbackForm) },
                 )
                 section == YuvaConversationsSection.MESSAGES && state.messages.isEmpty() ||
                     section == null && state.messages.isEmpty() && !state.hasFeedback -> Placeholder(
@@ -292,13 +352,14 @@ fun YuvaConversationsView(
                     icon = YuvaIcons.Chat,
                     hint = stringResource(R.string.yuva_conversations_empty_hint),
                     action = stringResource(R.string.yuva_conversations_new),
-                    onAction = { route = Route.Thread(null) },
+                    onAction = { onRoute(Route.Thread(null)) },
                 )
                 else -> {
                     val items = state.items(tab)
                     LazyColumn(
                         Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 24.dp),
+                        state = listState,
+                        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 96.dp),
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
                         val inbox = state.session?.inbox
@@ -310,7 +371,7 @@ fun YuvaConversationsView(
                                 ConnectedToggleGroup(
                                     options = ConversationsTab.entries,
                                     selected = tab,
-                                    onSelect = { tab = it },
+                                    onSelect = onTab,
                                     label = {
                                         stringResource(
                                             if (it == ConversationsTab.MESSAGES) R.string.yuva_conversations_messages
@@ -329,9 +390,11 @@ fun YuvaConversationsView(
                                 placementSpec = spring(dampingRatio = 0.75f, stiffness = Spring.StiffnessMediumLow),
                             )
                             if (conversation.isFeedback) {
-                                FeedbackRow(conversation, shape, tile) { route = Route.Thread(conversation.id) }
+                                FeedbackRow(conversation, shape, tileColor, tile) { onRoute(Route.Thread(conversation.id)) }
                             } else {
-                                ConversationRow(conversation, state.session?.inbox, shape, tile) { route = Route.Thread(conversation.id) }
+                                ConversationRow(conversation, state.session?.inbox, shape, tileColor, tile) {
+                                    onRoute(Route.Thread(conversation.id))
+                                }
                             }
                             if (conversation.id == items.lastOrNull()?.id) {
                                 LaunchedEffect(conversation.id, tab) { state.loadMore(tab) }
@@ -527,6 +590,7 @@ private fun ConversationListRow(
     time: String,
     unread: Boolean,
     shape: Shape,
+    color: Color,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     leading: @Composable () -> Unit,
@@ -535,7 +599,7 @@ private fun ConversationListRow(
     Surface(
         onClick = onClick,
         shape = shape,
-        color = MaterialTheme.colorScheme.surfaceBright,
+        color = color,
         modifier = modifier.fillMaxWidth(),
     ) {
         Row(Modifier.padding(horizontal = 16.dp, vertical = 16.dp), verticalAlignment = Alignment.Top) {
@@ -589,6 +653,7 @@ private fun ConversationRow(
     conversation: YuvaConversation,
     inbox: YuvaInbox?,
     shape: Shape,
+    color: Color,
     modifier: Modifier,
     onClick: () -> Unit,
 ) {
@@ -607,6 +672,7 @@ private fun ConversationRow(
         time = ShortTime.list(context, conversation.lastMessageAt ?: conversation.createdAt),
         unread = conversation.unread,
         shape = shape,
+        color = color,
         onClick = onClick,
         modifier = modifier,
         leading = { Avatar((inbox?.name ?: title).take(1).uppercase(), RowAvatar, inbox?.branding?.logoUrl) },
@@ -645,7 +711,7 @@ internal fun stateLabel(state: YuvaFeedbackState): Int = when (state) {
 }
 
 @Composable
-private fun FeedbackRow(conversation: YuvaConversation, shape: Shape, modifier: Modifier, onClick: () -> Unit) {
+private fun FeedbackRow(conversation: YuvaConversation, shape: Shape, color: Color, modifier: Modifier, onClick: () -> Unit) {
     val context = LocalContext.current
     val title = conversation.feedback?.let { stringResource(categoryLabel(it.category)) }
         ?: stringResource(R.string.yuva_feedback_kind)
@@ -658,6 +724,7 @@ private fun FeedbackRow(conversation: YuvaConversation, shape: Shape, modifier: 
         time = ShortTime.list(context, conversation.lastMessageAt ?: conversation.createdAt),
         unread = conversation.unread,
         shape = shape,
+        color = color,
         onClick = onClick,
         modifier = modifier,
         leading = { CategoryIcon(conversation.feedback?.category, RowAvatar) },

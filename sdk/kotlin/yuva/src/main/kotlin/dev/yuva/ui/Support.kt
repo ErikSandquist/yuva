@@ -7,6 +7,7 @@ import android.net.Uri
 import android.text.format.DateUtils
 import android.text.format.Formatter
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.size
@@ -50,6 +51,36 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.keyframes
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.detectTransformGestures
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import dev.yuva.R
 import dev.yuva.YuvaFeedbackCategory
 import dev.yuva.YuvaFeedbackState
@@ -248,7 +279,7 @@ internal object AttachmentCache {
 }
 
 @Composable
-internal fun AttachmentImage(client: YuvaClient, id: String) {
+internal fun AttachmentImage(client: YuvaClient, id: String, onOpen: (() -> Unit)? = null) {
     var bitmap by remember(id) { mutableStateOf<Bitmap?>(null) }
     LaunchedEffect(id) {
         repeat(3) { attempt ->
@@ -269,7 +300,11 @@ internal fun AttachmentImage(client: YuvaClient, id: String) {
             current.asImageBitmap(),
             contentDescription = null,
             contentScale = ContentScale.Fit,
-            modifier = Modifier.widthIn(max = 220.dp).heightIn(max = 260.dp).clip(shape),
+            modifier = Modifier.widthIn(max = 220.dp).heightIn(max = 260.dp).clip(shape).then(
+                if (onOpen == null) Modifier
+                else Modifier.clickable(onClickLabel = stringResource(R.string.yuva_thread_open_image), onClick = onOpen)
+                    .testTag("yuva.thread.image"),
+            ),
         )
     }
 }
@@ -311,5 +346,101 @@ internal fun errorMessage(error: Throwable): Int {
         error.code == "attachment_type_mismatch" -> R.string.yuva_error_attachment_mismatch
         error.code == "attachment_type_not_allowed" || error.status == 415 -> R.string.yuva_error_attachment_type
         else -> R.string.yuva_error_generic
+    }
+}
+
+private val UrlPattern = Regex("""(?i)\b(?:https?://|www\.)[^\s<>"]+""")
+
+internal fun linkRanges(text: String): List<Pair<IntRange, String>> = UrlPattern.findAll(text).map { match ->
+    val trimmed = match.value.trimEnd('.', ',', ';', ':', '!', '?', ')', ']', '}', '\'', '"')
+    val range = match.range.first until match.range.first + trimmed.length
+    range to if (trimmed.startsWith("www.", ignoreCase = true)) "https://$trimmed" else trimmed
+}.filter { !it.first.isEmpty() }.toList()
+
+internal fun linkified(text: String, linkColor: Color): AnnotatedString = buildAnnotatedString {
+    append(text)
+    val style = TextLinkStyles(SpanStyle(color = linkColor, textDecoration = TextDecoration.Underline))
+    linkRanges(text).forEach { (range, url) ->
+        addLink(LinkAnnotation.Url(url, style), range.first, range.last + 1)
+    }
+}
+
+@Composable
+internal fun ImageViewer(client: YuvaClient, id: String, onDismiss: () -> Unit) {
+    val bitmap by produceState<Bitmap?>(null, id) { value = AttachmentCache.image(client, id) }
+    var scale by remember(id) { mutableFloatStateOf(1f) }
+    var offset by remember(id) { mutableStateOf(Offset.Zero) }
+    Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false)) {
+        Box(
+            Modifier.fillMaxSize().background(Color.Black).testTag("yuva.thread.imageViewer")
+                .pointerInput(id) {
+                    detectTransformGestures { _, pan, zoom, _ ->
+                        scale = (scale * zoom).coerceIn(1f, 5f)
+                        offset = if (scale == 1f) Offset.Zero else offset + pan
+                    }
+                }
+                .pointerInput(id) {
+                    detectTapGestures(onDoubleTap = {
+                        scale = if (scale > 1f) 1f else 2.5f
+                        offset = Offset.Zero
+                    })
+                },
+            contentAlignment = Alignment.Center,
+        ) {
+            val current = bitmap
+            if (current == null) {
+                CircularProgressIndicator(color = Color.White)
+            } else {
+                Image(
+                    current.asImageBitmap(),
+                    contentDescription = null,
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier.fillMaxSize().graphicsLayer {
+                        scaleX = scale
+                        scaleY = scale
+                        translationX = offset.x
+                        translationY = offset.y
+                    },
+                )
+            }
+            FilledTonalIconButton(
+                onClick = onDismiss,
+                colors = IconButtonDefaults.filledTonalIconButtonColors(
+                    containerColor = Color.White.copy(alpha = 0.16f),
+                    contentColor = Color.White,
+                ),
+                modifier = Modifier.align(Alignment.TopStart).windowInsetsPadding(WindowInsets.safeDrawing).padding(12.dp)
+                    .testTag("yuva.thread.imageViewer.close"),
+            ) { Icon(Icons.Default.Close, contentDescription = stringResource(R.string.yuva_thread_close)) }
+        }
+    }
+}
+
+@Composable
+internal fun TypingDots(color: Color, modifier: Modifier = Modifier) {
+    val transition = rememberInfiniteTransition(label = "typing")
+    Row(modifier, horizontalArrangement = Arrangement.spacedBy(5.dp), verticalAlignment = Alignment.CenterVertically) {
+        repeat(3) { index ->
+            val lift by transition.animateFloat(
+                initialValue = 0f,
+                targetValue = 0f,
+                animationSpec = infiniteRepeatable(
+                    keyframes {
+                        durationMillis = 1200
+                        0f at 0
+                        1f at 200 + index * 150 using FastOutSlowInEasing
+                        0f at 500 + index * 150
+                        0f at 1200
+                    },
+                ),
+                label = "dot$index",
+            )
+            Box(
+                Modifier.size(8.dp).graphicsLayer {
+                    translationY = -lift * 4.dp.toPx()
+                    alpha = 0.45f + 0.55f * lift
+                }.clip(CircleShape).background(color),
+            )
+        }
     }
 }

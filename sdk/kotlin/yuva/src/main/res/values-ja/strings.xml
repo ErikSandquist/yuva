@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">チームがこれを「対応中」にしました。</string>
     <string name="yuva_feedback_note_done">チームがこれを「完了」にしました。</string>
     <string name="yuva_feedback_note_wont_do">チームがこれを「対応しない」にしました。</string>
+    <string name="yuva_thread_scroll_bottom">最新へ移動</string>
+    <string name="yuva_thread_open_image">画像を開く</string>
+    <string name="yuva_thread_close">閉じる</string>
 </resources>

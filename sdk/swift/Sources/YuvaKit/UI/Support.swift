@@ -203,9 +203,22 @@ final class AttachmentCache {
 struct AttachmentImageView: View {
     let client: YuvaClient
     let attachment: YuvaAttachment
+    var open: (() -> Void)?
     @State private var image: PlatformImage?
 
     var body: some View {
+        content
+            .contentShape(RoundedRectangle(cornerRadius: 12))
+            .onTapGesture { if image != nil { open?() } }
+            .accessibilityElement()
+            .accessibilityLabel(attachment.filename)
+            .accessibilityAddTraits(open == nil ? .isImage : [.isImage, .isButton])
+            .accessibilityAction { open?() }
+            .accessibilityHint(open == nil ? "" : L.t("thread.openImage"))
+            .accessibilityIdentifier("yuva.thread.image")
+    }
+
+    private var content: some View {
         Group {
             if let image {
                 Image(platformImage: image).resizable().scaledToFit()
@@ -268,5 +281,145 @@ struct AttachmentFileView: View {
         try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         let file = directory.appending(path: attachment.filename)
         if (try? data.write(to: file)) != nil { url = file }
+    }
+}
+
+enum Links {
+    private static let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+
+    static func attributed(_ text: String) -> AttributedString {
+        var result = AttributedString(text)
+        guard let detector, text.contains("://") || text.localizedCaseInsensitiveContains("www.") else { return result }
+        let range = NSRange(text.startIndex..., in: text)
+        for match in detector.matches(in: text, range: range) {
+            guard let url = match.url, url.scheme?.hasPrefix("http") == true,
+                  let swiftRange = Range(match.range, in: text),
+                  let lower = AttributedString.Index(swiftRange.lowerBound, within: result),
+                  let upper = AttributedString.Index(swiftRange.upperBound, within: result)
+            else { continue }
+            result[lower..<upper].link = url
+            result[lower..<upper].underlineStyle = .single
+        }
+        return result
+    }
+}
+
+struct ImageViewer: View {
+    let client: YuvaClient
+    let attachment: YuvaAttachment
+    @Environment(\.dismiss) private var dismiss
+    @State private var image: PlatformImage?
+    @State private var scale: CGFloat = 1
+    @State private var settled: CGFloat = 1
+    @State private var offset: CGSize = .zero
+    @State private var dragged: CGSize = .zero
+
+    var body: some View {
+        ZStack {
+            Color.black.ignoresSafeArea()
+            if let image {
+                Image(platformImage: image).resizable().scaledToFit()
+                    .scaleEffect(scale)
+                    .offset(offset)
+                    .gesture(
+                        MagnifyGesture()
+                            .onChanged { scale = min(max(settled * $0.magnification, 1), 5) }
+                            .onEnded { _ in
+                                settled = scale
+                                if scale == 1 { withAnimation(.snappy) { offset = .zero; dragged = .zero } }
+                            }
+                            .simultaneously(with: DragGesture()
+                                .onChanged { value in
+                                    guard scale > 1 else { return }
+                                    offset = CGSize(
+                                        width: dragged.width + value.translation.width,
+                                        height: dragged.height + value.translation.height)
+                                }
+                                .onEnded { _ in dragged = offset })
+                    )
+                    .onTapGesture(count: 2) {
+                        withAnimation(.snappy) {
+                            scale = scale > 1 ? 1 : 2.5
+                            settled = scale
+                            offset = .zero
+                            dragged = .zero
+                        }
+                    }
+                    .accessibilityLabel(attachment.filename)
+                    .accessibilityAddTraits(.isImage)
+            } else {
+                ProgressView().tint(.white)
+            }
+        }
+        .overlay(alignment: .top) {
+            HStack {
+                Button { dismiss() } label: {
+                    Image(systemName: "xmark").font(.body.weight(.semibold)).frame(width: 44, height: 44)
+                }
+                .glassCircle()
+                .accessibilityLabel(L.t("thread.close"))
+                .accessibilityIdentifier("yuva.thread.imageViewer.close")
+                Spacer()
+                if let image {
+                    let picture = Image(platformImage: image)
+                    ShareLink(item: picture, preview: SharePreview(attachment.filename, image: picture)) {
+                        Image(systemName: "square.and.arrow.up").font(.body.weight(.semibold)).frame(width: 44, height: 44)
+                    }
+                    .glassCircle()
+                }
+            }
+            .foregroundStyle(.white)
+            .padding(.horizontal, 16)
+        }
+        .accessibilityIdentifier("yuva.thread.imageViewer")
+        .task { image = await AttachmentCache.shared.image(attachment.id, client: client) }
+    }
+}
+
+struct TypingDots: View {
+    var body: some View {
+        TimelineView(.animation) { context in
+            let time = context.date.timeIntervalSinceReferenceDate
+            HStack(spacing: 5) {
+                ForEach(0..<3, id: \.self) { index in
+                    let phase = (time * 2.2 - Double(index) * 0.25).truncatingRemainder(dividingBy: 1.4)
+                    let lift = phase < 0.6 ? sin(phase / 0.6 * .pi) : 0
+                    Circle().frame(width: 8, height: 8)
+                        .opacity(0.4 + 0.6 * lift)
+                        .offset(y: -4 * lift)
+                }
+            }
+        }
+        .foregroundStyle(.secondary)
+    }
+}
+
+extension View {
+    @ViewBuilder
+    func bottomBar<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
+        if #available(iOS 26.0, macOS 26.0, *) {
+            safeAreaBar(edge: .bottom, spacing: 0, content: content)
+        } else {
+            safeAreaInset(edge: .bottom, spacing: 0, content: content)
+        }
+    }
+
+    @ViewBuilder
+    func glassCircle() -> some View {
+        if #available(iOS 26.0, macOS 26.0, *) {
+            buttonStyle(.plain).glassEffect(.regular.interactive(), in: .circle)
+        } else {
+            buttonStyle(.plain).background(.ultraThinMaterial, in: Circle())
+        }
+    }
+
+    @ViewBuilder
+    func glassCapsule() -> some View {
+        if #available(iOS 26.0, macOS 26.0, *) {
+            glassEffect(.regular.interactive(), in: .rect(cornerRadius: 22))
+        } else {
+            background(.background, in: RoundedRectangle(cornerRadius: 22))
+                .overlay(RoundedRectangle(cornerRadius: 22).stroke(.separator, lineWidth: 1))
+        }
     }
 }

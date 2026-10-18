@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">팀이 이 항목을 \'진행 중\'으로 표시했습니다.</string>
     <string name="yuva_feedback_note_done">팀이 이 항목을 \'완료\'로 표시했습니다.</string>
     <string name="yuva_feedback_note_wont_do">팀이 이 항목을 \'진행 안 함\'으로 표시했습니다.</string>
+    <string name="yuva_thread_scroll_bottom">최신 메시지로 이동</string>
+    <string name="yuva_thread_open_image">이미지 열기</string>
+    <string name="yuva_thread_close">닫기</string>
 </resources>

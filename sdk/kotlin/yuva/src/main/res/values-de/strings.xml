@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">Das Team hat dies als in Arbeit markiert.</string>
     <string name="yuva_feedback_note_done">Das Team hat dies als erledigt markiert.</string>
     <string name="yuva_feedback_note_wont_do">Das Team hat dies als nicht umzusetzen markiert.</string>
+    <string name="yuva_thread_scroll_bottom">Zur neuesten Nachricht</string>
+    <string name="yuva_thread_open_image">Bild öffnen</string>
+    <string name="yuva_thread_close">Schließen</string>
 </resources>

@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">Tiimi merkitsi tämän työn alla olevaksi.</string>
     <string name="yuva_feedback_note_done">Tiimi merkitsi tämän valmiiksi.</string>
     <string name="yuva_feedback_note_wont_do">Tiimi merkitsi tämän ei toteuteta -tilaan.</string>
+    <string name="yuva_thread_scroll_bottom">Siirry uusimpaan</string>
+    <string name="yuva_thread_open_image">Avaa kuva</string>
+    <string name="yuva_thread_close">Sulje</string>
 </resources>

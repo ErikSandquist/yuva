@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">团队已将此标记为进行中。</string>
     <string name="yuva_feedback_note_done">团队已将此标记为已完成。</string>
     <string name="yuva_feedback_note_wont_do">团队已将此标记为不会处理。</string>
+    <string name="yuva_thread_scroll_bottom">跳到最新</string>
+    <string name="yuva_thread_open_image">打开图片</string>
+    <string name="yuva_thread_close">关闭</string>
 </resources>

@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">Zespół oznaczył to jako w toku.</string>
     <string name="yuva_feedback_note_done">Zespół oznaczył to jako zrobione.</string>
     <string name="yuva_feedback_note_wont_do">Zespół oznaczył to jako nie będzie zrobione.</string>
+    <string name="yuva_thread_scroll_bottom">Przejdź do najnowszych</string>
+    <string name="yuva_thread_open_image">Otwórz obraz</string>
+    <string name="yuva_thread_close">Zamknij</string>
 </resources>

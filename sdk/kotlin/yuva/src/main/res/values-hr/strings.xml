@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">Tim je ovo označio kao u tijeku.</string>
     <string name="yuva_feedback_note_done">Tim je ovo označio kao gotovo.</string>
     <string name="yuva_feedback_note_wont_do">Tim je ovo označio kao neće se raditi.</string>
+    <string name="yuva_thread_scroll_bottom">Idi na najnovije</string>
+    <string name="yuva_thread_open_image">Otvori sliku</string>
+    <string name="yuva_thread_close">Zatvori</string>
 </resources>

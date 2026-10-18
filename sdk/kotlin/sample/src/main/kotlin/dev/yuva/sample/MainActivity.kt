@@ -2,31 +2,36 @@ package dev.yuva.sample
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -36,15 +41,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalView
-import androidx.core.view.drawToBitmap
-import android.graphics.Bitmap
-import android.view.View
-import java.io.ByteArrayOutputStream
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.core.view.drawToBitmap
 import dev.yuva.Yuva
 import dev.yuva.YuvaClient
 import dev.yuva.YuvaConfiguration
@@ -55,6 +60,7 @@ import dev.yuva.analytics.TrackScreen
 import dev.yuva.ui.YuvaConversationsSection
 import dev.yuva.ui.YuvaConversationsView
 import dev.yuva.ui.YuvaFeedbackView
+import java.io.ByteArrayOutputStream
 import java.net.URL
 import java.net.URLEncoder
 import kotlinx.coroutines.Dispatchers
@@ -71,9 +77,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         requested.value = request(intent)
         setContent {
-            MaterialTheme(colorScheme = if (isSystemInDarkTheme()) darkColorScheme() else lightColorScheme()) {
-                Sample(this, requested.value)
-            }
+            SampleTheme { Sample(this, requested.value) }
         }
     }
 
@@ -105,7 +109,6 @@ private fun client(context: Context, identified: Boolean, userId: String): YuvaC
     return YuvaClient(context, YuvaConfiguration(BuildConfig.SERVER_URL, BuildConfig.CHANNEL_KEY, provider))
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Sample(context: Context, request: Request?) {
     val openConversation = request?.conversation
@@ -142,78 +145,153 @@ private fun Sample(context: Context, request: Request?) {
         Text("Copy sample/yuva.properties.example to sample/yuva.properties and rebuild.", Modifier.padding(32.dp))
         return
     }
-    if (screen == "analytics") {
-        BackHandler { screen = null }
-        AnalyticsScreen(onClose = { screen = null })
-        return
-    }
     val current = yuva
-    when (screen.takeIf { current != null }) {
-        "messages" -> {
-            BackHandler { screen = null }
-            YuvaConversationsView(current!!, openConversationId = openConversation, onClose = { screen = null })
-            return
-        }
-        "messages-only", "feedback-list" -> {
-            BackHandler { screen = null }
-            val section = if (screen == "messages-only") YuvaConversationsSection.MESSAGES else YuvaConversationsSection.FEEDBACK
-            YuvaConversationsView(current!!, openConversationId = openConversation, onClose = { screen = null }, section = section)
-            return
-        }
-        "feedback" -> {
-            BackHandler { screen = null }
-            YuvaFeedbackView(current!!, screenshot = screenshot, screen = "sample.home", onDone = { screen = null })
-            return
-        }
-    }
-    TrackScreen("Home")
-    Scaffold(topBar = { TopAppBar(title = { Text("Yuva Sample") }) }) { padding ->
-        Column(
-            Modifier.fillMaxSize().padding(padding).padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
-                listOf(false to "Anonymous", true to "Identified").forEachIndexed { index, (value, label) ->
-                    SegmentedButton(
-                        selected = identified == value,
-                        onClick = {
-                            val signOut = identified && !value
-                            identified = value
-                            replaceClient(signOut)
-                        },
-                        shape = SegmentedButtonDefaults.itemShape(index, 2),
-                    ) { Text(label) }
-                }
-            }
-            if (identified) {
-                OutlinedTextField(
-                    value = userId,
-                    onValueChange = {
-                        userId = it
-                        replaceClient(false)
-                    },
-                    label = { Text("Host user id") },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-            }
-            Button(onClick = { screen = "messages" }, enabled = current != null, modifier = Modifier.fillMaxWidth()) {
-                Text("Open messages")
-            }
-            Button(enabled = current != null, onClick = {
-                screenshot = capture(view)
-                screen = "feedback"
-            }, modifier = Modifier.fillMaxWidth()) { Text("Send feedback") }
-            Button(onClick = { screen = "analytics" }, modifier = Modifier.fillMaxWidth().testTag("sample.analytics")) {
-                Text("Analytics")
-            }
-            if (identified && userId.isNotBlank() && current != null) {
-                key(current) { Newsletter(current) }
-            }
-            Text("Server: ${BuildConfig.SERVER_URL}\nYuva SDK ${Yuva.VERSION}", style = MaterialTheme.typography.bodySmall)
+    val shown = screen.takeIf { it == "analytics" || current != null }
+    AnimatedContent(
+        targetState = shown,
+        transitionSpec = {
+            val forward = initialState == null
+            val motion = spring<IntOffset>(dampingRatio = 0.9f, stiffness = Spring.StiffnessMediumLow)
+            (slideInHorizontally(motion) { if (forward) it / 4 else -it / 4 } + fadeIn())
+                .togetherWith(slideOutHorizontally(motion) { if (forward) -it / 4 else it / 4 } + fadeOut())
+        },
+        label = "screen",
+    ) { target ->
+        if (target != null) BackHandler { screen = null }
+        when (target) {
+            "analytics" -> AnalyticsScreen(onClose = { screen = null })
+            "messages", "messages-only", "feedback-list" -> if (current != null) YuvaConversationsView(
+                current,
+                openConversationId = openConversation,
+                onClose = { screen = null },
+                section = when (target) {
+                    "messages-only" -> YuvaConversationsSection.MESSAGES
+                    "feedback-list" -> YuvaConversationsSection.FEEDBACK
+                    else -> null
+                },
+            )
+            "feedback" -> if (current != null) YuvaFeedbackView(current, screenshot = screenshot, screen = "sample.home", onDone = { screen = null })
+            else -> Home(
+                identified = identified,
+                userId = userId,
+                client = current,
+                onIdentified = { value ->
+                    val signOut = identified && !value
+                    identified = value
+                    replaceClient(signOut)
+                },
+                onUserId = {
+                    userId = it
+                    replaceClient(false)
+                },
+                onOpen = { next ->
+                    if (next == "feedback") screenshot = capture(view)
+                    screen = next
+                },
+            )
         }
     }
 }
+
+@Composable
+private fun Home(
+    identified: Boolean,
+    userId: String,
+    client: YuvaClient?,
+    onIdentified: (Boolean) -> Unit,
+    onUserId: (String) -> Unit,
+    onOpen: (String) -> Unit,
+) {
+    TrackScreen("Home")
+    val colors = MaterialTheme.colorScheme
+    SamplePage("Yuva Sample") {
+        item { SectionLabel("Mode") }
+        item {
+            ConnectedToggle(
+                options = listOf(false to "Anonymous", true to "Identified"),
+                selected = identified,
+                onSelect = onIdentified,
+            )
+        }
+        if (identified) {
+            item {
+                TextField(
+                    value = userId,
+                    onValueChange = onUserId,
+                    label = { Text("Host user id") },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                    shape = groupShape(0, 1),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = tileColor,
+                        unfocusedContainerColor = tileColor,
+                        disabledContainerColor = tileColor,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                    ),
+                    modifier = Modifier.fillParentMaxWidth().padding(top = 8.dp),
+                )
+            }
+        }
+        item { SectionLabel("Support") }
+        val screens = listOf(
+            HomeRow("messages", "Messages and feedback", "Everything in one place", Icons.Default.Home, colors.primary),
+            HomeRow("messages-only", "Messages only", "Conversations with the team", Icons.Default.Email, colors.secondary),
+            HomeRow("feedback-list", "Feedback only", "Bugs, ideas and praise you sent", Icons.AutoMirrored.Filled.List, colors.tertiary),
+            HomeRow("feedback", "Send feedback", "With a screenshot of this screen", Icons.AutoMirrored.Filled.Send, colors.error),
+        )
+        screens.forEachIndexed { index, row ->
+            item(key = row.screen) {
+                Tile(
+                    row.title,
+                    groupShape(index, screens.size),
+                    supporting = row.supporting,
+                    icon = row.icon,
+                    tint = row.tint,
+                    enabled = client != null,
+                    opensScreen = true,
+                    onClick = { onOpen(row.screen) },
+                    modifier = Modifier.testTag("sample.open.${row.screen}"),
+                )
+            }
+        }
+        item { SectionLabel("Analytics") }
+        item {
+            Tile(
+                "Analytics",
+                groupShape(0, 1),
+                supporting = "Events, consent and identify",
+                icon = Icons.Default.Star,
+                tint = colors.primary,
+                opensScreen = true,
+                onClick = { onOpen("analytics") },
+                modifier = Modifier.testTag("sample.analytics"),
+            )
+        }
+        if (identified && userId.isNotBlank() && client != null) {
+            item { SectionLabel("Newsletter") }
+            item(key = "newsletter") { key(client) { Newsletter(client) } }
+        }
+        item { SectionLabel("Server") }
+        item {
+            Tile(
+                BuildConfig.SERVER_URL,
+                groupShape(0, 1),
+                supporting = "Yuva SDK ${Yuva.VERSION}",
+                icon = Icons.Default.Info,
+                tint = colors.onSurfaceVariant,
+            )
+        }
+    }
+}
+
+private class HomeRow(
+    val screen: String,
+    val title: String,
+    val supporting: String,
+    val icon: ImageVector,
+    val tint: Color,
+)
 
 @Composable
 private fun Newsletter(yuva: YuvaClient) {
@@ -249,36 +327,32 @@ private fun Newsletter(yuva: YuvaClient) {
         }
     }
 
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text("Newsletter", style = MaterialTheme.typography.titleMedium)
-        subscriptions.forEach { subscription ->
+    Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
+        subscriptions.forEachIndexed { index, subscription ->
             val state = subscription.state
-            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                Column(Modifier.weight(1f)) {
-                    Text(subscription.list.name)
-                    if (subscription.list.description.isNotEmpty()) {
-                        Text(subscription.list.description, style = MaterialTheme.typography.bodySmall)
-                    }
-                    if (state == YuvaSubscriptionState.PENDING) {
-                        Text(
-                            "Waiting for the confirmation e-mail",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.tertiary,
-                        )
-                    }
-                }
-                Switch(
-                    checked = state == YuvaSubscriptionState.SUBSCRIBED || state == YuvaSubscriptionState.PENDING,
-                    onCheckedChange = { toggle(subscription, it) },
-                    enabled = subscription.list.id !in busy,
-                    modifier = Modifier.testTag("sample.newsletter.${subscription.list.name}"),
-                )
-            }
+            SwitchTile(
+                title = subscription.list.name,
+                checked = state == YuvaSubscriptionState.SUBSCRIBED || state == YuvaSubscriptionState.PENDING,
+                shape = groupShape(index, subscriptions.size),
+                tag = "sample.newsletter.${subscription.list.name}",
+                supporting = if (state == YuvaSubscriptionState.PENDING) {
+                    "Waiting for the confirmation e-mail"
+                } else {
+                    subscription.list.description.ifEmpty { null }
+                },
+                enabled = subscription.list.id !in busy,
+                onChange = { toggle(subscription, it) },
+            )
         }
-        if (subscriptions.isEmpty() && notice == null) {
-            Text("No public lists", style = MaterialTheme.typography.bodySmall)
+        if (subscriptions.isEmpty() && notice == null) Tile("No public lists", groupShape(0, 1))
+        notice?.let {
+            Text(
+                it,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            )
         }
-        notice?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
     }
 }
 

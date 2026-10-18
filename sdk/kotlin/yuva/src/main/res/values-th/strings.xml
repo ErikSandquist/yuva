@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">ทีมทำเครื่องหมายเรื่องนี้ว่ากำลังดำเนินการ</string>
     <string name="yuva_feedback_note_done">ทีมทำเครื่องหมายเรื่องนี้ว่าเสร็จแล้ว</string>
     <string name="yuva_feedback_note_wont_do">ทีมทำเครื่องหมายเรื่องนี้ว่าจะไม่ทำ</string>
+    <string name="yuva_thread_scroll_bottom">ไปที่ล่าสุด</string>
+    <string name="yuva_thread_open_image">เปิดรูปภาพ</string>
+    <string name="yuva_thread_close">ปิด</string>
 </resources>

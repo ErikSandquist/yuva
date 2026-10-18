@@ -27,6 +27,7 @@ final class ThreadModel {
     var connected = true
     var loading = false
     var failed = false
+    var failure = ""
     var ratingChoice: YuvaRating?
     var ratingSending = false
     var ratingError: String?
@@ -58,6 +59,7 @@ final class ThreadModel {
             failed = false
             await markRead()
         } catch {
+            failure = L.message(for: error)
             failed = items.isEmpty
         }
     }
@@ -234,6 +236,11 @@ public struct YuvaThreadView: View {
     @State private var text = ""
     @State private var picked: [PhotosPickerItem] = []
     @State private var uploads: [YuvaUpload] = []
+    @State private var viewing: YuvaAttachment?
+    @State private var bottomY: CGFloat = 0
+    @State private var viewport: CGFloat = 0
+    @State private var unseen = false
+    @State private var sent = 0
 
     public init(client: YuvaClient, conversationId: String?) {
         _model = State(initialValue: ThreadModel(client: client, conversationId: conversationId))
@@ -251,7 +258,13 @@ public struct YuvaThreadView: View {
             }
             messages
         }
-        .safeAreaInset(edge: .bottom, spacing: 0) { composer }
+        .bottomBar { composer }
+        .sensoryFeedback(.impact(weight: .light), trigger: sent)
+        #if os(iOS)
+        .fullScreenCover(item: $viewing) { ImageViewer(client: model.client, attachment: $0) }
+        #else
+        .sheet(item: $viewing) { ImageViewer(client: model.client, attachment: $0).frame(minWidth: 480, minHeight: 360) }
+        #endif
         .navigationTitle(title)
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
@@ -268,6 +281,8 @@ public struct YuvaThreadView: View {
         }
     }
 
+    private var atBottom: Bool { viewport == 0 || bottomY <= viewport + 80 }
+
     private var title: String {
         if let subject = model.conversation?.subject, !subject.isEmpty { return subject }
         if model.conversation?.isFeedback == true { return L.t("feedback.kind") }
@@ -281,7 +296,7 @@ public struct YuvaThreadView: View {
                     if model.canLoadOlder {
                         ProgressView().padding().onAppear { Task { await model.loadOlder() } }
                     }
-                    if model.items.isEmpty && !model.loading {
+                    if model.items.isEmpty && !model.loading && !model.failed {
                         greeting
                     }
                     ForEach(ThreadLayout.rows(model.items)) { row in
@@ -294,10 +309,10 @@ public struct YuvaThreadView: View {
                             item: row.item, client: model.client, seen: row.item.id == model.seenMessageId,
                             showStatus: row.item.mine
                                 && (row.item.id == model.items.last(where: \.mine)?.id || row.item.state != .sent),
-                            first: row.first, last: row.last
-                        ) {
-                            model.retry(row.item.id)
-                        }
+                            first: row.first, last: row.last,
+                            retry: { model.retry(row.item.id) },
+                            openImage: { viewing = $0 }
+                        )
                         .padding(.top, row.first && !row.startsDay ? 10 : 2)
                         .id(row.item.id)
                     }
@@ -314,29 +329,75 @@ public struct YuvaThreadView: View {
                         RatingCard(model: model).id("rating")
                     }
                     if let name = model.typingName {
-                        HStack {
-                            Text(name.isEmpty ? L.t("thread.typingSomeone") : L.f("thread.typing", name))
-                                .font(.caption).foregroundStyle(.secondary)
+                        HStack(alignment: .bottom, spacing: 8) {
+                            AvatarView(initials: String(name.prefix(1)).uppercased(), size: 28)
+                            TypingDots()
+                                .padding(.horizontal, 14).padding(.vertical, 13)
+                                .background(Color.secondary.opacity(0.18), in: Capsule())
                             Spacer()
                         }
-                        .padding(.horizontal)
+                        .padding(.horizontal, 12).padding(.top, 10)
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityLabel(name.isEmpty ? L.t("thread.typingSomeone") : L.f("thread.typing", name))
+                        .accessibilityIdentifier("yuva.thread.typing")
+                        .transition(.scale(scale: 0.6, anchor: .bottomLeading).combined(with: .opacity))
                         .id("typing")
                     }
+                    Color.clear.frame(height: 1)
+                        .id("bottom")
+                        .onGeometryChange(for: CGFloat.self, of: { $0.frame(in: .scrollView).minY }) { bottomY = $0 }
                 }
                 .padding(.vertical, 8)
+                .animation(.snappy, value: model.typingName)
             }
             .scrollDismissesKeyboard(.interactively)
             .defaultScrollAnchor(.bottom)
-            .overlay { if model.loading { ProgressView() } }
+            .onGeometryChange(for: CGFloat.self, of: { $0.size.height }) { viewport = $0 }
+            .onChange(of: atBottom) { _, now in if now { unseen = false } }
+            .overlay {
+                if model.loading {
+                    ProgressView()
+                } else if model.failed {
+                    ContentUnavailableView {
+                        Label(model.failure, systemImage: "wifi.exclamationmark")
+                    } actions: {
+                        Button(L.t("error.retry")) { Task { await model.load() } }
+                            .buttonStyle(.borderedProminent)
+                            .accessibilityIdentifier("yuva.thread.retry")
+                    }
+                }
+            }
+            .overlay(alignment: .bottomTrailing) {
+                if !atBottom && !model.items.isEmpty {
+                    Button {
+                        withAnimation(.snappy) { proxy.scrollTo("bottom", anchor: .bottom) }
+                    } label: {
+                        Image(systemName: "chevron.down").font(.body.weight(.semibold)).frame(width: 44, height: 44)
+                    }
+                    .glassCircle()
+                    .overlay(alignment: .topTrailing) {
+                        if unseen { Circle().fill(Color.accentColor).frame(width: 10, height: 10) }
+                    }
+                    .padding(16)
+                    .transition(.scale.combined(with: .opacity))
+                    .accessibilityLabel(L.t("thread.scrollToBottom"))
+                    .accessibilityIdentifier("yuva.thread.scrollToBottom")
+                }
+            }
+            .animation(.snappy, value: atBottom)
             .onChange(of: model.items.last?.id) { _, id in
-                guard let id else { return }
-                withAnimation { proxy.scrollTo(id, anchor: .bottom) }
+                guard let id, let last = model.items.last else { return }
+                if atBottom || (last.mine && last.message == nil) {
+                    withAnimation { proxy.scrollTo(id, anchor: .bottom) }
+                } else if !last.mine {
+                    unseen = true
+                }
             }
             .onChange(of: model.showsRating) { _, shows in
                 if shows { withAnimation { proxy.scrollTo("rating", anchor: .bottom) } }
             }
             .onChange(of: model.typingName) { _, name in
-                if name != nil { withAnimation { proxy.scrollTo("typing", anchor: .bottom) } }
+                if name != nil, atBottom { withAnimation { proxy.scrollTo("typing", anchor: .bottom) } }
             }
         }
     }
@@ -351,6 +412,15 @@ public struct YuvaThreadView: View {
             }
         }
         .padding(24)
+    }
+
+    @ViewBuilder
+    private var composerBackground: some View {
+        if #available(iOS 26.0, macOS 26.0, *) {
+            Color.clear
+        } else {
+            Rectangle().fill(.bar).ignoresSafeArea()
+        }
     }
 
     private var canSend: Bool {
@@ -382,36 +452,40 @@ public struct YuvaThreadView: View {
             }
             HStack(alignment: .bottom, spacing: 8) {
                 PhotosPicker(selection: $picked, maxSelectionCount: 10, matching: .images) {
-                    Image(systemName: "photo").font(.title3).frame(width: 34, height: 34)
+                    Image(systemName: "plus").font(.title3.weight(.medium)).frame(width: 44, height: 44)
                 }
+                .glassCircle()
                 .accessibilityLabel(L.t("thread.attach"))
                 HStack(alignment: .bottom, spacing: 4) {
                     TextField(L.t("thread.placeholder"), text: $text, axis: .vertical)
                         .lineLimit(1...5)
                         .textFieldStyle(.plain)
-                        .padding(.leading, 14).padding(.vertical, 7)
+                        .padding(.leading, 16).padding(.vertical, 11)
                         .onChange(of: text) { _, value in model.typing(value) }
                         .accessibilityIdentifier("yuva.thread.input")
                     Button {
                         model.send(text, uploads: uploads)
                         text = ""
                         uploads = []
+                        sent += 1
                     } label: {
-                        Image(systemName: "arrow.up.circle.fill").font(.system(size: 30))
-                            .foregroundStyle(canSend ? Color.accentColor : Color.secondary.opacity(0.4))
+                        Image(systemName: "arrow.up.circle.fill").font(.system(size: 32))
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(.white, canSend ? Color.accentColor : Color.secondary.opacity(0.35))
                     }
                     .buttonStyle(.plain)
                     .disabled(!canSend)
-                    .padding(.trailing, 3).padding(.bottom, 2)
+                    .padding(.trailing, 6).padding(.bottom, 6)
+                    .animation(.snappy, value: canSend)
                     .accessibilityLabel(L.t("thread.send"))
                     .accessibilityIdentifier("yuva.thread.send")
                 }
-                .background(RoundedRectangle(cornerRadius: 20).stroke(.separator, lineWidth: 1))
+                .glassCapsule()
             }
             .padding(.horizontal, 12)
         }
         .padding(.vertical, 8)
-        .background(.bar)
+        .background { composerBackground }
         .onChange(of: picked) { _, items in
             guard !items.isEmpty else { return }
             picked = []
@@ -559,6 +633,7 @@ struct MessageRow: View {
     let first: Bool
     let last: Bool
     let retry: () -> Void
+    var openImage: (YuvaAttachment) -> Void = { _ in }
 
     private let avatarSize: CGFloat = 28
     private static let radius: CGFloat = 18
@@ -581,8 +656,9 @@ struct MessageRow: View {
                 }
                 attachments
                 if !item.body.isEmpty {
-                    Text(item.body)
+                    Text(Links.attributed(item.body))
                         .textSelection(.enabled)
+                        .tint(item.mine ? Color.white : Color.accentColor)
                         .padding(.horizontal, 12).padding(.vertical, 8)
                         .foregroundStyle(item.mine ? Color.white : Color.primary)
                         .background(
@@ -617,7 +693,7 @@ struct MessageRow: View {
         if let message = item.message {
             ForEach(message.attachments) { attachment in
                 if attachment.isImage {
-                    AttachmentImageView(client: client, attachment: attachment)
+                    AttachmentImageView(client: client, attachment: attachment) { openImage(attachment) }
                 } else {
                     AttachmentFileView(client: client, attachment: attachment)
                 }

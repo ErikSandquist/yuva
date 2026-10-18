@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">Nhóm đã đánh dấu mục này là đang thực hiện.</string>
     <string name="yuva_feedback_note_done">Nhóm đã đánh dấu mục này là hoàn thành.</string>
     <string name="yuva_feedback_note_wont_do">Nhóm đã đánh dấu mục này là sẽ không làm.</string>
+    <string name="yuva_thread_scroll_bottom">Đến tin mới nhất</string>
+    <string name="yuva_thread_open_image">Mở hình ảnh</string>
+    <string name="yuva_thread_close">Đóng</string>
 </resources>

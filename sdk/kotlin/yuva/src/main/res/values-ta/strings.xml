@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">The team marked this as in progress.</string>
     <string name="yuva_feedback_note_done">The team marked this as done.</string>
     <string name="yuva_feedback_note_wont_do">The team marked this as won\'t do.</string>
+    <string name="yuva_thread_scroll_bottom">சமீபத்தியதுக்குச் செல்</string>
+    <string name="yuva_thread_open_image">படத்தைத் திற</string>
+    <string name="yuva_thread_close">மூடு</string>
 </resources>

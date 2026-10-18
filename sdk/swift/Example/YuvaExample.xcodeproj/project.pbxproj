@@ -183,6 +183,7 @@
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = YuvaExample/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Yuva Example";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -207,6 +208,7 @@
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = YuvaExample/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Yuva Example";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">Pasukan menandakan ini sebagai sedang dibuat.</string>
     <string name="yuva_feedback_note_done">Pasukan menandakan ini sebagai selesai.</string>
     <string name="yuva_feedback_note_wont_do">Pasukan menandakan ini sebagai tidak akan dibuat.</string>
+    <string name="yuva_thread_scroll_bottom">Lompat ke terkini</string>
+    <string name="yuva_thread_open_image">Buka imej</string>
+    <string name="yuva_thread_close">Tutup</string>
 </resources>

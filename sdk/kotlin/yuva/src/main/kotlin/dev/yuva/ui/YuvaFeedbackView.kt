@@ -190,15 +190,6 @@ fun YuvaFeedbackView(
                         }
                     }
                 },
-                actions = {
-                    if (!sent) {
-                        FilledTonalButton(
-                            enabled = canSend,
-                            modifier = Modifier.padding(end = 8.dp).testTag("yuva.feedback.send"),
-                            onClick = ::submit,
-                        ) { Text(stringResource(R.string.yuva_feedback_send)) }
-                    }
-                },
             )
         },
     ) { padding ->
@@ -339,7 +330,7 @@ fun YuvaFeedbackView(
                 enabled = canSend,
                 shape = CircleShape,
                 contentPadding = PaddingValues(vertical = 18.dp),
-                modifier = Modifier.fillMaxWidth().heightIn(min = 60.dp),
+                modifier = Modifier.fillMaxWidth().heightIn(min = 60.dp).testTag("yuva.feedback.send"),
             ) {
                 if (sending) {
                     CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.5.dp, color = LocalContentColor.current)

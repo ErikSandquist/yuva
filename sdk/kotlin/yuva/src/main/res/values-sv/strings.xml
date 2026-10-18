@@ -69,4 +69,7 @@
     <string name="yuva_feedback_note_in_progress">Teamet markerade detta som pågår.</string>
     <string name="yuva_feedback_note_done">Teamet markerade detta som klart.</string>
     <string name="yuva_feedback_note_wont_do">Teamet markerade detta som görs inte.</string>
+    <string name="yuva_thread_scroll_bottom">Gå till senaste</string>
+    <string name="yuva_thread_open_image">Öppna bild</string>
+    <string name="yuva_thread_close">Stäng</string>
 </resources>
