@@ -25,7 +25,7 @@ Konuşmaları tipli istemciyle okuyup yazın (`npm install useyuva`):
 import { createYuvaApi } from "useyuva/api";
 
 const api = createYuvaApi({ server: "https://support.example.com", apiKey: process.env.YUVA_API_KEY! });
-const { data } = await api.GET("/v1/conversations", { params: { query: { status: "open" } } });
+const { data } = await api.GET("/v1/conversations", { params: { query: { status: ["open"] } } });
 ```
 
 Go ile: `github.com/productdevbook/yuva/sdk/go/client` ([README](../../sdk/go/README.md)). Diğer

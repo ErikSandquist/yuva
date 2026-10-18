@@ -16,7 +16,7 @@ const once = process.argv.includes("--once")
 const api = createYuvaApi({ server, apiKey })
 
 async function loadOpenConversations() {
-  const { data, error } = await api.GET("/v1/conversations", { params: { query: { status: "open", limit: 50 } } })
+  const { data, error } = await api.GET("/v1/conversations", { params: { query: { status: ["open"], limit: 50 } } })
   if (error) throw new Error(`${error.code}: ${error.detail ?? error.title}`)
   for (const c of data.items) console.log(`open  ${c.id}  ${c.subject ?? ""}`)
 }
