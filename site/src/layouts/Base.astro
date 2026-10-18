@@ -41,6 +41,16 @@ const {
 const i18n = i18nFor(locale)
 const canonical = absolute(paths[locale])
 const ogImage = absolute(image ?? `/og/${locale}.png`)
+const localeScript = `;(function(){var L=${JSON.stringify(locales)},cur=${JSON.stringify(locale)},rel=${JSON.stringify(
+  translated && !noindex ? paths.en : ""
+)},h=location.hostname
+function save(c){try{var d=/^[\\d.]+$/.test(h)||h.indexOf(":")>-1||h.indexOf(".")<0?"":";Domain="+h.replace(/^www\\./,"")
+document.cookie="yuva_locale="+c+d+";Path=/;Max-Age=31536000;SameSite=Lax"+(location.protocol==="https:"?";Secure":"")}catch(e){}}
+if(cur!=="en")save(cur)
+else if(rel){var m=/(?:^|; )yuva_locale=([^;]+)/.exec(document.cookie),c=m&&m[1]
+if(c&&c!=="en"&&L.indexOf(c)>0&&location.pathname===rel)location.replace("/"+c+rel+location.search+location.hash)}
+document.addEventListener("click",function(e){var a=e.target instanceof Element?e.target.closest("details[data-lang] a[hreflang],a[hreflang][lang]"):null
+if(a)save(a.getAttribute("hreflang"))})})()`
 const serialize = (o: object) => JSON.stringify(o).replace(/</g, "\\u003c")
 const latinExt: Locale[] = ["tr", "pl", "cs", "sk", "hr", "sl", "ro", "hu"]
 const cyrillic: Locale[] = ["ru", "uk"]
@@ -70,6 +80,7 @@ const preload = [
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
+    <script is:inline set:html={localeScript}></script>
     <script is:inline>
       ;(function () {
         var key = "yuva.theme"
