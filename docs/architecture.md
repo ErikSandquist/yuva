@@ -2162,7 +2162,7 @@ incident before a customer writes, and the conversations an outage brings are an
   gets a log line and the `yuva_status_rounds_dropped_total` metric; heartbeats and pushes are not
   affected by this, but a heartbeat whose beats stop while the server itself was not taking requests
   (its own start within the grace) waits one more interval.
-- **Support.** `GET /client/v1/channels/{key}` and the realtime `channel.updated` carry `status` on the
+- **Support.** `GET /client/v1/channels/{key}`, the client session and the realtime `inbox.updated` carry `status` on the
   inbox: the page URL, the overall state and the open published incidents and running maintenance (id,
   title, impact, state, last update, URL). The widget and the Swift and Kotlin SDKs show a dismissible
   line above the conversation list and the composer while one is open. In the panel a conversation can
@@ -2180,7 +2180,7 @@ incident before a customer writes, and the conversations an outage brings are an
   `status.incident.updated` (every published update), `status.incident.resolved`,
   `status.monitor.down`, `status.monitor.up`. MCP tools: `list_status_pages`, `get_status_page`,
   `set_component_state`, `create_incident`, `post_incident_update`, `resolve_incident`,
-  `list_monitors`; publishing from MCP follows the same draft rule as the panel unless the workspace lets
+  `list_monitors`, `link_conversation_to_incident`; publishing from MCP follows the same draft rule as the panel unless the workspace lets
   assistants publish incidents.
 - **Lookups before the workspace is known.** A public page finds its page by `status_pages.slug`, a
   former slug in `status_page_slugs` or a verified `status_pages.custom_domain`, all unique across the
