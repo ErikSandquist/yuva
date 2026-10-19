@@ -100,6 +100,9 @@ const preload = [
             var own = (m.getAttribute("media") || "").indexOf("dark") > -1 ? "#09090b" : "#ffffff"
             m.setAttribute("content", choice === "system" ? own : dark ? "#09090b" : "#ffffff")
           })
+          document.querySelectorAll("yuva-status").forEach(function (s) {
+            s.setAttribute("theme", choice === "system" ? "auto" : choice)
+          })
           document.querySelectorAll("[data-theme-choice]").forEach(function (b) {
             b.setAttribute("aria-pressed", String(b.getAttribute("data-theme-choice") === choice))
           })
@@ -174,6 +177,7 @@ const preload = [
       </div>
     )}
     <script is:inline src="https://app.useyuva.com/yuva.js" async></script>
+    <script is:inline src="https://app.useyuva.com/yuva-status.js" async></script>
     <yuva-chat channel="yuva_pk_OZ33Z-rvQRImHtjRS8PbtBQS" server="https://app.useyuva.com" locale={locale}></yuva-chat>
   </body>
 </html>
