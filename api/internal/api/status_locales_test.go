@@ -4,6 +4,7 @@ import (
 	"reflect"
 	"strings"
 	"testing"
+	"time"
 )
 
 func verbs(s string) string {
@@ -33,7 +34,7 @@ func TestStatusLanguagesCoverEveryLocale(t *testing.T) {
 		wv, ev := reflect.ValueOf(w), reflect.ValueOf(en)
 		for i := range wv.NumField() {
 			name := wv.Type().Field(i).Name
-			if name == "Dir" {
+			if name == "Dir" || name == "DateUnits" {
 				continue
 			}
 			switch f := wv.Field(i); f.Kind() {
@@ -83,5 +84,20 @@ func TestHomeCatalogCoversEveryLocale(t *testing.T) {
 				}
 			}
 		}
+	}
+}
+
+func TestStatusDatesInEastAsianOrder(t *testing.T) {
+	d := time.Date(2026, 10, 19, 14, 5, 0, 0, time.UTC)
+	for code, want := range map[string]string{"ja": "2026年10月19日", "zh-Hans": "2026年10月19日", "zh-Hant": "2026年10月19日", "ko": "2026년 10월 19일", "en": "19 Oct 2026"} {
+		if got := statusLanguages[code].day(d); got != want {
+			t.Errorf("%s: %q, want %q", code, got, want)
+		}
+	}
+	if got := statusLanguages["ko"].longMonth(d); got != "2026년 10월" {
+		t.Errorf("ko month %q", got)
+	}
+	if got := statusLanguages["ja"].shortDay(d); got != "10月19日" {
+		t.Errorf("ja short day %q", got)
 	}
 }

@@ -18,6 +18,7 @@ type statusWords struct {
 	MonitorPaused, MonitorRemoved                string
 	MaintenanceStarted, MaintenanceDone          string
 	WindowNow                                    string
+	DateUnits                                    [3]string
 	Months                                       [12]string
 
 	Name, Dir, Status, Language, Apply, Follow               string
@@ -1922,6 +1923,7 @@ var statusLanguages = map[string]statusWords{
 	},
 	"ja": {
 		Lang:               "ja",
+		DateUnits:          [3]string{"年", "月", "日"},
 		Name:               "日本語",
 		States:             map[string]string{stOperational: "正常稼働", stDegraded: "パフォーマンス低下", stPartialOutage: "部分的な障害", stMajorOutage: "大規模な障害", stMaintenance: "メンテナンス中"},
 		Headlines:          map[string]string{stOperational: "すべてのシステムが稼働中", stDegraded: "一部のシステムで遅延が発生しています", stPartialOutage: "一部のシステムが停止しています", stMajorOutage: "大規模な障害", stMaintenance: "メンテナンス実施中"},
@@ -2118,6 +2120,7 @@ var statusLanguages = map[string]statusWords{
 	},
 	"ko": {
 		Lang:               "ko",
+		DateUnits:          [3]string{"년 ", "월 ", "일"},
 		Name:               "한국어",
 		States:             map[string]string{stOperational: "정상", stDegraded: "성능 저하", stPartialOutage: "부분 장애", stMajorOutage: "대규모 장애", stMaintenance: "점검 중"},
 		Headlines:          map[string]string{stOperational: "모든 시스템 정상", stDegraded: "일부 시스템이 느립니다", stPartialOutage: "일부 시스템이 중단되었습니다", stMajorOutage: "대규모 장애", stMaintenance: "점검이 진행 중입니다"},
@@ -4275,6 +4278,7 @@ var statusLanguages = map[string]statusWords{
 	},
 	"zh-Hans": {
 		Lang:               "zh-Hans",
+		DateUnits:          [3]string{"年", "月", "日"},
 		Name:               "简体中文",
 		States:             map[string]string{stOperational: "运行正常", stDegraded: "性能下降", stPartialOutage: "部分故障", stMajorOutage: "严重故障", stMaintenance: "维护中"},
 		Headlines:          map[string]string{stOperational: "所有系统运行正常", stDegraded: "部分系统运行缓慢", stPartialOutage: "部分系统已中断", stMajorOutage: "严重故障", stMaintenance: "正在维护"},
@@ -4373,6 +4377,7 @@ var statusLanguages = map[string]statusWords{
 	},
 	"zh-Hant": {
 		Lang:               "zh-Hant",
+		DateUnits:          [3]string{"年", "月", "日"},
 		Name:               "繁體中文",
 		States:             map[string]string{stOperational: "運作正常", stDegraded: "效能下降", stPartialOutage: "部分故障", stMajorOutage: "嚴重故障", stMaintenance: "維護中"},
 		Headlines:          map[string]string{stOperational: "所有系統運作正常", stDegraded: "部分系統運作緩慢", stPartialOutage: "部分系統已中斷", stMajorOutage: "嚴重故障", stMaintenance: "正在維護"},
@@ -4499,7 +4504,27 @@ func (w statusWords) direction() string {
 	return w.Dir
 }
 
+func (w statusWords) cjk() bool { return w.DateUnits[0] != "" }
+
+func (w statusWords) ymd(t time.Time) string {
+	u := w.DateUnits
+	return strconv.Itoa(t.Year()) + u[0] + strconv.Itoa(int(t.Month())) + u[1] + strconv.Itoa(t.Day()) + u[2]
+}
+
+func (w statusWords) md(t time.Time) string {
+	u := w.DateUnits
+	return strconv.Itoa(int(t.Month())) + u[1] + strconv.Itoa(t.Day()) + u[2]
+}
+
+func (w statusWords) ym(t time.Time) string {
+	u := w.DateUnits
+	return strconv.Itoa(t.Year()) + u[0] + strconv.Itoa(int(t.Month())) + strings.TrimSpace(u[1])
+}
+
 func (w statusWords) day(t time.Time) string {
+	if w.cjk() {
+		return w.ymd(t)
+	}
 	return strconv.Itoa(t.Day()) + " " + w.Months[t.Month()-1] + " " + strconv.Itoa(t.Year())
 }
 
@@ -4508,14 +4533,23 @@ func (w statusWords) moment(t time.Time) string {
 }
 
 func (w statusWords) month(t time.Time) string {
+	if w.cjk() {
+		return w.ym(t)
+	}
 	return w.Months[t.Month()-1] + " " + strconv.Itoa(t.Year())
 }
 
 func (w statusWords) longMonth(t time.Time) string {
+	if w.cjk() {
+		return w.ym(t)
+	}
 	return w.LongMonths[t.Month()-1] + " " + strconv.Itoa(t.Year())
 }
 
 func (w statusWords) shortDay(t time.Time) string {
+	if w.cjk() {
+		return w.md(t)
+	}
 	return strconv.Itoa(t.Day()) + " " + w.Months[t.Month()-1]
 }
 
