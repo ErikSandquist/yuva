@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "ฉันต้องรันเซิร์ฟเวอร์อีเมลไหม"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "เอกสาร"
 
@@ -1569,6 +1570,14 @@ msgstr "ความกว้างของตัวอย่าง"
 msgid "Previous"
 msgstr "ก่อนหน้า"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "ราคา"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "ความเป็นส่วนตัว"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "การโฮสต์เองและโอเพนซอร์ส
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "ส่งข้อความทดสอบแล้วดูการสนทนาปรากฏในแผงควบคุม"
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "ส่งสถานะทำงานปกติหรือสถานะขัดข้องด้วยตัวเอง การแจ้งเตือนจาก Alertmanager และ Grafana รับได้ตามที่เป็น"
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "ส่งจดหมายข่าวถึงรายชื่อผู้รับของคุณและดูว่าผู้อ่านทำอะไรกับมัน"
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "ส่ง operational หรือสถานะขัดข้องด้วยตัวเอง การแจ้งเตือนจาก Alertmanager และ Grafana รับได้ตามที่เป็น"
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "ดีไซน์เริ่มต้นสำหรับตัวอ
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "สถานะโดย Yuva"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

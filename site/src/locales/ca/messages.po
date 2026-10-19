@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "Necessito executar un servidor de correu?"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "Documents"
 
@@ -1569,6 +1570,14 @@ msgstr "Amplada de la previsualització"
 msgid "Previous"
 msgstr "Anterior"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "Preus"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "Privadesa"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "Autoallotjament i codi obert"
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "Envieu un missatge de prova i mireu com apareix la conversa al tauler."
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "Envieu vosaltres mateixos un estat de funcionament o d'interrupció. Les alertes d'Alertmanager i Grafana s'accepten tal com són."
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "Envieu butlletins a les vostres llistes de correu i vegeu què en fan els lectors."
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "Envieu vosaltres mateixos operational o un estat d'interrupció. Les alertes d'Alertmanager i Grafana s'accepten tal com són."
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "Dissenys inicials per al dissenyador de correu, en anglès, turc i alema
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "Estat per Yuva"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

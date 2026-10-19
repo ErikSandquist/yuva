@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "Kell futtatnom levelezőszervert?"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "Dokumentáció"
 
@@ -1569,6 +1570,14 @@ msgstr "Az előnézet szélessége"
 msgid "Previous"
 msgstr "Előző"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "Árak"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "Adatvédelem"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "Saját üzemeltetés és nyílt forrás"
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "Küldj egy tesztüzenetet, és nézd, ahogy megjelenik a beszélgetés a panelen."
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "Küldje el maga a működési vagy kiesési állapotot. Az Alertmanager és a Grafana riasztásait módosítás nélkül fogadja."
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "Küldj hírleveleket a levelezőlistáidnak, és nézd meg, mit kezdenek velük az olvasók."
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "Küldje el maga az operational vagy egy kiesési állapotot. Az Alertmanager és a Grafana riasztásait módosítás nélkül fogadja."
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "Kezdő tervek az e-mail-tervezőhöz angolul, törökül és németül. 
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "Állapot: Yuva"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

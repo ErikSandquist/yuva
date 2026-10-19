@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "Χρειάζεται να τρέχω διακομιστή αλληλογραφίας;"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "Έγγραφα"
 
@@ -1569,6 +1570,14 @@ msgstr "Πλάτος προεπισκόπησης"
 msgid "Previous"
 msgstr "Προηγούμενο"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "Τιμές"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "Απόρρητο"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "Αυτο-φιλοξενία και ανοιχτός κώδικας"
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "Στείλτε ένα δοκιμαστικό μήνυμα και δείτε τη συνομιλία να εμφανίζεται στον πίνακα."
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "Στείλτε μόνοι σας μια κατάσταση λειτουργίας ή διακοπής. Οι ειδοποιήσεις του Alertmanager και του Grafana γίνονται δεκτές όπως είναι."
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "Στείλτε ενημερωτικά δελτία στις λίστες αλληλογραφίας σας και δείτε τι κάνουν οι αναγνώστες με αυτά."
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "Στείλτε μόνοι σας operational ή μια κατάσταση διακοπής. Οι ειδοποιήσεις του Alertmanager και του Grafana γίνονται δεκτές όπως είναι."
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "Αρχικά σχέδια για τον σχεδιαστή email, στα
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "Κατάσταση από το Yuva"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

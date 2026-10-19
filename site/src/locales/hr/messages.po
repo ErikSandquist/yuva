@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "Moram li pokretati poštanski poslužitelj?"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "Dokumenti"
 
@@ -1569,6 +1570,14 @@ msgstr "Širina pregleda"
 msgid "Previous"
 msgstr "Prethodno"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "Cijene"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "Privatnost"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "Samostalno hostiranje i open source"
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "Pošaljite probnu poruku i gledajte kako se razgovor pojavljuje u panelu."
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "Sami pošaljite stanje rada ili ispada. Upozorenja iz Alertmanagera i Grafane prihvaćaju se onakva kakva jesu."
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "Šaljite newslettere svojim popisima i pogledajte što čitatelji s njima rade."
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "Sami pošaljite operational ili stanje ispada. Upozorenja iz Alertmanagera i Grafane prihvaćaju se onakva kakva jesu."
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "Početni dizajni za dizajner e-pošte, na engleskom, turskom i njemačko
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "Status od Yuve"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "Adakah saya perlu menjalankan pelayan mel?"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "Dokumen"
 
@@ -1569,6 +1570,14 @@ msgstr "Lebar pratonton"
 msgid "Previous"
 msgstr "Sebelumnya"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "Harga"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "Privasi"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "Hos sendiri dan sumber terbuka"
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "Hantar mesej ujian dan lihat perbualan muncul dalam panel."
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "Hantar sendiri status berfungsi atau status gangguan. Amaran Alertmanager dan Grafana diterima seadanya."
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "Hantar surat berita kepada senarai mel anda dan lihat apa yang pembaca lakukan dengannya."
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "Hantar sendiri operational atau status gangguan. Amaran Alertmanager dan Grafana diterima seadanya."
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "Reka bentuk permulaan untuk pereka bentuk e-mel, dalam bahasa Inggeris, 
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "Status oleh Yuva"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

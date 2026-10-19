@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "هل أحتاج إلى تشغيل خادم بريد؟"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "المستندات"
 
@@ -1569,6 +1570,14 @@ msgstr "عرض المعاينة"
 msgid "Previous"
 msgstr "السابق"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "الأسعار"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "الخصوصية"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "الاستضافة الذاتية والمصدر المفتوح"
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "أرسل رسالة تجريبية وشاهد المحادثة تظهر في اللوحة."
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "أرسل بنفسك حالة التشغيل أو حالة الانقطاع. تُقبل تنبيهات Alertmanager وGrafana كما هي."
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "أرسل النشرات البريدية إلى قوائمك وتابع ما يفعله القراء بها."
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "أرسل operational أو حالة انقطاع بنفسك. تُقبل تنبيهات Alertmanager وGrafana كما هي."
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "تصاميم أولية لمصمم البريد، بالإنجليزية
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "الحالة من Yuva"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

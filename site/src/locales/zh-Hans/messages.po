@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "我需要运行邮件服务器吗？"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "文档"
 
@@ -1569,6 +1570,14 @@ msgstr "预览宽度"
 msgid "Previous"
 msgstr "上一页"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "价格"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "隐私"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "自托管与开源"
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "发送一条测试消息，看对话出现在面板中。"
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "你可以自己发送正常运行或故障状态。Alertmanager 和 Grafana 的告警会原样接收。"
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "向你的邮件列表发送新闻邮件，看看读者如何互动。"
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "你可以自己发送 operational 或某个故障状态。Alertmanager 和 Grafana 的告警会原样接收。"
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "适用于邮件设计器的入门设计，提供英语、土耳其语和
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "状态由 Yuva 提供"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

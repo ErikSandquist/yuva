@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "Tôi có cần chạy máy chủ thư không?"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "Tài liệu"
 
@@ -1569,6 +1570,14 @@ msgstr "Chiều rộng xem trước"
 msgid "Previous"
 msgstr "Trước"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "Giá"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "Quyền riêng tư"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "Tự lưu trữ và mã nguồn mở"
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "Gửi một tin nhắn thử và xem cuộc trò chuyện xuất hiện trong bảng điều khiển."
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "Tự gửi trạng thái hoạt động hoặc trạng thái gián đoạn. Cảnh báo từ Alertmanager và Grafana được chấp nhận nguyên trạng."
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "Gửi bản tin đến danh sách gửi thư của bạn và xem người đọc làm gì với chúng."
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "Tự gửi operational hoặc một trạng thái gián đoạn. Cảnh báo từ Alertmanager và Grafana được chấp nhận nguyên trạng."
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "Thiết kế khởi đầu cho trình thiết kế email, bằng tiếng
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "Trạng thái bởi Yuva"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

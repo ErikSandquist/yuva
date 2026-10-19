@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "메일 서버를 직접 운영해야 하나요?"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "문서"
 
@@ -1569,6 +1570,14 @@ msgstr "미리보기 너비"
 msgid "Previous"
 msgstr "이전"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "요금"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "개인정보"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "셀프 호스팅과 오픈 소스"
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "테스트 메시지를 보내고 패널에 대화가 나타나는 것을 확인하세요."
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "작동 중 또는 장애 상태를 직접 보내세요. Alertmanager와 Grafana 알림은 그대로 받습니다."
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "메일링 리스트로 뉴스레터를 보내고 독자의 반응을 확인하세요."
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "operational 또는 장애 상태를 직접 보내세요. Alertmanager와 Grafana 알림은 그대로 받습니다."
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "영어, 튀르키예어, 독일어로 된 이메일 디자이너용 스�
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "Yuva 상태 서비스"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

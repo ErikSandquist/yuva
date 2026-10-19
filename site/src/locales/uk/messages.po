@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "Чи потрібно мені запускати поштовий сервер?"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "Документи"
 
@@ -1569,6 +1570,14 @@ msgstr "Ширина попереднього перегляду"
 msgid "Previous"
 msgstr "Назад"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "Ціни"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "Конфіденційність"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "Самостійний хостинг і відкритий код"
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "Надішліть тестове повідомлення й побачите, як розмова з’явиться в панелі."
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "Надсилайте стан роботи або збою самі. Сповіщення Alertmanager і Grafana приймаються як є."
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "Надсилайте розсилки своїм спискам і дивіться, що з ними роблять читачі."
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "Надсилайте operational або стан збою самі. Сповіщення Alertmanager і Grafana приймаються як є."
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "Стартові дизайни для дизайнера листів �
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "Статус від Yuva"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

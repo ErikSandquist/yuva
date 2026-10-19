@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "¿Necesito ejecutar un servidor de correo?"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "Documentos"
 
@@ -1569,6 +1570,14 @@ msgstr "Ancho de la vista previa"
 msgid "Previous"
 msgstr "Anterior"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "Precios"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "Privacidad"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "Autoalojamiento y código abierto"
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "Envía un mensaje de prueba y mira cómo aparece la conversación en el panel."
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "Envíe usted mismo un estado operativo o de interrupción. Las alertas de Alertmanager y Grafana se aceptan tal cual."
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "Envía boletines a tus listas de correo y mira qué hacen los lectores con ellos."
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "Envíe usted mismo operational o un estado de interrupción. Las alertas de Alertmanager y Grafana se aceptan tal cual."
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "Diseños iniciales para el diseñador de correo, en inglés, turco y ale
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "Estado por Yuva"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

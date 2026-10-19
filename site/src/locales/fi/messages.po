@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "Tarvitsenko sähköpostipalvelimen?"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "Ohjeet"
 
@@ -1569,6 +1570,14 @@ msgstr "Esikatselun leveys"
 msgid "Previous"
 msgstr "Edellinen"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "Hinnoittelu"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "Tietosuoja"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "Itse isännöinti ja avoin lähdekoodi"
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "Lähetä testiviesti ja katso keskustelun ilmestyvän paneeliin."
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "Lähetä itse toimintatila tai katkotila. Alertmanagerin ja Grafanan hälytykset hyväksytään sellaisinaan."
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "Lähetä uutiskirjeitä postituslistoillesi ja katso, mitä lukijat tekevät niille."
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "Lähetä itse operational tai katkotila. Alertmanagerin ja Grafanan hälytykset hyväksytään sellaisinaan."
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "Aloitusmalleja sähköpostisuunnittelijaan englanniksi, turkiksi ja saks
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "Tilan tarjoaa Yuva"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

@@ -111,7 +111,7 @@ export function statusCopy(i18n: I18n) {
         {
           term: i18n._(msg`Pushed states`),
           text: i18n._(
-            msg`Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are.`
+            msg`Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are.`
           ),
         },
         {
@@ -247,6 +247,9 @@ export function statusCopy(i18n: I18n) {
       light: i18n._(msg`On a light site`),
       dark: i18n._(msg`On a dark site`),
       by: i18n._(msg`Status by Yuva`),
+      pricing: i18n._(msg`Pricing`),
+      docs: i18n._(msg`Docs`),
+      privacy: i18n._(msg`Privacy`),
       title: i18n._(msg`The API is running slow`),
       line: i18n._(msg`Chat and e-mail work normally.`),
       attributes: [

@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "நான் அஞ்சல் சர்வர் இயக்க வேண்டுமா?"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "டாக்ஸ்"
 
@@ -1569,6 +1570,14 @@ msgstr "முன்னோட்ட அகலம்"
 msgid "Previous"
 msgstr "முந்தையது"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "விலை"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "தனியுரிமை"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "சுய-ஹோஸ்டிங்கும் ஓப்பன் சோ
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "ஒரு சோதனைச் செய்தியை அனுப்பி, உரையாடல் பேனலில் தோன்றுவதைப் பாருங்கள்."
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "இயங்கும் அல்லது தடங்கல் நிலையை நீங்களே அனுப்புங்கள். Alertmanager, Grafana எச்சரிக்கைகள் அப்படியே ஏற்கப்படும்."
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "உங்கள் அஞ்சல் பட்டியல்களுக்குச் செய்திமடல்களை அனுப்பி, வாசகர்கள் அவற்றை என்ன செய்கிறார்கள் என்பதைப் பாருங்கள்."
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "operational அல்லது தடங்கல் நிலையை நீங்களே அனுப்புங்கள். Alertmanager, Grafana எச்சரிக்கைகள் அப்படியே ஏற்கப்படும்."
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "மின்னஞ்சல் வடிவமைப்பாளரு�
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "Yuva வழங்கும் நிலை"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

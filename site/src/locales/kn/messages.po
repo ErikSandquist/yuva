@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "ನಾನು ಮೇಲ್ ಸರ್ವರ್ ನಡೆಸಬೇಕೇ?"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "ಡಾಕ್ಸ್"
 
@@ -1569,6 +1570,14 @@ msgstr "ಮುನ್ನೋಟದ ಅಗಲ"
 msgid "Previous"
 msgstr "ಹಿಂದಿನ"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "ಬೆಲೆ"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "ಗೌಪ್ಯತೆ"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "ಸ್ವಯಂ-ಹೋಸ್ಟಿಂಗ್ ಮತ್ತು ಓಪನ್
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "ಪರೀಕ್ಷಾ ಸಂದೇಶ ಕಳುಹಿಸಿ ಮತ್ತು ಪ್ಯಾನೆಲ್‌ನಲ್ಲಿ ಸಂಭಾಷಣೆ ಕಾಣಿಸುವುದನ್ನು ನೋಡಿ."
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತಿರುವ ಅಥವಾ ಅಡಚಣೆಯ ಸ್ಥಿತಿಯನ್ನು ನೀವೇ ಕಳುಹಿಸಿ. Alertmanager ಮತ್ತು Grafana ಎಚ್ಚರಿಕೆಗಳನ್ನು ಇದ್ದಂತೆಯೇ ಸ್ವೀಕರಿಸಲಾಗುತ್ತದೆ."
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "ನಿಮ್ಮ ಮೇಲಿಂಗ್ ಪಟ್ಟಿಗಳಿಗೆ ನ್ಯೂಸ್‌ಲೆಟರ್‌ಗಳನ್ನು ಕಳುಹಿಸಿ ಮತ್ತು ಓದುಗರು ಅವುಗಳೊಂದಿಗೆ ಏನು ಮಾಡುತ್ತಾರೆ ಎಂದು ನೋಡಿ."
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "operational ಅಥವಾ ಅಡಚಣೆಯ ಸ್ಥಿತಿಯನ್ನು ನೀವೇ ಕಳುಹಿಸಿ. Alertmanager ಮತ್ತು Grafana ಎಚ್ಚರಿಕೆಗಳನ್ನು ಇದ್ದಂತೆಯೇ ಸ್ವೀಕರಿಸಲಾಗುತ್ತದೆ."
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "ಇಮೇಲ್ ಡಿಸೈನರ್‌ಗಾಗಿ ಆರಂಭಿಕ 
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "Yuva ಒದಗಿಸಿದ ಸ್ಥಿತಿ"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

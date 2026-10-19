@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "Bir posta sunucusu işletmem gerekir mi?"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "Belgeler"
 
@@ -1569,6 +1570,14 @@ msgstr "Önizleme genişliği"
 msgid "Previous"
 msgstr "Önceki"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "Fiyatlandırma"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "Gizlilik"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "Kendi sunucunuzda barındırma ve açık kaynak"
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "Bir test iletisi gönderin ve konuşmanın panelde belirmesini izleyin."
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "Çalışıyor ya da kesinti durumunu kendiniz gönderin. Alertmanager ve Grafana uyarıları olduğu gibi kabul edilir."
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "Bültenleri e-posta listelerinize gönderin ve okurların onlarla ne yaptığını görün."
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "operational ya da bir kesinti durumunu kendiniz gönderin. Alertmanager ve Grafana uyarıları olduğu gibi kabul edilir."
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "E-posta tasarımcısı için İngilizce, Türkçe ve Almanca başlangı�
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "Yuva ile durum"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

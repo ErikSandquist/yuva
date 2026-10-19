@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "メールサーバーを運用する必要はありますか?"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "ドキュメント"
 
@@ -1569,6 +1570,14 @@ msgstr "プレビューの幅"
 msgid "Previous"
 msgstr "前へ"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "料金"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "プライバシー"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "セルフホスティングとオープンソース"
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "テストメッセージを送信して、パネルに会話が現れるのを確認します。"
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "稼働中や障害の状態を自分で送れます。Alertmanager と Grafana のアラートはそのまま受け付けます。"
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "メーリングリストにニュースレターを送り、読者の反応を確認できます。"
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "operational や障害の状態を自分で送れます。Alertmanager と Grafana のアラートはそのまま受け付けます。"
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "メールデザイナー用のスターターデザイン(英語、ト�
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "Yuva によるステータス"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

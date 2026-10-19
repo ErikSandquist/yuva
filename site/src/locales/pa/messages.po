@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "ਕੀ ਮੈਨੂੰ ਮੇਲ ਸਰਵਰ ਚਲਾਉਣਾ ਪਵੇਗਾ?"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "ਡੌਕਸ"
 
@@ -1569,6 +1570,14 @@ msgstr "ਪ੍ਰੀਵਿਊ ਦੀ ਚੌੜਾਈ"
 msgid "Previous"
 msgstr "ਪਿਛਲਾ"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "ਕੀਮਤ"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "ਗੋਪਨੀਯਤਾ"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "ਆਪ ਹੋਸਟਿੰਗ ਅਤੇ ਓਪਨ ਸੋਰਸ"
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "ਇੱਕ ਟੈਸਟ ਸੁਨੇਹਾ ਭੇਜੋ ਅਤੇ ਪੈਨਲ ਵਿੱਚ ਗੱਲਬਾਤ ਨੂੰ ਦਿਸਦੇ ਦੇਖੋ।"
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "ਚੱਲਦੀ ਜਾਂ ਰੁਕਾਵਟ ਦੀ ਸਥਿਤੀ ਆਪ ਭੇਜੋ। Alertmanager ਅਤੇ Grafana ਦੀਆਂ ਚੇਤਾਵਨੀਆਂ ਜਿਵੇਂ ਹਨ ਉਵੇਂ ਹੀ ਮੰਨੀਆਂ ਜਾਂਦੀਆਂ ਹਨ।"
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "ਆਪਣੀਆਂ ਮੇਲਿੰਗ ਸੂਚੀਆਂ ਨੂੰ ਨਿਊਜ਼ਲੈਟਰ ਭੇਜੋ ਅਤੇ ਦੇਖੋ ਕਿ ਪਾਠਕ ਉਨ੍ਹਾਂ ਨਾਲ ਕੀ ਕਰਦੇ ਹਨ।"
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "operational ਜਾਂ ਰੁਕਾਵਟ ਦੀ ਸਥਿਤੀ ਆਪ ਭੇਜੋ। Alertmanager ਅਤੇ Grafana ਦੀਆਂ ਚੇਤਾਵਨੀਆਂ ਜਿਵੇਂ ਹਨ ਉਵੇਂ ਹੀ ਮੰਨੀਆਂ ਜਾਂਦੀਆਂ ਹਨ।"
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "ਈਮੇਲ ਡਿਜ਼ਾਈਨਰ ਲਈ ਸ਼ੁਰੂਆਤੀ �
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "Yuva ਵੱਲੋਂ ਸਥਿਤੀ"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

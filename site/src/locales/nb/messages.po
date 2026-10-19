@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "Må jeg drifte en e-postserver?"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "Dokumenter"
 
@@ -1569,6 +1570,14 @@ msgstr "Bredde på forhåndsvisningen"
 msgid "Previous"
 msgstr "Forrige"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "Priser"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "Personvern"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "Selvdrift og åpen kildekode"
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "Send en testmelding og se samtalen dukke opp i panelet."
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "Send selv en driftsstatus eller en avbruddsstatus. Varsler fra Alertmanager og Grafana godtas som de er."
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "Send nyhetsbrev til e-postlistene dine og se hva leserne gjør med dem."
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "Send selv operational eller en avbruddsstatus. Varsler fra Alertmanager og Grafana godtas som de er."
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "Startdesign for e-postdesigneren, på engelsk, tyrkisk og tysk. Forhånd
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "Status fra Yuva"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

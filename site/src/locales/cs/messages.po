@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "Musím provozovat poštovní server?"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "Dokumentace"
 
@@ -1569,6 +1570,14 @@ msgstr "Šířka náhledu"
 msgid "Previous"
 msgstr "Předchozí"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "Ceník"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "Soukromí"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "Vlastní hosting a open source"
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "Odešlete testovací zprávu a sledujte, jak se v panelu objeví konverzace."
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "Pošlete sami stav provozu nebo výpadku. Upozornění z Alertmanageru a Grafany se přijímají tak, jak jsou."
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "Posílejte newslettery svým seznamům a sledujte, co s nimi čtenáři dělají."
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "Pošlete sami operational nebo stav výpadku. Upozornění z Alertmanageru a Grafany se přijímají tak, jak jsou."
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "Výchozí návrhy pro e-mailový designér, v angličtině, turečtině 
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "Stav od Yuva"
 
 #: src/copy/header.ts
 #: src/copy/home.ts

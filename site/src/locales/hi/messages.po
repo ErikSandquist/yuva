@@ -589,6 +589,7 @@ msgid "Do I need to run a mail server?"
 msgstr "क्या मुझे मेल सर्वर चलाना होगा?"
 
 #: src/copy/docs.ts
+#: src/copy/status.ts
 msgid "Docs"
 msgstr "डॉक्स"
 
@@ -1569,6 +1570,14 @@ msgstr "प्रीव्यू की चौड़ाई"
 msgid "Previous"
 msgstr "पिछला"
 
+#: src/copy/status.ts
+msgid "Pricing"
+msgstr "मूल्य"
+
+#: src/copy/status.ts
+msgid "Privacy"
+msgstr "गोपनीयता"
+
 #: src/copy/header.ts
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
@@ -1828,13 +1837,13 @@ msgstr "सेल्फ़-होस्टिंग और ओपन सोर�
 msgid "Send a test message and watch the conversation appear in the panel."
 msgstr "एक टेस्ट संदेश भेजें और पैनल में बातचीत को दिखते देखें।"
 
+#: src/copy/status.ts
+msgid "Send a working or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "चालू या रुकावट की स्थिति खुद भेजें। Alertmanager और Grafana के अलर्ट जैसे हैं वैसे स्वीकार होते हैं।"
+
 #: src/copy/home.ts
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "अपनी मेलिंग सूचियों को न्यूज़लेटर भेजें और देखें कि पाठक उनके साथ क्या करते हैं।"
-
-#: src/copy/status.ts
-msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
-msgstr "operational या रुकावट की स्थिति खुद भेजें। Alertmanager और Grafana के अलर्ट जैसे हैं वैसे स्वीकार होते हैं।"
 
 #: src/copy/status.ts
 msgid "Send us a message"
@@ -1938,7 +1947,7 @@ msgstr "ईमेल डिज़ाइनर के लिए स्टार�
 
 #: src/copy/status.ts
 msgid "Status by Yuva"
-msgstr "Status by Yuva"
+msgstr "Yuva द्वारा स्टेटस"
 
 #: src/copy/header.ts
 #: src/copy/home.ts
