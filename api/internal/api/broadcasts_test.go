@@ -18,6 +18,8 @@ import (
 	"time"
 	"uuid"
 
+	"github.com/jackc/pgx/v5"
+
 	"github.com/productdevbook/yuva/api/internal/api"
 	"github.com/productdevbook/yuva/api/internal/email"
 	"github.com/productdevbook/yuva/api/internal/store"
@@ -145,22 +147,19 @@ func (bt broadcastTeam) subscribe(t *testing.T, addrs ...string) {
 // subscribeMany adds n subscribers straight into the database; prefix sorts them in order.
 func (bt broadcastTeam) subscribeMany(t *testing.T, prefix string, n int) []string {
 	t.Helper()
-	ctx := context.Background()
 	var out []string
+	var batch pgx.Batch
 	for i := 0; i < n; i++ {
 		addr := fmt.Sprintf("%s-%04d@example.org", prefix, i)
 		id := uuid.NewV7()
-		if _, err := bt.h.st.Pool.Exec(ctx, `INSERT INTO contacts (id, workspace_id, name, attributes, created_at, updated_at) VALUES ($1, $2, '', '{}', now(), now())`, id, bt.ws); err != nil {
-			t.Fatal(err)
-		}
-		if _, err := bt.h.st.Pool.Exec(ctx, `INSERT INTO contact_emails (workspace_id, contact_id, email, position) VALUES ($1, $2, $3, 0)`, bt.ws, id, addr); err != nil {
-			t.Fatal(err)
-		}
-		if _, err := bt.h.st.Pool.Exec(ctx, `INSERT INTO list_subscriptions (id, workspace_id, list_id, contact_id, email, state, source, consent_at, created_at, updated_at)
-			VALUES ($1, $2, $3, $4, $5, 'subscribed', 'api', now(), now(), now())`, uuid.NewV7(), bt.ws, bt.list, id, addr); err != nil {
-			t.Fatal(err)
-		}
+		batch.Queue(`INSERT INTO contacts (id, workspace_id, name, attributes, created_at, updated_at) VALUES ($1, $2, '', '{}', now(), now())`, id, bt.ws)
+		batch.Queue(`INSERT INTO contact_emails (workspace_id, contact_id, email, position) VALUES ($1, $2, $3, 0)`, bt.ws, id, addr)
+		batch.Queue(`INSERT INTO list_subscriptions (id, workspace_id, list_id, contact_id, email, state, source, consent_at, created_at, updated_at)
+			VALUES ($1, $2, $3, $4, $5, 'subscribed', 'api', now(), now(), now())`, uuid.NewV7(), bt.ws, bt.list, id, addr)
 		out = append(out, addr)
+	}
+	if err := bt.h.st.Pool.SendBatch(context.Background(), &batch).Close(); err != nil {
+		t.Fatal(err)
 	}
 	return out
 }
@@ -243,6 +242,7 @@ func deliveryOf(t *testing.T, c *client, id, addr string) map[string]any {
 var ourMessageID = regexp.MustCompile(`^<[a-z2-7]{24}\.[a-z2-7]{16}@example\.com>$`)
 
 func TestBroadcastSendFlow(t *testing.T) {
+	t.Parallel()
 	h, bs := newBroadcastHarness(t, nil)
 	bt := newBroadcastTeam(t, h, bs)
 	bt.subscribe(t, "ada@example.org", "grace@example.org", "linus@example.org", "blocked@example.org", "gone@example.org", "later@example.org")
@@ -360,6 +360,7 @@ func TestBroadcastSendFlow(t *testing.T) {
 }
 
 func TestBroadcastPauseCancelWithinBatch(t *testing.T) {
+	t.Parallel()
 	h, bs := newBroadcastHarness(t, nil)
 	bt := newBroadcastTeam(t, h, bs)
 	bt.subscribeMany(t, "r", 20)
@@ -400,6 +401,7 @@ func TestBroadcastPauseCancelWithinBatch(t *testing.T) {
 }
 
 func TestBroadcastRechecksEachAddress(t *testing.T) {
+	t.Parallel()
 	h, bs := newBroadcastHarness(t, nil)
 	bt := newBroadcastTeam(t, h, bs)
 	bt.subscribe(t, "stay@example.org", "leave@example.org", "bounced@example.org")
@@ -426,6 +428,7 @@ func TestBroadcastRechecksEachAddress(t *testing.T) {
 }
 
 func TestBroadcastReplies(t *testing.T) {
+	t.Parallel()
 	h, bs := newBroadcastHarness(t, nil)
 	bt := newBroadcastTeam(t, h, bs)
 	bt.subscribe(t, "ada@example.org", "grace@example.org")
@@ -504,6 +507,7 @@ func arfMail(from, to, original, rcpt string) []byte {
 }
 
 func TestBroadcastBouncesAndComplaints(t *testing.T) {
+	t.Parallel()
 	h, bs := newBroadcastHarness(t, nil)
 	bt := newBroadcastTeam(t, h, bs)
 	bt.subscribe(t, "unknown@example.org", "ses@example.org", "arf@example.org", "dsn@example.org")
@@ -576,6 +580,7 @@ func TestBroadcastBouncesAndComplaints(t *testing.T) {
 }
 
 func TestBroadcastAutoPauseAtBounceRate(t *testing.T) {
+	t.Parallel()
 	h, bs := newBroadcastHarness(t, nil)
 	bt := newBroadcastTeam(t, h, bs)
 	bt.subscribeMany(t, "a-bad", 12)
@@ -602,6 +607,7 @@ func TestBroadcastAutoPauseAtBounceRate(t *testing.T) {
 }
 
 func TestBroadcastDailyCapAndComplaintRate(t *testing.T) {
+	t.Parallel()
 	h, bs := newBroadcastHarness(t, func(d *api.Deps) { d.Broadcasts.DailyRecipients = 100 })
 	bt := newBroadcastTeam(t, h, bs)
 	bt.subscribeMany(t, "r", 250)
@@ -651,6 +657,7 @@ func meAgreesWithWorkspace(t *testing.T, bt broadcastTeam) {
 }
 
 func TestBroadcastComplaintRateSuspends(t *testing.T) {
+	t.Parallel()
 	h, bs := newBroadcastHarness(t, func(d *api.Deps) { d.Broadcasts.DailyRecipients = 1000 })
 	bt := newBroadcastTeam(t, h, bs)
 	bt.subscribeMany(t, "r", 1010)
@@ -683,6 +690,7 @@ func TestBroadcastComplaintRateSuspends(t *testing.T) {
 }
 
 func TestBroadcastApprovalGateAndWarmup(t *testing.T) {
+	t.Parallel()
 	h, bs := newBroadcastHarness(t, func(d *api.Deps) { d.Broadcasts.Mode = "approval" })
 	bt := newBroadcastTeam(t, h, bs)
 	bt.subscribe(t, "ada@example.org")
@@ -724,6 +732,7 @@ func TestBroadcastApprovalGateAndWarmup(t *testing.T) {
 }
 
 func TestBroadcastScopesAndAccess(t *testing.T) {
+	t.Parallel()
 	h, bs := newBroadcastHarness(t, nil)
 	bt := newBroadcastTeam(t, h, bs)
 	bt.subscribe(t, "ada@example.org")
@@ -780,6 +789,7 @@ func TestBroadcastScopesAndAccess(t *testing.T) {
 }
 
 func TestBroadcastsOffAndClickTracking(t *testing.T) {
+	t.Parallel()
 	h, bs := newBroadcastHarness(t, nil)
 	bt := newBroadcastTeam(t, h, bs)
 	bt.subscribe(t, "ada@example.org")
@@ -854,6 +864,7 @@ func broadcastEvents(t *testing.T, bt broadcastTeam, id string) []map[string]any
 }
 
 func TestBroadcastPaceSpacesMail(t *testing.T) {
+	t.Parallel()
 	h, bs := newBroadcastHarness(t, nil)
 	bt := newBroadcastTeam(t, h, bs)
 	bt.subscribe(t, "p1@example.org", "p2@example.org", "p3@example.org", "p4@example.org")
@@ -913,6 +924,7 @@ func TestBroadcastPaceSpacesMail(t *testing.T) {
 }
 
 func TestBroadcastPaceBuildFailureTakesNoSlot(t *testing.T) {
+	t.Parallel()
 	h, bs := newBroadcastHarness(t, nil)
 	bt := newBroadcastTeam(t, h, bs)
 	bt.subscribe(t, "big@example.org", "ok@example.org")
@@ -935,6 +947,7 @@ func TestBroadcastPaceBuildFailureTakesNoSlot(t *testing.T) {
 }
 
 func TestBroadcastPaceSkippedRecipientsDoNotWait(t *testing.T) {
+	t.Parallel()
 	h, bs := newBroadcastHarness(t, nil)
 	bt := newBroadcastTeam(t, h, bs)
 	bt.subscribe(t, "w1@example.org", "w2@example.org", "w3@example.org", "w4@example.org")
@@ -949,10 +962,10 @@ func TestBroadcastPaceSkippedRecipientsDoNotWait(t *testing.T) {
 		bt.owner.expect(http.StatusOK, "PATCH", "/v1/lists/"+bt.list+"/subscriptions/"+sub["id"].(string), map[string]any{"state": "unsubscribed"})
 	}
 	h.clock.Advance(2 * time.Second)
-	start := time.Now()
+	waits := h.sleep.count()
 	bt.run(t)
-	if took := time.Since(start); took > time.Second {
-		t.Fatalf("skipped recipients made the batch wait %v", took)
+	if n := h.sleep.count() - waits; n > 0 {
+		t.Fatalf("skipped recipients made the batch wait %d times", n)
 	}
 	c := counts(bt.get(t, id))
 	if bs.count() != 2 || c["skipped"].(map[string]any)["unsubscribed"] != float64(2) {
@@ -961,6 +974,7 @@ func TestBroadcastPaceSkippedRecipientsDoNotWait(t *testing.T) {
 }
 
 func TestBroadcastPaceSlotClaimIsExclusive(t *testing.T) {
+	t.Parallel()
 	h, bs := newBroadcastHarness(t, nil)
 	bt := newBroadcastTeam(t, h, bs)
 	id := uuid.MustParse(bt.draft(t, map[string]any{"pace": map[string]any{"per_hour": 10}}))
@@ -1010,6 +1024,7 @@ func TestBroadcastPaceSlotClaimIsExclusive(t *testing.T) {
 }
 
 func TestBroadcastPaceChanges(t *testing.T) {
+	t.Parallel()
 	h, bs := newBroadcastHarness(t, nil)
 	bt := newBroadcastTeam(t, h, bs)
 	path := func(id string) string { return "/v1/broadcasts/" + id }
@@ -1083,6 +1098,7 @@ func TestBroadcastPaceChanges(t *testing.T) {
 }
 
 func TestBroadcastPaceReview(t *testing.T) {
+	t.Parallel()
 	h, bs := newBroadcastHarness(t, func(d *api.Deps) { d.Broadcasts.DailyRecipients = 100 })
 	bt := newBroadcastTeam(t, h, bs)
 	bt.subscribeMany(t, "r", 15)
@@ -1115,6 +1131,7 @@ func TestBroadcastPaceReview(t *testing.T) {
 }
 
 func TestBroadcastPaceAndDailyLimit(t *testing.T) {
+	t.Parallel()
 	h, bs := newBroadcastHarness(t, func(d *api.Deps) { d.Broadcasts.DailyRecipients = 2 })
 	now := h.clock.Now().UTC()
 	h.clock.Advance(time.Date(now.Year(), now.Month(), now.Day()+1, 0, 10, 0, 0, time.UTC).Sub(now))

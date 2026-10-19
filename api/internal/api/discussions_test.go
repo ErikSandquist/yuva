@@ -45,6 +45,7 @@ func items(r response) []map[string]any {
 }
 
 func TestDiscussionAccessAndModeration(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	ct := newChatTeam(t, h, "live", true)
 	other := newChatTeam(t, h, "live", true)
@@ -248,6 +249,7 @@ func digestArgs(t *testing.T, ct chatTeam, discussion, contact string) api.Discu
 }
 
 func TestReaderAccountDeletion(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	ct := newChatTeam(t, h, "live", true)
 	page := ct.origin + "/faq"
@@ -268,6 +270,7 @@ func TestReaderAccountDeletion(t *testing.T) {
 }
 
 func TestDiscussionFromConversation(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	ct := newChatTeam(t, h, "live", true)
 	cs := ct.session(h, map[string]any{"identity_token": ct.token(h, map[string]any{"sub": "u-" + unique("d"), "name": "Cem"})})
@@ -298,6 +301,7 @@ func TestDiscussionFromConversation(t *testing.T) {
 }
 
 func TestRefusedReaderWriteLeavesNoContact(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	ct := newChatTeam(t, h, "live", true)
 	page := ct.origin + "/faq"
@@ -331,6 +335,7 @@ func TestRefusedReaderWriteLeavesNoContact(t *testing.T) {
 }
 
 func TestReaderTokenBoundToItsOrigin(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	ct := newChatTeam(t, h, "live", true)
 	second := "https://" + unique("second") + ".example"

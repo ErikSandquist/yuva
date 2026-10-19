@@ -101,6 +101,7 @@ func messages(c *client, conv string) []map[string]any {
 }
 
 func TestInboxAccessControl(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	tm := newTeam(t, h)
 	created := tm.owner.expect(http.StatusCreated, "POST", "/v1/inboxes", map[string]any{"name": "Other", "slug": "other"})
@@ -157,6 +158,7 @@ func TestInboxAccessControl(t *testing.T) {
 }
 
 func TestConversationCrossWorkspace(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	a := newTeam(t, h)
 	b := newTeam(t, h)
@@ -186,6 +188,7 @@ func TestConversationCrossWorkspace(t *testing.T) {
 }
 
 func TestMessageClientIDIsIdempotent(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	tm := newTeam(t, h)
 	conv := tm.conversation(tm.owner)
@@ -214,6 +217,7 @@ func TestMessageClientIDIsIdempotent(t *testing.T) {
 }
 
 func TestEventsOnAssignStatusAndLabels(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	tm := newTeam(t, h)
 	conv := tm.conversation(tm.owner)
@@ -244,6 +248,7 @@ func TestEventsOnAssignStatusAndLabels(t *testing.T) {
 }
 
 func TestConversationCursorPagination(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	tm := newTeam(t, h)
 	want := map[string]bool{}
@@ -297,6 +302,7 @@ func TestConversationCursorPagination(t *testing.T) {
 }
 
 func TestAttachmentLimits(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	tm := newTeam(t, h)
 	conv := tm.conversation(tm.owner)
@@ -343,6 +349,7 @@ func TestAttachmentLimits(t *testing.T) {
 }
 
 func TestUsageCounters(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	tm := newTeam(t, h)
 	conv := tm.conversation(tm.owner)
@@ -371,6 +378,7 @@ func TestUsageCounters(t *testing.T) {
 }
 
 func TestAgentContactScope(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	tm := newTeam(t, h)
 	hidden := tm.owner.expect(http.StatusCreated, "POST", "/v1/inboxes", map[string]any{"name": "Hidden", "slug": "hidden"}).body["inbox"].(map[string]any)["id"].(string)
@@ -422,6 +430,7 @@ func TestAgentContactScope(t *testing.T) {
 }
 
 func TestOrphanContactVisibility(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	tm := newTeam(t, h)
 	orphan := tm.owner.expect(http.StatusCreated, "POST", "/v1/contacts", map[string]any{"name": "Orphan"}).str("id")

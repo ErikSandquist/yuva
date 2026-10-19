@@ -49,6 +49,7 @@ func publicStatus(t *testing.T, h *harness, path string) response {
 }
 
 func TestStatusPageAccess(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	st := newStatusTeam(t, h)
 
@@ -113,6 +114,7 @@ func TestStatusPageAccess(t *testing.T) {
 }
 
 func TestStatusIncidentFlow(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	st := newStatusTeam(t, h)
 	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"published": true})
@@ -203,6 +205,7 @@ func TestStatusIncidentFlow(t *testing.T) {
 }
 
 func TestStatusIncidentAndMemberStates(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	st := newStatusTeam(t, h)
 	st.owner.expect(http.StatusOK, "POST", st.path("/components/"+st.api+"/state"), map[string]any{"state": "degraded"})
@@ -267,6 +270,7 @@ func TestStatusMaintenanceRunsOnTime(t *testing.T) {
 }
 
 func TestStatusPublicRateLimit(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	st := newStatusTeam(t, h)
 	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"published": true})
@@ -285,6 +289,7 @@ func TestStatusPublicRateLimit(t *testing.T) {
 }
 
 func TestStatusURLRedirect(t *testing.T) {
+	t.Parallel()
 	h := newHarnessWith(t, func(d *api.Deps) { d.Status = api.StatusSettings{URL: "https://status.example.test"} })
 	st := newStatusTeam(t, h)
 	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"published": true})
@@ -315,6 +320,7 @@ func TestStatusURLRedirect(t *testing.T) {
 }
 
 func TestStatusMCPTools(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	st := newStatusTeam(t, h)
 	reader := st.owner.expect(http.StatusCreated, "POST", "/v1/api-keys", map[string]any{"name": "r", "scopes": []string{"status:read"}}).str("secret")
@@ -351,6 +357,7 @@ func TestStatusMCPTools(t *testing.T) {
 }
 
 func TestStatusWebhooks(t *testing.T) {
+	t.Parallel()
 	h := privateHarness(t)
 	st := newStatusTeam(t, h)
 	rcv := newReceiver(t)
@@ -378,6 +385,7 @@ func TestStatusWebhooks(t *testing.T) {
 }
 
 func TestStatusPageChangedAtNeverMovesBack(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	st := newStatusTeam(t, h)
 	ws, page := uuid.MustParse(st.ws), uuid.MustParse(st.page)
@@ -401,6 +409,7 @@ func TestStatusPageChangedAtNeverMovesBack(t *testing.T) {
 }
 
 func TestStatusComponentHolderHandover(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	st := newStatusTeam(t, h)
 	open := func(id string) store.StatusComponentState {
@@ -429,6 +438,7 @@ func TestStatusComponentHolderHandover(t *testing.T) {
 }
 
 func TestStatusSlugRenameRedirects(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	st := newStatusTeam(t, h)
 	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"published": true})

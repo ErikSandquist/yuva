@@ -92,6 +92,7 @@ func designDoc(blocks ...map[string]any) map[string]any {
 }
 
 func TestEmailDesigns(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	tm := newTeam(t, h)
 	o := tm.owner
@@ -177,6 +178,7 @@ func TestEmailDesigns(t *testing.T) {
 }
 
 func TestEmailDesignConflictKeepsTheirs(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	o := newTeam(t, h).owner
 
@@ -222,6 +224,7 @@ func TestEmailDesignConflictKeepsTheirs(t *testing.T) {
 }
 
 func TestEmailImages(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	tm := newTeam(t, h)
 	o := tm.owner
@@ -297,6 +300,7 @@ func TestEmailImages(t *testing.T) {
 }
 
 func TestEmailTemplates(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	tm := newTeam(t, h)
 	o := tm.owner

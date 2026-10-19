@@ -17,6 +17,7 @@ func undeliverable(c *client, contactID string) []any {
 }
 
 func TestThirdPartyCannotHijackReplies(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	et := newEmailTeam(t, h, false)
 	customer, colleague := unique("customer")+"@example.net", unique("colleague")+"@example.org"
@@ -91,6 +92,7 @@ func TestThirdPartyCannotHijackReplies(t *testing.T) {
 }
 
 func TestForgedDeliveryReports(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	et := newEmailTeam(t, h, false)
 	victim := unique("victim") + "@example.net"
@@ -161,6 +163,7 @@ func TestForgedDeliveryReports(t *testing.T) {
 }
 
 func TestSESOnlyForOurRecipients(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	et := newEmailTeam(t, h, false)
 	signer := newSNSSigner(t, h.web)
@@ -202,6 +205,7 @@ const inlineImageMail = "From: Customer <%[1]s>\r\nTo: %[2]s\r\nSubject: Screens
 	"--rel--\r\n"
 
 func TestInlineImagesAndRemoteImageFlag(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	et := newEmailTeam(t, h, false)
 	r := h.ingest(et.address, []byte(fmt.Sprintf(inlineImageMail, unique("pics")+"@example.net", et.address, newMessageID())), nil)
@@ -246,6 +250,7 @@ const styledMailHTML = `<html><head><style>body { color: red } @import url(https
 	`<blockquote type="cite">Earlier mail</blockquote></body></html>`
 
 func TestOriginalHTMLKeepsAllowedStyles(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	et := newEmailTeam(t, h, false)
 	raw := fmt.Sprintf("From: Shop <%s>\r\nTo: %s\r\nSubject: Shipped\r\nMessage-ID: <%s>\r\n"+

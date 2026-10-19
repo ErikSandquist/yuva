@@ -44,6 +44,7 @@ func post(c *client, conv string, body map[string]any) string {
 }
 
 func TestConversationListItems(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	tm := newTeam(t, h)
 	other := newTeam(t, h)
@@ -264,6 +265,7 @@ func TestUnreadAndReadCursor(t *testing.T) {
 }
 
 func TestConversationCounts(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	tm := newTeam(t, h)
 	key := tm.apiKey(h)
@@ -337,6 +339,7 @@ func TestConversationCounts(t *testing.T) {
 }
 
 func TestMessagesNewestFirst(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	tm := newTeam(t, h)
 	conv := tm.conversation(tm.owner)
@@ -377,6 +380,7 @@ func TestMessagesNewestFirst(t *testing.T) {
 }
 
 func TestAttachmentWorkspaceQuery(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	email := unique("both") + "@example.com"
 	wsA := h.bootstrap(email, unique("ws")).WorkspaceID.String()
@@ -407,6 +411,7 @@ func TestAttachmentWorkspaceQuery(t *testing.T) {
 }
 
 func TestSignInKeepsOtherSessions(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	email := unique("owner") + "@example.com"
 	h.bootstrap(email, unique("ws"))
@@ -422,6 +427,7 @@ func TestSignInKeepsOtherSessions(t *testing.T) {
 }
 
 func TestAttachmentContentMustMatchType(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	tm := newTeam(t, h)
 	conv := tm.conversation(tm.owner)
@@ -464,6 +470,7 @@ func TestAttachmentContentMustMatchType(t *testing.T) {
 }
 
 func TestContactLookupNeedsInboxAccess(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	tm := newTeam(t, h)
 	tm.owner.expect(http.StatusOK, "PATCH", "/v1/contacts/"+tm.contact, map[string]any{
@@ -481,6 +488,7 @@ func TestContactLookupNeedsInboxAccess(t *testing.T) {
 }
 
 func TestSearchNegationExcludesConversation(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	tm := newTeam(t, h)
 	refund := tm.conversation(tm.owner)

@@ -808,12 +808,8 @@ func (s *Server) sendNoticeBatch(ctx context.Context, ns *noticeSend, sess *emai
 				return out, true, nil
 			}
 		}
-		if attempted && pace > 0 {
-			select {
-			case <-ctx.Done():
-				return out, false, nil
-			case <-time.After(pace):
-			}
+		if attempted && pace > 0 && s.sleep(ctx, pace) != nil {
+			return out, false, nil
 		}
 		attempted = true
 		sendCtx, cancel := context.WithTimeout(ctx, time.Minute)

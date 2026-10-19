@@ -51,6 +51,25 @@ func (c *clock) Advance(d time.Duration) {
 	c.now = c.now.Add(d)
 }
 
+// sleeper stands in for the timer that spaces out mails: it returns at once and keeps what was asked.
+type sleeper struct {
+	mu    sync.Mutex
+	waits []time.Duration
+}
+
+func (s *sleeper) Sleep(ctx context.Context, d time.Duration) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.waits = append(s.waits, d)
+	return ctx.Err()
+}
+
+func (s *sleeper) count() int {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	return len(s.waits)
+}
+
 type outbox struct {
 	mu    sync.Mutex
 	sent  []mail.Message
@@ -130,6 +149,7 @@ type harness struct {
 	st      *store.Store
 	url     string
 	clock   *clock
+	sleep   *sleeper
 	mail    *outbox
 	secrets *secret.Key
 	storage *storage.Local
@@ -161,7 +181,12 @@ func newHarnessWith(t *testing.T, configure func(*api.Deps)) *harness {
 		t.Skip("YUVA_TEST_DATABASE_URL is not set")
 	}
 	ctx := context.Background()
-	st, err := store.Open(ctx, dsn)
+	sep := "?"
+	if strings.Contains(dsn, "?") {
+		sep = "&"
+	}
+	// The test database is thrown away, so a commit need not wait for the disk.
+	st, err := store.Open(ctx, dsn+sep+"synchronous_commit=off")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -191,7 +216,7 @@ func newHarnessWith(t *testing.T, configure func(*api.Deps)) *harness {
 	listenCtx, stopListening := context.WithCancel(ctx)
 	t.Cleanup(stopListening)
 	go realtime.Listen(listenCtx, dsn, st.Queries, hub, slog.New(slog.DiscardHandler))
-	h := &harness{t: t, st: st, clock: &clock{now: time.Now()}, mail: &outbox{}, secrets: key, storage: objects, hub: hub,
+	h := &harness{t: t, st: st, clock: &clock{now: time.Now()}, sleep: &sleeper{}, mail: &outbox{}, secrets: key, storage: objects, hub: hub,
 		smtp: &smtpCapture{}, web: newFakeWeb()}
 	deps := api.Deps{
 		Log:      slog.New(slog.DiscardHandler),
@@ -201,6 +226,7 @@ func newHarnessWith(t *testing.T, configure func(*api.Deps)) *harness {
 		WebAuthn: wa,
 		Auth:     api.AuthSettings{PublicURL: testOrigin, ClientIPHeader: "X-Forwarded-For", TrustedProxies: []netip.Prefix{netip.MustParsePrefix("127.0.0.1/32"), netip.MustParsePrefix("::1/128")}, CodeReplyDelay: time.Millisecond},
 		Now:      h.clock.Now,
+		Sleep:    h.sleep.Sleep,
 		Secrets:  key,
 		Storage:  objects,
 		Attachments: api.AttachmentSettings{

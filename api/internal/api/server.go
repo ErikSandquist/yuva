@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"errors"
 	"log/slog"
 	"net/http"
@@ -49,6 +50,7 @@ type Server struct {
 	webauthn *webauthn.WebAuthn
 	auth     AuthSettings
 	now      func() time.Time
+	sleep    func(ctx context.Context, d time.Duration) error
 	secrets  *secret.Key
 	objects  storage.Storage
 	attach   AttachmentSettings
@@ -97,6 +99,8 @@ type Deps struct {
 	WebAuthn *webauthn.WebAuthn
 	Auth     AuthSettings
 	Now      func() time.Time
+	// Sleep replaces the timer that spaces out the mails of a send, for tests; nil waits for real.
+	Sleep func(ctx context.Context, d time.Duration) error
 
 	Secrets     *secret.Key
 	Storage     storage.Storage
@@ -202,10 +206,25 @@ type SignupSettings struct {
 	WorkspacesPerIP     int
 }
 
+func sleepCtx(ctx context.Context, d time.Duration) error {
+	t := time.NewTimer(d)
+	defer t.Stop()
+	select {
+	case <-ctx.Done():
+		return ctx.Err()
+	case <-t.C:
+		return nil
+	}
+}
+
 func New(d Deps) *Server {
 	now := d.Now
 	if now == nil {
 		now = time.Now
+	}
+	sleep := d.Sleep
+	if sleep == nil {
+		sleep = sleepCtx
 	}
 	jobs, err := river.NewClient(riverpgxv5.New(d.Store.Pool), &river.Config{Logger: d.Log})
 	if err != nil {
@@ -242,7 +261,7 @@ func New(d Deps) *Server {
 		}
 	}
 	srv := &Server{
-		log: d.Log, st: d.Store, version: d.Version, mailer: d.Mailer, webauthn: d.WebAuthn, auth: d.Auth, now: now,
+		log: d.Log, st: d.Store, version: d.Version, mailer: d.Mailer, webauthn: d.WebAuthn, auth: d.Auth, now: now, sleep: sleep,
 		secrets: d.Secrets, objects: d.Storage, attach: d.Attachments, sanitize: htmlPolicy(), original: originalHTMLPolicy(),
 		hub: d.Hub, jobs: jobs, ingress: d.Ingress, ingestQ: make(chan struct{}, ingestSlots), sender: sender, smtpPriv: d.SMTPAllowPrivate, snsCerts: newCertCache(fetch), fetch: fetch,
 		chat: chat, limits: newRateLimiter(), webhooks: d.Webhooks, hooks: hooks, push: pusher,

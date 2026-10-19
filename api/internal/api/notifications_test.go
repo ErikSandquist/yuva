@@ -368,6 +368,7 @@ func expectPushes(t *testing.T, got []pushDelivery, b *browser, want ...string) 
 }
 
 func TestNotificationRuleMatrix(t *testing.T) {
+	t.Parallel()
 	h, fake := pushHarness(t)
 	nt := newNotifyTeam(t, h)
 	owner, agent := fake.subscribe(nt.owner), fake.subscribe(nt.agent)
@@ -452,6 +453,7 @@ func TestNotificationRuleMatrix(t *testing.T) {
 }
 
 func TestNotificationSettingsAPI(t *testing.T) {
+	t.Parallel()
 	h, _ := pushHarness(t)
 	nt := newNotifyTeam(t, h)
 	other := newNotifyTeam(t, h)
@@ -506,6 +508,7 @@ func TestNotificationSettingsAPI(t *testing.T) {
 }
 
 func TestPushSubscriptionsAPI(t *testing.T) {
+	t.Parallel()
 	h, fake := pushHarness(t)
 	nt := newNotifyTeam(t, h)
 	other := newNotifyTeam(t, h)
@@ -675,6 +678,7 @@ func TestNotificationsQuietWhileViewing(t *testing.T) {
 }
 
 func TestNotificationsNoSelfNotifyAndAway(t *testing.T) {
+	t.Parallel()
 	h, fake := pushHarness(t)
 	nt := newNotifyTeam(t, h)
 	owner, agent := fake.subscribe(nt.owner), fake.subscribe(nt.agent)
@@ -708,6 +712,7 @@ func TestNotificationsNoSelfNotifyAndAway(t *testing.T) {
 }
 
 func TestPushGoneAndRetry(t *testing.T) {
+	t.Parallel()
 	h, fake := pushHarness(t)
 	nt := newNotifyTeam(t, h)
 	gone, missing, busy, ok := fake.subscribe(nt.owner), fake.subscribe(nt.owner), fake.subscribe(nt.owner), fake.subscribe(nt.owner)
@@ -756,6 +761,7 @@ func TestPushGoneAndRetry(t *testing.T) {
 }
 
 func TestPushEndpointSSRFRefused(t *testing.T) {
+	t.Parallel()
 	keys := testVAPIDKeys(t)
 	fake := newFakePushService(t, keys.PublicKey)
 	h := newHarnessWith(t, func(d *api.Deps) {
@@ -804,6 +810,7 @@ func (h *harness) emailChecks(ws string) []api.NotificationEmailArgs {
 }
 
 func TestNotificationEmailDigest(t *testing.T) {
+	t.Parallel()
 	h, _ := pushHarness(t)
 	nt := newNotifyTeam(t, h)
 	agentEmail := nt.agent.expect(http.StatusOK, "GET", "/v1/me", nil).body["person"].(map[string]any)["email"].(string)
@@ -892,6 +899,7 @@ func TestNotificationEmailDigest(t *testing.T) {
 }
 
 func TestNotificationEmailSkipsAnsweredMessages(t *testing.T) {
+	t.Parallel()
 	h, _ := pushHarness(t)
 	nt := newNotifyTeam(t, h)
 	agentEmail := nt.agent.expect(http.StatusOK, "GET", "/v1/me", nil).body["person"].(map[string]any)["email"].(string)
@@ -935,6 +943,7 @@ func TestNotificationEmailSkipsAnsweredMessages(t *testing.T) {
 }
 
 func TestNoteMentions(t *testing.T) {
+	t.Parallel()
 	h, fake := pushHarness(t)
 	nt := newNotifyTeam(t, h)
 	other := newNotifyTeam(t, h)

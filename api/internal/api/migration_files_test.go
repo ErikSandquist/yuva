@@ -142,6 +142,7 @@ func bigMbox(n, body int, address string) []byte {
 }
 
 func TestFileMigrationUploadResumesAndImports(t *testing.T) {
+	t.Parallel()
 	d := newFileRun(t, nil)
 	h, tm := d.h, d.tm
 	ctx := context.Background()
@@ -289,6 +290,7 @@ func zipOf(t *testing.T, files map[string]string, modes map[string]fs.FileMode) 
 }
 
 func TestFileMigrationRefusesBadFiles(t *testing.T) {
+	t.Parallel()
 	d := newFileRun(t, func(dp *api.Deps) { dp.Migrations.UploadMaxBytes = 12 << 20 })
 	h, tm := d.h, d.tm
 	address, channel := d.emailChannel(t)
@@ -568,6 +570,7 @@ func TestFileMigrationZipsImportFoldersAsLabels(t *testing.T) {
 }
 
 func TestTakeoutThreadsByGmailThreadIDs(t *testing.T) {
+	t.Parallel()
 	d := newFileRun(t, nil)
 	ctx := context.Background()
 	address, channel := d.emailChannel(t)

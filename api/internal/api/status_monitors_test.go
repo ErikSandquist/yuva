@@ -155,6 +155,7 @@ func TestStatusHeartbeatWaitsAfterServerStart(t *testing.T) {
 }
 
 func TestStatusMonitorThresholds(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	st := newStatusTeam(t, h)
 	_, token := st.monitor(t, map[string]any{"kind": "push", "name": "Prometheus", "component_id": st.web,
@@ -187,6 +188,7 @@ func TestStatusMonitorThresholds(t *testing.T) {
 }
 
 func TestStatusMonitorMemberStateWins(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	st := newStatusTeam(t, h)
 	id, token := st.monitor(t, map[string]any{"kind": "push", "name": "Uptime", "component_id": st.api, "on_failure": "publish"})
@@ -232,6 +234,7 @@ func TestStatusMonitorMemberStateWins(t *testing.T) {
 }
 
 func TestStatusMonitorAlertBodies(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	st := newStatusTeam(t, h)
 	_, am := st.monitor(t, map[string]any{"kind": "push", "name": "Alertmanager", "component_id": st.api, "on_failure": "none"})
@@ -266,6 +269,7 @@ func TestStatusMonitorAlertBodies(t *testing.T) {
 }
 
 func TestStatusMonitorIsolationAndTokens(t *testing.T) {
+	t.Parallel()
 	h := newHarnessWith(t, func(d *api.Deps) { d.Status.Monitors = 2 })
 	st := newStatusTeam(t, h)
 	other := newStatusTeam(t, h)
@@ -304,6 +308,7 @@ func TestStatusMonitorIsolationAndTokens(t *testing.T) {
 }
 
 func TestStatusMonitorNotifiesLikeNewConversation(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	st := newStatusTeam(t, h)
 	email := st.owner.expect(http.StatusOK, "GET", "/v1/me", nil).body["person"].(map[string]any)["email"].(string)
@@ -375,6 +380,7 @@ func (st statusTeam) setComponent(t *testing.T, id, state string) {
 }
 
 func TestStatusMonitorNeverOverridesLaterMemberState(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	st := newStatusTeam(t, h)
 	_, token := st.monitor(t, map[string]any{"kind": "push", "name": "Uptime", "component_id": st.api, "on_failure": "none"})
@@ -429,6 +435,7 @@ func (st statusTeam) hasUpdate(t *testing.T, incident, word string) bool {
 }
 
 func TestStatusMonitorPausedOrDeletedResolvesItsIncident(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	st := newStatusTeam(t, h)
 	id, token := st.monitor(t, map[string]any{"kind": "push", "name": "Uptime", "component_id": st.api, "on_failure": "publish"})
@@ -477,6 +484,7 @@ func TestStatusMonitorPausedOrDeletedResolvesItsIncident(t *testing.T) {
 }
 
 func TestStatusMonitorIncidentFollowsTheClaim(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	st := newStatusTeam(t, h)
 	id, token := st.monitor(t, map[string]any{"kind": "push", "name": "Uptime", "component_id": st.api, "on_failure": "publish"})
@@ -498,6 +506,7 @@ func TestStatusMonitorIncidentFollowsTheClaim(t *testing.T) {
 }
 
 func TestStatusMonitorIngressLimits(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	st := newStatusTeam(t, h)
 	_, token := st.monitor(t, map[string]any{"kind": "heartbeat", "name": "Backup", "component_id": st.api})

@@ -175,7 +175,7 @@ func TestWhoIsViewing(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if seen.Equal(h.clock.Now()) || time.Now().After(deadline) {
+		if seen.Equal(h.clock.Now().Truncate(time.Microsecond)) || time.Now().After(deadline) {
 			break
 		}
 		time.Sleep(10 * time.Millisecond)

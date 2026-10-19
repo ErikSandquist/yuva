@@ -189,6 +189,7 @@ func (at appTeam) session(h *harness, sub string) contactSession {
 }
 
 func TestAppChannelNeedsNoOrigin(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	at := newAppTeam(t, h, false)
 	ch := at.owner.expect(http.StatusOK, "GET", "/v1/channels/"+at.channel, nil)
@@ -239,6 +240,7 @@ func TestAppChannelNeedsNoOrigin(t *testing.T) {
 }
 
 func TestClientFeedback(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	at := newAppTeam(t, h, false)
 	cs := at.session(h, "user-42")
@@ -320,6 +322,7 @@ func TestClientFeedback(t *testing.T) {
 }
 
 func TestAPIFeedbackAndDeleteByExternalID(t *testing.T) {
+	t.Parallel()
 	h := privateHarness(t)
 	tm := newTeam(t, h)
 	key := tm.apiKey(h)
@@ -553,6 +556,7 @@ func TestWebhookDeliveryRetriesAndDisable(t *testing.T) {
 }
 
 func TestWebhookNotesAndInboxScope(t *testing.T) {
+	t.Parallel()
 	h := privateHarness(t)
 	tm := newTeam(t, h)
 	other := tm.owner.expect(http.StatusCreated, "POST", "/v1/inboxes", map[string]any{"name": "Other", "slug": "other"})
@@ -587,6 +591,7 @@ func (r staticResolver) LookupNetIP(_ context.Context, _, host string) ([]netip.
 }
 
 func TestWebhookLinkLocalRefusedWhenPrivateAllowed(t *testing.T) {
+	t.Parallel()
 	h := newHarnessWith(t, func(d *api.Deps) {
 		d.Webhooks.AllowPrivate = true
 		d.Webhooks.Resolver = staticResolver{"hooks.example.com": "127.0.0.1", "metadata.example.com": "169.254.169.254"}
@@ -623,6 +628,7 @@ func TestWebhookLinkLocalRefusedWhenPrivateAllowed(t *testing.T) {
 }
 
 func TestWebhookSSRFRefused(t *testing.T) {
+	t.Parallel()
 	h := newHarnessWith(t, func(d *api.Deps) {
 		d.Webhooks.Resolver = staticResolver{"hooks.example.com": "127.0.0.1", "intranet.example.com": "10.1.2.3"}
 	})

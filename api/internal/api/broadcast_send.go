@@ -994,10 +994,8 @@ func (s *Server) sendBatch(ctx context.Context, r *bcRenderer, sess email.Sessio
 			continue
 		}
 		if wait := max(pace, gap); attempted && wait > 0 {
-			select {
-			case <-ctx.Done():
+			if s.sleep(ctx, wait) != nil {
 				return out, stopState, rejects
-			case <-time.After(wait):
 			}
 			cur, err = s.st.GetBroadcast(ctx, store.GetBroadcastParams{WorkspaceID: ws, ID: r.b.ID})
 			if err != nil || cur.State != bcSending {

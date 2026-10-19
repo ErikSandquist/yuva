@@ -221,6 +221,7 @@ func lastOf(items []map[string]any, kind string) map[string]any {
 }
 
 func TestEmailChannelSettings(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	et := newEmailTeam(t, h, false)
 	o := et.owner
@@ -277,6 +278,7 @@ func TestEmailChannelSettings(t *testing.T) {
 }
 
 func TestIngressSignatureAndRefusals(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	et := newEmailTeam(t, h, false)
 	raw := buildMail(mailOpts{from: "cust@example.net", to: et.address, subject: "Hi", messageID: newMessageID(), body: "Hello"})
@@ -347,6 +349,7 @@ const attachmentMail = "From: =?UTF-8?Q?Ay=C5=9Fe?= <newcust@example.net>\r\n" +
 	"--b1--\r\n"
 
 func TestInboundMailOpensConversation(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	et := newEmailTeam(t, h, false)
 	id := newMessageID()
@@ -403,6 +406,7 @@ func TestInboundMailOpensConversation(t *testing.T) {
 }
 
 func TestReplyThreading(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	et := newEmailTeam(t, h, false)
 	first := newMessageID()
@@ -513,6 +517,7 @@ func TestReplyThreading(t *testing.T) {
 }
 
 func TestOutboundFailuresAndRefusals(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	et := newEmailTeam(t, h, false)
 	r := h.ingest(et.address, buildMail(mailOpts{from: "fail@example.net", to: et.address, subject: "Q", messageID: newMessageID(), body: "Q?"}), nil)
@@ -553,6 +558,7 @@ func TestOutboundFailuresAndRefusals(t *testing.T) {
 }
 
 func TestLoopProtection(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	et := newEmailTeam(t, h, true)
 	autoReplies := func(conv string) int {
@@ -639,6 +645,7 @@ func TestLoopProtection(t *testing.T) {
 }
 
 func TestSenderHourlyCap(t *testing.T) {
+	t.Parallel()
 	h := newHarnessWith(t, func(d *api.Deps) { d.Ingress.SenderHourlyCap = 3 })
 	et := newEmailTeam(t, h, false)
 	sender := unique("abuse") + "@example.net"
@@ -660,6 +667,7 @@ func TestSenderHourlyCap(t *testing.T) {
 }
 
 func TestCatchAllChannel(t *testing.T) {
+	t.Parallel()
 	h := newHarnessWith(t, func(d *api.Deps) { d.Ingress.OwnAddresses = []string{"no-reply@yuva.example"} })
 	tm := newTeam(t, h)
 	domain := unique("shop") + ".example"
@@ -731,6 +739,7 @@ func TestCatchAllChannel(t *testing.T) {
 }
 
 func TestSpamView(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	et := newEmailTeam(t, h, true)
 	r := h.ingest(et.address, buildMail(mailOpts{
@@ -784,6 +793,7 @@ func dsnMail(to, original, rcpt, status string) []byte {
 }
 
 func TestBounceDSN(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	et := newEmailTeam(t, h, false)
 	rcpt := unique("gone") + "@example.net"
@@ -830,6 +840,7 @@ func TestBounceDSN(t *testing.T) {
 }
 
 func TestReportsCountOnlyForTheirRecipient(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	et := newEmailTeam(t, h, false)
 	answer := func(from string, headers map[string]string) (conv, headerID string) {
@@ -951,6 +962,7 @@ func (h *harness) postSNS(body []byte) int {
 }
 
 func TestSESNotifications(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	et := newEmailTeam(t, h, false)
 	signer := newSNSSigner(t, h.web)

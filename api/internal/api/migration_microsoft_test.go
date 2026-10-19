@@ -383,7 +383,10 @@ func serveOutlookIMAP(conn net.Conn, opens func(user, token string) bool) {
 		case "EXAMINE":
 			say("* 2 EXISTS", "* OK [UIDVALIDITY 7] ok", "* OK [UIDNEXT 3] ok", tag+" OK [READ-ONLY] EXAMINE completed.")
 		case "STATUS":
-			say("* STATUS "+fields[2]+" (MESSAGES 2 UIDNEXT 3 UIDVALIDITY 7)", tag+" OK STATUS completed.")
+			_, args, _ := strings.Cut(strings.TrimSpace(line), " ")
+			_, args, _ = strings.Cut(args, " ")
+			mailbox, _, _ := strings.Cut(args, " (")
+			say("* STATUS "+mailbox+" (MESSAGES 2 UIDNEXT 3 UIDVALIDITY 7)", tag+" OK STATUS completed.")
 		case "LOGOUT":
 			say("* BYE Microsoft Exchange Server IMAP4 server signing off.", tag+" OK LOGOUT completed.")
 			return

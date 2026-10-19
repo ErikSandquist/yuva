@@ -139,6 +139,7 @@ func eventKinds(sub map[string]any) []string {
 }
 
 func TestSubscribeFormConfirmAndOneClick(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	lt := newListTeam(t, h)
 	c, token := lt.form(h)
@@ -228,6 +229,7 @@ func TestSubscribeFormConfirmAndOneClick(t *testing.T) {
 }
 
 func TestSubscribeAnswersEveryAddressAlike(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	lt := newListTeam(t, h)
 	c, token := lt.form(h)
@@ -273,6 +275,7 @@ func TestSubscribeAnswersEveryAddressAlike(t *testing.T) {
 }
 
 func TestMailingListAccessAndScopes(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	lt := newListTeam(t, h)
 	other := lt.owner.expect(http.StatusCreated, "POST", "/v1/inboxes", map[string]any{"name": "Hidden", "slug": "hidden"})
@@ -333,6 +336,7 @@ func TestMailingListAccessAndScopes(t *testing.T) {
 }
 
 func TestOptOutsOutliveTheContact(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	lt := newListTeam(t, h)
 	addr := unique("objector") + "@example.org"
@@ -373,6 +377,7 @@ func TestOptOutsOutliveTheContact(t *testing.T) {
 }
 
 func TestIdentitySubscriptions(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	lt := newListTeam(t, h)
 	anon := lt.session(h, map[string]any{})
@@ -420,6 +425,7 @@ func contactEmailOwners(t *testing.T, h *harness, ws, addr string) int {
 }
 
 func TestConfirmingAListDoesNotGiveAnIdentifiedContactTheAddress(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	lt := newListTeam(t, h)
 	victim := unique("victim") + "@example.org"
@@ -448,6 +454,7 @@ func TestConfirmingAListDoesNotGiveAnIdentifiedContactTheAddress(t *testing.T) {
 }
 
 func TestSubscriptionWebhooks(t *testing.T) {
+	t.Parallel()
 	h := privateHarness(t)
 	lt := newListTeam(t, h)
 	rec := newReceiver(t)
@@ -471,6 +478,7 @@ func TestSubscriptionWebhooks(t *testing.T) {
 }
 
 func TestOnlyThePersonSubscribesAgain(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	lt := newListTeam(t, h)
 	subs := "/v1/lists/" + lt.list + "/subscriptions"
@@ -567,6 +575,7 @@ func TestOnlyThePersonSubscribesAgain(t *testing.T) {
 }
 
 func TestSubscriptionConsentRequired(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	lt := newListTeam(t, h)
 	subs := "/v1/lists/" + lt.list + "/subscriptions"
@@ -591,6 +600,7 @@ func TestSubscriptionConsentRequired(t *testing.T) {
 }
 
 func TestSubscriberContactRecordsCreator(t *testing.T) {
+	t.Parallel()
 	h := newHarness(t)
 	lt := newListTeam(t, h)
 	member := lt.owner.expect(http.StatusOK, "GET", "/v1/me", nil).body["memberships"].([]any)[0].(map[string]any)["member_id"].(string)
