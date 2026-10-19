@@ -281,6 +281,7 @@ func (s *Server) AddWorkers(workers *river.Workers) {
 	river.AddWorker(workers, &statusReplyWorker{s: s})
 	river.AddWorker(workers, &statusNoticeWorker{s: s})
 	river.AddWorker(workers, &statusNoticeSweepWorker{s: s})
+	s.addStatusDomainWorkers(workers)
 	s.addAnalyticsWorkers(workers)
 	s.addSESWorkers(workers)
 }

@@ -21,6 +21,7 @@ import (
 
 	"github.com/productdevbook/yuva/api/internal/api"
 	"github.com/productdevbook/yuva/api/internal/awsses"
+	"github.com/productdevbook/yuva/api/internal/cfsaas"
 	"github.com/productdevbook/yuva/api/internal/config"
 	"github.com/productdevbook/yuva/api/internal/email"
 	"github.com/productdevbook/yuva/api/internal/jobs"
@@ -266,7 +267,8 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 		Analytics: analyticsSettings(cfg),
 		SES:       sesSettings(cfg),
 		Status: api.StatusSettings{URL: cfg.StatusURL, Monitors: cfg.StatusMonitors, NoticesOff: !cfg.StatusNotices, NoticesDaily: cfg.StatusNoticesDaily, MaxSubscribers: cfg.StatusMaxSubscribers,
-			MinInterval: cfg.StatusMinInterval, CanaryURLs: cfg.StatusCanaryURLs, CanariesOff: cfg.StatusCanariesOff, AllowPrivate: cfg.WebhookAllowPrivate && !cfg.SignupOpen},
+			MinInterval: cfg.StatusMinInterval, CanaryURLs: cfg.StatusCanaryURLs, CanariesOff: cfg.StatusCanariesOff, AllowPrivate: cfg.WebhookAllowPrivate && !cfg.SignupOpen,
+			Domains: cfg.StatusDomains, CNAME: cfg.StatusCNAME, DomainLimit: cfg.StatusDomainLimit, Cloudflare: cloudflareClient(cfg)},
 	})
 	if cfg.SMTPAllowPrivate {
 		log.Warn("YUVA_SMTP_ALLOW_PRIVATE is set; e-mail channels may send through SMTP servers on private and loopback addresses")
@@ -541,4 +543,11 @@ func ingestEmail(ctx context.Context, cfg config.Config, log *slog.Logger, args 
 	}
 	fmt.Println(res.Status)
 	return 0
+}
+
+func cloudflareClient(cfg config.Config) *cfsaas.Client {
+	if cfg.StatusDomains != "cloudflare" {
+		return nil
+	}
+	return &cfsaas.Client{ZoneID: cfg.CloudflareZoneID, Token: cfg.CloudflareAPIToken, HTTP: &http.Client{Timeout: 30 * time.Second}}
 }

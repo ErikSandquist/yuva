@@ -11,6 +11,7 @@ import (
 	"time"
 	"uuid"
 
+	"github.com/productdevbook/yuva/api/internal/cfsaas"
 	"github.com/productdevbook/yuva/api/internal/oas"
 	"github.com/productdevbook/yuva/api/internal/store"
 )
@@ -67,6 +68,15 @@ type StatusSettings struct {
 	AllowPrivate bool
 	// RootCAs replaces the system roots for https checks; nil uses the system's.
 	RootCAs *x509.CertPool
+	// Domains is YUVA_STATUS_DOMAINS: ask (also when empty), cloudflare or off. CNAME is the target
+	// own domains point at; empty means the public URL's host. DomainLimit caps a workspace's own
+	// domains, 0 meaning no limit. Cloudflare registers verified domains in cloudflare mode.
+	// Resolver looks the records up; nil uses the system's.
+	Domains     string
+	CNAME       string
+	DomainLimit int
+	Cloudflare  *cfsaas.Client
+	Resolver    StatusResolver
 }
 
 func (s *Server) statusBase() string {
@@ -86,6 +96,8 @@ func statusUniqueConflict(err error) error {
 		return errStatusPageExists
 	case "status_pages_slug_key", "status_page_slugs_pkey":
 		return errStatusSlugTaken
+	case "status_pages_custom_domain_key":
+		return errStatusDomainTaken
 	}
 	return err
 }
@@ -144,10 +156,10 @@ func statusPageRef(pg store.StatusPage) oas.StatusPageRef {
 func (s *Server) statusPageBody(pg store.StatusPage, state string, email oas.StatusEmailSubscribers) oas.StatusPage {
 	out := oas.StatusPage{
 		Id: pg.ID, InboxId: pg.InboxID, Name: pg.Name, Description: pg.Description, Slug: oas.StatusPageSlug(pg.Slug),
-		Url: s.statusURL(pg.Slug, ""), LogoUrl: pg.LogoUrl, SiteUrl: pg.SiteUrl, SupportUrl: pg.SupportUrl, Locale: pg.Locale,
+		Url: s.pageURL(pg, ""), LogoUrl: pg.LogoUrl, SiteUrl: pg.SiteUrl, SupportUrl: pg.SupportUrl, Locale: pg.Locale,
 		Timezone: pg.Timezone, HistoryDays: pg.HistoryDays, ShowUptime: pg.ShowUptime, Published: pg.Published,
 		State: oas.StatusComponentStateValue(state), CreatedAt: pg.CreatedAt, UpdatedAt: pg.UpdatedAt,
-		EmailSubscribers: email,
+		EmailSubscribers: email, CustomDomain: s.customDomainBody(pg),
 	}
 	if pg.AccentColor != nil {
 		c := oas.StatusColor(*pg.AccentColor)
@@ -353,7 +365,7 @@ func (s *Server) UpdateStatusPage(ctx context.Context, req oas.UpdateStatusPageR
 	}
 	b := req.Body
 	var out oas.StatusPage
-	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, _ *eventBatch) error {
+	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, ev *eventBatch) error {
 		cur, err := visibleStatusPage(ctx, q, p, req.PageId, true)
 		if err != nil {
 			return err
@@ -421,6 +433,16 @@ func (s *Server) UpdateStatusPage(ctx context.Context, req oas.UpdateStatusPageR
 				return err
 			}
 		}
+		if b.CustomDomain.IsSpecified() {
+			var raw *string
+			if !b.CustomDomain.IsNull() {
+				v := b.CustomDomain.MustGet()
+				raw = &v
+			}
+			if pg, err = s.setStatusDomain(ctx, q, ev, pg, raw); err != nil {
+				return err
+			}
+		}
 		out, err = s.statusPageOut(ctx, q, pg)
 		return err
 	})
@@ -440,7 +462,12 @@ func (s *Server) DeleteStatusPage(ctx context.Context, req oas.DeleteStatusPageR
 	if err != nil {
 		return nil, err
 	}
-	err = s.st.InTx(ctx, func(q *store.Queries) error {
+	err = s.inTx(ctx, p.workspaceID, func(q *store.Queries, ev *eventBatch) error {
+		cur, err := q.LockStatusPage(ctx, store.LockStatusPageParams{WorkspaceID: p.workspaceID, ID: pg.ID})
+		if err != nil {
+			return err
+		}
+		releaseCloudflare(ev, cur)
 		if _, err := q.DeleteStatusPage(ctx, store.DeleteStatusPageParams{WorkspaceID: p.workspaceID, ID: pg.ID}); err != nil {
 			return err
 		}
@@ -454,6 +481,9 @@ func (s *Server) DeleteStatusPage(ctx context.Context, req oas.DeleteStatusPageR
 		return nil, err
 	}
 	s.statusCache.forget(pg.ID)
+	if pg.CustomDomain != nil {
+		s.statusDomainCache.forget(*pg.CustomDomain)
+	}
 	s.statusHint(ctx, p.workspaceID, pg.InboxID)
 	return oas.DeleteStatusPage204Response{}, nil
 }

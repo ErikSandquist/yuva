@@ -371,6 +371,11 @@ func (s *Server) DeleteInbox(ctx context.Context, req oas.DeleteInboxRequestObje
 		} else if t != nil {
 			events.job(SESTenantDeleteArgs{Name: t.Name, Region: t.Region}, nil)
 		}
+		if pg, err := q.GetInboxStatusPage(ctx, store.GetInboxStatusPageParams{WorkspaceID: p.workspaceID, InboxID: req.InboxId}); err == nil {
+			releaseCloudflare(events, pg)
+		} else if !store.IsNotFound(err) {
+			return err
+		}
 		if _, err = q.DeleteInbox(ctx, store.DeleteInboxParams{WorkspaceID: p.workspaceID, ID: req.InboxId}); err != nil {
 			return err
 		}

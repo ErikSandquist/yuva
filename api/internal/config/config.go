@@ -98,6 +98,15 @@ type Config struct {
 	StatusMinInterval int
 	StatusCanaryURLs  []string
 	StatusCanariesOff bool
+	// StatusDomains is YUVA_STATUS_DOMAINS: ask (default), cloudflare or off. StatusCNAME is the
+	// target own domains point at (YUVA_STATUS_CNAME; the public URL's host when unset).
+	// StatusDomainLimit caps a workspace's own domains (YUVA_STATUS_DOMAIN_LIMIT; 1 with open
+	// signup, else 0 for no limit).
+	StatusDomains      string
+	StatusCNAME        string
+	StatusDomainLimit  int
+	CloudflareZoneID   string
+	CloudflareAPIToken string
 
 	// MigrationSources are the sources teams may move from (YUVA_MIGRATION_SOURCES); nil for every
 	// source the server has.
@@ -379,6 +388,9 @@ func Load(version string) (Config, error) {
 	if err := c.loadStatusChecks(); err != nil {
 		return c, err
 	}
+	if err := c.loadStatusDomains(public.Hostname()); err != nil {
+		return c, err
+	}
 	if err := c.loadAnalytics(); err != nil {
 		return c, err
 	}
@@ -413,6 +425,33 @@ func (c *Config) loadStatusChecks() error {
 			return fmt.Errorf("YUVA_STATUS_CANARY_URLS must be comma-separated http or https URLs, got %q", item)
 		}
 		c.StatusCanaryURLs = append(c.StatusCanaryURLs, item)
+	}
+	return nil
+}
+
+func (c *Config) loadStatusDomains(publicHost string) error {
+	switch c.StatusDomains = strings.ToLower(env("YUVA_STATUS_DOMAINS", "ask")); c.StatusDomains {
+	case "ask", "off":
+	case "cloudflare":
+		c.CloudflareZoneID = env("YUVA_CLOUDFLARE_ZONE_ID", "")
+		c.CloudflareAPIToken = strings.TrimSpace(os.Getenv("YUVA_CLOUDFLARE_API_TOKEN"))
+		if c.CloudflareZoneID == "" || c.CloudflareAPIToken == "" {
+			return errors.New("YUVA_STATUS_DOMAINS=cloudflare needs YUVA_CLOUDFLARE_ZONE_ID and YUVA_CLOUDFLARE_API_TOKEN")
+		}
+	default:
+		return errors.New("YUVA_STATUS_DOMAINS must be ask, cloudflare or off")
+	}
+	c.StatusCNAME = strings.TrimSuffix(strings.ToLower(env("YUVA_STATUS_CNAME", publicHost)), ".")
+	if strings.ContainsAny(c.StatusCNAME, "/:@ ") || !strings.Contains(c.StatusCNAME, ".") && c.StatusCNAME != "localhost" {
+		return fmt.Errorf("YUVA_STATUS_CNAME must be a hostname such as status-proxy.example.com, got %q", c.StatusCNAME)
+	}
+	def := "0"
+	if c.SignupOpen {
+		def = "1"
+	}
+	var err error
+	if c.StatusDomainLimit, err = strconv.Atoi(env("YUVA_STATUS_DOMAIN_LIMIT", def)); err != nil || c.StatusDomainLimit < 0 {
+		return errors.New("YUVA_STATUS_DOMAIN_LIMIT must be a number of domains, 0 for no limit")
 	}
 	return nil
 }

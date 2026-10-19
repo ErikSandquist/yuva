@@ -123,7 +123,7 @@ func (s *Server) serveStatusSubscribe(w http.ResponseWriter, r *http.Request) {
 	}
 	chosen = slices.DeleteFunc(chosen, func(id uuid.UUID) bool { return !slices.Contains(visible, id) })
 	pr := s.requestProof(r, string(oas.SubscriptionSourceForm))
-	page, text := s.statusURL(pg.Slug, "/subscribe"), fill(words.SubscribeConsent, pg.Name, f.inbox.Name, "")
+	page, text := s.pageURL(pg, "/subscribe"), fill(words.SubscribeConsent, pg.Name, f.inbox.Name, "")
 	pr.pageURL, pr.text = &page, &text
 	pr.detail = map[string]any{"status_page_id": pg.ID.String()}
 	if len(chosen) > 0 && len(chosen) < len(visible) {
@@ -184,7 +184,7 @@ func (s *Server) statusSubscriberRoom(ctx context.Context, q *store.Queries, f s
 func (s *Server) statusSubscribeView(f statusSubscribeForm, words listWords) listPageView {
 	v := listPageView{W: words, Inbox: f.pg.Name}
 	statusPageColor(&v, &f.pg)
-	v.Links = []pageLink{{URL: s.statusURL(f.pg.Slug, ""), Label: words.StatusBack}}
+	v.Links = []pageLink{{URL: s.pageURL(f.pg, ""), Label: words.StatusBack}}
 	return v
 }
 
@@ -216,10 +216,13 @@ func (s *Server) statusSubscribeFormPage(w http.ResponseWriter, r *http.Request,
 	writeListPage(w, status, v)
 }
 
-// statusLocalPath is a path of the page on the host the request came to: the status host serves
-// pages at /{slug}, the server's own host at /status/{slug}.
+// statusLocalPath is a path of the page on the host the request came to: an own domain serves its
+// page at /, the status host pages at /{slug}, the server's own host at /status/{slug}.
 func statusLocalPath(r *http.Request, slug, path string) string {
-	if r.Context().Value(statusHostKey{}) != nil {
+	if on, ok := r.Context().Value(statusHostKey{}).(statusOn); ok {
+		if on.domain {
+			return path
+		}
 		return "/" + slug + path
 	}
 	return statusPathPrefix + slug + path

@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"html/template"
 	"log/slog"
+	"net"
 	"net/http"
 	"net/url"
 	"slices"
@@ -85,28 +86,53 @@ func (c *statusCache) forget(page uuid.UUID) {
 
 type statusHostKey struct{}
 
-// statusHost serves the status pages at /{slug} on YUVA_STATUS_URL's host and nothing else there.
+// statusOn is the context value of a request that came to the status host or to an own domain.
+type statusOn struct{ domain bool }
+
+// statusHost serves the status pages at /{slug} on YUVA_STATUS_URL's host and nothing else there,
+// and a page at / on its verified own domain and nothing else there.
 func (s *Server) statusHost(next http.Handler) http.Handler {
-	if s.status.URL == "" {
-		return next
+	var statusHost string
+	if u, err := url.Parse(s.status.URL); s.status.URL != "" && err == nil {
+		statusHost = u.Host
 	}
-	u, err := url.Parse(s.status.URL)
-	if err != nil {
-		return next
+	var publicHost string
+	if u, err := url.Parse(s.auth.PublicURL); err == nil {
+		publicHost = u.Host
 	}
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if !strings.EqualFold(r.Host, u.Host) {
+		switch {
+		case statusHost != "" && strings.EqualFold(r.Host, statusHost):
+			if r.URL.Path == "/" || strings.HasPrefix(r.URL.Path, statusPathPrefix) || strings.Count(r.URL.Path, "/") > 3 {
+				writeProblem(w, errNotFound)
+				return
+			}
+			r2 := r.Clone(context.WithValue(r.Context(), statusHostKey{}, statusOn{}))
+			r2.URL.Path = strings.TrimSuffix(statusPathPrefix, "/") + r.URL.Path
+			r2.URL.RawPath = ""
+			next.ServeHTTP(w, r2)
+		case s.statusDomainsOn() && !strings.EqualFold(r.Host, publicHost):
+			host := strings.ToLower(r.Host)
+			if h, _, err := net.SplitHostPort(host); err == nil {
+				host = h
+			}
+			slug, ok := s.domainPage(r.Context(), strings.TrimSuffix(host, "."))
+			if !ok {
+				next.ServeHTTP(w, r)
+				return
+			}
+			path, ok := statusDomainPath(slug, r.URL.Path)
+			if !ok {
+				writeProblem(w, errNotFound)
+				return
+			}
+			r2 := r.Clone(context.WithValue(r.Context(), statusHostKey{}, statusOn{domain: true}))
+			r2.URL.Path = path
+			r2.URL.RawPath = ""
+			next.ServeHTTP(w, r2)
+		default:
 			next.ServeHTTP(w, r)
-			return
 		}
-		if r.URL.Path == "/" || strings.HasPrefix(r.URL.Path, statusPathPrefix) || strings.Count(r.URL.Path, "/") > 3 {
-			writeProblem(w, errNotFound)
-			return
-		}
-		r2 := r.Clone(context.WithValue(r.Context(), statusHostKey{}, true))
-		r2.URL.Path = strings.TrimSuffix(statusPathPrefix, "/") + r.URL.Path
-		r2.URL.RawPath = ""
-		next.ServeHTTP(w, r2)
 	})
 }
 
@@ -144,7 +170,7 @@ func (s *Server) publicStatusPage(w http.ResponseWriter, r *http.Request) (store
 	if store.IsNotFound(err) {
 		pg, err = s.st.FindStatusPageByFormerSlug(ctx, slug)
 		if err == nil && pg.Published {
-			target := s.statusURL(pg.Slug, strings.TrimPrefix(r.URL.Path, statusPathPrefix+slug))
+			target := s.pageURL(pg, strings.TrimPrefix(r.URL.Path, statusPathPrefix+slug))
 			if r.URL.RawQuery != "" {
 				target += "?" + r.URL.RawQuery
 			}
@@ -306,7 +332,7 @@ func (s *Server) statusSnapshot(ctx context.Context, q *store.Queries, pg store.
 	ws := pg.WorkspaceID
 	snap := &statusSnap{page: pg, words: statusWordsFor(pg.Locale), loc: propertyLocation(pg.Timezone), now: now,
 		days: map[uuid.UUID][]uptimeDay{}, uptime: map[uuid.UUID]*float64{}, visible: map[uuid.UUID]bool{},
-		url: func(path string) string { return s.statusURL(pg.Slug, path) }}
+		url: func(path string) string { return s.pageURL(pg, path) }}
 	groups, err := q.ListStatusGroups(ctx, store.ListStatusGroupsParams{WorkspaceID: ws, PageID: pg.ID})
 	if err != nil {
 		return nil, err
@@ -428,7 +454,7 @@ func (s *Server) GetClientStatusPage(ctx context.Context, req oas.GetClientStatu
 	if store.IsNotFound(err) {
 		pg, err = s.st.FindStatusPageByFormerSlug(ctx, req.Slug)
 		if err == nil && pg.Published {
-			target := s.statusURL(pg.Slug, "")
+			target := s.pageURL(pg, "")
 			return oas.GetClientStatusPage301Response{Headers: oas.GetClientStatusPage301ResponseHeaders{Location: &target}}, nil
 		}
 	}

@@ -44,6 +44,7 @@ const (
 var operationAccess = map[string]access{
 	"GetHealthz":          accessPublic,
 	"GetReadyz":           accessPublic,
+	"CheckStatusDomain":   accessPublic,
 	"GetVersion":          accessPublic,
 	"RequestSignInCode":   accessPublic,
 	"VerifySignInCode":    accessPublic,

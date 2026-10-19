@@ -415,7 +415,7 @@ func (s *Server) serveConfirmPost(w http.ResponseWriter, r *http.Request) {
 		v := s.listPageView(t.inbox, &t.contact)
 		statusPageColor(&v, t.page)
 		v.Heading = fill(v.W.StatusConfirmed, t.page.Name, t.inbox.Name, "")
-		v.Links = []pageLink{{URL: s.statusURL(t.page.Slug, ""), Label: v.W.StatusBack}}
+		v.Links = []pageLink{{URL: s.pageURL(*t.page, ""), Label: v.W.StatusBack}}
 		writeListPage(w, http.StatusOK, v)
 	case done:
 		v := s.listPageView(t.inbox, &t.contact)
@@ -577,7 +577,7 @@ func (s *Server) manageView(w http.ResponseWriter, ctx context.Context, t *manag
 func (s *Server) statusManageView(w http.ResponseWriter, ctx context.Context, t *manageTarget, v listPageView, status int, heading string, undo []uuid.UUID) {
 	ln, in := t.page.Name, t.inbox.Name
 	statusPageColor(&v, t.page)
-	v.Links = []pageLink{{URL: s.statusURL(t.page.Slug, ""), Label: v.W.StatusBack}}
+	v.Links = []pageLink{{URL: s.pageURL(*t.page, ""), Label: v.W.StatusBack}}
 	own := t.subsOf(t.list.ID)
 	if heading != "" {
 		v.Heading = heading

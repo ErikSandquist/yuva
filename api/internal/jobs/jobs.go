@@ -44,6 +44,7 @@ const (
 	StatusMonitorSweepInterval  = 30 * time.Second
 	StatusChecksCleanupInterval = time.Hour
 	StatusNoticeSweepInterval   = time.Minute
+	StatusDomainSweepInterval   = time.Minute
 )
 
 // StatusNoticeQueue holds the status notice jobs, so a notice about an outage never waits behind a
@@ -127,6 +128,9 @@ func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorker
 		river.NewPeriodicJob(river.PeriodicInterval(StatusNoticeSweepInterval), func() (river.JobArgs, *river.InsertOpts) {
 			return StatusNoticeSweepArgs{}, nil
 		}, &river.PeriodicJobOpts{ID: "status_notice_sweep", RunOnStart: true}),
+		river.NewPeriodicJob(river.PeriodicInterval(StatusDomainSweepInterval), func() (river.JobArgs, *river.InsertOpts) {
+			return StatusDomainSweepArgs{}, nil
+		}, &river.PeriodicJobOpts{ID: "status_domain_sweep", RunOnStart: true}),
 	}
 	if sesTenants {
 		periodic = append(periodic, river.NewPeriodicJob(river.PeriodicInterval(SESTenantStatusInterval), func() (river.JobArgs, *river.InsertOpts) {
@@ -243,6 +247,18 @@ type StatusMonitorSweepArgs struct{}
 func (StatusMonitorSweepArgs) Kind() string { return "status_monitor_sweep" }
 
 func (StatusMonitorSweepArgs) InsertOpts() river.InsertOpts {
+	return river.InsertOpts{UniqueOpts: river.UniqueOpts{ByArgs: true, ByState: []rivertype.JobState{
+		rivertype.JobStateAvailable, rivertype.JobStatePending, rivertype.JobStateRunning, rivertype.JobStateScheduled, rivertype.JobStateRetryable,
+	}}}
+}
+
+// StatusDomainSweepArgs is worked by the api package: it queues the checks of status page domains
+// that are due.
+type StatusDomainSweepArgs struct{}
+
+func (StatusDomainSweepArgs) Kind() string { return "status_domain_sweep" }
+
+func (StatusDomainSweepArgs) InsertOpts() river.InsertOpts {
 	return river.InsertOpts{UniqueOpts: river.UniqueOpts{ByArgs: true, ByState: []rivertype.JobState{
 		rivertype.JobStateAvailable, rivertype.JobStatePending, rivertype.JobStateRunning, rivertype.JobStateScheduled, rivertype.JobStateRetryable,
 	}}}

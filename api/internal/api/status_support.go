@@ -44,11 +44,11 @@ func (s *Server) clientStatus(ctx context.Context, q *store.Queries, inboxID, ws
 	if err != nil {
 		return nil, err
 	}
-	out := oas.ClientInboxStatus{Url: s.statusURL(pg.Slug, ""), State: oas.StatusComponentStateValue(pageState(comps)), Open: []oas.ClientStatusIncident{}}
+	out := oas.ClientInboxStatus{Url: s.pageURL(pg, ""), State: oas.StatusComponentStateValue(pageState(comps)), Open: []oas.ClientStatusIncident{}}
 	for _, i := range incs {
 		out.Open = append(out.Open, oas.ClientStatusIncident{
 			Id: i.ID, Kind: oas.StatusIncidentKind(i.Kind), Title: i.Title, Impact: oas.StatusIncidentImpact(i.Impact),
-			State: oas.StatusIncidentState(i.State), UpdatedAt: i.LastUpdateAt, Url: s.statusURL(pg.Slug, "/incidents/"+i.ID.String()),
+			State: oas.StatusIncidentState(i.State), UpdatedAt: i.LastUpdateAt, Url: s.pageURL(pg, "/incidents/"+i.ID.String()),
 		})
 	}
 	s.statusCache.put(key, statusCacheEntry{changed: pg.ChangedAt, at: now, ctype: "application/json", body: mustJSON(out)})
@@ -208,7 +208,7 @@ func (s *Server) ListConversationIncidents(ctx context.Context, req oas.ListConv
 		out.Items = append(out.Items, oas.ConversationIncident{
 			Id: i.ID, Page: oas.StatusPageRef{Id: i.PageID, Name: r.PageName, Slug: r.PageSlug}, Kind: oas.StatusIncidentKind(i.Kind),
 			Title: i.Title, Impact: oas.StatusIncidentImpact(i.Impact), State: oas.StatusIncidentState(i.State),
-			Url: s.statusURL(r.PageSlug, "/incidents/"+i.ID.String()), PublishedAt: i.PublishedAt, ResolvedAt: i.ResolvedAt, LinkedAt: r.LinkedAt,
+			Url: s.statusURLFor(r.PageSlug, r.PageDomain, r.PageDomainState, "/incidents/"+i.ID.String()), PublishedAt: i.PublishedAt, ResolvedAt: i.ResolvedAt, LinkedAt: r.LinkedAt,
 		})
 	}
 	return out, nil

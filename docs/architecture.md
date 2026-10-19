@@ -1962,18 +1962,31 @@ incident before a customer writes, and the conversations an outage brings are an
   `YUVA_STATUS_CNAME` (unset: the host of `YUVA_PUBLIC_URL`) and a TXT record `_yuva-status.<domain>`
   with the page's verification value, so nobody claims a domain they do not hold; a River job checks
   both every 10 minutes until they are seen and every day afterwards, and a domain whose records go
-  away is turned off after 3 days. A request whose `Host` is a verified domain is served that page at
-  `/`. Yuva does not terminate TLS; who issues the certificate is `YUVA_STATUS_DOMAINS`:
+  away is turned off after 3 days. State (`status_pages.domain_state`): `pending` (records not seen),
+  `failed` (records found with another target or value; also checked every 10 minutes), `verified`,
+  `off` (not checked again; setting the same domain again starts it over with the same value). A lookup
+  that fails for another reason than a missing record changes nothing and is tried again in 10 minutes,
+  so a resolver outage never turns domains off. A CNAME counts when the domain's canonical name is the
+  target or, for a provider that flattens it, its addresses are all the target's. The domain is a
+  hostname that is not, contains or sits inside one of the server's own hosts (`YUVA_PUBLIC_URL`,
+  `YUVA_STATUS_URL`, `YUVA_STATUS_CNAME`), unique across the server (`409 domain_taken`); setting it
+  queues a check at once. A request whose `Host` is a verified domain is served that page at `/`, with
+  `/history`, `/incidents/{id}`, `/feed.atom`, `/badge.svg`, `/subscribe` and `/subscribe/sent`, and
+  `404` for every other path (no API or panel on a customer's domain); links, the feed, the badge, the
+  JSON, notices and the API's `url` name the page there while it is verified. Yuva does not terminate
+  TLS; who issues the certificate is `YUVA_STATUS_DOMAINS`:
   - `ask` (default): the operator's proxy issues certificates on demand and asks
     `GET /status-domains/check?domain=` (200 for a verified domain, 404 otherwise; the Caddy
-    `on_demand_tls` `ask` form). `deploy/` documents Caddy.
+    `on_demand_tls` `ask` form; `404` in the other modes). `deploy/caddy/Caddyfile` documents Caddy.
   - `cloudflare`: the server registers each verified domain as a Cloudflare for SaaS custom hostname
     in `YUVA_CLOUDFLARE_ZONE_ID` (token `YUVA_CLOUDFLARE_API_TOKEN`, permission SSL and Certificates
     edit) with HTTP validation, so Cloudflare issues and renews the certificate once the CNAME points
     at the zone's fallback origin; the panel shows the hostname's and the certificate's state from
-    Cloudflare, and a removed or turned-off domain is deleted there. For servers behind Cloudflare.
-  - `off`: no own domains.
-  `YUVA_STATUS_DOMAIN_LIMIT` caps verified domains per workspace on a hosted server (unset: 1).
+    Cloudflare (checked every 10 minutes until both are `active`), and a removed or turned-off domain,
+    or one whose page, inbox or workspace is deleted, is deleted there by a job. For servers behind Cloudflare.
+  - `off`: no own domains; `custom_domain` is left out of answers and setting it is `400`.
+  `YUVA_STATUS_DOMAIN_LIMIT` caps the pages of a workspace with a domain that is not `off`, checked when
+  one is set (`403 status_domain_limit`; unset: 1 with `YUVA_SIGNUP=open`, else no limit).
 - **Subscribers.** A page may have e-mail subscribers, who get a notice when an incident or maintenance
   is published or updated. They are not a new kind of recipient: they are the subscriptions of a
   mailing list of the page's inbox, so consent, confirmation, `/s/` and `/m/` pages, suppression,
@@ -2234,7 +2247,9 @@ incident before a customer writes, and the conversations an outage brings are an
   assistants publish incidents.
 - **Lookups before the workspace is known.** A public page finds its page by `status_pages.slug`, a
   former slug in `status_page_slugs` or a verified `status_pages.custom_domain`, all unique across the
-  server, and a slug's availability is checked against current and former slugs of every workspace; a heartbeat or push finds its
+  server, and a slug's availability is checked against current and former slugs of every workspace and a domain's
+  against the domains of every workspace; the domain sweep lists the own domains due for a check of every workspace in
+  one query; a heartbeat or push finds its
   monitor by `status_monitors.token_hash`, and the sweep of overdue heartbeats lists the due monitors of every
   workspace in one query; an SES notification finds a notice delivery by
   `status_notice_deliveries.header_message_id`, unique across the server. Everything after those lookups is scoped by the workspace
@@ -2325,8 +2340,9 @@ now; per-channel limits can narrow them later.
     contact session token is looked up by its hash in `contact_sessions` before its workspace is
     known. Everything after those lookups is scoped by the workspace they returned.
   - Status pages (M19): a public page finds its page by `status_pages.slug`, a former slug in
-    `status_page_slugs` or a verified `status_pages.custom_domain` (a slug's availability is checked the
-    same way), and a heartbeat or push finds its monitor by
+    `status_page_slugs` or a verified `status_pages.custom_domain` (a slug's and a domain's availability is
+    checked the same way, and the domain sweep lists the domains due for a check of every workspace), and a
+    heartbeat or push finds its monitor by
     `status_monitors.token_hash` (the sweep of overdue heartbeats lists the due monitors of every workspace
     in one query, and the notice sweep the due notices of every workspace), and an SES notification finds a notice delivery by
     `status_notice_deliveries.header_message_id`, all unique across the server; everything after those lookups is

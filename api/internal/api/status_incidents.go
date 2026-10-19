@@ -86,7 +86,7 @@ func (s *Server) incidentBody(pg store.StatusPage, inc store.StatusIncident, par
 	out := oas.StatusIncident{
 		Id: inc.ID, PageId: inc.PageID, Kind: oas.StatusIncidentKind(inc.Kind), Title: inc.Title, Impact: oas.StatusIncidentImpact(inc.Impact),
 		State: oas.StatusIncidentState(inc.State), Components: []oas.StatusIncidentComponent{}, Updates: []oas.StatusIncidentUpdate{},
-		Url: s.statusURL(pg.Slug, "/incidents/"+inc.ID.String()), PublishedAt: inc.PublishedAt, ScheduledStart: inc.ScheduledStart,
+		Url: s.pageURL(pg, "/incidents/"+inc.ID.String()), PublishedAt: inc.PublishedAt, ScheduledStart: inc.ScheduledStart,
 		ScheduledEnd: inc.ScheduledEnd, StartedAt: inc.StartedAt, ResolvedAt: inc.ResolvedAt, CreatedAt: inc.CreatedAt, UpdatedAt: inc.UpdatedAt,
 	}
 	for _, c := range parts.components[inc.ID] {

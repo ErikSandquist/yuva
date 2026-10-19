@@ -117,6 +117,15 @@ func (s *Server) closeWorkspace(ctx context.Context, workspaceID uuid.UUID) erro
 				return err
 			}
 		}
+		hostnames, err := q.ListStatusCloudflareHostnames(ctx, workspaceID)
+		if err != nil {
+			return err
+		}
+		for _, h := range hostnames {
+			if _, err := s.jobs.InsertTx(ctx, tx, StatusDomainReleaseArgs{WorkspaceID: workspaceID, HostnameID: h.HostnameID, Domain: h.Domain}, nil); err != nil {
+				return err
+			}
+		}
 		_, err = s.jobs.InsertTx(ctx, tx, WorkspaceDeleteArgs{WorkspaceID: workspaceID}, nil)
 		return err
 	})

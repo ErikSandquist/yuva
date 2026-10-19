@@ -1772,26 +1772,39 @@ type StatusNoticeDelivery struct {
 }
 
 type StatusPage struct {
-	ID            uuid.UUID
-	WorkspaceID   uuid.UUID
-	InboxID       uuid.UUID
-	Name          string
-	Description   string
-	Slug          string
-	LogoUrl       *string
-	AccentColor   *string
-	SiteUrl       *string
-	SupportUrl    *string
-	Locale        string
-	Timezone      string
-	HistoryDays   int32
-	ShowUptime    bool
-	Published     bool
-	ChangedAt     time.Time
-	CreatedAt     time.Time
-	UpdatedAt     time.Time
-	MailingListID *uuid.UUID
-	EmailEnabled  bool
+	ID                 uuid.UUID
+	WorkspaceID        uuid.UUID
+	InboxID            uuid.UUID
+	Name               string
+	Description        string
+	Slug               string
+	LogoUrl            *string
+	AccentColor        *string
+	SiteUrl            *string
+	SupportUrl         *string
+	Locale             string
+	Timezone           string
+	HistoryDays        int32
+	ShowUptime         bool
+	Published          bool
+	ChangedAt          time.Time
+	CreatedAt          time.Time
+	UpdatedAt          time.Time
+	MailingListID      *uuid.UUID
+	EmailEnabled       bool
+	CustomDomain       *string
+	DomainToken        *string
+	DomainState        *string
+	DomainProblem      *string
+	DomainCheckedAt    *time.Time
+	DomainCheckAt      *time.Time
+	DomainVerifiedAt   *time.Time
+	DomainMissingSince *time.Time
+	CfHostnameID       *string
+	CfStatus           *string
+	CfSslStatus        *string
+	CfErrors           []string
+	CfCheckedAt        *time.Time
 }
 
 type StatusPageSlug struct {

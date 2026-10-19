@@ -1,0 +1,35 @@
+# Caddy in front of Yuva, with certificates for status pages on their own domains.
+#
+# YUVA_PUBLIC_URL=https://support.example.com, YUVA_STATUS_DOMAINS=ask (the default) and
+# YUVA_STATUS_CNAME=support.example.com (also the default). A customer points
+# status.customer.example at support.example.com with a CNAME and adds the TXT record
+# _yuva-status.status.customer.example the panel shows. Once Yuva has seen both records the
+# domain is verified, and the first visit makes Caddy ask
+#   GET http://127.0.0.1:8080/status-domains/check?domain=status.customer.example
+# Yuva answers 200 for a verified domain and 404 for anything else, so Caddy issues
+# certificates only for verified domains, and stops renewing one when its domain is
+# removed or turned off.
+#
+# Port 80 must reach Caddy for the HTTP challenge, and 443 for TLS-ALPN.
+
+{
+	on_demand_tls {
+		ask http://127.0.0.1:8080/status-domains/check
+	}
+}
+
+support.example.com {
+	reverse_proxy 127.0.0.1:8080 {
+		header_up X-Real-IP {remote_host}
+	}
+}
+
+# Every other name: own domains of status pages. Yuva serves only the page there.
+https:// {
+	tls {
+		on_demand
+	}
+	reverse_proxy 127.0.0.1:8080 {
+		header_up X-Real-IP {remote_host}
+	}
+}

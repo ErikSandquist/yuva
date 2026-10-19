@@ -4599,6 +4599,48 @@ func (e StatusComponentStateValue) Valid() bool {
 	}
 }
 
+// Defines values for StatusCustomDomainCertificates.
+const (
+	StatusCertificatesAsk        StatusCustomDomainCertificates = "ask"
+	StatusCertificatesCloudflare StatusCustomDomainCertificates = "cloudflare"
+)
+
+// Valid indicates whether the value is a known member of the StatusCustomDomainCertificates enum.
+func (e StatusCustomDomainCertificates) Valid() bool {
+	switch e {
+	case StatusCertificatesAsk:
+		return true
+	case StatusCertificatesCloudflare:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusDomainState.
+const (
+	StatusDomainFailed   StatusDomainState = "failed"
+	StatusDomainOff      StatusDomainState = "off"
+	StatusDomainPending  StatusDomainState = "pending"
+	StatusDomainVerified StatusDomainState = "verified"
+)
+
+// Valid indicates whether the value is a known member of the StatusDomainState enum.
+func (e StatusDomainState) Valid() bool {
+	switch e {
+	case StatusDomainFailed:
+		return true
+	case StatusDomainOff:
+		return true
+	case StatusDomainPending:
+		return true
+	case StatusDomainVerified:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for StatusEmailSubscribersWarnings.
 const (
 	StatusWarningDkimUnaligned         StatusEmailSubscribersWarnings = "dkim_unaligned"
@@ -14593,6 +14635,23 @@ type StatusCheckSummary struct {
 	Uptime *float64 `json:"uptime,omitempty"`
 }
 
+// StatusCloudflareHostname The domain's Cloudflare for SaaS custom hostname, as Cloudflare last reported it. Absent
+// fields mean it is not created yet (the domain is not verified, or creating it failed and is
+// tried again).
+type StatusCloudflareHostname struct {
+	CheckedAt *time.Time `json:"checked_at,omitempty"`
+
+	// Errors Cloudflare's verification and validation errors, or why creating the hostname failed.
+	Errors *[]string `json:"errors,omitempty"`
+	Id     *string   `json:"id,omitempty"`
+
+	// SslStatus Cloudflare's certificate status (`initializing`, `pending_validation`, `active`, …).
+	SslStatus *string `json:"ssl_status,omitempty"`
+
+	// Status Cloudflare's hostname status (`pending`, `active`, `moved`, `blocked`, …).
+	Status *string `json:"status,omitempty"`
+}
+
 // StatusColor Examples: #2563eb
 type StatusColor = string
 
@@ -14704,6 +14763,61 @@ type StatusComponentUpdate struct {
 	Name     *string                      `json:"name,omitempty"`
 	Position *int32                       `json:"position,omitempty"`
 }
+
+// StatusCustomDomain The page's own domain, absent when it has none or the server's `YUVA_STATUS_DOMAINS` is
+// `off`. The owner adds a CNAME from `domain` to `cname_target` and a TXT record `txt_name` with
+// `txt_value`. `cloudflare` is present when the server registers verified domains as Cloudflare
+// for SaaS custom hostnames.
+type StatusCustomDomain struct {
+	// Certificates Who issues the domain's certificate, the server's `YUVA_STATUS_DOMAINS`.
+	Certificates StatusCustomDomainCertificates `json:"certificates"`
+	CheckedAt    *time.Time                     `json:"checked_at,omitempty"`
+
+	// Cloudflare The domain's Cloudflare for SaaS custom hostname, as Cloudflare last reported it. Absent
+	// fields mean it is not created yet (the domain is not verified, or creating it failed and is
+	// tried again).
+	Cloudflare *StatusCloudflareHostname `json:"cloudflare,omitempty"`
+
+	// CnameTarget `YUVA_STATUS_CNAME`, or the host of the server's public URL.
+	CnameTarget string `json:"cname_target"`
+
+	// Domain Examples: status.example.com
+	Domain string `json:"domain"`
+
+	// MissingSince A verified domain whose records the checks no longer see; it is turned off 3 days after this.
+	MissingSince *time.Time `json:"missing_since,omitempty"`
+	NextCheckAt  *time.Time `json:"next_check_at,omitempty"`
+
+	// Problem What the last check that did not verify the domain saw, in English.
+	Problem *string `json:"problem,omitempty"`
+
+	// State `pending`: the CNAME and TXT records were not seen yet (checked every 10 minutes).
+	// `failed`: the last check found them but they name another target or value (checked every 10
+	// minutes). `verified`: both were seen; the domain serves the page (checked every day).
+	// `off`: a verified domain whose records were gone for 3 days; it no longer serves the page and
+	// is not checked again until `custom_domain` is set again.
+	State StatusDomainState `json:"state"`
+
+	// TxtName Examples: _yuva-status.status.example.com
+	TxtName    string     `json:"txt_name"`
+	TxtValue   string     `json:"txt_value"`
+	VerifiedAt *time.Time `json:"verified_at,omitempty"`
+}
+
+// StatusCustomDomainCertificates Who issues the domain's certificate, the server's `YUVA_STATUS_DOMAINS`.
+type StatusCustomDomainCertificates string
+
+// StatusDomainCheck defines model for StatusDomainCheck.
+type StatusDomainCheck struct {
+	Domain string `json:"domain"`
+}
+
+// StatusDomainState `pending`: the CNAME and TXT records were not seen yet (checked every 10 minutes).
+// `failed`: the last check found them but they name another target or value (checked every 10
+// minutes). `verified`: both were seen; the domain serves the page (checked every day).
+// `off`: a verified domain whose records were gone for 3 days; it no longer serves the page and
+// is not checked again until `custom_domain` is set again.
+type StatusDomainState string
 
 // StatusEmailSubscribers Whether visitors may subscribe to e-mail notices on `/status/{slug}/subscribe` and notices
 // are sent. `list_id` is the page's subscriber list (`kind: status`), made when e-mail
@@ -15485,7 +15599,13 @@ type StatusPage struct {
 	// AccentColor Examples: #2563eb
 	AccentColor *StatusColor `json:"accent_color,omitempty"`
 	CreatedAt   time.Time    `json:"created_at"`
-	Description string       `json:"description"`
+
+	// CustomDomain The page's own domain, absent when it has none or the server's `YUVA_STATUS_DOMAINS` is
+	// `off`. The owner adds a CNAME from `domain` to `cname_target` and a TXT record `txt_name` with
+	// `txt_value`. `cloudflare` is present when the server registers verified domains as Cloudflare
+	// for SaaS custom hostnames.
+	CustomDomain *StatusCustomDomain `json:"custom_domain,omitempty"`
+	Description  string              `json:"description"`
 
 	// EmailSubscribers Whether visitors may subscribe to e-mail notices on `/status/{slug}/subscribe` and notices
 	// are sent. `list_id` is the page's subscriber list (`kind: status`), made when e-mail
@@ -15522,7 +15642,7 @@ type StatusPage struct {
 	Timezone  string    `json:"timezone"`
 	UpdatedAt time.Time `json:"updated_at"`
 
-	// Url The public page, at the server's status URL.
+	// Url The public page, on its verified own domain when it has one, else at the server's status URL.
 	Url string `json:"url"`
 }
 
@@ -15585,7 +15705,19 @@ type StatusPageSlug = string
 
 // StatusPageUpdate defines model for StatusPageUpdate.
 type StatusPageUpdate struct {
-	AccentColor      nullable.Nullable[string]     `json:"accent_color,omitempty"`
+	AccentColor nullable.Nullable[string] `json:"accent_color,omitempty"`
+
+	// CustomDomain A hostname such as `status.example.com`, `null` to remove it. It must not be or contain
+	// one of the server's own hosts, and is unique across the server (`409 domain_taken`). A new
+	// domain starts `pending` with a new verification value and is checked at once; setting the
+	// same domain again checks it at once and, when it was `off`, starts it over. At most
+	// `YUVA_STATUS_DOMAIN_LIMIT` pages of a workspace have one on a hosted server
+	// (`403 status_domain_limit`). Refused with `400` when the server's `YUVA_STATUS_DOMAINS` is
+	// `off`.
+	//
+	//
+	// Examples: status.example.com
+	CustomDomain     nullable.Nullable[string]     `json:"custom_domain,omitempty"`
 	Description      *string                       `json:"description,omitempty"`
 	EmailSubscribers *StatusEmailSubscribersUpdate `json:"email_subscribers,omitempty"`
 	HistoryDays      *int32                        `json:"history_days,omitempty"`
@@ -16687,6 +16819,11 @@ type StatusHeartbeatPostParamsFail string
 // StatusPushJSONBody defines parameters for StatusPush.
 type StatusPushJSONBody struct {
 	union json.RawMessage
+}
+
+// CheckStatusDomainParams defines parameters for CheckStatusDomain.
+type CheckStatusDomainParams struct {
+	Domain string `form:"domain" json:"domain"`
 }
 
 // ListReaderDiscussionsParams defines parameters for ListReaderDiscussions.
@@ -24402,6 +24539,15 @@ type ClientInterface interface {
 	// Corresponds with GET /readyz (the `GetReadyz` operationId).
 	GetReadyz(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// CheckStatusDomain Ask whether a status page domain is verified
+	//
+	// For the operator's TLS proxy issuing certificates on demand (Caddy `on_demand_tls` `ask`):
+	// `200` when `domain` is a status page's verified own domain, `404` otherwise, also when the
+	// server's `YUVA_STATUS_DOMAINS` is not `ask`.
+	//
+	// Corresponds with GET /status-domains/check (the `CheckStatusDomain` operationId).
+	CheckStatusDomain(ctx context.Context, params *CheckStatusDomainParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// GetReaderAccount The signed-in person as a reader
 	//
 	// The reader account of the signed-in person: the name and initials shown on their posts, their
@@ -31738,6 +31884,25 @@ func (c *Client) StatusPush(ctx context.Context, token StatusMonitorToken, body 
 // Corresponds with GET /readyz (the `GetReadyz` operationId).
 func (c *Client) GetReadyz(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetReadyzRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CheckStatusDomain Ask whether a status page domain is verified
+//
+// For the operator's TLS proxy issuing certificates on demand (Caddy `on_demand_tls` `ask`):
+// `200` when `domain` is a status page's verified own domain, `404` otherwise, also when the
+// server's `YUVA_STATUS_DOMAINS` is not `ask`.
+//
+// Corresponds with GET /status-domains/check (the `CheckStatusDomain` operationId).
+func (c *Client) CheckStatusDomain(ctx context.Context, params *CheckStatusDomainParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCheckStatusDomainRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -43617,6 +43782,56 @@ func NewGetReadyzRequest(server string) (*http.Request, error) {
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCheckStatusDomainRequest constructs an http.Request for the CheckStatusDomain method
+func NewCheckStatusDomainRequest(server string, params *CheckStatusDomainParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/status-domains/check")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "domain", params.Domain, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			return nil, err
+		} else {
+			for _, qp := range strings.Split(queryFrag, "&") {
+				rawQueryFragments = append(rawQueryFragments, qp)
+			}
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
 	}
 
 	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
@@ -64338,6 +64553,17 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /readyz (the `GetReadyz` operationId).
 	GetReadyzWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetReadyzResponse, error)
 
+	// CheckStatusDomainWithResponse Ask whether a status page domain is verified
+	//
+	// For the operator's TLS proxy issuing certificates on demand (Caddy `on_demand_tls` `ask`):
+	// `200` when `domain` is a status page's verified own domain, `404` otherwise, also when the
+	// server's `YUVA_STATUS_DOMAINS` is not `ask`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /status-domains/check (the `CheckStatusDomain` operationId).
+	CheckStatusDomainWithResponse(ctx context.Context, params *CheckStatusDomainParams, reqEditors ...RequestEditorFn) (*CheckStatusDomainResponse, error)
+
 	// GetReaderAccountWithResponse The signed-in person as a reader
 	//
 	// The reader account of the signed-in person: the name and initials shown on their posts, their
@@ -73443,6 +73669,54 @@ func (r GetReadyzResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r GetReadyzResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CheckStatusDomainResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StatusDomainCheck
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CheckStatusDomainResponse) GetJSON200() *StatusDomainCheck {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CheckStatusDomainResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r CheckStatusDomainResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CheckStatusDomainResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CheckStatusDomainResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CheckStatusDomainResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -95517,6 +95791,23 @@ func (c *ClientWithResponses) GetReadyzWithResponse(ctx context.Context, reqEdit
 	return ParseGetReadyzResponse(rsp)
 }
 
+// CheckStatusDomainWithResponse Ask whether a status page domain is verified
+//
+// For the operator's TLS proxy issuing certificates on demand (Caddy `on_demand_tls` `ask`):
+// `200` when `domain` is a status page's verified own domain, `404` otherwise, also when the
+// server's `YUVA_STATUS_DOMAINS` is not `ask`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /status-domains/check (the `CheckStatusDomain` operationId).
+func (c *ClientWithResponses) CheckStatusDomainWithResponse(ctx context.Context, params *CheckStatusDomainParams, reqEditors ...RequestEditorFn) (*CheckStatusDomainResponse, error) {
+	rsp, err := c.CheckStatusDomain(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCheckStatusDomainResponse(rsp)
+}
+
 // GetReaderAccountWithResponse The signed-in person as a reader
 //
 // The reader account of the signed-in person: the name and initials shown on their posts, their
@@ -106484,6 +106775,39 @@ func ParseGetReadyzResponse(rsp *http.Response) (*GetReadyzResponse, error) {
 			return nil, err
 		}
 		response.ApplicationproblemJSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCheckStatusDomainResponse parses an HTTP response from a CheckStatusDomainWithResponse call
+func ParseCheckStatusDomainResponse(rsp *http.Response) (*CheckStatusDomainResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CheckStatusDomainResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StatusDomainCheck
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
 
 	}
 

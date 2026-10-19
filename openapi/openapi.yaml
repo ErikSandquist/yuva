@@ -276,6 +276,16 @@ tags:
       `GET /client/v1/status/{slug}`; an unpublished page answers `404` there and is seen only through
       `previewStatusPage`.
 
+      A page may also answer on its own domain (`custom_domain`). The owner points a CNAME at the
+      server's CNAME target and puts the page's verification value in a TXT record
+      `_yuva-status.<domain>`; the server checks both every 10 minutes until it sees them and every day
+      afterwards, and turns off a domain whose records have been gone for 3 days. A verified domain
+      serves the page at `/` (with `/history`, `/incidents/{id}`, `/feed.atom`, `/badge.svg` and
+      `/subscribe`), and every link, the feed, the badge and the JSON name the page there. Who issues
+      the certificate is the server's `YUVA_STATUS_DOMAINS`: `ask` (the operator's proxy asks
+      `checkStatusDomain` before issuing one), `cloudflare` (the server registers the domain as a
+      Cloudflare for SaaS custom hostname and reports its state) or `off` (no own domains).
+
       A component's state is `operational`, `degraded`, `partial_outage`, `major_outage` or
       `maintenance`; the page's state is the worst visible one, `maintenance` only when nothing is
       worse. Every change is kept, so uptime per day is the share of the day not in `major_outage`,
@@ -410,6 +420,33 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Health"
+  /status-domains/check:
+    get:
+      operationId: checkStatusDomain
+      summary: Ask whether a status page domain is verified
+      description: |
+        For the operator's TLS proxy issuing certificates on demand (Caddy `on_demand_tls` `ask`):
+        `200` when `domain` is a status page's verified own domain, `404` otherwise, also when the
+        server's `YUVA_STATUS_DOMAINS` is not `ask`.
+      tags: [status]
+      security: []
+      parameters:
+        - name: domain
+          in: query
+          required: true
+          schema:
+            type: string
+            maxLength: 253
+            examples: [status.example.com]
+      responses:
+        "200":
+          description: The domain is verified.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusDomainCheck"
+        "404":
+          $ref: "#/components/responses/Problem"
   /readyz:
     get:
       operationId: getReadyz
@@ -24535,7 +24572,7 @@ components:
           $ref: "#/components/schemas/StatusPageSlug"
         url:
           type: string
-          description: The public page, at the server's status URL.
+          description: The public page, on its verified own domain when it has one, else at the server's status URL.
         logo_url:
           type: string
         accent_color:
@@ -24562,12 +24599,98 @@ components:
           $ref: "#/components/schemas/StatusComponentStateValue"
         email_subscribers:
           $ref: "#/components/schemas/StatusEmailSubscribers"
+        custom_domain:
+          $ref: "#/components/schemas/StatusCustomDomain"
         created_at:
           type: string
           format: date-time
         updated_at:
           type: string
           format: date-time
+    StatusDomainState:
+      type: string
+      description: |
+        `pending`: the CNAME and TXT records were not seen yet (checked every 10 minutes).
+        `failed`: the last check found them but they name another target or value (checked every 10
+        minutes). `verified`: both were seen; the domain serves the page (checked every day).
+        `off`: a verified domain whose records were gone for 3 days; it no longer serves the page and
+        is not checked again until `custom_domain` is set again.
+      enum: [pending, verified, failed, off]
+      x-enum-varnames: [StatusDomainPending, StatusDomainVerified, StatusDomainFailed, StatusDomainOff]
+    StatusCustomDomain:
+      type: object
+      description: |
+        The page's own domain, absent when it has none or the server's `YUVA_STATUS_DOMAINS` is
+        `off`. The owner adds a CNAME from `domain` to `cname_target` and a TXT record `txt_name` with
+        `txt_value`. `cloudflare` is present when the server registers verified domains as Cloudflare
+        for SaaS custom hostnames.
+      required: [domain, state, cname_target, txt_name, txt_value, certificates]
+      properties:
+        domain:
+          type: string
+          examples: [status.example.com]
+        state:
+          $ref: "#/components/schemas/StatusDomainState"
+        cname_target:
+          type: string
+          description: "`YUVA_STATUS_CNAME`, or the host of the server's public URL."
+        txt_name:
+          type: string
+          examples: [_yuva-status.status.example.com]
+        txt_value:
+          type: string
+        certificates:
+          type: string
+          description: Who issues the domain's certificate, the server's `YUVA_STATUS_DOMAINS`.
+          enum: [ask, cloudflare]
+          x-enum-varnames: [StatusCertificatesAsk, StatusCertificatesCloudflare]
+        problem:
+          type: string
+          description: What the last check that did not verify the domain saw, in English.
+        checked_at:
+          type: string
+          format: date-time
+        next_check_at:
+          type: string
+          format: date-time
+        verified_at:
+          type: string
+          format: date-time
+        missing_since:
+          type: string
+          format: date-time
+          description: A verified domain whose records the checks no longer see; it is turned off 3 days after this.
+        cloudflare:
+          $ref: "#/components/schemas/StatusCloudflareHostname"
+    StatusCloudflareHostname:
+      type: object
+      description: |
+        The domain's Cloudflare for SaaS custom hostname, as Cloudflare last reported it. Absent
+        fields mean it is not created yet (the domain is not verified, or creating it failed and is
+        tried again).
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          description: Cloudflare's hostname status (`pending`, `active`, `moved`, `blocked`, …).
+        ssl_status:
+          type: string
+          description: Cloudflare's certificate status (`initializing`, `pending_validation`, `active`, …).
+        errors:
+          type: array
+          items:
+            type: string
+          description: Cloudflare's verification and validation errors, or why creating the hostname failed.
+        checked_at:
+          type: string
+          format: date-time
+    StatusDomainCheck:
+      type: object
+      required: [domain]
+      properties:
+        domain:
+          type: string
     StatusEmailSubscribers:
       type: object
       description: |
@@ -24711,6 +24834,18 @@ components:
           type: boolean
         email_subscribers:
           $ref: "#/components/schemas/StatusEmailSubscribersUpdate"
+        custom_domain:
+          type: [string, "null"]
+          maxLength: 253
+          description: |
+            A hostname such as `status.example.com`, `null` to remove it. It must not be or contain
+            one of the server's own hosts, and is unique across the server (`409 domain_taken`). A new
+            domain starts `pending` with a new verification value and is checked at once; setting the
+            same domain again checks it at once and, when it was `off`, starts it over. At most
+            `YUVA_STATUS_DOMAIN_LIMIT` pages of a workspace have one on a hosted server
+            (`403 status_domain_limit`). Refused with `400` when the server's `YUVA_STATUS_DOMAINS` is
+            `off`.
+          examples: [status.example.com]
     StatusPageRef:
       type: object
       required: [id, name, slug]

@@ -869,7 +869,7 @@ func (s *Server) noticeData(ns *noticeSend, locale string) map[string]any {
 	d := map[string]any{
 		"Inbox": ns.inbox.Name, "Page": oneLine(ns.pg.Name), "Title": oneLine(inc.Title), "Maintenance": inc.Kind == kindMaintenance,
 		"State": w.IncidentStates[inc.State], "Zone": ns.pg.Timezone, "Sender": senderLine(ns.inbox),
-		"URL": s.statusURL(ns.pg.Slug, "/incidents/"+inc.ID.String()),
+		"URL": s.pageURL(ns.pg, "/incidents/"+inc.ID.String()),
 	}
 	if inc.Impact != string(oas.StatusImpactNone) {
 		d["Impact"] = w.Impacts[inc.Impact]
