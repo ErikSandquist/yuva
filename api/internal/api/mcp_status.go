@@ -245,7 +245,7 @@ var mcpStatusTools = []mcpTool{
 			return c.statusIncidentUpdate(ctx, in.PageID, in.IncidentID, in.Body, optString[oas.StatusIncidentState](in.State))
 		}),
 	defineTool("link_conversation_to_incident", "Link a conversation to an incident",
-		"Links a conversation to an incident or maintenance of a status page, so the team sees it with the incident and a member's \"Reply to linked\" reaches it. Linking twice changes nothing. Maps to PUT /v1/status-pages/{id}/incidents/{id}/conversations/{id}.",
+		"Links a conversation to an incident or maintenance of a status page, so the team sees it with the incident and a member's \"Reply to linked\" reaches it. Linking twice changes nothing. Needs the scopes status:manage and conversations:read. Maps to PUT /v1/status-pages/{id}/incidents/{id}/conversations/{id}.",
 		idempotent, nil, mcpTool{ops: []string{"LinkStatusIncidentConversation"}},
 		func(ctx context.Context, c *mcpCall, in linkConversationIn) (mcpIncidentLink, error) {
 			if _, err := c.s.LinkStatusIncidentConversation(ctx, oas.LinkStatusIncidentConversationRequestObject{PageId: in.PageID, IncidentId: in.IncidentID,

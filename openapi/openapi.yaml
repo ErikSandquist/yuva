@@ -10133,7 +10133,8 @@ paths:
         Links a conversation to the incident, so it is listed with it and reached by "Reply to
         linked". A conversation may be linked to several incidents, also of other pages; linking it
         twice is a no-op. The caller must see both the page's inbox and the conversation's inbox
-        (`404` otherwise).
+        (`404` otherwise, also when the incident or conversation was deleted meanwhile). An incident
+        takes at most 5,000 linked conversations (`422 too_many_links`, naming the limit).
 
         Agents with access to both inboxes, owners, admins and API keys. Scopes: `status:manage`
         and `conversations:read`.
@@ -10151,6 +10152,8 @@ paths:
         "403":
           $ref: "#/components/responses/Problem"
         "404":
+          $ref: "#/components/responses/Problem"
+        "422":
           $ref: "#/components/responses/Problem"
     delete:
       operationId: unlinkStatusIncidentConversation
@@ -10183,11 +10186,15 @@ paths:
       description: |
         Sends one reply, written once, to every linked conversation that is not closed and that the
         caller can see, and with `close` closes each afterwards. Each conversation gets its own job,
-        which posts the reply through the normal reply path as the caller (a member, or an API key's
-        bot), so it reaches the contact on the conversation's own channel (e-mail, chat or app) and
-        fires the usual `message.created` and `conversation.updated` events and webhooks. A retried
-        job never sends a conversation the reply twice; send `Idempotency-Key` to make a retried
-        request safe as well.
+        which posts the reply through the normal reply path as the caller (a member, an API key's
+        bot or an OAuth grant), so it reaches the contact on the conversation's own channel
+        (e-mail, chat or app) and fires the usual `message.created` and `conversation.updated`
+        events and webhooks. The job checks the caller again when it runs: a revoked or expired key
+        or grant, a removed member or a lost scope sends nothing. A retried job never sends a
+        conversation the reply twice; send `Idempotency-Key` to make a retried request safe as well.
+
+        The `202` carries the reply's `id`; `GET .../replies/{replyId}` reports what became of each
+        conversation.
 
         API keys and MCP clients need the workspace to let them deliver messages
         (`403 bot_sending_disabled`). Agents with access to the page's inbox, owners, admins and API
@@ -10206,11 +10213,49 @@ paths:
               $ref: "#/components/schemas/StatusIncidentReply"
       responses:
         "202":
-          description: How many replies were queued.
+          description: The reply and how many conversations it was queued for.
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/StatusIncidentReplyResult"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/incidents/{incidentId}/replies/{replyId}:
+    get:
+      operationId: getStatusIncidentReply
+      summary: Get what became of a reply to linked conversations
+      description: |
+        The outcome of one "Reply to linked" request, per conversation: `pending` until its job
+        ran, then `sent`, `skipped` or `failed`, with a `reason`. Reasons of `skipped`: `closed` (the
+        conversation was closed before its turn), `unlinked`, `conversation_deleted`, `revoked` (the
+        caller's key, grant or membership ended before the job ran). Reasons of `failed` are the
+        problem `code` the reply path returned (`bot_sending_disabled`, `insufficient_scope`, ...),
+        or `gave_up` when the job kept failing. `counts` cover the conversations the caller can see,
+        and so do `items`, ordered by conversation id.
+
+        Agents with access to the page's inbox, owners, admins and API keys. Scopes: `status:read`
+        and `conversations:read`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusIncidentId"
+        - $ref: "#/components/parameters/StatusReplyId"
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: The reply and its outcomes.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusIncidentReplyReport"
         "400":
           $ref: "#/components/responses/Problem"
         "401":
@@ -11891,8 +11936,10 @@ paths:
         whenever it changes) come only for `live` inboxes. `inbox.updated` carries the inbox's
         public settings, the same `ClientInbox` as `GET /client/v1/channels/{channel_key}`, whenever
         a member changes the inbox (mode, business hours, branding, greeting) or the session's
-        channel; replace the settings shown with it. After a reconnect, fetch the channel settings
-        again, since a change made while disconnected is not replayed.
+        channel, or the status of its published page changes; replace the settings shown with it.
+        A connection resumed with `last_event_id` gets one `inbox.updated` right after `ready`
+        with the current settings and status, since changes made while disconnected are not
+        replayed; one opened without it starts from the settings fetched just before.
 
         The server pings every 30 seconds; the client sends nothing. Close codes as on
         `/v1/realtime`: 1008 when the session ends or the contact is deleted (start a new session),
@@ -13369,6 +13416,13 @@ components:
         format: uuid
     StatusIncidentId:
       name: incidentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    StatusReplyId:
+      name: replyId
       in: path
       required: true
       schema:
@@ -24452,12 +24506,79 @@ components:
           description: Close each conversation after the reply.
     StatusIncidentReplyResult:
       type: object
-      required: [queued]
+      required: [id, queued]
       properties:
+        id:
+          type: string
+          format: uuid
+          description: The reply request; read its outcomes with `GET .../replies/{replyId}`.
         queued:
           type: integer
           format: int32
           description: The conversations a reply was queued for.
+    StatusIncidentReplyOutcome:
+      type: string
+      enum: [pending, sent, skipped, failed]
+    StatusIncidentReplyCounts:
+      type: object
+      required: [pending, sent, skipped, failed]
+      properties:
+        pending:
+          type: integer
+          format: int32
+        sent:
+          type: integer
+          format: int32
+        skipped:
+          type: integer
+          format: int32
+        failed:
+          type: integer
+          format: int32
+    StatusIncidentReplyTarget:
+      type: object
+      required: [conversation_id, outcome]
+      properties:
+        conversation_id:
+          type: string
+          format: uuid
+        outcome:
+          $ref: "#/components/schemas/StatusIncidentReplyOutcome"
+        reason:
+          type: string
+          description: Why the conversation was skipped or the reply failed; absent for `pending` and `sent`.
+        finished_at:
+          type: string
+          format: date-time
+          description: Absent while `pending`.
+    StatusIncidentReplyReport:
+      type: object
+      required: [id, incident_id, close, queued, counts, created_at, items]
+      properties:
+        id:
+          type: string
+          format: uuid
+        incident_id:
+          type: string
+          format: uuid
+        close:
+          type: boolean
+        queued:
+          type: integer
+          format: int32
+          description: The conversations the request was queued for.
+        counts:
+          $ref: "#/components/schemas/StatusIncidentReplyCounts"
+        created_at:
+          type: string
+          format: date-time
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/StatusIncidentReplyTarget"
+        next_cursor:
+          type: string
+          description: Absent on the last page.
     StatusComponentGroup:
       type: object
       required: [id, page_id, name, position, created_at, updated_at]

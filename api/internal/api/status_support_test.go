@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -323,8 +324,16 @@ func TestReplyToLinked(t *testing.T) {
 			t.Fatalf("conversation %s is %s", c, s)
 		}
 	}
-	if s := sp.owner.expect(http.StatusOK, "GET", "/v1/conversations/"+chatConv, nil).str("status"); s != "closed" {
-		t.Fatalf("reopened chat conversation is %s after the retried job", s)
+	if s := sp.owner.expect(http.StatusOK, "GET", "/v1/conversations/"+chatConv, nil).str("status"); s != "open" {
+		t.Fatalf("reopened chat conversation is %s after the finished job ran again", s)
+	}
+	rep := sp.owner.expect(http.StatusOK, "GET", sp.path("/incidents/"+inc+"/replies/"+r.str("id")), nil)
+	if c := rep.body["counts"].(map[string]any); c["sent"] != float64(2) || c["skipped"] != float64(1) || c["pending"] != float64(0) || c["failed"] != float64(0) || rep.body["queued"] != float64(3) || rep.body["close"] != true {
+		t.Fatalf("report %s", rep.raw)
+	}
+	byConv := outcomes(rep)
+	if byConv[mailConv] != "sent" || byConv[chatConv] != "sent" || byConv[appConv] != "skipped:unlinked" || len(byConv) != 3 {
+		t.Fatalf("outcomes %v", byConv)
 	}
 	if em, _ := replies(mailConv)[0]["email"].(map[string]any); em == nil {
 		t.Fatalf("the e-mail conversation's reply was not mailed: %v", replies(mailConv)[0])
@@ -340,5 +349,265 @@ func TestReplyToLinked(t *testing.T) {
 		if !strings.Contains(fmt.Sprint(msgs), "We are on it.") {
 			t.Fatalf("contact does not see the reply in %s: %v", c.conv, msgs)
 		}
+	}
+}
+
+func outcomes(r response) map[string]string {
+	out := map[string]string{}
+	for _, it := range r.body["items"].([]any) {
+		m := it.(map[string]any)
+		v := m["outcome"].(string)
+		if reason, ok := m["reason"].(string); ok {
+			v += ":" + reason
+		}
+		out[m["conversation_id"].(string)] = v
+	}
+	return out
+}
+
+func (h *harness) runStatusReplies(t *testing.T, ws string) {
+	t.Helper()
+	for _, j := range h.jobs("status_reply", ws) {
+		var a api.StatusReplyArgs
+		if err := json.Unmarshal(j.args, &a); err != nil {
+			t.Fatal(err)
+		}
+		if err := h.srv.RunStatusReply(context.Background(), a); err != nil {
+			t.Fatal(err)
+		}
+	}
+}
+
+func TestClientStatusResumeFrame(t *testing.T) {
+	h := newHarness(t)
+	sp := newSupportTeam(t, h)
+	sp.owner.expect(http.StatusOK, "PATCH", sp.path(""), map[string]any{"published": true})
+	cs := sp.visitor(h, sp.chatKey, sp.origin)
+	ws, _, err := dialContact(h, cs.token, sp.origin, "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	ready := ws.nextNot("presence")
+	if ready.Type != "ready" {
+		t.Fatalf("first frame %s", ready.Type)
+	}
+	ws.close()
+
+	sp.owner.expect(http.StatusCreated, "POST", sp.path("/incidents"), map[string]any{
+		"title": "API down", "message": "Looking", "publish": true, "components": []map[string]any{{"component_id": sp.api}},
+	})
+	resume := func(from int64) []wsMessage {
+		t.Helper()
+		c, _, err := dialContact(h, cs.token, sp.origin, fmt.Sprintf("?last_event_id=%d", from))
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer c.close()
+		msgs := c.until(func(m wsMessage) bool { return m.Type == "inbox.updated" })
+		var types []string
+		for _, m := range msgs {
+			types = append(types, m.Type)
+		}
+		if strings.Join(types, " ") != "ready inbox.updated" {
+			t.Fatalf("frames on resume: %v", types)
+		}
+		return msgs
+	}
+	last := resume(ready.LastEventID)[1]
+	var in map[string]any
+	_ = json.Unmarshal(last.Data, &in)
+	st, _ := in["status"].(map[string]any)
+	if st["state"] != "major_outage" || strings.Join(openTitles(st), ",") != "API down" {
+		t.Fatalf("status missed while away: %s", last.Data)
+	}
+	if again := resume(ready.LastEventID)[1]; again.Type != "inbox.updated" {
+		t.Fatalf("second resume: %s", again.Type)
+	}
+}
+
+func TestStatusLinkConcurrentDelete(t *testing.T) {
+	h := newHarness(t)
+	sp := newSupportTeam(t, h)
+	inc := sp.owner.expect(http.StatusCreated, "POST", sp.path("/incidents"), map[string]any{"title": "Down", "message": "Looking", "publish": true}).str("id")
+	for i := 0; i < 12; i++ {
+		contact := sp.owner.expect(http.StatusCreated, "POST", "/v1/contacts", map[string]any{"name": fmt.Sprint("C", i)}).str("id")
+		conv := sp.owner.expect(http.StatusCreated, "POST", "/v1/conversations", map[string]any{"inbox_id": sp.inbox, "contact_id": contact}).str("id")
+		var got [2]int
+		var wg sync.WaitGroup
+		wg.Add(2)
+		go func() {
+			defer wg.Done()
+			got[0] = sp.owner.do("PUT", sp.path("/incidents/"+inc+"/conversations/"+conv), nil).status
+		}()
+		go func() {
+			defer wg.Done()
+			got[1] = sp.owner.do("DELETE", "/v1/contacts/"+contact, nil).status
+		}()
+		wg.Wait()
+		if got[0] != http.StatusNoContent && got[0] != http.StatusNotFound {
+			t.Fatalf("link during a delete: status %d", got[0])
+		}
+	}
+	sp.owner.expectProblem(http.StatusNotFound, "not_found", "PUT", sp.path("/incidents/"+inc+"/conversations/"+sp.api), nil)
+
+	conv := sp.owner.expect(http.StatusCreated, "POST", "/v1/conversations", map[string]any{"inbox_id": sp.inbox, "contact_id": sp.contact}).str("id")
+	for i := 0; i < 12; i++ {
+		draft := sp.owner.expect(http.StatusCreated, "POST", sp.path("/incidents"), map[string]any{"title": "Draft", "message": "x"}).str("id")
+		var got int
+		var wg sync.WaitGroup
+		wg.Add(2)
+		go func() {
+			defer wg.Done()
+			got = sp.owner.do("PUT", sp.path("/incidents/"+draft+"/conversations/"+conv), nil).status
+		}()
+		go func() {
+			defer wg.Done()
+			sp.owner.do("DELETE", sp.path("/incidents/"+draft), nil)
+		}()
+		wg.Wait()
+		if got != http.StatusNoContent && got != http.StatusNotFound {
+			t.Fatalf("link during an incident delete: status %d", got)
+		}
+	}
+}
+
+func TestStatusLinkLimit(t *testing.T) {
+	h := newHarness(t)
+	sp := newSupportTeam(t, h)
+	defer api.SetMaxIncidentLinks(2)()
+	inc := sp.owner.expect(http.StatusCreated, "POST", sp.path("/incidents"), map[string]any{"title": "Down", "message": "Looking", "publish": true}).str("id")
+	conv := func() string {
+		return sp.owner.expect(http.StatusCreated, "POST", "/v1/conversations", map[string]any{"inbox_id": sp.inbox, "contact_id": sp.contact}).str("id")
+	}
+	a, b, c := conv(), conv(), conv()
+	link := func(conv string) string { return sp.path("/incidents/" + inc + "/conversations/" + conv) }
+	sp.owner.expect(http.StatusNoContent, "PUT", link(a), nil)
+	sp.owner.expect(http.StatusNoContent, "PUT", link(b), nil)
+	sp.owner.expect(http.StatusNoContent, "PUT", link(a), nil)
+	r := sp.owner.expect(http.StatusUnprocessableEntity, "PUT", link(c), nil)
+	if r.str("code") != "too_many_links" || !strings.Contains(r.str("detail"), "at most 2") {
+		t.Fatalf("limit problem %s", r.raw)
+	}
+	sp.owner.expect(http.StatusNoContent, "DELETE", link(a), nil)
+	sp.owner.expect(http.StatusNoContent, "PUT", link(c), nil)
+}
+
+func TestReplyOutcomes(t *testing.T) {
+	h := newHarness(t)
+	sp := newSupportTeam(t, h)
+	defer api.SetStatusReplyBatchSize(2)()
+	inc := sp.owner.expect(http.StatusCreated, "POST", sp.path("/incidents"), map[string]any{"title": "Down", "message": "Looking", "publish": true}).str("id")
+	var convs []string
+	for i := 0; i < 5; i++ {
+		c := sp.owner.expect(http.StatusCreated, "POST", "/v1/conversations", map[string]any{"inbox_id": sp.inbox, "contact_id": sp.contact, "subject": fmt.Sprint("C", i)}).str("id")
+		sp.owner.expect(http.StatusNoContent, "PUT", sp.path("/incidents/"+inc+"/conversations/"+c), nil)
+		convs = append(convs, c)
+	}
+	sp.owner.expect(http.StatusNoContent, "PUT", "/v1/inboxes/"+sp.inbox+"/members/"+sp.agentID, nil)
+
+	reply := sp.agent.expect(http.StatusAccepted, "POST", sp.path("/incidents/"+inc+"/reply"), map[string]any{"body": "Working on it"})
+	if reply.body["queued"] != float64(5) || reply.str("id") == "" {
+		t.Fatalf("reply %s", reply.raw)
+	}
+	id := reply.str("id")
+	if n := h.count("SELECT count(*) FROM status_incident_replies WHERE workspace_id = $1", sp.ws); n != 1 {
+		t.Fatalf("%d reply rows", n)
+	}
+	jobs := h.jobs("status_reply", sp.ws)
+	if len(jobs) != 5 || strings.Contains(string(jobs[0].args), "Working on it") {
+		t.Fatalf("%d jobs, args %s", len(jobs), jobs[0].args)
+	}
+	path := sp.path("/incidents/" + inc + "/replies/" + id)
+	pending := sp.agent.expect(http.StatusOK, "GET", path, nil)
+	if c := pending.body["counts"].(map[string]any); c["pending"] != float64(5) || len(pending.body["items"].([]any)) != 5 {
+		t.Fatalf("before the jobs ran: %s", pending.raw)
+	}
+
+	sp.owner.expect(http.StatusOK, "PATCH", "/v1/conversations/"+convs[0], map[string]any{"status": "closed"})
+	sp.owner.expect(http.StatusNoContent, "DELETE", sp.path("/incidents/"+inc+"/conversations/"+convs[1]), nil)
+	sp.owner.expect(http.StatusNoContent, "DELETE", "/v1/inboxes/"+sp.inbox+"/members/"+sp.agentID, nil)
+	h.runStatusReplies(t, sp.ws)
+
+	done := sp.owner.expect(http.StatusOK, "GET", path, nil)
+	got := outcomes(done)
+	want := map[string]string{convs[0]: "skipped:closed", convs[1]: "skipped:unlinked", convs[2]: "failed:not_found", convs[3]: "failed:not_found", convs[4]: "failed:not_found"}
+	if fmt.Sprint(got) != fmt.Sprint(want) {
+		t.Fatalf("outcomes %v, want %v", got, want)
+	}
+	if c := done.body["counts"].(map[string]any); c["skipped"] != float64(2) || c["failed"] != float64(3) || c["pending"] != float64(0) {
+		t.Fatalf("counts %v", c)
+	}
+	if done.body["items"].([]any)[0].(map[string]any)["finished_at"] == nil {
+		t.Fatalf("no finished_at: %s", done.raw)
+	}
+
+	page := sp.owner.expect(http.StatusOK, "GET", path+"?limit=2", nil)
+	if len(page.body["items"].([]any)) != 2 || page.str("next_cursor") == "" {
+		t.Fatalf("first page %s", page.raw)
+	}
+	seen := 2
+	for cur := page.str("next_cursor"); cur != ""; {
+		next := sp.owner.expect(http.StatusOK, "GET", path+"?limit=2&cursor="+cur, nil)
+		seen += len(next.body["items"].([]any))
+		cur = next.str("next_cursor")
+	}
+	if seen != 5 {
+		t.Fatalf("pages cover %d targets", seen)
+	}
+
+	sp.owner.expectProblem(http.StatusNotFound, "not_found", "GET", sp.path("/incidents/"+inc+"/replies/"+inc), nil)
+	sp.agent.expectProblem(http.StatusNotFound, "not_found", "GET", path, nil)
+	stranger := newTeam(t, h)
+	stranger.owner.expectProblem(http.StatusNotFound, "not_found", "GET", path, nil)
+	other := newSupportTeam(t, h)
+	other.owner.expectProblem(http.StatusNotFound, "not_found", "GET", other.path("/incidents/"+inc+"/replies/"+id), nil)
+}
+
+func TestReplyRechecksCaller(t *testing.T) {
+	h := newHarness(t)
+	sp := newSupportTeam(t, h)
+	sp.owner.expect(http.StatusOK, "PATCH", "/v1/workspace", map[string]any{"bots_may_send": true})
+	inc := sp.owner.expect(http.StatusCreated, "POST", sp.path("/incidents"), map[string]any{"title": "Down", "message": "Looking", "publish": true}).str("id")
+	conv := sp.owner.expect(http.StatusCreated, "POST", "/v1/conversations", map[string]any{"inbox_id": sp.inbox, "contact_id": sp.contact}).str("id")
+	sp.owner.expect(http.StatusNoContent, "PUT", sp.path("/incidents/"+inc+"/conversations/"+conv), nil)
+	replyPath := sp.path("/incidents/" + inc + "/reply")
+
+	granted := h.client()
+	granted.bearer = h.oauthToken(sp.owner, sp.ws, "Claude Code", testOrigin, []string{"status:manage", "messages:write"})
+	live := granted.expect(http.StatusAccepted, "POST", replyPath, map[string]any{"body": "From the grant"}).str("id")
+	h.runStatusReplies(t, sp.ws)
+	if got := outcomes(sp.owner.expect(http.StatusOK, "GET", sp.path("/incidents/"+inc+"/replies/"+live), nil)); got[conv] != "sent" {
+		t.Fatalf("grant reply outcome %v", got)
+	}
+
+	revoked := granted.expect(http.StatusAccepted, "POST", replyPath, map[string]any{"body": "Revoked grant"}).str("id")
+	for _, g := range sp.owner.expect(http.StatusOK, "GET", "/v1/oauth/grants", nil).body["items"].([]any) {
+		sp.owner.expect(http.StatusNoContent, "DELETE", "/v1/oauth/grants/"+g.(map[string]any)["id"].(string), nil)
+	}
+	keyed := h.client()
+	key := sp.owner.expect(http.StatusCreated, "POST", "/v1/api-keys", map[string]any{"name": "bot", "scopes": []string{"status:manage", "messages:write"}})
+	keyed.bearer = key.str("secret")
+	byKey := keyed.expect(http.StatusAccepted, "POST", replyPath, map[string]any{"body": "Revoked key"}).str("id")
+	sp.owner.expect(http.StatusNoContent, "DELETE", "/v1/api-keys/"+key.body["api_key"].(map[string]any)["id"].(string), nil)
+	h.runStatusReplies(t, sp.ws)
+
+	for id, body := range map[string]string{revoked: "Revoked grant", byKey: "Revoked key"} {
+		if got := outcomes(sp.owner.expect(http.StatusOK, "GET", sp.path("/incidents/"+inc+"/replies/"+id), nil)); got[conv] != "skipped:revoked" {
+			t.Fatalf("%s outcome %v", body, got)
+		}
+		for _, m := range messages(sp.owner, conv) {
+			if m["body"] == body {
+				t.Fatalf("%q was sent after its caller was revoked", body)
+			}
+		}
+	}
+	sent := 0
+	for _, m := range messages(sp.owner, conv) {
+		if m["body"] == "From the grant" {
+			sent++
+		}
+	}
+	if sent != 1 {
+		t.Fatalf("the live grant's reply was sent %d times", sent)
 	}
 }

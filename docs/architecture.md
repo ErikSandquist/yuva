@@ -747,7 +747,8 @@ inline thread inside a product's own panel.
   that inbox get an `inbox.updated` frame with the same public settings as
   `GET /client/v1/channels/{key}` (sent only when they differ from what the connection last saw).
   The frame has no id and is not replayed (a channel change travels as a signal like typing), so
-  clients fetch the settings again after a reconnect.
+  a connection that resumes with `last_event_id` gets one `inbox.updated` frame with the current
+  settings and status right after `ready`, whatever it missed while away.
 - If the contact has left when a reply arrives and an e-mail address is known, the reply is e-mailed
   after a delay; their e-mail answer continues the same conversation. A River job checks the
   conversation `YUVA_CHAT_EMAIL_DELAY` (5 minutes by default) after a member's reply and after the
@@ -2169,7 +2170,14 @@ incident before a customer writes, and the conversations an outage brings are an
   be linked to an incident (`status_incident_conversations`), the incident lists its conversations and
   their states, and "Reply to linked" sends one reply, written once, to every linked open conversation
   as the member, then optionally closes them; it is one job per conversation through the normal reply
-  path, so e-mail, chat and app all get it the usual way.
+  path, so e-mail, chat and app all get it the usual way. The body is stored once per request
+  (`status_incident_replies`) and the jobs reference it; jobs are inserted in batches, and an incident
+  takes at most 5,000 linked conversations (`422 too_many_links`). Each conversation's outcome
+  (`pending`, `sent`, `skipped` with `closed`, `unlinked`, `conversation_deleted` or `revoked`, `failed`
+  with the problem code or `gave_up`) is kept on `status_incident_reply_targets` and read with
+  `GET /v1/status-pages/{id}/incidents/{id}/replies/{replyId}`; the `202` carries that id. A job
+  checks its caller again when it runs: a revoked or expired key, a revoked OAuth grant, a removed
+  member or a lost scope sends nothing.
 - **API and access.** `/v1/status-pages`, `/v1/status-pages/{id}/components`, `/groups`,
   `/incidents`, `/incidents/{id}/updates`, `/incidents/{id}/conversations`, `/monitors`,
   `/monitors/{id}/checks`; `/v1/status-pages/{id}/preview` renders the public page for members.

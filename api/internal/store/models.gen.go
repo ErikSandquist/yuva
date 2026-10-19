@@ -1642,6 +1642,30 @@ type StatusIncidentConversation struct {
 	LinkedAt         time.Time
 }
 
+type StatusIncidentReply struct {
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+	IncidentID  uuid.UUID
+	Body        string
+	Close       bool
+	MemberID    *uuid.UUID
+	ApiKeyID    *uuid.UUID
+	GrantID     *uuid.UUID
+	Via         string
+	McpOnly     bool
+	Queued      int32
+	CreatedAt   time.Time
+}
+
+type StatusIncidentReplyTarget struct {
+	WorkspaceID    uuid.UUID
+	ReplyID        uuid.UUID
+	ConversationID uuid.UUID
+	Outcome        string
+	Reason         *string
+	FinishedAt     *time.Time
+}
+
 type StatusIncidentUpdate struct {
 	ID             uuid.UUID
 	WorkspaceID    uuid.UUID

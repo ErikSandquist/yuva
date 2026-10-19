@@ -4653,6 +4653,30 @@ func (e StatusIncidentKind) Valid() bool {
 	}
 }
 
+// Defines values for StatusIncidentReplyOutcome.
+const (
+	StatusIncidentReplyOutcomeFailed  StatusIncidentReplyOutcome = "failed"
+	StatusIncidentReplyOutcomePending StatusIncidentReplyOutcome = "pending"
+	StatusIncidentReplyOutcomeSent    StatusIncidentReplyOutcome = "sent"
+	StatusIncidentReplyOutcomeSkipped StatusIncidentReplyOutcome = "skipped"
+)
+
+// Valid indicates whether the value is a known member of the StatusIncidentReplyOutcome enum.
+func (e StatusIncidentReplyOutcome) Valid() bool {
+	switch e {
+	case StatusIncidentReplyOutcomeFailed:
+		return true
+	case StatusIncidentReplyOutcomePending:
+		return true
+	case StatusIncidentReplyOutcomeSent:
+		return true
+	case StatusIncidentReplyOutcomeSkipped:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for StatusIncidentState.
 const (
 	StatusCompleted     StatusIncidentState = "completed"
@@ -14687,10 +14711,52 @@ type StatusIncidentReply struct {
 	Close *bool `json:"close,omitempty"`
 }
 
+// StatusIncidentReplyCounts defines model for StatusIncidentReplyCounts.
+type StatusIncidentReplyCounts struct {
+	Failed  int32 `json:"failed"`
+	Pending int32 `json:"pending"`
+	Sent    int32 `json:"sent"`
+	Skipped int32 `json:"skipped"`
+}
+
+// StatusIncidentReplyOutcome defines model for StatusIncidentReplyOutcome.
+type StatusIncidentReplyOutcome string
+
+// StatusIncidentReplyReport defines model for StatusIncidentReplyReport.
+type StatusIncidentReplyReport struct {
+	Close      bool                        `json:"close"`
+	Counts     StatusIncidentReplyCounts   `json:"counts"`
+	CreatedAt  time.Time                   `json:"created_at"`
+	Id         uuid.UUID                   `json:"id"`
+	IncidentId uuid.UUID                   `json:"incident_id"`
+	Items      []StatusIncidentReplyTarget `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+
+	// Queued The conversations the request was queued for.
+	Queued int32 `json:"queued"`
+}
+
 // StatusIncidentReplyResult defines model for StatusIncidentReplyResult.
 type StatusIncidentReplyResult struct {
+	// Id The reply request; read its outcomes with `GET .../replies/{replyId}`.
+	Id uuid.UUID `json:"id"`
+
 	// Queued The conversations a reply was queued for.
 	Queued int32 `json:"queued"`
+}
+
+// StatusIncidentReplyTarget defines model for StatusIncidentReplyTarget.
+type StatusIncidentReplyTarget struct {
+	ConversationId uuid.UUID `json:"conversation_id"`
+
+	// FinishedAt Absent while `pending`.
+	FinishedAt *time.Time                 `json:"finished_at,omitempty"`
+	Outcome    StatusIncidentReplyOutcome `json:"outcome"`
+
+	// Reason Why the conversation was skipped or the reply failed; absent for `pending` and `sent`.
+	Reason *string `json:"reason,omitempty"`
 }
 
 // StatusIncidentState Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
@@ -15981,6 +16047,9 @@ type StatusMonitorToken = string
 
 // StatusPageId defines model for StatusPageId.
 type StatusPageId = uuid.UUID
+
+// StatusReplyId defines model for StatusReplyId.
+type StatusReplyId = uuid.UUID
 
 // StatusSlug defines model for StatusSlug.
 type StatusSlug = string
@@ -18226,6 +18295,18 @@ type LinkStatusIncidentConversationParams struct {
 type PublishStatusIncidentParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetStatusIncidentReplyParams defines parameters for GetStatusIncidentReply.
+type GetStatusIncidentReplyParams struct {
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
@@ -28649,7 +28730,8 @@ type ClientInterface interface {
 	// Links a conversation to the incident, so it is listed with it and reached by "Reply to
 	// linked". A conversation may be linked to several incidents, also of other pages; linking it
 	// twice is a no-op. The caller must see both the page's inbox and the conversation's inbox
-	// (`404` otherwise).
+	// (`404` otherwise, also when the incident or conversation was deleted meanwhile). An incident
+	// takes at most 5,000 linked conversations (`422 too_many_links`, naming the limit).
 	//
 	// Agents with access to both inboxes, owners, admins and API keys. Scopes: `status:manage`
 	// and `conversations:read`.
@@ -28667,15 +28749,35 @@ type ClientInterface interface {
 	// Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/publish (the `PublishStatusIncident` operationId).
 	PublishStatusIncident(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetStatusIncidentReply Get what became of a reply to linked conversations
+	//
+	// The outcome of one "Reply to linked" request, per conversation: `pending` until its job
+	// ran, then `sent`, `skipped` or `failed`, with a `reason`. Reasons of `skipped`: `closed` (the
+	// conversation was closed before its turn), `unlinked`, `conversation_deleted`, `revoked` (the
+	// caller's key, grant or membership ended before the job ran). Reasons of `failed` are the
+	// problem `code` the reply path returned (`bot_sending_disabled`, `insufficient_scope`, ...),
+	// or `gave_up` when the job kept failing. `counts` cover the conversations the caller can see,
+	// and so do `items`, ordered by conversation id.
+	//
+	// Agents with access to the page's inbox, owners, admins and API keys. Scopes: `status:read`
+	// and `conversations:read`.
+	//
+	// Corresponds with GET /v1/status-pages/{pageId}/incidents/{incidentId}/replies/{replyId} (the `GetStatusIncidentReply` operationId).
+	GetStatusIncidentReply(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, replyId StatusReplyId, params *GetStatusIncidentReplyParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ReplyToStatusIncidentConversationsWithBody Reply to linked conversations
 	//
 	// Sends one reply, written once, to every linked conversation that is not closed and that the
 	// caller can see, and with `close` closes each afterwards. Each conversation gets its own job,
-	// which posts the reply through the normal reply path as the caller (a member, or an API key's
-	// bot), so it reaches the contact on the conversation's own channel (e-mail, chat or app) and
-	// fires the usual `message.created` and `conversation.updated` events and webhooks. A retried
-	// job never sends a conversation the reply twice; send `Idempotency-Key` to make a retried
-	// request safe as well.
+	// which posts the reply through the normal reply path as the caller (a member, an API key's
+	// bot or an OAuth grant), so it reaches the contact on the conversation's own channel
+	// (e-mail, chat or app) and fires the usual `message.created` and `conversation.updated`
+	// events and webhooks. The job checks the caller again when it runs: a revoked or expired key
+	// or grant, a removed member or a lost scope sends nothing. A retried job never sends a
+	// conversation the reply twice; send `Idempotency-Key` to make a retried request safe as well.
+	//
+	// The `202` carries the reply's `id`; `GET .../replies/{replyId}` reports what became of each
+	// conversation.
 	//
 	// API keys and MCP clients need the workspace to let them deliver messages
 	// (`403 bot_sending_disabled`). Agents with access to the page's inbox, owners, admins and API
@@ -28690,11 +28792,15 @@ type ClientInterface interface {
 	//
 	// Sends one reply, written once, to every linked conversation that is not closed and that the
 	// caller can see, and with `close` closes each afterwards. Each conversation gets its own job,
-	// which posts the reply through the normal reply path as the caller (a member, or an API key's
-	// bot), so it reaches the contact on the conversation's own channel (e-mail, chat or app) and
-	// fires the usual `message.created` and `conversation.updated` events and webhooks. A retried
-	// job never sends a conversation the reply twice; send `Idempotency-Key` to make a retried
-	// request safe as well.
+	// which posts the reply through the normal reply path as the caller (a member, an API key's
+	// bot or an OAuth grant), so it reaches the contact on the conversation's own channel
+	// (e-mail, chat or app) and fires the usual `message.created` and `conversation.updated`
+	// events and webhooks. The job checks the caller again when it runs: a revoked or expired key
+	// or grant, a removed member or a lost scope sends nothing. A retried job never sends a
+	// conversation the reply twice; send `Idempotency-Key` to make a retried request safe as well.
+	//
+	// The `202` carries the reply's `id`; `GET .../replies/{replyId}` reports what became of each
+	// conversation.
 	//
 	// API keys and MCP clients need the workspace to let them deliver messages
 	// (`403 bot_sending_disabled`). Agents with access to the page's inbox, owners, admins and API
@@ -39512,7 +39618,8 @@ func (c *Client) UnlinkStatusIncidentConversation(ctx context.Context, pageId St
 // Links a conversation to the incident, so it is listed with it and reached by "Reply to
 // linked". A conversation may be linked to several incidents, also of other pages; linking it
 // twice is a no-op. The caller must see both the page's inbox and the conversation's inbox
-// (`404` otherwise).
+// (`404` otherwise, also when the incident or conversation was deleted meanwhile). An incident
+// takes at most 5,000 linked conversations (`422 too_many_links`, naming the limit).
 //
 // Agents with access to both inboxes, owners, admins and API keys. Scopes: `status:manage`
 // and `conversations:read`.
@@ -39550,15 +39657,45 @@ func (c *Client) PublishStatusIncident(ctx context.Context, pageId StatusPageId,
 	return c.Client.Do(req)
 }
 
+// GetStatusIncidentReply Get what became of a reply to linked conversations
+//
+// The outcome of one "Reply to linked" request, per conversation: `pending` until its job
+// ran, then `sent`, `skipped` or `failed`, with a `reason`. Reasons of `skipped`: `closed` (the
+// conversation was closed before its turn), `unlinked`, `conversation_deleted`, `revoked` (the
+// caller's key, grant or membership ended before the job ran). Reasons of `failed` are the
+// problem `code` the reply path returned (`bot_sending_disabled`, `insufficient_scope`, ...),
+// or `gave_up` when the job kept failing. `counts` cover the conversations the caller can see,
+// and so do `items`, ordered by conversation id.
+//
+// Agents with access to the page's inbox, owners, admins and API keys. Scopes: `status:read`
+// and `conversations:read`.
+//
+// Corresponds with GET /v1/status-pages/{pageId}/incidents/{incidentId}/replies/{replyId} (the `GetStatusIncidentReply` operationId).
+func (c *Client) GetStatusIncidentReply(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, replyId StatusReplyId, params *GetStatusIncidentReplyParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetStatusIncidentReplyRequest(c.Server, pageId, incidentId, replyId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // ReplyToStatusIncidentConversationsWithBody Reply to linked conversations
 //
 // Sends one reply, written once, to every linked conversation that is not closed and that the
 // caller can see, and with `close` closes each afterwards. Each conversation gets its own job,
-// which posts the reply through the normal reply path as the caller (a member, or an API key's
-// bot), so it reaches the contact on the conversation's own channel (e-mail, chat or app) and
-// fires the usual `message.created` and `conversation.updated` events and webhooks. A retried
-// job never sends a conversation the reply twice; send `Idempotency-Key` to make a retried
-// request safe as well.
+// which posts the reply through the normal reply path as the caller (a member, an API key's
+// bot or an OAuth grant), so it reaches the contact on the conversation's own channel
+// (e-mail, chat or app) and fires the usual `message.created` and `conversation.updated`
+// events and webhooks. The job checks the caller again when it runs: a revoked or expired key
+// or grant, a removed member or a lost scope sends nothing. A retried job never sends a
+// conversation the reply twice; send `Idempotency-Key` to make a retried request safe as well.
+//
+// The `202` carries the reply's `id`; `GET .../replies/{replyId}` reports what became of each
+// conversation.
 //
 // API keys and MCP clients need the workspace to let them deliver messages
 // (`403 bot_sending_disabled`). Agents with access to the page's inbox, owners, admins and API
@@ -39583,11 +39720,15 @@ func (c *Client) ReplyToStatusIncidentConversationsWithBody(ctx context.Context,
 //
 // Sends one reply, written once, to every linked conversation that is not closed and that the
 // caller can see, and with `close` closes each afterwards. Each conversation gets its own job,
-// which posts the reply through the normal reply path as the caller (a member, or an API key's
-// bot), so it reaches the contact on the conversation's own channel (e-mail, chat or app) and
-// fires the usual `message.created` and `conversation.updated` events and webhooks. A retried
-// job never sends a conversation the reply twice; send `Idempotency-Key` to make a retried
-// request safe as well.
+// which posts the reply through the normal reply path as the caller (a member, an API key's
+// bot or an OAuth grant), so it reaches the contact on the conversation's own channel
+// (e-mail, chat or app) and fires the usual `message.created` and `conversation.updated`
+// events and webhooks. The job checks the caller again when it runs: a revoked or expired key
+// or grant, a removed member or a lost scope sends nothing. A retried job never sends a
+// conversation the reply twice; send `Idempotency-Key` to make a retried request safe as well.
+//
+// The `202` carries the reply's `id`; `GET .../replies/{replyId}` reports what became of each
+// conversation.
 //
 // API keys and MCP clients need the workspace to let them deliver messages
 // (`403 bot_sending_disabled`). Agents with access to the page's inbox, owners, admins and API
@@ -59863,6 +60004,108 @@ func NewPublishStatusIncidentRequest(server string, pageId StatusPageId, inciden
 	return req, nil
 }
 
+// NewGetStatusIncidentReplyRequest constructs an http.Request for the GetStatusIncidentReply method
+func NewGetStatusIncidentReplyRequest(server string, pageId StatusPageId, incidentId StatusIncidentId, replyId StatusReplyId, params *GetStatusIncidentReplyParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "incidentId", incidentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithOptions("simple", false, "replyId", replyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/status-pages/%s/incidents/%s/replies/%s", pathParam0, pathParam1, pathParam2)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewReplyToStatusIncidentConversationsRequest calls the generic ReplyToStatusIncidentConversations builder with application/json body
 func NewReplyToStatusIncidentConversationsRequest(server string, pageId StatusPageId, incidentId StatusIncidentId, params *ReplyToStatusIncidentConversationsParams, body ReplyToStatusIncidentConversationsJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -68015,7 +68258,8 @@ type ClientWithResponsesInterface interface {
 	// Links a conversation to the incident, so it is listed with it and reached by "Reply to
 	// linked". A conversation may be linked to several incidents, also of other pages; linking it
 	// twice is a no-op. The caller must see both the page's inbox and the conversation's inbox
-	// (`404` otherwise).
+	// (`404` otherwise, also when the incident or conversation was deleted meanwhile). An incident
+	// takes at most 5,000 linked conversations (`422 too_many_links`, naming the limit).
 	//
 	// Agents with access to both inboxes, owners, admins and API keys. Scopes: `status:manage`
 	// and `conversations:read`.
@@ -68037,15 +68281,37 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/publish (the `PublishStatusIncident` operationId).
 	PublishStatusIncidentWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams, reqEditors ...RequestEditorFn) (*PublishStatusIncidentResponse, error)
 
+	// GetStatusIncidentReplyWithResponse Get what became of a reply to linked conversations
+	//
+	// The outcome of one "Reply to linked" request, per conversation: `pending` until its job
+	// ran, then `sent`, `skipped` or `failed`, with a `reason`. Reasons of `skipped`: `closed` (the
+	// conversation was closed before its turn), `unlinked`, `conversation_deleted`, `revoked` (the
+	// caller's key, grant or membership ended before the job ran). Reasons of `failed` are the
+	// problem `code` the reply path returned (`bot_sending_disabled`, `insufficient_scope`, ...),
+	// or `gave_up` when the job kept failing. `counts` cover the conversations the caller can see,
+	// and so do `items`, ordered by conversation id.
+	//
+	// Agents with access to the page's inbox, owners, admins and API keys. Scopes: `status:read`
+	// and `conversations:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/status-pages/{pageId}/incidents/{incidentId}/replies/{replyId} (the `GetStatusIncidentReply` operationId).
+	GetStatusIncidentReplyWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, replyId StatusReplyId, params *GetStatusIncidentReplyParams, reqEditors ...RequestEditorFn) (*GetStatusIncidentReplyResponse, error)
+
 	// ReplyToStatusIncidentConversationsWithBodyWithResponse Reply to linked conversations
 	//
 	// Sends one reply, written once, to every linked conversation that is not closed and that the
 	// caller can see, and with `close` closes each afterwards. Each conversation gets its own job,
-	// which posts the reply through the normal reply path as the caller (a member, or an API key's
-	// bot), so it reaches the contact on the conversation's own channel (e-mail, chat or app) and
-	// fires the usual `message.created` and `conversation.updated` events and webhooks. A retried
-	// job never sends a conversation the reply twice; send `Idempotency-Key` to make a retried
-	// request safe as well.
+	// which posts the reply through the normal reply path as the caller (a member, an API key's
+	// bot or an OAuth grant), so it reaches the contact on the conversation's own channel
+	// (e-mail, chat or app) and fires the usual `message.created` and `conversation.updated`
+	// events and webhooks. The job checks the caller again when it runs: a revoked or expired key
+	// or grant, a removed member or a lost scope sends nothing. A retried job never sends a
+	// conversation the reply twice; send `Idempotency-Key` to make a retried request safe as well.
+	//
+	// The `202` carries the reply's `id`; `GET .../replies/{replyId}` reports what became of each
+	// conversation.
 	//
 	// API keys and MCP clients need the workspace to let them deliver messages
 	// (`403 bot_sending_disabled`). Agents with access to the page's inbox, owners, admins and API
@@ -68060,11 +68326,15 @@ type ClientWithResponsesInterface interface {
 	//
 	// Sends one reply, written once, to every linked conversation that is not closed and that the
 	// caller can see, and with `close` closes each afterwards. Each conversation gets its own job,
-	// which posts the reply through the normal reply path as the caller (a member, or an API key's
-	// bot), so it reaches the contact on the conversation's own channel (e-mail, chat or app) and
-	// fires the usual `message.created` and `conversation.updated` events and webhooks. A retried
-	// job never sends a conversation the reply twice; send `Idempotency-Key` to make a retried
-	// request safe as well.
+	// which posts the reply through the normal reply path as the caller (a member, an API key's
+	// bot or an OAuth grant), so it reaches the contact on the conversation's own channel
+	// (e-mail, chat or app) and fires the usual `message.created` and `conversation.updated`
+	// events and webhooks. The job checks the caller again when it runs: a revoked or expired key
+	// or grant, a removed member or a lost scope sends nothing. A retried job never sends a
+	// conversation the reply twice; send `Idempotency-Key` to make a retried request safe as well.
+	//
+	// The `202` carries the reply's `id`; `GET .../replies/{replyId}` reports what became of each
+	// conversation.
 	//
 	// API keys and MCP clients need the workspace to let them deliver messages
 	// (`403 bot_sending_disabled`). Agents with access to the page's inbox, owners, admins and API
@@ -89907,6 +90177,8 @@ type LinkStatusIncidentConversationResponse struct {
 	ApplicationproblemJSON403 *Problem
 	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
 	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
 }
 
 // GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
@@ -89922,6 +90194,11 @@ func (r LinkStatusIncidentConversationResponse) GetApplicationproblemJSON403() *
 // GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
 func (r LinkStatusIncidentConversationResponse) GetApplicationproblemJSON404() *Problem {
 	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r LinkStatusIncidentConversationResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
 }
 
 // GetBody returns the raw response body bytes
@@ -90009,6 +90286,75 @@ func (r PublishStatusIncidentResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r PublishStatusIncidentResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetStatusIncidentReplyResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StatusIncidentReplyReport
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetStatusIncidentReplyResponse) GetJSON200() *StatusIncidentReplyReport {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r GetStatusIncidentReplyResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetStatusIncidentReplyResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetStatusIncidentReplyResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetStatusIncidentReplyResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetStatusIncidentReplyResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetStatusIncidentReplyResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetStatusIncidentReplyResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetStatusIncidentReplyResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -100790,7 +101136,8 @@ func (c *ClientWithResponses) UnlinkStatusIncidentConversationWithResponse(ctx c
 // Links a conversation to the incident, so it is listed with it and reached by "Reply to
 // linked". A conversation may be linked to several incidents, also of other pages; linking it
 // twice is a no-op. The caller must see both the page's inbox and the conversation's inbox
-// (`404` otherwise).
+// (`404` otherwise, also when the incident or conversation was deleted meanwhile). An incident
+// takes at most 5,000 linked conversations (`422 too_many_links`, naming the limit).
 //
 // Agents with access to both inboxes, owners, admins and API keys. Scopes: `status:manage`
 // and `conversations:read`.
@@ -100824,15 +101171,43 @@ func (c *ClientWithResponses) PublishStatusIncidentWithResponse(ctx context.Cont
 	return ParsePublishStatusIncidentResponse(rsp)
 }
 
+// GetStatusIncidentReplyWithResponse Get what became of a reply to linked conversations
+//
+// The outcome of one "Reply to linked" request, per conversation: `pending` until its job
+// ran, then `sent`, `skipped` or `failed`, with a `reason`. Reasons of `skipped`: `closed` (the
+// conversation was closed before its turn), `unlinked`, `conversation_deleted`, `revoked` (the
+// caller's key, grant or membership ended before the job ran). Reasons of `failed` are the
+// problem `code` the reply path returned (`bot_sending_disabled`, `insufficient_scope`, ...),
+// or `gave_up` when the job kept failing. `counts` cover the conversations the caller can see,
+// and so do `items`, ordered by conversation id.
+//
+// Agents with access to the page's inbox, owners, admins and API keys. Scopes: `status:read`
+// and `conversations:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/status-pages/{pageId}/incidents/{incidentId}/replies/{replyId} (the `GetStatusIncidentReply` operationId).
+func (c *ClientWithResponses) GetStatusIncidentReplyWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, replyId StatusReplyId, params *GetStatusIncidentReplyParams, reqEditors ...RequestEditorFn) (*GetStatusIncidentReplyResponse, error) {
+	rsp, err := c.GetStatusIncidentReply(ctx, pageId, incidentId, replyId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetStatusIncidentReplyResponse(rsp)
+}
+
 // ReplyToStatusIncidentConversationsWithBodyWithResponse Reply to linked conversations
 //
 // Sends one reply, written once, to every linked conversation that is not closed and that the
 // caller can see, and with `close` closes each afterwards. Each conversation gets its own job,
-// which posts the reply through the normal reply path as the caller (a member, or an API key's
-// bot), so it reaches the contact on the conversation's own channel (e-mail, chat or app) and
-// fires the usual `message.created` and `conversation.updated` events and webhooks. A retried
-// job never sends a conversation the reply twice; send `Idempotency-Key` to make a retried
-// request safe as well.
+// which posts the reply through the normal reply path as the caller (a member, an API key's
+// bot or an OAuth grant), so it reaches the contact on the conversation's own channel
+// (e-mail, chat or app) and fires the usual `message.created` and `conversation.updated`
+// events and webhooks. The job checks the caller again when it runs: a revoked or expired key
+// or grant, a removed member or a lost scope sends nothing. A retried job never sends a
+// conversation the reply twice; send `Idempotency-Key` to make a retried request safe as well.
+//
+// The `202` carries the reply's `id`; `GET .../replies/{replyId}` reports what became of each
+// conversation.
 //
 // API keys and MCP clients need the workspace to let them deliver messages
 // (`403 bot_sending_disabled`). Agents with access to the page's inbox, owners, admins and API
@@ -100853,11 +101228,15 @@ func (c *ClientWithResponses) ReplyToStatusIncidentConversationsWithBodyWithResp
 //
 // Sends one reply, written once, to every linked conversation that is not closed and that the
 // caller can see, and with `close` closes each afterwards. Each conversation gets its own job,
-// which posts the reply through the normal reply path as the caller (a member, or an API key's
-// bot), so it reaches the contact on the conversation's own channel (e-mail, chat or app) and
-// fires the usual `message.created` and `conversation.updated` events and webhooks. A retried
-// job never sends a conversation the reply twice; send `Idempotency-Key` to make a retried
-// request safe as well.
+// which posts the reply through the normal reply path as the caller (a member, an API key's
+// bot or an OAuth grant), so it reaches the contact on the conversation's own channel
+// (e-mail, chat or app) and fires the usual `message.created` and `conversation.updated`
+// events and webhooks. The job checks the caller again when it runs: a revoked or expired key
+// or grant, a removed member or a lost scope sends nothing. A retried job never sends a
+// conversation the reply twice; send `Idempotency-Key` to make a retried request safe as well.
+//
+// The `202` carries the reply's `id`; `GET .../replies/{replyId}` reports what became of each
+// conversation.
 //
 // API keys and MCP clients need the workspace to let them deliver messages
 // (`403 bot_sending_disabled`). Agents with access to the page's inbox, owners, admins and API
@@ -118426,6 +118805,13 @@ func ParseLinkStatusIncidentConversationResponse(rsp *http.Response) (*LinkStatu
 		}
 		response.ApplicationproblemJSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
 	}
 
 	return response, nil
@@ -118451,6 +118837,60 @@ func ParsePublishStatusIncidentResponse(rsp *http.Response) (*PublishStatusIncid
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetStatusIncidentReplyResponse parses an HTTP response from a GetStatusIncidentReplyWithResponse call
+func ParseGetStatusIncidentReplyResponse(rsp *http.Response) (*GetStatusIncidentReplyResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetStatusIncidentReplyResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StatusIncidentReplyReport
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
 		var dest Problem

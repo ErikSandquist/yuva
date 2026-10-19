@@ -96,6 +96,22 @@ func (q *Queries) AddStatusIncidentComponent(ctx context.Context, arg AddStatusI
 	return err
 }
 
+const addStatusReplyTargets = `-- name: AddStatusReplyTargets :exec
+INSERT INTO status_incident_reply_targets (workspace_id, reply_id, conversation_id)
+SELECT $1, $2, unnest($3::uuid[])
+`
+
+type AddStatusReplyTargetsParams struct {
+	WorkspaceID     uuid.UUID
+	ReplyID         uuid.UUID
+	ConversationIds []uuid.UUID
+}
+
+func (q *Queries) AddStatusReplyTargets(ctx context.Context, arg AddStatusReplyTargetsParams) error {
+	_, err := q.db.Exec(ctx, addStatusReplyTargets, arg.WorkspaceID, arg.ReplyID, arg.ConversationIds)
+	return err
+}
+
 const clearStatusIncidentComponents = `-- name: ClearStatusIncidentComponents :exec
 DELETE FROM status_incident_components WHERE workspace_id = $1 AND incident_id = $2
 `
@@ -176,6 +192,69 @@ func (q *Queries) CountStatusComponents(ctx context.Context, arg CountStatusComp
 	var column_1 int64
 	err := row.Scan(&column_1)
 	return column_1, err
+}
+
+const countStatusIncidentConversations = `-- name: CountStatusIncidentConversations :one
+SELECT count(*)::int FROM status_incident_conversations WHERE workspace_id = $1 AND incident_id = $2
+`
+
+type CountStatusIncidentConversationsParams struct {
+	WorkspaceID uuid.UUID
+	IncidentID  uuid.UUID
+}
+
+func (q *Queries) CountStatusIncidentConversations(ctx context.Context, arg CountStatusIncidentConversationsParams) (int32, error) {
+	row := q.db.QueryRow(ctx, countStatusIncidentConversations, arg.WorkspaceID, arg.IncidentID)
+	var column_1 int32
+	err := row.Scan(&column_1)
+	return column_1, err
+}
+
+const countStatusReplyTargets = `-- name: CountStatusReplyTargets :many
+SELECT t.outcome, count(*)::int AS n FROM status_incident_reply_targets t
+JOIN conversations c ON c.workspace_id = t.workspace_id AND c.id = t.conversation_id
+WHERE t.workspace_id = $1 AND t.reply_id = $2
+  AND ($3::bool OR EXISTS (
+      SELECT 1 FROM inbox_viewers iv
+      WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = $4))
+GROUP BY t.outcome
+`
+
+type CountStatusReplyTargetsParams struct {
+	WorkspaceID uuid.UUID
+	ReplyID     uuid.UUID
+	AllInboxes  bool
+	ViewerID    uuid.UUID
+}
+
+type CountStatusReplyTargetsRow struct {
+	Outcome string
+	N       int32
+}
+
+func (q *Queries) CountStatusReplyTargets(ctx context.Context, arg CountStatusReplyTargetsParams) ([]CountStatusReplyTargetsRow, error) {
+	rows, err := q.db.Query(ctx, countStatusReplyTargets,
+		arg.WorkspaceID,
+		arg.ReplyID,
+		arg.AllInboxes,
+		arg.ViewerID,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []CountStatusReplyTargetsRow
+	for rows.Next() {
+		var i CountStatusReplyTargetsRow
+		if err := rows.Scan(&i.Outcome, &i.N); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 const createStatusComponent = `-- name: CreateStatusComponent :one
@@ -321,6 +400,60 @@ func (q *Queries) CreateStatusIncident(ctx context.Context, arg CreateStatusInci
 		&i.CreatedBy,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const createStatusIncidentReply = `-- name: CreateStatusIncidentReply :one
+INSERT INTO status_incident_replies (workspace_id, id, incident_id, body, close, member_id, api_key_id, grant_id, via, mcp_only, queued, created_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+RETURNING workspace_id, id, incident_id, body, close, member_id, api_key_id, grant_id, via, mcp_only, queued, created_at
+`
+
+type CreateStatusIncidentReplyParams struct {
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+	IncidentID  uuid.UUID
+	Body        string
+	Close       bool
+	MemberID    *uuid.UUID
+	ApiKeyID    *uuid.UUID
+	GrantID     *uuid.UUID
+	Via         string
+	McpOnly     bool
+	Queued      int32
+	CreatedAt   time.Time
+}
+
+func (q *Queries) CreateStatusIncidentReply(ctx context.Context, arg CreateStatusIncidentReplyParams) (StatusIncidentReply, error) {
+	row := q.db.QueryRow(ctx, createStatusIncidentReply,
+		arg.WorkspaceID,
+		arg.ID,
+		arg.IncidentID,
+		arg.Body,
+		arg.Close,
+		arg.MemberID,
+		arg.ApiKeyID,
+		arg.GrantID,
+		arg.Via,
+		arg.McpOnly,
+		arg.Queued,
+		arg.CreatedAt,
+	)
+	var i StatusIncidentReply
+	err := row.Scan(
+		&i.WorkspaceID,
+		&i.ID,
+		&i.IncidentID,
+		&i.Body,
+		&i.Close,
+		&i.MemberID,
+		&i.ApiKeyID,
+		&i.GrantID,
+		&i.Via,
+		&i.McpOnly,
+		&i.Queued,
+		&i.CreatedAt,
 	)
 	return i, err
 }
@@ -626,6 +759,32 @@ func (q *Queries) FindStatusPageBySlug(ctx context.Context, slug string) (Status
 	return i, err
 }
 
+const finishStatusReplyTarget = `-- name: FinishStatusReplyTarget :exec
+UPDATE status_incident_reply_targets SET outcome = $1, reason = $2, finished_at = $3
+WHERE workspace_id = $4 AND reply_id = $5 AND conversation_id = $6 AND outcome = 'pending'
+`
+
+type FinishStatusReplyTargetParams struct {
+	Outcome        string
+	Reason         *string
+	Now            *time.Time
+	WorkspaceID    uuid.UUID
+	ReplyID        uuid.UUID
+	ConversationID uuid.UUID
+}
+
+func (q *Queries) FinishStatusReplyTarget(ctx context.Context, arg FinishStatusReplyTargetParams) error {
+	_, err := q.db.Exec(ctx, finishStatusReplyTarget,
+		arg.Outcome,
+		arg.Reason,
+		arg.Now,
+		arg.WorkspaceID,
+		arg.ReplyID,
+		arg.ConversationID,
+	)
+	return err
+}
+
 const getInboxStatusPage = `-- name: GetInboxStatusPage :one
 SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at FROM status_pages WHERE workspace_id = $1 AND inbox_id = $2
 `
@@ -748,6 +907,36 @@ func (q *Queries) GetStatusIncident(ctx context.Context, arg GetStatusIncidentPa
 	return i, err
 }
 
+const getStatusIncidentReply = `-- name: GetStatusIncidentReply :one
+SELECT workspace_id, id, incident_id, body, close, member_id, api_key_id, grant_id, via, mcp_only, queued, created_at FROM status_incident_replies WHERE workspace_id = $1 AND incident_id = $2 AND id = $3
+`
+
+type GetStatusIncidentReplyParams struct {
+	WorkspaceID uuid.UUID
+	IncidentID  uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) GetStatusIncidentReply(ctx context.Context, arg GetStatusIncidentReplyParams) (StatusIncidentReply, error) {
+	row := q.db.QueryRow(ctx, getStatusIncidentReply, arg.WorkspaceID, arg.IncidentID, arg.ID)
+	var i StatusIncidentReply
+	err := row.Scan(
+		&i.WorkspaceID,
+		&i.ID,
+		&i.IncidentID,
+		&i.Body,
+		&i.Close,
+		&i.MemberID,
+		&i.ApiKeyID,
+		&i.GrantID,
+		&i.Via,
+		&i.McpOnly,
+		&i.Queued,
+		&i.CreatedAt,
+	)
+	return i, err
+}
+
 const getStatusPage = `-- name: GetStatusPage :one
 SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at FROM status_pages WHERE workspace_id = $1 AND id = $2
 `
@@ -779,6 +968,35 @@ func (q *Queries) GetStatusPage(ctx context.Context, arg GetStatusPageParams) (S
 		&i.ChangedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const getStatusReply = `-- name: GetStatusReply :one
+SELECT workspace_id, id, incident_id, body, close, member_id, api_key_id, grant_id, via, mcp_only, queued, created_at FROM status_incident_replies WHERE workspace_id = $1 AND id = $2
+`
+
+type GetStatusReplyParams struct {
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) GetStatusReply(ctx context.Context, arg GetStatusReplyParams) (StatusIncidentReply, error) {
+	row := q.db.QueryRow(ctx, getStatusReply, arg.WorkspaceID, arg.ID)
+	var i StatusIncidentReply
+	err := row.Scan(
+		&i.WorkspaceID,
+		&i.ID,
+		&i.IncidentID,
+		&i.Body,
+		&i.Close,
+		&i.MemberID,
+		&i.ApiKeyID,
+		&i.GrantID,
+		&i.Via,
+		&i.McpOnly,
+		&i.Queued,
+		&i.CreatedAt,
 	)
 	return i, err
 }
@@ -1420,6 +1638,66 @@ func (q *Queries) ListStatusPages(ctx context.Context, arg ListStatusPagesParams
 	return items, nil
 }
 
+const listStatusReplyTargetOutcomes = `-- name: ListStatusReplyTargetOutcomes :many
+SELECT t.conversation_id, t.outcome, t.reason, t.finished_at FROM status_incident_reply_targets t
+JOIN conversations c ON c.workspace_id = t.workspace_id AND c.id = t.conversation_id
+WHERE t.workspace_id = $1 AND t.reply_id = $2
+  AND ($3::bool OR EXISTS (
+      SELECT 1 FROM inbox_viewers iv
+      WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = $4))
+  AND ($5::uuid IS NULL OR t.conversation_id > $5::uuid)
+ORDER BY t.conversation_id
+LIMIT $6
+`
+
+type ListStatusReplyTargetOutcomesParams struct {
+	WorkspaceID uuid.UUID
+	ReplyID     uuid.UUID
+	AllInboxes  bool
+	ViewerID    uuid.UUID
+	CursorID    *uuid.UUID
+	Lim         int32
+}
+
+type ListStatusReplyTargetOutcomesRow struct {
+	ConversationID uuid.UUID
+	Outcome        string
+	Reason         *string
+	FinishedAt     *time.Time
+}
+
+func (q *Queries) ListStatusReplyTargetOutcomes(ctx context.Context, arg ListStatusReplyTargetOutcomesParams) ([]ListStatusReplyTargetOutcomesRow, error) {
+	rows, err := q.db.Query(ctx, listStatusReplyTargetOutcomes,
+		arg.WorkspaceID,
+		arg.ReplyID,
+		arg.AllInboxes,
+		arg.ViewerID,
+		arg.CursorID,
+		arg.Lim,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListStatusReplyTargetOutcomesRow
+	for rows.Next() {
+		var i ListStatusReplyTargetOutcomesRow
+		if err := rows.Scan(
+			&i.ConversationID,
+			&i.Outcome,
+			&i.Reason,
+			&i.FinishedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listStatusReplyTargets = `-- name: ListStatusReplyTargets :many
 SELECT c.id FROM status_incident_conversations l
 JOIN conversations c ON c.workspace_id = l.workspace_id AND c.id = l.conversation_id
@@ -1770,6 +2048,24 @@ func (q *Queries) StatusIncidentConversationLinked(ctx context.Context, arg Stat
 	var column_1 bool
 	err := row.Scan(&column_1)
 	return column_1, err
+}
+
+const statusReplyTargetOutcome = `-- name: StatusReplyTargetOutcome :one
+SELECT outcome FROM status_incident_reply_targets
+WHERE workspace_id = $1 AND reply_id = $2 AND conversation_id = $3
+`
+
+type StatusReplyTargetOutcomeParams struct {
+	WorkspaceID    uuid.UUID
+	ReplyID        uuid.UUID
+	ConversationID uuid.UUID
+}
+
+func (q *Queries) StatusReplyTargetOutcome(ctx context.Context, arg StatusReplyTargetOutcomeParams) (string, error) {
+	row := q.db.QueryRow(ctx, statusReplyTargetOutcome, arg.WorkspaceID, arg.ReplyID, arg.ConversationID)
+	var outcome string
+	err := row.Scan(&outcome)
+	return outcome, err
 }
 
 const statusSlugTaken = `-- name: StatusSlugTaken :one

@@ -184,6 +184,17 @@ func (s *Server) clientStream(conn *websocket.Conn, r *http.Request, cp contactP
 	if err := send(realtimeReady{Type: "ready", LastEventID: last}); err != nil {
 		return 0, "", err
 	}
+	if resumeFrom != nil {
+		frames, err := f.currentInboxFrame(ctx)
+		if err != nil {
+			return websocket.StatusInternalError, "internal", err
+		}
+		for _, fr := range frames {
+			if err := send(fr); err != nil {
+				return 0, "", err
+			}
+		}
+	}
 	if err := deliver(realtime.Event{Type: realtime.PresenceHint, WorkspaceID: cp.workspaceID}); err != nil {
 		return finish(err)
 	}
@@ -363,6 +374,17 @@ func (f *clientFilter) inboxFrames(ctx context.Context) ([]any, error) {
 	if first {
 		return nil, nil
 	}
+	return []any{oas.ClientInboxUpdatedEvent{Type: oas.ClientInboxUpdatedEventType(clientInboxFrame), CreatedAt: f.s.now(), Data: in}}, nil
+}
+
+// currentInboxFrame sends the inbox's settings and status as they are now, for a connection that
+// resumes: it cannot know which changes it missed while away, and replay carries none of them.
+func (f *clientFilter) currentInboxFrame(ctx context.Context) ([]any, error) {
+	in, err := f.s.clientInbox(ctx, f.s.st.Queries, f.inbox, f.chat)
+	if err != nil {
+		return nil, err
+	}
+	f.settings = mustJSON(in)
 	return []any{oas.ClientInboxUpdatedEvent{Type: oas.ClientInboxUpdatedEventType(clientInboxFrame), CreatedAt: f.s.now(), Data: in}}, nil
 }
 

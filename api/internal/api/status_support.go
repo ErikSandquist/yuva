@@ -6,10 +6,11 @@ import (
 	"errors"
 	"log/slog"
 	"net/http"
+	"strconv"
 	"strings"
-	"time"
 	"uuid"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/riverqueue/river"
 
 	"github.com/productdevbook/yuva/api/internal/oas"
@@ -19,7 +20,6 @@ import (
 
 const statusReplyAttempts = 8
 
-// clientStatus is the status line of an inbox's published page, nil when it has none.
 func (s *Server) clientStatus(ctx context.Context, q *store.Queries, inboxID, ws uuid.UUID) (*oas.ClientInboxStatus, error) {
 	pg, err := q.GetInboxStatusPage(ctx, store.GetInboxStatusPageParams{WorkspaceID: ws, InboxID: inboxID})
 	if store.IsNotFound(err) || (err == nil && !pg.Published) {
@@ -69,38 +69,45 @@ func (s *Server) statusHint(ctx context.Context, ws, inboxID uuid.UUID) {
 	s.signal(ctx, realtime.Event{Type: realtime.StatusHint, WorkspaceID: ws, InboxID: &inboxID, Data: json.RawMessage("{}")})
 }
 
-// statusLinkTargets finds an incident of a page and a conversation, both of which the caller must see.
 func statusLinkTargets(ctx context.Context, q *store.Queries, p principal, pageID, incidentID, conversationID uuid.UUID) (store.StatusIncident, store.Conversation, error) {
-	pg, err := visibleStatusPage(ctx, q, p, pageID, false)
+	pg, err := visibleStatusPage(ctx, q, p, pageID, true)
 	if err != nil {
 		return store.StatusIncident{}, store.Conversation{}, err
 	}
-	inc, err := q.GetStatusIncident(ctx, store.GetStatusIncidentParams{WorkspaceID: p.workspaceID, PageID: pg.ID, ID: incidentID})
-	if store.IsNotFound(err) {
-		return inc, store.Conversation{}, errStatusIncidentGone
-	}
+	inc, err := lockedStatusIncident(ctx, q, pg, incidentID)
 	if err != nil {
 		return inc, store.Conversation{}, err
 	}
-	c, err := visibleConversation(ctx, q, p, conversationID, false)
+	c, err := visibleConversation(ctx, q, p, conversationID, true)
 	return inc, c, err
-}
-
-// linkIncidentConversation links a conversation to an incident; linking twice keeps the first link.
-func linkIncidentConversation(ctx context.Context, q *store.Queries, ws, incidentID, conversationID uuid.UUID, member, key *uuid.UUID, now time.Time) error {
-	return q.LinkStatusIncidentConversation(ctx, store.LinkStatusIncidentConversationParams{
-		WorkspaceID: ws, IncidentID: incidentID, ConversationID: conversationID, LinkedByMemberID: member, LinkedByApiKeyID: key, Now: now,
-	})
 }
 
 func (s *Server) LinkStatusIncidentConversation(ctx context.Context, req oas.LinkStatusIncidentConversationRequestObject) (oas.LinkStatusIncidentConversationResponseObject, error) {
 	p := principalFrom(ctx)
-	inc, c, err := statusLinkTargets(ctx, s.st.Queries, p, req.PageId, req.IncidentId, req.ConversationId)
+	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, _ *eventBatch) error {
+		inc, c, err := statusLinkTargets(ctx, q, p, req.PageId, req.IncidentId, req.ConversationId)
+		if err != nil {
+			return err
+		}
+		linked, err := q.StatusIncidentConversationLinked(ctx, store.StatusIncidentConversationLinkedParams{
+			WorkspaceID: p.workspaceID, IncidentID: inc.ID, ConversationID: c.ID,
+		})
+		if err != nil || linked {
+			return err
+		}
+		n, err := q.CountStatusIncidentConversations(ctx, store.CountStatusIncidentConversationsParams{WorkspaceID: p.workspaceID, IncidentID: inc.ID})
+		if err != nil {
+			return err
+		}
+		if int(n) >= maxIncidentLinks {
+			return errTooManyLinks()
+		}
+		member, key := statusAuthor(p)
+		return q.LinkStatusIncidentConversation(ctx, store.LinkStatusIncidentConversationParams{
+			WorkspaceID: p.workspaceID, IncidentID: inc.ID, ConversationID: c.ID, LinkedByMemberID: member, LinkedByApiKeyID: key, Now: s.now(),
+		})
+	})
 	if err != nil {
-		return nil, err
-	}
-	member, key := statusAuthor(p)
-	if err := linkIncidentConversation(ctx, s.st.Queries, p.workspaceID, inc.ID, c.ID, member, key, s.now()); err != nil {
 		return nil, err
 	}
 	return oas.LinkStatusIncidentConversation204Response{}, nil
@@ -108,13 +115,16 @@ func (s *Server) LinkStatusIncidentConversation(ctx context.Context, req oas.Lin
 
 func (s *Server) UnlinkStatusIncidentConversation(ctx context.Context, req oas.UnlinkStatusIncidentConversationRequestObject) (oas.UnlinkStatusIncidentConversationResponseObject, error) {
 	p := principalFrom(ctx)
-	inc, c, err := statusLinkTargets(ctx, s.st.Queries, p, req.PageId, req.IncidentId, req.ConversationId)
+	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, _ *eventBatch) error {
+		inc, c, err := statusLinkTargets(ctx, q, p, req.PageId, req.IncidentId, req.ConversationId)
+		if err != nil {
+			return err
+		}
+		return q.UnlinkStatusIncidentConversation(ctx, store.UnlinkStatusIncidentConversationParams{
+			WorkspaceID: p.workspaceID, IncidentID: inc.ID, ConversationID: c.ID,
+		})
+	})
 	if err != nil {
-		return nil, err
-	}
-	if err := s.st.UnlinkStatusIncidentConversation(ctx, store.UnlinkStatusIncidentConversationParams{
-		WorkspaceID: p.workspaceID, IncidentID: inc.ID, ConversationID: c.ID,
-	}); err != nil {
 		return nil, err
 	}
 	return oas.UnlinkStatusIncidentConversation204Response{}, nil
@@ -204,20 +214,10 @@ func (s *Server) ListConversationIncidents(ctx context.Context, req oas.ListConv
 	return out, nil
 }
 
-// StatusReplyArgs posts one "Reply to linked" reply into one conversation as the member or API key
-// that asked for it. The message carries a client id made from ReplyID, so a retried job finds the
-// reply it already posted instead of sending it again.
 type StatusReplyArgs struct {
-	WorkspaceID    uuid.UUID  `json:"workspace_id"`
-	IncidentID     uuid.UUID  `json:"incident_id"`
-	ConversationID uuid.UUID  `json:"conversation_id"`
-	ReplyID        uuid.UUID  `json:"reply_id"`
-	Body           string     `json:"body"`
-	Close          bool       `json:"close,omitempty"`
-	MemberID       *uuid.UUID `json:"member_id,omitempty"`
-	APIKeyID       *uuid.UUID `json:"api_key_id,omitempty"`
-	Via            string     `json:"via,omitempty"`
-	MCPOnly        bool       `json:"mcp_only,omitempty"`
+	WorkspaceID    uuid.UUID `json:"workspace_id"`
+	ReplyID        uuid.UUID `json:"reply_id"`
+	ConversationID uuid.UUID `json:"conversation_id"`
 }
 
 func (StatusReplyArgs) Kind() string { return "status_reply" }
@@ -232,10 +232,39 @@ type statusReplyWorker struct {
 }
 
 func (w *statusReplyWorker) Work(ctx context.Context, job *river.Job[StatusReplyArgs]) error {
-	return w.s.RunStatusReply(ctx, job.Args)
+	err := w.s.RunStatusReply(ctx, job.Args)
+	if err != nil && job.Attempt >= job.MaxAttempts {
+		w.s.finishStatusReply(context.WithoutCancel(ctx), job.Args, outcomeFailed, reasonGaveUp)
+	}
+	return err
 }
 
+// A retried job finds the message it already posted through this client id instead of sending it again.
 func statusReplyClientID(reply uuid.UUID) string { return "status-reply:" + reply.String() }
+
+const (
+	outcomePending = "pending"
+	outcomeSent    = "sent"
+	outcomeSkipped = "skipped"
+	outcomeFailed  = "failed"
+
+	reasonClosed      = "closed"
+	reasonUnlinked    = "unlinked"
+	reasonConvDeleted = "conversation_deleted"
+	reasonRevoked     = "revoked"
+	reasonGaveUp      = "gave_up"
+)
+
+var (
+	maxIncidentLinks     = 5000
+	statusReplyBatchSize = 500
+)
+
+func errTooManyLinks() *apiError {
+	return problem(http.StatusUnprocessableEntity, "too_many_links", "an incident takes at most "+strconv.Itoa(maxIncidentLinks)+" linked conversations")
+}
+
+var errStatusReplyGone = problem(http.StatusNotFound, "not_found", "no such reply")
 
 func (s *Server) ReplyToStatusIncidentConversations(ctx context.Context, req oas.ReplyToStatusIncidentConversationsRequestObject) (oas.ReplyToStatusIncidentConversationsResponseObject, error) {
 	p := principalFrom(ctx)
@@ -258,8 +287,8 @@ func (s *Server) ReplyToStatusIncidentConversations(ctx context.Context, req oas
 	if strings.TrimSpace(b.Body) == "" {
 		return nil, errValidation("body is required")
 	}
-	var queued int32
-	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, ev *eventBatch) error {
+	var reply store.StatusIncidentReply
+	err := s.st.InTxRaw(ctx, func(tx pgx.Tx, q *store.Queries) error {
 		inc, err := visibleStatusIncident(ctx, q, p, req.PageId, req.IncidentId)
 		if err != nil {
 			return err
@@ -271,36 +300,113 @@ func (s *Server) ReplyToStatusIncidentConversations(ctx context.Context, req oas
 			return err
 		}
 		member, key := statusAuthor(p)
-		reply := newID()
-		for _, id := range ids {
-			ev.job(StatusReplyArgs{
-				WorkspaceID: p.workspaceID, IncidentID: inc.ID, ConversationID: id, ReplyID: reply, Body: b.Body, Close: closeAfter,
-				MemberID: member, APIKeyID: key, Via: p.via, MCPOnly: p.mcpOnly,
-			}, nil)
+		var grant *uuid.UUID
+		if p.isGrant() {
+			g := p.grantID
+			grant = &g
 		}
-		queued = int32(len(ids))
+		reply, err = q.CreateStatusIncidentReply(ctx, store.CreateStatusIncidentReplyParams{
+			WorkspaceID: p.workspaceID, ID: newID(), IncidentID: inc.ID, Body: b.Body, Close: closeAfter, MemberID: member, ApiKeyID: key,
+			GrantID: grant, Via: p.via, McpOnly: p.mcpOnly, Queued: int32(len(ids)), CreatedAt: s.now(),
+		})
+		if err != nil {
+			return err
+		}
+		for len(ids) > 0 {
+			batch := ids[:min(statusReplyBatchSize, len(ids))]
+			ids = ids[len(batch):]
+			if err := q.AddStatusReplyTargets(ctx, store.AddStatusReplyTargetsParams{WorkspaceID: p.workspaceID, ReplyID: reply.ID, ConversationIds: batch}); err != nil {
+				return err
+			}
+			jobs := make([]river.InsertManyParams, len(batch))
+			for i, id := range batch {
+				jobs[i] = river.InsertManyParams{Args: StatusReplyArgs{WorkspaceID: p.workspaceID, ReplyID: reply.ID, ConversationID: id}}
+			}
+			if _, err := s.jobs.InsertManyTx(ctx, tx, jobs); err != nil {
+				return err
+			}
+		}
 		return nil
 	})
 	if err != nil {
 		return nil, err
 	}
-	return oas.ReplyToStatusIncidentConversations202JSONResponse{Queued: queued}, nil
+	return oas.ReplyToStatusIncidentConversations202JSONResponse{Id: reply.ID, Queued: reply.Queued}, nil
 }
 
-// statusReplyPrincipal is the member or API key a reply job acts as, as it is now: a member who left
-// or a key that was revoked or expired sends nothing.
-func (s *Server) statusReplyPrincipal(ctx context.Context, a StatusReplyArgs) (principal, bool, error) {
-	ws, err := s.st.GetWorkspace(ctx, a.WorkspaceID)
+func (s *Server) GetStatusIncidentReply(ctx context.Context, req oas.GetStatusIncidentReplyRequestObject) (oas.GetStatusIncidentReplyResponseObject, error) {
+	p := principalFrom(ctx)
+	limit, err := pageSize(req.Params.Limit)
+	if err != nil {
+		return nil, err
+	}
+	_, after, err := decodeCursor(req.Params.Cursor)
+	if err != nil {
+		return nil, err
+	}
+	inc, err := visibleStatusIncident(ctx, s.st.Queries, p, req.PageId, req.IncidentId)
+	if err != nil {
+		return nil, err
+	}
+	reply, err := s.st.GetStatusIncidentReply(ctx, store.GetStatusIncidentReplyParams{WorkspaceID: p.workspaceID, IncidentID: inc.ID, ID: req.ReplyId})
+	if store.IsNotFound(err) {
+		return nil, errStatusReplyGone
+	}
+	if err != nil {
+		return nil, err
+	}
+	counts, err := s.st.CountStatusReplyTargets(ctx, store.CountStatusReplyTargetsParams{
+		WorkspaceID: p.workspaceID, ReplyID: reply.ID, AllInboxes: p.seesAllInboxes(), ViewerID: p.viewerID(),
+	})
+	if err != nil {
+		return nil, err
+	}
+	rows, err := s.st.ListStatusReplyTargetOutcomes(ctx, store.ListStatusReplyTargetOutcomesParams{
+		WorkspaceID: p.workspaceID, ReplyID: reply.ID, AllInboxes: p.seesAllInboxes(), ViewerID: p.viewerID(), CursorID: after, Lim: limit + 1,
+	})
+	if err != nil {
+		return nil, err
+	}
+	out := oas.GetStatusIncidentReply200JSONResponse{
+		Id: reply.ID, IncidentId: reply.IncidentID, Close: reply.Close, Queued: reply.Queued, CreatedAt: reply.CreatedAt, Items: []oas.StatusIncidentReplyTarget{},
+	}
+	for _, c := range counts {
+		switch c.Outcome {
+		case outcomePending:
+			out.Counts.Pending = c.N
+		case outcomeSent:
+			out.Counts.Sent = c.N
+		case outcomeSkipped:
+			out.Counts.Skipped = c.N
+		case outcomeFailed:
+			out.Counts.Failed = c.N
+		}
+	}
+	if len(rows) > int(limit) {
+		rows = rows[:limit]
+		cur := encodeCursor(reply.CreatedAt, rows[len(rows)-1].ConversationID)
+		out.NextCursor = &cur
+	}
+	for _, r := range rows {
+		out.Items = append(out.Items, oas.StatusIncidentReplyTarget{
+			ConversationId: r.ConversationID, Outcome: oas.StatusIncidentReplyOutcome(r.Outcome), Reason: r.Reason, FinishedAt: r.FinishedAt,
+		})
+	}
+	return out, nil
+}
+
+func (s *Server) statusReplyPrincipal(ctx context.Context, reply store.StatusIncidentReply) (principal, bool, error) {
+	ws, err := s.st.GetWorkspace(ctx, reply.WorkspaceID)
 	if store.IsNotFound(err) || (err == nil && ws.DeletedAt != nil) {
 		return principal{}, false, nil
 	}
 	if err != nil {
 		return principal{}, false, err
 	}
-	p := principal{workspaceID: a.WorkspaceID, via: a.Via, mcpOnly: a.MCPOnly, botsMaySend: ws.BotsMaySend, broadcastsByKeys: ws.BroadcastsByKeys}
+	p := principal{workspaceID: reply.WorkspaceID, via: reply.Via, mcpOnly: reply.McpOnly, botsMaySend: ws.BotsMaySend, broadcastsByKeys: ws.BroadcastsByKeys}
 	switch {
-	case a.APIKeyID != nil:
-		k, err := s.st.GetAPIKey(ctx, store.GetAPIKeyParams{WorkspaceID: a.WorkspaceID, ID: *a.APIKeyID})
+	case reply.ApiKeyID != nil:
+		k, err := s.st.GetAPIKey(ctx, store.GetAPIKeyParams{WorkspaceID: reply.WorkspaceID, ID: *reply.ApiKeyID})
 		if store.IsNotFound(err) {
 			return p, false, nil
 		}
@@ -311,8 +417,8 @@ func (s *Server) statusReplyPrincipal(ctx context.Context, a StatusReplyArgs) (p
 			return p, false, nil
 		}
 		p.keyID, p.scopes, p.limited = k.ID, k.Scopes, k.InboxLimited
-	case a.MemberID != nil:
-		m, err := s.st.GetMember(ctx, store.GetMemberParams{WorkspaceID: a.WorkspaceID, ID: *a.MemberID})
+	case reply.MemberID != nil:
+		m, err := s.st.GetMember(ctx, store.GetMemberParams{WorkspaceID: reply.WorkspaceID, ID: *reply.MemberID})
 		if store.IsNotFound(err) {
 			return p, false, nil
 		}
@@ -320,48 +426,111 @@ func (s *Server) statusReplyPrincipal(ctx context.Context, a StatusReplyArgs) (p
 			return p, false, err
 		}
 		p.memberID, p.role = m.ID, m.Role
+		if reply.GrantID != nil {
+			g, err := s.st.GetOAuthGrant(ctx, store.GetOAuthGrantParams{WorkspaceID: reply.WorkspaceID, ID: *reply.GrantID})
+			if store.IsNotFound(err) {
+				return p, false, nil
+			}
+			if err != nil {
+				return p, false, err
+			}
+			p.grantID, p.scopes = g.ID, g.Scopes
+		}
 	default:
 		return p, false, nil
 	}
 	return p, true, nil
 }
 
-// RunStatusReply posts the reply through the normal reply path, so it goes out on the conversation's
-// own channel, then closes the conversation when asked. A conversation closed before its turn gets nothing.
-func (s *Server) RunStatusReply(ctx context.Context, a StatusReplyArgs) error {
-	p, ok, err := s.statusReplyPrincipal(ctx, a)
-	if err != nil || !ok {
-		return err
+func (s *Server) finishStatusReply(ctx context.Context, a StatusReplyArgs, outcome, reason string) {
+	var r *string
+	if reason != "" {
+		r = &reason
 	}
-	c, err := s.st.GetConversation(ctx, store.GetConversationParams{WorkspaceID: a.WorkspaceID, ID: a.ConversationID})
+	now := s.now()
+	err := s.st.FinishStatusReplyTarget(ctx, store.FinishStatusReplyTargetParams{
+		WorkspaceID: a.WorkspaceID, ReplyID: a.ReplyID, ConversationID: a.ConversationID, Outcome: outcome, Reason: r, Now: &now,
+	})
+	if err != nil {
+		s.log.WarnContext(ctx, "status reply outcome not recorded", slog.String("conversation_id", a.ConversationID.String()), slog.Any("error", err))
+	}
+}
+
+func (s *Server) RunStatusReply(ctx context.Context, a StatusReplyArgs) error {
+	pending, err := s.st.StatusReplyTargetOutcome(ctx, store.StatusReplyTargetOutcomeParams{WorkspaceID: a.WorkspaceID, ReplyID: a.ReplyID, ConversationID: a.ConversationID})
 	if store.IsNotFound(err) {
 		return nil
 	}
+	if err != nil || pending != outcomePending {
+		return err
+	}
+	outcome, reason, err := s.sendStatusReply(ctx, a)
 	if err != nil {
 		return err
 	}
+	s.finishStatusReply(ctx, a, outcome, reason)
+	return nil
+}
+
+func (s *Server) sendStatusReply(ctx context.Context, a StatusReplyArgs) (outcome, reason string, err error) {
+	reply, err := s.st.GetStatusReply(ctx, store.GetStatusReplyParams{WorkspaceID: a.WorkspaceID, ID: a.ReplyID})
+	if store.IsNotFound(err) {
+		return outcomeSkipped, reasonConvDeleted, nil
+	}
+	if err != nil {
+		return "", "", err
+	}
+	p, ok, err := s.statusReplyPrincipal(ctx, reply)
+	if err != nil {
+		return "", "", err
+	}
+	if !ok {
+		return outcomeSkipped, reasonRevoked, nil
+	}
+	needs := []oas.ApiKeyScope{oas.StatusManage, oas.MessagesWrite}
+	if reply.Close {
+		needs = append(needs, oas.ConversationsWrite)
+	}
+	for _, sc := range needs {
+		if err := requireScope(p, sc); err != nil {
+			return outcomeFailed, err.(*apiError).Code, nil
+		}
+	}
+	c, err := s.st.GetConversation(ctx, store.GetConversationParams{WorkspaceID: a.WorkspaceID, ID: a.ConversationID})
+	if store.IsNotFound(err) {
+		return outcomeSkipped, reasonConvDeleted, nil
+	}
+	if err != nil {
+		return "", "", err
+	}
 	if c.Status == string(oas.ConversationStatusClosed) {
-		return nil
+		return outcomeSkipped, reasonClosed, nil
 	}
 	linked, err := s.st.StatusIncidentConversationLinked(ctx, store.StatusIncidentConversationLinkedParams{
-		WorkspaceID: a.WorkspaceID, IncidentID: a.IncidentID, ConversationID: a.ConversationID,
+		WorkspaceID: a.WorkspaceID, IncidentID: reply.IncidentID, ConversationID: a.ConversationID,
 	})
-	if err != nil || !linked {
-		return err
+	if err != nil {
+		return "", "", err
+	}
+	if !linked {
+		return outcomeSkipped, reasonUnlinked, nil
 	}
 	clientID := statusReplyClientID(a.ReplyID)
 	actx := context.WithValue(ctx, principalKey, p)
 	_, err = s.CreateMessage(actx, oas.CreateMessageRequestObject{ConversationId: a.ConversationID, JSONBody: &oas.CreateMessageJSONRequestBody{
-		Kind: oas.MessageCreateKindMessage, Body: &a.Body, ClientId: &clientID,
+		Kind: oas.MessageCreateKindMessage, Body: &reply.Body, ClientId: &clientID,
 	}})
-	if err == nil && a.Close {
+	if err == nil && reply.Close {
 		closed := oas.ConversationStatusClosed
 		_, err = s.UpdateConversation(actx, oas.UpdateConversationRequestObject{ConversationId: a.ConversationID, Body: &oas.ConversationUpdate{Status: &closed}})
 	}
 	var e *apiError
 	if errors.As(err, &e) && e.Status < 500 && e.Status != http.StatusTooManyRequests && e.Status != http.StatusConflict {
 		s.log.WarnContext(ctx, "status reply not sent", slog.String("conversation_id", a.ConversationID.String()), slog.String("code", e.Code))
-		return nil
+		return outcomeFailed, e.Code, nil
 	}
-	return err
+	if err != nil {
+		return "", "", err
+	}
+	return outcomeSent, "", nil
 }
