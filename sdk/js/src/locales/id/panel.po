@@ -44,6 +44,10 @@ msgid "Comment"
 msgstr "Komentar"
 
 #: src/panel/chat.ts
+msgid "Completed"
+msgstr "Selesai"
+
+#: src/panel/chat.ts
 msgid "Conversation"
 msgstr "Percakapan"
 
@@ -54,6 +58,10 @@ msgstr "Alamat e-mail Anda tidak dapat disimpan. Coba lagi."
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Penilaian Anda tidak dapat dikirim. Coba lagi."
+
+#: src/panel/chat.ts
+msgid "Dismiss"
+msgstr "Tutup"
 
 #: src/panel/chat.ts
 msgid "E-mail address"
@@ -72,6 +80,18 @@ msgid "How did we do?"
 msgstr "Bagaimana pelayanan kami?"
 
 #: src/panel/chat.ts
+msgid "Identified"
+msgstr "Penyebab teridentifikasi"
+
+#: src/panel/chat.ts
+msgid "In progress"
+msgstr "Sedang berlangsung"
+
+#: src/panel/chat.ts
+msgid "Investigating"
+msgstr "Sedang diselidiki"
+
+#: src/panel/chat.ts
 msgid "Loading…"
 msgstr "Memuat…"
 
@@ -82,6 +102,10 @@ msgstr "Pesan"
 #: src/panel/chat.ts
 msgid "Messages"
 msgstr "Pesan"
+
+#: src/panel/chat.ts
+msgid "Monitoring"
+msgstr "Sedang dipantau"
 
 #: src/panel/chat.ts
 msgid "New conversation"
@@ -123,6 +147,10 @@ msgstr "Coba lagi"
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Simpan"
+
+#: src/panel/chat.ts
+msgid "Scheduled"
+msgstr "Dijadwalkan"
 
 #: src/panel/chat.ts
 msgid "Seen"

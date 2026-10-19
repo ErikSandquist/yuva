@@ -44,6 +44,10 @@ msgid "Comment"
 msgstr "תגובה"
 
 #: src/panel/chat.ts
+msgid "Completed"
+msgstr "הושלם"
+
+#: src/panel/chat.ts
 msgid "Conversation"
 msgstr "שיחה"
 
@@ -54,6 +58,10 @@ msgstr "לא ניתן היה לשמור את כתובת האימייל שלכם.
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "לא ניתן היה לשלוח את הדירוג שלכם. נסו שוב."
+
+#: src/panel/chat.ts
+msgid "Dismiss"
+msgstr "סגירה"
 
 #: src/panel/chat.ts
 msgid "E-mail address"
@@ -72,6 +80,18 @@ msgid "How did we do?"
 msgstr "איך היינו?"
 
 #: src/panel/chat.ts
+msgid "Identified"
+msgstr "הסיבה זוהתה"
+
+#: src/panel/chat.ts
+msgid "In progress"
+msgstr "בתהליך"
+
+#: src/panel/chat.ts
+msgid "Investigating"
+msgstr "בבדיקה"
+
+#: src/panel/chat.ts
 msgid "Loading…"
 msgstr "טוען…"
 
@@ -82,6 +102,10 @@ msgstr "הודעה"
 #: src/panel/chat.ts
 msgid "Messages"
 msgstr "הודעות"
+
+#: src/panel/chat.ts
+msgid "Monitoring"
+msgstr "במעקב"
 
 #: src/panel/chat.ts
 msgid "New conversation"
@@ -123,6 +147,10 @@ msgstr "נסו שוב"
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "שמירה"
+
+#: src/panel/chat.ts
+msgid "Scheduled"
+msgstr "מתוזמן"
 
 #: src/panel/chat.ts
 msgid "Seen"

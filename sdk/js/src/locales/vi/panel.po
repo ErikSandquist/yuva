@@ -44,6 +44,10 @@ msgid "Comment"
 msgstr "Bình luận"
 
 #: src/panel/chat.ts
+msgid "Completed"
+msgstr "Đã hoàn tất"
+
+#: src/panel/chat.ts
 msgid "Conversation"
 msgstr "Cuộc trò chuyện"
 
@@ -54,6 +58,10 @@ msgstr "Không thể lưu địa chỉ email của bạn. Hãy thử lại."
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Không thể gửi đánh giá của bạn. Hãy thử lại."
+
+#: src/panel/chat.ts
+msgid "Dismiss"
+msgstr "Đóng"
 
 #: src/panel/chat.ts
 msgid "E-mail address"
@@ -72,6 +80,18 @@ msgid "How did we do?"
 msgstr "Chúng tôi phục vụ thế nào?"
 
 #: src/panel/chat.ts
+msgid "Identified"
+msgstr "Đã xác định nguyên nhân"
+
+#: src/panel/chat.ts
+msgid "In progress"
+msgstr "Đang diễn ra"
+
+#: src/panel/chat.ts
+msgid "Investigating"
+msgstr "Đang điều tra"
+
+#: src/panel/chat.ts
 msgid "Loading…"
 msgstr "Đang tải…"
 
@@ -82,6 +102,10 @@ msgstr "Tin nhắn"
 #: src/panel/chat.ts
 msgid "Messages"
 msgstr "Tin nhắn"
+
+#: src/panel/chat.ts
+msgid "Monitoring"
+msgstr "Đang theo dõi"
 
 #: src/panel/chat.ts
 msgid "New conversation"
@@ -123,6 +147,10 @@ msgstr "Thử lại"
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Lưu"
+
+#: src/panel/chat.ts
+msgid "Scheduled"
+msgstr "Đã lên lịch"
 
 #: src/panel/chat.ts
 msgid "Seen"

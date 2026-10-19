@@ -44,6 +44,10 @@ msgid "Comment"
 msgstr "Komentar"
 
 #: src/panel/chat.ts
+msgid "Completed"
+msgstr "Završeno"
+
+#: src/panel/chat.ts
 msgid "Conversation"
 msgstr "Razgovor"
 
@@ -54,6 +58,10 @@ msgstr "Vašu e-adresu nije bilo moguće spremiti. Pokušajte ponovno."
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Vašu ocjenu nije bilo moguće poslati. Pokušajte ponovno."
+
+#: src/panel/chat.ts
+msgid "Dismiss"
+msgstr "Odbaci"
 
 #: src/panel/chat.ts
 msgid "E-mail address"
@@ -72,6 +80,18 @@ msgid "How did we do?"
 msgstr "Kako smo prošli?"
 
 #: src/panel/chat.ts
+msgid "Identified"
+msgstr "Uzrok utvrđen"
+
+#: src/panel/chat.ts
+msgid "In progress"
+msgstr "U tijeku"
+
+#: src/panel/chat.ts
+msgid "Investigating"
+msgstr "Istražujemo"
+
+#: src/panel/chat.ts
 msgid "Loading…"
 msgstr "Učitavanje…"
 
@@ -82,6 +102,10 @@ msgstr "Poruka"
 #: src/panel/chat.ts
 msgid "Messages"
 msgstr "Poruke"
+
+#: src/panel/chat.ts
+msgid "Monitoring"
+msgstr "Pratimo"
 
 #: src/panel/chat.ts
 msgid "New conversation"
@@ -123,6 +147,10 @@ msgstr "Pokušaj ponovno"
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Spremi"
+
+#: src/panel/chat.ts
+msgid "Scheduled"
+msgstr "Planirano"
 
 #: src/panel/chat.ts
 msgid "Seen"

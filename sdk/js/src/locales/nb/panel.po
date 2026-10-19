@@ -44,6 +44,10 @@ msgid "Comment"
 msgstr "Kommentar"
 
 #: src/panel/chat.ts
+msgid "Completed"
+msgstr "Fullført"
+
+#: src/panel/chat.ts
 msgid "Conversation"
 msgstr "Samtale"
 
@@ -54,6 +58,10 @@ msgstr "E-postadressen din kunne ikke lagres. Prøv igjen."
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Vurderingen din kunne ikke sendes. Prøv igjen."
+
+#: src/panel/chat.ts
+msgid "Dismiss"
+msgstr "Lukk"
 
 #: src/panel/chat.ts
 msgid "E-mail address"
@@ -72,6 +80,18 @@ msgid "How did we do?"
 msgstr "Hvordan gikk det?"
 
 #: src/panel/chat.ts
+msgid "Identified"
+msgstr "Årsak funnet"
+
+#: src/panel/chat.ts
+msgid "In progress"
+msgstr "Pågår"
+
+#: src/panel/chat.ts
+msgid "Investigating"
+msgstr "Undersøker"
+
+#: src/panel/chat.ts
 msgid "Loading…"
 msgstr "Laster…"
 
@@ -82,6 +102,10 @@ msgstr "Melding"
 #: src/panel/chat.ts
 msgid "Messages"
 msgstr "Meldinger"
+
+#: src/panel/chat.ts
+msgid "Monitoring"
+msgstr "Overvåker"
 
 #: src/panel/chat.ts
 msgid "New conversation"
@@ -123,6 +147,10 @@ msgstr "Prøv igjen"
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Lagre"
+
+#: src/panel/chat.ts
+msgid "Scheduled"
+msgstr "Planlagt"
 
 #: src/panel/chat.ts
 msgid "Seen"

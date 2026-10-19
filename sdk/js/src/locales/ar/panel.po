@@ -44,6 +44,10 @@ msgid "Comment"
 msgstr "تعليق"
 
 #: src/panel/chat.ts
+msgid "Completed"
+msgstr "اكتمل"
+
+#: src/panel/chat.ts
 msgid "Conversation"
 msgstr "المحادثة"
 
@@ -54,6 +58,10 @@ msgstr "تعذّر حفظ بريدك الإلكتروني. حاول مرة أخ�
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "تعذّر إرسال تقييمك. حاول مرة أخرى."
+
+#: src/panel/chat.ts
+msgid "Dismiss"
+msgstr "تجاهل"
 
 #: src/panel/chat.ts
 msgid "E-mail address"
@@ -72,6 +80,18 @@ msgid "How did we do?"
 msgstr "كيف كانت تجربتك معنا؟"
 
 #: src/panel/chat.ts
+msgid "Identified"
+msgstr "تم تحديد السبب"
+
+#: src/panel/chat.ts
+msgid "In progress"
+msgstr "قيد التنفيذ"
+
+#: src/panel/chat.ts
+msgid "Investigating"
+msgstr "قيد التحقيق"
+
+#: src/panel/chat.ts
 msgid "Loading…"
 msgstr "جارٍ التحميل…"
 
@@ -82,6 +102,10 @@ msgstr "رسالة"
 #: src/panel/chat.ts
 msgid "Messages"
 msgstr "الرسائل"
+
+#: src/panel/chat.ts
+msgid "Monitoring"
+msgstr "قيد المراقبة"
 
 #: src/panel/chat.ts
 msgid "New conversation"
@@ -123,6 +147,10 @@ msgstr "إعادة المحاولة"
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "حفظ"
+
+#: src/panel/chat.ts
+msgid "Scheduled"
+msgstr "مجدول"
 
 #: src/panel/chat.ts
 msgid "Seen"

@@ -44,6 +44,10 @@ msgid "Comment"
 msgstr "留言"
 
 #: src/panel/chat.ts
+msgid "Completed"
+msgstr "已完成"
+
+#: src/panel/chat.ts
 msgid "Conversation"
 msgstr "對話"
 
@@ -54,6 +58,10 @@ msgstr "無法儲存您的電子郵件地址。請再試一次。"
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "無法傳送您的評價。請再試一次。"
+
+#: src/panel/chat.ts
+msgid "Dismiss"
+msgstr "關閉"
 
 #: src/panel/chat.ts
 msgid "E-mail address"
@@ -72,6 +80,18 @@ msgid "How did we do?"
 msgstr "我們表現得如何?"
 
 #: src/panel/chat.ts
+msgid "Identified"
+msgstr "已確定原因"
+
+#: src/panel/chat.ts
+msgid "In progress"
+msgstr "進行中"
+
+#: src/panel/chat.ts
+msgid "Investigating"
+msgstr "調查中"
+
+#: src/panel/chat.ts
 msgid "Loading…"
 msgstr "載入中…"
 
@@ -82,6 +102,10 @@ msgstr "訊息"
 #: src/panel/chat.ts
 msgid "Messages"
 msgstr "訊息"
+
+#: src/panel/chat.ts
+msgid "Monitoring"
+msgstr "監控中"
 
 #: src/panel/chat.ts
 msgid "New conversation"
@@ -123,6 +147,10 @@ msgstr "重試"
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "儲存"
+
+#: src/panel/chat.ts
+msgid "Scheduled"
+msgstr "已排定"
 
 #: src/panel/chat.ts
 msgid "Seen"

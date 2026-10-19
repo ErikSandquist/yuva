@@ -44,6 +44,10 @@ msgid "Comment"
 msgstr "Comentari"
 
 #: src/panel/chat.ts
+msgid "Completed"
+msgstr "Completat"
+
+#: src/panel/chat.ts
 msgid "Conversation"
 msgstr "Conversa"
 
@@ -54,6 +58,10 @@ msgstr "No s'ha pogut desar el teu correu electrònic. Torna-ho a provar."
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "No s'ha pogut enviar la teva valoració. Torna-ho a provar."
+
+#: src/panel/chat.ts
+msgid "Dismiss"
+msgstr "Descarta"
 
 #: src/panel/chat.ts
 msgid "E-mail address"
@@ -72,6 +80,18 @@ msgid "How did we do?"
 msgstr "Com ho hem fet?"
 
 #: src/panel/chat.ts
+msgid "Identified"
+msgstr "Causa identificada"
+
+#: src/panel/chat.ts
+msgid "In progress"
+msgstr "En curs"
+
+#: src/panel/chat.ts
+msgid "Investigating"
+msgstr "Investigant"
+
+#: src/panel/chat.ts
 msgid "Loading…"
 msgstr "Carregant…"
 
@@ -82,6 +102,10 @@ msgstr "Missatge"
 #: src/panel/chat.ts
 msgid "Messages"
 msgstr "Missatges"
+
+#: src/panel/chat.ts
+msgid "Monitoring"
+msgstr "En seguiment"
 
 #: src/panel/chat.ts
 msgid "New conversation"
@@ -123,6 +147,10 @@ msgstr "Torna-ho a provar"
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Desa"
+
+#: src/panel/chat.ts
+msgid "Scheduled"
+msgstr "Programat"
 
 #: src/panel/chat.ts
 msgid "Seen"

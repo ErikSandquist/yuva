@@ -44,6 +44,10 @@ msgid "Comment"
 msgstr "ความคิดเห็น"
 
 #: src/panel/chat.ts
+msgid "Completed"
+msgstr "เสร็จสิ้น"
+
+#: src/panel/chat.ts
 msgid "Conversation"
 msgstr "การสนทนา"
 
@@ -54,6 +58,10 @@ msgstr "ไม่สามารถบันทึกอีเมลของค
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "ไม่สามารถส่งคะแนนของคุณได้ โปรดลองอีกครั้ง"
+
+#: src/panel/chat.ts
+msgid "Dismiss"
+msgstr "ปิด"
 
 #: src/panel/chat.ts
 msgid "E-mail address"
@@ -72,6 +80,18 @@ msgid "How did we do?"
 msgstr "เราทำได้ดีแค่ไหน"
 
 #: src/panel/chat.ts
+msgid "Identified"
+msgstr "พบสาเหตุแล้ว"
+
+#: src/panel/chat.ts
+msgid "In progress"
+msgstr "กำลังดำเนินการ"
+
+#: src/panel/chat.ts
+msgid "Investigating"
+msgstr "กำลังตรวจสอบ"
+
+#: src/panel/chat.ts
 msgid "Loading…"
 msgstr "กำลังโหลด…"
 
@@ -82,6 +102,10 @@ msgstr "ข้อความ"
 #: src/panel/chat.ts
 msgid "Messages"
 msgstr "ข้อความ"
+
+#: src/panel/chat.ts
+msgid "Monitoring"
+msgstr "กำลังเฝ้าติดตาม"
 
 #: src/panel/chat.ts
 msgid "New conversation"
@@ -123,6 +147,10 @@ msgstr "ลองอีกครั้ง"
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "บันทึก"
+
+#: src/panel/chat.ts
+msgid "Scheduled"
+msgstr "กำหนดไว้"
 
 #: src/panel/chat.ts
 msgid "Seen"

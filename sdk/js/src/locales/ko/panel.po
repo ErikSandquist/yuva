@@ -44,6 +44,10 @@ msgid "Comment"
 msgstr "댓글"
 
 #: src/panel/chat.ts
+msgid "Completed"
+msgstr "완료"
+
+#: src/panel/chat.ts
 msgid "Conversation"
 msgstr "대화"
 
@@ -54,6 +58,10 @@ msgstr "이메일 주소를 저장하지 못했습니다. 다시 시도해 주�
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "평가를 보내지 못했습니다. 다시 시도해 주세요."
+
+#: src/panel/chat.ts
+msgid "Dismiss"
+msgstr "닫기"
 
 #: src/panel/chat.ts
 msgid "E-mail address"
@@ -72,6 +80,18 @@ msgid "How did we do?"
 msgstr "어떠셨나요?"
 
 #: src/panel/chat.ts
+msgid "Identified"
+msgstr "원인 파악됨"
+
+#: src/panel/chat.ts
+msgid "In progress"
+msgstr "진행 중"
+
+#: src/panel/chat.ts
+msgid "Investigating"
+msgstr "조사 중"
+
+#: src/panel/chat.ts
 msgid "Loading…"
 msgstr "불러오는 중…"
 
@@ -82,6 +102,10 @@ msgstr "메시지"
 #: src/panel/chat.ts
 msgid "Messages"
 msgstr "메시지"
+
+#: src/panel/chat.ts
+msgid "Monitoring"
+msgstr "모니터링 중"
 
 #: src/panel/chat.ts
 msgid "New conversation"
@@ -123,6 +147,10 @@ msgstr "다시 시도"
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "저장"
+
+#: src/panel/chat.ts
+msgid "Scheduled"
+msgstr "예정됨"
 
 #: src/panel/chat.ts
 msgid "Seen"

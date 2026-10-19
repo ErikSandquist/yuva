@@ -44,6 +44,10 @@ msgid "Comment"
 msgstr "Comentario"
 
 #: src/panel/chat.ts
+msgid "Completed"
+msgstr "Completado"
+
+#: src/panel/chat.ts
 msgid "Conversation"
 msgstr "Conversación"
 
@@ -54,6 +58,10 @@ msgstr "No se pudo guardar tu correo electrónico. Inténtalo de nuevo."
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "No se pudo enviar tu valoración. Inténtalo de nuevo."
+
+#: src/panel/chat.ts
+msgid "Dismiss"
+msgstr "Descartar"
 
 #: src/panel/chat.ts
 msgid "E-mail address"
@@ -72,6 +80,18 @@ msgid "How did we do?"
 msgstr "¿Cómo lo hemos hecho?"
 
 #: src/panel/chat.ts
+msgid "Identified"
+msgstr "Causa identificada"
+
+#: src/panel/chat.ts
+msgid "In progress"
+msgstr "En curso"
+
+#: src/panel/chat.ts
+msgid "Investigating"
+msgstr "Investigando"
+
+#: src/panel/chat.ts
 msgid "Loading…"
 msgstr "Cargando…"
 
@@ -82,6 +102,10 @@ msgstr "Mensaje"
 #: src/panel/chat.ts
 msgid "Messages"
 msgstr "Mensajes"
+
+#: src/panel/chat.ts
+msgid "Monitoring"
+msgstr "En seguimiento"
 
 #: src/panel/chat.ts
 msgid "New conversation"
@@ -123,6 +147,10 @@ msgstr "Reintentar"
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Guardar"
+
+#: src/panel/chat.ts
+msgid "Scheduled"
+msgstr "Programado"
 
 #: src/panel/chat.ts
 msgid "Seen"

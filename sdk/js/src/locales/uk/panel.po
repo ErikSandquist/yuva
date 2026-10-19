@@ -44,6 +44,10 @@ msgid "Comment"
 msgstr "Коментар"
 
 #: src/panel/chat.ts
+msgid "Completed"
+msgstr "Завершено"
+
+#: src/panel/chat.ts
 msgid "Conversation"
 msgstr "Розмова"
 
@@ -54,6 +58,10 @@ msgstr "Не вдалося зберегти вашу електронну ад�
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Не вдалося надіслати вашу оцінку. Спробуйте ще раз."
+
+#: src/panel/chat.ts
+msgid "Dismiss"
+msgstr "Закрити"
 
 #: src/panel/chat.ts
 msgid "E-mail address"
@@ -72,6 +80,18 @@ msgid "How did we do?"
 msgstr "Як ми впоралися?"
 
 #: src/panel/chat.ts
+msgid "Identified"
+msgstr "Причину виявлено"
+
+#: src/panel/chat.ts
+msgid "In progress"
+msgstr "Триває"
+
+#: src/panel/chat.ts
+msgid "Investigating"
+msgstr "Досліджуємо"
+
+#: src/panel/chat.ts
 msgid "Loading…"
 msgstr "Завантаження…"
 
@@ -82,6 +102,10 @@ msgstr "Повідомлення"
 #: src/panel/chat.ts
 msgid "Messages"
 msgstr "Повідомлення"
+
+#: src/panel/chat.ts
+msgid "Monitoring"
+msgstr "Спостерігаємо"
 
 #: src/panel/chat.ts
 msgid "New conversation"
@@ -123,6 +147,10 @@ msgstr "Повторити"
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Зберегти"
+
+#: src/panel/chat.ts
+msgid "Scheduled"
+msgstr "Заплановано"
 
 #: src/panel/chat.ts
 msgid "Seen"

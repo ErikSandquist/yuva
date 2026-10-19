@@ -44,6 +44,10 @@ msgid "Comment"
 msgstr "Komentár"
 
 #: src/panel/chat.ts
+msgid "Completed"
+msgstr "Dokončené"
+
+#: src/panel/chat.ts
 msgid "Conversation"
 msgstr "Konverzácia"
 
@@ -54,6 +58,10 @@ msgstr "Váš e-mail sa nepodarilo uložiť. Skúste to znova."
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Vaše hodnotenie sa nepodarilo odoslať. Skúste to znova."
+
+#: src/panel/chat.ts
+msgid "Dismiss"
+msgstr "Zavrieť"
 
 #: src/panel/chat.ts
 msgid "E-mail address"
@@ -72,6 +80,18 @@ msgid "How did we do?"
 msgstr "Ako sme obstáli?"
 
 #: src/panel/chat.ts
+msgid "Identified"
+msgstr "Príčina zistená"
+
+#: src/panel/chat.ts
+msgid "In progress"
+msgstr "Prebieha"
+
+#: src/panel/chat.ts
+msgid "Investigating"
+msgstr "Skúmame"
+
+#: src/panel/chat.ts
 msgid "Loading…"
 msgstr "Načítava sa…"
 
@@ -82,6 +102,10 @@ msgstr "Správa"
 #: src/panel/chat.ts
 msgid "Messages"
 msgstr "Správy"
+
+#: src/panel/chat.ts
+msgid "Monitoring"
+msgstr "Sledujeme"
 
 #: src/panel/chat.ts
 msgid "New conversation"
@@ -123,6 +147,10 @@ msgstr "Skúsiť znova"
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Uložiť"
+
+#: src/panel/chat.ts
+msgid "Scheduled"
+msgstr "Naplánované"
 
 #: src/panel/chat.ts
 msgid "Seen"

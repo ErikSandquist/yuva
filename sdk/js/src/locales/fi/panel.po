@@ -44,6 +44,10 @@ msgid "Comment"
 msgstr "Kommentti"
 
 #: src/panel/chat.ts
+msgid "Completed"
+msgstr "Valmis"
+
+#: src/panel/chat.ts
 msgid "Conversation"
 msgstr "Keskustelu"
 
@@ -54,6 +58,10 @@ msgstr "Sähköpostiosoitettasi ei voitu tallentaa. Yritä uudelleen."
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Arviotasi ei voitu lähettää. Yritä uudelleen."
+
+#: src/panel/chat.ts
+msgid "Dismiss"
+msgstr "Sulje"
 
 #: src/panel/chat.ts
 msgid "E-mail address"
@@ -72,6 +80,18 @@ msgid "How did we do?"
 msgstr "Miten meni?"
 
 #: src/panel/chat.ts
+msgid "Identified"
+msgstr "Syy löydetty"
+
+#: src/panel/chat.ts
+msgid "In progress"
+msgstr "Käynnissä"
+
+#: src/panel/chat.ts
+msgid "Investigating"
+msgstr "Selvitetään"
+
+#: src/panel/chat.ts
 msgid "Loading…"
 msgstr "Ladataan…"
 
@@ -82,6 +102,10 @@ msgstr "Viesti"
 #: src/panel/chat.ts
 msgid "Messages"
 msgstr "Viestit"
+
+#: src/panel/chat.ts
+msgid "Monitoring"
+msgstr "Seurannassa"
 
 #: src/panel/chat.ts
 msgid "New conversation"
@@ -123,6 +147,10 @@ msgstr "Yritä uudelleen"
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Tallenna"
+
+#: src/panel/chat.ts
+msgid "Scheduled"
+msgstr "Ajastettu"
 
 #: src/panel/chat.ts
 msgid "Seen"

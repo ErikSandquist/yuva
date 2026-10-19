@@ -44,6 +44,10 @@ msgid "Comment"
 msgstr "Σχόλιο"
 
 #: src/panel/chat.ts
+msgid "Completed"
+msgstr "Ολοκληρώθηκε"
+
+#: src/panel/chat.ts
 msgid "Conversation"
 msgstr "Συνομιλία"
 
@@ -54,6 +58,10 @@ msgstr "Δεν ήταν δυνατή η αποθήκευση της διεύθυ
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Δεν ήταν δυνατή η αποστολή της αξιολόγησής σας. Δοκιμάστε ξανά."
+
+#: src/panel/chat.ts
+msgid "Dismiss"
+msgstr "Παράβλεψη"
 
 #: src/panel/chat.ts
 msgid "E-mail address"
@@ -72,6 +80,18 @@ msgid "How did we do?"
 msgstr "Πώς τα πήγαμε;"
 
 #: src/panel/chat.ts
+msgid "Identified"
+msgstr "Εντοπίστηκε η αιτία"
+
+#: src/panel/chat.ts
+msgid "In progress"
+msgstr "Σε εξέλιξη"
+
+#: src/panel/chat.ts
+msgid "Investigating"
+msgstr "Διερεύνηση"
+
+#: src/panel/chat.ts
 msgid "Loading…"
 msgstr "Φόρτωση…"
 
@@ -82,6 +102,10 @@ msgstr "Μήνυμα"
 #: src/panel/chat.ts
 msgid "Messages"
 msgstr "Μηνύματα"
+
+#: src/panel/chat.ts
+msgid "Monitoring"
+msgstr "Παρακολούθηση"
 
 #: src/panel/chat.ts
 msgid "New conversation"
@@ -123,6 +147,10 @@ msgstr "Επανάληψη"
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Αποθήκευση"
+
+#: src/panel/chat.ts
+msgid "Scheduled"
+msgstr "Προγραμματισμένο"
 
 #: src/panel/chat.ts
 msgid "Seen"

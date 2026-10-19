@@ -44,6 +44,10 @@ msgid "Comment"
 msgstr "వ్యాఖ్య"
 
 #: src/panel/chat.ts
+msgid "Completed"
+msgstr "పూర్తయింది"
+
+#: src/panel/chat.ts
 msgid "Conversation"
 msgstr "సంభాషణ"
 
@@ -54,6 +58,10 @@ msgstr "మీ ఇమెయిల్ చిరునామాను సేవ్
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "మీ రేటింగ్‌ను పంపలేకపోయాము. మళ్లీ ప్రయత్నించండి."
+
+#: src/panel/chat.ts
+msgid "Dismiss"
+msgstr "మూసివేయండి"
 
 #: src/panel/chat.ts
 msgid "E-mail address"
@@ -72,6 +80,18 @@ msgid "How did we do?"
 msgstr "మేము ఎలా చేశాము?"
 
 #: src/panel/chat.ts
+msgid "Identified"
+msgstr "కారణం గుర్తించబడింది"
+
+#: src/panel/chat.ts
+msgid "In progress"
+msgstr "కొనసాగుతోంది"
+
+#: src/panel/chat.ts
+msgid "Investigating"
+msgstr "పరిశీలిస్తున్నాము"
+
+#: src/panel/chat.ts
 msgid "Loading…"
 msgstr "లోడ్ అవుతోంది…"
 
@@ -82,6 +102,10 @@ msgstr "సందేశం"
 #: src/panel/chat.ts
 msgid "Messages"
 msgstr "సందేశాలు"
+
+#: src/panel/chat.ts
+msgid "Monitoring"
+msgstr "పర్యవేక్షిస్తున్నాము"
 
 #: src/panel/chat.ts
 msgid "New conversation"
@@ -123,6 +147,10 @@ msgstr "మళ్లీ ప్రయత్నించండి"
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "సేవ్ చేయండి"
+
+#: src/panel/chat.ts
+msgid "Scheduled"
+msgstr "షెడ్యూల్ చేయబడింది"
 
 #: src/panel/chat.ts
 msgid "Seen"

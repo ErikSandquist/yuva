@@ -44,6 +44,10 @@ msgid "Comment"
 msgstr "Megjegyzés"
 
 #: src/panel/chat.ts
+msgid "Completed"
+msgstr "Befejezve"
+
+#: src/panel/chat.ts
 msgid "Conversation"
 msgstr "Beszélgetés"
 
@@ -54,6 +58,10 @@ msgstr "Nem sikerült elmenteni az e-mail-címét. Próbálja újra."
 #: src/panel/chat.ts
 msgid "Could not send your rating. Try again."
 msgstr "Nem sikerült elküldeni az értékelését. Próbálja újra."
+
+#: src/panel/chat.ts
+msgid "Dismiss"
+msgstr "Elvetés"
 
 #: src/panel/chat.ts
 msgid "E-mail address"
@@ -72,6 +80,18 @@ msgid "How did we do?"
 msgstr "Hogy sikerült?"
 
 #: src/panel/chat.ts
+msgid "Identified"
+msgstr "Az ok azonosítva"
+
+#: src/panel/chat.ts
+msgid "In progress"
+msgstr "Folyamatban"
+
+#: src/panel/chat.ts
+msgid "Investigating"
+msgstr "Vizsgálat alatt"
+
+#: src/panel/chat.ts
 msgid "Loading…"
 msgstr "Betöltés…"
 
@@ -82,6 +102,10 @@ msgstr "Üzenet"
 #: src/panel/chat.ts
 msgid "Messages"
 msgstr "Üzenetek"
+
+#: src/panel/chat.ts
+msgid "Monitoring"
+msgstr "Megfigyelés alatt"
 
 #: src/panel/chat.ts
 msgid "New conversation"
@@ -123,6 +147,10 @@ msgstr "Újra"
 #: src/panel/chat.ts
 msgid "Save"
 msgstr "Mentés"
+
+#: src/panel/chat.ts
+msgid "Scheduled"
+msgstr "Ütemezve"
 
 #: src/panel/chat.ts
 msgid "Seen"
