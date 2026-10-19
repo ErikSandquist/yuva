@@ -4877,6 +4877,7 @@ msgstr "{name} ਲਈ ਇਨਬਾਕਸ"
 msgid "Inbox today"
 msgstr "ਅੱਜ ਦਾ ਇਨਬਾਕਸ"
 
+#: src/features/contact/ContactSheet.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/SettingsColumn.tsx

@@ -4877,6 +4877,7 @@ msgstr "กล่องข้อความสำหรับ {name}"
 msgid "Inbox today"
 msgstr "กล่องข้อความวันนี้"
 
+#: src/features/contact/ContactSheet.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/SettingsColumn.tsx

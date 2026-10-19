@@ -4877,6 +4877,7 @@ msgstr "{name} 的收件箱"
 msgid "Inbox today"
 msgstr "今日收件箱"
 
+#: src/features/contact/ContactSheet.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/SettingsColumn.tsx

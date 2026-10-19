@@ -4877,6 +4877,7 @@ msgstr "Ящик для {name}"
 msgid "Inbox today"
 msgstr "Входящие сегодня"
 
+#: src/features/contact/ContactSheet.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/SettingsColumn.tsx

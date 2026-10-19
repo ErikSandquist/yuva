@@ -3,7 +3,7 @@ import { ArrowUpRightIcon, XIcon } from "lucide-react"
 import { useState } from "react"
 import { Link } from "react-router"
 
-import { ContactAvatar, ErrorLine, Segmented } from "@/components/common"
+import { ContactAvatar, ErrorLine, InboxBadges, Segmented } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from "@/components/ui/sheet"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -161,6 +161,14 @@ function Body({
               </SectionTitle>
               <Identities contact={c} editable />
             </section>
+            {c.inboxes.length > 0 && (
+              <section>
+                <SectionTitle>
+                  <Trans>Inboxes</Trans>
+                </SectionTitle>
+                <InboxBadges inboxes={c.inboxes} />
+              </section>
+            )}
             {(c.locale || Object.keys(c.attributes ?? {}).length > 0) && (
               <section>
                 <SectionTitle>

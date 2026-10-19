@@ -1,18 +1,20 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
 import { BookUserIcon, SearchIcon, XIcon } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
-import { Link, useMatch, useNavigate } from "react-router"
+import { Link, useMatch, useNavigate, useSearchParams } from "react-router"
 
-import { ContactAvatar, ErrorLine } from "@/components/common"
+import { ContactAvatar, ErrorLine, InboxBadges } from "@/components/common"
 import { PaneEmpty } from "@/components/common/Column"
 import { formatDateTime, formatShort } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/components/ui/input-group"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useContactDirectory, type DirectoryFilter } from "@/features/contact/queries"
+import { InboxPicker } from "@/features/inbox/InboxPicker"
 import { contactName } from "@/features/contact/Section"
 import { useDebounced } from "@/hooks/use-debounced"
 import { useHotkeys } from "@/hooks/use-hotkeys"
+import { useInboxes } from "@/lib/workspace"
 import { useResetState } from "@/hooks/use-reset-state"
 import type { Contact } from "@/lib/api"
 import { cn } from "@/lib/utils"
@@ -64,6 +66,7 @@ function Row({ c, current, cursor }: { c: Contact; current: boolean; cursor: boo
               </span>
             )}
           </span>
+          <InboxBadges inboxes={c.inboxes} max={2} className="mt-1" />
         </span>
       </Link>
     </li>
@@ -79,9 +82,13 @@ export function ContactsColumn() {
   const [q, setQ] = useState("")
   const query = useDebounced(q.trim(), 250)
   const [filter, setFilter] = useState<DirectoryFilter>("all")
-  const directory = useContactDirectory(query, filter)
+  const [params, setParams] = useSearchParams()
+  const inboxes = useInboxes()
+  const picked = params.get("inbox") ?? ""
+  const inboxId = inboxes.data?.some((i) => i.id === picked) ? picked : ""
+  const directory = useContactDirectory(query, filter, inboxId)
   const items = directory.data?.pages.flatMap((p) => p.items) ?? []
-  const [cursor, setCursor] = useResetState(-1, `${filter} ${query}`)
+  const [cursor, setCursor] = useResetState(-1, `${filter} ${query} ${inboxId}`)
   const list = useRef<HTMLUListElement>(null)
 
   useHotkeys({
@@ -147,7 +154,7 @@ export function ContactsColumn() {
           )}
         </InputGroup>
       </div>
-      <div className="flex shrink-0 flex-wrap gap-1.5 px-3 pb-2.5" role="toolbar" aria-label={t`Show`}>
+      <div className="flex shrink-0 flex-wrap items-center gap-1.5 px-3 pb-2.5" role="toolbar" aria-label={t`Show`}>
         {FILTERS.map((k) => (
           <button
             key={k}
@@ -164,6 +171,21 @@ export function ContactsColumn() {
             {labels[k]}
           </button>
         ))}
+        <InboxPicker
+          className="ms-auto"
+          value={inboxId}
+          onChange={(id) =>
+            setParams(
+              (prev) => {
+                const next = new URLSearchParams(prev)
+                if (id) next.set("inbox", id)
+                else next.delete("inbox")
+                return next
+              },
+              { replace: true }
+            )
+          }
+        />
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-4">
         {directory.isPending ? (
@@ -177,7 +199,7 @@ export function ContactsColumn() {
           <p className="px-4 py-10 text-center text-body text-faint">
             {query ? (
               <Trans>No contact matches “{query}”.</Trans>
-            ) : filter !== "all" ? (
+            ) : filter !== "all" || inboxId ? (
               <Trans>No contacts in this view.</Trans>
             ) : (
               <Trans>No contacts yet. They appear when someone writes in.</Trans>

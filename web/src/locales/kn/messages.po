@@ -4877,6 +4877,7 @@ msgstr "{name} ಗಾಗಿ ಇನ್‌ಬಾಕ್ಸ್"
 msgid "Inbox today"
 msgstr "ಇಂದಿನ ಇನ್‌ಬಾಕ್ಸ್"
 
+#: src/features/contact/ContactSheet.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/SettingsColumn.tsx

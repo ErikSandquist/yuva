@@ -8,10 +8,20 @@ import { useInboxes } from "@/lib/workspace"
 
 const ALL = "all"
 
-export function InboxPicker({ className }: { className?: string }) {
+export function InboxPicker({
+  className,
+  value: controlled,
+  onChange,
+}: {
+  className?: string
+  value?: string
+  onChange?: (id: string) => void
+}) {
   const { t } = useLingui()
   const inboxes = useInboxes().data ?? []
-  const [value, set] = useInboxFilter()
+  const [stored, setStored] = useInboxFilter()
+  const value = controlled ?? stored
+  const set = onChange ?? setStored
   if (inboxes.length < 2) return null
   const items: Record<string, string> = {
     [ALL]: t`All inboxes`,

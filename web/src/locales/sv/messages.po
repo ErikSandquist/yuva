@@ -4877,6 +4877,7 @@ msgstr "Brevlåda för {name}"
 msgid "Inbox today"
 msgstr "Brevlåda idag"
 
+#: src/features/contact/ContactSheet.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/SettingsColumn.tsx

@@ -4877,6 +4877,7 @@ msgstr "Mailbox voor {name}"
 msgid "Inbox today"
 msgstr "Mailbox vandaag"
 
+#: src/features/contact/ContactSheet.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/SettingsColumn.tsx

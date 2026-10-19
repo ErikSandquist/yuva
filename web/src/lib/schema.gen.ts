@@ -8112,6 +8112,12 @@ export interface components {
             /** Format: uuid */
             id: string;
             name: string;
+            /**
+             * @description The inboxes (products) where the contact has a conversation or an external id, limited
+             *     to those the caller can see, sorted by name. Webhook payloads list all of them; realtime
+             *     and event-feed payloads are cut to the inboxes the receiving member can see.
+             */
+            inboxes: components["schemas"]["ContactInbox"][];
             emails: components["schemas"]["Email"][];
             external_ids: components["schemas"]["ExternalId"][];
             attributes: components["schemas"]["Attributes"];
@@ -8126,6 +8132,11 @@ export interface components {
             created_at: string;
             /** Format: date-time */
             updated_at: string;
+        };
+        ContactInbox: {
+            /** Format: uuid */
+            id: string;
+            name: string;
         };
         /**
          * @description Only on `GET /v1/contacts` and `GET /v1/contacts/{contactId}`. The counts cover the
@@ -17198,6 +17209,11 @@ export interface operations {
                 kind?: "known" | "visitor";
                 /** @description Only contacts with (`true`) or without (`false`) an open conversation the caller can see; spam does not count. */
                 has_open?: boolean;
+                /**
+                 * @description Only contacts with a conversation (any status, spam included) or an external id in this
+                 *     inbox. An inbox that does not exist, or that the caller cannot access, answers `404`.
+                 */
+                inbox_id?: string;
                 sort?: "created" | "last_seen";
                 /** @description The `next_cursor` of the previous page. */
                 cursor?: components["parameters"]["Cursor"];
@@ -17225,6 +17241,7 @@ export interface operations {
             400: components["responses"]["Problem"];
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
         };
     };
     createContact: {

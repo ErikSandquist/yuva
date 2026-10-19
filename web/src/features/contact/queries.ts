@@ -79,16 +79,17 @@ export function useClearUndeliverable(contactId: string) {
 
 export type DirectoryFilter = "all" | "open" | "known" | "visitor"
 
-export function useContactDirectory(q: string, filter: DirectoryFilter) {
+export function useContactDirectory(q: string, filter: DirectoryFilter, inboxId?: string) {
   const { workspaceId: ws } = useSession()
   return useInfiniteQuery({
-    queryKey: [...keys.contactSearch(ws), "directory", q, filter],
+    queryKey: [...keys.contactSearch(ws), "directory", q, filter, inboxId ?? ""],
     queryFn: ({ pageParam }) =>
       unwrap(
         api.GET("/v1/contacts", {
           params: {
             query: {
               q: q || undefined,
+              inbox_id: inboxId || undefined,
               kind: filter === "known" || filter === "visitor" ? filter : undefined,
               has_open: filter === "open" ? true : undefined,
               sort: q ? undefined : "last_seen",
