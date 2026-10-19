@@ -179,8 +179,8 @@ workspace or another reader is visible.
 
 ## M13 — Broadcasts and e-mail designs
 
-Status: M13.1–M13.5 done and deployed on 2026-10-12 (#26–#30); M13.6 (#91) and M13.7 (#92) in
-progress. Umbrella issue #25, decisions in `architecture.md` › Broadcasts and e-mail designs (M13).
+Status: M13.1–M13.5 done and deployed on 2026-10-12 (#26–#30); M13.6 (#91) and M13.7 (#92) done,
+verified on 2026-10-19. Umbrella issue #25, decisions in `architecture.md` › Broadcasts and e-mail designs (M13).
 
 - **M13.1 Lists and subscribing:** mailing lists with recorded consent and double opt-in,
   `<yuva-subscribe>` (HTML, React, Nuxt, shadcn), unsubscribe and preference pages with one-click, an API
@@ -292,7 +292,7 @@ an agent opens the inbox at `/` and never sees an inbox or property they may not
 
 ## M18 — Feedback on its own
 
-Status: in progress; API, panel and SDKs done, the Swift and Kotlin samples not yet run against a server. Issue #93, decisions in `architecture.md` › Feedback (M18).
+Status: in progress; API, panel, SDKs and progress verified on 2026-10-19 with the Swift and Kotlin samples against a server. Open: the widget does not show Resolved, and a feedback with progress set shows no resolved line in the thread. Issue #93, decisions in `architecture.md` › Feedback (M18).
 
 - `kind` on `GET /v1/conversations/counts` and `GET /client/v1/conversations`; `can_rate` false for
   feedback.
