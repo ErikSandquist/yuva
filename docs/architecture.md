@@ -1340,6 +1340,8 @@ Decisions:
   default), `public` (offered on forms and the preference page), `commercial` (marketing content, for the
   consent export), `welcome` (a receipt after subscribing) and the e-mail channel that sends its
   confirmation and welcome mail. Owners and admins manage lists; agents read the lists of their inboxes.
+  `mailing_lists.kind` is `list`, or `status` for the subscriber list a status page makes (M19); a status
+  list is not offered, audience-selectable or importable and sits outside the opt-out register.
 - **Subscriptions and consent.** `list_subscriptions` (list, contact, address, `pending|subscribed|
   unsubscribed`, source `form|identity|api|member|import|preferences`) and an append-only `consent_events` log (what
   happened, when, IP, user agent, page, the label the person saw, the member, key or import). Consent is
@@ -1377,7 +1379,8 @@ Decisions:
 - **Unsubscribing.** Every broadcast and welcome mail carries `List-Unsubscribe` with
   `List-Unsubscribe-Post: List-Unsubscribe=One-Click` (RFC 8058) and footer links to `/m/{token}`: a page
   with "unsubscribe from this list", the inbox's public lists and "unsubscribe from everything"; opening it
-  changes nothing, its one-click POST unsubscribes at once. Tokens seal the workspace, list, contact and
+  changes nothing, its one-click POST unsubscribes at once. `/m/` of a status list shows only that list
+  (unsubscribe, its component choices, a link back to the page). Tokens seal the workspace, list, contact and
   broadcast under the master key and never expire while the contact exists.
 - **Designs.** A design is a JSON document (`EmailDesignDocument` in the contract, `schema: 1` with
   upgrade steps on read) of blocks (section, columns, heading, text, image, button, divider, spacer,
@@ -1980,7 +1983,7 @@ incident before a customer writes, and the conversations an outage brings are an
     (unique; the list is made when e-mail subscribers are first turned on, named like the page, with
     ` (status)` added when the inbox already has a list of that name). A status list is fixed by a
     check: not `public`, not `commercial`, `double_opt_in` on, no `welcome`. It is left out of broadcast
-    audiences (`422 validation`, field `lists`), of `GET /v1/lists` unless `kind=status`, of the forms
+    audiences (`400 validation_failed` naming `audience.list_ids`, as every audience check), of `GET /v1/lists` unless `kind=status`, of the forms
     and `GET /client/v1/channels/{key}/lists`, of CSV imports (`409 list_kind`), of the İYS export, and
     of the lists a marketing `/m/` page offers or "unsubscribe from everything" ends. It sits outside
     the opt-out register: leaving it writes no `email_optouts` row (also not after 3 years or when the

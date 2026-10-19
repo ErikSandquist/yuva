@@ -318,3 +318,41 @@ WHERE t.workspace_id = @workspace_id AND t.reply_id = @reply_id
   AND (sqlc.narg(cursor_id)::uuid IS NULL OR t.conversation_id > sqlc.narg(cursor_id)::uuid)
 ORDER BY t.conversation_id
 LIMIT @lim;
+-- name: SetStatusPageEmail :one
+UPDATE status_pages SET mailing_list_id = sqlc.narg(mailing_list_id), email_enabled = @email_enabled, updated_at = @now
+WHERE workspace_id = @workspace_id AND id = @id
+RETURNING *;
+
+-- name: GetStatusPageByList :one
+SELECT * FROM status_pages WHERE workspace_id = @workspace_id AND mailing_list_id = @mailing_list_id;
+
+-- name: ListStatusPagesByLists :many
+SELECT id, mailing_list_id FROM status_pages WHERE workspace_id = @workspace_id AND mailing_list_id = ANY(@list_ids::uuid[]);
+
+-- name: MailingListNameTaken :one
+SELECT EXISTS (SELECT 1 FROM mailing_lists WHERE workspace_id = @workspace_id AND inbox_id = @inbox_id AND name = @name)::bool;
+
+-- name: ClearSubscriptionComponents :exec
+DELETE FROM status_subscriber_components WHERE workspace_id = @workspace_id AND subscription_id = @subscription_id;
+
+-- name: AddSubscriptionComponent :exec
+INSERT INTO status_subscriber_components (workspace_id, subscription_id, component_id)
+VALUES (@workspace_id, @subscription_id, @component_id)
+ON CONFLICT DO NOTHING;
+
+-- name: ListSubscriptionComponents :many
+SELECT subscription_id, component_id FROM status_subscriber_components
+WHERE workspace_id = @workspace_id AND subscription_id = ANY(@subscription_ids::uuid[])
+ORDER BY subscription_id, component_id;
+
+-- Contacts made by a status page request that nobody confirmed: nothing else refers to them.
+-- name: DeleteUnconfirmedContacts :execrows
+DELETE FROM contacts c
+WHERE c.workspace_id = @workspace_id AND c.id = ANY(@ids::uuid[]) AND c.person_id IS NULL
+  AND NOT EXISTS (SELECT 1 FROM contact_emails x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id)
+  AND NOT EXISTS (SELECT 1 FROM contact_external_ids x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id)
+  AND NOT EXISTS (SELECT 1 FROM conversations x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id)
+  AND NOT EXISTS (SELECT 1 FROM list_subscriptions x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id)
+  AND NOT EXISTS (SELECT 1 FROM contact_notes x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id)
+  AND NOT EXISTS (SELECT 1 FROM chat_visitors x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id)
+  AND NOT EXISTS (SELECT 1 FROM broadcast_deliveries x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id);

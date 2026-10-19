@@ -247,11 +247,15 @@ type importUpload struct {
 
 func (s *Server) CreateListImport(ctx context.Context, req oas.CreateListImportRequestObject) (oas.CreateListImportResponseObject, error) {
 	p := principalFrom(ctx)
-	if _, err := visibleList(ctx, s.st.Queries, p, req.ListId, false); err != nil {
+	list, err := visibleList(ctx, s.st.Queries, p, req.ListId, false)
+	if err != nil {
 		return nil, err
 	}
 	if err := requireManagerOrKey(p); err != nil {
 		return nil, err
+	}
+	if list.Kind == listKindStatus {
+		return nil, errListKind
 	}
 	var up importUpload
 	for {
@@ -327,7 +331,7 @@ func (s *Server) CreateListImport(ctx context.Context, req oas.CreateListImportR
 		return nil, err
 	}
 	var imp store.ListImport
-	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, events *eventBatch) error {
+	err = s.inTx(ctx, p.workspaceID, func(q *store.Queries, events *eventBatch) error {
 		list, err := visibleList(ctx, q, p, req.ListId, false)
 		if err != nil {
 			return err

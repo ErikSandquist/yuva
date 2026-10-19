@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"time"
+	"uuid"
 )
 
 func (s *Server) FillRateLimiter(now time.Time) {
@@ -21,4 +22,8 @@ func SetStatusReplyBatchSize(n int) (restore func()) {
 	old := statusReplyBatchSize
 	statusReplyBatchSize = n
 	return func() { statusReplyBatchSize = old }
+}
+
+func (s *Server) ManageURL(ws, list, contact uuid.UUID) string {
+	return s.manageURL(ws, list, contact, uuid.Nil())
 }

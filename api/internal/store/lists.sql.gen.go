@@ -82,7 +82,8 @@ func (q *Queries) AddOptOut(ctx context.Context, arg AddOptOutParams) error {
 
 const contactObjectionEmails = `-- name: ContactObjectionEmails :many
 SELECT s.email FROM list_subscriptions s
-WHERE s.workspace_id = $1 AND s.contact_id = $2
+JOIN mailing_lists l ON l.workspace_id = s.workspace_id AND l.id = s.list_id
+WHERE s.workspace_id = $1 AND s.contact_id = $2 AND l.kind = 'list'
   AND (s.state = 'unsubscribed' OR (s.state = 'pending' AND s.unsubscribe_reason IS NOT NULL))
 UNION
 SELECT x.email FROM email_suppressions x
@@ -181,9 +182,9 @@ func (q *Queries) CountSubscriptions(ctx context.Context, arg CountSubscriptions
 }
 
 const createMailingList = `-- name: CreateMailingList :one
-INSERT INTO mailing_lists (id, workspace_id, inbox_id, channel_id, name, description, double_opt_in, public, commercial, welcome, created_at, updated_at)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $11)
-RETURNING id, workspace_id, inbox_id, channel_id, name, description, double_opt_in, public, commercial, welcome, archived_at, created_at, updated_at
+INSERT INTO mailing_lists (id, workspace_id, inbox_id, channel_id, kind, name, description, double_opt_in, public, commercial, welcome, created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $12)
+RETURNING id, workspace_id, inbox_id, channel_id, name, description, double_opt_in, public, commercial, welcome, archived_at, created_at, updated_at, kind
 `
 
 type CreateMailingListParams struct {
@@ -191,6 +192,7 @@ type CreateMailingListParams struct {
 	WorkspaceID uuid.UUID
 	InboxID     uuid.UUID
 	ChannelID   *uuid.UUID
+	Kind        string
 	Name        string
 	Description string
 	DoubleOptIn bool
@@ -206,6 +208,7 @@ func (q *Queries) CreateMailingList(ctx context.Context, arg CreateMailingListPa
 		arg.WorkspaceID,
 		arg.InboxID,
 		arg.ChannelID,
+		arg.Kind,
 		arg.Name,
 		arg.Description,
 		arg.DoubleOptIn,
@@ -229,6 +232,7 @@ func (q *Queries) CreateMailingList(ctx context.Context, arg CreateMailingListPa
 		&i.ArchivedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Kind,
 	)
 	return i, err
 }
@@ -352,9 +356,10 @@ func (q *Queries) DeleteSubscriptions(ctx context.Context, arg DeleteSubscriptio
 	return result.RowsAffected(), nil
 }
 
-const expirePendingSubscriptions = `-- name: ExpirePendingSubscriptions :one
+const expirePendingSubscriptions = `-- name: ExpirePendingSubscriptions :many
 WITH expired AS (
-    SELECT s.id,
+    SELECT s.id, s.contact_id,
+           (SELECT l.kind = 'status' FROM mailing_lists l WHERE l.workspace_id = s.workspace_id AND l.id = s.list_id)::bool AS status,
            (SELECT max(e.created_at) FROM consent_events e
             WHERE e.workspace_id = s.workspace_id AND e.subscription_id = s.id AND e.kind IN ('unsubscribed', 'complained')) AS objected_at
     FROM list_subscriptions s
@@ -372,7 +377,9 @@ WITH expired AS (
     WHERE s.workspace_id = $1 AND s.id = x.id AND x.objected_at IS NULL
     RETURNING s.id
 )
-SELECT (SELECT count(*) FROM reverted) + (SELECT count(*) FROM deleted)
+SELECT x.contact_id, (x.status AND d.id IS NOT NULL)::bool AS unconfirmed_status
+FROM expired x
+LEFT JOIN deleted d ON d.id = x.id
 `
 
 type ExpirePendingSubscriptionsParams struct {
@@ -382,22 +389,40 @@ type ExpirePendingSubscriptionsParams struct {
 	Now         time.Time
 }
 
+type ExpirePendingSubscriptionsRow struct {
+	ContactID         uuid.UUID
+	UnconfirmedStatus bool
+}
+
 // Pending subscriptions that never reached consent are deleted; one that was unsubscribed before
 // and asked again goes back to unsubscribed, so its objection is not lost.
-func (q *Queries) ExpirePendingSubscriptions(ctx context.Context, arg ExpirePendingSubscriptionsParams) (int32, error) {
-	row := q.db.QueryRow(ctx, expirePendingSubscriptions,
+func (q *Queries) ExpirePendingSubscriptions(ctx context.Context, arg ExpirePendingSubscriptionsParams) ([]ExpirePendingSubscriptionsRow, error) {
+	rows, err := q.db.Query(ctx, expirePendingSubscriptions,
 		arg.WorkspaceID,
 		arg.Before,
 		arg.Lim,
 		arg.Now,
 	)
-	var column_1 int32
-	err := row.Scan(&column_1)
-	return column_1, err
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ExpirePendingSubscriptionsRow
+	for rows.Next() {
+		var i ExpirePendingSubscriptionsRow
+		if err := rows.Scan(&i.ContactID, &i.UnconfirmedStatus); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 const getMailingList = `-- name: GetMailingList :one
-SELECT id, workspace_id, inbox_id, channel_id, name, description, double_opt_in, public, commercial, welcome, archived_at, created_at, updated_at FROM mailing_lists WHERE workspace_id = $1 AND id = $2
+SELECT id, workspace_id, inbox_id, channel_id, name, description, double_opt_in, public, commercial, welcome, archived_at, created_at, updated_at, kind FROM mailing_lists WHERE workspace_id = $1 AND id = $2
 `
 
 type GetMailingListParams struct {
@@ -422,6 +447,7 @@ func (q *Queries) GetMailingList(ctx context.Context, arg GetMailingListParams) 
 		&i.ArchivedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Kind,
 	)
 	return i, err
 }
@@ -694,9 +720,10 @@ func (q *Queries) ListContactSubscriptions(ctx context.Context, arg ListContactS
 }
 
 const listExpiredUnsubscribed = `-- name: ListExpiredUnsubscribed :many
-SELECT id, email FROM list_subscriptions
-WHERE workspace_id = $1 AND state = 'unsubscribed' AND unsubscribed_at < $2::timestamptz
-ORDER BY unsubscribed_at
+SELECT s.id, s.email, l.kind FROM list_subscriptions s
+JOIN mailing_lists l ON l.workspace_id = s.workspace_id AND l.id = s.list_id
+WHERE s.workspace_id = $1 AND s.state = 'unsubscribed' AND s.unsubscribed_at < $2::timestamptz
+ORDER BY s.unsubscribed_at
 LIMIT $3
 `
 
@@ -709,6 +736,7 @@ type ListExpiredUnsubscribedParams struct {
 type ListExpiredUnsubscribedRow struct {
 	ID    uuid.UUID
 	Email string
+	Kind  string
 }
 
 func (q *Queries) ListExpiredUnsubscribed(ctx context.Context, arg ListExpiredUnsubscribedParams) ([]ListExpiredUnsubscribedRow, error) {
@@ -720,7 +748,7 @@ func (q *Queries) ListExpiredUnsubscribed(ctx context.Context, arg ListExpiredUn
 	var items []ListExpiredUnsubscribedRow
 	for rows.Next() {
 		var i ListExpiredUnsubscribedRow
-		if err := rows.Scan(&i.ID, &i.Email); err != nil {
+		if err := rows.Scan(&i.ID, &i.Email, &i.Kind); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
@@ -798,7 +826,7 @@ func (q *Queries) ListIYSRecords(ctx context.Context, arg ListIYSRecordsParams) 
 }
 
 const listInboxMailingLists = `-- name: ListInboxMailingLists :many
-SELECT id, workspace_id, inbox_id, channel_id, name, description, double_opt_in, public, commercial, welcome, archived_at, created_at, updated_at FROM mailing_lists WHERE workspace_id = $1 AND inbox_id = $2 ORDER BY name, id
+SELECT id, workspace_id, inbox_id, channel_id, name, description, double_opt_in, public, commercial, welcome, archived_at, created_at, updated_at, kind FROM mailing_lists WHERE workspace_id = $1 AND inbox_id = $2 ORDER BY name, id
 `
 
 type ListInboxMailingListsParams struct {
@@ -829,6 +857,7 @@ func (q *Queries) ListInboxMailingLists(ctx context.Context, arg ListInboxMailin
 			&i.ArchivedAt,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.Kind,
 		); err != nil {
 			return nil, err
 		}
@@ -841,23 +870,25 @@ func (q *Queries) ListInboxMailingLists(ctx context.Context, arg ListInboxMailin
 }
 
 const listMailingLists = `-- name: ListMailingLists :many
-SELECT id, workspace_id, inbox_id, channel_id, name, description, double_opt_in, public, commercial, welcome, archived_at, created_at, updated_at FROM mailing_lists l
+SELECT id, workspace_id, inbox_id, channel_id, name, description, double_opt_in, public, commercial, welcome, archived_at, created_at, updated_at, kind FROM mailing_lists l
 WHERE l.workspace_id = $1
   AND ($2::uuid IS NULL OR l.inbox_id = $2::uuid)
   AND $3::bool = (l.archived_at IS NOT NULL)
-  AND ($4::bool OR EXISTS (
+  AND l.kind = $4
+  AND ($5::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
-      WHERE iv.workspace_id = l.workspace_id AND iv.inbox_id = l.inbox_id AND iv.viewer_id = $5))
-  AND ($6::timestamptz IS NULL
-       OR (l.created_at, l.id) < ($6::timestamptz, $7::uuid))
+      WHERE iv.workspace_id = l.workspace_id AND iv.inbox_id = l.inbox_id AND iv.viewer_id = $6))
+  AND ($7::timestamptz IS NULL
+       OR (l.created_at, l.id) < ($7::timestamptz, $8::uuid))
 ORDER BY l.created_at DESC, l.id DESC
-LIMIT $8
+LIMIT $9
 `
 
 type ListMailingListsParams struct {
 	WorkspaceID uuid.UUID
 	InboxID     *uuid.UUID
 	Archived    bool
+	Kind        string
 	AllInboxes  bool
 	ViewerID    uuid.UUID
 	CursorAt    *time.Time
@@ -870,6 +901,7 @@ func (q *Queries) ListMailingLists(ctx context.Context, arg ListMailingListsPara
 		arg.WorkspaceID,
 		arg.InboxID,
 		arg.Archived,
+		arg.Kind,
 		arg.AllInboxes,
 		arg.ViewerID,
 		arg.CursorAt,
@@ -897,6 +929,7 @@ func (q *Queries) ListMailingLists(ctx context.Context, arg ListMailingListsPara
 			&i.ArchivedAt,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.Kind,
 		); err != nil {
 			return nil, err
 		}
@@ -909,7 +942,7 @@ func (q *Queries) ListMailingLists(ctx context.Context, arg ListMailingListsPara
 }
 
 const listMailingListsByIDs = `-- name: ListMailingListsByIDs :many
-SELECT id, workspace_id, inbox_id, channel_id, name, description, double_opt_in, public, commercial, welcome, archived_at, created_at, updated_at FROM mailing_lists WHERE workspace_id = $1 AND id = ANY($2::uuid[])
+SELECT id, workspace_id, inbox_id, channel_id, name, description, double_opt_in, public, commercial, welcome, archived_at, created_at, updated_at, kind FROM mailing_lists WHERE workspace_id = $1 AND id = ANY($2::uuid[])
 `
 
 type ListMailingListsByIDsParams struct {
@@ -940,6 +973,7 @@ func (q *Queries) ListMailingListsByIDs(ctx context.Context, arg ListMailingList
 			&i.ArchivedAt,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.Kind,
 		); err != nil {
 			return nil, err
 		}
@@ -952,8 +986,8 @@ func (q *Queries) ListMailingListsByIDs(ctx context.Context, arg ListMailingList
 }
 
 const listPublicMailingLists = `-- name: ListPublicMailingLists :many
-SELECT id, workspace_id, inbox_id, channel_id, name, description, double_opt_in, public, commercial, welcome, archived_at, created_at, updated_at FROM mailing_lists
-WHERE workspace_id = $1 AND inbox_id = $2 AND public AND archived_at IS NULL
+SELECT id, workspace_id, inbox_id, channel_id, name, description, double_opt_in, public, commercial, welcome, archived_at, created_at, updated_at, kind FROM mailing_lists
+WHERE workspace_id = $1 AND inbox_id = $2 AND public AND archived_at IS NULL AND kind = 'list'
 ORDER BY name, id
 `
 
@@ -985,6 +1019,7 @@ func (q *Queries) ListPublicMailingLists(ctx context.Context, arg ListPublicMail
 			&i.ArchivedAt,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.Kind,
 		); err != nil {
 			return nil, err
 		}
@@ -1192,7 +1227,7 @@ func (q *Queries) LockEmailSubscriptions(ctx context.Context, arg LockEmailSubsc
 }
 
 const lockMailingList = `-- name: LockMailingList :one
-SELECT id, workspace_id, inbox_id, channel_id, name, description, double_opt_in, public, commercial, welcome, archived_at, created_at, updated_at FROM mailing_lists WHERE workspace_id = $1 AND id = $2 FOR UPDATE
+SELECT id, workspace_id, inbox_id, channel_id, name, description, double_opt_in, public, commercial, welcome, archived_at, created_at, updated_at, kind FROM mailing_lists WHERE workspace_id = $1 AND id = $2 FOR UPDATE
 `
 
 type LockMailingListParams struct {
@@ -1217,6 +1252,7 @@ func (q *Queries) LockMailingList(ctx context.Context, arg LockMailingListParams
 		&i.ArchivedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Kind,
 	)
 	return i, err
 }
@@ -1527,7 +1563,7 @@ UPDATE mailing_lists SET name = $1, description = $2, double_opt_in = $3, public
     commercial = $5, welcome = $6, channel_id = $7, archived_at = $8,
     updated_at = $9
 WHERE workspace_id = $10 AND id = $11
-RETURNING id, workspace_id, inbox_id, channel_id, name, description, double_opt_in, public, commercial, welcome, archived_at, created_at, updated_at
+RETURNING id, workspace_id, inbox_id, channel_id, name, description, double_opt_in, public, commercial, welcome, archived_at, created_at, updated_at, kind
 `
 
 type UpdateMailingListParams struct {
@@ -1573,6 +1609,7 @@ func (q *Queries) UpdateMailingList(ctx context.Context, arg UpdateMailingListPa
 		&i.ArchivedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Kind,
 	)
 	return i, err
 }

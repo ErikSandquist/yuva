@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"errors"
 	"html/template"
 	"log/slog"
 	"net/http"
@@ -27,6 +28,9 @@ type listWords struct {
 	Lists, Save, UnsubscribeAll, UnsubscribeAllText              string
 	Unsubscribed, Saved, AllGone, Undo, Restored, OneClickDone   string
 	ManageLink, TestMail                                         string
+	StatusConfirmText, StatusOnly, StatusConfirmed               string
+	StatusSubscribedAs, StatusNotSubscribed, StatusLegend        string
+	StatusSave, StatusNoneChosen, StatusBack                     string
 }
 
 var listLanguages = map[string]listWords{
@@ -40,8 +44,13 @@ var listLanguages = map[string]listWords{
 		UnsubscribeAll: "Unsubscribe from all mail from %i", UnsubscribeAllText: "No more lists or newsletters from %i at this address.",
 		Unsubscribed: "You are unsubscribed from “%l”.", Saved: "Your choices are saved.",
 		AllGone: "You will get no more list mail from %i.", Undo: "Undo", Restored: "Your subscriptions are back.",
-		ManageLink: "Choose which e-mails you get",
-		TestMail:   "This was a test of a broadcast. Its link changes nothing; in the real mail it unsubscribes the recipient.",
+		ManageLink:        "Choose which e-mails you get",
+		TestMail:          "This was a test of a broadcast. Its link changes nothing; in the real mail it unsubscribes the recipient.",
+		StatusConfirmText: "Confirm that %s should get notices about incidents and maintenance of “%l”.", StatusOnly: "Only about: %c",
+		StatusConfirmed:    "You will get notices from “%l”. You can unsubscribe in every mail.",
+		StatusSubscribedAs: "You get notices from “%l” at %s.", StatusNotSubscribed: "You get no notices from “%l”.",
+		StatusLegend: "Send me notices about", StatusSave: "Save choices",
+		StatusNoneChosen: "Choose at least one component, or unsubscribe instead.", StatusBack: "Back to the status page",
 	},
 	"tr": {
 		Lang: "tr", Gone: "Bu bağlantı artık geçerli değil.", Error: "Bir sorun oluştu. Bağlantıyı daha sonra yeniden deneyin.",
@@ -53,8 +62,13 @@ var listLanguages = map[string]listWords{
 		UnsubscribeAll: "%i tarafından gelen tüm e-postalardan çık", UnsubscribeAllText: "Bu adrese %i tarafından artık liste ya da bülten gönderilmez.",
 		Unsubscribed: "“%l” aboneliğinden çıktınız.", Saved: "Seçimleriniz kaydedildi.",
 		AllGone: "%i tarafından artık liste e-postası almayacaksınız.", Undo: "Geri al", Restored: "Abonelikleriniz geri geldi.",
-		ManageLink: "Hangi e-postaları alacağınızı seçin",
-		TestMail:   "Bu, bir bültenin deneme gönderimiydi. Bu bağlantı hiçbir şeyi değiştirmez; gerçek e-postada alıcının aboneliğini sonlandırır.",
+		ManageLink:        "Hangi e-postaları alacağınızı seçin",
+		TestMail:          "Bu, bir bültenin deneme gönderimiydi. Bu bağlantı hiçbir şeyi değiştirmez; gerçek e-postada alıcının aboneliğini sonlandırır.",
+		StatusConfirmText: "%s adresinin “%l” olay ve bakım bildirimlerini almasını onaylayın.", StatusOnly: "Yalnızca: %c",
+		StatusConfirmed:    "“%l” bildirimlerini alacaksınız. Her e-postadan aboneliğinizi sonlandırabilirsiniz.",
+		StatusSubscribedAs: "“%l” bildirimlerini %s adresine alıyorsunuz.", StatusNotSubscribed: "“%l” bildirimlerini almıyorsunuz.",
+		StatusLegend: "Şunlarla ilgili bildirim gönder", StatusSave: "Seçimleri kaydet",
+		StatusNoneChosen: "En az bir bileşen seçin ya da aboneliğinizi sonlandırın.", StatusBack: "Durum sayfasına dön",
 	},
 	"de": {
 		Lang: "de", Gone: "Dieser Link ist nicht mehr gültig.", Error: "Etwas ist schiefgelaufen. Versuchen Sie den Link später erneut.",
@@ -66,8 +80,13 @@ var listLanguages = map[string]listWords{
 		UnsubscribeAll: "Von allen E-Mails von %i abmelden", UnsubscribeAllText: "Keine Listen oder Newsletter von %i mehr an diese Adresse.",
 		Unsubscribed: "Sie sind von „%l“ abgemeldet.", Saved: "Ihre Auswahl ist gespeichert.",
 		AllGone: "Sie erhalten keine Listen-E-Mails von %i mehr.", Undo: "Rückgängig", Restored: "Ihre Abonnements sind wieder da.",
-		ManageLink: "Wählen, welche E-Mails Sie erhalten",
-		TestMail:   "Dies war ein Test eines Newsletters. Dieser Link ändert nichts; in der echten E-Mail meldet er den Empfänger ab.",
+		ManageLink:        "Wählen, welche E-Mails Sie erhalten",
+		TestMail:          "Dies war ein Test eines Newsletters. Dieser Link ändert nichts; in der echten E-Mail meldet er den Empfänger ab.",
+		StatusConfirmText: "Bestätigen Sie, dass %s Meldungen zu Störungen und Wartungen von „%l“ erhalten soll.", StatusOnly: "Nur zu: %c",
+		StatusConfirmed:    "Sie erhalten Meldungen von „%l“. Abmelden können Sie sich in jeder E-Mail.",
+		StatusSubscribedAs: "Sie erhalten Meldungen von „%l“ an %s.", StatusNotSubscribed: "Sie erhalten keine Meldungen von „%l“.",
+		StatusLegend: "Meldungen senden zu", StatusSave: "Auswahl speichern",
+		StatusNoneChosen: "Wählen Sie mindestens eine Komponente oder melden Sie sich ab.", StatusBack: "Zurück zur Statusseite",
 	},
 }
 
@@ -104,8 +123,18 @@ type pageForm struct {
 	Lists          []string
 	Choices        []pageChoice
 	Legend, Note   string
+	Field          string
 	Secondary      bool
 }
+
+func (f pageForm) ChoiceName() string {
+	if f.Field != "" {
+		return f.Field
+	}
+	return "lists"
+}
+
+type pageLink struct{ URL, Label string }
 
 type listPageView struct {
 	W              listWords
@@ -114,6 +143,7 @@ type listPageView struct {
 	Color          template.CSS
 	Target         string
 	Forms          []pageForm
+	Links          []pageLink
 }
 
 var listPage = template.Must(template.New("list").Parse(`<!doctype html>
@@ -145,11 +175,12 @@ button.secondary{background:transparent;color:inherit;border:1px solid #8888}
 {{range $k, $v := .Hidden}}<input type="hidden" name="{{$k}}" value="{{$v}}">{{end}}
 {{range .Lists}}<input type="hidden" name="lists" value="{{.}}">{{end}}
 {{if .Choices}}<fieldset><legend>{{.Legend}}</legend>
-{{range .Choices}}<label><input type="checkbox" name="lists" value="{{.ID}}"{{if .Checked}} checked{{end}}><span>{{.Name}}{{if .Description}}<small>{{.Description}}</small>{{end}}</span></label>
+{{$name := .ChoiceName}}{{range .Choices}}<label><input type="checkbox" name="{{$name}}" value="{{.ID}}"{{if .Checked}} checked{{end}}><span>{{.Name}}{{if .Description}}<small>{{.Description}}</small>{{end}}</span></label>
 {{end}}</fieldset>{{end}}
 <button type="submit"{{if .Secondary}} class="secondary"{{end}}>{{.Button}}</button>
 {{if .Note}}<p class="note">{{.Note}}</p>{{end}}
 </form>{{end}}
+{{range .Links}}<p><a href="{{.URL}}" style="color:var(--brand)">{{.Label}}</a></p>{{end}}
 </body></html>`))
 
 func writeListPage(w http.ResponseWriter, status int, v listPageView) {
@@ -175,6 +206,16 @@ func (s *Server) listPageView(in store.Inbox, c *store.Contact) listPageView {
 	return listPageView{W: listWordsFor(locale), Inbox: in.Name, Color: rv.Color}
 }
 
+func statusPageColor(v *listPageView, pg *store.StatusPage) {
+	if pg != nil && pg.AccentColor != nil {
+		v.Color = template.CSS(*pg.AccentColor)
+	}
+}
+
+func fillComponents(s string, names []string) string {
+	return strings.ReplaceAll(s, "%c", strings.Join(names, ", "))
+}
+
 func (s *Server) listPageError(w http.ResponseWriter, r *http.Request, err error) {
 	s.log.ErrorContext(r.Context(), "list page", slog.Any("error", err))
 	writeListPage(w, http.StatusInternalServerError, listPageView{W: listWordsFor("en"), Heading: listWordsFor("en").Error})
@@ -190,6 +231,8 @@ type confirmTarget struct {
 	inbox   store.Inbox
 	contact store.Contact
 	issued  time.Time
+	page    *store.StatusPage
+	chosen  []string
 }
 
 func (s *Server) confirmTarget(ctx context.Context, q *store.Queries, token string, lock bool) (*confirmTarget, error) {
@@ -225,13 +268,45 @@ func (s *Server) confirmTarget(ctx context.Context, q *store.Queries, token stri
 		return nil, err
 	}
 	t.contact = store.Contact{ID: c.ID, Locale: c.Locale}
+	if err := t.loadStatus(ctx, q); err != nil {
+		return nil, err
+	}
 	return &t, nil
+}
+
+func (t *confirmTarget) loadStatus(ctx context.Context, q *store.Queries) error {
+	pg, ok, err := statusListPage(ctx, q, t.list)
+	if err != nil || !ok {
+		return err
+	}
+	t.page = &pg
+	chosen, err := subscriptionComponentIDs(ctx, q, t.sub)
+	if err != nil || len(chosen) == 0 {
+		return err
+	}
+	visible, err := visibleComponents(ctx, q, pg)
+	if err != nil {
+		return err
+	}
+	for _, c := range visible {
+		if slices.Contains(chosen, c.ID) {
+			t.chosen = append(t.chosen, c.Name)
+		}
+	}
+	return nil
 }
 
 func (s *Server) confirmView(w http.ResponseWriter, t *confirmTarget, token string) {
 	v := s.listPageView(t.inbox, &t.contact)
 	ln, in := t.list.Name, t.inbox.Name
+	if t.page != nil {
+		ln = t.page.Name
+		statusPageColor(&v, t.page)
+	}
 	switch {
+	case t.sub.State == subSubscribed && t.page != nil:
+		v.Heading = fill(v.W.StatusConfirmed, ln, in, "")
+		writeListPage(w, http.StatusOK, v)
 	case t.sub.State == subSubscribed:
 		v.Heading = fill(v.W.Already, ln, in, "")
 		writeListPage(w, http.StatusOK, v)
@@ -244,7 +319,12 @@ func (s *Server) confirmView(w http.ResponseWriter, t *confirmTarget, token stri
 	default:
 		v.Heading = v.W.ConfirmTitle
 		v.Texts = []string{fill(v.W.ConfirmText, ln, in, maskAddress(t.sub.Email))}
-		if t.list.Description != "" {
+		if t.page != nil {
+			v.Texts = []string{fill(v.W.StatusConfirmText, ln, in, maskAddress(t.sub.Email))}
+			if len(t.chosen) > 0 {
+				v.Texts = append(v.Texts, fillComponents(v.W.StatusOnly, t.chosen))
+			}
+		} else if t.list.Description != "" {
 			v.Texts = append(v.Texts, t.list.Description)
 		}
 		v.Target = confirmPathPrefix + token
@@ -298,6 +378,12 @@ func (s *Server) serveConfirmPost(w http.ResponseWriter, r *http.Request) {
 		s.listPageError(w, r, err)
 	case t == nil:
 		goneListPage(w)
+	case done && t.page != nil:
+		v := s.listPageView(t.inbox, &t.contact)
+		statusPageColor(&v, t.page)
+		v.Heading = fill(v.W.StatusConfirmed, t.page.Name, t.inbox.Name, "")
+		v.Links = []pageLink{{URL: s.statusURL(t.page.Slug, ""), Label: v.W.StatusBack}}
+		writeListPage(w, http.StatusOK, v)
 	case done:
 		v := s.listPageView(t.inbox, &t.contact)
 		v.Heading = fill(v.W.Confirmed, t.list.Name, t.inbox.Name, "")
@@ -314,6 +400,8 @@ type manageTarget struct {
 	contact       store.Contact
 	lists         []store.MailingList
 	subs          []store.ListSubscription
+	page          *store.StatusPage
+	components    []store.StatusComponent
 }
 
 func (t *manageTarget) subsOf(listID uuid.UUID) []store.ListSubscription {
@@ -372,8 +460,21 @@ func (s *Server) manageTarget(ctx context.Context, q *store.Queries, token strin
 	if t.inbox, err = q.GetInbox(ctx, store.GetInboxParams{WorkspaceID: t.ws, ID: t.list.InboxID}); err != nil {
 		return nil, err
 	}
-	if t.lists, err = q.ListInboxMailingLists(ctx, store.ListInboxMailingListsParams{WorkspaceID: t.ws, InboxID: t.inbox.ID}); err != nil {
-		return nil, err
+	if t.list.Kind == listKindStatus {
+		pg, ok, err := statusListPage(ctx, q, t.list)
+		if err != nil || !ok {
+			return nil, err
+		}
+		t.page = &pg
+		if t.components, err = visibleComponents(ctx, q, pg); err != nil {
+			return nil, err
+		}
+		t.lists = []store.MailingList{t.list}
+	} else {
+		if t.lists, err = q.ListInboxMailingLists(ctx, store.ListInboxMailingListsParams{WorkspaceID: t.ws, InboxID: t.inbox.ID}); err != nil {
+			return nil, err
+		}
+		t.lists = slices.DeleteFunc(t.lists, func(l store.MailingList) bool { return l.Kind == listKindStatus })
 	}
 	all, err := q.ListContactSubscriptions(ctx, store.ListContactSubscriptionsParams{WorkspaceID: t.ws, ContactID: c.ID})
 	if err != nil {
@@ -406,6 +507,10 @@ func (s *Server) manageView(w http.ResponseWriter, ctx context.Context, t *manag
 	v := s.listPageView(t.inbox, &t.contact)
 	ln, in := t.list.Name, t.inbox.Name
 	v.Target = managePathPrefix + token
+	if t.page != nil {
+		s.statusManageView(w, ctx, t, v, status, heading, undo)
+		return
+	}
 	if heading != "" {
 		v.Heading = heading
 		if len(undo) > 0 {
@@ -433,6 +538,48 @@ func (s *Server) manageView(w http.ResponseWriter, ctx context.Context, t *manag
 	}
 	v.Forms = append(v.Forms, choices,
 		pageForm{Action: "all", Button: fill(v.W.UnsubscribeAll, ln, in, ""), Note: fill(v.W.UnsubscribeAllText, ln, in, ""), Secondary: true})
+	writeListPage(w, status, v)
+}
+
+// statusManageView is /m/ of a status list: only that list, its component choices and a link back to
+// the page.
+func (s *Server) statusManageView(w http.ResponseWriter, ctx context.Context, t *manageTarget, v listPageView, status int, heading string, undo []uuid.UUID) {
+	ln, in := t.page.Name, t.inbox.Name
+	statusPageColor(&v, t.page)
+	v.Links = []pageLink{{URL: s.statusURL(t.page.Slug, ""), Label: v.W.StatusBack}}
+	own := t.subsOf(t.list.ID)
+	if heading != "" {
+		v.Heading = heading
+		if len(undo) > 0 {
+			v.Forms = append(v.Forms, pageForm{Action: "undo", Button: v.W.Undo, Secondary: true, Lists: []string{t.list.ID.String()}})
+		}
+		v.Forms = append(v.Forms, pageForm{Action: "show", Button: v.W.ManageLink, Secondary: true})
+		writeListPage(w, status, v)
+		return
+	}
+	v.Heading = v.W.ManageTitle
+	if !activeState(own) {
+		v.Texts = []string{fill(v.W.StatusNotSubscribed, ln, in, "")}
+		writeListPage(w, status, v)
+		return
+	}
+	v.Texts = []string{fill(v.W.StatusSubscribedAs, ln, in, maskAddress(own[0].Email))}
+	v.Forms = append(v.Forms, pageForm{Action: "unsubscribe", Button: fill(v.W.UnsubscribeFrom, ln, in, "")})
+	if len(t.components) > 1 {
+		var chosen []uuid.UUID
+		for _, sub := range own {
+			ids, err := subscriptionComponentIDs(ctx, s.st.Queries, sub)
+			if err != nil {
+				s.log.ErrorContext(ctx, "status components", slog.Any("error", err))
+			}
+			chosen = append(chosen, ids...)
+		}
+		f := pageForm{Action: "components", Button: v.W.StatusSave, Legend: v.W.StatusLegend, Field: "components", Secondary: true}
+		for _, c := range t.components {
+			f.Choices = append(f.Choices, pageChoice{ID: c.ID.String(), Name: c.Name, Checked: len(chosen) == 0 || slices.Contains(chosen, c.ID)})
+		}
+		v.Forms = append(v.Forms, f)
+	}
 	writeListPage(w, status, v)
 }
 
@@ -527,16 +674,25 @@ func (s *Server) serveManagePost(w http.ResponseWriter, r *http.Request) {
 		}
 		words := s.listPageView(t.inbox, &t.contact).W
 		ln, in := t.list.Name, t.inbox.Name
+		if t.page != nil {
+			ln = t.page.Name
+		}
 		switch {
 		case oneClick:
 			_, err = s.leaveLists(r.Context(), q, events, r, t, []uuid.UUID{t.list.ID}, string(oas.UnsubscribeReasonOneClick))
 		case action == "unsubscribe":
 			undo, err = s.leaveLists(r.Context(), q, events, r, t, []uuid.UUID{t.list.ID}, string(oas.UnsubscribeReasonLink))
 			heading = fill(words.Unsubscribed, ln, in, "")
-		case action == "save":
+		case action == "save" && t.page == nil:
 			heading = words.Saved
 			undo, err = s.saveChoices(r.Context(), q, events, r, t, formLists(r.PostForm["lists"]))
-		case action == "all":
+		case action == "components" && t.page != nil:
+			heading = words.Saved
+			err = s.saveComponents(r.Context(), q, t, formLists(r.PostForm["components"]))
+			if errors.Is(err, errNoComponents) {
+				heading, err = words.StatusNoneChosen, nil
+			}
+		case action == "all" && t.page == nil:
 			heading = fill(words.AllGone, ln, in, "")
 			if undo, err = s.leaveAll(r.Context(), q, events, r, t); err != nil {
 				return err
@@ -568,6 +724,29 @@ func (s *Server) serveManagePost(w http.ResponseWriter, r *http.Request) {
 		}
 		s.manageView(w, r.Context(), t, token, http.StatusOK, heading, undo)
 	}
+}
+
+var errNoComponents = errors.New("no components chosen")
+
+// saveComponents changes a status subscription's component choices; they are preferences, so no
+// consent event is written.
+func (s *Server) saveComponents(ctx context.Context, q *store.Queries, t *manageTarget, chosen []uuid.UUID) error {
+	visible := make([]uuid.UUID, len(t.components))
+	for i, c := range t.components {
+		visible[i] = c.ID
+	}
+	if !slices.ContainsFunc(chosen, func(id uuid.UUID) bool { return slices.Contains(visible, id) }) {
+		return errNoComponents
+	}
+	for _, sub := range t.subsOf(t.list.ID) {
+		if sub.State == subUnsubscribed {
+			continue
+		}
+		if err := setSubscriptionComponents(ctx, q, sub, visible, chosen); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (s *Server) pageProof(r *http.Request, t *manageTarget, source string) consentProof {
@@ -648,6 +827,9 @@ func (s *Server) joinLists(ctx context.Context, q *store.Queries, events *eventB
 		if err != nil {
 			return err
 		}
+	}
+	if t.page != nil {
+		return nil
 	}
 	return q.DeleteOptOut(ctx, store.DeleteOptOutParams{WorkspaceID: t.ws, EmailHash: s.optOutHash(t.ws, addr)})
 }

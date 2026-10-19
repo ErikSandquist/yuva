@@ -1120,6 +1120,7 @@ type MailingList struct {
 	ArchivedAt  *time.Time
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
+	Kind        string
 }
 
 type Member struct {
@@ -1709,24 +1710,26 @@ type StatusMonitor struct {
 }
 
 type StatusPage struct {
-	ID          uuid.UUID
-	WorkspaceID uuid.UUID
-	InboxID     uuid.UUID
-	Name        string
-	Description string
-	Slug        string
-	LogoUrl     *string
-	AccentColor *string
-	SiteUrl     *string
-	SupportUrl  *string
-	Locale      string
-	Timezone    string
-	HistoryDays int32
-	ShowUptime  bool
-	Published   bool
-	ChangedAt   time.Time
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
+	ID            uuid.UUID
+	WorkspaceID   uuid.UUID
+	InboxID       uuid.UUID
+	Name          string
+	Description   string
+	Slug          string
+	LogoUrl       *string
+	AccentColor   *string
+	SiteUrl       *string
+	SupportUrl    *string
+	Locale        string
+	Timezone      string
+	HistoryDays   int32
+	ShowUptime    bool
+	Published     bool
+	ChangedAt     time.Time
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
+	MailingListID *uuid.UUID
+	EmailEnabled  bool
 }
 
 type StatusPageSlug struct {
@@ -1734,6 +1737,12 @@ type StatusPageSlug struct {
 	WorkspaceID uuid.UUID
 	PageID      uuid.UUID
 	CreatedAt   time.Time
+}
+
+type StatusSubscriberComponent struct {
+	WorkspaceID    uuid.UUID
+	SubscriptionID uuid.UUID
+	ComponentID    uuid.UUID
 }
 
 type UsageCounter struct {

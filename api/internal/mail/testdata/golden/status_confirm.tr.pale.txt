@@ -1,0 +1,7 @@
+Hello, my invoice is wrong. bildirimlerini onaylayın
+
+Bu adrese "Hello, my invoice is wrong." olay ve bakım bildirimlerinin gönderilmesi istendi. Yalnızca: API, Dashboard. Buradan onaylayın:
+
+    https://yuva.example.com/s/tok
+
+Bağlantı 7 gün geçerlidir. Bunu siz istemediyseniz bu e-postayı yok sayın; hiçbir şey olmaz.

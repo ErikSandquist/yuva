@@ -1,6 +1,6 @@
 -- name: CreateMailingList :one
-INSERT INTO mailing_lists (id, workspace_id, inbox_id, channel_id, name, description, double_opt_in, public, commercial, welcome, created_at, updated_at)
-VALUES (@id, @workspace_id, @inbox_id, sqlc.narg(channel_id), @name, @description, @double_opt_in, @public, @commercial, @welcome, @now, @now)
+INSERT INTO mailing_lists (id, workspace_id, inbox_id, channel_id, kind, name, description, double_opt_in, public, commercial, welcome, created_at, updated_at)
+VALUES (@id, @workspace_id, @inbox_id, sqlc.narg(channel_id), @kind, @name, @description, @double_opt_in, @public, @commercial, @welcome, @now, @now)
 RETURNING *;
 
 -- name: GetMailingList :one
@@ -24,6 +24,7 @@ SELECT * FROM mailing_lists l
 WHERE l.workspace_id = @workspace_id
   AND (sqlc.narg(inbox_id)::uuid IS NULL OR l.inbox_id = sqlc.narg(inbox_id)::uuid)
   AND @archived::bool = (l.archived_at IS NOT NULL)
+  AND l.kind = @kind
   AND (@all_inboxes::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
       WHERE iv.workspace_id = l.workspace_id AND iv.inbox_id = l.inbox_id AND iv.viewer_id = @viewer_id))
@@ -34,7 +35,7 @@ LIMIT @lim;
 
 -- name: ListPublicMailingLists :many
 SELECT * FROM mailing_lists
-WHERE workspace_id = @workspace_id AND inbox_id = @inbox_id AND public AND archived_at IS NULL
+WHERE workspace_id = @workspace_id AND inbox_id = @inbox_id AND public AND archived_at IS NULL AND kind = 'list'
 ORDER BY name, id;
 
 -- name: ListInboxMailingLists :many
@@ -190,7 +191,8 @@ DELETE FROM email_optouts WHERE workspace_id = @workspace_id AND email_hash = @e
 
 -- name: ContactObjectionEmails :many
 SELECT s.email FROM list_subscriptions s
-WHERE s.workspace_id = @workspace_id AND s.contact_id = @contact_id
+JOIN mailing_lists l ON l.workspace_id = s.workspace_id AND l.id = s.list_id
+WHERE s.workspace_id = @workspace_id AND s.contact_id = @contact_id AND l.kind = 'list'
   AND (s.state = 'unsubscribed' OR (s.state = 'pending' AND s.unsubscribe_reason IS NOT NULL))
 UNION
 SELECT x.email FROM email_suppressions x
@@ -207,9 +209,10 @@ SELECT EXISTS (SELECT 1 FROM email_suppressions WHERE workspace_id = $1 AND emai
 
 -- Pending subscriptions that never reached consent are deleted; one that was unsubscribed before
 -- and asked again goes back to unsubscribed, so its objection is not lost.
--- name: ExpirePendingSubscriptions :one
+-- name: ExpirePendingSubscriptions :many
 WITH expired AS (
-    SELECT s.id,
+    SELECT s.id, s.contact_id,
+           (SELECT l.kind = 'status' FROM mailing_lists l WHERE l.workspace_id = s.workspace_id AND l.id = s.list_id)::bool AS status,
            (SELECT max(e.created_at) FROM consent_events e
             WHERE e.workspace_id = s.workspace_id AND e.subscription_id = s.id AND e.kind IN ('unsubscribed', 'complained')) AS objected_at
     FROM list_subscriptions s
@@ -227,12 +230,15 @@ WITH expired AS (
     WHERE s.workspace_id = @workspace_id AND s.id = x.id AND x.objected_at IS NULL
     RETURNING s.id
 )
-SELECT (SELECT count(*) FROM reverted) + (SELECT count(*) FROM deleted);
+SELECT x.contact_id, (x.status AND d.id IS NOT NULL)::bool AS unconfirmed_status
+FROM expired x
+LEFT JOIN deleted d ON d.id = x.id;
 
 -- name: ListExpiredUnsubscribed :many
-SELECT id, email FROM list_subscriptions
-WHERE workspace_id = @workspace_id AND state = 'unsubscribed' AND unsubscribed_at < @before::timestamptz
-ORDER BY unsubscribed_at
+SELECT s.id, s.email, l.kind FROM list_subscriptions s
+JOIN mailing_lists l ON l.workspace_id = s.workspace_id AND l.id = s.list_id
+WHERE s.workspace_id = @workspace_id AND s.state = 'unsubscribed' AND s.unsubscribed_at < @before::timestamptz
+ORDER BY s.unsubscribed_at
 LIMIT @lim;
 
 -- name: DeleteSubscriptions :execrows

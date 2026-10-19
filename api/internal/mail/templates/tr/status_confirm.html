@@ -1,0 +1,5 @@
+{{template "heading" "Durum bildirimlerini onaylayın"}}
+<p style="margin:0;">Bu adrese <strong>{{.Page}}</strong> olay ve bakım bildirimlerinin gönderilmesi istendi.{{if .Components}} Yalnızca: {{.Components}}.{{end}} Aşağıdaki düğmeyle onaylayın.</p>
+{{template "button" (button .URL "Bildirimleri onayla")}}
+{{template "fallback" (button .URL "Ya da bu bağlantıyı açın:")}}
+<p class="y-muted" style="margin:16px 0 0 0;font-size:13px;line-height:20px;color:#71717a;">Bağlantı 7 gün geçerlidir. Bunu siz istemediyseniz bu e-postayı yok sayın; hiçbir şey olmaz.</p>

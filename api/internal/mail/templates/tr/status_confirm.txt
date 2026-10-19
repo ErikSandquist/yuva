@@ -1,0 +1,7 @@
+{{.Page}} bildirimlerini onaylayın
+
+Bu adrese "{{.Page}}" olay ve bakım bildirimlerinin gönderilmesi istendi.{{if .Components}} Yalnızca: {{.Components}}.{{end}} Buradan onaylayın:
+
+    {{.URL}}
+
+Bağlantı 7 gün geçerlidir. Bunu siz istemediyseniz bu e-postayı yok sayın; hiçbir şey olmaz.

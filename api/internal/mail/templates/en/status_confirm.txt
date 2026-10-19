@@ -1,0 +1,7 @@
+Confirm notices from {{.Page}}
+
+Someone asked to send this address notices about incidents and maintenance of "{{.Page}}".{{if .Components}} Only about: {{.Components}}.{{end}} Confirm it here:
+
+    {{.URL}}
+
+The link works for 7 days. If you did not ask for this, ignore this e-mail and nothing happens.

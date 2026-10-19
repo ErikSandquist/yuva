@@ -136,8 +136,23 @@ func subscriptionBodies(ctx context.Context, q *store.Queries, ws uuid.UUID, sub
 	for _, r := range rows {
 		names[r.ID] = r.Name
 	}
+	subIDs := make([]uuid.UUID, len(subs))
+	for i, sub := range subs {
+		subIDs[i] = sub.ID
+	}
+	chosen, err := q.ListSubscriptionComponents(ctx, store.ListSubscriptionComponentsParams{WorkspaceID: ws, SubscriptionIds: subIDs})
+	if err != nil {
+		return nil, err
+	}
+	comps := map[uuid.UUID][]uuid.UUID{}
+	for _, c := range chosen {
+		comps[c.SubscriptionID] = append(comps[c.SubscriptionID], c.ComponentID)
+	}
 	for i, sub := range subs {
 		out[i] = subscriptionBody(sub, names[sub.ContactID])
+		if c, ok := comps[sub.ID]; ok {
+			out[i].Components = &c
+		}
 	}
 	return out, nil
 }
@@ -321,8 +336,10 @@ func (s *Server) confirmListSubscription(ctx context.Context, q *store.Queries, 
 	if err := s.consentEvent(ctx, q, out, consentConfirmed, pr); err != nil {
 		return out, err
 	}
-	if err := q.DeleteOptOut(ctx, store.DeleteOptOutParams{WorkspaceID: sub.WorkspaceID, EmailHash: s.optOutHash(sub.WorkspaceID, sub.Email)}); err != nil {
-		return out, err
+	if list.Kind != listKindStatus {
+		if err := q.DeleteOptOut(ctx, store.DeleteOptOutParams{WorkspaceID: sub.WorkspaceID, EmailHash: s.optOutHash(sub.WorkspaceID, sub.Email)}); err != nil {
+			return out, err
+		}
 	}
 	if _, err := q.GetContactIDByEmail(ctx, store.GetContactIDByEmailParams{WorkspaceID: sub.WorkspaceID, Email: sub.Email}); store.IsNotFound(err) {
 		own, err := q.ContactUnidentified(ctx, store.ContactUnidentifiedParams{WorkspaceID: sub.WorkspaceID, ID: sub.ContactID})
@@ -612,6 +629,7 @@ func (s *Server) CreateSubscription(ctx context.Context, req oas.CreateSubscript
 	var (
 		out     store.ListSubscription
 		created bool
+		status  bool
 	)
 	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, events *eventBatch) error {
 		list, err := visibleList(ctx, q, p, req.ListId, false)
@@ -630,10 +648,14 @@ func (s *Server) CreateSubscription(ctx context.Context, req oas.CreateSubscript
 		} else if suppressed {
 			return errSubSuppressed
 		}
-		if opted, err := s.optedOut(ctx, q, p.workspaceID, email); err != nil {
-			return err
-		} else if opted {
-			return errSubOptedOut
+		status = list.Kind == listKindStatus
+		confirmed := c.Confirmed && !status
+		if !status {
+			if opted, err := s.optedOut(ctx, q, p.workspaceID, email); err != nil {
+				return err
+			} else if opted {
+				return errSubOptedOut
+			}
 		}
 		pr := principalProof(p, principalSource(p))
 		pr.ip, pr.pageURL, pr.text = c.Ip, c.PageUrl, c.Text
@@ -653,9 +675,9 @@ func (s *Server) CreateSubscription(ctx context.Context, req oas.CreateSubscript
 			switch {
 			case cur.State == subSubscribed:
 				out = cur
-			case cur.State == subUnsubscribed || (objected(cur) && c.Confirmed):
+			case cur.State == subUnsubscribed || (objected(cur) && confirmed):
 				return errSubUnsubscribed
-			case c.Confirmed:
+			case confirmed:
 				out, err = s.subscribeNow(ctx, q, events, list, cur, consentAt, pr)
 			default:
 				out = cur
@@ -663,7 +685,7 @@ func (s *Server) CreateSubscription(ctx context.Context, req oas.CreateSubscript
 			return err
 		}
 		created = true
-		if c.Confirmed {
+		if confirmed {
 			if out, err = s.newSubscription(ctx, q, events, list, contactID, email, subSubscribed, principalSource(p), &consentAt); err != nil {
 				return err
 			}
@@ -690,6 +712,9 @@ func (s *Server) CreateSubscription(ctx context.Context, req oas.CreateSubscript
 	body, err := oneSubscription(ctx, s.st.Queries, out)
 	if err != nil {
 		return nil, err
+	}
+	if created && status {
+		return oas.CreateSubscription202JSONResponse(body), nil
 	}
 	if created {
 		return oas.CreateSubscription201JSONResponse(body), nil
@@ -718,7 +743,8 @@ func (s *Server) GetSubscription(ctx context.Context, req oas.GetSubscriptionReq
 		Id: body.Id, ListId: body.ListId, Contact: body.Contact, Email: body.Email, State: body.State, Source: body.Source,
 		ConsentAt: body.ConsentAt, ConfirmedAt: body.ConfirmedAt, ConfirmationSentAt: body.ConfirmationSentAt,
 		UnsubscribedAt: body.UnsubscribedAt, UnsubscribeReason: body.UnsubscribeReason, CreatedAt: body.CreatedAt, UpdatedAt: body.UpdatedAt,
-		Events: make([]oas.ConsentEvent, len(rows)),
+		Components: body.Components,
+		Events:     make([]oas.ConsentEvent, len(rows)),
 	}
 	for i, e := range rows {
 		out.Events[i] = consentEventBody(e)
@@ -784,7 +810,11 @@ func (s *Server) DeleteSubscription(ctx context.Context, req oas.DeleteSubscript
 		if err := requireManagerOrKey(p); err != nil {
 			return err
 		}
-		if objected(sub) {
+		list, err := q.GetMailingList(ctx, store.GetMailingListParams{WorkspaceID: p.workspaceID, ID: sub.ListID})
+		if err != nil {
+			return err
+		}
+		if objected(sub) && list.Kind != listKindStatus {
 			if err := s.rememberOptOuts(ctx, q, p.workspaceID, []string{sub.Email}, optOutErasure); err != nil {
 				return err
 			}
@@ -900,6 +930,9 @@ func (s *Server) ExportListConsent(ctx context.Context, req oas.ExportListConsen
 		return nil, errValidation("format must be csv, json or iys")
 	}
 	if req.Params.Format != nil && *req.Params.Format == oas.ExportListConsentParamsFormatIys {
+		if list.Kind == listKindStatus {
+			return nil, errListKind
+		}
 		return iysStream{
 			s: s, ctx: ctx, name: "iys-" + list.ID.String(),
 			arg: store.ListIYSRecordsParams{WorkspaceID: p.workspaceID, ListID: list.ID, Since: req.Params.Since},
@@ -981,13 +1014,24 @@ func (s *Server) ExpireSubscriptions(ctx context.Context) error {
 	}
 	for _, ws := range ids {
 		for {
-			n, err := s.st.ExpirePendingSubscriptions(ctx, store.ExpirePendingSubscriptionsParams{
+			rows, err := s.st.ExpirePendingSubscriptions(ctx, store.ExpirePendingSubscriptionsParams{
 				WorkspaceID: ws, Before: s.now().Add(-pendingKept), Now: s.now(), Lim: retentionBatch,
 			})
 			if err != nil {
 				return err
 			}
-			if n < retentionBatch {
+			var unconfirmed []uuid.UUID
+			for _, r := range rows {
+				if r.UnconfirmedStatus {
+					unconfirmed = append(unconfirmed, r.ContactID)
+				}
+			}
+			if len(unconfirmed) > 0 {
+				if _, err := s.st.DeleteUnconfirmedContacts(ctx, store.DeleteUnconfirmedContactsParams{WorkspaceID: ws, Ids: unconfirmed}); err != nil {
+					return err
+				}
+			}
+			if len(rows) < retentionBatch {
 				break
 			}
 		}
@@ -1000,9 +1044,12 @@ func (s *Server) ExpireSubscriptions(ctx context.Context) error {
 				}
 				n = len(rows)
 				ids := make([]uuid.UUID, n)
-				emails := make([]string, n)
+				var emails []string
 				for i, r := range rows {
-					ids[i], emails[i] = r.ID, r.Email
+					ids[i] = r.ID
+					if r.Kind != listKindStatus {
+						emails = append(emails, r.Email)
+					}
 				}
 				if err := s.rememberOptOuts(ctx, q, ws, emails, optOutErasure); err != nil {
 					return err

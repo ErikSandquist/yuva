@@ -157,11 +157,23 @@ func (s *Server) SendListMail(ctx context.Context, a ListMailArgs, lastAttempt b
 	}
 	headers := []email.Header{{Name: "Auto-Submitted", Value: "auto-generated"}, {Name: "X-Auto-Response-Suppress", Value: "All"}}
 	var msg mail.Message
-	if a.Mail == listMailConfirm {
+	page, isStatus, err := statusListPage(ctx, s.st.Queries, list)
+	if err != nil {
+		return err
+	}
+	switch {
+	case a.Mail == listMailConfirm && isStatus:
+		var data map[string]string
+		if data, err = s.statusConfirmData(ctx, page, sub); err == nil {
+			msg, err = mail.RenderAs(inboxMailBrand(in), "status_confirm", locale, data)
+		}
+	case a.Mail == listMailConfirm:
 		msg, err = mail.RenderAs(inboxMailBrand(in), "list_confirm", locale, map[string]string{
 			"Inbox": in.Name, "List": list.Name, "URL": s.confirmURL(sub),
 		})
-	} else {
+	case isStatus:
+		return skip("a status list sends no welcome mail")
+	default:
 		manage := s.manageURL(ws, list.ID, sub.ContactID, uuid.Nil())
 		msg, err = mail.RenderAs(inboxMailBrand(in), "list_welcome", locale, map[string]string{
 			"Inbox": in.Name, "List": list.Name, "Description": list.Description, "UnsubscribeURL": manage, "ManageURL": manage,

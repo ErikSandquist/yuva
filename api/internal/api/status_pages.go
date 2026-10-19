@@ -125,13 +125,13 @@ func statusPageRef(pg store.StatusPage) oas.StatusPageRef {
 	return oas.StatusPageRef{Id: pg.ID, Name: pg.Name, Slug: pg.Slug}
 }
 
-func (s *Server) statusPageBody(pg store.StatusPage, state string) oas.StatusPage {
+func (s *Server) statusPageBody(pg store.StatusPage, state string, email oas.StatusEmailSubscribers) oas.StatusPage {
 	out := oas.StatusPage{
 		Id: pg.ID, InboxId: pg.InboxID, Name: pg.Name, Description: pg.Description, Slug: oas.StatusPageSlug(pg.Slug),
 		Url: s.statusURL(pg.Slug, ""), LogoUrl: pg.LogoUrl, SiteUrl: pg.SiteUrl, SupportUrl: pg.SupportUrl, Locale: pg.Locale,
 		Timezone: pg.Timezone, HistoryDays: pg.HistoryDays, ShowUptime: pg.ShowUptime, Published: pg.Published,
 		State: oas.StatusComponentStateValue(state), CreatedAt: pg.CreatedAt, UpdatedAt: pg.UpdatedAt,
-		EmailSubscribers: oas.StatusEmailSubscribers{Warnings: []oas.StatusEmailSubscribersWarnings{}},
+		EmailSubscribers: email,
 	}
 	if pg.AccentColor != nil {
 		c := oas.StatusColor(*pg.AccentColor)
@@ -155,7 +155,11 @@ func (s *Server) statusPageOut(ctx context.Context, q *store.Queries, pg store.S
 	if err != nil {
 		return oas.StatusPage{}, err
 	}
-	return s.statusPageBody(pg, pageState(comps)), nil
+	email, err := s.statusEmailBody(ctx, q, pg)
+	if err != nil {
+		return oas.StatusPage{}, err
+	}
+	return s.statusPageBody(pg, pageState(comps), email), nil
 }
 
 func statusLink(raw *string, field string, schemes ...string) (*string, error) {
@@ -295,7 +299,7 @@ func (s *Server) CreateStatusPage(ctx context.Context, req oas.CreateStatusPageR
 	if pg.Published {
 		s.statusHint(ctx, p.workspaceID, pg.InboxID)
 	}
-	return oas.CreateStatusPage201JSONResponse(s.statusPageBody(pg, stOperational)), nil
+	return oas.CreateStatusPage201JSONResponse(s.statusPageBody(pg, stOperational, noStatusEmail())), nil
 }
 
 func (s *Server) GetStatusPage(ctx context.Context, req oas.GetStatusPageRequestObject) (oas.GetStatusPageResponseObject, error) {
@@ -396,6 +400,11 @@ func (s *Server) UpdateStatusPage(ctx context.Context, req oas.UpdateStatusPageR
 		if err != nil {
 			return err
 		}
+		if b.EmailSubscribers != nil {
+			if pg, err = s.setStatusEmail(ctx, q, pg, *b.EmailSubscribers); err != nil {
+				return err
+			}
+		}
 		out, err = s.statusPageOut(ctx, q, pg)
 		return err
 	})
@@ -415,7 +424,17 @@ func (s *Server) DeleteStatusPage(ctx context.Context, req oas.DeleteStatusPageR
 	if err != nil {
 		return nil, err
 	}
-	if _, err := s.st.DeleteStatusPage(ctx, store.DeleteStatusPageParams{WorkspaceID: p.workspaceID, ID: pg.ID}); err != nil {
+	err = s.st.InTx(ctx, func(q *store.Queries) error {
+		if _, err := q.DeleteStatusPage(ctx, store.DeleteStatusPageParams{WorkspaceID: p.workspaceID, ID: pg.ID}); err != nil {
+			return err
+		}
+		if pg.MailingListID != nil {
+			_, err := q.DeleteMailingList(ctx, store.DeleteMailingListParams{WorkspaceID: p.workspaceID, ID: *pg.MailingListID})
+			return err
+		}
+		return nil
+	})
+	if err != nil {
 		return nil, err
 	}
 	s.statusCache.forget(pg.ID)

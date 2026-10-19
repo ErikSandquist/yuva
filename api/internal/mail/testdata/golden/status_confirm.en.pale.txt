@@ -1,0 +1,7 @@
+Confirm notices from Hello, my invoice is wrong.
+
+Someone asked to send this address notices about incidents and maintenance of "Hello, my invoice is wrong.". Only about: API, Dashboard. Confirm it here:
+
+    https://yuva.example.com/s/tok
+
+The link works for 7 days. If you did not ask for this, ignore this e-mail and nothing happens.

@@ -1,0 +1,7 @@
+Bestätigen Sie Meldungen von Hello, my invoice is wrong.
+
+Jemand hat darum gebeten, dieser Adresse Meldungen zu Störungen und Wartungen von „Hello, my invoice is wrong.“ zu senden. Nur zu: API, Dashboard. Bestätigen Sie es hier:
+
+    https://yuva.example.com/s/tok
+
+Der Link gilt 7 Tage. Wenn Sie das nicht angefordert haben, ignorieren Sie diese E-Mail; es passiert nichts.

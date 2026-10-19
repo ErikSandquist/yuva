@@ -1,0 +1,7 @@
+Bestätigen Sie Meldungen von {{.Page}}
+
+Jemand hat darum gebeten, dieser Adresse Meldungen zu Störungen und Wartungen von „{{.Page}}“ zu senden.{{if .Components}} Nur zu: {{.Components}}.{{end}} Bestätigen Sie es hier:
+
+    {{.URL}}
+
+Der Link gilt 7 Tage. Wenn Sie das nicht angefordert haben, ignorieren Sie diese E-Mail; es passiert nichts.

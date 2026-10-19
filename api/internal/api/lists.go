@@ -18,6 +18,12 @@ var (
 	errListGone             = problem(http.StatusNotFound, "not_found", "no such mailing list")
 	errListNameTaken        = problem(http.StatusConflict, "name_taken", "another list of the inbox has this name")
 	errEmailChannelRequired = problem(http.StatusConflict, "email_channel_required", "the list needs an e-mail channel of its inbox with an SMTP account")
+	errListKind             = problem(http.StatusConflict, "list_kind", "this is a status page's subscriber list; it is managed on its status page")
+)
+
+const (
+	listKindList   = string(oas.MailingListKindList)
+	listKindStatus = string(oas.MailingListKindStatus)
 )
 
 // visibleList loads a list the caller may see: lists of inboxes it cannot access answer 404.
@@ -103,12 +109,33 @@ func (s *Server) mailingListBodies(ctx context.Context, q *store.Queries, ws uui
 	if err != nil {
 		return nil, err
 	}
+	pages := map[uuid.UUID]uuid.UUID{}
+	var statusIDs []uuid.UUID
+	for _, l := range lists {
+		if l.Kind == listKindStatus {
+			statusIDs = append(statusIDs, l.ID)
+		}
+	}
+	if len(statusIDs) > 0 {
+		rows, err := q.ListStatusPagesByLists(ctx, store.ListStatusPagesByListsParams{WorkspaceID: ws, ListIds: statusIDs})
+		if err != nil {
+			return nil, err
+		}
+		for _, r := range rows {
+			if r.MailingListID != nil {
+				pages[*r.MailingListID] = r.ID
+			}
+		}
+	}
 	for i, l := range lists {
 		out[i] = oas.MailingList{
-			Id: l.ID, InboxId: l.InboxID, Kind: oas.MailingListKindList, ChannelId: l.ChannelID, Name: l.Name, Description: l.Description,
+			Id: l.ID, InboxId: l.InboxID, Kind: oas.MailingListKind(l.Kind), ChannelId: l.ChannelID, Name: l.Name, Description: l.Description,
 			DoubleOptIn: l.DoubleOptIn, Public: l.Public, Commercial: l.Commercial, Welcome: l.Welcome,
 			ArchivedAt: l.ArchivedAt, Counts: byList[l.ID], CreatedAt: l.CreatedAt, UpdatedAt: l.UpdatedAt,
 			SenderReady: l.ChannelID != nil && ready[*l.ChannelID],
+		}
+		if id, ok := pages[l.ID]; ok {
+			out[i].StatusPageId = &id
 		}
 	}
 	return out, nil
@@ -123,7 +150,7 @@ func (s *Server) mailingListBody(ctx context.Context, q *store.Queries, l store.
 }
 
 func listRef(l store.MailingList) oas.MailingListRef {
-	return oas.MailingListRef{Id: l.ID, InboxId: l.InboxID, Name: l.Name, Kind: oas.MailingListKindList}
+	return oas.MailingListRef{Id: l.ID, InboxId: l.InboxID, Name: l.Name, Kind: oas.MailingListKind(l.Kind)}
 }
 
 // listChannel checks that a list may send through the channel: an e-mail channel of its inbox that
@@ -185,8 +212,15 @@ func (s *Server) ListMailingLists(ctx context.Context, req oas.ListMailingListsR
 			return nil, err
 		}
 	}
+	kind := listKindList
+	if req.Params.Kind != nil {
+		if !req.Params.Kind.Valid() {
+			return nil, errValidation("kind must be list or status")
+		}
+		kind = string(*req.Params.Kind)
+	}
 	rows, err := s.st.ListMailingLists(ctx, store.ListMailingListsParams{
-		WorkspaceID: p.workspaceID, InboxID: req.Params.InboxId, Archived: boolOr(req.Params.Archived, false),
+		WorkspaceID: p.workspaceID, InboxID: req.Params.InboxId, Archived: boolOr(req.Params.Archived, false), Kind: kind,
 		AllInboxes: p.seesAllInboxes(), ViewerID: p.viewerID(), CursorAt: at, CursorID: id, Lim: lim + 1,
 	})
 	if err != nil {
@@ -231,7 +265,7 @@ func (s *Server) CreateMailingList(ctx context.Context, req oas.CreateMailingLis
 		}
 	}
 	l, err := s.st.CreateMailingList(ctx, store.CreateMailingListParams{
-		ID: newID(), WorkspaceID: p.workspaceID, InboxID: in.ID, ChannelID: b.ChannelId, Name: f.name, Description: f.description,
+		ID: newID(), WorkspaceID: p.workspaceID, InboxID: in.ID, ChannelID: b.ChannelId, Kind: listKindList, Name: f.name, Description: f.description,
 		DoubleOptIn: f.doubleOptIn, Public: f.public, Commercial: f.commercial, Welcome: f.welcome, Now: s.now(),
 	})
 	if store.IsUniqueViolation(err) {
@@ -271,6 +305,10 @@ func (s *Server) UpdateMailingList(ctx context.Context, req oas.UpdateMailingLis
 		}
 		if err := requireManagerOrKey(p); err != nil {
 			return err
+		}
+		if cur.Kind == listKindStatus && (b.DoubleOptIn != nil || b.Public != nil || b.Commercial != nil || b.Welcome != nil ||
+			b.ChannelId.IsSpecified() || b.Archived != nil) {
+			return errListKind
 		}
 		f := listFields{
 			name: cur.Name, description: cur.Description, doubleOptIn: boolOr(b.DoubleOptIn, cur.DoubleOptIn),
@@ -334,6 +372,9 @@ func (s *Server) DeleteMailingList(ctx context.Context, req oas.DeleteMailingLis
 		}
 		if err := requireManagerOrKey(p); err != nil {
 			return err
+		}
+		if l.Kind == listKindStatus {
+			return errListKind
 		}
 		if uploads, err = q.ListImportStorageKeys(ctx, store.ListImportStorageKeysParams{WorkspaceID: p.workspaceID, ListID: &l.ID}); err != nil {
 			return err

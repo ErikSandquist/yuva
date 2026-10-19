@@ -1,0 +1,5 @@
+{{template "heading" "Confirm status notices"}}
+<p style="margin:0;">Someone asked to send this address notices about incidents and maintenance of <strong>{{.Page}}</strong>.{{if .Components}} Only about: {{.Components}}.{{end}} Confirm it with the button below.</p>
+{{template "button" (button .URL "Confirm notices")}}
+{{template "fallback" (button .URL "Or open this link:")}}
+<p class="y-muted" style="margin:16px 0 0 0;font-size:13px;line-height:20px;color:#71717a;">The link works for 7 days. If you did not ask for this, ignore this e-mail and nothing happens.</p>

@@ -112,6 +112,23 @@ func (q *Queries) AddStatusReplyTargets(ctx context.Context, arg AddStatusReplyT
 	return err
 }
 
+const addSubscriptionComponent = `-- name: AddSubscriptionComponent :exec
+INSERT INTO status_subscriber_components (workspace_id, subscription_id, component_id)
+VALUES ($1, $2, $3)
+ON CONFLICT DO NOTHING
+`
+
+type AddSubscriptionComponentParams struct {
+	WorkspaceID    uuid.UUID
+	SubscriptionID uuid.UUID
+	ComponentID    uuid.UUID
+}
+
+func (q *Queries) AddSubscriptionComponent(ctx context.Context, arg AddSubscriptionComponentParams) error {
+	_, err := q.db.Exec(ctx, addSubscriptionComponent, arg.WorkspaceID, arg.SubscriptionID, arg.ComponentID)
+	return err
+}
+
 const clearStatusIncidentComponents = `-- name: ClearStatusIncidentComponents :exec
 DELETE FROM status_incident_components WHERE workspace_id = $1 AND incident_id = $2
 `
@@ -123,6 +140,20 @@ type ClearStatusIncidentComponentsParams struct {
 
 func (q *Queries) ClearStatusIncidentComponents(ctx context.Context, arg ClearStatusIncidentComponentsParams) error {
 	_, err := q.db.Exec(ctx, clearStatusIncidentComponents, arg.WorkspaceID, arg.IncidentID)
+	return err
+}
+
+const clearSubscriptionComponents = `-- name: ClearSubscriptionComponents :exec
+DELETE FROM status_subscriber_components WHERE workspace_id = $1 AND subscription_id = $2
+`
+
+type ClearSubscriptionComponentsParams struct {
+	WorkspaceID    uuid.UUID
+	SubscriptionID uuid.UUID
+}
+
+func (q *Queries) ClearSubscriptionComponents(ctx context.Context, arg ClearSubscriptionComponentsParams) error {
+	_, err := q.db.Exec(ctx, clearSubscriptionComponents, arg.WorkspaceID, arg.SubscriptionID)
 	return err
 }
 
@@ -506,7 +537,7 @@ INSERT INTO status_pages (id, workspace_id, inbox_id, name, description, slug, l
     locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at)
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,
     $10, $11, $12, $13, $14, $15, $16, $16, $16)
-RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at
+RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled
 `
 
 type CreateStatusPageParams struct {
@@ -567,6 +598,8 @@ func (q *Queries) CreateStatusPage(ctx context.Context, arg CreateStatusPagePara
 		&i.ChangedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.MailingListID,
+		&i.EmailEnabled,
 	)
 	return i, err
 }
@@ -642,6 +675,32 @@ func (q *Queries) DeleteStatusPage(ctx context.Context, arg DeleteStatusPagePara
 	return result.RowsAffected(), nil
 }
 
+const deleteUnconfirmedContacts = `-- name: DeleteUnconfirmedContacts :execrows
+DELETE FROM contacts c
+WHERE c.workspace_id = $1 AND c.id = ANY($2::uuid[]) AND c.person_id IS NULL
+  AND NOT EXISTS (SELECT 1 FROM contact_emails x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id)
+  AND NOT EXISTS (SELECT 1 FROM contact_external_ids x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id)
+  AND NOT EXISTS (SELECT 1 FROM conversations x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id)
+  AND NOT EXISTS (SELECT 1 FROM list_subscriptions x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id)
+  AND NOT EXISTS (SELECT 1 FROM contact_notes x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id)
+  AND NOT EXISTS (SELECT 1 FROM chat_visitors x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id)
+  AND NOT EXISTS (SELECT 1 FROM broadcast_deliveries x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id)
+`
+
+type DeleteUnconfirmedContactsParams struct {
+	WorkspaceID uuid.UUID
+	Ids         []uuid.UUID
+}
+
+// Contacts made by a status page request that nobody confirmed: nothing else refers to them.
+func (q *Queries) DeleteUnconfirmedContacts(ctx context.Context, arg DeleteUnconfirmedContactsParams) (int64, error) {
+	result, err := q.db.Exec(ctx, deleteUnconfirmedContacts, arg.WorkspaceID, arg.Ids)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
 const editStatusIncidentUpdate = `-- name: EditStatusIncidentUpdate :one
 UPDATE status_incident_updates SET body = $1, edited_at = $2
 WHERE workspace_id = $3 AND incident_id = $4 AND id = $5
@@ -696,7 +755,7 @@ func (q *Queries) EndStatusComponentState(ctx context.Context, arg EndStatusComp
 }
 
 const findStatusPageByFormerSlug = `-- name: FindStatusPageByFormerSlug :one
-SELECT p.id, p.workspace_id, p.inbox_id, p.name, p.description, p.slug, p.logo_url, p.accent_color, p.site_url, p.support_url, p.locale, p.timezone, p.history_days, p.show_uptime, p.published, p.changed_at, p.created_at, p.updated_at FROM status_page_slugs s
+SELECT p.id, p.workspace_id, p.inbox_id, p.name, p.description, p.slug, p.logo_url, p.accent_color, p.site_url, p.support_url, p.locale, p.timezone, p.history_days, p.show_uptime, p.published, p.changed_at, p.created_at, p.updated_at, p.mailing_list_id, p.email_enabled FROM status_page_slugs s
 JOIN status_pages p ON p.workspace_id = s.workspace_id AND p.id = s.page_id
 WHERE s.slug = $1
 `
@@ -724,12 +783,14 @@ func (q *Queries) FindStatusPageByFormerSlug(ctx context.Context, slug string) (
 		&i.ChangedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.MailingListID,
+		&i.EmailEnabled,
 	)
 	return i, err
 }
 
 const findStatusPageBySlug = `-- name: FindStatusPageBySlug :one
-SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at FROM status_pages WHERE slug = $1
+SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled FROM status_pages WHERE slug = $1
 `
 
 // The documented exception: a public page is found by its slug before its workspace is known.
@@ -755,6 +816,8 @@ func (q *Queries) FindStatusPageBySlug(ctx context.Context, slug string) (Status
 		&i.ChangedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.MailingListID,
+		&i.EmailEnabled,
 	)
 	return i, err
 }
@@ -786,7 +849,7 @@ func (q *Queries) FinishStatusReplyTarget(ctx context.Context, arg FinishStatusR
 }
 
 const getInboxStatusPage = `-- name: GetInboxStatusPage :one
-SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at FROM status_pages WHERE workspace_id = $1 AND inbox_id = $2
+SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled FROM status_pages WHERE workspace_id = $1 AND inbox_id = $2
 `
 
 type GetInboxStatusPageParams struct {
@@ -816,6 +879,8 @@ func (q *Queries) GetInboxStatusPage(ctx context.Context, arg GetInboxStatusPage
 		&i.ChangedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.MailingListID,
+		&i.EmailEnabled,
 	)
 	return i, err
 }
@@ -938,7 +1003,7 @@ func (q *Queries) GetStatusIncidentReply(ctx context.Context, arg GetStatusIncid
 }
 
 const getStatusPage = `-- name: GetStatusPage :one
-SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at FROM status_pages WHERE workspace_id = $1 AND id = $2
+SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled FROM status_pages WHERE workspace_id = $1 AND id = $2
 `
 
 type GetStatusPageParams struct {
@@ -968,6 +1033,45 @@ func (q *Queries) GetStatusPage(ctx context.Context, arg GetStatusPageParams) (S
 		&i.ChangedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.MailingListID,
+		&i.EmailEnabled,
+	)
+	return i, err
+}
+
+const getStatusPageByList = `-- name: GetStatusPageByList :one
+SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled FROM status_pages WHERE workspace_id = $1 AND mailing_list_id = $2
+`
+
+type GetStatusPageByListParams struct {
+	WorkspaceID   uuid.UUID
+	MailingListID *uuid.UUID
+}
+
+func (q *Queries) GetStatusPageByList(ctx context.Context, arg GetStatusPageByListParams) (StatusPage, error) {
+	row := q.db.QueryRow(ctx, getStatusPageByList, arg.WorkspaceID, arg.MailingListID)
+	var i StatusPage
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.InboxID,
+		&i.Name,
+		&i.Description,
+		&i.Slug,
+		&i.LogoUrl,
+		&i.AccentColor,
+		&i.SiteUrl,
+		&i.SupportUrl,
+		&i.Locale,
+		&i.Timezone,
+		&i.HistoryDays,
+		&i.ShowUptime,
+		&i.Published,
+		&i.ChangedAt,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.MailingListID,
+		&i.EmailEnabled,
 	)
 	return i, err
 }
@@ -1578,7 +1682,7 @@ func (q *Queries) ListStatusIncidentsByIDs(ctx context.Context, arg ListStatusIn
 }
 
 const listStatusPages = `-- name: ListStatusPages :many
-SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at FROM status_pages p
+SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled FROM status_pages p
 WHERE p.workspace_id = $1
   AND ($2::uuid IS NULL OR p.inbox_id = $2::uuid)
   AND ($3::bool OR EXISTS (
@@ -1627,7 +1731,43 @@ func (q *Queries) ListStatusPages(ctx context.Context, arg ListStatusPagesParams
 			&i.ChangedAt,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.MailingListID,
+			&i.EmailEnabled,
 		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listStatusPagesByLists = `-- name: ListStatusPagesByLists :many
+SELECT id, mailing_list_id FROM status_pages WHERE workspace_id = $1 AND mailing_list_id = ANY($2::uuid[])
+`
+
+type ListStatusPagesByListsParams struct {
+	WorkspaceID uuid.UUID
+	ListIds     []uuid.UUID
+}
+
+type ListStatusPagesByListsRow struct {
+	ID            uuid.UUID
+	MailingListID *uuid.UUID
+}
+
+func (q *Queries) ListStatusPagesByLists(ctx context.Context, arg ListStatusPagesByListsParams) ([]ListStatusPagesByListsRow, error) {
+	rows, err := q.db.Query(ctx, listStatusPagesByLists, arg.WorkspaceID, arg.ListIds)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListStatusPagesByListsRow
+	for rows.Next() {
+		var i ListStatusPagesByListsRow
+		if err := rows.Scan(&i.ID, &i.MailingListID); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
@@ -1740,6 +1880,42 @@ func (q *Queries) ListStatusReplyTargets(ctx context.Context, arg ListStatusRepl
 	return items, nil
 }
 
+const listSubscriptionComponents = `-- name: ListSubscriptionComponents :many
+SELECT subscription_id, component_id FROM status_subscriber_components
+WHERE workspace_id = $1 AND subscription_id = ANY($2::uuid[])
+ORDER BY subscription_id, component_id
+`
+
+type ListSubscriptionComponentsParams struct {
+	WorkspaceID     uuid.UUID
+	SubscriptionIds []uuid.UUID
+}
+
+type ListSubscriptionComponentsRow struct {
+	SubscriptionID uuid.UUID
+	ComponentID    uuid.UUID
+}
+
+func (q *Queries) ListSubscriptionComponents(ctx context.Context, arg ListSubscriptionComponentsParams) ([]ListSubscriptionComponentsRow, error) {
+	rows, err := q.db.Query(ctx, listSubscriptionComponents, arg.WorkspaceID, arg.SubscriptionIds)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListSubscriptionComponentsRow
+	for rows.Next() {
+		var i ListSubscriptionComponentsRow
+		if err := rows.Scan(&i.SubscriptionID, &i.ComponentID); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const lockStatusComponent = `-- name: LockStatusComponent :one
 SELECT id, workspace_id, page_id, group_id, name, description, position, hidden, state, created_at, updated_at FROM status_components WHERE workspace_id = $1 AND page_id = $2 AND id = $3 FOR UPDATE
 `
@@ -1803,7 +1979,7 @@ func (q *Queries) LockStatusIncident(ctx context.Context, arg LockStatusIncident
 }
 
 const lockStatusPage = `-- name: LockStatusPage :one
-SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at FROM status_pages WHERE workspace_id = $1 AND id = $2 FOR UPDATE
+SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled FROM status_pages WHERE workspace_id = $1 AND id = $2 FOR UPDATE
 `
 
 type LockStatusPageParams struct {
@@ -1833,8 +2009,27 @@ func (q *Queries) LockStatusPage(ctx context.Context, arg LockStatusPageParams) 
 		&i.ChangedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.MailingListID,
+		&i.EmailEnabled,
 	)
 	return i, err
+}
+
+const mailingListNameTaken = `-- name: MailingListNameTaken :one
+SELECT EXISTS (SELECT 1 FROM mailing_lists WHERE workspace_id = $1 AND inbox_id = $2 AND name = $3)::bool
+`
+
+type MailingListNameTakenParams struct {
+	WorkspaceID uuid.UUID
+	InboxID     uuid.UUID
+	Name        string
+}
+
+func (q *Queries) MailingListNameTaken(ctx context.Context, arg MailingListNameTakenParams) (bool, error) {
+	row := q.db.QueryRow(ctx, mailingListNameTaken, arg.WorkspaceID, arg.InboxID, arg.Name)
+	var column_1 bool
+	err := row.Scan(&column_1)
+	return column_1, err
 }
 
 const openStatusComponentStates = `-- name: OpenStatusComponentStates :many
@@ -1948,6 +2143,54 @@ func (q *Queries) SetStatusIncidentComponentState(ctx context.Context, arg SetSt
 		arg.ComponentID,
 	)
 	return err
+}
+
+const setStatusPageEmail = `-- name: SetStatusPageEmail :one
+UPDATE status_pages SET mailing_list_id = $1, email_enabled = $2, updated_at = $3
+WHERE workspace_id = $4 AND id = $5
+RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled
+`
+
+type SetStatusPageEmailParams struct {
+	MailingListID *uuid.UUID
+	EmailEnabled  bool
+	Now           time.Time
+	WorkspaceID   uuid.UUID
+	ID            uuid.UUID
+}
+
+func (q *Queries) SetStatusPageEmail(ctx context.Context, arg SetStatusPageEmailParams) (StatusPage, error) {
+	row := q.db.QueryRow(ctx, setStatusPageEmail,
+		arg.MailingListID,
+		arg.EmailEnabled,
+		arg.Now,
+		arg.WorkspaceID,
+		arg.ID,
+	)
+	var i StatusPage
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.InboxID,
+		&i.Name,
+		&i.Description,
+		&i.Slug,
+		&i.LogoUrl,
+		&i.AccentColor,
+		&i.SiteUrl,
+		&i.SupportUrl,
+		&i.Locale,
+		&i.Timezone,
+		&i.HistoryDays,
+		&i.ShowUptime,
+		&i.Published,
+		&i.ChangedAt,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.MailingListID,
+		&i.EmailEnabled,
+	)
+	return i, err
 }
 
 const startStatusComponentState = `-- name: StartStatusComponentState :one
@@ -2264,7 +2507,7 @@ UPDATE status_pages SET name = $1, description = $2, slug = $3, logo_url = $4,
     locale = $8, timezone = $9, history_days = $10, show_uptime = $11, published = $12,
     changed_at = greatest(changed_at + interval '1 microsecond', $13::timestamptz), updated_at = $13
 WHERE workspace_id = $14 AND id = $15
-RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at
+RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled
 `
 
 type UpdateStatusPageParams struct {
@@ -2323,6 +2566,8 @@ func (q *Queries) UpdateStatusPage(ctx context.Context, arg UpdateStatusPagePara
 		&i.ChangedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.MailingListID,
+		&i.EmailEnabled,
 	)
 	return i, err
 }

@@ -1,0 +1,5 @@
+{{template "heading" "Statusmeldungen bestätigen"}}
+<p style="margin:0;">Jemand hat darum gebeten, dieser Adresse Meldungen zu Störungen und Wartungen von <strong>{{.Page}}</strong> zu senden.{{if .Components}} Nur zu: {{.Components}}.{{end}} Bestätigen Sie es mit der Schaltfläche unten.</p>
+{{template "button" (button .URL "Meldungen bestätigen")}}
+{{template "fallback" (button .URL "Oder öffnen Sie diesen Link:")}}
+<p class="y-muted" style="margin:16px 0 0 0;font-size:13px;line-height:20px;color:#71717a;">Der Link gilt 7 Tage. Wenn Sie das nicht angefordert haben, ignorieren Sie diese E-Mail; es passiert nichts.</p>

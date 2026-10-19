@@ -471,6 +471,9 @@ func checkAudience(ctx context.Context, q *store.Queries, ws, inboxID uuid.UUID,
 			if l.InboxID != inboxID {
 				return out, errValidation("audience.list_ids names a list of another inbox")
 			}
+			if l.Kind == listKindStatus {
+				return out, errValidation("audience.list_ids names a status page's subscriber list, which takes only incident notices")
+			}
 		}
 	}
 	if in.Conditions != nil {
