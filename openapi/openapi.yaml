@@ -320,7 +320,8 @@ tags:
       maintenance started), which is due after 60 seconds and pulls a waiting one forward. A page
       sends at most 10 notices an hour; others are `skipped` (`rate`). A final one is exempt from
       the rate but goes only to subscribers who got an earlier notice of the incident, and is
-      `skipped` (`nothing_earlier`) when none was sent. A
+      `skipped` (`nothing_earlier`) when none was sent. A notice reports exactly the updates attached
+      to it (`update_ids`); a final one names the affected components without their states. A
       subscriber whose components the incident does not touch gets nothing; an incident touching no
       component reaches only those who chose none and those whose chosen components were all deleted. Notices are not stored as events and send no
       webhooks; their progress reaches `/v1/realtime` as `status_notice.updated`.
@@ -10094,8 +10095,8 @@ paths:
       summary: Publish a draft incident
       description: |
         Shows it on the page and, while it is open, sets the components it touches, and queues one
-        notice to the page's e-mail subscribers with the current state and the latest update unless
-        `notify` is `false` (see the notices endpoints). Publishing a published incident changes
+        notice to the page's e-mail subscribers covering every update of the draft that asked to notify,
+        unless `notify` is `false` (see the notices endpoints). Publishing a published incident changes
         nothing.
 
         Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
@@ -10135,7 +10136,8 @@ paths:
         incident or completed maintenance takes no more updates (`409 incident_closed`). Resolving or
         completing puts its components back; see the tag. On a published incident, `notify` (default
         `true` when the state changes, `false` for text only) queues a notice to the page's e-mail
-        subscribers or joins the one waiting.
+        subscribers or joins the one waiting. Resolving or completing with `notify` `false` cancels the
+        notices still waiting (`skip_reason` `closed_quietly`).
 
         Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
       tags: [status]
@@ -25351,7 +25353,7 @@ components:
       type: string
       description: |
         `pending` (waiting until `due_at`), `sending`, `sent`, `skipped` (nothing went out, see
-        `skip_reason`), `cancelled` (a member stopped it while it waited).
+        `skip_reason`), `cancelled` (a member stopped it while it waited, or the incident was closed without notifying: `skip_reason` `closed_quietly`).
       enum: [pending, sending, sent, skipped, cancelled]
       x-enum-varnames: [StatusNoticePending, StatusNoticeSending, StatusNoticeSent, StatusNoticeSkipped, StatusNoticeCancelled]
     StatusNoticeSkipReason:
@@ -25362,8 +25364,10 @@ components:
         notices. `unpublished`: the page or the incident is not public. `sender_not_ready`: the
         channel cannot send. `no_recipients`: no subscriber matched. `nothing_earlier`: a final
         notice, and no earlier notice of the incident was sent, so nobody had heard of it.
-      enum: [rate, suspended, email_off, unpublished, sender_not_ready, no_recipients, nothing_earlier]
-      x-enum-varnames: [NoticeSkipRate, NoticeSkipSuspended, NoticeSkipEmailOff, NoticeSkipUnpublished, NoticeSkipSenderNotReady, NoticeSkipNoRecipients, NoticeSkipNothingEarlier]
+        `closed_quietly`: the incident was resolved or completed without notifying, which cancels
+        the notices that still waited.
+      enum: [rate, suspended, email_off, unpublished, sender_not_ready, no_recipients, nothing_earlier, closed_quietly]
+      x-enum-varnames: [NoticeSkipRate, NoticeSkipSuspended, NoticeSkipEmailOff, NoticeSkipUnpublished, NoticeSkipSenderNotReady, NoticeSkipNoRecipients, NoticeSkipNothingEarlier, NoticeSkipClosedQuietly]
     StatusNoticeCounts:
       type: object
       description: |

@@ -1,15 +1,19 @@
 [{{.Page}}] {{if .Maintenance}}Wartung: {{end}}{{.Title}}
 
 {{.State}}{{if .Impact}} · Auswirkung: {{.Impact}}{{end}}
-{{- if .Window}}
+{{- if and .Window (not .Change)}}
 Geplant: {{.Window}}
 {{- end}}
 {{- if .Components}}
 
 Betroffen:
 {{- range .Components}}
-- {{.Name}}: {{.State}}
+- {{.Name}}{{if .State}}: {{.State}}{{end}}
 {{- end}}
+{{- end}}
+{{- if .Change}}
+
+{{.Change}}
 {{- end}}
 {{range .Updates}}
 {{.State}} · {{.At}}{{if .Edited}} · bearbeitet{{end}}

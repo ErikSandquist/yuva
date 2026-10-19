@@ -17,6 +17,7 @@ type statusWords struct {
 	MonitorTitle, MonitorBody, MonitorResolved   string
 	MonitorPaused, MonitorRemoved                string
 	MaintenanceStarted, MaintenanceDone          string
+	WindowNow                                    string
 	Months                                       [12]string
 }
 
@@ -39,7 +40,8 @@ var statusLanguages = map[string]statusWords{
 		MonitorResolved: "%s is working again.",
 		MonitorPaused:   "Monitoring of %s was paused.", MonitorRemoved: "Monitoring of %s was removed.",
 		MaintenanceStarted: "The maintenance has started.", MaintenanceDone: "The maintenance is complete.",
-		Months: [12]string{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"},
+		WindowNow: "The maintenance is now scheduled for %s.",
+		Months:    [12]string{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"},
 	},
 	"tr": {
 		Lang: "tr",
@@ -59,7 +61,8 @@ var statusLanguages = map[string]statusWords{
 		MonitorResolved: "%s yeniden çalışıyor.",
 		MonitorPaused:   "%s izlemesi duraklatıldı.", MonitorRemoved: "%s izlemesi kaldırıldı.",
 		MaintenanceStarted: "Bakım başladı.", MaintenanceDone: "Bakım tamamlandı.",
-		Months: [12]string{"Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"},
+		WindowNow: "Bakım artık şu zamana planlandı: %s.",
+		Months:    [12]string{"Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"},
 	},
 	"de": {
 		Lang: "de",
@@ -79,7 +82,8 @@ var statusLanguages = map[string]statusWords{
 		MonitorResolved: "%s funktioniert wieder.",
 		MonitorPaused:   "Die Überwachung von %s wurde pausiert.", MonitorRemoved: "Die Überwachung von %s wurde entfernt.",
 		MaintenanceStarted: "Die Wartung hat begonnen.", MaintenanceDone: "Die Wartung ist abgeschlossen.",
-		Months: [12]string{"Jan.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sep.", "Okt.", "Nov.", "Dez."},
+		WindowNow: "Die Wartung ist jetzt geplant für %s.",
+		Months:    [12]string{"Jan.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sep.", "Okt.", "Nov.", "Dez."},
 	},
 }
 

@@ -4972,6 +4972,7 @@ func (e StatusNoticeEventType) Valid() bool {
 
 // Defines values for StatusNoticeSkipReason.
 const (
+	NoticeSkipClosedQuietly  StatusNoticeSkipReason = "closed_quietly"
 	NoticeSkipEmailOff       StatusNoticeSkipReason = "email_off"
 	NoticeSkipNoRecipients   StatusNoticeSkipReason = "no_recipients"
 	NoticeSkipNothingEarlier StatusNoticeSkipReason = "nothing_earlier"
@@ -4984,6 +4985,8 @@ const (
 // Valid indicates whether the value is a known member of the StatusNoticeSkipReason enum.
 func (e StatusNoticeSkipReason) Valid() bool {
 	switch e {
+	case NoticeSkipClosedQuietly:
+		return true
 	case NoticeSkipEmailOff:
 		return true
 	case NoticeSkipNoRecipients:
@@ -15491,11 +15494,13 @@ type StatusNotice struct {
 	// notices. `unpublished`: the page or the incident is not public. `sender_not_ready`: the
 	// channel cannot send. `no_recipients`: no subscriber matched. `nothing_earlier`: a final
 	// notice, and no earlier notice of the incident was sent, so nobody had heard of it.
+	// `closed_quietly`: the incident was resolved or completed without notifying, which cancels
+	// the notices that still waited.
 	SkipReason *StatusNoticeSkipReason `json:"skip_reason,omitempty"`
 	StartedAt  *time.Time              `json:"started_at,omitempty"`
 
 	// State `pending` (waiting until `due_at`), `sending`, `sent`, `skipped` (nothing went out, see
-	// `skip_reason`), `cancelled` (a member stopped it while it waited).
+	// `skip_reason`), `cancelled` (a member stopped it while it waited, or the incident was closed without notifying: `skip_reason` `closed_quietly`).
 	State StatusNoticeState `json:"state"`
 
 	// UpdateIds The incident's updates it reports.
@@ -15550,10 +15555,12 @@ type StatusNoticeReach struct {
 // notices. `unpublished`: the page or the incident is not public. `sender_not_ready`: the
 // channel cannot send. `no_recipients`: no subscriber matched. `nothing_earlier`: a final
 // notice, and no earlier notice of the incident was sent, so nobody had heard of it.
+// `closed_quietly`: the incident was resolved or completed without notifying, which cancels
+// the notices that still waited.
 type StatusNoticeSkipReason string
 
 // StatusNoticeState `pending` (waiting until `due_at`), `sending`, `sent`, `skipped` (nothing went out, see
-// `skip_reason`), `cancelled` (a member stopped it while it waited).
+// `skip_reason`), `cancelled` (a member stopped it while it waited, or the incident was closed without notifying: `skip_reason` `closed_quietly`).
 type StatusNoticeState string
 
 // StatusPage defines model for StatusPage.

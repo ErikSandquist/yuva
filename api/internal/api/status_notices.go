@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"html/template"
 	"log/slog"
 	"net/http"
@@ -147,7 +148,17 @@ func finalNotice(inc store.StatusIncident) bool {
 	return incidentClosed(inc.State) || (inc.Kind == kindMaintenance && inc.State == incInProgress)
 }
 
-func (s *Server) queueNotice(ctx context.Context, q *store.Queries, ev *eventBatch, pg store.StatusPage, inc store.StatusIncident, update *uuid.UUID) error {
+func notifiedUpdates(ups []store.StatusIncidentUpdate) []uuid.UUID {
+	var ids []uuid.UUID
+	for _, u := range ups {
+		if u.Notify {
+			ids = append(ids, u.ID)
+		}
+	}
+	return ids
+}
+
+func (s *Server) queueNotice(ctx context.Context, q *store.Queries, ev *eventBatch, pg store.StatusPage, inc store.StatusIncident, updates []uuid.UUID) error {
 	if s.status.NoticesOff || !pg.EmailEnabled || pg.MailingListID == nil || !pg.Published || inc.PublishedAt == nil {
 		return nil
 	}
@@ -186,12 +197,23 @@ func (s *Server) queueNotice(ctx context.Context, q *store.Queries, ev *eventBat
 	default:
 		return err
 	}
-	if update != nil {
-		if err := q.AttachStatusNoticeUpdate(ctx, store.AttachStatusNoticeUpdateParams{WorkspaceID: inc.WorkspaceID, ID: *update, NoticeID: &n.ID}); err != nil {
+	if len(updates) > 0 {
+		if err := q.AttachStatusNoticeUpdates(ctx, store.AttachStatusNoticeUpdatesParams{WorkspaceID: inc.WorkspaceID, Ids: updates, NoticeID: &n.ID}); err != nil {
 			return err
 		}
 	}
 	s.noticeSignal(ctx, q, pg.InboxID, n)
+	return nil
+}
+
+func (s *Server) cancelQuietNotices(ctx context.Context, q *store.Queries, pg store.StatusPage, inc store.StatusIncident, now time.Time) error {
+	rows, err := q.CancelPendingStatusNotices(ctx, store.CancelPendingStatusNoticesParams{WorkspaceID: inc.WorkspaceID, IncidentID: inc.ID, Now: now})
+	if err != nil {
+		return err
+	}
+	for _, n := range rows {
+		s.noticeSignal(ctx, q, pg.InboxID, n)
+	}
 	return nil
 }
 
@@ -341,7 +363,6 @@ type noticeSend struct {
 	loc     *time.Location
 	comps   []store.StatusIncidentComponent
 	names   map[uuid.UUID]string
-	current map[uuid.UUID]string
 	updates []store.StatusIncidentUpdate
 
 	cfg                             email.SMTPConfig
@@ -521,7 +542,7 @@ func (s *Server) finishNotice(ctx context.Context, n store.StatusNotice, state, 
 func (s *Server) loadNoticeSend(ctx context.Context, n store.StatusNotice) (*noticeSend, error) {
 	q := s.st.Queries
 	ws := n.WorkspaceID
-	ns := &noticeSend{n: n, names: map[uuid.UUID]string{}, current: map[uuid.UUID]string{}, data: map[string]map[string]any{}}
+	ns := &noticeSend{n: n, names: map[uuid.UUID]string{}, data: map[string]map[string]any{}}
 	var err error
 	if ns.pg, err = q.GetStatusPage(ctx, store.GetStatusPageParams{WorkspaceID: ws, ID: n.PageID}); err != nil {
 		return nil, err
@@ -551,20 +572,10 @@ func (s *Server) loadNoticeSend(ctx context.Context, n store.StatusNotice) (*not
 	for _, c := range all {
 		if !c.Hidden {
 			ns.names[c.ID] = c.Name
-			ns.current[c.ID] = c.State
 		}
 	}
 	if ns.updates, err = q.ListStatusNoticeUpdates(ctx, store.ListStatusNoticeUpdatesParams{WorkspaceID: ws, NoticeID: &n.ID}); err != nil {
 		return nil, err
-	}
-	if len(ns.updates) == 0 {
-		all, err := q.ListStatusIncidentUpdates(ctx, store.ListStatusIncidentUpdatesParams{WorkspaceID: ws, IncidentIds: []uuid.UUID{ns.inc.ID}})
-		if err != nil {
-			return nil, err
-		}
-		if i := slices.IndexFunc(all, func(u store.StatusIncidentUpdate) bool { return u.Notify }); i >= 0 {
-			ns.updates = all[i : i+1]
-		}
 	}
 	cfg, from, ok, err := s.broadcastAccount(ns.ch)
 	if err != nil || !ok {
@@ -882,11 +893,11 @@ func (s *Server) noticeData(ns *noticeSend, locale string) map[string]any {
 	var comps []map[string]string
 	for _, c := range ns.comps {
 		if name, ok := ns.names[c.ComponentID]; ok {
-			state := c.State
-			if incidentClosed(inc.State) {
-				state = ns.current[c.ComponentID]
+			comp := map[string]string{"Name": name}
+			if !incidentClosed(inc.State) {
+				comp["State"] = w.States[c.State]
 			}
-			comps = append(comps, map[string]string{"Name": name, "State": w.States[state]})
+			comps = append(comps, comp)
 		}
 	}
 	d["Components"] = comps
@@ -896,6 +907,9 @@ func (s *Server) noticeData(ns *noticeSend, locale string) map[string]any {
 			"HTML": template.HTML(richStatusText(u.Body)), "Edited": u.EditedAt != nil})
 	}
 	d["Updates"] = ups
+	if len(ups) == 0 && d["Window"] != nil && !incidentClosed(inc.State) {
+		d["Change"] = fmt.Sprintf(w.WindowNow, d["Window"])
+	}
 	ns.data[w.Lang] = d
 	return d
 }

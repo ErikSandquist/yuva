@@ -19,9 +19,9 @@ UPDATE status_notices SET final = @final, due_at = @due_at, updated_at = @now
 WHERE workspace_id = @workspace_id AND id = @id
 RETURNING *;
 
--- name: AttachStatusNoticeUpdate :exec
+-- name: AttachStatusNoticeUpdates :exec
 UPDATE status_incident_updates SET notice_id = @notice_id
-WHERE workspace_id = @workspace_id AND id = @id;
+WHERE workspace_id = @workspace_id AND id = ANY(@ids::uuid[]);
 
 -- name: GetStatusNotice :one
 SELECT * FROM status_notices WHERE workspace_id = @workspace_id AND page_id = @page_id AND id = @id;
@@ -57,6 +57,11 @@ RETURNING *;
 -- name: CancelStatusNotice :one
 UPDATE status_notices SET state = 'cancelled', finished_at = @now::timestamptz, updated_at = @now
 WHERE workspace_id = @workspace_id AND page_id = @page_id AND id = @id AND state = 'pending'
+RETURNING *;
+
+-- name: CancelPendingStatusNotices :many
+UPDATE status_notices SET state = 'cancelled', skip_reason = 'closed_quietly', finished_at = @now::timestamptz, updated_at = @now
+WHERE workspace_id = @workspace_id AND incident_id = @incident_id AND state = 'pending'
 RETURNING *;
 
 -- name: RenewStatusNoticeLease :exec

@@ -1,15 +1,19 @@
 [{{.Page}}] {{if .Maintenance}}Bakım: {{end}}{{.Title}}
 
 {{.State}}{{if .Impact}} · Etki: {{.Impact}}{{end}}
-{{- if .Window}}
+{{- if and .Window (not .Change)}}
 Planlanan: {{.Window}}
 {{- end}}
 {{- if .Components}}
 
 Etkilenenler:
 {{- range .Components}}
-- {{.Name}}: {{.State}}
+- {{.Name}}{{if .State}}: {{.State}}{{end}}
 {{- end}}
+{{- end}}
+{{- if .Change}}
+
+{{.Change}}
 {{- end}}
 {{range .Updates}}
 {{.State}} · {{.At}}{{if .Edited}} · düzenlendi{{end}}

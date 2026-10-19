@@ -2080,12 +2080,14 @@ incident before a customer writes, and the conversations an outage brings are an
     River job follow the incident's stored `notify` and carry a text in the page's locale ("The
     maintenance has started." / "The maintenance is complete.", also in `tr` and `de`), so pages and notices
     say something. Component changes alone, drafts, and published updates with `notify=false`
-    send nothing. Publishing a draft sends one notice with the current state and the latest text, not
-    one per stored update. Monitor-opened published incidents notify like a member's; the budget below
+    send nothing. Every update stores `notify`; the opening update of an incident takes the incident's.
+    Publishing a draft sends one notice attaching every `notify` update of the draft (shown newest first).
+    Resolving or completing with `notify=false` cancels the notices still waiting (`state` `cancelled`,
+    `skip_reason` `closed_quietly`), so nothing mails after a quiet close. Monitor-opened published incidents notify like a member's; the budget below
     keeps a flapping monitor from mailing people. A notice is a `status_notices` row (page, incident,
     `due_at`, `state` `pending|sending|sent|skipped|cancelled`, `final`, `skip_reason`, counts) covering
-    the updates whose `status_incident_updates.notice_id` points at it (only updates with `notify` true are
-    attached; publishing a draft attaches the latest of them, and a notice with none shows the latest one), and one `status_notice_deliveries`
+    exactly the updates whose `status_incident_updates.notice_id` points at it (only `notify` updates are
+    attached, and a notice never falls back to another update), and one `status_notice_deliveries`
     row per recipient (notice, subscription, address, `email_token` and unique `header_message_id` like
     broadcast deliveries, `previous_message_id`, `state` `queued|sent|failed|bounced|complained|skipped`,
     skip reason, attempts, next attempt, times, error). Deliveries and addresses go after 90 days; the
@@ -2099,9 +2101,12 @@ incident before a customer writes, and the conversations an outage brings are an
     and each notice also sets `In-Reply-To` to the recipient's previous notice of the incident and
     `References` to the chain. Body, first line: the state in words (`Investigating`, `Identified`,
     `Monitoring`, `Resolved`, `Scheduled`, `In progress`, `Completed`, never colour alone), then impact,
-    the affected components with their states (a final notice shows their states now), the updates since the last notice newest first with
-    times in the page's zone and its name, the incident's text (plain text; the HTML part escapes it and
-    links only `http` and `https` URLs, marks "edited"), a link to
+    the affected components with the states the incident set (a final notice, resolved or completed, lists
+    them by name only), the attached updates newest first with times in the page's zone and its name, the
+    incident's text (plain text; the HTML part escapes it and links only `http` and `https` URLs, marks
+    "edited"); a notice with no attached update (a maintenance window change) shows a sentence for what
+    changed ("The maintenance is now scheduled for {window}", the window in the page's zone, also in `tr`
+    and `de`) and no update text. Then a link to
     `/status/{slug}/incidents/{id}` (on the verified custom domain when there is one), the footer: why
     the person gets it, the page, "Choose components or unsubscribe" to `/m/{token}`, the inbox's
     legal name and postal address when set (never required: notices are not commercial). A notice is

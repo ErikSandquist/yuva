@@ -1,15 +1,19 @@
 [{{.Page}}] {{if .Maintenance}}Maintenance: {{end}}{{.Title}}
 
 {{.State}}{{if .Impact}} · Impact: {{.Impact}}{{end}}
-{{- if .Window}}
+{{- if and .Window (not .Change)}}
 Scheduled: {{.Window}}
 {{- end}}
 {{- if .Components}}
 
 Affected:
 {{- range .Components}}
-- {{.Name}}: {{.State}}
+- {{.Name}}{{if .State}}: {{.State}}{{end}}
 {{- end}}
+{{- end}}
+{{- if .Change}}
+
+{{.Change}}
 {{- end}}
 {{range .Updates}}
 {{.State}} · {{.At}}{{if .Edited}} · edited{{end}}

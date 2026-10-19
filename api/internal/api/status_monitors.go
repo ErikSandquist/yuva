@@ -759,7 +759,7 @@ func (s *Server) monitorIncident(ctx context.Context, q *store.Queries, ev *even
 	if err != nil {
 		return nil, err
 	}
-	if err := s.queueNotice(ctx, q, ev, pg, inc, &up.ID); err != nil {
+	if err := s.queueNotice(ctx, q, ev, pg, inc, []uuid.UUID{up.ID}); err != nil {
 		return nil, err
 	}
 	if _, err := s.incidentEvent(ctx, q, ev, pg, inc, oas.StatusChangeCreated, &up); err != nil {

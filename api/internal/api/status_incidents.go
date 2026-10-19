@@ -459,7 +459,7 @@ func (s *Server) CreateStatusIncident(ctx context.Context, req oas.CreateStatusI
 		}
 		member, key := statusAuthor(p)
 		up, err := q.CreateStatusIncidentUpdate(ctx, store.CreateStatusIncidentUpdateParams{
-			ID: newID(), WorkspaceID: p.workspaceID, IncidentID: inc.ID, State: state, Body: message, AuthorMemberID: member, AuthorKeyID: key, Notify: true, Now: now,
+			ID: newID(), WorkspaceID: p.workspaceID, IncidentID: inc.ID, State: state, Body: message, AuthorMemberID: member, AuthorKeyID: key, Notify: notify, Now: now,
 		})
 		if err != nil {
 			return err
@@ -475,7 +475,7 @@ func (s *Server) CreateStatusIncident(ctx context.Context, req oas.CreateStatusI
 		}
 		queueMaintenance(ev, inc, now)
 		if notify {
-			if err := s.queueNotice(ctx, q, ev, pg, inc, &up.ID); err != nil {
+			if err := s.queueNotice(ctx, q, ev, pg, inc, []uuid.UUID{up.ID}); err != nil {
 				return err
 			}
 		}
@@ -673,11 +673,7 @@ func (s *Server) PublishStatusIncident(ctx context.Context, req oas.PublishStatu
 			if err != nil {
 				return err
 			}
-			var latest *uuid.UUID
-			if i := slices.IndexFunc(ups, func(u store.StatusIncidentUpdate) bool { return u.Notify }); i >= 0 {
-				latest = &ups[i].ID
-			}
-			if err := s.queueNotice(ctx, q, ev, pg, inc, latest); err != nil {
+			if err := s.queueNotice(ctx, q, ev, pg, inc, notifiedUpdates(ups)); err != nil {
 				return err
 			}
 		}
@@ -735,7 +731,11 @@ func (s *Server) moveIncidentWith(ctx context.Context, q *store.Queries, ev *eve
 		}
 	}
 	if notify {
-		if err := s.queueNotice(ctx, q, ev, pg, inc, &up.ID); err != nil {
+		if err := s.queueNotice(ctx, q, ev, pg, inc, []uuid.UUID{up.ID}); err != nil {
+			return oas.StatusIncident{}, err
+		}
+	} else if incidentClosed(state) {
+		if err := s.cancelQuietNotices(ctx, q, pg, inc, now); err != nil {
 			return oas.StatusIncident{}, err
 		}
 	}

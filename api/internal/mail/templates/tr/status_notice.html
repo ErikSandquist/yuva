@@ -1,7 +1,10 @@
 {{if .Maintenance}}{{template "heading" (print "Bakım: " .Title)}}{{else}}{{template "heading" .Title}}{{end}}
-<p style="margin:0 0 16px 0;"><strong>{{.State}}</strong>{{if .Impact}} · Etki: {{.Impact}}{{end}}{{if .Window}}<br>Planlanan: {{.Window}}{{end}}</p>
+<p style="margin:0 0 16px 0;"><strong>{{.State}}</strong>{{if .Impact}} · Etki: {{.Impact}}{{end}}{{if and .Window (not .Change)}}<br>Planlanan: {{.Window}}{{end}}</p>
 {{- if .Components}}
-<p style="margin:0 0 16px 0;">Etkilenenler:{{range .Components}}<br>{{.Name}}: <strong>{{.State}}</strong>{{end}}</p>
+<p style="margin:0 0 16px 0;">Etkilenenler:{{range .Components}}<br>{{.Name}}{{if .State}}: <strong>{{.State}}</strong>{{end}}{{end}}</p>
+{{- end}}
+{{- if .Change}}
+<p dir="auto" style="margin:0 0 8px 0;">{{.Change}}</p>
 {{- end}}
 {{- range .Updates}}
 <p class="y-muted" style="margin:16px 0 4px 0;font-size:13px;line-height:20px;color:#71717a;"><strong>{{.State}}</strong> · {{.At}}{{if .Edited}} · düzenlendi{{end}}</p>

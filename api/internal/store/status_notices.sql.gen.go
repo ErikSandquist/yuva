@@ -29,20 +29,68 @@ func (q *Queries) AddStatusNoticeUsage(ctx context.Context, arg AddStatusNoticeU
 	return err
 }
 
-const attachStatusNoticeUpdate = `-- name: AttachStatusNoticeUpdate :exec
+const attachStatusNoticeUpdates = `-- name: AttachStatusNoticeUpdates :exec
 UPDATE status_incident_updates SET notice_id = $1
-WHERE workspace_id = $2 AND id = $3
+WHERE workspace_id = $2 AND id = ANY($3::uuid[])
 `
 
-type AttachStatusNoticeUpdateParams struct {
+type AttachStatusNoticeUpdatesParams struct {
 	NoticeID    *uuid.UUID
 	WorkspaceID uuid.UUID
-	ID          uuid.UUID
+	Ids         []uuid.UUID
 }
 
-func (q *Queries) AttachStatusNoticeUpdate(ctx context.Context, arg AttachStatusNoticeUpdateParams) error {
-	_, err := q.db.Exec(ctx, attachStatusNoticeUpdate, arg.NoticeID, arg.WorkspaceID, arg.ID)
+func (q *Queries) AttachStatusNoticeUpdates(ctx context.Context, arg AttachStatusNoticeUpdatesParams) error {
+	_, err := q.db.Exec(ctx, attachStatusNoticeUpdates, arg.NoticeID, arg.WorkspaceID, arg.Ids)
 	return err
+}
+
+const cancelPendingStatusNotices = `-- name: CancelPendingStatusNotices :many
+UPDATE status_notices SET state = 'cancelled', skip_reason = 'closed_quietly', finished_at = $1::timestamptz, updated_at = $1
+WHERE workspace_id = $2 AND incident_id = $3 AND state = 'pending'
+RETURNING id, workspace_id, page_id, incident_id, state, final, due_at, skip_reason, counts, snapshot_done, lease_until, started_at, finished_at, created_at, updated_at
+`
+
+type CancelPendingStatusNoticesParams struct {
+	Now         time.Time
+	WorkspaceID uuid.UUID
+	IncidentID  uuid.UUID
+}
+
+func (q *Queries) CancelPendingStatusNotices(ctx context.Context, arg CancelPendingStatusNoticesParams) ([]StatusNotice, error) {
+	rows, err := q.db.Query(ctx, cancelPendingStatusNotices, arg.Now, arg.WorkspaceID, arg.IncidentID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []StatusNotice
+	for rows.Next() {
+		var i StatusNotice
+		if err := rows.Scan(
+			&i.ID,
+			&i.WorkspaceID,
+			&i.PageID,
+			&i.IncidentID,
+			&i.State,
+			&i.Final,
+			&i.DueAt,
+			&i.SkipReason,
+			&i.Counts,
+			&i.SnapshotDone,
+			&i.LeaseUntil,
+			&i.StartedAt,
+			&i.FinishedAt,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 const cancelStatusNotice = `-- name: CancelStatusNotice :one

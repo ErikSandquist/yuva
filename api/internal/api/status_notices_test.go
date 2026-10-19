@@ -301,7 +301,31 @@ func noticeMail(t *testing.T, bs *broadcastSender, addr string, i int) *email.Me
 	return env
 }
 
-func TestStatusNoticeResolutionShowsCurrentComponents(t *testing.T) {
+func (nt noticeTeam) updateNotify(t *testing.T, incident string) []bool {
+	t.Helper()
+	rows, err := nt.h.st.Pool.Query(context.Background(),
+		"SELECT notify FROM status_incident_updates WHERE workspace_id = $1 AND incident_id = $2 ORDER BY created_at, id", nt.ws, incident)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer rows.Close()
+	var out []bool
+	for rows.Next() {
+		var b bool
+		if err := rows.Scan(&b); err != nil {
+			t.Fatal(err)
+		}
+		out = append(out, b)
+	}
+	return out
+}
+
+func lastNoticeMail(t *testing.T, bs *broadcastSender, addr string) *email.Message {
+	t.Helper()
+	return noticeMail(t, bs, addr, len(bs.to(addr))-1)
+}
+
+func TestStatusFinalNoticeNamesComponentsOnly(t *testing.T) {
 	h, bs := newBroadcastHarness(t, nil)
 	nt := newNoticeTeam(t, h, bs)
 	nt.subscriber(t, "ada@example.org")
@@ -320,33 +344,62 @@ func TestStatusNoticeResolutionShowsCurrentComponents(t *testing.T) {
 	}
 	final := noticeMail(t, bs, "ada@example.org", 1)
 	for name, body := range map[string]string{"text": final.Text, "html": final.HTML} {
-		if !strings.Contains(body, "Fixed.") || !strings.Contains(body, "Operational") || strings.Contains(body, "Degraded") || strings.Contains(body, "Hidden remark.") {
+		if !strings.Contains(body, "Resolved") || !strings.Contains(body, "Fixed.") || !strings.Contains(body, "API") ||
+			strings.Contains(body, "Degraded") || strings.Contains(body, "Operational") || strings.Contains(body, "API:") ||
+			strings.Contains(body, "Hidden remark.") {
 			t.Fatalf("resolution %s part: %s", name, body)
 		}
 	}
 }
 
-func TestStatusNoticeCoversOnlyNotifiedUpdates(t *testing.T) {
+func TestStatusNoticeCoversExactlyItsUpdates(t *testing.T) {
 	h, bs := newBroadcastHarness(t, nil)
 	nt := newNoticeTeam(t, h, bs)
 	nt.subscriber(t, "ada@example.org")
 
-	draft := nt.incident(t, map[string]any{"title": "Draft", "message": "Public text."})
-	nt.update(t, draft, map[string]any{"body": "Draft remark.", "notify": false})
-	nt.owner.expect(http.StatusOK, "POST", nt.path("/incidents/"+draft+"/publish"), nil)
-	ns := nt.notices(t, draft)
-	if len(ns) != 1 || len(ns[0]["update_ids"].([]any)) != 1 {
-		t.Fatalf("publish notice: %v", ns)
+	quiet := nt.incident(t, map[string]any{"title": "Quiet", "message": "Quiet text.", "notify": false})
+	loud := nt.incident(t, map[string]any{"title": "Loud", "message": "Public text."})
+	if got := nt.updateNotify(t, quiet); len(got) != 1 || got[0] {
+		t.Fatalf("opening update of a quiet incident: %v", got)
+	}
+	if got := nt.updateNotify(t, loud); len(got) != 1 || !got[0] {
+		t.Fatalf("opening update of a notifying incident: %v", got)
+	}
+
+	nt.update(t, loud, map[string]any{"body": "Draft remark.", "notify": false})
+	nt.update(t, loud, map[string]any{"body": "Second text.", "state": "identified"})
+	nt.owner.expect(http.StatusOK, "POST", nt.path("/incidents/"+loud+"/publish"), nil)
+	ns := nt.notices(t, loud)
+	if len(ns) != 1 || len(ns[0]["update_ids"].([]any)) != 2 {
+		t.Fatalf("publish attaches every notified update: %v", ns)
 	}
 	h.clock.Advance(61 * time.Second)
 	nt.runNotices(t)
-	env := noticeMail(t, bs, "ada@example.org", 0)
+	env := lastNoticeMail(t, bs, "ada@example.org")
 	for name, body := range map[string]string{"text": env.Text, "html": env.HTML} {
-		if !strings.Contains(body, "Public text.") || strings.Contains(body, "Draft remark.") {
+		first, second := strings.Index(body, "Second text."), strings.Index(body, "Public text.")
+		if first < 0 || second < 0 || first > second || strings.Contains(body, "Draft remark.") {
 			t.Fatalf("publish %s part: %s", name, body)
 		}
 	}
 
+	before := bs.count()
+	nt.owner.expect(http.StatusOK, "POST", nt.path("/incidents/"+quiet+"/publish"), map[string]any{"notify": true})
+	ns = nt.notices(t, quiet)
+	if len(ns) != 1 || len(ns[0]["update_ids"].([]any)) != 0 {
+		t.Fatalf("a published quiet incident: %v", ns)
+	}
+	h.clock.Advance(16 * time.Minute)
+	nt.runNotices(t)
+	if bs.count() != before+1 || strings.Contains(lastNoticeMail(t, bs, "ada@example.org").Text, "Quiet text.") {
+		t.Fatalf("a notice without updates repeated a hidden one: %s", lastNoticeMail(t, bs, "ada@example.org").Text)
+	}
+}
+
+func TestStatusMaintenanceWindowChangeNotice(t *testing.T) {
+	h, bs := newBroadcastHarness(t, nil)
+	nt := newNoticeTeam(t, h, bs)
+	nt.subscriber(t, "ada@example.org")
 	start := h.clock.Now().Add(48 * time.Hour)
 	window := func(shift time.Duration) map[string]any {
 		return map[string]any{"scheduled_start": start.Add(shift).Format(time.RFC3339), "scheduled_end": start.Add(shift + time.Hour).Format(time.RFC3339)}
@@ -358,12 +411,49 @@ func TestStatusNoticeCoversOnlyNotifiedUpdates(t *testing.T) {
 	nt.runNotices(t)
 	nt.update(t, maint, map[string]any{"body": "Maintenance remark.", "notify": false})
 	nt.owner.expect(http.StatusOK, "PATCH", nt.path("/incidents/"+maint), window(time.Hour))
+	ns := nt.notices(t, maint)
+	if len(ns) != 2 || ns[0]["state"] != "pending" || len(ns[0]["update_ids"].([]any)) != 0 {
+		t.Fatalf("window change notice: %v", ns)
+	}
 	h.clock.Advance(16 * time.Minute)
 	nt.runNotices(t)
-	moved := noticeMail(t, bs, "ada@example.org", 2)
+	if ns = nt.notices(t, maint); ns[0]["state"] != "sent" {
+		t.Fatalf("window change notice: %v", ns)
+	}
+	moved := lastNoticeMail(t, bs, "ada@example.org")
 	for name, body := range map[string]string{"text": moved.Text, "html": moved.HTML} {
-		if !strings.Contains(body, "Planned.") || strings.Contains(body, "Maintenance remark.") {
+		if !strings.Contains(body, "The maintenance is now scheduled for") || strings.Contains(body, "Planned.") ||
+			strings.Contains(body, "Maintenance remark.") || strings.Contains(body, "Scheduled:") {
 			t.Fatalf("window change %s part: %s", name, body)
 		}
+	}
+}
+
+func TestStatusQuietCloseCancelsPendingNotices(t *testing.T) {
+	h, bs := newBroadcastHarness(t, nil)
+	nt := newNoticeTeam(t, h, bs)
+	nt.subscriber(t, "ada@example.org")
+
+	inc := nt.incident(t, map[string]any{"title": "API down", "message": "Requests fail.", "publish": true})
+	ns := nt.notices(t, inc)
+	if len(ns) != 1 || ns[0]["state"] != "pending" {
+		t.Fatalf("opening notice: %v", ns)
+	}
+	nt.update(t, inc, map[string]any{"body": "Fixed.", "state": "resolved", "notify": false})
+	ns = nt.notices(t, inc)
+	if len(ns) != 1 || ns[0]["state"] != "cancelled" || ns[0]["skip_reason"] != "closed_quietly" {
+		t.Fatalf("after a quiet close: %v", ns)
+	}
+	h.clock.Advance(16 * time.Minute)
+	nt.runNotices(t)
+	if bs.count() != 0 {
+		t.Fatal("a notice went out after a quiet close")
+	}
+
+	loud := nt.incident(t, map[string]any{"title": "Slow", "message": "Slow.", "publish": true})
+	nt.update(t, loud, map[string]any{"body": "Done.", "state": "resolved"})
+	ns = nt.notices(t, loud)
+	if len(ns) != 1 || ns[0]["state"] != "pending" || ns[0]["final"] != true {
+		t.Fatalf("after a notifying close: %v", ns)
 	}
 }
