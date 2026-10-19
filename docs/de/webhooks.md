@@ -56,6 +56,9 @@ eine `webhook-id`, die Sie schon verarbeitet haben, und sortieren Sie nach `time
 | `subscription.updated` | Ein Abonnement wurde bestätigt, abgemeldet (mit `unsubscribe_reason`) oder erneut abonniert | `subscription`, `list`, `contact`, `previous_state` |
 | `analytics.alert` | Eine [Analytics](analytics.md)-Website hat einen [Alert](analytics-support.md#alerts) ausgelöst: Spike, Einbruch, Goal-Einbruch, Support-Last oder neuer Referrer | `alert`, `property` |
 | `broadcast.updated` | Ein [Broadcast](broadcasts.md) hat den Status gewechselt: geplant, sendend, pausiert, gesendet, abgebrochen, fehlgeschlagen oder zurück zum Entwurf, oder sein Tempo hat sich geändert | `broadcast`, `previous_state` |
+| `status.component.updated` | Eine Komponente einer [Statusseite](status-pages.md) wurde angelegt, geändert oder hat einen neuen Zustand | `component`, `page`, `previous_state` |
+| `status.incident.created`, `status.incident.updated`, `status.incident.resolved` | Ein veröffentlichter Vorfall oder eine Wartung wurde veröffentlicht, geändert oder gelöst bzw. abgeschlossen | `incident`, `page`, `change`, `update` |
+| `status.monitor.down`, `status.monitor.up` | Ein Monitor ist ausgefallen oder hat sich erholt | `monitor`, `page`, `incident_id` |
 
 Jeder Body hat `type`, `timestamp` (wann es passiert ist), `workspace_id`, `inbox_id` (nicht bei
 Kontaktereignissen) und `data`. `data.contact.online` ist `false`, wenn der Kontakt keine

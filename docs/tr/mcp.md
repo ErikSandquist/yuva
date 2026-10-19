@@ -169,6 +169,9 @@ Araçlar `/v1` ile aynı kontrollerden geçer. Kullanamayacağınız araçlar li
 | `create_inbox`, `create_chat_channel`, `update_chat_channel` (sahipler ve yöneticiler) | `inboxes:manage` |
 | `list_properties`, `analytics_overview`, `analytics_query` (`dataset: support` ve `insights` dahil), `analytics_realtime`, `analytics_support_report`, `list_goals`, `funnel_report`, `get_analytics_snippet`, `add_annotation` | `analytics:read` |
 | `create_property`, `create_goal` (sahipler, yöneticiler, gelen kutusu sınırı olmayan anahtarlar) | `analytics:manage` |
+| `list_status_pages`, `get_status_page`, `list_monitors` | `status:read` |
+| `set_component_state`, `create_incident` (her zaman taslak), `post_incident_update`, `resolve_incident` | `status:manage` |
+| `link_conversation_to_incident` | `status:manage` ve `conversations:read` |
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (gözden geçirme ve taslak için kitle sayısıyla), `get_broadcast_report` | `broadcasts:read` |
 | `list_email_templates`, `preview_design` (sahipler ve yöneticiler) | `broadcasts:read` |

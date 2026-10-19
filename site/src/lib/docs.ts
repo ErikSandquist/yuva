@@ -11,7 +11,7 @@ export type NavGroup = { key: string; title: string; icon: IconName; items: NavI
 
 const groups = [
   { key: "start", icon: "flag", slugs: ["install"] },
-  { key: "channels", icon: "mail", slugs: ["email", "widget", "mobile", "documentation-pages"] },
+  { key: "channels", icon: "mail", slugs: ["email", "widget", "mobile", "documentation-pages", "status-pages"] },
   { key: "broadcasts", icon: "send", slugs: ["lists", "importing", "designs", "broadcasts", "deliverability"] },
   {
     key: "analytics",

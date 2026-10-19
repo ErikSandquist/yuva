@@ -141,6 +141,18 @@ Einstellung nennt.
 | `YUVA_IMPORT_MAX_ROWS` | `100000` | Höchstzahl der Datenzeilen einer CSV-Datei beim [Importieren von Abonnenten](importing.md). Von 1 bis 100000; ein höherer Wert verhindert den Start des Servers. Eine Datei darüber schlägt fehl, und nichts wird eingetragen. |
 | `YUVA_MAIL_LINK_URL` | `YUVA_PUBLIC_URL` | Ursprung (Schema und Host, kein Pfad), auf den die Abmelde-, Bestätigungs-, Klick- und Bild-Links in Listen- und Broadcast-Mails zeigen, z. B. `https://links.example.com`. Er muss diesen Server erreichen. Dieser Host beantwortet nur diese Links (`/m/`, `/s/`, `/c/`, `/i/`) und liefert für alles andere `404`; Panel und API bleiben auf Ihrem Haupt-Host. |
 
+## Statusseiten
+
+[Statusseiten](status-pages.md).
+
+| Variable | Standard | Bedeutung |
+|---|---|---|
+| `YUVA_STATUS_URL` | nicht gesetzt | Ursprung, von dem öffentliche Statusseiten ausgeliefert werden, z. B. `https://status.example.com` (kein Pfad). Er muss diesen Server erreichen und sich von `YUVA_PUBLIC_URL` unterscheiden. Die Seiten liegen dann unter `<Ursprung>/{slug}`, und `<YUVA_PUBLIC_URL>/status/{slug}` leitet dorthin um. Nicht gesetzt, liegen die Seiten unter `<YUVA_PUBLIC_URL>/status/{slug}`. |
+| `YUVA_STATUS_MONITORS` | `20` | Höchstzahl der Monitore eines Workspace; `0` heißt unbegrenzt. Darüber antwortet das Anlegen mit `403 status_monitor_limit`. |
+| `YUVA_STATUS_NOTICES` | `on` | `off` blendet das Anmeldeformular aus (es antwortet `404`) und sendet keine Benachrichtigungen. |
+| `YUVA_STATUS_NOTICES_DAILY` | `5000` bei `YUVA_SIGNUP=open`, sonst `0` | Höchstzahl der Benachrichtigungsmails, die ein Workspace pro UTC-Tag sendet; `0` heißt unbegrenzt. Der Rest wartet auf den nächsten Tag. |
+| `YUVA_STATUS_MAX_SUBSCRIBERS` | `10000` bei `YUVA_SIGNUP=open`, sonst `0` | Höchstzahl der angemeldeten Adressen je Seite; `0` heißt unbegrenzt. An der Grenze sagt das Formular, dass die Seite keine Abonnenten mehr annimmt. |
+
 ## Analytics
 
 [Ihre Websites zählen](analytics.md).

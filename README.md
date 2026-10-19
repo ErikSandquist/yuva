@@ -61,6 +61,7 @@ products land in one shared inbox. You host it yourself: one Docker image and Po
 | [Configuration](docs/configuration.md) | [Web widget](docs/widget.md) | [Webhooks](docs/webhooks.md) | [AI assistants (MCP)](docs/mcp.md) |
 | [Operations](docs/operations.md) | [Mobile SDKs](docs/mobile.md) | [API contract](openapi/openapi.yaml) | [Examples](examples) |
 | | [Documentation pages](docs/documentation-pages.md) | | |
+| | [Status pages](docs/status-pages.md) | | |
 | | [Mailing lists](docs/lists.md) | | |
 | | [E-mail designs](docs/designs.md) | | |
 | | [Sending broadcasts](docs/broadcasts.md) | | |

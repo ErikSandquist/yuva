@@ -139,6 +139,18 @@ a request over one is refused with `422 hosted_limit` naming it.
 | `YUVA_IMPORT_MAX_ROWS` | `100000` | Most data rows a CSV file may have when [importing subscribers](importing.md). From 1 to 100000; a higher value stops the server from starting. A file over it fails and nothing is added. |
 | `YUVA_MAIL_LINK_URL` | `YUVA_PUBLIC_URL` | Origin (scheme and host, no path) that the unsubscribe, confirmation, click and image links in list and broadcast mail point at, e.g. `https://links.example.com`. It must reach this server. That host answers only those links (`/m/`, `/s/`, `/c/`, `/i/`) and `404` for everything else, so the panel and API stay on your main host. |
 
+## Status pages
+
+[Status pages](status-pages.md).
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `YUVA_STATUS_URL` | unset | Origin that public status pages are served from, such as `https://status.example.com` (no path). It must reach this server and differ from `YUVA_PUBLIC_URL`. Pages are then at `<origin>/{slug}`, and `<YUVA_PUBLIC_URL>/status/{slug}` redirects there. Unset, pages are at `<YUVA_PUBLIC_URL>/status/{slug}`. |
+| `YUVA_STATUS_MONITORS` | `20` | Most monitors one workspace may have; `0` is no limit. Beyond it, creating one answers `403 status_monitor_limit`. |
+| `YUVA_STATUS_NOTICES` | `on` | `off` hides the subscribe form (it answers `404`) and sends no notices. |
+| `YUVA_STATUS_NOTICES_DAILY` | `5000` when `YUVA_SIGNUP=open`, else `0` | Most notice mails one workspace sends per UTC day; `0` is no limit. What is over waits for the next day. |
+| `YUVA_STATUS_MAX_SUBSCRIBERS` | `10000` when `YUVA_SIGNUP=open`, else `0` | Most subscribed addresses one page takes; `0` is no limit. At the cap the form says the page takes no more subscribers. |
+
 ## Analytics
 
 [Counting your websites](analytics.md).

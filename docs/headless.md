@@ -111,6 +111,8 @@ A call without the needed scope answers `403 insufficient_scope`.
 | `analytics:read` | [Analytics](analytics.md#api): properties, numbers, realtime, health |
 | `analytics:write` | Send [server-side events](analytics-server.md) (`POST /v1/analytics/properties/{propertyId}/events`). API keys only, never offered to OAuth clients. |
 | `analytics:manage` | Create, change and delete properties, rotate their keys, delete their data. Never given to agents or to keys limited to inboxes. |
+| `status:read` | [Status pages](status-pages.md): pages, components, incidents, notices, monitors and their checks |
+| `status:manage` | Change status pages, set states, post incident updates, manage monitors, link conversations to incidents and reply to them. Does not include `status:read`. |
 | `feedback:write` | `POST /v1/feedback` |
 
 ### Keys

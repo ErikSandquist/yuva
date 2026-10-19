@@ -164,6 +164,9 @@ answers `insufficient_scope` with the scope to grant.
 | `create_inbox`, `create_chat_channel`, `update_chat_channel` (owners and admins) | `inboxes:manage` |
 | `list_properties`, `analytics_overview`, `analytics_query` (also `dataset: support` and `insights`), `analytics_realtime`, `analytics_support_report`, `list_goals`, `funnel_report`, `get_analytics_snippet`, `add_annotation` | `analytics:read` |
 | `create_property`, `create_goal` (owners, admins, keys without an inbox limit) | `analytics:manage` |
+| `list_status_pages`, `get_status_page`, `list_monitors` | `status:read` |
+| `set_component_state`, `create_incident` (always a draft), `post_incident_update`, `resolve_incident` | `status:manage` |
+| `link_conversation_to_incident` | `status:manage` and `conversations:read` |
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (with the review and, for a draft, the audience count), `get_broadcast_report` | `broadcasts:read` |
 | `list_email_templates`, `preview_design` (owners and admins) | `broadcasts:read` |

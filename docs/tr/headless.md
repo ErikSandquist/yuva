@@ -114,6 +114,8 @@ Gereken yetki olmadan yapılan çağrı `403 insufficient_scope` döner.
 | `analytics:read` | [Analitik](analytics.md#api): mülkler, rakamlar, canlı, durum |
 | `analytics:write` | [Sunucu tarafı olayları](analytics-server.md) gönderme (`POST /v1/analytics/properties/{propertyId}/events`). Yalnızca API anahtarları; OAuth istemcilerine asla sunulmaz. |
 | `analytics:manage` | Mülk oluşturma, değiştirme ve silme, anahtarlarını yenileme, verilerini silme. Asistan hesaplarına ve gelen kutularıyla sınırlı anahtarlara asla verilmez. |
+| `status:read` | [Durum sayfaları](status-pages.md): sayfalar, bileşenler, olaylar, bildirimler, monitörler ve kontrolleri |
+| `status:manage` | Durum sayfalarını değiştirme, durum ayarlama, olay güncellemesi gönderme, monitörleri yönetme, konuşmaları olaylara bağlama ve onlara yanıt verme. `status:read` içermez. |
 | `feedback:write` | `POST /v1/feedback` |
 
 ### Anahtarlar

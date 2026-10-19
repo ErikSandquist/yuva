@@ -54,6 +54,9 @@ or out of order: skip a `webhook-id` you have handled and order by `timestamp`.
 | `subscription.updated` | A subscription was confirmed, unsubscribed (with `unsubscribe_reason`) or subscribed again | `subscription`, `list`, `contact`, `previous_state` |
 | `analytics.alert` | A website of [Analytics](analytics.md) raised an [alert](analytics-support.md#alerts): spike, drop, goal drop, support load or new referrer | `alert`, `property` |
 | `broadcast.updated` | A [broadcast](broadcasts.md) changed state: scheduled, sending, paused, sent, cancelled, failed or back to draft, or its pace changed | `broadcast`, `previous_state` |
+| `status.component.updated` | A [status page](status-pages.md) component was created, changed or got a new state | `component`, `page`, `previous_state` |
+| `status.incident.created`, `status.incident.updated`, `status.incident.resolved` | A published incident or maintenance was published, changed, or resolved or completed | `incident`, `page`, `change`, `update` |
+| `status.monitor.down`, `status.monitor.up` | A monitor failed or recovered | `monitor`, `page`, `incident_id` |
 
 Every body has `type`, `timestamp` (when it happened), `workspace_id`, `inbox_id` (not on contact
 events) and `data`. `data.contact.online` is `false` when the contact has no live connection: the

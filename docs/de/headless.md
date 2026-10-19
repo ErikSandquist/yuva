@@ -116,6 +116,8 @@ Ein Aufruf ohne den nötigen Scope antwortet mit `403 insufficient_scope`.
 | `analytics:read` | [Analytics](analytics.md#api): Properties, Zahlen, Realtime, Health |
 | `analytics:write` | [Serverseitige Events](analytics-server.md) senden (`POST /v1/analytics/properties/{propertyId}/events`). Nur API-Keys, OAuth-Clients nie angeboten. |
 | `analytics:manage` | Properties anlegen, ändern und löschen, ihre Schlüssel erneuern, ihre Daten löschen. Nie für Agents oder auf Posteingänge beschränkte Keys. |
+| `status:read` | [Statusseiten](status-pages.md): Seiten, Komponenten, Vorfälle, Benachrichtigungen, Monitore und ihre Prüfungen |
+| `status:manage` | Statusseiten ändern, Zustände setzen, Vorfall-Updates senden, Monitore verwalten, Konversationen mit Vorfällen verknüpfen und ihnen antworten. Enthält `status:read` nicht. |
 | `feedback:write` | `POST /v1/feedback` |
 
 ### Schlüssel

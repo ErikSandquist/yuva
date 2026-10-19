@@ -140,6 +140,18 @@ sunucular içindir; birini aşan bir istek adı belirtilerek `422 hosted_limit` 
 | `YUVA_IMPORT_MAX_ROWS` | `100000` | [Abone içe aktarırken](importing.md) bir CSV dosyasının sahip olabileceği en çok veri satırı. 1 ile 100000 arası; daha yüksek bir değer sunucunun başlamasını engeller. Bu değeri aşan dosya başarısız olur ve hiçbir şey eklenmez. |
 | `YUVA_MAIL_LINK_URL` | `YUVA_PUBLIC_URL` | Liste ve bülten e-postalarındaki abonelikten çıkma, onay, tıklama ve görsel bağlantılarının işaret ettiği kaynak (şema ve alan adı, yol yok), örn. `https://links.example.com`. Bu sunucuya ulaşmalıdır. O alan adı yalnızca bu bağlantılara (`/m/`, `/s/`, `/c/`, `/i/`) yanıt verir, geri kalan her şey için `404` döner; panel ve API ana alan adınızda kalır. |
 
+## Durum sayfaları
+
+[Durum sayfaları](status-pages.md).
+
+| Değişken | Varsayılan | Anlamı |
+|---|---|---|
+| `YUVA_STATUS_URL` | atanmamış | Herkese açık durum sayfalarının sunulduğu kaynak, ör. `https://status.example.com` (yol yok). Bu sunucuya ulaşmalı ve `YUVA_PUBLIC_URL` alan adından farklı olmalıdır. Sayfalar o zaman `<kaynak>/{slug}` adresindedir ve `<YUVA_PUBLIC_URL>/status/{slug}` oraya yönlenir. Atanmamışsa sayfalar `<YUVA_PUBLIC_URL>/status/{slug}` adresindedir. |
+| `YUVA_STATUS_MONITORS` | `20` | Bir çalışma alanının en fazla kaç monitörü olabileceği; `0` sınırsız. Aşılırsa monitör oluşturma `403 status_monitor_limit` döner. |
+| `YUVA_STATUS_NOTICES` | `on` | `off` abonelik formunu gizler (`404` döner) ve hiçbir bildirim göndermez. |
+| `YUVA_STATUS_NOTICES_DAILY` | `YUVA_SIGNUP=open` ise `5000`, değilse `0` | Bir çalışma alanının UTC günü başına gönderdiği en fazla bildirim e-postası; `0` sınırsız. Aşan kısım ertesi güne kalır. |
+| `YUVA_STATUS_MAX_SUBSCRIBERS` | `YUVA_SIGNUP=open` ise `10000`, değilse `0` | Bir sayfanın alabileceği en fazla abone adresi; `0` sınırsız. Sınırda form, sayfanın yeni abone almadığını söyler. |
+
 ## Analitik
 
 [Web sitelerinizi sayma](analytics.md).
