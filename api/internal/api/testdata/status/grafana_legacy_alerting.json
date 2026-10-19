@@ -1,0 +1,14 @@
+{
+  "dashboardId": 1,
+  "evalMatches": [{"value": 12873, "metric": "queue_depth", "tags": {}}],
+  "imageUrl": "https://grafana.example.com/render/queue01.png",
+  "message": "Queue depth is above 10,000",
+  "orgId": 1,
+  "panelId": 7,
+  "ruleId": 42,
+  "ruleName": "Queue depth alert",
+  "ruleUrl": "https://grafana.example.com/d/queue01/workers?viewPanel=7&orgId=1",
+  "state": "alerting",
+  "tags": {"team": "workers"},
+  "title": "[Alerting] Queue depth alert"
+}

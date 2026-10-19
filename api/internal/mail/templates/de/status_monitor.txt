@@ -1,0 +1,9 @@
+{{.Inbox}}: {{.Component}} {{if .Down}}ist ausgefallen{{else}}funktioniert wieder{{end}}
+
+{{if .Down}}Der Monitor {{.Monitor}} der Statusseite {{.Page}} ist fehlgeschlagen{{if .State}} und hat {{.Component}} auf {{.State}} gesetzt{{end}}.{{else}}Der Monitor {{.Monitor}} der Statusseite {{.Page}} ist wieder in Ordnung und hat {{.Component}} zurückgesetzt.{{end}}
+{{if and .Down .Message}}
+> {{.Message}}
+{{end}}
+Monitore öffnen: {{.URL}}
+
+Sie erhalten diese E-Mail, weil Sie E-Mails zu neuen Unterhaltungen in {{.Inbox}} gewählt haben. Wählen Sie, welche E-Mails Sie erhalten: {{.SettingsURL}}

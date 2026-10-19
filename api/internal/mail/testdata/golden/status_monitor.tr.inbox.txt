@@ -1,0 +1,9 @@
+Acme Support: Backups çalışmıyor
+
+Acme status durum sayfasındaki Nightly backup izleyicisi hata verdi ve Backups bileşenini Major outage durumuna aldı.
+
+> Hello, my invoice is wrong.
+
+İzleyicileri aç: https://yuva.example.com/status-pages/1/monitors
+
+Bu e-postayı Acme Support içindeki yeni konuşmalar için e-posta seçtiğiniz için alıyorsunuz. Hangi e-postaları alacağınızı seçin: https://yuva.example.com/settings/notifications

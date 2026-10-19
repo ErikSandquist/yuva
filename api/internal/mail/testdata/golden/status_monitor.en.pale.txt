@@ -1,0 +1,9 @@
+Acme Support: Backups is down
+
+The monitor Nightly backup on the status page Acme status failed and set Backups to Major outage.
+
+> Hello, my invoice is wrong.
+
+Open the monitors: https://yuva.example.com/status-pages/1/monitors
+
+You get this e-mail because you chose e-mails about new conversations in Acme Support. Choose which e-mails you get: https://yuva.example.com/settings/notifications

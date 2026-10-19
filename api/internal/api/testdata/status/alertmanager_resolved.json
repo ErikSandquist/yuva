@@ -1,0 +1,22 @@
+{
+  "version": "4",
+  "groupKey": "{}:{alertname=\"APIDown\"}",
+  "truncatedAlerts": 0,
+  "status": "resolved",
+  "receiver": "yuva",
+  "groupLabels": {"alertname": "APIDown"},
+  "commonLabels": {"alertname": "APIDown", "job": "api", "severity": "critical"},
+  "commonAnnotations": {"summary": "The API answers 5xx on every request", "description": "Error rate above 50% for 5 minutes."},
+  "externalURL": "http://alertmanager.example.com:9093",
+  "alerts": [
+    {
+      "status": "resolved",
+      "labels": {"alertname": "APIDown", "instance": "api-1:8080", "job": "api", "severity": "critical"},
+      "annotations": {"summary": "The API answers 5xx on every request", "description": "Error rate above 50% for 5 minutes."},
+      "startsAt": "2026-10-19T08:00:00.000Z",
+      "endsAt": "2026-10-19T08:20:00.000Z",
+      "generatorURL": "http://prometheus.example.com:9090/graph?g0.expr=job%3Aerrors%3Arate5m+%3E+0.5",
+      "fingerprint": "c3f4d1a2b5e6f708"
+    }
+  ]
+}

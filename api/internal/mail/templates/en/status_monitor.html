@@ -1,0 +1,7 @@
+{{template "heading" (print .Component (or (and .Down " is down") " is working again"))}}
+<p style="margin:0 0 16px 0;">{{if .Down}}The monitor <strong>{{.Monitor}}</strong> on the status page <strong>{{.Page}}</strong> failed{{if .State}} and set {{.Component}} to <strong>{{.State}}</strong>{{end}}.{{else}}The monitor <strong>{{.Monitor}}</strong> on the status page <strong>{{.Page}}</strong> recovered and put {{.Component}} back.{{end}}</p>
+{{- if and .Down .Message}}
+{{template "quote" .Message}}
+{{- end}}
+{{template "button" (button .URL "Open the monitors")}}
+{{define "status_monitor.footer"}}You get this e-mail because you chose e-mails about new conversations in {{.Inbox}}. <a href="{{.SettingsURL}}" target="_blank" style="color:#71717a;text-decoration:underline;">Choose which e-mails you get</a>{{end}}

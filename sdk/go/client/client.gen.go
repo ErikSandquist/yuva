@@ -21,6 +21,42 @@ import (
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
+// Defines values for AlertmanagerAlertStatus.
+const (
+	AlertmanagerAlertStatusFiring   AlertmanagerAlertStatus = "firing"
+	AlertmanagerAlertStatusResolved AlertmanagerAlertStatus = "resolved"
+)
+
+// Valid indicates whether the value is a known member of the AlertmanagerAlertStatus enum.
+func (e AlertmanagerAlertStatus) Valid() bool {
+	switch e {
+	case AlertmanagerAlertStatusFiring:
+		return true
+	case AlertmanagerAlertStatusResolved:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AlertmanagerWebhookBodyStatus.
+const (
+	AlertmanagerWebhookBodyStatusFiring   AlertmanagerWebhookBodyStatus = "firing"
+	AlertmanagerWebhookBodyStatusResolved AlertmanagerWebhookBodyStatus = "resolved"
+)
+
+// Valid indicates whether the value is a known member of the AlertmanagerWebhookBodyStatus enum.
+func (e AlertmanagerWebhookBodyStatus) Valid() bool {
+	switch e {
+	case AlertmanagerWebhookBodyStatusFiring:
+		return true
+	case AlertmanagerWebhookBodyStatusResolved:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsAlertEventType.
 const (
 	AnalyticsAlertEventTypeAnalyticsAlert AnalyticsAlertEventType = "analytics.alert"
@@ -185,16 +221,16 @@ func (e AnalyticsCompareWith) Valid() bool {
 
 // Defines values for AnalyticsConsentA.
 const (
-	N0 AnalyticsConsentA = 0
-	N1 AnalyticsConsentA = 1
+	AnalyticsConsentAN0 AnalyticsConsentA = 0
+	AnalyticsConsentAN1 AnalyticsConsentA = 1
 )
 
 // Valid indicates whether the value is a known member of the AnalyticsConsentA enum.
 func (e AnalyticsConsentA) Valid() bool {
 	switch e {
-	case N0:
+	case AnalyticsConsentAN0:
 		return true
-	case N1:
+	case AnalyticsConsentAN1:
 		return true
 	default:
 		return false
@@ -2571,6 +2607,33 @@ func (e FeedbackProgress) Valid() bool {
 	}
 }
 
+// Defines values for GrafanaWebhookBodyState.
+const (
+	GrafanaAlerting GrafanaWebhookBodyState = "alerting"
+	GrafanaNoData   GrafanaWebhookBodyState = "no_data"
+	GrafanaOk       GrafanaWebhookBodyState = "ok"
+	GrafanaPaused   GrafanaWebhookBodyState = "paused"
+	GrafanaPending  GrafanaWebhookBodyState = "pending"
+)
+
+// Valid indicates whether the value is a known member of the GrafanaWebhookBodyState enum.
+func (e GrafanaWebhookBodyState) Valid() bool {
+	switch e {
+	case GrafanaAlerting:
+		return true
+	case GrafanaNoData:
+		return true
+	case GrafanaOk:
+		return true
+	case GrafanaPaused:
+		return true
+	case GrafanaPending:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for HealthStatus.
 const (
 	Ok HealthStatus = "ok"
@@ -4422,6 +4485,36 @@ func (e SmtpTls) Valid() bool {
 	}
 }
 
+// Defines values for StatusCheckSource.
+const (
+	StatusCheckAlertmanager StatusCheckSource = "alertmanager"
+	StatusCheckBeat         StatusCheckSource = "beat"
+	StatusCheckFail         StatusCheckSource = "fail"
+	StatusCheckGrafana      StatusCheckSource = "grafana"
+	StatusCheckMissed       StatusCheckSource = "missed"
+	StatusCheckPush         StatusCheckSource = "push"
+)
+
+// Valid indicates whether the value is a known member of the StatusCheckSource enum.
+func (e StatusCheckSource) Valid() bool {
+	switch e {
+	case StatusCheckAlertmanager:
+		return true
+	case StatusCheckBeat:
+		return true
+	case StatusCheckFail:
+		return true
+	case StatusCheckGrafana:
+		return true
+	case StatusCheckMissed:
+		return true
+	case StatusCheckPush:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for StatusComponentEventType.
 const (
 	StatusComponentEventTypeStatusComponentUpdated StatusComponentEventType = "status.component.updated"
@@ -4587,6 +4680,129 @@ func (e StatusIncidentState) Valid() bool {
 	case StatusResolved:
 		return true
 	case StatusScheduled:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusMonitorEventType.
+const (
+	StatusMonitorDownEvent StatusMonitorEventType = "status.monitor.down"
+	StatusMonitorUpEvent   StatusMonitorEventType = "status.monitor.up"
+)
+
+// Valid indicates whether the value is a known member of the StatusMonitorEventType enum.
+func (e StatusMonitorEventType) Valid() bool {
+	switch e {
+	case StatusMonitorDownEvent:
+		return true
+	case StatusMonitorUpEvent:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusMonitorFailureState.
+const (
+	StatusFailureDegraded      StatusMonitorFailureState = "degraded"
+	StatusFailureMajorOutage   StatusMonitorFailureState = "major_outage"
+	StatusFailurePartialOutage StatusMonitorFailureState = "partial_outage"
+)
+
+// Valid indicates whether the value is a known member of the StatusMonitorFailureState enum.
+func (e StatusMonitorFailureState) Valid() bool {
+	switch e {
+	case StatusFailureDegraded:
+		return true
+	case StatusFailureMajorOutage:
+		return true
+	case StatusFailurePartialOutage:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusMonitorKind.
+const (
+	StatusMonitorHeartbeat StatusMonitorKind = "heartbeat"
+	StatusMonitorPush      StatusMonitorKind = "push"
+)
+
+// Valid indicates whether the value is a known member of the StatusMonitorKind enum.
+func (e StatusMonitorKind) Valid() bool {
+	switch e {
+	case StatusMonitorHeartbeat:
+		return true
+	case StatusMonitorPush:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusMonitorOnFailure.
+const (
+	StatusOnFailureDraft   StatusMonitorOnFailure = "draft"
+	StatusOnFailureNone    StatusMonitorOnFailure = "none"
+	StatusOnFailurePublish StatusMonitorOnFailure = "publish"
+)
+
+// Valid indicates whether the value is a known member of the StatusMonitorOnFailure enum.
+func (e StatusMonitorOnFailure) Valid() bool {
+	switch e {
+	case StatusOnFailureDraft:
+		return true
+	case StatusOnFailureNone:
+		return true
+	case StatusOnFailurePublish:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusMonitorState.
+const (
+	MonitorDown    StatusMonitorState = "down"
+	MonitorPending StatusMonitorState = "pending"
+	MonitorUp      StatusMonitorState = "up"
+)
+
+// Valid indicates whether the value is a known member of the StatusMonitorState enum.
+func (e StatusMonitorState) Valid() bool {
+	switch e {
+	case MonitorDown:
+		return true
+	case MonitorPending:
+		return true
+	case MonitorUp:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusPushBodyState.
+const (
+	PushDegraded      StatusPushBodyState = "degraded"
+	PushMajorOutage   StatusPushBodyState = "major_outage"
+	PushOperational   StatusPushBodyState = "operational"
+	PushPartialOutage StatusPushBodyState = "partial_outage"
+)
+
+// Valid indicates whether the value is a known member of the StatusPushBodyState enum.
+func (e StatusPushBodyState) Valid() bool {
+	switch e {
+	case PushDegraded:
+		return true
+	case PushMajorOutage:
+		return true
+	case PushOperational:
+		return true
+	case PushPartialOutage:
 		return true
 	default:
 		return false
@@ -4849,6 +5065,8 @@ const (
 	WebhookEventTypeStatusIncidentCreated  WebhookEventType = "status.incident.created"
 	WebhookEventTypeStatusIncidentResolved WebhookEventType = "status.incident.resolved"
 	WebhookEventTypeStatusIncidentUpdated  WebhookEventType = "status.incident.updated"
+	WebhookEventTypeStatusMonitorDown      WebhookEventType = "status.monitor.down"
+	WebhookEventTypeStatusMonitorUp        WebhookEventType = "status.monitor.up"
 	WebhookEventTypeSubscriptionCreated    WebhookEventType = "subscription.created"
 	WebhookEventTypeSubscriptionUpdated    WebhookEventType = "subscription.updated"
 )
@@ -4895,6 +5113,10 @@ func (e WebhookEventType) Valid() bool {
 	case WebhookEventTypeStatusIncidentResolved:
 		return true
 	case WebhookEventTypeStatusIncidentUpdated:
+		return true
+	case WebhookEventTypeStatusMonitorDown:
+		return true
+	case WebhookEventTypeStatusMonitorUp:
 		return true
 	case WebhookEventTypeSubscriptionCreated:
 		return true
@@ -4977,6 +5199,30 @@ func (e ListConsentFormat) Valid() bool {
 	}
 }
 
+// Defines values for StatusHeartbeatFail.
+const (
+	StatusHeartbeatFailFalse StatusHeartbeatFail = "false"
+	StatusHeartbeatFailN0    StatusHeartbeatFail = "0"
+	StatusHeartbeatFailN1    StatusHeartbeatFail = "1"
+	StatusHeartbeatFailTrue  StatusHeartbeatFail = "true"
+)
+
+// Valid indicates whether the value is a known member of the StatusHeartbeatFail enum.
+func (e StatusHeartbeatFail) Valid() bool {
+	switch e {
+	case StatusHeartbeatFailFalse:
+		return true
+	case StatusHeartbeatFailN0:
+		return true
+	case StatusHeartbeatFailN1:
+		return true
+	case StatusHeartbeatFailTrue:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ListClientMessagesParamsOrder.
 const (
 	ListClientMessagesParamsOrderAsc  ListClientMessagesParamsOrder = "asc"
@@ -4989,6 +5235,54 @@ func (e ListClientMessagesParamsOrder) Valid() bool {
 	case ListClientMessagesParamsOrderAsc:
 		return true
 	case ListClientMessagesParamsOrderDesc:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusHeartbeatParamsFail.
+const (
+	StatusHeartbeatParamsFailFalse StatusHeartbeatParamsFail = "false"
+	StatusHeartbeatParamsFailN0    StatusHeartbeatParamsFail = "0"
+	StatusHeartbeatParamsFailN1    StatusHeartbeatParamsFail = "1"
+	StatusHeartbeatParamsFailTrue  StatusHeartbeatParamsFail = "true"
+)
+
+// Valid indicates whether the value is a known member of the StatusHeartbeatParamsFail enum.
+func (e StatusHeartbeatParamsFail) Valid() bool {
+	switch e {
+	case StatusHeartbeatParamsFailFalse:
+		return true
+	case StatusHeartbeatParamsFailN0:
+		return true
+	case StatusHeartbeatParamsFailN1:
+		return true
+	case StatusHeartbeatParamsFailTrue:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusHeartbeatPostParamsFail.
+const (
+	StatusHeartbeatPostParamsFailFalse StatusHeartbeatPostParamsFail = "false"
+	StatusHeartbeatPostParamsFailN0    StatusHeartbeatPostParamsFail = "0"
+	StatusHeartbeatPostParamsFailN1    StatusHeartbeatPostParamsFail = "1"
+	StatusHeartbeatPostParamsFailTrue  StatusHeartbeatPostParamsFail = "true"
+)
+
+// Valid indicates whether the value is a known member of the StatusHeartbeatPostParamsFail enum.
+func (e StatusHeartbeatPostParamsFail) Valid() bool {
+	switch e {
+	case StatusHeartbeatPostParamsFailFalse:
+		return true
+	case StatusHeartbeatPostParamsFailN0:
+		return true
+	case StatusHeartbeatPostParamsFailN1:
+		return true
+	case StatusHeartbeatPostParamsFailTrue:
 		return true
 	default:
 		return false
@@ -5186,6 +5480,39 @@ type AccountDeletion struct {
 	// Email The person's e-mail address (case is ignored); anything else is refused with `400 confirmation_mismatch`.
 	Email string `json:"email"`
 }
+
+// AlertmanagerAlert defines model for AlertmanagerAlert.
+type AlertmanagerAlert struct {
+	Annotations  *map[string]string       `json:"annotations,omitempty"`
+	EndsAt       *string                  `json:"endsAt,omitempty"`
+	Fingerprint  *string                  `json:"fingerprint,omitempty"`
+	GeneratorURL *string                  `json:"generatorURL,omitempty"`
+	Labels       *map[string]string       `json:"labels,omitempty"`
+	StartsAt     *string                  `json:"startsAt,omitempty"`
+	Status       *AlertmanagerAlertStatus `json:"status,omitempty"`
+}
+
+// AlertmanagerAlertStatus defines model for AlertmanagerAlert.Status.
+type AlertmanagerAlertStatus string
+
+// AlertmanagerWebhookBody The body Alertmanager's `webhook_config` posts
+// (https://prometheus.io/docs/alerting/latest/configuration/#webhook_config). Grafana Alerting's
+// webhook contact point sends the same shape with `title`, `message`, `state` and `orgId` added.
+type AlertmanagerWebhookBody struct {
+	Alerts            []AlertmanagerAlert           `json:"alerts"`
+	CommonAnnotations *map[string]string            `json:"commonAnnotations,omitempty"`
+	CommonLabels      *map[string]string            `json:"commonLabels,omitempty"`
+	ExternalURL       *string                       `json:"externalURL,omitempty"`
+	GroupKey          *string                       `json:"groupKey,omitempty"`
+	GroupLabels       *map[string]string            `json:"groupLabels,omitempty"`
+	Receiver          *string                       `json:"receiver,omitempty"`
+	Status            AlertmanagerWebhookBodyStatus `json:"status"`
+	TruncatedAlerts   *int                          `json:"truncatedAlerts,omitempty"`
+	Version           *string                       `json:"version,omitempty"`
+}
+
+// AlertmanagerWebhookBodyStatus defines model for AlertmanagerWebhookBody.Status.
+type AlertmanagerWebhookBodyStatus string
 
 // AnalyticsAlert defines model for AnalyticsAlert.
 type AnalyticsAlert struct {
@@ -10741,6 +11068,19 @@ type FeedbackFields struct {
 // Done, Won't do. Separate from the status: a feedback can be `done` and still open.
 type FeedbackProgress string
 
+// GrafanaWebhookBody The body of Grafana's legacy alerting webhook notifier.
+type GrafanaWebhookBody struct {
+	Message  *string                 `json:"message,omitempty"`
+	RuleId   *int                    `json:"ruleId,omitempty"`
+	RuleName *string                 `json:"ruleName,omitempty"`
+	RuleUrl  *string                 `json:"ruleUrl,omitempty"`
+	State    GrafanaWebhookBodyState `json:"state"`
+	Title    *string                 `json:"title,omitempty"`
+}
+
+// GrafanaWebhookBodyState defines model for GrafanaWebhookBody.State.
+type GrafanaWebhookBodyState string
+
 // Health defines model for Health.
 type Health struct {
 	Status HealthStatus `json:"status"`
@@ -13914,6 +14254,40 @@ type Stats struct {
 	Until time.Time `json:"until"`
 }
 
+// StatusCheck defines model for StatusCheck.
+type StatusCheck struct {
+	At time.Time `json:"at"`
+
+	// DurationMs For outside checks, which come later.
+	DurationMs *int32 `json:"duration_ms,omitempty"`
+
+	// Error Why it failed, when the server knows.
+	Error   *string   `json:"error,omitempty"`
+	Id      uuid.UUID `json:"id"`
+	Message *string   `json:"message,omitempty"`
+	Ok      bool      `json:"ok"`
+
+	// Source `beat` and `fail` (heartbeat calls), `missed` (no beat in time), `push`, `alertmanager` and
+	// `grafana` (pushed states).
+	Source StatusCheckSource `json:"source"`
+
+	// State The state a failure named.
+	State *StatusComponentStateValue `json:"state,omitempty"`
+
+	// StatusCode For outside checks, which come later.
+	StatusCode *int32 `json:"status_code,omitempty"`
+}
+
+// StatusCheckList defines model for StatusCheckList.
+type StatusCheckList struct {
+	Items      []StatusCheck `json:"items"`
+	NextCursor *string       `json:"next_cursor,omitempty"`
+}
+
+// StatusCheckSource `beat` and `fail` (heartbeat calls), `missed` (no beat in time), `push`, `alertmanager` and
+// `grafana` (pushed states).
+type StatusCheckSource string
+
 // StatusColor Examples: #2563eb
 type StatusColor = string
 
@@ -14182,6 +14556,217 @@ type StatusIncidentUpdateEdit struct {
 	Body string `json:"body"`
 }
 
+// StatusIngressResult defines model for StatusIngressResult.
+type StatusIngressResult struct {
+	Paused bool `json:"paused"`
+
+	// State `pending` until the first result decides, then `up` or `down`.
+	State StatusMonitorState `json:"state"`
+}
+
+// StatusMonitor defines model for StatusMonitor.
+type StatusMonitor struct {
+	// ComponentId The component whose state the monitor sets.
+	ComponentId          uuid.UUID `json:"component_id"`
+	ConsecutiveFailures  int32     `json:"consecutive_failures"`
+	ConsecutiveSuccesses int32     `json:"consecutive_successes"`
+	CreatedAt            time.Time `json:"created_at"`
+
+	// DownState While `down`, the state it sets: `failure_state`, or the state a push named.
+	DownState    *StatusComponentStateValue `json:"down_state,omitempty"`
+	FailureState StatusMonitorFailureState  `json:"failure_state"`
+
+	// FailureThreshold Failures in a row that fail the monitor.
+	FailureThreshold int32 `json:"failure_threshold"`
+
+	// Grace `heartbeat`: seconds a beat may be late.
+	Grace *int32    `json:"grace,omitempty"`
+	Id    uuid.UUID `json:"id"`
+
+	// IncidentId The open incident this monitor opened.
+	IncidentId *uuid.UUID `json:"incident_id,omitempty"`
+
+	// Interval `heartbeat`: seconds between beats.
+	Interval *int32 `json:"interval,omitempty"`
+
+	// Kind `heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state.
+	Kind StatusMonitorKind `json:"kind"`
+
+	// LastMessage The message of the last pushed state, or of the last failure.
+	LastMessage *string `json:"last_message,omitempty"`
+
+	// LastResultAt The last beat, missed beat or pushed state.
+	LastResultAt *time.Time `json:"last_result_at,omitempty"`
+	Name         string     `json:"name"`
+
+	// NextBeatDue `heartbeat`, not paused and not failed: when a missing beat becomes a failure.
+	NextBeatDue *time.Time `json:"next_beat_due,omitempty"`
+
+	// OnFailure What failing opens: `none`, a `draft` incident members publish, or a published incident (`publish`).
+	OnFailure StatusMonitorOnFailure `json:"on_failure"`
+	PageId    uuid.UUID              `json:"page_id"`
+	Paused    bool                   `json:"paused"`
+
+	// RecoveryThreshold Successes in a row that bring a failed monitor back.
+	RecoveryThreshold int32 `json:"recovery_threshold"`
+
+	// State `pending` until the first result decides, then `up` or `down`.
+	State StatusMonitorState `json:"state"`
+
+	// StateSince The monitor's last change between `up` and `down` (its creation or resumption before that).
+	StateSince time.Time `json:"state_since"`
+
+	// TokenPrefix The first characters of the token, to tell tokens apart.
+	TokenPrefix *string   `json:"token_prefix,omitempty"`
+	UpdatedAt   time.Time `json:"updated_at"`
+}
+
+// StatusMonitorCreate defines model for StatusMonitorCreate.
+type StatusMonitorCreate struct {
+	ComponentId uuid.UUID `json:"component_id"`
+
+	// FailureState Default `major_outage`.
+	FailureState *StatusMonitorFailureState `json:"failure_state,omitempty"`
+
+	// FailureThreshold Default 1.
+	FailureThreshold *int32 `json:"failure_threshold,omitempty"`
+
+	// Grace `heartbeat` only: seconds a beat may be late, up to a day; default 60.
+	Grace *int32 `json:"grace,omitempty"`
+
+	// Interval `heartbeat` only: seconds between beats, 30 seconds to 30 days; default 300.
+	Interval *int32 `json:"interval,omitempty"`
+
+	// Kind `heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state.
+	Kind StatusMonitorKind `json:"kind"`
+	Name string            `json:"name"`
+
+	// OnFailure Default `draft`.
+	OnFailure *StatusMonitorOnFailure `json:"on_failure,omitempty"`
+	Paused    *bool                   `json:"paused,omitempty"`
+
+	// RecoveryThreshold Default 1.
+	RecoveryThreshold *int32 `json:"recovery_threshold,omitempty"`
+}
+
+// StatusMonitorEvent `status.monitor.down`, `status.monitor.up`: a monitor failed or recovered. Delivered to callers
+// who hold `status:read` and can see the page's inbox.
+type StatusMonitorEvent struct {
+	CreatedAt   time.Time              `json:"created_at"`
+	Data        StatusMonitorEventData `json:"data"`
+	Id          int64                  `json:"id"`
+	InboxId     uuid.UUID              `json:"inbox_id"`
+	Type        StatusMonitorEventType `json:"type"`
+	WorkspaceId uuid.UUID              `json:"workspace_id"`
+}
+
+// StatusMonitorEventType defines model for StatusMonitorEvent.Type.
+type StatusMonitorEventType string
+
+// StatusMonitorEventData defines model for StatusMonitorEventData.
+type StatusMonitorEventData struct {
+	// IncidentId The incident the monitor opened (`down`) or resolved (`up`).
+	IncidentId *uuid.UUID    `json:"incident_id,omitempty"`
+	Monitor    StatusMonitor `json:"monitor"`
+	Page       StatusPageRef `json:"page"`
+}
+
+// StatusMonitorFailureState defines model for StatusMonitorFailureState.
+type StatusMonitorFailureState string
+
+// StatusMonitorKind `heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state.
+type StatusMonitorKind string
+
+// StatusMonitorList defines model for StatusMonitorList.
+type StatusMonitorList struct {
+	Items []StatusMonitor `json:"items"`
+}
+
+// StatusMonitorOnFailure What failing opens: `none`, a `draft` incident members publish, or a published incident (`publish`).
+type StatusMonitorOnFailure string
+
+// StatusMonitorState `pending` until the first result decides, then `up` or `down`.
+type StatusMonitorState string
+
+// StatusMonitorUpdate defines model for StatusMonitorUpdate.
+type StatusMonitorUpdate struct {
+	ComponentId      *uuid.UUID                 `json:"component_id,omitempty"`
+	FailureState     *StatusMonitorFailureState `json:"failure_state,omitempty"`
+	FailureThreshold *int32                     `json:"failure_threshold,omitempty"`
+	Grace            *int32                     `json:"grace,omitempty"`
+	Interval         *int32                     `json:"interval,omitempty"`
+	Name             *string                    `json:"name,omitempty"`
+
+	// OnFailure What failing opens: `none`, a `draft` incident members publish, or a published incident (`publish`).
+	OnFailure         *StatusMonitorOnFailure `json:"on_failure,omitempty"`
+	Paused            *bool                   `json:"paused,omitempty"`
+	RecoveryThreshold *int32                  `json:"recovery_threshold,omitempty"`
+}
+
+// StatusMonitorWithToken defines model for StatusMonitorWithToken.
+type StatusMonitorWithToken struct {
+	// ComponentId The component whose state the monitor sets.
+	ComponentId          uuid.UUID `json:"component_id"`
+	ConsecutiveFailures  int32     `json:"consecutive_failures"`
+	ConsecutiveSuccesses int32     `json:"consecutive_successes"`
+	CreatedAt            time.Time `json:"created_at"`
+
+	// DownState While `down`, the state it sets: `failure_state`, or the state a push named.
+	DownState    *StatusComponentStateValue `json:"down_state,omitempty"`
+	FailureState StatusMonitorFailureState  `json:"failure_state"`
+
+	// FailureThreshold Failures in a row that fail the monitor.
+	FailureThreshold int32 `json:"failure_threshold"`
+
+	// Grace `heartbeat`: seconds a beat may be late.
+	Grace *int32    `json:"grace,omitempty"`
+	Id    uuid.UUID `json:"id"`
+
+	// IncidentId The open incident this monitor opened.
+	IncidentId *uuid.UUID `json:"incident_id,omitempty"`
+
+	// Interval `heartbeat`: seconds between beats.
+	Interval *int32 `json:"interval,omitempty"`
+
+	// Kind `heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state.
+	Kind StatusMonitorKind `json:"kind"`
+
+	// LastMessage The message of the last pushed state, or of the last failure.
+	LastMessage *string `json:"last_message,omitempty"`
+
+	// LastResultAt The last beat, missed beat or pushed state.
+	LastResultAt *time.Time `json:"last_result_at,omitempty"`
+	Name         string     `json:"name"`
+
+	// NextBeatDue `heartbeat`, not paused and not failed: when a missing beat becomes a failure.
+	NextBeatDue *time.Time `json:"next_beat_due,omitempty"`
+
+	// OnFailure What failing opens: `none`, a `draft` incident members publish, or a published incident (`publish`).
+	OnFailure StatusMonitorOnFailure `json:"on_failure"`
+	PageId    uuid.UUID              `json:"page_id"`
+	Paused    bool                   `json:"paused"`
+
+	// RecoveryThreshold Successes in a row that bring a failed monitor back.
+	RecoveryThreshold int32 `json:"recovery_threshold"`
+
+	// State `pending` until the first result decides, then `up` or `down`.
+	State StatusMonitorState `json:"state"`
+
+	// StateSince The monitor's last change between `up` and `down` (its creation or resumption before that).
+	StateSince time.Time `json:"state_since"`
+
+	// Token Shown only now; only its hash is kept.
+	Token string `json:"token"`
+
+	// TokenPrefix The first characters of the token, to tell tokens apart.
+	TokenPrefix *string   `json:"token_prefix,omitempty"`
+	UpdatedAt   time.Time `json:"updated_at"`
+
+	// Url Where the host calls: `<public URL>/ingress/heartbeat/{token}` (add `/fail` for a failed
+	// run) or `<public URL>/ingress/status/{token}`.
+	Url string `json:"url"`
+}
+
 // StatusPage defines model for StatusPage.
 type StatusPage struct {
 	// AccentColor Examples: #2563eb
@@ -14299,6 +14884,15 @@ type StatusPageUpdate struct {
 	SupportUrl nullable.Nullable[string] `json:"support_url,omitempty"`
 	Timezone   *string                   `json:"timezone,omitempty"`
 }
+
+// StatusPushBody defines model for StatusPushBody.
+type StatusPushBody struct {
+	Message *string             `json:"message,omitempty"`
+	State   StatusPushBodyState `json:"state"`
+}
+
+// StatusPushBodyState defines model for StatusPushBody.State.
+type StatusPushBodyState string
 
 // StatusStateSource Who set a component's current state.
 type StatusStateSource string
@@ -14962,6 +15556,19 @@ type WebhookStatusIncidentPayload struct {
 	WorkspaceId uuid.UUID        `json:"workspace_id"`
 }
 
+// WebhookStatusMonitorPayload defines model for WebhookStatusMonitorPayload.
+type WebhookStatusMonitorPayload struct {
+	Data StatusMonitorEventData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
+}
+
 // WebhookSubscriptionData defines model for WebhookSubscriptionData.
 type WebhookSubscriptionData struct {
 	// Contact The contact as a host backend needs it.
@@ -15189,8 +15796,17 @@ type StatusComponentId = uuid.UUID
 // StatusGroupId defines model for StatusGroupId.
 type StatusGroupId = uuid.UUID
 
+// StatusHeartbeatFail defines model for StatusHeartbeatFail.
+type StatusHeartbeatFail string
+
 // StatusIncidentId defines model for StatusIncidentId.
 type StatusIncidentId = uuid.UUID
+
+// StatusMonitorId defines model for StatusMonitorId.
+type StatusMonitorId = uuid.UUID
+
+// StatusMonitorToken defines model for StatusMonitorToken.
+type StatusMonitorToken = string
 
 // StatusPageId defines model for StatusPageId.
 type StatusPageId = uuid.UUID
@@ -15315,6 +15931,29 @@ type CreateClientFeedbackParams struct {
 type SubscribeClientParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+}
+
+// StatusHeartbeatParams defines parameters for StatusHeartbeat.
+type StatusHeartbeatParams struct {
+	// Fail `1` or `true` reports a failure.
+	Fail *StatusHeartbeatParamsFail `form:"fail,omitempty" json:"fail,omitempty"`
+}
+
+// StatusHeartbeatParamsFail defines parameters for StatusHeartbeat.
+type StatusHeartbeatParamsFail string
+
+// StatusHeartbeatPostParams defines parameters for StatusHeartbeatPost.
+type StatusHeartbeatPostParams struct {
+	// Fail `1` or `true` reports a failure.
+	Fail *StatusHeartbeatPostParamsFail `form:"fail,omitempty" json:"fail,omitempty"`
+}
+
+// StatusHeartbeatPostParamsFail defines parameters for StatusHeartbeatPost.
+type StatusHeartbeatPostParamsFail string
+
+// StatusPushJSONBody defines parameters for StatusPush.
+type StatusPushJSONBody struct {
+	union json.RawMessage
 }
 
 // ListReaderDiscussionsParams defines parameters for ListReaderDiscussions.
@@ -17406,6 +18045,57 @@ type EditStatusIncidentUpdateParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListStatusMonitorsParams defines parameters for ListStatusMonitors.
+type ListStatusMonitorsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateStatusMonitorParams defines parameters for CreateStatusMonitor.
+type CreateStatusMonitorParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteStatusMonitorParams defines parameters for DeleteStatusMonitor.
+type DeleteStatusMonitorParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetStatusMonitorParams defines parameters for GetStatusMonitor.
+type GetStatusMonitorParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateStatusMonitorParams defines parameters for UpdateStatusMonitor.
+type UpdateStatusMonitorParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListStatusMonitorChecksParams defines parameters for ListStatusMonitorChecks.
+type ListStatusMonitorChecksParams struct {
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// RotateStatusMonitorTokenParams defines parameters for RotateStatusMonitorToken.
+type RotateStatusMonitorTokenParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // PreviewStatusPageParams defines parameters for PreviewStatusPage.
 type PreviewStatusPageParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
@@ -17807,6 +18497,34 @@ type WebhookStatusIncidentUpdatedParams struct {
 	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
 }
 
+// WebhookStatusMonitorDownParams defines parameters for WebhookStatusMonitorDown.
+type WebhookStatusMonitorDownParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookStatusMonitorUpParams defines parameters for WebhookStatusMonitorUp.
+type WebhookStatusMonitorUpParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
 // WebhookSubscriptionCreatedParams defines parameters for WebhookSubscriptionCreated.
 type WebhookSubscriptionCreatedParams struct {
 	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
@@ -17900,6 +18618,9 @@ type CreateClientSessionJSONRequestBody = ClientSessionCreate
 
 // SubscribeClientJSONRequestBody defines body for SubscribeClient for application/json ContentType.
 type SubscribeClientJSONRequestBody = ClientSubscriptionPut
+
+// StatusPushJSONRequestBody defines body for StatusPush for application/json ContentType.
+type StatusPushJSONRequestBody StatusPushJSONBody
 
 // UpdateReaderAccountJSONRequestBody defines body for UpdateReaderAccount for application/json ContentType.
 type UpdateReaderAccountJSONRequestBody = ReaderAccountUpdate
@@ -18201,6 +18922,12 @@ type CreateStatusIncidentUpdateJSONRequestBody = StatusIncidentUpdateCreate
 // EditStatusIncidentUpdateJSONRequestBody defines body for EditStatusIncidentUpdate for application/json ContentType.
 type EditStatusIncidentUpdateJSONRequestBody = StatusIncidentUpdateEdit
 
+// CreateStatusMonitorJSONRequestBody defines body for CreateStatusMonitor for application/json ContentType.
+type CreateStatusMonitorJSONRequestBody = StatusMonitorCreate
+
+// UpdateStatusMonitorJSONRequestBody defines body for UpdateStatusMonitor for application/json ContentType.
+type UpdateStatusMonitorJSONRequestBody = StatusMonitorUpdate
+
 // CreateWebhookJSONRequestBody defines body for CreateWebhook for application/json ContentType.
 type CreateWebhookJSONRequestBody = WebhookEndpointCreate
 
@@ -18278,6 +19005,12 @@ type WebhookStatusIncidentResolvedJSONRequestBody = WebhookStatusIncidentPayload
 
 // WebhookStatusIncidentUpdatedJSONRequestBody defines body for WebhookStatusIncidentUpdated for application/json ContentType.
 type WebhookStatusIncidentUpdatedJSONRequestBody = WebhookStatusIncidentPayload
+
+// WebhookStatusMonitorDownJSONRequestBody defines body for WebhookStatusMonitorDown for application/json ContentType.
+type WebhookStatusMonitorDownJSONRequestBody = WebhookStatusMonitorPayload
+
+// WebhookStatusMonitorUpJSONRequestBody defines body for WebhookStatusMonitorUp for application/json ContentType.
+type WebhookStatusMonitorUpJSONRequestBody = WebhookStatusMonitorPayload
 
 // WebhookSubscriptionCreatedJSONRequestBody defines body for WebhookSubscriptionCreated for application/json ContentType.
 type WebhookSubscriptionCreatedJSONRequestBody = WebhookSubscriptionPayload
@@ -20473,6 +21206,32 @@ func (t *RealtimeMessage) MergeStatusIncidentEvent(v StatusIncidentEvent) error 
 	return err
 }
 
+// AsStatusMonitorEvent returns the union data inside the RealtimeMessage as a StatusMonitorEvent
+func (t RealtimeMessage) AsStatusMonitorEvent() (StatusMonitorEvent, error) {
+	var body StatusMonitorEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromStatusMonitorEvent overwrites any union data inside the RealtimeMessage as the provided StatusMonitorEvent
+func (t *RealtimeMessage) FromStatusMonitorEvent(v StatusMonitorEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeStatusMonitorEvent performs a merge with any union data inside the RealtimeMessage, using the provided StatusMonitorEvent
+func (t *RealtimeMessage) MergeStatusMonitorEvent(v StatusMonitorEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsMigrationProgressEvent returns the union data inside the RealtimeMessage as a MigrationProgressEvent
 func (t RealtimeMessage) AsMigrationProgressEvent() (MigrationProgressEvent, error) {
 	var body MigrationProgressEvent
@@ -20847,6 +21606,10 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsStatusIncidentEvent()
 	case "status.incident.updated":
 		return t.AsStatusIncidentEvent()
+	case "status.monitor.down":
+		return t.AsStatusMonitorEvent()
+	case "status.monitor.up":
+		return t.AsStatusMonitorEvent()
 	case "subscription.created":
 		return t.AsSubscriptionEvent()
 	case "subscription.updated":
@@ -21416,6 +22179,32 @@ func (t *StoredEvent) MergeStatusIncidentEvent(v StatusIncidentEvent) error {
 	return err
 }
 
+// AsStatusMonitorEvent returns the union data inside the StoredEvent as a StatusMonitorEvent
+func (t StoredEvent) AsStatusMonitorEvent() (StatusMonitorEvent, error) {
+	var body StatusMonitorEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromStatusMonitorEvent overwrites any union data inside the StoredEvent as the provided StatusMonitorEvent
+func (t *StoredEvent) FromStatusMonitorEvent(v StatusMonitorEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeStatusMonitorEvent performs a merge with any union data inside the StoredEvent, using the provided StatusMonitorEvent
+func (t *StoredEvent) MergeStatusMonitorEvent(v StatusMonitorEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 func (t StoredEvent) Discriminator() (string, error) {
 	var discriminator struct {
 		Discriminator string `json:"type"`
@@ -21486,6 +22275,10 @@ func (t StoredEvent) ValueByDiscriminator() (interface{}, error) {
 		return t.AsStatusIncidentEvent()
 	case "status.incident.updated":
 		return t.AsStatusIncidentEvent()
+	case "status.monitor.down":
+		return t.AsStatusMonitorEvent()
+	case "status.monitor.up":
+		return t.AsStatusMonitorEvent()
 	case "subscription.created":
 		return t.AsSubscriptionEvent()
 	case "subscription.updated":
@@ -21501,6 +22294,94 @@ func (t StoredEvent) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StoredEvent) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsStatusPushBody returns the union data inside the StatusPushJSONBody as a StatusPushBody
+func (t StatusPushJSONBody) AsStatusPushBody() (StatusPushBody, error) {
+	var body StatusPushBody
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromStatusPushBody overwrites any union data inside the StatusPushJSONBody as the provided StatusPushBody
+func (t *StatusPushJSONBody) FromStatusPushBody(v StatusPushBody) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeStatusPushBody performs a merge with any union data inside the StatusPushJSONBody, using the provided StatusPushBody
+func (t *StatusPushJSONBody) MergeStatusPushBody(v StatusPushBody) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsAlertmanagerWebhookBody returns the union data inside the StatusPushJSONBody as a AlertmanagerWebhookBody
+func (t StatusPushJSONBody) AsAlertmanagerWebhookBody() (AlertmanagerWebhookBody, error) {
+	var body AlertmanagerWebhookBody
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAlertmanagerWebhookBody overwrites any union data inside the StatusPushJSONBody as the provided AlertmanagerWebhookBody
+func (t *StatusPushJSONBody) FromAlertmanagerWebhookBody(v AlertmanagerWebhookBody) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAlertmanagerWebhookBody performs a merge with any union data inside the StatusPushJSONBody, using the provided AlertmanagerWebhookBody
+func (t *StatusPushJSONBody) MergeAlertmanagerWebhookBody(v AlertmanagerWebhookBody) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsGrafanaWebhookBody returns the union data inside the StatusPushJSONBody as a GrafanaWebhookBody
+func (t StatusPushJSONBody) AsGrafanaWebhookBody() (GrafanaWebhookBody, error) {
+	var body GrafanaWebhookBody
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromGrafanaWebhookBody overwrites any union data inside the StatusPushJSONBody as the provided GrafanaWebhookBody
+func (t *StatusPushJSONBody) FromGrafanaWebhookBody(v GrafanaWebhookBody) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeGrafanaWebhookBody performs a merge with any union data inside the StatusPushJSONBody, using the provided GrafanaWebhookBody
+func (t *StatusPushJSONBody) MergeGrafanaWebhookBody(v GrafanaWebhookBody) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t StatusPushJSONBody) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *StatusPushJSONBody) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }
@@ -22572,6 +23453,85 @@ type ClientInterface interface {
 	//
 	// Corresponds with GET /healthz (the `GetHealthz` operationId).
 	GetHealthz(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// StatusHeartbeat Send a heartbeat
+	//
+	// A beat of a `heartbeat` monitor: the host's job or cron calls this at least every
+	// `interval` seconds. `?fail=1` reports a failure instead (the job ran and failed). `GET` and
+	// `POST` do the same, so `curl -fsS <url>` from a crontab is enough; a body is ignored.
+	//
+	// The token is the credential: it is left out of the server's request logs, and at most 60
+	// calls a minute per token are taken (`429` with `Retry-After`). A token of a `push` monitor
+	// answers `409 monitor_kind`, an unknown or rotated one `404`. A paused monitor answers `200`
+	// and counts nothing.
+	//
+	// Corresponds with GET /ingress/heartbeat/{token} (the `StatusHeartbeat` operationId).
+	StatusHeartbeat(ctx context.Context, token StatusMonitorToken, params *StatusHeartbeatParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// StatusHeartbeatPost Send a heartbeat
+	//
+	// The same as `GET`.
+	//
+	// Corresponds with POST /ingress/heartbeat/{token} (the `StatusHeartbeatPost` operationId).
+	StatusHeartbeatPost(ctx context.Context, token StatusMonitorToken, params *StatusHeartbeatPostParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// StatusHeartbeatFail Report a failed run
+	//
+	// The same as `/ingress/heartbeat/{token}?fail=1`.
+	//
+	// Corresponds with GET /ingress/heartbeat/{token}/fail (the `StatusHeartbeatFail` operationId).
+	StatusHeartbeatFail(ctx context.Context, token StatusMonitorToken, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// StatusHeartbeatFailPost Report a failed run
+	//
+	// The same as `GET`.
+	//
+	// Corresponds with POST /ingress/heartbeat/{token}/fail (the `StatusHeartbeatFailPost` operationId).
+	StatusHeartbeatFailPost(ctx context.Context, token StatusMonitorToken, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// StatusPushWithBody Push a state
+	//
+	// The state of a `push` monitor, from the host's own monitoring. The body is one of, as it is:
+	//
+	// - `{"state": "major_outage", "message": "..."}`: `operational` is a success, `degraded`,
+	//   `partial_outage` and `major_outage` a failure that sets that state (the monitor's
+	//   `failure_state` is not used). `message` (at most 1,000 characters) is kept with the check.
+	// - An Alertmanager webhook body (`version` `4`, `status`, `alerts`): `firing` is a failure,
+	//   `resolved` a success. The message is the common `summary` or `description` annotation.
+	// - A Grafana alert webhook body, of Grafana Alerting (`status` `firing`/`resolved`) or of
+	//   legacy alerting (`state` `alerting` is a failure, `ok` a success; `no_data` and `paused`
+	//   change nothing).
+	//
+	// At most 1 MiB. The token is left out of request logs; at most 60 calls a minute per token
+	// (`429`). A token of a `heartbeat` monitor answers `409 monitor_kind`, an unknown one `404`, a
+	// body that is none of these `400`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /ingress/status/{token} (the `StatusPush` operationId).
+	StatusPushWithBody(ctx context.Context, token StatusMonitorToken, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// StatusPush Push a state
+	//
+	// The state of a `push` monitor, from the host's own monitoring. The body is one of, as it is:
+	//
+	// - `{"state": "major_outage", "message": "..."}`: `operational` is a success, `degraded`,
+	//   `partial_outage` and `major_outage` a failure that sets that state (the monitor's
+	//   `failure_state` is not used). `message` (at most 1,000 characters) is kept with the check.
+	// - An Alertmanager webhook body (`version` `4`, `status`, `alerts`): `firing` is a failure,
+	//   `resolved` a success. The message is the common `summary` or `description` annotation.
+	// - A Grafana alert webhook body, of Grafana Alerting (`status` `firing`/`resolved`) or of
+	//   legacy alerting (`state` `alerting` is a failure, `ok` a success; `no_data` and `paused`
+	//   change nothing).
+	//
+	// At most 1 MiB. The token is left out of request logs; at most 60 calls a minute per token
+	// (`429`). A token of a `heartbeat` monitor answers `409 monitor_kind`, an unknown one `404`, a
+	// body that is none of these `400`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /ingress/status/{token} (the `StatusPush` operationId).
+	StatusPush(ctx context.Context, token StatusMonitorToken, body StatusPushJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetReadyz Readiness
 	//
@@ -27501,6 +28461,129 @@ type ClientInterface interface {
 	// Corresponds with PATCH /v1/status-pages/{pageId}/incidents/{incidentId}/updates/{updateId} (the `EditStatusIncidentUpdate` operationId).
 	EditStatusIncidentUpdate(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, updateId StatusUpdateId, params *EditStatusIncidentUpdateParams, body EditStatusIncidentUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListStatusMonitors List a page's monitors
+	//
+	// Oldest first. Tokens are never shown again after they are made; `token_prefix` names one.
+	//
+	// Scope: `status:read`.
+	//
+	// Corresponds with GET /v1/status-pages/{pageId}/monitors (the `ListStatusMonitors` operationId).
+	ListStatusMonitors(ctx context.Context, pageId StatusPageId, params *ListStatusMonitorsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateStatusMonitorWithBody Create a monitor
+	//
+	// A monitor that sets `component_id`'s state from outside a member's hand:
+	//
+	// - `heartbeat`: the host's job calls `POST` or `GET /ingress/heartbeat/{token}` at least every
+	//   `interval` seconds; a beat missing for `interval` plus `grace` seconds is a failure, and
+	//   `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
+	// - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
+	//   `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+	//
+	// The monitor fails after `failure_threshold` failures in a row and recovers after
+	// `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+	// `failure_state`, never over a state a member set later than the monitor's last change, and
+	// opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
+	// it opened and puts the component back. The answer carries `token` and `url` once; only a
+	// hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
+	// unset, `403 status_monitor_limit`).
+	//
+	// Owners, admins and API keys. Scope: `status:manage`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/status-pages/{pageId}/monitors (the `CreateStatusMonitor` operationId).
+	CreateStatusMonitorWithBody(ctx context.Context, pageId StatusPageId, params *CreateStatusMonitorParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateStatusMonitor Create a monitor
+	//
+	// A monitor that sets `component_id`'s state from outside a member's hand:
+	//
+	// - `heartbeat`: the host's job calls `POST` or `GET /ingress/heartbeat/{token}` at least every
+	//   `interval` seconds; a beat missing for `interval` plus `grace` seconds is a failure, and
+	//   `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
+	// - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
+	//   `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+	//
+	// The monitor fails after `failure_threshold` failures in a row and recovers after
+	// `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+	// `failure_state`, never over a state a member set later than the monitor's last change, and
+	// opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
+	// it opened and puts the component back. The answer carries `token` and `url` once; only a
+	// hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
+	// unset, `403 status_monitor_limit`).
+	//
+	// Owners, admins and API keys. Scope: `status:manage`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/status-pages/{pageId}/monitors (the `CreateStatusMonitor` operationId).
+	CreateStatusMonitor(ctx context.Context, pageId StatusPageId, params *CreateStatusMonitorParams, body CreateStatusMonitorJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteStatusMonitor Delete a monitor
+	//
+	// With its checks. A component it set goes back to `operational` unless something else holds
+	// it; an incident it opened stays.
+	//
+	// Owners, admins and API keys. Scope: `status:manage`.
+	//
+	// Corresponds with DELETE /v1/status-pages/{pageId}/monitors/{monitorId} (the `DeleteStatusMonitor` operationId).
+	DeleteStatusMonitor(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *DeleteStatusMonitorParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetStatusMonitor A monitor
+	//
+	// Scope: `status:read`.
+	//
+	// Corresponds with GET /v1/status-pages/{pageId}/monitors/{monitorId} (the `GetStatusMonitor` operationId).
+	GetStatusMonitor(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *GetStatusMonitorParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateStatusMonitorWithBody Update a monitor
+	//
+	// Changes the given fields. Pausing stops results from counting and lets go of the component
+	// (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
+	// starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
+	// later. A new `interval` or `grace` moves the next beat's due time.
+	//
+	// Owners, admins and API keys. Scope: `status:manage`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/status-pages/{pageId}/monitors/{monitorId} (the `UpdateStatusMonitor` operationId).
+	UpdateStatusMonitorWithBody(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *UpdateStatusMonitorParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateStatusMonitor Update a monitor
+	//
+	// Changes the given fields. Pausing stops results from counting and lets go of the component
+	// (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
+	// starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
+	// later. A new `interval` or `grace` moves the next beat's due time.
+	//
+	// Owners, admins and API keys. Scope: `status:manage`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/status-pages/{pageId}/monitors/{monitorId} (the `UpdateStatusMonitor` operationId).
+	UpdateStatusMonitor(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *UpdateStatusMonitorParams, body UpdateStatusMonitorJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListStatusMonitorChecks List a monitor's checks
+	//
+	// Every beat, missed beat and pushed state, newest first, kept 30 days. Results that arrive
+	// while the monitor is paused are not kept.
+	//
+	// Scope: `status:read`.
+	//
+	// Corresponds with GET /v1/status-pages/{pageId}/monitors/{monitorId}/checks (the `ListStatusMonitorChecks` operationId).
+	ListStatusMonitorChecks(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *ListStatusMonitorChecksParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RotateStatusMonitorToken Rotate a monitor's token
+	//
+	// Makes a new token and drops the old one at once: calls with the old token answer `404`.
+	//
+	// Owners, admins and API keys. Scope: `status:manage`.
+	//
+	// Corresponds with POST /v1/status-pages/{pageId}/monitors/{monitorId}/token (the `RotateStatusMonitorToken` operationId).
+	RotateStatusMonitorToken(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *RotateStatusMonitorTokenParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// PreviewStatusPage Preview a status page
 	//
 	// The page as visitors see it at its status URL, also while it is unpublished, drafts left out. It
@@ -29381,6 +30464,145 @@ func (c *Client) SubscribeClient(ctx context.Context, listId ListId, params *Sub
 // Corresponds with GET /healthz (the `GetHealthz` operationId).
 func (c *Client) GetHealthz(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetHealthzRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// StatusHeartbeat Send a heartbeat
+//
+// A beat of a `heartbeat` monitor: the host's job or cron calls this at least every
+// `interval` seconds. `?fail=1` reports a failure instead (the job ran and failed). `GET` and
+// `POST` do the same, so `curl -fsS <url>` from a crontab is enough; a body is ignored.
+//
+// The token is the credential: it is left out of the server's request logs, and at most 60
+// calls a minute per token are taken (`429` with `Retry-After`). A token of a `push` monitor
+// answers `409 monitor_kind`, an unknown or rotated one `404`. A paused monitor answers `200`
+// and counts nothing.
+//
+// Corresponds with GET /ingress/heartbeat/{token} (the `StatusHeartbeat` operationId).
+func (c *Client) StatusHeartbeat(ctx context.Context, token StatusMonitorToken, params *StatusHeartbeatParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewStatusHeartbeatRequest(c.Server, token, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// StatusHeartbeatPost Send a heartbeat
+//
+// The same as `GET`.
+//
+// Corresponds with POST /ingress/heartbeat/{token} (the `StatusHeartbeatPost` operationId).
+func (c *Client) StatusHeartbeatPost(ctx context.Context, token StatusMonitorToken, params *StatusHeartbeatPostParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewStatusHeartbeatPostRequest(c.Server, token, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// StatusHeartbeatFail Report a failed run
+//
+// The same as `/ingress/heartbeat/{token}?fail=1`.
+//
+// Corresponds with GET /ingress/heartbeat/{token}/fail (the `StatusHeartbeatFail` operationId).
+func (c *Client) StatusHeartbeatFail(ctx context.Context, token StatusMonitorToken, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewStatusHeartbeatFailRequest(c.Server, token)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// StatusHeartbeatFailPost Report a failed run
+//
+// The same as `GET`.
+//
+// Corresponds with POST /ingress/heartbeat/{token}/fail (the `StatusHeartbeatFailPost` operationId).
+func (c *Client) StatusHeartbeatFailPost(ctx context.Context, token StatusMonitorToken, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewStatusHeartbeatFailPostRequest(c.Server, token)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// StatusPushWithBody Push a state
+//
+// The state of a `push` monitor, from the host's own monitoring. The body is one of, as it is:
+//
+//   - `{"state": "major_outage", "message": "..."}`: `operational` is a success, `degraded`,
+//     `partial_outage` and `major_outage` a failure that sets that state (the monitor's
+//     `failure_state` is not used). `message` (at most 1,000 characters) is kept with the check.
+//   - An Alertmanager webhook body (`version` `4`, `status`, `alerts`): `firing` is a failure,
+//     `resolved` a success. The message is the common `summary` or `description` annotation.
+//   - A Grafana alert webhook body, of Grafana Alerting (`status` `firing`/`resolved`) or of
+//     legacy alerting (`state` `alerting` is a failure, `ok` a success; `no_data` and `paused`
+//     change nothing).
+//
+// At most 1 MiB. The token is left out of request logs; at most 60 calls a minute per token
+// (`429`). A token of a `heartbeat` monitor answers `409 monitor_kind`, an unknown one `404`, a
+// body that is none of these `400`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /ingress/status/{token} (the `StatusPush` operationId).
+func (c *Client) StatusPushWithBody(ctx context.Context, token StatusMonitorToken, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewStatusPushRequestWithBody(c.Server, token, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// StatusPush Push a state
+//
+// The state of a `push` monitor, from the host's own monitoring. The body is one of, as it is:
+//
+//   - `{"state": "major_outage", "message": "..."}`: `operational` is a success, `degraded`,
+//     `partial_outage` and `major_outage` a failure that sets that state (the monitor's
+//     `failure_state` is not used). `message` (at most 1,000 characters) is kept with the check.
+//   - An Alertmanager webhook body (`version` `4`, `status`, `alerts`): `firing` is a failure,
+//     `resolved` a success. The message is the common `summary` or `description` annotation.
+//   - A Grafana alert webhook body, of Grafana Alerting (`status` `firing`/`resolved`) or of
+//     legacy alerting (`state` `alerting` is a failure, `ok` a success; `no_data` and `paused`
+//     change nothing).
+//
+// At most 1 MiB. The token is left out of request logs; at most 60 calls a minute per token
+// (`429`). A token of a `heartbeat` monitor answers `409 monitor_kind`, an unknown one `404`, a
+// body that is none of these `400`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /ingress/status/{token} (the `StatusPush` operationId).
+func (c *Client) StatusPush(ctx context.Context, token StatusMonitorToken, body StatusPushJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewStatusPushRequest(c.Server, token, body)
 	if err != nil {
 		return nil, err
 	}
@@ -38039,6 +39261,219 @@ func (c *Client) EditStatusIncidentUpdate(ctx context.Context, pageId StatusPage
 	return c.Client.Do(req)
 }
 
+// ListStatusMonitors List a page's monitors
+//
+// Oldest first. Tokens are never shown again after they are made; `token_prefix` names one.
+//
+// Scope: `status:read`.
+//
+// Corresponds with GET /v1/status-pages/{pageId}/monitors (the `ListStatusMonitors` operationId).
+func (c *Client) ListStatusMonitors(ctx context.Context, pageId StatusPageId, params *ListStatusMonitorsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListStatusMonitorsRequest(c.Server, pageId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateStatusMonitorWithBody Create a monitor
+//
+// A monitor that sets `component_id`'s state from outside a member's hand:
+//
+//   - `heartbeat`: the host's job calls `POST` or `GET /ingress/heartbeat/{token}` at least every
+//     `interval` seconds; a beat missing for `interval` plus `grace` seconds is a failure, and
+//     `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
+//   - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
+//     `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+//
+// The monitor fails after `failure_threshold` failures in a row and recovers after
+// `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+// `failure_state`, never over a state a member set later than the monitor's last change, and
+// opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
+// it opened and puts the component back. The answer carries `token` and `url` once; only a
+// hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
+// unset, `403 status_monitor_limit`).
+//
+// Owners, admins and API keys. Scope: `status:manage`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/status-pages/{pageId}/monitors (the `CreateStatusMonitor` operationId).
+func (c *Client) CreateStatusMonitorWithBody(ctx context.Context, pageId StatusPageId, params *CreateStatusMonitorParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateStatusMonitorRequestWithBody(c.Server, pageId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateStatusMonitor Create a monitor
+//
+// A monitor that sets `component_id`'s state from outside a member's hand:
+//
+//   - `heartbeat`: the host's job calls `POST` or `GET /ingress/heartbeat/{token}` at least every
+//     `interval` seconds; a beat missing for `interval` plus `grace` seconds is a failure, and
+//     `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
+//   - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
+//     `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+//
+// The monitor fails after `failure_threshold` failures in a row and recovers after
+// `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+// `failure_state`, never over a state a member set later than the monitor's last change, and
+// opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
+// it opened and puts the component back. The answer carries `token` and `url` once; only a
+// hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
+// unset, `403 status_monitor_limit`).
+//
+// Owners, admins and API keys. Scope: `status:manage`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/status-pages/{pageId}/monitors (the `CreateStatusMonitor` operationId).
+func (c *Client) CreateStatusMonitor(ctx context.Context, pageId StatusPageId, params *CreateStatusMonitorParams, body CreateStatusMonitorJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateStatusMonitorRequest(c.Server, pageId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteStatusMonitor Delete a monitor
+//
+// With its checks. A component it set goes back to `operational` unless something else holds
+// it; an incident it opened stays.
+//
+// Owners, admins and API keys. Scope: `status:manage`.
+//
+// Corresponds with DELETE /v1/status-pages/{pageId}/monitors/{monitorId} (the `DeleteStatusMonitor` operationId).
+func (c *Client) DeleteStatusMonitor(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *DeleteStatusMonitorParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteStatusMonitorRequest(c.Server, pageId, monitorId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetStatusMonitor A monitor
+//
+// Scope: `status:read`.
+//
+// Corresponds with GET /v1/status-pages/{pageId}/monitors/{monitorId} (the `GetStatusMonitor` operationId).
+func (c *Client) GetStatusMonitor(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *GetStatusMonitorParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetStatusMonitorRequest(c.Server, pageId, monitorId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateStatusMonitorWithBody Update a monitor
+//
+// Changes the given fields. Pausing stops results from counting and lets go of the component
+// (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
+// starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
+// later. A new `interval` or `grace` moves the next beat's due time.
+//
+// Owners, admins and API keys. Scope: `status:manage`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/status-pages/{pageId}/monitors/{monitorId} (the `UpdateStatusMonitor` operationId).
+func (c *Client) UpdateStatusMonitorWithBody(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *UpdateStatusMonitorParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateStatusMonitorRequestWithBody(c.Server, pageId, monitorId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateStatusMonitor Update a monitor
+//
+// Changes the given fields. Pausing stops results from counting and lets go of the component
+// (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
+// starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
+// later. A new `interval` or `grace` moves the next beat's due time.
+//
+// Owners, admins and API keys. Scope: `status:manage`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/status-pages/{pageId}/monitors/{monitorId} (the `UpdateStatusMonitor` operationId).
+func (c *Client) UpdateStatusMonitor(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *UpdateStatusMonitorParams, body UpdateStatusMonitorJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateStatusMonitorRequest(c.Server, pageId, monitorId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListStatusMonitorChecks List a monitor's checks
+//
+// Every beat, missed beat and pushed state, newest first, kept 30 days. Results that arrive
+// while the monitor is paused are not kept.
+//
+// Scope: `status:read`.
+//
+// Corresponds with GET /v1/status-pages/{pageId}/monitors/{monitorId}/checks (the `ListStatusMonitorChecks` operationId).
+func (c *Client) ListStatusMonitorChecks(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *ListStatusMonitorChecksParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListStatusMonitorChecksRequest(c.Server, pageId, monitorId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RotateStatusMonitorToken Rotate a monitor's token
+//
+// Makes a new token and drops the old one at once: calls with the old token answer `404`.
+//
+// Owners, admins and API keys. Scope: `status:manage`.
+//
+// Corresponds with POST /v1/status-pages/{pageId}/monitors/{monitorId}/token (the `RotateStatusMonitorToken` operationId).
+func (c *Client) RotateStatusMonitorToken(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *RotateStatusMonitorTokenParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRotateStatusMonitorTokenRequest(c.Server, pageId, monitorId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // PreviewStatusPage Preview a status page
 //
 // The page as visitors see it at its status URL, also while it is unpublished, drafts left out. It
@@ -40420,6 +41855,243 @@ func NewGetHealthzRequest(server string) (*http.Request, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	return req, nil
+}
+
+// NewStatusHeartbeatRequest constructs an http.Request for the StatusHeartbeat method
+func NewStatusHeartbeatRequest(server string, token StatusMonitorToken, params *StatusHeartbeatParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "token", token, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/ingress/heartbeat/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Fail != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "fail", *params.Fail, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewStatusHeartbeatPostRequest constructs an http.Request for the StatusHeartbeatPost method
+func NewStatusHeartbeatPostRequest(server string, token StatusMonitorToken, params *StatusHeartbeatPostParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "token", token, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/ingress/heartbeat/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Fail != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "fail", *params.Fail, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewStatusHeartbeatFailRequest constructs an http.Request for the StatusHeartbeatFail method
+func NewStatusHeartbeatFailRequest(server string, token StatusMonitorToken) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "token", token, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/ingress/heartbeat/%s/fail", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewStatusHeartbeatFailPostRequest constructs an http.Request for the StatusHeartbeatFailPost method
+func NewStatusHeartbeatFailPostRequest(server string, token StatusMonitorToken) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "token", token, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/ingress/heartbeat/%s/fail", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewStatusPushRequest calls the generic StatusPush builder with application/json body
+func NewStatusPushRequest(server string, token StatusMonitorToken, body StatusPushJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewStatusPushRequestWithBody(server, token, "application/json", bodyReader)
+}
+
+// NewStatusPushRequestWithBody constructs an http.Request for the StatusPush method, with any body, and a specified content type
+func NewStatusPushRequestWithBody(server string, token StatusMonitorToken, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "token", token, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/ingress/status/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -57638,6 +59310,460 @@ func NewEditStatusIncidentUpdateRequestWithBody(server string, pageId StatusPage
 	return req, nil
 }
 
+// NewListStatusMonitorsRequest constructs an http.Request for the ListStatusMonitors method
+func NewListStatusMonitorsRequest(server string, pageId StatusPageId, params *ListStatusMonitorsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/status-pages/%s/monitors", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateStatusMonitorRequest calls the generic CreateStatusMonitor builder with application/json body
+func NewCreateStatusMonitorRequest(server string, pageId StatusPageId, params *CreateStatusMonitorParams, body CreateStatusMonitorJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateStatusMonitorRequestWithBody(server, pageId, params, "application/json", bodyReader)
+}
+
+// NewCreateStatusMonitorRequestWithBody constructs an http.Request for the CreateStatusMonitor method, with any body, and a specified content type
+func NewCreateStatusMonitorRequestWithBody(server string, pageId StatusPageId, params *CreateStatusMonitorParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/status-pages/%s/monitors", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteStatusMonitorRequest constructs an http.Request for the DeleteStatusMonitor method
+func NewDeleteStatusMonitorRequest(server string, pageId StatusPageId, monitorId StatusMonitorId, params *DeleteStatusMonitorParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "monitorId", monitorId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/status-pages/%s/monitors/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetStatusMonitorRequest constructs an http.Request for the GetStatusMonitor method
+func NewGetStatusMonitorRequest(server string, pageId StatusPageId, monitorId StatusMonitorId, params *GetStatusMonitorParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "monitorId", monitorId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/status-pages/%s/monitors/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateStatusMonitorRequest calls the generic UpdateStatusMonitor builder with application/json body
+func NewUpdateStatusMonitorRequest(server string, pageId StatusPageId, monitorId StatusMonitorId, params *UpdateStatusMonitorParams, body UpdateStatusMonitorJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateStatusMonitorRequestWithBody(server, pageId, monitorId, params, "application/json", bodyReader)
+}
+
+// NewUpdateStatusMonitorRequestWithBody constructs an http.Request for the UpdateStatusMonitor method, with any body, and a specified content type
+func NewUpdateStatusMonitorRequestWithBody(server string, pageId StatusPageId, monitorId StatusMonitorId, params *UpdateStatusMonitorParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "monitorId", monitorId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/status-pages/%s/monitors/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListStatusMonitorChecksRequest constructs an http.Request for the ListStatusMonitorChecks method
+func NewListStatusMonitorChecksRequest(server string, pageId StatusPageId, monitorId StatusMonitorId, params *ListStatusMonitorChecksParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "monitorId", monitorId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/status-pages/%s/monitors/%s/checks", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewRotateStatusMonitorTokenRequest constructs an http.Request for the RotateStatusMonitorToken method
+func NewRotateStatusMonitorTokenRequest(server string, pageId StatusPageId, monitorId StatusMonitorId, params *RotateStatusMonitorTokenParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "monitorId", monitorId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/status-pages/%s/monitors/%s/token", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewPreviewStatusPageRequest constructs an http.Request for the PreviewStatusPage method
 func NewPreviewStatusPageRequest(server string, pageId StatusPageId, params *PreviewStatusPageParams) (*http.Request, error) {
 	var err error
@@ -59751,6 +61877,93 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with GET /healthz (the `GetHealthz` operationId).
 	GetHealthzWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetHealthzResponse, error)
+
+	// StatusHeartbeatWithResponse Send a heartbeat
+	//
+	// A beat of a `heartbeat` monitor: the host's job or cron calls this at least every
+	// `interval` seconds. `?fail=1` reports a failure instead (the job ran and failed). `GET` and
+	// `POST` do the same, so `curl -fsS <url>` from a crontab is enough; a body is ignored.
+	//
+	// The token is the credential: it is left out of the server's request logs, and at most 60
+	// calls a minute per token are taken (`429` with `Retry-After`). A token of a `push` monitor
+	// answers `409 monitor_kind`, an unknown or rotated one `404`. A paused monitor answers `200`
+	// and counts nothing.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /ingress/heartbeat/{token} (the `StatusHeartbeat` operationId).
+	StatusHeartbeatWithResponse(ctx context.Context, token StatusMonitorToken, params *StatusHeartbeatParams, reqEditors ...RequestEditorFn) (*StatusHeartbeatResponse, error)
+
+	// StatusHeartbeatPostWithResponse Send a heartbeat
+	//
+	// The same as `GET`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /ingress/heartbeat/{token} (the `StatusHeartbeatPost` operationId).
+	StatusHeartbeatPostWithResponse(ctx context.Context, token StatusMonitorToken, params *StatusHeartbeatPostParams, reqEditors ...RequestEditorFn) (*StatusHeartbeatPostResponse, error)
+
+	// StatusHeartbeatFailWithResponse Report a failed run
+	//
+	// The same as `/ingress/heartbeat/{token}?fail=1`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /ingress/heartbeat/{token}/fail (the `StatusHeartbeatFail` operationId).
+	StatusHeartbeatFailWithResponse(ctx context.Context, token StatusMonitorToken, reqEditors ...RequestEditorFn) (*StatusHeartbeatFailResponse, error)
+
+	// StatusHeartbeatFailPostWithResponse Report a failed run
+	//
+	// The same as `GET`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /ingress/heartbeat/{token}/fail (the `StatusHeartbeatFailPost` operationId).
+	StatusHeartbeatFailPostWithResponse(ctx context.Context, token StatusMonitorToken, reqEditors ...RequestEditorFn) (*StatusHeartbeatFailPostResponse, error)
+
+	// StatusPushWithBodyWithResponse Push a state
+	//
+	// The state of a `push` monitor, from the host's own monitoring. The body is one of, as it is:
+	//
+	// - `{"state": "major_outage", "message": "..."}`: `operational` is a success, `degraded`,
+	//   `partial_outage` and `major_outage` a failure that sets that state (the monitor's
+	//   `failure_state` is not used). `message` (at most 1,000 characters) is kept with the check.
+	// - An Alertmanager webhook body (`version` `4`, `status`, `alerts`): `firing` is a failure,
+	//   `resolved` a success. The message is the common `summary` or `description` annotation.
+	// - A Grafana alert webhook body, of Grafana Alerting (`status` `firing`/`resolved`) or of
+	//   legacy alerting (`state` `alerting` is a failure, `ok` a success; `no_data` and `paused`
+	//   change nothing).
+	//
+	// At most 1 MiB. The token is left out of request logs; at most 60 calls a minute per token
+	// (`429`). A token of a `heartbeat` monitor answers `409 monitor_kind`, an unknown one `404`, a
+	// body that is none of these `400`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /ingress/status/{token} (the `StatusPush` operationId).
+	StatusPushWithBodyWithResponse(ctx context.Context, token StatusMonitorToken, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*StatusPushResponse, error)
+
+	// StatusPushWithResponse Push a state
+	//
+	// The state of a `push` monitor, from the host's own monitoring. The body is one of, as it is:
+	//
+	// - `{"state": "major_outage", "message": "..."}`: `operational` is a success, `degraded`,
+	//   `partial_outage` and `major_outage` a failure that sets that state (the monitor's
+	//   `failure_state` is not used). `message` (at most 1,000 characters) is kept with the check.
+	// - An Alertmanager webhook body (`version` `4`, `status`, `alerts`): `firing` is a failure,
+	//   `resolved` a success. The message is the common `summary` or `description` annotation.
+	// - A Grafana alert webhook body, of Grafana Alerting (`status` `firing`/`resolved`) or of
+	//   legacy alerting (`state` `alerting` is a failure, `ok` a success; `no_data` and `paused`
+	//   change nothing).
+	//
+	// At most 1 MiB. The token is left out of request logs; at most 60 calls a minute per token
+	// (`429`). A token of a `heartbeat` monitor answers `409 monitor_kind`, an unknown one `404`, a
+	// body that is none of these `400`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /ingress/status/{token} (the `StatusPush` operationId).
+	StatusPushWithResponse(ctx context.Context, token StatusMonitorToken, body StatusPushJSONRequestBody, reqEditors ...RequestEditorFn) (*StatusPushResponse, error)
 
 	// GetReadyzWithResponse Readiness
 	//
@@ -65034,6 +67247,139 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /v1/status-pages/{pageId}/incidents/{incidentId}/updates/{updateId} (the `EditStatusIncidentUpdate` operationId).
 	EditStatusIncidentUpdateWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, updateId StatusUpdateId, params *EditStatusIncidentUpdateParams, body EditStatusIncidentUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*EditStatusIncidentUpdateResponse, error)
 
+	// ListStatusMonitorsWithResponse List a page's monitors
+	//
+	// Oldest first. Tokens are never shown again after they are made; `token_prefix` names one.
+	//
+	// Scope: `status:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/status-pages/{pageId}/monitors (the `ListStatusMonitors` operationId).
+	ListStatusMonitorsWithResponse(ctx context.Context, pageId StatusPageId, params *ListStatusMonitorsParams, reqEditors ...RequestEditorFn) (*ListStatusMonitorsResponse, error)
+
+	// CreateStatusMonitorWithBodyWithResponse Create a monitor
+	//
+	// A monitor that sets `component_id`'s state from outside a member's hand:
+	//
+	// - `heartbeat`: the host's job calls `POST` or `GET /ingress/heartbeat/{token}` at least every
+	//   `interval` seconds; a beat missing for `interval` plus `grace` seconds is a failure, and
+	//   `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
+	// - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
+	//   `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+	//
+	// The monitor fails after `failure_threshold` failures in a row and recovers after
+	// `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+	// `failure_state`, never over a state a member set later than the monitor's last change, and
+	// opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
+	// it opened and puts the component back. The answer carries `token` and `url` once; only a
+	// hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
+	// unset, `403 status_monitor_limit`).
+	//
+	// Owners, admins and API keys. Scope: `status:manage`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/status-pages/{pageId}/monitors (the `CreateStatusMonitor` operationId).
+	CreateStatusMonitorWithBodyWithResponse(ctx context.Context, pageId StatusPageId, params *CreateStatusMonitorParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateStatusMonitorResponse, error)
+
+	// CreateStatusMonitorWithResponse Create a monitor
+	//
+	// A monitor that sets `component_id`'s state from outside a member's hand:
+	//
+	// - `heartbeat`: the host's job calls `POST` or `GET /ingress/heartbeat/{token}` at least every
+	//   `interval` seconds; a beat missing for `interval` plus `grace` seconds is a failure, and
+	//   `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
+	// - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
+	//   `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+	//
+	// The monitor fails after `failure_threshold` failures in a row and recovers after
+	// `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+	// `failure_state`, never over a state a member set later than the monitor's last change, and
+	// opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
+	// it opened and puts the component back. The answer carries `token` and `url` once; only a
+	// hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
+	// unset, `403 status_monitor_limit`).
+	//
+	// Owners, admins and API keys. Scope: `status:manage`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/status-pages/{pageId}/monitors (the `CreateStatusMonitor` operationId).
+	CreateStatusMonitorWithResponse(ctx context.Context, pageId StatusPageId, params *CreateStatusMonitorParams, body CreateStatusMonitorJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateStatusMonitorResponse, error)
+
+	// DeleteStatusMonitorWithResponse Delete a monitor
+	//
+	// With its checks. A component it set goes back to `operational` unless something else holds
+	// it; an incident it opened stays.
+	//
+	// Owners, admins and API keys. Scope: `status:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/status-pages/{pageId}/monitors/{monitorId} (the `DeleteStatusMonitor` operationId).
+	DeleteStatusMonitorWithResponse(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *DeleteStatusMonitorParams, reqEditors ...RequestEditorFn) (*DeleteStatusMonitorResponse, error)
+
+	// GetStatusMonitorWithResponse A monitor
+	//
+	// Scope: `status:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/status-pages/{pageId}/monitors/{monitorId} (the `GetStatusMonitor` operationId).
+	GetStatusMonitorWithResponse(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *GetStatusMonitorParams, reqEditors ...RequestEditorFn) (*GetStatusMonitorResponse, error)
+
+	// UpdateStatusMonitorWithBodyWithResponse Update a monitor
+	//
+	// Changes the given fields. Pausing stops results from counting and lets go of the component
+	// (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
+	// starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
+	// later. A new `interval` or `grace` moves the next beat's due time.
+	//
+	// Owners, admins and API keys. Scope: `status:manage`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/status-pages/{pageId}/monitors/{monitorId} (the `UpdateStatusMonitor` operationId).
+	UpdateStatusMonitorWithBodyWithResponse(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *UpdateStatusMonitorParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateStatusMonitorResponse, error)
+
+	// UpdateStatusMonitorWithResponse Update a monitor
+	//
+	// Changes the given fields. Pausing stops results from counting and lets go of the component
+	// (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
+	// starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
+	// later. A new `interval` or `grace` moves the next beat's due time.
+	//
+	// Owners, admins and API keys. Scope: `status:manage`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/status-pages/{pageId}/monitors/{monitorId} (the `UpdateStatusMonitor` operationId).
+	UpdateStatusMonitorWithResponse(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *UpdateStatusMonitorParams, body UpdateStatusMonitorJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateStatusMonitorResponse, error)
+
+	// ListStatusMonitorChecksWithResponse List a monitor's checks
+	//
+	// Every beat, missed beat and pushed state, newest first, kept 30 days. Results that arrive
+	// while the monitor is paused are not kept.
+	//
+	// Scope: `status:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/status-pages/{pageId}/monitors/{monitorId}/checks (the `ListStatusMonitorChecks` operationId).
+	ListStatusMonitorChecksWithResponse(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *ListStatusMonitorChecksParams, reqEditors ...RequestEditorFn) (*ListStatusMonitorChecksResponse, error)
+
+	// RotateStatusMonitorTokenWithResponse Rotate a monitor's token
+	//
+	// Makes a new token and drops the old one at once: calls with the old token answer `404`.
+	//
+	// Owners, admins and API keys. Scope: `status:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/status-pages/{pageId}/monitors/{monitorId}/token (the `RotateStatusMonitorToken` operationId).
+	RotateStatusMonitorTokenWithResponse(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *RotateStatusMonitorTokenParams, reqEditors ...RequestEditorFn) (*RotateStatusMonitorTokenResponse, error)
+
 	// PreviewStatusPageWithResponse Preview a status page
 	//
 	// The page as visitors see it at its status URL, also while it is unpublished, drafts left out. It
@@ -68087,6 +70433,330 @@ func (r GetHealthzResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r GetHealthzResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type StatusHeartbeatResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StatusIngressResult
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r StatusHeartbeatResponse) GetJSON200() *StatusIngressResult {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r StatusHeartbeatResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r StatusHeartbeatResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r StatusHeartbeatResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r StatusHeartbeatResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r StatusHeartbeatResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r StatusHeartbeatResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r StatusHeartbeatResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type StatusHeartbeatPostResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StatusIngressResult
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r StatusHeartbeatPostResponse) GetJSON200() *StatusIngressResult {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r StatusHeartbeatPostResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r StatusHeartbeatPostResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r StatusHeartbeatPostResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r StatusHeartbeatPostResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r StatusHeartbeatPostResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r StatusHeartbeatPostResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r StatusHeartbeatPostResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type StatusHeartbeatFailResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StatusIngressResult
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r StatusHeartbeatFailResponse) GetJSON200() *StatusIngressResult {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r StatusHeartbeatFailResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r StatusHeartbeatFailResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r StatusHeartbeatFailResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r StatusHeartbeatFailResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r StatusHeartbeatFailResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r StatusHeartbeatFailResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r StatusHeartbeatFailResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type StatusHeartbeatFailPostResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StatusIngressResult
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r StatusHeartbeatFailPostResponse) GetJSON200() *StatusIngressResult {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r StatusHeartbeatFailPostResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r StatusHeartbeatFailPostResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r StatusHeartbeatFailPostResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r StatusHeartbeatFailPostResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r StatusHeartbeatFailPostResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r StatusHeartbeatFailPostResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r StatusHeartbeatFailPostResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type StatusPushResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StatusIngressResult
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON413 the response for an HTTP 413 `application/problem+json` response
+	ApplicationproblemJSON413 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r StatusPushResponse) GetJSON200() *StatusIngressResult {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r StatusPushResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r StatusPushResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r StatusPushResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON413 returns the response for an HTTP 413 `application/problem+json` response
+func (r StatusPushResponse) GetApplicationproblemJSON413() *Problem {
+	return r.ApplicationproblemJSON413
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r StatusPushResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r StatusPushResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r StatusPushResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r StatusPushResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r StatusPushResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -86369,6 +89039,454 @@ func (r EditStatusIncidentUpdateResponse) ContentType() string {
 	return ""
 }
 
+type ListStatusMonitorsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StatusMonitorList
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListStatusMonitorsResponse) GetJSON200() *StatusMonitorList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListStatusMonitorsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListStatusMonitorsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListStatusMonitorsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListStatusMonitorsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListStatusMonitorsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListStatusMonitorsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListStatusMonitorsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateStatusMonitorResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *StatusMonitorWithToken
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateStatusMonitorResponse) GetJSON201() *StatusMonitorWithToken {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateStatusMonitorResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateStatusMonitorResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateStatusMonitorResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateStatusMonitorResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateStatusMonitorResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateStatusMonitorResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateStatusMonitorResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateStatusMonitorResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteStatusMonitorResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteStatusMonitorResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteStatusMonitorResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteStatusMonitorResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteStatusMonitorResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteStatusMonitorResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteStatusMonitorResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteStatusMonitorResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetStatusMonitorResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StatusMonitor
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetStatusMonitorResponse) GetJSON200() *StatusMonitor {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetStatusMonitorResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetStatusMonitorResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetStatusMonitorResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetStatusMonitorResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetStatusMonitorResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetStatusMonitorResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetStatusMonitorResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateStatusMonitorResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StatusMonitor
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateStatusMonitorResponse) GetJSON200() *StatusMonitor {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateStatusMonitorResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateStatusMonitorResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateStatusMonitorResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateStatusMonitorResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateStatusMonitorResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateStatusMonitorResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateStatusMonitorResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateStatusMonitorResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListStatusMonitorChecksResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StatusCheckList
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListStatusMonitorChecksResponse) GetJSON200() *StatusCheckList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListStatusMonitorChecksResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListStatusMonitorChecksResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListStatusMonitorChecksResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListStatusMonitorChecksResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListStatusMonitorChecksResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListStatusMonitorChecksResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListStatusMonitorChecksResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListStatusMonitorChecksResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type RotateStatusMonitorTokenResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StatusMonitorWithToken
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r RotateStatusMonitorTokenResponse) GetJSON200() *StatusMonitorWithToken {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r RotateStatusMonitorTokenResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r RotateStatusMonitorTokenResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r RotateStatusMonitorTokenResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r RotateStatusMonitorTokenResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r RotateStatusMonitorTokenResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RotateStatusMonitorTokenResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r RotateStatusMonitorTokenResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type PreviewStatusPageResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -88876,6 +91994,129 @@ func (c *ClientWithResponses) GetHealthzWithResponse(ctx context.Context, reqEdi
 		return nil, err
 	}
 	return ParseGetHealthzResponse(rsp)
+}
+
+// StatusHeartbeatWithResponse Send a heartbeat
+//
+// A beat of a `heartbeat` monitor: the host's job or cron calls this at least every
+// `interval` seconds. `?fail=1` reports a failure instead (the job ran and failed). `GET` and
+// `POST` do the same, so `curl -fsS <url>` from a crontab is enough; a body is ignored.
+//
+// The token is the credential: it is left out of the server's request logs, and at most 60
+// calls a minute per token are taken (`429` with `Retry-After`). A token of a `push` monitor
+// answers `409 monitor_kind`, an unknown or rotated one `404`. A paused monitor answers `200`
+// and counts nothing.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /ingress/heartbeat/{token} (the `StatusHeartbeat` operationId).
+func (c *ClientWithResponses) StatusHeartbeatWithResponse(ctx context.Context, token StatusMonitorToken, params *StatusHeartbeatParams, reqEditors ...RequestEditorFn) (*StatusHeartbeatResponse, error) {
+	rsp, err := c.StatusHeartbeat(ctx, token, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseStatusHeartbeatResponse(rsp)
+}
+
+// StatusHeartbeatPostWithResponse Send a heartbeat
+//
+// The same as `GET`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /ingress/heartbeat/{token} (the `StatusHeartbeatPost` operationId).
+func (c *ClientWithResponses) StatusHeartbeatPostWithResponse(ctx context.Context, token StatusMonitorToken, params *StatusHeartbeatPostParams, reqEditors ...RequestEditorFn) (*StatusHeartbeatPostResponse, error) {
+	rsp, err := c.StatusHeartbeatPost(ctx, token, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseStatusHeartbeatPostResponse(rsp)
+}
+
+// StatusHeartbeatFailWithResponse Report a failed run
+//
+// The same as `/ingress/heartbeat/{token}?fail=1`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /ingress/heartbeat/{token}/fail (the `StatusHeartbeatFail` operationId).
+func (c *ClientWithResponses) StatusHeartbeatFailWithResponse(ctx context.Context, token StatusMonitorToken, reqEditors ...RequestEditorFn) (*StatusHeartbeatFailResponse, error) {
+	rsp, err := c.StatusHeartbeatFail(ctx, token, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseStatusHeartbeatFailResponse(rsp)
+}
+
+// StatusHeartbeatFailPostWithResponse Report a failed run
+//
+// The same as `GET`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /ingress/heartbeat/{token}/fail (the `StatusHeartbeatFailPost` operationId).
+func (c *ClientWithResponses) StatusHeartbeatFailPostWithResponse(ctx context.Context, token StatusMonitorToken, reqEditors ...RequestEditorFn) (*StatusHeartbeatFailPostResponse, error) {
+	rsp, err := c.StatusHeartbeatFailPost(ctx, token, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseStatusHeartbeatFailPostResponse(rsp)
+}
+
+// StatusPushWithBodyWithResponse Push a state
+//
+// The state of a `push` monitor, from the host's own monitoring. The body is one of, as it is:
+//
+//   - `{"state": "major_outage", "message": "..."}`: `operational` is a success, `degraded`,
+//     `partial_outage` and `major_outage` a failure that sets that state (the monitor's
+//     `failure_state` is not used). `message` (at most 1,000 characters) is kept with the check.
+//   - An Alertmanager webhook body (`version` `4`, `status`, `alerts`): `firing` is a failure,
+//     `resolved` a success. The message is the common `summary` or `description` annotation.
+//   - A Grafana alert webhook body, of Grafana Alerting (`status` `firing`/`resolved`) or of
+//     legacy alerting (`state` `alerting` is a failure, `ok` a success; `no_data` and `paused`
+//     change nothing).
+//
+// At most 1 MiB. The token is left out of request logs; at most 60 calls a minute per token
+// (`429`). A token of a `heartbeat` monitor answers `409 monitor_kind`, an unknown one `404`, a
+// body that is none of these `400`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /ingress/status/{token} (the `StatusPush` operationId).
+func (c *ClientWithResponses) StatusPushWithBodyWithResponse(ctx context.Context, token StatusMonitorToken, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*StatusPushResponse, error) {
+	rsp, err := c.StatusPushWithBody(ctx, token, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseStatusPushResponse(rsp)
+}
+
+// StatusPushWithResponse Push a state
+//
+// The state of a `push` monitor, from the host's own monitoring. The body is one of, as it is:
+//
+//   - `{"state": "major_outage", "message": "..."}`: `operational` is a success, `degraded`,
+//     `partial_outage` and `major_outage` a failure that sets that state (the monitor's
+//     `failure_state` is not used). `message` (at most 1,000 characters) is kept with the check.
+//   - An Alertmanager webhook body (`version` `4`, `status`, `alerts`): `firing` is a failure,
+//     `resolved` a success. The message is the common `summary` or `description` annotation.
+//   - A Grafana alert webhook body, of Grafana Alerting (`status` `firing`/`resolved`) or of
+//     legacy alerting (`state` `alerting` is a failure, `ok` a success; `no_data` and `paused`
+//     change nothing).
+//
+// At most 1 MiB. The token is left out of request logs; at most 60 calls a minute per token
+// (`429`). A token of a `heartbeat` monitor answers `409 monitor_kind`, an unknown one `404`, a
+// body that is none of these `400`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /ingress/status/{token} (the `StatusPush` operationId).
+func (c *ClientWithResponses) StatusPushWithResponse(ctx context.Context, token StatusMonitorToken, body StatusPushJSONRequestBody, reqEditors ...RequestEditorFn) (*StatusPushResponse, error) {
+	rsp, err := c.StatusPush(ctx, token, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseStatusPushResponse(rsp)
 }
 
 // GetReadyzWithResponse Readiness
@@ -96392,6 +99633,193 @@ func (c *ClientWithResponses) EditStatusIncidentUpdateWithResponse(ctx context.C
 	return ParseEditStatusIncidentUpdateResponse(rsp)
 }
 
+// ListStatusMonitorsWithResponse List a page's monitors
+//
+// Oldest first. Tokens are never shown again after they are made; `token_prefix` names one.
+//
+// Scope: `status:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/status-pages/{pageId}/monitors (the `ListStatusMonitors` operationId).
+func (c *ClientWithResponses) ListStatusMonitorsWithResponse(ctx context.Context, pageId StatusPageId, params *ListStatusMonitorsParams, reqEditors ...RequestEditorFn) (*ListStatusMonitorsResponse, error) {
+	rsp, err := c.ListStatusMonitors(ctx, pageId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListStatusMonitorsResponse(rsp)
+}
+
+// CreateStatusMonitorWithBodyWithResponse Create a monitor
+//
+// A monitor that sets `component_id`'s state from outside a member's hand:
+//
+//   - `heartbeat`: the host's job calls `POST` or `GET /ingress/heartbeat/{token}` at least every
+//     `interval` seconds; a beat missing for `interval` plus `grace` seconds is a failure, and
+//     `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
+//   - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
+//     `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+//
+// The monitor fails after `failure_threshold` failures in a row and recovers after
+// `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+// `failure_state`, never over a state a member set later than the monitor's last change, and
+// opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
+// it opened and puts the component back. The answer carries `token` and `url` once; only a
+// hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
+// unset, `403 status_monitor_limit`).
+//
+// Owners, admins and API keys. Scope: `status:manage`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/status-pages/{pageId}/monitors (the `CreateStatusMonitor` operationId).
+func (c *ClientWithResponses) CreateStatusMonitorWithBodyWithResponse(ctx context.Context, pageId StatusPageId, params *CreateStatusMonitorParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateStatusMonitorResponse, error) {
+	rsp, err := c.CreateStatusMonitorWithBody(ctx, pageId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateStatusMonitorResponse(rsp)
+}
+
+// CreateStatusMonitorWithResponse Create a monitor
+//
+// A monitor that sets `component_id`'s state from outside a member's hand:
+//
+//   - `heartbeat`: the host's job calls `POST` or `GET /ingress/heartbeat/{token}` at least every
+//     `interval` seconds; a beat missing for `interval` plus `grace` seconds is a failure, and
+//     `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
+//   - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
+//     `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+//
+// The monitor fails after `failure_threshold` failures in a row and recovers after
+// `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+// `failure_state`, never over a state a member set later than the monitor's last change, and
+// opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
+// it opened and puts the component back. The answer carries `token` and `url` once; only a
+// hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
+// unset, `403 status_monitor_limit`).
+//
+// Owners, admins and API keys. Scope: `status:manage`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/status-pages/{pageId}/monitors (the `CreateStatusMonitor` operationId).
+func (c *ClientWithResponses) CreateStatusMonitorWithResponse(ctx context.Context, pageId StatusPageId, params *CreateStatusMonitorParams, body CreateStatusMonitorJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateStatusMonitorResponse, error) {
+	rsp, err := c.CreateStatusMonitor(ctx, pageId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateStatusMonitorResponse(rsp)
+}
+
+// DeleteStatusMonitorWithResponse Delete a monitor
+//
+// With its checks. A component it set goes back to `operational` unless something else holds
+// it; an incident it opened stays.
+//
+// Owners, admins and API keys. Scope: `status:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/status-pages/{pageId}/monitors/{monitorId} (the `DeleteStatusMonitor` operationId).
+func (c *ClientWithResponses) DeleteStatusMonitorWithResponse(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *DeleteStatusMonitorParams, reqEditors ...RequestEditorFn) (*DeleteStatusMonitorResponse, error) {
+	rsp, err := c.DeleteStatusMonitor(ctx, pageId, monitorId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteStatusMonitorResponse(rsp)
+}
+
+// GetStatusMonitorWithResponse A monitor
+//
+// Scope: `status:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/status-pages/{pageId}/monitors/{monitorId} (the `GetStatusMonitor` operationId).
+func (c *ClientWithResponses) GetStatusMonitorWithResponse(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *GetStatusMonitorParams, reqEditors ...RequestEditorFn) (*GetStatusMonitorResponse, error) {
+	rsp, err := c.GetStatusMonitor(ctx, pageId, monitorId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetStatusMonitorResponse(rsp)
+}
+
+// UpdateStatusMonitorWithBodyWithResponse Update a monitor
+//
+// Changes the given fields. Pausing stops results from counting and lets go of the component
+// (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
+// starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
+// later. A new `interval` or `grace` moves the next beat's due time.
+//
+// Owners, admins and API keys. Scope: `status:manage`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/status-pages/{pageId}/monitors/{monitorId} (the `UpdateStatusMonitor` operationId).
+func (c *ClientWithResponses) UpdateStatusMonitorWithBodyWithResponse(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *UpdateStatusMonitorParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateStatusMonitorResponse, error) {
+	rsp, err := c.UpdateStatusMonitorWithBody(ctx, pageId, monitorId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateStatusMonitorResponse(rsp)
+}
+
+// UpdateStatusMonitorWithResponse Update a monitor
+//
+// Changes the given fields. Pausing stops results from counting and lets go of the component
+// (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
+// starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
+// later. A new `interval` or `grace` moves the next beat's due time.
+//
+// Owners, admins and API keys. Scope: `status:manage`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/status-pages/{pageId}/monitors/{monitorId} (the `UpdateStatusMonitor` operationId).
+func (c *ClientWithResponses) UpdateStatusMonitorWithResponse(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *UpdateStatusMonitorParams, body UpdateStatusMonitorJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateStatusMonitorResponse, error) {
+	rsp, err := c.UpdateStatusMonitor(ctx, pageId, monitorId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateStatusMonitorResponse(rsp)
+}
+
+// ListStatusMonitorChecksWithResponse List a monitor's checks
+//
+// Every beat, missed beat and pushed state, newest first, kept 30 days. Results that arrive
+// while the monitor is paused are not kept.
+//
+// Scope: `status:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/status-pages/{pageId}/monitors/{monitorId}/checks (the `ListStatusMonitorChecks` operationId).
+func (c *ClientWithResponses) ListStatusMonitorChecksWithResponse(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *ListStatusMonitorChecksParams, reqEditors ...RequestEditorFn) (*ListStatusMonitorChecksResponse, error) {
+	rsp, err := c.ListStatusMonitorChecks(ctx, pageId, monitorId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListStatusMonitorChecksResponse(rsp)
+}
+
+// RotateStatusMonitorTokenWithResponse Rotate a monitor's token
+//
+// Makes a new token and drops the old one at once: calls with the old token answer `404`.
+//
+// Owners, admins and API keys. Scope: `status:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/status-pages/{pageId}/monitors/{monitorId}/token (the `RotateStatusMonitorToken` operationId).
+func (c *ClientWithResponses) RotateStatusMonitorTokenWithResponse(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *RotateStatusMonitorTokenParams, reqEditors ...RequestEditorFn) (*RotateStatusMonitorTokenResponse, error) {
+	rsp, err := c.RotateStatusMonitorToken(ctx, pageId, monitorId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRotateStatusMonitorTokenResponse(rsp)
+}
+
 // PreviewStatusPageWithResponse Preview a status page
 //
 // The page as visitors see it at its status URL, also while it is unpublished, drafts left out. It
@@ -99039,6 +102467,255 @@ func ParseGetHealthzResponse(rsp *http.Response) (*GetHealthzResponse, error) {
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseStatusHeartbeatResponse parses an HTTP response from a StatusHeartbeatWithResponse call
+func ParseStatusHeartbeatResponse(rsp *http.Response) (*StatusHeartbeatResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &StatusHeartbeatResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StatusIngressResult
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseStatusHeartbeatPostResponse parses an HTTP response from a StatusHeartbeatPostWithResponse call
+func ParseStatusHeartbeatPostResponse(rsp *http.Response) (*StatusHeartbeatPostResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &StatusHeartbeatPostResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StatusIngressResult
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseStatusHeartbeatFailResponse parses an HTTP response from a StatusHeartbeatFailWithResponse call
+func ParseStatusHeartbeatFailResponse(rsp *http.Response) (*StatusHeartbeatFailResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &StatusHeartbeatFailResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StatusIngressResult
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseStatusHeartbeatFailPostResponse parses an HTTP response from a StatusHeartbeatFailPostWithResponse call
+func ParseStatusHeartbeatFailPostResponse(rsp *http.Response) (*StatusHeartbeatFailPostResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &StatusHeartbeatFailPostResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StatusIngressResult
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseStatusPushResponse parses an HTTP response from a StatusPushWithResponse call
+func ParseStatusPushResponse(rsp *http.Response) (*StatusPushResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &StatusPushResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StatusIngressResult
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 413:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON413 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
 
 	}
 
@@ -113412,6 +117089,352 @@ func ParseEditStatusIncidentUpdateResponse(rsp *http.Response) (*EditStatusIncid
 	return response, nil
 }
 
+// ParseListStatusMonitorsResponse parses an HTTP response from a ListStatusMonitorsWithResponse call
+func ParseListStatusMonitorsResponse(rsp *http.Response) (*ListStatusMonitorsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListStatusMonitorsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StatusMonitorList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateStatusMonitorResponse parses an HTTP response from a CreateStatusMonitorWithResponse call
+func ParseCreateStatusMonitorResponse(rsp *http.Response) (*CreateStatusMonitorResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateStatusMonitorResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest StatusMonitorWithToken
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteStatusMonitorResponse parses an HTTP response from a DeleteStatusMonitorWithResponse call
+func ParseDeleteStatusMonitorResponse(rsp *http.Response) (*DeleteStatusMonitorResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteStatusMonitorResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetStatusMonitorResponse parses an HTTP response from a GetStatusMonitorWithResponse call
+func ParseGetStatusMonitorResponse(rsp *http.Response) (*GetStatusMonitorResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetStatusMonitorResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StatusMonitor
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateStatusMonitorResponse parses an HTTP response from a UpdateStatusMonitorWithResponse call
+func ParseUpdateStatusMonitorResponse(rsp *http.Response) (*UpdateStatusMonitorResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateStatusMonitorResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StatusMonitor
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListStatusMonitorChecksResponse parses an HTTP response from a ListStatusMonitorChecksWithResponse call
+func ParseListStatusMonitorChecksResponse(rsp *http.Response) (*ListStatusMonitorChecksResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListStatusMonitorChecksResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StatusCheckList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseRotateStatusMonitorTokenResponse parses an HTTP response from a RotateStatusMonitorTokenWithResponse call
+func ParseRotateStatusMonitorTokenResponse(rsp *http.Response) (*RotateStatusMonitorTokenResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RotateStatusMonitorTokenResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StatusMonitorWithToken
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParsePreviewStatusPageResponse parses an HTTP response from a PreviewStatusPageWithResponse call
 func ParsePreviewStatusPageResponse(rsp *http.Response) (*PreviewStatusPageResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -114423,6 +118446,16 @@ type WebhookInitiatorInterface interface {
 
 	WebhookStatusIncidentUpdated(ctx context.Context, targetURL string, params *WebhookStatusIncidentUpdatedParams, body WebhookStatusIncidentUpdatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// WebhookStatusMonitorDownWithBody fires the status.monitor.down webhook with any body
+	WebhookStatusMonitorDownWithBody(ctx context.Context, targetURL string, params *WebhookStatusMonitorDownParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	WebhookStatusMonitorDown(ctx context.Context, targetURL string, params *WebhookStatusMonitorDownParams, body WebhookStatusMonitorDownJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// WebhookStatusMonitorUpWithBody fires the status.monitor.up webhook with any body
+	WebhookStatusMonitorUpWithBody(ctx context.Context, targetURL string, params *WebhookStatusMonitorUpParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	WebhookStatusMonitorUp(ctx context.Context, targetURL string, params *WebhookStatusMonitorUpParams, body WebhookStatusMonitorUpJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// WebhookSubscriptionCreatedWithBody fires the subscription.created webhook with any body
 	WebhookSubscriptionCreatedWithBody(ctx context.Context, targetURL string, params *WebhookSubscriptionCreatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -114904,6 +118937,54 @@ func (p *WebhookInitiator) WebhookStatusIncidentUpdatedWithBody(ctx context.Cont
 
 func (p *WebhookInitiator) WebhookStatusIncidentUpdated(ctx context.Context, targetURL string, params *WebhookStatusIncidentUpdatedParams, body WebhookStatusIncidentUpdatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewWebhookStatusIncidentUpdatedWebhookRequest(targetURL, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookStatusMonitorDownWithBody(ctx context.Context, targetURL string, params *WebhookStatusMonitorDownParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookStatusMonitorDownWebhookRequestWithBody(targetURL, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookStatusMonitorDown(ctx context.Context, targetURL string, params *WebhookStatusMonitorDownParams, body WebhookStatusMonitorDownJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookStatusMonitorDownWebhookRequest(targetURL, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookStatusMonitorUpWithBody(ctx context.Context, targetURL string, params *WebhookStatusMonitorUpParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookStatusMonitorUpWebhookRequestWithBody(targetURL, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookStatusMonitorUp(ctx context.Context, targetURL string, params *WebhookStatusMonitorUpParams, body WebhookStatusMonitorUpJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookStatusMonitorUpWebhookRequest(targetURL, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -116134,6 +120215,128 @@ func NewWebhookStatusIncidentUpdatedWebhookRequest(targetURL string, params *Web
 
 // NewWebhookStatusIncidentUpdatedWebhookRequestWithBody builds a POST request for the status.incident.updated webhook with any body
 func NewWebhookStatusIncidentUpdatedWebhookRequestWithBody(targetURL string, params *WebhookStatusIncidentUpdatedParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+	_ = err
+
+	reqURL, err := url.Parse(targetURL)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, reqURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "webhook-id", params.WebhookId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-id", headerParam0)
+
+		var headerParam1 string
+
+		headerParam1, err = runtime.StyleParamWithOptions("simple", false, "webhook-timestamp", params.WebhookTimestamp, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-timestamp", headerParam1)
+
+		var headerParam2 string
+
+		headerParam2, err = runtime.StyleParamWithOptions("simple", false, "webhook-signature", params.WebhookSignature, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-signature", headerParam2)
+
+	}
+	return req, nil
+}
+
+// NewWebhookStatusMonitorDownWebhookRequest builds a application/json POST request for the status.monitor.down webhook
+func NewWebhookStatusMonitorDownWebhookRequest(targetURL string, params *WebhookStatusMonitorDownParams, body WebhookStatusMonitorDownJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewWebhookStatusMonitorDownWebhookRequestWithBody(targetURL, params, "application/json", bodyReader)
+}
+
+// NewWebhookStatusMonitorDownWebhookRequestWithBody builds a POST request for the status.monitor.down webhook with any body
+func NewWebhookStatusMonitorDownWebhookRequestWithBody(targetURL string, params *WebhookStatusMonitorDownParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+	_ = err
+
+	reqURL, err := url.Parse(targetURL)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, reqURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "webhook-id", params.WebhookId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-id", headerParam0)
+
+		var headerParam1 string
+
+		headerParam1, err = runtime.StyleParamWithOptions("simple", false, "webhook-timestamp", params.WebhookTimestamp, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-timestamp", headerParam1)
+
+		var headerParam2 string
+
+		headerParam2, err = runtime.StyleParamWithOptions("simple", false, "webhook-signature", params.WebhookSignature, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-signature", headerParam2)
+
+	}
+	return req, nil
+}
+
+// NewWebhookStatusMonitorUpWebhookRequest builds a application/json POST request for the status.monitor.up webhook
+func NewWebhookStatusMonitorUpWebhookRequest(targetURL string, params *WebhookStatusMonitorUpParams, body WebhookStatusMonitorUpJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewWebhookStatusMonitorUpWebhookRequestWithBody(targetURL, params, "application/json", bodyReader)
+}
+
+// NewWebhookStatusMonitorUpWebhookRequestWithBody builds a POST request for the status.monitor.up webhook with any body
+func NewWebhookStatusMonitorUpWebhookRequestWithBody(targetURL string, params *WebhookStatusMonitorUpParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 	_ = err
 

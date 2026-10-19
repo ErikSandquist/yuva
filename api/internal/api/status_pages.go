@@ -25,6 +25,7 @@ const (
 	statusSourceMember    = string(oas.StatusSourceMember)
 	statusSourceAPIKey    = string(oas.StatusSourceApiKey)
 	statusSourceIncident  = string(oas.StatusSourceIncident)
+	statusSourceMonitor   = string(oas.StatusSourceMonitor)
 	statusComponentsLimit = "a page has at most 100 components"
 )
 
@@ -46,8 +47,10 @@ var (
 
 // StatusSettings: URL is YUVA_STATUS_URL, the origin public pages are named from; empty means
 // <public URL>/status.
+// Monitors is YUVA_STATUS_MONITORS, the most monitors a workspace may have; 0 means no limit.
 type StatusSettings struct {
-	URL string
+	URL      string
+	Monitors int
 }
 
 func (s *Server) statusBase() string {

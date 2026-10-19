@@ -1,0 +1,9 @@
+{{.Inbox}}: {{.Component}} {{if .Down}}çalışmıyor{{else}}yeniden çalışıyor{{end}}
+
+{{if .Down}}{{.Page}} durum sayfasındaki {{.Monitor}} izleyicisi hata verdi{{if .State}} ve {{.Component}} bileşenini {{.State}} durumuna aldı{{end}}.{{else}}{{.Page}} durum sayfasındaki {{.Monitor}} izleyicisi düzeldi ve {{.Component}} bileşenini eski durumuna getirdi.{{end}}
+{{if and .Down .Message}}
+> {{.Message}}
+{{end}}
+İzleyicileri aç: {{.URL}}
+
+Bu e-postayı {{.Inbox}} içindeki yeni konuşmalar için e-posta seçtiğiniz için alıyorsunuz. Hangi e-postaları alacağınızı seçin: {{.SettingsURL}}

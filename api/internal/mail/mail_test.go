@@ -78,13 +78,16 @@ func samples(inbox, text string) map[string]map[string]any {
 		"rating_request": {"Inbox": inbox, "GoodURL": "https://yuva.example.com/rate/tok?rating=good",
 			"BadURL": "https://yuva.example.com/rate/tok?rating=bad"},
 		"list_confirm": {"Inbox": inbox, "List": "Product news", "URL": "https://yuva.example.com/s/tok"},
+		"status_monitor": {"Inbox": inbox, "Page": "Acme status", "Monitor": "Nightly backup", "Component": "Backups", "Down": true,
+			"State": "Major outage", "Message": text, "URL": "https://yuva.example.com/status-pages/1/monitors",
+			"SettingsURL": "https://yuva.example.com/settings/notifications"},
 		"list_welcome": {"Inbox": inbox, "List": "Product news", "Description": "One e-mail a month.",
 			"UnsubscribeURL": "https://yuva.example.com/m/tok", "ManageURL": "https://yuva.example.com/m/tok",
 			"Sender": "Acme Ltd, 1 Main Street, Springfield"},
 	}
 }
 
-var htmlMails = []string{"sign_in_code", "sign_in_locked", "invite", "confirm_email", "notification", "discussion_digest", "rating_request", "list_confirm", "list_welcome", "analytics_limit", "analytics_report", "analytics_alert"}
+var htmlMails = []string{"sign_in_code", "sign_in_locked", "invite", "confirm_email", "notification", "discussion_digest", "rating_request", "list_confirm", "list_welcome", "analytics_limit", "analytics_report", "analytics_alert", "status_monitor"}
 
 // englishMails go only to the server's operator.
 var englishMails = []string{"operator_digest"}

@@ -3,8 +3,8 @@ package config
 import (
 	"errors"
 	"fmt"
-	"net/mail"
 	"net"
+	"net/mail"
 	"net/netip"
 	"net/url"
 	"os"
@@ -83,6 +83,8 @@ type Config struct {
 	// StatusURL is the origin public status pages are named from (YUVA_STATUS_URL); empty means
 	// <PublicURL>/status.
 	StatusURL string
+	// StatusMonitors caps a workspace's status monitors (YUVA_STATUS_MONITORS, default 20); 0 is no limit.
+	StatusMonitors int
 
 	// MigrationSources are the sources teams may move from (YUVA_MIGRATION_SOURCES); nil for every
 	// source the server has.
@@ -235,6 +237,9 @@ func Load(version string) (Config, error) {
 		if strings.EqualFold(u.Host, public.Host) {
 			return c, errors.New("YUVA_STATUS_URL must name another host than YUVA_PUBLIC_URL; leave it unset for <YUVA_PUBLIC_URL>/status")
 		}
+	}
+	if c.StatusMonitors, err = strconv.Atoi(env("YUVA_STATUS_MONITORS", "20")); err != nil || c.StatusMonitors < 0 {
+		return c, errors.New("YUVA_STATUS_MONITORS must be a number of monitors, 0 for no limit")
 	}
 	if c.LocaleCookieDomain, err = localeCookieDomain(env("YUVA_LOCALE_COOKIE_DOMAIN", ""), public.Hostname()); err != nil {
 		return c, err

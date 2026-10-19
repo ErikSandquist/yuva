@@ -118,43 +118,93 @@ func incidentComponentIDs(ctx context.Context, q *store.Queries, inc store.Statu
 	return ids, nil
 }
 
-// settleComponents sets each component to the worst state the incidents holding it set, unless a member
-// set a worse one. A component nothing holds goes back to operational when restore names it or an
-// incident set its current state; otherwise a state a member set stays.
+// statusActor is who a component's state change is recorded as: an incident or a monitor.
+type statusActor struct {
+	source string
+	id     *uuid.UUID
+}
+
+type statusHolder struct {
+	component     uuid.UUID
+	state, source string
+	id            uuid.UUID
+}
+
+func automaticSource(source string) bool {
+	return source == statusSourceIncident || source == statusSourceMonitor
+}
+
+func handSource(source string) bool {
+	return source == statusSourceMember || source == statusSourceAPIKey
+}
+
+// statusHolders lists the failing monitors and the open published incidents that hold the components,
+// monitors first so that a monitor keeps a state it shares with an incident. A monitor does not hold a
+// component whose state a member or key set later than the monitor's last change.
+func statusHolders(ctx context.Context, q *store.Queries, ws uuid.UUID, ids []uuid.UUID, open map[uuid.UUID]store.StatusComponentState) ([]statusHolder, error) {
+	mons, err := q.FailingStatusMonitors(ctx, store.FailingStatusMonitorsParams{WorkspaceID: ws, ComponentIds: ids})
+	if err != nil {
+		return nil, err
+	}
+	var out []statusHolder
+	for _, m := range mons {
+		if o, ok := open[m.ComponentID]; ok && handSource(o.Source) && o.StartedAt.After(m.ChangedAt) {
+			continue
+		}
+		out = append(out, statusHolder{component: m.ComponentID, state: m.State, source: statusSourceMonitor, id: m.ID})
+	}
+	incs, err := q.ActiveStatusHolders(ctx, store.ActiveStatusHoldersParams{WorkspaceID: ws, ComponentIds: ids, ExceptID: uuid.Nil()})
+	if err != nil {
+		return nil, err
+	}
+	for _, h := range incs {
+		out = append(out, statusHolder{component: h.ComponentID, state: h.State, source: statusSourceIncident, id: h.IncidentID})
+	}
+	return out, nil
+}
+
+// settleComponents sets each component to the worst state the incidents and failing monitors holding it
+// set, unless a member set a worse one. A component nothing holds goes back to operational when restore
+// names it or an incident or monitor set its current state; otherwise a state a member set stays.
 func (s *Server) settleComponents(ctx context.Context, q *store.Queries, ev *eventBatch, pg store.StatusPage, ids []uuid.UUID,
-	restore map[uuid.UUID]bool, closing *uuid.UUID, now time.Time) error {
+	restore map[uuid.UUID]bool, closer statusActor, now time.Time) error {
 	if len(ids) == 0 {
 		return nil
 	}
+	if closer.source == "" {
+		closer.source = statusSourceIncident
+	}
 	ws := pg.WorkspaceID
-	holders, err := q.ActiveStatusHolders(ctx, store.ActiveStatusHoldersParams{WorkspaceID: ws, ComponentIds: ids, ExceptID: uuid.Nil()})
+	rows, err := q.OpenStatusComponentStates(ctx, store.OpenStatusComponentStatesParams{WorkspaceID: ws, ComponentIds: ids})
 	if err != nil {
 		return err
 	}
-	open, err := q.OpenStatusComponentStates(ctx, store.OpenStatusComponentStatesParams{WorkspaceID: ws, ComponentIds: ids})
+	open := map[uuid.UUID]store.StatusComponentState{}
+	for _, o := range rows {
+		open[o.ComponentID] = o
+	}
+	holders, err := statusHolders(ctx, q, ws, ids, open)
 	if err != nil {
 		return err
-	}
-	source := map[uuid.UUID]string{}
-	for _, o := range open {
-		source[o.ComponentID] = o.Source
 	}
 	sorted := slices.Clone(ids)
 	slices.SortFunc(sorted, func(a, b uuid.UUID) int { return a.Compare(b) })
 	for _, id := range slices.Compact(sorted) {
-		target, by, held := "", closing, false
-		for _, h := range holders {
-			if h.ComponentID == id && (!held || stateRank(h.State) > stateRank(target)) {
-				target, held = h.State, true
-				hid := h.IncidentID
-				by = &hid
+		var top *statusHolder
+		for i := range holders {
+			if h := &holders[i]; h.component == id && (top == nil || stateRank(h.state) > stateRank(top.state)) {
+				top = h
 			}
 		}
-		if !held {
-			if !restore[id] && source[id] != statusSourceIncident {
+		auto := automaticSource(open[id].Source)
+		target, source, by := stOperational, closer.source, closer.id
+		if top == nil {
+			if !restore[id] && !auto {
 				continue
 			}
-			target = stOperational
+		} else {
+			hid := top.id
+			target, source, by = top.state, top.source, &hid
 		}
 		c, err := lockedStatusComponent(ctx, q, pg, id)
 		if err == errStatusComponentGone {
@@ -163,21 +213,21 @@ func (s *Server) settleComponents(ctx context.Context, q *store.Queries, ev *eve
 		if err != nil {
 			return err
 		}
-		if held && source[id] != statusSourceIncident && stateRank(c.State) > stateRank(target) {
+		if top != nil && !auto && stateRank(c.State) > stateRank(target) {
 			continue
 		}
-		if held && c.State == target && source[id] != statusSourceIncident {
+		if top != nil && c.State == target && !auto {
 			if err := q.EndStatusComponentState(ctx, store.EndStatusComponentStateParams{WorkspaceID: ws, ComponentID: id, Now: now}); err != nil {
 				return err
 			}
 			if _, err := q.StartStatusComponentState(ctx, store.StartStatusComponentStateParams{
-				ID: newID(), WorkspaceID: ws, ComponentID: id, State: target, Source: statusSourceIncident, SourceID: by, Now: now,
+				ID: newID(), WorkspaceID: ws, ComponentID: id, State: target, Source: source, SourceID: by, Now: now,
 			}); err != nil {
 				return err
 			}
 			continue
 		}
-		if _, err := s.setComponentState(ctx, q, ev, pg, c, target, statusSourceIncident, by, now); err != nil {
+		if _, err := s.setComponentState(ctx, q, ev, pg, c, target, source, by, now); err != nil {
 			return err
 		}
 	}
@@ -422,7 +472,7 @@ func (s *Server) CreateStatusIncident(ctx context.Context, req oas.CreateStatusI
 			if err != nil {
 				return err
 			}
-			if err := s.settleComponents(ctx, q, ev, pg, ids, nil, nil, now); err != nil {
+			if err := s.settleComponents(ctx, q, ev, pg, ids, nil, statusActor{}, now); err != nil {
 				return err
 			}
 		}
@@ -536,7 +586,7 @@ func (s *Server) UpdateStatusIncident(ctx context.Context, req oas.UpdateStatusI
 			return err
 		}
 		if b.Components != nil && incidentHolds(inc.PublishedAt != nil, inc.State) {
-			if err := s.settleComponents(ctx, q, ev, pg, touched, removed, &inc.ID, now); err != nil {
+			if err := s.settleComponents(ctx, q, ev, pg, touched, removed, statusActor{statusSourceIncident, &inc.ID}, now); err != nil {
 				return err
 			}
 		}
@@ -602,7 +652,7 @@ func (s *Server) PublishStatusIncident(ctx context.Context, req oas.PublishStatu
 			if err != nil {
 				return err
 			}
-			if err := s.settleComponents(ctx, q, ev, pg, ids, nil, nil, now); err != nil {
+			if err := s.settleComponents(ctx, q, ev, pg, ids, nil, statusActor{}, now); err != nil {
 				return err
 			}
 		}
@@ -618,6 +668,13 @@ func (s *Server) PublishStatusIncident(ctx context.Context, req oas.PublishStatu
 
 func (s *Server) moveIncident(ctx context.Context, q *store.Queries, ev *eventBatch, pg store.StatusPage, inc store.StatusIncident,
 	state, body string, member, key *uuid.UUID, change oas.StatusIncidentChange, now time.Time) (oas.StatusIncident, error) {
+	return s.moveIncidentWith(ctx, q, ev, pg, inc, state, body, member, key, change, true, now)
+}
+
+// moveIncidentWith moves an incident to state with an update. Closing it puts its components back to
+// operational when restoreAll is set; without it only those an incident or monitor set go back.
+func (s *Server) moveIncidentWith(ctx context.Context, q *store.Queries, ev *eventBatch, pg store.StatusPage, inc store.StatusIncident,
+	state, body string, member, key *uuid.UUID, change oas.StatusIncidentChange, restoreAll bool, now time.Time) (oas.StatusIncident, error) {
 	held := incidentHolds(inc.PublishedAt != nil, inc.State)
 	arg := incidentUpdateArg(inc, now)
 	arg.State = state
@@ -644,13 +701,13 @@ func (s *Server) moveIncident(ctx context.Context, q *store.Queries, ev *eventBa
 			return oas.StatusIncident{}, err
 		}
 		var restore map[uuid.UUID]bool
-		if !holds {
+		if !holds && restoreAll {
 			restore = map[uuid.UUID]bool{}
 			for _, id := range ids {
 				restore[id] = true
 			}
 		}
-		if err := s.settleComponents(ctx, q, ev, pg, ids, restore, &inc.ID, now); err != nil {
+		if err := s.settleComponents(ctx, q, ev, pg, ids, restore, statusActor{statusSourceIncident, &inc.ID}, now); err != nil {
 			return oas.StatusIncident{}, err
 		}
 	}

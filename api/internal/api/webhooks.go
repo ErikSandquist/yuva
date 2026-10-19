@@ -454,7 +454,7 @@ func webhookSource(e pendingEvent) bool {
 		realtime.DraftCreated, realtime.DraftUpdated, realtime.DraftDeleted,
 		eventDiscussionCreated, eventDiscussionPostCreated, eventDiscussionAnswered, eventDiscussionUpdated,
 		eventSubscriptionCreated, eventSubscriptionUpdated, eventBroadcastUpdated, eventAnalyticsAlert,
-		statusEventComponent, statusEventCreated, statusEventUpdated, statusEventResolved:
+		statusEventComponent, statusEventCreated, statusEventUpdated, statusEventResolved, statusEventMonitorDown, statusEventMonitorUp:
 		return true
 	case realtime.ContactDeleted:
 		return e.deleted != nil
@@ -712,7 +712,7 @@ func (s *Server) webhookPayloads(ctx context.Context, q *store.Queries, ev store
 		}
 		inbox := d.Broadcast.InboxId
 		return []webhookOut{{typ: ev.Type, body: payload(ev.Type, &inbox, oas.WebhookBroadcastData{Broadcast: d.Broadcast, PreviousState: d.PreviousState})}}, []uuid.UUID{inbox}, nil
-	case statusEventComponent:
+	case statusEventComponent, statusEventMonitorDown, statusEventMonitorUp:
 		return []webhookOut{{typ: ev.Type, body: payload(ev.Type, ev.InboxID, json.RawMessage(ev.Payload))}}, []uuid.UUID{*ev.InboxID}, nil
 	case statusEventCreated, statusEventUpdated, statusEventResolved:
 		var d oas.StatusIncidentEventData

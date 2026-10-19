@@ -1559,6 +1559,20 @@ type Session struct {
 	LastSeenAt time.Time
 }
 
+type StatusCheck struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	MonitorID   uuid.UUID
+	At          time.Time
+	Ok          bool
+	Source      string
+	State       *string
+	Message     *string
+	Error       *string
+	DurationMs  *int32
+	StatusCode  *int32
+}
+
 type StatusComponent struct {
 	ID          uuid.UUID
 	WorkspaceID uuid.UUID
@@ -1629,6 +1643,36 @@ type StatusIncidentUpdate struct {
 	AuthorKeyID    *uuid.UUID
 	CreatedAt      time.Time
 	EditedAt       *time.Time
+}
+
+type StatusMonitor struct {
+	ID                   uuid.UUID
+	WorkspaceID          uuid.UUID
+	PageID               uuid.UUID
+	ComponentID          uuid.UUID
+	Kind                 string
+	Name                 string
+	TokenHash            []byte
+	TokenPrefix          *string
+	IntervalSeconds      *int32
+	GraceSeconds         *int32
+	FailureState         string
+	FailureThreshold     int32
+	RecoveryThreshold    int32
+	OnFailure            string
+	Paused               bool
+	State                string
+	DownState            *string
+	ConsecutiveFailures  int32
+	ConsecutiveSuccesses int32
+	LastResultAt         *time.Time
+	LastMessage          *string
+	DueAt                *time.Time
+	DueExtended          bool
+	IncidentID           *uuid.UUID
+	ChangedAt            time.Time
+	CreatedAt            time.Time
+	UpdatedAt            time.Time
 }
 
 type StatusPage struct {

@@ -1,0 +1,30 @@
+{
+  "receiver": "yuva",
+  "status": "firing",
+  "orgId": 1,
+  "alerts": [
+    {
+      "status": "firing",
+      "labels": {"alertname": "Checkout latency", "grafana_folder": "Shop", "team": "payments"},
+      "annotations": {"summary": "Checkout p95 latency is above 3 seconds"},
+      "startsAt": "2026-10-19T09:00:00Z",
+      "endsAt": "0001-01-01T00:00:00Z",
+      "generatorURL": "https://grafana.example.com/alerting/grafana/aa1bb2cc/view?orgId=1",
+      "fingerprint": "57c6d9296de2ad39",
+      "silenceURL": "https://grafana.example.com/alerting/silence/new?alertmanager=grafana&matcher=alertname%3DCheckout+latency",
+      "dashboardURL": "https://grafana.example.com/d/shop01?orgId=1",
+      "panelURL": "https://grafana.example.com/d/shop01?orgId=1&viewPanel=4",
+      "values": {"B": 3.42, "C": 1}
+    }
+  ],
+  "groupLabels": {"alertname": "Checkout latency"},
+  "commonLabels": {"alertname": "Checkout latency", "grafana_folder": "Shop", "team": "payments"},
+  "commonAnnotations": {"summary": "Checkout p95 latency is above 3 seconds"},
+  "externalURL": "https://grafana.example.com/",
+  "version": "1",
+  "groupKey": "{}:{alertname=\"Checkout latency\"}",
+  "truncatedAlerts": 0,
+  "title": "[FIRING:1] Checkout latency Shop (payments)",
+  "state": "alerting",
+  "message": "**Firing**\n\nValue: B=3.42, C=1\nLabels:\n - alertname = Checkout latency\n"
+}

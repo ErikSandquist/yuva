@@ -1,0 +1,27 @@
+{
+  "receiver": "yuva",
+  "status": "resolved",
+  "orgId": 1,
+  "alerts": [
+    {
+      "status": "resolved",
+      "labels": {"alertname": "Checkout latency", "grafana_folder": "Shop", "team": "payments"},
+      "annotations": {"summary": "Checkout p95 latency is above 3 seconds"},
+      "startsAt": "2026-10-19T09:00:00Z",
+      "endsAt": "2026-10-19T09:12:00Z",
+      "generatorURL": "https://grafana.example.com/alerting/grafana/aa1bb2cc/view?orgId=1",
+      "fingerprint": "57c6d9296de2ad39",
+      "values": {"B": 0.81, "C": 0}
+    }
+  ],
+  "groupLabels": {"alertname": "Checkout latency"},
+  "commonLabels": {"alertname": "Checkout latency", "grafana_folder": "Shop", "team": "payments"},
+  "commonAnnotations": {"summary": "Checkout p95 latency is above 3 seconds"},
+  "externalURL": "https://grafana.example.com/",
+  "version": "1",
+  "groupKey": "{}:{alertname=\"Checkout latency\"}",
+  "truncatedAlerts": 0,
+  "title": "[RESOLVED] Checkout latency Shop (payments)",
+  "state": "ok",
+  "message": "**Resolved**\n\nValue: B=0.81, C=0\n"
+}

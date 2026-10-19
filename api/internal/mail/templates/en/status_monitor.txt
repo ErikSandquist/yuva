@@ -1,0 +1,9 @@
+{{.Inbox}}: {{.Component}} {{if .Down}}is down{{else}}is working again{{end}}
+
+{{if .Down}}The monitor {{.Monitor}} on the status page {{.Page}} failed{{if .State}} and set {{.Component}} to {{.State}}{{end}}.{{else}}The monitor {{.Monitor}} on the status page {{.Page}} recovered and put {{.Component}} back.{{end}}
+{{if and .Down .Message}}
+> {{.Message}}
+{{end}}
+Open the monitors: {{.URL}}
+
+You get this e-mail because you chose e-mails about new conversations in {{.Inbox}}. Choose which e-mails you get: {{.SettingsURL}}

@@ -281,7 +281,15 @@ tags:
       characters; a published one cannot be removed, only edited with an "edited" mark. Only a draft
       can be deleted.
 
-      Owners, admins and API keys manage pages, groups and components; agents with access to the
+      Monitors set a component's state from outside a member's hand: a `heartbeat` monitor fails when
+      the host's job stops calling `/ingress/heartbeat/{token}`, a `push` monitor takes the state the
+      host's monitoring sends to `/ingress/status/{token}` (its own JSON, Alertmanager or Grafana).
+      A failing monitor holds its component like an open incident does, and resolving an incident
+      leaves a component a failing monitor holds in the monitor's state. Monitors going down or up send
+      `status.monitor.down` and `status.monitor.up` and notify the inbox's members as a new
+      conversation does (push and e-mail, per their settings for new conversations).
+
+      Owners, admins and API keys manage pages, groups, components and monitors; agents with access to the
       page's inbox read them, set component states and write incidents and updates. A key limited to
       inboxes sees the pages of those inboxes. Pages the caller cannot see answer `404`. Keys and
       OAuth tokens need `status:read` or `status:manage`; no `status:*` scope is added to keys made
@@ -10059,6 +10067,217 @@ paths:
           $ref: "#/components/responses/Problem"
         "404":
           $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/monitors:
+    get:
+      operationId: listStatusMonitors
+      summary: List a page's monitors
+      description: |
+        Oldest first. Tokens are never shown again after they are made; `token_prefix` names one.
+
+        Scope: `status:read`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+      responses:
+        "200":
+          description: The monitors.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusMonitorList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createStatusMonitor
+      summary: Create a monitor
+      description: |
+        A monitor that sets `component_id`'s state from outside a member's hand:
+
+        - `heartbeat`: the host's job calls `POST` or `GET /ingress/heartbeat/{token}` at least every
+          `interval` seconds; a beat missing for `interval` plus `grace` seconds is a failure, and
+          `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
+        - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
+          `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+
+        The monitor fails after `failure_threshold` failures in a row and recovers after
+        `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+        `failure_state`, never over a state a member set later than the monitor's last change, and
+        opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
+        it opened and puts the component back. The answer carries `token` and `url` once; only a
+        hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
+        unset, `403 status_monitor_limit`).
+
+        Owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatusMonitorCreate"
+      responses:
+        "201":
+          description: The monitor with its token, shown this once.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusMonitorWithToken"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/monitors/{monitorId}:
+    get:
+      operationId: getStatusMonitor
+      summary: A monitor
+      description: |
+        Scope: `status:read`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusMonitorId"
+      responses:
+        "200":
+          description: The monitor.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusMonitor"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: updateStatusMonitor
+      summary: Update a monitor
+      description: |
+        Changes the given fields. Pausing stops results from counting and lets go of the component
+        (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
+        starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
+        later. A new `interval` or `grace` moves the next beat's due time.
+
+        Owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusMonitorId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatusMonitorUpdate"
+      responses:
+        "200":
+          description: The updated monitor.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusMonitor"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteStatusMonitor
+      summary: Delete a monitor
+      description: |
+        With its checks. A component it set goes back to `operational` unless something else holds
+        it; an incident it opened stays.
+
+        Owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusMonitorId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/monitors/{monitorId}/token:
+    post:
+      operationId: rotateStatusMonitorToken
+      summary: Rotate a monitor's token
+      description: |
+        Makes a new token and drops the old one at once: calls with the old token answer `404`.
+
+        Owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusMonitorId"
+      responses:
+        "200":
+          description: The monitor with its new token, shown this once.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusMonitorWithToken"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/monitors/{monitorId}/checks:
+    get:
+      operationId: listStatusMonitorChecks
+      summary: List a monitor's checks
+      description: |
+        Every beat, missed beat and pushed state, newest first, kept 30 days. Results that arrive
+        while the monitor is paused are not kept.
+
+        Scope: `status:read`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusMonitorId"
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: The checks.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusCheckList"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
   /client/v1/session:
     post:
       operationId: createClientSession
@@ -11693,6 +11912,149 @@ paths:
           $ref: "#/components/responses/Problem"
         "503":
           $ref: "#/components/responses/Problem"
+  /ingress/heartbeat/{token}:
+    parameters:
+      - $ref: "#/components/parameters/StatusMonitorToken"
+    get:
+      operationId: statusHeartbeat
+      summary: Send a heartbeat
+      description: |
+        A beat of a `heartbeat` monitor: the host's job or cron calls this at least every
+        `interval` seconds. `?fail=1` reports a failure instead (the job ran and failed). `GET` and
+        `POST` do the same, so `curl -fsS <url>` from a crontab is enough; a body is ignored.
+
+        The token is the credential: it is left out of the server's request logs, and at most 60
+        calls a minute per token are taken (`429` with `Retry-After`). A token of a `push` monitor
+        answers `409 monitor_kind`, an unknown or rotated one `404`. A paused monitor answers `200`
+        and counts nothing.
+      tags: [ingress]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/StatusHeartbeatFail"
+      responses:
+        "200":
+          description: Taken.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusIngressResult"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: statusHeartbeatPost
+      summary: Send a heartbeat
+      description: The same as `GET`.
+      tags: [ingress]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/StatusHeartbeatFail"
+      responses:
+        "200":
+          description: Taken.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusIngressResult"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /ingress/heartbeat/{token}/fail:
+    parameters:
+      - $ref: "#/components/parameters/StatusMonitorToken"
+    get:
+      operationId: statusHeartbeatFail
+      summary: Report a failed run
+      description: The same as `/ingress/heartbeat/{token}?fail=1`.
+      tags: [ingress]
+      security: []
+      responses:
+        "200":
+          description: Taken.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusIngressResult"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: statusHeartbeatFailPost
+      summary: Report a failed run
+      description: The same as `GET`.
+      tags: [ingress]
+      security: []
+      responses:
+        "200":
+          description: Taken.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusIngressResult"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /ingress/status/{token}:
+    parameters:
+      - $ref: "#/components/parameters/StatusMonitorToken"
+    post:
+      operationId: statusPush
+      summary: Push a state
+      description: |
+        The state of a `push` monitor, from the host's own monitoring. The body is one of, as it is:
+
+        - `{"state": "major_outage", "message": "..."}`: `operational` is a success, `degraded`,
+          `partial_outage` and `major_outage` a failure that sets that state (the monitor's
+          `failure_state` is not used). `message` (at most 1,000 characters) is kept with the check.
+        - An Alertmanager webhook body (`version` `4`, `status`, `alerts`): `firing` is a failure,
+          `resolved` a success. The message is the common `summary` or `description` annotation.
+        - A Grafana alert webhook body, of Grafana Alerting (`status` `firing`/`resolved`) or of
+          legacy alerting (`state` `alerting` is a failure, `ok` a success; `no_data` and `paused`
+          change nothing).
+
+        At most 1 MiB. The token is left out of request logs; at most 60 calls a minute per token
+        (`429`). A token of a `heartbeat` monitor answers `409 monitor_kind`, an unknown one `404`, a
+        body that is none of these `400`.
+      tags: [ingress]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/StatusPushBody"
+                - $ref: "#/components/schemas/AlertmanagerWebhookBody"
+                - $ref: "#/components/schemas/GrafanaWebhookBody"
+      responses:
+        "200":
+          description: Taken.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusIngressResult"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "413":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
   /.well-known/oauth-authorization-server:
     get:
       operationId: oauthAuthorizationServerMetadata
@@ -12362,6 +12724,50 @@ webhooks:
       responses:
         "200":
           description: Any 2xx answer counts as delivered.
+  status.monitor.down:
+    post:
+      operationId: webhookStatusMonitorDown
+      summary: A monitor failed
+      description: |
+        A heartbeat or push monitor reached its failure threshold. `incident_id` names the incident it
+        opened, when `on_failure` opened one. Endpoints of an inbox get the monitors of that inbox's
+        page.
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookStatusMonitorPayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
+  status.monitor.up:
+    post:
+      operationId: webhookStatusMonitorUp
+      summary: A monitor recovered
+      description: |
+        A failed monitor reached its recovery threshold. `incident_id` names the incident it resolved.
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookStatusMonitorPayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
 components:
   securitySchemes:
     session:
@@ -12830,6 +13236,28 @@ components:
       schema:
         type: string
         maxLength: 48
+    StatusMonitorId:
+      name: monitorId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    StatusMonitorToken:
+      name: token
+      in: path
+      required: true
+      description: The monitor's token, as `token` showed it when the monitor was made or its token rotated.
+      schema:
+        type: string
+        maxLength: 100
+    StatusHeartbeatFail:
+      name: fail
+      in: query
+      description: "`1` or `true` reports a failure."
+      schema:
+        type: string
+        enum: ["1", "true", "0", "false"]
   responses:
     Problem:
       description: An error.
@@ -14634,7 +15062,7 @@ components:
           format: int64
     WebhookEventType:
       type: string
-      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted, discussion.created, discussion.post_created, discussion.answered, discussion.updated, subscription.created, subscription.updated, broadcast.updated, analytics.alert, status.component.updated, status.incident.created, status.incident.updated, status.incident.resolved]
+      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted, discussion.created, discussion.post_created, discussion.answered, discussion.updated, subscription.created, subscription.updated, broadcast.updated, analytics.alert, status.component.updated, status.incident.created, status.incident.updated, status.incident.resolved, status.monitor.down, status.monitor.up]
     WebhookEndpoint:
       type: object
       required: [id, url, description, events, include_notes, enabled, created_at, updated_at]
@@ -18275,6 +18703,7 @@ components:
         - $ref: "#/components/schemas/AnalyticsAlertEvent"
         - $ref: "#/components/schemas/StatusComponentEvent"
         - $ref: "#/components/schemas/StatusIncidentEvent"
+        - $ref: "#/components/schemas/StatusMonitorEvent"
       discriminator:
         propertyName: type
         mapping:
@@ -18308,6 +18737,8 @@ components:
           status.incident.created: "#/components/schemas/StatusIncidentEvent"
           status.incident.updated: "#/components/schemas/StatusIncidentEvent"
           status.incident.resolved: "#/components/schemas/StatusIncidentEvent"
+          status.monitor.down: "#/components/schemas/StatusMonitorEvent"
+          status.monitor.up: "#/components/schemas/StatusMonitorEvent"
     EventPage:
       type: object
       required: [events, next, has_more]
@@ -18355,6 +18786,7 @@ components:
         - $ref: "#/components/schemas/AnalyticsAlertEvent"
         - $ref: "#/components/schemas/StatusComponentEvent"
         - $ref: "#/components/schemas/StatusIncidentEvent"
+        - $ref: "#/components/schemas/StatusMonitorEvent"
         - $ref: "#/components/schemas/MigrationProgressEvent"
         - $ref: "#/components/schemas/MigrationForwardingConfirmationEvent"
         - $ref: "#/components/schemas/BroadcastProgressEvent"
@@ -18399,6 +18831,8 @@ components:
           status.incident.created: "#/components/schemas/StatusIncidentEvent"
           status.incident.updated: "#/components/schemas/StatusIncidentEvent"
           status.incident.resolved: "#/components/schemas/StatusIncidentEvent"
+          status.monitor.down: "#/components/schemas/StatusMonitorEvent"
+          status.monitor.up: "#/components/schemas/StatusMonitorEvent"
           migration.progress: "#/components/schemas/MigrationProgressEvent"
           migration.forwarding_confirmation: "#/components/schemas/MigrationForwardingConfirmationEvent"
           broadcast.progress: "#/components/schemas/BroadcastProgressEvent"
@@ -24173,6 +24607,398 @@ components:
           properties:
             data:
               $ref: "#/components/schemas/StatusIncidentEventData"
+    StatusMonitorKind:
+      type: string
+      description: "`heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state."
+      enum: [heartbeat, push]
+      x-enum-varnames: [StatusMonitorHeartbeat, StatusMonitorPush]
+    StatusMonitorState:
+      type: string
+      description: "`pending` until the first result decides, then `up` or `down`."
+      enum: [pending, up, down]
+      x-enum-varnames: [MonitorPending, MonitorUp, MonitorDown]
+    StatusMonitorOnFailure:
+      type: string
+      description: "What failing opens: `none`, a `draft` incident members publish, or a published incident (`publish`)."
+      enum: [none, draft, publish]
+      x-enum-varnames: [StatusOnFailureNone, StatusOnFailureDraft, StatusOnFailurePublish]
+    StatusMonitorFailureState:
+      type: string
+      enum: [degraded, partial_outage, major_outage]
+      x-enum-varnames: [StatusFailureDegraded, StatusFailurePartialOutage, StatusFailureMajorOutage]
+    StatusMonitor:
+      type: object
+      required: [id, page_id, component_id, kind, name, state, state_since, paused, failure_state, on_failure, failure_threshold,
+        recovery_threshold, consecutive_failures, consecutive_successes, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        page_id:
+          type: string
+          format: uuid
+        component_id:
+          type: string
+          format: uuid
+          description: The component whose state the monitor sets.
+        kind:
+          $ref: "#/components/schemas/StatusMonitorKind"
+        name:
+          type: string
+        state:
+          $ref: "#/components/schemas/StatusMonitorState"
+        state_since:
+          type: string
+          format: date-time
+          description: The monitor's last change between `up` and `down` (its creation or resumption before that).
+        down_state:
+          $ref: "#/components/schemas/StatusComponentStateValue"
+          description: "While `down`, the state it sets: `failure_state`, or the state a push named."
+        paused:
+          type: boolean
+        failure_state:
+          $ref: "#/components/schemas/StatusMonitorFailureState"
+        on_failure:
+          $ref: "#/components/schemas/StatusMonitorOnFailure"
+        failure_threshold:
+          type: integer
+          format: int32
+          description: Failures in a row that fail the monitor.
+        recovery_threshold:
+          type: integer
+          format: int32
+          description: Successes in a row that bring a failed monitor back.
+        interval:
+          type: integer
+          format: int32
+          description: "`heartbeat`: seconds between beats."
+        grace:
+          type: integer
+          format: int32
+          description: "`heartbeat`: seconds a beat may be late."
+        token_prefix:
+          type: string
+          description: The first characters of the token, to tell tokens apart.
+        consecutive_failures:
+          type: integer
+          format: int32
+        consecutive_successes:
+          type: integer
+          format: int32
+        last_result_at:
+          type: string
+          format: date-time
+          description: The last beat, missed beat or pushed state.
+        last_message:
+          type: string
+          description: The message of the last pushed state, or of the last failure.
+        next_beat_due:
+          type: string
+          format: date-time
+          description: "`heartbeat`, not paused and not failed: when a missing beat becomes a failure."
+        incident_id:
+          type: string
+          format: uuid
+          description: The open incident this monitor opened.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    StatusMonitorList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/StatusMonitor"
+    StatusMonitorWithToken:
+      allOf:
+        - $ref: "#/components/schemas/StatusMonitor"
+        - type: object
+          required: [token, url]
+          properties:
+            token:
+              type: string
+              description: Shown only now; only its hash is kept.
+            url:
+              type: string
+              description: |
+                Where the host calls: `<public URL>/ingress/heartbeat/{token}` (add `/fail` for a failed
+                run) or `<public URL>/ingress/status/{token}`.
+    StatusMonitorCreate:
+      type: object
+      required: [kind, name, component_id]
+      properties:
+        kind:
+          $ref: "#/components/schemas/StatusMonitorKind"
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        component_id:
+          type: string
+          format: uuid
+        failure_state:
+          $ref: "#/components/schemas/StatusMonitorFailureState"
+          description: Default `major_outage`.
+        on_failure:
+          $ref: "#/components/schemas/StatusMonitorOnFailure"
+          description: Default `draft`.
+        failure_threshold:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 10
+          description: Default 1.
+        recovery_threshold:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 10
+          description: Default 1.
+        interval:
+          type: integer
+          format: int32
+          minimum: 30
+          maximum: 2592000
+          description: "`heartbeat` only: seconds between beats, 30 seconds to 30 days; default 300."
+        grace:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 86400
+          description: "`heartbeat` only: seconds a beat may be late, up to a day; default 60."
+        paused:
+          type: boolean
+    StatusMonitorUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        component_id:
+          type: string
+          format: uuid
+        failure_state:
+          $ref: "#/components/schemas/StatusMonitorFailureState"
+        on_failure:
+          $ref: "#/components/schemas/StatusMonitorOnFailure"
+        failure_threshold:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 10
+        recovery_threshold:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 10
+        interval:
+          type: integer
+          format: int32
+          minimum: 30
+          maximum: 2592000
+        grace:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 86400
+        paused:
+          type: boolean
+    StatusCheckSource:
+      type: string
+      description: |
+        `beat` and `fail` (heartbeat calls), `missed` (no beat in time), `push`, `alertmanager` and
+        `grafana` (pushed states).
+      enum: [beat, fail, missed, push, alertmanager, grafana]
+      x-enum-varnames: [StatusCheckBeat, StatusCheckFail, StatusCheckMissed, StatusCheckPush, StatusCheckAlertmanager, StatusCheckGrafana]
+    StatusCheck:
+      type: object
+      required: [id, at, ok, source]
+      properties:
+        id:
+          type: string
+          format: uuid
+        at:
+          type: string
+          format: date-time
+        ok:
+          type: boolean
+        source:
+          $ref: "#/components/schemas/StatusCheckSource"
+        state:
+          $ref: "#/components/schemas/StatusComponentStateValue"
+          description: The state a failure named.
+        message:
+          type: string
+        error:
+          type: string
+          description: Why it failed, when the server knows.
+        duration_ms:
+          type: integer
+          format: int32
+          description: For outside checks, which come later.
+        status_code:
+          type: integer
+          format: int32
+          description: For outside checks, which come later.
+    StatusCheckList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/StatusCheck"
+        next_cursor:
+          type: string
+    StatusIngressResult:
+      type: object
+      required: [state, paused]
+      properties:
+        state:
+          $ref: "#/components/schemas/StatusMonitorState"
+        paused:
+          type: boolean
+    StatusPushBody:
+      type: object
+      required: [state]
+      properties:
+        state:
+          type: string
+          enum: [operational, degraded, partial_outage, major_outage]
+          x-enum-varnames: [PushOperational, PushDegraded, PushPartialOutage, PushMajorOutage]
+        message:
+          type: string
+          maxLength: 1000
+    AlertmanagerAlert:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [firing, resolved]
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        startsAt:
+          type: string
+        endsAt:
+          type: string
+        generatorURL:
+          type: string
+        fingerprint:
+          type: string
+    AlertmanagerWebhookBody:
+      type: object
+      description: |
+        The body Alertmanager's `webhook_config` posts
+        (https://prometheus.io/docs/alerting/latest/configuration/#webhook_config). Grafana Alerting's
+        webhook contact point sends the same shape with `title`, `message`, `state` and `orgId` added.
+      required: [status, alerts]
+      properties:
+        version:
+          type: string
+        groupKey:
+          type: string
+        truncatedAlerts:
+          type: integer
+        status:
+          type: string
+          enum: [firing, resolved]
+        receiver:
+          type: string
+        groupLabels:
+          type: object
+          additionalProperties:
+            type: string
+        commonLabels:
+          type: object
+          additionalProperties:
+            type: string
+        commonAnnotations:
+          type: object
+          additionalProperties:
+            type: string
+        externalURL:
+          type: string
+        alerts:
+          type: array
+          items:
+            $ref: "#/components/schemas/AlertmanagerAlert"
+    GrafanaWebhookBody:
+      type: object
+      description: The body of Grafana's legacy alerting webhook notifier.
+      required: [state]
+      properties:
+        title:
+          type: string
+        ruleId:
+          type: integer
+        ruleName:
+          type: string
+        ruleUrl:
+          type: string
+        state:
+          type: string
+          enum: [alerting, ok, no_data, paused, pending]
+          x-enum-varnames: [GrafanaAlerting, GrafanaOk, GrafanaNoData, GrafanaPaused, GrafanaPending]
+        message:
+          type: string
+    StatusMonitorEventData:
+      type: object
+      required: [monitor, page]
+      properties:
+        monitor:
+          $ref: "#/components/schemas/StatusMonitor"
+        page:
+          $ref: "#/components/schemas/StatusPageRef"
+        incident_id:
+          type: string
+          format: uuid
+          description: The incident the monitor opened (`down`) or resolved (`up`).
+    StatusMonitorEvent:
+      type: object
+      description: |
+        `status.monitor.down`, `status.monitor.up`: a monitor failed or recovered. Delivered to callers
+        who hold `status:read` and can see the page's inbox.
+      required: [id, type, workspace_id, inbox_id, created_at, data]
+      properties:
+        id:
+          type: integer
+          format: int64
+        type:
+          type: string
+          enum: [status.monitor.down, status.monitor.up]
+          x-enum-varnames: [StatusMonitorDownEvent, StatusMonitorUpEvent]
+        workspace_id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          $ref: "#/components/schemas/StatusMonitorEventData"
+    WebhookStatusMonitorPayload:
+      allOf:
+        - $ref: "#/components/schemas/WebhookPayloadBase"
+        - type: object
+          required: [data]
+          properties:
+            data:
+              $ref: "#/components/schemas/StatusMonitorEventData"
     PublicStatusDay:
       type: object
       required: [date, state]

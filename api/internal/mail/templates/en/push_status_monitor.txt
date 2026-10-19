@@ -1,0 +1,3 @@
+{{.Inbox}} · {{.Component}}
+
+{{if .Down}}{{.Monitor}} failed{{if .State}}: {{.State}}{{end}}{{else}}{{.Monitor}} recovered{{end}}

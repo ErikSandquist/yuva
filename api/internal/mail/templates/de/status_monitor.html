@@ -1,0 +1,7 @@
+{{template "heading" (print .Component (or (and .Down " ist ausgefallen") " funktioniert wieder"))}}
+<p style="margin:0 0 16px 0;">{{if .Down}}Der Monitor <strong>{{.Monitor}}</strong> der Statusseite <strong>{{.Page}}</strong> ist fehlgeschlagen{{if .State}} und hat {{.Component}} auf <strong>{{.State}}</strong> gesetzt{{end}}.{{else}}Der Monitor <strong>{{.Monitor}}</strong> der Statusseite <strong>{{.Page}}</strong> ist wieder in Ordnung und hat {{.Component}} zurückgesetzt.{{end}}</p>
+{{- if and .Down .Message}}
+{{template "quote" .Message}}
+{{- end}}
+{{template "button" (button .URL "Monitore öffnen")}}
+{{define "status_monitor.footer"}}Sie erhalten diese E-Mail, weil Sie E-Mails zu neuen Unterhaltungen in {{.Inbox}} gewählt haben. <a href="{{.SettingsURL}}" target="_blank" style="color:#71717a;text-decoration:underline;">Wählen Sie, welche E-Mails Sie erhalten</a>{{end}}

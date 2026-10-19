@@ -1,0 +1,13 @@
+{
+  "dashboardId": 1,
+  "evalMatches": [],
+  "message": "Queue depth is above 10,000",
+  "orgId": 1,
+  "panelId": 7,
+  "ruleId": 42,
+  "ruleName": "Queue depth alert",
+  "ruleUrl": "https://grafana.example.com/d/queue01/workers?viewPanel=7&orgId=1",
+  "state": "no_data",
+  "tags": {},
+  "title": "[No Data] Queue depth alert"
+}

@@ -33,14 +33,16 @@ func Migrate(ctx context.Context, pool *pgxpool.Pool, log *slog.Logger) error {
 }
 
 const (
-	EventRetention          = 7 * 24 * time.Hour
-	WebhookRetention        = 7 * 24 * time.Hour
-	IdempotencyRetention    = 24 * time.Hour
-	UnusedOAuthClientAge    = 30 * 24 * time.Hour
-	PresenceSweepInterval   = time.Minute
-	OperatorDigestInterval  = time.Minute
-	BroadcastSweepInterval  = 5 * time.Minute
-	SESTenantStatusInterval = 5 * time.Minute
+	EventRetention              = 7 * 24 * time.Hour
+	WebhookRetention            = 7 * 24 * time.Hour
+	IdempotencyRetention        = 24 * time.Hour
+	UnusedOAuthClientAge        = 30 * 24 * time.Hour
+	PresenceSweepInterval       = time.Minute
+	OperatorDigestInterval      = time.Minute
+	BroadcastSweepInterval      = 5 * time.Minute
+	SESTenantStatusInterval     = 5 * time.Minute
+	StatusMonitorSweepInterval  = 30 * time.Second
+	StatusChecksCleanupInterval = time.Hour
 )
 
 // BroadcastQueue holds the broadcast sending jobs, so a large send never delays replies,
@@ -103,6 +105,12 @@ func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorker
 		river.NewPeriodicJob(river.PeriodicInterval(MigrationWatchdogInterval), func() (river.JobArgs, *river.InsertOpts) {
 			return MigrationWatchdogArgs{}, nil
 		}, &river.PeriodicJobOpts{ID: "migration_watchdog", RunOnStart: true}),
+		river.NewPeriodicJob(river.PeriodicInterval(StatusMonitorSweepInterval), func() (river.JobArgs, *river.InsertOpts) {
+			return StatusMonitorSweepArgs{}, nil
+		}, &river.PeriodicJobOpts{ID: "status_monitor_sweep", RunOnStart: true}),
+		river.NewPeriodicJob(river.PeriodicInterval(StatusChecksCleanupInterval), func() (river.JobArgs, *river.InsertOpts) {
+			return StatusChecksCleanupArgs{}, nil
+		}, &river.PeriodicJobOpts{ID: "status_checks_cleanup", RunOnStart: true}),
 	}
 	if sesTenants {
 		periodic = append(periodic, river.NewPeriodicJob(river.PeriodicInterval(SESTenantStatusInterval), func() (river.JobArgs, *river.InsertOpts) {
@@ -207,6 +215,16 @@ func (SESTenantStatusArgs) InsertOpts() river.InsertOpts {
 		rivertype.JobStateAvailable, rivertype.JobStatePending, rivertype.JobStateRunning, rivertype.JobStateScheduled, rivertype.JobStateRetryable,
 	}}}
 }
+
+// StatusMonitorSweepArgs is worked by the api package: it fails heartbeats whose beat is overdue.
+type StatusMonitorSweepArgs struct{}
+
+func (StatusMonitorSweepArgs) Kind() string { return "status_monitor_sweep" }
+
+// StatusChecksCleanupArgs is worked by the api package: it deletes monitor checks after 30 days.
+type StatusChecksCleanupArgs struct{}
+
+func (StatusChecksCleanupArgs) Kind() string { return "status_checks_cleanup" }
 
 // MigrationWatchdogArgs is worked by the api package, which owns migrations.
 type MigrationWatchdogArgs struct{}

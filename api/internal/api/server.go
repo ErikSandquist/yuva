@@ -76,6 +76,7 @@ type Server struct {
 	ses         SESSettings
 	status      StatusSettings
 	statusCache *statusCache
+	started     time.Time
 	sesCaller   atomic.Pointer[string]
 
 	mcp        http.Handler
@@ -245,7 +246,7 @@ func New(d Deps) *Server {
 		chat: chat, limits: newRateLimiter(), webhooks: d.Webhooks, hooks: hooks, push: pusher,
 		noPanel: d.DisablePanel, panelKey: d.PanelAnalyticsKey, noWidget: d.DisableWidget, operator: d.OperatorEmails, imagesMax: d.EmailImagesMaxBytes,
 		broadcasts: d.Broadcasts, imports: importSettings(d.Imports), migrations: migrationSettings(d.Migrations), ses: d.SES,
-		status: d.Status, statusCache: newStatusCache(),
+		status: d.Status, statusCache: newStatusCache(), started: now(),
 	}
 	if !d.DisableMCP {
 		srv.mcp, srv.mcpSchemas = newMCPHandler(), mcp.NewSchemaCache()
@@ -344,6 +345,11 @@ func (s *Server) Handler() http.Handler {
 	s.routeStatus(mux)
 	mux.HandleFunc("POST /ingress/email", s.serveIngressEmail)
 	mux.HandleFunc("POST /ingress/ses", s.serveIngressSES)
+	mux.HandleFunc("GET "+heartbeatPathPrefix+"{token}", s.serveHeartbeat(false))
+	mux.HandleFunc("POST "+heartbeatPathPrefix+"{token}", s.serveHeartbeat(false))
+	mux.HandleFunc("GET "+heartbeatPathPrefix+"{token}/fail", s.serveHeartbeat(true))
+	mux.HandleFunc("POST "+heartbeatPathPrefix+"{token}/fail", s.serveHeartbeat(true))
+	mux.HandleFunc("POST "+statusPushPathPrefix+"{token}", s.serveStatusPush)
 	mux.HandleFunc("GET "+emailConfirmPath, s.serveEmailConfirm)
 	mux.HandleFunc("POST "+emailConfirmPath, s.serveEmailConfirmPost)
 	mux.HandleFunc("GET "+ratingPathPrefix+"{token}", s.serveRatingPage)
@@ -507,6 +513,7 @@ func (s *Server) recoverer(next http.Handler) http.Handler {
 var tokenPathPrefixes = []string{
 	sharePagePrefix, shareClientPrefix, confirmPathPrefix, managePathPrefix,
 	clickPathPrefix, ratingPathPrefix, unsubscribePathPrefix, emailImagePathPrefix,
+	heartbeatPathPrefix, statusPushPathPrefix,
 }
 
 // loggedPath leaves bearer tokens out of logs: anyone holding one can use the link.

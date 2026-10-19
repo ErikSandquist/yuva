@@ -1,0 +1,9 @@
+Acme Support: Backups ist ausgefallen
+
+Der Monitor Nightly backup der Statusseite Acme status ist fehlgeschlagen und hat Backups auf Major outage gesetzt.
+
+> Hello, my invoice is wrong.
+
+Monitore öffnen: https://yuva.example.com/status-pages/1/monitors
+
+Sie erhalten diese E-Mail, weil Sie E-Mails zu neuen Unterhaltungen in Acme Support gewählt haben. Wählen Sie, welche E-Mails Sie erhalten: https://yuva.example.com/settings/notifications

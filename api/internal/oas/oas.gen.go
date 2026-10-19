@@ -23,6 +23,42 @@ import (
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
+// Defines values for AlertmanagerAlertStatus.
+const (
+	AlertmanagerAlertStatusFiring   AlertmanagerAlertStatus = "firing"
+	AlertmanagerAlertStatusResolved AlertmanagerAlertStatus = "resolved"
+)
+
+// Valid indicates whether the value is a known member of the AlertmanagerAlertStatus enum.
+func (e AlertmanagerAlertStatus) Valid() bool {
+	switch e {
+	case AlertmanagerAlertStatusFiring:
+		return true
+	case AlertmanagerAlertStatusResolved:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AlertmanagerWebhookBodyStatus.
+const (
+	AlertmanagerWebhookBodyStatusFiring   AlertmanagerWebhookBodyStatus = "firing"
+	AlertmanagerWebhookBodyStatusResolved AlertmanagerWebhookBodyStatus = "resolved"
+)
+
+// Valid indicates whether the value is a known member of the AlertmanagerWebhookBodyStatus enum.
+func (e AlertmanagerWebhookBodyStatus) Valid() bool {
+	switch e {
+	case AlertmanagerWebhookBodyStatusFiring:
+		return true
+	case AlertmanagerWebhookBodyStatusResolved:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsAlertEventType.
 const (
 	AnalyticsAlertEventTypeAnalyticsAlert AnalyticsAlertEventType = "analytics.alert"
@@ -187,16 +223,16 @@ func (e AnalyticsCompareWith) Valid() bool {
 
 // Defines values for AnalyticsConsentA.
 const (
-	N0 AnalyticsConsentA = 0
-	N1 AnalyticsConsentA = 1
+	AnalyticsConsentAN0 AnalyticsConsentA = 0
+	AnalyticsConsentAN1 AnalyticsConsentA = 1
 )
 
 // Valid indicates whether the value is a known member of the AnalyticsConsentA enum.
 func (e AnalyticsConsentA) Valid() bool {
 	switch e {
-	case N0:
+	case AnalyticsConsentAN0:
 		return true
-	case N1:
+	case AnalyticsConsentAN1:
 		return true
 	default:
 		return false
@@ -2573,6 +2609,33 @@ func (e FeedbackProgress) Valid() bool {
 	}
 }
 
+// Defines values for GrafanaWebhookBodyState.
+const (
+	GrafanaAlerting GrafanaWebhookBodyState = "alerting"
+	GrafanaNoData   GrafanaWebhookBodyState = "no_data"
+	GrafanaOk       GrafanaWebhookBodyState = "ok"
+	GrafanaPaused   GrafanaWebhookBodyState = "paused"
+	GrafanaPending  GrafanaWebhookBodyState = "pending"
+)
+
+// Valid indicates whether the value is a known member of the GrafanaWebhookBodyState enum.
+func (e GrafanaWebhookBodyState) Valid() bool {
+	switch e {
+	case GrafanaAlerting:
+		return true
+	case GrafanaNoData:
+		return true
+	case GrafanaOk:
+		return true
+	case GrafanaPaused:
+		return true
+	case GrafanaPending:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for HealthStatus.
 const (
 	Ok HealthStatus = "ok"
@@ -4424,6 +4487,36 @@ func (e SmtpTls) Valid() bool {
 	}
 }
 
+// Defines values for StatusCheckSource.
+const (
+	StatusCheckAlertmanager StatusCheckSource = "alertmanager"
+	StatusCheckBeat         StatusCheckSource = "beat"
+	StatusCheckFail         StatusCheckSource = "fail"
+	StatusCheckGrafana      StatusCheckSource = "grafana"
+	StatusCheckMissed       StatusCheckSource = "missed"
+	StatusCheckPush         StatusCheckSource = "push"
+)
+
+// Valid indicates whether the value is a known member of the StatusCheckSource enum.
+func (e StatusCheckSource) Valid() bool {
+	switch e {
+	case StatusCheckAlertmanager:
+		return true
+	case StatusCheckBeat:
+		return true
+	case StatusCheckFail:
+		return true
+	case StatusCheckGrafana:
+		return true
+	case StatusCheckMissed:
+		return true
+	case StatusCheckPush:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for StatusComponentEventType.
 const (
 	StatusComponentEventTypeStatusComponentUpdated StatusComponentEventType = "status.component.updated"
@@ -4589,6 +4682,129 @@ func (e StatusIncidentState) Valid() bool {
 	case StatusResolved:
 		return true
 	case StatusScheduled:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusMonitorEventType.
+const (
+	StatusMonitorDownEvent StatusMonitorEventType = "status.monitor.down"
+	StatusMonitorUpEvent   StatusMonitorEventType = "status.monitor.up"
+)
+
+// Valid indicates whether the value is a known member of the StatusMonitorEventType enum.
+func (e StatusMonitorEventType) Valid() bool {
+	switch e {
+	case StatusMonitorDownEvent:
+		return true
+	case StatusMonitorUpEvent:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusMonitorFailureState.
+const (
+	StatusFailureDegraded      StatusMonitorFailureState = "degraded"
+	StatusFailureMajorOutage   StatusMonitorFailureState = "major_outage"
+	StatusFailurePartialOutage StatusMonitorFailureState = "partial_outage"
+)
+
+// Valid indicates whether the value is a known member of the StatusMonitorFailureState enum.
+func (e StatusMonitorFailureState) Valid() bool {
+	switch e {
+	case StatusFailureDegraded:
+		return true
+	case StatusFailureMajorOutage:
+		return true
+	case StatusFailurePartialOutage:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusMonitorKind.
+const (
+	StatusMonitorHeartbeat StatusMonitorKind = "heartbeat"
+	StatusMonitorPush      StatusMonitorKind = "push"
+)
+
+// Valid indicates whether the value is a known member of the StatusMonitorKind enum.
+func (e StatusMonitorKind) Valid() bool {
+	switch e {
+	case StatusMonitorHeartbeat:
+		return true
+	case StatusMonitorPush:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusMonitorOnFailure.
+const (
+	StatusOnFailureDraft   StatusMonitorOnFailure = "draft"
+	StatusOnFailureNone    StatusMonitorOnFailure = "none"
+	StatusOnFailurePublish StatusMonitorOnFailure = "publish"
+)
+
+// Valid indicates whether the value is a known member of the StatusMonitorOnFailure enum.
+func (e StatusMonitorOnFailure) Valid() bool {
+	switch e {
+	case StatusOnFailureDraft:
+		return true
+	case StatusOnFailureNone:
+		return true
+	case StatusOnFailurePublish:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusMonitorState.
+const (
+	MonitorDown    StatusMonitorState = "down"
+	MonitorPending StatusMonitorState = "pending"
+	MonitorUp      StatusMonitorState = "up"
+)
+
+// Valid indicates whether the value is a known member of the StatusMonitorState enum.
+func (e StatusMonitorState) Valid() bool {
+	switch e {
+	case MonitorDown:
+		return true
+	case MonitorPending:
+		return true
+	case MonitorUp:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusPushBodyState.
+const (
+	PushDegraded      StatusPushBodyState = "degraded"
+	PushMajorOutage   StatusPushBodyState = "major_outage"
+	PushOperational   StatusPushBodyState = "operational"
+	PushPartialOutage StatusPushBodyState = "partial_outage"
+)
+
+// Valid indicates whether the value is a known member of the StatusPushBodyState enum.
+func (e StatusPushBodyState) Valid() bool {
+	switch e {
+	case PushDegraded:
+		return true
+	case PushMajorOutage:
+		return true
+	case PushOperational:
+		return true
+	case PushPartialOutage:
 		return true
 	default:
 		return false
@@ -4851,6 +5067,8 @@ const (
 	WebhookEventTypeStatusIncidentCreated  WebhookEventType = "status.incident.created"
 	WebhookEventTypeStatusIncidentResolved WebhookEventType = "status.incident.resolved"
 	WebhookEventTypeStatusIncidentUpdated  WebhookEventType = "status.incident.updated"
+	WebhookEventTypeStatusMonitorDown      WebhookEventType = "status.monitor.down"
+	WebhookEventTypeStatusMonitorUp        WebhookEventType = "status.monitor.up"
 	WebhookEventTypeSubscriptionCreated    WebhookEventType = "subscription.created"
 	WebhookEventTypeSubscriptionUpdated    WebhookEventType = "subscription.updated"
 )
@@ -4897,6 +5115,10 @@ func (e WebhookEventType) Valid() bool {
 	case WebhookEventTypeStatusIncidentResolved:
 		return true
 	case WebhookEventTypeStatusIncidentUpdated:
+		return true
+	case WebhookEventTypeStatusMonitorDown:
+		return true
+	case WebhookEventTypeStatusMonitorUp:
 		return true
 	case WebhookEventTypeSubscriptionCreated:
 		return true
@@ -4973,6 +5195,30 @@ func (e ListConsentFormat) Valid() bool {
 	case ListConsentFormatIys:
 		return true
 	case ListConsentFormatJson:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusHeartbeatFail.
+const (
+	StatusHeartbeatFailFalse StatusHeartbeatFail = "false"
+	StatusHeartbeatFailN0    StatusHeartbeatFail = "0"
+	StatusHeartbeatFailN1    StatusHeartbeatFail = "1"
+	StatusHeartbeatFailTrue  StatusHeartbeatFail = "true"
+)
+
+// Valid indicates whether the value is a known member of the StatusHeartbeatFail enum.
+func (e StatusHeartbeatFail) Valid() bool {
+	switch e {
+	case StatusHeartbeatFailFalse:
+		return true
+	case StatusHeartbeatFailN0:
+		return true
+	case StatusHeartbeatFailN1:
+		return true
+	case StatusHeartbeatFailTrue:
 		return true
 	default:
 		return false
@@ -5188,6 +5434,39 @@ type AccountDeletion struct {
 	// Email The person's e-mail address (case is ignored); anything else is refused with `400 confirmation_mismatch`.
 	Email string `json:"email"`
 }
+
+// AlertmanagerAlert defines model for AlertmanagerAlert.
+type AlertmanagerAlert struct {
+	Annotations  *map[string]string       `json:"annotations,omitempty"`
+	EndsAt       *string                  `json:"endsAt,omitempty"`
+	Fingerprint  *string                  `json:"fingerprint,omitempty"`
+	GeneratorURL *string                  `json:"generatorURL,omitempty"`
+	Labels       *map[string]string       `json:"labels,omitempty"`
+	StartsAt     *string                  `json:"startsAt,omitempty"`
+	Status       *AlertmanagerAlertStatus `json:"status,omitempty"`
+}
+
+// AlertmanagerAlertStatus defines model for AlertmanagerAlert.Status.
+type AlertmanagerAlertStatus string
+
+// AlertmanagerWebhookBody The body Alertmanager's `webhook_config` posts
+// (https://prometheus.io/docs/alerting/latest/configuration/#webhook_config). Grafana Alerting's
+// webhook contact point sends the same shape with `title`, `message`, `state` and `orgId` added.
+type AlertmanagerWebhookBody struct {
+	Alerts            []AlertmanagerAlert           `json:"alerts"`
+	CommonAnnotations *map[string]string            `json:"commonAnnotations,omitempty"`
+	CommonLabels      *map[string]string            `json:"commonLabels,omitempty"`
+	ExternalURL       *string                       `json:"externalURL,omitempty"`
+	GroupKey          *string                       `json:"groupKey,omitempty"`
+	GroupLabels       *map[string]string            `json:"groupLabels,omitempty"`
+	Receiver          *string                       `json:"receiver,omitempty"`
+	Status            AlertmanagerWebhookBodyStatus `json:"status"`
+	TruncatedAlerts   *int                          `json:"truncatedAlerts,omitempty"`
+	Version           *string                       `json:"version,omitempty"`
+}
+
+// AlertmanagerWebhookBodyStatus defines model for AlertmanagerWebhookBody.Status.
+type AlertmanagerWebhookBodyStatus string
 
 // AnalyticsAlert defines model for AnalyticsAlert.
 type AnalyticsAlert struct {
@@ -10743,6 +11022,19 @@ type FeedbackFields struct {
 // Done, Won't do. Separate from the status: a feedback can be `done` and still open.
 type FeedbackProgress string
 
+// GrafanaWebhookBody The body of Grafana's legacy alerting webhook notifier.
+type GrafanaWebhookBody struct {
+	Message  *string                 `json:"message,omitempty"`
+	RuleId   *int                    `json:"ruleId,omitempty"`
+	RuleName *string                 `json:"ruleName,omitempty"`
+	RuleUrl  *string                 `json:"ruleUrl,omitempty"`
+	State    GrafanaWebhookBodyState `json:"state"`
+	Title    *string                 `json:"title,omitempty"`
+}
+
+// GrafanaWebhookBodyState defines model for GrafanaWebhookBody.State.
+type GrafanaWebhookBodyState string
+
 // Health defines model for Health.
 type Health struct {
 	Status HealthStatus `json:"status"`
@@ -13916,6 +14208,40 @@ type Stats struct {
 	Until time.Time `json:"until"`
 }
 
+// StatusCheck defines model for StatusCheck.
+type StatusCheck struct {
+	At time.Time `json:"at"`
+
+	// DurationMs For outside checks, which come later.
+	DurationMs *int32 `json:"duration_ms,omitempty"`
+
+	// Error Why it failed, when the server knows.
+	Error   *string   `json:"error,omitempty"`
+	Id      uuid.UUID `json:"id"`
+	Message *string   `json:"message,omitempty"`
+	Ok      bool      `json:"ok"`
+
+	// Source `beat` and `fail` (heartbeat calls), `missed` (no beat in time), `push`, `alertmanager` and
+	// `grafana` (pushed states).
+	Source StatusCheckSource `json:"source"`
+
+	// State The state a failure named.
+	State *StatusComponentStateValue `json:"state,omitempty"`
+
+	// StatusCode For outside checks, which come later.
+	StatusCode *int32 `json:"status_code,omitempty"`
+}
+
+// StatusCheckList defines model for StatusCheckList.
+type StatusCheckList struct {
+	Items      []StatusCheck `json:"items"`
+	NextCursor *string       `json:"next_cursor,omitempty"`
+}
+
+// StatusCheckSource `beat` and `fail` (heartbeat calls), `missed` (no beat in time), `push`, `alertmanager` and
+// `grafana` (pushed states).
+type StatusCheckSource string
+
 // StatusColor Examples: #2563eb
 type StatusColor = string
 
@@ -14184,6 +14510,217 @@ type StatusIncidentUpdateEdit struct {
 	Body string `json:"body"`
 }
 
+// StatusIngressResult defines model for StatusIngressResult.
+type StatusIngressResult struct {
+	Paused bool `json:"paused"`
+
+	// State `pending` until the first result decides, then `up` or `down`.
+	State StatusMonitorState `json:"state"`
+}
+
+// StatusMonitor defines model for StatusMonitor.
+type StatusMonitor struct {
+	// ComponentId The component whose state the monitor sets.
+	ComponentId          uuid.UUID `json:"component_id"`
+	ConsecutiveFailures  int32     `json:"consecutive_failures"`
+	ConsecutiveSuccesses int32     `json:"consecutive_successes"`
+	CreatedAt            time.Time `json:"created_at"`
+
+	// DownState While `down`, the state it sets: `failure_state`, or the state a push named.
+	DownState    *StatusComponentStateValue `json:"down_state,omitempty"`
+	FailureState StatusMonitorFailureState  `json:"failure_state"`
+
+	// FailureThreshold Failures in a row that fail the monitor.
+	FailureThreshold int32 `json:"failure_threshold"`
+
+	// Grace `heartbeat`: seconds a beat may be late.
+	Grace *int32    `json:"grace,omitempty"`
+	Id    uuid.UUID `json:"id"`
+
+	// IncidentId The open incident this monitor opened.
+	IncidentId *uuid.UUID `json:"incident_id,omitempty"`
+
+	// Interval `heartbeat`: seconds between beats.
+	Interval *int32 `json:"interval,omitempty"`
+
+	// Kind `heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state.
+	Kind StatusMonitorKind `json:"kind"`
+
+	// LastMessage The message of the last pushed state, or of the last failure.
+	LastMessage *string `json:"last_message,omitempty"`
+
+	// LastResultAt The last beat, missed beat or pushed state.
+	LastResultAt *time.Time `json:"last_result_at,omitempty"`
+	Name         string     `json:"name"`
+
+	// NextBeatDue `heartbeat`, not paused and not failed: when a missing beat becomes a failure.
+	NextBeatDue *time.Time `json:"next_beat_due,omitempty"`
+
+	// OnFailure What failing opens: `none`, a `draft` incident members publish, or a published incident (`publish`).
+	OnFailure StatusMonitorOnFailure `json:"on_failure"`
+	PageId    uuid.UUID              `json:"page_id"`
+	Paused    bool                   `json:"paused"`
+
+	// RecoveryThreshold Successes in a row that bring a failed monitor back.
+	RecoveryThreshold int32 `json:"recovery_threshold"`
+
+	// State `pending` until the first result decides, then `up` or `down`.
+	State StatusMonitorState `json:"state"`
+
+	// StateSince The monitor's last change between `up` and `down` (its creation or resumption before that).
+	StateSince time.Time `json:"state_since"`
+
+	// TokenPrefix The first characters of the token, to tell tokens apart.
+	TokenPrefix *string   `json:"token_prefix,omitempty"`
+	UpdatedAt   time.Time `json:"updated_at"`
+}
+
+// StatusMonitorCreate defines model for StatusMonitorCreate.
+type StatusMonitorCreate struct {
+	ComponentId uuid.UUID `json:"component_id"`
+
+	// FailureState Default `major_outage`.
+	FailureState *StatusMonitorFailureState `json:"failure_state,omitempty"`
+
+	// FailureThreshold Default 1.
+	FailureThreshold *int32 `json:"failure_threshold,omitempty"`
+
+	// Grace `heartbeat` only: seconds a beat may be late, up to a day; default 60.
+	Grace *int32 `json:"grace,omitempty"`
+
+	// Interval `heartbeat` only: seconds between beats, 30 seconds to 30 days; default 300.
+	Interval *int32 `json:"interval,omitempty"`
+
+	// Kind `heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state.
+	Kind StatusMonitorKind `json:"kind"`
+	Name string            `json:"name"`
+
+	// OnFailure Default `draft`.
+	OnFailure *StatusMonitorOnFailure `json:"on_failure,omitempty"`
+	Paused    *bool                   `json:"paused,omitempty"`
+
+	// RecoveryThreshold Default 1.
+	RecoveryThreshold *int32 `json:"recovery_threshold,omitempty"`
+}
+
+// StatusMonitorEvent `status.monitor.down`, `status.monitor.up`: a monitor failed or recovered. Delivered to callers
+// who hold `status:read` and can see the page's inbox.
+type StatusMonitorEvent struct {
+	CreatedAt   time.Time              `json:"created_at"`
+	Data        StatusMonitorEventData `json:"data"`
+	Id          int64                  `json:"id"`
+	InboxId     uuid.UUID              `json:"inbox_id"`
+	Type        StatusMonitorEventType `json:"type"`
+	WorkspaceId uuid.UUID              `json:"workspace_id"`
+}
+
+// StatusMonitorEventType defines model for StatusMonitorEvent.Type.
+type StatusMonitorEventType string
+
+// StatusMonitorEventData defines model for StatusMonitorEventData.
+type StatusMonitorEventData struct {
+	// IncidentId The incident the monitor opened (`down`) or resolved (`up`).
+	IncidentId *uuid.UUID    `json:"incident_id,omitempty"`
+	Monitor    StatusMonitor `json:"monitor"`
+	Page       StatusPageRef `json:"page"`
+}
+
+// StatusMonitorFailureState defines model for StatusMonitorFailureState.
+type StatusMonitorFailureState string
+
+// StatusMonitorKind `heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state.
+type StatusMonitorKind string
+
+// StatusMonitorList defines model for StatusMonitorList.
+type StatusMonitorList struct {
+	Items []StatusMonitor `json:"items"`
+}
+
+// StatusMonitorOnFailure What failing opens: `none`, a `draft` incident members publish, or a published incident (`publish`).
+type StatusMonitorOnFailure string
+
+// StatusMonitorState `pending` until the first result decides, then `up` or `down`.
+type StatusMonitorState string
+
+// StatusMonitorUpdate defines model for StatusMonitorUpdate.
+type StatusMonitorUpdate struct {
+	ComponentId      *uuid.UUID                 `json:"component_id,omitempty"`
+	FailureState     *StatusMonitorFailureState `json:"failure_state,omitempty"`
+	FailureThreshold *int32                     `json:"failure_threshold,omitempty"`
+	Grace            *int32                     `json:"grace,omitempty"`
+	Interval         *int32                     `json:"interval,omitempty"`
+	Name             *string                    `json:"name,omitempty"`
+
+	// OnFailure What failing opens: `none`, a `draft` incident members publish, or a published incident (`publish`).
+	OnFailure         *StatusMonitorOnFailure `json:"on_failure,omitempty"`
+	Paused            *bool                   `json:"paused,omitempty"`
+	RecoveryThreshold *int32                  `json:"recovery_threshold,omitempty"`
+}
+
+// StatusMonitorWithToken defines model for StatusMonitorWithToken.
+type StatusMonitorWithToken struct {
+	// ComponentId The component whose state the monitor sets.
+	ComponentId          uuid.UUID `json:"component_id"`
+	ConsecutiveFailures  int32     `json:"consecutive_failures"`
+	ConsecutiveSuccesses int32     `json:"consecutive_successes"`
+	CreatedAt            time.Time `json:"created_at"`
+
+	// DownState While `down`, the state it sets: `failure_state`, or the state a push named.
+	DownState    *StatusComponentStateValue `json:"down_state,omitempty"`
+	FailureState StatusMonitorFailureState  `json:"failure_state"`
+
+	// FailureThreshold Failures in a row that fail the monitor.
+	FailureThreshold int32 `json:"failure_threshold"`
+
+	// Grace `heartbeat`: seconds a beat may be late.
+	Grace *int32    `json:"grace,omitempty"`
+	Id    uuid.UUID `json:"id"`
+
+	// IncidentId The open incident this monitor opened.
+	IncidentId *uuid.UUID `json:"incident_id,omitempty"`
+
+	// Interval `heartbeat`: seconds between beats.
+	Interval *int32 `json:"interval,omitempty"`
+
+	// Kind `heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state.
+	Kind StatusMonitorKind `json:"kind"`
+
+	// LastMessage The message of the last pushed state, or of the last failure.
+	LastMessage *string `json:"last_message,omitempty"`
+
+	// LastResultAt The last beat, missed beat or pushed state.
+	LastResultAt *time.Time `json:"last_result_at,omitempty"`
+	Name         string     `json:"name"`
+
+	// NextBeatDue `heartbeat`, not paused and not failed: when a missing beat becomes a failure.
+	NextBeatDue *time.Time `json:"next_beat_due,omitempty"`
+
+	// OnFailure What failing opens: `none`, a `draft` incident members publish, or a published incident (`publish`).
+	OnFailure StatusMonitorOnFailure `json:"on_failure"`
+	PageId    uuid.UUID              `json:"page_id"`
+	Paused    bool                   `json:"paused"`
+
+	// RecoveryThreshold Successes in a row that bring a failed monitor back.
+	RecoveryThreshold int32 `json:"recovery_threshold"`
+
+	// State `pending` until the first result decides, then `up` or `down`.
+	State StatusMonitorState `json:"state"`
+
+	// StateSince The monitor's last change between `up` and `down` (its creation or resumption before that).
+	StateSince time.Time `json:"state_since"`
+
+	// Token Shown only now; only its hash is kept.
+	Token string `json:"token"`
+
+	// TokenPrefix The first characters of the token, to tell tokens apart.
+	TokenPrefix *string   `json:"token_prefix,omitempty"`
+	UpdatedAt   time.Time `json:"updated_at"`
+
+	// Url Where the host calls: `<public URL>/ingress/heartbeat/{token}` (add `/fail` for a failed
+	// run) or `<public URL>/ingress/status/{token}`.
+	Url string `json:"url"`
+}
+
 // StatusPage defines model for StatusPage.
 type StatusPage struct {
 	// AccentColor Examples: #2563eb
@@ -14301,6 +14838,15 @@ type StatusPageUpdate struct {
 	SupportUrl nullable.Nullable[string] `json:"support_url,omitempty"`
 	Timezone   *string                   `json:"timezone,omitempty"`
 }
+
+// StatusPushBody defines model for StatusPushBody.
+type StatusPushBody struct {
+	Message *string             `json:"message,omitempty"`
+	State   StatusPushBodyState `json:"state"`
+}
+
+// StatusPushBodyState defines model for StatusPushBody.State.
+type StatusPushBodyState string
 
 // StatusStateSource Who set a component's current state.
 type StatusStateSource string
@@ -14964,6 +15510,19 @@ type WebhookStatusIncidentPayload struct {
 	WorkspaceId uuid.UUID        `json:"workspace_id"`
 }
 
+// WebhookStatusMonitorPayload defines model for WebhookStatusMonitorPayload.
+type WebhookStatusMonitorPayload struct {
+	Data StatusMonitorEventData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
+}
+
 // WebhookSubscriptionData defines model for WebhookSubscriptionData.
 type WebhookSubscriptionData struct {
 	// Contact The contact as a host backend needs it.
@@ -15191,8 +15750,17 @@ type StatusComponentId = uuid.UUID
 // StatusGroupId defines model for StatusGroupId.
 type StatusGroupId = uuid.UUID
 
+// StatusHeartbeatFail defines model for StatusHeartbeatFail.
+type StatusHeartbeatFail string
+
 // StatusIncidentId defines model for StatusIncidentId.
 type StatusIncidentId = uuid.UUID
+
+// StatusMonitorId defines model for StatusMonitorId.
+type StatusMonitorId = uuid.UUID
+
+// StatusMonitorToken defines model for StatusMonitorToken.
+type StatusMonitorToken = string
 
 // StatusPageId defines model for StatusPageId.
 type StatusPageId = uuid.UUID
@@ -17408,6 +17976,57 @@ type EditStatusIncidentUpdateParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListStatusMonitorsParams defines parameters for ListStatusMonitors.
+type ListStatusMonitorsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateStatusMonitorParams defines parameters for CreateStatusMonitor.
+type CreateStatusMonitorParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteStatusMonitorParams defines parameters for DeleteStatusMonitor.
+type DeleteStatusMonitorParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetStatusMonitorParams defines parameters for GetStatusMonitor.
+type GetStatusMonitorParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateStatusMonitorParams defines parameters for UpdateStatusMonitor.
+type UpdateStatusMonitorParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListStatusMonitorChecksParams defines parameters for ListStatusMonitorChecks.
+type ListStatusMonitorChecksParams struct {
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// RotateStatusMonitorTokenParams defines parameters for RotateStatusMonitorToken.
+type RotateStatusMonitorTokenParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // PreviewStatusPageParams defines parameters for PreviewStatusPage.
 type PreviewStatusPageParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
@@ -17809,6 +18428,34 @@ type WebhookStatusIncidentUpdatedParams struct {
 	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
 }
 
+// WebhookStatusMonitorDownParams defines parameters for WebhookStatusMonitorDown.
+type WebhookStatusMonitorDownParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookStatusMonitorUpParams defines parameters for WebhookStatusMonitorUp.
+type WebhookStatusMonitorUpParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
 // WebhookSubscriptionCreatedParams defines parameters for WebhookSubscriptionCreated.
 type WebhookSubscriptionCreatedParams struct {
 	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
@@ -18197,6 +18844,12 @@ type CreateStatusIncidentUpdateJSONRequestBody = StatusIncidentUpdateCreate
 // EditStatusIncidentUpdateJSONRequestBody defines body for EditStatusIncidentUpdate for application/json ContentType.
 type EditStatusIncidentUpdateJSONRequestBody = StatusIncidentUpdateEdit
 
+// CreateStatusMonitorJSONRequestBody defines body for CreateStatusMonitor for application/json ContentType.
+type CreateStatusMonitorJSONRequestBody = StatusMonitorCreate
+
+// UpdateStatusMonitorJSONRequestBody defines body for UpdateStatusMonitor for application/json ContentType.
+type UpdateStatusMonitorJSONRequestBody = StatusMonitorUpdate
+
 // CreateWebhookJSONRequestBody defines body for CreateWebhook for application/json ContentType.
 type CreateWebhookJSONRequestBody = WebhookEndpointCreate
 
@@ -18274,6 +18927,12 @@ type WebhookStatusIncidentResolvedJSONRequestBody = WebhookStatusIncidentPayload
 
 // WebhookStatusIncidentUpdatedJSONRequestBody defines body for WebhookStatusIncidentUpdated for application/json ContentType.
 type WebhookStatusIncidentUpdatedJSONRequestBody = WebhookStatusIncidentPayload
+
+// WebhookStatusMonitorDownJSONRequestBody defines body for WebhookStatusMonitorDown for application/json ContentType.
+type WebhookStatusMonitorDownJSONRequestBody = WebhookStatusMonitorPayload
+
+// WebhookStatusMonitorUpJSONRequestBody defines body for WebhookStatusMonitorUp for application/json ContentType.
+type WebhookStatusMonitorUpJSONRequestBody = WebhookStatusMonitorPayload
 
 // WebhookSubscriptionCreatedJSONRequestBody defines body for WebhookSubscriptionCreated for application/json ContentType.
 type WebhookSubscriptionCreatedJSONRequestBody = WebhookSubscriptionPayload
@@ -20469,6 +21128,32 @@ func (t *RealtimeMessage) MergeStatusIncidentEvent(v StatusIncidentEvent) error 
 	return err
 }
 
+// AsStatusMonitorEvent returns the union data inside the RealtimeMessage as a StatusMonitorEvent
+func (t RealtimeMessage) AsStatusMonitorEvent() (StatusMonitorEvent, error) {
+	var body StatusMonitorEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromStatusMonitorEvent overwrites any union data inside the RealtimeMessage as the provided StatusMonitorEvent
+func (t *RealtimeMessage) FromStatusMonitorEvent(v StatusMonitorEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeStatusMonitorEvent performs a merge with any union data inside the RealtimeMessage, using the provided StatusMonitorEvent
+func (t *RealtimeMessage) MergeStatusMonitorEvent(v StatusMonitorEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsMigrationProgressEvent returns the union data inside the RealtimeMessage as a MigrationProgressEvent
 func (t RealtimeMessage) AsMigrationProgressEvent() (MigrationProgressEvent, error) {
 	var body MigrationProgressEvent
@@ -20843,6 +21528,10 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsStatusIncidentEvent()
 	case "status.incident.updated":
 		return t.AsStatusIncidentEvent()
+	case "status.monitor.down":
+		return t.AsStatusMonitorEvent()
+	case "status.monitor.up":
+		return t.AsStatusMonitorEvent()
 	case "subscription.created":
 		return t.AsSubscriptionEvent()
 	case "subscription.updated":
@@ -21412,6 +22101,32 @@ func (t *StoredEvent) MergeStatusIncidentEvent(v StatusIncidentEvent) error {
 	return err
 }
 
+// AsStatusMonitorEvent returns the union data inside the StoredEvent as a StatusMonitorEvent
+func (t StoredEvent) AsStatusMonitorEvent() (StatusMonitorEvent, error) {
+	var body StatusMonitorEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromStatusMonitorEvent overwrites any union data inside the StoredEvent as the provided StatusMonitorEvent
+func (t *StoredEvent) FromStatusMonitorEvent(v StatusMonitorEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeStatusMonitorEvent performs a merge with any union data inside the StoredEvent, using the provided StatusMonitorEvent
+func (t *StoredEvent) MergeStatusMonitorEvent(v StatusMonitorEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 func (t StoredEvent) Discriminator() (string, error) {
 	var discriminator struct {
 		Discriminator string `json:"type"`
@@ -21482,6 +22197,10 @@ func (t StoredEvent) ValueByDiscriminator() (interface{}, error) {
 		return t.AsStatusIncidentEvent()
 	case "status.incident.updated":
 		return t.AsStatusIncidentEvent()
+	case "status.monitor.down":
+		return t.AsStatusMonitorEvent()
+	case "status.monitor.up":
+		return t.AsStatusMonitorEvent()
 	case "subscription.created":
 		return t.AsSubscriptionEvent()
 	case "subscription.updated":
@@ -22451,6 +23170,27 @@ type ServerInterface interface {
 	// EditStatusIncidentUpdate Edit an update's text
 	// (PATCH /v1/status-pages/{pageId}/incidents/{incidentId}/updates/{updateId})
 	EditStatusIncidentUpdate(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, updateId StatusUpdateId, params EditStatusIncidentUpdateParams)
+	// ListStatusMonitors List a page's monitors
+	// (GET /v1/status-pages/{pageId}/monitors)
+	ListStatusMonitors(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params ListStatusMonitorsParams)
+	// CreateStatusMonitor Create a monitor
+	// (POST /v1/status-pages/{pageId}/monitors)
+	CreateStatusMonitor(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params CreateStatusMonitorParams)
+	// DeleteStatusMonitor Delete a monitor
+	// (DELETE /v1/status-pages/{pageId}/monitors/{monitorId})
+	DeleteStatusMonitor(w http.ResponseWriter, r *http.Request, pageId StatusPageId, monitorId StatusMonitorId, params DeleteStatusMonitorParams)
+	// GetStatusMonitor A monitor
+	// (GET /v1/status-pages/{pageId}/monitors/{monitorId})
+	GetStatusMonitor(w http.ResponseWriter, r *http.Request, pageId StatusPageId, monitorId StatusMonitorId, params GetStatusMonitorParams)
+	// UpdateStatusMonitor Update a monitor
+	// (PATCH /v1/status-pages/{pageId}/monitors/{monitorId})
+	UpdateStatusMonitor(w http.ResponseWriter, r *http.Request, pageId StatusPageId, monitorId StatusMonitorId, params UpdateStatusMonitorParams)
+	// ListStatusMonitorChecks List a monitor's checks
+	// (GET /v1/status-pages/{pageId}/monitors/{monitorId}/checks)
+	ListStatusMonitorChecks(w http.ResponseWriter, r *http.Request, pageId StatusPageId, monitorId StatusMonitorId, params ListStatusMonitorChecksParams)
+	// RotateStatusMonitorToken Rotate a monitor's token
+	// (POST /v1/status-pages/{pageId}/monitors/{monitorId}/token)
+	RotateStatusMonitorToken(w http.ResponseWriter, r *http.Request, pageId StatusPageId, monitorId StatusMonitorId, params RotateStatusMonitorTokenParams)
 	// PreviewStatusPage Preview a status page
 	// (GET /v1/status-pages/{pageId}/preview)
 	PreviewStatusPage(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params PreviewStatusPageParams)
@@ -39636,6 +40376,446 @@ func (siw *ServerInterfaceWrapper) EditStatusIncidentUpdate(w http.ResponseWrite
 	handler.ServeHTTP(w, r)
 }
 
+// ListStatusMonitors operation middleware
+func (siw *ServerInterfaceWrapper) ListStatusMonitors(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListStatusMonitorsParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListStatusMonitors(w, r, pageId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateStatusMonitor operation middleware
+func (siw *ServerInterfaceWrapper) CreateStatusMonitor(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateStatusMonitorParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateStatusMonitor(w, r, pageId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteStatusMonitor operation middleware
+func (siw *ServerInterfaceWrapper) DeleteStatusMonitor(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "monitorId" -------------
+	var monitorId StatusMonitorId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "monitorId", r.PathValue("monitorId"), &monitorId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "monitorId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteStatusMonitorParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteStatusMonitor(w, r, pageId, monitorId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetStatusMonitor operation middleware
+func (siw *ServerInterfaceWrapper) GetStatusMonitor(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "monitorId" -------------
+	var monitorId StatusMonitorId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "monitorId", r.PathValue("monitorId"), &monitorId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "monitorId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetStatusMonitorParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetStatusMonitor(w, r, pageId, monitorId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateStatusMonitor operation middleware
+func (siw *ServerInterfaceWrapper) UpdateStatusMonitor(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "monitorId" -------------
+	var monitorId StatusMonitorId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "monitorId", r.PathValue("monitorId"), &monitorId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "monitorId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateStatusMonitorParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateStatusMonitor(w, r, pageId, monitorId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListStatusMonitorChecks operation middleware
+func (siw *ServerInterfaceWrapper) ListStatusMonitorChecks(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "monitorId" -------------
+	var monitorId StatusMonitorId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "monitorId", r.PathValue("monitorId"), &monitorId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "monitorId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListStatusMonitorChecksParams
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListStatusMonitorChecks(w, r, pageId, monitorId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// RotateStatusMonitorToken operation middleware
+func (siw *ServerInterfaceWrapper) RotateStatusMonitorToken(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "monitorId" -------------
+	var monitorId StatusMonitorId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "monitorId", r.PathValue("monitorId"), &monitorId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "monitorId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params RotateStatusMonitorTokenParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.RotateStatusMonitorToken(w, r, pageId, monitorId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // PreviewStatusPage operation middleware
 func (siw *ServerInterfaceWrapper) PreviewStatusPage(w http.ResponseWriter, r *http.Request) {
 
@@ -40975,6 +42155,13 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents/{incidentId}/publish", wrapper.PublishStatusIncident)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents/{incidentId}/updates", wrapper.CreateStatusIncidentUpdate)
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents/{incidentId}/updates/{updateId}", wrapper.EditStatusIncidentUpdate)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors", wrapper.ListStatusMonitors)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors", wrapper.CreateStatusMonitor)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors/{monitorId}", wrapper.DeleteStatusMonitor)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors/{monitorId}", wrapper.GetStatusMonitor)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors/{monitorId}", wrapper.UpdateStatusMonitor)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors/{monitorId}/token", wrapper.RotateStatusMonitorToken)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors/{monitorId}/checks", wrapper.ListStatusMonitorChecks)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/client/v1/session", wrapper.DeleteClientSession)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/session", wrapper.GetClientSession)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/session", wrapper.CreateClientSession)
@@ -41084,6 +42271,12 @@ type WebhookReceiverInterface interface {
 	// A published incident changed
 	// HandleWebhookStatusIncidentUpdatedWebhook handles the POST webhook for status.incident.updated.
 	HandleWebhookStatusIncidentUpdatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookStatusIncidentUpdatedParams)
+	// A monitor failed
+	// HandleWebhookStatusMonitorDownWebhook handles the POST webhook for status.monitor.down.
+	HandleWebhookStatusMonitorDownWebhook(w http.ResponseWriter, r *http.Request, params WebhookStatusMonitorDownParams)
+	// A monitor recovered
+	// HandleWebhookStatusMonitorUpWebhook handles the POST webhook for status.monitor.up.
+	HandleWebhookStatusMonitorUpWebhook(w http.ResponseWriter, r *http.Request, params WebhookStatusMonitorUpParams)
 	// A subscription was created
 	// HandleWebhookSubscriptionCreatedWebhook handles the POST webhook for subscription.created.
 	HandleWebhookSubscriptionCreatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookSubscriptionCreatedParams)
@@ -42929,6 +44122,190 @@ func WebhookStatusIncidentUpdatedWebhookHandler(si WebhookReceiverInterface, err
 		}
 
 		si.HandleWebhookStatusIncidentUpdatedWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
+// WebhookStatusMonitorDownWebhookHandler returns the http.Handler for the status.monitor.down webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookStatusMonitorDownWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookStatusMonitorDownParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookStatusMonitorDownWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
+// WebhookStatusMonitorUpWebhookHandler returns the http.Handler for the status.monitor.up webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookStatusMonitorUpWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookStatusMonitorUpParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookStatusMonitorUpWebhook(w, r, params)
 	})
 	for _, mw := range middlewares {
 		h = mw(h)
@@ -67621,6 +68998,518 @@ func (response EditStatusIncidentUpdate404ApplicationProblemPlusJSONResponse) Vi
 	return err
 }
 
+type ListStatusMonitorsRequestObject struct {
+	PageId StatusPageId `json:"pageId"`
+	Params ListStatusMonitorsParams
+}
+
+type ListStatusMonitorsResponseObject interface {
+	VisitListStatusMonitorsResponse(w http.ResponseWriter) error
+}
+
+type ListStatusMonitors200JSONResponse StatusMonitorList
+
+func (response ListStatusMonitors200JSONResponse) VisitListStatusMonitorsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusMonitors401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListStatusMonitors401ApplicationProblemPlusJSONResponse) VisitListStatusMonitorsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusMonitors403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusMonitors403ApplicationProblemPlusJSONResponse) VisitListStatusMonitorsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusMonitors404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusMonitors404ApplicationProblemPlusJSONResponse) VisitListStatusMonitorsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusMonitorRequestObject struct {
+	PageId StatusPageId `json:"pageId"`
+	Params CreateStatusMonitorParams
+	Body   *CreateStatusMonitorJSONRequestBody
+}
+
+type CreateStatusMonitorResponseObject interface {
+	VisitCreateStatusMonitorResponse(w http.ResponseWriter) error
+}
+
+type CreateStatusMonitor201JSONResponse StatusMonitorWithToken
+
+func (response CreateStatusMonitor201JSONResponse) VisitCreateStatusMonitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusMonitor400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateStatusMonitor400ApplicationProblemPlusJSONResponse) VisitCreateStatusMonitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusMonitor401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusMonitor401ApplicationProblemPlusJSONResponse) VisitCreateStatusMonitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusMonitor403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusMonitor403ApplicationProblemPlusJSONResponse) VisitCreateStatusMonitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateStatusMonitor404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateStatusMonitor404ApplicationProblemPlusJSONResponse) VisitCreateStatusMonitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteStatusMonitorRequestObject struct {
+	PageId    StatusPageId    `json:"pageId"`
+	MonitorId StatusMonitorId `json:"monitorId"`
+	Params    DeleteStatusMonitorParams
+}
+
+type DeleteStatusMonitorResponseObject interface {
+	VisitDeleteStatusMonitorResponse(w http.ResponseWriter) error
+}
+
+type DeleteStatusMonitor204Response struct {
+}
+
+func (response DeleteStatusMonitor204Response) VisitDeleteStatusMonitorResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteStatusMonitor401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteStatusMonitor401ApplicationProblemPlusJSONResponse) VisitDeleteStatusMonitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteStatusMonitor403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteStatusMonitor403ApplicationProblemPlusJSONResponse) VisitDeleteStatusMonitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteStatusMonitor404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteStatusMonitor404ApplicationProblemPlusJSONResponse) VisitDeleteStatusMonitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusMonitorRequestObject struct {
+	PageId    StatusPageId    `json:"pageId"`
+	MonitorId StatusMonitorId `json:"monitorId"`
+	Params    GetStatusMonitorParams
+}
+
+type GetStatusMonitorResponseObject interface {
+	VisitGetStatusMonitorResponse(w http.ResponseWriter) error
+}
+
+type GetStatusMonitor200JSONResponse StatusMonitor
+
+func (response GetStatusMonitor200JSONResponse) VisitGetStatusMonitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusMonitor401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetStatusMonitor401ApplicationProblemPlusJSONResponse) VisitGetStatusMonitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusMonitor403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetStatusMonitor403ApplicationProblemPlusJSONResponse) VisitGetStatusMonitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusMonitor404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetStatusMonitor404ApplicationProblemPlusJSONResponse) VisitGetStatusMonitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusMonitorRequestObject struct {
+	PageId    StatusPageId    `json:"pageId"`
+	MonitorId StatusMonitorId `json:"monitorId"`
+	Params    UpdateStatusMonitorParams
+	Body      *UpdateStatusMonitorJSONRequestBody
+}
+
+type UpdateStatusMonitorResponseObject interface {
+	VisitUpdateStatusMonitorResponse(w http.ResponseWriter) error
+}
+
+type UpdateStatusMonitor200JSONResponse StatusMonitor
+
+func (response UpdateStatusMonitor200JSONResponse) VisitUpdateStatusMonitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusMonitor400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateStatusMonitor400ApplicationProblemPlusJSONResponse) VisitUpdateStatusMonitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusMonitor401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateStatusMonitor401ApplicationProblemPlusJSONResponse) VisitUpdateStatusMonitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusMonitor403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateStatusMonitor403ApplicationProblemPlusJSONResponse) VisitUpdateStatusMonitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateStatusMonitor404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateStatusMonitor404ApplicationProblemPlusJSONResponse) VisitUpdateStatusMonitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusMonitorChecksRequestObject struct {
+	PageId    StatusPageId    `json:"pageId"`
+	MonitorId StatusMonitorId `json:"monitorId"`
+	Params    ListStatusMonitorChecksParams
+}
+
+type ListStatusMonitorChecksResponseObject interface {
+	VisitListStatusMonitorChecksResponse(w http.ResponseWriter) error
+}
+
+type ListStatusMonitorChecks200JSONResponse StatusCheckList
+
+func (response ListStatusMonitorChecks200JSONResponse) VisitListStatusMonitorChecksResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusMonitorChecks400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListStatusMonitorChecks400ApplicationProblemPlusJSONResponse) VisitListStatusMonitorChecksResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusMonitorChecks401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusMonitorChecks401ApplicationProblemPlusJSONResponse) VisitListStatusMonitorChecksResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusMonitorChecks403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusMonitorChecks403ApplicationProblemPlusJSONResponse) VisitListStatusMonitorChecksResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusMonitorChecks404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusMonitorChecks404ApplicationProblemPlusJSONResponse) VisitListStatusMonitorChecksResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RotateStatusMonitorTokenRequestObject struct {
+	PageId    StatusPageId    `json:"pageId"`
+	MonitorId StatusMonitorId `json:"monitorId"`
+	Params    RotateStatusMonitorTokenParams
+}
+
+type RotateStatusMonitorTokenResponseObject interface {
+	VisitRotateStatusMonitorTokenResponse(w http.ResponseWriter) error
+}
+
+type RotateStatusMonitorToken200JSONResponse StatusMonitorWithToken
+
+func (response RotateStatusMonitorToken200JSONResponse) VisitRotateStatusMonitorTokenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RotateStatusMonitorToken401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response RotateStatusMonitorToken401ApplicationProblemPlusJSONResponse) VisitRotateStatusMonitorTokenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RotateStatusMonitorToken403ApplicationProblemPlusJSONResponse Problem
+
+func (response RotateStatusMonitorToken403ApplicationProblemPlusJSONResponse) VisitRotateStatusMonitorTokenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RotateStatusMonitorToken404ApplicationProblemPlusJSONResponse Problem
+
+func (response RotateStatusMonitorToken404ApplicationProblemPlusJSONResponse) VisitRotateStatusMonitorTokenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type PreviewStatusPageRequestObject struct {
 	PageId StatusPageId `json:"pageId"`
 	Params PreviewStatusPageParams
@@ -69794,6 +71683,27 @@ type StrictServerInterface interface {
 	// EditStatusIncidentUpdate Edit an update's text
 	// (PATCH /v1/status-pages/{pageId}/incidents/{incidentId}/updates/{updateId})
 	EditStatusIncidentUpdate(ctx context.Context, request EditStatusIncidentUpdateRequestObject) (EditStatusIncidentUpdateResponseObject, error)
+	// ListStatusMonitors List a page's monitors
+	// (GET /v1/status-pages/{pageId}/monitors)
+	ListStatusMonitors(ctx context.Context, request ListStatusMonitorsRequestObject) (ListStatusMonitorsResponseObject, error)
+	// CreateStatusMonitor Create a monitor
+	// (POST /v1/status-pages/{pageId}/monitors)
+	CreateStatusMonitor(ctx context.Context, request CreateStatusMonitorRequestObject) (CreateStatusMonitorResponseObject, error)
+	// DeleteStatusMonitor Delete a monitor
+	// (DELETE /v1/status-pages/{pageId}/monitors/{monitorId})
+	DeleteStatusMonitor(ctx context.Context, request DeleteStatusMonitorRequestObject) (DeleteStatusMonitorResponseObject, error)
+	// GetStatusMonitor A monitor
+	// (GET /v1/status-pages/{pageId}/monitors/{monitorId})
+	GetStatusMonitor(ctx context.Context, request GetStatusMonitorRequestObject) (GetStatusMonitorResponseObject, error)
+	// UpdateStatusMonitor Update a monitor
+	// (PATCH /v1/status-pages/{pageId}/monitors/{monitorId})
+	UpdateStatusMonitor(ctx context.Context, request UpdateStatusMonitorRequestObject) (UpdateStatusMonitorResponseObject, error)
+	// ListStatusMonitorChecks List a monitor's checks
+	// (GET /v1/status-pages/{pageId}/monitors/{monitorId}/checks)
+	ListStatusMonitorChecks(ctx context.Context, request ListStatusMonitorChecksRequestObject) (ListStatusMonitorChecksResponseObject, error)
+	// RotateStatusMonitorToken Rotate a monitor's token
+	// (POST /v1/status-pages/{pageId}/monitors/{monitorId}/token)
+	RotateStatusMonitorToken(ctx context.Context, request RotateStatusMonitorTokenRequestObject) (RotateStatusMonitorTokenResponseObject, error)
 	// PreviewStatusPage Preview a status page
 	// (GET /v1/status-pages/{pageId}/preview)
 	PreviewStatusPage(ctx context.Context, request PreviewStatusPageRequestObject) (PreviewStatusPageResponseObject, error)
@@ -79172,6 +81082,214 @@ func (sh *strictHandler) EditStatusIncidentUpdate(w http.ResponseWriter, r *http
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(EditStatusIncidentUpdateResponseObject); ok {
 		if err := validResponse.VisitEditStatusIncidentUpdateResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListStatusMonitors operation middleware
+func (sh *strictHandler) ListStatusMonitors(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params ListStatusMonitorsParams) {
+	var request ListStatusMonitorsRequestObject
+
+	request.PageId = pageId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListStatusMonitors(ctx, request.(ListStatusMonitorsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListStatusMonitors")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListStatusMonitorsResponseObject); ok {
+		if err := validResponse.VisitListStatusMonitorsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateStatusMonitor operation middleware
+func (sh *strictHandler) CreateStatusMonitor(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params CreateStatusMonitorParams) {
+	var request CreateStatusMonitorRequestObject
+
+	request.PageId = pageId
+	request.Params = params
+
+	var body CreateStatusMonitorJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateStatusMonitor(ctx, request.(CreateStatusMonitorRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateStatusMonitor")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateStatusMonitorResponseObject); ok {
+		if err := validResponse.VisitCreateStatusMonitorResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteStatusMonitor operation middleware
+func (sh *strictHandler) DeleteStatusMonitor(w http.ResponseWriter, r *http.Request, pageId StatusPageId, monitorId StatusMonitorId, params DeleteStatusMonitorParams) {
+	var request DeleteStatusMonitorRequestObject
+
+	request.PageId = pageId
+	request.MonitorId = monitorId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteStatusMonitor(ctx, request.(DeleteStatusMonitorRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteStatusMonitor")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteStatusMonitorResponseObject); ok {
+		if err := validResponse.VisitDeleteStatusMonitorResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetStatusMonitor operation middleware
+func (sh *strictHandler) GetStatusMonitor(w http.ResponseWriter, r *http.Request, pageId StatusPageId, monitorId StatusMonitorId, params GetStatusMonitorParams) {
+	var request GetStatusMonitorRequestObject
+
+	request.PageId = pageId
+	request.MonitorId = monitorId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetStatusMonitor(ctx, request.(GetStatusMonitorRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetStatusMonitor")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetStatusMonitorResponseObject); ok {
+		if err := validResponse.VisitGetStatusMonitorResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateStatusMonitor operation middleware
+func (sh *strictHandler) UpdateStatusMonitor(w http.ResponseWriter, r *http.Request, pageId StatusPageId, monitorId StatusMonitorId, params UpdateStatusMonitorParams) {
+	var request UpdateStatusMonitorRequestObject
+
+	request.PageId = pageId
+	request.MonitorId = monitorId
+	request.Params = params
+
+	var body UpdateStatusMonitorJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateStatusMonitor(ctx, request.(UpdateStatusMonitorRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateStatusMonitor")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateStatusMonitorResponseObject); ok {
+		if err := validResponse.VisitUpdateStatusMonitorResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListStatusMonitorChecks operation middleware
+func (sh *strictHandler) ListStatusMonitorChecks(w http.ResponseWriter, r *http.Request, pageId StatusPageId, monitorId StatusMonitorId, params ListStatusMonitorChecksParams) {
+	var request ListStatusMonitorChecksRequestObject
+
+	request.PageId = pageId
+	request.MonitorId = monitorId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListStatusMonitorChecks(ctx, request.(ListStatusMonitorChecksRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListStatusMonitorChecks")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListStatusMonitorChecksResponseObject); ok {
+		if err := validResponse.VisitListStatusMonitorChecksResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// RotateStatusMonitorToken operation middleware
+func (sh *strictHandler) RotateStatusMonitorToken(w http.ResponseWriter, r *http.Request, pageId StatusPageId, monitorId StatusMonitorId, params RotateStatusMonitorTokenParams) {
+	var request RotateStatusMonitorTokenRequestObject
+
+	request.PageId = pageId
+	request.MonitorId = monitorId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.RotateStatusMonitorToken(ctx, request.(RotateStatusMonitorTokenRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "RotateStatusMonitorToken")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(RotateStatusMonitorTokenResponseObject); ok {
+		if err := validResponse.VisitRotateStatusMonitorTokenResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

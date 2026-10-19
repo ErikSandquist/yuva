@@ -108,6 +108,24 @@ type resolveIncidentIn struct {
 	Body       string    `json:"body" jsonschema:"plain text that customers read"`
 }
 
+type mcpStatusMonitor struct {
+	ID          uuid.UUID  `json:"id"`
+	ComponentID uuid.UUID  `json:"component_id" jsonschema:"the component whose state it sets"`
+	Kind        string     `json:"kind" jsonschema:"heartbeat or push"`
+	Name        string     `json:"name"`
+	State       string     `json:"state" jsonschema:"pending, up or down"`
+	Since       time.Time  `json:"since" jsonschema:"its last change between up and down"`
+	Paused      bool       `json:"paused,omitempty"`
+	LastResult  *time.Time `json:"last_result,omitempty"`
+	IncidentID  *uuid.UUID `json:"incident_id,omitempty" jsonschema:"the open incident it opened"`
+	// The message comes from whoever holds the monitor's token, so it is treated like customer text.
+	CustomerContent *mcpMonitorContent `json:"customer_content,omitempty"`
+}
+
+type mcpMonitorContent struct {
+	LastMessage string `json:"last_message" jsonschema:"what the host's monitoring sent last"`
+}
+
 func (c *mcpCall) statusIncidentUpdate(ctx context.Context, page, incident uuid.UUID, body string, state *oas.StatusIncidentState) (mcpIncident, error) {
 	res, err := c.s.CreateStatusIncidentUpdate(ctx, oas.CreateStatusIncidentUpdateRequestObject{PageId: page, IncidentId: incident,
 		Body: &oas.StatusIncidentUpdateCreate{Body: body, State: state}})
@@ -156,6 +174,25 @@ var mcpStatusTools = []mcpTool{
 			}
 			for _, i := range incs.(oas.ListStatusIncidents200JSONResponse).Items {
 				out.Open = append(out.Open, incidentOutMCP(i))
+			}
+			return out, nil
+		}),
+	defineTool("list_monitors", "List a status page's monitors",
+		"Lists the heartbeat and push monitors of a status page with their state (pending, up, down), the component each sets and the incident a failing one opened. Maps to GET /v1/status-pages/{id}/monitors.",
+		readOnly, nil, mcpTool{ops: []string{"ListStatusMonitors"}},
+		func(ctx context.Context, c *mcpCall, in statusPageIn) (mcpPage[mcpStatusMonitor], error) {
+			res, err := c.s.ListStatusMonitors(ctx, oas.ListStatusMonitorsRequestObject{PageId: in.PageID})
+			if err != nil {
+				return mcpPage[mcpStatusMonitor]{}, err
+			}
+			out := mcpPage[mcpStatusMonitor]{Items: []mcpStatusMonitor{}}
+			for _, m := range res.(oas.ListStatusMonitors200JSONResponse).Items {
+				item := mcpStatusMonitor{ID: m.Id, ComponentID: m.ComponentId, Kind: string(m.Kind), Name: m.Name, State: string(m.State),
+					Since: m.StateSince, Paused: m.Paused, LastResult: m.LastResultAt, IncidentID: m.IncidentId}
+				if m.LastMessage != nil {
+					item.CustomerContent = &mcpMonitorContent{LastMessage: *m.LastMessage}
+				}
+				out.Items = append(out.Items, item)
 			}
 			return out, nil
 		}),

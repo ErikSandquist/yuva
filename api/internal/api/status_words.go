@@ -13,6 +13,7 @@ type statusWords struct {
 	DaysAgo, Today, NoData, Recent, NoRecent     string
 	History, NoHistory, Back, Feed, Updated      string
 	Edited, Support, Site, Window, Affects, Gone string
+	MonitorTitle, MonitorBody, MonitorResolved   string
 	Months                                       [12]string
 }
 
@@ -30,8 +31,10 @@ var statusLanguages = map[string]statusWords{
 		DaysAgo: "%d days ago", Today: "Today", NoData: "No data", Recent: "Past incidents", NoRecent: "No incidents in the last 14 days.",
 		History: "Incident history", NoHistory: "No incidents in the last %d days.", Back: "Current status", Feed: "Atom feed",
 		Updated: "Last updated", Edited: "edited", Support: "Get help", Site: "Website", Window: "Scheduled", Affects: "Affects",
-		Gone:   "There is no status page here.",
-		Months: [12]string{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"},
+		Gone:         "There is no status page here.",
+		MonitorTitle: "%s is not working as expected", MonitorBody: "Our monitoring found a problem with %s. We are looking into it.",
+		MonitorResolved: "%s is working again.",
+		Months:          [12]string{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"},
 	},
 	"tr": {
 		Lang: "tr",
@@ -46,8 +49,10 @@ var statusLanguages = map[string]statusWords{
 		DaysAgo: "%d gün önce", Today: "Bugün", NoData: "Veri yok", Recent: "Geçmiş olaylar", NoRecent: "Son 14 günde olay yok.",
 		History: "Olay geçmişi", NoHistory: "Son %d günde olay yok.", Back: "Güncel durum", Feed: "Atom akışı",
 		Updated: "Son güncelleme", Edited: "düzenlendi", Support: "Yardım alın", Site: "Web sitesi", Window: "Planlanan", Affects: "Etkilenen",
-		Gone:   "Burada bir durum sayfası yok.",
-		Months: [12]string{"Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"},
+		Gone:         "Burada bir durum sayfası yok.",
+		MonitorTitle: "%s beklendiği gibi çalışmıyor", MonitorBody: "İzleme sistemimiz %s ile ilgili bir sorun buldu. İnceliyoruz.",
+		MonitorResolved: "%s yeniden çalışıyor.",
+		Months:          [12]string{"Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"},
 	},
 	"de": {
 		Lang: "de",
@@ -62,8 +67,10 @@ var statusLanguages = map[string]statusWords{
 		DaysAgo: "vor %d Tagen", Today: "Heute", NoData: "Keine Daten", Recent: "Vergangene Störungen", NoRecent: "Keine Störungen in den letzten 14 Tagen.",
 		History: "Störungsverlauf", NoHistory: "Keine Störungen in den letzten %d Tagen.", Back: "Aktueller Status", Feed: "Atom-Feed",
 		Updated: "Zuletzt aktualisiert", Edited: "bearbeitet", Support: "Hilfe erhalten", Site: "Website", Window: "Geplant", Affects: "Betrifft",
-		Gone:   "Hier gibt es keine Statusseite.",
-		Months: [12]string{"Jan.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sep.", "Okt.", "Nov.", "Dez."},
+		Gone:         "Hier gibt es keine Statusseite.",
+		MonitorTitle: "%s funktioniert nicht wie erwartet", MonitorBody: "Unsere Überwachung hat ein Problem mit %s festgestellt. Wir sehen es uns an.",
+		MonitorResolved: "%s funktioniert wieder.",
+		Months:          [12]string{"Jan.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sep.", "Okt.", "Nov.", "Dez."},
 	},
 }
 

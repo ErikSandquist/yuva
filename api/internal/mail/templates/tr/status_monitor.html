@@ -1,0 +1,7 @@
+{{template "heading" (print .Component (or (and .Down " çalışmıyor") " yeniden çalışıyor"))}}
+<p style="margin:0 0 16px 0;">{{if .Down}}<strong>{{.Page}}</strong> durum sayfasındaki <strong>{{.Monitor}}</strong> izleyicisi hata verdi{{if .State}} ve {{.Component}} bileşenini <strong>{{.State}}</strong> durumuna aldı{{end}}.{{else}}<strong>{{.Page}}</strong> durum sayfasındaki <strong>{{.Monitor}}</strong> izleyicisi düzeldi ve {{.Component}} bileşenini eski durumuna getirdi.{{end}}</p>
+{{- if and .Down .Message}}
+{{template "quote" .Message}}
+{{- end}}
+{{template "button" (button .URL "İzleyicileri aç")}}
+{{define "status_monitor.footer"}}Bu e-postayı {{.Inbox}} içindeki yeni konuşmalar için e-posta seçtiğiniz için alıyorsunuz. <a href="{{.SettingsURL}}" target="_blank" style="color:#71717a;text-decoration:underline;">Hangi e-postaları alacağınızı seçin</a>{{end}}
