@@ -150,3 +150,13 @@ func TestStatusUniqueConflict(t *testing.T) {
 		t.Fatalf("a plain error became %v", err)
 	}
 }
+
+func TestStepPathBridgesOnlyGapsWithinTheInterval(t *testing.T) {
+	line, _, _ := stepPath([]int32{100, -1, 120, -1, -1, -1, 130}, 1)
+	if line != "M0 29H2V29H4V14H6M12 7H14" {
+		t.Fatalf("line %q", line)
+	}
+	if hold := stepHold(60*time.Second, 67*time.Second); hold != 2 {
+		t.Fatalf("hold %d", hold)
+	}
+}

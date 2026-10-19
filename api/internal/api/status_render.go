@@ -402,9 +402,29 @@ func (snap *statusSnap) monthStrip(month time.Time, byDate map[string]uptimeDay,
 	return template.HTML(b.String())
 }
 
-// stepPath draws the points as a stepped line two units per point, broken where a point is
-// missing, and the area under it.
-func stepPath(points []int32) (line, area string, empty bool) {
+// stepHold is how many empty steps between two measured ones the line bridges: a step can be
+// shorter than the monitor's interval and then holds no check without anything being wrong.
+func stepHold(interval, step time.Duration) int {
+	return int(math.Ceil(1.5 * float64(interval) / float64(step)))
+}
+
+// stepPath draws the points as a stepped line two units per point and the area under it. A run of
+// at most hold missing points between two measured ones keeps the last value; longer runs break
+// the line.
+func stepPath(points []int32, hold int) (line, area string, empty bool) {
+	points = slices.Clone(points)
+	last := -1
+	for i, p := range points {
+		if p < 0 {
+			continue
+		}
+		if last >= 0 && i-last-1 <= hold {
+			for k := last + 1; k < i; k++ {
+				points[k] = points[last]
+			}
+		}
+		last = i
+	}
 	lo, hi := int32(math.MaxInt32), int32(-1)
 	for _, p := range points {
 		if p >= 0 {
@@ -456,7 +476,7 @@ func (snap *statusSnap) pageResponse(num string) *responseView {
 		r := snap.response[id]
 		name := snap.componentName(id)
 		c := chartView{ID: strconv.Itoa(i), Name: name, StatLabel: name + " · " + w.Median, Stat: "–", Label: name + ": " + w.ResponseTime}
-		c.Line, c.Area, c.Empty = stepPath(r.points)
+		c.Line, c.Area, c.Empty = stepPath(r.points, stepHold(snap.intervals[id], r.step))
 		if r.median != nil {
 			c.Stat, c.Sub = formatMs(*r.median), fillS(w.P95, formatMs(*r.p95))
 		}
@@ -738,15 +758,26 @@ func (s *Server) incidentDetail(ctx context.Context, snap *statusSnap, v *status
 				worst = worseState(worst, sp.State)
 				off += b.Sub(a)
 			}
-			cur := ""
+			after := ""
 			for _, c := range snap.comps {
 				if c.ID == id {
-					cur = c.State
+					after = c.State
 				}
 			}
-			text := w.States[cur]
-			if worst != stOperational {
-				text = w.States[worst] + " " + w.duration(off) + " → " + w.States[cur]
+			closed := incidentEnd(inc) != nil
+			if closed {
+				for _, sp := range spans {
+					if sp.ComponentID == id && !sp.StartedAt.After(end) && (sp.EndedAt == nil || sp.EndedAt.After(end)) {
+						after = sp.State
+					}
+				}
+			}
+			text := w.States[after]
+			switch {
+			case worst != stOperational && closed:
+				text = fillS(fillS(fillS(w.AffectedThen, w.States[worst]), w.duration(off)), w.States[after])
+			case worst != stOperational:
+				text = fillS(fillS(w.AffectedSoFar, w.States[worst]), w.duration(off))
 			}
 			v.Affected = append(v.Affected, affectedView{Name: snap.componentName(id), Text: text})
 		}
@@ -788,7 +819,7 @@ func (s *Server) incidentDetail(ctx context.Context, snap *statusSnap, v *status
 			r := series[id]
 			name := snap.componentName(id)
 			c := chartView{ID: strconv.Itoa(i), Name: name, StatLabel: name + " · " + w.Peak, Stat: "–", Label: name + ": " + w.ResponseDuring}
-			c.Line, c.Area, c.Empty = stepPath(r.points)
+			c.Line, c.Area, c.Empty = stepPath(r.points, stepHold(snap.intervals[id], step))
 			if c.Empty {
 				continue
 			}

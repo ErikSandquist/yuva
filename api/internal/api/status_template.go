@@ -12,6 +12,8 @@ const statusStyle = `
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
+body{overflow-x:hidden}
+@supports (overflow:clip){body{overflow-x:clip}}
 body{margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font:15px/1.55 Geist,ui-sans-serif,system-ui,sans-serif;letter-spacing:-.1px}
 a{color:inherit;text-decoration:none}
 a:hover{text-decoration:underline;text-underline-offset:3px}
@@ -71,15 +73,16 @@ select{appearance:none;-webkit-appearance:none;font:500 14px Geist,ui-sans-serif
 .comp{display:grid;grid-template-columns:1fr 2fr;gap:1px;background:var(--rule)}
 .comp.nobars{grid-template-columns:1fr}
 .comp>div{background:var(--paper);padding:18px 28px;min-width:0}
-.cname{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.cname{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 12px}
+.cname>span:first-child{min-width:0;overflow-wrap:anywhere}
 .cname b{font-weight:600;display:block}
 .cname small{display:block;color:var(--soft);font-size:13px}
 .st{font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
 .st .q{width:7px;height:7px}
 .cbars{display:flex;flex-direction:column;justify-content:center;gap:6px}
-.bars{display:block;width:100%;height:14px}
+.bars{display:block;width:100%;max-width:100%;height:14px}
 .strip{display:block;width:100%;height:12px}
-.scale{display:flex;justify-content:space-between;gap:12px;font-size:11px;color:var(--soft)}
+.scale{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;font-size:11px;color:var(--soft)}
 .d-none{fill:var(--rule)}
 .d-operational,.q-operational{fill:var(--ok);background:var(--ok)}
 .d-degraded,.q-degraded{fill:var(--warn);background:var(--warn)}
@@ -89,7 +92,7 @@ select{appearance:none;-webkit-appearance:none;font:500 14px Geist,ui-sans-serif
 .k-operational{color:var(--ok-t)}.k-degraded,.i-degraded{color:var(--warn-t)}.k-partial_outage,.i-partial_outage{color:var(--partial-t)}
 .k-major_outage,.i-major_outage{color:var(--bad-t)}.k-maintenance{color:var(--maint)}.i-none{color:var(--soft)}
 .kick.k-operational,.kick .k-operational{color:var(--ok-deep)}
-.tabs{display:inline-flex;border:1px solid var(--strong);border-radius:8px;overflow:hidden}
+.tabs{display:inline-flex;flex-wrap:wrap;max-width:100%;border:1px solid var(--strong);border-radius:8px;overflow:hidden}
 .tabs label{font-size:13px;font-weight:500;padding:6px 14px;min-height:34px;display:inline-flex;align-items:center;cursor:pointer}
 .tabs label+label{border-inline-start:1px solid var(--strong)}
 .rt-in{position:absolute;opacity:0;pointer-events:none}
@@ -102,7 +105,7 @@ select{appearance:none;-webkit-appearance:none;font:500 14px Geist,ui-sans-serif
 .rt-chart>div{background:var(--paper);padding:24px 28px;display:flex;flex-direction:column;gap:4px;min-width:0}
 .rt-chart .plot{grid-column:span 3;gap:8px}
 .big{font-size:32px;font-weight:600;letter-spacing:-1px}
-.chart{display:block;width:100%;height:auto}
+.chart{display:block;width:100%;max-width:100%;height:auto}
 .chart .grid-l{stroke:var(--rule);stroke-width:.5;fill:none}
 .chart .area{fill:var(--wash)}
 .chart .band{fill:var(--warn-wash)}
@@ -119,13 +122,13 @@ form.sub-form{display:flex;flex-direction:column;gap:12px;align-items:flex-start
 .follow{display:flex;flex-direction:column;gap:6px;padding:24px 28px}
 .follow b{font-weight:600}
 .follow .mono{font-size:12px;overflow-wrap:anywhere}
-code{display:block;font-family:"Geist Mono",ui-monospace,monospace;font-size:11px;background:var(--deep);border:1px solid var(--rule);border-radius:6px;padding:6px 8px;overflow-x:auto;white-space:nowrap}
+code{display:block;max-width:100%;font-family:"Geist Mono",ui-monospace,monospace;font-size:11px;background:var(--deep);border:1px solid var(--rule);border-radius:6px;padding:6px 8px;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-all}
 .upd{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:1px;background:var(--rule)}
 .upd>div{background:var(--paper);padding:22px 28px;min-width:0}
 .upd .body{grid-column:span 3;overflow-wrap:anywhere}
 .upd b{display:inline-flex;align-items:center;gap:8px;font-weight:600}
 .upd time,.upd .edited{font-family:"Geist Mono",ui-monospace,monospace;font-size:12px;color:var(--soft)}
-.aff{display:flex;justify-content:space-between;gap:12px}
+.aff{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px}
 .links{display:flex;flex-wrap:wrap;gap:20px;font-size:14px}
 .month{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:1px;background:var(--rule)}
 .month>div{background:var(--paper);min-width:0}
@@ -134,7 +137,7 @@ code{display:block;font-family:"Geist Mono",ui-monospace,monospace;font-size:11p
 .item small{display:block;font-size:13px;color:var(--soft)}
 .item b{font-weight:600}
 .quiet{background:var(--paper);padding:24px 28px;color:var(--soft);flex:1}
-.seg{display:inline-flex;align-self:flex-start;border:1px solid var(--strong);border-radius:8px;overflow:hidden;margin-top:8px}
+.seg{display:inline-flex;flex-wrap:wrap;max-width:100%;align-self:flex-start;border:1px solid var(--strong);border-radius:8px;overflow:hidden;margin-top:8px}
 .seg a{font-size:13px;font-weight:500;padding:6px 14px;min-height:34px;display:inline-flex;align-items:center}
 .seg a+a{border-inline-start:1px solid var(--strong)}
 .seg a.on{background:var(--ink);color:var(--paper)}
@@ -142,6 +145,7 @@ code{display:block;font-family:"Geist Mono",ui-monospace,monospace;font-size:11p
 .foot .links{font-size:13px}
 .powered{display:inline-flex;align-items:center;gap:6px}
 .mark{display:block;flex:none}
+@media (max-width:1053px){.x{display:none}}
 @media (max-width:700px){.wide,.rt-chart .plot,.upd .body,.month .items{grid-column:auto}.comp{grid-template-columns:1fr}
 .hero{padding:48px 20px 40px}.hero h1,.sub .hero h1{font-size:36px;letter-spacing:-1.2px}.bar,.head,.pad,.card,.comp>div,.follow,.rt-chart>div,.upd>div,.item,.quiet,.foot,.cell,.group{padding-inline:16px}
 .item{grid-template-columns:56px minmax(0,1fr)}.item .label{grid-column:2}}

@@ -164,7 +164,7 @@ func TestStatusHistoryFilter(t *testing.T) {
 		}
 	}
 	if r := publicStatus(t, h, "/status/"+st.slug+"/incidents/"+inc.str("id")); r.status != http.StatusOK || !strings.Contains(string(r.raw), "Fixed.") ||
-		!strings.Contains(string(r.raw), "API") {
+		!strings.Contains(string(r.raw), "Degraded performance for 1 h, then Operational") {
 		t.Fatalf("incident page %d %s", r.status, r.raw)
 	}
 }

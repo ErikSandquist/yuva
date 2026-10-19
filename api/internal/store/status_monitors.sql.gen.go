@@ -1235,8 +1235,9 @@ func (q *Queries) StatusResponseBuckets(ctx context.Context, arg StatusResponseB
 }
 
 const statusResponseComponents = `-- name: StatusResponseComponents :many
-SELECT DISTINCT component_id FROM status_monitors
+SELECT component_id, max(coalesce(interval_seconds, 60))::int AS interval_seconds FROM status_monitors
 WHERE workspace_id = $1 AND page_id = $2 AND kind IN ('http', 'tcp') AND component_id = ANY($3::uuid[])
+GROUP BY component_id
 `
 
 type StatusResponseComponentsParams struct {
@@ -1245,19 +1246,25 @@ type StatusResponseComponentsParams struct {
 	ComponentIds []uuid.UUID
 }
 
-func (q *Queries) StatusResponseComponents(ctx context.Context, arg StatusResponseComponentsParams) ([]uuid.UUID, error) {
+type StatusResponseComponentsRow struct {
+	ComponentID     uuid.UUID
+	IntervalSeconds int32
+}
+
+// interval_seconds is the longest interval of the component's http and tcp monitors.
+func (q *Queries) StatusResponseComponents(ctx context.Context, arg StatusResponseComponentsParams) ([]StatusResponseComponentsRow, error) {
 	rows, err := q.db.Query(ctx, statusResponseComponents, arg.WorkspaceID, arg.PageID, arg.ComponentIds)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []uuid.UUID
+	var items []StatusResponseComponentsRow
 	for rows.Next() {
-		var component_id uuid.UUID
-		if err := rows.Scan(&component_id); err != nil {
+		var i StatusResponseComponentsRow
+		if err := rows.Scan(&i.ComponentID, &i.IntervalSeconds); err != nil {
 			return nil, err
 		}
-		items = append(items, component_id)
+		items = append(items, i)
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err

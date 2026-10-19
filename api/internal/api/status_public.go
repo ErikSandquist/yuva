@@ -377,6 +377,7 @@ type statusSnap struct {
 	url       func(path string) string
 	response  map[uuid.UUID]*responseSeries
 	monitored []uuid.UUID
+	intervals map[uuid.UUID]time.Duration
 	lang      string
 	filter    string
 }
@@ -431,8 +432,12 @@ func (s *Server) statusSnapshot(ctx context.Context, q *store.Queries, pg store.
 		if err != nil {
 			return nil, err
 		}
+		snap.intervals = map[uuid.UUID]time.Duration{}
+		for _, r := range rows {
+			snap.intervals[r.ComponentID] = time.Duration(r.IntervalSeconds) * time.Second
+		}
 		for _, id := range ids {
-			if slices.Contains(rows, id) {
+			if _, ok := snap.intervals[id]; ok {
 				snap.monitored = append(snap.monitored, id)
 			}
 		}

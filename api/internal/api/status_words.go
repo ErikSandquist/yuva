@@ -32,6 +32,7 @@ type statusWords struct {
 	Started, Ended, Ongoing, Duration, Updates, Affected     string
 	StayInformed, StayText, HistoryHead, Filter, FilterAll   string
 	FilterIncidents, NoMonth, DurMin, DurHours, DurDays      string
+	AffectedThen, AffectedSoFar                              string
 	LongMonths                                               [12]string
 }
 
@@ -72,6 +73,7 @@ var statusLanguages = map[string]statusWords{
 		StayInformed: "Stay informed", StayText: "Get the next one by e-mail as it happens, or follow the feed.",
 		HistoryHead: "Every incident and maintenance.", Filter: "Filter", FilterAll: "All", FilterIncidents: "Incidents",
 		NoMonth: "No incidents this month.", DurMin: "%d min", DurHours: "%d h", DurDays: "%d d",
+		AffectedThen: "%s for %s, then %s", AffectedSoFar: "%s for %s so far",
 		LongMonths: [12]string{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"},
 	},
 	"tr": {
@@ -110,6 +112,7 @@ var statusLanguages = map[string]statusWords{
 		StayInformed: "Haberdar olun", StayText: "Bir sonrakini olduğu anda e-postayla alın ya da akışı takip edin.",
 		HistoryHead: "Tüm olaylar ve bakımlar.", Filter: "Süz", FilterAll: "Tümü", FilterIncidents: "Olaylar",
 		NoMonth: "Bu ay olay yok.", DurMin: "%d dk", DurHours: "%d sa", DurDays: "%d gün",
+		AffectedThen: "%s %s sürdü, sonra %s", AffectedSoFar: "%s %s sürüyor",
 		LongMonths: [12]string{"Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"},
 	},
 	"de": {
@@ -148,6 +151,7 @@ var statusLanguages = map[string]statusWords{
 		StayInformed: "Auf dem Laufenden bleiben", StayText: "Erhalten Sie die nächste Meldung sofort per E-Mail oder folgen Sie dem Feed.",
 		HistoryHead: "Alle Störungen und Wartungen.", Filter: "Filter", FilterAll: "Alle", FilterIncidents: "Störungen",
 		NoMonth: "Keine Störungen in diesem Monat.", DurMin: "%d Min.", DurHours: "%d Std.", DurDays: "%d T.",
+		AffectedThen: "%s für %s, danach %s", AffectedSoFar: "%s seit %s",
 		LongMonths: [12]string{"Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"},
 	},
 }

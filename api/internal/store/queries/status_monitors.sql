@@ -171,8 +171,10 @@ FROM status_checks
 WHERE workspace_id = @workspace_id AND monitor_id = @monitor_id AND NOT pending AND at >= @since::timestamptz AND at < @until::timestamptz;
 
 -- name: StatusResponseComponents :many
-SELECT DISTINCT component_id FROM status_monitors
-WHERE workspace_id = @workspace_id AND page_id = @page_id AND kind IN ('http', 'tcp') AND component_id = ANY(@component_ids::uuid[]);
+-- interval_seconds is the longest interval of the component's http and tcp monitors.
+SELECT component_id, max(coalesce(interval_seconds, 60))::int AS interval_seconds FROM status_monitors
+WHERE workspace_id = @workspace_id AND page_id = @page_id AND kind IN ('http', 'tcp') AND component_id = ANY(@component_ids::uuid[])
+GROUP BY component_id;
 
 -- name: StatusResponseBuckets :many
 -- Step n covers since + n * step_seconds; only measured successes of http and tcp monitors count.
