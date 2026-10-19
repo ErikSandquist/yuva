@@ -1922,7 +1922,7 @@ incident before a customer writes, and the conversations an outage brings are an
   draft.
 - **The public page.** The server renders it with `html/template` like the list pages, without the
   panel and without JavaScript, so it loads when the product it describes does not:
-  `<YUVA_PUBLIC_URL>/status/{slug}` (overall state, open incidents and maintenance, components by group
+  `<status URL>/{slug}` (overall state, open incidents and maintenance, components by group
   with day bars, incidents of the last 14 days), `/status/{slug}/history` (by month),
   `/status/{slug}/incidents/{id}`, `/status/{slug}/feed.atom`, `/status/{slug}/badge.svg` (overall
   state, for READMEs) and the JSON `GET /client/v1/status/{slug}` (`Access-Control-Allow-Origin: *`,
@@ -1932,7 +1932,10 @@ incident before a customer writes, and the conversations an outage brings are an
   cached in the process per page and per language and dropped on the page's next change; it is sent with
   `Cache-Control: public, max-age=30` so a CDN in front takes an outage's traffic. Rate limit 120
   requests a minute per address. `frame-ancestors` is `*` on the page so a host may embed it; the badge and
-  JSON have no cookies. When the page names an analytics property of the workspace, the page sends a
+  JSON have no cookies. The status URL is `YUVA_STATUS_URL` (an origin such as
+  `https://status.example.com`, served by the same server when requests for its host reach it; unset:
+  `<YUVA_PUBLIC_URL>/status`); every link, the feed, the badge and the JSON name pages from it, and with
+  it set `<YUVA_PUBLIC_URL>/status/{slug}` redirects there. When the page names an analytics property of the workspace, the page sends a
   cookieless page view to it with the analytics script.
 - **Own domain.** A page may name `custom_domain` (`status.example.com`). The owner adds a CNAME to
   `YUVA_STATUS_CNAME` (unset: the host of `YUVA_PUBLIC_URL`) and a TXT record `_yuva-status.<domain>`
