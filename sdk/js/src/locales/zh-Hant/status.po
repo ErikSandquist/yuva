@@ -8,12 +8,12 @@ msgstr ""
 "Language: zh-Hant\n"
 
 #: src/status/element.ts
-msgid "{name} system status"
-msgstr "{name} 系統狀態"
+msgid "{count} D"
+msgstr "{count} 天"
 
 #: src/status/element.ts
-msgid "90 D"
-msgstr "90 天"
+msgid "{name} system status"
+msgstr "{name} 系統狀態"
 
 #: src/status/element.ts
 msgid "All systems operational"

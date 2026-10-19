@@ -8,12 +8,12 @@ msgstr ""
 "Language: gu\n"
 
 #: src/status/element.ts
-msgid "{name} system status"
-msgstr "{name} સિસ્ટમની સ્થિતિ"
+msgid "{count} D"
+msgstr "{count} દિ"
 
 #: src/status/element.ts
-msgid "90 D"
-msgstr "90 દિ"
+msgid "{name} system status"
+msgstr "{name} સિસ્ટમની સ્થિતિ"
 
 #: src/status/element.ts
 msgid "All systems operational"

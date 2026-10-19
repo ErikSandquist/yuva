@@ -8,12 +8,12 @@ msgstr ""
 "Language: pl\n"
 
 #: src/status/element.ts
-msgid "{name} system status"
-msgstr "Stan systemu {name}"
+msgid "{count} D"
+msgstr "{count} D"
 
 #: src/status/element.ts
-msgid "90 D"
-msgstr "90 D"
+msgid "{name} system status"
+msgstr "Stan systemu {name}"
 
 #: src/status/element.ts
 msgid "All systems operational"

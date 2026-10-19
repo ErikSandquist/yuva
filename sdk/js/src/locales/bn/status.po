@@ -8,12 +8,12 @@ msgstr ""
 "Language: bn\n"
 
 #: src/status/element.ts
-msgid "{name} system status"
-msgstr "{name} সিস্টেমের অবস্থা"
+msgid "{count} D"
+msgstr "৯০ দি"
 
 #: src/status/element.ts
-msgid "90 D"
-msgstr "৯০ দি"
+msgid "{name} system status"
+msgstr "{name} সিস্টেমের অবস্থা"
 
 #: src/status/element.ts
 msgid "All systems operational"

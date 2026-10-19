@@ -8,12 +8,12 @@ msgstr ""
 "Language: ur\n"
 
 #: src/status/element.ts
-msgid "{name} system status"
-msgstr "{name} سسٹم کی حالت"
+msgid "{count} D"
+msgstr "{count} دن"
 
 #: src/status/element.ts
-msgid "90 D"
-msgstr "90 دن"
+msgid "{name} system status"
+msgstr "{name} سسٹم کی حالت"
 
 #: src/status/element.ts
 msgid "All systems operational"

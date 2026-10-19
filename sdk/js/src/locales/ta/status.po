@@ -8,12 +8,12 @@ msgstr ""
 "Language: ta\n"
 
 #: src/status/element.ts
-msgid "{name} system status"
-msgstr "{name} அமைப்பின் நிலை"
+msgid "{count} D"
+msgstr "{count} நா"
 
 #: src/status/element.ts
-msgid "90 D"
-msgstr "90 நா"
+msgid "{name} system status"
+msgstr "{name} அமைப்பின் நிலை"
 
 #: src/status/element.ts
 msgid "All systems operational"

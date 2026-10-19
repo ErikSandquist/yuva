@@ -8,12 +8,12 @@ msgstr ""
 "Language: ko\n"
 
 #: src/status/element.ts
-msgid "{name} system status"
-msgstr "{name} 시스템 상태"
+msgid "{count} D"
+msgstr "{count}일"
 
 #: src/status/element.ts
-msgid "90 D"
-msgstr "90일"
+msgid "{name} system status"
+msgstr "{name} 시스템 상태"
 
 #: src/status/element.ts
 msgid "All systems operational"

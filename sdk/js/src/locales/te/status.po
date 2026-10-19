@@ -8,12 +8,12 @@ msgstr ""
 "Language: te\n"
 
 #: src/status/element.ts
-msgid "{name} system status"
-msgstr "{name} సిస్టమ్ స్థితి"
+msgid "{count} D"
+msgstr "{count} రో"
 
 #: src/status/element.ts
-msgid "90 D"
-msgstr "90 రో"
+msgid "{name} system status"
+msgstr "{name} సిస్టమ్ స్థితి"
 
 #: src/status/element.ts
 msgid "All systems operational"

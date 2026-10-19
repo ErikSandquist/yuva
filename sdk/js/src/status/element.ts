@@ -17,6 +17,9 @@ import { directionOf, localeIn, translate } from "../translate"
 type Tone = "ok" | "warn" | "partial" | "maint" | "bad"
 
 const days = 90
+const gap = 2
+const minCell = 4
+const maxCell = 8
 const refreshMs = 60_000
 const fetcher: Fetch = (url, init) => fetch(url, init)
 const svgNS = "http://www.w3.org/2000/svg"
@@ -59,7 +62,7 @@ section{padding:0 var(--yuva-status-gutter,40px);border-top:1px solid var(--rule
 .cross.b{bottom:-6px}
 .cross.s{left:-6px}
 .cross.e{right:-6px}
-.bar{display:grid;grid-template-columns:minmax(0,1fr) 360px auto}
+.bar{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,680px) auto}
 .cell{display:flex;align-items:center;gap:12px;min-width:0;min-height:52px;padding:0 20px;background:var(--paper)}
 .bar>.cell+.cell{border-inline-start:1px solid var(--rule)}
 .dot{flex:none;inline-size:8px;block-size:8px;background:var(--tone)}
@@ -68,8 +71,10 @@ section{padding:0 var(--yuva-status-gutter,40px);border-top:1px solid var(--rule
 .line{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--soft);font-size:13px}
 .span{gap:14px}
 .span .label{font:500 10px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:1px;color:var(--faint);white-space:nowrap}
-.strip{flex:1;min-inline-size:0;block-size:12px;display:block}
+.stripbox{flex:1;min-inline-size:0;display:flex;justify-content:flex-end;align-items:center;min-block-size:8px}
+.strip{display:block;flex:none}
 .strip path{fill:var(--tone)}
+.strip path.off{fill:var(--ink);opacity:.1}
 .uptime{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
 .by{min-inline-size:max-content;gap:6px;font-size:12px;color:var(--faint);white-space:nowrap}
 .by svg{flex:none;inline-size:14px;block-size:14px;display:block}
@@ -139,6 +144,7 @@ export class YuvaStatusElement extends Base {
   #data: PublicStatusPage | null = null
   #timer: ReturnType<typeof setInterval> | undefined
   #loadedAt = 0
+  #observer: ResizeObserver | undefined
 
   constructor() {
     super()
@@ -177,6 +183,7 @@ export class YuvaStatusElement extends Base {
     this.#connected = false
     document.removeEventListener("visibilitychange", this.#visibility)
     clearInterval(this.#timer)
+    this.#observer?.disconnect()
   }
 
   attributeChangedCallback(name: string, previous: string | null, value: string | null): void {
@@ -261,27 +268,54 @@ export class YuvaStatusElement extends Base {
     return svg
   }
 
-  #strip(list: PublicStatusDay[], uptime: string): SVGElement {
+  #strip(list: PublicStatusDay[], uptime: string, label: HTMLElement): HTMLElement {
+    const box = el("span", "stripbox")
     const svg = document.createElementNS(svgNS, "svg")
     svg.setAttribute("class", "strip")
-    svg.setAttribute("viewBox", `0 0 ${days * 2} 8`)
-    svg.setAttribute("preserveAspectRatio", "none")
     svg.setAttribute("shape-rendering", "crispEdges")
     svg.setAttribute("role", "img")
     svg.setAttribute("aria-label", uptime ? this.#t(msg`Last 90 days, ${uptime} uptime`) : this.#t(msg`Last 90 days`))
-    const paths: Record<Tone, string> = { ok: "", warn: "", partial: "", maint: "", bad: "" }
-    const offset = days - list.length
-    list.forEach((day, index) => {
-      paths[tones[day.state]] += `M${(offset + index) * 2} 0h1.4v8h-1.4Z`
-    })
-    for (const [tone, d] of Object.entries(paths)) {
-      if (!d) continue
-      const path = document.createElementNS(svgNS, "path")
-      path.setAttribute("class", tone)
-      path.setAttribute("d", d)
-      svg.append(path)
+    box.append(svg)
+    const draw = () => {
+      const width = box.clientWidth
+      if (!width) return
+      let count = days
+      let size = Math.min(maxCell, Math.floor((width + gap) / days - gap))
+      if (size < minCell) {
+        size = minCell
+        count = Math.max(1, Math.floor((width + gap) / (minCell + gap)))
+      }
+      const step = size + gap
+      const shown = list.slice(-count)
+      const first = count - shown.length
+      const paths: Record<Tone | "off", string> = { ok: "", warn: "", partial: "", maint: "", bad: "", off: "" }
+      for (let index = 0; index < first; index++) paths.off += `M${index * step} 0h${size}v${size}h-${size}Z`
+      shown.forEach((day, index) => {
+        paths[tones[day.state]] += `M${(first + index) * step} 0h${size}v${size}h-${size}Z`
+      })
+      const total = count * step - gap
+      svg.setAttribute("viewBox", `0 0 ${total} ${size}`)
+      svg.setAttribute("width", String(total))
+      svg.setAttribute("height", String(size))
+      svg.replaceChildren(
+        ...Object.entries(paths)
+          .filter(([, d]) => d)
+          .map(([tone, d]) => {
+            const path = document.createElementNS(svgNS, "path")
+            path.setAttribute("class", tone)
+            path.setAttribute("d", d)
+            return path
+          })
+      )
+      label.textContent = this.#t(msg`${count} D`)
     }
-    return svg
+    this.#observer?.disconnect()
+    if (typeof ResizeObserver !== "undefined") {
+      this.#observer = new ResizeObserver(draw)
+      this.#observer.observe(box)
+    }
+    queueMicrotask(draw)
+    return box
   }
 
   #mark(): SVGElement {
@@ -354,7 +388,9 @@ export class YuvaStatusElement extends Base {
     state.append(dot, text)
 
     const span = el("span", "cell span")
-    span.append(el("span", "label", this.#t(msg`90 D`)), this.#strip(merged, uptime))
+    const count = days
+    const label = el("span", "label", this.#t(msg`${count} D`))
+    span.append(label, this.#strip(merged, uptime, label))
     if (uptime) span.append(el("span", "uptime", uptime))
 
     const by = el("a", "cell by")

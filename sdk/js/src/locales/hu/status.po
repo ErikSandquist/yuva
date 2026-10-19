@@ -8,12 +8,12 @@ msgstr ""
 "Language: hu\n"
 
 #: src/status/element.ts
-msgid "{name} system status"
-msgstr "{name} rendszerállapota"
+msgid "{count} D"
+msgstr "{count} N"
 
 #: src/status/element.ts
-msgid "90 D"
-msgstr "90 N"
+msgid "{name} system status"
+msgstr "{name} rendszerállapota"
 
 #: src/status/element.ts
 msgid "All systems operational"
