@@ -3,6 +3,7 @@ import { CheckIcon, CopyIcon } from "lucide-react"
 import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 export function useCopy() {
   const [copied, setCopied] = useState(false)
@@ -55,11 +56,14 @@ export function CodeLine({ value, testId }: { value: string; testId?: string }) 
   )
 }
 
-export function CodeBlock({ value, testId }: { value: string; testId?: string }) {
+export function CodeBlock({ value, testId, wrap }: { value: string; testId?: string; wrap?: boolean }) {
   return (
     <div className="flex min-w-0 items-start gap-3 rounded-xl border bg-surface py-2 ps-3.5 pe-2">
       <pre
-        className="min-w-0 flex-1 overflow-x-auto py-1 font-mono text-caption leading-relaxed whitespace-pre"
+        className={cn(
+          "min-w-0 flex-1 py-1 font-mono text-caption leading-relaxed",
+          wrap ? "whitespace-pre-wrap [overflow-wrap:anywhere]" : "overflow-x-auto whitespace-pre"
+        )}
         data-testid={testId}
         tabIndex={0}
       >

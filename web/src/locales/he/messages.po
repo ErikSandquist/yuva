@@ -970,6 +970,10 @@ msgstr "רשימת תפוצה שולחת בשם של תיבת דואר, דרך �
 msgid "A mailing list with subscribe forms, for your broadcasts"
 msgstr "רשימת תפוצה עם טפסי הרשמה, לשליחות ההמוניות שלך"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "A member set the component by hand later, so it stays as they left it."
+msgstr "חבר הגדיר את הרכיב ידנית מאוחר יותר, ולכן הוא נשאר כפי שהשאיר אותו."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "שדה מיזוג בלי ערך חלופי יהיה ריק אצל חלק מהנמענים. תן לו ערך חלופי."
@@ -1025,6 +1029,10 @@ msgstr "לנכס יכולים להיות לכל היותר 20 משפכים. מח
 #: src/features/status/CreatePageDialog.tsx
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "דף ציבורי שמספר ללקוחות שלכם אם {inboxName} עובד. הוא נשאר לא מפורסם עד שתפרסמו אותו."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "A pushed state that names its own state keeps it."
+msgstr "מצב שנשלח ומציין את מצבו שלו שומר עליו."
 
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
@@ -1165,6 +1173,14 @@ msgstr "הוספת בלוק"
 msgid "Add a condition"
 msgstr "הוספת תנאי"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Add a contact point of type Webhook, paste the address above, keep the method POST and use the contact point in a notification policy. Firing alerts fail the monitor, resolved ones recover it."
+msgstr "הוסיפו נקודת קשר מסוג Webhook, הדביקו את הכתובת שלמעלה, השאירו את השיטה POST והשתמשו בנקודת הקשר במדיניות התראות. התראות שהופעלו מפילות את המוניטור, ואלה שנפתרו משחזרות אותו."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add a monitor"
+msgstr "הוספת מוניטור"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Add a note (optional)"
 msgstr "הוסף הערה (אופציונלי)"
@@ -1244,6 +1260,15 @@ msgstr "הוספת נקודת קצה"
 msgid "Add group"
 msgstr "הוספת קבוצה"
 
+#: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsTab.tsx
+msgid "Add monitor"
+msgstr "הוספת מוניטור"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Add monitor ({addKey})"
+msgstr "הוספת מוניטור ({addKey})"
+
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Add note"
@@ -1315,6 +1340,7 @@ msgstr "נוסף על ידי הצוות"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
 msgstr "כתובת"
@@ -1355,6 +1381,11 @@ msgstr "תאריך הסכמה"
 #: src/features/settings/notifications/TabAlertsSection.tsx
 msgid "Alert me while the tab is in the background"
 msgstr "התרע לי כשהלשונית ברקע"
+
+#: src/features/status/MonitorToken.tsx
+#: src/features/status/text.tsx
+msgid "Alertmanager"
+msgstr "Alertmanager"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
@@ -2064,6 +2095,14 @@ msgstr "חזרה להמתנה"
 msgid "Back to your list"
 msgstr "חזרה לרשימה שלך"
 
+#: src/features/status/text.tsx
+msgid "Beat"
+msgstr "אות"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Beats only when the job succeeded."
+msgstr "שולח אות רק כשהמשימה הצליחה."
+
 #: src/features/migrations/ConnectStep.tsx
 msgid "Before you connect"
 msgstr "לפני שמתחברים"
@@ -2274,6 +2313,7 @@ msgstr "האם אפשר לתזמן ניוזלטר לכל מנוי?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "ביטול"
 
@@ -2507,6 +2547,10 @@ msgstr "בחר „Forward a copy of incoming mail to” עם הכתובת, הש�
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "בחר „Generate app password”, קרא לה „Yuva” וצור אותה."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Choose a component"
+msgstr "בחרו רכיב"
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Choose a region"
 msgstr "בחר אזור"
@@ -2710,6 +2754,10 @@ msgstr "הושלם"
 #: src/features/status/text.tsx
 msgid "Completed"
 msgstr "הושלם"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Component"
+msgstr "רכיב"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Component deleted"
@@ -3060,6 +3108,10 @@ msgstr "העתק אותו עכשיו ועדכן את הצד המקבל שלך; �
 msgid "Copy the 16-character password and paste it below. Gmail's IMAP is always on."
 msgstr "העתק את הסיסמה בת 16 התווים והדבק למטה. IMAP ב-Gmail תמיד פעיל."
 
+#: src/features/status/MonitorToken.tsx
+msgid "Copy the address now: it is shown only once. Anyone who has it can report for this monitor."
+msgstr "העתיקו את הכתובת עכשיו: היא מוצגת פעם אחת בלבד. כל מי שיש לו אותה יכול לדווח עבור המוניטור הזה."
+
 #: src/features/migrations/text.ts
 msgid "Copy the Application (client) ID from Overview and paste it below with the secret. For an app limited to your organization, also enter its Directory (tenant) ID."
 msgstr "העתק את מזהה היישום (הלקוח) מהסקירה הכללית והדבק למטה עם הסוד. עבור יישום המוגבל לארגון שלך, הזן גם את מזהה הספרייה (הדייר)."
@@ -3202,6 +3254,10 @@ msgstr "פרטי הגישה נמחקו. Yuva כבר לא יכולה לקרוא �
 msgid "Critical"
 msgstr "קריטי"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Cron"
+msgstr "Cron"
+
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
 msgstr "קובץ CSV"
@@ -3294,6 +3350,7 @@ msgstr "ביצועים מופחתים"
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
+#: src/features/status/MonitorsTab.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "מחיקה"
@@ -3314,6 +3371,7 @@ msgstr "למחוק את {0}?"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/workspace/DeleteWorkspace.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Delete {name}?"
 msgstr "למחוק את {name}?"
 
@@ -3349,6 +3407,10 @@ msgstr "מחיקת מפתח"
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Delete list"
 msgstr "מחיקת רשימה"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Delete monitor"
+msgstr "מחיקת מוניטור"
 
 #: src/features/auth/DeleteAccountButton.tsx
 #: src/features/settings/profile/ProfilePage.tsx
@@ -3691,6 +3753,7 @@ msgstr "הדומיין לא מאומת"
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/MonitorToken.tsx
 msgid "Done"
 msgstr "בוצע"
 
@@ -3698,6 +3761,10 @@ msgstr "בוצע"
 msgctxt "feedback progress"
 msgid "Done"
 msgstr "Done"
+
+#: src/features/status/text.tsx
+msgid "Down"
+msgstr "מושבת"
 
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
@@ -3892,6 +3959,7 @@ msgstr "כל אחת עם כל ההודעות וההערות שלה"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Edit"
 msgstr "עריכה"
 
@@ -3923,6 +3991,10 @@ msgstr "עריכת פרטים ({editKey})"
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
 msgstr "עריכת תווית"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Edit monitor"
+msgstr "עריכת מוניטור"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Edit the design"
@@ -4052,6 +4124,10 @@ msgstr "אירועים"
 msgid "Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off."
 msgstr "כל הניסיונות נכשלו מאז {failingSince}. אחרי 24 שעות של כשלים Yuva מכבה את נקודת הקצה."
 
+#: src/features/status/MonitorChecks.tsx
+msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
+msgstr "כל אות, אות שהוחמץ ומצב שנשלח ב־30 הימים האחרונים, החדשים תחילה."
+
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
 msgstr "כל שיחות הלקוחות, במקום אחד."
@@ -4154,6 +4230,10 @@ msgstr "בכל מקום"
 msgid "Example Ltd."
 msgstr "Example בע״מ"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Expected every"
+msgstr "צפוי כל"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "פג {expires}"
@@ -4195,6 +4275,7 @@ msgstr "מזהים חיצוניים"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "נכשל"
 
@@ -4205,6 +4286,14 @@ msgstr "נכשל חמש פעמים"
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
 msgstr "נכשל"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Fails the monitor at once, without waiting for the grace."
+msgstr "מפיל את המוניטור מיד, בלי להמתין לסובלנות."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Failures to go down"
+msgstr "כשלונות ברצף עד הנפילה"
 
 #: src/features/docs/DocsPages.tsx
 msgid "feedback"
@@ -4317,6 +4406,10 @@ msgstr "סיום בלי בדיקה"
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Finished"
 msgstr "הסתיים"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Firing alerts fail the monitor, resolved ones recover it."
+msgstr "התראות שהופעלו מפילות את המוניטור, ואלה שנפתרו משחזרות אותו."
 
 #: src/features/setup/SetupLayout.tsx
 msgid "First message"
@@ -4646,6 +4739,14 @@ msgstr "Google שלחה קוד אישור"
 msgid "Google Takeout"
 msgstr "Google Takeout"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Grace"
+msgstr "סובלנות"
+
+#: src/features/status/text.tsx
+msgid "Grafana"
+msgstr "Grafana"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Greeting"
@@ -4671,6 +4772,10 @@ msgstr "הועברה אל {name}"
 #: src/features/contact/ContactsColumn.tsx
 msgid "Has an open conversation"
 msgstr "יש לו שיחה פתוחה"
+
+#: src/features/status/text.tsx
+msgid "Heartbeat"
+msgstr "Heartbeat"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Held by an incident, {since}"
@@ -4813,6 +4918,10 @@ msgstr "כמה רחוק אחורה"
 msgid "How HTML e-mails open. You can still switch each message."
 msgstr "איך נפתחים אימיילים ב-HTML. עדיין אפשר להחליף לכל הודעה."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "How late a beat may be."
+msgstr "כמה אות רשאי לאחר."
+
 #: src/features/setup/email/EmailReceiveStep.tsx
 msgid "How mail reaches Yuva"
 msgstr "איך הדואר מגיע ל-Yuva"
@@ -4927,6 +5036,10 @@ msgstr "אם ספק ה-DNS שלך מגביל מחרוזת TXT ל-255 תווים,
 msgid "If your mail provider mails a confirmation to that address, it arrives in this inbox as a conversation; open it there."
 msgstr "אם ספק הדואר שלך שולח אישור לכתובת הזאת, הוא מגיע לתיבת הדואר הזאת כשיחה; פתח אותו שם."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Ignores results and lets the component go back."
+msgstr "מתעלם מהתוצאות ומאפשר לרכיב לחזור."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Image descriptions"
 msgstr "תיאורי תמונות"
@@ -5013,6 +5126,10 @@ msgstr "ייבואים רצים אחד בכל פעם בסביבת העבודה. 
 #: src/features/conversation/HeaderActions.tsx
 msgid "In 1 hour"
 msgstr "בעוד שעה"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "In a row, 1 to 10."
+msgstr "ברצף, 1 עד 10."
 
 #: src/features/conversation/HeaderActions.tsx
 msgid "in an hour"
@@ -5317,6 +5434,10 @@ msgstr "הוא לא יקבל עוד התראות."
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "הגישה שלו מסתיימת מיד. כדי להשתמש בו שוב, חבר אותו שוב."
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Its checks are deleted. An incident it opened is resolved."
+msgstr "הבדיקות שלו נמחקות. אירוע שהוא פתח נפתר."
+
 #: src/features/status/ComponentsTab.tsx
 msgid "Its components stay, without a group."
 msgstr "הרכיבים שלה נשארים, ללא קבוצה."
@@ -5388,6 +5509,10 @@ msgstr "מפתחות ועוזרים אינם רשאים לתזמן שליחות 
 msgid "Keys and assistants may send broadcasts"
 msgstr "מפתחות ועוזרים רשאים לשלוח שליחות המוניות"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Kind"
+msgstr "סוג"
+
 #: src/features/contact/ContactsColumn.tsx
 msgid "Known"
 msgstr "ידוע"
@@ -5455,6 +5580,10 @@ msgstr "גדול ממגבלת השרת הזה להודעה אחת"
 msgid "Last attempt"
 msgstr "ניסיון אחרון"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Last beat {last}"
+msgstr "האות האחרון {last}"
+
 #: src/features/home/HomePage.tsx
 msgid "Last broadcast"
 msgstr "שליחה המונית אחרונה"
@@ -5486,6 +5615,10 @@ msgstr "נראה לאחרונה {seen}"
 #: src/features/contact/ContactPage.tsx
 msgid "last seen {seenText}"
 msgstr "נראה לאחרונה {seenText}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last state {last}"
+msgstr "המצב האחרון {last}"
 
 #: src/features/broadcasts/TestSend.tsx
 msgid "Last test {last}"
@@ -5650,6 +5783,7 @@ msgstr "טעינת תמונות"
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/MonitorChecks.tsx
 #: src/features/team/MemberPage.tsx
 msgid "Load more"
 msgstr "טעינת עוד"
@@ -5817,9 +5951,17 @@ msgstr "גדולה"
 msgid "Major outage"
 msgstr "השבתה גדולה"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Make a new address for {name}?"
+msgstr "ליצור כתובת חדשה עבור {name}?"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Make it public"
 msgstr "הפיכה לציבורי"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Make new address"
+msgstr "יצירת כתובת חדשה"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6092,6 +6234,10 @@ msgstr "שלי"
 msgid "Minor"
 msgstr "קטנה"
 
+#: src/features/status/text.tsx
+msgid "Missed beat"
+msgstr "אות שהוחמץ"
+
 #: src/components/common/text.ts
 #: src/features/settings/channels/app/AppFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6107,9 +6253,18 @@ msgstr "בפיקוח"
 msgid "Monday"
 msgstr "יום שני"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Monitor deleted"
+msgstr "המוניטור נמחק"
+
 #: src/features/status/text.tsx
 msgid "Monitoring"
 msgstr "במעקב"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Monitors"
+msgstr "מוניטורים"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "More actions"
@@ -6124,6 +6279,10 @@ msgstr "פעולות נוספות עבור {address}"
 #: src/features/status/ComponentsTab.tsx
 msgid "More for {0}"
 msgstr "עוד עבור {0}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "More for {name}"
+msgstr "עוד עבור {name}"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "More options"
@@ -6243,6 +6402,7 @@ msgstr "הפרופיל שלי"
 #: src/features/setup/SetupLayout.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorDialog.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Name"
 msgstr "שם"
@@ -6329,6 +6489,14 @@ msgstr "חדש"
 #: src/features/broadcasts/Growth.tsx
 msgid "New"
 msgstr "חדש"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "New address"
+msgstr "כתובת חדשה"
+
+#: src/features/status/MonitorToken.tsx
+msgid "New address for {name}"
+msgstr "כתובת חדשה עבור {name}"
 
 #: src/features/broadcasts/Import.tsx
 msgid "New addresses that get a confirmation mail"
@@ -6527,6 +6695,10 @@ msgstr "בשלב הבא, בחר מה להביא. הסריקה קוראת את ה
 #: src/features/migrations/ChooseStep.tsx
 msgid "Next, choose where they go."
 msgstr "בשלב הבא, בחר לאן הם הולכים."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Nightly backup"
+msgstr "גיבוי לילי"
 
 #: src/features/setup/previews.tsx
 msgid "No"
@@ -6763,6 +6935,10 @@ msgstr "עדיין אין מדיה, קישורים או מסמכים בשיחה 
 msgid "No messages yet"
 msgstr "עדיין אין הודעות"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
+msgstr "אין עדיין מוניטורים. הוסיפו אחד כדי שמשימה או מערכת הניטור שלכם תגדיר את מצב הרכיב."
+
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "אין התראות ב-90 הימים האחרונים."
@@ -6815,6 +6991,10 @@ msgstr "עדיין אין תשובות."
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "אין חשבון תשובות"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "No result yet"
+msgstr "אין עדיין תוצאה"
 
 #: src/app/Palette.tsx
 msgid "No results"
@@ -6928,6 +7108,7 @@ msgstr "אף אחד לא יקבל את האימייל הזה. בחר רשימו�
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "None"
 msgstr "ללא"
 
@@ -7105,6 +7286,10 @@ msgstr "דבר לא השתנה ב-{provider}; השאר את החשבון כאר�
 msgid "Nothing from the file is added, and the uploaded file is deleted."
 msgstr "שום דבר מהקובץ לא נוסף, והקובץ שהועלה נמחק."
 
+#: src/features/status/MonitorChecks.tsx
+msgid "Nothing has arrived yet."
+msgstr "עדיין לא הגיע דבר."
+
 #: src/features/broadcasts/Report.tsx
 msgid "Nothing has happened yet."
 msgstr "עדיין לא קרה דבר."
@@ -7227,6 +7412,10 @@ msgstr "מוצע בטפסי הרשמה ובדף ההעדפות. רשימות פ�
 #: src/features/conversation/HeaderActions.tsx
 msgid "Offline"
 msgstr "לא מקוון"
+
+#: src/features/status/MonitorChecks.tsx
+msgid "OK"
+msgstr "אישור"
 
 #: src/features/migrations/parts.tsx
 msgid "Older mail came from the export file you imported, so only newer mail is read here; mail that is in both is not imported twice. After the copy, the usual switch follows."
@@ -7473,6 +7662,10 @@ msgstr "פתיחת {0}"
 msgid "Open {provider}'s mail settings and find forwarding, or a filter that forwards all incoming mail."
 msgstr "פתח את הגדרות הדואר של {provider} ומצא העברה, או מסנן שמעביר את כל הדואר הנכנס."
 
+#: src/features/status/text.tsx
+msgid "Open a draft incident"
+msgstr "פתיחת טיוטת אירוע"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Open a page of your docs"
 msgstr "פתח דף מהתיעוד שלך"
@@ -7563,6 +7756,10 @@ msgstr "פתיחת דף האישור של Google"
 msgid "Open in Analytics"
 msgstr "פתיחה באנליטיקה"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Open incident"
+msgstr "פתיחת האירוע"
+
 #: src/features/account/ConnectPage.tsx
 msgid "Open it from the sign-in button of a documentation page."
 msgstr "פתח אותו מכפתור הכניסה בדף תיעוד."
@@ -7570,6 +7767,10 @@ msgstr "פתח אותו מכפתור הכניסה בדף תיעוד."
 #: src/features/migrations/DoneStep.tsx
 msgid "Open My Apps"
 msgstr "פתיחת My Apps"
+
+#: src/features/status/text.tsx
+msgid "Open nothing"
+msgstr "לא לפתוח דבר"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -7681,6 +7882,10 @@ msgstr "פתיחות"
 #: src/features/status/text.tsx
 msgid "Operational"
 msgstr "פועל"
+
+#: src/features/status/MonitorToken.tsx
+msgid "operational recovers; degraded, partial_outage and major_outage fail."
+msgstr "operational משחזר; degraded, partial_outage ו־major_outage מפילים."
 
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
@@ -7884,6 +8089,7 @@ msgstr "הדבק את זה לפני תג ה-body הסוגר של הדפים של
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Pause"
 msgstr "השהיה"
 
@@ -7896,6 +8102,8 @@ msgstr "השהיה או המשך של השליחה"
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/MonitorDialog.tsx
+#: src/features/status/text.tsx
 msgid "Paused"
 msgstr "מושהה"
 
@@ -8376,6 +8584,10 @@ msgstr "פרסום"
 msgid "Publish ({publishKey})"
 msgstr "פרסום ({publishKey})"
 
+#: src/features/status/text.tsx
+msgid "Publish an incident"
+msgstr "פרסום אירוע"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "פרסום עכשיו"
@@ -8405,6 +8617,10 @@ msgstr "מתפרסם מיד ונשלח לעוקבים."
 msgid "Push"
 msgstr "דחיפה"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Push a state"
+msgstr "שליחת מצב"
+
 #: src/features/settings/notifications/events.ts
 msgid "Push and e-mail"
 msgstr "דחיפה ואימייל"
@@ -8418,9 +8634,21 @@ msgstr "התראות דחיפה"
 msgid "Push only"
 msgstr "דחיפה בלבד"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Push recovery"
+msgstr "שליחת התאוששות"
+
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Push: {label}"
 msgstr "דחיפה: {label}"
+
+#: src/features/status/text.tsx
+msgid "Pushed"
+msgstr "נשלח"
+
+#: src/features/status/text.tsx
+msgid "Pushed state"
+msgstr "מצב שנשלח"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "Put its subscribe form on your site, or add people who agreed to hear from you."
@@ -8611,6 +8839,10 @@ msgstr "קליטה"
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "Recent activity"
 msgstr "פעילות אחרונה"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Recent checks"
+msgstr "בדיקות אחרונות"
 
 #: src/features/contact/ContactPage.tsx
 msgid "Recent visits"
@@ -8950,6 +9182,10 @@ msgstr "משיב אל {to}"
 msgid "Report"
 msgstr "דיווח"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Report a failed run"
+msgstr "דיווח על הרצה שנכשלה"
+
 #: src/components/common/text.ts
 msgid "Reported a mail as spam"
 msgstr "דיווח על אימייל כספאם"
@@ -8961,6 +9197,10 @@ msgstr "דווח כספאם"
 #: src/components/common/text.ts
 msgid "Reported as spam"
 msgstr "דווח כספאם"
+
+#: src/features/status/text.tsx
+msgid "Reported failure"
+msgstr "כשל שדווח"
 
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -9005,6 +9245,7 @@ msgstr "שחזור"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Resume"
 msgstr "המשך"
 
@@ -9160,6 +9401,7 @@ msgstr "יום שבת"
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Save"
 msgstr "שמירה"
 
@@ -9387,6 +9629,10 @@ msgstr "לשלוח את „{name}” עכשיו?"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send “{name}” on {when}?"
 msgstr "לשלוח את „{name}” ב-{when}?"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Send a beat"
+msgstr "שליחת אות"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
@@ -9684,6 +9930,10 @@ msgstr "כתובת השרת"
 msgid "SES tenant"
 msgstr "דייר SES"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
+msgstr "הגדירו את מצב הרכיב מבחוץ: משימה שמדווחת, או מערכת הניטור שלכם ששולחת את מצבה."
+
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
 msgstr "הוגדר על ידי מוניטור, {since}"
@@ -9697,6 +9947,10 @@ msgstr "Set progress"
 msgid "Set the feedback progress"
 msgstr "Set the feedback progress"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Set up {name}"
+msgstr "הגדרת {name}"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Set up DKIM"
 msgstr "הגדרת DKIM"
@@ -9709,6 +9963,10 @@ msgstr "הגדרת אימייל"
 #: src/features/setup/SetupHub.tsx
 msgid "Set up Yuva"
 msgstr "הגדרת Yuva"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Sets {failureState}. {onFailure}."
+msgstr "מגדיר {failureState}. {onFailure}."
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Setting up the inbox’s Amazon SES tenant…"
@@ -10307,6 +10565,10 @@ msgstr "המצב של {0}"
 msgid "State of {0} while it is open"
 msgstr "המצב של {0} כל עוד הוא פתוח"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "State while down"
+msgstr "מצב בנפילה"
+
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -10431,6 +10693,10 @@ msgstr "המנוי נמחק"
 #: src/components/common/text.ts
 msgid "Succeeded"
 msgstr "הצליח"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Successes to recover"
+msgstr "הצלחות ברצף עד ההתאוששות"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Such as a MERSİS number, trade register or VAT id, if you have one"
@@ -10708,6 +10974,10 @@ msgstr "הקוד שגוי או שפג תוקפו."
 msgid "The columns are guessed from the header row. One must be the e-mail address; name the others as contact fields or attributes, or skip them. Attributes only fill keys a contact does not have yet."
 msgstr "העמודות מנוחשות משורת הכותרת. אחת חייבת להיות כתובת האימייל; תן לאחרות שם כשדות איש קשר או כמאפיינים, או דלג עליהן. מאפיינים ממלאים רק מפתחות שעדיין אין לאיש הקשר."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "The component whose state this monitor sets."
+msgstr "הרכיב שהמוניטור הזה מגדיר את מצבו."
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "The confirmation mail is on its way."
 msgstr "אימייל האישור בדרך."
@@ -10719,6 +10989,10 @@ msgstr "דף ההסכמה מסמן את מה שהלקוח מבקש. השאר ב�
 #: src/components/common/text.ts
 msgid "The contact was deleted"
 msgstr "איש הקשר נמחק"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "The current address stops working at once. Update whatever calls it."
+msgstr "הכתובת הנוכחית מפסיקה לעבוד מיד. עדכנו כל מה שקורא לה."
 
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "The customer does not see this"
@@ -11044,6 +11318,10 @@ msgstr "מספר הנמענים השתנה מאז שהסתכלת. בדוק את 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The number of recipients changed while you looked. It is {recipients} now. Confirm again to send to them."
 msgstr "מספר הנמענים השתנה בזמן שהסתכלת. עכשיו הוא {recipients}. אשר שוב כדי לשלוח אליהם."
+
+#: src/features/status/MonitorToken.tsx
+msgid "The old address no longer works. Copy the new one now: it is shown only once."
+msgstr "הכתובת הישנה כבר לא עובדת. העתיקו את החדשה עכשיו: היא מוצגת פעם אחת בלבד."
 
 #: src/features/migrations/DoneStep.tsx
 msgid "The old mailbox is untouched; keep it as an archive if you like."
@@ -12112,6 +12390,10 @@ msgstr "עד שילחצו על הקישור הם נשארים ממתינים ל�
 msgid "Unverified sender"
 msgstr "שולח לא מאומת"
 
+#: src/features/status/text.tsx
+msgid "Up"
+msgstr "פעיל"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "עד {max} ו-100,000 שורות, עם שורת כותרת. קובצי Excel בקידוד טורקי או מערבי ועמודות המופרדות בפסיקים, נקודה-פסיק או טאבים נקראים כפי שהם."
@@ -12457,6 +12739,10 @@ msgstr "ממתין ללקוח"
 msgid "Waiting for the first message"
 msgstr "ממתין להודעה הראשונה"
 
+#: src/features/status/text.tsx
+msgid "Waiting for the first result"
+msgstr "ממתין לתוצאה הראשונה"
+
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Waiting for the operator"
 msgstr "ממתין למפעיל"
@@ -12635,6 +12921,10 @@ msgstr "כשחבר צוות מתייג אותך בהערה עם @."
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"
 msgstr "מתי הם הסכימו?"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "When it goes down"
+msgstr "כשהוא נופל"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "When nobody is available, the widget asks where to send the reply."
@@ -13076,6 +13366,10 @@ msgstr "התיקייה שלך"
 msgid "Your folders and labels become Yuva labels on the conversations they hold."
 msgstr "התיקיות והתוויות שלך הופכות לתוויות Yuva בשיחות שהן מחזיקות."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Your job calls Yuva on a schedule. A missing call fails the monitor."
+msgstr "המשימה שלכם קוראת ל־Yuva במרווחים קבועים. קריאה חסרה מפילה את המוניטור."
+
 #: src/features/migrations/Wizard.tsx
 msgid "Your mail provider"
 msgstr "ספק הדואר שלך"
@@ -13105,6 +13399,10 @@ msgstr "הארגון שלך חסם את הכניסה"
 #: src/features/migrations/text.ts
 msgid "Your organization's admin must allow Yuva"
 msgstr "מנהל הארגון שלך צריך לאשר את Yuva"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Your own monitoring sends its state, including Alertmanager and Grafana alerts."
+msgstr "מערכת הניטור שלכם שולחת את מצבה, כולל התראות של Alertmanager ו־Grafana."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Your plan and workspace policies decide whether custom MCP servers are available."

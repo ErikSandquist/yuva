@@ -648,6 +648,8 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
     case "status.incident.created":
     case "status.incident.updated":
     case "status.incident.resolved":
+    case "status.monitor.down":
+    case "status.monitor.up":
       void qc.invalidateQueries({ queryKey: keys.status(ctx.ws) })
       return
     case "analytics.alert": {

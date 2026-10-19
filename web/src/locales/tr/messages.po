@@ -970,6 +970,10 @@ msgstr "E-posta listesi bir gelen kutusunun adıyla, onun e-posta kanalı üzeri
 msgid "A mailing list with subscribe forms, for your broadcasts"
 msgstr "Bültenleriniz için abonelik formlu bir e-posta listesi"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "A member set the component by hand later, so it stays as they left it."
+msgstr "Bir üye bileşeni sonradan elle ayarladı, bu yüzden onun bıraktığı durumda kalıyor."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "Yedek metni olmayan bir birleştirme alanı bazı alıcılarda boş kalacak. Bir yedek metin ekleyin."
@@ -1026,6 +1030,10 @@ msgstr "Bir mülkte en fazla 20 huni olabilir. Önce birini silin."
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "Müşterilerinize {inboxName} ürününün çalışıp çalışmadığını söyleyen herkese açık bir sayfa. Siz yayınlayana kadar yayında olmaz."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "A pushed state that names its own state keeps it."
+msgstr "Kendi durumunu bildiren bir gönderim bu durumu korur."
+
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
 msgstr "{name} hakkında bir soru"
@@ -1060,11 +1068,11 @@ msgstr "Bir durum bileşeni değişti ya da yeni bir durum aldı"
 
 #: src/components/common/text.ts
 msgid "A status monitor recovered"
-msgstr "Bir durum izleyicisi düzeldi"
+msgstr "Bir durum monitörü düzeldi"
 
 #: src/components/common/text.ts
 msgid "A status monitor went down"
-msgstr "Bir durum izleyicisi çöktü"
+msgstr "Bir durum monitörü çöktü"
 
 #: src/components/common/text.ts
 msgid "A subscription changed"
@@ -1165,6 +1173,14 @@ msgstr "Blok ekle"
 msgid "Add a condition"
 msgstr "Koşul ekle"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Add a contact point of type Webhook, paste the address above, keep the method POST and use the contact point in a notification policy. Firing alerts fail the monitor, resolved ones recover it."
+msgstr "Webhook türünde bir iletişim noktası ekleyin, yukarıdaki adresi yapıştırın, yöntemi POST olarak bırakın ve iletişim noktasını bir bildirim politikasında kullanın. Tetiklenen uyarılar monitörü düşürür, çözülenler düzeltir."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add a monitor"
+msgstr "Monitör ekle"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Add a note (optional)"
 msgstr "Not ekle (isteğe bağlı)"
@@ -1244,6 +1260,15 @@ msgstr "Uç nokta ekle"
 msgid "Add group"
 msgstr "Grup ekle"
 
+#: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsTab.tsx
+msgid "Add monitor"
+msgstr "Monitör ekle"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Add monitor ({addKey})"
+msgstr "Monitör ekle ({addKey})"
+
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Add note"
@@ -1315,6 +1340,7 @@ msgstr "Ekip ekledi"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
 msgstr "Adres"
@@ -1355,6 +1381,11 @@ msgstr "İzin tarihi"
 #: src/features/settings/notifications/TabAlertsSection.tsx
 msgid "Alert me while the tab is in the background"
 msgstr "Sekme arka plandayken beni uyar"
+
+#: src/features/status/MonitorToken.tsx
+#: src/features/status/text.tsx
+msgid "Alertmanager"
+msgstr "Alertmanager"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
@@ -2064,6 +2095,14 @@ msgstr "Bekleyenlere geri al"
 msgid "Back to your list"
 msgstr "Listenize dön"
 
+#: src/features/status/text.tsx
+msgid "Beat"
+msgstr "Sinyal"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Beats only when the job succeeded."
+msgstr "Yalnızca iş başarılı olduğunda sinyal gönderir."
+
 #: src/features/migrations/ConnectStep.tsx
 msgid "Before you connect"
 msgstr "Bağlanmadan önce"
@@ -2274,6 +2313,7 @@ msgstr "Her abone için ayrı bülten planlayabilir miyim?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Vazgeç"
 
@@ -2507,6 +2547,10 @@ msgstr "“Gelen postaların bir kopyasını şuraya yönlendir” seçeneğiyle
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "“Uygulama şifresi oluştur”u seçin, adını “Yuva” koyup oluşturun."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Choose a component"
+msgstr "Bir bileşen seçin"
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Choose a region"
 msgstr "Bölge seçin"
@@ -2710,6 +2754,10 @@ msgstr "Tamam"
 #: src/features/status/text.tsx
 msgid "Completed"
 msgstr "Tamamlandı"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Component"
+msgstr "Bileşen"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Component deleted"
@@ -3060,6 +3108,10 @@ msgstr "Şimdi kopyalayıp alıcınızı güncelleyin; eski anahtar 24 saat daha
 msgid "Copy the 16-character password and paste it below. Gmail's IMAP is always on."
 msgstr "16 karakterlik şifreyi kopyalayıp aşağıya yapıştırın. Gmail'de IMAP her zaman açıktır."
 
+#: src/features/status/MonitorToken.tsx
+msgid "Copy the address now: it is shown only once. Anyone who has it can report for this monitor."
+msgstr "Adresi şimdi kopyalayın: yalnızca bir kez gösterilir. Adrese sahip olan herkes bu monitör adına bildirim gönderebilir."
+
 #: src/features/migrations/text.ts
 msgid "Copy the Application (client) ID from Overview and paste it below with the secret. For an app limited to your organization, also enter its Directory (tenant) ID."
 msgstr "Overview sayfasından Application (client) ID değerini kopyalayıp gizli anahtarla birlikte aşağıya yapıştırın. Yalnızca kuruluşunuzla sınırlı bir uygulamada Directory (tenant) ID değerini de girin."
@@ -3202,6 +3254,10 @@ msgstr "Erişim bilgileri silindi. Yuva artık {address} adresini okuyamaz."
 msgid "Critical"
 msgstr "Kritik"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Cron"
+msgstr "Cron"
+
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
 msgstr "CSV dosyası"
@@ -3294,6 +3350,7 @@ msgstr "Düşük performans"
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
+#: src/features/status/MonitorsTab.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "Sil"
@@ -3314,6 +3371,7 @@ msgstr "{0} silinsin mi?"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/workspace/DeleteWorkspace.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Delete {name}?"
 msgstr "{name} silinsin mi?"
 
@@ -3349,6 +3407,10 @@ msgstr "Anahtarı sil"
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Delete list"
 msgstr "Listeyi sil"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Delete monitor"
+msgstr "Monitörü sil"
 
 #: src/features/auth/DeleteAccountButton.tsx
 #: src/features/settings/profile/ProfilePage.tsx
@@ -3691,6 +3753,7 @@ msgstr "Alan adı doğrulanmadı"
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/MonitorToken.tsx
 msgid "Done"
 msgstr "Bitti"
 
@@ -3698,6 +3761,10 @@ msgstr "Bitti"
 msgctxt "feedback progress"
 msgid "Done"
 msgstr "Yapıldı"
+
+#: src/features/status/text.tsx
+msgid "Down"
+msgstr "Çalışmıyor"
 
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
@@ -3892,6 +3959,7 @@ msgstr "Her biri tüm mesajları ve notlarıyla"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Edit"
 msgstr "Düzenle"
 
@@ -3923,6 +3991,10 @@ msgstr "Ayrıntıları düzenle ({editKey})"
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
 msgstr "Etiketi düzenle"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Edit monitor"
+msgstr "Monitörü düzenle"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Edit the design"
@@ -4052,6 +4124,10 @@ msgstr "Olaylar"
 msgid "Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off."
 msgstr "{failingSince} tarihinden beri her deneme başarısız. 24 saat boyunca başarısız olursa Yuva uç noktayı kapatır."
 
+#: src/features/status/MonitorChecks.tsx
+msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
+msgstr "Son 30 günün tüm sinyalleri, kaçan sinyalleri ve gönderilen durumları, en yeniden eskiye."
+
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
 msgstr "Tüm müşteri konuşmaları tek bir yerde."
@@ -4154,6 +4230,10 @@ msgstr "Her yerde"
 msgid "Example Ltd."
 msgstr "Örnek Ltd. Şti."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Expected every"
+msgstr "Beklenen sıklık"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "{expires} tarihinde süresi doldu"
@@ -4195,6 +4275,7 @@ msgstr "Harici kimlikler"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Başarısız"
 
@@ -4205,6 +4286,14 @@ msgstr "Beş kez başarısız oldu"
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
 msgstr "Başarısız oluyor"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Fails the monitor at once, without waiting for the grace."
+msgstr "Monitörü hemen düşürür, tolerans süresini beklemez."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Failures to go down"
+msgstr "Düşmek için hata sayısı"
 
 #: src/features/docs/DocsPages.tsx
 msgid "feedback"
@@ -4317,6 +4406,10 @@ msgstr "Kontrol etmeden bitir"
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Finished"
 msgstr "Bitti"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Firing alerts fail the monitor, resolved ones recover it."
+msgstr "Tetiklenen uyarılar monitörü düşürür, çözülenler düzeltir."
 
 #: src/features/setup/SetupLayout.tsx
 msgid "First message"
@@ -4646,6 +4739,14 @@ msgstr "Google bir onay kodu gönderdi"
 msgid "Google Takeout"
 msgstr "Google Takeout"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Grace"
+msgstr "Tolerans"
+
+#: src/features/status/text.tsx
+msgid "Grafana"
+msgstr "Grafana"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Greeting"
@@ -4671,6 +4772,10 @@ msgstr "Verildi: {name}"
 #: src/features/contact/ContactsColumn.tsx
 msgid "Has an open conversation"
 msgstr "Açık konuşması olan"
+
+#: src/features/status/text.tsx
+msgid "Heartbeat"
+msgstr "Kalp atışı"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Held by an incident, {since}"
@@ -4813,6 +4918,10 @@ msgstr "Ne kadar geriye"
 msgid "How HTML e-mails open. You can still switch each message."
 msgstr "HTML e-postaların nasıl açılacağı. Her iletiyi yine de ayrı ayrı değiştirebilirsiniz."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "How late a beat may be."
+msgstr "Bir sinyalin ne kadar geç kalabileceği."
+
 #: src/features/setup/email/EmailReceiveStep.tsx
 msgid "How mail reaches Yuva"
 msgstr "Postanın Yuva'ya ulaşma yolu"
@@ -4927,6 +5036,10 @@ msgstr "DNS sağlayıcınız bir TXT metnini 255 karakterle sınırlıyorsa değ
 msgid "If your mail provider mails a confirmation to that address, it arrives in this inbox as a conversation; open it there."
 msgstr "E-posta sağlayıcınız bu adrese bir onay e-postası gönderirse, bu gelen kutusuna bir konuşma olarak düşer; onu oradan açın."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Ignores results and lets the component go back."
+msgstr "Sonuçları yok sayar ve bileşenin eski durumuna dönmesine izin verir."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Image descriptions"
 msgstr "Görsel açıklamaları"
@@ -5013,6 +5126,10 @@ msgstr "Çalışma alanında içe aktarmalar sırayla çalışır. Diğeri bitin
 #: src/features/conversation/HeaderActions.tsx
 msgid "In 1 hour"
 msgstr "1 saat sonra"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "In a row, 1 to 10."
+msgstr "Art arda, 1 ile 10 arasında."
 
 #: src/features/conversation/HeaderActions.tsx
 msgid "in an hour"
@@ -5317,6 +5434,10 @@ msgstr "Bu cihaz artık bildirim almayacak."
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "Erişimi hemen sona erer. Yeniden kullanmak için tekrar bağlamanız gerekir."
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Its checks are deleted. An incident it opened is resolved."
+msgstr "Kontrolleri silinir. Açtığı olay çözüldü olarak işaretlenir."
+
 #: src/features/status/ComponentsTab.tsx
 msgid "Its components stay, without a group."
 msgstr "Bileşenleri grupsuz olarak kalır."
@@ -5388,6 +5509,10 @@ msgstr "Bu çalışma alanında anahtarlar ve asistanlar bülten zamanlayamaz."
 msgid "Keys and assistants may send broadcasts"
 msgstr "Anahtarlar ve asistanlar bülten gönderebilir"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Kind"
+msgstr "Tür"
+
 #: src/features/contact/ContactsColumn.tsx
 msgid "Known"
 msgstr "Tanınan"
@@ -5455,6 +5580,10 @@ msgstr "Bu sunucunun tek mesaj sınırından büyük"
 msgid "Last attempt"
 msgstr "Son deneme"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Last beat {last}"
+msgstr "Son sinyal {last}"
+
 #: src/features/home/HomePage.tsx
 msgid "Last broadcast"
 msgstr "Son bülten"
@@ -5486,6 +5615,10 @@ msgstr "Son görülme: {seen}"
 #: src/features/contact/ContactPage.tsx
 msgid "last seen {seenText}"
 msgstr "son görülme {seenText}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last state {last}"
+msgstr "Son durum {last}"
 
 #: src/features/broadcasts/TestSend.tsx
 msgid "Last test {last}"
@@ -5650,6 +5783,7 @@ msgstr "Görselleri yükle"
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/MonitorChecks.tsx
 #: src/features/team/MemberPage.tsx
 msgid "Load more"
 msgstr "Daha fazla yükle"
@@ -5817,9 +5951,17 @@ msgstr "Büyük"
 msgid "Major outage"
 msgstr "Büyük kesinti"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Make a new address for {name}?"
+msgstr "{name} için yeni adres oluşturulsun mu?"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Make it public"
 msgstr "Herkese aç"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Make new address"
+msgstr "Yeni adres oluştur"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6092,6 +6234,10 @@ msgstr "Bana atanan"
 msgid "Minor"
 msgstr "Küçük"
 
+#: src/features/status/text.tsx
+msgid "Missed beat"
+msgstr "Kaçan sinyal"
+
 #: src/components/common/text.ts
 #: src/features/settings/channels/app/AppFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6107,9 +6253,18 @@ msgstr "Denetimli"
 msgid "Monday"
 msgstr "Pazartesi"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Monitor deleted"
+msgstr "Monitör silindi"
+
 #: src/features/status/text.tsx
 msgid "Monitoring"
 msgstr "İzleniyor"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Monitors"
+msgstr "Monitörler"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "More actions"
@@ -6124,6 +6279,10 @@ msgstr "{address} için diğer işlemler"
 #: src/features/status/ComponentsTab.tsx
 msgid "More for {0}"
 msgstr "{0} için daha fazlası"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "More for {name}"
+msgstr "{name} için diğer işlemler"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "More options"
@@ -6243,6 +6402,7 @@ msgstr "Profilim"
 #: src/features/setup/SetupLayout.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorDialog.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Name"
 msgstr "Ad"
@@ -6329,6 +6489,14 @@ msgstr "yeni"
 #: src/features/broadcasts/Growth.tsx
 msgid "New"
 msgstr "Yeni"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "New address"
+msgstr "Yeni adres"
+
+#: src/features/status/MonitorToken.tsx
+msgid "New address for {name}"
+msgstr "{name} için yeni adres"
 
 #: src/features/broadcasts/Import.tsx
 msgid "New addresses that get a confirmation mail"
@@ -6527,6 +6695,10 @@ msgstr "Şimdi neyin getirileceğini seçin. Tarama dosyayı bir kez okur."
 #: src/features/migrations/ChooseStep.tsx
 msgid "Next, choose where they go."
 msgstr "Şimdi nereye gideceklerini seçin."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Nightly backup"
+msgstr "Gece yedeklemesi"
 
 #: src/features/setup/previews.tsx
 msgid "No"
@@ -6763,6 +6935,10 @@ msgstr "Bu konuşmada henüz medya, bağlantı ya da belge yok."
 msgid "No messages yet"
 msgstr "Henüz mesaj yok"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
+msgstr "Henüz monitör yok. Bir işin ya da izleme sisteminizin bir bileşenin durumunu ayarlaması için monitör ekleyin."
+
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "Son 90 günde bildirim yok."
@@ -6815,6 +6991,10 @@ msgstr "Henüz yanıt yok."
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "Yanıt hesabı yok"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "No result yet"
+msgstr "Henüz sonuç yok"
 
 #: src/app/Palette.tsx
 msgid "No results"
@@ -6928,6 +7108,7 @@ msgstr "Bu e-postayı kimse almayacak. Abonesi olan listeler seçin ya da koşul
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "None"
 msgstr "Yok"
 
@@ -7105,6 +7286,10 @@ msgstr "{provider} tarafında hiçbir şey değişmedi; isterseniz hesabı arşi
 msgid "Nothing from the file is added, and the uploaded file is deleted."
 msgstr "Dosyadan hiçbir şey eklenmez ve yüklenen dosya silinir."
 
+#: src/features/status/MonitorChecks.tsx
+msgid "Nothing has arrived yet."
+msgstr "Henüz hiçbir şey gelmedi."
+
 #: src/features/broadcasts/Report.tsx
 msgid "Nothing has happened yet."
 msgstr "Henüz bir şey olmadı."
@@ -7227,6 +7412,10 @@ msgstr "Abonelik formlarında ve tercih sayfasında sunulur. Özel listeleri eki
 #: src/features/conversation/HeaderActions.tsx
 msgid "Offline"
 msgstr "Çevrimdışı"
+
+#: src/features/status/MonitorChecks.tsx
+msgid "OK"
+msgstr "Tamam"
 
 #: src/features/migrations/parts.tsx
 msgid "Older mail came from the export file you imported, so only newer mail is read here; mail that is in both is not imported twice. After the copy, the usual switch follows."
@@ -7473,6 +7662,10 @@ msgstr "{0} dosyasını aç"
 msgid "Open {provider}'s mail settings and find forwarding, or a filter that forwards all incoming mail."
 msgstr "{provider} e-posta ayarlarını açın ve yönlendirmeyi ya da gelen tüm e-postaları yönlendiren bir filtreyi bulun."
 
+#: src/features/status/text.tsx
+msgid "Open a draft incident"
+msgstr "Taslak olay aç"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Open a page of your docs"
 msgstr "Dokümanlarınızdan bir sayfa açın"
@@ -7563,6 +7756,10 @@ msgstr "Google'ın onay sayfasını aç"
 msgid "Open in Analytics"
 msgstr "Analitikte aç"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Open incident"
+msgstr "Olayı aç"
+
 #: src/features/account/ConnectPage.tsx
 msgid "Open it from the sign-in button of a documentation page."
 msgstr "Bir dokümantasyon sayfasındaki oturum açma düğmesinden açın."
@@ -7570,6 +7767,10 @@ msgstr "Bir dokümantasyon sayfasındaki oturum açma düğmesinden açın."
 #: src/features/migrations/DoneStep.tsx
 msgid "Open My Apps"
 msgstr "Uygulamalarım sayfasını aç"
+
+#: src/features/status/text.tsx
+msgid "Open nothing"
+msgstr "Hiçbir şey açma"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -7681,6 +7882,10 @@ msgstr "Açılış"
 #: src/features/status/text.tsx
 msgid "Operational"
 msgstr "Çalışıyor"
+
+#: src/features/status/MonitorToken.tsx
+msgid "operational recovers; degraded, partial_outage and major_outage fail."
+msgstr "operational düzeltir; degraded, partial_outage ve major_outage düşürür."
 
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
@@ -7884,6 +8089,7 @@ msgstr "Bunu sayfalarınızda kapanış body etiketinden önce yapıştırın"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Pause"
 msgstr "Duraklat"
 
@@ -7896,6 +8102,8 @@ msgstr "Gönderimi duraklat ya da sürdür"
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/MonitorDialog.tsx
+#: src/features/status/text.tsx
 msgid "Paused"
 msgstr "Duraklatıldı"
 
@@ -8376,6 +8584,10 @@ msgstr "Yayınla"
 msgid "Publish ({publishKey})"
 msgstr "Yayınla ({publishKey})"
 
+#: src/features/status/text.tsx
+msgid "Publish an incident"
+msgstr "Olayı yayımla"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Şimdi yayınla"
@@ -8405,6 +8617,10 @@ msgstr "Hemen yayımlanır ve takipçilere gönderilir."
 msgid "Push"
 msgstr "Anlık"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Push a state"
+msgstr "Durum gönder"
+
 #: src/features/settings/notifications/events.ts
 msgid "Push and e-mail"
 msgstr "Anlık ve e-posta"
@@ -8418,9 +8634,21 @@ msgstr "Anlık bildirimler"
 msgid "Push only"
 msgstr "Yalnızca anlık"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Push recovery"
+msgstr "Düzelme gönder"
+
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Push: {label}"
 msgstr "Anlık bildirim: {label}"
+
+#: src/features/status/text.tsx
+msgid "Pushed"
+msgstr "Gönderildi"
+
+#: src/features/status/text.tsx
+msgid "Pushed state"
+msgstr "Gönderilen durum"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "Put its subscribe form on your site, or add people who agreed to hear from you."
@@ -8611,6 +8839,10 @@ msgstr "Alma"
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "Recent activity"
 msgstr "Son etkinlik"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Recent checks"
+msgstr "Son kontroller"
 
 #: src/features/contact/ContactPage.tsx
 msgid "Recent visits"
@@ -8950,6 +9182,10 @@ msgstr "Yanıtlanan: {to}"
 msgid "Report"
 msgstr "Rapor"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Report a failed run"
+msgstr "Başarısız çalışmayı bildir"
+
 #: src/components/common/text.ts
 msgid "Reported a mail as spam"
 msgstr "Bir e-postayı istenmeyen olarak bildirdi"
@@ -8961,6 +9197,10 @@ msgstr "spam olarak bildirildi"
 #: src/components/common/text.ts
 msgid "Reported as spam"
 msgstr "Spam olarak bildirildi"
+
+#: src/features/status/text.tsx
+msgid "Reported failure"
+msgstr "Bildirilen hata"
 
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -9005,6 +9245,7 @@ msgstr "Geri al"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Resume"
 msgstr "Sürdür"
 
@@ -9160,6 +9401,7 @@ msgstr "Cumartesi"
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Save"
 msgstr "Kaydet"
 
@@ -9387,6 +9629,10 @@ msgstr "“{name}” şimdi gönderilsin mi?"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send “{name}” on {when}?"
 msgstr "“{name}” {when} tarihinde gönderilsin mi?"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Send a beat"
+msgstr "Sinyal gönder"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
@@ -9684,9 +9930,13 @@ msgstr "Sunucu adresi"
 msgid "SES tenant"
 msgstr "SES kiracısı"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
+msgstr "Bir bileşenin durumunu dışarıdan ayarlayın: rapor veren bir iş ya da durumunu kendisi gönderen izleme sisteminiz."
+
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
-msgstr "Bir izleyici ayarladı, {since}"
+msgstr "Bir monitör ayarladı, {since}"
 
 #: src/features/conversation/HeaderActions.tsx
 msgid "Set progress"
@@ -9696,6 +9946,10 @@ msgstr "İlerleme belirle"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Set the feedback progress"
 msgstr "Geri bildirim ilerlemesini belirle"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Set up {name}"
+msgstr "{name} kurulumu"
 
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Set up DKIM"
@@ -9709,6 +9963,10 @@ msgstr "E-postayı kur"
 #: src/features/setup/SetupHub.tsx
 msgid "Set up Yuva"
 msgstr "Yuva’yı kur"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Sets {failureState}. {onFailure}."
+msgstr "{failureState} olarak ayarlar. {onFailure}."
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Setting up the inbox’s Amazon SES tenant…"
@@ -10307,6 +10565,10 @@ msgstr "{0} durumu"
 msgid "State of {0} while it is open"
 msgstr "{0} durumu, açıkken"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "State while down"
+msgstr "Düştüğündeki durum"
+
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -10431,6 +10693,10 @@ msgstr "Abonelik silindi"
 #: src/components/common/text.ts
 msgid "Succeeded"
 msgstr "Başarılı"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Successes to recover"
+msgstr "Düzelmek için başarı sayısı"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Such as a MERSİS number, trade register or VAT id, if you have one"
@@ -10708,6 +10974,10 @@ msgstr "Kod yanlış ya da süresi dolmuş."
 msgid "The columns are guessed from the header row. One must be the e-mail address; name the others as contact fields or attributes, or skip them. Attributes only fill keys a contact does not have yet."
 msgstr "Sütunlar başlık satırından tahmin edildi. Biri e-posta adresi olmalı; diğerlerini kişi alanı ya da özellik olarak adlandırın veya atlayın. Özellikler yalnızca kişide henüz olmayan anahtarları doldurur."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "The component whose state this monitor sets."
+msgstr "Bu monitörün durumunu ayarladığı bileşen."
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "The confirmation mail is on its way."
 msgstr "Onay e-postası yolda."
@@ -10719,6 +10989,10 @@ msgstr "İzin sayfası istemcinin istediklerini işaretli getirir. Yapmasını i
 #: src/components/common/text.ts
 msgid "The contact was deleted"
 msgstr "Kişi silindi"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "The current address stops working at once. Update whatever calls it."
+msgstr "Mevcut adres hemen çalışmaz hale gelir. Onu çağıran her şeyi güncelleyin."
 
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "The customer does not see this"
@@ -11044,6 +11318,10 @@ msgstr "Siz bakarken alıcı sayısı değişti. Yeni sayıyı kontrol edip yeni
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The number of recipients changed while you looked. It is {recipients} now. Confirm again to send to them."
 msgstr "Siz bakarken alıcı sayısı değişti; şimdi {recipients}. Onlara göndermek için yeniden onaylayın."
+
+#: src/features/status/MonitorToken.tsx
+msgid "The old address no longer works. Copy the new one now: it is shown only once."
+msgstr "Eski adres artık çalışmıyor. Yenisini şimdi kopyalayın: yalnızca bir kez gösterilir."
 
 #: src/features/migrations/DoneStep.tsx
 msgid "The old mailbox is untouched; keep it as an archive if you like."
@@ -12112,6 +12390,10 @@ msgstr "Bağlantıya tıklayana kadar onay beklerler ve başka e-posta almazlar.
 msgid "Unverified sender"
 msgstr "Doğrulanmamış gönderen"
 
+#: src/features/status/text.tsx
+msgid "Up"
+msgstr "Çalışıyor"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "En fazla {max} ve 100.000 satır, bir başlık satırıyla. Türkçe ya da Batı dilleri kodlamasındaki Excel dosyaları ve virgül, noktalı virgül ya da sekmeyle ayrılmış sütunlar olduğu gibi okunur."
@@ -12457,6 +12739,10 @@ msgstr "Müşteriden yanıt bekleniyor"
 msgid "Waiting for the first message"
 msgstr "İlk mesaj bekleniyor"
 
+#: src/features/status/text.tsx
+msgid "Waiting for the first result"
+msgstr "İlk sonuç bekleniyor"
+
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Waiting for the operator"
 msgstr "Sunucu yöneticisi bekleniyor"
@@ -12635,6 +12921,10 @@ msgstr "Bir ekip arkadaşı seni @ ile bir nota eklediğinde."
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"
 msgstr "Ne zaman izin verdiler?"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "When it goes down"
+msgstr "Düştüğünde"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "When nobody is available, the widget asks where to send the reply."
@@ -13076,6 +13366,10 @@ msgstr "Kendi klasörünüz"
 msgid "Your folders and labels become Yuva labels on the conversations they hold."
 msgstr "Klasörleriniz ve etiketleriniz, içerdikleri konuşmalarda Yuva etiketine dönüşür."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Your job calls Yuva on a schedule. A missing call fails the monitor."
+msgstr "İşiniz Yuva'yı belirli aralıklarla çağırır. Eksik bir çağrı monitörü düşürür."
+
 #: src/features/migrations/Wizard.tsx
 msgid "Your mail provider"
 msgstr "E-posta sağlayıcınız"
@@ -13105,6 +13399,10 @@ msgstr "Kuruluşunuz oturum açmayı engelledi"
 #: src/features/migrations/text.ts
 msgid "Your organization's admin must allow Yuva"
 msgstr "Kuruluşunuzun yöneticisinin Yuva'ya izin vermesi gerekiyor"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Your own monitoring sends its state, including Alertmanager and Grafana alerts."
+msgstr "Kendi izleme sisteminiz durumunu gönderir; Alertmanager ve Grafana uyarıları dahil."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Your plan and workspace policies decide whether custom MCP servers are available."

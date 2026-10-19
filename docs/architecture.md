@@ -1945,8 +1945,13 @@ incident before a customer writes, and the conversations an outage brings are an
 - **Panel.** A Status entry in the rail (`/status`, shortcut `g s`) follows the inbox filter: the page of each
   visible inbox, or "Create status page" for owners and admins on an inbox without one. A page opens at
   `/status-pages/{id}` (not under `/status/`, which the server answers with the public page) with Incidents,
-  Components and, for owners and admins, Settings; an incident opens at
-  `/status-pages/{id}/incidents/{incidentId}`. Agents with access to the inbox set component states and
+  Components, Monitors (`/status-pages/{id}/monitors`, where member notifications about a monitor going
+  down or up link; keys `1` to `4` switch tabs) and, for owners and admins, Settings; an incident opens at
+  `/status-pages/{id}/incidents/{incidentId}`. Owners and admins add, edit, pause and delete monitors and
+  make a new address; agents with access to the inbox read them and their recent checks. A monitor's
+  address is shown once, after creating it or making a new one, with copyable setup snippets (curl, cron,
+  `?fail=1`, a push body, Alertmanager `webhook_configs`, a Grafana contact point note) and never again;
+  a member's later state on the component is shown on the monitor as holding. Agents with access to the inbox set component states and
   open, update, publish and resolve incidents; owners and admins also manage components, groups and the page
   and publish or unpublish it. The preview shows the `/preview` HTML in a sandboxed frame. Lists and incidents
   refresh on the `status.*` realtime events.

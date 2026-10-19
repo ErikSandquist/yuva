@@ -6,6 +6,11 @@ import type {
   StatusIncidentImpact,
   StatusIncidentKind,
   StatusIncidentState,
+  StatusCheckSource,
+  StatusMonitorFailureState,
+  StatusMonitorKind,
+  StatusMonitorOnFailure,
+  StatusMonitorState,
 } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
@@ -16,6 +21,10 @@ export const COMPONENT_STATES: StatusComponentStateValue[] = [
   "major_outage",
   "maintenance",
 ]
+
+export const FAILURE_STATES: StatusMonitorFailureState[] = ["degraded", "partial_outage", "major_outage"]
+export const ON_FAILURE: StatusMonitorOnFailure[] = ["none", "draft", "publish"]
+export const MONITOR_KINDS: StatusMonitorKind[] = ["heartbeat", "push"]
 
 export const IMPACTS: StatusIncidentImpact[] = ["none", "minor", "major", "critical"]
 
@@ -71,7 +80,30 @@ export function useStatusText() {
     incident: t`Incident`,
     maintenance: t`Maintenance`,
   }
-  return { component, impact, incident, kind }
+  const monitorKind: Record<StatusMonitorKind, string> = {
+    heartbeat: t`Heartbeat`,
+    push: t`Pushed state`,
+  }
+  const monitorState: Record<StatusMonitorState | "paused", string> = {
+    pending: t`Waiting for the first result`,
+    up: t`Up`,
+    down: t`Down`,
+    paused: t`Paused`,
+  }
+  const onFailure: Record<StatusMonitorOnFailure, string> = {
+    none: t`Open nothing`,
+    draft: t`Open a draft incident`,
+    publish: t`Publish an incident`,
+  }
+  const checkSource: Record<StatusCheckSource, string> = {
+    beat: t`Beat`,
+    fail: t`Reported failure`,
+    missed: t`Missed beat`,
+    push: t`Pushed`,
+    alertmanager: t`Alertmanager`,
+    grafana: t`Grafana`,
+  }
+  return { component, impact, incident, kind, monitorKind, monitorState, onFailure, checkSource }
 }
 
 const URL_RE = /(https?:\/\/[^\s<>"]+[^\s<>".,;:!?)\]])/g

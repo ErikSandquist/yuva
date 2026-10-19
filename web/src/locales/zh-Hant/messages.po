@@ -970,6 +970,10 @@ msgstr "郵件列表以收件匣的名義,透過其郵件頻道傳送。請先�
 msgid "A mailing list with subscribe forms, for your broadcasts"
 msgstr "帶訂閱表單的郵件列表,用於你的群發"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "A member set the component by hand later, so it stays as they left it."
+msgstr "有成員稍後手動設定了該元件，因此它維持成員設定的狀態。"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "沒有備用值的合併欄位對部分收件人會顯示為空。請為它設定備用值。"
@@ -1025,6 +1029,10 @@ msgstr "每個屬性最多可有 20 個漏斗。請先刪除一個。"
 #: src/features/status/CreatePageDialog.tsx
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "一個公開頁面，告訴客戶 {inboxName} 是否正常運作。發布前不會公開。"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "A pushed state that names its own state keeps it."
+msgstr "自帶狀態的推送狀態會保留該狀態。"
 
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
@@ -1165,6 +1173,14 @@ msgstr "新增區塊"
 msgid "Add a condition"
 msgstr "新增條件"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Add a contact point of type Webhook, paste the address above, keep the method POST and use the contact point in a notification policy. Firing alerts fail the monitor, resolved ones recover it."
+msgstr "新增一個 Webhook 類型的聯絡點，貼上上方的位址，保持 POST 方法，並在通知政策中使用該聯絡點。觸發的警示會讓監控失敗，已解決的警示會讓它恢復。"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add a monitor"
+msgstr "新增監控"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Add a note (optional)"
 msgstr "新增備註(可選)"
@@ -1244,6 +1260,15 @@ msgstr "新增端點"
 msgid "Add group"
 msgstr "新增群組"
 
+#: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsTab.tsx
+msgid "Add monitor"
+msgstr "新增監控"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Add monitor ({addKey})"
+msgstr "新增監控（{addKey}）"
+
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Add note"
@@ -1315,6 +1340,7 @@ msgstr "由團隊新增"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
 msgstr "地址"
@@ -1355,6 +1381,11 @@ msgstr "同意時間"
 #: src/features/settings/notifications/TabAlertsSection.tsx
 msgid "Alert me while the tab is in the background"
 msgstr "標籤頁在後臺時提醒我"
+
+#: src/features/status/MonitorToken.tsx
+#: src/features/status/text.tsx
+msgid "Alertmanager"
+msgstr "Alertmanager"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
@@ -2064,6 +2095,14 @@ msgstr "退回等待"
 msgid "Back to your list"
 msgstr "返回你的列表"
 
+#: src/features/status/text.tsx
+msgid "Beat"
+msgstr "心跳訊號"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Beats only when the job succeeded."
+msgstr "僅在工作成功時傳送心跳訊號。"
+
 #: src/features/migrations/ConnectStep.tsx
 msgid "Before you connect"
 msgstr "連線之前"
@@ -2274,6 +2313,7 @@ msgstr "能為每位訂閱者單獨安排傳送新聞簡報嗎?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "取消"
 
@@ -2507,6 +2547,10 @@ msgstr "選擇「將傳入郵件的副本轉發到」該地址,在收件匣中�
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "選擇「生成應用程式專用密碼」,命名為「Yuva」並建立。"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Choose a component"
+msgstr "選擇元件"
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Choose a region"
 msgstr "選擇區域"
@@ -2710,6 +2754,10 @@ msgstr "完成"
 #: src/features/status/text.tsx
 msgid "Completed"
 msgstr "已完成"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Component"
+msgstr "元件"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Component deleted"
@@ -3060,6 +3108,10 @@ msgstr "請立即複製並更新你的接收端;舊金鑰會繼續簽名 24 小�
 msgid "Copy the 16-character password and paste it below. Gmail's IMAP is always on."
 msgstr "複製 16 位密碼並貼上到下面。Gmail 的 IMAP 始終開啟。"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Copy the address now: it is shown only once. Anyone who has it can report for this monitor."
+msgstr "請立即複製該位址：它只會顯示一次。任何取得它的人都可以為此監控回報。"
+
 #: src/features/migrations/text.ts
 msgid "Copy the Application (client) ID from Overview and paste it below with the secret. For an app limited to your organization, also enter its Directory (tenant) ID."
 msgstr "從「概述」中複製應用程式(用戶端)ID,與金鑰一起貼上到下面。對於僅限你所在組織的應用程式,還需輸入其目錄(租戶)ID。"
@@ -3202,6 +3254,10 @@ msgstr "憑證已刪除。Yuva 無法再讀取 {address}。"
 msgid "Critical"
 msgstr "嚴重"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Cron"
+msgstr "Cron"
+
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
 msgstr "CSV 檔案"
@@ -3294,6 +3350,7 @@ msgstr "效能降低"
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
+#: src/features/status/MonitorsTab.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "刪除"
@@ -3314,6 +3371,7 @@ msgstr "刪除 {0}?"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/workspace/DeleteWorkspace.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Delete {name}?"
 msgstr "刪除 {name}?"
 
@@ -3349,6 +3407,10 @@ msgstr "刪除金鑰"
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Delete list"
 msgstr "刪除列表"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Delete monitor"
+msgstr "刪除監控"
 
 #: src/features/auth/DeleteAccountButton.tsx
 #: src/features/settings/profile/ProfilePage.tsx
@@ -3691,6 +3753,7 @@ msgstr "域名未驗證"
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/MonitorToken.tsx
 msgid "Done"
 msgstr "完成"
 
@@ -3698,6 +3761,10 @@ msgstr "完成"
 msgctxt "feedback progress"
 msgid "Done"
 msgstr "已完成"
+
+#: src/features/status/text.tsx
+msgid "Down"
+msgstr "故障"
 
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
@@ -3892,6 +3959,7 @@ msgstr "每個都包含其所有訊息和備註"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Edit"
 msgstr "編輯"
 
@@ -3923,6 +3991,10 @@ msgstr "編輯詳細資料（{editKey}）"
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
 msgstr "編輯標籤"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Edit monitor"
+msgstr "編輯監控"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Edit the design"
@@ -4052,6 +4124,10 @@ msgstr "事件"
 msgid "Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off."
 msgstr "自 {failingSince} 起每次嘗試都失敗了。連續失敗 24 小時後,Yuva 會關閉該端點。"
 
+#: src/features/status/MonitorChecks.tsx
+msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
+msgstr "最近 30 天的每個心跳訊號、漏掉的訊號和推送狀態，最新的在前。"
+
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
 msgstr "每一次客戶對話,盡在一處。"
@@ -4154,6 +4230,10 @@ msgstr "所有位置"
 msgid "Example Ltd."
 msgstr "Example Ltd."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Expected every"
+msgstr "預期間隔"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "{expires} 過期"
@@ -4195,6 +4275,7 @@ msgstr "外部 ID"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "失敗"
 
@@ -4205,6 +4286,14 @@ msgstr "失敗五次"
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
 msgstr "失敗中"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Fails the monitor at once, without waiting for the grace."
+msgstr "立即讓監控失敗，不等待寬限時間。"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Failures to go down"
+msgstr "連續失敗幾次後故障"
 
 #: src/features/docs/DocsPages.tsx
 msgid "feedback"
@@ -4317,6 +4406,10 @@ msgstr "不檢查直接完成"
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Finished"
 msgstr "已完成"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Firing alerts fail the monitor, resolved ones recover it."
+msgstr "觸發的警示會讓監控失敗，已解決的警示會讓它恢復。"
 
 #: src/features/setup/SetupLayout.tsx
 msgid "First message"
@@ -4646,6 +4739,14 @@ msgstr "Google 已傳送確認碼"
 msgid "Google Takeout"
 msgstr "Google Takeout"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Grace"
+msgstr "寬限時間"
+
+#: src/features/status/text.tsx
+msgid "Grafana"
+msgstr "Grafana"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Greeting"
@@ -4671,6 +4772,10 @@ msgstr "已交給 {name}"
 #: src/features/contact/ContactsColumn.tsx
 msgid "Has an open conversation"
 msgstr "有未關閉的對話"
+
+#: src/features/status/text.tsx
+msgid "Heartbeat"
+msgstr "心跳"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Held by an incident, {since}"
@@ -4813,6 +4918,10 @@ msgstr "回溯多久"
 msgid "How HTML e-mails open. You can still switch each message."
 msgstr "HTML 郵件的開啟方式。你仍可逐封切換。"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "How late a beat may be."
+msgstr "心跳訊號可以遲到多久。"
+
 #: src/features/setup/email/EmailReceiveStep.tsx
 msgid "How mail reaches Yuva"
 msgstr "郵件如何到達 Yuva"
@@ -4927,6 +5036,10 @@ msgstr "如果你的 DNS 供應商把 TXT 字串限制為 255 個字元,請把�
 msgid "If your mail provider mails a confirmation to that address, it arrives in this inbox as a conversation; open it there."
 msgstr "如果你的郵件供應商向該地址傳送確認郵件,它會作為一個對話到達此收件匣;請在那裡開啟。"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Ignores results and lets the component go back."
+msgstr "忽略結果，讓元件恢復原狀。"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Image descriptions"
 msgstr "圖片描述"
@@ -5013,6 +5126,10 @@ msgstr "工作區中的匯入一次只能執行一個。請在另一個結束後
 #: src/features/conversation/HeaderActions.tsx
 msgid "In 1 hour"
 msgstr "1 小時後"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "In a row, 1 to 10."
+msgstr "連續次數，1 到 10。"
 
 #: src/features/conversation/HeaderActions.tsx
 msgid "in an hour"
@@ -5317,6 +5434,10 @@ msgstr "它將不再收到通知。"
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "它的存取許可權會立即結束。如需再次使用,請重新連線。"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Its checks are deleted. An incident it opened is resolved."
+msgstr "其檢查紀錄會被刪除，它開啟的事件會被解決。"
+
 #: src/features/status/ComponentsTab.tsx
 msgid "Its components stay, without a group."
 msgstr "其元件會保留，但不屬於任何群組。"
@@ -5388,6 +5509,10 @@ msgstr "此工作區中,金鑰和助手不能安排群發。"
 msgid "Keys and assistants may send broadcasts"
 msgstr "金鑰和助手可以傳送群發"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Kind"
+msgstr "類型"
+
 #: src/features/contact/ContactsColumn.tsx
 msgid "Known"
 msgstr "已知"
@@ -5455,6 +5580,10 @@ msgstr "超過此伺服器對單封郵件的限制"
 msgid "Last attempt"
 msgstr "最近一次嘗試"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Last beat {last}"
+msgstr "最後一次心跳 {last}"
+
 #: src/features/home/HomePage.tsx
 msgid "Last broadcast"
 msgstr "最近一次群發"
@@ -5486,6 +5615,10 @@ msgstr "最近上線 {seen}"
 #: src/features/contact/ContactPage.tsx
 msgid "last seen {seenText}"
 msgstr "最近上線 {seenText}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last state {last}"
+msgstr "最後一次狀態 {last}"
 
 #: src/features/broadcasts/TestSend.tsx
 msgid "Last test {last}"
@@ -5650,6 +5783,7 @@ msgstr "載入圖片"
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/MonitorChecks.tsx
 #: src/features/team/MemberPage.tsx
 msgid "Load more"
 msgstr "載入更多"
@@ -5817,9 +5951,17 @@ msgstr "重大"
 msgid "Major outage"
 msgstr "嚴重中斷"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Make a new address for {name}?"
+msgstr "為 {name} 產生新位址？"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Make it public"
 msgstr "設為公開"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Make new address"
+msgstr "產生新位址"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6092,6 +6234,10 @@ msgstr "我的"
 msgid "Minor"
 msgstr "輕微"
 
+#: src/features/status/text.tsx
+msgid "Missed beat"
+msgstr "漏掉的心跳訊號"
+
 #: src/components/common/text.ts
 #: src/features/settings/channels/app/AppFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6107,9 +6253,18 @@ msgstr "需稽覈"
 msgid "Monday"
 msgstr "星期一"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Monitor deleted"
+msgstr "監控已刪除"
+
 #: src/features/status/text.tsx
 msgid "Monitoring"
 msgstr "觀察中"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Monitors"
+msgstr "監控"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "More actions"
@@ -6124,6 +6279,10 @@ msgstr "{address} 的更多操作"
 #: src/features/status/ComponentsTab.tsx
 msgid "More for {0}"
 msgstr "{0} 的更多操作"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "More for {name}"
+msgstr "{name} 的更多操作"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "More options"
@@ -6243,6 +6402,7 @@ msgstr "我的個人資料"
 #: src/features/setup/SetupLayout.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorDialog.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Name"
 msgstr "名稱"
@@ -6329,6 +6489,14 @@ msgstr "新"
 #: src/features/broadcasts/Growth.tsx
 msgid "New"
 msgstr "新"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "New address"
+msgstr "新位址"
+
+#: src/features/status/MonitorToken.tsx
+msgid "New address for {name}"
+msgstr "{name} 的新位址"
 
 #: src/features/broadcasts/Import.tsx
 msgid "New addresses that get a confirmation mail"
@@ -6527,6 +6695,10 @@ msgstr "接下來選擇要匯入的內容。掃描只會讀取一次檔案。"
 #: src/features/migrations/ChooseStep.tsx
 msgid "Next, choose where they go."
 msgstr "接下來選擇它們去哪裡。"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Nightly backup"
+msgstr "夜間備份"
 
 #: src/features/setup/previews.tsx
 msgid "No"
@@ -6763,6 +6935,10 @@ msgstr "此對話中還沒有媒體、連結或文件。"
 msgid "No messages yet"
 msgstr "還沒有訊息"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
+msgstr "還沒有監控。新增一個，讓工作或你自己的監控系統設定元件的狀態。"
+
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "最近 90 天沒有通知。"
@@ -6815,6 +6991,10 @@ msgstr "還沒有回覆。"
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "沒有回覆帳號"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "No result yet"
+msgstr "還沒有結果"
 
 #: src/app/Palette.tsx
 msgid "No results"
@@ -6928,6 +7108,7 @@ msgstr "沒有人會收到這封郵件。請選擇有訂閱者的列表,或放�
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "None"
 msgstr "無"
 
@@ -7105,6 +7286,10 @@ msgstr "{provider} 沒有任何更改;如果你願意,可以把該帳號保留�
 msgid "Nothing from the file is added, and the uploaded file is deleted."
 msgstr "檔案中的任何內容都不會被新增,已上傳的檔案會被刪除。"
 
+#: src/features/status/MonitorChecks.tsx
+msgid "Nothing has arrived yet."
+msgstr "還沒有收到任何內容。"
+
 #: src/features/broadcasts/Report.tsx
 msgid "Nothing has happened yet."
 msgstr "還沒有發生任何事。"
@@ -7227,6 +7412,10 @@ msgstr "會在訂閱表單和偏好設定頁面中提供。私有列表由團隊
 #: src/features/conversation/HeaderActions.tsx
 msgid "Offline"
 msgstr "離線"
+
+#: src/features/status/MonitorChecks.tsx
+msgid "OK"
+msgstr "正常"
 
 #: src/features/migrations/parts.tsx
 msgid "Older mail came from the export file you imported, so only newer mail is read here; mail that is in both is not imported twice. After the copy, the usual switch follows."
@@ -7473,6 +7662,10 @@ msgstr "開啟 {0}"
 msgid "Open {provider}'s mail settings and find forwarding, or a filter that forwards all incoming mail."
 msgstr "開啟 {provider} 的郵件設定,找到轉發,或者轉發所有傳入郵件的過濾器。"
 
+#: src/features/status/text.tsx
+msgid "Open a draft incident"
+msgstr "開啟事件草稿"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Open a page of your docs"
 msgstr "開啟文件的一個頁面"
@@ -7563,6 +7756,10 @@ msgstr "開啟 Google 的確認頁面"
 msgid "Open in Analytics"
 msgstr "在分析中開啟"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Open incident"
+msgstr "開啟事件"
+
 #: src/features/account/ConnectPage.tsx
 msgid "Open it from the sign-in button of a documentation page."
 msgstr "從文件頁面的登入按鈕開啟。"
@@ -7570,6 +7767,10 @@ msgstr "從文件頁面的登入按鈕開啟。"
 #: src/features/migrations/DoneStep.tsx
 msgid "Open My Apps"
 msgstr "開啟 My Apps"
+
+#: src/features/status/text.tsx
+msgid "Open nothing"
+msgstr "不開啟任何事件"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -7681,6 +7882,10 @@ msgstr "開啟數"
 #: src/features/status/text.tsx
 msgid "Operational"
 msgstr "運作正常"
+
+#: src/features/status/MonitorToken.tsx
+msgid "operational recovers; degraded, partial_outage and major_outage fail."
+msgstr "operational 表示恢復；degraded、partial_outage 和 major_outage 表示失敗。"
 
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
@@ -7884,6 +8089,7 @@ msgstr "把它貼上到你頁面的 body 結束標籤之前"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Pause"
 msgstr "暫停"
 
@@ -7896,6 +8102,8 @@ msgstr "暫停或繼續傳送"
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/MonitorDialog.tsx
+#: src/features/status/text.tsx
 msgid "Paused"
 msgstr "已暫停"
 
@@ -8376,6 +8584,10 @@ msgstr "發布"
 msgid "Publish ({publishKey})"
 msgstr "發布（{publishKey}）"
 
+#: src/features/status/text.tsx
+msgid "Publish an incident"
+msgstr "發布事件"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "立即發布"
@@ -8405,6 +8617,10 @@ msgstr "立即釋出併傳送給關注者。"
 msgid "Push"
 msgstr "推送"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Push a state"
+msgstr "推送狀態"
+
 #: src/features/settings/notifications/events.ts
 msgid "Push and e-mail"
 msgstr "推送和郵件"
@@ -8418,9 +8634,21 @@ msgstr "推送通知"
 msgid "Push only"
 msgstr "僅推送"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Push recovery"
+msgstr "推送恢復"
+
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Push: {label}"
 msgstr "推送:{label}"
+
+#: src/features/status/text.tsx
+msgid "Pushed"
+msgstr "已推送"
+
+#: src/features/status/text.tsx
+msgid "Pushed state"
+msgstr "推送狀態"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "Put its subscribe form on your site, or add people who agreed to hear from you."
@@ -8611,6 +8839,10 @@ msgstr "接收中"
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "Recent activity"
 msgstr "最近活動"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Recent checks"
+msgstr "最近的檢查"
 
 #: src/features/contact/ContactPage.tsx
 msgid "Recent visits"
@@ -8950,6 +9182,10 @@ msgstr "正在回覆 {to}"
 msgid "Report"
 msgstr "報告"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Report a failed run"
+msgstr "回報失敗的執行"
+
 #: src/components/common/text.ts
 msgid "Reported a mail as spam"
 msgstr "把一封郵件舉報為垃圾郵件"
@@ -8961,6 +9197,10 @@ msgstr "已舉報為垃圾郵件"
 #: src/components/common/text.ts
 msgid "Reported as spam"
 msgstr "已舉報為垃圾郵件"
+
+#: src/features/status/text.tsx
+msgid "Reported failure"
+msgstr "回報的失敗"
 
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -9005,6 +9245,7 @@ msgstr "恢復"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Resume"
 msgstr "繼續"
 
@@ -9160,6 +9401,7 @@ msgstr "星期六"
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Save"
 msgstr "儲存"
 
@@ -9387,6 +9629,10 @@ msgstr "現在傳送「{name}」?"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send “{name}” on {when}?"
 msgstr "在 {when} 傳送「{name}」?"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Send a beat"
+msgstr "傳送心跳訊號"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
@@ -9684,6 +9930,10 @@ msgstr "伺服器 URL"
 msgid "SES tenant"
 msgstr "SES 租戶"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
+msgstr "從外部設定元件的狀態：由會主動回報的工作，或由推送狀態的你自己的監控系統來完成。"
+
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
 msgstr "由監控設定，{since}"
@@ -9697,6 +9947,10 @@ msgstr "設定進度"
 msgid "Set the feedback progress"
 msgstr "設定回饋進度"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Set up {name}"
+msgstr "設定 {name}"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Set up DKIM"
 msgstr "設定 DKIM"
@@ -9709,6 +9963,10 @@ msgstr "設定郵件"
 #: src/features/setup/SetupHub.tsx
 msgid "Set up Yuva"
 msgstr "設定 Yuva"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Sets {failureState}. {onFailure}."
+msgstr "設為 {failureState}。{onFailure}。"
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Setting up the inbox’s Amazon SES tenant…"
@@ -10307,6 +10565,10 @@ msgstr "{0} 的狀態"
 msgid "State of {0} while it is open"
 msgstr "{0} 開啟期間的狀態"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "State while down"
+msgstr "故障時的狀態"
+
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -10431,6 +10693,10 @@ msgstr "訂閱已刪除"
 #: src/components/common/text.ts
 msgid "Succeeded"
 msgstr "成功"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Successes to recover"
+msgstr "連續成功幾次後恢復"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Such as a MERSİS number, trade register or VAT id, if you have one"
@@ -10708,6 +10974,10 @@ msgstr "驗證碼錯誤或已過期。"
 msgid "The columns are guessed from the header row. One must be the e-mail address; name the others as contact fields or attributes, or skip them. Attributes only fill keys a contact does not have yet."
 msgstr "列是根據標題行猜測的。其中一列必須是電子郵件地址;其他列請命名為聯絡人欄位或屬性,或跳過。屬性只會填充聯絡人尚未擁有的鍵。"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "The component whose state this monitor sets."
+msgstr "此監控設定其狀態的元件。"
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "The confirmation mail is on its way."
 msgstr "確認郵件正在傳送中。"
@@ -10719,6 +10989,10 @@ msgstr "同意頁面已勾選用戶端請求的內容。請取消勾選你不希
 #: src/components/common/text.ts
 msgid "The contact was deleted"
 msgstr "聯絡人已被刪除"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "The current address stops working at once. Update whatever calls it."
+msgstr "目前的位址會立即失效。請更新所有呼叫它的地方。"
 
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "The customer does not see this"
@@ -11044,6 +11318,10 @@ msgstr "自你檢視以來收件人數量發生了變化。請檢查新的數量
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The number of recipients changed while you looked. It is {recipients} now. Confirm again to send to them."
 msgstr "你檢視期間收件人數量發生了變化,現在是 {recipients}。再次確認即可傳送給他們。"
+
+#: src/features/status/MonitorToken.tsx
+msgid "The old address no longer works. Copy the new one now: it is shown only once."
+msgstr "舊位址已失效。請立即複製新位址：它只會顯示一次。"
 
 #: src/features/migrations/DoneStep.tsx
 msgid "The old mailbox is untouched; keep it as an archive if you like."
@@ -12112,6 +12390,10 @@ msgstr "在他們點選連結之前,會一直等待確認,也不會收到其他�
 msgid "Unverified sender"
 msgstr "未驗證的發件人"
 
+#: src/features/status/text.tsx
+msgid "Up"
+msgstr "正常運作"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "最多 {max} 和 100,000 行,帶標題行。土耳其語或西歐編碼的 Excel 檔案,以及用逗號、分號或製表符分隔的列,會按原樣讀取。"
@@ -12457,6 +12739,10 @@ msgstr "等待客戶"
 msgid "Waiting for the first message"
 msgstr "等待第一條訊息"
 
+#: src/features/status/text.tsx
+msgid "Waiting for the first result"
+msgstr "等待第一個結果"
+
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Waiting for the operator"
 msgstr "等待維運人員"
@@ -12635,6 +12921,10 @@ msgstr "當團隊成員在備註中用 @ 新增你時。"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"
 msgstr "他們是什麼時候同意的?"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "When it goes down"
+msgstr "發生故障時"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "When nobody is available, the widget asks where to send the reply."
@@ -13076,6 +13366,10 @@ msgstr "你的資料夾"
 msgid "Your folders and labels become Yuva labels on the conversations they hold."
 msgstr "你的資料夾和標籤會變成其中對話上的 Yuva 標籤。"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Your job calls Yuva on a schedule. A missing call fails the monitor."
+msgstr "你的工作會定期呼叫 Yuva。缺少呼叫會讓監控失敗。"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Your mail provider"
 msgstr "你的郵件供應商"
@@ -13105,6 +13399,10 @@ msgstr "你的組織阻止了此次登入"
 #: src/features/migrations/text.ts
 msgid "Your organization's admin must allow Yuva"
 msgstr "你所在組織的管理員必須允許 Yuva"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Your own monitoring sends its state, including Alertmanager and Grafana alerts."
+msgstr "你自己的監控系統傳送其狀態，包括 Alertmanager 和 Grafana 的警示。"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Your plan and workspace policies decide whether custom MCP servers are available."

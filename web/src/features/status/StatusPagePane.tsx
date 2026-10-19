@@ -1,7 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { ActivityIcon, EyeIcon, ExternalLinkIcon } from "lucide-react"
 import { useState } from "react"
-import { useParams, useSearchParams } from "react-router"
+import { useLocation, useNavigate, useParams } from "react-router"
 
 import { Dot, ErrorLine, Segmented } from "@/components/common"
 import { Pane, PaneBack, PaneEmpty } from "@/components/common/Column"
@@ -9,16 +9,17 @@ import { keyLabel, STATUS_KEYS } from "@/components/common/ShortcutSheet"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ComponentsTab } from "@/features/status/ComponentsTab"
+import { MonitorsTab } from "@/features/status/MonitorsTab"
 import { IncidentsTab } from "@/features/status/IncidentsTab"
 import { PreviewDialog } from "@/features/status/PreviewDialog"
-import { usePatchStatusPage, useStatusPage } from "@/features/status/queries"
+import { statusLink, usePatchStatusPage, useStatusPage } from "@/features/status/queries"
 import { SettingsTab } from "@/features/status/SettingsTab"
 import { StateDot, useStatusText } from "@/features/status/text"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { useSession } from "@/lib/session"
 import { useInboxes } from "@/lib/workspace"
 
-const TABS = ["incidents", "components", "settings"] as const
+const TABS = ["incidents", "components", "monitors", "settings"] as const
 type Tab = (typeof TABS)[number]
 
 export function StatusHome() {
@@ -35,22 +36,24 @@ export function StatusHome() {
 export function StatusPagePane() {
   const { t } = useLingui()
   const { pageId = "" } = useParams()
-  const [params, setParams] = useSearchParams()
+  const { pathname, search } = useLocation()
+  const navigate = useNavigate()
   const page = useStatusPage(pageId)
   const patch = usePatchStatusPage(pageId)
   const { canManage } = useSession()
   const text = useStatusText()
   const inbox = (useInboxes().data ?? []).find((i) => i.id === page.data?.inbox_id)
   const [preview, setPreview] = useState(false)
-  const raw = params.get("tab")
+  const raw = new URLSearchParams(search).get("tab") ?? (pathname.endsWith("/monitors") ? "monitors" : null)
   const tab: Tab = TABS.includes(raw as Tab) && (raw !== "settings" || canManage) ? (raw as Tab) : "incidents"
-  const setTab = (v: Tab) => setParams(v === "incidents" ? {} : { tab: v }, { replace: true })
+  const setTab = (v: Tab) => navigate(statusLink(pageId, v === "incidents" ? undefined : v), { replace: true })
   const p = page.data
 
   useHotkeys(
     {
       [STATUS_KEYS.incidents]: () => setTab("incidents"),
       [STATUS_KEYS.components]: () => setTab("components"),
+      [STATUS_KEYS.monitors]: () => setTab("monitors"),
       ...(canManage ? { [STATUS_KEYS.settings]: () => setTab("settings") } : {}),
       [STATUS_KEYS.preview]: () => setPreview(true),
       ...(canManage && p ? { [STATUS_KEYS.publishPage]: () => patch.mutate({ published: !p.published }) } : {}),
@@ -77,6 +80,7 @@ export function StatusPagePane() {
   const names: Record<Tab, string> = {
     incidents: t`Incidents`,
     components: t`Components`,
+    monitors: t`Monitors`,
     settings: t`Settings`,
   }
   const previewKey = keyLabel(STATUS_KEYS.preview).join("")
@@ -160,6 +164,7 @@ export function StatusPagePane() {
       </div>
       {tab === "incidents" && <IncidentsTab page={p} />}
       {tab === "components" && <ComponentsTab page={p} />}
+      {tab === "monitors" && <MonitorsTab page={p} />}
       {tab === "settings" && canManage && <SettingsTab page={p} />}
       {preview && <PreviewDialog page={p} onClose={() => setPreview(false)} />}
     </Pane>

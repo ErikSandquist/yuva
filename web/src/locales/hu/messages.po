@@ -970,6 +970,10 @@ msgstr "A levelezési lista a postafiók nevében küld, az e-mail-csatornáján
 msgid "A mailing list with subscribe forms, for your broadcasts"
 msgstr "Levelezési lista feliratkozási űrlapokkal a tömeges leveleidhez"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "A member set the component by hand later, so it stays as they left it."
+msgstr "Egy tag később kézzel állította be az összetevőt, ezért az úgy marad, ahogy hagyta."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "A tartalék érték nélküli egyesítési mező néhány címzettnél üres lenne. Adj neki tartalék értéket."
@@ -1025,6 +1029,10 @@ msgstr "Egy tulajdonságnak legfeljebb 20 tölcsére lehet. Előbb törölj egye
 #: src/features/status/CreatePageDialog.tsx
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "Nyilvános oldal, amely megmondja az ügyfeleknek, működik-e a(z) {inboxName}. Közzétételig nem nyilvános."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "A pushed state that names its own state keeps it."
+msgstr "Az elküldött állapot, amely megnevezi a saját állapotát, megtartja azt."
 
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
@@ -1165,6 +1173,14 @@ msgstr "Blokk hozzáadása"
 msgid "Add a condition"
 msgstr "Feltétel hozzáadása"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Add a contact point of type Webhook, paste the address above, keep the method POST and use the contact point in a notification policy. Firing alerts fail the monitor, resolved ones recover it."
+msgstr "Adjon hozzá egy Webhook típusú kapcsolattartási pontot, illessze be a fenti címet, hagyja a POST módszert, és használja a kapcsolattartási pontot egy értesítési szabályban. A kiváltott riasztások leállítják a figyelőt, a megoldottak helyreállítják."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add a monitor"
+msgstr "Figyelő hozzáadása"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Add a note (optional)"
 msgstr "Megjegyzés hozzáadása (nem kötelező)"
@@ -1244,6 +1260,15 @@ msgstr "Végpont hozzáadása"
 msgid "Add group"
 msgstr "Csoport hozzáadása"
 
+#: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsTab.tsx
+msgid "Add monitor"
+msgstr "Figyelő hozzáadása"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Add monitor ({addKey})"
+msgstr "Figyelő hozzáadása ({addKey})"
+
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Add note"
@@ -1315,6 +1340,7 @@ msgstr "A csapat adta hozzá"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
 msgstr "Cím"
@@ -1355,6 +1381,11 @@ msgstr "Hozzájárulás dátuma"
 #: src/features/settings/notifications/TabAlertsSection.tsx
 msgid "Alert me while the tab is in the background"
 msgstr "Figyelmeztess, amíg a lap a háttérben van"
+
+#: src/features/status/MonitorToken.tsx
+#: src/features/status/text.tsx
+msgid "Alertmanager"
+msgstr "Alertmanager"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
@@ -2064,6 +2095,14 @@ msgstr "Vissza a várakozáshoz"
 msgid "Back to your list"
 msgstr "Vissza a listához"
 
+#: src/features/status/text.tsx
+msgid "Beat"
+msgstr "Jel"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Beats only when the job succeeded."
+msgstr "Csak akkor küld jelet, ha a feladat sikerült."
+
 #: src/features/migrations/ConnectStep.tsx
 msgid "Before you connect"
 msgstr "Mielőtt csatlakoznál"
@@ -2274,6 +2313,7 @@ msgstr "Ütemezhetek hírlevelet minden feliratkozónak külön?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Mégse"
 
@@ -2507,6 +2547,10 @@ msgstr "Válaszd a „Bejövő levelek másolatának továbbítása ide” lehet
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "Válaszd az „Alkalmazásjelszó generálása” lehetőséget, nevezd el „Yuva”-nak, és hozd létre."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Choose a component"
+msgstr "Válasszon összetevőt"
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Choose a region"
 msgstr "Válassz régiót"
@@ -2710,6 +2754,10 @@ msgstr "Kész"
 #: src/features/status/text.tsx
 msgid "Completed"
 msgstr "Befejezve"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Component"
+msgstr "Összetevő"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Component deleted"
@@ -3060,6 +3108,10 @@ msgstr "Másold ki most, és frissítsd a fogadódat; a régi titok még 24 ór�
 msgid "Copy the 16-character password and paste it below. Gmail's IMAP is always on."
 msgstr "Másold ki a 16 karakteres jelszót, és illeszd be alább. A Gmail IMAP-ja mindig be van kapcsolva."
 
+#: src/features/status/MonitorToken.tsx
+msgid "Copy the address now: it is shown only once. Anyone who has it can report for this monitor."
+msgstr "Másolja ki a címet most: csak egyszer jelenik meg. Bárki, akinél megvan, jelenthet ennek a figyelőnek."
+
 #: src/features/migrations/text.ts
 msgid "Copy the Application (client) ID from Overview and paste it below with the secret. For an app limited to your organization, also enter its Directory (tenant) ID."
 msgstr "Másold ki az Alkalmazás (kliens) azonosítóját az Áttekintésből, és illeszd be alább a titokkal együtt. A szervezetedre korlátozott alkalmazásnál add meg a Directory (tenant) ID-ját is."
@@ -3202,6 +3254,10 @@ msgstr "A hitelesítő adatok törölve. A Yuva már nem tudja olvasni a(z) {add
 msgid "Critical"
 msgstr "Kritikus"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Cron"
+msgstr "Cron"
+
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
 msgstr "CSV-fájl"
@@ -3294,6 +3350,7 @@ msgstr "Csökkent teljesítmény"
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
+#: src/features/status/MonitorsTab.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "Törlés"
@@ -3314,6 +3371,7 @@ msgstr "Törlöd ezt: {0}?"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/workspace/DeleteWorkspace.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Delete {name}?"
 msgstr "Törlöd ezt: {name}?"
 
@@ -3349,6 +3407,10 @@ msgstr "Kulcs törlése"
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Delete list"
 msgstr "Lista törlése"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Delete monitor"
+msgstr "Figyelő törlése"
 
 #: src/features/auth/DeleteAccountButton.tsx
 #: src/features/settings/profile/ProfilePage.tsx
@@ -3691,6 +3753,7 @@ msgstr "A domain nincs ellenőrizve"
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/MonitorToken.tsx
 msgid "Done"
 msgstr "Kész"
 
@@ -3698,6 +3761,10 @@ msgstr "Kész"
 msgctxt "feedback progress"
 msgid "Done"
 msgstr "Kész"
+
+#: src/features/status/text.tsx
+msgid "Down"
+msgstr "Leállt"
 
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
@@ -3892,6 +3959,7 @@ msgstr "Mindegyik az összes üzenetével és jegyzetével"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Edit"
 msgstr "Szerkesztés"
 
@@ -3923,6 +3991,10 @@ msgstr "Részletek szerkesztése ({editKey})"
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
 msgstr "Címke szerkesztése"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Edit monitor"
+msgstr "Figyelő szerkesztése"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Edit the design"
@@ -4052,6 +4124,10 @@ msgstr "Események"
 msgid "Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off."
 msgstr "Minden kísérlet sikertelen {failingSince} óta. 24 órányi hiba után a Yuva kikapcsolja a végpontot."
 
+#: src/features/status/MonitorChecks.tsx
+msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
+msgstr "Minden jel, kihagyott jel és elküldött állapot az elmúlt 30 napból, legújabb elöl."
+
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
 msgstr "Minden ügyfélbeszélgetés egy helyen."
@@ -4154,6 +4230,10 @@ msgstr "Mindenhol"
 msgid "Example Ltd."
 msgstr "Példa Kft."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Expected every"
+msgstr "Várt gyakoriság"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "Lejárt: {expires}"
@@ -4195,6 +4275,7 @@ msgstr "Külső azonosítók"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Sikertelen"
 
@@ -4205,6 +4286,14 @@ msgstr "Ötször sikertelen"
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
 msgstr "Hibás"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Fails the monitor at once, without waiting for the grace."
+msgstr "Azonnal leállítja a figyelőt, a türelmi idő megvárása nélkül."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Failures to go down"
+msgstr "Hibák egymás után a leálláshoz"
 
 #: src/features/docs/DocsPages.tsx
 msgid "feedback"
@@ -4317,6 +4406,10 @@ msgstr "Befejezés ellenőrzés nélkül"
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Finished"
 msgstr "Befejezve"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Firing alerts fail the monitor, resolved ones recover it."
+msgstr "A kiváltott riasztások leállítják a figyelőt, a megoldottak helyreállítják."
 
 #: src/features/setup/SetupLayout.tsx
 msgid "First message"
@@ -4646,6 +4739,14 @@ msgstr "A Google megerősítő kódot küldött"
 msgid "Google Takeout"
 msgstr "Google Takeout"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Grace"
+msgstr "Türelmi idő"
+
+#: src/features/status/text.tsx
+msgid "Grafana"
+msgstr "Grafana"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Greeting"
@@ -4671,6 +4772,10 @@ msgstr "Átadva: {name}"
 #: src/features/contact/ContactsColumn.tsx
 msgid "Has an open conversation"
 msgstr "Van nyitott beszélgetése"
+
+#: src/features/status/text.tsx
+msgid "Heartbeat"
+msgstr "Heartbeat"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Held by an incident, {since}"
@@ -4813,6 +4918,10 @@ msgstr "Mennyire messzire vissza"
 msgid "How HTML e-mails open. You can still switch each message."
 msgstr "Hogyan nyílnak meg a HTML-e-mailek. Minden üzenetnél továbbra is átválthatsz."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "How late a beat may be."
+msgstr "Mennyit késhet egy jel."
+
 #: src/features/setup/email/EmailReceiveStep.tsx
 msgid "How mail reaches Yuva"
 msgstr "Hogyan érkeznek a levelek a Yuvába"
@@ -4927,6 +5036,10 @@ msgstr "Ha a DNS-szolgáltatód egy TXT-karakterláncot 255 karakterre korlátoz
 msgid "If your mail provider mails a confirmation to that address, it arrives in this inbox as a conversation; open it there."
 msgstr "Ha az e-mail-szolgáltatód megerősítést küld erre a címre, beszélgetésként érkezik ebbe a postafiókba; nyisd meg ott."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Ignores results and lets the component go back."
+msgstr "Figyelmen kívül hagyja az eredményeket, és hagyja visszatérni az összetevőt."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Image descriptions"
 msgstr "Képleírások"
@@ -5013,6 +5126,10 @@ msgstr "A munkaterületben az importok egyenként futnak. Próbáld újra, ha a 
 #: src/features/conversation/HeaderActions.tsx
 msgid "In 1 hour"
 msgstr "1 óra múlva"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "In a row, 1 to 10."
+msgstr "Egymás után, 1–10."
 
 #: src/features/conversation/HeaderActions.tsx
 msgid "in an hour"
@@ -5317,6 +5434,10 @@ msgstr "Többé nem kap értesítéseket."
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "A hozzáférése azonnal megszűnik. Újbóli használatához csatlakoztasd újra."
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Its checks are deleted. An incident it opened is resolved."
+msgstr "Az ellenőrzései törlődnek. Az általa megnyitott incidens megoldódik."
+
 #: src/features/status/ComponentsTab.tsx
 msgid "Its components stay, without a group."
 msgstr "Az összetevői megmaradnak, csoport nélkül."
@@ -5388,6 +5509,10 @@ msgstr "A kulcsok és asszisztensek ebben a munkaterületben nem ütemezhetnek t
 msgid "Keys and assistants may send broadcasts"
 msgstr "A kulcsok és asszisztensek küldhetnek tömeges leveleket"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Kind"
+msgstr "Típus"
+
 #: src/features/contact/ContactsColumn.tsx
 msgid "Known"
 msgstr "Ismert"
@@ -5455,6 +5580,10 @@ msgstr "Nagyobb a szerver egy üzenetre vonatkozó korlátjánál"
 msgid "Last attempt"
 msgstr "Utolsó kísérlet"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Last beat {last}"
+msgstr "Utolsó jel {last}"
+
 #: src/features/home/HomePage.tsx
 msgid "Last broadcast"
 msgstr "Utolsó tömeges levél"
@@ -5486,6 +5615,10 @@ msgstr "Utoljára látva: {seen}"
 #: src/features/contact/ContactPage.tsx
 msgid "last seen {seenText}"
 msgstr "utoljára látva: {seenText}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last state {last}"
+msgstr "Utolsó állapot {last}"
 
 #: src/features/broadcasts/TestSend.tsx
 msgid "Last test {last}"
@@ -5650,6 +5783,7 @@ msgstr "Képek betöltése"
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/MonitorChecks.tsx
 #: src/features/team/MemberPage.tsx
 msgid "Load more"
 msgstr "Továbbiak betöltése"
@@ -5817,9 +5951,17 @@ msgstr "Nagy"
 msgid "Major outage"
 msgstr "Súlyos üzemszünet"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Make a new address for {name}?"
+msgstr "Új címet hoz létre ehhez: {name}?"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Make it public"
 msgstr "Nyilvánossá tétel"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Make new address"
+msgstr "Új cím létrehozása"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6092,6 +6234,10 @@ msgstr "Az enyéim"
 msgid "Minor"
 msgstr "Kisebb"
 
+#: src/features/status/text.tsx
+msgid "Missed beat"
+msgstr "Kihagyott jel"
+
 #: src/components/common/text.ts
 #: src/features/settings/channels/app/AppFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6107,9 +6253,18 @@ msgstr "Moderált"
 msgid "Monday"
 msgstr "Hétfő"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Monitor deleted"
+msgstr "Figyelő törölve"
+
 #: src/features/status/text.tsx
 msgid "Monitoring"
 msgstr "Megfigyelés alatt"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Monitors"
+msgstr "Figyelők"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "More actions"
@@ -6124,6 +6279,10 @@ msgstr "További műveletek ehhez: {address}"
 #: src/features/status/ComponentsTab.tsx
 msgid "More for {0}"
 msgstr "Továbbiak ehhez: {0}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "More for {name}"
+msgstr "Továbbiak ehhez: {name}"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "More options"
@@ -6243,6 +6402,7 @@ msgstr "Profilom"
 #: src/features/setup/SetupLayout.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorDialog.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Name"
 msgstr "Név"
@@ -6329,6 +6489,14 @@ msgstr "új"
 #: src/features/broadcasts/Growth.tsx
 msgid "New"
 msgstr "Új"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "New address"
+msgstr "Új cím"
+
+#: src/features/status/MonitorToken.tsx
+msgid "New address for {name}"
+msgstr "Új cím ehhez: {name}"
 
 #: src/features/broadcasts/Import.tsx
 msgid "New addresses that get a confirmation mail"
@@ -6527,6 +6695,10 @@ msgstr "Ezután válaszd ki, mit hozz át. Az átvizsgálás egyszer olvassa a f
 #: src/features/migrations/ChooseStep.tsx
 msgid "Next, choose where they go."
 msgstr "Ezután válaszd ki, hova kerüljenek."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Nightly backup"
+msgstr "Éjszakai mentés"
 
 #: src/features/setup/previews.tsx
 msgid "No"
@@ -6763,6 +6935,10 @@ msgstr "Ebben a beszélgetésben még nincs média, link vagy dokumentum."
 msgid "No messages yet"
 msgstr "Még nincsenek üzenetek"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
+msgstr "Még nincs figyelő. Adjon hozzá egyet, hogy egy feladat vagy a saját felügyelete állítsa be egy összetevő állapotát."
+
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "Az elmúlt 90 napban nincs értesítés."
@@ -6815,6 +6991,10 @@ msgstr "Még nincsenek válaszok."
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "Nincs válaszfiók"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "No result yet"
+msgstr "Még nincs eredmény"
 
 #: src/app/Palette.tsx
 msgid "No results"
@@ -6928,6 +7108,7 @@ msgstr "Senki sem kapná meg ezt a levelet. Válassz feliratkozókkal rendelkez�
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "None"
 msgstr "Nincs"
 
@@ -7105,6 +7286,10 @@ msgstr "A(z) {provider} szolgáltatásban semmi sem változott; megtarthatod a f
 msgid "Nothing from the file is added, and the uploaded file is deleted."
 msgstr "A fájlból semmi sem kerül hozzáadásra, és a feltöltött fájl törlődik."
 
+#: src/features/status/MonitorChecks.tsx
+msgid "Nothing has arrived yet."
+msgstr "Még semmi sem érkezett."
+
 #: src/features/broadcasts/Report.tsx
 msgid "Nothing has happened yet."
 msgstr "Még nem történt semmi."
@@ -7227,6 +7412,10 @@ msgstr "Feliratkozási űrlapokon és a beállítások oldalon kínáljuk fel. A
 #: src/features/conversation/HeaderActions.tsx
 msgid "Offline"
 msgstr "Offline"
+
+#: src/features/status/MonitorChecks.tsx
+msgid "OK"
+msgstr "OK"
 
 #: src/features/migrations/parts.tsx
 msgid "Older mail came from the export file you imported, so only newer mail is read here; mail that is in both is not imported twice. After the copy, the usual switch follows."
@@ -7473,6 +7662,10 @@ msgstr "{0} megnyitása"
 msgid "Open {provider}'s mail settings and find forwarding, or a filter that forwards all incoming mail."
 msgstr "Nyisd meg a(z) {provider} levelezési beállításait, és keresd meg az átirányítást vagy egy szűrőt, amely minden bejövő levelet továbbít."
 
+#: src/features/status/text.tsx
+msgid "Open a draft incident"
+msgstr "Incidenstervezet megnyitása"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Open a page of your docs"
 msgstr "Nyisd meg a dokumentációd egy oldalát"
@@ -7563,6 +7756,10 @@ msgstr "A Google megerősítő oldalának megnyitása"
 msgid "Open in Analytics"
 msgstr "Megnyitás az Analitikában"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Open incident"
+msgstr "Incidens megnyitása"
+
 #: src/features/account/ConnectPage.tsx
 msgid "Open it from the sign-in button of a documentation page."
 msgstr "Nyisd meg egy dokumentációs oldal bejelentkezés gombjáról."
@@ -7570,6 +7767,10 @@ msgstr "Nyisd meg egy dokumentációs oldal bejelentkezés gombjáról."
 #: src/features/migrations/DoneStep.tsx
 msgid "Open My Apps"
 msgstr "My Apps megnyitása"
+
+#: src/features/status/text.tsx
+msgid "Open nothing"
+msgstr "Ne nyisson meg semmit"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -7681,6 +7882,10 @@ msgstr "Megnyitások"
 #: src/features/status/text.tsx
 msgid "Operational"
 msgstr "Működik"
+
+#: src/features/status/MonitorToken.tsx
+msgid "operational recovers; degraded, partial_outage and major_outage fail."
+msgstr "az operational helyreállít; a degraded, partial_outage és major_outage leállít."
 
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
@@ -7884,6 +8089,7 @@ msgstr "Illeszd be ezt az oldalaid záró body-címkéje elé"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Pause"
 msgstr "Szüneteltetés"
 
@@ -7896,6 +8102,8 @@ msgstr "Küldés szüneteltetése vagy folytatása"
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/MonitorDialog.tsx
+#: src/features/status/text.tsx
 msgid "Paused"
 msgstr "Szünetel"
 
@@ -8376,6 +8584,10 @@ msgstr "Közzététel"
 msgid "Publish ({publishKey})"
 msgstr "Közzététel ({publishKey})"
 
+#: src/features/status/text.tsx
+msgid "Publish an incident"
+msgstr "Incidens közzététele"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Közzététel most"
@@ -8405,6 +8617,10 @@ msgstr "Azonnal közzétéve és elküldve a követőknek."
 msgid "Push"
 msgstr "Push"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Push a state"
+msgstr "Állapot küldése"
+
 #: src/features/settings/notifications/events.ts
 msgid "Push and e-mail"
 msgstr "Push és e-mail"
@@ -8418,9 +8634,21 @@ msgstr "Push-értesítések"
 msgid "Push only"
 msgstr "Csak push"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Push recovery"
+msgstr "Helyreállítás küldése"
+
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Push: {label}"
 msgstr "Push: {label}"
+
+#: src/features/status/text.tsx
+msgid "Pushed"
+msgstr "Elküldve"
+
+#: src/features/status/text.tsx
+msgid "Pushed state"
+msgstr "Elküldött állapot"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "Put its subscribe form on your site, or add people who agreed to hear from you."
@@ -8611,6 +8839,10 @@ msgstr "Fogadás"
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "Recent activity"
 msgstr "Legutóbbi tevékenység"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Recent checks"
+msgstr "Legutóbbi ellenőrzések"
 
 #: src/features/contact/ContactPage.tsx
 msgid "Recent visits"
@@ -8950,6 +9182,10 @@ msgstr "Válasz neki: {to}"
 msgid "Report"
 msgstr "Jelentés"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Report a failed run"
+msgstr "Sikertelen futás jelentése"
+
 #: src/components/common/text.ts
 msgid "Reported a mail as spam"
 msgstr "Spamnek jelentett egy levelet"
@@ -8961,6 +9197,10 @@ msgstr "spamnek jelentve"
 #: src/components/common/text.ts
 msgid "Reported as spam"
 msgstr "Spamnek jelentve"
+
+#: src/features/status/text.tsx
+msgid "Reported failure"
+msgstr "Jelentett hiba"
 
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -9005,6 +9245,7 @@ msgstr "Visszaállítás"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Resume"
 msgstr "Folytatás"
 
@@ -9160,6 +9401,7 @@ msgstr "Szombat"
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Save"
 msgstr "Mentés"
 
@@ -9387,6 +9629,10 @@ msgstr "Elküldöd most ezt: „{name}”?"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send “{name}” on {when}?"
 msgstr "Elküldöd ezt: „{name}” ekkor: {when}?"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Send a beat"
+msgstr "Jel küldése"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
@@ -9684,6 +9930,10 @@ msgstr "Szerver URL-je"
 msgid "SES tenant"
 msgstr "SES-bérlő"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
+msgstr "Állítsa be egy összetevő állapotát kívülről: egy jelentkező feladat vagy a saját felügyelete, amely elküldi az állapotát."
+
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
 msgstr "Figyelő állította be, {since}"
@@ -9697,6 +9947,10 @@ msgstr "Állapot beállítása"
 msgid "Set the feedback progress"
 msgstr "A visszajelzés állapotának beállítása"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Set up {name}"
+msgstr "{name} beállítása"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Set up DKIM"
 msgstr "DKIM beállítása"
@@ -9709,6 +9963,10 @@ msgstr "E-mail beállítása"
 #: src/features/setup/SetupHub.tsx
 msgid "Set up Yuva"
 msgstr "Yuva beállítása"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Sets {failureState}. {onFailure}."
+msgstr "Beállítja: {failureState}. {onFailure}."
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Setting up the inbox’s Amazon SES tenant…"
@@ -10307,6 +10565,10 @@ msgstr "{0} állapota"
 msgid "State of {0} while it is open"
 msgstr "{0} állapota, amíg nyitott"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "State while down"
+msgstr "Állapot leálláskor"
+
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -10431,6 +10693,10 @@ msgstr "Feliratkozás törölve"
 #: src/components/common/text.ts
 msgid "Succeeded"
 msgstr "Sikerült"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Successes to recover"
+msgstr "Sikerek egymás után a helyreálláshoz"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Such as a MERSİS number, trade register or VAT id, if you have one"
@@ -10708,6 +10974,10 @@ msgstr "A kód hibás vagy lejárt."
 msgid "The columns are guessed from the header row. One must be the e-mail address; name the others as contact fields or attributes, or skip them. Attributes only fill keys a contact does not have yet."
 msgstr "Az oszlopokat a fejlécsorból találjuk ki. Az egyiknek e-mail-címnek kell lennie; a többit nevezd el kontaktmezőként vagy attribútumként, vagy hagyd ki. Az attribútumok csak azokat a kulcsokat töltik ki, amelyekkel a kontaktnak még nincs."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "The component whose state this monitor sets."
+msgstr "Az összetevő, amelynek állapotát ez a figyelő beállítja."
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "The confirmation mail is on its way."
 msgstr "A megerősítő levél úton van."
@@ -10719,6 +10989,10 @@ msgstr "A hozzájárulási oldal bejelöli, amit a kliens kér. Hagyd ki, amit n
 #: src/components/common/text.ts
 msgid "The contact was deleted"
 msgstr "A kontaktot törölték"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "The current address stops working at once. Update whatever calls it."
+msgstr "A jelenlegi cím azonnal megszűnik működni. Frissítsen mindent, ami hívja."
 
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "The customer does not see this"
@@ -11044,6 +11318,10 @@ msgstr "A címzettek száma megváltozott, mióta megnézted. Ellenőrizd az új
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The number of recipients changed while you looked. It is {recipients} now. Confirm again to send to them."
 msgstr "A címzettek száma megváltozott, miközben nézted. Most {recipients}. Erősítsd meg újra, hogy elküldd nekik."
+
+#: src/features/status/MonitorToken.tsx
+msgid "The old address no longer works. Copy the new one now: it is shown only once."
+msgstr "A régi cím már nem működik. Másolja ki az újat most: csak egyszer jelenik meg."
 
 #: src/features/migrations/DoneStep.tsx
 msgid "The old mailbox is untouched; keep it as an archive if you like."
@@ -12112,6 +12390,10 @@ msgstr "Amíg nem kattintanak a linkre, megerősítésre várnak, és más level
 msgid "Unverified sender"
 msgstr "Nem ellenőrzött feladó"
 
+#: src/features/status/text.tsx
+msgid "Up"
+msgstr "Működik"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "Legfeljebb {max} és 100 000 sor, fejlécsorral. A török vagy nyugati kódolású Excel-fájlok, valamint a vesszővel, pontosvesszővel vagy tabulátorral elválasztott oszlopok úgy olvasódnak, ahogy vannak."
@@ -12457,6 +12739,10 @@ msgstr "Az ügyfélre vár"
 msgid "Waiting for the first message"
 msgstr "Várakozás az első üzenetre"
 
+#: src/features/status/text.tsx
+msgid "Waiting for the first result"
+msgstr "Várakozás az első eredményre"
+
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Waiting for the operator"
 msgstr "Az üzemeltetőre vár"
@@ -12635,6 +12921,10 @@ msgstr "Amikor egy kolléga @-cal hozzáad egy jegyzethez."
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"
 msgstr "Mikor egyeztek bele?"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "When it goes down"
+msgstr "Leálláskor"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "When nobody is available, the widget asks where to send the reply."
@@ -13076,6 +13366,10 @@ msgstr "A mappád"
 msgid "Your folders and labels become Yuva labels on the conversations they hold."
 msgstr "A mappáidból és címkéidből Yuva-címkék lesznek a bennük lévő beszélgetéseken."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Your job calls Yuva on a schedule. A missing call fails the monitor."
+msgstr "A feladata rendszeres időközönként hívja a Yuvát. A hiányzó hívás leállítja a figyelőt."
+
 #: src/features/migrations/Wizard.tsx
 msgid "Your mail provider"
 msgstr "A levelezőszolgáltatód"
@@ -13105,6 +13399,10 @@ msgstr "A szervezeted blokkolta a bejelentkezést"
 #: src/features/migrations/text.ts
 msgid "Your organization's admin must allow Yuva"
 msgstr "A szervezeted adminjának engedélyeznie kell a Yuvát"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Your own monitoring sends its state, including Alertmanager and Grafana alerts."
+msgstr "A saját felügyelete elküldi az állapotát, az Alertmanager és a Grafana riasztásait is beleértve."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Your plan and workspace policies decide whether custom MCP servers are available."

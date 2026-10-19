@@ -970,6 +970,10 @@ msgstr "Senarai mel menghantar atas nama peti masuk, melalui saluran e-melnya. S
 msgid "A mailing list with subscribe forms, for your broadcasts"
 msgstr "Senarai mel dengan borang langganan, untuk siaran anda"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "A member set the component by hand later, so it stays as they left it."
+msgstr "Seorang ahli menetapkan komponen secara manual kemudian, jadi komponen kekal seperti yang ditinggalkannya."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "Medan gabung tanpa nilai ganti akan kosong bagi sesetengah penerima. Berikan nilai ganti."
@@ -1025,6 +1029,10 @@ msgstr "Satu properti boleh mempunyai paling banyak 20 corong. Padam satu dahulu
 #: src/features/status/CreatePageDialog.tsx
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "Halaman awam yang memberitahu pelanggan anda sama ada {inboxName} berfungsi. Ia kekal tidak diterbitkan sehingga anda menerbitkannya."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "A pushed state that names its own state keeps it."
+msgstr "Status yang dihantar yang menyatakan statusnya sendiri akan mengekalkannya."
 
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
@@ -1165,6 +1173,14 @@ msgstr "Tambah blok"
 msgid "Add a condition"
 msgstr "Tambah syarat"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Add a contact point of type Webhook, paste the address above, keep the method POST and use the contact point in a notification policy. Firing alerts fail the monitor, resolved ones recover it."
+msgstr "Tambah titik hubungan berjenis Webhook, tampal alamat di atas, kekalkan kaedah POST dan gunakan titik hubungan itu dalam dasar pemberitahuan. Amaran yang dicetuskan menjatuhkan monitor, yang diselesaikan memulihkannya."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add a monitor"
+msgstr "Tambah monitor"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Add a note (optional)"
 msgstr "Tambah nota (pilihan)"
@@ -1244,6 +1260,15 @@ msgstr "Tambah titik akhir"
 msgid "Add group"
 msgstr "Tambah kumpulan"
 
+#: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsTab.tsx
+msgid "Add monitor"
+msgstr "Tambah monitor"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Add monitor ({addKey})"
+msgstr "Tambah monitor ({addKey})"
+
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Add note"
@@ -1315,6 +1340,7 @@ msgstr "Ditambah oleh pasukan"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
 msgstr "Alamat"
@@ -1355,6 +1381,11 @@ msgstr "Tarikh bersetuju"
 #: src/features/settings/notifications/TabAlertsSection.tsx
 msgid "Alert me while the tab is in the background"
 msgstr "Beri amaran saya semasa tab berada di latar belakang"
+
+#: src/features/status/MonitorToken.tsx
+#: src/features/status/text.tsx
+msgid "Alertmanager"
+msgstr "Alertmanager"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
@@ -2064,6 +2095,14 @@ msgstr "Kembali ke menunggu"
 msgid "Back to your list"
 msgstr "Kembali ke senarai anda"
 
+#: src/features/status/text.tsx
+msgid "Beat"
+msgstr "Isyarat"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Beats only when the job succeeded."
+msgstr "Hanya menghantar isyarat apabila tugas berjaya."
+
 #: src/features/migrations/ConnectStep.tsx
 msgid "Before you connect"
 msgstr "Sebelum anda menyambung"
@@ -2274,6 +2313,7 @@ msgstr "Bolehkah saya menjadualkan surat berita untuk setiap pelanggan?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Batal"
 
@@ -2507,6 +2547,10 @@ msgstr "Pilih “Forward a copy of incoming mail to” alamat itu, kekalkan sali
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "Pilih “Generate app password”, namakan “Yuva” dan cipta."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Choose a component"
+msgstr "Pilih komponen"
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Choose a region"
 msgstr "Pilih wilayah"
@@ -2710,6 +2754,10 @@ msgstr "Lengkap"
 #: src/features/status/text.tsx
 msgid "Completed"
 msgstr "Selesai"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Component"
+msgstr "Komponen"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Component deleted"
@@ -3060,6 +3108,10 @@ msgstr "Salin sekarang dan kemas kini penerima anda; rahsia lama terus menandata
 msgid "Copy the 16-character password and paste it below. Gmail's IMAP is always on."
 msgstr "Salin kata laluan 16 aksara dan tampal di bawah. IMAP Gmail sentiasa hidup."
 
+#: src/features/status/MonitorToken.tsx
+msgid "Copy the address now: it is shown only once. Anyone who has it can report for this monitor."
+msgstr "Salin alamat sekarang: ia hanya dipaparkan sekali. Sesiapa yang memilikinya boleh melapor untuk monitor ini."
+
 #: src/features/migrations/text.ts
 msgid "Copy the Application (client) ID from Overview and paste it below with the secret. For an app limited to your organization, also enter its Directory (tenant) ID."
 msgstr "Salin ID Aplikasi (klien) daripada Overview dan tampal di bawah bersama rahsia. Untuk apl yang terhad kepada organisasi anda, masukkan juga ID Direktori (penyewa)."
@@ -3202,6 +3254,10 @@ msgstr "Bukti kelayakan dipadam. Yuva tidak lagi boleh membaca {address}."
 msgid "Critical"
 msgstr "Kritikal"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Cron"
+msgstr "Cron"
+
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
 msgstr "Fail CSV"
@@ -3294,6 +3350,7 @@ msgstr "Prestasi merosot"
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
+#: src/features/status/MonitorsTab.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "Padam"
@@ -3314,6 +3371,7 @@ msgstr "Padam {0}?"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/workspace/DeleteWorkspace.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Delete {name}?"
 msgstr "Padam {name}?"
 
@@ -3349,6 +3407,10 @@ msgstr "Padam kunci"
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Delete list"
 msgstr "Padam senarai"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Delete monitor"
+msgstr "Padam monitor"
 
 #: src/features/auth/DeleteAccountButton.tsx
 #: src/features/settings/profile/ProfilePage.tsx
@@ -3691,6 +3753,7 @@ msgstr "Domain belum disahkan"
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/MonitorToken.tsx
 msgid "Done"
 msgstr "Selesai"
 
@@ -3698,6 +3761,10 @@ msgstr "Selesai"
 msgctxt "feedback progress"
 msgid "Done"
 msgstr "Selesai"
+
+#: src/features/status/text.tsx
+msgid "Down"
+msgstr "Tumbang"
 
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
@@ -3892,6 +3959,7 @@ msgstr "Masing-masing dengan semua mesej dan notanya"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Edit"
 msgstr "Sunting"
 
@@ -3923,6 +3991,10 @@ msgstr "Edit butiran ({editKey})"
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
 msgstr "Sunting label"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Edit monitor"
+msgstr "Sunting monitor"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Edit the design"
@@ -4052,6 +4124,10 @@ msgstr "Peristiwa"
 msgid "Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off."
 msgstr "Setiap percubaan gagal sejak {failingSince}. Selepas 24 jam kegagalan Yuva mematikan titik akhir."
 
+#: src/features/status/MonitorChecks.tsx
+msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
+msgstr "Setiap isyarat, isyarat terlepas dan status dihantar dalam 30 hari lepas, terbaharu dahulu."
+
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
 msgstr "Setiap perbualan pelanggan, di satu tempat."
@@ -4154,6 +4230,10 @@ msgstr "Di mana-mana"
 msgid "Example Ltd."
 msgstr "Example Sdn. Bhd."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Expected every"
+msgstr "Dijangka setiap"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "Tamat tempoh {expires}"
@@ -4195,6 +4275,7 @@ msgstr "ID luaran"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Gagal"
 
@@ -4205,6 +4286,14 @@ msgstr "Gagal lima kali"
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
 msgstr "Gagal"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Fails the monitor at once, without waiting for the grace."
+msgstr "Menjatuhkan monitor serta-merta tanpa menunggu toleransi."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Failures to go down"
+msgstr "Kegagalan berturut-turut sehingga tumbang"
 
 #: src/features/docs/DocsPages.tsx
 msgid "feedback"
@@ -4317,6 +4406,10 @@ msgstr "Selesai tanpa semakan"
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Finished"
 msgstr "Selesai"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Firing alerts fail the monitor, resolved ones recover it."
+msgstr "Amaran yang dicetuskan menjatuhkan monitor, yang diselesaikan memulihkannya."
 
 #: src/features/setup/SetupLayout.tsx
 msgid "First message"
@@ -4646,6 +4739,14 @@ msgstr "Google menghantar kod pengesahan"
 msgid "Google Takeout"
 msgstr "Google Takeout"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Grace"
+msgstr "Toleransi"
+
+#: src/features/status/text.tsx
+msgid "Grafana"
+msgstr "Grafana"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Greeting"
@@ -4671,6 +4772,10 @@ msgstr "Diserahkan kepada {name}"
 #: src/features/contact/ContactsColumn.tsx
 msgid "Has an open conversation"
 msgstr "Ada perbualan terbuka"
+
+#: src/features/status/text.tsx
+msgid "Heartbeat"
+msgstr "Heartbeat"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Held by an incident, {since}"
@@ -4813,6 +4918,10 @@ msgstr "Sejauh mana ke belakang"
 msgid "How HTML e-mails open. You can still switch each message."
 msgstr "Bagaimana e-mel HTML dibuka. Anda masih boleh menukar setiap mesej."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "How late a beat may be."
+msgstr "Berapa lewat isyarat dibenarkan."
+
 #: src/features/setup/email/EmailReceiveStep.tsx
 msgid "How mail reaches Yuva"
 msgstr "Bagaimana mel sampai ke Yuva"
@@ -4927,6 +5036,10 @@ msgstr "Jika penyedia DNS anda menghadkan rentetan TXT kepada 255 aksara, pecahk
 msgid "If your mail provider mails a confirmation to that address, it arrives in this inbox as a conversation; open it there."
 msgstr "Jika penyedia mel anda mengirim pengesahan ke alamat itu, ia tiba dalam peti masuk ini sebagai perbualan; bukanya di sana."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Ignores results and lets the component go back."
+msgstr "Mengabaikan keputusan dan membiarkan komponen kembali."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Image descriptions"
 msgstr "Perihalan imej"
@@ -5013,6 +5126,10 @@ msgstr "Import berjalan satu demi satu dalam ruang kerja. Cuba lagi apabila yang
 #: src/features/conversation/HeaderActions.tsx
 msgid "In 1 hour"
 msgstr "Dalam 1 jam"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "In a row, 1 to 10."
+msgstr "Berturut-turut, 1 hingga 10."
 
 #: src/features/conversation/HeaderActions.tsx
 msgid "in an hour"
@@ -5317,6 +5434,10 @@ msgstr "Ia tidak lagi akan menerima pemberitahuan."
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "Aksesnya tamat serta-merta. Untuk menggunakannya semula, sambungkan semula."
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Its checks are deleted. An incident it opened is resolved."
+msgstr "Semakannya dipadam. Insiden yang dibukanya diselesaikan."
+
 #: src/features/status/ComponentsTab.tsx
 msgid "Its components stay, without a group."
 msgstr "Komponennya kekal, tanpa kumpulan."
@@ -5388,6 +5509,10 @@ msgstr "Kunci dan pembantu tidak boleh menjadualkan siaran dalam ruang kerja ini
 msgid "Keys and assistants may send broadcasts"
 msgstr "Kunci dan pembantu boleh menghantar siaran"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Kind"
+msgstr "Jenis"
+
 #: src/features/contact/ContactsColumn.tsx
 msgid "Known"
 msgstr "Diketahui"
@@ -5455,6 +5580,10 @@ msgstr "Lebih besar daripada had pelayan ini untuk satu mesej"
 msgid "Last attempt"
 msgstr "Percubaan terakhir"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Last beat {last}"
+msgstr "Isyarat terakhir {last}"
+
 #: src/features/home/HomePage.tsx
 msgid "Last broadcast"
 msgstr "Siaran terakhir"
@@ -5486,6 +5615,10 @@ msgstr "Dilihat terakhir {seen}"
 #: src/features/contact/ContactPage.tsx
 msgid "last seen {seenText}"
 msgstr "dilihat terakhir {seenText}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last state {last}"
+msgstr "Status terakhir {last}"
 
 #: src/features/broadcasts/TestSend.tsx
 msgid "Last test {last}"
@@ -5650,6 +5783,7 @@ msgstr "Muatkan imej"
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/MonitorChecks.tsx
 #: src/features/team/MemberPage.tsx
 msgid "Load more"
 msgstr "Muatkan lagi"
@@ -5817,9 +5951,17 @@ msgstr "Besar"
 msgid "Major outage"
 msgstr "Gangguan besar"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Make a new address for {name}?"
+msgstr "Buat alamat baharu untuk {name}?"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Make it public"
 msgstr "Jadikan awam"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Make new address"
+msgstr "Buat alamat baharu"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6092,6 +6234,10 @@ msgstr "Saya"
 msgid "Minor"
 msgstr "Kecil"
 
+#: src/features/status/text.tsx
+msgid "Missed beat"
+msgstr "Isyarat terlepas"
+
 #: src/components/common/text.ts
 #: src/features/settings/channels/app/AppFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6107,9 +6253,18 @@ msgstr "Disederhanakan"
 msgid "Monday"
 msgstr "Isnin"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Monitor deleted"
+msgstr "Monitor dipadam"
+
 #: src/features/status/text.tsx
 msgid "Monitoring"
 msgstr "Dipantau"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Monitors"
+msgstr "Monitor"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "More actions"
@@ -6124,6 +6279,10 @@ msgstr "Tindakan lain untuk {address}"
 #: src/features/status/ComponentsTab.tsx
 msgid "More for {0}"
 msgstr "Lagi untuk {0}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "More for {name}"
+msgstr "Lagi untuk {name}"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "More options"
@@ -6243,6 +6402,7 @@ msgstr "Profil saya"
 #: src/features/setup/SetupLayout.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorDialog.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Name"
 msgstr "Nama"
@@ -6329,6 +6489,14 @@ msgstr "baharu"
 #: src/features/broadcasts/Growth.tsx
 msgid "New"
 msgstr "Baharu"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "New address"
+msgstr "Alamat baharu"
+
+#: src/features/status/MonitorToken.tsx
+msgid "New address for {name}"
+msgstr "Alamat baharu untuk {name}"
 
 #: src/features/broadcasts/Import.tsx
 msgid "New addresses that get a confirmation mail"
@@ -6527,6 +6695,10 @@ msgstr "Seterusnya, pilih apa yang hendak dibawa. Imbasan membaca fail sekali."
 #: src/features/migrations/ChooseStep.tsx
 msgid "Next, choose where they go."
 msgstr "Seterusnya, pilih ke mana mereka pergi."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Nightly backup"
+msgstr "Sandaran malam"
 
 #: src/features/setup/previews.tsx
 msgid "No"
@@ -6763,6 +6935,10 @@ msgstr "Belum ada media, pautan atau dokumen dalam perbualan ini."
 msgid "No messages yet"
 msgstr "Belum ada mesej"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
+msgstr "Belum ada monitor. Tambah satu supaya tugas atau pemantauan anda menetapkan status komponen."
+
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "Tiada pemberitahuan dalam 90 hari lepas."
@@ -6815,6 +6991,10 @@ msgstr "Belum ada balasan."
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "Tiada akaun balasan"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "No result yet"
+msgstr "Belum ada keputusan"
 
 #: src/app/Palette.tsx
 msgid "No results"
@@ -6928,6 +7108,7 @@ msgstr "Tiada sesiapa akan mendapat mel ini. Pilih senarai yang ada pelanggan, a
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "None"
 msgstr "Tiada"
 
@@ -7105,6 +7286,10 @@ msgstr "Tiada apa berubah dalam {provider}; kekalkan akaun sebagai arkib jika an
 msgid "Nothing from the file is added, and the uploaded file is deleted."
 msgstr "Tiada apa daripada fail ditambah, dan fail yang dimuat naik dipadam."
 
+#: src/features/status/MonitorChecks.tsx
+msgid "Nothing has arrived yet."
+msgstr "Belum ada yang tiba."
+
 #: src/features/broadcasts/Report.tsx
 msgid "Nothing has happened yet."
 msgstr "Belum ada apa yang berlaku."
@@ -7227,6 +7412,10 @@ msgstr "Ditawarkan pada borang langganan dan halaman keutamaan. Senarai persendi
 #: src/features/conversation/HeaderActions.tsx
 msgid "Offline"
 msgstr "Luar talian"
+
+#: src/features/status/MonitorChecks.tsx
+msgid "OK"
+msgstr "OK"
 
 #: src/features/migrations/parts.tsx
 msgid "Older mail came from the export file you imported, so only newer mail is read here; mail that is in both is not imported twice. After the copy, the usual switch follows."
@@ -7473,6 +7662,10 @@ msgstr "Buka {0}"
 msgid "Open {provider}'s mail settings and find forwarding, or a filter that forwards all incoming mail."
 msgstr "Buka tetapan mel {provider} dan cari pemajuan, atau penapis yang memajukan semua mel masuk."
 
+#: src/features/status/text.tsx
+msgid "Open a draft incident"
+msgstr "Buka draf insiden"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Open a page of your docs"
 msgstr "Buka halaman dokumentasi anda"
@@ -7563,6 +7756,10 @@ msgstr "Buka halaman pengesahan Google"
 msgid "Open in Analytics"
 msgstr "Buka dalam Analitik"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Open incident"
+msgstr "Buka insiden"
+
 #: src/features/account/ConnectPage.tsx
 msgid "Open it from the sign-in button of a documentation page."
 msgstr "Bukanya daripada butang log masuk pada halaman dokumentasi."
@@ -7570,6 +7767,10 @@ msgstr "Bukanya daripada butang log masuk pada halaman dokumentasi."
 #: src/features/migrations/DoneStep.tsx
 msgid "Open My Apps"
 msgstr "Buka My Apps"
+
+#: src/features/status/text.tsx
+msgid "Open nothing"
+msgstr "Jangan buka apa-apa"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -7681,6 +7882,10 @@ msgstr "Bukaan"
 #: src/features/status/text.tsx
 msgid "Operational"
 msgstr "Beroperasi"
+
+#: src/features/status/MonitorToken.tsx
+msgid "operational recovers; degraded, partial_outage and major_outage fail."
+msgstr "operational memulihkan; degraded, partial_outage dan major_outage menjatuhkan."
 
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
@@ -7884,6 +8089,7 @@ msgstr "Tampal ini sebelum teg body penutup pada halaman anda"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Pause"
 msgstr "Jeda"
 
@@ -7896,6 +8102,8 @@ msgstr "Jeda atau sambung penghantaran"
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/MonitorDialog.tsx
+#: src/features/status/text.tsx
 msgid "Paused"
 msgstr "Dijeda"
 
@@ -8376,6 +8584,10 @@ msgstr "Terbitkan"
 msgid "Publish ({publishKey})"
 msgstr "Terbitkan ({publishKey})"
 
+#: src/features/status/text.tsx
+msgid "Publish an incident"
+msgstr "Terbitkan insiden"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Terbitkan sekarang"
@@ -8405,6 +8617,10 @@ msgstr "Diterbitkan serta-merta dan dihantar kepada pengikut."
 msgid "Push"
 msgstr "Tolak"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Push a state"
+msgstr "Hantar status"
+
 #: src/features/settings/notifications/events.ts
 msgid "Push and e-mail"
 msgstr "Tolak dan e-mel"
@@ -8418,9 +8634,21 @@ msgstr "Pemberitahuan tolak"
 msgid "Push only"
 msgstr "Tolak sahaja"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Push recovery"
+msgstr "Hantar pemulihan"
+
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Push: {label}"
 msgstr "Tolak: {label}"
+
+#: src/features/status/text.tsx
+msgid "Pushed"
+msgstr "Dihantar"
+
+#: src/features/status/text.tsx
+msgid "Pushed state"
+msgstr "Status dihantar"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "Put its subscribe form on your site, or add people who agreed to hear from you."
@@ -8611,6 +8839,10 @@ msgstr "Menerima"
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "Recent activity"
 msgstr "Aktiviti terkini"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Recent checks"
+msgstr "Semakan terkini"
 
 #: src/features/contact/ContactPage.tsx
 msgid "Recent visits"
@@ -8950,6 +9182,10 @@ msgstr "Membalas kepada {to}"
 msgid "Report"
 msgstr "Laporan"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Report a failed run"
+msgstr "Laporkan larian yang gagal"
+
 #: src/components/common/text.ts
 msgid "Reported a mail as spam"
 msgstr "Melaporkan mel sebagai spam"
@@ -8961,6 +9197,10 @@ msgstr "dilaporkan sebagai spam"
 #: src/components/common/text.ts
 msgid "Reported as spam"
 msgstr "Dilaporkan sebagai spam"
+
+#: src/features/status/text.tsx
+msgid "Reported failure"
+msgstr "Kegagalan dilaporkan"
 
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -9005,6 +9245,7 @@ msgstr "Pulihkan"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Resume"
 msgstr "Sambung"
 
@@ -9160,6 +9401,7 @@ msgstr "Sabtu"
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Save"
 msgstr "Simpan"
 
@@ -9387,6 +9629,10 @@ msgstr "Hantar “{name}” sekarang?"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send “{name}” on {when}?"
 msgstr "Hantar “{name}” pada {when}?"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Send a beat"
+msgstr "Hantar isyarat"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
@@ -9684,6 +9930,10 @@ msgstr "URL pelayan"
 msgid "SES tenant"
 msgstr "Penyewa SES"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
+msgstr "Tetapkan status komponen dari luar: tugas yang melapor atau pemantauan anda sendiri yang menghantar statusnya."
+
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
 msgstr "Ditetapkan oleh monitor, {since}"
@@ -9697,6 +9947,10 @@ msgstr "Tetapkan kemajuan"
 msgid "Set the feedback progress"
 msgstr "Tetapkan kemajuan maklum balas"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Set up {name}"
+msgstr "Sediakan {name}"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Set up DKIM"
 msgstr "Sediakan DKIM"
@@ -9709,6 +9963,10 @@ msgstr "Sediakan e-mel"
 #: src/features/setup/SetupHub.tsx
 msgid "Set up Yuva"
 msgstr "Sediakan Yuva"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Sets {failureState}. {onFailure}."
+msgstr "Menetapkan {failureState}. {onFailure}."
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Setting up the inbox’s Amazon SES tenant…"
@@ -10307,6 +10565,10 @@ msgstr "Keadaan {0}"
 msgid "State of {0} while it is open"
 msgstr "Keadaan {0} selagi terbuka"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "State while down"
+msgstr "Status apabila tumbang"
+
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -10431,6 +10693,10 @@ msgstr "Langganan dipadam"
 #: src/components/common/text.ts
 msgid "Succeeded"
 msgstr "Berjaya"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Successes to recover"
+msgstr "Kejayaan berturut-turut sehingga pulih"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Such as a MERSİS number, trade register or VAT id, if you have one"
@@ -10708,6 +10974,10 @@ msgstr "Kod salah atau telah tamat tempoh."
 msgid "The columns are guessed from the header row. One must be the e-mail address; name the others as contact fields or attributes, or skip them. Attributes only fill keys a contact does not have yet."
 msgstr "Lajur diteka daripada baris pengepala. Satu mesti alamat e-mel; namakan yang lain sebagai medan kenalan atau atribut, atau langkau. Atribut hanya mengisi kunci yang kenalan belum ada."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "The component whose state this monitor sets."
+msgstr "Komponen yang statusnya ditetapkan oleh monitor ini."
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "The confirmation mail is on its way."
 msgstr "Mel pengesahan dalam perjalanan."
@@ -10719,6 +10989,10 @@ msgstr "Halaman persetujuan menanda apa yang diminta klien. Tinggalkan apa yang 
 #: src/components/common/text.ts
 msgid "The contact was deleted"
 msgstr "Kenalan dipadam"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "The current address stops working at once. Update whatever calls it."
+msgstr "Alamat semasa berhenti berfungsi serta-merta. Kemas kini segala yang memanggilnya."
 
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "The customer does not see this"
@@ -11044,6 +11318,10 @@ msgstr "Bilangan penerima berubah sejak anda melihat. Semak bilangan baharu dan 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The number of recipients changed while you looked. It is {recipients} now. Confirm again to send to them."
 msgstr "Bilangan penerima berubah semasa anda melihat. Kini {recipients}. Sahkan semula untuk menghantar kepada mereka."
+
+#: src/features/status/MonitorToken.tsx
+msgid "The old address no longer works. Copy the new one now: it is shown only once."
+msgstr "Alamat lama tidak lagi berfungsi. Salin yang baharu sekarang: ia hanya dipaparkan sekali."
 
 #: src/features/migrations/DoneStep.tsx
 msgid "The old mailbox is untouched; keep it as an archive if you like."
@@ -12112,6 +12390,10 @@ msgstr "Sehingga mereka mengklik pautan, mereka kekal menunggu pengesahan dan ti
 msgid "Unverified sender"
 msgstr "Penghantar belum disahkan"
 
+#: src/features/status/text.tsx
+msgid "Up"
+msgstr "Aktif"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "Sehingga {max} dan 100,000 baris, dengan baris pengepala. Fail Excel dalam pengekodan Turki atau Barat dan lajur yang dipisahkan koma, koma bertitik atau tab dibaca seperti sedia ada."
@@ -12457,6 +12739,10 @@ msgstr "Menunggu pelanggan"
 msgid "Waiting for the first message"
 msgstr "Menunggu mesej pertama"
 
+#: src/features/status/text.tsx
+msgid "Waiting for the first result"
+msgstr "Menunggu keputusan pertama"
+
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Waiting for the operator"
 msgstr "Menunggu pengendali"
@@ -12635,6 +12921,10 @@ msgstr "Apabila rakan sepasukan menyebut anda dalam nota dengan @."
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"
 msgstr "Bila mereka bersetuju?"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "When it goes down"
+msgstr "Apabila tumbang"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "When nobody is available, the widget asks where to send the reply."
@@ -13076,6 +13366,10 @@ msgstr "Folder anda"
 msgid "Your folders and labels become Yuva labels on the conversations they hold."
 msgstr "Folder dan label anda menjadi label Yuva pada perbualan yang dipegangnya."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Your job calls Yuva on a schedule. A missing call fails the monitor."
+msgstr "Tugas anda memanggil Yuva pada sela masa tetap. Panggilan yang tiada menjatuhkan monitor."
+
 #: src/features/migrations/Wizard.tsx
 msgid "Your mail provider"
 msgstr "Penyedia mel anda"
@@ -13105,6 +13399,10 @@ msgstr "Organisasi anda menyekat log masuk"
 #: src/features/migrations/text.ts
 msgid "Your organization's admin must allow Yuva"
 msgstr "Pentadbir organisasi anda mesti membenarkan Yuva"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Your own monitoring sends its state, including Alertmanager and Grafana alerts."
+msgstr "Pemantauan anda sendiri menghantar statusnya, termasuk amaran Alertmanager dan Grafana."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Your plan and workspace policies decide whether custom MCP servers are available."

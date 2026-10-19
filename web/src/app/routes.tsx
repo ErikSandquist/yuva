@@ -172,6 +172,7 @@ export function AppRoutes() {
           <Route path="broadcasts/:broadcastId" element={<BroadcastPage />} />
           <Route path="status" element={<StatusHome />} />
           <Route path="status-pages/:pageId" element={<StatusPagePane />} />
+          <Route path="status-pages/:pageId/monitors" element={<StatusPagePane />} />
           <Route path="status-pages/:pageId/incidents/:incidentId" element={<IncidentPane />} />
           <Route
             path="analytics/*"

@@ -970,6 +970,10 @@ msgstr "메일링 리스트는 받은 편지함의 이름으로 이메일 채널
 msgid "A mailing list with subscribe forms, for your broadcasts"
 msgstr "일괄 발송을 위한 구독 양식이 있는 메일링 리스트"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "A member set the component by hand later, so it stays as they left it."
+msgstr "구성원이 나중에 구성 요소를 직접 설정했으므로 그 상태가 유지됩니다."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "대체값이 없는 병합 필드는 일부 수신자에게 비어 보입니다. 대체값을 지정하세요."
@@ -1025,6 +1029,10 @@ msgstr "속성 하나에는 퍼널을 최대 20개까지 둘 수 있습니다. �
 #: src/features/status/CreatePageDialog.tsx
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "{inboxName}이(가) 작동하는지 고객에게 알려 주는 공개 페이지. 게시하기 전까지는 공개되지 않습니다."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "A pushed state that names its own state keeps it."
+msgstr "자체 상태를 지정해 보낸 상태는 그 상태를 유지합니다."
 
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
@@ -1165,6 +1173,14 @@ msgstr "블록 추가"
 msgid "Add a condition"
 msgstr "조건 추가"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Add a contact point of type Webhook, paste the address above, keep the method POST and use the contact point in a notification policy. Firing alerts fail the monitor, resolved ones recover it."
+msgstr "Webhook 유형의 연락 지점을 추가하고 위 주소를 붙여 넣은 다음, 메서드는 POST로 두고 알림 정책에서 해당 연락 지점을 사용하세요. 발생한 알림은 모니터를 다운시키고 해결된 알림은 복구합니다."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add a monitor"
+msgstr "모니터 추가"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Add a note (optional)"
 msgstr "메모 추가(선택)"
@@ -1244,6 +1260,15 @@ msgstr "엔드포인트 추가"
 msgid "Add group"
 msgstr "그룹 추가"
 
+#: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsTab.tsx
+msgid "Add monitor"
+msgstr "모니터 추가"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Add monitor ({addKey})"
+msgstr "모니터 추가 ({addKey})"
+
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Add note"
@@ -1315,6 +1340,7 @@ msgstr "팀이 추가함"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
 msgstr "주소"
@@ -1355,6 +1381,11 @@ msgstr "동의한 날짜"
 #: src/features/settings/notifications/TabAlertsSection.tsx
 msgid "Alert me while the tab is in the background"
 msgstr "탭이 백그라운드일 때 알림 받기"
+
+#: src/features/status/MonitorToken.tsx
+#: src/features/status/text.tsx
+msgid "Alertmanager"
+msgstr "Alertmanager"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
@@ -2064,6 +2095,14 @@ msgstr "대기로 되돌리기"
 msgid "Back to your list"
 msgstr "리스트로 돌아가기"
 
+#: src/features/status/text.tsx
+msgid "Beat"
+msgstr "비트"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Beats only when the job succeeded."
+msgstr "작업이 성공했을 때만 비트를 보냅니다."
+
 #: src/features/migrations/ConnectStep.tsx
 msgid "Before you connect"
 msgstr "연결하기 전에"
@@ -2274,6 +2313,7 @@ msgstr "구독자마다 뉴스레터를 예약할 수 있나요?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "취소"
 
@@ -2507,6 +2547,10 @@ msgstr "\"수신 메일의 사본을 다음 주소로 전달\"을 선택해 그 
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "\"앱 비밀번호 생성\"을 선택하고 이름을 \"Yuva\"로 지어 만드세요."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Choose a component"
+msgstr "구성 요소 선택"
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Choose a region"
 msgstr "리전 선택"
@@ -2710,6 +2754,10 @@ msgstr "완료"
 #: src/features/status/text.tsx
 msgid "Completed"
 msgstr "완료됨"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Component"
+msgstr "구성 요소"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Component deleted"
@@ -3060,6 +3108,10 @@ msgstr "지금 복사해 수신 측을 업데이트하세요. 이전 시크릿�
 msgid "Copy the 16-character password and paste it below. Gmail's IMAP is always on."
 msgstr "16자 비밀번호를 복사해 아래에 붙여 넣으세요. Gmail의 IMAP은 항상 켜져 있습니다."
 
+#: src/features/status/MonitorToken.tsx
+msgid "Copy the address now: it is shown only once. Anyone who has it can report for this monitor."
+msgstr "지금 주소를 복사하세요. 한 번만 표시됩니다. 주소를 가진 사람은 누구나 이 모니터로 보고할 수 있습니다."
+
 #: src/features/migrations/text.ts
 msgid "Copy the Application (client) ID from Overview and paste it below with the secret. For an app limited to your organization, also enter its Directory (tenant) ID."
 msgstr "개요에서 애플리케이션(클라이언트) ID를 복사해 시크릿과 함께 아래에 붙여 넣으세요. 조직으로 제한된 앱이라면 디렉터리(테넌트) ID도 입력하세요."
@@ -3202,6 +3254,10 @@ msgstr "자격 증명을 삭제했습니다. Yuva는 더 이상 {address}을(를
 msgid "Critical"
 msgstr "심각"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Cron"
+msgstr "Cron"
+
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
 msgstr "CSV 파일"
@@ -3294,6 +3350,7 @@ msgstr "성능 저하"
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
+#: src/features/status/MonitorsTab.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "삭제"
@@ -3314,6 +3371,7 @@ msgstr "{0}을(를) 삭제할까요?"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/workspace/DeleteWorkspace.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Delete {name}?"
 msgstr "{name}을(를) 삭제할까요?"
 
@@ -3349,6 +3407,10 @@ msgstr "키 삭제"
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Delete list"
 msgstr "리스트 삭제"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Delete monitor"
+msgstr "모니터 삭제"
 
 #: src/features/auth/DeleteAccountButton.tsx
 #: src/features/settings/profile/ProfilePage.tsx
@@ -3691,6 +3753,7 @@ msgstr "도메인 확인 안 됨"
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/MonitorToken.tsx
 msgid "Done"
 msgstr "완료"
 
@@ -3698,6 +3761,10 @@ msgstr "완료"
 msgctxt "feedback progress"
 msgid "Done"
 msgstr "완료"
+
+#: src/features/status/text.tsx
+msgid "Down"
+msgstr "다운"
 
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
@@ -3892,6 +3959,7 @@ msgstr "각각 모든 메시지와 메모 포함"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Edit"
 msgstr "편집"
 
@@ -3923,6 +3991,10 @@ msgstr "세부 정보 편집({editKey})"
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
 msgstr "레이블 편집"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Edit monitor"
+msgstr "모니터 편집"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Edit the design"
@@ -4052,6 +4124,10 @@ msgstr "이벤트"
 msgid "Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off."
 msgstr "{failingSince}부터 모든 시도가 실패했습니다. 실패가 24시간 이어지면 Yuva가 엔드포인트를 끕니다."
 
+#: src/features/status/MonitorChecks.tsx
+msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
+msgstr "최근 30일의 모든 비트, 누락된 비트, 보낸 상태를 최신순으로 표시합니다."
+
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
 msgstr "모든 고객 대화를 한곳에서."
@@ -4154,6 +4230,10 @@ msgstr "어디서나"
 msgid "Example Ltd."
 msgstr "Example Ltd."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Expected every"
+msgstr "예상 주기"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "{expires}에 만료됨"
@@ -4195,6 +4275,7 @@ msgstr "외부 ID"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "실패"
 
@@ -4205,6 +4286,14 @@ msgstr "다섯 번 실패"
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
 msgstr "실패 중"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Fails the monitor at once, without waiting for the grace."
+msgstr "유예 시간을 기다리지 않고 즉시 모니터를 다운시킵니다."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Failures to go down"
+msgstr "다운되기까지 연속 실패 횟수"
 
 #: src/features/docs/DocsPages.tsx
 msgid "feedback"
@@ -4317,6 +4406,10 @@ msgstr "확인 없이 마치기"
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Finished"
 msgstr "완료됨"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Firing alerts fail the monitor, resolved ones recover it."
+msgstr "발생한 알림은 모니터를 다운시키고 해결된 알림은 복구합니다."
 
 #: src/features/setup/SetupLayout.tsx
 msgid "First message"
@@ -4646,6 +4739,14 @@ msgstr "Google이 확인 코드를 보냈습니다"
 msgid "Google Takeout"
 msgstr "Google Takeout"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Grace"
+msgstr "유예 시간"
+
+#: src/features/status/text.tsx
+msgid "Grafana"
+msgstr "Grafana"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Greeting"
@@ -4671,6 +4772,10 @@ msgstr "{name}님에게 넘겼습니다"
 #: src/features/contact/ContactsColumn.tsx
 msgid "Has an open conversation"
 msgstr "열린 대화 있음"
+
+#: src/features/status/text.tsx
+msgid "Heartbeat"
+msgstr "하트비트"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Held by an incident, {since}"
@@ -4813,6 +4918,10 @@ msgstr "얼마나 이전까지"
 msgid "How HTML e-mails open. You can still switch each message."
 msgstr "HTML 이메일을 여는 방식입니다. 메시지마다 바꿀 수도 있습니다."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "How late a beat may be."
+msgstr "비트가 늦어도 되는 시간입니다."
+
 #: src/features/setup/email/EmailReceiveStep.tsx
 msgid "How mail reaches Yuva"
 msgstr "메일이 Yuva에 도착하는 방식"
@@ -4927,6 +5036,10 @@ msgstr "DNS 제공업체가 TXT 문자열을 255자로 제한한다면, 값을 �
 msgid "If your mail provider mails a confirmation to that address, it arrives in this inbox as a conversation; open it there."
 msgstr "메일 제공업체가 그 주소로 확인 메일을 보내면 이 받은 편지함에 대화로 도착합니다. 거기서 여세요."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Ignores results and lets the component go back."
+msgstr "결과를 무시하고 구성 요소가 원래대로 돌아가게 합니다."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Image descriptions"
 msgstr "이미지 설명"
@@ -5013,6 +5126,10 @@ msgstr "가져오기는 워크스페이스에서 한 번에 하나씩 실행됩�
 #: src/features/conversation/HeaderActions.tsx
 msgid "In 1 hour"
 msgstr "1시간 후"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "In a row, 1 to 10."
+msgstr "연속으로 1~10회."
 
 #: src/features/conversation/HeaderActions.tsx
 msgid "in an hour"
@@ -5317,6 +5434,10 @@ msgstr "더 이상 알림을 받지 않습니다."
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "접근이 즉시 끝납니다. 다시 사용하려면 다시 연결하세요."
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Its checks are deleted. An incident it opened is resolved."
+msgstr "확인 기록이 삭제됩니다. 이 모니터가 연 인시던트는 해결됩니다."
+
 #: src/features/status/ComponentsTab.tsx
 msgid "Its components stay, without a group."
 msgstr "구성 요소는 그룹 없이 남습니다."
@@ -5388,6 +5509,10 @@ msgstr "이 워크스페이스에서는 키와 어시스턴트가 일괄 발송�
 msgid "Keys and assistants may send broadcasts"
 msgstr "키와 어시스턴트의 일괄 발송 허용"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Kind"
+msgstr "종류"
+
 #: src/features/contact/ContactsColumn.tsx
 msgid "Known"
 msgstr "알려짐"
@@ -5455,6 +5580,10 @@ msgstr "이 서버의 메시지 하나당 제한보다 큼"
 msgid "Last attempt"
 msgstr "마지막 시도"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Last beat {last}"
+msgstr "마지막 비트 {last}"
+
 #: src/features/home/HomePage.tsx
 msgid "Last broadcast"
 msgstr "마지막 일괄 발송"
@@ -5486,6 +5615,10 @@ msgstr "마지막 접속 {seen}"
 #: src/features/contact/ContactPage.tsx
 msgid "last seen {seenText}"
 msgstr "마지막 접속 {seenText}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last state {last}"
+msgstr "마지막 상태 {last}"
 
 #: src/features/broadcasts/TestSend.tsx
 msgid "Last test {last}"
@@ -5650,6 +5783,7 @@ msgstr "이미지 불러오기"
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/MonitorChecks.tsx
 #: src/features/team/MemberPage.tsx
 msgid "Load more"
 msgstr "더 보기"
@@ -5817,9 +5951,17 @@ msgstr "큼"
 msgid "Major outage"
 msgstr "대규모 중단"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Make a new address for {name}?"
+msgstr "{name}의 새 주소를 만들까요?"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Make it public"
 msgstr "공개하기"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Make new address"
+msgstr "새 주소 만들기"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6092,6 +6234,10 @@ msgstr "내 것"
 msgid "Minor"
 msgstr "작음"
 
+#: src/features/status/text.tsx
+msgid "Missed beat"
+msgstr "누락된 비트"
+
 #: src/components/common/text.ts
 #: src/features/settings/channels/app/AppFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6107,9 +6253,18 @@ msgstr "승인제"
 msgid "Monday"
 msgstr "월요일"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Monitor deleted"
+msgstr "모니터를 삭제했습니다"
+
 #: src/features/status/text.tsx
 msgid "Monitoring"
 msgstr "모니터링 중"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Monitors"
+msgstr "모니터"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "More actions"
@@ -6124,6 +6279,10 @@ msgstr "{address}의 더 많은 작업"
 #: src/features/status/ComponentsTab.tsx
 msgid "More for {0}"
 msgstr "{0}의 더 보기"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "More for {name}"
+msgstr "{name} 더보기"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "More options"
@@ -6243,6 +6402,7 @@ msgstr "내 프로필"
 #: src/features/setup/SetupLayout.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorDialog.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Name"
 msgstr "이름"
@@ -6329,6 +6489,14 @@ msgstr "신규"
 #: src/features/broadcasts/Growth.tsx
 msgid "New"
 msgstr "새로 만들기"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "New address"
+msgstr "새 주소"
+
+#: src/features/status/MonitorToken.tsx
+msgid "New address for {name}"
+msgstr "{name}의 새 주소"
 
 #: src/features/broadcasts/Import.tsx
 msgid "New addresses that get a confirmation mail"
@@ -6527,6 +6695,10 @@ msgstr "다음으로 가져올 항목을 선택하세요. 스캔은 파일을 �
 #: src/features/migrations/ChooseStep.tsx
 msgid "Next, choose where they go."
 msgstr "다음으로 가져올 위치를 선택하세요."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Nightly backup"
+msgstr "야간 백업"
 
 #: src/features/setup/previews.tsx
 msgid "No"
@@ -6763,6 +6935,10 @@ msgstr "이 대화에는 아직 미디어, 링크, 문서가 없습니다."
 msgid "No messages yet"
 msgstr "아직 메시지가 없습니다"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
+msgstr "아직 모니터가 없습니다. 작업이나 모니터링 도구가 구성 요소의 상태를 설정하도록 모니터를 추가하세요."
+
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "최근 90일간 알림이 없습니다."
@@ -6815,6 +6991,10 @@ msgstr "아직 답글이 없습니다."
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "답장 계정 없음"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "No result yet"
+msgstr "아직 결과가 없습니다"
 
 #: src/app/Palette.tsx
 msgid "No results"
@@ -6928,6 +7108,7 @@ msgstr "이 메일을 받을 사람이 없습니다. 구독자가 있는 리스�
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "None"
 msgstr "없음"
 
@@ -7105,6 +7286,10 @@ msgstr "{provider}에는 변경이 없습니다. 원하면 계정을 보관용�
 msgid "Nothing from the file is added, and the uploaded file is deleted."
 msgstr "파일의 내용은 아무것도 추가되지 않으며 업로드한 파일은 삭제됩니다."
 
+#: src/features/status/MonitorChecks.tsx
+msgid "Nothing has arrived yet."
+msgstr "아직 도착한 것이 없습니다."
+
 #: src/features/broadcasts/Report.tsx
 msgid "Nothing has happened yet."
 msgstr "아직 아무 일도 일어나지 않았습니다."
@@ -7227,6 +7412,10 @@ msgstr "구독 양식과 설정 페이지에 표시됩니다. 비공개 리스�
 #: src/features/conversation/HeaderActions.tsx
 msgid "Offline"
 msgstr "오프라인"
+
+#: src/features/status/MonitorChecks.tsx
+msgid "OK"
+msgstr "OK"
 
 #: src/features/migrations/parts.tsx
 msgid "Older mail came from the export file you imported, so only newer mail is read here; mail that is in both is not imported twice. After the copy, the usual switch follows."
@@ -7473,6 +7662,10 @@ msgstr "{0} 열기"
 msgid "Open {provider}'s mail settings and find forwarding, or a filter that forwards all incoming mail."
 msgstr "{provider}의 메일 설정을 열어 전달 또는 수신 메일을 모두 전달하는 필터를 찾으세요."
 
+#: src/features/status/text.tsx
+msgid "Open a draft incident"
+msgstr "인시던트 초안 열기"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Open a page of your docs"
 msgstr "문서 페이지 열기"
@@ -7563,6 +7756,10 @@ msgstr "Google 확인 페이지 열기"
 msgid "Open in Analytics"
 msgstr "분석에서 열기"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Open incident"
+msgstr "인시던트 열기"
+
 #: src/features/account/ConnectPage.tsx
 msgid "Open it from the sign-in button of a documentation page."
 msgstr "문서 페이지의 로그인 버튼에서 여세요."
@@ -7570,6 +7767,10 @@ msgstr "문서 페이지의 로그인 버튼에서 여세요."
 #: src/features/migrations/DoneStep.tsx
 msgid "Open My Apps"
 msgstr "내 앱 열기"
+
+#: src/features/status/text.tsx
+msgid "Open nothing"
+msgstr "아무것도 열지 않음"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -7681,6 +7882,10 @@ msgstr "열람"
 #: src/features/status/text.tsx
 msgid "Operational"
 msgstr "정상 작동"
+
+#: src/features/status/MonitorToken.tsx
+msgid "operational recovers; degraded, partial_outage and major_outage fail."
+msgstr "operational은 복구하고, degraded, partial_outage, major_outage는 다운시킵니다."
 
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
@@ -7884,6 +8089,7 @@ msgstr "페이지의 body 닫는 태그 바로 앞에 붙여 넣으세요"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Pause"
 msgstr "일시 중지"
 
@@ -7896,6 +8102,8 @@ msgstr "발송 일시 중지 또는 재개"
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/MonitorDialog.tsx
+#: src/features/status/text.tsx
 msgid "Paused"
 msgstr "일시 중지됨"
 
@@ -8376,6 +8584,10 @@ msgstr "게시"
 msgid "Publish ({publishKey})"
 msgstr "게시({publishKey})"
 
+#: src/features/status/text.tsx
+msgid "Publish an incident"
+msgstr "인시던트 게시"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "지금 게시"
@@ -8405,6 +8617,10 @@ msgstr "즉시 게시되어 팔로워에게 전송됩니다."
 msgid "Push"
 msgstr "푸시"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Push a state"
+msgstr "상태 보내기"
+
 #: src/features/settings/notifications/events.ts
 msgid "Push and e-mail"
 msgstr "푸시와 이메일"
@@ -8418,9 +8634,21 @@ msgstr "푸시 알림"
 msgid "Push only"
 msgstr "푸시만"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Push recovery"
+msgstr "복구 보내기"
+
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Push: {label}"
 msgstr "푸시: {label}"
+
+#: src/features/status/text.tsx
+msgid "Pushed"
+msgstr "푸시됨"
+
+#: src/features/status/text.tsx
+msgid "Pushed state"
+msgstr "보낸 상태"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "Put its subscribe form on your site, or add people who agreed to hear from you."
@@ -8611,6 +8839,10 @@ msgstr "수신 중"
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "Recent activity"
 msgstr "최근 활동"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Recent checks"
+msgstr "최근 확인"
 
 #: src/features/contact/ContactPage.tsx
 msgid "Recent visits"
@@ -8950,6 +9182,10 @@ msgstr "{to}에게 답장 중"
 msgid "Report"
 msgstr "보고서"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Report a failed run"
+msgstr "실패한 실행 보고"
+
 #: src/components/common/text.ts
 msgid "Reported a mail as spam"
 msgstr "메일을 스팸으로 신고함"
@@ -8961,6 +9197,10 @@ msgstr "스팸 신고됨"
 #: src/components/common/text.ts
 msgid "Reported as spam"
 msgstr "스팸 신고됨"
+
+#: src/features/status/text.tsx
+msgid "Reported failure"
+msgstr "보고된 실패"
 
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -9005,6 +9245,7 @@ msgstr "복원"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Resume"
 msgstr "재개"
 
@@ -9160,6 +9401,7 @@ msgstr "토요일"
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Save"
 msgstr "저장"
 
@@ -9387,6 +9629,10 @@ msgstr "\"{name}\"을(를) 지금 보낼까요?"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send “{name}” on {when}?"
 msgstr "\"{name}\"을(를) {when}에 보낼까요?"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Send a beat"
+msgstr "비트 보내기"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
@@ -9684,6 +9930,10 @@ msgstr "서버 URL"
 msgid "SES tenant"
 msgstr "SES 테넌트"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
+msgstr "구성 요소의 상태를 외부에서 설정하세요. 보고하는 작업이나 상태를 푸시하는 자체 모니터링 도구를 사용할 수 있습니다."
+
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
 msgstr "모니터가 설정함, {since}"
@@ -9697,6 +9947,10 @@ msgstr "진행 상태 설정"
 msgid "Set the feedback progress"
 msgstr "피드백 진행 상태 설정"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Set up {name}"
+msgstr "{name} 설정"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Set up DKIM"
 msgstr "DKIM 설정"
@@ -9709,6 +9963,10 @@ msgstr "이메일 설정"
 #: src/features/setup/SetupHub.tsx
 msgid "Set up Yuva"
 msgstr "Yuva 설정"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Sets {failureState}. {onFailure}."
+msgstr "{failureState}(으)로 설정합니다. {onFailure}."
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Setting up the inbox’s Amazon SES tenant…"
@@ -10307,6 +10565,10 @@ msgstr "{0}의 상태"
 msgid "State of {0} while it is open"
 msgstr "{0}이(가) 열려 있는 동안의 상태"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "State while down"
+msgstr "다운 시 상태"
+
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -10431,6 +10693,10 @@ msgstr "구독을 삭제했습니다"
 #: src/components/common/text.ts
 msgid "Succeeded"
 msgstr "성공"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Successes to recover"
+msgstr "복구까지 연속 성공 횟수"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Such as a MERSİS number, trade register or VAT id, if you have one"
@@ -10708,6 +10974,10 @@ msgstr "코드가 틀렸거나 만료되었습니다."
 msgid "The columns are guessed from the header row. One must be the e-mail address; name the others as contact fields or attributes, or skip them. Attributes only fill keys a contact does not have yet."
 msgstr "열은 헤더 행에서 추정합니다. 하나는 이메일 주소여야 하며, 나머지는 연락처 필드나 속성으로 이름을 붙이거나 건너뛰세요. 속성은 연락처에 아직 없는 키만 채웁니다."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "The component whose state this monitor sets."
+msgstr "이 모니터가 상태를 설정하는 구성 요소입니다."
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "The confirmation mail is on its way."
 msgstr "확인 메일을 보내는 중입니다."
@@ -10719,6 +10989,10 @@ msgstr "동의 페이지에는 클라이언트가 요청한 항목이 체크되�
 #: src/components/common/text.ts
 msgid "The contact was deleted"
 msgstr "연락처가 삭제되었습니다"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "The current address stops working at once. Update whatever calls it."
+msgstr "현재 주소는 즉시 작동하지 않게 됩니다. 이 주소를 호출하는 모든 곳을 업데이트하세요."
 
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "The customer does not see this"
@@ -11044,6 +11318,10 @@ msgstr "확인한 뒤 수신자 수가 바뀌었습니다. 새 수를 확인하�
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The number of recipients changed while you looked. It is {recipients} now. Confirm again to send to them."
 msgstr "확인하는 동안 수신자 수가 바뀌어 지금은 {recipients}명입니다. 이들에게 보내려면 다시 승인하세요."
+
+#: src/features/status/MonitorToken.tsx
+msgid "The old address no longer works. Copy the new one now: it is shown only once."
+msgstr "이전 주소는 더 이상 작동하지 않습니다. 지금 새 주소를 복사하세요. 한 번만 표시됩니다."
 
 #: src/features/migrations/DoneStep.tsx
 msgid "The old mailbox is untouched; keep it as an archive if you like."
@@ -12112,6 +12390,10 @@ msgstr "링크를 클릭하기 전까지는 확인 대기 상태로 다른 메�
 msgid "Unverified sender"
 msgstr "확인되지 않은 발신자"
 
+#: src/features/status/text.tsx
+msgid "Up"
+msgstr "업"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "최대 {max}, 100,000행, 헤더 행 포함. 터키어 또는 서유럽 인코딩의 Excel 파일과 쉼표, 세미콜론, 탭으로 구분된 열은 그대로 읽습니다."
@@ -12457,6 +12739,10 @@ msgstr "고객의 답을 기다리는 중"
 msgid "Waiting for the first message"
 msgstr "첫 메시지를 기다리는 중"
 
+#: src/features/status/text.tsx
+msgid "Waiting for the first result"
+msgstr "첫 결과를 기다리는 중"
+
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Waiting for the operator"
 msgstr "운영자를 기다리는 중"
@@ -12635,6 +12921,10 @@ msgstr "팀원이 메모에서 @로 나를 추가했을 때."
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"
 msgstr "언제 동의했나요?"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "When it goes down"
+msgstr "다운될 때"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "When nobody is available, the widget asks where to send the reply."
@@ -13076,6 +13366,10 @@ msgstr "내 폴더"
 msgid "Your folders and labels become Yuva labels on the conversations they hold."
 msgstr "폴더와 레이블은 그것이 담고 있는 대화의 Yuva 레이블이 됩니다."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Your job calls Yuva on a schedule. A missing call fails the monitor."
+msgstr "작업이 일정한 간격으로 Yuva를 호출합니다. 호출이 없으면 모니터가 다운됩니다."
+
 #: src/features/migrations/Wizard.tsx
 msgid "Your mail provider"
 msgstr "내 메일 제공업체"
@@ -13105,6 +13399,10 @@ msgstr "조직이 로그인을 차단했습니다"
 #: src/features/migrations/text.ts
 msgid "Your organization's admin must allow Yuva"
 msgstr "조직의 관리자가 Yuva를 허용해야 합니다"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Your own monitoring sends its state, including Alertmanager and Grafana alerts."
+msgstr "자체 모니터링 도구가 상태를 보냅니다. Alertmanager와 Grafana 알림도 포함됩니다."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Your plan and workspace policies decide whether custom MCP servers are available."

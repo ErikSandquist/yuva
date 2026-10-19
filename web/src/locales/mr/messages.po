@@ -970,6 +970,10 @@ msgstr "मेलिंग लिस्ट इनबॉक्सच्या न
 msgid "A mailing list with subscribe forms, for your broadcasts"
 msgstr "तुमच्या ब्रॉडकास्टसाठी सबस्क्राइब फॉर्मसह मेलिंग लिस्ट"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "A member set the component by hand later, so it stays as they left it."
+msgstr "एका सदस्याने नंतर घटक हाताने सेट केला, म्हणून तो त्यांनी सोडला तसाच राहतो."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "फॉलबॅकशिवाय मर्ज फील्ड काही प्राप्तकर्त्यांसाठी रिकामे राहील. त्याला फॉलबॅक द्या."
@@ -1025,6 +1029,10 @@ msgstr "एका प्रॉपर्टीमध्ये जास्ती�
 #: src/features/status/CreatePageDialog.tsx
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "{inboxName} चालू आहे की नाही हे तुमच्या ग्राहकांना सांगणारे सार्वजनिक पेज. तुम्ही प्रकाशित करेपर्यंत ते अप्रकाशित राहते."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "A pushed state that names its own state keeps it."
+msgstr "स्वतःची स्थिती सांगणारी पाठवलेली स्थिती ती कायम ठेवते."
 
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
@@ -1165,6 +1173,14 @@ msgstr "ब्लॉक जोडा"
 msgid "Add a condition"
 msgstr "अट जोडा"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Add a contact point of type Webhook, paste the address above, keep the method POST and use the contact point in a notification policy. Firing alerts fail the monitor, resolved ones recover it."
+msgstr "Webhook प्रकारचा संपर्क बिंदू जोडा, वरील पत्ता पेस्ट करा, पद्धत POST ठेवा आणि सूचना धोरणात तो संपर्क बिंदू वापरा. सक्रिय अलर्ट मॉनिटरला अयशस्वी करतात, सुटलेले अलर्ट त्याला पूर्ववत करतात."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add a monitor"
+msgstr "मॉनिटर जोडा"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Add a note (optional)"
 msgstr "नोट जोडा (ऐच्छिक)"
@@ -1244,6 +1260,15 @@ msgstr "एंडपॉइंट जोडा"
 msgid "Add group"
 msgstr "गट जोडा"
 
+#: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsTab.tsx
+msgid "Add monitor"
+msgstr "मॉनिटर जोडा"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Add monitor ({addKey})"
+msgstr "मॉनिटर जोडा ({addKey})"
+
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Add note"
@@ -1315,6 +1340,7 @@ msgstr "टीमने जोडले"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
 msgstr "पत्ता"
@@ -1355,6 +1381,11 @@ msgstr "सहमतीची तारीख"
 #: src/features/settings/notifications/TabAlertsSection.tsx
 msgid "Alert me while the tab is in the background"
 msgstr "टॅब बॅकग्राउंडमध्ये असताना मला अलर्ट करा"
+
+#: src/features/status/MonitorToken.tsx
+#: src/features/status/text.tsx
+msgid "Alertmanager"
+msgstr "Alertmanager"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
@@ -2064,6 +2095,14 @@ msgstr "प्रतीक्षेवर परत"
 msgid "Back to your list"
 msgstr "तुमच्या लिस्टवर परत"
 
+#: src/features/status/text.tsx
+msgid "Beat"
+msgstr "संकेत"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Beats only when the job succeeded."
+msgstr "काम यशस्वी झाले तरच संकेत पाठवतो."
+
 #: src/features/migrations/ConnectStep.tsx
 msgid "Before you connect"
 msgstr "कनेक्ट करण्यापूर्वी"
@@ -2274,6 +2313,7 @@ msgstr "मी प्रत्येक सबस्क्रायबरसा�
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "रद्द करा"
 
@@ -2507,6 +2547,10 @@ msgstr "“येणाऱ्या मेलची कॉपी या पत�
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "“ॲप पासवर्ड जनरेट करा” निवडा, त्याला “Yuva” नाव द्या आणि तयार करा."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Choose a component"
+msgstr "एक घटक निवडा"
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Choose a region"
 msgstr "प्रदेश निवडा"
@@ -2710,6 +2754,10 @@ msgstr "पूर्ण"
 #: src/features/status/text.tsx
 msgid "Completed"
 msgstr "पूर्ण झाले"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Component"
+msgstr "घटक"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Component deleted"
@@ -3060,6 +3108,10 @@ msgstr "तो आता कॉपी करा आणि तुमचा रि
 msgid "Copy the 16-character password and paste it below. Gmail's IMAP is always on."
 msgstr "16 अक्षरी पासवर्ड कॉपी करा आणि खाली पेस्ट करा. Gmail चे IMAP नेहमी चालू असते."
 
+#: src/features/status/MonitorToken.tsx
+msgid "Copy the address now: it is shown only once. Anyone who has it can report for this monitor."
+msgstr "पत्ता आत्ताच कॉपी करा: तो फक्त एकदाच दाखवला जातो. ज्याच्याकडे तो आहे तो कोणीही या मॉनिटरच्या वतीने अहवाल देऊ शकतो."
+
 #: src/features/migrations/text.ts
 msgid "Copy the Application (client) ID from Overview and paste it below with the secret. For an app limited to your organization, also enter its Directory (tenant) ID."
 msgstr "Overview मधून Application (client) ID कॉपी करा आणि सीक्रेटसह खाली पेस्ट करा. फक्त तुमच्या संस्थेपुरत्या मर्यादित ॲपसाठी त्याचा Directory (tenant) ID देखील टाका."
@@ -3202,6 +3254,10 @@ msgstr "क्रेडेन्शियल हटवले. Yuva आता {ad
 msgid "Critical"
 msgstr "गंभीर"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Cron"
+msgstr "Cron"
+
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
 msgstr "CSV फाइल"
@@ -3294,6 +3350,7 @@ msgstr "कमी झालेली कामगिरी"
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
+#: src/features/status/MonitorsTab.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "हटवा"
@@ -3314,6 +3371,7 @@ msgstr "{0} हटवायचे?"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/workspace/DeleteWorkspace.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Delete {name}?"
 msgstr "{name} हटवायचे?"
 
@@ -3349,6 +3407,10 @@ msgstr "की हटवा"
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Delete list"
 msgstr "लिस्ट हटवा"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Delete monitor"
+msgstr "मॉनिटर हटवा"
 
 #: src/features/auth/DeleteAccountButton.tsx
 #: src/features/settings/profile/ProfilePage.tsx
@@ -3691,6 +3753,7 @@ msgstr "डोमेन सत्यापित नाही"
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/MonitorToken.tsx
 msgid "Done"
 msgstr "झाले"
 
@@ -3698,6 +3761,10 @@ msgstr "झाले"
 msgctxt "feedback progress"
 msgid "Done"
 msgstr "Done"
+
+#: src/features/status/text.tsx
+msgid "Down"
+msgstr "बंद"
 
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
@@ -3892,6 +3959,7 @@ msgstr "प्रत्येक त्याच्या सर्व संद
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Edit"
 msgstr "संपादित करा"
 
@@ -3923,6 +3991,10 @@ msgstr "तपशील संपादित करा ({editKey})"
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
 msgstr "लेबल संपादित करा"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Edit monitor"
+msgstr "मॉनिटर संपादित करा"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Edit the design"
@@ -4052,6 +4124,10 @@ msgstr "इव्हेंट"
 msgid "Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off."
 msgstr "{failingSince} पासून प्रत्येक प्रयत्न अयशस्वी झाला आहे. 24 तासांच्या अपयशानंतर Yuva एंडपॉइंट बंद करते."
 
+#: src/features/status/MonitorChecks.tsx
+msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
+msgstr "गेल्या 30 दिवसांचे प्रत्येक संकेत, चुकलेले संकेत आणि पाठवलेल्या स्थिती, नवीन आधी."
+
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
 msgstr "प्रत्येक ग्राहक संभाषण, एकाच जागी."
@@ -4154,6 +4230,10 @@ msgstr "सर्वत्र"
 msgid "Example Ltd."
 msgstr "Example Ltd."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Expected every"
+msgstr "अपेक्षित दर"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "{expires} ला मुदत संपली"
@@ -4195,6 +4275,7 @@ msgstr "बाह्य ID"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "अयशस्वी"
 
@@ -4205,6 +4286,14 @@ msgstr "पाच वेळा अयशस्वी"
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
 msgstr "अयशस्वी होत आहे"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Fails the monitor at once, without waiting for the grace."
+msgstr "सवलतीच्या वेळेची वाट न पाहता मॉनिटरला लगेच अयशस्वी करतो."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Failures to go down"
+msgstr "बंद होण्यापर्यंत सलग अपयश"
 
 #: src/features/docs/DocsPages.tsx
 msgid "feedback"
@@ -4317,6 +4406,10 @@ msgstr "तपासल्याशिवाय पूर्ण करा"
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Finished"
 msgstr "पूर्ण झाले"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Firing alerts fail the monitor, resolved ones recover it."
+msgstr "सक्रिय अलर्ट मॉनिटरला अयशस्वी करतात, सुटलेले अलर्ट त्याला पूर्ववत करतात."
 
 #: src/features/setup/SetupLayout.tsx
 msgid "First message"
@@ -4646,6 +4739,14 @@ msgstr "Google ने पुष्टी कोड पाठवला"
 msgid "Google Takeout"
 msgstr "Google Takeout"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Grace"
+msgstr "सवलत"
+
+#: src/features/status/text.tsx
+msgid "Grafana"
+msgstr "Grafana"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Greeting"
@@ -4671,6 +4772,10 @@ msgstr "{name} यांना सोपवले"
 #: src/features/contact/ContactsColumn.tsx
 msgid "Has an open conversation"
 msgstr "खुले संभाषण आहे"
+
+#: src/features/status/text.tsx
+msgid "Heartbeat"
+msgstr "हार्टबीट"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Held by an incident, {since}"
@@ -4813,6 +4918,10 @@ msgstr "किती मागे"
 msgid "How HTML e-mails open. You can still switch each message."
 msgstr "HTML ई-मेल कसे उघडतात. तुम्ही तरीही प्रत्येक संदेश बदलू शकता."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "How late a beat may be."
+msgstr "संकेताला किती उशीर चालतो."
+
 #: src/features/setup/email/EmailReceiveStep.tsx
 msgid "How mail reaches Yuva"
 msgstr "मेल Yuva पर्यंत कसा पोहोचतो"
@@ -4927,6 +5036,10 @@ msgstr "तुमचा DNS प्रदाता TXT स्ट्रिंग 2
 msgid "If your mail provider mails a confirmation to that address, it arrives in this inbox as a conversation; open it there."
 msgstr "तुमचा मेल प्रदाता त्या पत्त्यावर पुष्टी मेल करत असेल तर तो या इनबॉक्समध्ये संभाषण म्हणून येतो; तो तिथे उघडा."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Ignores results and lets the component go back."
+msgstr "निकाल दुर्लक्षित करतो आणि घटकाला परत येऊ देतो."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Image descriptions"
 msgstr "इमेज वर्णने"
@@ -5013,6 +5126,10 @@ msgstr "वर्कस्पेसमध्ये इम्पोर्ट ए�
 #: src/features/conversation/HeaderActions.tsx
 msgid "In 1 hour"
 msgstr "1 तासात"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "In a row, 1 to 10."
+msgstr "सलग, 1 ते 10."
 
 #: src/features/conversation/HeaderActions.tsx
 msgid "in an hour"
@@ -5317,6 +5434,10 @@ msgstr "त्याला आता नोटिफिकेशन मिळण
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "त्याचा ॲक्सेस लगेच संपतो. पुन्हा वापरण्यासाठी पुन्हा कनेक्ट करा."
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Its checks are deleted. An incident it opened is resolved."
+msgstr "त्याच्या तपासण्या हटवल्या जातात. त्याने उघडलेली घटना सोडवली जाते."
+
 #: src/features/status/ComponentsTab.tsx
 msgid "Its components stay, without a group."
 msgstr "त्याचे घटक गटाशिवाय राहतात."
@@ -5388,6 +5509,10 @@ msgstr "या वर्कस्पेसमध्ये की आणि अ�
 msgid "Keys and assistants may send broadcasts"
 msgstr "की आणि असिस्टंट ब्रॉडकास्ट पाठवू शकतात"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Kind"
+msgstr "प्रकार"
+
 #: src/features/contact/ContactsColumn.tsx
 msgid "Known"
 msgstr "ज्ञात"
@@ -5455,6 +5580,10 @@ msgstr "एका संदेशासाठी या सर्व्हरच
 msgid "Last attempt"
 msgstr "शेवटचा प्रयत्न"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Last beat {last}"
+msgstr "शेवटचा संकेत {last}"
+
 #: src/features/home/HomePage.tsx
 msgid "Last broadcast"
 msgstr "शेवटचा ब्रॉडकास्ट"
@@ -5486,6 +5615,10 @@ msgstr "शेवटचे पाहिले {seen}"
 #: src/features/contact/ContactPage.tsx
 msgid "last seen {seenText}"
 msgstr "शेवटचे पाहिले {seenText}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last state {last}"
+msgstr "शेवटची स्थिती {last}"
 
 #: src/features/broadcasts/TestSend.tsx
 msgid "Last test {last}"
@@ -5650,6 +5783,7 @@ msgstr "इमेज लोड करा"
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/MonitorChecks.tsx
 #: src/features/team/MemberPage.tsx
 msgid "Load more"
 msgstr "आणखी लोड करा"
@@ -5817,9 +5951,17 @@ msgstr "मोठा"
 msgid "Major outage"
 msgstr "मोठा खंड"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Make a new address for {name}?"
+msgstr "{name} साठी नवीन पत्ता तयार करायचा?"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Make it public"
 msgstr "सार्वजनिक करा"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Make new address"
+msgstr "नवीन पत्ता तयार करा"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6092,6 +6234,10 @@ msgstr "माझे"
 msgid "Minor"
 msgstr "लहान"
 
+#: src/features/status/text.tsx
+msgid "Missed beat"
+msgstr "चुकलेला संकेत"
+
 #: src/components/common/text.ts
 #: src/features/settings/channels/app/AppFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6107,9 +6253,18 @@ msgstr "मॉडरेटेड"
 msgid "Monday"
 msgstr "सोमवार"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Monitor deleted"
+msgstr "मॉनिटर हटवला"
+
 #: src/features/status/text.tsx
 msgid "Monitoring"
 msgstr "देखरेखीखाली"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Monitors"
+msgstr "मॉनिटर"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "More actions"
@@ -6124,6 +6279,10 @@ msgstr "{address} साठी आणखी क्रिया"
 #: src/features/status/ComponentsTab.tsx
 msgid "More for {0}"
 msgstr "{0} साठी अधिक"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "More for {name}"
+msgstr "{name} साठी आणखी"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "More options"
@@ -6243,6 +6402,7 @@ msgstr "माझी प्रोफाइल"
 #: src/features/setup/SetupLayout.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorDialog.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Name"
 msgstr "नाव"
@@ -6329,6 +6489,14 @@ msgstr "नवीन"
 #: src/features/broadcasts/Growth.tsx
 msgid "New"
 msgstr "नवीन"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "New address"
+msgstr "नवीन पत्ता"
+
+#: src/features/status/MonitorToken.tsx
+msgid "New address for {name}"
+msgstr "{name} साठी नवीन पत्ता"
 
 #: src/features/broadcasts/Import.tsx
 msgid "New addresses that get a confirmation mail"
@@ -6527,6 +6695,10 @@ msgstr "पुढे, काय आणायचे ते निवडा. स�
 #: src/features/migrations/ChooseStep.tsx
 msgid "Next, choose where they go."
 msgstr "पुढे, ते कुठे जावेत ते निवडा."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Nightly backup"
+msgstr "रात्रीचा बॅकअप"
 
 #: src/features/setup/previews.tsx
 msgid "No"
@@ -6763,6 +6935,10 @@ msgstr "या संभाषणात अजून मीडिया, लि�
 msgid "No messages yet"
 msgstr "अजून संदेश नाहीत"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
+msgstr "अजून मॉनिटर नाहीत. एखादे काम किंवा तुमची स्वतःची देखरेख घटकाची स्थिती सेट करण्यासाठी एक जोडा."
+
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "गेल्या 90 दिवसांत नोटिफिकेशन नाहीत."
@@ -6815,6 +6991,10 @@ msgstr "अजून उत्तरे नाहीत."
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "उत्तरांसाठी खाते नाही"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "No result yet"
+msgstr "अजून निकाल नाही"
 
 #: src/app/Palette.tsx
 msgid "No results"
@@ -6928,6 +7108,7 @@ msgstr "हा मेल कोणालाही मिळणार नाह�
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "None"
 msgstr "काहीही नाही"
 
@@ -7105,6 +7286,10 @@ msgstr "{provider} मध्ये काहीही बदलले नाह�
 msgid "Nothing from the file is added, and the uploaded file is deleted."
 msgstr "फाइलमधून काहीही जोडले जात नाही, आणि अपलोड केलेली फाइल हटवली जाते."
 
+#: src/features/status/MonitorChecks.tsx
+msgid "Nothing has arrived yet."
+msgstr "अजून काहीही आलेले नाही."
+
 #: src/features/broadcasts/Report.tsx
 msgid "Nothing has happened yet."
 msgstr "अजून काहीही झालेले नाही."
@@ -7227,6 +7412,10 @@ msgstr "सबस्क्राइब फॉर्म आणि प्रेफ
 #: src/features/conversation/HeaderActions.tsx
 msgid "Offline"
 msgstr "ऑफलाइन"
+
+#: src/features/status/MonitorChecks.tsx
+msgid "OK"
+msgstr "ठीक आहे"
 
 #: src/features/migrations/parts.tsx
 msgid "Older mail came from the export file you imported, so only newer mail is read here; mail that is in both is not imported twice. After the copy, the usual switch follows."
@@ -7473,6 +7662,10 @@ msgstr "{0} उघडा"
 msgid "Open {provider}'s mail settings and find forwarding, or a filter that forwards all incoming mail."
 msgstr "{provider} च्या मेल सेटिंग्ज उघडा आणि फॉरवर्डिंग शोधा, किंवा येणारा सर्व मेल फॉरवर्ड करणारा फिल्टर."
 
+#: src/features/status/text.tsx
+msgid "Open a draft incident"
+msgstr "घटनेचा मसुदा उघडा"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Open a page of your docs"
 msgstr "तुमच्या डॉक्सचे एक पेज उघडा"
@@ -7563,6 +7756,10 @@ msgstr "Google चे पुष्टी पेज उघडा"
 msgid "Open in Analytics"
 msgstr "ॲनालिटिक्समध्ये उघडा"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Open incident"
+msgstr "घटना उघडा"
+
 #: src/features/account/ConnectPage.tsx
 msgid "Open it from the sign-in button of a documentation page."
 msgstr "ते डॉक्युमेंटेशन पेजच्या साइन-इन बटणावरून उघडा."
@@ -7570,6 +7767,10 @@ msgstr "ते डॉक्युमेंटेशन पेजच्या स
 #: src/features/migrations/DoneStep.tsx
 msgid "Open My Apps"
 msgstr "My Apps उघडा"
+
+#: src/features/status/text.tsx
+msgid "Open nothing"
+msgstr "काहीही उघडू नका"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -7681,6 +7882,10 @@ msgstr "ओपन"
 #: src/features/status/text.tsx
 msgid "Operational"
 msgstr "चालू आहे"
+
+#: src/features/status/MonitorToken.tsx
+msgid "operational recovers; degraded, partial_outage and major_outage fail."
+msgstr "operational पूर्ववत करते; degraded, partial_outage आणि major_outage अयशस्वी करतात."
 
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
@@ -7884,6 +8089,7 @@ msgstr "तुमच्या पेजेसच्या बंद होणा
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Pause"
 msgstr "थांबवा"
 
@@ -7896,6 +8102,8 @@ msgstr "पाठवणे थांबवा किंवा पुन्हा
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/MonitorDialog.tsx
+#: src/features/status/text.tsx
 msgid "Paused"
 msgstr "थांबवलेले"
 
@@ -8376,6 +8584,10 @@ msgstr "प्रकाशित करा"
 msgid "Publish ({publishKey})"
 msgstr "प्रकाशित करा ({publishKey})"
 
+#: src/features/status/text.tsx
+msgid "Publish an incident"
+msgstr "घटना प्रकाशित करा"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "आता प्रकाशित करा"
@@ -8405,6 +8617,10 @@ msgstr "लगेच प्रकाशित आणि फॉलोअर्स
 msgid "Push"
 msgstr "पुश"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Push a state"
+msgstr "स्थिती पाठवा"
+
 #: src/features/settings/notifications/events.ts
 msgid "Push and e-mail"
 msgstr "पुश आणि ई-मेल"
@@ -8418,9 +8634,21 @@ msgstr "पुश नोटिफिकेशन"
 msgid "Push only"
 msgstr "फक्त पुश"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Push recovery"
+msgstr "पुनर्प्राप्ती पाठवा"
+
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Push: {label}"
 msgstr "पुश: {label}"
+
+#: src/features/status/text.tsx
+msgid "Pushed"
+msgstr "पाठवले"
+
+#: src/features/status/text.tsx
+msgid "Pushed state"
+msgstr "पाठवलेली स्थिती"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "Put its subscribe form on your site, or add people who agreed to hear from you."
@@ -8611,6 +8839,10 @@ msgstr "स्वीकारत आहे"
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "Recent activity"
 msgstr "अलीकडील क्रियाकलाप"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Recent checks"
+msgstr "अलीकडील तपासण्या"
 
 #: src/features/contact/ContactPage.tsx
 msgid "Recent visits"
@@ -8950,6 +9182,10 @@ msgstr "{to} ला उत्तर देत आहे"
 msgid "Report"
 msgstr "रिपोर्ट"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Report a failed run"
+msgstr "अयशस्वी रनची नोंद करा"
+
 #: src/components/common/text.ts
 msgid "Reported a mail as spam"
 msgstr "मेल स्पॅम म्हणून रिपोर्ट केला"
@@ -8961,6 +9197,10 @@ msgstr "स्पॅम म्हणून रिपोर्ट केले"
 #: src/components/common/text.ts
 msgid "Reported as spam"
 msgstr "स्पॅम म्हणून रिपोर्ट केले"
+
+#: src/features/status/text.tsx
+msgid "Reported failure"
+msgstr "नोंदवलेले अपयश"
 
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -9005,6 +9245,7 @@ msgstr "पुनर्संचयित करा"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Resume"
 msgstr "पुन्हा सुरू करा"
 
@@ -9160,6 +9401,7 @@ msgstr "शनिवार"
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Save"
 msgstr "सेव्ह करा"
 
@@ -9387,6 +9629,10 @@ msgstr "“{name}” आता पाठवायचे?"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send “{name}” on {when}?"
 msgstr "“{name}” {when} ला पाठवायचे?"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Send a beat"
+msgstr "संकेत पाठवा"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
@@ -9684,6 +9930,10 @@ msgstr "सर्व्हर URL"
 msgid "SES tenant"
 msgstr "SES टेनंट"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
+msgstr "घटकाची स्थिती बाहेरून सेट करा: स्वतः अहवाल देणारे काम, किंवा स्थिती पाठवणारी तुमची स्वतःची देखरेख."
+
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
 msgstr "एका मॉनिटरने ठरवले, {since}"
@@ -9697,6 +9947,10 @@ msgstr "Set progress"
 msgid "Set the feedback progress"
 msgstr "Set the feedback progress"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Set up {name}"
+msgstr "{name} सेट अप करा"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Set up DKIM"
 msgstr "DKIM सेट अप करा"
@@ -9709,6 +9963,10 @@ msgstr "ई-मेल सेट अप करा"
 #: src/features/setup/SetupHub.tsx
 msgid "Set up Yuva"
 msgstr "Yuva सेट अप करा"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Sets {failureState}. {onFailure}."
+msgstr "{failureState} सेट करतो. {onFailure}."
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Setting up the inbox’s Amazon SES tenant…"
@@ -10307,6 +10565,10 @@ msgstr "{0} ची स्थिती"
 msgid "State of {0} while it is open"
 msgstr "{0} उघडे असेपर्यंतची स्थिती"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "State while down"
+msgstr "बंद पडल्यावरची स्थिती"
+
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -10431,6 +10693,10 @@ msgstr "सबस्क्रिप्शन हटवले"
 #: src/components/common/text.ts
 msgid "Succeeded"
 msgstr "यशस्वी"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Successes to recover"
+msgstr "पुनर्प्राप्तीपर्यंत सलग यश"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Such as a MERSİS number, trade register or VAT id, if you have one"
@@ -10708,6 +10974,10 @@ msgstr "कोड चुकीचा आहे किंवा त्याच�
 msgid "The columns are guessed from the header row. One must be the e-mail address; name the others as contact fields or attributes, or skip them. Attributes only fill keys a contact does not have yet."
 msgstr "कॉलम हेडर पंक्तीवरून ओळखले आहेत. एक ई-मेल पत्ता असला पाहिजे; बाकीच्यांना कॉन्टॅक्ट फील्ड किंवा ॲट्रिब्यूट नाव द्या, किंवा वगळा. ॲट्रिब्यूट फक्त त्या की भरतात ज्या कॉन्टॅक्टकडे अजून नाहीत."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "The component whose state this monitor sets."
+msgstr "हा मॉनिटर ज्या घटकाची स्थिती सेट करतो तो घटक."
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "The confirmation mail is on its way."
 msgstr "पुष्टी मेल वाटेत आहे."
@@ -10719,6 +10989,10 @@ msgstr "संमती पेज क्लायंट जे मागतो �
 #: src/components/common/text.ts
 msgid "The contact was deleted"
 msgstr "कॉन्टॅक्ट हटवला गेला"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "The current address stops working at once. Update whatever calls it."
+msgstr "सध्याचा पत्ता लगेच काम करणे थांबवतो. त्याला कॉल करणारे सर्व काही अपडेट करा."
 
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "The customer does not see this"
@@ -11044,6 +11318,10 @@ msgstr "तुम्ही पाहिल्यानंतर प्राप�
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The number of recipients changed while you looked. It is {recipients} now. Confirm again to send to them."
 msgstr "तुम्ही पाहत असताना प्राप्तकर्त्यांची संख्या बदलली. आता ती {recipients} आहे. त्यांना पाठवण्यासाठी पुन्हा पुष्टी करा."
+
+#: src/features/status/MonitorToken.tsx
+msgid "The old address no longer works. Copy the new one now: it is shown only once."
+msgstr "जुना पत्ता आता चालत नाही. नवीन आत्ताच कॉपी करा: तो फक्त एकदाच दाखवला जातो."
 
 #: src/features/migrations/DoneStep.tsx
 msgid "The old mailbox is untouched; keep it as an archive if you like."
@@ -12112,6 +12390,10 @@ msgstr "लिंकवर क्लिक करेपर्यंत ते �
 msgid "Unverified sender"
 msgstr "असत्यापित प्रेषक"
 
+#: src/features/status/text.tsx
+msgid "Up"
+msgstr "चालू"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "{max} आणि 100,000 पंक्तींपर्यंत, हेडर पंक्तीसह. तुर्की किंवा पाश्चात्य एन्कोडिंगमधील Excel फाइल्स आणि स्वल्पविराम, अर्धविराम किंवा टॅबने विभक्त कॉलम जसे आहेत तसे वाचले जातात."
@@ -12457,6 +12739,10 @@ msgstr "ग्राहकाच्या प्रतीक्षेत"
 msgid "Waiting for the first message"
 msgstr "पहिल्या संदेशाची प्रतीक्षा आहे"
 
+#: src/features/status/text.tsx
+msgid "Waiting for the first result"
+msgstr "पहिल्या निकालाची प्रतीक्षा"
+
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Waiting for the operator"
 msgstr "ऑपरेटरच्या प्रतीक्षेत"
@@ -12635,6 +12921,10 @@ msgstr "जेव्हा टीममेट तुम्हाला @ ने 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"
 msgstr "ते केव्हा सहमत झाले?"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "When it goes down"
+msgstr "बंद पडल्यावर"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "When nobody is available, the widget asks where to send the reply."
@@ -13076,6 +13366,10 @@ msgstr "तुमचे फोल्डर"
 msgid "Your folders and labels become Yuva labels on the conversations they hold."
 msgstr "तुमचे फोल्डर आणि लेबल त्यांच्या संभाषणांवर Yuva लेबल बनतात."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Your job calls Yuva on a schedule. A missing call fails the monitor."
+msgstr "तुमचे काम नियमित अंतराने Yuva ला कॉल करते. कॉल न आल्यास मॉनिटर अयशस्वी होतो."
+
 #: src/features/migrations/Wizard.tsx
 msgid "Your mail provider"
 msgstr "तुमचा मेल प्रदाता"
@@ -13105,6 +13399,10 @@ msgstr "तुमच्या संस्थेने साइन-इन ब�
 #: src/features/migrations/text.ts
 msgid "Your organization's admin must allow Yuva"
 msgstr "तुमच्या संस्थेच्या ॲडमिनने Yuva ला परवानगी दिली पाहिजे"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Your own monitoring sends its state, including Alertmanager and Grafana alerts."
+msgstr "तुमची स्वतःची देखरेख तिची स्थिती पाठवते, Alertmanager आणि Grafana च्या अलर्टसह."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Your plan and workspace policies decide whether custom MCP servers are available."

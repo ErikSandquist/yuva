@@ -6,6 +6,8 @@ import {
   type StatusComponentStateValue,
   type StatusIncidentCreate,
   type StatusIncidentPatch,
+  type StatusMonitorCreate,
+  type StatusMonitorUpdate,
   type StatusPageCreate,
   type StatusPageUpdate,
 } from "@/lib/api"
@@ -275,6 +277,70 @@ export function useIncidentMutations(pageId: string) {
           api.PATCH("/v1/status-pages/{pageId}/incidents/{incidentId}/updates/{updateId}", {
             params: { path: { ...path, incidentId: v.id, updateId: v.updateId } },
             body: { body: v.body },
+          })
+        ),
+      onSuccess: refresh,
+    }),
+  }
+}
+
+export function useStatusMonitors(pageId: string) {
+  const { workspaceId: ws } = useSession()
+  return useQuery({
+    queryKey: keys.statusMonitors(ws, pageId),
+    queryFn: () =>
+      unwrap(api.GET("/v1/status-pages/{pageId}/monitors", { params: { path: { pageId } } })).then((r) => r.items),
+  })
+}
+
+export function useMonitorChecks(pageId: string, monitorId: string) {
+  const { workspaceId: ws } = useSession()
+  return useInfiniteQuery({
+    queryKey: keys.statusChecks(ws, pageId, monitorId),
+    queryFn: ({ pageParam }) =>
+      unwrap(
+        api.GET("/v1/status-pages/{pageId}/monitors/{monitorId}/checks", {
+          params: { path: { pageId, monitorId }, query: { cursor: pageParam, limit: 25 } },
+        })
+      ),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (last) => last.next_cursor,
+  })
+}
+
+export function useMonitorMutations(pageId: string) {
+  const refresh = useRefresh()
+  const path = { pageId }
+  return {
+    create: useMutation({
+      mutationFn: (body: StatusMonitorCreate) =>
+        unwrap(api.POST("/v1/status-pages/{pageId}/monitors", { params: { path }, body })),
+      onSuccess: refresh,
+    }),
+    update: useMutation({
+      mutationFn: ({ id, ...body }: StatusMonitorUpdate & { id: string }) =>
+        unwrap(
+          api.PATCH("/v1/status-pages/{pageId}/monitors/{monitorId}", {
+            params: { path: { ...path, monitorId: id } },
+            body,
+          })
+        ),
+      onSuccess: refresh,
+    }),
+    remove: useMutation({
+      mutationFn: (id: string) =>
+        unwrap(
+          api.DELETE("/v1/status-pages/{pageId}/monitors/{monitorId}", {
+            params: { path: { ...path, monitorId: id } },
+          })
+        ),
+      onSuccess: refresh,
+    }),
+    rotate: useMutation({
+      mutationFn: (id: string) =>
+        unwrap(
+          api.POST("/v1/status-pages/{pageId}/monitors/{monitorId}/token", {
+            params: { path: { ...path, monitorId: id } },
           })
         ),
       onSuccess: refresh,

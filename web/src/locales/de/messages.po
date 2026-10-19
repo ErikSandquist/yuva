@@ -970,6 +970,10 @@ msgstr "Eine Mailingliste sendet im Namen eines Postfachs über dessen E-Mail-Ka
 msgid "A mailing list with subscribe forms, for your broadcasts"
 msgstr "Eine Mailingliste mit Anmeldeformularen für Ihre Broadcasts"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "A member set the component by hand later, so it stays as they left it."
+msgstr "Ein Mitglied hat die Komponente später von Hand gesetzt, deshalb bleibt sie so, wie es sie hinterlassen hat."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "Ein Platzhalter ohne Ersatzwert wäre für manche Empfänger leer. Geben Sie ihm einen Ersatzwert."
@@ -1025,6 +1029,10 @@ msgstr "Eine Property kann höchstens 20 Trichter haben. Löschen Sie zuerst ein
 #: src/features/status/CreatePageDialog.tsx
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "Eine öffentliche Seite, die Ihren Kunden zeigt, ob {inboxName} funktioniert. Sie bleibt unveröffentlicht, bis Sie sie veröffentlichen."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "A pushed state that names its own state keeps it."
+msgstr "Ein gesendeter Status, der seinen eigenen Zustand nennt, behält ihn."
 
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
@@ -1165,6 +1173,14 @@ msgstr "Block hinzufügen"
 msgid "Add a condition"
 msgstr "Bedingung hinzufügen"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Add a contact point of type Webhook, paste the address above, keep the method POST and use the contact point in a notification policy. Firing alerts fail the monitor, resolved ones recover it."
+msgstr "Fügen Sie einen Kontaktpunkt vom Typ Webhook hinzu, fügen Sie die obige Adresse ein, lassen Sie die Methode auf POST und verwenden Sie den Kontaktpunkt in einer Benachrichtigungsrichtlinie. Auslösende Alarme lassen den Monitor ausfallen, aufgelöste stellen ihn wieder her."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add a monitor"
+msgstr "Monitor hinzufügen"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Add a note (optional)"
 msgstr "Notiz hinzufügen (optional)"
@@ -1244,6 +1260,15 @@ msgstr "Endpunkt hinzufügen"
 msgid "Add group"
 msgstr "Gruppe hinzufügen"
 
+#: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsTab.tsx
+msgid "Add monitor"
+msgstr "Monitor hinzufügen"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Add monitor ({addKey})"
+msgstr "Monitor hinzufügen ({addKey})"
+
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Add note"
@@ -1315,6 +1340,7 @@ msgstr "Vom Team hinzugefügt"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
 msgstr "Adresse"
@@ -1355,6 +1381,11 @@ msgstr "Zugestimmt am"
 #: src/features/settings/notifications/TabAlertsSection.tsx
 msgid "Alert me while the tab is in the background"
 msgstr "Benachrichtigen, solange der Tab im Hintergrund ist"
+
+#: src/features/status/MonitorToken.tsx
+#: src/features/status/text.tsx
+msgid "Alertmanager"
+msgstr "Alertmanager"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
@@ -2064,6 +2095,14 @@ msgstr "Zurück zum Warten"
 msgid "Back to your list"
 msgstr "Zurück zu Ihrer Liste"
 
+#: src/features/status/text.tsx
+msgid "Beat"
+msgstr "Signal"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Beats only when the job succeeded."
+msgstr "Sendet nur dann ein Signal, wenn der Job erfolgreich war."
+
 #: src/features/migrations/ConnectStep.tsx
 msgid "Before you connect"
 msgstr "Bevor Sie verbinden"
@@ -2274,6 +2313,7 @@ msgstr "Kann ich einen Newsletter pro Abonnent planen?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -2507,6 +2547,10 @@ msgstr "Wählen Sie „Kopie der eingehenden Nachrichten weiterleiten an“ mit 
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "Wählen Sie „App-Passwort generieren“, nennen Sie es „Yuva“ und erstellen Sie es."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Choose a component"
+msgstr "Komponente wählen"
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Choose a region"
 msgstr "Region wählen"
@@ -2710,6 +2754,10 @@ msgstr "Abgeschlossen"
 #: src/features/status/text.tsx
 msgid "Completed"
 msgstr "Abgeschlossen"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Component"
+msgstr "Komponente"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Component deleted"
@@ -3060,6 +3108,10 @@ msgstr "Kopieren Sie es jetzt und aktualisieren Sie Ihren Empfänger; das alte S
 msgid "Copy the 16-character password and paste it below. Gmail's IMAP is always on."
 msgstr "Kopieren Sie das 16-stellige Passwort und fügen Sie es unten ein. IMAP ist bei Gmail immer eingeschaltet."
 
+#: src/features/status/MonitorToken.tsx
+msgid "Copy the address now: it is shown only once. Anyone who has it can report for this monitor."
+msgstr "Kopieren Sie die Adresse jetzt: Sie wird nur einmal angezeigt. Jeder, der sie hat, kann für diesen Monitor melden."
+
 #: src/features/migrations/text.ts
 msgid "Copy the Application (client) ID from Overview and paste it below with the secret. For an app limited to your organization, also enter its Directory (tenant) ID."
 msgstr "Kopieren Sie die Anwendungs-ID (Client) aus der Übersicht und fügen Sie sie mit dem Secret unten ein. Bei einer auf Ihre Organisation beschränkten App geben Sie auch ihre Verzeichnis-ID (Mandant) ein."
@@ -3202,6 +3254,10 @@ msgstr "Zugangsdaten gelöscht. Yuva kann {address} nicht mehr lesen."
 msgid "Critical"
 msgstr "Kritisch"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Cron"
+msgstr "Cron"
+
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
 msgstr "CSV-Datei"
@@ -3294,6 +3350,7 @@ msgstr "Eingeschränkte Leistung"
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
+#: src/features/status/MonitorsTab.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "Löschen"
@@ -3314,6 +3371,7 @@ msgstr "{0} löschen?"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/workspace/DeleteWorkspace.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Delete {name}?"
 msgstr "{name} löschen?"
 
@@ -3349,6 +3407,10 @@ msgstr "Schlüssel löschen"
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Delete list"
 msgstr "Liste löschen"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Delete monitor"
+msgstr "Monitor löschen"
 
 #: src/features/auth/DeleteAccountButton.tsx
 #: src/features/settings/profile/ProfilePage.tsx
@@ -3691,6 +3753,7 @@ msgstr "Domain nicht verifiziert"
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/MonitorToken.tsx
 msgid "Done"
 msgstr "Fertig"
 
@@ -3698,6 +3761,10 @@ msgstr "Fertig"
 msgctxt "feedback progress"
 msgid "Done"
 msgstr "Erledigt"
+
+#: src/features/status/text.tsx
+msgid "Down"
+msgstr "Ausgefallen"
 
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
@@ -3892,6 +3959,7 @@ msgstr "Jeweils mit allen Nachrichten und Notizen"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -3923,6 +3991,10 @@ msgstr "Details bearbeiten ({editKey})"
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
 msgstr "Label bearbeiten"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Edit monitor"
+msgstr "Monitor bearbeiten"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Edit the design"
@@ -4052,6 +4124,10 @@ msgstr "Ereignisse"
 msgid "Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off."
 msgstr "Jeder Versuch ist seit {failingSince} fehlgeschlagen. Nach 24 Stunden Fehlschlägen schaltet Yuva den Endpunkt ab."
 
+#: src/features/status/MonitorChecks.tsx
+msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
+msgstr "Jedes Signal, jedes ausgebliebene Signal und jeder gesendete Status der letzten 30 Tage, neueste zuerst."
+
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
 msgstr "Jede Kundenunterhaltung an einem Ort."
@@ -4154,6 +4230,10 @@ msgstr "Überall"
 msgid "Example Ltd."
 msgstr "Beispiel GmbH"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Expected every"
+msgstr "Erwartet alle"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "Abgelaufen {expires}"
@@ -4195,6 +4275,7 @@ msgstr "Externe IDs"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Fehlgeschlagen"
 
@@ -4205,6 +4286,14 @@ msgstr "Fünfmal fehlgeschlagen"
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
 msgstr "Fehlerhaft"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Fails the monitor at once, without waiting for the grace."
+msgstr "Lässt den Monitor sofort ausfallen, ohne die Toleranz abzuwarten."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Failures to go down"
+msgstr "Fehler bis zum Ausfall"
 
 #: src/features/docs/DocsPages.tsx
 msgid "feedback"
@@ -4317,6 +4406,10 @@ msgstr "Ohne Prüfung abschließen"
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Finished"
 msgstr "Abgeschlossen"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Firing alerts fail the monitor, resolved ones recover it."
+msgstr "Auslösende Alarme lassen den Monitor ausfallen, aufgelöste stellen ihn wieder her."
 
 #: src/features/setup/SetupLayout.tsx
 msgid "First message"
@@ -4646,6 +4739,14 @@ msgstr "Google hat einen Bestätigungscode gesendet"
 msgid "Google Takeout"
 msgstr "Google Takeout"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Grace"
+msgstr "Toleranz"
+
+#: src/features/status/text.tsx
+msgid "Grafana"
+msgstr "Grafana"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Greeting"
@@ -4671,6 +4772,10 @@ msgstr "An {name} übergeben"
 #: src/features/contact/ContactsColumn.tsx
 msgid "Has an open conversation"
 msgstr "Hat eine offene Unterhaltung"
+
+#: src/features/status/text.tsx
+msgid "Heartbeat"
+msgstr "Heartbeat"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Held by an incident, {since}"
@@ -4813,6 +4918,10 @@ msgstr "Wie weit zurück"
 msgid "How HTML e-mails open. You can still switch each message."
 msgstr "Wie HTML-E-Mails geöffnet werden. Sie können weiterhin jede Nachricht umschalten."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "How late a beat may be."
+msgstr "Wie spät ein Signal eintreffen darf."
+
 #: src/features/setup/email/EmailReceiveStep.tsx
 msgid "How mail reaches Yuva"
 msgstr "Wie Mail zu Yuva kommt"
@@ -4927,6 +5036,10 @@ msgstr "Wenn Ihr DNS-Anbieter einen TXT-String auf 255 Zeichen begrenzt, teilen 
 msgid "If your mail provider mails a confirmation to that address, it arrives in this inbox as a conversation; open it there."
 msgstr "Wenn Ihr Mail-Anbieter eine Bestätigung an diese Adresse sendet, kommt sie als Unterhaltung in diesem Postfach an; öffnen Sie sie dort."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Ignores results and lets the component go back."
+msgstr "Ignoriert Ergebnisse und lässt die Komponente zurückkehren."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Image descriptions"
 msgstr "Bildbeschreibungen"
@@ -5013,6 +5126,10 @@ msgstr "Importe laufen im Workspace nacheinander. Versuchen Sie es erneut, wenn 
 #: src/features/conversation/HeaderActions.tsx
 msgid "In 1 hour"
 msgstr "In 1 Stunde"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "In a row, 1 to 10."
+msgstr "In Folge, 1 bis 10."
 
 #: src/features/conversation/HeaderActions.tsx
 msgid "in an hour"
@@ -5317,6 +5434,10 @@ msgstr "Sie erhält keine Benachrichtigungen mehr."
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "Ihr Zugriff endet sofort. Um sie wieder zu nutzen, verbinden Sie sie erneut."
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Its checks are deleted. An incident it opened is resolved."
+msgstr "Seine Prüfungen werden gelöscht. Ein von ihm eröffneter Vorfall wird gelöst."
+
 #: src/features/status/ComponentsTab.tsx
 msgid "Its components stay, without a group."
 msgstr "Die Komponenten bleiben ohne Gruppe erhalten."
@@ -5388,6 +5509,10 @@ msgstr "Schlüssel und Assistenten dürfen in diesem Workspace keine Broadcasts 
 msgid "Keys and assistants may send broadcasts"
 msgstr "Schlüssel und Assistenten dürfen Broadcasts senden"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Kind"
+msgstr "Art"
+
 #: src/features/contact/ContactsColumn.tsx
 msgid "Known"
 msgstr "Bekannt"
@@ -5455,6 +5580,10 @@ msgstr "Größer als das Limit dieses Servers für eine Nachricht"
 msgid "Last attempt"
 msgstr "Letzter Versuch"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Last beat {last}"
+msgstr "Letztes Signal {last}"
+
 #: src/features/home/HomePage.tsx
 msgid "Last broadcast"
 msgstr "Letzter Broadcast"
@@ -5486,6 +5615,10 @@ msgstr "Zuletzt gesehen {seen}"
 #: src/features/contact/ContactPage.tsx
 msgid "last seen {seenText}"
 msgstr "zuletzt gesehen {seenText}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last state {last}"
+msgstr "Letzter Status {last}"
 
 #: src/features/broadcasts/TestSend.tsx
 msgid "Last test {last}"
@@ -5650,6 +5783,7 @@ msgstr "Bilder laden"
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/MonitorChecks.tsx
 #: src/features/team/MemberPage.tsx
 msgid "Load more"
 msgstr "Mehr laden"
@@ -5817,9 +5951,17 @@ msgstr "Hoch"
 msgid "Major outage"
 msgstr "Großer Ausfall"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Make a new address for {name}?"
+msgstr "Neue Adresse für {name} erzeugen?"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Make it public"
 msgstr "Öffentlich machen"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Make new address"
+msgstr "Neue Adresse erzeugen"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6092,6 +6234,10 @@ msgstr "Meine"
 msgid "Minor"
 msgstr "Gering"
 
+#: src/features/status/text.tsx
+msgid "Missed beat"
+msgstr "Ausgebliebenes Signal"
+
 #: src/components/common/text.ts
 #: src/features/settings/channels/app/AppFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6107,9 +6253,18 @@ msgstr "Moderiert"
 msgid "Monday"
 msgstr "Montag"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Monitor deleted"
+msgstr "Monitor gelöscht"
+
 #: src/features/status/text.tsx
 msgid "Monitoring"
 msgstr "Beobachtung"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Monitors"
+msgstr "Monitore"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "More actions"
@@ -6124,6 +6279,10 @@ msgstr "Weitere Aktionen für {address}"
 #: src/features/status/ComponentsTab.tsx
 msgid "More for {0}"
 msgstr "Mehr für {0}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "More for {name}"
+msgstr "Mehr zu {name}"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "More options"
@@ -6243,6 +6402,7 @@ msgstr "Mein Profil"
 #: src/features/setup/SetupLayout.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorDialog.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Name"
 msgstr "Name"
@@ -6329,6 +6489,14 @@ msgstr "neu"
 #: src/features/broadcasts/Growth.tsx
 msgid "New"
 msgstr "Neu"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "New address"
+msgstr "Neue Adresse"
+
+#: src/features/status/MonitorToken.tsx
+msgid "New address for {name}"
+msgstr "Neue Adresse für {name}"
 
 #: src/features/broadcasts/Import.tsx
 msgid "New addresses that get a confirmation mail"
@@ -6527,6 +6695,10 @@ msgstr "Wählen Sie als Nächstes, was Sie übernehmen. Der Scan liest die Datei
 #: src/features/migrations/ChooseStep.tsx
 msgid "Next, choose where they go."
 msgstr "Wählen Sie als Nächstes, wohin sie gehen."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Nightly backup"
+msgstr "Nächtliches Backup"
 
 #: src/features/setup/previews.tsx
 msgid "No"
@@ -6763,6 +6935,10 @@ msgstr "Noch keine Medien, Links oder Dokumente in dieser Unterhaltung."
 msgid "No messages yet"
 msgstr "Noch keine Nachrichten"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
+msgstr "Noch keine Monitore. Fügen Sie einen hinzu, damit ein Job oder Ihr Monitoring den Zustand einer Komponente setzt."
+
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "Keine Benachrichtigungen in den letzten 90 Tagen."
@@ -6815,6 +6991,10 @@ msgstr "Noch keine Antworten."
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "Kein Antwortkonto"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "No result yet"
+msgstr "Noch kein Ergebnis"
 
 #: src/app/Palette.tsx
 msgid "No results"
@@ -6928,6 +7108,7 @@ msgstr "Niemand würde diese Mail erhalten. Wählen Sie Listen mit Abonnenten od
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "None"
 msgstr "Keine"
 
@@ -7105,6 +7286,10 @@ msgstr "An {provider} hat sich nichts geändert; behalten Sie das Konto gern als
 msgid "Nothing from the file is added, and the uploaded file is deleted."
 msgstr "Nichts aus der Datei wird hinzugefügt, und die hochgeladene Datei wird gelöscht."
 
+#: src/features/status/MonitorChecks.tsx
+msgid "Nothing has arrived yet."
+msgstr "Es ist noch nichts eingetroffen."
+
 #: src/features/broadcasts/Report.tsx
 msgid "Nothing has happened yet."
 msgstr "Noch ist nichts passiert."
@@ -7227,6 +7412,10 @@ msgstr "Wird in Anmeldeformularen und auf der Einstellungsseite angeboten. Priva
 #: src/features/conversation/HeaderActions.tsx
 msgid "Offline"
 msgstr "Offline"
+
+#: src/features/status/MonitorChecks.tsx
+msgid "OK"
+msgstr "OK"
 
 #: src/features/migrations/parts.tsx
 msgid "Older mail came from the export file you imported, so only newer mail is read here; mail that is in both is not imported twice. After the copy, the usual switch follows."
@@ -7473,6 +7662,10 @@ msgstr "{0} öffnen"
 msgid "Open {provider}'s mail settings and find forwarding, or a filter that forwards all incoming mail."
 msgstr "Öffnen Sie die Mail-Einstellungen von {provider} und suchen Sie die Weiterleitung oder einen Filter, der alle eingehende Mail weiterleitet."
 
+#: src/features/status/text.tsx
+msgid "Open a draft incident"
+msgstr "Entwurf eines Vorfalls eröffnen"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Open a page of your docs"
 msgstr "Eine Seite Ihrer Doku öffnen"
@@ -7563,6 +7756,10 @@ msgstr "Bestätigungsseite von Google öffnen"
 msgid "Open in Analytics"
 msgstr "In Analytics öffnen"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Open incident"
+msgstr "Vorfall öffnen"
+
 #: src/features/account/ConnectPage.tsx
 msgid "Open it from the sign-in button of a documentation page."
 msgstr "Öffnen Sie sie über die Anmeldeschaltfläche einer Dokumentationsseite."
@@ -7570,6 +7767,10 @@ msgstr "Öffnen Sie sie über die Anmeldeschaltfläche einer Dokumentationsseite
 #: src/features/migrations/DoneStep.tsx
 msgid "Open My Apps"
 msgstr "Meine Apps öffnen"
+
+#: src/features/status/text.tsx
+msgid "Open nothing"
+msgstr "Nichts eröffnen"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -7681,6 +7882,10 @@ msgstr "Öffnungen"
 #: src/features/status/text.tsx
 msgid "Operational"
 msgstr "Betriebsbereit"
+
+#: src/features/status/MonitorToken.tsx
+msgid "operational recovers; degraded, partial_outage and major_outage fail."
+msgstr "operational stellt wieder her; degraded, partial_outage und major_outage lassen ausfallen."
 
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
@@ -7884,6 +8089,7 @@ msgstr "Fügen Sie dies vor dem schließenden Body-Tag Ihrer Seiten ein"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Pause"
 msgstr "Pausieren"
 
@@ -7896,6 +8102,8 @@ msgstr "Senden pausieren oder fortsetzen"
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/MonitorDialog.tsx
+#: src/features/status/text.tsx
 msgid "Paused"
 msgstr "Pausiert"
 
@@ -8376,6 +8584,10 @@ msgstr "Veröffentlichen"
 msgid "Publish ({publishKey})"
 msgstr "Veröffentlichen ({publishKey})"
 
+#: src/features/status/text.tsx
+msgid "Publish an incident"
+msgstr "Vorfall veröffentlichen"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Jetzt veröffentlichen"
@@ -8405,6 +8617,10 @@ msgstr "Sofort veröffentlicht und an die Follower gesendet."
 msgid "Push"
 msgstr "Push"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Push a state"
+msgstr "Status senden"
+
 #: src/features/settings/notifications/events.ts
 msgid "Push and e-mail"
 msgstr "Push und E-Mail"
@@ -8418,9 +8634,21 @@ msgstr "Push-Benachrichtigungen"
 msgid "Push only"
 msgstr "Nur Push"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Push recovery"
+msgstr "Wiederherstellung senden"
+
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Push: {label}"
 msgstr "Push: {label}"
+
+#: src/features/status/text.tsx
+msgid "Pushed"
+msgstr "Gesendet"
+
+#: src/features/status/text.tsx
+msgid "Pushed state"
+msgstr "Gesendeter Status"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "Put its subscribe form on your site, or add people who agreed to hear from you."
@@ -8611,6 +8839,10 @@ msgstr "Empfang"
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "Recent activity"
 msgstr "Letzte Aktivität"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Recent checks"
+msgstr "Letzte Prüfungen"
 
 #: src/features/contact/ContactPage.tsx
 msgid "Recent visits"
@@ -8950,6 +9182,10 @@ msgstr "Antwort an {to}"
 msgid "Report"
 msgstr "Melden"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Report a failed run"
+msgstr "Fehlgeschlagenen Lauf melden"
+
 #: src/components/common/text.ts
 msgid "Reported a mail as spam"
 msgstr "Eine Mail als Spam gemeldet"
@@ -8961,6 +9197,10 @@ msgstr "als Spam gemeldet"
 #: src/components/common/text.ts
 msgid "Reported as spam"
 msgstr "Als Spam gemeldet"
+
+#: src/features/status/text.tsx
+msgid "Reported failure"
+msgstr "Gemeldeter Fehler"
 
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -9005,6 +9245,7 @@ msgstr "Wiederherstellen"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Resume"
 msgstr "Fortsetzen"
 
@@ -9160,6 +9401,7 @@ msgstr "Samstag"
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Save"
 msgstr "Speichern"
 
@@ -9387,6 +9629,10 @@ msgstr "„{name}“ jetzt senden?"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send “{name}” on {when}?"
 msgstr "„{name}“ am {when} senden?"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Send a beat"
+msgstr "Signal senden"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
@@ -9684,6 +9930,10 @@ msgstr "Server-URL"
 msgid "SES tenant"
 msgstr "SES-Tenant"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
+msgstr "Setzen Sie den Zustand einer Komponente von außen: ein Job, der sich meldet, oder Ihr eigenes Monitoring, das seinen Zustand sendet."
+
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
 msgstr "Von einem Monitor gesetzt, {since}"
@@ -9697,6 +9947,10 @@ msgstr "Fortschritt setzen"
 msgid "Set the feedback progress"
 msgstr "Fortschritt des Feedbacks festlegen"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Set up {name}"
+msgstr "{name} einrichten"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Set up DKIM"
 msgstr "DKIM einrichten"
@@ -9709,6 +9963,10 @@ msgstr "E-Mail einrichten"
 #: src/features/setup/SetupHub.tsx
 msgid "Set up Yuva"
 msgstr "Yuva einrichten"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Sets {failureState}. {onFailure}."
+msgstr "Setzt {failureState}. {onFailure}."
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Setting up the inbox’s Amazon SES tenant…"
@@ -10307,6 +10565,10 @@ msgstr "Zustand von {0}"
 msgid "State of {0} while it is open"
 msgstr "Zustand von {0}, solange offen"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "State while down"
+msgstr "Zustand bei Ausfall"
+
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -10431,6 +10693,10 @@ msgstr "Abonnement gelöscht"
 #: src/components/common/text.ts
 msgid "Succeeded"
 msgstr "Erfolgreich"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Successes to recover"
+msgstr "Erfolge bis zur Wiederherstellung"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Such as a MERSİS number, trade register or VAT id, if you have one"
@@ -10708,6 +10974,10 @@ msgstr "Der Code ist falsch oder abgelaufen."
 msgid "The columns are guessed from the header row. One must be the e-mail address; name the others as contact fields or attributes, or skip them. Attributes only fill keys a contact does not have yet."
 msgstr "Die Spalten werden aus der Kopfzeile erraten. Eine muss die E-Mail-Adresse sein; ordnen Sie die anderen Kontaktfeldern oder Attributen zu oder überspringen Sie sie. Attribute füllen nur Schlüssel, die ein Kontakt noch nicht hat."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "The component whose state this monitor sets."
+msgstr "Die Komponente, deren Zustand dieser Monitor setzt."
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "The confirmation mail is on its way."
 msgstr "Die Bestätigungsmail ist unterwegs."
@@ -10719,6 +10989,10 @@ msgstr "Die Zustimmungsseite hakt an, was der Client verlangt. Lassen Sie weg, w
 #: src/components/common/text.ts
 msgid "The contact was deleted"
 msgstr "Der Kontakt wurde gelöscht"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "The current address stops working at once. Update whatever calls it."
+msgstr "Die aktuelle Adresse funktioniert sofort nicht mehr. Aktualisieren Sie alles, was sie aufruft."
 
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "The customer does not see this"
@@ -11044,6 +11318,10 @@ msgstr "Die Zahl der Empfänger hat sich geändert, seit Sie nachgesehen haben. 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The number of recipients changed while you looked. It is {recipients} now. Confirm again to send to them."
 msgstr "Die Zahl der Empfänger hat sich geändert, während Sie nachgesehen haben. Sie beträgt jetzt {recipients}. Bestätigen Sie erneut, um an sie zu senden."
+
+#: src/features/status/MonitorToken.tsx
+msgid "The old address no longer works. Copy the new one now: it is shown only once."
+msgstr "Die alte Adresse funktioniert nicht mehr. Kopieren Sie die neue jetzt: Sie wird nur einmal angezeigt."
 
 #: src/features/migrations/DoneStep.tsx
 msgid "The old mailbox is untouched; keep it as an archive if you like."
@@ -12112,6 +12390,10 @@ msgstr "Bis sie auf den Link klicken, warten sie auf Bestätigung und erhalten k
 msgid "Unverified sender"
 msgstr "Nicht verifizierter Absender"
 
+#: src/features/status/text.tsx
+msgid "Up"
+msgstr "Aktiv"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "Bis zu {max} und 100.000 Zeilen, mit Kopfzeile. Excel-Dateien in türkischer oder westlicher Kodierung und durch Kommas, Semikolons oder Tabs getrennte Spalten werden unverändert gelesen."
@@ -12457,6 +12739,10 @@ msgstr "Wartet auf den Kunden"
 msgid "Waiting for the first message"
 msgstr "Warte auf die erste Nachricht"
 
+#: src/features/status/text.tsx
+msgid "Waiting for the first result"
+msgstr "Wartet auf das erste Ergebnis"
+
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Waiting for the operator"
 msgstr "Wartet auf den Betreiber"
@@ -12635,6 +12921,10 @@ msgstr "Wenn ein Teammitglied Sie mit @ zu einer Notiz hinzufügt."
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"
 msgstr "Wann haben sie zugestimmt?"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "When it goes down"
+msgstr "Bei Ausfall"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "When nobody is available, the widget asks where to send the reply."
@@ -13076,6 +13366,10 @@ msgstr "Ihr Ordner"
 msgid "Your folders and labels become Yuva labels on the conversations they hold."
 msgstr "Ihre Ordner und Labels werden zu Yuva-Labels an den Unterhaltungen, die sie enthalten."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Your job calls Yuva on a schedule. A missing call fails the monitor."
+msgstr "Ihr Job ruft Yuva in festen Abständen auf. Ein ausbleibender Aufruf lässt den Monitor ausfallen."
+
 #: src/features/migrations/Wizard.tsx
 msgid "Your mail provider"
 msgstr "Ihr Mail-Anbieter"
@@ -13105,6 +13399,10 @@ msgstr "Ihre Organisation hat die Anmeldung blockiert"
 #: src/features/migrations/text.ts
 msgid "Your organization's admin must allow Yuva"
 msgstr "Der Admin Ihrer Organisation muss Yuva zulassen"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Your own monitoring sends its state, including Alertmanager and Grafana alerts."
+msgstr "Ihr eigenes Monitoring sendet seinen Zustand, auch Alertmanager- und Grafana-Alarme."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Your plan and workspace policies decide whether custom MCP servers are available."

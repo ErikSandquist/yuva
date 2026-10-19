@@ -970,6 +970,10 @@ msgstr "E-mailový zoznam odosiela v mene schránky cez jej e-mailový kanál. N
 msgid "A mailing list with subscribe forms, for your broadcasts"
 msgstr "E-mailový zoznam s formulármi na odber pre vaše hromadné správy"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "A member set the component by hand later, so it stays as they left it."
+msgstr "Člen neskôr nastavil komponent ručne, takže zostáva tak, ako ho nechal."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
 msgstr "Zlučovacie pole bez záložnej hodnoty by bolo pre niektorých príjemcov prázdne. Dajte mu záložnú hodnotu."
@@ -1025,6 +1029,10 @@ msgstr "Vlastnosť môže mať najviac 20 lievikov. Najprv jeden odstráňte."
 #: src/features/status/CreatePageDialog.tsx
 msgid "A public page that tells your customers whether {inboxName} works. It stays unpublished until you publish it."
 msgstr "Verejná stránka, ktorá zákazníkom hovorí, či {inboxName} funguje. Zostáva nezverejnená, kým ju nezverejníte."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "A pushed state that names its own state keeps it."
+msgstr "Odoslaný stav, ktorý uvádza vlastný stav, si ho ponechá."
 
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
@@ -1165,6 +1173,14 @@ msgstr "Pridať blok"
 msgid "Add a condition"
 msgstr "Pridať podmienku"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Add a contact point of type Webhook, paste the address above, keep the method POST and use the contact point in a notification policy. Firing alerts fail the monitor, resolved ones recover it."
+msgstr "Pridajte kontaktný bod typu Webhook, vložte vyššie uvedenú adresu, ponechajte metódu POST a použite kontaktný bod v oznamovacích pravidlách. Spustené upozornenia monitor vyradia, vyriešené ho obnovia."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add a monitor"
+msgstr "Pridať monitor"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Add a note (optional)"
 msgstr "Pridať poznámku (voliteľné)"
@@ -1244,6 +1260,15 @@ msgstr "Pridať koncový bod"
 msgid "Add group"
 msgstr "Pridať skupinu"
 
+#: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsTab.tsx
+msgid "Add monitor"
+msgstr "Pridať monitor"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Add monitor ({addKey})"
+msgstr "Pridať monitor ({addKey})"
+
 #: src/features/contact/ContactNotes.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Add note"
@@ -1315,6 +1340,7 @@ msgstr "Pridané tímom"
 #: src/features/conversation/Feedback.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
 msgstr "Adresa"
@@ -1355,6 +1381,11 @@ msgstr "Dátum súhlasu"
 #: src/features/settings/notifications/TabAlertsSection.tsx
 msgid "Alert me while the tab is in the background"
 msgstr "Upozorniť, keď je karta na pozadí"
+
+#: src/features/status/MonitorToken.tsx
+#: src/features/status/text.tsx
+msgid "Alertmanager"
+msgstr "Alertmanager"
 
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
@@ -2064,6 +2095,14 @@ msgstr "Späť k čakaniu"
 msgid "Back to your list"
 msgstr "Späť na váš zoznam"
 
+#: src/features/status/text.tsx
+msgid "Beat"
+msgstr "Signál"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Beats only when the job succeeded."
+msgstr "Pošle signál, len keď úloha uspela."
+
 #: src/features/migrations/ConnectStep.tsx
 msgid "Before you connect"
 msgstr "Skôr než sa pripojíte"
@@ -2274,6 +2313,7 @@ msgstr "Môžem naplánovať newsletter pre každého odberateľa zvlášť?"
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Cancel"
 msgstr "Zrušiť"
 
@@ -2507,6 +2547,10 @@ msgstr "Zvoľte „Preposielať kópiu prichádzajúcej pošty na“ túto adres
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "Zvoľte „Vygenerovať heslo aplikácie“, pomenujte ho „Yuva“ a vytvorte ho."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Choose a component"
+msgstr "Vyberte komponent"
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Choose a region"
 msgstr "Vyberte oblasť"
@@ -2710,6 +2754,10 @@ msgstr "Dokončené"
 #: src/features/status/text.tsx
 msgid "Completed"
 msgstr "Dokončené"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Component"
+msgstr "Komponent"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Component deleted"
@@ -3060,6 +3108,10 @@ msgstr "Skopírujte ju hneď a aktualizujte svojho príjemcu; starý tajný kľ�
 msgid "Copy the 16-character password and paste it below. Gmail's IMAP is always on."
 msgstr "Skopírujte 16-znakové heslo a vložte ho nižšie. IMAP v Gmaile je vždy zapnutý."
 
+#: src/features/status/MonitorToken.tsx
+msgid "Copy the address now: it is shown only once. Anyone who has it can report for this monitor."
+msgstr "Adresu skopírujte hneď: zobrazí sa iba raz. Ktokoľvek ju má, môže hlásiť za tento monitor."
+
 #: src/features/migrations/text.ts
 msgid "Copy the Application (client) ID from Overview and paste it below with the secret. For an app limited to your organization, also enter its Directory (tenant) ID."
 msgstr "Skopírujte ID aplikácie (klienta) z Prehľadu a vložte ho nižšie s tajným kľúčom. Pri aplikácii obmedzenej na vašu organizáciu zadajte aj jej ID adresára (tenanta)."
@@ -3202,6 +3254,10 @@ msgstr "Prihlasovacie údaje odstránené. Yuva už nemôže čítať {address}.
 msgid "Critical"
 msgstr "Kritický"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Cron"
+msgstr "Cron"
+
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
 msgstr "Súbor CSV"
@@ -3294,6 +3350,7 @@ msgstr "Znížený výkon"
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
+#: src/features/status/MonitorsTab.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "Odstrániť"
@@ -3314,6 +3371,7 @@ msgstr "Odstrániť {0}?"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/workspace/DeleteWorkspace.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Delete {name}?"
 msgstr "Odstrániť {name}?"
 
@@ -3349,6 +3407,10 @@ msgstr "Odstrániť kľúč"
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Delete list"
 msgstr "Odstrániť zoznam"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Delete monitor"
+msgstr "Odstrániť monitor"
 
 #: src/features/auth/DeleteAccountButton.tsx
 #: src/features/settings/profile/ProfilePage.tsx
@@ -3691,6 +3753,7 @@ msgstr "Doména neoverená"
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
+#: src/features/status/MonitorToken.tsx
 msgid "Done"
 msgstr "Hotovo"
 
@@ -3698,6 +3761,10 @@ msgstr "Hotovo"
 msgctxt "feedback progress"
 msgid "Done"
 msgstr "Hotovo"
+
+#: src/features/status/text.tsx
+msgid "Down"
+msgstr "Nefunguje"
 
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
@@ -3892,6 +3959,7 @@ msgstr "Každá so všetkými svojimi správami a poznámkami"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Edit"
 msgstr "Upraviť"
 
@@ -3923,6 +3991,10 @@ msgstr "Upraviť podrobnosti ({editKey})"
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Edit label"
 msgstr "Upraviť štítok"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Edit monitor"
+msgstr "Upraviť monitor"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Edit the design"
@@ -4052,6 +4124,10 @@ msgstr "Udalosti"
 msgid "Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off."
 msgstr "Každý pokus zlyháva od {failingSince}. Po 24 hodinách zlyhávania Yuva koncový bod vypne."
 
+#: src/features/status/MonitorChecks.tsx
+msgid "Every beat, missed beat and pushed state of the last 30 days, newest first."
+msgstr "Každý signál, zmeškaný signál a odoslaný stav za posledných 30 dní, najnovšie prvé."
+
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
 msgstr "Každá zákaznícka konverzácia na jednom mieste."
@@ -4154,6 +4230,10 @@ msgstr "Všade"
 msgid "Example Ltd."
 msgstr "Príklad s.r.o."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Expected every"
+msgstr "Očakáva sa každých"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Expired {expires}"
 msgstr "Vypršalo {expires}"
@@ -4195,6 +4275,7 @@ msgstr "Externé ID"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
+#: src/features/status/MonitorChecks.tsx
 msgid "Failed"
 msgstr "Zlyhalo"
 
@@ -4205,6 +4286,14 @@ msgstr "Zlyhalo päťkrát"
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
 msgstr "Zlyháva"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Fails the monitor at once, without waiting for the grace."
+msgstr "Okamžite vyradí monitor bez čakania na toleranciu."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Failures to go down"
+msgstr "Zlyhania do výpadku"
 
 #: src/features/docs/DocsPages.tsx
 msgid "feedback"
@@ -4317,6 +4406,10 @@ msgstr "Dokončiť bez kontroly"
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Finished"
 msgstr "Dokončené"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Firing alerts fail the monitor, resolved ones recover it."
+msgstr "Spustené upozornenia monitor vyradia, vyriešené ho obnovia."
 
 #: src/features/setup/SetupLayout.tsx
 msgid "First message"
@@ -4646,6 +4739,14 @@ msgstr "Google poslal potvrdzovací kód"
 msgid "Google Takeout"
 msgstr "Google Takeout"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Grace"
+msgstr "Tolerancia"
+
+#: src/features/status/text.tsx
+msgid "Grafana"
+msgstr "Grafana"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Greeting"
@@ -4671,6 +4772,10 @@ msgstr "Odovzdané používateľovi {name}"
 #: src/features/contact/ContactsColumn.tsx
 msgid "Has an open conversation"
 msgstr "Má otvorenú konverzáciu"
+
+#: src/features/status/text.tsx
+msgid "Heartbeat"
+msgstr "Heartbeat"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Held by an incident, {since}"
@@ -4813,6 +4918,10 @@ msgstr "Ako ďaleko späť"
 msgid "How HTML e-mails open. You can still switch each message."
 msgstr "Ako sa otvárajú e-maily HTML. Každú správu môžete stále prepnúť."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "How late a beat may be."
+msgstr "O koľko sa signál smie oneskoriť."
+
 #: src/features/setup/email/EmailReceiveStep.tsx
 msgid "How mail reaches Yuva"
 msgstr "Ako pošta dorazí do Yuvy"
@@ -4927,6 +5036,10 @@ msgstr "Ak váš poskytovateľ DNS obmedzuje reťazec TXT na 255 znakov, rozdeľ
 msgid "If your mail provider mails a confirmation to that address, it arrives in this inbox as a conversation; open it there."
 msgstr "Ak váš poštový poskytovateľ pošle na túto adresu potvrdenie, dorazí do tejto schránky ako konverzácia; otvorte ju tam."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Ignores results and lets the component go back."
+msgstr "Ignoruje výsledky a nechá komponent vrátiť sa."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Image descriptions"
 msgstr "Popisy obrázkov"
@@ -5013,6 +5126,10 @@ msgstr "Importy v pracovnom priestore bežia po jednom. Skúste to znova, keď d
 #: src/features/conversation/HeaderActions.tsx
 msgid "In 1 hour"
 msgstr "Za 1 hodinu"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "In a row, 1 to 10."
+msgstr "Za sebou, 1 až 10."
 
 #: src/features/conversation/HeaderActions.tsx
 msgid "in an hour"
@@ -5317,6 +5434,10 @@ msgstr "Už nebude dostávať oznámenia."
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "Jeho prístup okamžite skončí. Ak ho chcete použiť znova, pripojte ho znova."
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Its checks are deleted. An incident it opened is resolved."
+msgstr "Jeho kontroly sa odstránia. Incident, ktorý otvoril, sa vyrieši."
+
 #: src/features/status/ComponentsTab.tsx
 msgid "Its components stay, without a group."
 msgstr "Jej komponenty zostanú, bez skupiny."
@@ -5388,6 +5509,10 @@ msgstr "Kľúče a asistenti v tomto pracovnom priestore nesmú plánovať hroma
 msgid "Keys and assistants may send broadcasts"
 msgstr "Kľúče a asistenti smú odosielať hromadné správy"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Kind"
+msgstr "Druh"
+
 #: src/features/contact/ContactsColumn.tsx
 msgid "Known"
 msgstr "Známe"
@@ -5455,6 +5580,10 @@ msgstr "Väčšie než limit tohto servera pre jednu správu"
 msgid "Last attempt"
 msgstr "Posledný pokus"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Last beat {last}"
+msgstr "Posledný signál {last}"
+
 #: src/features/home/HomePage.tsx
 msgid "Last broadcast"
 msgstr "Posledná hromadná správa"
@@ -5486,6 +5615,10 @@ msgstr "Naposledy videný {seen}"
 #: src/features/contact/ContactPage.tsx
 msgid "last seen {seenText}"
 msgstr "naposledy videný {seenText}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Last state {last}"
+msgstr "Posledný stav {last}"
 
 #: src/features/broadcasts/TestSend.tsx
 msgid "Last test {last}"
@@ -5650,6 +5783,7 @@ msgstr "Načítať obrázky"
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
 #: src/features/status/IncidentsTab.tsx
+#: src/features/status/MonitorChecks.tsx
 #: src/features/team/MemberPage.tsx
 msgid "Load more"
 msgstr "Načítať ďalšie"
@@ -5817,9 +5951,17 @@ msgstr "Veľký"
 msgid "Major outage"
 msgstr "Veľký výpadok"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Make a new address for {name}?"
+msgstr "Vytvoriť novú adresu pre „{name}“?"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Make it public"
 msgstr "Zverejniť"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Make new address"
+msgstr "Vytvoriť novú adresu"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6092,6 +6234,10 @@ msgstr "Moje"
 msgid "Minor"
 msgstr "Malý"
 
+#: src/features/status/text.tsx
+msgid "Missed beat"
+msgstr "Zmeškaný signál"
+
 #: src/components/common/text.ts
 #: src/features/settings/channels/app/AppFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -6107,9 +6253,18 @@ msgstr "Moderované"
 msgid "Monday"
 msgstr "Pondelok"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Monitor deleted"
+msgstr "Monitor odstránený"
+
 #: src/features/status/text.tsx
 msgid "Monitoring"
 msgstr "Sleduje sa"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/StatusPagePane.tsx
+msgid "Monitors"
+msgstr "Monitory"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "More actions"
@@ -6124,6 +6279,10 @@ msgstr "Ďalšie akcie pre {address}"
 #: src/features/status/ComponentsTab.tsx
 msgid "More for {0}"
 msgstr "Viac pre {0}"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "More for {name}"
+msgstr "Viac pre „{name}“"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "More options"
@@ -6243,6 +6402,7 @@ msgstr "Môj profil"
 #: src/features/setup/SetupLayout.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/MonitorDialog.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Name"
 msgstr "Názov"
@@ -6329,6 +6489,14 @@ msgstr "nové"
 #: src/features/broadcasts/Growth.tsx
 msgid "New"
 msgstr "Nové"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "New address"
+msgstr "Nová adresa"
+
+#: src/features/status/MonitorToken.tsx
+msgid "New address for {name}"
+msgstr "Nová adresa pre „{name}“"
 
 #: src/features/broadcasts/Import.tsx
 msgid "New addresses that get a confirmation mail"
@@ -6527,6 +6695,10 @@ msgstr "Ďalej vyberte, čo preniesť. Prehľadanie prečíta súbor raz."
 #: src/features/migrations/ChooseStep.tsx
 msgid "Next, choose where they go."
 msgstr "Ďalej vyberte, kam pôjdu."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Nightly backup"
+msgstr "Nočná záloha"
 
 #: src/features/setup/previews.tsx
 msgid "No"
@@ -6763,6 +6935,10 @@ msgstr "V tejto konverzácii zatiaľ nie sú žiadne médiá, odkazy ani dokumen
 msgid "No messages yet"
 msgstr "Zatiaľ žiadne správy"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "No monitors yet. Add one to let a job or your monitoring set a component’s state."
+msgstr "Zatiaľ žiadne monitory. Pridajte monitor, aby stav komponentu nastavovala úloha alebo vaše monitorovanie."
+
 #: src/features/account/AccountPage.tsx
 msgid "No notifications in the last 90 days."
 msgstr "Za posledných 90 dní žiadne oznámenia."
@@ -6815,6 +6991,10 @@ msgstr "Zatiaľ žiadne odpovede."
 #: src/features/setup/NewsletterStep.tsx
 msgid "No reply account"
 msgstr "Žiadny účet pre odpovede"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "No result yet"
+msgstr "Zatiaľ žiadny výsledok"
 
 #: src/app/Palette.tsx
 msgid "No results"
@@ -6928,6 +7108,7 @@ msgstr "Nikto by túto správu nedostal. Vyberte zoznamy s odberateľmi, alebo p
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "None"
 msgstr "Žiadne"
 
@@ -7105,6 +7286,10 @@ msgstr "V {provider} sa nič nezmenilo; účet si môžete ponechať ako archív
 msgid "Nothing from the file is added, and the uploaded file is deleted."
 msgstr "Zo súboru sa nič nepridá a nahraný súbor sa odstráni."
 
+#: src/features/status/MonitorChecks.tsx
+msgid "Nothing has arrived yet."
+msgstr "Zatiaľ nič neprišlo."
+
 #: src/features/broadcasts/Report.tsx
 msgid "Nothing has happened yet."
 msgstr "Zatiaľ sa nič nestalo."
@@ -7227,6 +7412,10 @@ msgstr "Ponúka sa vo formulároch na odber a na stránke predvolieb. Súkromné
 #: src/features/conversation/HeaderActions.tsx
 msgid "Offline"
 msgstr "Offline"
+
+#: src/features/status/MonitorChecks.tsx
+msgid "OK"
+msgstr "OK"
 
 #: src/features/migrations/parts.tsx
 msgid "Older mail came from the export file you imported, so only newer mail is read here; mail that is in both is not imported twice. After the copy, the usual switch follows."
@@ -7473,6 +7662,10 @@ msgstr "Otvoriť {0}"
 msgid "Open {provider}'s mail settings and find forwarding, or a filter that forwards all incoming mail."
 msgstr "Otvorte nastavenia pošty {provider} a nájdite presmerovanie alebo filter, ktorý presmerováva všetku prichádzajúcu poštu."
 
+#: src/features/status/text.tsx
+msgid "Open a draft incident"
+msgstr "Otvoriť koncept incidentu"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Open a page of your docs"
 msgstr "Otvorte stránku svojej dokumentácie"
@@ -7563,6 +7756,10 @@ msgstr "Otvoriť potvrdzovaciu stránku Googlu"
 msgid "Open in Analytics"
 msgstr "Otvoriť v Analytike"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Open incident"
+msgstr "Otvoriť incident"
+
 #: src/features/account/ConnectPage.tsx
 msgid "Open it from the sign-in button of a documentation page."
 msgstr "Otvorte ju tlačidlom prihlásenia na stránke dokumentácie."
@@ -7570,6 +7767,10 @@ msgstr "Otvorte ju tlačidlom prihlásenia na stránke dokumentácie."
 #: src/features/migrations/DoneStep.tsx
 msgid "Open My Apps"
 msgstr "Otvoriť My Apps"
+
+#: src/features/status/text.tsx
+msgid "Open nothing"
+msgstr "Nič neotvárať"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -7681,6 +7882,10 @@ msgstr "Otvorenia"
 #: src/features/status/text.tsx
 msgid "Operational"
 msgstr "V prevádzke"
+
+#: src/features/status/MonitorToken.tsx
+msgid "operational recovers; degraded, partial_outage and major_outage fail."
+msgstr "operational obnoví; degraded, partial_outage a major_outage vyradia."
 
 #: src/features/status/ComponentDialogs.tsx
 msgid "Optional. Shown on the public page."
@@ -7884,6 +8089,7 @@ msgstr "Vložte to pred uzatvárací tag body svojich stránok"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Pause"
 msgstr "Pozastaviť"
 
@@ -7896,6 +8102,8 @@ msgstr "Pozastaviť alebo obnoviť odosielanie"
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/MonitorDialog.tsx
+#: src/features/status/text.tsx
 msgid "Paused"
 msgstr "Pozastavené"
 
@@ -8376,6 +8584,10 @@ msgstr "Zverejniť"
 msgid "Publish ({publishKey})"
 msgstr "Zverejniť ({publishKey})"
 
+#: src/features/status/text.tsx
+msgid "Publish an incident"
+msgstr "Zverejniť incident"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "Publish now"
 msgstr "Zverejniť hneď"
@@ -8405,6 +8617,10 @@ msgstr "Zverejnené hneď a odoslané sledujúcim."
 msgid "Push"
 msgstr "Push"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Push a state"
+msgstr "Odoslať stav"
+
 #: src/features/settings/notifications/events.ts
 msgid "Push and e-mail"
 msgstr "Push a e-mail"
@@ -8418,9 +8634,21 @@ msgstr "Push oznámenia"
 msgid "Push only"
 msgstr "Iba push"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Push recovery"
+msgstr "Odoslať obnovenie"
+
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Push: {label}"
 msgstr "Push: {label}"
+
+#: src/features/status/text.tsx
+msgid "Pushed"
+msgstr "Odoslané"
+
+#: src/features/status/text.tsx
+msgid "Pushed state"
+msgstr "Odoslaný stav"
 
 #: src/features/setup/NewsletterStep.tsx
 msgid "Put its subscribe form on your site, or add people who agreed to hear from you."
@@ -8611,6 +8839,10 @@ msgstr "Príjem"
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "Recent activity"
 msgstr "Nedávna aktivita"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Recent checks"
+msgstr "Posledné kontroly"
 
 #: src/features/contact/ContactPage.tsx
 msgid "Recent visits"
@@ -8950,6 +9182,10 @@ msgstr "Odpoveď používateľovi {to}"
 msgid "Report"
 msgstr "Správa"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Report a failed run"
+msgstr "Nahlásiť neúspešné spustenie"
+
 #: src/components/common/text.ts
 msgid "Reported a mail as spam"
 msgstr "Nahlásil(a) správu ako spam"
@@ -8961,6 +9197,10 @@ msgstr "nahlásené ako spam"
 #: src/components/common/text.ts
 msgid "Reported as spam"
 msgstr "Nahlásené ako spam"
+
+#: src/features/status/text.tsx
+msgid "Reported failure"
+msgstr "Nahlásené zlyhanie"
 
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -9005,6 +9245,7 @@ msgstr "Obnoviť"
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/status/MonitorsTab.tsx
 msgid "Resume"
 msgstr "Pokračovať"
 
@@ -9160,6 +9401,7 @@ msgstr "Sobota"
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/IncidentDialog.tsx
 #: src/features/status/IncidentPane.tsx
+#: src/features/status/MonitorDialog.tsx
 msgid "Save"
 msgstr "Uložiť"
 
@@ -9387,6 +9629,10 @@ msgstr "Odoslať „{name}“ hneď?"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send “{name}” on {when}?"
 msgstr "Odoslať „{name}“ {when}?"
+
+#: src/features/status/MonitorToken.tsx
+msgid "Send a beat"
+msgstr "Poslať signál"
 
 #: src/features/setup/email/EmailTestStep.tsx
 msgid "Send a check"
@@ -9684,6 +9930,10 @@ msgstr "URL servera"
 msgid "SES tenant"
 msgstr "Tenant SES"
 
+#: src/features/status/MonitorsTab.tsx
+msgid "Set a component’s state from outside: a job that reports in, or your own monitoring that pushes its state."
+msgstr "Nastavujte stav komponentu zvonka: úloha, ktorá sa hlási, alebo vaše monitorovanie, ktoré odosiela stav."
+
 #: src/features/status/ComponentsTab.tsx
 msgid "Set by a monitor, {since}"
 msgstr "Nastavil monitor, {since}"
@@ -9697,6 +9947,10 @@ msgstr "Nastaviť stav spracovania"
 msgid "Set the feedback progress"
 msgstr "Nastaviť stav spracovania spätnej väzby"
 
+#: src/features/status/MonitorToken.tsx
+msgid "Set up {name}"
+msgstr "Nastavenie „{name}“"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Set up DKIM"
 msgstr "Nastaviť DKIM"
@@ -9709,6 +9963,10 @@ msgstr "Nastaviť e-mail"
 #: src/features/setup/SetupHub.tsx
 msgid "Set up Yuva"
 msgstr "Nastaviť Yuvu"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "Sets {failureState}. {onFailure}."
+msgstr "Nastaví stav: {failureState}. {onFailure}."
 
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Setting up the inbox’s Amazon SES tenant…"
@@ -10307,6 +10565,10 @@ msgstr "Stav: {0}"
 msgid "State of {0} while it is open"
 msgstr "Stav: {0}, kým je otvorený"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "State while down"
+msgstr "Stav pri výpadku"
+
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -10431,6 +10693,10 @@ msgstr "Odber odstránený"
 #: src/components/common/text.ts
 msgid "Succeeded"
 msgstr "Uspelo"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Successes to recover"
+msgstr "Úspechy do obnovenia"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Such as a MERSİS number, trade register or VAT id, if you have one"
@@ -10708,6 +10974,10 @@ msgstr "Kód je nesprávny alebo vypršal."
 msgid "The columns are guessed from the header row. One must be the e-mail address; name the others as contact fields or attributes, or skip them. Attributes only fill keys a contact does not have yet."
 msgstr "Stĺpce sa odhadujú z riadka hlavičky. Jeden musí byť e-mailová adresa; ostatné pomenujte ako polia kontaktu alebo atribúty, alebo ich preskočte. Atribúty vyplnia len kľúče, ktoré kontakt ešte nemá."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "The component whose state this monitor sets."
+msgstr "Komponent, ktorého stav tento monitor nastavuje."
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "The confirmation mail is on its way."
 msgstr "Potvrdzovacia správa je na ceste."
@@ -10719,6 +10989,10 @@ msgstr "Stránka súhlasu začiarkne to, o čo klient žiada. Vynechajte, čo ne
 #: src/components/common/text.ts
 msgid "The contact was deleted"
 msgstr "Kontakt bol odstránený"
+
+#: src/features/status/MonitorsTab.tsx
+msgid "The current address stops working at once. Update whatever calls it."
+msgstr "Súčasná adresa prestane fungovať okamžite. Aktualizujte všetko, čo ju volá."
 
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "The customer does not see this"
@@ -11044,6 +11318,10 @@ msgstr "Počet príjemcov sa od vášho pohľadu zmenil. Skontrolujte nový poč
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The number of recipients changed while you looked. It is {recipients} now. Confirm again to send to them."
 msgstr "Počet príjemcov sa zmenil, keď ste sa pozerali. Teraz je {recipients}. Potvrďte znova, aby sa im odoslalo."
+
+#: src/features/status/MonitorToken.tsx
+msgid "The old address no longer works. Copy the new one now: it is shown only once."
+msgstr "Stará adresa už nefunguje. Novú skopírujte hneď: zobrazí sa iba raz."
 
 #: src/features/migrations/DoneStep.tsx
 msgid "The old mailbox is untouched; keep it as an archive if you like."
@@ -12112,6 +12390,10 @@ msgstr "Kým na odkaz nekliknú, zostanú čakať na potvrdenie a nedostanú ži
 msgid "Unverified sender"
 msgstr "Neoverený odosielateľ"
 
+#: src/features/status/text.tsx
+msgid "Up"
+msgstr "Funguje"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "Až {max} a 100 000 riadkov, s riadkom hlavičky. Súbory Excelu v tureckom alebo západnom kódovaní a stĺpce oddelené čiarkami, bodkočiarkami alebo tabulátormi sa čítajú tak, ako sú."
@@ -12457,6 +12739,10 @@ msgstr "Čaká na zákazníka"
 msgid "Waiting for the first message"
 msgstr "Čaká sa na prvú správu"
 
+#: src/features/status/text.tsx
+msgid "Waiting for the first result"
+msgstr "Čaká sa na prvý výsledok"
+
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Waiting for the operator"
 msgstr "Čaká na prevádzkovateľa"
@@ -12635,6 +12921,10 @@ msgstr "Keď vás kolega pridá do poznámky cez @."
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "When did they agree?"
 msgstr "Kedy súhlasili?"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "When it goes down"
+msgstr "Pri výpadku"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "When nobody is available, the widget asks where to send the reply."
@@ -13076,6 +13366,10 @@ msgstr "Váš priečinok"
 msgid "Your folders and labels become Yuva labels on the conversations they hold."
 msgstr "Vaše priečinky a štítky sa stanú štítkami Yuvy pri konverzáciách, ktoré obsahujú."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Your job calls Yuva on a schedule. A missing call fails the monitor."
+msgstr "Vaša úloha volá Yuva v pravidelných intervaloch. Chýbajúce volanie monitor vyradí."
+
 #: src/features/migrations/Wizard.tsx
 msgid "Your mail provider"
 msgstr "Váš poštový poskytovateľ"
@@ -13105,6 +13399,10 @@ msgstr "Vaša organizácia prihlásenie zablokovala"
 #: src/features/migrations/text.ts
 msgid "Your organization's admin must allow Yuva"
 msgstr "Správca vašej organizácie musí Yuvu povoliť"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Your own monitoring sends its state, including Alertmanager and Grafana alerts."
+msgstr "Vaše monitorovanie posiela svoj stav, vrátane upozornení Alertmanagera a Grafany."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Your plan and workspace policies decide whether custom MCP servers are available."
