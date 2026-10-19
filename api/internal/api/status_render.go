@@ -442,7 +442,7 @@ func stepCells(points []int32, hold, band, bandEnd int) (grid *cellGrid, empty b
 	median := float64(measured[len(measured)/2])
 	top := max(float64(measured[len(measured)-1]), chartHot*1.5*median, 1)
 	row := func(p int32) int {
-		return chartRows - 1 - int(math.Round(float64(p)/top*(chartRows-1)))
+		return chartRows - 3 - int(math.Round(float64(p)/top*(chartRows-3)))
 	}
 	hot := func(p int32) bool { return median > 0 && float64(p) >= chartHot*median }
 	grid = newCellGrid(len(points), chartRows)
