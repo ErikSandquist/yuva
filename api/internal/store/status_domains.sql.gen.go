@@ -86,7 +86,7 @@ func (q *Queries) CountStatusDomains(ctx context.Context, arg CountStatusDomains
 const failStatusDomainClaims = `-- name: FailStatusDomainClaims :many
 UPDATE status_pages SET domain_state = 'failed', domain_problem = 'taken', domain_check_at = NULL, updated_at = $1
 WHERE custom_domain = $2 AND id <> $3 AND domain_state IN ('pending', 'failed')
-RETURNING workspace_id, inbox_id
+RETURNING id, workspace_id, inbox_id
 `
 
 type FailStatusDomainClaimsParams struct {
@@ -96,6 +96,7 @@ type FailStatusDomainClaimsParams struct {
 }
 
 type FailStatusDomainClaimsRow struct {
+	ID          uuid.UUID
 	WorkspaceID uuid.UUID
 	InboxID     uuid.UUID
 }
@@ -110,7 +111,7 @@ func (q *Queries) FailStatusDomainClaims(ctx context.Context, arg FailStatusDoma
 	var items []FailStatusDomainClaimsRow
 	for rows.Next() {
 		var i FailStatusDomainClaimsRow
-		if err := rows.Scan(&i.WorkspaceID, &i.InboxID); err != nil {
+		if err := rows.Scan(&i.ID, &i.WorkspaceID, &i.InboxID); err != nil {
 			return nil, err
 		}
 		items = append(items, i)

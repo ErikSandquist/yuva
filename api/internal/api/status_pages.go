@@ -156,7 +156,7 @@ func (s *Server) statusPageBody(pg store.StatusPage, state string, email oas.Sta
 		Url: s.pageURL(pg, ""), LogoUrl: pg.LogoUrl, SiteUrl: pg.SiteUrl, SupportUrl: pg.SupportUrl, Locale: pg.Locale,
 		Timezone: pg.Timezone, HistoryDays: pg.HistoryDays, ShowUptime: pg.ShowUptime, Published: pg.Published,
 		State: oas.StatusComponentStateValue(state), CreatedAt: pg.CreatedAt, UpdatedAt: pg.UpdatedAt,
-		EmailSubscribers: email, CustomDomain: s.customDomainBody(pg),
+		EmailSubscribers: email, CustomDomain: s.customDomainBody(pg), OwnDomains: s.ownDomainsBody(),
 	}
 	if pg.AccentColor != nil {
 		c := oas.StatusColor(*pg.AccentColor)
@@ -455,6 +455,7 @@ func (s *Server) UpdateStatusPage(ctx context.Context, req oas.UpdateStatusPageR
 	}
 	s.statusDomainCache.forget(req.PageId, hosts...)
 	s.statusHint(ctx, p.workspaceID, out.InboxId)
+	s.statusPageSignal(ctx, p.workspaceID, out.InboxId, out.Id)
 	return oas.UpdateStatusPage200JSONResponse(out), nil
 }
 

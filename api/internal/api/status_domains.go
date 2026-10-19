@@ -209,6 +209,16 @@ func (s *Server) customDomainBody(pg store.StatusPage) *oas.StatusCustomDomain {
 	return out
 }
 
+func (s *Server) ownDomainsBody() *oas.StatusOwnDomains {
+	switch s.statusDomainsMode() {
+	case statusDomainsAsk:
+		return &oas.StatusOwnDomains{Mode: oas.StatusOwnDomainsAsk}
+	case statusDomainsCloudflare:
+		return &oas.StatusOwnDomains{Mode: oas.StatusOwnDomainsCloudflare}
+	}
+	return nil
+}
+
 func releaseCloudflare(ev *eventBatch, pg store.StatusPage) {
 	if pg.CfHostnameID != nil && pg.CustomDomain != nil {
 		ev.job(StatusDomainReleaseArgs{WorkspaceID: pg.WorkspaceID, HostnameID: *pg.CfHostnameID, Domain: *pg.CustomDomain}, nil)
@@ -449,9 +459,11 @@ func (s *Server) RunStatusDomainCheck(ctx context.Context, ws, id uuid.UUID) err
 	if moved {
 		s.statusDomainCache.forget(id, domain)
 		s.statusHint(ctx, ws, pg.InboxID)
+		s.statusPageSignal(ctx, ws, pg.InboxID, id)
 	}
 	for _, o := range others {
 		s.statusHint(ctx, o.WorkspaceID, o.InboxID)
+		s.statusPageSignal(ctx, o.WorkspaceID, o.InboxID, o.ID)
 	}
 	if !verified || s.statusDomainsMode() != statusDomainsCloudflare {
 		return nil
@@ -518,6 +530,9 @@ func (s *Server) syncCloudflareHostname(ctx context.Context, pg store.StatusPage
 		_, err := q.SetStatusPageCloudflare(ctx, arg)
 		if err == nil && (arg.Status != cur.CfStatus || arg.SslStatus != cur.CfSslStatus) {
 			s.statusHint(ctx, pg.WorkspaceID, pg.InboxID)
+		}
+		if err == nil {
+			s.statusPageSignal(ctx, pg.WorkspaceID, pg.InboxID, pg.ID)
 		}
 		return err
 	})

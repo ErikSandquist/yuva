@@ -69,6 +69,10 @@ func (s *Server) statusHint(ctx context.Context, ws, inboxID uuid.UUID) {
 	s.signal(ctx, realtime.Event{Type: realtime.StatusHint, WorkspaceID: ws, InboxID: &inboxID, Data: json.RawMessage("{}")})
 }
 
+func (s *Server) statusPageSignal(ctx context.Context, ws, inboxID, pageID uuid.UUID) {
+	s.signal(ctx, realtime.Event{Type: eventStatusPage, WorkspaceID: ws, InboxID: &inboxID, Data: mustJSON(map[string]uuid.UUID{"page_id": pageID})})
+}
+
 func statusLinkTargets(ctx context.Context, q *store.Queries, p principal, pageID, incidentID, conversationID uuid.UUID) (store.StatusIncident, store.Conversation, error) {
 	pg, err := visibleStatusPage(ctx, q, p, pageID, true)
 	if err != nil {

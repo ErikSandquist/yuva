@@ -2010,6 +2010,13 @@ incident before a customer writes, and the conversations an outage brings are an
       `""` or the page's current domain (unchanged, not an error); anything else is `400`. Removing a
       domain still deletes its Cloudflare hostname when `YUVA_CLOUDFLARE_ZONE_ID` and
       `YUVA_CLOUDFLARE_API_TOKEN` are set, which they may be in any mode for that.
+  - **Availability and realtime.** `GET /v1/status-pages` and `/{id}` carry `own_domains: {mode}` (`ask` or
+    `cloudflare`), absent when `YUVA_STATUS_DOMAINS` is `off`, so a client tells "no domain set" from
+    "domains off". Realtime `status.page.updated` (`data.page_id`; `/v1/realtime` only, not stored, no
+    replay) goes to members with `status:read` or `status:manage` who see the page's inbox when its
+    domain changes state (verified, failed, turned off, claim lost to another page), its Cloudflare
+    hostname or certificate status moves, or the page is patched; clients reload the page. The
+    contacts' `status.hint` is separate.
   - `YUVA_STATUS_DOMAIN_LIMIT` caps the pages of a workspace with a domain that is not `off`, checked when
     one is set under an advisory lock per workspace, so concurrent PATCHes cannot pass it
     (`403 status_domain_limit`; unset: 1 with `YUVA_SIGNUP=open`, else no limit).

@@ -12,7 +12,7 @@ SELECT pg_advisory_xact_lock(hashtextextended('yuva_status_domains:' || sqlc.arg
 -- The documented exception: once a page verifies a domain, the other claims of every workspace lose it.
 UPDATE status_pages SET domain_state = 'failed', domain_problem = 'taken', domain_check_at = NULL, updated_at = @now
 WHERE custom_domain = @domain AND id <> @id AND domain_state IN ('pending', 'failed')
-RETURNING workspace_id, inbox_id;
+RETURNING id, workspace_id, inbox_id;
 
 -- name: CountStatusDomains :one
 SELECT count(*) FROM status_pages

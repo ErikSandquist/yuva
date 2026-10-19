@@ -36,6 +36,7 @@ const (
 	noticeDeliveriesKept = 90 * 24 * time.Hour
 	noticeFeedbackID     = "yuvastatus"
 	eventStatusNotice    = string(oas.StatusNoticeUpdated)
+	eventStatusPage      = string(oas.StatusPageUpdated)
 
 	noticePending   = string(oas.StatusNoticePending)
 	noticeSending   = string(oas.StatusNoticeSending)

@@ -5031,6 +5031,39 @@ func (e StatusNoticeState) Valid() bool {
 	}
 }
 
+// Defines values for StatusOwnDomainsMode.
+const (
+	StatusOwnDomainsAsk        StatusOwnDomainsMode = "ask"
+	StatusOwnDomainsCloudflare StatusOwnDomainsMode = "cloudflare"
+)
+
+// Valid indicates whether the value is a known member of the StatusOwnDomainsMode enum.
+func (e StatusOwnDomainsMode) Valid() bool {
+	switch e {
+	case StatusOwnDomainsAsk:
+		return true
+	case StatusOwnDomainsCloudflare:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusPageEventType.
+const (
+	StatusPageUpdated StatusPageEventType = "status.page.updated"
+)
+
+// Valid indicates whether the value is a known member of the StatusPageEventType enum.
+func (e StatusPageEventType) Valid() bool {
+	switch e {
+	case StatusPageUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for StatusPushBodyState.
 const (
 	PushDegraded      StatusPushBodyState = "degraded"
@@ -15609,6 +15642,20 @@ type StatusNoticeSkipReason string
 // `skip_reason`), `cancelled` (a member stopped it while it waited, or the incident was closed without notifying: `skip_reason` `closed_quietly`).
 type StatusNoticeState string
 
+// StatusOwnDomains Whether the server lets pages use their own domain (`YUVA_STATUS_DOMAINS`). Absent when it
+// is `off`; setting `custom_domain` is then refused.
+type StatusOwnDomains struct {
+	// Mode `ask`: the owner points the records and asks for the certificate elsewhere (a proxy in
+	// front). `cloudflare`: verified domains are registered as Cloudflare for SaaS custom
+	// hostnames, which issue the certificate.
+	Mode StatusOwnDomainsMode `json:"mode"`
+}
+
+// StatusOwnDomainsMode `ask`: the owner points the records and asks for the certificate elsewhere (a proxy in
+// front). `cloudflare`: verified domains are registered as Cloudflare for SaaS custom
+// hostnames, which issue the certificate.
+type StatusOwnDomainsMode string
+
 // StatusPage defines model for StatusPage.
 type StatusPage struct {
 	// AccentColor Examples: #2563eb
@@ -15637,12 +15684,16 @@ type StatusPage struct {
 	InboxId     uuid.UUID `json:"inbox_id"`
 
 	// Locale The language of the page's words (`en`, `tr`, `de`; others show English).
-	Locale     string  `json:"locale"`
-	LogoUrl    *string `json:"logo_url,omitempty"`
-	Name       string  `json:"name"`
-	Published  bool    `json:"published"`
-	ShowUptime bool    `json:"show_uptime"`
-	SiteUrl    *string `json:"site_url,omitempty"`
+	Locale  string  `json:"locale"`
+	LogoUrl *string `json:"logo_url,omitempty"`
+	Name    string  `json:"name"`
+
+	// OwnDomains Whether the server lets pages use their own domain (`YUVA_STATUS_DOMAINS`). Absent when it
+	// is `off`; setting `custom_domain` is then refused.
+	OwnDomains *StatusOwnDomains `json:"own_domains,omitempty"`
+	Published  bool              `json:"published"`
+	ShowUptime bool              `json:"show_uptime"`
+	SiteUrl    *string           `json:"site_url,omitempty"`
 
 	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
 	//
@@ -15702,6 +15753,23 @@ type StatusPageCreate struct {
 	// Timezone An IANA time zone.
 	Timezone *string `json:"timezone,omitempty"`
 }
+
+// StatusPageEvent `status.page.updated`, on `/v1/realtime` only: the page's own domain changed state, its
+// Cloudflare hostname or certificate status moved, or the page was edited. Not stored, no id,
+// never replayed; reload the page (`GET /v1/status-pages/{id}`) after it and after a reconnect.
+// Reaches whoever may read the page with `status:read` or `status:manage` and sees its inbox.
+type StatusPageEvent struct {
+	CreatedAt time.Time `json:"created_at"`
+	Data      struct {
+		PageId uuid.UUID `json:"page_id"`
+	} `json:"data"`
+	InboxId     uuid.UUID           `json:"inbox_id"`
+	Type        StatusPageEventType `json:"type"`
+	WorkspaceId uuid.UUID           `json:"workspace_id"`
+}
+
+// StatusPageEventType defines model for StatusPageEvent.Type.
+type StatusPageEventType string
 
 // StatusPageList defines model for StatusPageList.
 type StatusPageList struct {
@@ -22325,6 +22393,32 @@ func (t *RealtimeMessage) MergeStatusNoticeEvent(v StatusNoticeEvent) error {
 	return err
 }
 
+// AsStatusPageEvent returns the union data inside the RealtimeMessage as a StatusPageEvent
+func (t RealtimeMessage) AsStatusPageEvent() (StatusPageEvent, error) {
+	var body StatusPageEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromStatusPageEvent overwrites any union data inside the RealtimeMessage as the provided StatusPageEvent
+func (t *RealtimeMessage) FromStatusPageEvent(v StatusPageEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeStatusPageEvent performs a merge with any union data inside the RealtimeMessage, using the provided StatusPageEvent
+func (t *RealtimeMessage) MergeStatusPageEvent(v StatusPageEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsListImportEvent returns the union data inside the RealtimeMessage as a ListImportEvent
 func (t RealtimeMessage) AsListImportEvent() (ListImportEvent, error) {
 	var body ListImportEvent
@@ -22625,6 +22719,8 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsStatusMonitorEvent()
 	case "status.monitor.up":
 		return t.AsStatusMonitorEvent()
+	case "status.page.updated":
+		return t.AsStatusPageEvent()
 	case "status_notice.updated":
 		return t.AsStatusNoticeEvent()
 	case "subscription.created":

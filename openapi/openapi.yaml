@@ -19303,6 +19303,7 @@ components:
         - $ref: "#/components/schemas/MigrationForwardingConfirmationEvent"
         - $ref: "#/components/schemas/BroadcastProgressEvent"
         - $ref: "#/components/schemas/StatusNoticeEvent"
+        - $ref: "#/components/schemas/StatusPageEvent"
         - $ref: "#/components/schemas/ListImportEvent"
         - $ref: "#/components/schemas/ListImportProgressEvent"
         - $ref: "#/components/schemas/TypingEvent"
@@ -19350,6 +19351,7 @@ components:
           migration.forwarding_confirmation: "#/components/schemas/MigrationForwardingConfirmationEvent"
           broadcast.progress: "#/components/schemas/BroadcastProgressEvent"
           status_notice.updated: "#/components/schemas/StatusNoticeEvent"
+          status.page.updated: "#/components/schemas/StatusPageEvent"
           list_import.updated: "#/components/schemas/ListImportEvent"
           list_import.progress: "#/components/schemas/ListImportProgressEvent"
           typing: "#/components/schemas/TypingEvent"
@@ -24610,12 +24612,29 @@ components:
           $ref: "#/components/schemas/StatusEmailSubscribers"
         custom_domain:
           $ref: "#/components/schemas/StatusCustomDomain"
+        own_domains:
+          $ref: "#/components/schemas/StatusOwnDomains"
         created_at:
           type: string
           format: date-time
         updated_at:
           type: string
           format: date-time
+    StatusOwnDomains:
+      type: object
+      description: |
+        Whether the server lets pages use their own domain (`YUVA_STATUS_DOMAINS`). Absent when it
+        is `off`; setting `custom_domain` is then refused.
+      required: [mode]
+      properties:
+        mode:
+          type: string
+          description: |
+            `ask`: the owner points the records and asks for the certificate elsewhere (a proxy in
+            front). `cloudflare`: verified domains are registered as Cloudflare for SaaS custom
+            hostnames, which issue the certificate.
+          enum: [ask, cloudflare]
+          x-enum-varnames: [StatusOwnDomainsAsk, StatusOwnDomainsCloudflare]
     StatusDomainState:
       type: string
       description: |
@@ -25464,6 +25483,35 @@ components:
         subscribers:
           type: integer
           format: int64
+    StatusPageEvent:
+      type: object
+      description: |
+        `status.page.updated`, on `/v1/realtime` only: the page's own domain changed state, its
+        Cloudflare hostname or certificate status moved, or the page was edited. Not stored, no id,
+        never replayed; reload the page (`GET /v1/status-pages/{id}`) after it and after a reconnect.
+        Reaches whoever may read the page with `status:read` or `status:manage` and sees its inbox.
+      required: [type, workspace_id, inbox_id, created_at, data]
+      properties:
+        type:
+          type: string
+          enum: [status.page.updated]
+          x-enum-varnames: [StatusPageUpdated]
+        workspace_id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          type: object
+          required: [page_id]
+          properties:
+            page_id:
+              type: string
+              format: uuid
     StatusNoticeEvent:
       type: object
       description: |

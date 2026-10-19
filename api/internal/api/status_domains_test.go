@@ -664,3 +664,59 @@ func TestStatusDomainLimitConcurrent(t *testing.T) {
 		t.Fatalf("%d pages got a domain with a limit of 1: %v", ok, codes)
 	}
 }
+
+func TestStatusPageUpdatedEvent(t *testing.T) {
+	cf := cfsaastest.New(t, "zone1", "token1")
+	dns := newFakeDNS()
+	h := domainHarness(t, dns, func(s *api.StatusSettings) { s.Domains = "cloudflare"; s.Cloudflare = cf.Client() })
+	st := newStatusTeam(t, h)
+	other := newStatusTeam(t, h)
+	agent := st.agent.dial("")
+	agent.ready()
+	foreign := other.owner.dial("")
+	foreign.ready()
+
+	name := unique("d") + ".example.org"
+	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"name": "Acme 2"})
+	st.owner.expect(http.StatusNoContent, "PUT", "/v1/inboxes/"+st.inbox+"/members/"+st.agentID, nil)
+	for _, m := range agent.until(func(m wsMessage) bool { return m.Type == "inbox_access.changed" }) {
+		if m.Type == "status.page.updated" {
+			t.Fatalf("member without inbox access got %+v", m)
+		}
+	}
+	d := customDomain(t, st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"custom_domain": name}))
+	if m := agent.nextOf("status.page.updated"); !strings.Contains(string(m.Data), st.page) || m.InboxID != st.inbox {
+		t.Fatalf("patch event %+v", m)
+	}
+	dns.set(name, testStatusCNAME, d["txt_value"].(string))
+	st.check(t, h)
+	if m := agent.nextOf("status.page.updated"); !strings.Contains(string(m.Data), st.page) {
+		t.Fatalf("verified event %+v", m)
+	}
+	cf.Activate(name)
+	h.clock.Advance(10 * time.Minute)
+	st.check(t, h)
+	if m := agent.nextOf("status.page.updated"); !strings.Contains(string(m.Data), st.page) {
+		t.Fatalf("cloudflare event %+v", m)
+	}
+
+	other.owner.expect(http.StatusOK, "PATCH", other.path(""), map[string]any{"name": "Other"})
+	if m := foreign.nextOf("status.page.updated"); !strings.Contains(string(m.Data), other.page) {
+		t.Fatalf("foreign workspace got %+v", m)
+	}
+}
+
+func TestStatusOwnDomainsField(t *testing.T) {
+	for mode, want := range map[string]string{"": "ask", "ask": "ask", "cloudflare": "cloudflare", "off": ""} {
+		h := domainHarness(t, newFakeDNS(), func(s *api.StatusSettings) { s.Domains = mode })
+		st := newStatusTeam(t, h)
+		own, ok := st.owner.expect(http.StatusOK, "GET", st.path(""), nil).body["own_domains"].(map[string]any)
+		if want == "" && ok || want != "" && (!ok || own["mode"] != want) {
+			t.Fatalf("mode %q: own_domains %v", mode, own)
+		}
+		list := st.owner.expect(http.StatusOK, "GET", "/v1/status-pages", nil).body["items"].([]any)[0].(map[string]any)
+		if _, ok := list["own_domains"]; ok != (want != "") {
+			t.Fatalf("mode %q: list own_domains %v", mode, list)
+		}
+	}
+}
