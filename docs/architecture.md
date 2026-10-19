@@ -81,7 +81,9 @@ is called change. Decisions:
   it in the panel's feedback header and on the conversation update; each change is a conversation
   event (`feedback_progress`) in the timeline, the contact sees it as a line in the thread, and the
   contact's row shows the progress (Planned, In progress, Done, Won't do) instead of Sent or Answered
-  while it is set. The panel's feedback row shows it as a chip.
+  while it is set. The panel's feedback row shows it as a chip. Progress never hides the resolved
+  line: a resolved feedback's thread shows that line whether or not a progress is set, and the
+  header keeps the progress tag.
 - **SDK look.** The Swift and Kotlin views look like a native messaging app, not a settings list: rows
   edge to edge with a round avatar or category icon, a short time (14:32, Yesterday), unread in bold
   with a dot, the team name and reply time as the title's subtitle, the feedback state as a small

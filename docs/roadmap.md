@@ -292,7 +292,7 @@ an agent opens the inbox at `/` and never sees an inbox or property they may not
 
 ## M18 — Feedback on its own
 
-Status: in progress; API, panel, SDKs and progress verified on 2026-10-19 with the Swift and Kotlin samples against a server. Open: the widget does not show Resolved, and a feedback with progress set shows no resolved line in the thread. Issue #93, decisions in `architecture.md` › Feedback (M18).
+Status: done. API, panel, SDKs and progress verified on 2026-10-19 with the Swift and Kotlin samples against a server; the widget shows Resolved for a closed feedback (`5a73a1e`) and the SDK threads keep the resolved line when a progress is set (`2e344c1`). Issue #93, decisions in `architecture.md` › Feedback (M18).
 
 - `kind` on `GET /v1/conversations/counts` and `GET /client/v1/conversations`; `can_rate` false for
   feedback.
