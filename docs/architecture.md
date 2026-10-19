@@ -1915,8 +1915,8 @@ incident before a customer writes, and the conversations an outage brings are an
   An incident moves `investigating` → `identified` → `monitoring` → `resolved`; maintenance is
   `scheduled` (with a window) → `in_progress` → `completed`, started and completed on time by a River job
   unless a member does it first. Text is plain with links and line breaks, at most 5,000 characters, never
-  HTML. A draft (`published_at` null) is seen only in the panel; publishing makes it public and sends
-  notifications. Resolving or completing puts each touched component back to `operational` unless
+  HTML. A draft (`published_at` null) is seen only in the panel; publishing makes it public and, unless
+  `notify` is false, queues a notice (see Subscribers). Resolving or completing puts each touched component back to `operational` unless
   another open incident or a failing monitor holds it. An update that is published cannot be removed,
   only corrected with a new one or edited with an "edited" mark; an incident can be deleted only as a
   draft.
@@ -1953,13 +1953,162 @@ incident before a customer writes, and the conversations an outage brings are an
     Cloudflare, and a removed or turned-off domain is deleted there. For servers behind Cloudflare.
   - `off`: no own domains.
   `YUVA_STATUS_DOMAIN_LIMIT` caps verified domains per workspace on a hosted server (unset: 1).
-- **Subscribers.** Each page may have e-mail subscribers through a mailing list of its inbox
-  (`status_pages.mailing_list_id`, double opt-in, the list's consent records, `/s/` and `/m/` links and
-  list headers) and choose per incident and per update whether to notify. Who gets which notice
-  (all, or per component), how notices are sent next to broadcasts (they are the person's own request
-  and are not subject to broadcast approval, but use the inbox's sending domain, its suppression list
-  and the per-inbox pace) and the notice design are planned by `yuva-broadcasts` before M19.4. The
-  Atom feed and webhooks need no subscription.
+- **Subscribers.** A page may have e-mail subscribers, who get a notice when an incident or maintenance
+  is published or updated. They are not a new kind of recipient: they are the subscriptions of a
+  mailing list of the page's inbox, so consent, confirmation, `/s/` and `/m/` pages, suppression,
+  complaints, retention and the consent export are the ones of M13. The Atom feed and webhooks need no
+  subscription.
+  - **Storage.** `mailing_lists.kind` (`list` default, `status`) and `status_pages.mailing_list_id`
+    (unique; the list is made when e-mail subscribers are first turned on, named like the page, with
+    ` (status)` added when the inbox already has a list of that name). A status list is fixed by a
+    check: not `public`, not `commercial`, `double_opt_in` on, no `welcome`. It is left out of broadcast
+    audiences (`422 validation`, field `lists`), of `GET /v1/lists` unless `kind=status`, of the forms
+    and `GET /client/v1/channels/{key}/lists`, of CSV imports (`409 list_kind`), of the İYS export, and
+    of the lists a marketing `/m/` page offers or "unsubscribe from everything" ends. It sits outside
+    the opt-out register: leaving it writes no `email_optouts` row (also not after 3 years or when the
+    contact is deleted), confirming it lifts none, and an existing opt-out does not stop a person who
+    asks for notices again (they confirm by mail). A complaint still ends every subscription of the
+    address and writes its opt-out, like any complaint. Purpose limitation is the reason for the
+    separate kind: people agreed to incident notices, never to newsletters.
+  - **Choosing components.** A subscription gets all notices of the page, or only those of chosen
+    components: `status_subscriber_components` (`workspace_id`, `subscription_id`, `component_id`,
+    primary key on the last two, cascade on both). No rows means everything, including components added
+    later. The form and the `/m/` page show one checkbox per visible component, all ticked; ticking all
+    stores no rows, ticking none is refused ("unsubscribe instead"). An incident or maintenance reaches
+    a subscriber when it has no choices or the incident touches one of their components; an incident
+    touching no component reaches only those with no choices. Choices are preferences, not consent:
+    they change without a consent event, and the consent event of the request stores the chosen
+    components in `detail`. Reason for choosing per component and not per page only: a page with
+    regional or product components mailing everyone about everything is what produces spam
+    complaints, and the complaint rate is the one number that can suspend a workspace.
+  - **Subscribing.** The page links to `GET /status/{slug}/subscribe` (own page, `no-store`,
+    `frame-ancestors 'none'`; on a verified custom domain `/subscribe`). The cached page itself carries
+    no form because a sealed form token in a body cached per page and per language would outlive its
+    two hours. The form is plain HTML without JavaScript: address, component checkboxes, a honeypot,
+    the language of the page, a sealed token (`yuva status subscribe v1`: page id and issue time, at
+    least 2 seconds and at most 2 hours old) and a visible sentence in the page's language ("Send me
+    notices about incidents and maintenance of {page}. I confirm by e-mail and can unsubscribe in every
+    mail."), which is stored as the consent text. It posts to the same URL; the answer is a redirect to
+    `/status/{slug}/subscribe/sent` ("If the address can receive mail, a confirmation is on its way"),
+    identical for every address, taken or not, suppressed or not. Behind it the M13 form path runs
+    (`subscribeFromForm` with the page's list): contact by address or a new unconfirmed one with the
+    page's language as locale, `pending` subscription, `requested` consent event with IP, user agent,
+    the page URL and the text, confirmation job. Always double opt-in. The confirmation mail
+    (`status_confirm`) and the `/s/` page name the page and the chosen components; a confirmed
+    subscriber gets no welcome mail. Hosts add subscribers only through `/v1/lists/{id}/subscriptions`,
+    which for a status list always creates `pending` and sends the confirmation (`202`, never
+    `subscribed`); there is no JSON subscribe endpoint for visitors, a host links to the page.
+  - **Abuse limits.** The page's 120 requests a minute per address stay. Subscribe: 10 an hour per
+    address of the visitor and 300 an hour per page, then `429` with `Retry-After` (the page says so);
+    confirmation mails 3 a day per recipient address, one per 10 minutes per recipient and page, and
+    1,000 a day per page, all the M13 counters keyed on the page; the honeypot and a token that is
+    too young or too old answer as success (honeypot) or ask to load the form again (token).
+    `YUVA_STATUS_MAX_SUBSCRIBERS` caps subscribed addresses per page (unset: 10,000 with
+    `YUVA_SIGNUP=open`, else no cap; at the cap the form says the page takes no more subscribers).
+    Pending ones go after 30 days like any list's, and the sweep also deletes the unconfirmed contacts
+    those requests created when nothing else refers to them (no address, identity, conversation or other
+    subscription), so a flood of fake addresses leaves nothing in the contacts directory.
+    `YUVA_STATUS_NOTICES=off` hides the form (404) and sends nothing; owners may switch a page's e-mail
+    off in its settings. The confirmation puts only the page name (at most 100 characters, plain text) in
+    the subject and body; incident text appears only in notices to confirmed subscribers.
+  - **Notices.** Incident and maintenance updates carry `notify` (API, MCP and panel). A new incident
+    defaults to `true`; an update defaults to `true` when it changes the state, the window or is the
+    resolution, and to `false` when it only adds text; a maintenance start and completion done by the
+    River job are `true`. Component changes alone, drafts, and published updates with `notify=false`
+    send nothing. Publishing a draft sends one notice with the current state and the latest text, not
+    one per stored update. Monitor-opened published incidents notify like a member's; the budget below
+    keeps a flapping monitor from mailing people. A notice is a `status_notices` row (page, incident,
+    `due_at`, `state` `pending|sending|sent|skipped|cancelled`, `final`, `skip_reason`, counts) covering
+    the updates whose `status_incident_updates.notice_id` points at it, and one `status_notice_deliveries`
+    row per recipient (notice, subscription, address, `email_token` and unique `header_message_id` like
+    broadcast deliveries, `previous_message_id`, `state` `queued|sent|failed|bounced|complained|skipped`,
+    skip reason, attempts, next attempt, times, error). Deliveries and addresses go after 90 days; the
+    notice keeps its counts.
+  - **Content.** Server-rendered, no designer, no merge fields, no images, no tracked links and no
+    open pixel: `status_notice` and `status_confirm` in `mail/templates/{en,tr,de}` through the shared
+    layout (brand: the inbox's name, the page's accent colour; dark mode as the other mails) with a text
+    part. The language is the subscriber's locale (set from the page's language when they subscribed),
+    else the page's. Subject `[{page}] {title}`, `[{page}] Maintenance: {title}` in the language; the
+    subject does not change between notices of one incident, so mail clients keep them in one thread,
+    and each notice also sets `In-Reply-To` to the recipient's previous notice of the incident and
+    `References` to the chain. Body, first line: the state in words (`Investigating`, `Identified`,
+    `Monitoring`, `Resolved`, `Scheduled`, `In progress`, `Completed`, never colour alone), then impact,
+    the affected components with their states, the updates since the last notice newest first with
+    times in the page's zone and its name, the incident's text (plain text; the HTML part escapes it and
+    links only `http` and `https` URLs, marks "edited"), a link to
+    `/status/{slug}/incidents/{id}` (on the verified custom domain when there is one), the footer: why
+    the person gets it, the page, "Choose components or unsubscribe" to `/m/{token}`, the inbox's
+    legal name and postal address when set (never required: notices are not commercial). A notice is
+    rendered when it is sent from the current rows, so a corrected update is mailed as corrected.
+  - **Sending.** Through the inbox's e-mail channel named on the list, never the server's own SMTP:
+    the channel's broadcast account when set, else its support account, its From address, display name
+    and Reply-To, its own DKIM key or SES identity and the SES tenant headers, so SPF, DKIM and DMARC
+    align exactly as for broadcasts and bulk mail never shares reputation with a support reply's
+    account. Headers: `Message-ID` `<email_token.random@sending domain>`, `List-Unsubscribe` and
+    `List-Unsubscribe-Post: List-Unsubscribe=One-Click` (RFC 8058) with the recipient's `/m/` link for
+    the status list, `List-Id` (`<s{list}.{domain}>` with the page name), `Feedback-ID`
+    `{incident}:{list}:{workspace}:yuvastatus`, `X-Auto-Response-Suppress: OOF, AutoReply`, no
+    `Auto-Submitted`. `/m/` of a status list shows only that list: unsubscribe, the component choices,
+    a link back to the page; the one-click POST unsubscribes at once. Not subject to broadcast approval,
+    warm-up or `YUVA_BROADCAST_DAILY_RECIPIENTS` (a notice about an outage must not wait for a
+    quota), but never above these: a workspace suspended from sending (30-day rates) sends none
+    (`skipped`, `suspended`), a channel without a sender or a tenant that is `identity_missing` is
+    attempted as for confirmations, and `YUVA_STATUS_NOTICES_DAILY` (notice mails per workspace and UTC
+    day, 0 = no limit, unset: 5,000 with `YUVA_SIGNUP=open`, else 0; beyond it deliveries are `skipped`
+    with `limit`). Notices count in `broadcast_sending_days` (sent, bounced, complained), so they stay
+    inside the workspace's 30-day complaint and bounce limits, and in the usage counters as
+    `status_notices`. Jobs: `status_notice` on its own River queue (2 workers, so a notice never waits
+    behind a newsletter), one job per notice, scheduled at `due_at`; a sweep every minute queues pending
+    notices that are due and sending ones whose lease ran out. The job claims the notice with one
+    conditional update (`pending` to `sending`, `due_at <= now`), so a duplicate or moved job does
+    nothing; checks the page is published, e-mail on, the incident published and the channel ready;
+    snapshots recipients (subscribed, not suppressed in any scope, component match) into deliveries in
+    1,000-row transactions with `ON CONFLICT DO NOTHING`; sends in batches of 50 or 5 seconds over one
+    SMTP session at the channel's `broadcast_rate`, re-checking each address before its mail
+    (still subscribed, not suppressed, notice not cancelled). Per-broadcast `pace` does not apply.
+    Temporary failures retry after 1, 5 and 30 minutes, then fail; a delivery more than 6 hours old
+    is `skipped` (`stale`): late news is worse than none. `5.1.x` and `5.2.1` answers are bounces.
+    The job does not pause anything; the panel shows the counts and the page's last notices.
+  - **Bounces, complaints, replies.** Delivery reports, ARF reports and SES notifications find a
+    notice delivery by `header_message_id` or the relay's id in the places that find broadcast
+    deliveries (`FindStatusNoticeDeliveryByHeader` and `...AnyWorkspace`, the second across
+    workspaces because SES names only the message; everything after it is scoped by the delivery's
+    `workspace_id`). A hard bounce suppresses the address for all mail; a complaint suppresses
+    broadcasts, unsubscribes every list of the address and writes an opt-out, exactly as for a
+    broadcast. A reply to a notice (found by the token in `In-Reply-To` or `References`) opens or
+    continues a conversation with that contact in the inbox and links it to the notice's incident
+    (`status_incident_conversations`), so "Reply to linked" reaches it; automatic replies are only
+    counted.
+  - **Throttling.** Notices of one incident coalesce and keep a distance: a notice is due 60 seconds
+    after the update that asked for it (the window for fixing a typo, and for "Undo" in the panel,
+    `POST /v1/status-pages/{id}/notices/{notice_id}/cancel`, `409 not_pending` once sending); an update
+    with `notify` that arrives while a notice of the incident is `pending` joins it and keeps its
+    `due_at`; a notice of an incident is due no earlier than 15 minutes after the previous one of that
+    incident was sent, except `final` ones (resolved, completed, maintenance started), which are due
+    after 60 seconds and pull a waiting notice forward. A page sends at most 10 notices in any rolling
+    hour; further ones are `skipped` (`rate`) and the panel says so; `final` notices are exempt. With the
+    gap this means a subscriber gets at most one mail per quarter of an hour about an incident and ten
+    an hour from a page, however often members post.
+  - **Panel and API.** Settings of a page: e-mail subscribers on or off and the e-mail channel (the
+    inbox's channels that can send; `409 sender_not_ready` otherwise; a missing deliverability check,
+    a missing postal address or an unaligned DKIM warn, never block). A Subscribers tab (counts,
+    search, state, chosen components, remove, add by address which sends the confirmation, consent
+    export; the list endpoints of M13 with `kind=status`, scopes `lists:*`). In the incident
+    composer a "Notify subscribers" checkbox beside Publish and beside each update, with the number it
+    would reach, and in the timeline a notice line (scheduled for, sending, sent to N, N failed, N
+    bounced, skipped and why) with Undo during the hold. `GET /v1/status-pages/{id}/notices`
+    (`incident_id`, `state`, cursor) and `/{notice_id}`, scope `status:read`; cancel needs
+    `status:manage`. `GET /v1/status-pages/{id}` shows `email_subscribers` (`enabled`, `channel_id`,
+    `list_id`, counts) and `status.*` events and webhooks are unchanged; progress reaches
+    `/v1/realtime` as `status_notice.updated` (not stored). `subscription.*` events fire for status
+    lists with `list.kind`. MCP: `create_incident` and `post_incident_update` take `notify`,
+    `get_status_page` returns the subscriber counts; no tool reads addresses.
+  - **Law.** Subscribers asked for the notice and confirmed by mail; the consent events (IP, user
+    agent, page, the sentence they saw, the components) serve GDPR Art. 7 and 15 and KVKK, and the
+    consent export includes status lists without an İYS format. Notices contain no promotion, so they
+    are service messages: no İYS record, CAN-SPAM's transactional exemption (accurate From and
+    routing) applies, and the footer still names the sender and offers one-click unsubscribe, which
+    Gmail and Yahoo require of subscribed bulk mail. Links never expire.
 - **Monitors.** `status_monitors` set a component's state from outside a member's hand. Kinds:
   - `heartbeat`: the host's job calls `POST` or `GET /ingress/heartbeat/{token}` at least every
     `interval` plus `grace`; a missed beat fails the monitor, `?fail=1` or `/fail` fails it at once.
@@ -2007,7 +2156,8 @@ incident before a customer writes, and the conversations an outage brings are an
   assistants publish incidents.
 - **Lookups before the workspace is known.** A public page finds its page by `status_pages.slug` or a
   verified `status_pages.custom_domain`, both unique across the server; a heartbeat or push finds its
-  monitor by `status_monitors.token_hash`. Everything after those lookups is scoped by the workspace
+  monitor by `status_monitors.token_hash`; an SES notification finds a notice delivery by
+  `status_notice_deliveries.header_message_id`, unique across the server. Everything after those lookups is scoped by the workspace
   they returned.
 
 ### Storage
@@ -2092,7 +2242,8 @@ now; per-channel limits can narrow them later.
     known. Everything after those lookups is scoped by the workspace they returned.
   - Status pages (M19): a public page finds its page by `status_pages.slug` or a verified
     `status_pages.custom_domain`, and a heartbeat or push finds its monitor by
-    `status_monitors.token_hash`, all unique across the server; everything after those lookups is
+    `status_monitors.token_hash`, and an SES notification finds a notice delivery by
+    `status_notice_deliveries.header_message_id`, all unique across the server; everything after those lookups is
     scoped by the workspace they returned.
   - The person-level identity tables `people`, `sessions`, `login_codes`, `passkeys`,
     `webauthn_ceremonies` and `push_subscriptions` (a browser's subscription follows the person

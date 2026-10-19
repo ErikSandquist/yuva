@@ -352,8 +352,14 @@ to linked" and each contact gets the reply on their own channel.
 
 ### M19.4 — E-mail subscribers
 
-- Subscribing from the page with double opt-in into the page's list; notices for incidents and
-  updates as planned by `yuva-broadcasts`; unsubscribe and manage links.
+- `mailing_lists.kind` `status` and its rules (no audiences, imports, public forms, İYS export or
+  opt-out register); per-component choices.
+- `/status/{slug}/subscribe` with double opt-in, limits and the sweep of unconfirmed contacts; `/s/` and
+  `/m/` for status lists.
+- Notices: `notify`, the 60-second hold, coalescing, the 15-minute gap and 10 an hour per page; sending
+  through the inbox's channel with list headers; bounces, complaints and replies linked to the incident.
+- Panel: e-mail subscribers setting, Subscribers tab, Notify subscribers with counts, notice lines and
+  Undo. Guides in en, tr, de.
 
 Accept: a simulator address subscribes from the page, confirms, gets a notice for a published incident
 and its resolution and none for a draft or an update sent without notifying, and unsubscribes with one
