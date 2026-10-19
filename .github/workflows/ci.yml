@@ -104,7 +104,16 @@ jobs:
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version-file: api/go.mod
-          cache-dependency-path: api/go.sum
+          cache: false
+      # setup-go's cache is keyed on go.sum alone and never refreshed, so every run compiled our packages again.
+      - id: go-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: go-${{ runner.os }}-${{ hashFiles('api/go.sum', 'sdk/go/go.sum') }}-${{ github.sha }}
+          restore-keys: go-${{ runner.os }}-${{ hashFiles('api/go.sum', 'sdk/go/go.sum') }}-
       - name: Dovecot with the migration fixtures
         run: |
           (cd api && go run ./internal/migrate/testdata/gen -out "$YUVA_TEST_IMAP_FIXTURES")
@@ -128,7 +137,7 @@ jobs:
           done
       - name: api
         working-directory: api
-        run: go generate ./... && go vet ./... && go test ./... && go build ./...
+        run: go generate ./... && go vet ./... && go test -count=1 ./... && go build ./...
       - name: the migration tests sent the mailboxes nothing but reading commands
         run: |
           sudo sh -c 'cat "$0"/*/rawlog/*.in' "$YUVA_TEST_IMAP_FIXTURES" \
@@ -137,13 +146,20 @@ jobs:
           ! grep -vxE 'CAPABILITY|NOOP|LOGOUT|STARTTLS|LOGIN|AUTHENTICATE|LIST|STATUS|EXAMINE|UNSELECT|SEARCH|UID SEARCH|FETCH|UID FETCH' commands.txt
       - name: sdk/go
         working-directory: sdk/go
-        run: go generate ./... && go vet ./... && go test ./... && go build ./...
+        run: go generate ./... && go vet ./... && go test -count=1 ./... && go build ./...
       - name: govulncheck
         run: |
           (cd api && go run golang.org/x/vuln/cmd/govulncheck@v1.9.0 ./...)
           (cd sdk/go && go run golang.org/x/vuln/cmd/govulncheck@v1.9.0 ./...)
       - name: generated code is committed
         run: git diff --exit-code -- api sdk/go
+      - if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ steps.go-cache.outputs.cache-primary-key }}
 
   web:
     needs: changes
