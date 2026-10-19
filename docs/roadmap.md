@@ -373,6 +373,8 @@ click.
 
 ### M19.5 — Outside checks
 
+Status: done, issue #99; every Accept item verified on 2026-10-19 at `e7939af`.
+
 - `http` and `tcp` monitors with the outbound address rules, keyword, certificate expiry, response
   times in `status_checks` and their chart in the panel; hosted limits.
 
