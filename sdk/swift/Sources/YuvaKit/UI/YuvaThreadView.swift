@@ -128,6 +128,12 @@ final class ThreadModel {
         return conversation.canRate || conversation.rating != nil
     }
 
+    var feedbackNoteState: YuvaFeedbackState? {
+        guard let conversation, conversation.isFeedback else { return nil }
+        if conversation.status == .closed { return .resolved }
+        return feedbackState
+    }
+
     var feedbackState: YuvaFeedbackState? {
         guard let conversation, conversation.isFeedback else { return nil }
         let last = items.last(where: { $0.message != nil })?.message?.author.type ?? conversation.lastMessage?.authorType
@@ -316,7 +322,7 @@ public struct YuvaThreadView: View {
                         .padding(.top, row.first && !row.startsDay ? 10 : 2)
                         .id(row.item.id)
                     }
-                    if let state = model.feedbackState, state == .resolved || state.isProgress {
+                    if let state = model.feedbackNoteState, state == .resolved || state.isProgress {
                         Label(
                             L.t(state.isProgress ? "feedback.progressNote." + state.rawValue : "feedback.resolvedNote"),
                             systemImage: state.isProgress ? "flag.fill" : "checkmark.circle.fill")

@@ -253,6 +253,9 @@ internal class ThreadState(val client: YuvaClient, conversationId: String?, priv
             return YuvaFeedbackState.of(current.status, last, current.feedback?.progress)
         }
 
+    val feedbackResolved: Boolean
+        get() = conversation?.let { it.isFeedback && it.status == YuvaConversationStatus.CLOSED } == true
+
     fun rate(rating: YuvaRating, comment: String?) {
         val id = conversationId ?: return
         if (ratingSending) return
@@ -529,7 +532,8 @@ fun YuvaThreadView(
                             ),
                         )
                     }
-                    val noteState = state.feedbackState ?: YuvaFeedbackState.SENT
+                    val noteState = if (state.feedbackResolved) YuvaFeedbackState.RESOLVED
+                    else state.feedbackState ?: YuvaFeedbackState.SENT
                     if (noteState == YuvaFeedbackState.RESOLVED || noteState.isProgress) {
                         item(key = "resolved") {
                             val tint = stateTint(noteState)
