@@ -354,6 +354,8 @@ Accept: while an incident is published the widget and both sample apps show its 
 when it is resolved; a member links three conversations (e-mail, chat, app), replies once with "Reply
 to linked" and each contact gets the reply on their own channel.
 
+Status: done, issue #97; widget, panel and API verified at `410afaf`, the Swift and Kotlin samples on 2026-10-19 at `b9d23c6`.
+
 ### M19.4 — E-mail subscribers
 
 Status: done, issue #98; every Accept item verified on 2026-10-19 at `410afaf`; notice content follow-ups in #101.
