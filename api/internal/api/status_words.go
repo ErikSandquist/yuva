@@ -12,6 +12,7 @@ type statusWords struct {
 	Active, Maintenance, Components, Uptime      string
 	DaysAgo, Today, NoData, Recent, NoRecent     string
 	History, NoHistory, Back, Feed, Updated      string
+	Subscribe                                    string
 	Edited, Support, Site, Window, Affects, Gone string
 	MonitorTitle, MonitorBody, MonitorResolved   string
 	MonitorPaused, MonitorRemoved                string
@@ -30,7 +31,7 @@ var statusLanguages = map[string]statusWords{
 		Impacts: map[string]string{"none": "No impact", "minor": "Minor", "major": "Major", "critical": "Critical"},
 		Active:  "Current incidents", Maintenance: "Maintenance", Components: "Components", Uptime: "%s uptime",
 		DaysAgo: "%d days ago", Today: "Today", NoData: "No data", Recent: "Past incidents", NoRecent: "No incidents in the last 14 days.",
-		History: "Incident history", NoHistory: "No incidents in the last %d days.", Back: "Current status", Feed: "Atom feed",
+		History: "Incident history", NoHistory: "No incidents in the last %d days.", Back: "Current status", Feed: "Atom feed", Subscribe: "Get notices by e-mail",
 		Updated: "Last updated", Edited: "edited", Support: "Get help", Site: "Website", Window: "Scheduled", Affects: "Affects",
 		Gone:         "There is no status page here.",
 		MonitorTitle: "%s is not working as expected", MonitorBody: "Our monitoring found a problem with %s. We are looking into it.",
@@ -49,7 +50,7 @@ var statusLanguages = map[string]statusWords{
 		Impacts: map[string]string{"none": "Etkisiz", "minor": "Küçük", "major": "Büyük", "critical": "Kritik"},
 		Active:  "Süren olaylar", Maintenance: "Bakım", Components: "Bileşenler", Uptime: "%s erişilebilirlik",
 		DaysAgo: "%d gün önce", Today: "Bugün", NoData: "Veri yok", Recent: "Geçmiş olaylar", NoRecent: "Son 14 günde olay yok.",
-		History: "Olay geçmişi", NoHistory: "Son %d günde olay yok.", Back: "Güncel durum", Feed: "Atom akışı",
+		History: "Olay geçmişi", NoHistory: "Son %d günde olay yok.", Back: "Güncel durum", Feed: "Atom akışı", Subscribe: "E-posta ile bildirim al",
 		Updated: "Son güncelleme", Edited: "düzenlendi", Support: "Yardım alın", Site: "Web sitesi", Window: "Planlanan", Affects: "Etkilenen",
 		Gone:         "Burada bir durum sayfası yok.",
 		MonitorTitle: "%s beklendiği gibi çalışmıyor", MonitorBody: "İzleme sistemimiz %s ile ilgili bir sorun buldu. İnceliyoruz.",
@@ -68,7 +69,7 @@ var statusLanguages = map[string]statusWords{
 		Impacts: map[string]string{"none": "Keine Auswirkung", "minor": "Gering", "major": "Erheblich", "critical": "Kritisch"},
 		Active:  "Aktuelle Störungen", Maintenance: "Wartung", Components: "Komponenten", Uptime: "%s Verfügbarkeit",
 		DaysAgo: "vor %d Tagen", Today: "Heute", NoData: "Keine Daten", Recent: "Vergangene Störungen", NoRecent: "Keine Störungen in den letzten 14 Tagen.",
-		History: "Störungsverlauf", NoHistory: "Keine Störungen in den letzten %d Tagen.", Back: "Aktueller Status", Feed: "Atom-Feed",
+		History: "Störungsverlauf", NoHistory: "Keine Störungen in den letzten %d Tagen.", Back: "Aktueller Status", Feed: "Atom-Feed", Subscribe: "Meldungen per E-Mail",
 		Updated: "Zuletzt aktualisiert", Edited: "bearbeitet", Support: "Hilfe erhalten", Site: "Website", Window: "Geplant", Affects: "Betrifft",
 		Gone:         "Hier gibt es keine Statusseite.",
 		MonitorTitle: "%s funktioniert nicht wie erwartet", MonitorBody: "Unsere Überwachung hat ein Problem mit %s festgestellt. Wir sehen es uns an.",

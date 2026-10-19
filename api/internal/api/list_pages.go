@@ -21,16 +21,19 @@ const (
 )
 
 type listWords struct {
-	Lang, Gone, Error                                            string
-	ConfirmTitle, ConfirmText, ConfirmButton, Confirmed, Already string
-	Expired                                                      string
-	ManageTitle, SubscribedAs, NotSubscribed, UnsubscribeFrom    string
-	Lists, Save, UnsubscribeAll, UnsubscribeAllText              string
-	Unsubscribed, Saved, AllGone, Undo, Restored, OneClickDone   string
-	ManageLink, TestMail                                         string
-	StatusConfirmText, StatusOnly, StatusConfirmed               string
-	StatusSubscribedAs, StatusNotSubscribed, StatusLegend        string
-	StatusSave, StatusNoneChosen, StatusBack                     string
+	Lang, Gone, Error                                             string
+	ConfirmTitle, ConfirmText, ConfirmButton, Confirmed, Already  string
+	Expired                                                       string
+	ManageTitle, SubscribedAs, NotSubscribed, UnsubscribeFrom     string
+	Lists, Save, UnsubscribeAll, UnsubscribeAllText               string
+	Unsubscribed, Saved, AllGone, Undo, Restored, OneClickDone    string
+	ManageLink, TestMail                                          string
+	StatusConfirmText, StatusOnly, StatusConfirmed                string
+	StatusSubscribedAs, StatusNotSubscribed, StatusLegend         string
+	StatusSave, StatusNoneChosen, StatusBack                      string
+	SubscribeTitle, SubscribeConsent, EmailLabel, SubscribeButton string
+	SentTitle, SentText, TooMany, FormExpired, PageFull           string
+	InvalidEmail, ChooseOne                                       string
 }
 
 var listLanguages = map[string]listWords{
@@ -51,6 +54,13 @@ var listLanguages = map[string]listWords{
 		StatusSubscribedAs: "You get notices from “%l” at %s.", StatusNotSubscribed: "You get no notices from “%l”.",
 		StatusLegend: "Send me notices about", StatusSave: "Save choices",
 		StatusNoneChosen: "Choose at least one component, or unsubscribe instead.", StatusBack: "Back to the status page",
+		SubscribeTitle:   "Get notices from “%l”",
+		SubscribeConsent: "Send me notices about incidents and maintenance of %l. I confirm by e-mail and can unsubscribe in every mail.",
+		EmailLabel:       "E-mail address", SubscribeButton: "Subscribe",
+		SentTitle: "Check your mail", SentText: "If the address can receive mail, a confirmation is on its way.",
+		TooMany:     "Too many requests from here. Try again in a while.",
+		FormExpired: "The form is out of date. Please send it again.", PageFull: "This page takes no more subscribers.",
+		InvalidEmail: "Enter a valid e-mail address.", ChooseOne: "Choose at least one component.",
 	},
 	"tr": {
 		Lang: "tr", Gone: "Bu bağlantı artık geçerli değil.", Error: "Bir sorun oluştu. Bağlantıyı daha sonra yeniden deneyin.",
@@ -69,6 +79,13 @@ var listLanguages = map[string]listWords{
 		StatusSubscribedAs: "“%l” bildirimlerini %s adresine alıyorsunuz.", StatusNotSubscribed: "“%l” bildirimlerini almıyorsunuz.",
 		StatusLegend: "Şunlarla ilgili bildirim gönder", StatusSave: "Seçimleri kaydet",
 		StatusNoneChosen: "En az bir bileşen seçin ya da aboneliğinizi sonlandırın.", StatusBack: "Durum sayfasına dön",
+		SubscribeTitle:   "“%l” bildirimlerini alın",
+		SubscribeConsent: "%l olay ve bakım bildirimlerini bana gönderin. E-postayla onaylarım ve her e-postadan aboneliğimi sonlandırabilirim.",
+		EmailLabel:       "E-posta adresi", SubscribeButton: "Abone ol",
+		SentTitle: "E-postanıza bakın", SentText: "Adres e-posta alabiliyorsa bir onay e-postası yolda.",
+		TooMany:     "Buradan çok fazla istek geldi. Bir süre sonra yeniden deneyin.",
+		FormExpired: "Formun süresi doldu. Lütfen yeniden gönderin.", PageFull: "Bu sayfa yeni abone kabul etmiyor.",
+		InvalidEmail: "Geçerli bir e-posta adresi girin.", ChooseOne: "En az bir bileşen seçin.",
 	},
 	"de": {
 		Lang: "de", Gone: "Dieser Link ist nicht mehr gültig.", Error: "Etwas ist schiefgelaufen. Versuchen Sie den Link später erneut.",
@@ -87,6 +104,13 @@ var listLanguages = map[string]listWords{
 		StatusSubscribedAs: "Sie erhalten Meldungen von „%l“ an %s.", StatusNotSubscribed: "Sie erhalten keine Meldungen von „%l“.",
 		StatusLegend: "Meldungen senden zu", StatusSave: "Auswahl speichern",
 		StatusNoneChosen: "Wählen Sie mindestens eine Komponente oder melden Sie sich ab.", StatusBack: "Zurück zur Statusseite",
+		SubscribeTitle:   "Meldungen von „%l“ erhalten",
+		SubscribeConsent: "Senden Sie mir Meldungen zu Störungen und Wartungen von %l. Ich bestätige per E-Mail und kann mich in jeder E-Mail abmelden.",
+		EmailLabel:       "E-Mail-Adresse", SubscribeButton: "Abonnieren",
+		SentTitle: "Sehen Sie in Ihr Postfach", SentText: "Wenn die Adresse E-Mails empfangen kann, ist eine Bestätigung unterwegs.",
+		TooMany:     "Zu viele Anfragen von hier. Versuchen Sie es später erneut.",
+		FormExpired: "Das Formular ist veraltet. Bitte senden Sie es erneut.", PageFull: "Diese Seite nimmt keine weiteren Abonnenten an.",
+		InvalidEmail: "Geben Sie eine gültige E-Mail-Adresse ein.", ChooseOne: "Wählen Sie mindestens eine Komponente.",
 	},
 }
 
@@ -124,8 +148,12 @@ type pageForm struct {
 	Choices        []pageChoice
 	Legend, Note   string
 	Field          string
+	Inputs         []formInput
+	Trap           string
 	Secondary      bool
 }
+
+type formInput struct{ Name, Type, Label, Value, Auto string }
 
 func (f pageForm) ChoiceName() string {
 	if f.Field != "" {
@@ -165,6 +193,9 @@ input[type=checkbox]{width:1.1rem;height:1.1rem;margin-top:.2rem;accent-color:va
 button{font:inherit;font-weight:600;padding:.7rem 1.4rem;border:0;border-radius:.6rem;background:var(--brand);color:#fff;cursor:pointer}
 button.secondary{background:transparent;color:inherit;border:1px solid #8888}
 .note{font-size:.9rem;opacity:.8;margin:.5rem 0 0}
+label.field{display:block;font-weight:600;margin:0 0 1rem}
+label.field input{display:block;box-sizing:border-box;width:100%;font:inherit;font-weight:400;margin-top:.35rem;padding:.6rem .75rem;border:1px solid #8888;border-radius:.6rem;background:transparent;color:inherit}
+.trap{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
 </style>
 </head><body>
 {{if .Inbox}}<p class="inbox">{{.Inbox}}</p>{{end}}
@@ -174,7 +205,9 @@ button.secondary{background:transparent;color:inherit;border:1px solid #8888}
 <input type="hidden" name="action" value="{{.Action}}">
 {{range $k, $v := .Hidden}}<input type="hidden" name="{{$k}}" value="{{$v}}">{{end}}
 {{range .Lists}}<input type="hidden" name="lists" value="{{.}}">{{end}}
-{{if .Choices}}<fieldset><legend>{{.Legend}}</legend>
+{{range .Inputs}}<label class="field">{{.Label}}<input type="{{.Type}}" name="{{.Name}}" value="{{.Value}}" autocomplete="{{.Auto}}" required></label>
+{{end}}{{if .Trap}}<div class="trap" aria-hidden="true"><label>Website<input type="text" name="{{.Trap}}" tabindex="-1" autocomplete="off"></label></div>
+{{end}}{{if .Choices}}<fieldset><legend>{{.Legend}}</legend>
 {{$name := .ChoiceName}}{{range .Choices}}<label><input type="checkbox" name="{{$name}}" value="{{.ID}}"{{if .Checked}} checked{{end}}><span>{{.Name}}{{if .Description}}<small>{{.Description}}</small>{{end}}</span></label>
 {{end}}</fieldset>{{end}}
 <button type="submit"{{if .Secondary}} class="secondary"{{end}}>{{.Button}}</button>

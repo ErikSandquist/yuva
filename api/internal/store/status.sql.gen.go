@@ -2146,7 +2146,8 @@ func (q *Queries) SetStatusIncidentComponentState(ctx context.Context, arg SetSt
 }
 
 const setStatusPageEmail = `-- name: SetStatusPageEmail :one
-UPDATE status_pages SET mailing_list_id = $1, email_enabled = $2, updated_at = $3
+UPDATE status_pages SET mailing_list_id = $1, email_enabled = $2,
+    changed_at = greatest(changed_at + interval '1 microsecond', $3::timestamptz), updated_at = $3
 WHERE workspace_id = $4 AND id = $5
 RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled
 `

@@ -48,9 +48,14 @@ var (
 // StatusSettings: URL is YUVA_STATUS_URL, the origin public pages are named from; empty means
 // <public URL>/status.
 // Monitors is YUVA_STATUS_MONITORS, the most monitors a workspace may have; 0 means no limit.
+// NoticesOff is YUVA_STATUS_NOTICES=off; NoticesDaily and MaxSubscribers are
+// YUVA_STATUS_NOTICES_DAILY and YUVA_STATUS_MAX_SUBSCRIBERS, 0 meaning no limit.
 type StatusSettings struct {
-	URL      string
-	Monitors int
+	URL            string
+	Monitors       int
+	NoticesOff     bool
+	NoticesDaily   int64
+	MaxSubscribers int
 }
 
 func (s *Server) statusBase() string {

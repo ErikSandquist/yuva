@@ -319,7 +319,8 @@ WHERE t.workspace_id = @workspace_id AND t.reply_id = @reply_id
 ORDER BY t.conversation_id
 LIMIT @lim;
 -- name: SetStatusPageEmail :one
-UPDATE status_pages SET mailing_list_id = sqlc.narg(mailing_list_id), email_enabled = @email_enabled, updated_at = @now
+UPDATE status_pages SET mailing_list_id = sqlc.narg(mailing_list_id), email_enabled = @email_enabled,
+    changed_at = greatest(changed_at + interval '1 microsecond', @now::timestamptz), updated_at = @now
 WHERE workspace_id = @workspace_id AND id = @id
 RETURNING *;
 

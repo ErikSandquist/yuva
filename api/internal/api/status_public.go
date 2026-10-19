@@ -116,45 +116,69 @@ func (s *Server) routeStatus(mux *http.ServeMux) {
 	mux.HandleFunc("GET "+statusPathPrefix+"{slug}/incidents/{id}", s.serveStatus("incident"))
 	mux.HandleFunc("GET "+statusPathPrefix+"{slug}/feed.atom", s.serveStatus("feed"))
 	mux.HandleFunc("GET "+statusPathPrefix+"{slug}/badge.svg", s.serveStatus("badge"))
+	mux.HandleFunc("GET "+statusPathPrefix+"{slug}/subscribe", s.serveStatusSubscribe)
+	mux.HandleFunc("POST "+statusPathPrefix+"{slug}/subscribe", s.serveStatusSubscribe)
+	mux.HandleFunc("GET "+statusPathPrefix+"{slug}/subscribe/sent", s.serveStatusSubscribe)
+}
+
+// publicStatusPage finds the published page of the request's slug, answering a redirect, a rate
+// limit or a 404 itself when there is none to serve.
+func (s *Server) publicStatusPage(w http.ResponseWriter, r *http.Request) (store.StatusPage, bool) {
+	ctx := r.Context()
+	slug := r.PathValue("slug")
+	redirect := http.StatusFound
+	if r.Method != http.MethodGet {
+		redirect = http.StatusTemporaryRedirect
+	}
+	if s.status.URL != "" && ctx.Value(statusHostKey{}) == nil {
+		target := s.statusURL(slug, strings.TrimPrefix(r.URL.Path, statusPathPrefix+slug))
+		if r.URL.RawQuery != "" {
+			target += "?" + r.URL.RawQuery
+		}
+		http.Redirect(w, r, target, redirect)
+		return store.StatusPage{}, false
+	}
+	if err := s.rateLimit(rateCheck{"status:ip:" + rateIP(s.clientIP(r)), limitStatusPerIP}); err != nil {
+		writeProblem(w, err.(*apiError))
+		return store.StatusPage{}, false
+	}
+	pg, err := s.st.FindStatusPageBySlug(ctx, slug)
+	if store.IsNotFound(err) {
+		pg, err = s.st.FindStatusPageByFormerSlug(ctx, slug)
+		if err == nil && pg.Published {
+			target := s.statusURL(pg.Slug, strings.TrimPrefix(r.URL.Path, statusPathPrefix+slug))
+			if r.URL.RawQuery != "" {
+				target += "?" + r.URL.RawQuery
+			}
+			if redirect == http.StatusFound {
+				redirect = http.StatusMovedPermanently
+			} else {
+				redirect = http.StatusPermanentRedirect
+			}
+			http.Redirect(w, r, target, redirect)
+			return pg, false
+		}
+	}
+	if store.IsNotFound(err) || (err == nil && !pg.Published) {
+		s.statusGone(w)
+		return pg, false
+	}
+	if err != nil {
+		s.log.ErrorContext(ctx, "status page", slog.Any("error", err))
+		writeProblem(w, errInternal)
+		return pg, false
+	}
+	return pg, true
 }
 
 func (s *Server) serveStatus(view string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
-		slug := r.PathValue("slug")
-		if s.status.URL != "" && ctx.Value(statusHostKey{}) == nil {
-			target := s.statusURL(slug, strings.TrimPrefix(r.URL.Path, statusPathPrefix+slug))
-			if r.URL.RawQuery != "" {
-				target += "?" + r.URL.RawQuery
-			}
-			http.Redirect(w, r, target, http.StatusFound)
+		pg, ok := s.publicStatusPage(w, r)
+		if !ok {
 			return
 		}
-		if err := s.rateLimit(rateCheck{"status:ip:" + rateIP(s.clientIP(r)), limitStatusPerIP}); err != nil {
-			writeProblem(w, err.(*apiError))
-			return
-		}
-		pg, err := s.st.FindStatusPageBySlug(ctx, slug)
-		if store.IsNotFound(err) {
-			pg, err = s.st.FindStatusPageByFormerSlug(ctx, slug)
-			if err == nil && pg.Published {
-				target := s.statusURL(pg.Slug, strings.TrimPrefix(r.URL.Path, statusPathPrefix+slug))
-				if r.URL.RawQuery != "" {
-					target += "?" + r.URL.RawQuery
-				}
-				http.Redirect(w, r, target, http.StatusMovedPermanently)
-				return
-			}
-		}
-		if store.IsNotFound(err) || (err == nil && !pg.Published) {
-			s.statusGone(w)
-			return
-		}
-		if err != nil {
-			s.log.ErrorContext(ctx, "status page", slog.Any("error", err))
-			writeProblem(w, errInternal)
-			return
-		}
+		var err error
 		var incident uuid.UUID
 		if view == "incident" {
 			if incident, err = uuid.Parse(r.PathValue("id")); err != nil {
@@ -499,7 +523,7 @@ type statusPageView struct {
 	W                                            statusWords
 	View, Name, Description, Logo, Site, Support string
 	Color                                        template.CSS
-	Home, HistoryURL, FeedURL                    string
+	Home, HistoryURL, FeedURL, SubscribeURL      string
 	State, StateColor, Headline                  string
 	Open, Recent                                 []incidentView
 	Groups                                       []groupView
@@ -544,6 +568,9 @@ func (s *Server) statusView(snap *statusSnap, view string) statusPageView {
 		Headline: w.Headlines[state], Updated: snap.at(pg.ChangedAt), Script: template.JS(statusScript)}
 	if pg.AccentColor != nil {
 		v.Color = template.CSS(*pg.AccentColor)
+	}
+	if s.statusEmailOpen(pg) {
+		v.SubscribeURL = snap.url("/subscribe")
 	}
 	if pg.LogoUrl != nil {
 		v.Logo = *pg.LogoUrl
@@ -677,7 +704,7 @@ footer{margin:3rem 0 1rem;font-size:.85rem;opacity:.75;display:flex;gap:1rem;fle
 <h2>{{.W.Recent}}</h2>
 {{range .Recent}}<div class="card"><h3><a href="{{.URL}}">{{.Title}}</a></h3><p class="meta">{{.State}} · <time datetime="{{.When.ISO}}" data-local>{{.When.Text}}</time></p></div>{{else}}<p>{{.W.NoRecent}}</p>{{end}}
 {{end}}
-<footer><a href="{{.HistoryURL}}">{{.W.History}}</a><a href="{{.FeedURL}}">{{.W.Feed}}</a><span>{{.W.Updated}}: <time datetime="{{.Updated.ISO}}" data-local>{{.Updated.Text}}</time></span></footer>
+<footer><a href="{{.HistoryURL}}">{{.W.History}}</a><a href="{{.FeedURL}}">{{.W.Feed}}</a>{{if .SubscribeURL}}<a href="{{.SubscribeURL}}" target="_top">{{.W.Subscribe}}</a>{{end}}<span>{{.W.Updated}}: <time datetime="{{.Updated.ISO}}" data-local>{{.Updated.Text}}</time></span></footer>
 <script>{{.Script}}</script>
 </body></html>`))
 

@@ -2163,7 +2163,9 @@ incident before a customer writes, and the conversations an outage brings are an
   in one query, then handles each in its workspace; one failing monitor is logged and the others go on.
   A monitor going down or up notifies the inbox's members like a new conversation does (push, e-mail
   per their settings), one job per member and channel carrying the transition's state, message and
-  time, so a retry never sends anything twice. Hosted limits: `YUVA_STATUS_MONITORS` per workspace (unset: 20).
+  time, so a retry never sends anything twice. Hosted limits: `YUVA_STATUS_MONITORS` per workspace (unset: 20);
+  for subscribers `YUVA_STATUS_NOTICES` (`on|off`), `YUVA_STATUS_NOTICES_DAILY` and
+  `YUVA_STATUS_MAX_SUBSCRIBERS` (see Subscribers).
   Checks run from the server's own place and a multi-location check is not planned, so the server
   tells its own trouble from its customers': each round also checks `YUVA_STATUS_CANARY_URLS` (unset:
   two well-known public URLs) and, when every canary fails or more than half of the round's outside

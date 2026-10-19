@@ -2,10 +2,13 @@ package api_test
 
 import (
 	"context"
+	"html"
 	"net/http"
 	"net/url"
+	"regexp"
 	"strings"
 	"testing"
+	"time"
 	"uuid"
 )
 
@@ -158,4 +161,125 @@ func TestStatusListIsSeparate(t *testing.T) {
 func newStatusListTeamPage(t *testing.T, lt listTeam) string {
 	t.Helper()
 	return lt.owner.expect(http.StatusCreated, "POST", "/v1/status-pages", map[string]any{"inbox_id": lt.chatInbox, "name": "Other", "slug": unique("st")}).str("id")
+}
+
+var statusFormToken = regexp.MustCompile(`name="token" value="([^"]+)"`)
+
+func TestStatusSubscribePage(t *testing.T) {
+	h := newHarness(t)
+	ctx := context.Background()
+	st := newStatusListTeam(t, h)
+	path := "/status/" + st.slug + "/subscribe"
+	if status, _ := pageAt(t, h, "GET", path, nil); status != http.StatusNotFound {
+		t.Fatalf("subscribe page of an unpublished page: %d", status)
+	}
+	st.owner.expect(http.StatusOK, "PATCH", "/v1/status-pages/"+st.page, map[string]any{"published": true})
+	if r := publicStatus(t, h, "/status/"+st.slug); !strings.Contains(string(r.raw), path) {
+		t.Fatal("the public page does not link to the subscribe page")
+	}
+	res, err := http.Get(h.url + path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	res.Body.Close()
+	if res.Header.Get("Cache-Control") != "no-store" || !strings.Contains(res.Header.Get("Content-Security-Policy"), "frame-ancestors 'none'") {
+		t.Fatalf("subscribe page headers: %v", res.Header)
+	}
+	form := func() string {
+		t.Helper()
+		status, page := pageAt(t, h, "GET", path, nil)
+		m := statusFormToken.FindStringSubmatch(page)
+		if status != http.StatusOK || m == nil || !strings.Contains(page, `name="components"`) || !strings.Contains(page, "incidents and maintenance of Product news") {
+			t.Fatalf("subscribe form: %d %s", status, page)
+		}
+		return html.UnescapeString(m[1])
+	}
+	send := func(token, addr string, components ...string) (int, string) {
+		t.Helper()
+		return pageAt(t, h, "POST", path, url.Values{"token": {token}, "email": {addr}, "components": components})
+	}
+	token := form()
+	addr := unique("watcher") + "@example.org"
+	if status, page := send(token, addr, st.api); status != http.StatusBadRequest || !strings.Contains(page, "out of date") {
+		t.Fatalf("young token: %d %s", status, page)
+	}
+	h.clock.Advance(3 * time.Second)
+	if status, page := send(token, addr); status != http.StatusBadRequest || !strings.Contains(page, "at least one component") {
+		t.Fatalf("no components: %d %s", status, page)
+	}
+	if status, page := send(token, addr, st.api); status != http.StatusOK || !strings.Contains(page, "confirmation is on its way") {
+		t.Fatalf("subscribe: %d %s", status, page)
+	}
+	sub := st.statusSubscription(t, addr)
+	if sub["state"] != "pending" || len(sub["components"].([]any)) != 1 {
+		t.Fatalf("subscription: %v", sub)
+	}
+	requested := sub["events"].([]any)[0].(map[string]any)
+	if !strings.HasPrefix(requested["consent_text"].(string), "Send me notices about incidents and maintenance of Product news") ||
+		!strings.HasSuffix(requested["page_url"].(string), path) {
+		t.Fatalf("requested event %v", requested)
+	}
+	mails := h.runListMail(st.ws)
+	if len(mails) != 1 || !strings.Contains(mails[0].Text, "Only about: API") {
+		t.Fatalf("confirmation: %d", len(mails))
+	}
+	confirm := linkIn(t, mails[0], "s")
+	if _, page := pageAt(t, h, "GET", confirm, nil); !strings.Contains(page, "Only about: API") {
+		t.Fatalf("/s/: %s", page)
+	}
+	pageAt(t, h, "POST", confirm, url.Values{"action": {"confirm"}})
+	if status, page := send(token, addr, st.api, st.web); status != http.StatusOK || !strings.Contains(page, "confirmation is on its way") {
+		t.Fatalf("known address: %d %s", status, page)
+	}
+	if sub := st.statusSubscription(t, addr); sub["state"] != "subscribed" || len(sub["components"].([]any)) != 1 {
+		t.Fatalf("a second request changed a confirmed subscription: %v", sub)
+	}
+	fake := unique("fake") + "@example.org"
+	if status, _ := pageAt(t, h, "POST", path, url.Values{"token": {token}, "email": {fake}, "website": {"https://spam.example"}}); status != http.StatusOK {
+		t.Fatalf("honeypot: %d", status)
+	}
+	if st.statusSubscription(t, fake) != nil {
+		t.Fatal("the honeypot subscribed")
+	}
+	send(token, fake, st.web)
+	for range 4 {
+		if status, _ := send(token, unique("more")+"@example.org", st.web); status != http.StatusOK {
+			t.Fatalf("request within the limit: %d", status)
+		}
+	}
+	status, page := send(token, unique("last")+"@example.org", st.web)
+	if status != http.StatusTooManyRequests || !strings.Contains(page, "Too many requests") {
+		t.Fatalf("11th request: %d", status)
+	}
+
+	st.owner.expect(http.StatusOK, "PATCH", "/v1/status-pages/"+st.page, map[string]any{"email_subscribers": map[string]any{"enabled": false}})
+	if status, _ := pageAt(t, h, "GET", path, nil); status != http.StatusNotFound {
+		t.Fatalf("subscribe page with e-mail off: %d", status)
+	}
+	if r := publicStatus(t, h, "/status/"+st.slug); strings.Contains(string(r.raw), path) {
+		t.Fatal("the public page links to a closed subscribe page")
+	}
+
+	contactOf := func(addr string) int {
+		t.Helper()
+		var n int
+		if err := h.st.Pool.QueryRow(ctx, "SELECT count(*) FROM contacts WHERE workspace_id = $1 AND typed_email = $2", st.ws, addr).Scan(&n); err != nil {
+			t.Fatal(err)
+		}
+		return n
+	}
+	if contactOf(fake) != 1 {
+		t.Fatal("the request made no contact")
+	}
+	h.clock.Advance(31 * 24 * time.Hour)
+	if err := h.srv.ExpireSubscriptions(ctx); err != nil {
+		t.Fatal(err)
+	}
+	var kept int
+	if err := h.st.Pool.QueryRow(ctx, "SELECT count(*) FROM list_subscriptions WHERE workspace_id = $1 AND email = $2 AND state = 'subscribed'", st.ws, addr).Scan(&kept); err != nil {
+		t.Fatal(err)
+	}
+	if contactOf(fake) != 0 || kept != 1 {
+		t.Fatalf("after the sweep: %d contacts of the fake address, %d confirmed subscriptions", contactOf(fake), kept)
+	}
 }

@@ -85,6 +85,12 @@ type Config struct {
 	StatusURL string
 	// StatusMonitors caps a workspace's status monitors (YUVA_STATUS_MONITORS, default 20); 0 is no limit.
 	StatusMonitors int
+	// StatusNotices is YUVA_STATUS_NOTICES: off hides the subscribe form and sends no notices.
+	StatusNotices bool
+	// StatusNoticesDaily caps notice mails per workspace and UTC day (YUVA_STATUS_NOTICES_DAILY); 0 is
+	// no limit. StatusMaxSubscribers caps subscribed addresses per page (YUVA_STATUS_MAX_SUBSCRIBERS).
+	StatusNoticesDaily   int64
+	StatusMaxSubscribers int
 
 	// MigrationSources are the sources teams may move from (YUVA_MIGRATION_SOURCES); nil for every
 	// source the server has.
@@ -360,6 +366,9 @@ func Load(version string) (Config, error) {
 	if err := c.loadBroadcasts(); err != nil {
 		return c, err
 	}
+	if err := c.loadStatusNotices(); err != nil {
+		return c, err
+	}
 	if err := c.loadAnalytics(); err != nil {
 		return c, err
 	}
@@ -370,6 +379,28 @@ func Load(version string) (Config, error) {
 		return c, errors.New("YUVA_SMTP_FROM is required when YUVA_SMTP_HOST is set")
 	}
 	return c, nil
+}
+
+func (c *Config) loadStatusNotices() error {
+	switch strings.ToLower(env("YUVA_STATUS_NOTICES", "on")) {
+	case "on":
+		c.StatusNotices = true
+	case "off":
+	default:
+		return errors.New("YUVA_STATUS_NOTICES must be on or off")
+	}
+	daily, max := "0", "0"
+	if c.SignupOpen {
+		daily, max = "5000", "10000"
+	}
+	var err error
+	if c.StatusNoticesDaily, err = strconv.ParseInt(env("YUVA_STATUS_NOTICES_DAILY", daily), 10, 64); err != nil || c.StatusNoticesDaily < 0 {
+		return errors.New("YUVA_STATUS_NOTICES_DAILY must be a number of mails, 0 for no limit")
+	}
+	if c.StatusMaxSubscribers, err = strconv.Atoi(env("YUVA_STATUS_MAX_SUBSCRIBERS", max)); err != nil || c.StatusMaxSubscribers < 0 {
+		return errors.New("YUVA_STATUS_MAX_SUBSCRIBERS must be a number of subscribers, 0 for no limit")
+	}
+	return nil
 }
 
 func (c *Config) loadBroadcasts() error {
