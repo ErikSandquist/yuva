@@ -113,6 +113,10 @@ msgid "Remove {0}"
 msgstr "הסרת {0}"
 
 #: src/panel/chat.ts
+msgid "Resolved"
+msgstr "נפתר"
+
+#: src/panel/chat.ts
 msgid "Retry"
 msgstr "נסו שוב"
 

@@ -870,6 +870,8 @@ export class Chat implements PanelController {
       const main = el("div", "item-main")
       const top = el("div", "item-top")
       top.append(el("span", "item-subject", conversation.subject || this.#inbox?.name || this.#t(msg`Conversation`)))
+      if (conversation.kind === "feedback" && conversation.status === "closed")
+        top.append(el("span", "item-state", this.#t(msg`Resolved`)))
       const at = new Date(conversation.last_message_at ?? conversation.created_at)
       top.append(
         el(
@@ -1012,6 +1014,8 @@ export class Chat implements PanelController {
     })
 
     const conversation = id ? this.#conversations.get(id) : undefined
+    if (conversation?.kind === "feedback" && conversation.status === "closed")
+      nodes.push(el("p", "hint resolved", this.#t(msg`Resolved`)))
     const rate = conversation ? this.#renderRating(conversation) : null
     if (rate) nodes.push(rate)
 

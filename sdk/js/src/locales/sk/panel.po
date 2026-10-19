@@ -113,6 +113,10 @@ msgid "Remove {0}"
 msgstr "Odstrániť {0}"
 
 #: src/panel/chat.ts
+msgid "Resolved"
+msgstr "Vyriešené"
+
+#: src/panel/chat.ts
 msgid "Retry"
 msgstr "Skúsiť znova"
 

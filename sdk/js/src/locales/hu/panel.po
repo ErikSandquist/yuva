@@ -113,6 +113,10 @@ msgid "Remove {0}"
 msgstr "{0} eltávolítása"
 
 #: src/panel/chat.ts
+msgid "Resolved"
+msgstr "Megoldva"
+
+#: src/panel/chat.ts
 msgid "Retry"
 msgstr "Újra"
 

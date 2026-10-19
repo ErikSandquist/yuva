@@ -113,6 +113,10 @@ msgid "Remove {0}"
 msgstr "{0} 삭제"
 
 #: src/panel/chat.ts
+msgid "Resolved"
+msgstr "해결됨"
+
+#: src/panel/chat.ts
 msgid "Retry"
 msgstr "다시 시도"
 

@@ -80,6 +80,8 @@ export const styles = `
 .item-subject { font-weight: 600; }
 .item-preview { color: var(--yuva-muted); font-size: 14px; }
 .item.unread .item-preview { color: var(--yuva-fg); font-weight: 600; }
+.item-state { flex: none; margin-inline-start: auto; color: var(--yuva-muted); font-size: 12px; }
+.hint.resolved { text-align: center; }
 .item-time { flex: none; color: var(--yuva-muted); font-size: 12px; }
 .unread-dot { flex: none; inline-size: 9px; block-size: 9px; border-radius: 50%; background: var(--yuva-accent); }
 .primary {
