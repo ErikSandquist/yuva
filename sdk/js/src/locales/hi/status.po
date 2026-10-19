@@ -1,0 +1,72 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-19 21:12+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: hi\n"
+
+#: src/status/element.ts
+msgid "{name} system status"
+msgstr "{name} सिस्टम की स्थिति"
+
+#: src/status/element.ts
+msgid "90 D"
+msgstr "90 दि"
+
+#: src/status/element.ts
+msgid "All systems operational"
+msgstr "सभी सिस्टम चालू हैं"
+
+#: src/status/element.ts
+msgid "Degraded performance"
+msgstr "प्रदर्शन में गिरावट"
+
+#: src/status/element.ts
+msgid "Down"
+msgstr "बंद"
+
+#: src/status/element.ts
+msgid "Everything is working."
+msgstr "सब कुछ ठीक चल रहा है।"
+
+#: src/status/element.ts
+msgid "Last 90 days"
+msgstr "पिछले 90 दिन"
+
+#: src/status/element.ts
+msgid "Last 90 days, {uptime} uptime"
+msgstr "पिछले 90 दिन, अपटाइम {uptime}"
+
+#: src/status/element.ts
+msgid "Maintenance"
+msgstr "रखरखाव"
+
+#: src/status/element.ts
+msgid "Major outage"
+msgstr "बड़ी रुकावट"
+
+#: src/status/element.ts
+msgid "OK"
+msgstr "ठीक"
+
+#: src/status/element.ts
+msgid "Partial"
+msgstr "आंशिक"
+
+#: src/status/element.ts
+msgid "Partial outage"
+msgstr "आंशिक रुकावट"
+
+#: src/status/element.ts
+msgid "Slow"
+msgstr "धीमा"
+
+#: src/status/element.ts
+msgid "Status by Yuva"
+msgstr "Yuva द्वारा स्टेटस"
+
+#: src/status/element.ts
+msgid "Under maintenance"
+msgstr "रखरखाव जारी है"

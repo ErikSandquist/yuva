@@ -1,0 +1,72 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-19 21:12+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ko\n"
+
+#: src/status/element.ts
+msgid "{name} system status"
+msgstr "{name} 시스템 상태"
+
+#: src/status/element.ts
+msgid "90 D"
+msgstr "90일"
+
+#: src/status/element.ts
+msgid "All systems operational"
+msgstr "모든 시스템 정상"
+
+#: src/status/element.ts
+msgid "Degraded performance"
+msgstr "성능 저하"
+
+#: src/status/element.ts
+msgid "Down"
+msgstr "중단"
+
+#: src/status/element.ts
+msgid "Everything is working."
+msgstr "모든 것이 정상 작동 중입니다."
+
+#: src/status/element.ts
+msgid "Last 90 days"
+msgstr "최근 90일"
+
+#: src/status/element.ts
+msgid "Last 90 days, {uptime} uptime"
+msgstr "최근 90일, 가동률 {uptime}"
+
+#: src/status/element.ts
+msgid "Maintenance"
+msgstr "점검"
+
+#: src/status/element.ts
+msgid "Major outage"
+msgstr "대규모 장애"
+
+#: src/status/element.ts
+msgid "OK"
+msgstr "정상"
+
+#: src/status/element.ts
+msgid "Partial"
+msgstr "일부"
+
+#: src/status/element.ts
+msgid "Partial outage"
+msgstr "부분 장애"
+
+#: src/status/element.ts
+msgid "Slow"
+msgstr "느림"
+
+#: src/status/element.ts
+msgid "Status by Yuva"
+msgstr "Yuva 상태 서비스"
+
+#: src/status/element.ts
+msgid "Under maintenance"
+msgstr "점검 중"

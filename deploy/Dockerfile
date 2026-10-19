@@ -21,8 +21,8 @@ COPY --from=widget /src/sdk/js/dist /tmp/widget-dist
 RUN if [ -f /tmp/web-dist/index.html ]; then \
       find internal/ui/dist -mindepth 1 -delete && cp -R /tmp/web-dist/. internal/ui/dist/; \
     fi; \
-    if [ -f /tmp/widget-dist/yuva.js ] && [ -f /tmp/widget-dist/yuva-chat.js ] && [ -f /tmp/widget-dist/yuva-docs.js ] && [ -f /tmp/widget-dist/yuva-subscribe.js ]; then \
-      cp /tmp/widget-dist/yuva.js /tmp/widget-dist/yuva-chat.js /tmp/widget-dist/yuva-docs.js /tmp/widget-dist/yuva-subscribe.js internal/widget/dist/; \
+    if [ -f /tmp/widget-dist/yuva.js ] && [ -f /tmp/widget-dist/yuva-chat.js ] && [ -f /tmp/widget-dist/yuva-docs.js ] && [ -f /tmp/widget-dist/yuva-subscribe.js ] && [ -f /tmp/widget-dist/yuva-status.js ]; then \
+      cp /tmp/widget-dist/yuva.js /tmp/widget-dist/yuva-chat.js /tmp/widget-dist/yuva-docs.js /tmp/widget-dist/yuva-subscribe.js /tmp/widget-dist/yuva-status.js internal/widget/dist/; \
       rm -rf internal/widget/dist/widget; \
       if [ -d /tmp/widget-dist/widget ]; then cp -R /tmp/widget-dist/widget internal/widget/dist/; fi; \
     fi; \

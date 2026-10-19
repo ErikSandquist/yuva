@@ -1,0 +1,72 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-19 21:12+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ml\n"
+
+#: src/status/element.ts
+msgid "{name} system status"
+msgstr "{name} സിസ്റ്റം നില"
+
+#: src/status/element.ts
+msgid "90 D"
+msgstr "90 ദി"
+
+#: src/status/element.ts
+msgid "All systems operational"
+msgstr "എല്ലാ സിസ്റ്റങ്ങളും പ്രവർത്തിക്കുന്നു"
+
+#: src/status/element.ts
+msgid "Degraded performance"
+msgstr "പ്രകടനം കുറഞ്ഞു"
+
+#: src/status/element.ts
+msgid "Down"
+msgstr "നിലച്ചു"
+
+#: src/status/element.ts
+msgid "Everything is working."
+msgstr "എല്ലാം ശരിയായി പ്രവർത്തിക്കുന്നു."
+
+#: src/status/element.ts
+msgid "Last 90 days"
+msgstr "കഴിഞ്ഞ 90 ദിവസം"
+
+#: src/status/element.ts
+msgid "Last 90 days, {uptime} uptime"
+msgstr "കഴിഞ്ഞ 90 ദിവസം, അപ്‌ടൈം {uptime}"
+
+#: src/status/element.ts
+msgid "Maintenance"
+msgstr "അറ്റകുറ്റപ്പണി"
+
+#: src/status/element.ts
+msgid "Major outage"
+msgstr "വലിയ തടസ്സം"
+
+#: src/status/element.ts
+msgid "OK"
+msgstr "ശരി"
+
+#: src/status/element.ts
+msgid "Partial"
+msgstr "ഭാഗികം"
+
+#: src/status/element.ts
+msgid "Partial outage"
+msgstr "ഭാഗിക തടസ്സം"
+
+#: src/status/element.ts
+msgid "Slow"
+msgstr "മന്ദം"
+
+#: src/status/element.ts
+msgid "Status by Yuva"
+msgstr "Yuva നൽകുന്ന സ്റ്റാറ്റസ്"
+
+#: src/status/element.ts
+msgid "Under maintenance"
+msgstr "അറ്റകുറ്റപ്പണിയിലാണ്"

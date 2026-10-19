@@ -21,7 +21,7 @@ const (
 	AnalyticsConsentScript = "yuva-analytics-consent.js"
 )
 
-var Files = []string{"yuva.js", "yuva-chat.js", "yuva-docs.js", "yuva-subscribe.js", AnalyticsScript, AnalyticsConsentScript}
+var Files = []string{"yuva.js", "yuva-chat.js", "yuva-docs.js", "yuva-subscribe.js", "yuva-status.js", AnalyticsScript, AnalyticsConsentScript}
 
 func Handler(name string) http.Handler {
 	body, err := embedded.ReadFile("dist/" + name)

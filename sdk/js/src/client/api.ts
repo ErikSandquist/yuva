@@ -43,6 +43,10 @@ export type ClientSubscriptionList = Schemas["ClientSubscriptionList"]
 export type ClientSubscriptionPut = Schemas["ClientSubscriptionPut"]
 export type ClientSubscriptionStatus = Schemas["ClientSubscriptionStatus"]
 export type SubscriptionState = Schemas["SubscriptionState"]
+export type PublicStatusPage = Schemas["PublicStatusPage"]
+export type PublicStatusComponent = Schemas["PublicStatusComponent"]
+export type PublicStatusDay = Schemas["PublicStatusDay"]
+export type StatusState = Schemas["StatusComponentStateValue"]
 
 export type Fetch = (url: string, init: RequestInit) => Promise<Response>
 

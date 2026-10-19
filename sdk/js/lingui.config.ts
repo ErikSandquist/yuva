@@ -63,6 +63,7 @@ export default defineConfig({
     },
     { path: "<rootDir>/src/locales/{locale}/thread", include: ["<rootDir>/src/docs/thread.ts"] },
     { path: "<rootDir>/src/locales/{locale}/subscribe", include: ["<rootDir>/src/subscribe"] },
+    { path: "<rootDir>/src/locales/{locale}/status", include: ["<rootDir>/src/status"] },
   ],
   format: formatter({ lineNumbers: false }),
   extractors: [createSwcExtractor()],

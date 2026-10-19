@@ -1,0 +1,72 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-19 21:12+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: hu\n"
+
+#: src/status/element.ts
+msgid "{name} system status"
+msgstr "{name} rendszerállapota"
+
+#: src/status/element.ts
+msgid "90 D"
+msgstr "90 N"
+
+#: src/status/element.ts
+msgid "All systems operational"
+msgstr "Minden rendszer működik"
+
+#: src/status/element.ts
+msgid "Degraded performance"
+msgstr "Csökkent teljesítmény"
+
+#: src/status/element.ts
+msgid "Down"
+msgstr "Leállt"
+
+#: src/status/element.ts
+msgid "Everything is working."
+msgstr "Minden működik."
+
+#: src/status/element.ts
+msgid "Last 90 days"
+msgstr "Elmúlt 90 nap"
+
+#: src/status/element.ts
+msgid "Last 90 days, {uptime} uptime"
+msgstr "Elmúlt 90 nap, {uptime} rendelkezésre állás"
+
+#: src/status/element.ts
+msgid "Maintenance"
+msgstr "Karbantartás"
+
+#: src/status/element.ts
+msgid "Major outage"
+msgstr "Nagy kiesés"
+
+#: src/status/element.ts
+msgid "OK"
+msgstr "OK"
+
+#: src/status/element.ts
+msgid "Partial"
+msgstr "Részleges"
+
+#: src/status/element.ts
+msgid "Partial outage"
+msgstr "Részleges kiesés"
+
+#: src/status/element.ts
+msgid "Slow"
+msgstr "Lassú"
+
+#: src/status/element.ts
+msgid "Status by Yuva"
+msgstr "Állapot: Yuva"
+
+#: src/status/element.ts
+msgid "Under maintenance"
+msgstr "Karbantartás alatt"

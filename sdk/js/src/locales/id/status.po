@@ -1,0 +1,72 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-19 21:12+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: id\n"
+
+#: src/status/element.ts
+msgid "{name} system status"
+msgstr "Status sistem {name}"
+
+#: src/status/element.ts
+msgid "90 D"
+msgstr "90 H"
+
+#: src/status/element.ts
+msgid "All systems operational"
+msgstr "Semua sistem berjalan"
+
+#: src/status/element.ts
+msgid "Degraded performance"
+msgstr "Kinerja menurun"
+
+#: src/status/element.ts
+msgid "Down"
+msgstr "Mati"
+
+#: src/status/element.ts
+msgid "Everything is working."
+msgstr "Semuanya berjalan normal."
+
+#: src/status/element.ts
+msgid "Last 90 days"
+msgstr "90 hari terakhir"
+
+#: src/status/element.ts
+msgid "Last 90 days, {uptime} uptime"
+msgstr "90 hari terakhir, uptime {uptime}"
+
+#: src/status/element.ts
+msgid "Maintenance"
+msgstr "Pemeliharaan"
+
+#: src/status/element.ts
+msgid "Major outage"
+msgstr "Gangguan besar"
+
+#: src/status/element.ts
+msgid "OK"
+msgstr "OK"
+
+#: src/status/element.ts
+msgid "Partial"
+msgstr "Sebagian"
+
+#: src/status/element.ts
+msgid "Partial outage"
+msgstr "Gangguan sebagian"
+
+#: src/status/element.ts
+msgid "Slow"
+msgstr "Lambat"
+
+#: src/status/element.ts
+msgid "Status by Yuva"
+msgstr "Status oleh Yuva"
+
+#: src/status/element.ts
+msgid "Under maintenance"
+msgstr "Dalam pemeliharaan"

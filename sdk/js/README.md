@@ -8,6 +8,7 @@ JavaScript SDK for [Yuva](https://github.com/productdevbook/yuva), open-source c
 | `useyuva/chat` | The `<yuva-chat>` web component, built on that client. Browser only. |
 | `useyuva/docs` | `<yuva-page-feedback>` and `<yuva-discussions>` for documentation pages. Registers in the browser only, so it is safe to import during SSR. |
 | `useyuva/subscribe` | `<yuva-subscribe>`, a mailing list sign-up form. Registers in the browser only. |
+| `useyuva/status` | `<yuva-status>`, a status band for the bottom of a site footer. Registers in the browser only. |
 | `useyuva/analytics` | `createAnalytics()`: cookieless pageviews and engagement for an analytics property. Does nothing during SSR. |
 | `useyuva/react` | `YuvaProvider`, `useConversations`, `useMessages`, `YuvaAnalytics`, `useYuvaAnalytics`. React 18+ is an optional peer. |
 | `useyuva/nuxt` | A Nuxt module: `YuvaChat`, `YuvaPageFeedback`, `YuvaDiscussions` and `YuvaSubscribe` components, configured once in `nuxt.config`, and the identity and webhook routes on the server. |
@@ -22,6 +23,7 @@ npm install useyuva
 Without a bundler, the server hosts the widget itself: `<script src="https://<your-yuva>/yuva.js" defer></script>`,
 the documentation page elements without the chat: `<script src="https://<your-yuva>/yuva-docs.js" defer></script>`,
 the subscribe form: `<script src="https://<your-yuva>/yuva-subscribe.js" defer></script>`,
+the status band: `<script src="https://<your-yuva>/yuva-status.js" defer></script>`,
 and analytics: `<script src="https://<your-yuva>/yuva-analytics.js" data-key="yuva_ak_…" defer></script>`.
 
 ## Client
@@ -178,6 +180,25 @@ with `--yuva-accent`, `--yuva-on-accent`, `--yuva-radius`, `--yuva-font` and
 `::part(field|button|consent|status)`. Events: `yuva-subscribe` (`{ lists, confirmation }`) and
 `yuva-subscribe-error` (`{ code }`); `YuvaSubscribe` in `useyuva/react` (`onSubscribe`, `onError`)
 and Nuxt (`@subscribe`, `@error`).
+
+## Status band
+
+```ts
+import "useyuva/status";
+```
+
+```html
+<yuva-status page="acme" server="https://support.example.com" components></yuva-status>
+```
+
+Put it at the very bottom of a footer. It reads the public status page `page` (its slug) and shows
+the state with the open incident, the last 90 days with the uptime and, with `components`, a second
+row with every visible component. It needs no credentials and refreshes every 60 seconds while the
+tab is visible. `theme` is `auto` (follows `prefers-color-scheme`), `light` or `dark`; `lang`
+defaults to the document's language, then the browser's. The background is transparent. Override
+the colours with `--yuva-status-paper`, `-ink`, `-soft`, `-faint`, `-rule`, `-cross`, `-ok`, `-warn`,
+`-partial`, `-maint`, `-bad`, `-ok-text`, `-warn-text`, `-bad-text`, the side padding with
+`--yuva-status-gutter` and the font with `--yuva-status-font`.
 
 ## Analytics
 
