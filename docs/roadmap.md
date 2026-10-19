@@ -318,6 +318,8 @@ issue; each part is done when its Accept holds on a running instance.
 
 ### M19.1 — Pages, components and incidents
 
+Status: done, issue #95; every Accept item verified on 2026-10-19 against a server built from `015570a`.
+
 - Tables, `/v1/status-pages` with components, groups, incidents, maintenance and updates; scopes
   `status:read`, `status:manage`; stored events and webhook types; MCP tools.
 - The public page rendered by the server: `/status/{slug}`, history, incident pages, Atom feed, badge,
@@ -332,6 +334,8 @@ completes on its own; an agent of another inbox sees neither the page nor its in
 the API.
 
 ### M19.2 — Heartbeats and pushed states
+
+Status: done, issue #96; every Accept item verified on 2026-10-19 against a server built from `015570a`.
 
 - `heartbeat` and `push` monitors with `/ingress/heartbeat/{token}` and `/ingress/status/{token}`
   (own JSON, Alertmanager, Grafana); thresholds, draft or published incidents on failure; member
