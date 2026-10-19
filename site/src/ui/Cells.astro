@@ -1,0 +1,33 @@
+---
+interface Props {
+  items: { term: string; text: string }[]
+  cols?: 2 | 3 | 4
+  numbered?: boolean
+  mono?: boolean
+}
+
+const { items, cols = 4, numbered = false, mono = false } = Astro.props
+const grid = {
+  2: "sm:grid-cols-2",
+  3: "md:grid-cols-3",
+  4: "sm:grid-cols-2 lg:grid-cols-4",
+}
+---
+
+<ul class:list={["grid gap-px border-t border-rule bg-rule", grid[cols]]}>
+  {items.map((item) => (
+    <li class="min-w-0 bg-paper px-5 py-6 sm:px-8">
+      {numbered && (
+        <span class="mb-3 block font-mono text-xs text-brand" aria-hidden="true">
+          {item.term}
+        </span>
+      )}
+      {!numbered && (
+        <span class:list={["block font-semibold tracking-tight", mono && "font-mono text-sm text-brand"]}>
+          {item.term}
+        </span>
+      )}
+      <span class:list={["block text-sm leading-relaxed text-ink-soft", !numbered && "mt-2"]}>{item.text}</span>
+    </li>
+  ))}
+</ul>

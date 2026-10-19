@@ -40,6 +40,14 @@ msgstr "Các endpoint {name} của API Yuva."
 msgid "{name}: {description} A free Yuva e-mail template."
 msgstr "{name}: {description} Mẫu email Yuva miễn phí."
 
+#: src/copy/status.ts
+msgid "90 days"
+msgstr "90 ngày"
+
+#: src/copy/status.ts
+msgid "A check sets a component's state without anyone's hand, and Yuva tells your team when it goes down or up."
+msgstr "Một lần kiểm tra đặt trạng thái của thành phần mà không cần ai can thiệp, và Yuva báo cho nhóm của bạn khi thành phần ngừng hoạt động hoặc phục hồi."
+
 #: src/copy/home.ts
 msgid "a contact and their data"
 msgstr "một liên hệ và dữ liệu của họ"
@@ -47,6 +55,10 @@ msgstr "một liên hệ và dữ liệu của họ"
 #: src/copy/home.ts
 msgid "A conversation in the {platform} SDK: a question about an order and the team's replies with a tracking link, and a box to write back."
 msgstr "Một cuộc trò chuyện trong SDK {platform}: câu hỏi về một đơn hàng và các trả lời của nhóm kèm liên kết theo dõi, cùng ô để trả lời."
+
+#: src/copy/status.ts
+msgid "A customer can dismiss it. It returns when the incident gets a new update."
+msgstr "Khách hàng có thể đóng nó. Nó hiện lại khi sự cố có cập nhật mới."
 
 #: src/copy/cloudflare-email.ts
 msgid "A customer writes to one of your support addresses, for example support@example.com."
@@ -56,6 +68,10 @@ msgstr "Một khách hàng viết đến một trong các địa chỉ hỗ tr�
 msgid "A finished import in the panel: 6 conversations and 12 messages copied from an mbox file, with a note that Yuva has no access to your mailbox."
 msgstr "Một lần nhập đã hoàn tất trong bảng điều khiển: 6 cuộc trò chuyện và 12 tin nhắn được sao chép từ tệp mbox, kèm ghi chú rằng Yuva không có quyền truy cập hộp thư của bạn."
 
+#: src/copy/status.ts
+msgid "A footer band: a coloured square and the state in words, a strip of 90 days with the uptime, and Status by Yuva."
+msgstr "Một dải chân trang: ô vuông màu và trạng thái bằng lời, dải 90 ngày với thời gian hoạt động, và Status by Yuva."
+
 #: src/copy/contact.ts
 msgid "A hosted service and commercial licenses"
 msgstr "Dịch vụ được lưu trữ và giấy phép thương mại"
@@ -64,13 +80,41 @@ msgstr "Dịch vụ được lưu trữ và giấy phép thương mại"
 msgid "A message can be up to 25 MiB including attachments, which is the Cloudflare Email Routing limit. Yuva keeps up to 50 attachments per message, each within the server's attachment size limit (25 MiB by default) and allowed types; it leaves out the rest."
 msgstr "Một thư có thể nặng tới 25 MiB kể cả tệp đính kèm, đó là giới hạn của Cloudflare Email Routing. Yuva giữ tối đa 50 tệp đính kèm mỗi thư, mỗi tệp nằm trong giới hạn dung lượng tệp đính kèm của máy chủ (mặc định 25 MiB) và thuộc các loại được phép; phần còn lại bị bỏ qua."
 
+#: src/copy/status.ts
+msgid "A notice waits 60 seconds so you can undo it, and notices about one incident keep their distance, so a long outage does not flood inboxes."
+msgstr "Một thông báo chờ 60 giây để bạn có thể hoàn tác, và các thông báo về cùng một sự cố được giãn cách, để một sự cố kéo dài không làm ngập hộp thư."
+
+#: src/copy/status.ts
+msgid "A page stays private until you publish it, and your team previews it in the panel before that."
+msgstr "Trang vẫn ở chế độ riêng tư cho đến khi bạn xuất bản, và nhóm của bạn xem trước trong bảng điều khiển trước đó."
+
+#: src/copy/home.ts
+msgid "A public page for the state of your products, kept in the same inbox as your support. Checks keep it current and subscribers hear by e-mail."
+msgstr "Một trang công khai về tình trạng sản phẩm của bạn, trong cùng hộp thư với bộ phận hỗ trợ. Các lần kiểm tra giữ trang luôn cập nhật và người đăng ký biết qua e-mail."
+
+#: src/copy/status.ts
+msgid "A public status page with components, incidents, maintenance and history, kept current by checks and by your team. E-mail subscribers, a line in the chat widget and the apps, and one reply to everyone who wrote."
+msgstr "Một trang trạng thái công khai với thành phần, sự cố, bảo trì và lịch sử, được cập nhật nhờ các lần kiểm tra và nhóm của bạn. Người đăng ký e-mail, một dòng trong widget chat và ứng dụng, và một phản hồi cho mọi người đã viết."
+
+#: src/copy/status.ts
+msgid "A sample status page: the overall state, an open incident and four components with their last 90 days as coloured bars."
+msgstr "Trang trạng thái mẫu: trạng thái chung, một sự cố đang mở và bốn thành phần với 90 ngày gần nhất dưới dạng các thanh màu."
+
 #: src/copy/cloudflare-email.ts
 msgid "A small open-source Worker"
 msgstr "Một Worker mã nguồn mở nhỏ gọn"
 
+#: src/copy/status.ts
+msgid "A Yuva status page shows whether your product works. It sits in your support inbox, so your chat widget and apps show an open incident, and one reply answers everyone who wrote about it."
+msgstr "Trang trạng thái Yuva cho biết sản phẩm của bạn có hoạt động không. Nó nằm trong hộp thư hỗ trợ của bạn, nên widget chat và ứng dụng hiện sự cố đang mở, và một phản hồi đến tất cả những người đã viết về nó."
+
 #: src/copy/home.ts
 msgid "Accepted answer"
 msgstr "Câu trả lời được chấp nhận"
+
+#: src/copy/status.ts
+msgid "Add it for a second row with each component's state."
+msgstr "Thêm vào để có hàng thứ hai với trạng thái của từng thành phần."
 
 #: src/copy/home.ts
 msgid "Add ratings and a discussion area to your own documentation pages."
@@ -121,6 +165,14 @@ msgstr "Tất cả bản phát hành trên GitHub"
 msgid "All templates"
 msgstr "Tất cả mẫu"
 
+#: src/copy/status.ts
+msgid "An Atom feed that needs no subscription, a badge for your README, and the same page as JSON for your own site or app."
+msgstr "Một nguồn cấp Atom không cần đăng ký, một huy hiệu cho README của bạn và chính trang này dưới dạng JSON cho trang web hoặc ứng dụng của bạn."
+
+#: src/copy/status.ts
+msgid "An outage brings the same question by e-mail, chat and in the apps. Link those conversations to the incident, write one answer, and send it to all of them."
+msgstr "Sự cố mang đến cùng một câu hỏi qua e-mail, chat và trong ứng dụng. Liên kết các cuộc trò chuyện đó với sự cố, viết một câu trả lời và gửi cho tất cả."
+
 #: src/copy/docs.ts
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -132,12 +184,20 @@ msgid "and funnels"
 msgstr "và phễu chuyển đổi"
 
 #: src/copy/home.ts
+msgid "and planned maintenance"
+msgstr "và bảo trì theo lịch"
+
+#: src/copy/home.ts
 msgid "and Postgres"
 msgstr "và Postgres"
 
 #: src/copy/home.ts
 msgid "and the inboxes they can see"
 msgstr "và các hộp thư họ có thể xem"
+
+#: src/copy/status.ts
+msgid "Announce planned work with a window. Yuva starts and completes it on time."
+msgstr "Thông báo công việc đã lên kế hoạch với một khung giờ. Yuva bắt đầu và hoàn tất đúng giờ."
 
 #: src/copy/templates.ts
 msgid "Announcement"
@@ -261,9 +321,17 @@ msgstr "Doanh nghiệp"
 msgid "By"
 msgstr "Bởi"
 
+#: src/copy/home.ts
+msgid "by e-mail, with double opt-in"
+msgstr "qua e-mail, với xác nhận kép"
+
 #: src/copy/cloudflare-email.ts
 msgid "Can someone forge mail to my Yuva server?"
 msgstr "Có ai giả mạo được thư gửi đến máy chủ Yuva của tôi không?"
+
+#: src/copy/status.ts
+msgid "Certificates"
+msgstr "Chứng chỉ"
 
 #: src/copy/brand.ts
 msgid "Change its colours"
@@ -288,9 +356,21 @@ msgstr "CHANGELOG.md"
 msgid "Channels"
 msgstr "Kênh"
 
+#: src/copy/status.ts
+msgid "Chat and e-mail work normally."
+msgstr "Chat và e-mail hoạt động bình thường."
+
+#: src/copy/status.ts
+msgid "Chat messages arrive late"
+msgstr "Tin nhắn chat đến muộn"
+
 #: src/copy/home.ts
 msgid "checks before you send"
 msgstr "kiểm tra trước khi gửi"
+
+#: src/copy/status.ts
+msgid "Checks keep it current"
+msgstr "Các lần kiểm tra giữ trang luôn cập nhật"
 
 #: src/copy/ai.ts
 msgid "Choose the workspace and what the assistant may do, then approve."
@@ -336,6 +416,11 @@ msgstr "Giấy phép thương mại"
 #: src/copy/pages.ts
 msgid "Compare changes"
 msgstr "So sánh thay đổi"
+
+#: src/copy/home.ts
+#: src/copy/status.ts
+msgid "Components"
+msgstr "Thành phần"
 
 #: src/copy/home.ts
 msgid "Connect a support address, a chat widget for your website or the SDKs for your apps."
@@ -412,6 +497,7 @@ msgstr "Sao chép SVG"
 
 #: src/copy/home.ts
 #: src/copy/pages.ts
+#: src/copy/status.ts
 msgid "Create an account"
 msgstr "Tạo tài khoản"
 
@@ -430,6 +516,10 @@ msgstr "Tối"
 #: src/ui/ThemeToggle.astro
 msgid "Dark theme"
 msgstr "Giao diện tối"
+
+#: src/copy/status.ts
+msgid "Degraded performance"
+msgstr "Hiệu năng suy giảm"
 
 #: src/copy/home.ts
 msgid "Delete"
@@ -463,6 +553,10 @@ msgstr "Thiết kế và bản nháp gửi hàng loạt"
 msgid "Desktop"
 msgstr "Máy tính"
 
+#: src/copy/status.ts
+msgid "Details"
+msgstr "Chi tiết"
+
 #: src/copy/docs.ts
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -477,6 +571,14 @@ msgstr "Bản tóm tắt"
 #: src/copy/home.ts
 msgid "Discussions"
 msgstr "Thảo luận"
+
+#: src/copy/status.ts
+msgid "Dismiss"
+msgstr "Đóng"
+
+#: src/copy/status.ts
+msgid "Dismissable"
+msgstr "Có thể đóng"
 
 #: src/copy/brand.ts
 msgid "Do"
@@ -505,6 +607,10 @@ msgstr "Yuva có dùng kết quả DMARC từ Cloudflare không?"
 msgid "Don't"
 msgstr "Không nên"
 
+#: src/copy/status.ts
+msgid "Double opt-in"
+msgstr "Xác nhận kép"
+
 #: src/copy/header.ts
 msgid "Download logo"
 msgstr "Tải logo"
@@ -531,12 +637,17 @@ msgstr "Bản nháp trả lời"
 
 #: src/copy/contact.ts
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "E-mail"
 msgstr "Email"
 
 #: src/pages/og/[lang].png.ts
 msgid "E-mail · live chat · in-app · self-hosted"
 msgstr "Email · chat trực tiếp · trong ứng dụng · tự lưu trữ"
+
+#: src/copy/status.ts
+msgid "E-mail subscribers"
+msgstr "Người đăng ký e-mail"
 
 #: src/copy/header.ts
 #: src/copy/templates.ts
@@ -559,6 +670,10 @@ msgstr "Còn non trẻ và được xây dựng công khai"
 #: src/copy/docs.ts
 msgid "Edit this page on GitHub"
 msgstr "Chỉnh sửa trang này trên GitHub"
+
+#: src/copy/status.ts
+msgid "Elevated API response times"
+msgstr "Thời gian phản hồi của API tăng"
 
 #: src/copy/cloudflare-email.ts
 msgid "Email Routing becomes the MX of the domain, so use a domain or subdomain that no other mail server handles."
@@ -624,6 +739,18 @@ msgstr "Tất cả hướng dẫn của Yuva ở một nơi: cài đặt, kênh,
 msgid "Every Yuva release and what changed in it, from the changelog."
 msgstr "Mỗi bản phát hành của Yuva và những gì đã thay đổi, từ nhật ký thay đổi."
 
+#: src/copy/status.ts
+msgid "Everything is in the API, with the scopes status:read and status:manage. Webhooks announce component, incident and monitor changes, and assistants connected over MCP can open drafts and resolve incidents."
+msgstr "Mọi thứ đều có trong API, với các phạm vi status:read và status:manage. Webhook thông báo thay đổi của thành phần, sự cố và trình giám sát, còn các trợ lý kết nối qua MCP có thể mở bản nháp và giải quyết sự cố."
+
+#: src/copy/status.ts
+msgid "Everything moves"
+msgstr "Mọi thứ chuyển theo"
+
+#: src/copy/status.ts
+msgid "Feed, badge and JSON"
+msgstr "Nguồn cấp, huy hiệu và JSON"
+
 #: src/copy/home.ts
 msgid "Feedback"
 msgstr "Phản hồi"
@@ -651,6 +778,10 @@ msgstr "Dành cho các cửa hàng ứng dụng và nền tảng tự bo tròn g
 #: src/copy/brand.ts
 msgid "For dark backgrounds."
 msgstr "Dành cho nền tối."
+
+#: src/copy/status.ts
+msgid "For developers"
+msgstr "Dành cho nhà phát triển"
 
 #: src/copy/contact.ts
 msgid "For investors"
@@ -683,6 +814,10 @@ msgstr "Thiết kế miễn phí để sao chép."
 #: src/copy/templates.ts
 msgid "Free starter designs for newsletters, product updates, announcements and more. Preview them here and open one in Yuva's e-mail designer."
 msgstr "Thiết kế khởi đầu miễn phí cho bản tin, cập nhật sản phẩm, thông báo và hơn thế nữa. Xem trước ở đây và mở một mẫu trong trình thiết kế email của Yuva."
+
+#: src/copy/status.ts
+msgid "From investigating to resolved, with every update kept. A published update is corrected, never removed."
+msgstr "Từ đang điều tra đến đã khắc phục, mọi cập nhật đều được giữ lại. Cập nhật đã xuất bản được sửa chứ không bao giờ bị xóa."
 
 #: src/copy/home.ts
 msgid "from the people you helped"
@@ -728,6 +863,14 @@ msgstr "Hướng dẫn"
 msgid "Guides for every part."
 msgstr "Hướng dẫn cho từng phần."
 
+#: src/copy/status.ts
+msgid "Heartbeats"
+msgstr "Theo nhóm, mỗi thành phần có trạng thái riêng, một thanh cho mỗi ngày đến 90 ngày và, nếu muốn, thời gian hoạt động."
+
+#: src/copy/status.ts
+msgid "Held, then sent"
+msgstr "Trong widget chat và ứng dụng"
+
 #: src/copy/home.ts
 msgid "Help center"
 msgstr "Trung tâm trợ giúp"
@@ -741,6 +884,7 @@ msgid "Hi! Tell us a little about yourself and what you have in mind."
 msgstr "Xin chào! Hãy kể đôi chút về bạn và điều bạn đang nghĩ đến."
 
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "History"
 msgstr "Lịch sử"
 
@@ -768,6 +912,10 @@ msgstr "AGPL, các SDK theo giấy phép MIT và CLA khớp với nhau như th�
 msgid "How to add a template"
 msgstr "Cách thêm một mẫu"
 
+#: src/copy/status.ts
+msgid "HTTP"
+msgstr "Sự cố"
+
 #: src/copy/templates.ts
 msgid "https://yuva.example.com"
 msgstr "https://yuva.example.com"
@@ -787,6 +935,10 @@ msgstr "Tôi muốn trao đổi về việc đầu tư vào Yuva."
 #: src/copy/contact.ts
 msgid "I'm writing about Yuva and have a few questions."
 msgstr "Tôi đang viết về Yuva và có vài câu hỏi."
+
+#: src/copy/status.ts
+msgid "Identified"
+msgstr "Sự cố"
 
 #: src/copy/home.ts
 msgid "Identity tokens"
@@ -812,6 +964,14 @@ msgstr "Vị trí"
 msgid "In claude.ai or Claude Desktop, open Customize → Connectors → Add custom connector."
 msgstr "Trong claude.ai hoặc Claude Desktop, mở Customize → Connectors → Add custom connector."
 
+#: src/copy/status.ts
+msgid "In groups, each with its state, a bar for every day of up to 90 days and, if you like, its uptime."
+msgstr "Sự cố được soạn sẵn cho bạn"
+
+#: src/copy/status.ts
+msgid "In the chat widget and the apps"
+msgstr "Đang điều tra"
+
 #: src/copy/cloudflare-email.ts
 msgid "In the Cloudflare dashboard, open your domain → Email → Email Routing and enable it. Cloudflare adds its MX and SPF records."
 msgstr "Trong bảng điều khiển Cloudflare, mở tên miền của bạn → Email → Email Routing và bật nó lên. Cloudflare thêm các bản ghi MX và SPF của nó."
@@ -834,6 +994,19 @@ msgstr "Hộp thư đến"
 msgid "Inbox and conversations"
 msgstr "Hộp thư và các cuộc trò chuyện"
 
+#: src/copy/status.ts
+msgid "Incident"
+msgstr "Heartbeat"
+
+#: src/copy/home.ts
+#: src/copy/status.ts
+msgid "Incidents"
+msgstr "Giữ lại, rồi gửi"
+
+#: src/copy/status.ts
+msgid "Incidents drafted for you"
+msgstr "HTTP"
+
 #: src/copy/brand.ts
 msgid "Ink"
 msgstr "Mực"
@@ -842,9 +1015,17 @@ msgstr "Mực"
 msgid "Introduction"
 msgstr "Giới thiệu"
 
+#: src/copy/status.ts
+msgid "Investigating"
+msgstr "Đã xác định"
+
 #: src/copy/contact.ts
 msgid "Investment"
 msgstr "Đầu tư"
+
+#: src/copy/status.ts
+msgid "Issued and renewed automatically, by an on-demand proxy such as Caddy or by Cloudflare custom hostnames."
+msgstr "Chứng chỉ được cấp và gia hạn tự động, bởi một proxy theo yêu cầu như Caddy hoặc bởi tên máy chủ tùy chỉnh của Cloudflare."
 
 #: src/copy/ai.ts
 msgid "It does the rest with you."
@@ -903,12 +1084,25 @@ msgstr "Sáng"
 msgid "Light theme"
 msgstr "Giao diện sáng"
 
+#: src/copy/status.ts
+msgid "light, dark or auto, which follows the visitor's colour scheme. The default is auto."
+msgstr "light, dark hoặc auto, theo bảng màu của khách truy cập. Mặc định là auto."
+
+#: src/copy/status.ts
+msgid "Link conversations to the incident in the panel. The incident page lists them."
+msgstr "Liên kết các cuộc trò chuyện với sự cố trong bảng điều khiển. Trang sự cố liệt kê chúng."
+
+#: src/copy/status.ts
+msgid "Links, the feed, the badge, the JSON and e-mail notices all use your domain."
+msgstr "Liên kết, nguồn cấp, huy hiệu, JSON và thông báo e-mail đều dùng tên miền của bạn."
+
 #: src/copy/home.ts
 msgid "Lists"
 msgstr "Danh sách"
 
 #: src/copy/contact.ts
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "Live chat"
 msgstr "Chat trực tiếp"
 
@@ -960,6 +1154,14 @@ msgstr "Hộp thư"
 msgid "Maintainer of Yuva"
 msgstr "Người bảo trì Yuva"
 
+#: src/copy/status.ts
+msgid "Maintenance"
+msgstr "Bảo trì"
+
+#: src/copy/status.ts
+msgid "Make a page, add your components and publish it. The guide is in English, Turkish and German."
+msgstr "Tạo một trang, thêm các thành phần và xuất bản. Hướng dẫn có tiếng Anh, tiếng Thổ Nhĩ Kỳ và tiếng Đức."
+
 #: src/copy/home.ts
 msgid "marked by your team"
 msgstr "do nhóm của bạn đánh dấu"
@@ -984,6 +1186,14 @@ msgstr "Thành viên"
 #: src/copy/header.ts
 msgid "Menu"
 msgstr "Menu"
+
+#: src/copy/status.ts
+msgid "Messages"
+msgstr "Tin nhắn"
+
+#: src/copy/status.ts
+msgid "Minor"
+msgstr "Nhỏ"
 
 #: src/copy/docs.ts
 msgid "More"
@@ -1087,6 +1297,14 @@ msgstr "Không, nếu không có sự cho phép bằng văn bản"
 msgid "Notes and mentions"
 msgstr "Ghi chú và lượt nhắc"
 
+#: src/copy/status.ts
+msgid "Nothing to set up"
+msgstr "Không cần thiết lập gì"
+
+#: src/copy/status.ts
+msgid "Notices go out through your inbox's own e-mail channel, from its address, and the people on the list are kept apart from your newsletters."
+msgstr "Thông báo được gửi qua kênh e-mail riêng của hộp thư bạn, từ địa chỉ của nó, và những người trong danh sách được tách biệt khỏi bản tin của bạn."
+
 #: src/copy/home.ts
 msgid "of every conversation"
 msgstr "của mọi cuộc trò chuyện"
@@ -1098,6 +1316,14 @@ msgstr "mẫu miễn phí"
 #: src/copy/brand.ts
 msgid "offer a hosted or managed service, or a product, under the Yuva name or a confusingly similar one;"
 msgstr "cung cấp một dịch vụ được lưu trữ hoặc được quản lý, hay một sản phẩm, dưới tên Yuva hoặc một tên giống đến mức gây nhầm lẫn;"
+
+#: src/copy/status.ts
+msgid "On a dark site"
+msgstr "Trên trang web tối"
+
+#: src/copy/status.ts
+msgid "On a light site"
+msgstr "Trên trang web sáng"
 
 #: src/copy/brand.ts
 msgid "On dark backgrounds"
@@ -1132,6 +1358,10 @@ msgstr "Một tệp nhị phân duy nhất"
 msgid "One binary and Postgres."
 msgstr "Một tệp nhị phân và Postgres."
 
+#: src/copy/status.ts
+msgid "One checkbox per component, and a link in every mail to change it or leave."
+msgstr "Một ô chọn cho mỗi thành phần và trong mỗi e-mail có liên kết để đổi lựa chọn hoặc hủy đăng ký."
+
 #: src/copy/home.ts
 msgid "One Docker image and Postgres on your own server."
 msgstr "Một image Docker và Postgres trên máy chủ của riêng bạn."
@@ -1148,6 +1378,14 @@ msgstr "Một hồ sơ cho mỗi người, dù họ viết từ kênh nào."
 #: src/copy/home.ts
 msgid "One small server runs all of it. The server is open source, and the SDKs carry no copyleft."
 msgstr "Một máy chủ nhỏ chạy tất cả. Máy chủ là mã nguồn mở, và các SDK không mang copyleft."
+
+#: src/copy/status.ts
+msgid "Only the page is served on your domain, never the API or the panel."
+msgstr "Trên tên miền của bạn chỉ trang được phục vụ, không bao giờ là API hay bảng điều khiển."
+
+#: src/copy/status.ts
+msgid "Only yours"
+msgstr "Chỉ của bạn"
 
 #: src/copy/contact.ts
 msgid "Open a GitHub issue"
@@ -1178,6 +1416,11 @@ msgid "Open source that stays open"
 msgstr "Mã nguồn mở luôn mở"
 
 #: src/copy/home.ts
+msgid "Open status pages"
+msgstr "Mở trang trạng thái"
+
+#: src/copy/home.ts
+#: src/copy/status.ts
 msgid "Open the API reference"
 msgstr "Mở tài liệu tham khảo API"
 
@@ -1205,6 +1448,10 @@ msgstr "Hợp đồng OpenAPI"
 msgid "Opens Yuva's e-mail designer with this template. You sign in first if you have not."
 msgstr "Mở trình thiết kế email của Yuva với mẫu này. Nếu chưa đăng nhập, bạn sẽ đăng nhập trước."
 
+#: src/copy/status.ts
+msgid "Operational"
+msgstr "Hoạt động bình thường"
+
 #: src/copy/cloudflare-email.ts
 msgid "Optional: keep mail during an outage by adding a fallback address to the deploy command:"
 msgstr "Tùy chọn: giữ thư trong lúc gián đoạn bằng cách thêm một địa chỉ dự phòng vào lệnh triển khai:"
@@ -1229,6 +1476,10 @@ msgstr "Những cách khác để mang thư sang"
 msgid "Other ways to reach us"
 msgstr "Những cách khác để liên hệ với chúng tôi"
 
+#: src/copy/status.ts
+msgid "Overall state"
+msgstr "Trạng thái chung"
+
 #: src/copy/docs.ts
 msgid "Overview"
 msgstr "Tổng quan"
@@ -1245,9 +1496,17 @@ msgstr "Trang và nguồn"
 msgid "Parameters"
 msgstr "Tham số"
 
+#: src/copy/status.ts
+msgid "Partial outage"
+msgstr "Gián đoạn một phần"
+
 #: src/copy/contact.ts
 msgid "Partnership"
 msgstr "Hợp tác"
+
+#: src/copy/status.ts
+msgid "Past incidents and maintenance by month, each with its own page."
+msgstr "Các sự cố và đợt bảo trì trước đây theo tháng, mỗi mục có trang riêng."
 
 #: src/copy/docs.ts
 msgid "Payload"
@@ -1264,6 +1523,10 @@ msgstr "Điện thoại"
 #: src/copy/ai.ts
 msgid "Pick your assistant"
 msgstr "Chọn trợ lý của bạn"
+
+#: src/copy/status.ts
+msgid "Plain notices"
+msgstr "Thông báo đơn giản"
 
 #: src/copy/pages.ts
 msgid "Posts are published in English."
@@ -1325,6 +1588,10 @@ msgstr "Dự án"
 msgid "publish a modified version under the Yuva name — rename your fork;"
 msgstr "phát hành một phiên bản đã chỉnh sửa dưới tên Yuva — hãy đổi tên bản fork của bạn;"
 
+#: src/copy/status.ts
+msgid "Pushed states"
+msgstr "Trạng thái được đẩy"
+
 #: src/copy/cloudflare-email.ts
 msgid "Questions and answers"
 msgstr "Hỏi và đáp"
@@ -1354,6 +1621,7 @@ msgid "Read the English page"
 msgstr "Đọc trang tiếng Anh"
 
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "Read the guide"
 msgstr "Đọc hướng dẫn"
 
@@ -1434,6 +1702,10 @@ msgstr "Bản phát hành"
 msgid "Removed"
 msgstr "Đã gỡ bỏ"
 
+#: src/copy/status.ts
+msgid "Reply to linked"
+msgstr "Trả lời những cuộc trò chuyện đã liên kết"
+
 #: src/layouts/Footer.astro
 msgid "Report a vulnerability"
 msgstr "Báo cáo lỗ hổng bảo mật"
@@ -1467,6 +1739,10 @@ msgstr "Tài nguyên"
 #: src/copy/docs.ts
 msgid "Response"
 msgstr "Phản hồi"
+
+#: src/copy/status.ts
+msgid "Response times"
+msgstr "Thời gian phản hồi"
 
 #: src/copy/docs.ts
 msgid "Responses"
@@ -1556,9 +1832,21 @@ msgstr "Gửi một tin nhắn thử và xem cuộc trò chuyện xuất hiện 
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "Gửi bản tin đến danh sách gửi thư của bạn và xem người đọc làm gì với chúng."
 
+#: src/copy/status.ts
+msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "Tự gửi operational hoặc một trạng thái gián đoạn. Cảnh báo từ Alertmanager và Grafana được chấp nhận nguyên trạng."
+
+#: src/copy/status.ts
+msgid "Send us a message"
+msgstr "Gửi tin nhắn cho chúng tôi"
+
 #: src/copy/home.ts
 msgid "sent by your own app"
 msgstr "do chính ứng dụng của bạn gửi"
+
+#: src/copy/status.ts
+msgid "Serve the page at an address such as status.example.com. Add a CNAME record and a TXT record that shows the domain is yours, and Yuva checks them for you."
+msgstr "Phục vụ trang tại một địa chỉ như status.example.com. Thêm bản ghi CNAME và bản ghi TXT chứng minh tên miền là của bạn, và Yuva sẽ kiểm tra giúp bạn."
 
 #: src/copy/templates.ts
 msgid "Server address"
@@ -1583,6 +1871,10 @@ msgstr "Thiết lập phân tích Yuva cho trang web này, với một mục ti�
 #: src/copy/pages.ts
 msgid "Share"
 msgstr "Chia sẻ"
+
+#: src/copy/status.ts
+msgid "Show your status in your site's footer: the state in words, a strip of the last 90 days with uptime, and a link to your page. It is one script and one element."
+msgstr "Hiển thị trạng thái của bạn ở chân trang web: tình trạng bằng lời, dải 90 ngày gần nhất với thời gian hoạt động và liên kết đến trang của bạn. Chỉ một tập lệnh và một phần tử."
 
 #: src/copy/ai.ts
 msgid "Sign in from Gemini CLI:"
@@ -1612,6 +1904,10 @@ msgstr "Chuyển đến nội dung"
 msgid "so users write as themselves"
 msgstr "để người dùng viết bằng chính danh nghĩa của họ"
 
+#: src/copy/status.ts
+msgid "Some systems are down"
+msgstr "Một số hệ thống đang ngừng hoạt động"
+
 #: src/copy/contact.ts
 msgid "Something else"
 msgstr "Việc khác"
@@ -1632,9 +1928,28 @@ msgstr "Bắt đầu miễn phí"
 msgid "Start with AI"
 msgstr "Bắt đầu với AI"
 
+#: src/copy/status.ts
+msgid "Start with the guide."
+msgstr "Bắt đầu với hướng dẫn."
+
 #: src/copy/templates.ts
 msgid "Starter designs for the e-mail designer, in English, Turkish and German. Preview one, then open it in Yuva and make it yours."
 msgstr "Thiết kế khởi đầu cho trình thiết kế email, bằng tiếng Anh, tiếng Thổ Nhĩ Kỳ và tiếng Đức. Xem trước một mẫu, rồi mở trong Yuva và biến nó thành của bạn."
+
+#: src/copy/status.ts
+msgid "Status by Yuva"
+msgstr "Status by Yuva"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/copy/status.ts
+#: src/layouts/Footer.astro
+msgid "Status pages"
+msgstr "Trang trạng thái"
+
+#: src/copy/status.ts
+msgid "Status pages for your products | Yuva"
+msgstr "Trang trạng thái cho sản phẩm của bạn | Yuva"
 
 #: src/copy/home.ts
 msgid "stay inside the team"
@@ -1643,6 +1958,10 @@ msgstr "ở lại trong nhóm"
 #: src/copy/brand.ts
 msgid "Stretch or squash it"
 msgstr "Kéo giãn hoặc nén nó"
+
+#: src/copy/home.ts
+msgid "Subscribers"
+msgstr "Người đăng ký"
 
 #: src/copy/cloudflare-email.ts
 msgid "Support e-mail through Cloudflare Email Routing | Yuva"
@@ -1656,6 +1975,10 @@ msgstr "Email hỗ trợ qua Cloudflare."
 msgid "Tag on GitHub"
 msgstr "Thẻ trên GitHub"
 
+#: src/copy/status.ts
+msgid "TCP"
+msgstr "TCP"
+
 #: src/copy/home.ts
 msgid "Team and reports"
 msgstr "Nhóm và báo cáo"
@@ -1663,6 +1986,14 @@ msgstr "Nhóm và báo cáo"
 #: src/copy/contact.ts
 msgid "Teams can use our hosted service, and because every contribution is made under a CLA, Yuva can also be offered under a commercial license."
 msgstr "Các nhóm có thể dùng dịch vụ được lưu trữ của chúng tôi, và vì mọi đóng góp đều theo CLA, Yuva cũng có thể được cung cấp theo giấy phép thương mại."
+
+#: src/copy/status.ts
+msgid "Tell customers what is down before they have to ask."
+msgstr "Cho khách hàng biết điều gì đang ngừng hoạt động trước khi họ phải hỏi."
+
+#: src/copy/header.ts
+msgid "Tell customers what works."
+msgstr "Cho khách hàng biết điều gì đang hoạt động."
 
 #: src/copy/ai.ts
 msgid "Tell your assistant to add Yuva."
@@ -1676,13 +2007,37 @@ msgstr "Thư viện mẫu"
 msgid "Templates"
 msgstr "Mẫu"
 
+#: src/copy/status.ts
+msgid "The address of your status page."
+msgstr "Địa chỉ trang trạng thái của bạn."
+
 #: src/copy/home.ts
 msgid "The analytics overview in the panel: 30 days of visitors, pageviews and bounce rate, a daily chart with a note on the day a newsletter went out, and the top pages and sources."
 msgstr "Tổng quan phân tích trong bảng điều khiển: 30 ngày lượt khách, lượt xem trang và tỷ lệ thoát, biểu đồ theo ngày có ghi chú vào ngày gửi bản tin, cùng các trang và nguồn hàng đầu."
 
+#: src/copy/status.ts
+msgid "The answer is the same for every address, and nobody is subscribed without confirming."
+msgstr "Câu trả lời giống nhau cho mọi địa chỉ, và không ai được đăng ký nếu chưa xác nhận."
+
+#: src/copy/status.ts
+msgid "The API is running slow"
+msgstr "API đang chạy chậm"
+
+#: src/copy/status.ts
+msgid "The API is slow and some chats are delayed."
+msgstr "API chậm và một số cuộc chat bị trễ."
+
 #: src/copy/ai.ts
 msgid "The assistant acts as you, with no more access than you approve, and asks before it changes anything."
 msgstr "Trợ lý hành động như bạn, không có quyền truy cập nhiều hơn mức bạn phê duyệt, và hỏi trước khi thay đổi bất cứ điều gì."
+
+#: src/copy/status.ts
+msgid "The band for your own site"
+msgstr "Dải cho trang web của bạn"
+
+#: src/copy/status.ts
+msgid "The chat widget with a line above the conversations: elevated API response times, minor, investigating, with a link to the details."
+msgstr "Widget chat với một dòng phía trên các cuộc trò chuyện: thời gian phản hồi API tăng, nhỏ, đang điều tra, kèm liên kết đến chi tiết."
 
 #: src/copy/header.ts
 msgid "The code, open source."
@@ -1703,6 +2058,10 @@ msgstr "Các sự kiện Yuva gửi đến endpoint webhook của bạn và payl
 #: src/copy/ai.ts
 msgid "The first time the assistant uses Yuva, your browser opens Yuva to sign in."
 msgstr "Lần đầu trợ lý dùng Yuva, trình duyệt của bạn mở Yuva để đăng nhập."
+
+#: src/copy/status.ts
+msgid "The line appears and goes away with the incident."
+msgstr "Dòng này xuất hiện và biến mất cùng sự cố."
 
 #: src/copy/brand.ts
 msgid "The mark is drawn to stay readable from an app store listing down to a 16-pixel browser tab."
@@ -1728,6 +2087,10 @@ msgstr "Bảng điều khiển với phản hồi gửi từ ứng dụng di đ�
 msgid "The payloads Yuva sends to your webhook endpoints."
 msgstr "Các payload Yuva gửi đến endpoint webhook của bạn."
 
+#: src/copy/status.ts
+msgid "The public page"
+msgstr "Trang công khai"
+
 #: src/copy/home.ts
 msgid "The report of a sent newsletter in the panel: 240 sent, 5 unsubscribed and 56 who clicked a link, a chart over time and the number of clicks on each link."
 msgstr "Báo cáo của một bản tin đã gửi trong bảng điều khiển: 240 đã gửi, 5 hủy đăng ký và 56 lượt nhấp liên kết, biểu đồ theo thời gian và số lượt nhấp trên từng liên kết."
@@ -1736,9 +2099,17 @@ msgstr "Báo cáo của một bản tin đã gửi trong bảng điều khiển:
 msgid "The server and panel are AGPL-3.0, the SDKs and API contract MIT. Improvements to the core stay public."
 msgstr "Máy chủ và bảng điều khiển theo AGPL-3.0, SDK và hợp đồng API theo MIT. Các cải tiến cho phần lõi vẫn công khai."
 
+#: src/copy/status.ts
+msgid "The state in words, the affected components and the updates, with no images, tracking or promotion. In English, Turkish or German."
+msgstr "Trạng thái bằng lời, các thành phần bị ảnh hưởng và các cập nhật, không có hình ảnh, theo dõi hay quảng cáo. Bằng tiếng Anh, tiếng Thổ Nhĩ Kỳ hoặc tiếng Đức."
+
 #: src/copy/home.ts
 msgid "The support screen of the {platform} SDK inside an app: the person's conversations with the latest reply, and a button to write a new message."
 msgstr "Màn hình hỗ trợ của SDK {platform} trong một ứng dụng: các cuộc trò chuyện của người dùng với trả lời mới nhất, và nút để viết tin nhắn mới."
+
+#: src/copy/status.ts
+msgid "The widget and the apps show it in each language they speak."
+msgstr "Widget và ứng dụng hiển thị nó bằng mọi ngôn ngữ chúng hỗ trợ."
 
 #: src/copy/cloudflare-email.ts
 msgid "The Worker is one way to call /ingress/email. Any mail server or relay can post the raw message with the same signed headers, and a mail server that delivers to a command can pipe the message into yuva ingest-email. The request format is documented in the Worker's README."
@@ -1747,6 +2118,10 @@ msgstr "Worker là một cách để gọi /ingress/email. Bất kỳ máy chủ
 #: src/copy/cloudflare-email.ts
 msgid "The Worker signs the raw message, both envelope addresses and a timestamp with HMAC-SHA256 under a secret you share with Yuva, and sends them to /ingress/email on your Yuva server."
 msgstr "Worker ký thư thô, cả hai địa chỉ phong bì và một dấu thời gian bằng HMAC-SHA256 với khóa bí mật bạn chia sẻ với Yuva, rồi gửi chúng đến /ingress/email trên máy chủ Yuva của bạn."
+
+#: src/copy/status.ts
+msgid "The worst state among the components you show, in words and in colour."
+msgstr "Trạng thái tệ nhất trong các thành phần bạn hiển thị, bằng lời và bằng màu."
 
 #: src/copy/home.ts
 msgid "The Yuva chat widget open on a newsletter tool's website: the visitor's question and a member's reply, with the member shown online."
@@ -1763,6 +2138,14 @@ msgstr "Logo, màu sắc và phông chữ của Yuva, sẵn sàng cho bài viế
 #: src/copy/home.ts
 msgid "The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send."
 msgstr "Bảng nhắn tin của Yuva: các cuộc trò chuyện từ email, chat trực tiếp và ứng dụng trong một danh sách, và một cuộc trò chuyện mở dạng chat, với ghi chú của nhóm và một câu trả lời trợ lý đã soạn để đồng nghiệp gửi."
+
+#: src/copy/status.ts
+msgid "Their choice"
+msgstr "Lựa chọn của họ"
+
+#: src/copy/status.ts
+msgid "Their language"
+msgstr "Ngôn ngữ của họ"
 
 #: src/ui/ThemeToggle.astro
 msgid "Theme"
@@ -1824,6 +2207,10 @@ msgstr "Không thể gửi tới"
 msgid "Under Routing rules, send each support address to the Worker yuva-edge. For a catch-all channel, point the catch-all rule at it."
 msgstr "Trong Routing rules, gửi mỗi địa chỉ hỗ trợ đến Worker yuva-edge. Với kênh bắt tất cả, hãy trỏ quy tắc bắt tất cả đến nó."
 
+#: src/copy/status.ts
+msgid "uptime"
+msgstr "thời gian hoạt động"
+
 #: src/copy/brand.ts
 msgid "use the logo in a way that suggests endorsement by the project."
 msgstr "dùng logo theo cách gợi ý dự án chứng thực."
@@ -1851,6 +2238,10 @@ msgstr "Xem trên GitHub"
 #: src/copy/home.ts
 msgid "visitors"
 msgstr "lượt khách"
+
+#: src/copy/status.ts
+msgid "Visitors subscribe to notices about incidents and maintenance, for every component or only the ones they use. A subscription always starts with a confirmation mail."
+msgstr "Khách truy cập đăng ký nhận thông báo về sự cố và bảo trì, cho mọi thành phần hoặc chỉ những thành phần họ dùng. Đăng ký luôn bắt đầu bằng một e-mail xác nhận."
 
 #: src/copy/header.ts
 msgid "Visitors without cookies."
@@ -1884,6 +2275,10 @@ msgstr "Webhook và danh tính"
 msgid "Webhooks guide"
 msgstr "Hướng dẫn webhook"
 
+#: src/copy/status.ts
+msgid "Website"
+msgstr "Trang web"
+
 #: src/copy/home.ts
 msgid "what came in and what is open"
 msgstr "những gì đã đến và những gì đang mở"
@@ -1912,6 +2307,14 @@ msgstr "Nói về điều gì?"
 msgid "What it is"
 msgstr "Đó là gì"
 
+#: src/copy/status.ts
+msgid "When a check goes down, Yuva can open a draft incident for you to review, publish one at once, or open none. When it recovers, Yuva resolves what it opened."
+msgstr "Khi một lần kiểm tra thất bại, Yuva có thể mở sự cố nháp để bạn xem xét, xuất bản ngay một sự cố hoặc không mở gì. Khi phục hồi, Yuva giải quyết những gì nó đã mở."
+
+#: src/copy/status.ts
+msgid "When you turn it on: the last 24 hours of each component with an HTTP or TCP check, with median and p95."
+msgstr "Khi bạn bật: 24 giờ gần nhất của mỗi thành phần có kiểm tra HTTP hoặc TCP, với trung vị và p95."
+
 #: src/copy/cloudflare-email.ts
 msgid "When Yuva refuses a message for good, for example an unknown address, a blocked sender or a message that is too large, the Worker rejects it and the sender gets a permanent SMTP error with Yuva's reason."
 msgstr "Khi Yuva từ chối một thư vĩnh viễn, ví dụ địa chỉ không xác định, người gửi bị chặn hoặc thư quá lớn, Worker từ chối nó và người gửi nhận lỗi SMTP vĩnh viễn kèm lý do của Yuva."
@@ -1924,9 +2327,17 @@ msgstr "Dù bạn muốn đầu tư vào Yuva, cùng xây dựng trên nó, cầ
 msgid "Which domains and addresses can I use?"
 msgstr "Tôi có thể dùng những tên miền và địa chỉ nào?"
 
+#: src/copy/status.ts
+msgid "While your page is published and an incident or maintenance is open, the web widget and the iOS and Android SDKs show a line above the conversations, with the state in words and a link to the incident."
+msgstr "Khi trang của bạn được xuất bản và có sự cố hoặc bảo trì đang mở, widget web cùng SDK iOS và Android hiển thị một dòng phía trên các cuộc trò chuyện với trạng thái bằng lời và liên kết đến sự cố."
+
 #: src/copy/brand.ts
 msgid "White"
 msgstr "Trắng"
+
+#: src/copy/home.ts
+msgid "with 90 day bars"
+msgstr "với các thanh 90 ngày"
 
 #: src/copy/home.ts
 msgid "with clicks and unsubscribes"
@@ -1968,6 +2379,10 @@ msgstr "Hoạt động với"
 msgid "Write an e-mail"
 msgstr "Viết email"
 
+#: src/copy/status.ts
+msgid "Write one reply. Review shows how many conversations get it, and you can close each one afterwards."
+msgstr "Viết một câu trả lời. Bước xem lại cho biết bao nhiêu cuộc trò chuyện nhận được, và sau đó bạn có thể đóng từng cuộc."
+
 #: src/copy/contact.ts
 msgid "Write to the Yuva team about investment, partnerships, commercial licenses or press, or find the right place for questions and security reports."
 msgstr "Viết cho nhóm Yuva về đầu tư, hợp tác, giấy phép thương mại hoặc báo chí, hoặc tìm đúng nơi cho câu hỏi và báo cáo bảo mật."
@@ -1975,6 +2390,10 @@ msgstr "Viết cho nhóm Yuva về đầu tư, hợp tác, giấy phép thương
 #: src/copy/cloudflare-email.ts
 msgid "Yes, when you set YUVA_INGRESS_AUTHSERV_ID to mx.cloudflare.net. Yuva then reads the DMARC verdict that Email Routing adds. A new conversation that fails DMARC is marked as spam."
 msgstr "Có, khi bạn đặt YUVA_INGRESS_AUTHSERV_ID thành mx.cloudflare.net. Khi đó Yuva đọc kết luận DMARC mà Email Routing thêm vào. Một cuộc trò chuyện mới không qua được DMARC sẽ bị đánh dấu là thư rác."
+
+#: src/copy/status.ts
+msgid "You choose how many failures in a row count, and a state your team set by hand is never overridden by a check."
+msgstr "Bạn chọn bao nhiêu lần thất bại liên tiếp được tính, và trạng thái nhóm bạn đặt thủ công không bao giờ bị kiểm tra ghi đè."
 
 #: src/copy/brand.ts
 msgid "You may"
@@ -1996,9 +2415,29 @@ msgstr "Trình duyệt của bạn mở Yuva. Đăng nhập bằng mã dùng m�
 msgid "Your code stays on your machine. Yuva only sees what the assistant creates through it."
 msgstr "Mã của bạn ở lại trên máy của bạn. Yuva chỉ thấy những gì trợ lý tạo ra qua nó."
 
+#: src/copy/status.ts
+msgid "Your cron job or server calls a URL on a schedule. When the calls stop, the component goes down."
+msgstr "Cron job hoặc máy chủ của bạn gọi một URL theo lịch. Khi các lệnh gọi dừng, thành phần ngừng hoạt động."
+
+#: src/copy/status.ts
+msgid "Your logo and accent colour. The page speaks English, Turkish and German; visitors see times in their own time zone."
+msgstr "Logo và màu nhấn của bạn. Trang nói tiếng Anh, tiếng Thổ Nhĩ Kỳ và tiếng Đức; khách truy cập thấy giờ theo múi giờ của họ."
+
+#: src/copy/status.ts
+msgid "Your look and language"
+msgstr "Giao diện và ngôn ngữ của bạn"
+
+#: src/copy/status.ts
+msgid "Your own domain"
+msgstr "Tên miền riêng của bạn"
+
 #: src/copy/cloudflare-email.ts
 msgid "Your team answers in the panel. The reply is sent through the e-mail channel's own SMTP account, such as Amazon SES, Postmark or your own relay, from the same address and in the same thread. Replies do not go through the Worker."
 msgstr "Nhóm của bạn trả lời trong bảng điều khiển. Câu trả lời được gửi qua chính tài khoản SMTP của kênh email, như Amazon SES, Postmark hoặc relay của riêng bạn, từ cùng địa chỉ và trong cùng chuỗi. Câu trả lời không đi qua Worker."
+
+#: src/copy/status.ts
+msgid "Your word first"
+msgstr "Lời của bạn trước"
 
 #: src/copy/ai.ts
 msgid "Your Yuva server"
@@ -2060,6 +2499,10 @@ msgstr "Yuva trong trợ lý AI của bạn"
 msgid "Yuva is pre-alpha. Every release, the roadmap and the code are public, so you can see exactly where it stands."
 msgstr "Yuva đang ở giai đoạn tiền alpha. Mọi bản phát hành, lộ trình và mã nguồn đều công khai, nên bạn thấy chính xác nó đang ở đâu."
 
+#: src/copy/status.ts
+msgid "Yuva opens a connection to a host and port and checks that it answers."
+msgstr "Yuva mở kết nối tới một máy chủ và cổng và kiểm tra xem nó có phản hồi không."
+
 #: src/copy/brand.ts
 msgid "Yuva orange"
 msgstr "Cam Yuva"
@@ -2075,6 +2518,18 @@ msgstr "Yuva từ chối mọi yêu cầu không có chữ ký HMAC hợp lệ h
 #: src/copy/pages.ts
 msgid "Yuva releases"
 msgstr "Bản phát hành Yuva"
+
+#: src/copy/status.ts
+msgid "Yuva renders it as plain HTML, complete without JavaScript, and answers are cached for 30 seconds so a CDN in front of your server can carry an outage's traffic."
+msgstr "Yuva hiển thị nó dưới dạng HTML thuần, đầy đủ mà không cần JavaScript, và các phản hồi được lưu đệm 30 giây để một CDN phía trước máy chủ của bạn gánh lưu lượng khi có sự cố."
+
+#: src/copy/status.ts
+msgid "Yuva requests a URL on an interval and checks the status code, optionally a keyword and the certificate's expiry."
+msgstr "Yuva yêu cầu một URL theo chu kỳ và kiểm tra mã trạng thái, tùy chọn một từ khóa và ngày hết hạn của chứng chỉ."
+
+#: src/copy/status.ts
+msgid "Yuva sends it as you to every linked conversation that is still open, through each one's own channel. It cannot be recalled once sent."
+msgstr "Yuva gửi nó thay mặt bạn đến mọi cuộc trò chuyện đã liên kết còn đang mở, qua kênh riêng của từng cuộc. Không thể thu hồi sau khi gửi."
 
 #: src/copy/docs.ts
 msgid "Yuva signs every request with Standard Webhooks and retries failed deliveries. Registering an endpoint and verifying a signature are in the webhooks guide."

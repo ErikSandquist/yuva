@@ -40,6 +40,14 @@ msgstr "Endpoint {name} dari Yuva API."
 msgid "{name}: {description} A free Yuva e-mail template."
 msgstr "{name}: {description} Templat email Yuva gratis."
 
+#: src/copy/status.ts
+msgid "90 days"
+msgstr "90 hari"
+
+#: src/copy/status.ts
+msgid "A check sets a component's state without anyone's hand, and Yuva tells your team when it goes down or up."
+msgstr "Pemeriksaan menetapkan status komponen tanpa campur tangan siapa pun, dan Yuva memberi tahu tim Anda saat komponen turun atau pulih."
+
 #: src/copy/home.ts
 msgid "a contact and their data"
 msgstr "kontak dan datanya"
@@ -47,6 +55,10 @@ msgstr "kontak dan datanya"
 #: src/copy/home.ts
 msgid "A conversation in the {platform} SDK: a question about an order and the team's replies with a tracking link, and a box to write back."
 msgstr "Percakapan di SDK {platform}: pertanyaan tentang pesanan dan balasan tim dengan tautan pelacakan, serta kotak untuk membalas."
+
+#: src/copy/status.ts
+msgid "A customer can dismiss it. It returns when the incident gets a new update."
+msgstr "Pelanggan dapat menutupnya. Muncul lagi saat insiden mendapat pembaruan baru."
 
 #: src/copy/cloudflare-email.ts
 msgid "A customer writes to one of your support addresses, for example support@example.com."
@@ -56,6 +68,10 @@ msgstr "Seorang pelanggan menulis ke salah satu alamat dukungan Anda, misalnya s
 msgid "A finished import in the panel: 6 conversations and 12 messages copied from an mbox file, with a note that Yuva has no access to your mailbox."
 msgstr "Impor yang selesai di panel: 6 percakapan dan 12 pesan disalin dari berkas mbox, dengan catatan bahwa Yuva tidak punya akses ke kotak surat Anda."
 
+#: src/copy/status.ts
+msgid "A footer band: a coloured square and the state in words, a strip of 90 days with the uptime, and Status by Yuva."
+msgstr "Pita footer: kotak berwarna dan status dalam kata-kata, strip 90 hari dengan uptime, dan Status by Yuva."
+
 #: src/copy/contact.ts
 msgid "A hosted service and commercial licenses"
 msgstr "Layanan terkelola dan lisensi komersial"
@@ -64,13 +80,41 @@ msgstr "Layanan terkelola dan lisensi komersial"
 msgid "A message can be up to 25 MiB including attachments, which is the Cloudflare Email Routing limit. Yuva keeps up to 50 attachments per message, each within the server's attachment size limit (25 MiB by default) and allowed types; it leaves out the rest."
 msgstr "Sebuah pesan dapat berukuran hingga 25 MiB termasuk lampiran, yaitu batas Cloudflare Email Routing. Yuva menyimpan hingga 50 lampiran per pesan, masing-masing dalam batas ukuran lampiran server (25 MiB secara bawaan) dan jenis yang diizinkan; sisanya diabaikan."
 
+#: src/copy/status.ts
+msgid "A notice waits 60 seconds so you can undo it, and notices about one incident keep their distance, so a long outage does not flood inboxes."
+msgstr "Pemberitahuan menunggu 60 detik agar Anda bisa membatalkannya, dan pemberitahuan tentang satu insiden diberi jarak, sehingga gangguan panjang tidak membanjiri kotak masuk."
+
+#: src/copy/status.ts
+msgid "A page stays private until you publish it, and your team previews it in the panel before that."
+msgstr "Halaman tetap privat sampai Anda menerbitkannya, dan tim Anda melihat pratinjaunya di panel sebelum itu."
+
+#: src/copy/home.ts
+msgid "A public page for the state of your products, kept in the same inbox as your support. Checks keep it current and subscribers hear by e-mail."
+msgstr "Halaman publik tentang keadaan produk Anda, di kotak masuk yang sama dengan dukungan Anda. Pemeriksaan menjaganya tetap mutakhir dan pelanggan berlangganan tahu lewat e-mail."
+
+#: src/copy/status.ts
+msgid "A public status page with components, incidents, maintenance and history, kept current by checks and by your team. E-mail subscribers, a line in the chat widget and the apps, and one reply to everyone who wrote."
+msgstr "Halaman status publik dengan komponen, insiden, pemeliharaan, dan riwayat, dijaga tetap mutakhir oleh pemeriksaan dan tim Anda. Pelanggan e-mail, satu baris di widget obrolan dan aplikasi, serta satu balasan untuk semua yang menulis."
+
+#: src/copy/status.ts
+msgid "A sample status page: the overall state, an open incident and four components with their last 90 days as coloured bars."
+msgstr "Contoh halaman status: status keseluruhan, satu insiden terbuka, dan empat komponen dengan 90 hari terakhirnya sebagai batang berwarna."
+
 #: src/copy/cloudflare-email.ts
 msgid "A small open-source Worker"
 msgstr "Worker open source yang kecil"
 
+#: src/copy/status.ts
+msgid "A Yuva status page shows whether your product works. It sits in your support inbox, so your chat widget and apps show an open incident, and one reply answers everyone who wrote about it."
+msgstr "Halaman status Yuva menunjukkan apakah produk Anda berfungsi. Halaman ini berada di kotak masuk dukungan Anda, sehingga widget obrolan dan aplikasi menampilkan insiden terbuka, dan satu balasan menjangkau semua yang menulis tentangnya."
+
 #: src/copy/home.ts
 msgid "Accepted answer"
 msgstr "Jawaban diterima"
+
+#: src/copy/status.ts
+msgid "Add it for a second row with each component's state."
+msgstr "Tambahkan untuk baris kedua dengan status setiap komponen."
 
 #: src/copy/home.ts
 msgid "Add ratings and a discussion area to your own documentation pages."
@@ -121,6 +165,14 @@ msgstr "Semua rilis di GitHub"
 msgid "All templates"
 msgstr "Semua templat"
 
+#: src/copy/status.ts
+msgid "An Atom feed that needs no subscription, a badge for your README, and the same page as JSON for your own site or app."
+msgstr "Feed Atom yang tidak perlu berlangganan, lencana untuk README Anda, dan halaman yang sama sebagai JSON untuk situs atau aplikasi Anda."
+
+#: src/copy/status.ts
+msgid "An outage brings the same question by e-mail, chat and in the apps. Link those conversations to the incident, write one answer, and send it to all of them."
+msgstr "Gangguan membawa pertanyaan yang sama lewat e-mail, obrolan, dan di aplikasi. Tautkan percakapan itu ke insiden, tulis satu jawaban, dan kirim ke semuanya."
+
 #: src/copy/docs.ts
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -132,12 +184,20 @@ msgid "and funnels"
 msgstr "dan corong konversi"
 
 #: src/copy/home.ts
+msgid "and planned maintenance"
+msgstr "dan pemeliharaan terjadwal"
+
+#: src/copy/home.ts
 msgid "and Postgres"
 msgstr "dan Postgres"
 
 #: src/copy/home.ts
 msgid "and the inboxes they can see"
 msgstr "dan kotak masuk yang bisa mereka lihat"
+
+#: src/copy/status.ts
+msgid "Announce planned work with a window. Yuva starts and completes it on time."
+msgstr "Umumkan pekerjaan terjadwal dengan jendela waktu. Yuva memulai dan menyelesaikannya tepat waktu."
 
 #: src/copy/templates.ts
 msgid "Announcement"
@@ -261,9 +321,17 @@ msgstr "Bisnis"
 msgid "By"
 msgstr "Oleh"
 
+#: src/copy/home.ts
+msgid "by e-mail, with double opt-in"
+msgstr "lewat e-mail, dengan konfirmasi ganda"
+
 #: src/copy/cloudflare-email.ts
 msgid "Can someone forge mail to my Yuva server?"
 msgstr "Bisakah seseorang memalsukan surat ke server Yuva saya?"
+
+#: src/copy/status.ts
+msgid "Certificates"
+msgstr "Sertifikat"
 
 #: src/copy/brand.ts
 msgid "Change its colours"
@@ -288,9 +356,21 @@ msgstr "CHANGELOG.md"
 msgid "Channels"
 msgstr "Saluran"
 
+#: src/copy/status.ts
+msgid "Chat and e-mail work normally."
+msgstr "Obrolan dan e-mail berjalan normal."
+
+#: src/copy/status.ts
+msgid "Chat messages arrive late"
+msgstr "Pesan obrolan tiba terlambat"
+
 #: src/copy/home.ts
 msgid "checks before you send"
 msgstr "pemeriksaan sebelum Anda kirim"
+
+#: src/copy/status.ts
+msgid "Checks keep it current"
+msgstr "Pemeriksaan menjaganya tetap mutakhir"
 
 #: src/copy/ai.ts
 msgid "Choose the workspace and what the assistant may do, then approve."
@@ -336,6 +416,11 @@ msgstr "Lisensi komersial"
 #: src/copy/pages.ts
 msgid "Compare changes"
 msgstr "Bandingkan perubahan"
+
+#: src/copy/home.ts
+#: src/copy/status.ts
+msgid "Components"
+msgstr "Komponen"
 
 #: src/copy/home.ts
 msgid "Connect a support address, a chat widget for your website or the SDKs for your apps."
@@ -412,6 +497,7 @@ msgstr "Salin SVG"
 
 #: src/copy/home.ts
 #: src/copy/pages.ts
+#: src/copy/status.ts
 msgid "Create an account"
 msgstr "Buat akun"
 
@@ -430,6 +516,10 @@ msgstr "Gelap"
 #: src/ui/ThemeToggle.astro
 msgid "Dark theme"
 msgstr "Tema gelap"
+
+#: src/copy/status.ts
+msgid "Degraded performance"
+msgstr "Performa menurun"
 
 #: src/copy/home.ts
 msgid "Delete"
@@ -463,6 +553,10 @@ msgstr "Desain dan draf siaran massal"
 msgid "Desktop"
 msgstr "Desktop"
 
+#: src/copy/status.ts
+msgid "Details"
+msgstr "Detail"
+
 #: src/copy/docs.ts
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -477,6 +571,14 @@ msgstr "Rangkuman"
 #: src/copy/home.ts
 msgid "Discussions"
 msgstr "Diskusi"
+
+#: src/copy/status.ts
+msgid "Dismiss"
+msgstr "Tutup"
+
+#: src/copy/status.ts
+msgid "Dismissable"
+msgstr "Dapat ditutup"
 
 #: src/copy/brand.ts
 msgid "Do"
@@ -505,6 +607,10 @@ msgstr "Apakah Yuva memakai hasil DMARC dari Cloudflare?"
 msgid "Don't"
 msgstr "Jangan"
 
+#: src/copy/status.ts
+msgid "Double opt-in"
+msgstr "Konfirmasi ganda"
+
 #: src/copy/header.ts
 msgid "Download logo"
 msgstr "Unduh logo"
@@ -531,12 +637,17 @@ msgstr "Draf balasan"
 
 #: src/copy/contact.ts
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "E-mail"
 msgstr "Email"
 
 #: src/pages/og/[lang].png.ts
 msgid "E-mail · live chat · in-app · self-hosted"
 msgstr "Email · live chat · dalam aplikasi · dihosting sendiri"
+
+#: src/copy/status.ts
+msgid "E-mail subscribers"
+msgstr "Pelanggan e-mail"
 
 #: src/copy/header.ts
 #: src/copy/templates.ts
@@ -559,6 +670,10 @@ msgstr "Masih awal dan dibangun secara terbuka"
 #: src/copy/docs.ts
 msgid "Edit this page on GitHub"
 msgstr "Edit halaman ini di GitHub"
+
+#: src/copy/status.ts
+msgid "Elevated API response times"
+msgstr "Waktu respons API meningkat"
 
 #: src/copy/cloudflare-email.ts
 msgid "Email Routing becomes the MX of the domain, so use a domain or subdomain that no other mail server handles."
@@ -624,6 +739,18 @@ msgstr "Semua panduan Yuva di satu tempat: instalasi, saluran, siaran massal, an
 msgid "Every Yuva release and what changed in it, from the changelog."
 msgstr "Setiap rilis Yuva dan apa yang berubah di dalamnya, dari catatan perubahan."
 
+#: src/copy/status.ts
+msgid "Everything is in the API, with the scopes status:read and status:manage. Webhooks announce component, incident and monitor changes, and assistants connected over MCP can open drafts and resolve incidents."
+msgstr "Semuanya ada di API, dengan cakupan status:read dan status:manage. Webhook mengumumkan perubahan komponen, insiden, dan monitor, dan asisten yang terhubung lewat MCP dapat membuka draf dan menyelesaikan insiden."
+
+#: src/copy/status.ts
+msgid "Everything moves"
+msgstr "Semuanya ikut pindah"
+
+#: src/copy/status.ts
+msgid "Feed, badge and JSON"
+msgstr "Feed, lencana, dan JSON"
+
 #: src/copy/home.ts
 msgid "Feedback"
 msgstr "Masukan"
@@ -651,6 +778,10 @@ msgstr "Untuk toko aplikasi dan platform yang membulatkan sudut sendiri."
 #: src/copy/brand.ts
 msgid "For dark backgrounds."
 msgstr "Untuk latar gelap."
+
+#: src/copy/status.ts
+msgid "For developers"
+msgstr "Untuk pengembang"
 
 #: src/copy/contact.ts
 msgid "For investors"
@@ -683,6 +814,10 @@ msgstr "Desain gratis untuk disalin."
 #: src/copy/templates.ts
 msgid "Free starter designs for newsletters, product updates, announcements and more. Preview them here and open one in Yuva's e-mail designer."
 msgstr "Desain awal gratis untuk buletin, pembaruan produk, pengumuman, dan lainnya. Pratinjau di sini dan buka salah satunya di desainer email Yuva."
+
+#: src/copy/status.ts
+msgid "From investigating to resolved, with every update kept. A published update is corrected, never removed."
+msgstr "Dari sedang diselidiki hingga selesai, dengan setiap pembaruan tersimpan. Pembaruan yang diterbitkan diperbaiki, tidak pernah dihapus."
 
 #: src/copy/home.ts
 msgid "from the people you helped"
@@ -728,6 +863,14 @@ msgstr "Panduan"
 msgid "Guides for every part."
 msgstr "Panduan untuk setiap bagian."
 
+#: src/copy/status.ts
+msgid "Heartbeats"
+msgstr "Dalam grup, masing-masing dengan statusnya, satu batang untuk setiap hari hingga 90 hari, dan jika mau, uptime-nya."
+
+#: src/copy/status.ts
+msgid "Held, then sent"
+msgstr "Di widget obrolan dan aplikasi"
+
 #: src/copy/home.ts
 msgid "Help center"
 msgstr "Pusat bantuan"
@@ -741,6 +884,7 @@ msgid "Hi! Tell us a little about yourself and what you have in mind."
 msgstr "Halo! Ceritakan sedikit tentang diri Anda dan apa yang Anda pikirkan."
 
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "History"
 msgstr "Riwayat"
 
@@ -768,6 +912,10 @@ msgstr "Bagaimana AGPL, SDK berlisensi MIT, dan CLA saling melengkapi."
 msgid "How to add a template"
 msgstr "Cara menambahkan templat"
 
+#: src/copy/status.ts
+msgid "HTTP"
+msgstr "Insiden"
+
 #: src/copy/templates.ts
 msgid "https://yuva.example.com"
 msgstr "https://yuva.example.com"
@@ -787,6 +935,10 @@ msgstr "Saya ingin membicarakan investasi di Yuva."
 #: src/copy/contact.ts
 msgid "I'm writing about Yuva and have a few questions."
 msgstr "Saya menulis tentang Yuva dan punya beberapa pertanyaan."
+
+#: src/copy/status.ts
+msgid "Identified"
+msgstr "Insiden"
 
 #: src/copy/home.ts
 msgid "Identity tokens"
@@ -812,6 +964,14 @@ msgstr "Di"
 msgid "In claude.ai or Claude Desktop, open Customize → Connectors → Add custom connector."
 msgstr "Di claude.ai atau Claude Desktop, buka Customize → Connectors → Add custom connector."
 
+#: src/copy/status.ts
+msgid "In groups, each with its state, a bar for every day of up to 90 days and, if you like, its uptime."
+msgstr "Insiden yang disusun untuk Anda"
+
+#: src/copy/status.ts
+msgid "In the chat widget and the apps"
+msgstr "Sedang diselidiki"
+
 #: src/copy/cloudflare-email.ts
 msgid "In the Cloudflare dashboard, open your domain → Email → Email Routing and enable it. Cloudflare adds its MX and SPF records."
 msgstr "Di dasbor Cloudflare, buka domain Anda → Email → Email Routing lalu aktifkan. Cloudflare menambahkan rekaman MX dan SPF-nya."
@@ -834,6 +994,19 @@ msgstr "Kotak masuk"
 msgid "Inbox and conversations"
 msgstr "Kotak masuk dan percakapan"
 
+#: src/copy/status.ts
+msgid "Incident"
+msgstr "Heartbeat"
+
+#: src/copy/home.ts
+#: src/copy/status.ts
+msgid "Incidents"
+msgstr "Ditahan, lalu dikirim"
+
+#: src/copy/status.ts
+msgid "Incidents drafted for you"
+msgstr "HTTP"
+
 #: src/copy/brand.ts
 msgid "Ink"
 msgstr "Tinta"
@@ -842,9 +1015,17 @@ msgstr "Tinta"
 msgid "Introduction"
 msgstr "Pengantar"
 
+#: src/copy/status.ts
+msgid "Investigating"
+msgstr "Teridentifikasi"
+
 #: src/copy/contact.ts
 msgid "Investment"
 msgstr "Investasi"
+
+#: src/copy/status.ts
+msgid "Issued and renewed automatically, by an on-demand proxy such as Caddy or by Cloudflare custom hostnames."
+msgstr "Sertifikat diterbitkan dan diperbarui otomatis, oleh proksi sesuai permintaan seperti Caddy atau oleh nama host kustom Cloudflare."
 
 #: src/copy/ai.ts
 msgid "It does the rest with you."
@@ -903,12 +1084,25 @@ msgstr "Terang"
 msgid "Light theme"
 msgstr "Tema terang"
 
+#: src/copy/status.ts
+msgid "light, dark or auto, which follows the visitor's colour scheme. The default is auto."
+msgstr "light, dark, atau auto, yang mengikuti skema warna pengunjung. Defaultnya auto."
+
+#: src/copy/status.ts
+msgid "Link conversations to the incident in the panel. The incident page lists them."
+msgstr "Tautkan percakapan ke insiden di panel. Halaman insiden mencantumkannya."
+
+#: src/copy/status.ts
+msgid "Links, the feed, the badge, the JSON and e-mail notices all use your domain."
+msgstr "Tautan, feed, lencana, JSON, dan pemberitahuan e-mail semuanya memakai domain Anda."
+
 #: src/copy/home.ts
 msgid "Lists"
 msgstr "Daftar"
 
 #: src/copy/contact.ts
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "Live chat"
 msgstr "Live chat"
 
@@ -960,6 +1154,14 @@ msgstr "Kotak surat"
 msgid "Maintainer of Yuva"
 msgstr "Pemelihara Yuva"
 
+#: src/copy/status.ts
+msgid "Maintenance"
+msgstr "Pemeliharaan"
+
+#: src/copy/status.ts
+msgid "Make a page, add your components and publish it. The guide is in English, Turkish and German."
+msgstr "Buat halaman, tambahkan komponen Anda, dan terbitkan. Panduannya tersedia dalam bahasa Inggris, Turki, dan Jerman."
+
 #: src/copy/home.ts
 msgid "marked by your team"
 msgstr "ditandai oleh tim Anda"
@@ -984,6 +1186,14 @@ msgstr "Anggota"
 #: src/copy/header.ts
 msgid "Menu"
 msgstr "Menu"
+
+#: src/copy/status.ts
+msgid "Messages"
+msgstr "Pesan"
+
+#: src/copy/status.ts
+msgid "Minor"
+msgstr "Kecil"
 
 #: src/copy/docs.ts
 msgid "More"
@@ -1087,6 +1297,14 @@ msgstr "Tidak tanpa izin tertulis"
 msgid "Notes and mentions"
 msgstr "Catatan dan sebutan"
 
+#: src/copy/status.ts
+msgid "Nothing to set up"
+msgstr "Tidak ada yang perlu diatur"
+
+#: src/copy/status.ts
+msgid "Notices go out through your inbox's own e-mail channel, from its address, and the people on the list are kept apart from your newsletters."
+msgstr "Pemberitahuan dikirim lewat kanal e-mail milik kotak masuk Anda, dari alamatnya, dan orang di daftar dipisahkan dari buletin Anda."
+
 #: src/copy/home.ts
 msgid "of every conversation"
 msgstr "dari setiap percakapan"
@@ -1098,6 +1316,14 @@ msgstr "templat gratis"
 #: src/copy/brand.ts
 msgid "offer a hosted or managed service, or a product, under the Yuva name or a confusingly similar one;"
 msgstr "menawarkan layanan terkelola atau produk dengan nama Yuva atau nama yang mirip hingga membingungkan;"
+
+#: src/copy/status.ts
+msgid "On a dark site"
+msgstr "Di situs gelap"
+
+#: src/copy/status.ts
+msgid "On a light site"
+msgstr "Di situs terang"
 
 #: src/copy/brand.ts
 msgid "On dark backgrounds"
@@ -1132,6 +1358,10 @@ msgstr "Satu biner"
 msgid "One binary and Postgres."
 msgstr "Satu biner dan Postgres."
 
+#: src/copy/status.ts
+msgid "One checkbox per component, and a link in every mail to change it or leave."
+msgstr "Satu kotak centang per komponen, dan di setiap e-mail ada tautan untuk mengubah pilihan atau berhenti."
+
 #: src/copy/home.ts
 msgid "One Docker image and Postgres on your own server."
 msgstr "Satu image Docker dan Postgres di server Anda sendiri."
@@ -1148,6 +1378,14 @@ msgstr "Satu profil untuk setiap orang, dari saluran mana pun mereka menulis."
 #: src/copy/home.ts
 msgid "One small server runs all of it. The server is open source, and the SDKs carry no copyleft."
 msgstr "Satu server kecil menjalankan semuanya. Servernya open source, dan SDK tidak membawa copyleft."
+
+#: src/copy/status.ts
+msgid "Only the page is served on your domain, never the API or the panel."
+msgstr "Di domain Anda hanya halaman yang disajikan, tidak pernah API atau panel."
+
+#: src/copy/status.ts
+msgid "Only yours"
+msgstr "Hanya milik Anda"
 
 #: src/copy/contact.ts
 msgid "Open a GitHub issue"
@@ -1178,6 +1416,11 @@ msgid "Open source that stays open"
 msgstr "Open source yang tetap terbuka"
 
 #: src/copy/home.ts
+msgid "Open status pages"
+msgstr "Buka halaman status"
+
+#: src/copy/home.ts
+#: src/copy/status.ts
 msgid "Open the API reference"
 msgstr "Buka referensi API"
 
@@ -1205,6 +1448,10 @@ msgstr "Kontrak OpenAPI"
 msgid "Opens Yuva's e-mail designer with this template. You sign in first if you have not."
 msgstr "Membuka desainer email Yuva dengan templat ini. Anda masuk dulu jika belum."
 
+#: src/copy/status.ts
+msgid "Operational"
+msgstr "Beroperasi"
+
 #: src/copy/cloudflare-email.ts
 msgid "Optional: keep mail during an outage by adding a fallback address to the deploy command:"
 msgstr "Opsional: simpan surat saat gangguan dengan menambahkan alamat cadangan ke perintah deploy:"
@@ -1229,6 +1476,10 @@ msgstr "Cara lain membawa surat masuk"
 msgid "Other ways to reach us"
 msgstr "Cara lain menghubungi kami"
 
+#: src/copy/status.ts
+msgid "Overall state"
+msgstr "Status keseluruhan"
+
 #: src/copy/docs.ts
 msgid "Overview"
 msgstr "Ikhtisar"
@@ -1245,9 +1496,17 @@ msgstr "Halaman dan sumber"
 msgid "Parameters"
 msgstr "Parameter"
 
+#: src/copy/status.ts
+msgid "Partial outage"
+msgstr "Gangguan sebagian"
+
 #: src/copy/contact.ts
 msgid "Partnership"
 msgstr "Kemitraan"
+
+#: src/copy/status.ts
+msgid "Past incidents and maintenance by month, each with its own page."
+msgstr "Insiden dan pemeliharaan lampau per bulan, masing-masing dengan halamannya sendiri."
 
 #: src/copy/docs.ts
 msgid "Payload"
@@ -1264,6 +1523,10 @@ msgstr "Ponsel"
 #: src/copy/ai.ts
 msgid "Pick your assistant"
 msgstr "Pilih asisten Anda"
+
+#: src/copy/status.ts
+msgid "Plain notices"
+msgstr "Pemberitahuan sederhana"
 
 #: src/copy/pages.ts
 msgid "Posts are published in English."
@@ -1325,6 +1588,10 @@ msgstr "Proyek"
 msgid "publish a modified version under the Yuva name — rename your fork;"
 msgstr "menerbitkan versi yang dimodifikasi dengan nama Yuva — ganti nama fork Anda;"
 
+#: src/copy/status.ts
+msgid "Pushed states"
+msgstr "Status yang didorong"
+
 #: src/copy/cloudflare-email.ts
 msgid "Questions and answers"
 msgstr "Tanya jawab"
@@ -1354,6 +1621,7 @@ msgid "Read the English page"
 msgstr "Baca halaman berbahasa Inggris"
 
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "Read the guide"
 msgstr "Baca panduannya"
 
@@ -1434,6 +1702,10 @@ msgstr "Rilis"
 msgid "Removed"
 msgstr "Dihapus"
 
+#: src/copy/status.ts
+msgid "Reply to linked"
+msgstr "Balas ke yang tertaut"
+
 #: src/layouts/Footer.astro
 msgid "Report a vulnerability"
 msgstr "Laporkan kerentanan"
@@ -1467,6 +1739,10 @@ msgstr "Sumber daya"
 #: src/copy/docs.ts
 msgid "Response"
 msgstr "Respons"
+
+#: src/copy/status.ts
+msgid "Response times"
+msgstr "Waktu respons"
 
 #: src/copy/docs.ts
 msgid "Responses"
@@ -1556,9 +1832,21 @@ msgstr "Kirim pesan uji dan lihat percakapannya muncul di panel."
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "Kirim buletin ke daftar surat Anda dan lihat apa yang pembaca lakukan dengannya."
 
+#: src/copy/status.ts
+msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "Kirim sendiri operational atau status gangguan. Peringatan Alertmanager dan Grafana diterima apa adanya."
+
+#: src/copy/status.ts
+msgid "Send us a message"
+msgstr "Kirim pesan kepada kami"
+
 #: src/copy/home.ts
 msgid "sent by your own app"
 msgstr "dikirim oleh aplikasi Anda sendiri"
+
+#: src/copy/status.ts
+msgid "Serve the page at an address such as status.example.com. Add a CNAME record and a TXT record that shows the domain is yours, and Yuva checks them for you."
+msgstr "Sajikan halaman di alamat seperti status.example.com. Tambahkan catatan CNAME dan catatan TXT yang menunjukkan domain itu milik Anda, dan Yuva memeriksanya untuk Anda."
 
 #: src/copy/templates.ts
 msgid "Server address"
@@ -1583,6 +1871,10 @@ msgstr "Siapkan analitik Yuva untuk situs ini, dengan sasaran untuk pendaftaran.
 #: src/copy/pages.ts
 msgid "Share"
 msgstr "Bagikan"
+
+#: src/copy/status.ts
+msgid "Show your status in your site's footer: the state in words, a strip of the last 90 days with uptime, and a link to your page. It is one script and one element."
+msgstr "Tampilkan status Anda di footer situs: keadaan dalam kata-kata, strip 90 hari terakhir dengan uptime, dan tautan ke halaman Anda. Satu skrip dan satu elemen."
 
 #: src/copy/ai.ts
 msgid "Sign in from Gemini CLI:"
@@ -1612,6 +1904,10 @@ msgstr "Lompat ke konten"
 msgid "so users write as themselves"
 msgstr "agar pengguna menulis sebagai diri mereka sendiri"
 
+#: src/copy/status.ts
+msgid "Some systems are down"
+msgstr "Beberapa sistem mati"
+
 #: src/copy/contact.ts
 msgid "Something else"
 msgstr "Lainnya"
@@ -1632,9 +1928,28 @@ msgstr "Mulai gratis"
 msgid "Start with AI"
 msgstr "Mulai dengan AI"
 
+#: src/copy/status.ts
+msgid "Start with the guide."
+msgstr "Mulai dengan panduannya."
+
 #: src/copy/templates.ts
 msgid "Starter designs for the e-mail designer, in English, Turkish and German. Preview one, then open it in Yuva and make it yours."
 msgstr "Desain awal untuk desainer email, dalam bahasa Inggris, Turki, dan Jerman. Pratinjau satu, lalu buka di Yuva dan jadikan milik Anda."
+
+#: src/copy/status.ts
+msgid "Status by Yuva"
+msgstr "Status by Yuva"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/copy/status.ts
+#: src/layouts/Footer.astro
+msgid "Status pages"
+msgstr "Halaman status"
+
+#: src/copy/status.ts
+msgid "Status pages for your products | Yuva"
+msgstr "Halaman status untuk produk Anda | Yuva"
 
 #: src/copy/home.ts
 msgid "stay inside the team"
@@ -1643,6 +1958,10 @@ msgstr "tetap di dalam tim"
 #: src/copy/brand.ts
 msgid "Stretch or squash it"
 msgstr "Meregangkan atau memampatkannya"
+
+#: src/copy/home.ts
+msgid "Subscribers"
+msgstr "Pelanggan"
 
 #: src/copy/cloudflare-email.ts
 msgid "Support e-mail through Cloudflare Email Routing | Yuva"
@@ -1656,6 +1975,10 @@ msgstr "Email dukungan lewat Cloudflare."
 msgid "Tag on GitHub"
 msgstr "Tag di GitHub"
 
+#: src/copy/status.ts
+msgid "TCP"
+msgstr "TCP"
+
 #: src/copy/home.ts
 msgid "Team and reports"
 msgstr "Tim dan laporan"
@@ -1663,6 +1986,14 @@ msgstr "Tim dan laporan"
 #: src/copy/contact.ts
 msgid "Teams can use our hosted service, and because every contribution is made under a CLA, Yuva can also be offered under a commercial license."
 msgstr "Tim dapat menggunakan layanan terkelola kami, dan karena setiap kontribusi dibuat di bawah CLA, Yuva juga dapat ditawarkan dengan lisensi komersial."
+
+#: src/copy/status.ts
+msgid "Tell customers what is down before they have to ask."
+msgstr "Beri tahu pelanggan apa yang mati sebelum mereka perlu bertanya."
+
+#: src/copy/header.ts
+msgid "Tell customers what works."
+msgstr "Beri tahu pelanggan apa yang berfungsi."
 
 #: src/copy/ai.ts
 msgid "Tell your assistant to add Yuva."
@@ -1676,13 +2007,37 @@ msgstr "Galeri templat"
 msgid "Templates"
 msgstr "Templat"
 
+#: src/copy/status.ts
+msgid "The address of your status page."
+msgstr "Alamat halaman status Anda."
+
 #: src/copy/home.ts
 msgid "The analytics overview in the panel: 30 days of visitors, pageviews and bounce rate, a daily chart with a note on the day a newsletter went out, and the top pages and sources."
 msgstr "Ikhtisar analitik di panel: 30 hari pengunjung, tampilan halaman, dan rasio pentalan, grafik harian dengan catatan pada hari buletin dikirim, serta halaman dan sumber teratas."
 
+#: src/copy/status.ts
+msgid "The answer is the same for every address, and nobody is subscribed without confirming."
+msgstr "Jawabannya sama untuk setiap alamat, dan tidak ada yang berlangganan tanpa konfirmasi."
+
+#: src/copy/status.ts
+msgid "The API is running slow"
+msgstr "API berjalan lambat"
+
+#: src/copy/status.ts
+msgid "The API is slow and some chats are delayed."
+msgstr "API lambat dan beberapa obrolan tertunda."
+
 #: src/copy/ai.ts
 msgid "The assistant acts as you, with no more access than you approve, and asks before it changes anything."
 msgstr "Asisten bertindak sebagai Anda, tanpa akses lebih dari yang Anda setujui, dan bertanya sebelum mengubah apa pun."
+
+#: src/copy/status.ts
+msgid "The band for your own site"
+msgstr "Pita untuk situs Anda sendiri"
+
+#: src/copy/status.ts
+msgid "The chat widget with a line above the conversations: elevated API response times, minor, investigating, with a link to the details."
+msgstr "Widget obrolan dengan satu baris di atas percakapan: waktu respons API meningkat, kecil, sedang diselidiki, dengan tautan ke detail."
 
 #: src/copy/header.ts
 msgid "The code, open source."
@@ -1703,6 +2058,10 @@ msgstr "Peristiwa yang dikirim Yuva ke endpoint webhook Anda dan payload masing-
 #: src/copy/ai.ts
 msgid "The first time the assistant uses Yuva, your browser opens Yuva to sign in."
 msgstr "Saat asisten pertama kali memakai Yuva, peramban Anda membuka Yuva untuk masuk."
+
+#: src/copy/status.ts
+msgid "The line appears and goes away with the incident."
+msgstr "Baris itu muncul dan hilang bersama insiden."
 
 #: src/copy/brand.ts
 msgid "The mark is drawn to stay readable from an app store listing down to a 16-pixel browser tab."
@@ -1728,6 +2087,10 @@ msgstr "Panel dengan masukan yang dikirim dari aplikasi seluler: laporan bug den
 msgid "The payloads Yuva sends to your webhook endpoints."
 msgstr "Payload yang dikirim Yuva ke endpoint webhook Anda."
 
+#: src/copy/status.ts
+msgid "The public page"
+msgstr "Halaman publik"
+
 #: src/copy/home.ts
 msgid "The report of a sent newsletter in the panel: 240 sent, 5 unsubscribed and 56 who clicked a link, a chart over time and the number of clicks on each link."
 msgstr "Laporan buletin yang terkirim di panel: 240 terkirim, 5 berhenti berlangganan, dan 56 mengeklik tautan, grafik dari waktu ke waktu, dan jumlah klik pada setiap tautan."
@@ -1736,9 +2099,17 @@ msgstr "Laporan buletin yang terkirim di panel: 240 terkirim, 5 berhenti berlang
 msgid "The server and panel are AGPL-3.0, the SDKs and API contract MIT. Improvements to the core stay public."
 msgstr "Server dan panel berlisensi AGPL-3.0, SDK dan kontrak API berlisensi MIT. Peningkatan inti tetap publik."
 
+#: src/copy/status.ts
+msgid "The state in words, the affected components and the updates, with no images, tracking or promotion. In English, Turkish or German."
+msgstr "Status dalam kata-kata, komponen yang terdampak, dan pembaruan, tanpa gambar, pelacakan, atau promosi. Dalam bahasa Inggris, Turki, atau Jerman."
+
 #: src/copy/home.ts
 msgid "The support screen of the {platform} SDK inside an app: the person's conversations with the latest reply, and a button to write a new message."
 msgstr "Layar dukungan SDK {platform} di dalam aplikasi: percakapan orang tersebut dengan balasan terakhir, dan tombol untuk menulis pesan baru."
+
+#: src/copy/status.ts
+msgid "The widget and the apps show it in each language they speak."
+msgstr "Widget dan aplikasi menampilkannya dalam setiap bahasa yang mereka gunakan."
 
 #: src/copy/cloudflare-email.ts
 msgid "The Worker is one way to call /ingress/email. Any mail server or relay can post the raw message with the same signed headers, and a mail server that delivers to a command can pipe the message into yuva ingest-email. The request format is documented in the Worker's README."
@@ -1747,6 +2118,10 @@ msgstr "Worker adalah salah satu cara memanggil /ingress/email. Server surat ata
 #: src/copy/cloudflare-email.ts
 msgid "The Worker signs the raw message, both envelope addresses and a timestamp with HMAC-SHA256 under a secret you share with Yuva, and sends them to /ingress/email on your Yuva server."
 msgstr "Worker menandatangani pesan mentah, kedua alamat amplop, dan stempel waktu dengan HMAC-SHA256 menggunakan rahasia yang Anda bagikan dengan Yuva, lalu mengirimnya ke /ingress/email di server Yuva Anda."
+
+#: src/copy/status.ts
+msgid "The worst state among the components you show, in words and in colour."
+msgstr "Status terburuk di antara komponen yang Anda tampilkan, dalam kata dan warna."
 
 #: src/copy/home.ts
 msgid "The Yuva chat widget open on a newsletter tool's website: the visitor's question and a member's reply, with the member shown online."
@@ -1763,6 +2138,14 @@ msgstr "Logo, warna, dan huruf Yuva, siap untuk artikel, integrasi, dan daftar a
 #: src/copy/home.ts
 msgid "The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send."
 msgstr "Panel pesan Yuva: percakapan dari email, live chat, dan aplikasi dalam satu daftar, serta percakapan yang dibuka sebagai obrolan, dengan catatan tim dan balasan yang disusun asisten untuk dikirim rekan tim."
+
+#: src/copy/status.ts
+msgid "Their choice"
+msgstr "Pilihan mereka"
+
+#: src/copy/status.ts
+msgid "Their language"
+msgstr "Bahasa mereka"
 
 #: src/ui/ThemeToggle.astro
 msgid "Theme"
@@ -1824,6 +2207,10 @@ msgstr "Tidak terkirim"
 msgid "Under Routing rules, send each support address to the Worker yuva-edge. For a catch-all channel, point the catch-all rule at it."
 msgstr "Di Routing rules, arahkan setiap alamat dukungan ke Worker yuva-edge. Untuk saluran catch-all, arahkan aturan catch-all ke sana."
 
+#: src/copy/status.ts
+msgid "uptime"
+msgstr "uptime"
+
 #: src/copy/brand.ts
 msgid "use the logo in a way that suggests endorsement by the project."
 msgstr "menggunakan logo dengan cara yang menyiratkan dukungan dari proyek."
@@ -1851,6 +2238,10 @@ msgstr "Lihat di GitHub"
 #: src/copy/home.ts
 msgid "visitors"
 msgstr "pengunjung"
+
+#: src/copy/status.ts
+msgid "Visitors subscribe to notices about incidents and maintenance, for every component or only the ones they use. A subscription always starts with a confirmation mail."
+msgstr "Pengunjung berlangganan pemberitahuan tentang insiden dan pemeliharaan, untuk semua komponen atau hanya yang mereka pakai. Langganan selalu dimulai dengan e-mail konfirmasi."
 
 #: src/copy/header.ts
 msgid "Visitors without cookies."
@@ -1884,6 +2275,10 @@ msgstr "Webhook dan identitas"
 msgid "Webhooks guide"
 msgstr "Panduan webhook"
 
+#: src/copy/status.ts
+msgid "Website"
+msgstr "Situs web"
+
 #: src/copy/home.ts
 msgid "what came in and what is open"
 msgstr "apa yang masuk dan apa yang terbuka"
@@ -1912,6 +2307,14 @@ msgstr "Tentang apa ini?"
 msgid "What it is"
 msgstr "Apa itu"
 
+#: src/copy/status.ts
+msgid "When a check goes down, Yuva can open a draft incident for you to review, publish one at once, or open none. When it recovers, Yuva resolves what it opened."
+msgstr "Saat pemeriksaan turun, Yuva dapat membuka draf insiden untuk Anda tinjau, langsung menerbitkan satu, atau tidak membuka sama sekali. Saat pulih, Yuva menyelesaikan apa yang dibukanya."
+
+#: src/copy/status.ts
+msgid "When you turn it on: the last 24 hours of each component with an HTTP or TCP check, with median and p95."
+msgstr "Saat Anda mengaktifkannya: 24 jam terakhir setiap komponen dengan pemeriksaan HTTP atau TCP, dengan median dan p95."
+
 #: src/copy/cloudflare-email.ts
 msgid "When Yuva refuses a message for good, for example an unknown address, a blocked sender or a message that is too large, the Worker rejects it and the sender gets a permanent SMTP error with Yuva's reason."
 msgstr "Saat Yuva menolak sebuah pesan secara permanen, misalnya alamat tidak dikenal, pengirim yang diblokir, atau pesan yang terlalu besar, Worker menolaknya dan pengirim mendapat kesalahan SMTP permanen beserta alasan dari Yuva."
@@ -1924,9 +2327,17 @@ msgstr "Entah Anda ingin berinvestasi di Yuva, membangun bersama di atasnya, but
 msgid "Which domains and addresses can I use?"
 msgstr "Domain dan alamat apa yang bisa saya gunakan?"
 
+#: src/copy/status.ts
+msgid "While your page is published and an incident or maintenance is open, the web widget and the iOS and Android SDKs show a line above the conversations, with the state in words and a link to the incident."
+msgstr "Selama halaman Anda diterbitkan dan ada insiden atau pemeliharaan terbuka, widget web serta SDK iOS dan Android menampilkan satu baris di atas percakapan dengan status dalam kata-kata dan tautan ke insiden."
+
 #: src/copy/brand.ts
 msgid "White"
 msgstr "Putih"
+
+#: src/copy/home.ts
+msgid "with 90 day bars"
+msgstr "dengan batang 90 hari"
 
 #: src/copy/home.ts
 msgid "with clicks and unsubscribes"
@@ -1968,6 +2379,10 @@ msgstr "Bekerja dengan"
 msgid "Write an e-mail"
 msgstr "Tulis email"
 
+#: src/copy/status.ts
+msgid "Write one reply. Review shows how many conversations get it, and you can close each one afterwards."
+msgstr "Tulis satu balasan. Tinjauan menunjukkan berapa banyak percakapan yang menerimanya, dan setelahnya Anda dapat menutup masing-masing."
+
 #: src/copy/contact.ts
 msgid "Write to the Yuva team about investment, partnerships, commercial licenses or press, or find the right place for questions and security reports."
 msgstr "Tulis kepada tim Yuva tentang investasi, kemitraan, lisensi komersial, atau pers, atau temukan tempat yang tepat untuk pertanyaan dan laporan keamanan."
@@ -1975,6 +2390,10 @@ msgstr "Tulis kepada tim Yuva tentang investasi, kemitraan, lisensi komersial, a
 #: src/copy/cloudflare-email.ts
 msgid "Yes, when you set YUVA_INGRESS_AUTHSERV_ID to mx.cloudflare.net. Yuva then reads the DMARC verdict that Email Routing adds. A new conversation that fails DMARC is marked as spam."
 msgstr "Ya, saat Anda mengatur YUVA_INGRESS_AUTHSERV_ID ke mx.cloudflare.net. Yuva lalu membaca vonis DMARC yang ditambahkan Email Routing. Percakapan baru yang gagal DMARC ditandai sebagai spam."
+
+#: src/copy/status.ts
+msgid "You choose how many failures in a row count, and a state your team set by hand is never overridden by a check."
+msgstr "Anda yang memilih berapa kegagalan berturut-turut yang dihitung, dan status yang ditetapkan tim Anda secara manual tidak pernah ditimpa oleh pemeriksaan."
 
 #: src/copy/brand.ts
 msgid "You may"
@@ -1996,9 +2415,29 @@ msgstr "Peramban Anda membuka Yuva. Masuk dengan kode sekali pakai; alamat email
 msgid "Your code stays on your machine. Yuva only sees what the assistant creates through it."
 msgstr "Kode Anda tetap di mesin Anda. Yuva hanya melihat apa yang dibuat asisten melaluinya."
 
+#: src/copy/status.ts
+msgid "Your cron job or server calls a URL on a schedule. When the calls stop, the component goes down."
+msgstr "Cron job atau server Anda memanggil sebuah URL sesuai jadwal. Saat panggilan berhenti, komponen turun."
+
+#: src/copy/status.ts
+msgid "Your logo and accent colour. The page speaks English, Turkish and German; visitors see times in their own time zone."
+msgstr "Logo dan warna aksen Anda. Halaman berbicara bahasa Inggris, Turki, dan Jerman; pengunjung melihat waktu di zona waktu mereka sendiri."
+
+#: src/copy/status.ts
+msgid "Your look and language"
+msgstr "Tampilan dan bahasa Anda"
+
+#: src/copy/status.ts
+msgid "Your own domain"
+msgstr "Domain Anda sendiri"
+
 #: src/copy/cloudflare-email.ts
 msgid "Your team answers in the panel. The reply is sent through the e-mail channel's own SMTP account, such as Amazon SES, Postmark or your own relay, from the same address and in the same thread. Replies do not go through the Worker."
 msgstr "Tim Anda menjawab di panel. Balasan dikirim lewat akun SMTP milik saluran email itu, seperti Amazon SES, Postmark, atau relay Anda sendiri, dari alamat yang sama dan di utas yang sama. Balasan tidak melewati Worker."
+
+#: src/copy/status.ts
+msgid "Your word first"
+msgstr "Kata Anda lebih dulu"
 
 #: src/copy/ai.ts
 msgid "Your Yuva server"
@@ -2060,6 +2499,10 @@ msgstr "Yuva di asisten AI Anda"
 msgid "Yuva is pre-alpha. Every release, the roadmap and the code are public, so you can see exactly where it stands."
 msgstr "Yuva masih pra-alfa. Setiap rilis, peta jalan, dan kode bersifat publik, jadi Anda bisa melihat dengan tepat di mana posisinya."
 
+#: src/copy/status.ts
+msgid "Yuva opens a connection to a host and port and checks that it answers."
+msgstr "Yuva membuka koneksi ke host dan port dan memeriksa apakah ia menjawab."
+
 #: src/copy/brand.ts
 msgid "Yuva orange"
 msgstr "Oranye Yuva"
@@ -2075,6 +2518,18 @@ msgstr "Yuva menolak setiap permintaan tanpa tanda tangan HMAC yang valid atau d
 #: src/copy/pages.ts
 msgid "Yuva releases"
 msgstr "Rilis Yuva"
+
+#: src/copy/status.ts
+msgid "Yuva renders it as plain HTML, complete without JavaScript, and answers are cached for 30 seconds so a CDN in front of your server can carry an outage's traffic."
+msgstr "Yuva merendernya sebagai HTML biasa, lengkap tanpa JavaScript, dan jawabannya di-cache 30 detik agar CDN di depan server Anda dapat menanggung lalu lintas saat gangguan."
+
+#: src/copy/status.ts
+msgid "Yuva requests a URL on an interval and checks the status code, optionally a keyword and the certificate's expiry."
+msgstr "Yuva meminta sebuah URL pada interval tertentu dan memeriksa kode status, secara opsional kata kunci dan masa berlaku sertifikat."
+
+#: src/copy/status.ts
+msgid "Yuva sends it as you to every linked conversation that is still open, through each one's own channel. It cannot be recalled once sent."
+msgstr "Yuva mengirimkannya atas nama Anda ke setiap percakapan tertaut yang masih terbuka, lewat kanal masing-masing. Tidak dapat ditarik kembali setelah terkirim."
 
 #: src/copy/docs.ts
 msgid "Yuva signs every request with Standard Webhooks and retries failed deliveries. Registering an endpoint and verifying a signature are in the webhooks guide."

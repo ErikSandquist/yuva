@@ -40,6 +40,14 @@ msgstr "A Yuva API {name} végpontjai."
 msgid "{name}: {description} A free Yuva e-mail template."
 msgstr "{name}: {description} Ingyenes Yuva e-mail-sablon."
 
+#: src/copy/status.ts
+msgid "90 days"
+msgstr "90 nap"
+
+#: src/copy/status.ts
+msgid "A check sets a component's state without anyone's hand, and Yuva tells your team when it goes down or up."
+msgstr "Egy ellenőrzés emberi beavatkozás nélkül állítja be egy összetevő állapotát, a Yuva pedig szól a csapatának, amikor leáll vagy helyreáll."
+
 #: src/copy/home.ts
 msgid "a contact and their data"
 msgstr "egy kapcsolat és az adatai"
@@ -47,6 +55,10 @@ msgstr "egy kapcsolat és az adatai"
 #: src/copy/home.ts
 msgid "A conversation in the {platform} SDK: a question about an order and the team's replies with a tracking link, and a box to write back."
 msgstr "Egy beszélgetés a(z) {platform} SDK-ban: kérdés egy rendelésről és a csapat válaszai nyomkövetési linkkel, valamint egy mező a válaszhoz."
+
+#: src/copy/status.ts
+msgid "A customer can dismiss it. It returns when the incident gets a new update."
+msgstr "Az ügyfél elvetheti. Visszatér, amikor az incidens új frissítést kap."
 
 #: src/copy/cloudflare-email.ts
 msgid "A customer writes to one of your support addresses, for example support@example.com."
@@ -56,6 +68,10 @@ msgstr "Egy ügyfél ír az egyik támogatási címedre, például a support@exa
 msgid "A finished import in the panel: 6 conversations and 12 messages copied from an mbox file, with a note that Yuva has no access to your mailbox."
 msgstr "Egy befejezett importálás a panelen: 6 beszélgetés és 12 üzenet másolva egy mbox-fájlból, azzal a megjegyzéssel, hogy a Yuva nem fér hozzá a postaládádhoz."
 
+#: src/copy/status.ts
+msgid "A footer band: a coloured square and the state in words, a strip of 90 days with the uptime, and Status by Yuva."
+msgstr "Lábléc sáv: színes négyzet és az állapot szavakkal, 90 napos sáv az elérhetőséggel, és Status by Yuva."
+
 #: src/copy/contact.ts
 msgid "A hosted service and commercial licenses"
 msgstr "Tárolt szolgáltatás és kereskedelmi licencek"
@@ -64,13 +80,41 @@ msgstr "Tárolt szolgáltatás és kereskedelmi licencek"
 msgid "A message can be up to 25 MiB including attachments, which is the Cloudflare Email Routing limit. Yuva keeps up to 50 attachments per message, each within the server's attachment size limit (25 MiB by default) and allowed types; it leaves out the rest."
 msgstr "Egy üzenet a mellékletekkel együtt legfeljebb 25 MiB lehet, ez a Cloudflare Email Routing korlátja. A Yuva üzenetenként legfeljebb 50 mellékletet tart meg, mindegyiket a szerver mellékletméret-korlátján belül (alapértelmezés szerint 25 MiB) és az engedélyezett típusok közül; a többit kihagyja."
 
+#: src/copy/status.ts
+msgid "A notice waits 60 seconds so you can undo it, and notices about one incident keep their distance, so a long outage does not flood inboxes."
+msgstr "Az értesítés 60 másodpercet vár, hogy visszavonhassa, az egy incidensről szóló értesítések pedig távolságot tartanak, hogy egy hosszú kiesés ne árassza el a postafiókokat."
+
+#: src/copy/status.ts
+msgid "A page stays private until you publish it, and your team previews it in the panel before that."
+msgstr "Az oldal addig privát, amíg közzé nem teszi, és a csapata előtte előnézetben látja a panelben."
+
+#: src/copy/home.ts
+msgid "A public page for the state of your products, kept in the same inbox as your support. Checks keep it current and subscribers hear by e-mail."
+msgstr "Nyilvános oldal a termékei állapotáról, ugyanabban a postaládában, mint a támogatása. Az ellenőrzések naprakészen tartják, az előfizetők pedig e-mailben értesülnek."
+
+#: src/copy/status.ts
+msgid "A public status page with components, incidents, maintenance and history, kept current by checks and by your team. E-mail subscribers, a line in the chat widget and the apps, and one reply to everyone who wrote."
+msgstr "Nyilvános állapotoldal összetevőkkel, incidensekkel, karbantartással és előzményekkel, amelyet ellenőrzések és a csapata tart naprakészen. E-mail-előfizetők, egy sor a csevegő widgetben és az alkalmazásokban, és egy válasz mindenkinek, aki írt."
+
+#: src/copy/status.ts
+msgid "A sample status page: the overall state, an open incident and four components with their last 90 days as coloured bars."
+msgstr "Minta állapotoldal: az általános állapot, egy nyitott incidens és négy összetevő az utolsó 90 napjával színes oszlopokként."
+
 #: src/copy/cloudflare-email.ts
 msgid "A small open-source Worker"
 msgstr "Egy kicsi, nyílt forráskódú Worker"
 
+#: src/copy/status.ts
+msgid "A Yuva status page shows whether your product works. It sits in your support inbox, so your chat widget and apps show an open incident, and one reply answers everyone who wrote about it."
+msgstr "A Yuva állapotoldala megmutatja, működik-e a terméke. A támogatási postaládájában él, így a csevegő widget és az alkalmazások megjelenítik a nyitott incidenst, és egy válasz mindenkit elér, aki írt róla."
+
 #: src/copy/home.ts
 msgid "Accepted answer"
 msgstr "Elfogadott válasz"
+
+#: src/copy/status.ts
+msgid "Add it for a second row with each component's state."
+msgstr "Adja hozzá egy második sorhoz, amely minden összetevő állapotát mutatja."
 
 #: src/copy/home.ts
 msgid "Add ratings and a discussion area to your own documentation pages."
@@ -121,6 +165,14 @@ msgstr "Minden kiadás a GitHubon"
 msgid "All templates"
 msgstr "Minden sablon"
 
+#: src/copy/status.ts
+msgid "An Atom feed that needs no subscription, a badge for your README, and the same page as JSON for your own site or app."
+msgstr "Előfizetést nem igénylő Atom-hírcsatorna, jelvény a README-hez, és ugyanez az oldal JSON-ként a saját webhelyéhez vagy alkalmazásához."
+
+#: src/copy/status.ts
+msgid "An outage brings the same question by e-mail, chat and in the apps. Link those conversations to the incident, write one answer, and send it to all of them."
+msgstr "Egy kiesés ugyanazt a kérdést hozza e-mailben, csevegésben és az alkalmazásokban. Kapcsolja ezeket a beszélgetéseket az incidenshez, írjon egy választ, és küldje el mindnek."
+
 #: src/copy/docs.ts
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -132,12 +184,20 @@ msgid "and funnels"
 msgstr "és tölcsérek"
 
 #: src/copy/home.ts
+msgid "and planned maintenance"
+msgstr "és tervezett karbantartás"
+
+#: src/copy/home.ts
 msgid "and Postgres"
 msgstr "és Postgres"
 
 #: src/copy/home.ts
 msgid "and the inboxes they can see"
 msgstr "és a postaládák, amelyeket láthatnak"
+
+#: src/copy/status.ts
+msgid "Announce planned work with a window. Yuva starts and completes it on time."
+msgstr "Jelentse be a tervezett munkát időablakkal. A Yuva időben elindítja és befejezi."
 
 #: src/copy/templates.ts
 msgid "Announcement"
@@ -261,9 +321,17 @@ msgstr "Üzlet"
 msgid "By"
 msgstr "Szerző"
 
+#: src/copy/home.ts
+msgid "by e-mail, with double opt-in"
+msgstr "e-mailben, kettős megerősítéssel"
+
 #: src/copy/cloudflare-email.ts
 msgid "Can someone forge mail to my Yuva server?"
 msgstr "Hamisíthat valaki levelet a Yuva szerveremre?"
+
+#: src/copy/status.ts
+msgid "Certificates"
+msgstr "Tanúsítványok"
 
 #: src/copy/brand.ts
 msgid "Change its colours"
@@ -288,9 +356,21 @@ msgstr "CHANGELOG.md"
 msgid "Channels"
 msgstr "Csatornák"
 
+#: src/copy/status.ts
+msgid "Chat and e-mail work normally."
+msgstr "A csevegés és az e-mail rendben működik."
+
+#: src/copy/status.ts
+msgid "Chat messages arrive late"
+msgstr "A csevegőüzenetek késve érkeznek"
+
 #: src/copy/home.ts
 msgid "checks before you send"
 msgstr "ellenőrzések küldés előtt"
+
+#: src/copy/status.ts
+msgid "Checks keep it current"
+msgstr "Az ellenőrzések naprakészen tartják"
 
 #: src/copy/ai.ts
 msgid "Choose the workspace and what the assistant may do, then approve."
@@ -336,6 +416,11 @@ msgstr "Kereskedelmi licenc"
 #: src/copy/pages.ts
 msgid "Compare changes"
 msgstr "Változások összehasonlítása"
+
+#: src/copy/home.ts
+#: src/copy/status.ts
+msgid "Components"
+msgstr "Összetevők"
 
 #: src/copy/home.ts
 msgid "Connect a support address, a chat widget for your website or the SDKs for your apps."
@@ -412,6 +497,7 @@ msgstr "SVG másolása"
 
 #: src/copy/home.ts
 #: src/copy/pages.ts
+#: src/copy/status.ts
 msgid "Create an account"
 msgstr "Fiók létrehozása"
 
@@ -430,6 +516,10 @@ msgstr "Sötét"
 #: src/ui/ThemeToggle.astro
 msgid "Dark theme"
 msgstr "Sötét téma"
+
+#: src/copy/status.ts
+msgid "Degraded performance"
+msgstr "Csökkent teljesítmény"
 
 #: src/copy/home.ts
 msgid "Delete"
@@ -463,6 +553,10 @@ msgstr "Tervek és a tömeges küldések piszkozatai"
 msgid "Desktop"
 msgstr "Asztali gép"
 
+#: src/copy/status.ts
+msgid "Details"
+msgstr "Részletek"
+
 #: src/copy/docs.ts
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -477,6 +571,14 @@ msgstr "Összefoglaló"
 #: src/copy/home.ts
 msgid "Discussions"
 msgstr "Beszélgetések"
+
+#: src/copy/status.ts
+msgid "Dismiss"
+msgstr "Elvetés"
+
+#: src/copy/status.ts
+msgid "Dismissable"
+msgstr "Elvethető"
 
 #: src/copy/brand.ts
 msgid "Do"
@@ -505,6 +607,10 @@ msgstr "Használja a Yuva a Cloudflare DMARC-eredményét?"
 msgid "Don't"
 msgstr "Ne tedd"
 
+#: src/copy/status.ts
+msgid "Double opt-in"
+msgstr "Kettős megerősítés"
+
 #: src/copy/header.ts
 msgid "Download logo"
 msgstr "Logó letöltése"
@@ -531,12 +637,17 @@ msgstr "Válaszpiszkozatok"
 
 #: src/copy/contact.ts
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "E-mail"
 msgstr "E-mail"
 
 #: src/pages/og/[lang].png.ts
 msgid "E-mail · live chat · in-app · self-hosted"
 msgstr "E-mail · élő chat · alkalmazáson belül · saját üzemeltetésű"
+
+#: src/copy/status.ts
+msgid "E-mail subscribers"
+msgstr "E-mail-előfizetők"
 
 #: src/copy/header.ts
 #: src/copy/templates.ts
@@ -559,6 +670,10 @@ msgstr "Korai és nyíltan épülő"
 #: src/copy/docs.ts
 msgid "Edit this page on GitHub"
 msgstr "Oldal szerkesztése a GitHubon"
+
+#: src/copy/status.ts
+msgid "Elevated API response times"
+msgstr "Megnövekedett API-válaszidők"
 
 #: src/copy/cloudflare-email.ts
 msgid "Email Routing becomes the MX of the domain, so use a domain or subdomain that no other mail server handles."
@@ -624,6 +739,18 @@ msgstr "Minden Yuva-útmutató egy helyen: telepítés, csatornák, tömeges kü
 msgid "Every Yuva release and what changed in it, from the changelog."
 msgstr "A Yuva minden kiadása és hogy mi változott benne, a változásnaplóból."
 
+#: src/copy/status.ts
+msgid "Everything is in the API, with the scopes status:read and status:manage. Webhooks announce component, incident and monitor changes, and assistants connected over MCP can open drafts and resolve incidents."
+msgstr "Minden az API-ban van, a status:read és status:manage jogosultságokkal. A webhookok jelzik az összetevők, incidensek és monitorok változásait, az MCP-n át csatlakoztatott asszisztensek pedig piszkozatokat nyithatnak és incidenseket oldhatnak meg."
+
+#: src/copy/status.ts
+msgid "Everything moves"
+msgstr "Minden vele költözik"
+
+#: src/copy/status.ts
+msgid "Feed, badge and JSON"
+msgstr "Hírcsatorna, jelvény és JSON"
+
 #: src/copy/home.ts
 msgid "Feedback"
 msgstr "Visszajelzések"
@@ -651,6 +778,10 @@ msgstr "Alkalmazásboltoknak és platformoknak, amelyek maguk kerekítik a sarko
 #: src/copy/brand.ts
 msgid "For dark backgrounds."
 msgstr "Sötét háttérhez."
+
+#: src/copy/status.ts
+msgid "For developers"
+msgstr "Fejlesztőknek"
 
 #: src/copy/contact.ts
 msgid "For investors"
@@ -683,6 +814,10 @@ msgstr "Ingyenes tervek másolásra."
 #: src/copy/templates.ts
 msgid "Free starter designs for newsletters, product updates, announcements and more. Preview them here and open one in Yuva's e-mail designer."
 msgstr "Ingyenes kezdő tervek hírlevelekhez, termékfrissítésekhez, közleményekhez és másokhoz. Nézd meg őket itt, és nyiss meg egyet a Yuva e-mail-tervezőjében."
+
+#: src/copy/status.ts
+msgid "From investigating to resolved, with every update kept. A published update is corrected, never removed."
+msgstr "A „vizsgálat alatt” állapottól a „megoldva” állapotig, minden frissítés megmarad. A közzétett frissítést javítják, soha nem törlik."
 
 #: src/copy/home.ts
 msgid "from the people you helped"
@@ -728,6 +863,14 @@ msgstr "Útmutatók"
 msgid "Guides for every part."
 msgstr "Útmutatók minden részhez."
 
+#: src/copy/status.ts
+msgid "Heartbeats"
+msgstr "Csoportokban, mindegyik a saját állapotával, naponta egy oszloppal akár 90 napig, és kívánság szerint az elérhetőségével."
+
+#: src/copy/status.ts
+msgid "Held, then sent"
+msgstr "A csevegő widgetben és az alkalmazásokban"
+
 #: src/copy/home.ts
 msgid "Help center"
 msgstr "Súgóközpont"
@@ -741,6 +884,7 @@ msgid "Hi! Tell us a little about yourself and what you have in mind."
 msgstr "Szia! Mesélj egy kicsit magadról és arról, mi jár a fejedben."
 
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "History"
 msgstr "Előzmények"
 
@@ -768,6 +912,10 @@ msgstr "Hogyan illeszkedik egymáshoz az AGPL, az MIT-licencű SDK-k és a CLA."
 msgid "How to add a template"
 msgstr "Hogyan adj hozzá sablont"
 
+#: src/copy/status.ts
+msgid "HTTP"
+msgstr "Incidens"
+
 #: src/copy/templates.ts
 msgid "https://yuva.example.com"
 msgstr "https://yuva.example.com"
@@ -787,6 +935,10 @@ msgstr "Szeretnék beszélni a Yuvába való befektetésről."
 #: src/copy/contact.ts
 msgid "I'm writing about Yuva and have a few questions."
 msgstr "A Yuváról írok, és van néhány kérdésem."
+
+#: src/copy/status.ts
+msgid "Identified"
+msgstr "Incidensek"
 
 #: src/copy/home.ts
 msgid "Identity tokens"
@@ -812,6 +964,14 @@ msgstr "Hol"
 msgid "In claude.ai or Claude Desktop, open Customize → Connectors → Add custom connector."
 msgstr "A claude.ai-ban vagy a Claude Desktopban nyisd meg a Customize → Connectors → Add custom connector menüpontot."
 
+#: src/copy/status.ts
+msgid "In groups, each with its state, a bar for every day of up to 90 days and, if you like, its uptime."
+msgstr "Önnek előkészített incidensek"
+
+#: src/copy/status.ts
+msgid "In the chat widget and the apps"
+msgstr "Vizsgálat alatt"
+
 #: src/copy/cloudflare-email.ts
 msgid "In the Cloudflare dashboard, open your domain → Email → Email Routing and enable it. Cloudflare adds its MX and SPF records."
 msgstr "A Cloudflare irányítópultján nyisd meg a domainedet → Email → Email Routing, és kapcsold be. A Cloudflare hozzáadja a saját MX- és SPF-rekordjait."
@@ -834,6 +994,19 @@ msgstr "Beérkezett üzenetek"
 msgid "Inbox and conversations"
 msgstr "Postaláda és beszélgetések"
 
+#: src/copy/status.ts
+msgid "Incident"
+msgstr "Heartbeatek"
+
+#: src/copy/home.ts
+#: src/copy/status.ts
+msgid "Incidents"
+msgstr "Visszatartva, majd elküldve"
+
+#: src/copy/status.ts
+msgid "Incidents drafted for you"
+msgstr "HTTP"
+
 #: src/copy/brand.ts
 msgid "Ink"
 msgstr "Tinta"
@@ -842,9 +1015,17 @@ msgstr "Tinta"
 msgid "Introduction"
 msgstr "Bevezetés"
 
+#: src/copy/status.ts
+msgid "Investigating"
+msgstr "Azonosítva"
+
 #: src/copy/contact.ts
 msgid "Investment"
 msgstr "Befektetés"
+
+#: src/copy/status.ts
+msgid "Issued and renewed automatically, by an on-demand proxy such as Caddy or by Cloudflare custom hostnames."
+msgstr "A tanúsítványokat automatikusan kiállítja és megújítja egy igény szerinti proxy, például a Caddy, vagy a Cloudflare egyéni állomásnevei."
 
 #: src/copy/ai.ts
 msgid "It does the rest with you."
@@ -903,12 +1084,25 @@ msgstr "Világos"
 msgid "Light theme"
 msgstr "Világos téma"
 
+#: src/copy/status.ts
+msgid "light, dark or auto, which follows the visitor's colour scheme. The default is auto."
+msgstr "light, dark vagy auto, amely a látogató színsémáját követi. Az alapértelmezett az auto."
+
+#: src/copy/status.ts
+msgid "Link conversations to the incident in the panel. The incident page lists them."
+msgstr "Kapcsolja a beszélgetéseket az incidenshez a panelben. Az incidens oldala felsorolja őket."
+
+#: src/copy/status.ts
+msgid "Links, the feed, the badge, the JSON and e-mail notices all use your domain."
+msgstr "A hivatkozások, a hírcsatorna, a jelvény, a JSON és az e-mail-értesítések mind az Ön tartományát használják."
+
 #: src/copy/home.ts
 msgid "Lists"
 msgstr "Listák"
 
 #: src/copy/contact.ts
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "Live chat"
 msgstr "Élő chat"
 
@@ -960,6 +1154,14 @@ msgstr "Postaládák"
 msgid "Maintainer of Yuva"
 msgstr "A Yuva karbantartója"
 
+#: src/copy/status.ts
+msgid "Maintenance"
+msgstr "Karbantartás"
+
+#: src/copy/status.ts
+msgid "Make a page, add your components and publish it. The guide is in English, Turkish and German."
+msgstr "Hozzon létre egy oldalt, adja hozzá az összetevőit, és tegye közzé. Az útmutató angolul, törökül és németül érhető el."
+
 #: src/copy/home.ts
 msgid "marked by your team"
 msgstr "a csapatod által megjelöltek"
@@ -984,6 +1186,14 @@ msgstr "Tagok"
 #: src/copy/header.ts
 msgid "Menu"
 msgstr "Menü"
+
+#: src/copy/status.ts
+msgid "Messages"
+msgstr "Üzenetek"
+
+#: src/copy/status.ts
+msgid "Minor"
+msgstr "Kisebb"
 
 #: src/copy/docs.ts
 msgid "More"
@@ -1087,6 +1297,14 @@ msgstr "Nem, írásbeli engedély nélkül"
 msgid "Notes and mentions"
 msgstr "Jegyzetek és megemlítések"
 
+#: src/copy/status.ts
+msgid "Nothing to set up"
+msgstr "Nincs mit beállítani"
+
+#: src/copy/status.ts
+msgid "Notices go out through your inbox's own e-mail channel, from its address, and the people on the list are kept apart from your newsletters."
+msgstr "Az értesítések a postaládája saját e-mail-csatornáján mennek ki, annak címéről, a lista tagjait pedig elkülönítve kezeljük a hírleveleitől."
+
 #: src/copy/home.ts
 msgid "of every conversation"
 msgstr "minden beszélgetésről"
@@ -1098,6 +1316,14 @@ msgstr "ingyenes sablonból"
 #: src/copy/brand.ts
 msgid "offer a hosted or managed service, or a product, under the Yuva name or a confusingly similar one;"
 msgstr "tárolt vagy menedzselt szolgáltatást vagy terméket kínálni a Yuva néven vagy összetéveszthetően hasonló néven;"
+
+#: src/copy/status.ts
+msgid "On a dark site"
+msgstr "Sötét webhelyen"
+
+#: src/copy/status.ts
+msgid "On a light site"
+msgstr "Világos webhelyen"
 
 #: src/copy/brand.ts
 msgid "On dark backgrounds"
@@ -1132,6 +1358,10 @@ msgstr "Egyetlen bináris"
 msgid "One binary and Postgres."
 msgstr "Egyetlen bináris és Postgres."
 
+#: src/copy/status.ts
+msgid "One checkbox per component, and a link in every mail to change it or leave."
+msgstr "Összetevőnként egy jelölőnégyzet, és minden levélben egy hivatkozás a választás módosításához vagy a leiratkozáshoz."
+
 #: src/copy/home.ts
 msgid "One Docker image and Postgres on your own server."
 msgstr "Egyetlen Docker-image és Postgres a saját szerveredön."
@@ -1148,6 +1378,14 @@ msgstr "Egy profil minden emberhez, bármelyik csatornáról ír."
 #: src/copy/home.ts
 msgid "One small server runs all of it. The server is open source, and the SDKs carry no copyleft."
 msgstr "Egyetlen kis szerver futtat mindent. A szerver nyílt forráskódú, az SDK-kban pedig nincs copyleft."
+
+#: src/copy/status.ts
+msgid "Only the page is served on your domain, never the API or the panel."
+msgstr "A tartományán csak az oldal szolgálható ki, soha az API vagy a panel."
+
+#: src/copy/status.ts
+msgid "Only yours"
+msgstr "Csak az Öné"
 
 #: src/copy/contact.ts
 msgid "Open a GitHub issue"
@@ -1178,6 +1416,11 @@ msgid "Open source that stays open"
 msgstr "Nyílt forrás, ami nyitott marad"
 
 #: src/copy/home.ts
+msgid "Open status pages"
+msgstr "Állapotoldalak megnyitása"
+
+#: src/copy/home.ts
+#: src/copy/status.ts
 msgid "Open the API reference"
 msgstr "Az API-referencia megnyitása"
 
@@ -1205,6 +1448,10 @@ msgstr "OpenAPI-szerződés"
 msgid "Opens Yuva's e-mail designer with this template. You sign in first if you have not."
 msgstr "Megnyitja a Yuva e-mail-tervezőjét ezzel a sablonnal. Előbb bejelentkezel, ha még nem tetted."
 
+#: src/copy/status.ts
+msgid "Operational"
+msgstr "Működik"
+
 #: src/copy/cloudflare-email.ts
 msgid "Optional: keep mail during an outage by adding a fallback address to the deploy command:"
 msgstr "Opcionális: őrizd meg a leveleket kiesés idején, ha tartalékcímet adsz a telepítési parancshoz:"
@@ -1229,6 +1476,10 @@ msgstr "További módok levelek behozatalára"
 msgid "Other ways to reach us"
 msgstr "További módok az elérésünkre"
 
+#: src/copy/status.ts
+msgid "Overall state"
+msgstr "Általános állapot"
+
 #: src/copy/docs.ts
 msgid "Overview"
 msgstr "Áttekintés"
@@ -1245,9 +1496,17 @@ msgstr "Oldalak és források"
 msgid "Parameters"
 msgstr "Paraméterek"
 
+#: src/copy/status.ts
+msgid "Partial outage"
+msgstr "Részleges kiesés"
+
 #: src/copy/contact.ts
 msgid "Partnership"
 msgstr "Partnerség"
+
+#: src/copy/status.ts
+msgid "Past incidents and maintenance by month, each with its own page."
+msgstr "A korábbi incidensek és karbantartások havonta, mindegyik saját oldallal."
 
 #: src/copy/docs.ts
 msgid "Payload"
@@ -1264,6 +1523,10 @@ msgstr "Telefon"
 #: src/copy/ai.ts
 msgid "Pick your assistant"
 msgstr "Válaszd ki az asszisztensedet"
+
+#: src/copy/status.ts
+msgid "Plain notices"
+msgstr "Egyszerű értesítések"
 
 #: src/copy/pages.ts
 msgid "Posts are published in English."
@@ -1325,6 +1588,10 @@ msgstr "Projekt"
 msgid "publish a modified version under the Yuva name — rename your fork;"
 msgstr "módosított verziót közzétenni a Yuva név alatt — nevezd át a forkodat;"
 
+#: src/copy/status.ts
+msgid "Pushed states"
+msgstr "Küldött állapotok"
+
 #: src/copy/cloudflare-email.ts
 msgid "Questions and answers"
 msgstr "Kérdések és válaszok"
@@ -1354,6 +1621,7 @@ msgid "Read the English page"
 msgstr "Az angol oldal elolvasása"
 
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "Read the guide"
 msgstr "Az útmutató elolvasása"
 
@@ -1434,6 +1702,10 @@ msgstr "Kiadások"
 msgid "Removed"
 msgstr "Eltávolítva"
 
+#: src/copy/status.ts
+msgid "Reply to linked"
+msgstr "Válasz a kapcsoltaknak"
+
 #: src/layouts/Footer.astro
 msgid "Report a vulnerability"
 msgstr "Sebezhetőség bejelentése"
@@ -1467,6 +1739,10 @@ msgstr "Erőforrások"
 #: src/copy/docs.ts
 msgid "Response"
 msgstr "Válasz"
+
+#: src/copy/status.ts
+msgid "Response times"
+msgstr "Válaszidők"
 
 #: src/copy/docs.ts
 msgid "Responses"
@@ -1556,9 +1832,21 @@ msgstr "Küldj egy tesztüzenetet, és nézd, ahogy megjelenik a beszélgetés a
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "Küldj hírleveleket a levelezőlistáidnak, és nézd meg, mit kezdenek velük az olvasók."
 
+#: src/copy/status.ts
+msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "Küldje el maga az operational vagy egy kiesési állapotot. Az Alertmanager és a Grafana riasztásait módosítás nélkül fogadja."
+
+#: src/copy/status.ts
+msgid "Send us a message"
+msgstr "Írjon nekünk"
+
 #: src/copy/home.ts
 msgid "sent by your own app"
 msgstr "a saját alkalmazásod küldi"
+
+#: src/copy/status.ts
+msgid "Serve the page at an address such as status.example.com. Add a CNAME record and a TXT record that shows the domain is yours, and Yuva checks them for you."
+msgstr "Szolgálja ki az oldalt egy olyan címen, mint a status.example.com. Adjon hozzá egy CNAME-rekordot és egy TXT-rekordot, amely igazolja, hogy a tartomány az Öné, és a Yuva ellenőrzi őket Ön helyett."
 
 #: src/copy/templates.ts
 msgid "Server address"
@@ -1583,6 +1871,10 @@ msgstr "Állítsd be a Yuva analitikát ehhez az oldalhoz, a regisztrációkra v
 #: src/copy/pages.ts
 msgid "Share"
 msgstr "Megosztás"
+
+#: src/copy/status.ts
+msgid "Show your status in your site's footer: the state in words, a strip of the last 90 days with uptime, and a link to your page. It is one script and one element."
+msgstr "Jelenítse meg az állapotát a webhelye láblécében: az állapot szavakkal, az utolsó 90 nap sávja az elérhetőséggel és hivatkozás az oldalára. Egy szkript és egy elem."
 
 #: src/copy/ai.ts
 msgid "Sign in from Gemini CLI:"
@@ -1612,6 +1904,10 @@ msgstr "Ugrás a tartalomra"
 msgid "so users write as themselves"
 msgstr "hogy a felhasználók a saját nevükben írjanak"
 
+#: src/copy/status.ts
+msgid "Some systems are down"
+msgstr "Néhány rendszer nem működik"
+
 #: src/copy/contact.ts
 msgid "Something else"
 msgstr "Valami más"
@@ -1632,9 +1928,28 @@ msgstr "Kezdd ingyen"
 msgid "Start with AI"
 msgstr "Kezdd MI-vel"
 
+#: src/copy/status.ts
+msgid "Start with the guide."
+msgstr "Kezdje az útmutatóval."
+
 #: src/copy/templates.ts
 msgid "Starter designs for the e-mail designer, in English, Turkish and German. Preview one, then open it in Yuva and make it yours."
 msgstr "Kezdő tervek az e-mail-tervezőhöz angolul, törökül és németül. Nézz meg egyet, majd nyisd meg a Yuvában, és tedd a magadévá."
+
+#: src/copy/status.ts
+msgid "Status by Yuva"
+msgstr "Status by Yuva"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/copy/status.ts
+#: src/layouts/Footer.astro
+msgid "Status pages"
+msgstr "Állapotoldalak"
+
+#: src/copy/status.ts
+msgid "Status pages for your products | Yuva"
+msgstr "Állapotoldalak a termékeihez | Yuva"
 
 #: src/copy/home.ts
 msgid "stay inside the team"
@@ -1643,6 +1958,10 @@ msgstr "a csapaton belül maradnak"
 #: src/copy/brand.ts
 msgid "Stretch or squash it"
 msgstr "Megnyújtani vagy összenyomni"
+
+#: src/copy/home.ts
+msgid "Subscribers"
+msgstr "Előfizetők"
 
 #: src/copy/cloudflare-email.ts
 msgid "Support e-mail through Cloudflare Email Routing | Yuva"
@@ -1656,6 +1975,10 @@ msgstr "Támogatási e-mail a Cloudflare-en keresztül."
 msgid "Tag on GitHub"
 msgstr "Címke a GitHubon"
 
+#: src/copy/status.ts
+msgid "TCP"
+msgstr "TCP"
+
 #: src/copy/home.ts
 msgid "Team and reports"
 msgstr "Csapat és jelentések"
@@ -1663,6 +1986,14 @@ msgstr "Csapat és jelentések"
 #: src/copy/contact.ts
 msgid "Teams can use our hosted service, and because every contribution is made under a CLA, Yuva can also be offered under a commercial license."
 msgstr "A csapatok használhatják a tárolt szolgáltatásunkat, és mivel minden közreműködés CLA alatt történik, a Yuva kereskedelmi licenccel is kínálható."
+
+#: src/copy/status.ts
+msgid "Tell customers what is down before they have to ask."
+msgstr "Mondja el az ügyfeleknek, mi nem működik, mielőtt kérdezniük kellene."
+
+#: src/copy/header.ts
+msgid "Tell customers what works."
+msgstr "Mondja el az ügyfeleknek, mi működik."
 
 #: src/copy/ai.ts
 msgid "Tell your assistant to add Yuva."
@@ -1676,13 +2007,37 @@ msgstr "Sablongaléria"
 msgid "Templates"
 msgstr "Sablonok"
 
+#: src/copy/status.ts
+msgid "The address of your status page."
+msgstr "Az állapotoldala címe."
+
 #: src/copy/home.ts
 msgid "The analytics overview in the panel: 30 days of visitors, pageviews and bounce rate, a daily chart with a note on the day a newsletter went out, and the top pages and sources."
 msgstr "Az analitika áttekintése a panelen: 30 nap látogatói, oldalmegtekintései és visszafordulási aránya, napi diagram megjegyzéssel a hírlevél kiküldésének napján, valamint a legnépszerűbb oldalak és források."
 
+#: src/copy/status.ts
+msgid "The answer is the same for every address, and nobody is subscribed without confirming."
+msgstr "A válasz minden címnél ugyanaz, és megerősítés nélkül senkit sem iratkoztatnak fel."
+
+#: src/copy/status.ts
+msgid "The API is running slow"
+msgstr "Az API lassan fut"
+
+#: src/copy/status.ts
+msgid "The API is slow and some chats are delayed."
+msgstr "Az API lassú, és néhány csevegés késik."
+
 #: src/copy/ai.ts
 msgid "The assistant acts as you, with no more access than you approve, and asks before it changes anything."
 msgstr "Az asszisztens a nevedben jár el, nem több hozzáféréssel, mint amit jóváhagysz, és kérdez, mielőtt bármit megváltoztatna."
+
+#: src/copy/status.ts
+msgid "The band for your own site"
+msgstr "A sáv a saját webhelyéhez"
+
+#: src/copy/status.ts
+msgid "The chat widget with a line above the conversations: elevated API response times, minor, investigating, with a link to the details."
+msgstr "A csevegő widget egy sorral a beszélgetések felett: megnövekedett API-válaszidők, kisebb, vizsgálat alatt, hivatkozással a részletekre."
 
 #: src/copy/header.ts
 msgid "The code, open source."
@@ -1703,6 +2058,10 @@ msgstr "Az események, amelyeket a Yuva a webhook-végpontjaidra küld, és mind
 #: src/copy/ai.ts
 msgid "The first time the assistant uses Yuva, your browser opens Yuva to sign in."
 msgstr "Amikor az asszisztens először használja a Yuvát, a böngésződ megnyitja a Yuvát a bejelentkezéshez."
+
+#: src/copy/status.ts
+msgid "The line appears and goes away with the incident."
+msgstr "A sor megjelenik és eltűnik az incidenssel."
 
 #: src/copy/brand.ts
 msgid "The mark is drawn to stay readable from an app store listing down to a 16-pixel browser tab."
@@ -1728,6 +2087,10 @@ msgstr "A panel mobilalkalmazásból küldött visszajelzésekkel: hibajelentés
 msgid "The payloads Yuva sends to your webhook endpoints."
 msgstr "Az adattartalmak, amelyeket a Yuva a webhook-végpontjaidra küld."
 
+#: src/copy/status.ts
+msgid "The public page"
+msgstr "A nyilvános oldal"
+
 #: src/copy/home.ts
 msgid "The report of a sent newsletter in the panel: 240 sent, 5 unsubscribed and 56 who clicked a link, a chart over time and the number of clicks on each link."
 msgstr "Egy elküldött hírlevél jelentése a panelen: 240 elküldve, 5 leiratkozás és 56 hivatkozásra kattintás, időbeli diagram és az egyes hivatkozásokra kattintások száma."
@@ -1736,9 +2099,17 @@ msgstr "Egy elküldött hírlevél jelentése a panelen: 240 elküldve, 5 leirat
 msgid "The server and panel are AGPL-3.0, the SDKs and API contract MIT. Improvements to the core stay public."
 msgstr "A szerver és a panel AGPL-3.0, az SDK-k és az API-szerződés MIT. A mag fejlesztései nyilvánosak maradnak."
 
+#: src/copy/status.ts
+msgid "The state in words, the affected components and the updates, with no images, tracking or promotion. In English, Turkish or German."
+msgstr "Az állapot szavakkal, az érintett összetevők és a frissítések, képek, követés és reklám nélkül. Angolul, törökül vagy németül."
+
 #: src/copy/home.ts
 msgid "The support screen of the {platform} SDK inside an app: the person's conversations with the latest reply, and a button to write a new message."
 msgstr "A(z) {platform} SDK ügyfélszolgálati képernyője egy alkalmazásban: a személy beszélgetései a legutóbbi válasszal, és egy gomb új üzenet írásához."
+
+#: src/copy/status.ts
+msgid "The widget and the apps show it in each language they speak."
+msgstr "A widget és az alkalmazások minden általuk beszélt nyelven megjelenítik."
 
 #: src/copy/cloudflare-email.ts
 msgid "The Worker is one way to call /ingress/email. Any mail server or relay can post the raw message with the same signed headers, and a mail server that delivers to a command can pipe the message into yuva ingest-email. The request format is documented in the Worker's README."
@@ -1747,6 +2118,10 @@ msgstr "A Worker egy mód a /ingress/email hívására. Bármely levelezőszerve
 #: src/copy/cloudflare-email.ts
 msgid "The Worker signs the raw message, both envelope addresses and a timestamp with HMAC-SHA256 under a secret you share with Yuva, and sends them to /ingress/email on your Yuva server."
 msgstr "A Worker HMAC-SHA256-tal írja alá a nyers üzenetet, mindkét borítékcímet és egy időbélyeget a Yuvával megosztott titokkal, és elküldi őket a Yuva szervered /ingress/email címére."
+
+#: src/copy/status.ts
+msgid "The worst state among the components you show, in words and in colour."
+msgstr "A megjelenített összetevők közül a legrosszabb állapot, szavakkal és színnel."
 
 #: src/copy/home.ts
 msgid "The Yuva chat widget open on a newsletter tool's website: the visitor's question and a member's reply, with the member shown online."
@@ -1763,6 +2138,14 @@ msgstr "A Yuva logója, színei és betűtípusa, cikkekhez, integrációkhoz é
 #: src/copy/home.ts
 msgid "The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send."
 msgstr "A Yuva üzenetküldő panelje: e-mailes, élő chates és alkalmazásos beszélgetések egy listában, és egy chatként megnyitott beszélgetés csapatjegyzettel és egy asszisztens által megfogalmazott válasszal, amelyet egy csapattárs küld el."
+
+#: src/copy/status.ts
+msgid "Their choice"
+msgstr "Az ő választásuk"
+
+#: src/copy/status.ts
+msgid "Their language"
+msgstr "Az ő nyelvük"
 
 #: src/ui/ThemeToggle.astro
 msgid "Theme"
@@ -1824,6 +2207,10 @@ msgstr "Kézbesíthetetlen"
 msgid "Under Routing rules, send each support address to the Worker yuva-edge. For a catch-all channel, point the catch-all rule at it."
 msgstr "A Routing rules alatt irányítsd minden támogatási címet a yuva-edge nevű Workerhez. Gyűjtőcsatornához a gyűjtőszabályt irányítsd rá."
 
+#: src/copy/status.ts
+msgid "uptime"
+msgstr "elérhetőség"
+
 #: src/copy/brand.ts
 msgid "use the logo in a way that suggests endorsement by the project."
 msgstr "a logót úgy használni, hogy az a projekt támogatására utaljon."
@@ -1851,6 +2238,10 @@ msgstr "Megtekintés a GitHubon"
 #: src/copy/home.ts
 msgid "visitors"
 msgstr "látogató"
+
+#: src/copy/status.ts
+msgid "Visitors subscribe to notices about incidents and maintenance, for every component or only the ones they use. A subscription always starts with a confirmation mail."
+msgstr "A látogatók feliratkoznak az incidensekről és karbantartásról szóló értesítésekre, minden összetevőre vagy csak azokra, amelyeket használnak. Az előfizetés mindig megerősítő e-maillel kezdődik."
 
 #: src/copy/header.ts
 msgid "Visitors without cookies."
@@ -1884,6 +2275,10 @@ msgstr "Webhookok és identitás"
 msgid "Webhooks guide"
 msgstr "Webhook-útmutató"
 
+#: src/copy/status.ts
+msgid "Website"
+msgstr "Webhely"
+
 #: src/copy/home.ts
 msgid "what came in and what is open"
 msgstr "mi érkezett és mi nyitott"
@@ -1912,6 +2307,14 @@ msgstr "Miről van szó?"
 msgid "What it is"
 msgstr "Mi ez"
 
+#: src/copy/status.ts
+msgid "When a check goes down, Yuva can open a draft incident for you to review, publish one at once, or open none. When it recovers, Yuva resolves what it opened."
+msgstr "Ha egy ellenőrzés leáll, a Yuva megnyithat egy piszkozat-incidenst az Ön átnézésére, azonnal közzétehet egyet, vagy nem nyit egyet sem. Amikor helyreáll, a Yuva megoldja, amit megnyitott."
+
+#: src/copy/status.ts
+msgid "When you turn it on: the last 24 hours of each component with an HTTP or TCP check, with median and p95."
+msgstr "Ha bekapcsolja: minden HTTP- vagy TCP-ellenőrzéssel rendelkező összetevő utolsó 24 órája, mediánnal és p95-tel."
+
 #: src/copy/cloudflare-email.ts
 msgid "When Yuva refuses a message for good, for example an unknown address, a blocked sender or a message that is too large, the Worker rejects it and the sender gets a permanent SMTP error with Yuva's reason."
 msgstr "Amikor a Yuva véglegesen elutasít egy üzenetet, például ismeretlen cím, letiltott feladó vagy túl nagy üzenet miatt, a Worker elutasítja, és a feladó állandó SMTP-hibát kap a Yuva indoklásával."
@@ -1924,9 +2327,17 @@ msgstr "Akár befektetnél a Yuvába, akár közösen építenél rá, kereskede
 msgid "Which domains and addresses can I use?"
 msgstr "Milyen domaineket és címeket használhatok?"
 
+#: src/copy/status.ts
+msgid "While your page is published and an incident or maintenance is open, the web widget and the iOS and Android SDKs show a line above the conversations, with the state in words and a link to the incident."
+msgstr "Amíg az oldala közzé van téve, és egy incidens vagy karbantartás nyitva van, a webes widget, valamint az iOS és Android SDK a beszélgetések felett egy sort jelenít meg az állapottal szavakkal és hivatkozással az incidensre."
+
 #: src/copy/brand.ts
 msgid "White"
 msgstr "Fehér"
+
+#: src/copy/home.ts
+msgid "with 90 day bars"
+msgstr "90 napos oszlopokkal"
 
 #: src/copy/home.ts
 msgid "with clicks and unsubscribes"
@@ -1968,6 +2379,10 @@ msgstr "Együttműködik"
 msgid "Write an e-mail"
 msgstr "E-mail írása"
 
+#: src/copy/status.ts
+msgid "Write one reply. Review shows how many conversations get it, and you can close each one afterwards."
+msgstr "Írjon egy választ. Az áttekintés megmutatja, hány beszélgetés kapja meg, utána pedig bármelyiket lezárhatja."
+
 #: src/copy/contact.ts
 msgid "Write to the Yuva team about investment, partnerships, commercial licenses or press, or find the right place for questions and security reports."
 msgstr "Írj a Yuva csapatának befektetésről, partnerségekről, kereskedelmi licencekről vagy sajtóról, vagy találd meg a megfelelő helyet kérdésekhez és biztonsági bejelentésekhez."
@@ -1975,6 +2390,10 @@ msgstr "Írj a Yuva csapatának befektetésről, partnerségekről, kereskedelmi
 #: src/copy/cloudflare-email.ts
 msgid "Yes, when you set YUVA_INGRESS_AUTHSERV_ID to mx.cloudflare.net. Yuva then reads the DMARC verdict that Email Routing adds. A new conversation that fails DMARC is marked as spam."
 msgstr "Igen, ha a YUVA_INGRESS_AUTHSERV_ID értékét mx.cloudflare.net-re állítod. A Yuva ilyenkor beolvassa a DMARC-ítéletet, amelyet az Email Routing hozzáad. Az az új beszélgetés, amely megbukik a DMARC-on, spamnek lesz jelölve."
+
+#: src/copy/status.ts
+msgid "You choose how many failures in a row count, and a state your team set by hand is never overridden by a check."
+msgstr "Ön választja meg, hány egymás utáni hiba számít, és a csapata által kézzel beállított állapotot az ellenőrzés soha nem írja felül."
 
 #: src/copy/brand.ts
 msgid "You may"
@@ -1996,9 +2415,29 @@ msgstr "A böngésződ megnyitja a Yuvát. Jelentkezz be egyszer használatos k�
 msgid "Your code stays on your machine. Yuva only sees what the assistant creates through it."
 msgstr "A kódod a gépeden marad. A Yuva csak azt látja, amit az asszisztens általa létrehoz."
 
+#: src/copy/status.ts
+msgid "Your cron job or server calls a URL on a schedule. When the calls stop, the component goes down."
+msgstr "A cron-feladata vagy a szervere ütemezés szerint hív meg egy URL-t. Ha a hívások elmaradnak, az összetevő leáll."
+
+#: src/copy/status.ts
+msgid "Your logo and accent colour. The page speaks English, Turkish and German; visitors see times in their own time zone."
+msgstr "A logója és a kiemelőszíne. Az oldal angolul, törökül és németül beszél; a látogatók az időket a saját időzónájukban látják."
+
+#: src/copy/status.ts
+msgid "Your look and language"
+msgstr "Az Ön megjelenése és nyelve"
+
+#: src/copy/status.ts
+msgid "Your own domain"
+msgstr "Saját tartomány"
+
 #: src/copy/cloudflare-email.ts
 msgid "Your team answers in the panel. The reply is sent through the e-mail channel's own SMTP account, such as Amazon SES, Postmark or your own relay, from the same address and in the same thread. Replies do not go through the Worker."
 msgstr "A csapatod a panelen válaszol. A válasz az e-mail-csatorna saját SMTP-fiókján keresztül megy, például Amazon SES, Postmark vagy a saját relé, ugyanarról a címről és ugyanabban a szálban. A válaszok nem mennek át a Workeren."
+
+#: src/copy/status.ts
+msgid "Your word first"
+msgstr "Először az Ön szava"
 
 #: src/copy/ai.ts
 msgid "Your Yuva server"
@@ -2060,6 +2499,10 @@ msgstr "A Yuva az MI-asszisztensedben"
 msgid "Yuva is pre-alpha. Every release, the roadmap and the code are public, so you can see exactly where it stands."
 msgstr "A Yuva pre-alfa. Minden kiadás, az ütemterv és a kód nyilvános, így pontosan látható, hol tart."
 
+#: src/copy/status.ts
+msgid "Yuva opens a connection to a host and port and checks that it answers."
+msgstr "A Yuva kapcsolatot nyit egy állomás és port felé, és ellenőrzi, hogy válaszol-e."
+
 #: src/copy/brand.ts
 msgid "Yuva orange"
 msgstr "Yuva-narancs"
@@ -2075,6 +2518,18 @@ msgstr "A Yuva minden olyan kérést elutasít, amelynek nincs érvényes HMAC-a
 #: src/copy/pages.ts
 msgid "Yuva releases"
 msgstr "Yuva-kiadások"
+
+#: src/copy/status.ts
+msgid "Yuva renders it as plain HTML, complete without JavaScript, and answers are cached for 30 seconds so a CDN in front of your server can carry an outage's traffic."
+msgstr "A Yuva sima HTML-ként jeleníti meg, JavaScript nélkül is teljes, a válaszokat pedig 30 másodpercig gyorsítótárazza, hogy a szervere előtti CDN elbírja a kiesés forgalmát."
+
+#: src/copy/status.ts
+msgid "Yuva requests a URL on an interval and checks the status code, optionally a keyword and the certificate's expiry."
+msgstr "A Yuva időközönként lekér egy URL-t, és ellenőrzi az állapotkódot, igény szerint egy kulcsszót és a tanúsítvány lejáratát."
+
+#: src/copy/status.ts
+msgid "Yuva sends it as you to every linked conversation that is still open, through each one's own channel. It cannot be recalled once sent."
+msgstr "A Yuva az Ön nevében elküldi minden még nyitott kapcsolt beszélgetésnek, mindegyik saját csatornáján. Elküldés után nem hívható vissza."
 
 #: src/copy/docs.ts
 msgid "Yuva signs every request with Standard Webhooks and retries failed deliveries. Registering an endpoint and verifying a signature are in the webhooks guide."

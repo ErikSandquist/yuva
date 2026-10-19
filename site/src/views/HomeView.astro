@@ -1,5 +1,6 @@
 ---
 import { homeCopy } from "@/copy/home"
+import { statusSampleCopy } from "@/copy/status"
 import { i18nFor } from "@/i18n"
 import Base from "@/layouts/Base.astro"
 import { quickStart } from "@/lib/docs"
@@ -48,6 +49,6 @@ const jsonLd = [
 
 <Base locale={locale} title={c.meta.title} description={c.meta.description} jsonLd={jsonLd}>
   <Hero t={c.hero} shots={shots(locale)} locale={locale} alts={c.features.alts} />
-  <Features t={c.features} shots={shots(locale)} previews={previews} />
+  <Features t={c.features} shots={shots(locale)} previews={previews} status={statusSampleCopy(i18nFor(locale))} />
   <Close t={c.close} hero={c.hero} locale={locale} />
 </Base>

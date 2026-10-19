@@ -6,6 +6,7 @@ import {
   blog,
   brand,
   cloudflareEmail,
+  status,
   contact,
   docsRoot,
   home,
@@ -32,6 +33,7 @@ const columns = [
   {
     title: i18n._(msg`Product`),
     items: [
+      { href: status[locale], label: i18n._(msg`Status pages`) },
       { href: templates[locale], label: i18n._(msg`E-mail templates`) },
       { href: blog[locale], label: i18n._(msg`Blog`) },
       { href: releases[locale], label: i18n._(msg`Releases`) },

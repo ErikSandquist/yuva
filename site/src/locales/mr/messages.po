@@ -40,6 +40,14 @@ msgstr "Yuva API चे {name} एंडपॉइंट."
 msgid "{name}: {description} A free Yuva e-mail template."
 msgstr "{name}: {description} Yuva चा एक मोफत ईमेल टेम्पलेट."
 
+#: src/copy/status.ts
+msgid "90 days"
+msgstr "90 दिवस"
+
+#: src/copy/status.ts
+msgid "A check sets a component's state without anyone's hand, and Yuva tells your team when it goes down or up."
+msgstr "एखादी तपासणी कोणाच्याही हस्तक्षेपाविना घटकाची स्थिती ठरवते, आणि तो बंद पडला किंवा पूर्ववत झाला की Yuva तुमच्या टीमला कळवते."
+
 #: src/copy/home.ts
 msgid "a contact and their data"
 msgstr "एक संपर्क आणि त्याचा डेटा"
@@ -47,6 +55,10 @@ msgstr "एक संपर्क आणि त्याचा डेटा"
 #: src/copy/home.ts
 msgid "A conversation in the {platform} SDK: a question about an order and the team's replies with a tracking link, and a box to write back."
 msgstr "{platform} SDK मधील एक संभाषण: एका ऑर्डरबद्दल प्रश्न, ट्रॅकिंग लिंकसह टीमची उत्तरे आणि उत्तर लिहिण्यासाठी एक बॉक्स."
+
+#: src/copy/status.ts
+msgid "A customer can dismiss it. It returns when the incident gets a new update."
+msgstr "ग्राहक ती बंद करू शकतो. घटनेला नवे अपडेट मिळाले की ती पुन्हा दिसते."
 
 #: src/copy/cloudflare-email.ts
 msgid "A customer writes to one of your support addresses, for example support@example.com."
@@ -56,6 +68,10 @@ msgstr "एखादा ग्राहक तुमच्या सपोर्
 msgid "A finished import in the panel: 6 conversations and 12 messages copied from an mbox file, with a note that Yuva has no access to your mailbox."
 msgstr "पॅनेलमधील पूर्ण झालेला इंपोर्ट: mbox फाइलमधून 6 संभाषणे आणि 12 संदेश कॉपी झाले, तसेच Yuva ला तुमच्या मेलबॉक्सचा अ‍ॅक्सेस नाही अशी नोंद."
 
+#: src/copy/status.ts
+msgid "A footer band: a coloured square and the state in words, a strip of 90 days with the uptime, and Status by Yuva."
+msgstr "फूटर बँड: रंगीत चौरस आणि शब्दांत स्थिती, उपलब्धतेसह 90 दिवसांची पट्टी, आणि Status by Yuva."
+
 #: src/copy/contact.ts
 msgid "A hosted service and commercial licenses"
 msgstr "होस्टेड सेवा आणि व्यावसायिक परवाने"
@@ -64,13 +80,41 @@ msgstr "होस्टेड सेवा आणि व्यावसायि
 msgid "A message can be up to 25 MiB including attachments, which is the Cloudflare Email Routing limit. Yuva keeps up to 50 attachments per message, each within the server's attachment size limit (25 MiB by default) and allowed types; it leaves out the rest."
 msgstr "संलग्नकांसह एक संदेश 25 MiB पर्यंत असू शकतो, ही Cloudflare Email Routing ची मर्यादा आहे. Yuva प्रत्येक संदेशामागे 50 संलग्नके ठेवतो, प्रत्येक सर्व्हरच्या संलग्नक आकार मर्यादेत (डिफॉल्ट 25 MiB) आणि अनुमत प्रकारांतील असावे; उर्वरित वगळतो."
 
+#: src/copy/status.ts
+msgid "A notice waits 60 seconds so you can undo it, and notices about one incident keep their distance, so a long outage does not flood inboxes."
+msgstr "सूचना 60 सेकंद थांबते जेणेकरून तुम्ही ती मागे घेऊ शकता, आणि एकाच घटनेच्या सूचना अंतराने पाठवल्या जातात, म्हणजे दीर्घ बिघाड इनबॉक्स भरून टाकत नाही."
+
+#: src/copy/status.ts
+msgid "A page stays private until you publish it, and your team previews it in the panel before that."
+msgstr "तुम्ही प्रकाशित करेपर्यंत पेज खाजगी राहते, आणि तुमची टीम त्याआधी पॅनेलमध्ये त्याचे पूर्वावलोकन पाहते."
+
+#: src/copy/home.ts
+msgid "A public page for the state of your products, kept in the same inbox as your support. Checks keep it current and subscribers hear by e-mail."
+msgstr "तुमच्या उत्पादनांच्या स्थितीचे सार्वजनिक पेज, तुमच्या सपोर्टच्या त्याच इनबॉक्समध्ये. तपासण्या ते अद्ययावत ठेवतात आणि सदस्यांना ई-मेलने कळते."
+
+#: src/copy/status.ts
+msgid "A public status page with components, incidents, maintenance and history, kept current by checks and by your team. E-mail subscribers, a line in the chat widget and the apps, and one reply to everyone who wrote."
+msgstr "घटक, घटना, देखभाल आणि इतिहास असलेले सार्वजनिक स्टेटस पेज, जे तपासण्या आणि तुमची टीम अद्ययावत ठेवतात. ई-मेल सदस्य, चॅट विजेट आणि अ‍ॅप्समध्ये एक ओळ, आणि लिहिणाऱ्या प्रत्येकाला एक उत्तर."
+
+#: src/copy/status.ts
+msgid "A sample status page: the overall state, an open incident and four components with their last 90 days as coloured bars."
+msgstr "नमुना स्टेटस पेज: एकूण स्थिती, एक उघडी घटना आणि चार घटक, ज्यांचे मागील 90 दिवस रंगीत पट्ट्यांच्या स्वरूपात दिसतात."
+
 #: src/copy/cloudflare-email.ts
 msgid "A small open-source Worker"
 msgstr "एक छोटा ओपन-सोर्स Worker"
 
+#: src/copy/status.ts
+msgid "A Yuva status page shows whether your product works. It sits in your support inbox, so your chat widget and apps show an open incident, and one reply answers everyone who wrote about it."
+msgstr "Yuva चे स्टेटस पेज तुमचे उत्पादन चालते आहे का ते दाखवते. ते तुमच्या सपोर्ट इनबॉक्समध्ये राहते, म्हणून चॅट विजेट आणि अ‍ॅप्स उघडी घटना दाखवतात, आणि एक उत्तर त्याबद्दल लिहिणाऱ्या सर्वांपर्यंत पोहोचते."
+
 #: src/copy/home.ts
 msgid "Accepted answer"
 msgstr "स्वीकारलेले उत्तर"
+
+#: src/copy/status.ts
+msgid "Add it for a second row with each component's state."
+msgstr "प्रत्येक घटकाच्या स्थितीची दुसरी ओळ हवी असल्यास ते जोडा."
 
 #: src/copy/home.ts
 msgid "Add ratings and a discussion area to your own documentation pages."
@@ -121,6 +165,14 @@ msgstr "GitHub वरील सर्व रिलीज"
 msgid "All templates"
 msgstr "सर्व टेम्पलेट"
 
+#: src/copy/status.ts
+msgid "An Atom feed that needs no subscription, a badge for your README, and the same page as JSON for your own site or app."
+msgstr "सदस्यत्व न लागणारा Atom फीड, तुमच्या README साठी बॅज, आणि तेच पेज JSON स्वरूपात तुमच्या स्वतःच्या साइट किंवा अ‍ॅपसाठी."
+
+#: src/copy/status.ts
+msgid "An outage brings the same question by e-mail, chat and in the apps. Link those conversations to the incident, write one answer, and send it to all of them."
+msgstr "बिघाडामुळे तोच प्रश्न ई-मेल, चॅट आणि अ‍ॅप्समध्ये येतो. त्या संभाषणांना घटनेशी जोडा, एक उत्तर लिहा आणि सर्वांना पाठवा."
+
 #: src/copy/docs.ts
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -132,12 +184,20 @@ msgid "and funnels"
 msgstr "आणि फनेल"
 
 #: src/copy/home.ts
+msgid "and planned maintenance"
+msgstr "आणि नियोजित देखभाल"
+
+#: src/copy/home.ts
 msgid "and Postgres"
 msgstr "आणि Postgres"
 
 #: src/copy/home.ts
 msgid "and the inboxes they can see"
 msgstr "आणि त्यांना दिसणारे इनबॉक्स"
+
+#: src/copy/status.ts
+msgid "Announce planned work with a window. Yuva starts and completes it on time."
+msgstr "नियोजित कामाची घोषणा वेळेच्या खिडकीसह करा. Yuva ते वेळेवर सुरू आणि पूर्ण करते."
 
 #: src/copy/templates.ts
 msgid "Announcement"
@@ -261,9 +321,17 @@ msgstr "व्यवसाय"
 msgid "By"
 msgstr "लेखक"
 
+#: src/copy/home.ts
+msgid "by e-mail, with double opt-in"
+msgstr "ई-मेलने, दुहेरी पुष्टीसह"
+
 #: src/copy/cloudflare-email.ts
 msgid "Can someone forge mail to my Yuva server?"
 msgstr "माझ्या Yuva सर्व्हरवर कोणी बनावट मेल पाठवू शकतो का?"
+
+#: src/copy/status.ts
+msgid "Certificates"
+msgstr "प्रमाणपत्रे"
 
 #: src/copy/brand.ts
 msgid "Change its colours"
@@ -288,9 +356,21 @@ msgstr "CHANGELOG.md"
 msgid "Channels"
 msgstr "चॅनेल"
 
+#: src/copy/status.ts
+msgid "Chat and e-mail work normally."
+msgstr "चॅट आणि ई-मेल नेहमीप्रमाणे चालू आहेत."
+
+#: src/copy/status.ts
+msgid "Chat messages arrive late"
+msgstr "चॅट संदेश उशिरा पोहोचत आहेत"
+
 #: src/copy/home.ts
 msgid "checks before you send"
 msgstr "पाठवण्यापूर्वी तपासण्या"
+
+#: src/copy/status.ts
+msgid "Checks keep it current"
+msgstr "तपासण्या ते अद्ययावत ठेवतात"
 
 #: src/copy/ai.ts
 msgid "Choose the workspace and what the assistant may do, then approve."
@@ -336,6 +416,11 @@ msgstr "व्यावसायिक परवाना"
 #: src/copy/pages.ts
 msgid "Compare changes"
 msgstr "बदलांची तुलना करा"
+
+#: src/copy/home.ts
+#: src/copy/status.ts
+msgid "Components"
+msgstr "घटक"
 
 #: src/copy/home.ts
 msgid "Connect a support address, a chat widget for your website or the SDKs for your apps."
@@ -412,6 +497,7 @@ msgstr "SVG कॉपी करा"
 
 #: src/copy/home.ts
 #: src/copy/pages.ts
+#: src/copy/status.ts
 msgid "Create an account"
 msgstr "खाते तयार करा"
 
@@ -430,6 +516,10 @@ msgstr "डार्क"
 #: src/ui/ThemeToggle.astro
 msgid "Dark theme"
 msgstr "डार्क थीम"
+
+#: src/copy/status.ts
+msgid "Degraded performance"
+msgstr "कार्यक्षमता घटली"
 
 #: src/copy/home.ts
 msgid "Delete"
@@ -463,6 +553,10 @@ msgstr "डिझाइन आणि ब्रॉडकास्ट मसुद
 msgid "Desktop"
 msgstr "डेस्कटॉप"
 
+#: src/copy/status.ts
+msgid "Details"
+msgstr "तपशील"
+
 #: src/copy/docs.ts
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -477,6 +571,14 @@ msgstr "डायजेस्ट"
 #: src/copy/home.ts
 msgid "Discussions"
 msgstr "चर्चा"
+
+#: src/copy/status.ts
+msgid "Dismiss"
+msgstr "बंद करा"
+
+#: src/copy/status.ts
+msgid "Dismissable"
+msgstr "बंद करता येते"
 
 #: src/copy/brand.ts
 msgid "Do"
@@ -505,6 +607,10 @@ msgstr "Yuva Cloudflare चा DMARC निकाल वापरतो का?"
 msgid "Don't"
 msgstr "करू नका"
 
+#: src/copy/status.ts
+msgid "Double opt-in"
+msgstr "दुहेरी पुष्टी"
+
 #: src/copy/header.ts
 msgid "Download logo"
 msgstr "लोगो डाउनलोड करा"
@@ -531,12 +637,17 @@ msgstr "उत्तराचे मसुदे"
 
 #: src/copy/contact.ts
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "E-mail"
 msgstr "ईमेल"
 
 #: src/pages/og/[lang].png.ts
 msgid "E-mail · live chat · in-app · self-hosted"
 msgstr "ईमेल · लाइव्ह चॅट · अ‍ॅपमध्ये · स्वतः होस्ट केलेले"
+
+#: src/copy/status.ts
+msgid "E-mail subscribers"
+msgstr "ई-मेल सदस्य"
 
 #: src/copy/header.ts
 #: src/copy/templates.ts
@@ -559,6 +670,10 @@ msgstr "सुरुवातीच्या टप्प्यात, उघड
 #: src/copy/docs.ts
 msgid "Edit this page on GitHub"
 msgstr "GitHub वर हे पेज संपादित करा"
+
+#: src/copy/status.ts
+msgid "Elevated API response times"
+msgstr "API चे प्रतिसाद वेळ वाढले आहेत"
 
 #: src/copy/cloudflare-email.ts
 msgid "Email Routing becomes the MX of the domain, so use a domain or subdomain that no other mail server handles."
@@ -624,6 +739,18 @@ msgstr "Yuva चे सर्व मार्गदर्शक एका जा
 msgid "Every Yuva release and what changed in it, from the changelog."
 msgstr "Yuva ची प्रत्येक रिलीज आणि त्यात काय बदलले, चेंजलॉगमधून."
 
+#: src/copy/status.ts
+msgid "Everything is in the API, with the scopes status:read and status:manage. Webhooks announce component, incident and monitor changes, and assistants connected over MCP can open drafts and resolve incidents."
+msgstr "सर्व काही API मध्ये आहे, status:read आणि status:manage स्कोपसह. वेबहूक घटक, घटना आणि मॉनिटरमधील बदल कळवतात, आणि MCP द्वारे जोडलेले सहाय्यक मसुदे उघडू शकतात आणि घटना सोडवू शकतात."
+
+#: src/copy/status.ts
+msgid "Everything moves"
+msgstr "सर्व काही सोबत हलते"
+
+#: src/copy/status.ts
+msgid "Feed, badge and JSON"
+msgstr "फीड, बॅज आणि JSON"
+
 #: src/copy/home.ts
 msgid "Feedback"
 msgstr "अभिप्राय"
@@ -651,6 +778,10 @@ msgstr "कोपरे स्वतः गोलाकार करणाऱ्
 #: src/copy/brand.ts
 msgid "For dark backgrounds."
 msgstr "गडद पार्श्वभूमीसाठी."
+
+#: src/copy/status.ts
+msgid "For developers"
+msgstr "डेव्हलपर्ससाठी"
 
 #: src/copy/contact.ts
 msgid "For investors"
@@ -683,6 +814,10 @@ msgstr "कॉपी करण्यासाठी मोफत डिझाइ
 #: src/copy/templates.ts
 msgid "Free starter designs for newsletters, product updates, announcements and more. Preview them here and open one in Yuva's e-mail designer."
 msgstr "न्यूजलेटर, प्रोडक्ट अपडेट, घोषणा आणि बरेच काही यांसाठी मोफत स्टार्टर डिझाइन. इथे पूर्वावलोकन पाहा आणि Yuva च्या ईमेल डिझायनरमध्ये एक उघडा."
+
+#: src/copy/status.ts
+msgid "From investigating to resolved, with every update kept. A published update is corrected, never removed."
+msgstr "तपास सुरू आहे पासून सोडवले पर्यंत, प्रत्येक अपडेट जपले जाते. प्रकाशित अपडेट दुरुस्त केले जाते, कधीही काढले जात नाही."
 
 #: src/copy/home.ts
 msgid "from the people you helped"
@@ -728,6 +863,14 @@ msgstr "मार्गदर्शक"
 msgid "Guides for every part."
 msgstr "प्रत्येक भागासाठी मार्गदर्शक."
 
+#: src/copy/status.ts
+msgid "Heartbeats"
+msgstr "गटांमध्ये, प्रत्येकाची स्वतःची स्थिती, 90 दिवसांपर्यंत प्रत्येक दिवसासाठी एक पट्टी आणि हवी असल्यास उपलब्धता."
+
+#: src/copy/status.ts
+msgid "Held, then sent"
+msgstr "चॅट विजेट आणि अ‍ॅप्समध्ये"
+
 #: src/copy/home.ts
 msgid "Help center"
 msgstr "मदत केंद्र"
@@ -741,6 +884,7 @@ msgid "Hi! Tell us a little about yourself and what you have in mind."
 msgstr "नमस्कार! तुमच्याबद्दल आणि तुमच्या मनात काय आहे ते थोडक्यात सांगा."
 
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "History"
 msgstr "इतिहास"
 
@@ -768,6 +912,10 @@ msgstr "AGPL, MIT SDK आणि CLA एकत्र कसे बसतात."
 msgid "How to add a template"
 msgstr "टेम्पलेट कसा जोडायचा"
 
+#: src/copy/status.ts
+msgid "HTTP"
+msgstr "घटना"
+
 #: src/copy/templates.ts
 msgid "https://yuva.example.com"
 msgstr "https://yuva.example.com"
@@ -787,6 +935,10 @@ msgstr "मला Yuva मध्ये गुंतवणुकीबद्द�
 #: src/copy/contact.ts
 msgid "I'm writing about Yuva and have a few questions."
 msgstr "मी Yuva बद्दल लिहीत आहे आणि माझे काही प्रश्न आहेत."
+
+#: src/copy/status.ts
+msgid "Identified"
+msgstr "घटना"
 
 #: src/copy/home.ts
 msgid "Identity tokens"
@@ -812,6 +964,14 @@ msgstr "स्थान"
 msgid "In claude.ai or Claude Desktop, open Customize → Connectors → Add custom connector."
 msgstr "claude.ai किंवा Claude Desktop मध्ये Customize → Connectors → Add custom connector उघडा."
 
+#: src/copy/status.ts
+msgid "In groups, each with its state, a bar for every day of up to 90 days and, if you like, its uptime."
+msgstr "तुमच्यासाठी तयार केलेल्या घटना"
+
+#: src/copy/status.ts
+msgid "In the chat widget and the apps"
+msgstr "तपास सुरू आहे"
+
 #: src/copy/cloudflare-email.ts
 msgid "In the Cloudflare dashboard, open your domain → Email → Email Routing and enable it. Cloudflare adds its MX and SPF records."
 msgstr "Cloudflare डॅशबोर्डमध्ये तुमचे डोमेन → Email → Email Routing उघडा आणि सुरू करा. Cloudflare त्याचे MX आणि SPF रेकॉर्ड जोडतो."
@@ -834,6 +994,19 @@ msgstr "इनबॉक्स"
 msgid "Inbox and conversations"
 msgstr "इनबॉक्स आणि संभाषणे"
 
+#: src/copy/status.ts
+msgid "Incident"
+msgstr "हार्टबीट"
+
+#: src/copy/home.ts
+#: src/copy/status.ts
+msgid "Incidents"
+msgstr "थांबवले, मग पाठवले"
+
+#: src/copy/status.ts
+msgid "Incidents drafted for you"
+msgstr "HTTP"
+
 #: src/copy/brand.ts
 msgid "Ink"
 msgstr "शाई"
@@ -842,9 +1015,17 @@ msgstr "शाई"
 msgid "Introduction"
 msgstr "परिचय"
 
+#: src/copy/status.ts
+msgid "Investigating"
+msgstr "ओळखले"
+
 #: src/copy/contact.ts
 msgid "Investment"
 msgstr "गुंतवणूक"
+
+#: src/copy/status.ts
+msgid "Issued and renewed automatically, by an on-demand proxy such as Caddy or by Cloudflare custom hostnames."
+msgstr "प्रमाणपत्रे आपोआप दिली आणि नूतनीकृत केली जातात, Caddy सारख्या मागणीनुसार चालणाऱ्या प्रॉक्सीद्वारे किंवा Cloudflare च्या कस्टम होस्टनावांद्वारे."
 
 #: src/copy/ai.ts
 msgid "It does the rest with you."
@@ -903,12 +1084,25 @@ msgstr "लाइट"
 msgid "Light theme"
 msgstr "लाइट थीम"
 
+#: src/copy/status.ts
+msgid "light, dark or auto, which follows the visitor's colour scheme. The default is auto."
+msgstr "light, dark किंवा auto, जे अभ्यागताच्या रंगसंगतीचे अनुसरण करते. डिफॉल्ट auto आहे."
+
+#: src/copy/status.ts
+msgid "Link conversations to the incident in the panel. The incident page lists them."
+msgstr "पॅनेलमध्ये संभाषणे घटनेशी जोडा. घटनेचे पेज त्यांची यादी दाखवते."
+
+#: src/copy/status.ts
+msgid "Links, the feed, the badge, the JSON and e-mail notices all use your domain."
+msgstr "दुवे, फीड, बॅज, JSON आणि ई-मेल सूचना सर्व तुमचे डोमेन वापरतात."
+
 #: src/copy/home.ts
 msgid "Lists"
 msgstr "याद्या"
 
 #: src/copy/contact.ts
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "Live chat"
 msgstr "लाइव्ह चॅट"
 
@@ -960,6 +1154,14 @@ msgstr "मेलबॉक्स"
 msgid "Maintainer of Yuva"
 msgstr "Yuva चे मेंटेनर"
 
+#: src/copy/status.ts
+msgid "Maintenance"
+msgstr "देखभाल"
+
+#: src/copy/status.ts
+msgid "Make a page, add your components and publish it. The guide is in English, Turkish and German."
+msgstr "एक पेज तयार करा, तुमचे घटक जोडा आणि ते प्रकाशित करा. मार्गदर्शक इंग्रजी, तुर्की आणि जर्मनमध्ये आहे."
+
 #: src/copy/home.ts
 msgid "marked by your team"
 msgstr "तुमच्या टीमने चिन्हांकित केलेले"
@@ -984,6 +1186,14 @@ msgstr "सदस्य"
 #: src/copy/header.ts
 msgid "Menu"
 msgstr "मेनू"
+
+#: src/copy/status.ts
+msgid "Messages"
+msgstr "संदेश"
+
+#: src/copy/status.ts
+msgid "Minor"
+msgstr "किरकोळ"
 
 #: src/copy/docs.ts
 msgid "More"
@@ -1087,6 +1297,14 @@ msgstr "लेखी परवानगीशिवाय नाही"
 msgid "Notes and mentions"
 msgstr "नोंदी आणि उल्लेख"
 
+#: src/copy/status.ts
+msgid "Nothing to set up"
+msgstr "काही सेट करण्याची गरज नाही"
+
+#: src/copy/status.ts
+msgid "Notices go out through your inbox's own e-mail channel, from its address, and the people on the list are kept apart from your newsletters."
+msgstr "सूचना तुमच्या इनबॉक्सच्या स्वतःच्या ई-मेल चॅनेलमधून, त्याच्या पत्त्यावरून जातात, आणि यादीतील लोक तुमच्या वृत्तपत्रांपासून वेगळे ठेवले जातात."
+
 #: src/copy/home.ts
 msgid "of every conversation"
 msgstr "प्रत्येक संभाषणाच्या"
@@ -1098,6 +1316,14 @@ msgstr "मोफत टेम्पलेटच्या"
 #: src/copy/brand.ts
 msgid "offer a hosted or managed service, or a product, under the Yuva name or a confusingly similar one;"
 msgstr "Yuva या नावाने किंवा गोंधळ निर्माण होईल इतक्या मिळत्याजुळत्या नावाने होस्टेड किंवा व्यवस्थापित सेवा अथवा प्रोडक्ट देणे;"
+
+#: src/copy/status.ts
+msgid "On a dark site"
+msgstr "गडद साइटवर"
+
+#: src/copy/status.ts
+msgid "On a light site"
+msgstr "फिकट साइटवर"
 
 #: src/copy/brand.ts
 msgid "On dark backgrounds"
@@ -1132,6 +1358,10 @@ msgstr "एक बायनरी"
 msgid "One binary and Postgres."
 msgstr "एक बायनरी आणि Postgres."
 
+#: src/copy/status.ts
+msgid "One checkbox per component, and a link in every mail to change it or leave."
+msgstr "प्रत्येक घटकासाठी एक चेकबॉक्स, आणि प्रत्येक ई-मेलमध्ये निवड बदलण्यासाठी किंवा बाहेर पडण्यासाठी दुवा."
+
 #: src/copy/home.ts
 msgid "One Docker image and Postgres on your own server."
 msgstr "तुमच्या स्वतःच्या सर्व्हरवर एक Docker इमेज आणि Postgres."
@@ -1148,6 +1378,14 @@ msgstr "कोणत्याही चॅनेलवरून लिहिल�
 #: src/copy/home.ts
 msgid "One small server runs all of it. The server is open source, and the SDKs carry no copyleft."
 msgstr "एक लहान सर्व्हर सर्वकाही चालवतो. सर्व्हर ओपन सोर्स आहे आणि SDK मध्ये कॉपीलेफ्ट नाही."
+
+#: src/copy/status.ts
+msgid "Only the page is served on your domain, never the API or the panel."
+msgstr "तुमच्या डोमेनवर फक्त पेज दिले जाते, API किंवा पॅनेल कधीच नाही."
+
+#: src/copy/status.ts
+msgid "Only yours"
+msgstr "फक्त तुमचे"
 
 #: src/copy/contact.ts
 msgid "Open a GitHub issue"
@@ -1178,6 +1416,11 @@ msgid "Open source that stays open"
 msgstr "खुला राहणारा ओपन सोर्स"
 
 #: src/copy/home.ts
+msgid "Open status pages"
+msgstr "स्टेटस पेज उघडा"
+
+#: src/copy/home.ts
+#: src/copy/status.ts
 msgid "Open the API reference"
 msgstr "API संदर्भ उघडा"
 
@@ -1205,6 +1448,10 @@ msgstr "OpenAPI करार"
 msgid "Opens Yuva's e-mail designer with this template. You sign in first if you have not."
 msgstr "या टेम्पलेटसह Yuva चा ईमेल डिझायनर उघडतो. साइन इन केले नसेल तर आधी साइन इन करा."
 
+#: src/copy/status.ts
+msgid "Operational"
+msgstr "चालू"
+
 #: src/copy/cloudflare-email.ts
 msgid "Optional: keep mail during an outage by adding a fallback address to the deploy command:"
 msgstr "पर्यायी: डिप्लॉय कमांडमध्ये पर्यायी पत्ता जोडून बंद पडल्यावरही मेल सुरक्षित ठेवा:"
@@ -1229,6 +1476,10 @@ msgstr "मेल आणण्याचे इतर मार्ग"
 msgid "Other ways to reach us"
 msgstr "आमच्याशी संपर्क साधण्याचे इतर मार्ग"
 
+#: src/copy/status.ts
+msgid "Overall state"
+msgstr "एकूण स्थिती"
+
 #: src/copy/docs.ts
 msgid "Overview"
 msgstr "आढावा"
@@ -1245,9 +1496,17 @@ msgstr "पेज आणि स्रोत"
 msgid "Parameters"
 msgstr "पॅरामीटर"
 
+#: src/copy/status.ts
+msgid "Partial outage"
+msgstr "अंशतः बिघाड"
+
 #: src/copy/contact.ts
 msgid "Partnership"
 msgstr "भागीदारी"
+
+#: src/copy/status.ts
+msgid "Past incidents and maintenance by month, each with its own page."
+msgstr "मागील घटना आणि देखभाल महिन्यानुसार, प्रत्येकाचे स्वतःचे पेज."
 
 #: src/copy/docs.ts
 msgid "Payload"
@@ -1264,6 +1523,10 @@ msgstr "फोन"
 #: src/copy/ai.ts
 msgid "Pick your assistant"
 msgstr "तुमचा सहाय्यक निवडा"
+
+#: src/copy/status.ts
+msgid "Plain notices"
+msgstr "साध्या सूचना"
 
 #: src/copy/pages.ts
 msgid "Posts are published in English."
@@ -1325,6 +1588,10 @@ msgstr "प्रोजेक्ट"
 msgid "publish a modified version under the Yuva name — rename your fork;"
 msgstr "बदललेली आवृत्ती Yuva या नावाने प्रकाशित करणे — तुमच्या फोर्कचे नाव बदला;"
 
+#: src/copy/status.ts
+msgid "Pushed states"
+msgstr "पुश केलेल्या स्थिती"
+
 #: src/copy/cloudflare-email.ts
 msgid "Questions and answers"
 msgstr "प्रश्नोत्तरे"
@@ -1354,6 +1621,7 @@ msgid "Read the English page"
 msgstr "इंग्रजी पेज वाचा"
 
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "Read the guide"
 msgstr "मार्गदर्शक वाचा"
 
@@ -1434,6 +1702,10 @@ msgstr "रिलीज"
 msgid "Removed"
 msgstr "काढले"
 
+#: src/copy/status.ts
+msgid "Reply to linked"
+msgstr "जोडलेल्यांना उत्तर"
+
 #: src/layouts/Footer.astro
 msgid "Report a vulnerability"
 msgstr "असुरक्षिततेची तक्रार करा"
@@ -1467,6 +1739,10 @@ msgstr "संसाधने"
 #: src/copy/docs.ts
 msgid "Response"
 msgstr "प्रतिसाद"
+
+#: src/copy/status.ts
+msgid "Response times"
+msgstr "प्रतिसाद वेळ"
 
 #: src/copy/docs.ts
 msgid "Responses"
@@ -1556,9 +1832,21 @@ msgstr "चाचणी संदेश पाठवा आणि संभा�
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "तुमच्या मेलिंग याद्यांना न्यूजलेटर पाठवा आणि वाचक त्यांचे काय करतात ते पाहा."
 
+#: src/copy/status.ts
+msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "operational किंवा बिघाडाची स्थिती तुम्ही स्वतः पाठवा. Alertmanager आणि Grafana चे अलर्ट जसे आहेत तसे स्वीकारले जातात."
+
+#: src/copy/status.ts
+msgid "Send us a message"
+msgstr "आम्हाला संदेश पाठवा"
+
 #: src/copy/home.ts
 msgid "sent by your own app"
 msgstr "तुमच्या स्वतःच्या अ‍ॅपने पाठवलेले"
+
+#: src/copy/status.ts
+msgid "Serve the page at an address such as status.example.com. Add a CNAME record and a TXT record that shows the domain is yours, and Yuva checks them for you."
+msgstr "पेज status.example.com सारख्या पत्त्यावर द्या. डोमेन तुमचे असल्याचे दाखवणारा CNAME रेकॉर्ड आणि TXT रेकॉर्ड जोडा, आणि Yuva ते तुमच्यासाठी तपासते."
 
 #: src/copy/templates.ts
 msgid "Server address"
@@ -1583,6 +1871,10 @@ msgstr "या साइटसाठी Yuva अ‍ॅनालिटिक्�
 #: src/copy/pages.ts
 msgid "Share"
 msgstr "शेअर करा"
+
+#: src/copy/status.ts
+msgid "Show your status in your site's footer: the state in words, a strip of the last 90 days with uptime, and a link to your page. It is one script and one element."
+msgstr "तुमच्या साइटच्या फूटरमध्ये तुमची स्थिती दाखवा: शब्दांत स्थिती, उपलब्धतेसह मागील 90 दिवसांची पट्टी आणि तुमच्या पेजचा दुवा. एक स्क्रिप्ट आणि एक एलिमेंट."
 
 #: src/copy/ai.ts
 msgid "Sign in from Gemini CLI:"
@@ -1612,6 +1904,10 @@ msgstr "मजकुराकडे जा"
 msgid "so users write as themselves"
 msgstr "जेणेकरून वापरकर्ते स्वतःच्या नावाने लिहितील"
 
+#: src/copy/status.ts
+msgid "Some systems are down"
+msgstr "काही सिस्टीम बंद आहेत"
+
 #: src/copy/contact.ts
 msgid "Something else"
 msgstr "आणखी काहीतरी"
@@ -1632,9 +1928,28 @@ msgstr "मोफत सुरू करा"
 msgid "Start with AI"
 msgstr "AI सह सुरू करा"
 
+#: src/copy/status.ts
+msgid "Start with the guide."
+msgstr "मार्गदर्शकापासून सुरू करा."
+
 #: src/copy/templates.ts
 msgid "Starter designs for the e-mail designer, in English, Turkish and German. Preview one, then open it in Yuva and make it yours."
 msgstr "इंग्रजी, तुर्की आणि जर्मनमध्ये ईमेल डिझायनरसाठी स्टार्टर डिझाइन. एकाचे पूर्वावलोकन पाहा, मग Yuva मध्ये उघडून आपलेसे करा."
+
+#: src/copy/status.ts
+msgid "Status by Yuva"
+msgstr "Status by Yuva"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/copy/status.ts
+#: src/layouts/Footer.astro
+msgid "Status pages"
+msgstr "स्टेटस पेज"
+
+#: src/copy/status.ts
+msgid "Status pages for your products | Yuva"
+msgstr "तुमच्या उत्पादनांसाठी स्टेटस पेज | Yuva"
 
 #: src/copy/home.ts
 msgid "stay inside the team"
@@ -1643,6 +1958,10 @@ msgstr "टीमच्या आतच राहतात"
 #: src/copy/brand.ts
 msgid "Stretch or squash it"
 msgstr "ताणू किंवा दाबू नका"
+
+#: src/copy/home.ts
+msgid "Subscribers"
+msgstr "सदस्य"
 
 #: src/copy/cloudflare-email.ts
 msgid "Support e-mail through Cloudflare Email Routing | Yuva"
@@ -1656,6 +1975,10 @@ msgstr "Cloudflare द्वारे सपोर्ट ईमेल."
 msgid "Tag on GitHub"
 msgstr "GitHub वरील टॅग"
 
+#: src/copy/status.ts
+msgid "TCP"
+msgstr "TCP"
+
 #: src/copy/home.ts
 msgid "Team and reports"
 msgstr "टीम आणि अहवाल"
@@ -1663,6 +1986,14 @@ msgstr "टीम आणि अहवाल"
 #: src/copy/contact.ts
 msgid "Teams can use our hosted service, and because every contribution is made under a CLA, Yuva can also be offered under a commercial license."
 msgstr "टीम आमची होस्टेड सेवा वापरू शकतात, आणि प्रत्येक योगदान CLA अंतर्गत असल्याने Yuva व्यावसायिक परवान्यावरही देता येते."
+
+#: src/copy/status.ts
+msgid "Tell customers what is down before they have to ask."
+msgstr "ग्राहकांनी विचारण्याआधी काय बंद आहे ते सांगा."
+
+#: src/copy/header.ts
+msgid "Tell customers what works."
+msgstr "ग्राहकांना काय चालते ते सांगा."
 
 #: src/copy/ai.ts
 msgid "Tell your assistant to add Yuva."
@@ -1676,13 +2007,37 @@ msgstr "टेम्पलेट गॅलरी"
 msgid "Templates"
 msgstr "टेम्पलेट"
 
+#: src/copy/status.ts
+msgid "The address of your status page."
+msgstr "तुमच्या स्टेटस पेजचा पत्ता."
+
 #: src/copy/home.ts
 msgid "The analytics overview in the panel: 30 days of visitors, pageviews and bounce rate, a daily chart with a note on the day a newsletter went out, and the top pages and sources."
 msgstr "पॅनेलमधील अ‍ॅनालिटिक्स आढावा: 30 दिवसांचे अभ्यागत, पेजव्ह्यू आणि बाउन्स रेट, न्यूजलेटर गेलेल्या दिवशी नोंदीसह दैनंदिन आलेख, आणि अव्वल पेज व स्रोत."
 
+#: src/copy/status.ts
+msgid "The answer is the same for every address, and nobody is subscribed without confirming."
+msgstr "उत्तर प्रत्येक पत्त्यासाठी सारखेच आहे, आणि पुष्टीशिवाय कोणीही सदस्य होत नाही."
+
+#: src/copy/status.ts
+msgid "The API is running slow"
+msgstr "API हळू चालत आहे"
+
+#: src/copy/status.ts
+msgid "The API is slow and some chats are delayed."
+msgstr "API हळू आहे आणि काही चॅट उशिरा येत आहेत."
+
 #: src/copy/ai.ts
 msgid "The assistant acts as you, with no more access than you approve, and asks before it changes anything."
 msgstr "सहाय्यक तुमच्या वतीने काम करतो, तुम्ही मंजूर केल्यापेक्षा जास्त अ‍ॅक्सेस नसतो, आणि काहीही बदलण्यापूर्वी विचारतो."
+
+#: src/copy/status.ts
+msgid "The band for your own site"
+msgstr "तुमच्या स्वतःच्या साइटसाठी बँड"
+
+#: src/copy/status.ts
+msgid "The chat widget with a line above the conversations: elevated API response times, minor, investigating, with a link to the details."
+msgstr "संभाषणांच्या वर एक ओळ असलेला चॅट विजेट: API चे प्रतिसाद वेळ वाढले, किरकोळ, तपास सुरू आहे, तपशीलांच्या दुव्यासह."
 
 #: src/copy/header.ts
 msgid "The code, open source."
@@ -1703,6 +2058,10 @@ msgstr "Yuva तुमच्या वेबहुक एंडपॉइंट�
 #: src/copy/ai.ts
 msgid "The first time the assistant uses Yuva, your browser opens Yuva to sign in."
 msgstr "सहाय्यक पहिल्यांदा Yuva वापरतो तेव्हा साइन इनसाठी तुमचा ब्राउझर Yuva उघडतो."
+
+#: src/copy/status.ts
+msgid "The line appears and goes away with the incident."
+msgstr "ही ओळ घटनेसोबत दिसते आणि नाहीशी होते."
 
 #: src/copy/brand.ts
 msgid "The mark is drawn to stay readable from an app store listing down to a 16-pixel browser tab."
@@ -1728,6 +2087,10 @@ msgstr "मोबाइल अ‍ॅपमधून पाठवलेल्य�
 msgid "The payloads Yuva sends to your webhook endpoints."
 msgstr "Yuva तुमच्या वेबहुक एंडपॉइंटवर पाठवतो ते पेलोड."
 
+#: src/copy/status.ts
+msgid "The public page"
+msgstr "सार्वजनिक पेज"
+
 #: src/copy/home.ts
 msgid "The report of a sent newsletter in the panel: 240 sent, 5 unsubscribed and 56 who clicked a link, a chart over time and the number of clicks on each link."
 msgstr "पॅनेलमधील पाठवलेल्या न्यूजलेटरचा अहवाल: 240 पाठवले, 5 अनसबस्क्राइब आणि 56 जणांनी लिंकवर क्लिक केले, कालानुसार आलेख आणि प्रत्येक लिंकवरील क्लिकची संख्या."
@@ -1736,9 +2099,17 @@ msgstr "पॅनेलमधील पाठवलेल्या न्यू�
 msgid "The server and panel are AGPL-3.0, the SDKs and API contract MIT. Improvements to the core stay public."
 msgstr "सर्व्हर आणि पॅनेल AGPL-3.0 आहेत, SDK आणि API करार MIT. कोअरमधील सुधारणा सार्वजनिक राहतात."
 
+#: src/copy/status.ts
+msgid "The state in words, the affected components and the updates, with no images, tracking or promotion. In English, Turkish or German."
+msgstr "शब्दांत स्थिती, प्रभावित घटक आणि अपडेट, चित्रे, ट्रॅकिंग किंवा प्रचाराशिवाय. इंग्रजी, तुर्की किंवा जर्मनमध्ये."
+
 #: src/copy/home.ts
 msgid "The support screen of the {platform} SDK inside an app: the person's conversations with the latest reply, and a button to write a new message."
 msgstr "अ‍ॅपमधील {platform} SDK ची सपोर्ट स्क्रीन: व्यक्तीची संभाषणे शेवटच्या उत्तरासह, आणि नवीन संदेश लिहिण्यासाठी एक बटण."
+
+#: src/copy/status.ts
+msgid "The widget and the apps show it in each language they speak."
+msgstr "विजेट आणि अ‍ॅप्स ते त्यांना येणाऱ्या प्रत्येक भाषेत दाखवतात."
 
 #: src/copy/cloudflare-email.ts
 msgid "The Worker is one way to call /ingress/email. Any mail server or relay can post the raw message with the same signed headers, and a mail server that delivers to a command can pipe the message into yuva ingest-email. The request format is documented in the Worker's README."
@@ -1747,6 +2118,10 @@ msgstr "/ingress/email कॉल करण्याचा Worker हा एक �
 #: src/copy/cloudflare-email.ts
 msgid "The Worker signs the raw message, both envelope addresses and a timestamp with HMAC-SHA256 under a secret you share with Yuva, and sends them to /ingress/email on your Yuva server."
 msgstr "Worker रॉ संदेश, दोन्ही एन्व्हलप पत्ते आणि टाइमस्टॅम्पवर तुम्ही Yuva सोबत सामायिक केलेल्या सीक्रेटने HMAC-SHA256 सही करतो आणि ते तुमच्या Yuva सर्व्हरवरील /ingress/email वर पाठवतो."
+
+#: src/copy/status.ts
+msgid "The worst state among the components you show, in words and in colour."
+msgstr "तुम्ही दाखवलेल्या घटकांतील सर्वांत वाईट स्थिती, शब्दांत आणि रंगात."
 
 #: src/copy/home.ts
 msgid "The Yuva chat widget open on a newsletter tool's website: the visitor's question and a member's reply, with the member shown online."
@@ -1763,6 +2138,14 @@ msgstr "Yuva चा लोगो, रंग आणि टाइपफेस, ल
 #: src/copy/home.ts
 msgid "The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send."
 msgstr "Yuva मेसेजिंग पॅनेल: ईमेल, लाइव्ह चॅट आणि अ‍ॅप्समधील संभाषणे एका यादीत, आणि एक संभाषण चॅट म्हणून उघडलेले, टीमची नोंद आणि सहकाऱ्याने पाठवण्यासाठी सहाय्यकाने तयार केलेल्या उत्तरासह."
+
+#: src/copy/status.ts
+msgid "Their choice"
+msgstr "त्यांची निवड"
+
+#: src/copy/status.ts
+msgid "Their language"
+msgstr "त्यांची भाषा"
 
 #: src/ui/ThemeToggle.astro
 msgid "Theme"
@@ -1824,6 +2207,10 @@ msgstr "पोहोचवता न येणारे"
 msgid "Under Routing rules, send each support address to the Worker yuva-edge. For a catch-all channel, point the catch-all rule at it."
 msgstr "Routing rules अंतर्गत प्रत्येक सपोर्ट पत्ता Worker yuva-edge कडे पाठवा. कॅच-ऑल चॅनेलसाठी कॅच-ऑल नियम त्याकडे वळवा."
 
+#: src/copy/status.ts
+msgid "uptime"
+msgstr "उपलब्धता"
+
 #: src/copy/brand.ts
 msgid "use the logo in a way that suggests endorsement by the project."
 msgstr "प्रोजेक्टचे समर्थन असल्याचे सुचवेल अशा प्रकारे लोगो वापरणे."
@@ -1851,6 +2238,10 @@ msgstr "GitHub वर पाहा"
 #: src/copy/home.ts
 msgid "visitors"
 msgstr "अभ्यागत"
+
+#: src/copy/status.ts
+msgid "Visitors subscribe to notices about incidents and maintenance, for every component or only the ones they use. A subscription always starts with a confirmation mail."
+msgstr "अभ्यागत घटना आणि देखभालीच्या सूचनांसाठी सदस्य होतात, सर्व घटकांसाठी किंवा फक्त ते वापरतात त्यांच्यासाठी. सदस्यत्व नेहमी पुष्टी ई-मेलने सुरू होते."
 
 #: src/copy/header.ts
 msgid "Visitors without cookies."
@@ -1884,6 +2275,10 @@ msgstr "वेबहुक आणि ओळख"
 msgid "Webhooks guide"
 msgstr "वेबहुक मार्गदर्शक"
 
+#: src/copy/status.ts
+msgid "Website"
+msgstr "वेबसाइट"
+
 #: src/copy/home.ts
 msgid "what came in and what is open"
 msgstr "काय आले आणि काय खुले आहे"
@@ -1912,6 +2307,14 @@ msgstr "हे कशाबद्दल आहे?"
 msgid "What it is"
 msgstr "हे काय आहे"
 
+#: src/copy/status.ts
+msgid "When a check goes down, Yuva can open a draft incident for you to review, publish one at once, or open none. When it recovers, Yuva resolves what it opened."
+msgstr "एखादी तपासणी अयशस्वी झाली की Yuva तुमच्या पुनरावलोकनासाठी मसुदा घटना उघडू शकते, लगेच एक प्रकाशित करू शकते किंवा एकही उघडत नाही. ती पूर्ववत झाली की Yuva ने उघडलेले सोडवते."
+
+#: src/copy/status.ts
+msgid "When you turn it on: the last 24 hours of each component with an HTTP or TCP check, with median and p95."
+msgstr "तुम्ही ते चालू केल्यावर: HTTP किंवा TCP तपासणी असलेल्या प्रत्येक घटकाचे मागील 24 तास, मध्यक आणि p95 सह."
+
 #: src/copy/cloudflare-email.ts
 msgid "When Yuva refuses a message for good, for example an unknown address, a blocked sender or a message that is too large, the Worker rejects it and the sender gets a permanent SMTP error with Yuva's reason."
 msgstr "अनोळखी पत्ता, ब्लॉक केलेला प्रेषक किंवा खूप मोठा संदेश अशा कारणांसाठी Yuva संदेश कायमचा नाकारतो, तेव्हा Worker तो नाकारतो आणि प्रेषकाला Yuva च्या कारणासह कायमची SMTP त्रुटी मिळते."
@@ -1924,9 +2327,17 @@ msgstr "तुम्हाला Yuva मध्ये गुंतवणूक �
 msgid "Which domains and addresses can I use?"
 msgstr "मी कोणते डोमेन आणि पत्ते वापरू शकतो?"
 
+#: src/copy/status.ts
+msgid "While your page is published and an incident or maintenance is open, the web widget and the iOS and Android SDKs show a line above the conversations, with the state in words and a link to the incident."
+msgstr "तुमचे पेज प्रकाशित असताना आणि एखादी घटना किंवा देखभाल उघडी असताना, वेब विजेट आणि iOS व Android SDK संभाषणांच्या वर शब्दांत स्थिती आणि घटनेचा दुवा असलेली एक ओळ दाखवतात."
+
 #: src/copy/brand.ts
 msgid "White"
 msgstr "पांढरा"
+
+#: src/copy/home.ts
+msgid "with 90 day bars"
+msgstr "90 दिवसांच्या पट्ट्यांसह"
 
 #: src/copy/home.ts
 msgid "with clicks and unsubscribes"
@@ -1968,6 +2379,10 @@ msgstr "यांच्यासोबत चालते"
 msgid "Write an e-mail"
 msgstr "ईमेल लिहा"
 
+#: src/copy/status.ts
+msgid "Write one reply. Review shows how many conversations get it, and you can close each one afterwards."
+msgstr "एक उत्तर लिहा. पुनरावलोकन किती संभाषणांना ते मिळेल ते दाखवते, आणि नंतर तुम्ही प्रत्येक बंद करू शकता."
+
 #: src/copy/contact.ts
 msgid "Write to the Yuva team about investment, partnerships, commercial licenses or press, or find the right place for questions and security reports."
 msgstr "गुंतवणूक, भागीदारी, व्यावसायिक परवाने किंवा प्रेसबद्दल Yuva टीमला लिहा, किंवा प्रश्न आणि सुरक्षा अहवालांसाठी योग्य जागा शोधा."
@@ -1975,6 +2390,10 @@ msgstr "गुंतवणूक, भागीदारी, व्यावस�
 #: src/copy/cloudflare-email.ts
 msgid "Yes, when you set YUVA_INGRESS_AUTHSERV_ID to mx.cloudflare.net. Yuva then reads the DMARC verdict that Email Routing adds. A new conversation that fails DMARC is marked as spam."
 msgstr "होय, जेव्हा तुम्ही YUVA_INGRESS_AUTHSERV_ID mx.cloudflare.net वर सेट करता. तेव्हा Yuva Email Routing जोडत असलेला DMARC निकाल वाचतो. DMARC मध्ये अपयशी ठरणारे नवीन संभाषण स्पॅम म्हणून चिन्हांकित होते."
+
+#: src/copy/status.ts
+msgid "You choose how many failures in a row count, and a state your team set by hand is never overridden by a check."
+msgstr "सलग किती अपयशे मोजायची ते तुम्ही ठरवता, आणि तुमच्या टीमने हाताने ठरवलेली स्थिती तपासणी कधीही बदलत नाही."
 
 #: src/copy/brand.ts
 msgid "You may"
@@ -1996,9 +2415,29 @@ msgstr "तुमचा ब्राउझर Yuva उघडतो. एकदा
 msgid "Your code stays on your machine. Yuva only sees what the assistant creates through it."
 msgstr "तुमचा कोड तुमच्या मशीनवरच राहतो. सहाय्यक त्याद्वारे जे तयार करतो तेच Yuva पाहतो."
 
+#: src/copy/status.ts
+msgid "Your cron job or server calls a URL on a schedule. When the calls stop, the component goes down."
+msgstr "तुमचे cron जॉब किंवा सर्व्हर वेळापत्रकानुसार एका URL ला कॉल करते. कॉल थांबले की घटक बंद पडतो."
+
+#: src/copy/status.ts
+msgid "Your logo and accent colour. The page speaks English, Turkish and German; visitors see times in their own time zone."
+msgstr "तुमचा लोगो आणि ठळक रंग. पेज इंग्रजी, तुर्की आणि जर्मन बोलते; अभ्यागत वेळा स्वतःच्या टाइम झोनमध्ये पाहतात."
+
+#: src/copy/status.ts
+msgid "Your look and language"
+msgstr "तुमचे रूप आणि भाषा"
+
+#: src/copy/status.ts
+msgid "Your own domain"
+msgstr "तुमचे स्वतःचे डोमेन"
+
 #: src/copy/cloudflare-email.ts
 msgid "Your team answers in the panel. The reply is sent through the e-mail channel's own SMTP account, such as Amazon SES, Postmark or your own relay, from the same address and in the same thread. Replies do not go through the Worker."
 msgstr "तुमची टीम पॅनेलमध्ये उत्तर देते. उत्तर ईमेल चॅनेलच्या स्वतःच्या SMTP खात्याद्वारे, उदाहरणार्थ Amazon SES, Postmark किंवा तुमचा स्वतःचा रिले, त्याच पत्त्यावरून आणि त्याच थ्रेडमध्ये पाठवले जाते. उत्तरे Worker मधून जात नाहीत."
+
+#: src/copy/status.ts
+msgid "Your word first"
+msgstr "आधी तुमचा शब्द"
 
 #: src/copy/ai.ts
 msgid "Your Yuva server"
@@ -2060,6 +2499,10 @@ msgstr "तुमच्या AI सहाय्यकात Yuva"
 msgid "Yuva is pre-alpha. Every release, the roadmap and the code are public, so you can see exactly where it stands."
 msgstr "Yuva प्री-अल्फा आहे. प्रत्येक रिलीज, रोडमॅप आणि कोड सार्वजनिक आहेत, त्यामुळे ते नेमके कुठे आहे ते तुम्ही पाहू शकता."
 
+#: src/copy/status.ts
+msgid "Yuva opens a connection to a host and port and checks that it answers."
+msgstr "Yuva एका होस्ट आणि पोर्टशी कनेक्शन उघडते आणि तो उत्तर देतो का ते तपासते."
+
 #: src/copy/brand.ts
 msgid "Yuva orange"
 msgstr "Yuva नारिंगी"
@@ -2075,6 +2518,18 @@ msgstr "वैध HMAC सही नसलेली किंवा 5 मिन�
 #: src/copy/pages.ts
 msgid "Yuva releases"
 msgstr "Yuva रिलीज"
+
+#: src/copy/status.ts
+msgid "Yuva renders it as plain HTML, complete without JavaScript, and answers are cached for 30 seconds so a CDN in front of your server can carry an outage's traffic."
+msgstr "Yuva ते साधा HTML म्हणून तयार करते, JavaScript शिवायही पूर्ण, आणि उत्तरे 30 सेकंद कॅश केली जातात जेणेकरून तुमच्या सर्व्हरसमोरील CDN बिघाडाचा ट्रॅफिक सांभाळू शकेल."
+
+#: src/copy/status.ts
+msgid "Yuva requests a URL on an interval and checks the status code, optionally a keyword and the certificate's expiry."
+msgstr "Yuva ठराविक अंतराने एक URL मागवते आणि स्टेटस कोड, आणि पर्यायाने एक कीवर्ड व प्रमाणपत्राची मुदत तपासते."
+
+#: src/copy/status.ts
+msgid "Yuva sends it as you to every linked conversation that is still open, through each one's own channel. It cannot be recalled once sent."
+msgstr "Yuva ते तुमच्या नावाने अजूनही उघड्या असलेल्या प्रत्येक जोडलेल्या संभाषणाला, प्रत्येकाच्या स्वतःच्या चॅनेलमधून पाठवते. पाठवल्यानंतर ते परत घेता येत नाही."
 
 #: src/copy/docs.ts
 msgid "Yuva signs every request with Standard Webhooks and retries failed deliveries. Registering an endpoint and verifying a signature are in the webhooks guide."

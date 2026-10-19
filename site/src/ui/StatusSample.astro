@@ -1,0 +1,119 @@
+---
+import type { StatusSampleCopy } from "@/copy/status"
+import type { BarTone } from "@/lib/statusBars"
+import Cross from "@/ui/Cross.astro"
+import StatusBars from "@/ui/StatusBars.astro"
+
+interface Props {
+  t: StatusSampleCopy
+  compact?: boolean
+}
+
+const { t, compact = false } = Astro.props
+const rows: {
+  name: string
+  state: string
+  tone: BarTone
+  text: string
+  uptime: string
+  marks: Record<number, BarTone>
+}[] = [
+  {
+    name: "API",
+    state: t.degraded,
+    tone: "warn",
+    text: "text-(--st-warn-text)",
+    uptime: "99.97%",
+    marks: { 17: "warn", 41: "partial", 87: "warn", 88: "warn", 89: "warn" },
+  },
+  {
+    name: t.website,
+    state: t.ok,
+    tone: "ok",
+    text: "text-ink-soft",
+    uptime: "100.00%",
+    marks: { 33: "maint", 64: "warn" },
+  },
+  {
+    name: t.email,
+    state: t.ok,
+    tone: "ok",
+    text: "text-ink-soft",
+    uptime: "100.00%",
+    marks: { 5: "maint", 52: "warn", 78: "maint" },
+  },
+  {
+    name: t.chat,
+    state: t.partial,
+    tone: "partial",
+    text: "text-(--st-bad-text)",
+    uptime: "99.80%",
+    marks: { 29: "warn", 71: "bad", 89: "partial" },
+  },
+]
+const shown = compact ? rows.filter((_, i) => i !== 1) : rows
+---
+
+<div class="status-palette relative border border-rule bg-paper text-start" role="img" aria-label={t.alt}>
+  <Cross class="-start-[6px] -top-[6px]" />
+  <Cross class="-end-[6px] -top-[6px]" />
+  <Cross class="-start-[6px] -bottom-[6px]" />
+  <Cross class="-end-[6px] -bottom-[6px]" />
+  <div aria-hidden="true">
+    {!compact && (
+      <div class="flex items-center gap-2 border-b border-rule px-5 py-3 sm:px-6">
+        <span class="text-sm font-semibold">Acme</span>
+        <span class="font-mono text-[0.7rem] tracking-widest text-ink-soft uppercase">Status</span>
+      </div>
+    )}
+    <div class:list={["px-5 sm:px-6", compact ? "py-5" : "py-8 sm:py-10"]}>
+      <p class="flex items-center gap-2 font-mono text-[0.7rem] tracking-widest uppercase text-(--st-bad-text)">
+        <span class="size-2 bg-(--st-partial)"></span>
+        {t.partial}
+      </p>
+      <p
+        class:list={[
+          "mt-2 leading-[1.05] font-semibold tracking-[-0.03em]",
+          compact ? "text-2xl" : "text-3xl sm:text-5xl",
+        ]}
+      >
+        {t.state}
+      </p>
+      {!compact && <p class="mt-3 text-ink-soft">{t.line}</p>}
+    </div>
+    {!compact && (
+      <div class="border-t border-rule px-5 py-5 sm:px-6">
+        <p class="font-mono text-[0.7rem] tracking-widest text-(--st-bad-text) uppercase">
+          {t.incident} · {t.identified}
+        </p>
+        <p class="mt-2 font-semibold">{t.incidentTitle} →</p>
+      </div>
+    )}
+    <div class="border-t border-rule">
+      <p class="px-5 py-3 font-mono text-[0.7rem] tracking-widest text-ink-soft uppercase sm:px-6">
+        {compact ? "" : "01 — "}
+        {t.components}
+      </p>
+      {shown.map((r) => (
+        <div class="grid items-center gap-x-6 gap-y-2 border-t border-rule px-5 py-4 sm:grid-cols-[11rem_minmax(0,1fr)] sm:px-6">
+          <div class="flex items-baseline justify-between gap-3 sm:block">
+            <p class="font-semibold">{r.name}</p>
+            <p class:list={["flex items-center gap-1.5 text-xs sm:mt-1", r.text]}>
+              <span class="size-1.5 shrink-0" style={`background:var(--st-${r.tone})`}></span>
+              {r.state}
+            </p>
+          </div>
+          <div class="min-w-0">
+            <StatusBars marks={r.marks} />
+            <p class="mt-1.5 flex justify-between font-mono text-[0.65rem] text-ink-soft">
+              <span>{t.days}</span>
+              <span>
+                {r.uptime} {t.uptime}
+              </span>
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>

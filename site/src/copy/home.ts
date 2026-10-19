@@ -1,9 +1,10 @@
 import type { I18n } from "@lingui/core"
 import { msg } from "@lingui/core/macro"
-import { ai, blog, contact, docsRoot, releases, templates, VERSION, type Locale } from "@/lib/routes"
+import { ai, blog, contact, docsRoot, releases, status, templates, VERSION, type Locale } from "@/lib/routes"
 
 export type Feature = {
   id: string
+  visual?: "status"
   shot?: "phone" | "widget" | "broadcast" | "analytics" | "migration"
   title: string
   body: string
@@ -183,6 +184,21 @@ export function homeCopy(i18n: I18n, quickStartRel: string) {
             { term: i18n._(msg`Realtime`), text: i18n._(msg`visitors`) },
           ],
           href: docs("analytics/"),
+        },
+        {
+          id: "status",
+          visual: "status",
+          title: i18n._(msg`Status pages`),
+          body: i18n._(
+            msg`A public page for the state of your products, kept in the same inbox as your support. Checks keep it current and subscribers hear by e-mail.`
+          ),
+          points: [
+            { term: i18n._(msg`Components`), text: i18n._(msg`with 90 day bars`) },
+            { term: i18n._(msg`Incidents`), text: i18n._(msg`and planned maintenance`) },
+            { term: i18n._(msg`Subscribers`), text: i18n._(msg`by e-mail, with double opt-in`) },
+          ],
+          link: i18n._(msg`Open status pages`),
+          href: status[locale],
         },
         {
           id: "assistants",

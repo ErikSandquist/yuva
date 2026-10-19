@@ -1,0 +1,157 @@
+---
+import { statusCopy } from "@/copy/status"
+import { i18nFor } from "@/i18n"
+import Base from "@/layouts/Base.astro"
+import { appUrl, docsPath, status, type Locale } from "@/lib/routes"
+import Cells from "@/ui/Cells.astro"
+import StatusBand from "@/ui/StatusBand.astro"
+import StatusSample from "@/ui/StatusSample.astro"
+import Stop from "@/ui/Stop.astro"
+import WidgetLine from "@/ui/WidgetLine.astro"
+
+interface Props {
+  locale: Locale
+}
+
+const { locale } = Astro.props
+const t = statusCopy(i18nFor(locale))
+const guide = docsPath("status-pages/")[locale]
+const button =
+  "inline-flex h-10 items-center rounded-full px-5 text-sm font-medium transition-colors sm:h-11 sm:text-[0.95rem]"
+const lead = "max-w-2xl text-lg leading-relaxed text-pretty text-ink-soft"
+const snippet = `<script src="https://support.example.com/yuva-status.js" defer></script>\n<yuva-status page="acme" theme="auto" components></yuva-status>`
+---
+
+<Base locale={locale} title={t.meta.title} description={t.meta.description} paths={status}>
+  <header class="px-5 pt-16 pb-12 sm:px-8 sm:pt-24">
+    <div class="max-w-3xl">
+      <p class="text-sm font-medium text-brand">{t.kicker}</p>
+      <h1 class="mt-3 text-4xl leading-[1.08] font-semibold tracking-[-0.03em] text-balance sm:text-5xl">{t.title}</h1>
+      <p class:list={["mt-5", lead]}>{t.lead}</p>
+      <div class="mt-8 flex flex-wrap items-center gap-2 sm:gap-3">
+        <a class:list={[button, "bg-signal text-white hover:bg-signal/90"]} href={guide}>
+          {t.guide}
+        </a>
+        <a
+          class:list={[button, "border border-rule-strong hover:border-ink/40 hover:bg-paper-deep"]}
+          href={appUrl(locale, { signup: "1" })}
+        >
+          {t.signUp}
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <Stop tone="deep">
+    <div class="mx-auto max-w-4xl">
+      <StatusSample t={t.sample} />
+    </div>
+  </Stop>
+
+  <Stop labelledby="page-title" index="01" label={t.page.label} headed flush>
+    <div class="px-5 py-10 sm:px-8">
+      <p class={lead}>{t.page.lead}</p>
+    </div>
+    <Cells items={t.page.points} />
+    <p class="border-t border-rule px-5 py-5 text-sm text-ink-soft sm:px-8">{t.page.preview}</p>
+  </Stop>
+
+  <Stop labelledby="checks-title" index="02" label={t.checks.label} headed flush>
+    <div class="px-5 py-10 sm:px-8">
+      <p class={lead}>{t.checks.lead}</p>
+    </div>
+    <Cells items={t.checks.points} />
+    <Cells
+      cols={2}
+      items={[
+        { term: t.checks.draftTitle, text: t.checks.draft },
+        { term: t.checks.thresholdTitle, text: t.checks.threshold },
+      ]}
+    />
+  </Stop>
+
+  <Stop labelledby="subscribers-title" index="03" label={t.subscribers.label} headed flush>
+    <div class="px-5 py-10 sm:px-8">
+      <p class={lead}>{t.subscribers.lead}</p>
+    </div>
+    <Cells items={t.subscribers.points} />
+    <p class="border-t border-rule px-5 py-5 text-sm text-ink-soft sm:px-8">{t.subscribers.channel}</p>
+  </Stop>
+
+  <Stop labelledby="apps-title" index="04" label={t.apps.label} headed tone="deep">
+    <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <div class="min-w-0">
+        <p class={lead}>{t.apps.lead}</p>
+        <ul class="mt-8 grid max-w-xl gap-3 text-sm">
+          {t.apps.points.map((p) => (
+            <li class="flex gap-3 border-t border-rule pt-3">
+              <span class="w-2/5 shrink-0 font-semibold tracking-tight">{p.term}</span>
+              <span class="text-ink-soft">{p.text}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <WidgetLine t={t.apps.widget} />
+    </div>
+  </Stop>
+
+  <Stop labelledby="reply-title" index="05" label={t.reply.label} headed flush>
+    <div class="px-5 py-10 sm:px-8">
+      <p class={lead}>{t.reply.lead}</p>
+    </div>
+    <Cells cols={3} numbered items={t.reply.steps.map((text, i) => ({ term: String(i + 1).padStart(2, "0"), text }))} />
+  </Stop>
+
+  <Stop labelledby="domain-title" index="06" label={t.domain.label} headed flush>
+    <div class="px-5 py-10 sm:px-8">
+      <p class={lead}>{t.domain.lead}</p>
+    </div>
+    <Cells cols={3} items={t.domain.points} />
+  </Stop>
+
+  <Stop labelledby="band-title" index="07" label={t.band.label} headed flush>
+    <div class="px-5 py-10 sm:px-8">
+      <p class={lead}>{t.band.lead}</p>
+    </div>
+    <div class="border-t border-rule px-5 py-8 sm:px-8">
+      <pre
+        class="overflow-x-auto border border-rule bg-paper-deep p-4 font-mono text-[0.82rem] leading-relaxed"
+        set:text={snippet}
+      />
+    </div>
+    <Cells cols={3} mono items={t.band.attributes.map((a) => ({ term: a.name, text: a.text }))} />
+    <div class="grid gap-10 border-t border-rule px-5 py-10 sm:px-8">
+      <StatusBand t={t} label={t.band.light} />
+      <StatusBand t={t} label={t.band.dark} dark />
+    </div>
+  </Stop>
+
+  <Stop labelledby="dev-title" index="08" label={t.developers.label} headed>
+    <p class={lead}>{t.developers.lead}</p>
+    <a class="mt-6 inline-flex text-sm font-medium text-brand hover:underline" href={docsPath("api/")[locale]}>
+      {t.developers.api} →
+    </a>
+  </Stop>
+
+  <Stop labelledby="close-title">
+    <div class="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16">
+      <div>
+        <h2 id="close-title" class="text-[clamp(2rem,1.4rem+2vw,3rem)] leading-[1.08] font-semibold tracking-[-0.03em]">
+          {t.close.title}
+        </h2>
+        <p class="mt-4 text-lg leading-relaxed text-ink-soft">{t.close.lead}</p>
+      </div>
+      <div class="flex flex-wrap gap-2 sm:gap-3">
+        <a class:list={[button, "bg-signal text-white hover:bg-signal/90"]} href={guide}>
+          {t.guide}
+        </a>
+        <a
+          class:list={[button, "border border-rule-strong hover:border-ink/40 hover:bg-paper-deep"]}
+          href={appUrl(locale, { signup: "1" })}
+        >
+          {t.signUp}
+        </a>
+      </div>
+    </div>
+  </Stop>
+</Base>

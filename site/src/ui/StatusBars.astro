@@ -1,0 +1,21 @@
+---
+import { bars, type BarTone } from "@/lib/statusBars"
+
+interface Props {
+  marks: Record<number, BarTone>
+  class?: string
+}
+
+const paths = bars(Astro.props.marks)
+const tones = Object.keys(paths) as BarTone[]
+---
+
+<svg
+  viewBox="0 0 180 8"
+  preserveAspectRatio="none"
+  shape-rendering="crispEdges"
+  class:list={["block h-3 w-full", Astro.props.class]}
+  aria-hidden="true"
+>
+  {tones.map((t) => paths[t] && <path d={paths[t]} style={`fill:var(--st-${t})`} />)}
+</svg>

@@ -40,6 +40,14 @@ msgstr "Yuva API 的 {name} 端點。"
 msgid "{name}: {description} A free Yuva e-mail template."
 msgstr "{name}：{description} Yuva 免費郵件範本。"
 
+#: src/copy/status.ts
+msgid "90 days"
+msgstr "90 天"
+
+#: src/copy/status.ts
+msgid "A check sets a component's state without anyone's hand, and Yuva tells your team when it goes down or up."
+msgstr "檢查無需任何人動手即可設定元件狀態，元件當機或恢復時，Yuva 會通知你的團隊。"
+
 #: src/copy/home.ts
 msgid "a contact and their data"
 msgstr "一位聯絡人及其資料"
@@ -47,6 +55,10 @@ msgstr "一位聯絡人及其資料"
 #: src/copy/home.ts
 msgid "A conversation in the {platform} SDK: a question about an order and the team's replies with a tracking link, and a box to write back."
 msgstr "{platform} SDK 中的一段對話：關於訂單的提問、團隊附上物流追蹤連結的回覆，以及回覆輸入框。"
+
+#: src/copy/status.ts
+msgid "A customer can dismiss it. It returns when the incident gets a new update."
+msgstr "客戶可以關閉它。事件有新更新時它會再次出現。"
 
 #: src/copy/cloudflare-email.ts
 msgid "A customer writes to one of your support addresses, for example support@example.com."
@@ -56,6 +68,10 @@ msgstr "客戶寫信到你的某個支援信箱，例如 support@example.com。"
 msgid "A finished import in the panel: 6 conversations and 12 messages copied from an mbox file, with a note that Yuva has no access to your mailbox."
 msgstr "面板中一次已完成的匯入：從 mbox 檔案複製了 6 個對話和 12 則訊息，並註明 Yuva 無法存取你的信箱。"
 
+#: src/copy/status.ts
+msgid "A footer band: a coloured square and the state in words, a strip of 90 days with the uptime, and Status by Yuva."
+msgstr "頁尾橫幅：一個彩色方塊與文字狀態、附可用率的 90 天色條，以及 Status by Yuva。"
+
 #: src/copy/contact.ts
 msgid "A hosted service and commercial licenses"
 msgstr "託管服務與商業授權"
@@ -64,13 +80,41 @@ msgstr "託管服務與商業授權"
 msgid "A message can be up to 25 MiB including attachments, which is the Cloudflare Email Routing limit. Yuva keeps up to 50 attachments per message, each within the server's attachment size limit (25 MiB by default) and allowed types; it leaves out the rest."
 msgstr "郵件連同附件上限為 25 MiB，這是 Cloudflare Email Routing 的限制。Yuva 每封郵件最多保留 50 個附件，每個附件須在伺服器的附件大小限制（預設 25 MiB）與允許的類型之內，其餘的會略過。"
 
+#: src/copy/status.ts
+msgid "A notice waits 60 seconds so you can undo it, and notices about one incident keep their distance, so a long outage does not flood inboxes."
+msgstr "通知會等待 60 秒，方便你撤銷；同一事件的通知會保持間隔，長時間故障也不會塞爆收件匣。"
+
+#: src/copy/status.ts
+msgid "A page stays private until you publish it, and your team previews it in the panel before that."
+msgstr "頁面在你發佈之前維持私人狀態，你的團隊可先在面板中預覽。"
+
+#: src/copy/home.ts
+msgid "A public page for the state of your products, kept in the same inbox as your support. Checks keep it current and subscribers hear by e-mail."
+msgstr "一個公開頁面，呈現你產品的狀態，與你的支援在同一個收件匣。檢查讓它保持最新，訂閱者透過電子郵件得知。"
+
+#: src/copy/status.ts
+msgid "A public status page with components, incidents, maintenance and history, kept current by checks and by your team. E-mail subscribers, a line in the chat widget and the apps, and one reply to everyone who wrote."
+msgstr "一個包含元件、事件、維護與歷史的公開狀態頁，由檢查與你的團隊保持最新。電子郵件訂閱者、聊天小工具與應用程式中的一行提示，以及對所有來信者的一次回覆。"
+
+#: src/copy/status.ts
+msgid "A sample status page: the overall state, an open incident and four components with their last 90 days as coloured bars."
+msgstr "範例狀態頁：整體狀態、一個進行中的事件，以及四個元件，其最近 90 天以彩色長條顯示。"
+
 #: src/copy/cloudflare-email.ts
 msgid "A small open-source Worker"
 msgstr "一個小巧的開源 Worker"
 
+#: src/copy/status.ts
+msgid "A Yuva status page shows whether your product works. It sits in your support inbox, so your chat widget and apps show an open incident, and one reply answers everyone who wrote about it."
+msgstr "Yuva 狀態頁顯示你的產品是否正常運作。它位於你的支援收件匣中，因此聊天小工具與應用程式會顯示進行中的事件，一次回覆即可送達所有就此來信的人。"
+
 #: src/copy/home.ts
 msgid "Accepted answer"
 msgstr "已採納的回答"
+
+#: src/copy/status.ts
+msgid "Add it for a second row with each component's state."
+msgstr "加入後會多出一列，顯示每個元件的狀態。"
 
 #: src/copy/home.ts
 msgid "Add ratings and a discussion area to your own documentation pages."
@@ -121,6 +165,14 @@ msgstr "GitHub 上的所有版本"
 msgid "All templates"
 msgstr "所有範本"
 
+#: src/copy/status.ts
+msgid "An Atom feed that needs no subscription, a badge for your README, and the same page as JSON for your own site or app."
+msgstr "無需訂閱的 Atom 摘要、用於 README 的徽章，以及供你自己的網站或應用程式使用的同一頁面 JSON。"
+
+#: src/copy/status.ts
+msgid "An outage brings the same question by e-mail, chat and in the apps. Link those conversations to the incident, write one answer, and send it to all of them."
+msgstr "一次故障會讓同樣的問題透過電子郵件、聊天與應用程式湧來。將這些對話連結到事件，寫一則回覆，傳送給所有人。"
+
 #: src/copy/docs.ts
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -132,12 +184,20 @@ msgid "and funnels"
 msgstr "與轉換漏斗"
 
 #: src/copy/home.ts
+msgid "and planned maintenance"
+msgstr "與計畫維護"
+
+#: src/copy/home.ts
 msgid "and Postgres"
 msgstr "與 Postgres"
 
 #: src/copy/home.ts
 msgid "and the inboxes they can see"
 msgstr "以及他們能看到的收件匣"
+
+#: src/copy/status.ts
+msgid "Announce planned work with a window. Yuva starts and completes it on time."
+msgstr "用時間窗口公告計畫中的工作。Yuva 會準時開始並完成。"
 
 #: src/copy/templates.ts
 msgid "Announcement"
@@ -261,9 +321,17 @@ msgstr "商業"
 msgid "By"
 msgstr "作者"
 
+#: src/copy/home.ts
+msgid "by e-mail, with double opt-in"
+msgstr "透過電子郵件，雙重確認訂閱"
+
 #: src/copy/cloudflare-email.ts
 msgid "Can someone forge mail to my Yuva server?"
 msgstr "有人能偽造寄往我的 Yuva 伺服器的郵件嗎？"
+
+#: src/copy/status.ts
+msgid "Certificates"
+msgstr "憑證"
 
 #: src/copy/brand.ts
 msgid "Change its colours"
@@ -288,9 +356,21 @@ msgstr "CHANGELOG.md"
 msgid "Channels"
 msgstr "頻道"
 
+#: src/copy/status.ts
+msgid "Chat and e-mail work normally."
+msgstr "聊天與電子郵件運作正常。"
+
+#: src/copy/status.ts
+msgid "Chat messages arrive late"
+msgstr "聊天訊息延遲送達"
+
 #: src/copy/home.ts
 msgid "checks before you send"
 msgstr "寄出前的檢查"
+
+#: src/copy/status.ts
+msgid "Checks keep it current"
+msgstr "檢查讓它保持最新"
 
 #: src/copy/ai.ts
 msgid "Choose the workspace and what the assistant may do, then approve."
@@ -336,6 +416,11 @@ msgstr "商業授權"
 #: src/copy/pages.ts
 msgid "Compare changes"
 msgstr "比較變更"
+
+#: src/copy/home.ts
+#: src/copy/status.ts
+msgid "Components"
+msgstr "元件"
 
 #: src/copy/home.ts
 msgid "Connect a support address, a chat widget for your website or the SDKs for your apps."
@@ -412,6 +497,7 @@ msgstr "複製 SVG"
 
 #: src/copy/home.ts
 #: src/copy/pages.ts
+#: src/copy/status.ts
 msgid "Create an account"
 msgstr "建立帳號"
 
@@ -430,6 +516,10 @@ msgstr "深色"
 #: src/ui/ThemeToggle.astro
 msgid "Dark theme"
 msgstr "深色主題"
+
+#: src/copy/status.ts
+msgid "Degraded performance"
+msgstr "效能下降"
 
 #: src/copy/home.ts
 msgid "Delete"
@@ -463,6 +553,10 @@ msgstr "設計與群發草稿"
 msgid "Desktop"
 msgstr "桌面版"
 
+#: src/copy/status.ts
+msgid "Details"
+msgstr "詳細資料"
+
 #: src/copy/docs.ts
 #: src/copy/header.ts
 #: src/copy/home.ts
@@ -477,6 +571,14 @@ msgstr "摘要"
 #: src/copy/home.ts
 msgid "Discussions"
 msgstr "討論"
+
+#: src/copy/status.ts
+msgid "Dismiss"
+msgstr "關閉"
+
+#: src/copy/status.ts
+msgid "Dismissable"
+msgstr "可關閉"
 
 #: src/copy/brand.ts
 msgid "Do"
@@ -505,6 +607,10 @@ msgstr "Yuva 會使用 Cloudflare 的 DMARC 結果嗎？"
 msgid "Don't"
 msgstr "避免"
 
+#: src/copy/status.ts
+msgid "Double opt-in"
+msgstr "雙重確認"
+
 #: src/copy/header.ts
 msgid "Download logo"
 msgstr "下載標誌"
@@ -531,12 +637,17 @@ msgstr "回覆草稿"
 
 #: src/copy/contact.ts
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "E-mail"
 msgstr "郵件"
 
 #: src/pages/og/[lang].png.ts
 msgid "E-mail · live chat · in-app · self-hosted"
 msgstr "郵件 · 即時聊天 · 應用程式內 · 自行託管"
+
+#: src/copy/status.ts
+msgid "E-mail subscribers"
+msgstr "電子郵件訂閱者"
 
 #: src/copy/header.ts
 #: src/copy/templates.ts
@@ -559,6 +670,10 @@ msgstr "處於早期，公開建構"
 #: src/copy/docs.ts
 msgid "Edit this page on GitHub"
 msgstr "在 GitHub 上編輯此頁面"
+
+#: src/copy/status.ts
+msgid "Elevated API response times"
+msgstr "API 回應時間變長"
 
 #: src/copy/cloudflare-email.ts
 msgid "Email Routing becomes the MX of the domain, so use a domain or subdomain that no other mail server handles."
@@ -624,6 +739,18 @@ msgstr "Yuva 的全部指南集中在一處：安裝、頻道、群發、分析�
 msgid "Every Yuva release and what changed in it, from the changelog."
 msgstr "Yuva 的每個版本及其變更，來自更新日誌。"
 
+#: src/copy/status.ts
+msgid "Everything is in the API, with the scopes status:read and status:manage. Webhooks announce component, incident and monitor changes, and assistants connected over MCP can open drafts and resolve incidents."
+msgstr "一切都在 API 中，權限為 status:read 與 status:manage。Webhook 會通知元件、事件與監控的變更，透過 MCP 連接的助理可以建立草稿並解決事件。"
+
+#: src/copy/status.ts
+msgid "Everything moves"
+msgstr "一切隨之遷移"
+
+#: src/copy/status.ts
+msgid "Feed, badge and JSON"
+msgstr "摘要、徽章與 JSON"
+
 #: src/copy/home.ts
 msgid "Feedback"
 msgstr "意見回饋"
@@ -651,6 +778,10 @@ msgstr "適用於會自行處理圓角的應用程式商店與平台。"
 #: src/copy/brand.ts
 msgid "For dark backgrounds."
 msgstr "適用於深色背景。"
+
+#: src/copy/status.ts
+msgid "For developers"
+msgstr "給開發人員"
 
 #: src/copy/contact.ts
 msgid "For investors"
@@ -683,6 +814,10 @@ msgstr "可複製的免費設計。"
 #: src/copy/templates.ts
 msgid "Free starter designs for newsletters, product updates, announcements and more. Preview them here and open one in Yuva's e-mail designer."
 msgstr "適用於電子報、產品更新、公告等的免費入門設計。在這裡預覽，並在 Yuva 的郵件設計工具中開啟一個。"
+
+#: src/copy/status.ts
+msgid "From investigating to resolved, with every update kept. A published update is corrected, never removed."
+msgstr "從調查中到已解決，每次更新都會保留。已發佈的更新可以更正，但不會被刪除。"
 
 #: src/copy/home.ts
 msgid "from the people you helped"
@@ -728,6 +863,14 @@ msgstr "指南"
 msgid "Guides for every part."
 msgstr "每個部分的指南。"
 
+#: src/copy/status.ts
+msgid "Heartbeats"
+msgstr "依群組顯示，每個元件有自己的狀態、最長 90 天的每日色條，以及（如有需要）可用率。"
+
+#: src/copy/status.ts
+msgid "Held, then sent"
+msgstr "在聊天小工具與應用程式中"
+
 #: src/copy/home.ts
 msgid "Help center"
 msgstr "說明中心"
@@ -741,6 +884,7 @@ msgid "Hi! Tell us a little about yourself and what you have in mind."
 msgstr "你好！請簡單介紹一下你自己，以及你的想法。"
 
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "History"
 msgstr "歷史"
 
@@ -768,6 +912,10 @@ msgstr "AGPL、採用 MIT 授權的 SDK 與 CLA 如何搭配。"
 msgid "How to add a template"
 msgstr "如何新增範本"
 
+#: src/copy/status.ts
+msgid "HTTP"
+msgstr "事件"
+
 #: src/copy/templates.ts
 msgid "https://yuva.example.com"
 msgstr "https://yuva.example.com"
@@ -787,6 +935,10 @@ msgstr "我想聊聊投資 Yuva 的事。"
 #: src/copy/contact.ts
 msgid "I'm writing about Yuva and have a few questions."
 msgstr "我正在撰寫關於 Yuva 的文章，有幾個問題。"
+
+#: src/copy/status.ts
+msgid "Identified"
+msgstr "事件"
 
 #: src/copy/home.ts
 msgid "Identity tokens"
@@ -812,6 +964,14 @@ msgstr "位置"
 msgid "In claude.ai or Claude Desktop, open Customize → Connectors → Add custom connector."
 msgstr "在 claude.ai 或 Claude Desktop 中，開啟 Customize → Connectors → Add custom connector。"
 
+#: src/copy/status.ts
+msgid "In groups, each with its state, a bar for every day of up to 90 days and, if you like, its uptime."
+msgstr "為你起草的事件"
+
+#: src/copy/status.ts
+msgid "In the chat widget and the apps"
+msgstr "調查中"
+
 #: src/copy/cloudflare-email.ts
 msgid "In the Cloudflare dashboard, open your domain → Email → Email Routing and enable it. Cloudflare adds its MX and SPF records."
 msgstr "在 Cloudflare 控制台中，開啟你的網域 → Email → Email Routing 並啟用。Cloudflare 會加入它的 MX 與 SPF 記錄。"
@@ -834,6 +994,19 @@ msgstr "收件匣"
 msgid "Inbox and conversations"
 msgstr "收件匣與對話"
 
+#: src/copy/status.ts
+msgid "Incident"
+msgstr "心跳"
+
+#: src/copy/home.ts
+#: src/copy/status.ts
+msgid "Incidents"
+msgstr "先保留，再傳送"
+
+#: src/copy/status.ts
+msgid "Incidents drafted for you"
+msgstr "HTTP"
+
 #: src/copy/brand.ts
 msgid "Ink"
 msgstr "墨色"
@@ -842,9 +1015,17 @@ msgstr "墨色"
 msgid "Introduction"
 msgstr "簡介"
 
+#: src/copy/status.ts
+msgid "Investigating"
+msgstr "已確認原因"
+
 #: src/copy/contact.ts
 msgid "Investment"
 msgstr "投資"
+
+#: src/copy/status.ts
+msgid "Issued and renewed automatically, by an on-demand proxy such as Caddy or by Cloudflare custom hostnames."
+msgstr "憑證會自動簽發與續期，由 Caddy 之類的隨需代理或 Cloudflare 自訂主機名稱完成。"
 
 #: src/copy/ai.ts
 msgid "It does the rest with you."
@@ -903,12 +1084,25 @@ msgstr "淺色"
 msgid "Light theme"
 msgstr "淺色主題"
 
+#: src/copy/status.ts
+msgid "light, dark or auto, which follows the visitor's colour scheme. The default is auto."
+msgstr "light、dark 或 auto，auto 會跟隨訪客的配色。預設為 auto。"
+
+#: src/copy/status.ts
+msgid "Link conversations to the incident in the panel. The incident page lists them."
+msgstr "在面板中將對話連結到事件。事件頁面會列出它們。"
+
+#: src/copy/status.ts
+msgid "Links, the feed, the badge, the JSON and e-mail notices all use your domain."
+msgstr "連結、摘要、徽章、JSON 與電子郵件通知都使用你的網域。"
+
 #: src/copy/home.ts
 msgid "Lists"
 msgstr "清單"
 
 #: src/copy/contact.ts
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "Live chat"
 msgstr "即時聊天"
 
@@ -960,6 +1154,14 @@ msgstr "信箱"
 msgid "Maintainer of Yuva"
 msgstr "Yuva 維護者"
 
+#: src/copy/status.ts
+msgid "Maintenance"
+msgstr "維護"
+
+#: src/copy/status.ts
+msgid "Make a page, add your components and publish it. The guide is in English, Turkish and German."
+msgstr "建立頁面、加入元件，然後發佈。指南提供英文、土耳其文與德文版本。"
+
 #: src/copy/home.ts
 msgid "marked by your team"
 msgstr "由你的團隊標記"
@@ -984,6 +1186,14 @@ msgstr "成員"
 #: src/copy/header.ts
 msgid "Menu"
 msgstr "選單"
+
+#: src/copy/status.ts
+msgid "Messages"
+msgstr "訊息"
+
+#: src/copy/status.ts
+msgid "Minor"
+msgstr "輕微"
 
 #: src/copy/docs.ts
 msgid "More"
@@ -1087,6 +1297,14 @@ msgstr "沒有書面授權不可以"
 msgid "Notes and mentions"
 msgstr "備註與提及"
 
+#: src/copy/status.ts
+msgid "Nothing to set up"
+msgstr "無需設定"
+
+#: src/copy/status.ts
+msgid "Notices go out through your inbox's own e-mail channel, from its address, and the people on the list are kept apart from your newsletters."
+msgstr "通知會透過你收件匣自己的電子郵件管道、以其位址寄出，名單中的人與你的電子報互相分開。"
+
 #: src/copy/home.ts
 msgid "of every conversation"
 msgstr "的每個對話"
@@ -1098,6 +1316,14 @@ msgstr "的免費範本"
 #: src/copy/brand.ts
 msgid "offer a hosted or managed service, or a product, under the Yuva name or a confusingly similar one;"
 msgstr "以 Yuva 之名或容易混淆的相似名稱提供託管或託管式服務或產品；"
+
+#: src/copy/status.ts
+msgid "On a dark site"
+msgstr "在深色網站上"
+
+#: src/copy/status.ts
+msgid "On a light site"
+msgstr "在淺色網站上"
 
 #: src/copy/brand.ts
 msgid "On dark backgrounds"
@@ -1132,6 +1358,10 @@ msgstr "單一二進位檔"
 msgid "One binary and Postgres."
 msgstr "單一二進位檔與 Postgres。"
 
+#: src/copy/status.ts
+msgid "One checkbox per component, and a link in every mail to change it or leave."
+msgstr "每個元件一個核取方塊，每封郵件中都有用於變更選擇或取消訂閱的連結。"
+
 #: src/copy/home.ts
 msgid "One Docker image and Postgres on your own server."
 msgstr "在你自己的伺服器上執行一個 Docker 映像與 Postgres。"
@@ -1148,6 +1378,14 @@ msgstr "每個人一份檔案，無論從哪個頻道來信。"
 #: src/copy/home.ts
 msgid "One small server runs all of it. The server is open source, and the SDKs carry no copyleft."
 msgstr "一台小伺服器就能執行全部。伺服器是開源的，SDK 不帶 copyleft。"
+
+#: src/copy/status.ts
+msgid "Only the page is served on your domain, never the API or the panel."
+msgstr "你的網域上只提供頁面，絕不提供 API 或面板。"
+
+#: src/copy/status.ts
+msgid "Only yours"
+msgstr "只屬於你"
 
 #: src/copy/contact.ts
 msgid "Open a GitHub issue"
@@ -1178,6 +1416,11 @@ msgid "Open source that stays open"
 msgstr "始終保持開放的開源"
 
 #: src/copy/home.ts
+msgid "Open status pages"
+msgstr "開啟狀態頁"
+
+#: src/copy/home.ts
+#: src/copy/status.ts
 msgid "Open the API reference"
 msgstr "開啟 API 參考"
 
@@ -1205,6 +1448,10 @@ msgstr "OpenAPI 契約"
 msgid "Opens Yuva's e-mail designer with this template. You sign in first if you have not."
 msgstr "用這個範本開啟 Yuva 的郵件設計工具。如果尚未登入，會先要求登入。"
 
+#: src/copy/status.ts
+msgid "Operational"
+msgstr "運作正常"
+
 #: src/copy/cloudflare-email.ts
 msgid "Optional: keep mail during an outage by adding a fallback address to the deploy command:"
 msgstr "選用：在部署指令中加入備用位址，以便在故障期間保留郵件："
@@ -1229,6 +1476,10 @@ msgstr "其他遷入郵件的方式"
 msgid "Other ways to reach us"
 msgstr "其他聯絡我們的方式"
 
+#: src/copy/status.ts
+msgid "Overall state"
+msgstr "整體狀態"
+
 #: src/copy/docs.ts
 msgid "Overview"
 msgstr "總覽"
@@ -1245,9 +1496,17 @@ msgstr "頁面與來源"
 msgid "Parameters"
 msgstr "參數"
 
+#: src/copy/status.ts
+msgid "Partial outage"
+msgstr "部分中斷"
+
 #: src/copy/contact.ts
 msgid "Partnership"
 msgstr "合作"
+
+#: src/copy/status.ts
+msgid "Past incidents and maintenance by month, each with its own page."
+msgstr "依月份顯示過去的事件與維護，每項都有自己的頁面。"
 
 #: src/copy/docs.ts
 msgid "Payload"
@@ -1264,6 +1523,10 @@ msgstr "手機"
 #: src/copy/ai.ts
 msgid "Pick your assistant"
 msgstr "選擇你的助理"
+
+#: src/copy/status.ts
+msgid "Plain notices"
+msgstr "簡潔的通知"
 
 #: src/copy/pages.ts
 msgid "Posts are published in English."
@@ -1325,6 +1588,10 @@ msgstr "專案"
 msgid "publish a modified version under the Yuva name — rename your fork;"
 msgstr "以 Yuva 之名發布修改後的版本——請為你的 fork 重新命名；"
 
+#: src/copy/status.ts
+msgid "Pushed states"
+msgstr "推送的狀態"
+
 #: src/copy/cloudflare-email.ts
 msgid "Questions and answers"
 msgstr "問與答"
@@ -1354,6 +1621,7 @@ msgid "Read the English page"
 msgstr "閱讀英文頁面"
 
 #: src/copy/home.ts
+#: src/copy/status.ts
 msgid "Read the guide"
 msgstr "閱讀指南"
 
@@ -1434,6 +1702,10 @@ msgstr "版本發布"
 msgid "Removed"
 msgstr "已移除"
 
+#: src/copy/status.ts
+msgid "Reply to linked"
+msgstr "回覆已連結的對話"
+
 #: src/layouts/Footer.astro
 msgid "Report a vulnerability"
 msgstr "回報安全漏洞"
@@ -1467,6 +1739,10 @@ msgstr "資源"
 #: src/copy/docs.ts
 msgid "Response"
 msgstr "回應"
+
+#: src/copy/status.ts
+msgid "Response times"
+msgstr "回應時間"
 
 #: src/copy/docs.ts
 msgid "Responses"
@@ -1556,9 +1832,21 @@ msgstr "傳送一則測試訊息，看對話出現在面板中。"
 msgid "Send newsletters to your mailing lists and see what readers do with them."
 msgstr "向你的郵寄清單寄送電子報，看看讀者如何互動。"
 
+#: src/copy/status.ts
+msgid "Send operational or an outage state yourself. Alertmanager and Grafana alerts are accepted as they are."
+msgstr "你可以自行傳送 operational 或某個故障狀態。Alertmanager 與 Grafana 的警示會原樣接收。"
+
+#: src/copy/status.ts
+msgid "Send us a message"
+msgstr "傳訊息給我們"
+
 #: src/copy/home.ts
 msgid "sent by your own app"
 msgstr "由你自己的應用程式寄出"
+
+#: src/copy/status.ts
+msgid "Serve the page at an address such as status.example.com. Add a CNAME record and a TXT record that shows the domain is yours, and Yuva checks them for you."
+msgstr "在 status.example.com 這樣的位址提供頁面。新增一筆 CNAME 記錄與一筆證明網域屬於你的 TXT 記錄，Yuva 會替你檢查。"
 
 #: src/copy/templates.ts
 msgid "Server address"
@@ -1583,6 +1871,10 @@ msgstr "為這個網站設定 Yuva 分析，並為註冊設一個目標。"
 #: src/copy/pages.ts
 msgid "Share"
 msgstr "分享"
+
+#: src/copy/status.ts
+msgid "Show your status in your site's footer: the state in words, a strip of the last 90 days with uptime, and a link to your page. It is one script and one element."
+msgstr "在網站頁尾顯示你的狀態：文字狀態、附可用率的最近 90 天色條，以及指向你頁面的連結。只需一個指令碼與一個元素。"
 
 #: src/copy/ai.ts
 msgid "Sign in from Gemini CLI:"
@@ -1612,6 +1904,10 @@ msgstr "跳到內容"
 msgid "so users write as themselves"
 msgstr "讓使用者以自己的身分發言"
 
+#: src/copy/status.ts
+msgid "Some systems are down"
+msgstr "部分系統已當機"
+
 #: src/copy/contact.ts
 msgid "Something else"
 msgstr "其他"
@@ -1632,9 +1928,28 @@ msgstr "免費開始"
 msgid "Start with AI"
 msgstr "用 AI 開始"
 
+#: src/copy/status.ts
+msgid "Start with the guide."
+msgstr "從指南開始。"
+
 #: src/copy/templates.ts
 msgid "Starter designs for the e-mail designer, in English, Turkish and German. Preview one, then open it in Yuva and make it yours."
 msgstr "適用於郵件設計工具的入門設計，提供英語、土耳其語與德語版本。預覽一個，然後在 Yuva 中開啟並改成你的風格。"
+
+#: src/copy/status.ts
+msgid "Status by Yuva"
+msgstr "Status by Yuva"
+
+#: src/copy/header.ts
+#: src/copy/home.ts
+#: src/copy/status.ts
+#: src/layouts/Footer.astro
+msgid "Status pages"
+msgstr "狀態頁"
+
+#: src/copy/status.ts
+msgid "Status pages for your products | Yuva"
+msgstr "為你的產品打造狀態頁 | Yuva"
 
 #: src/copy/home.ts
 msgid "stay inside the team"
@@ -1643,6 +1958,10 @@ msgstr "只留在團隊內部"
 #: src/copy/brand.ts
 msgid "Stretch or squash it"
 msgstr "拉伸或擠壓它"
+
+#: src/copy/home.ts
+msgid "Subscribers"
+msgstr "訂閱者"
 
 #: src/copy/cloudflare-email.ts
 msgid "Support e-mail through Cloudflare Email Routing | Yuva"
@@ -1656,6 +1975,10 @@ msgstr "透過 Cloudflare 接收支援郵件。"
 msgid "Tag on GitHub"
 msgstr "GitHub 上的標籤"
 
+#: src/copy/status.ts
+msgid "TCP"
+msgstr "TCP"
+
 #: src/copy/home.ts
 msgid "Team and reports"
 msgstr "團隊與報告"
@@ -1663,6 +1986,14 @@ msgstr "團隊與報告"
 #: src/copy/contact.ts
 msgid "Teams can use our hosted service, and because every contribution is made under a CLA, Yuva can also be offered under a commercial license."
 msgstr "團隊可以使用我們的託管服務；由於每項貢獻都在 CLA 下進行，Yuva 也可以依商業授權提供。"
+
+#: src/copy/status.ts
+msgid "Tell customers what is down before they have to ask."
+msgstr "在客戶詢問之前，先告訴他們哪裡出了問題。"
+
+#: src/copy/header.ts
+msgid "Tell customers what works."
+msgstr "告訴客戶哪些功能正常。"
 
 #: src/copy/ai.ts
 msgid "Tell your assistant to add Yuva."
@@ -1676,13 +2007,37 @@ msgstr "範本庫"
 msgid "Templates"
 msgstr "範本"
 
+#: src/copy/status.ts
+msgid "The address of your status page."
+msgstr "你的狀態頁位址。"
+
 #: src/copy/home.ts
 msgid "The analytics overview in the panel: 30 days of visitors, pageviews and bounce rate, a daily chart with a note on the day a newsletter went out, and the top pages and sources."
 msgstr "面板中的分析總覽：30 天的訪客、頁面瀏覽量與跳出率，一張在電子報寄出當天附有標註的每日圖表，以及熱門頁面與來源。"
 
+#: src/copy/status.ts
+msgid "The answer is the same for every address, and nobody is subscribed without confirming."
+msgstr "對任何位址的回應都相同，未經確認不會有人被訂閱。"
+
+#: src/copy/status.ts
+msgid "The API is running slow"
+msgstr "API 運作緩慢"
+
+#: src/copy/status.ts
+msgid "The API is slow and some chats are delayed."
+msgstr "API 較慢，部分聊天有延遲。"
+
 #: src/copy/ai.ts
 msgid "The assistant acts as you, with no more access than you approve, and asks before it changes anything."
 msgstr "助理以你的身分行事，權限不超過你的核准範圍，變更任何內容前都會先詢問。"
+
+#: src/copy/status.ts
+msgid "The band for your own site"
+msgstr "用於你自己網站的橫幅"
+
+#: src/copy/status.ts
+msgid "The chat widget with a line above the conversations: elevated API response times, minor, investigating, with a link to the details."
+msgstr "對話上方帶一行提示的聊天小工具：API 回應時間變長、輕微、調查中，並附詳細資料連結。"
 
 #: src/copy/header.ts
 msgid "The code, open source."
@@ -1703,6 +2058,10 @@ msgstr "Yuva 傳送到你的 Webhook 端點的事件，以及每個事件的負�
 #: src/copy/ai.ts
 msgid "The first time the assistant uses Yuva, your browser opens Yuva to sign in."
 msgstr "助理第一次使用 Yuva 時，瀏覽器會開啟 Yuva 供你登入。"
+
+#: src/copy/status.ts
+msgid "The line appears and goes away with the incident."
+msgstr "這一行會隨事件出現與消失。"
 
 #: src/copy/brand.ts
 msgid "The mark is drawn to stay readable from an app store listing down to a 16-pixel browser tab."
@@ -1728,6 +2087,10 @@ msgstr "顯示從行動應用程式傳來的意見回饋的面板：對話清單
 msgid "The payloads Yuva sends to your webhook endpoints."
 msgstr "Yuva 傳送到你的 Webhook 端點的負載。"
 
+#: src/copy/status.ts
+msgid "The public page"
+msgstr "公開頁面"
+
 #: src/copy/home.ts
 msgid "The report of a sent newsletter in the panel: 240 sent, 5 unsubscribed and 56 who clicked a link, a chart over time and the number of clicks on each link."
 msgstr "面板中已寄出電子報的報告：寄出 240 封，5 人退訂，56 人點選了連結，一張隨時間變化的圖表以及每個連結的點選次數。"
@@ -1736,9 +2099,17 @@ msgstr "面板中已寄出電子報的報告：寄出 240 封，5 人退訂，56
 msgid "The server and panel are AGPL-3.0, the SDKs and API contract MIT. Improvements to the core stay public."
 msgstr "伺服器與面板採用 AGPL-3.0，SDK 與 API 契約採用 MIT。核心的改進保持公開。"
 
+#: src/copy/status.ts
+msgid "The state in words, the affected components and the updates, with no images, tracking or promotion. In English, Turkish or German."
+msgstr "文字狀態、受影響的元件與更新，沒有圖片、追蹤或推銷。提供英文、土耳其文或德文。"
+
 #: src/copy/home.ts
 msgid "The support screen of the {platform} SDK inside an app: the person's conversations with the latest reply, and a button to write a new message."
 msgstr "應用程式內 {platform} SDK 的支援畫面：此人的對話與最新回覆，以及撰寫新訊息的按鈕。"
+
+#: src/copy/status.ts
+msgid "The widget and the apps show it in each language they speak."
+msgstr "小工具與應用程式會以它們支援的每種語言顯示。"
 
 #: src/copy/cloudflare-email.ts
 msgid "The Worker is one way to call /ingress/email. Any mail server or relay can post the raw message with the same signed headers, and a mail server that delivers to a command can pipe the message into yuva ingest-email. The request format is documented in the Worker's README."
@@ -1747,6 +2118,10 @@ msgstr "Worker 是呼叫 /ingress/email 的一種方式。任何郵件伺服器�
 #: src/copy/cloudflare-email.ts
 msgid "The Worker signs the raw message, both envelope addresses and a timestamp with HMAC-SHA256 under a secret you share with Yuva, and sends them to /ingress/email on your Yuva server."
 msgstr "Worker 使用你與 Yuva 共享的密鑰，以 HMAC-SHA256 對原始郵件、兩個信封位址與時間戳記簽章，並傳送到你 Yuva 伺服器的 /ingress/email。"
+
+#: src/copy/status.ts
+msgid "The worst state among the components you show, in words and in colour."
+msgstr "你所顯示的元件中最差的狀態，用文字與顏色表示。"
 
 #: src/copy/home.ts
 msgid "The Yuva chat widget open on a newsletter tool's website: the visitor's question and a member's reply, with the member shown online."
@@ -1763,6 +2138,14 @@ msgstr "Yuva 的標誌、顏色與字型，可直接用於文章、整合與應�
 #: src/copy/home.ts
 msgid "The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send."
 msgstr "Yuva 訊息面板：來自郵件、即時聊天與應用程式的對話匯在一個清單中，其中一則對話以聊天形式開啟，附有團隊備註與一則助理起草、供同事寄出的回覆。"
+
+#: src/copy/status.ts
+msgid "Their choice"
+msgstr "他們的選擇"
+
+#: src/copy/status.ts
+msgid "Their language"
+msgstr "他們的語言"
 
 #: src/ui/ThemeToggle.astro
 msgid "Theme"
@@ -1824,6 +2207,10 @@ msgstr "無法投遞"
 msgid "Under Routing rules, send each support address to the Worker yuva-edge. For a catch-all channel, point the catch-all rule at it."
 msgstr "在 Routing rules 下，把每個支援信箱傳送到名為 yuva-edge 的 Worker。對於萬用頻道，把萬用規則指向它。"
 
+#: src/copy/status.ts
+msgid "uptime"
+msgstr "可用率"
+
 #: src/copy/brand.ts
 msgid "use the logo in a way that suggests endorsement by the project."
 msgstr "以暗示獲得專案認可的方式使用標誌。"
@@ -1851,6 +2238,10 @@ msgstr "在 GitHub 上檢視"
 #: src/copy/home.ts
 msgid "visitors"
 msgstr "訪客"
+
+#: src/copy/status.ts
+msgid "Visitors subscribe to notices about incidents and maintenance, for every component or only the ones they use. A subscription always starts with a confirmation mail."
+msgstr "訪客訂閱事件與維護的通知，可訂閱全部元件，也可只訂閱自己使用的。訂閱一律從一封確認郵件開始。"
 
 #: src/copy/header.ts
 msgid "Visitors without cookies."
@@ -1884,6 +2275,10 @@ msgstr "Webhook 與身分"
 msgid "Webhooks guide"
 msgstr "Webhook 指南"
 
+#: src/copy/status.ts
+msgid "Website"
+msgstr "網站"
+
 #: src/copy/home.ts
 msgid "what came in and what is open"
 msgstr "收到了什麼、還有什麼待處理"
@@ -1912,6 +2307,14 @@ msgstr "是關於什麼的？"
 msgid "What it is"
 msgstr "是什麼"
 
+#: src/copy/status.ts
+msgid "When a check goes down, Yuva can open a draft incident for you to review, publish one at once, or open none. When it recovers, Yuva resolves what it opened."
+msgstr "檢查當機時，Yuva 可以建立一份草稿事件供你審閱、立即發佈一個事件，或不建立任何事件。恢復後，Yuva 會解決它建立的事件。"
+
+#: src/copy/status.ts
+msgid "When you turn it on: the last 24 hours of each component with an HTTP or TCP check, with median and p95."
+msgstr "開啟後：每個設有 HTTP 或 TCP 檢查的元件最近 24 小時的資料，附中位數與 p95。"
+
 #: src/copy/cloudflare-email.ts
 msgid "When Yuva refuses a message for good, for example an unknown address, a blocked sender or a message that is too large, the Worker rejects it and the sender gets a permanent SMTP error with Yuva's reason."
 msgstr "當 Yuva 永久拒絕一封郵件時，例如位址未知、寄件者被封鎖或郵件過大，Worker 會拒收它，寄件者會收到附有 Yuva 所給原因的永久性 SMTP 錯誤。"
@@ -1924,9 +2327,17 @@ msgstr "無論你想投資 Yuva、一起基於它建構、需要商業授權，�
 msgid "Which domains and addresses can I use?"
 msgstr "我可以使用哪些網域與位址？"
 
+#: src/copy/status.ts
+msgid "While your page is published and an incident or maintenance is open, the web widget and the iOS and Android SDKs show a line above the conversations, with the state in words and a link to the incident."
+msgstr "只要你的頁面已發佈且有事件或維護進行中，網頁小工具以及 iOS 與 Android SDK 就會在對話上方顯示一行，寫明文字狀態並連結到事件。"
+
 #: src/copy/brand.ts
 msgid "White"
 msgstr "白色"
+
+#: src/copy/home.ts
+msgid "with 90 day bars"
+msgstr "附 90 天色條"
 
 #: src/copy/home.ts
 msgid "with clicks and unsubscribes"
@@ -1968,6 +2379,10 @@ msgstr "適配"
 msgid "Write an e-mail"
 msgstr "寫郵件"
 
+#: src/copy/status.ts
+msgid "Write one reply. Review shows how many conversations get it, and you can close each one afterwards."
+msgstr "寫一則回覆。審閱會顯示有多少對話會收到它，之後你可以逐一關閉這些對話。"
+
 #: src/copy/contact.ts
 msgid "Write to the Yuva team about investment, partnerships, commercial licenses or press, or find the right place for questions and security reports."
 msgstr "就投資、合作、商業授權或媒體事宜聯絡 Yuva 團隊，或找到提問與回報安全問題的合適去處。"
@@ -1975,6 +2390,10 @@ msgstr "就投資、合作、商業授權或媒體事宜聯絡 Yuva 團隊，或
 #: src/copy/cloudflare-email.ts
 msgid "Yes, when you set YUVA_INGRESS_AUTHSERV_ID to mx.cloudflare.net. Yuva then reads the DMARC verdict that Email Routing adds. A new conversation that fails DMARC is marked as spam."
 msgstr "會，前提是你把 YUVA_INGRESS_AUTHSERV_ID 設為 mx.cloudflare.net。此時 Yuva 會讀取 Email Routing 加入的 DMARC 結論。未通過 DMARC 的新對話會被標記為垃圾郵件。"
+
+#: src/copy/status.ts
+msgid "You choose how many failures in a row count, and a state your team set by hand is never overridden by a check."
+msgstr "你決定連續多少次失敗才算數，團隊手動設定的狀態絕不會被檢查覆蓋。"
 
 #: src/copy/brand.ts
 msgid "You may"
@@ -1996,9 +2415,29 @@ msgstr "瀏覽器會開啟 Yuva。用一次性驗證碼登入；新的電子郵�
 msgid "Your code stays on your machine. Yuva only sees what the assistant creates through it."
 msgstr "你的程式碼留在你的機器上。Yuva 只能看到助理透過它建立的內容。"
 
+#: src/copy/status.ts
+msgid "Your cron job or server calls a URL on a schedule. When the calls stop, the component goes down."
+msgstr "你的 cron 工作或伺服器依排程呼叫一個 URL。呼叫停止時，元件即視為當機。"
+
+#: src/copy/status.ts
+msgid "Your logo and accent colour. The page speaks English, Turkish and German; visitors see times in their own time zone."
+msgstr "你的標誌與強調色。頁面使用英文、土耳其文與德文；訪客依自己的時區查看時間。"
+
+#: src/copy/status.ts
+msgid "Your look and language"
+msgstr "你的外觀與語言"
+
+#: src/copy/status.ts
+msgid "Your own domain"
+msgstr "你自己的網域"
+
 #: src/copy/cloudflare-email.ts
 msgid "Your team answers in the panel. The reply is sent through the e-mail channel's own SMTP account, such as Amazon SES, Postmark or your own relay, from the same address and in the same thread. Replies do not go through the Worker."
 msgstr "你的團隊在面板中回覆。回覆透過郵件頻道自己的 SMTP 帳號寄出，例如 Amazon SES、Postmark 或你自己的中繼，使用同一個位址並在同一個執行緒中。回覆不經過 Worker。"
+
+#: src/copy/status.ts
+msgid "Your word first"
+msgstr "先聽你的"
 
 #: src/copy/ai.ts
 msgid "Your Yuva server"
@@ -2060,6 +2499,10 @@ msgstr "你的 AI 助理中的 Yuva"
 msgid "Yuva is pre-alpha. Every release, the roadmap and the code are public, so you can see exactly where it stands."
 msgstr "Yuva 處於預覽前期。每個版本、路線圖與程式碼都是公開的，所以你能清楚看到它的進展。"
 
+#: src/copy/status.ts
+msgid "Yuva opens a connection to a host and port and checks that it answers."
+msgstr "Yuva 會開啟到某個主機與連接埠的連線，並檢查它是否回應。"
+
 #: src/copy/brand.ts
 msgid "Yuva orange"
 msgstr "Yuva 橘"
@@ -2075,6 +2518,18 @@ msgstr "Yuva 會在讀取本文之前，拒絕任何沒有有效 HMAC 簽章或�
 #: src/copy/pages.ts
 msgid "Yuva releases"
 msgstr "Yuva 版本發布"
+
+#: src/copy/status.ts
+msgid "Yuva renders it as plain HTML, complete without JavaScript, and answers are cached for 30 seconds so a CDN in front of your server can carry an outage's traffic."
+msgstr "Yuva 將它轉譯為純 HTML，無需 JavaScript 也完整可用，回應快取 30 秒，讓你伺服器前面的 CDN 能承接故障期間的流量。"
+
+#: src/copy/status.ts
+msgid "Yuva requests a URL on an interval and checks the status code, optionally a keyword and the certificate's expiry."
+msgstr "Yuva 依一定間隔請求一個 URL，並檢查狀態碼，還可選擇檢查關鍵字與憑證到期時間。"
+
+#: src/copy/status.ts
+msgid "Yuva sends it as you to every linked conversation that is still open, through each one's own channel. It cannot be recalled once sent."
+msgstr "Yuva 會以你的名義，透過各自的管道傳送給每個仍處於開啟狀態的已連結對話。傳送後無法收回。"
 
 #: src/copy/docs.ts
 msgid "Yuva signs every request with Standard Webhooks and retries failed deliveries. Registering an endpoint and verifying a signature are in the webhooks guide."

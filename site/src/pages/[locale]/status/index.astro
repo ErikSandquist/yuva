@@ -1,0 +1,9 @@
+---
+import StatusView from "@/views/StatusView.astro"
+import { localePaths, type Locale } from "@/lib/routes"
+
+export const getStaticPaths = localePaths
+const { locale } = Astro.params as { locale: Locale }
+---
+
+<StatusView locale={locale} />

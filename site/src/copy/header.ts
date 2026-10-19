@@ -11,6 +11,7 @@ import {
   home,
   links,
   releases,
+  status,
   templates,
   type Locale,
 } from "@/lib/routes"
@@ -68,6 +69,12 @@ export function headerCopy(i18n: I18n, locale: Locale) {
             title: i18n._(msg`Analytics`),
             body: i18n._(msg`Visitors without cookies.`),
             href: page("analytics"),
+          },
+          {
+            icon: "flag",
+            title: i18n._(msg`Status pages`),
+            body: i18n._(msg`Tell customers what works.`),
+            href: status[locale],
           },
           {
             icon: "download",

@@ -304,3 +304,39 @@ kbd {
 .prose .shots figcaption {
   @apply col-span-2 mt-0 text-center text-sm;
 }
+
+.status-palette {
+  --st-ok: #16a34a;
+  --st-warn: #eab308;
+  --st-partial: #f97316;
+  --st-maint: #2563eb;
+  --st-bad: #dc2626;
+  --st-warn-text: #a16207;
+  --st-bad-text: #b91c1c;
+  --st-cross: #a1a1aa;
+}
+
+[data-theme="dark"] .status-palette,
+.status-palette-dark {
+  --st-ok: #4ade80;
+  --st-warn: #facc15;
+  --st-partial: #fb923c;
+  --st-maint: #60a5fa;
+  --st-bad: #f87171;
+  --st-warn-text: #facc15;
+  --st-bad-text: #fca5a5;
+  --st-cross: #52525b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .status-palette {
+    --st-ok: #4ade80;
+    --st-warn: #facc15;
+    --st-partial: #fb923c;
+    --st-maint: #60a5fa;
+    --st-bad: #f87171;
+    --st-warn-text: #facc15;
+    --st-bad-text: #fca5a5;
+    --st-cross: #52525b;
+  }
+}
