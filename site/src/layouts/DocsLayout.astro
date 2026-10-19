@@ -60,7 +60,7 @@ const strip = "relative flex h-11 items-center gap-2 border-b border-rule px-5 t
           <span class="font-medium text-ink-soft">{t.documentation}</span>
           <Cross class="-end-[6px] -bottom-[6px]" />
         </div>
-        <div class="flex-1 overflow-y-auto p-3" data-sidebar>
+        <div class="flex-1 overflow-y-auto overscroll-contain" data-sidebar>
           <DocsNav locale={locale} groups={groups} slug={slug} label={t.documentation} />
         </div>
       </div>
@@ -84,8 +84,8 @@ const strip = "relative flex h-11 items-center gap-2 border-b border-rule px-5 t
             <path d="m4 6 4 4 4-4" />
           </svg>
         </summary>
-        <div class="absolute inset-x-0 top-full z-40 max-h-[70svh] overflow-y-auto border-b border-rule bg-paper p-3 shadow-paper">
-          <div class="mb-3 grid gap-3 border-b border-rule px-2 pb-3 md:hidden">
+        <div class="absolute inset-x-0 top-full z-40 max-h-[70svh] overflow-y-auto border-b border-rule bg-paper shadow-paper">
+          <div class="grid gap-3 border-b border-rule px-5 py-3 md:hidden">
             <ThemeToggle locale={locale} class="justify-self-start" />
             <p class="flex flex-wrap gap-x-4 gap-y-2 text-sm">
               {locales
@@ -178,14 +178,18 @@ const strip = "relative flex h-11 items-center gap-2 border-b border-rule px-5 t
             <span class="font-medium text-ink-soft">{t.onThisPage}</span>
           </div>
           {toc.length > 1 && (
-            <nav class="max-h-[calc(100svh-6.25rem)] overflow-y-auto p-5" aria-label={t.onThisPage}>
-              <ol class="border-s border-rule">
+            <nav
+              class="max-h-[calc(100svh-6.25rem)] overflow-y-auto overscroll-contain py-2"
+              aria-label={t.onThisPage}
+              data-toc
+            >
+              <ol>
                 {toc.map((h) => (
                   <li>
                     <a
                       class:list={[
-                        "-ms-px block border-s border-transparent py-1 text-[13px] leading-5 transition-colors hover:border-ink hover:text-ink",
-                        h.depth === 3 ? "ps-6 text-ink-faint" : "ps-3 text-ink-soft",
+                        "relative block py-1.5 pe-5 text-[13px] leading-5 transition-colors hover:bg-paper-deep hover:text-ink focus-visible:rounded-none focus-visible:-outline-offset-2 aria-[current=location]:bg-brand-wash aria-[current=location]:font-medium aria-[current=location]:text-brand aria-[current=location]:before:absolute aria-[current=location]:before:inset-y-0 aria-[current=location]:before:start-0 aria-[current=location]:before:w-0.5 aria-[current=location]:before:bg-signal",
+                        h.depth === 3 ? "ps-9 text-ink-faint" : "ps-5 text-ink-soft",
                       ]}
                       href={`#${h.slug}`}
                     >
@@ -254,4 +258,36 @@ const strip = "relative flex h-11 items-center gap-2 border-b border-rule px-5 t
   if (sidebar && current)
     sidebar.scrollTop +=
       current.getBoundingClientRect().top - sidebar.getBoundingClientRect().top - sidebar.clientHeight / 3
+
+  const toc = document.querySelector<HTMLElement>("[data-toc]")
+  const entries = [...(toc?.querySelectorAll<HTMLAnchorElement>('a[href^="#"]') ?? [])]
+    .map((link) => ({ link, heading: document.getElementById(decodeURIComponent(link.hash.slice(1))) }))
+    .filter((e): e is { link: HTMLAnchorElement; heading: HTMLElement } => e.heading !== null)
+  if (toc && entries.length) {
+    let active: HTMLAnchorElement | undefined
+    let queued = false
+    const update = () => {
+      queued = false
+      const line = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 96
+      const bottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2
+      let pick = entries[0]!
+      for (const e of entries) if (e.heading.getBoundingClientRect().top <= line + 16) pick = e
+      if (bottom) pick = entries[entries.length - 1]!
+      if (pick.link === active) return
+      active?.removeAttribute("aria-current")
+      active = pick.link
+      active.setAttribute("aria-current", "location")
+      const top = active.offsetTop - toc.offsetTop
+      if (top < toc.scrollTop || top + active.offsetHeight > toc.scrollTop + toc.clientHeight)
+        toc.scrollTop = top - toc.clientHeight / 3
+    }
+    const schedule = () => {
+      if (queued) return
+      queued = true
+      requestAnimationFrame(update)
+    }
+    addEventListener("scroll", schedule, { passive: true })
+    addEventListener("resize", schedule, { passive: true })
+    update()
+  }
 </script>

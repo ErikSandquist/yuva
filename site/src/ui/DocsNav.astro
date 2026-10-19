@@ -11,27 +11,27 @@ interface Props {
 }
 
 const { locale, groups, slug, label } = Astro.props
-const link =
-  "-ms-px block border-s border-transparent py-1 ps-3 pe-2 text-[13px] leading-5 text-ink-soft transition-colors hover:border-rule-strong hover:text-ink aria-[current=page]:border-signal aria-[current=page]:bg-brand-wash aria-[current=page]:font-medium aria-[current=page]:text-brand"
+const row =
+  "relative flex w-full items-center transition-colors focus-visible:rounded-none focus-visible:-outline-offset-2"
+const link = `${row} py-1.5 ps-13 pe-5 text-[13px] leading-5 text-ink-soft hover:bg-paper-deep hover:text-ink aria-[current=page]:bg-brand-wash aria-[current=page]:font-medium aria-[current=page]:text-brand aria-[current=page]:before:absolute aria-[current=page]:before:inset-y-0 aria-[current=page]:before:start-0 aria-[current=page]:before:w-0.5 aria-[current=page]:before:bg-signal`
 ---
 
-<nav class="grid gap-1" aria-label={label}>
+<nav class="py-2" aria-label={label} data-docs-nav>
   {groups.map((g) => {
     const inside = g.items.some((i) => i.slug === slug)
     return (
-      <details class="group/nav">
-        <summary class="flex cursor-pointer list-none items-center gap-2.5 rounded-md px-1.5 py-1.5 text-sm font-medium transition-colors select-none hover:bg-paper-deep [&::-webkit-details-marker]:hidden">
-          <span
-            class:list={[
-              "grid size-6 shrink-0 place-items-center rounded-md border",
-              inside ? "border-brand/30 bg-brand-wash text-brand" : "border-rule text-ink-soft",
-            ]}
-          >
-            <Icon name={g.icon} class="size-3.5" />
-          </span>
-          <span class="flex-1">{g.title}</span>
+      <details class="group/nav" open={inside} data-group={g.key}>
+        <summary
+          class:list={[
+            row,
+            "h-9 cursor-pointer list-none gap-3 px-5 text-[13px] font-medium select-none hover:bg-paper-deep [&::-webkit-details-marker]:hidden",
+            inside ? "text-ink" : "text-ink-soft hover:text-ink",
+          ]}
+        >
+          <Icon name={g.icon} class:list={["size-3.5 shrink-0", inside ? "text-brand" : "text-ink-faint"]} />
+          <span class="flex-1 truncate">{g.title}</span>
           <svg
-            class="size-3.5 text-ink-faint transition-transform group-open/nav:rotate-90 rtl:-scale-x-100 rtl:group-open/nav:-rotate-90"
+            class="size-3.5 shrink-0 text-ink-faint transition-transform group-open/nav:rotate-90 rtl:-scale-x-100 rtl:group-open/nav:-rotate-90"
             viewBox="0 0 16 16"
             fill="none"
             stroke="currentColor"
@@ -43,7 +43,7 @@ const link =
             <path d="m6 4 4 4-4 4" />
           </svg>
         </summary>
-        <ul class="mt-0.5 mb-2 ms-[1.1rem] border-s border-rule">
+        <ul class="pb-2">
           {g.items.map((c) => (
             <li>
               <a class={link} href={href(locale, c.rel)} aria-current={c.slug === slug ? "page" : undefined}>
@@ -56,3 +56,33 @@ const link =
     )
   })}
 </nav>
+
+<script>
+  const key = "yuva:docs-nav"
+  const read = (): string[] => {
+    try {
+      const v: unknown = JSON.parse(sessionStorage.getItem(key) ?? "[]")
+      return Array.isArray(v) ? v.filter((x): x is string => typeof x === "string") : []
+    } catch {
+      return []
+    }
+  }
+  const write = (keys: string[]) => {
+    try {
+      sessionStorage.setItem(key, JSON.stringify(keys))
+    } catch {}
+  }
+  const groups = [...document.querySelectorAll<HTMLDetailsElement>("[data-docs-nav] details[data-group]")]
+  const opened = new Set(read())
+  for (const d of groups) if (opened.has(d.dataset.group!)) d.open = true
+  for (const d of groups) {
+    d.querySelector("summary")?.addEventListener("click", () => {
+      const k = d.dataset.group!
+      const next = new Set(read())
+      if (d.open) next.delete(k)
+      else next.add(k)
+      write([...next])
+      for (const o of groups) if (o !== d && o.dataset.group === k) o.open = !d.open
+    })
+  }
+</script>
