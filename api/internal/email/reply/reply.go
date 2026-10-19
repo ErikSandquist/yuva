@@ -5,6 +5,7 @@ package reply
 import (
 	"regexp"
 	"strings"
+	"unicode/utf8"
 )
 
 var (
@@ -60,7 +61,7 @@ func attribution(lines []string, i int) (int, bool) {
 	if l == "" || isQuoted(lines[i]) {
 		return 0, false
 	}
-	if !attributionEnd.MatchString(l) && !turkishAttribution.MatchString(l) {
+	if !endsAttribution(l) {
 		return 0, false
 	}
 	for start := i; start >= 0 && start >= i-2; start-- {
@@ -79,6 +80,26 @@ func attribution(lines []string, i int) (int, bool) {
 		return i, true
 	}
 	return 0, false
+}
+
+// turkishWordRunes is the length of "şunu yazdı", the longest word turkishAttribution ends on.
+const turkishWordRunes = 10
+
+// endsAttribution is attributionEnd or turkishAttribution matching the trimmed line l. Both are
+// anchored at its end, so only that end is scanned: attributionEnd needs the line to end in a
+// colon, and turkishAttribution's word lies in the last turkishWordRunes runes before the colon
+// and the spaces in front of it.
+func endsAttribution(l string) bool {
+	if strings.HasSuffix(l, ":") && attributionEnd.MatchString(l) {
+		return true
+	}
+	word := strings.TrimRight(strings.TrimSuffix(l, ":"), " \t\n\f\r")
+	start := len(word)
+	for n := 0; n < turkishWordRunes && start > 0; n++ {
+		_, size := utf8.DecodeLastRuneInString(word[:start])
+		start -= size
+	}
+	return turkishAttribution.MatchString(l[start:])
 }
 
 func hasDigit(s string) bool { return strings.ContainsAny(s, "0123456789") }
