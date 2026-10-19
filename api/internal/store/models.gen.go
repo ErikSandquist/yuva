@@ -1808,6 +1808,7 @@ type StatusPage struct {
 	CfErrors           []string
 	CfCheckedAt        *time.Time
 	DomainClaimedAt    *time.Time
+	ShowResponseTimes  bool
 }
 
 type StatusPageSlug struct {

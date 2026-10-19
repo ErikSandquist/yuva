@@ -1,8 +1,8 @@
 -- name: CreateStatusPage :one
 INSERT INTO status_pages (id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url,
-    locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at)
+    locale, timezone, history_days, show_uptime, show_response_times, published, changed_at, created_at, updated_at)
 VALUES (@id, @workspace_id, @inbox_id, @name, @description, @slug, sqlc.narg(logo_url), sqlc.narg(accent_color), sqlc.narg(site_url),
-    sqlc.narg(support_url), @locale, @timezone, @history_days, @show_uptime, @published, @now, @now, @now)
+    sqlc.narg(support_url), @locale, @timezone, @history_days, @show_uptime, @show_response_times, @published, @now, @now, @now)
 RETURNING *;
 
 -- name: GetStatusPage :one
@@ -38,7 +38,8 @@ SELECT * FROM status_pages WHERE slug = $1;
 -- name: UpdateStatusPage :one
 UPDATE status_pages SET name = @name, description = @description, slug = @slug, logo_url = sqlc.narg(logo_url),
     accent_color = sqlc.narg(accent_color), site_url = sqlc.narg(site_url), support_url = sqlc.narg(support_url),
-    locale = @locale, timezone = @timezone, history_days = @history_days, show_uptime = @show_uptime, published = @published,
+    locale = @locale, timezone = @timezone, history_days = @history_days, show_uptime = @show_uptime,
+    show_response_times = @show_response_times, published = @published,
     changed_at = greatest(changed_at + interval '1 microsecond', @now::timestamptz), updated_at = @now
 WHERE workspace_id = @workspace_id AND id = @id
 RETURNING *;

@@ -169,3 +169,26 @@ SELECT count(*)::int AS checks, count(*) FILTER (WHERE NOT ok)::int AS failures,
     coalesce((percentile_cont(0.95) WITHIN GROUP (ORDER BY duration_ms) FILTER (WHERE ok AND duration_ms IS NOT NULL))::int, -1)::int AS p95
 FROM status_checks
 WHERE workspace_id = @workspace_id AND monitor_id = @monitor_id AND NOT pending AND at >= @since::timestamptz AND at < @until::timestamptz;
+
+-- name: StatusResponseComponents :many
+SELECT DISTINCT component_id FROM status_monitors
+WHERE workspace_id = @workspace_id AND page_id = @page_id AND kind IN ('http', 'tcp') AND component_id = ANY(@component_ids::uuid[]);
+
+-- name: StatusResponseBuckets :many
+-- Step n covers since + n * step_seconds; only measured successes of http and tcp monitors count.
+SELECT m.component_id, floor(date_part('epoch', c.at - @since::timestamptz) / sqlc.arg(step_seconds)::int)::int AS step,
+    (percentile_cont(0.5) WITHIN GROUP (ORDER BY c.duration_ms))::int AS p50
+FROM status_checks c
+JOIN status_monitors m ON m.workspace_id = c.workspace_id AND m.id = c.monitor_id
+WHERE c.workspace_id = @workspace_id AND m.page_id = @page_id AND m.kind IN ('http', 'tcp') AND m.component_id = ANY(@component_ids::uuid[])
+  AND NOT c.pending AND c.ok AND c.duration_ms IS NOT NULL AND c.at >= @since::timestamptz AND c.at < @until::timestamptz
+GROUP BY 1, 2;
+
+-- name: StatusResponseTotals :many
+SELECT m.component_id, (percentile_cont(0.5) WITHIN GROUP (ORDER BY c.duration_ms))::int AS p50,
+    (percentile_cont(0.95) WITHIN GROUP (ORDER BY c.duration_ms))::int AS p95
+FROM status_checks c
+JOIN status_monitors m ON m.workspace_id = c.workspace_id AND m.id = c.monitor_id
+WHERE c.workspace_id = @workspace_id AND m.page_id = @page_id AND m.kind IN ('http', 'tcp') AND m.component_id = ANY(@component_ids::uuid[])
+  AND NOT c.pending AND c.ok AND c.duration_ms IS NOT NULL AND c.at >= @since::timestamptz AND c.at < @until::timestamptz
+GROUP BY 1;

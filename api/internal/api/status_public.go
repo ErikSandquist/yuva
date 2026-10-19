@@ -147,6 +147,7 @@ func (s *Server) routeStatus(mux *http.ServeMux) {
 	mux.HandleFunc("GET "+statusPathPrefix+"{slug}/incidents/{id}", s.serveStatus("incident"))
 	mux.HandleFunc("GET "+statusPathPrefix+"{slug}/feed.atom", s.serveStatus("feed"))
 	mux.HandleFunc("GET "+statusPathPrefix+"{slug}/badge.svg", s.serveStatus("badge"))
+	mux.HandleFunc("GET "+statusPathPrefix+"{slug}/fonts/{name}", serveStatusFont)
 	mux.HandleFunc("GET "+statusPathPrefix+"{slug}/subscribe", s.serveStatusSubscribe)
 	mux.HandleFunc("POST "+statusPathPrefix+"{slug}/subscribe", s.serveStatusSubscribe)
 	mux.HandleFunc("GET "+statusPathPrefix+"{slug}/subscribe/sent", s.serveStatusSubscribe)
@@ -212,15 +213,15 @@ func (s *Server) serveStatus(view string) http.HandlerFunc {
 		if !ok {
 			return
 		}
-		var err error
-		var incident uuid.UUID
+		req := statusRequestFor(r, pg, view)
 		if view == "incident" {
-			if incident, err = uuid.Parse(r.PathValue("id")); err != nil {
+			var err error
+			if req.incident, err = uuid.Parse(r.PathValue("id")); err != nil {
 				s.statusGone(w)
 				return
 			}
 		}
-		e, err := s.statusAnswer(ctx, pg, view, incident)
+		e, err := s.statusAnswer(ctx, pg, req)
 		if err == errStatusIncidentGone {
 			s.statusGone(w)
 			return
@@ -243,12 +244,19 @@ func (s *Server) statusGone(w http.ResponseWriter) {
 }
 
 var (
-	statusScript     = `document.querySelectorAll("time[data-local]").forEach(function(t){var d=new Date(t.getAttribute("datetime"));if(!isNaN(d))t.textContent=d.toLocaleString(document.documentElement.lang,{dateStyle:"medium",timeStyle:"short"})});setTimeout(function(){location.reload()},60000)`
+	statusScript = `var L=document.documentElement.lang;` +
+		`document.querySelectorAll("time[data-local]").forEach(function(t){var d=new Date(t.getAttribute("datetime"));if(!isNaN(d))t.textContent=d.toLocaleString(L,{dateStyle:"medium",timeStyle:"short"})});` +
+		`document.querySelectorAll("time[data-hm]").forEach(function(t){var d=new Date(t.getAttribute("datetime"));if(!isNaN(d))t.textContent=d.toLocaleTimeString(L,{hour:"2-digit",minute:"2-digit"})});` +
+		`try{var z=Intl.DateTimeFormat().resolvedOptions().timeZone;if(z)document.querySelectorAll("[data-zone]").forEach(function(e){e.textContent=z})}catch(e){}` +
+		`document.querySelectorAll("select[data-rt]").forEach(function(s){var c=document.querySelectorAll("[data-rt-chart]");function f(){c.forEach(function(e){e.hidden=e.getAttribute("data-rt-chart")!==s.value})}s.closest("label").hidden=false;s.addEventListener("change",f);f()});` +
+		`document.querySelectorAll("select[data-lang]").forEach(function(s){var b=s.form.querySelector("button");if(b)b.hidden=true;s.addEventListener("change",function(){s.form.submit()})});` +
+		`setTimeout(function(){location.reload()},60000)`
 	statusScriptHash = func() string {
 		h := sha256.Sum256([]byte(statusScript))
 		return base64.StdEncoding.EncodeToString(h[:])
 	}()
-	statusPageCSP = "default-src 'none'; style-src 'unsafe-inline'; img-src https: data:; script-src 'sha256-" + statusScriptHash + "'; frame-ancestors *; base-uri 'none'; form-action 'none'"
+	statusPageCSP = "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' https: data:; font-src 'self'; script-src 'sha256-" + statusScriptHash +
+		"'; frame-ancestors *; base-uri 'none'; form-action 'self'"
 )
 
 func writeStatusAnswer(w http.ResponseWriter, e statusCacheEntry) {
@@ -269,16 +277,40 @@ func writeStatusAnswer(w http.ResponseWriter, e statusCacheEntry) {
 	_, _ = w.Write(e.body)
 }
 
-func (s *Server) statusAnswer(ctx context.Context, pg store.StatusPage, view string, incident uuid.UUID) (statusCacheEntry, error) {
+// statusRequest is what a public answer depends on besides the page: the view, the incident, the
+// language a visitor picked with ?lang= ("" for the page's own) and the history filter.
+type statusRequest struct {
+	view     string
+	incident uuid.UUID
+	lang     string
+	filter   string
+}
+
+func statusRequestFor(r *http.Request, pg store.StatusPage, view string) statusRequest {
+	req := statusRequest{view: view}
+	q := r.URL.Query()
+	if code := q.Get("lang"); code != "" {
+		if w, ok := statusLanguage(code); ok && w.Lang != statusWordsFor(pg.Locale).Lang {
+			req.lang = w.Lang
+		}
+	}
+	if f := q.Get("filter"); view == "history" && (f == statusFilterIncidents || f == statusFilterMaintenance) {
+		req.filter = f
+	}
+	return req
+}
+
+func (s *Server) statusAnswer(ctx context.Context, pg store.StatusPage, req statusRequest) (statusCacheEntry, error) {
 	now := s.now()
-	key := pg.ID.String() + "|" + view + "|" + incident.String() + "|" + statusWordsFor(pg.Locale).Lang
+	view := req.view
+	key := pg.ID.String() + "|" + view + "|" + req.incident.String() + "|" + statusWordsFor(pg.Locale).Lang + "|" + req.lang + "|" + req.filter
 	if e, ok := s.statusCache.get(key, pg.ChangedAt, now); ok {
 		return e, nil
 	}
 	var inc store.StatusIncident
 	if view == "incident" {
 		var err error
-		inc, err = s.st.GetStatusIncident(ctx, store.GetStatusIncidentParams{WorkspaceID: pg.WorkspaceID, PageID: pg.ID, ID: incident})
+		inc, err = s.st.GetStatusIncident(ctx, store.GetStatusIncidentParams{WorkspaceID: pg.WorkspaceID, PageID: pg.ID, ID: req.incident})
 		if store.IsNotFound(err) || (err == nil && inc.PublishedAt == nil) {
 			return statusCacheEntry{}, errStatusIncidentGone
 		}
@@ -290,6 +322,10 @@ func (s *Server) statusAnswer(ctx context.Context, pg store.StatusPage, view str
 	if err != nil {
 		return statusCacheEntry{}, err
 	}
+	if req.lang != "" {
+		snap.words, snap.lang = statusWordsFor(req.lang), req.lang
+	}
+	snap.filter = req.filter
 	e := statusCacheEntry{changed: pg.ChangedAt, at: now}
 	switch view {
 	case "json":
@@ -309,6 +345,9 @@ func (s *Server) statusAnswer(ctx context.Context, pg store.StatusPage, view str
 		v := s.statusView(snap, "incident")
 		iv := snap.incidentView(inc, parts)
 		v.Incident = &iv
+		if err = s.incidentDetail(ctx, snap, &v, inc, parts); err != nil {
+			return e, err
+		}
 		e.ctype = "text/html; charset=utf-8"
 		e.body, err = renderStatus(v)
 	default:
@@ -336,6 +375,10 @@ type statusSnap struct {
 	parts     incidentParts
 	visible   map[uuid.UUID]bool
 	url       func(path string) string
+	response  map[uuid.UUID]*responseSeries
+	monitored []uuid.UUID
+	lang      string
+	filter    string
 }
 
 func (s *Server) statusSnapshot(ctx context.Context, q *store.Queries, pg store.StatusPage, now time.Time) (*statusSnap, error) {
@@ -381,6 +424,21 @@ func (s *Server) statusSnapshot(ctx context.Context, q *store.Queries, pg store.
 		for _, id := range ids {
 			snap.days[id] = uptimeDays(by[id], int(pg.HistoryDays), snap.loc, now)
 			snap.uptime[id] = uptimeOver(snap.days[id])
+		}
+	}
+	if pg.ShowResponseTimes && len(ids) > 0 {
+		rows, err := q.StatusResponseComponents(ctx, store.StatusResponseComponentsParams{WorkspaceID: ws, PageID: pg.ID, ComponentIds: ids})
+		if err != nil {
+			return nil, err
+		}
+		for _, id := range ids {
+			if slices.Contains(rows, id) {
+				snap.monitored = append(snap.monitored, id)
+			}
+		}
+		from := now.Truncate(statusResponseStep).Add(statusResponseStep - statusResponseSteps*statusResponseStep)
+		if snap.response, err = responseSeriesFor(ctx, q, pg, snap.monitored, from, statusResponseStep, statusResponseSteps); err != nil {
+			return nil, err
 		}
 	}
 	if snap.incidents, err = q.ListPublicStatusIncidents(ctx, store.ListPublicStatusIncidentsParams{WorkspaceID: ws, PageID: pg.ID, Since: window, Lim: statusPublicMax}); err != nil {
@@ -432,6 +490,9 @@ func (snap *statusSnap) json() oas.PublicStatusPage {
 			}
 			pc.Days = &days
 		}
+		if r := snap.response[c.ID]; r != nil {
+			pc.ResponseTimes = r.public()
+		}
 		out.Components = append(out.Components, pc)
 	}
 	recentFrom := snap.now.AddDate(0, 0, -statusRecentDays)
@@ -474,7 +535,7 @@ func (s *Server) GetClientStatusPage(ctx context.Context, req oas.GetClientStatu
 	if err != nil {
 		return nil, err
 	}
-	e, err := s.statusAnswer(ctx, pg, "json", uuid.Nil())
+	e, err := s.statusAnswer(ctx, pg, statusRequest{view: "json"})
 	if err != nil {
 		return nil, err
 	}
@@ -494,7 +555,7 @@ func (b statusPreviewResponse) VisitPreviewStatusPageResponse(w http.ResponseWri
 	h := w.Header()
 	h.Set("Content-Type", "text/html; charset=utf-8")
 	h.Set("Cache-Control", "no-store")
-	h.Set("Content-Security-Policy", strings.Replace(statusPageCSP, "frame-ancestors *", "frame-ancestors 'self'", 1))
+	h.Set("Content-Security-Policy", strings.NewReplacer("frame-ancestors *", "frame-ancestors 'self'", "font-src 'self'", "font-src 'self' https:").Replace(statusPageCSP))
 	w.WriteHeader(http.StatusOK)
 	_, err := w.Write(b)
 	return err
@@ -518,237 +579,6 @@ func (s *Server) PreviewStatusPage(ctx context.Context, req oas.PreviewStatusPag
 }
 
 var statusColors = map[string]string{stOperational: "#16a34a", stDegraded: "#ca8a04", stPartialOutage: "#ea580c", stMajorOutage: "#dc2626", stMaintenance: "#2563eb", "": "#9ca3af"}
-
-type timeView struct{ ISO, Text string }
-
-type updateView struct {
-	State  string
-	Body   template.HTML
-	At     timeView
-	Edited bool
-}
-
-type incidentView struct {
-	URL, Title, State, StateClass, Impact, Affects string
-	Maintenance, Closed                            bool
-	Start, End                                     *timeView
-	Updates                                        []updateView
-	When                                           timeView
-}
-
-type dayView struct{ Color, Title string }
-
-type componentView struct {
-	Name, Description, State, Color, Uptime string
-	Days                                    []dayView
-}
-
-type groupView struct {
-	Name       string
-	Components []componentView
-}
-
-type monthView struct {
-	Name      string
-	Incidents []incidentView
-}
-
-type statusPageView struct {
-	W                                            statusWords
-	View, Name, Description, Logo, Site, Support string
-	Color                                        template.CSS
-	Home, HistoryURL, FeedURL, SubscribeURL      string
-	State, StateColor, Headline                  string
-	Open, Recent                                 []incidentView
-	Groups                                       []groupView
-	Months                                       []monthView
-	NoHistory, OldestDay                         string
-	Incident                                     *incidentView
-	Updated                                      timeView
-	Script                                       template.JS
-}
-
-func (snap *statusSnap) at(t time.Time) timeView {
-	return timeView{ISO: t.UTC().Format(time.RFC3339), Text: snap.words.moment(t.In(snap.loc))}
-}
-
-func (snap *statusSnap) incidentView(inc store.StatusIncident, parts incidentParts) incidentView {
-	w := snap.words
-	v := incidentView{URL: snap.url("/incidents/" + inc.ID.String()), Title: inc.Title, State: w.IncidentStates[inc.State], StateClass: inc.State,
-		Impact: w.Impacts[inc.Impact], Maintenance: inc.Kind == kindMaintenance, Closed: incidentClosed(inc.State), When: snap.at(*inc.PublishedAt)}
-	if inc.ScheduledStart != nil {
-		a, b := snap.at(*inc.ScheduledStart), snap.at(*inc.ScheduledEnd)
-		v.Start, v.End = &a, &b
-		v.When = a
-	}
-	var names []string
-	for _, c := range parts.components[inc.ID] {
-		if i := slices.IndexFunc(snap.comps, func(x store.StatusComponent) bool { return x.ID == c.ComponentID }); i >= 0 {
-			names = append(names, snap.comps[i].Name)
-		}
-	}
-	v.Affects = strings.Join(names, ", ")
-	for _, u := range parts.updates[inc.ID] {
-		v.Updates = append(v.Updates, updateView{State: w.IncidentStates[u.State], Body: richStatusText(u.Body), At: snap.at(u.CreatedAt), Edited: u.EditedAt != nil})
-	}
-	return v
-}
-
-func (s *Server) statusView(snap *statusSnap, view string) statusPageView {
-	pg, w := snap.page, snap.words
-	state := string(snap.out.State)
-	v := statusPageView{W: w, View: view, Name: pg.Name, Description: pg.Description, Color: defaultBrandColor, Home: snap.url(""),
-		HistoryURL: snap.url("/history"), FeedURL: snap.url("/feed.atom"), State: w.States[state], StateColor: statusColors[state],
-		Headline: w.Headlines[state], Updated: snap.at(pg.ChangedAt), Script: template.JS(statusScript)}
-	if pg.AccentColor != nil {
-		v.Color = template.CSS(*pg.AccentColor)
-	}
-	if s.statusEmailOpen(pg) {
-		v.SubscribeURL = snap.url("/subscribe")
-	}
-	if pg.LogoUrl != nil {
-		v.Logo = *pg.LogoUrl
-	}
-	if pg.SiteUrl != nil {
-		v.Site = *pg.SiteUrl
-	}
-	if pg.SupportUrl != nil {
-		v.Support = *pg.SupportUrl
-	}
-	recentFrom := snap.now.AddDate(0, 0, -statusRecentDays)
-	for _, inc := range snap.incidents {
-		switch {
-		case !incidentClosed(inc.State):
-			v.Open = append(v.Open, snap.incidentView(inc, snap.parts))
-		case inc.ResolvedAt != nil && inc.ResolvedAt.After(recentFrom):
-			v.Recent = append(v.Recent, snap.incidentView(inc, snap.parts))
-		}
-	}
-	group := func(id *uuid.UUID) []componentView {
-		var out []componentView
-		for _, c := range snap.comps {
-			if (id == nil) != (c.GroupID == nil) || (id != nil && *id != *c.GroupID) {
-				continue
-			}
-			cv := componentView{Name: c.Name, Description: c.Description, State: w.States[c.State], Color: statusColors[c.State]}
-			if pg.ShowUptime {
-				if u := snap.uptime[c.ID]; u != nil {
-					cv.Uptime = strings.Replace(w.Uptime, "%s", fmt.Sprintf("%.2f%%", *u), 1)
-				}
-				for _, d := range snap.days[c.ID] {
-					title := w.day(d.date) + ": " + w.NoData
-					color := statusColors[""]
-					if d.known {
-						color = statusColors[d.state]
-						title = w.day(d.date) + ": " + w.States[d.state]
-						if u := d.uptime(); u != nil {
-							title += fmt.Sprintf(" (%.2f%%)", *u)
-						}
-					}
-					cv.Days = append(cv.Days, dayView{Color: color, Title: title})
-				}
-			}
-			out = append(out, cv)
-		}
-		return out
-	}
-	if ungrouped := group(nil); len(ungrouped) > 0 {
-		v.Groups = append(v.Groups, groupView{Components: ungrouped})
-	}
-	for _, g := range snap.groups {
-		id := g.ID
-		v.Groups = append(v.Groups, groupView{Name: g.Name, Components: group(&id)})
-	}
-	if view == "history" {
-		for _, inc := range snap.incidents {
-			iv := snap.incidentView(inc, snap.parts)
-			t := *inc.PublishedAt
-			if inc.ScheduledStart != nil {
-				t = *inc.ScheduledStart
-			}
-			name := w.month(t.In(snap.loc))
-			if n := len(v.Months); n == 0 || v.Months[n-1].Name != name {
-				v.Months = append(v.Months, monthView{Name: name})
-			}
-			v.Months[len(v.Months)-1].Incidents = append(v.Months[len(v.Months)-1].Incidents, iv)
-		}
-		v.NoHistory = strings.Replace(w.NoHistory, "%d", fmt.Sprint(pg.HistoryDays), 1)
-	}
-	if pg.ShowUptime {
-		v.OldestDay = strings.Replace(w.DaysAgo, "%d", fmt.Sprint(pg.HistoryDays-1), 1)
-	}
-	return v
-}
-
-var statusTemplate = template.Must(template.New("status").Parse(`<!doctype html>
-<html lang="{{.W.Lang}}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{.Name}} – {{if .Incident}}{{.Incident.Title}}{{else}}{{.Headline}}{{end}}</title>
-<link rel="alternate" type="application/atom+xml" href="{{.FeedURL}}" title="{{.W.Feed}}">
-<style>
-:root{--brand:{{.Color}};color-scheme:light dark}
-body{font:16px/1.5 system-ui,sans-serif;max-width:52rem;margin:2rem auto;padding:0 1rem;color:#1f2328;background:#fff}
-@media (prefers-color-scheme:dark){body{color:#e6e6e6;background:#16181d}.card{background:#1f2229}}
-a{color:var(--brand)}
-header{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem}
-header img{height:2rem;width:auto}
-header h1{font-size:1.4rem;margin:0;flex:1}
-header nav a{margin-left:1rem;font-size:.95rem}
-.banner{border-radius:.75rem;padding:1rem 1.25rem;color:#fff;font-weight:600;font-size:1.15rem;margin:0 0 1.5rem}
-h2{font-size:1.1rem;margin:2rem 0 .75rem}
-h3{font-size:1rem;margin:1.25rem 0 .5rem;opacity:.85}
-.card{border:1px solid #8884;border-radius:.75rem;padding:1rem 1.25rem;margin:0 0 1rem}
-.card h3{margin:0 0 .25rem;opacity:1}
-.meta{font-size:.9rem;opacity:.75}
-.update{margin:.75rem 0 0}
-.update b{margin-right:.4rem}
-.comp{border-bottom:1px solid #8883;padding:.6rem 0}
-.comp:last-child{border-bottom:0}
-.row{display:flex;justify-content:space-between;gap:1rem}
-.state{font-size:.9rem;font-weight:600}
-.bars{display:flex;gap:1px;margin:.4rem 0 .2rem;height:1.6rem}
-.bars span{flex:1;border-radius:2px;min-width:1px}
-.scale{display:flex;justify-content:space-between;font-size:.8rem;opacity:.7}
-footer{margin:3rem 0 1rem;font-size:.85rem;opacity:.75;display:flex;gap:1rem;flex-wrap:wrap}
-</style></head><body>
-<header>{{if .Logo}}<img src="{{.Logo}}" alt="">{{end}}<h1><a href="{{.Home}}" style="color:inherit;text-decoration:none">{{.Name}}</a></h1>
-<nav>{{if .Site}}<a href="{{.Site}}" rel="noopener">{{.W.Site}}</a>{{end}}{{if .Support}}<a href="{{.Support}}" rel="noopener">{{.W.Support}}</a>{{end}}</nav></header>
-{{if .Incident}}{{with .Incident}}
-<p><a href="{{$.Home}}">← {{$.W.Back}}</a></p>
-<h2>{{.Title}}</h2>
-<p class="meta">{{.State}}{{if not .Maintenance}} · {{.Impact}}{{end}}{{if .Affects}} · {{$.W.Affects}}: {{.Affects}}{{end}}</p>
-{{if .Start}}<p class="meta">{{$.W.Window}}: <time datetime="{{.Start.ISO}}" data-local>{{.Start.Text}}</time> – <time datetime="{{.End.ISO}}" data-local>{{.End.Text}}</time></p>{{end}}
-{{range .Updates}}<div class="card"><p class="update"><b>{{.State}}</b><span class="meta"><time datetime="{{.At.ISO}}" data-local>{{.At.Text}}</time>{{if .Edited}} · {{$.W.Edited}}{{end}}</span></p>{{if .Body}}<p>{{.Body}}</p>{{end}}</div>{{end}}
-{{end}}{{else if eq .View "history"}}
-<p><a href="{{.Home}}">← {{.W.Back}}</a></p>
-<h2>{{.W.History}}</h2>
-{{range .Months}}<h3>{{.Name}}</h3>{{range .Incidents}}<div class="card"><h3><a href="{{.URL}}">{{.Title}}</a></h3><p class="meta">{{.State}} · <time datetime="{{.When.ISO}}" data-local>{{.When.Text}}</time></p></div>{{end}}{{else}}<p>{{.NoHistory}}</p>{{end}}
-{{else}}
-<p class="banner" style="background:{{.StateColor}}">{{.Headline}}</p>
-{{if .Description}}<p>{{.Description}}</p>{{end}}
-{{range .Open}}<div class="card"><h3><a href="{{.URL}}">{{.Title}}</a></h3>
-<p class="meta">{{.State}}{{if not .Maintenance}} · {{.Impact}}{{end}}{{if .Affects}} · {{$.W.Affects}}: {{.Affects}}{{end}}</p>
-{{if .Start}}<p class="meta">{{$.W.Window}}: <time datetime="{{.Start.ISO}}" data-local>{{.Start.Text}}</time> – <time datetime="{{.End.ISO}}" data-local>{{.End.Text}}</time></p>{{end}}
-{{range .Updates}}<p class="update"><b>{{.State}}</b><span class="meta"><time datetime="{{.At.ISO}}" data-local>{{.At.Text}}</time>{{if .Edited}} · {{$.W.Edited}}{{end}}</span>{{if .Body}}<br>{{.Body}}{{end}}</p>{{end}}</div>{{end}}
-<h2>{{.W.Components}}</h2>
-{{range .Groups}}{{if .Name}}<h3>{{.Name}}</h3>{{end}}<div class="card">{{range .Components}}<div class="comp">
-<div class="row"><span>{{.Name}}{{if .Description}}<br><span class="meta">{{.Description}}</span>{{end}}</span><span class="state" style="color:{{.Color}}">{{.State}}</span></div>
-{{if .Days}}<div class="bars">{{range .Days}}<span style="background:{{.Color}}" title="{{.Title}}"></span>{{end}}</div>
-<div class="scale"><span>{{$.OldestDay}}</span><span>{{.Uptime}}</span><span>{{$.W.Today}}</span></div>{{end}}
-</div>{{end}}</div>{{end}}
-<h2>{{.W.Recent}}</h2>
-{{range .Recent}}<div class="card"><h3><a href="{{.URL}}">{{.Title}}</a></h3><p class="meta">{{.State}} · <time datetime="{{.When.ISO}}" data-local>{{.When.Text}}</time></p></div>{{else}}<p>{{.W.NoRecent}}</p>{{end}}
-{{end}}
-<footer><a href="{{.HistoryURL}}">{{.W.History}}</a><a href="{{.FeedURL}}">{{.W.Feed}}</a>{{if .SubscribeURL}}<a href="{{.SubscribeURL}}" target="_top">{{.W.Subscribe}}</a>{{end}}<span>{{.W.Updated}}: <time datetime="{{.Updated.ISO}}" data-local>{{.Updated.Text}}</time></span></footer>
-<script>{{.Script}}</script>
-</body></html>`))
-
-func renderStatus(v statusPageView) ([]byte, error) {
-	var b bytes.Buffer
-	if err := statusTemplate.Execute(&b, v); err != nil {
-		return nil, err
-	}
-	return b.Bytes(), nil
-}
 
 type atomLink struct {
 	Href string `xml:"href,attr"`

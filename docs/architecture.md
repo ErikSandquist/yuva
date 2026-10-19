@@ -1902,7 +1902,8 @@ incident before a customer writes, and the conversations an outage brings are an
 - **Pages.** `status_pages` belong to an inbox (one page per inbox at most): name, description, `slug`
   (unique across the server, `a-z0-9-`, 3–48 characters, reserved words refused), logo (storage), accent
   colour, site and support links, locale (`en`, `tr`, `de`, …; the page's words follow it), time zone,
-  `history_days` (90), whether uptime is shown, and `published`. An unpublished page answers 404 to
+  `history_days` (90), whether uptime is shown, whether response times are shown (`show_response_times`,
+  off by default), and `published`. An unpublished page answers 404 to
   everyone but members, who preview it in the panel. Renaming a slug keeps the old one in
   `status_page_slugs`: it stays reserved for that page, its public paths (page, history, incidents, feed,
   badge, JSON) answer `301` to the current slug, and it is freed only when the page is deleted; a page
@@ -1929,22 +1930,50 @@ incident before a customer writes, and the conversations an outage brings are an
   draft.
 - **The public page.** The server renders it with `html/template` like the list pages, without the
   panel and without JavaScript, so it loads when the product it describes does not:
-  `<status URL>/{slug}` (overall state, open incidents and maintenance, components by group
-  with day bars, incidents of the last 14 days), `/status/{slug}/history` (by month),
-  `/status/{slug}/incidents/{id}`, `/status/{slug}/feed.atom`, `/status/{slug}/badge.svg` (overall
-  state, for READMEs) and the JSON `GET /client/v1/status/{slug}` (`Access-Control-Allow-Origin: *`,
-  no credentials). Words come in the page's locale from the server's own catalogue (en, tr, de) and
-  times in the visitor's zone through `<time>` with the page's zone as fallback. One small inline
-  script refreshes the page every 60 seconds; without it the page is complete. Every public answer is
-  cached in the process per page and per language and dropped on the page's next change; it is sent with
-  `Cache-Control: public, max-age=30, stale-if-error=86400` so a CDN in front takes an outage's traffic
-  and keeps serving the last page for a day when this server cannot answer. Rate limit 120
-  requests a minute per address. `frame-ancestors` is `*` on the page so a host may embed it; the badge and
-  JSON have no cookies. The status URL is `YUVA_STATUS_URL` (an origin such as
-  `https://status.example.com`, served by the same server when requests for its host reach it; unset:
-  `<YUVA_PUBLIC_URL>/status`); every link, the feed, the badge and the JSON name pages from it, and with
-  it set `<YUVA_PUBLIC_URL>/status/{slug}` redirects there. When the page names an analytics property of the workspace, the page sends a
-  cookieless page view to it with the analytics script.
+  `<status URL>/{slug}`, `/status/{slug}/history`, `/status/{slug}/incidents/{id}`,
+  `/status/{slug}/feed.atom`, `/status/{slug}/badge.svg` (overall state, for READMEs) and the JSON
+  `GET /client/v1/status/{slug}` (`Access-Control-Allow-Origin: *`, no credentials). The pages follow
+  the site's lined style: full-width rules, a centred column with crosses where rules meet, numbered
+  mono section labels, light and dark through `prefers-color-scheme`; the page's accent colour replaces
+  the brand orange. Geist and Geist Mono (OFL) are embedded in the binary and served at
+  `{page}/fonts/{name}.{hash}.woff2` with a year's immutable cache, so the page asks no other host; the
+  footer carries the Yuva mark inline and a link to the Yuva site, the header the page's own logo.
+  - The page: overall state and headline, three cells (uptime over the last 60 days of all visible
+    components, components not operational now, last change), open incidents beside running or planned
+    maintenance, components by group with 60 day bars drawn as SVG cells in five colours with a legend
+    and each component's uptime over those days, response times when shown, incidents of the last 14
+    days, subscribing (a GET form to the existing `/subscribe` page with the components ticked, which
+    pre-ticks them there; nothing is sealed or cached on the page) and follow and embed (feed, badge,
+    JSON URL, iframe snippet).
+  - Response times: only with `show_response_times` and only for components with an `http` or `tcp`
+    monitor (paused ones too). The last 24 hours in 96 steps of 15 minutes, the median of the
+    successful checks of each step as a stepped SVG line, and median and p95 over the day. Up to
+    three components are tabs made of radio inputs and `:checked` rules; more are all shown, and the
+    inline script turns them into a select. The JSON carries the same aggregates as
+    `response_times`; addresses, errors, messages and status codes of checks are never public.
+  - An incident page shows start, end and duration, response times of its monitored components from
+    a margin before to a margin after it (peak during it, median of the 24 hours before it), its
+    updates as rows and how each affected component fared (worst state and time off operational).
+  - The history page lists every month of the page's `history_days`, newest first, with the month's
+    uptime and a day strip, and `?filter=incidents` or `?filter=maintenance` keeps one kind.
+  - Words come in the page's locale from the server's catalogue (`status_words.go`; en, tr and de
+    are complete, a language is one map entry with its name and direction). `?lang=<code>` picks
+    another catalogue language for that visitor, links on the page carry it, and an unknown code
+    shows the page's locale; the language select submits a GET form (the script submits it on
+    change). Times are shown in the visitor's zone through `<time>` with the page's zone as fallback.
+    One small inline script (its hash in the CSP) localises times, switches the response select and
+    the language, and refreshes the page every 60 seconds; without it the page is complete.
+  - Every public answer is cached in the process per page, view, language and filter and dropped on
+    the page's next change; it is sent with `Cache-Control: public, max-age=30, stale-if-error=86400`
+    so a CDN in front takes an outage's traffic and keeps serving the last page for a day when this
+    server cannot answer. Rate limit 120 requests a minute per address (fonts are not counted).
+    `frame-ancestors` is `*` on the page so a host may embed it, `font-src` and `form-action` are
+    `'self'`; the badge and JSON have no cookies. The status URL is `YUVA_STATUS_URL` (an origin such
+    as `https://status.example.com`, served by the same server when requests for its host reach it;
+    unset: `<YUVA_PUBLIC_URL>/status`); every link, the feed, the badge and the JSON name pages from
+    it, and with it set `<YUVA_PUBLIC_URL>/status/{slug}` redirects there. When the page names an
+    analytics property of the workspace, the page sends a cookieless page view to it with the
+    analytics script.
 - **Panel.** A Status entry in the rail (`/status`, shortcut `g s`) follows the inbox filter: the page of each
   visible inbox, or "Create status page" for owners and admins on an inbox without one. A page opens at
   `/status-pages/{id}` (not under `/status/`, which the server answers with the public page) with Incidents,

@@ -80,7 +80,7 @@ func (s *Server) serveStatusSubscribe(w http.ResponseWriter, r *http.Request) {
 			s.listPageError(w, r, err)
 			return
 		}
-		s.statusSubscribeFormPage(w, r, f, words, http.StatusOK, note, "", nil)
+		s.statusSubscribeFormPage(w, r, f, words, http.StatusOK, note, "", formLists(r.URL.Query()["components"]))
 		return
 	}
 	if err := s.rateLimit(rateCheck{"status-subscribe:ip:" + rateIP(s.clientIP(r)), limitStatusSubscribeIP},

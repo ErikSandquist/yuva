@@ -12185,8 +12185,8 @@ paths:
       summary: A published status page
       description: |
         What the public status page shows, as JSON: the page, its overall state, the visible
-        components by group with their uptime, open incidents and running or planned maintenance, and
-        the incidents of the last 14 days. Needs no credentials and sends
+        components by group with their uptime (and their response times when the page shows them), open
+        incidents and running or planned maintenance, and the incidents of the last 14 days. Needs no credentials and sends
         `Access-Control-Allow-Origin: *`, so any site may read it; it is cached for 30 seconds
         (`Cache-Control: public, max-age=30, stale-if-error=86400`). An unknown or unpublished page answers `404`; a
         slug the page was renamed from answers `301` with the current address in `Location`. Limited
@@ -24564,7 +24564,7 @@ components:
       examples: ["#2563eb"]
     StatusPage:
       type: object
-      required: [id, inbox_id, name, description, slug, url, locale, timezone, history_days, show_uptime, published, state, email_subscribers, created_at, updated_at]
+      required: [id, inbox_id, name, description, slug, url, locale, timezone, history_days, show_uptime, show_response_times, published, state, email_subscribers, created_at, updated_at]
       properties:
         id:
           type: string
@@ -24604,6 +24604,11 @@ components:
           description: Days of day bars and history the page shows.
         show_uptime:
           type: boolean
+        show_response_times:
+          type: boolean
+          description: |
+            Whether the public page and its JSON show the last 24 hours of response times of components
+            with an `http` or `tcp` monitor, aggregated (median per step, median and p95).
         published:
           type: boolean
         state:
@@ -24822,6 +24827,9 @@ components:
         show_uptime:
           type: boolean
           description: Default `true`.
+        show_response_times:
+          type: boolean
+          description: Default `false`.
         published:
           type: boolean
           description: Default `false`.
@@ -24863,6 +24871,8 @@ components:
           minimum: 7
           maximum: 90
         show_uptime:
+          type: boolean
+        show_response_times:
           type: boolean
         published:
           type: boolean
@@ -26368,6 +26378,38 @@ components:
           description: Oldest first, the page's `history_days` ending today; when the page shows uptime.
           items:
             $ref: "#/components/schemas/PublicStatusDay"
+        response_times:
+          $ref: "#/components/schemas/PublicStatusResponseTimes"
+    PublicStatusResponseTimes:
+      type: object
+      description: |
+        The last 24 hours of the component's `http` and `tcp` checks that succeeded, aggregated; only
+        when the page shows response times and the component has such a monitor. Addresses, errors
+        and status codes of checks are never public.
+      required: [from, step_seconds, points]
+      properties:
+        from:
+          type: string
+          format: date-time
+          description: The start of the first step.
+        step_seconds:
+          type: integer
+          format: int32
+          description: The length of each step (900).
+        median_ms:
+          type: integer
+          format: int32
+          description: The median over the 24 hours; absent without a successful check.
+        p95_ms:
+          type: integer
+          format: int32
+          description: The 95th percentile over the 24 hours; absent without a successful check.
+        points:
+          type: array
+          description: Oldest first, one per step (96); the step's median, `null` without a successful check.
+          items:
+            type: [integer, "null"]
+            format: int32
     PublicStatusGroup:
       type: object
       required: [id, name]

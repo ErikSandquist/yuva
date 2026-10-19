@@ -723,5 +723,8 @@ func statusDomainPath(slug, path string) (string, bool) {
 	if id, ok := strings.CutPrefix(path, "/incidents/"); ok && id != "" && !strings.Contains(id, "/") {
 		return statusPathPrefix + slug + path, true
 	}
+	if name, ok := strings.CutPrefix(path, "/fonts/"); ok && name != "" && !strings.Contains(name, "/") {
+		return statusPathPrefix + slug + path, true
+	}
 	return "", false
 }

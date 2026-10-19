@@ -198,7 +198,7 @@ func TestStatusDomainLifecycle(t *testing.T) {
 	if d := st.check(t, h); d["state"] != "pending" || !strings.Contains(d["problem"].(string), "no CNAME") || ask() != http.StatusNotFound {
 		t.Fatalf("without records: %v", d)
 	}
-	if _, body, _ := onHost(t, h, name, "/"); strings.Contains(body, `class="banner"`) {
+	if _, body, _ := onHost(t, h, name, "/"); strings.Contains(body, `id="follow"`) {
 		t.Fatal("a pending domain serves the page")
 	}
 	dns.set(name, testStatusCNAME, "something-else")
@@ -275,7 +275,7 @@ func TestStatusDomainLifecycle(t *testing.T) {
 	if d = st.check(t, h); d["state"] != "off" || d["next_check_at"] != nil || ask() != http.StatusNotFound {
 		t.Fatalf("after 3 days: %v", d)
 	}
-	if _, body, _ := onHost(t, h, name, "/"); strings.Contains(body, `class="banner"`) {
+	if _, body, _ := onHost(t, h, name, "/"); strings.Contains(body, `id="follow"`) {
 		t.Fatal("an off domain serves the page")
 	}
 	if u := st.owner.expect(http.StatusOK, "GET", st.path(""), nil).str("url"); strings.Contains(u, name) {
@@ -501,7 +501,7 @@ func TestStatusDomainCacheByPage(t *testing.T) {
 	st.check(t, h)
 	served := func() bool {
 		code, body, _ := onHost(t, h, name, "/")
-		return code == http.StatusOK && strings.Contains(body, `class="banner"`)
+		return code == http.StatusOK && strings.Contains(body, `id="follow"`)
 	}
 	if !served() {
 		t.Fatal("verified domain right after its check")

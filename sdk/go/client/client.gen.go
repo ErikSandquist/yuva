@@ -14153,6 +14153,11 @@ type PublicStatusComponent struct {
 	Id          uuid.UUID          `json:"id"`
 	Name        string             `json:"name"`
 
+	// ResponseTimes The last 24 hours of the component's `http` and `tcp` checks that succeeded, aggregated; only
+	// when the page shows response times and the component has such a monitor. Addresses, errors
+	// and status codes of checks are never public.
+	ResponseTimes *PublicStatusResponseTimes `json:"response_times,omitempty"`
+
 	// State Worst to best: `major_outage`, `partial_outage`, `degraded`, `maintenance`, `operational`.
 	State StatusComponentStateValue `json:"state"`
 
@@ -14228,6 +14233,26 @@ type PublicStatusPage struct {
 	// UpdatedAt When anything on the page last changed.
 	UpdatedAt time.Time `json:"updated_at"`
 	Url       string    `json:"url"`
+}
+
+// PublicStatusResponseTimes The last 24 hours of the component's `http` and `tcp` checks that succeeded, aggregated; only
+// when the page shows response times and the component has such a monitor. Addresses, errors
+// and status codes of checks are never public.
+type PublicStatusResponseTimes struct {
+	// From The start of the first step.
+	From time.Time `json:"from"`
+
+	// MedianMs The median over the 24 hours; absent without a successful check.
+	MedianMs *int32 `json:"median_ms,omitempty"`
+
+	// P95Ms The 95th percentile over the 24 hours; absent without a successful check.
+	P95Ms *int32 `json:"p95_ms,omitempty"`
+
+	// Points Oldest first, one per step (96); the step's median, `null` without a successful check.
+	Points []nullable.Nullable[int32] `json:"points"`
+
+	// StepSeconds The length of each step (900).
+	StepSeconds int32 `json:"step_seconds"`
 }
 
 // PublicStatusUpdate defines model for PublicStatusUpdate.
@@ -15692,8 +15717,12 @@ type StatusPage struct {
 	// is `off`; setting `custom_domain` is then refused.
 	OwnDomains *StatusOwnDomains `json:"own_domains,omitempty"`
 	Published  bool              `json:"published"`
-	ShowUptime bool              `json:"show_uptime"`
-	SiteUrl    *string           `json:"site_url,omitempty"`
+
+	// ShowResponseTimes Whether the public page and its JSON show the last 24 hours of response times of components
+	// with an `http` or `tcp` monitor, aggregated (median per step, median and p95).
+	ShowResponseTimes bool    `json:"show_response_times"`
+	ShowUptime        bool    `json:"show_uptime"`
+	SiteUrl           *string `json:"site_url,omitempty"`
 
 	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
 	//
@@ -15735,6 +15764,9 @@ type StatusPageCreate struct {
 
 	// Published Default `false`.
 	Published *bool `json:"published,omitempty"`
+
+	// ShowResponseTimes Default `false`.
+	ShowResponseTimes *bool `json:"show_response_times,omitempty"`
 
 	// ShowUptime Default `true`.
 	ShowUptime *bool `json:"show_uptime,omitempty"`
@@ -15811,12 +15843,13 @@ type StatusPageUpdate struct {
 	// Locale A BCP 47 language tag.
 	//
 	// Examples: en, tr
-	Locale     *LanguageTag              `json:"locale,omitempty"`
-	LogoUrl    nullable.Nullable[string] `json:"logo_url,omitempty"`
-	Name       *string                   `json:"name,omitempty"`
-	Published  *bool                     `json:"published,omitempty"`
-	ShowUptime *bool                     `json:"show_uptime,omitempty"`
-	SiteUrl    nullable.Nullable[string] `json:"site_url,omitempty"`
+	Locale            *LanguageTag              `json:"locale,omitempty"`
+	LogoUrl           nullable.Nullable[string] `json:"logo_url,omitempty"`
+	Name              *string                   `json:"name,omitempty"`
+	Published         *bool                     `json:"published,omitempty"`
+	ShowResponseTimes *bool                     `json:"show_response_times,omitempty"`
+	ShowUptime        *bool                     `json:"show_uptime,omitempty"`
+	SiteUrl           nullable.Nullable[string] `json:"site_url,omitempty"`
 
 	// Slug `a-z`, `0-9` and inner hyphens, 3 to 48 characters; unique across the server.
 	//
@@ -24498,8 +24531,8 @@ type ClientInterface interface {
 	// GetClientStatusPage A published status page
 	//
 	// What the public status page shows, as JSON: the page, its overall state, the visible
-	// components by group with their uptime, open incidents and running or planned maintenance, and
-	// the incidents of the last 14 days. Needs no credentials and sends
+	// components by group with their uptime (and their response times when the page shows them), open
+	// incidents and running or planned maintenance, and the incidents of the last 14 days. Needs no credentials and sends
 	// `Access-Control-Allow-Origin: *`, so any site may read it; it is cached for 30 seconds
 	// (`Cache-Control: public, max-age=30, stale-if-error=86400`). An unknown or unpublished page answers `404`; a
 	// slug the page was renamed from answers `301` with the current address in `Location`. Limited
@@ -31727,8 +31760,8 @@ func (c *Client) CreateClientSession(ctx context.Context, body CreateClientSessi
 // GetClientStatusPage A published status page
 //
 // What the public status page shows, as JSON: the page, its overall state, the visible
-// components by group with their uptime, open incidents and running or planned maintenance, and
-// the incidents of the last 14 days. Needs no credentials and sends
+// components by group with their uptime (and their response times when the page shows them), open
+// incidents and running or planned maintenance, and the incidents of the last 14 days. Needs no credentials and sends
 // `Access-Control-Allow-Origin: *`, so any site may read it; it is cached for 30 seconds
 // (`Cache-Control: public, max-age=30, stale-if-error=86400`). An unknown or unpublished page answers `404`; a
 // slug the page was renamed from answers `301` with the current address in `Location`. Limited
@@ -64502,8 +64535,8 @@ type ClientWithResponsesInterface interface {
 	// GetClientStatusPageWithResponse A published status page
 	//
 	// What the public status page shows, as JSON: the page, its overall state, the visible
-	// components by group with their uptime, open incidents and running or planned maintenance, and
-	// the incidents of the last 14 days. Needs no credentials and sends
+	// components by group with their uptime (and their response times when the page shows them), open
+	// incidents and running or planned maintenance, and the incidents of the last 14 days. Needs no credentials and sends
 	// `Access-Control-Allow-Origin: *`, so any site may read it; it is cached for 30 seconds
 	// (`Cache-Control: public, max-age=30, stale-if-error=86400`). An unknown or unpublished page answers `404`; a
 	// slug the page was renamed from answers `301` with the current address in `Location`. Limited
@@ -95673,8 +95706,8 @@ func (c *ClientWithResponses) CreateClientSessionWithResponse(ctx context.Contex
 // GetClientStatusPageWithResponse A published status page
 //
 // What the public status page shows, as JSON: the page, its overall state, the visible
-// components by group with their uptime, open incidents and running or planned maintenance, and
-// the incidents of the last 14 days. Needs no credentials and sends
+// components by group with their uptime (and their response times when the page shows them), open
+// incidents and running or planned maintenance, and the incidents of the last 14 days. Needs no credentials and sends
 // `Access-Control-Allow-Origin: *`, so any site may read it; it is cached for 30 seconds
 // (`Cache-Control: public, max-age=30, stale-if-error=86400`). An unknown or unpublished page answers `404`; a
 // slug the page was renamed from answers `301` with the current address in `Location`. Limited

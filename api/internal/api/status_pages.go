@@ -154,8 +154,8 @@ func (s *Server) statusPageBody(pg store.StatusPage, state string, email oas.Sta
 	out := oas.StatusPage{
 		Id: pg.ID, InboxId: pg.InboxID, Name: pg.Name, Description: pg.Description, Slug: oas.StatusPageSlug(pg.Slug),
 		Url: s.pageURL(pg, ""), LogoUrl: pg.LogoUrl, SiteUrl: pg.SiteUrl, SupportUrl: pg.SupportUrl, Locale: pg.Locale,
-		Timezone: pg.Timezone, HistoryDays: pg.HistoryDays, ShowUptime: pg.ShowUptime, Published: pg.Published,
-		State: oas.StatusComponentStateValue(state), CreatedAt: pg.CreatedAt, UpdatedAt: pg.UpdatedAt,
+		Timezone: pg.Timezone, HistoryDays: pg.HistoryDays, ShowUptime: pg.ShowUptime, ShowResponseTimes: pg.ShowResponseTimes,
+		Published: pg.Published, State: oas.StatusComponentStateValue(state), CreatedAt: pg.CreatedAt, UpdatedAt: pg.UpdatedAt,
 		EmailSubscribers: email, CustomDomain: s.customDomainBody(pg), OwnDomains: s.ownDomainsBody(),
 	}
 	if pg.AccentColor != nil {
@@ -206,7 +206,7 @@ type statusPageFields struct {
 	name, description, slug, locale, timezone string
 	logo, color, site, support                *string
 	history                                   int32
-	uptime, published                         bool
+	uptime, responses, published              bool
 }
 
 func (f *statusPageFields) check() error {
@@ -292,6 +292,9 @@ func (s *Server) CreateStatusPage(ctx context.Context, req oas.CreateStatusPageR
 	if b.ShowUptime != nil {
 		f.uptime = *b.ShowUptime
 	}
+	if b.ShowResponseTimes != nil {
+		f.responses = *b.ShowResponseTimes
+	}
 	if b.Published != nil {
 		f.published = *b.Published
 	}
@@ -314,7 +317,7 @@ func (s *Server) CreateStatusPage(ctx context.Context, req oas.CreateStatusPageR
 		pg, err = q.CreateStatusPage(ctx, store.CreateStatusPageParams{
 			ID: newID(), WorkspaceID: p.workspaceID, InboxID: in.ID, Name: f.name, Description: f.description, Slug: f.slug,
 			LogoUrl: f.logo, AccentColor: f.color, SiteUrl: f.site, SupportUrl: f.support, Locale: f.locale, Timezone: f.timezone,
-			HistoryDays: f.history, ShowUptime: f.uptime, Published: f.published, Now: s.now(),
+			HistoryDays: f.history, ShowUptime: f.uptime, ShowResponseTimes: f.responses, Published: f.published, Now: s.now(),
 		})
 		return err
 	})
@@ -375,7 +378,7 @@ func (s *Server) UpdateStatusPage(ctx context.Context, req oas.UpdateStatusPageR
 			name: cur.Name, description: cur.Description, slug: cur.Slug, locale: cur.Locale, timezone: cur.Timezone,
 			logo: nullableLink(b.LogoUrl, cur.LogoUrl), color: nullableLink(b.AccentColor, cur.AccentColor),
 			site: nullableLink(b.SiteUrl, cur.SiteUrl), support: nullableLink(b.SupportUrl, cur.SupportUrl),
-			history: cur.HistoryDays, uptime: cur.ShowUptime, published: cur.Published,
+			history: cur.HistoryDays, uptime: cur.ShowUptime, responses: cur.ShowResponseTimes, published: cur.Published,
 		}
 		if b.Name != nil {
 			f.name = *b.Name
@@ -397,6 +400,9 @@ func (s *Server) UpdateStatusPage(ctx context.Context, req oas.UpdateStatusPageR
 		}
 		if b.ShowUptime != nil {
 			f.uptime = *b.ShowUptime
+		}
+		if b.ShowResponseTimes != nil {
+			f.responses = *b.ShowResponseTimes
 		}
 		if b.Published != nil {
 			f.published = *b.Published
@@ -424,7 +430,7 @@ func (s *Server) UpdateStatusPage(ctx context.Context, req oas.UpdateStatusPageR
 		pg, err := q.UpdateStatusPage(ctx, store.UpdateStatusPageParams{
 			WorkspaceID: p.workspaceID, ID: cur.ID, Name: f.name, Description: f.description, Slug: f.slug, LogoUrl: f.logo,
 			AccentColor: f.color, SiteUrl: f.site, SupportUrl: f.support, Locale: f.locale, Timezone: f.timezone,
-			HistoryDays: f.history, ShowUptime: f.uptime, Published: f.published, Now: now,
+			HistoryDays: f.history, ShowUptime: f.uptime, ShowResponseTimes: f.responses, Published: f.published, Now: now,
 		})
 		if err != nil {
 			return err

@@ -15,7 +15,7 @@ import (
 const checkStatusDomainSoon = `-- name: CheckStatusDomainSoon :one
 UPDATE status_pages SET domain_check_at = $1::timestamptz, updated_at = $1
 WHERE workspace_id = $2 AND id = $3
-RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at, domain_claimed_at
+RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at, domain_claimed_at, show_response_times
 `
 
 type CheckStatusDomainSoonParams struct {
@@ -62,6 +62,7 @@ func (q *Queries) CheckStatusDomainSoon(ctx context.Context, arg CheckStatusDoma
 		&i.CfErrors,
 		&i.CfCheckedAt,
 		&i.DomainClaimedAt,
+		&i.ShowResponseTimes,
 	)
 	return i, err
 }
@@ -123,7 +124,7 @@ func (q *Queries) FailStatusDomainClaims(ctx context.Context, arg FailStatusDoma
 }
 
 const findStatusPageByDomain = `-- name: FindStatusPageByDomain :one
-SELECT p.id, p.workspace_id, p.inbox_id, p.name, p.description, p.slug, p.logo_url, p.accent_color, p.site_url, p.support_url, p.locale, p.timezone, p.history_days, p.show_uptime, p.published, p.changed_at, p.created_at, p.updated_at, p.mailing_list_id, p.email_enabled, p.custom_domain, p.domain_token, p.domain_state, p.domain_problem, p.domain_checked_at, p.domain_check_at, p.domain_verified_at, p.domain_missing_since, p.cf_hostname_id, p.cf_status, p.cf_ssl_status, p.cf_errors, p.cf_checked_at, p.domain_claimed_at FROM status_pages p
+SELECT p.id, p.workspace_id, p.inbox_id, p.name, p.description, p.slug, p.logo_url, p.accent_color, p.site_url, p.support_url, p.locale, p.timezone, p.history_days, p.show_uptime, p.published, p.changed_at, p.created_at, p.updated_at, p.mailing_list_id, p.email_enabled, p.custom_domain, p.domain_token, p.domain_state, p.domain_problem, p.domain_checked_at, p.domain_check_at, p.domain_verified_at, p.domain_missing_since, p.cf_hostname_id, p.cf_status, p.cf_ssl_status, p.cf_errors, p.cf_checked_at, p.domain_claimed_at, p.show_response_times FROM status_pages p
 JOIN workspaces w ON w.id = p.workspace_id AND w.deleted_at IS NULL
 WHERE p.custom_domain = $1 AND p.domain_state = 'verified'
 `
@@ -167,6 +168,7 @@ func (q *Queries) FindStatusPageByDomain(ctx context.Context, domain *string) (S
 		&i.CfErrors,
 		&i.CfCheckedAt,
 		&i.DomainClaimedAt,
+		&i.ShowResponseTimes,
 	)
 	return i, err
 }
@@ -264,7 +266,7 @@ UPDATE status_pages SET domain_state = $1::text, domain_problem = $2, domain_che
     changed_at = CASE WHEN $7::bool THEN greatest(changed_at + interval '1 microsecond', $3::timestamptz) ELSE changed_at END,
     updated_at = $3
 WHERE workspace_id = $8 AND id = $9
-RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at, domain_claimed_at
+RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at, domain_claimed_at, show_response_times
 `
 
 type RecordStatusDomainCheckParams struct {
@@ -327,6 +329,7 @@ func (q *Queries) RecordStatusDomainCheck(ctx context.Context, arg RecordStatusD
 		&i.CfErrors,
 		&i.CfCheckedAt,
 		&i.DomainClaimedAt,
+		&i.ShowResponseTimes,
 	)
 	return i, err
 }
@@ -335,7 +338,7 @@ const setStatusPageCloudflare = `-- name: SetStatusPageCloudflare :one
 UPDATE status_pages SET cf_hostname_id = $1, cf_status = $2, cf_ssl_status = $3,
     cf_errors = $4::text[], cf_checked_at = $5::timestamptz, domain_check_at = coalesce($6, domain_check_at), updated_at = $5
 WHERE workspace_id = $7 AND id = $8
-RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at, domain_claimed_at
+RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at, domain_claimed_at, show_response_times
 `
 
 type SetStatusPageCloudflareParams struct {
@@ -396,6 +399,7 @@ func (q *Queries) SetStatusPageCloudflare(ctx context.Context, arg SetStatusPage
 		&i.CfErrors,
 		&i.CfCheckedAt,
 		&i.DomainClaimedAt,
+		&i.ShowResponseTimes,
 	)
 	return i, err
 }
@@ -406,7 +410,7 @@ UPDATE status_pages SET custom_domain = $1, domain_token = $2, domain_state = $3
     domain_missing_since = NULL, domain_claimed_at = CASE WHEN $1::text IS NULL THEN NULL ELSE $5::timestamptz END, cf_hostname_id = NULL, cf_status = NULL, cf_ssl_status = NULL, cf_errors = NULL, cf_checked_at = NULL,
     changed_at = greatest(changed_at + interval '1 microsecond', $5::timestamptz), updated_at = $5
 WHERE workspace_id = $6 AND id = $7
-RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at, domain_claimed_at
+RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at, domain_claimed_at, show_response_times
 `
 
 type SetStatusPageDomainParams struct {
@@ -465,6 +469,7 @@ func (q *Queries) SetStatusPageDomain(ctx context.Context, arg SetStatusPageDoma
 		&i.CfErrors,
 		&i.CfCheckedAt,
 		&i.DomainClaimedAt,
+		&i.ShowResponseTimes,
 	)
 	return i, err
 }

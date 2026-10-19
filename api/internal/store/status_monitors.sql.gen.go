@@ -1181,6 +1181,140 @@ func (q *Queries) StatusCheckTotals(ctx context.Context, arg StatusCheckTotalsPa
 	return i, err
 }
 
+const statusResponseBuckets = `-- name: StatusResponseBuckets :many
+SELECT m.component_id, floor(date_part('epoch', c.at - $1::timestamptz) / $2::int)::int AS step,
+    (percentile_cont(0.5) WITHIN GROUP (ORDER BY c.duration_ms))::int AS p50
+FROM status_checks c
+JOIN status_monitors m ON m.workspace_id = c.workspace_id AND m.id = c.monitor_id
+WHERE c.workspace_id = $3 AND m.page_id = $4 AND m.kind IN ('http', 'tcp') AND m.component_id = ANY($5::uuid[])
+  AND NOT c.pending AND c.ok AND c.duration_ms IS NOT NULL AND c.at >= $1::timestamptz AND c.at < $6::timestamptz
+GROUP BY 1, 2
+`
+
+type StatusResponseBucketsParams struct {
+	Since        time.Time
+	StepSeconds  int32
+	WorkspaceID  uuid.UUID
+	PageID       uuid.UUID
+	ComponentIds []uuid.UUID
+	Until        time.Time
+}
+
+type StatusResponseBucketsRow struct {
+	ComponentID uuid.UUID
+	Step        int32
+	P50         int32
+}
+
+// Step n covers since + n * step_seconds; only measured successes of http and tcp monitors count.
+func (q *Queries) StatusResponseBuckets(ctx context.Context, arg StatusResponseBucketsParams) ([]StatusResponseBucketsRow, error) {
+	rows, err := q.db.Query(ctx, statusResponseBuckets,
+		arg.Since,
+		arg.StepSeconds,
+		arg.WorkspaceID,
+		arg.PageID,
+		arg.ComponentIds,
+		arg.Until,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []StatusResponseBucketsRow
+	for rows.Next() {
+		var i StatusResponseBucketsRow
+		if err := rows.Scan(&i.ComponentID, &i.Step, &i.P50); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const statusResponseComponents = `-- name: StatusResponseComponents :many
+SELECT DISTINCT component_id FROM status_monitors
+WHERE workspace_id = $1 AND page_id = $2 AND kind IN ('http', 'tcp') AND component_id = ANY($3::uuid[])
+`
+
+type StatusResponseComponentsParams struct {
+	WorkspaceID  uuid.UUID
+	PageID       uuid.UUID
+	ComponentIds []uuid.UUID
+}
+
+func (q *Queries) StatusResponseComponents(ctx context.Context, arg StatusResponseComponentsParams) ([]uuid.UUID, error) {
+	rows, err := q.db.Query(ctx, statusResponseComponents, arg.WorkspaceID, arg.PageID, arg.ComponentIds)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []uuid.UUID
+	for rows.Next() {
+		var component_id uuid.UUID
+		if err := rows.Scan(&component_id); err != nil {
+			return nil, err
+		}
+		items = append(items, component_id)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const statusResponseTotals = `-- name: StatusResponseTotals :many
+SELECT m.component_id, (percentile_cont(0.5) WITHIN GROUP (ORDER BY c.duration_ms))::int AS p50,
+    (percentile_cont(0.95) WITHIN GROUP (ORDER BY c.duration_ms))::int AS p95
+FROM status_checks c
+JOIN status_monitors m ON m.workspace_id = c.workspace_id AND m.id = c.monitor_id
+WHERE c.workspace_id = $1 AND m.page_id = $2 AND m.kind IN ('http', 'tcp') AND m.component_id = ANY($3::uuid[])
+  AND NOT c.pending AND c.ok AND c.duration_ms IS NOT NULL AND c.at >= $4::timestamptz AND c.at < $5::timestamptz
+GROUP BY 1
+`
+
+type StatusResponseTotalsParams struct {
+	WorkspaceID  uuid.UUID
+	PageID       uuid.UUID
+	ComponentIds []uuid.UUID
+	Since        time.Time
+	Until        time.Time
+}
+
+type StatusResponseTotalsRow struct {
+	ComponentID uuid.UUID
+	P50         int32
+	P95         int32
+}
+
+func (q *Queries) StatusResponseTotals(ctx context.Context, arg StatusResponseTotalsParams) ([]StatusResponseTotalsRow, error) {
+	rows, err := q.db.Query(ctx, statusResponseTotals,
+		arg.WorkspaceID,
+		arg.PageID,
+		arg.ComponentIds,
+		arg.Since,
+		arg.Until,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []StatusResponseTotalsRow
+	for rows.Next() {
+		var i StatusResponseTotalsRow
+		if err := rows.Scan(&i.ComponentID, &i.P50, &i.P95); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const updateStatusMonitorSettings = `-- name: UpdateStatusMonitorSettings :one
 UPDATE status_monitors SET name = $1, component_id = $2, failure_state = $3, failure_threshold = $4,
     recovery_threshold = $5, on_failure = $6, interval_seconds = $7,
