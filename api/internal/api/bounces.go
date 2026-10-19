@@ -405,8 +405,6 @@ func (s *Server) applyBroadcastDSN(ctx context.Context, ch store.FindEmailChanne
 	return s.applyNoticeDSN(ctx, ch, m)
 }
 
-// applyNoticeDSN applies a delivery report about a status notice of the channel's workspace: a
-// permanent failure of the delivery's own address is a bounce.
 func (s *Server) applyNoticeDSN(ctx context.Context, ch store.FindEmailChannelByAddressRow, m *email.Message) (IngestResult, bool, error) {
 	d, err := noticeDeliveryOf(ctx, s.st.Queries, ch.WorkspaceID, slices.Concat([]string{m.Bounce.OriginalMessageID}, m.InReplyTo, m.References))
 	if err != nil || d == nil {
@@ -427,8 +425,8 @@ func (s *Server) applyNoticeDSN(ctx context.Context, ch store.FindEmailChannelBy
 	return IngestResult{Status: IngestBounce}, true, nil
 }
 
-// applyNoticeSES applies an SES bounce or complaint about a status notice. SES names only the
-// message, so the delivery is found across workspaces and everything after is scoped by its own.
+// SES names only the message, so the delivery is found across workspaces and everything after is
+// scoped by its own.
 func (s *Server) applyNoticeSES(ctx context.Context, id string, recipients []bounced, tenant string) error {
 	d, err := s.st.FindStatusNoticeDeliveryAnyWorkspace(ctx, id)
 	if store.IsNotFound(err) {

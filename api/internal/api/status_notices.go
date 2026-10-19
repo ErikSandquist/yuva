@@ -50,8 +50,6 @@ var (
 	errNoticeNoSend     = errors.New("the channel cannot send")
 )
 
-// StatusNoticeArgs sends one status notice; it is scheduled at the notice's due_at and does nothing
-// when the notice was moved, cancelled or claimed by another job.
 type StatusNoticeArgs struct {
 	WorkspaceID uuid.UUID `json:"workspace_id"`
 	NoticeID    uuid.UUID `json:"notice_id"`
@@ -149,9 +147,6 @@ func finalNotice(inc store.StatusIncident) bool {
 	return incidentClosed(inc.State) || (inc.Kind == kindMaintenance && inc.State == incInProgress)
 }
 
-// queueNotice asks for a notice about the incident, attaching the update. An update arriving while a
-// notice of the incident waits joins it; a new notice waits 60 seconds, and at least 15 minutes after
-// the incident's previous one started unless it is final, which also pulls a waiting one forward.
 func (s *Server) queueNotice(ctx context.Context, q *store.Queries, ev *eventBatch, pg store.StatusPage, inc store.StatusIncident, update *uuid.UUID) error {
 	if s.status.NoticesOff || !pg.EmailEnabled || pg.MailingListID == nil || !pg.Published || inc.PublishedAt == nil {
 		return nil
@@ -320,8 +315,7 @@ func (s *Server) GetStatusNoticeReach(ctx context.Context, req oas.GetStatusNoti
 	return out, nil
 }
 
-// SweepStatusNotices queues the notices that are due and the sending ones whose job stopped. It
-// reads across workspaces; each job then works in the notice's own workspace.
+// It reads across workspaces; each job then works in the notice's own workspace.
 func (s *Server) SweepStatusNotices(ctx context.Context) error {
 	rows, err := s.st.DueStatusNotices(ctx, s.now())
 	if err != nil || len(rows) == 0 {
@@ -356,7 +350,6 @@ type noticeSend struct {
 	data                            map[string]map[string]any
 }
 
-// noticeChannel is the list's channel when it can send.
 func (s *Server) noticeChannel(ctx context.Context, q *store.Queries, pg store.StatusPage) (store.MailingList, store.EmailChannel, error) {
 	l, err := q.GetMailingList(ctx, store.GetMailingListParams{WorkspaceID: pg.WorkspaceID, ID: *pg.MailingListID})
 	if err != nil {
@@ -378,8 +371,6 @@ func (s *Server) noticeChannel(ctx context.Context, q *store.Queries, pg store.S
 	return l, ch, nil
 }
 
-// claimNotice moves a due notice from pending to sending after the checks that may skip it, or takes
-// over a sending one whose lease ran out. ok is false when there is nothing to do.
 func (s *Server) claimNotice(ctx context.Context, ws, id uuid.UUID) (store.StatusNotice, bool, error) {
 	var (
 		n  store.StatusNotice
@@ -436,7 +427,6 @@ func (s *Server) claimNotice(ctx context.Context, ws, id uuid.UUID) (store.Statu
 	return n, ok, err
 }
 
-// noticeSkip is why a due notice sends nothing, or "".
 func (s *Server) noticeSkip(ctx context.Context, q *store.Queries, n store.StatusNotice, pg store.StatusPage, inc store.StatusIncident, now time.Time) (string, error) {
 	if s.status.NoticesOff || !pg.EmailEnabled || pg.MailingListID == nil {
 		return string(oas.NoticeSkipEmailOff), nil
@@ -468,12 +458,18 @@ func (s *Server) noticeSkip(ctx context.Context, q *store.Queries, n store.Statu
 		if started >= noticeRateMax {
 			return string(oas.NoticeSkipRate), nil
 		}
+		return "", nil
+	}
+	earlier, err := q.HasEarlierSentStatusNotice(ctx, store.HasEarlierSentStatusNoticeParams{WorkspaceID: pg.WorkspaceID, IncidentID: inc.ID, NoticeID: n.ID})
+	if err != nil {
+		return "", err
+	}
+	if !earlier {
+		return string(oas.NoticeSkipNothingEarlier), nil
 	}
 	return "", nil
 }
 
-// RunStatusNotice claims a due notice, snapshots its recipients once and sends to them until the
-// budget runs out, when it queues itself again.
 func (s *Server) RunStatusNotice(ctx context.Context, ws, id uuid.UUID, budget time.Duration) error {
 	n, ok, err := s.claimNotice(ctx, ws, id)
 	if err != nil || !ok {
@@ -590,8 +586,6 @@ func (s *Server) loadNoticeSend(ctx context.Context, n store.StatusNotice) (*not
 	return ns, nil
 }
 
-// snapshotNotice writes one delivery per recipient: subscribed, not suppressed, and with no
-// component choices or a choice the incident touches. It answers the number of deliveries.
 func (s *Server) snapshotNotice(ctx context.Context, ns *noticeSend) (int64, error) {
 	ws := ns.n.WorkspaceID
 	after := uuid.Nil()
@@ -602,7 +596,7 @@ func (s *Server) snapshotNotice(ctx context.Context, ns *noticeSend) (int64, err
 		)
 		err := s.inTx(ctx, ws, func(q *store.Queries, _ *eventBatch) error {
 			rows, err := q.StatusNoticeRecipients(ctx, store.StatusNoticeRecipientsParams{
-				WorkspaceID: ws, ListID: ns.list.ID, IncidentID: ns.inc.ID, After: after, Lim: noticeSnapshotPage,
+				WorkspaceID: ws, ListID: ns.list.ID, IncidentID: ns.inc.ID, NoticeID: ns.n.ID, EarlierOnly: ns.n.Final, After: after, Lim: noticeSnapshotPage,
 			})
 			if err != nil {
 				return err
@@ -685,9 +679,7 @@ type noticeResult struct {
 	relayID  *string
 }
 
-// sendNotice sends the queued deliveries in batches of 50 or 5 seconds over one SMTP session at the
-// channel's broadcast rate, then marks the notice sent; with retries left for later it hands the
-// notice to the sweep through its lease.
+// With retries left for later the notice is handed to the sweep through its lease.
 func (s *Server) sendNotice(ctx context.Context, ns *noticeSend, budget time.Duration) error {
 	ws := ns.n.WorkspaceID
 	deadline := time.Now().Add(budget)
@@ -729,7 +721,7 @@ func (s *Server) sendNotice(ctx context.Context, ns *noticeSend, budget time.Dur
 			next := qd.NextAttempt
 			return s.st.RenewStatusNoticeLease(ctx, store.RenewStatusNoticeLeaseParams{WorkspaceID: ws, ID: ns.n.ID, LeaseUntil: &next, Now: now})
 		}
-		results, broken := s.sendNoticeBatch(ctx, ns, &sess, due, pace, &sentToday)
+		results, broken, batchErr := s.sendNoticeBatch(ctx, ns, &sess, due, pace, &sentToday)
 		if broken && sess != nil {
 			_ = sess.Close()
 			sess = nil
@@ -737,10 +729,17 @@ func (s *Server) sendNotice(ctx context.Context, ns *noticeSend, budget time.Dur
 		if err := s.commitNoticeBatch(ctx, ns, results); err != nil {
 			return err
 		}
+		if batchErr != nil {
+			now := s.now()
+			if err := s.st.RenewStatusNoticeLease(ctx, store.RenewStatusNoticeLeaseParams{WorkspaceID: ws, ID: ns.n.ID, LeaseUntil: &now, Now: now}); err != nil {
+				return err
+			}
+			return batchErr
+		}
 	}
 }
 
-func (s *Server) sendNoticeBatch(ctx context.Context, ns *noticeSend, sess *email.Session, due []store.StatusNoticeDelivery, pace time.Duration, sentToday *int64) ([]noticeResult, bool) {
+func (s *Server) sendNoticeBatch(ctx context.Context, ns *noticeSend, sess *email.Session, due []store.StatusNoticeDelivery, pace time.Duration, sentToday *int64) ([]noticeResult, bool, error) {
 	ws := ns.n.WorkspaceID
 	until := time.Now().Add(batchTime)
 	var out []noticeResult
@@ -759,11 +758,13 @@ func (s *Server) sendNoticeBatch(ctx context.Context, ns *noticeSend, sess *emai
 		}
 		active, err := s.st.StatusSubscriptionActive(ctx, store.StatusSubscriptionActiveParams{WorkspaceID: ws, ID: d.SubscriptionID})
 		if err != nil {
-			break
+			s.log.ErrorContext(ctx, "status notice recipient check", slog.Any("error", err))
+			return out, false, err
 		}
 		suppressed, err := s.st.IsEmailSuppressedAnyScope(ctx, store.IsEmailSuppressedAnyScopeParams{WorkspaceID: ws, Email: d.Email})
 		if err != nil {
-			break
+			s.log.ErrorContext(ctx, "status notice recipient check", slog.Any("error", err))
+			return out, false, err
 		}
 		switch {
 		case !active:
@@ -773,9 +774,9 @@ func (s *Server) sendNoticeBatch(ctx context.Context, ns *noticeSend, sess *emai
 		case s.now().Sub(d.CreatedAt) > noticeStale:
 			skip("stale")
 		case s.status.NoticesDaily > 0 && *sentToday >= s.status.NoticesDaily:
-			skip("limit")
+			res.next = new(utcDay(s.now()).AddDate(0, 0, 1))
 		}
-		if res.skip != nil {
+		if res.skip != nil || res.next != nil {
 			out = append(out, res)
 			continue
 		}
@@ -795,13 +796,13 @@ func (s *Server) sendNoticeBatch(ctx context.Context, ns *noticeSend, sess *emai
 				res.errText = new(truncateRunes(err.Error(), maxDeliveryError))
 				res.next = new(s.now().Add(noticeRetry[0]))
 				out = append(out, res)
-				return out, true
+				return out, true, nil
 			}
 		}
 		if attempted && pace > 0 {
 			select {
 			case <-ctx.Done():
-				return out, false
+				return out, false, nil
 			case <-time.After(pace):
 			}
 		}
@@ -833,10 +834,10 @@ func (s *Server) sendNoticeBatch(ctx context.Context, ns *noticeSend, sess *emai
 		out = append(out, res)
 		var brokenErr *email.BrokenError
 		if errors.As(err, &brokenErr) {
-			return out, true
+			return out, true, nil
 		}
 	}
-	return out, false
+	return out, false, nil
 }
 
 // noticeReferences are the Message-IDs of each recipient's earlier notices of the incident, oldest
@@ -859,7 +860,6 @@ func (s *Server) noticeReferences(ctx context.Context, ns *noticeSend, due []sto
 	return out, nil
 }
 
-// noticeData is the template data of the notice in a language, without the recipient's link.
 func (s *Server) noticeData(ns *noticeSend, locale string) map[string]any {
 	w := statusWordsFor(locale)
 	if d, ok := ns.data[w.Lang]; ok {
@@ -894,8 +894,6 @@ func (s *Server) noticeData(ns *noticeSend, locale string) map[string]any {
 	return d
 }
 
-// noticeMessage builds one recipient's notice: in their language, signed like broadcasts, with the
-// list headers and the thread of their earlier notices of the incident.
 func (s *Server) noticeMessage(ctx context.Context, ns *noticeSend, d store.StatusNoticeDelivery, refs []string) ([]byte, error) {
 	ws := ns.n.WorkspaceID
 	locale := ns.pg.Locale
@@ -943,8 +941,6 @@ func (s *Server) noticeMessage(ctx context.Context, ns *noticeSend, d store.Stat
 	return signWith(ns.dkim, raw)
 }
 
-// commitNoticeBatch stores a batch's results with the notice's counts, the workspace's sending day
-// and usage in one transaction, then applies the workspace's 30-day limits.
 func (s *Server) commitNoticeBatch(ctx context.Context, ns *noticeSend, results []noticeResult) error {
 	if len(results) == 0 {
 		return nil
@@ -998,7 +994,6 @@ func (s *Server) commitNoticeBatch(ctx context.Context, ns *noticeSend, results 
 	return s.checkWorkspaceRates(ctx, ws)
 }
 
-// noticeDeliveryOf finds the notice delivery a report or reply names in the channel's workspace.
 func noticeDeliveryOf(ctx context.Context, q *store.Queries, ws uuid.UUID, ids []string) (*store.StatusNoticeDelivery, error) {
 	for _, id := range ids {
 		if id == "" {
@@ -1016,8 +1011,6 @@ func noticeDeliveryOf(ctx context.Context, q *store.Queries, ws uuid.UUID, ids [
 	return nil, nil
 }
 
-// noticeFeedback applies a bounce or a complaint to a notice delivery: a bounce suppresses the
-// address for all mail, a complaint as for a broadcast.
 func (s *Server) noticeFeedback(ctx context.Context, d store.StatusNoticeDelivery, complaint bool, detail string) error {
 	ws := d.WorkspaceID
 	err := s.inTx(ctx, ws, func(q *store.Queries, events *eventBatch) error {
@@ -1069,8 +1062,6 @@ func (s *Server) noticeFeedback(ctx context.Context, d store.StatusNoticeDeliver
 	return s.checkWorkspaceRates(ctx, ws)
 }
 
-// noticeDeliveryOfTokens finds the notice delivery a reply answers, by the token in our Message-ID
-// or by the relay's id, among the notices of the receiving channel's inbox.
 func noticeDeliveryOfTokens(ctx context.Context, q *store.Queries, ch store.FindEmailChannelByAddressRow, m *email.Message, contactID uuid.UUID) (*store.StatusNoticeDelivery, error) {
 	ids := slices.Concat(m.InReplyTo, m.References)
 	if len(ids) == 0 {
@@ -1094,7 +1085,6 @@ func noticeDeliveryOfTokens(ctx context.Context, q *store.Queries, ch store.Find
 	return &d, nil
 }
 
-// noticeAutoReply counts an automatic answer to a notice instead of storing it.
 func (s *Server) noticeAutoReply(ctx context.Context, ch store.FindEmailChannelByAddressRow, m *email.Message) (bool, error) {
 	d, err := noticeDeliveryOfTokens(ctx, s.st.Queries, ch, m, uuid.Nil())
 	if err != nil || d == nil {
@@ -1111,8 +1101,6 @@ func (s *Server) noticeAutoReply(ctx context.Context, ch store.FindEmailChannelB
 	return err == nil, err
 }
 
-// noticeReplyStart links a conversation a reply to a notice opened to the notice's incident, so
-// "Reply to linked" reaches it, and counts the reply when the recipient wrote it.
 func (s *Server) noticeReplyStart(ctx context.Context, q *store.Queries, c store.Conversation, d store.StatusNoticeDelivery, contactID uuid.UUID, now time.Time) error {
 	inc, err := q.StatusNoticeIncident(ctx, store.StatusNoticeIncidentParams{WorkspaceID: c.WorkspaceID, NoticeID: d.NoticeID})
 	if store.IsNotFound(err) {
@@ -1149,8 +1137,6 @@ func (s *Server) noticeReplyStart(ctx context.Context, q *store.Queries, c store
 	return err
 }
 
-// CleanStatusNotices removes notice deliveries and their addresses after 90 days; the notices keep
-// their counts.
 func (s *Server) CleanStatusNotices(ctx context.Context) error {
 	ids, err := s.st.ListWorkspaceIDs(ctx)
 	if err != nil {

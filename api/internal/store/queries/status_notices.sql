@@ -78,14 +78,22 @@ WHERE (state = 'pending' AND due_at <= @now::timestamptz) OR (state = 'sending' 
 ORDER BY due_at
 LIMIT 500;
 
+-- A subscriber who chose components and has none left gets only incidents that touch no component.
 -- name: StatusNoticeRecipients :many
 SELECT s.id, s.contact_id, s.email FROM list_subscriptions s
 WHERE s.workspace_id = @workspace_id AND s.list_id = @list_id AND s.state = 'subscribed' AND s.id > @after::uuid
   AND NOT EXISTS (SELECT 1 FROM email_suppressions x WHERE x.workspace_id = s.workspace_id AND x.email = s.email)
-  AND (NOT EXISTS (SELECT 1 FROM status_subscriber_components c WHERE c.workspace_id = s.workspace_id AND c.subscription_id = s.id)
+  AND (NOT s.chose_components
        OR EXISTS (SELECT 1 FROM status_subscriber_components c
                   JOIN status_incident_components ic ON ic.workspace_id = c.workspace_id AND ic.component_id = c.component_id
-                  WHERE c.workspace_id = s.workspace_id AND c.subscription_id = s.id AND ic.incident_id = @incident_id))
+                  WHERE c.workspace_id = s.workspace_id AND c.subscription_id = s.id AND ic.incident_id = @incident_id)
+       OR (NOT EXISTS (SELECT 1 FROM status_subscriber_components c WHERE c.workspace_id = s.workspace_id AND c.subscription_id = s.id)
+           AND NOT EXISTS (SELECT 1 FROM status_incident_components ic WHERE ic.workspace_id = s.workspace_id AND ic.incident_id = @incident_id)))
+  AND (NOT @earlier_only::bool OR EXISTS (
+        SELECT 1 FROM status_notice_deliveries d
+        JOIN status_notices n ON n.workspace_id = d.workspace_id AND n.id = d.notice_id
+        WHERE d.workspace_id = s.workspace_id AND d.subscription_id = s.id AND n.incident_id = @incident_id
+          AND d.notice_id <> @notice_id AND d.sent_at IS NOT NULL))
 ORDER BY s.id
 LIMIT @lim;
 
@@ -93,9 +101,18 @@ LIMIT @lim;
 SELECT count(*)::bigint FROM list_subscriptions s
 WHERE s.workspace_id = @workspace_id AND s.list_id = @list_id AND s.state = 'subscribed'
   AND NOT EXISTS (SELECT 1 FROM email_suppressions x WHERE x.workspace_id = s.workspace_id AND x.email = s.email)
-  AND (NOT EXISTS (SELECT 1 FROM status_subscriber_components c WHERE c.workspace_id = s.workspace_id AND c.subscription_id = s.id)
+  AND (NOT s.chose_components
        OR EXISTS (SELECT 1 FROM status_subscriber_components c
-                  WHERE c.workspace_id = s.workspace_id AND c.subscription_id = s.id AND c.component_id = ANY(@component_ids::uuid[])));
+                  WHERE c.workspace_id = s.workspace_id AND c.subscription_id = s.id AND c.component_id = ANY(@component_ids::uuid[]))
+       OR (NOT EXISTS (SELECT 1 FROM status_subscriber_components c WHERE c.workspace_id = s.workspace_id AND c.subscription_id = s.id)
+           AND coalesce(cardinality(@component_ids::uuid[]), 0) = 0));
+
+-- name: HasEarlierSentStatusNotice :one
+SELECT EXISTS (
+    SELECT 1 FROM status_notice_deliveries d
+    JOIN status_notices n ON n.workspace_id = d.workspace_id AND n.id = d.notice_id
+    WHERE d.workspace_id = @workspace_id AND n.incident_id = @incident_id AND d.notice_id <> @notice_id AND d.sent_at IS NOT NULL
+) AS earlier;
 
 -- name: InsertStatusNoticeDeliveries :execrows
 INSERT INTO status_notice_deliveries (id, workspace_id, notice_id, subscription_id, contact_id, email, email_token, header_message_id,
@@ -104,7 +121,6 @@ SELECT unnest(@ids::uuid[]), @workspace_id, @notice_id, unnest(@subscription_ids
        unnest(@emails::text[]), unnest(@tokens::text[]), unnest(@headers::text[]), nullif(unnest(@previous::text[]), ''), @now
 ON CONFLICT DO NOTHING;
 
--- The recipient's earlier notices of the incident, newest first, for In-Reply-To and References.
 -- name: PreviousStatusNoticeMessages :many
 SELECT d.subscription_id, d.header_message_id FROM status_notice_deliveries d
 JOIN status_notices n ON n.workspace_id = d.workspace_id AND n.id = d.notice_id

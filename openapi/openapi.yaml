@@ -307,9 +307,11 @@ tags:
       updates with `notify` arriving while it waits join it. A notice of an incident is due at the
       earliest 15 minutes after the previous one was sent, except a final one (resolved, completed,
       maintenance started), which is due after 60 seconds and pulls a waiting one forward. A page
-      sends at most 10 notices an hour; others are `skipped` (`rate`), final ones never. A
+      sends at most 10 notices an hour; others are `skipped` (`rate`). A final one is exempt from
+      the rate but goes only to subscribers who got an earlier notice of the incident, and is
+      `skipped` (`nothing_earlier`) when none was sent. A
       subscriber whose components the incident does not touch gets nothing; an incident touching no
-      component reaches only those who chose none. Notices are not stored as events and send no
+      component reaches only those who chose none and those whose chosen components were all deleted. Notices are not stored as events and send no
       webhooks; their progress reaches `/v1/realtime` as `status_notice.updated`.
 
       Owners, admins and API keys manage pages, groups, components and monitors; agents with access to the
@@ -21205,7 +21207,7 @@ components:
           $ref: "#/components/schemas/UnsubscribeReason"
         components:
           type: array
-          description: On a status list, the components of the page the subscriber chose; absent when they get the notices of every component, including ones added later.
+          description: On a status list, the components of the page the subscriber chose; absent when they get the notices of every component, including ones added later. Empty when every chosen component was deleted, and they then get only incidents that touch no component.
           items:
             type: string
             format: uuid
@@ -25151,9 +25153,10 @@ components:
         `rate`: the page sent 10 notices in the last hour. `suspended`: the workspace may not send
         bulk mail now. `email_off`: e-mail subscribers were turned off, or the server sends no
         notices. `unpublished`: the page or the incident is not public. `sender_not_ready`: the
-        channel cannot send. `no_recipients`: no subscriber matched.
-      enum: [rate, suspended, email_off, unpublished, sender_not_ready, no_recipients]
-      x-enum-varnames: [NoticeSkipRate, NoticeSkipSuspended, NoticeSkipEmailOff, NoticeSkipUnpublished, NoticeSkipSenderNotReady, NoticeSkipNoRecipients]
+        channel cannot send. `no_recipients`: no subscriber matched. `nothing_earlier`: a final
+        notice, and no earlier notice of the incident was sent, so nobody had heard of it.
+      enum: [rate, suspended, email_off, unpublished, sender_not_ready, no_recipients, nothing_earlier]
+      x-enum-varnames: [NoticeSkipRate, NoticeSkipSuspended, NoticeSkipEmailOff, NoticeSkipUnpublished, NoticeSkipSenderNotReady, NoticeSkipNoRecipients, NoticeSkipNothingEarlier]
     StatusNoticeCounts:
       type: object
       description: |

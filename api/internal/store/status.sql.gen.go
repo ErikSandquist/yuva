@@ -2206,6 +2206,21 @@ func (q *Queries) SetStatusPageEmail(ctx context.Context, arg SetStatusPageEmail
 	return i, err
 }
 
+const setSubscriptionChoseComponents = `-- name: SetSubscriptionChoseComponents :exec
+UPDATE list_subscriptions SET chose_components = $1 WHERE workspace_id = $2 AND id = $3
+`
+
+type SetSubscriptionChoseComponentsParams struct {
+	Chose       bool
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) SetSubscriptionChoseComponents(ctx context.Context, arg SetSubscriptionChoseComponentsParams) error {
+	_, err := q.db.Exec(ctx, setSubscriptionChoseComponents, arg.Chose, arg.WorkspaceID, arg.ID)
+	return err
+}
+
 const startStatusComponentState = `-- name: StartStatusComponentState :one
 INSERT INTO status_component_states (id, workspace_id, component_id, state, source, source_id, started_at)
 VALUES ($1, $2, $3, $4, $5, $6, $7)

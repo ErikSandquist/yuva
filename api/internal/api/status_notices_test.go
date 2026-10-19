@@ -44,6 +44,11 @@ func (nt noticeTeam) subscriber(t *testing.T, addr string, components ...string)
 	if _, err := nt.h.st.Pool.Exec(ctx, "UPDATE list_subscriptions SET state = 'subscribed', consent_at = now() WHERE workspace_id = $1 AND id = $2", nt.ws, id); err != nil {
 		t.Fatal(err)
 	}
+	if len(components) > 0 {
+		if _, err := nt.h.st.Pool.Exec(ctx, "UPDATE list_subscriptions SET chose_components = true WHERE workspace_id = $1 AND id = $2", nt.ws, id); err != nil {
+			t.Fatal(err)
+		}
+	}
 	for _, c := range components {
 		if _, err := nt.h.st.Pool.Exec(ctx, "INSERT INTO status_subscriber_components (workspace_id, subscription_id, component_id) VALUES ($1, $2, $3)", nt.ws, id, c); err != nil {
 			t.Fatal(err)

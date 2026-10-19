@@ -1072,6 +1072,7 @@ type ListSubscription struct {
 	UnsubscribeBroadcastID *uuid.UUID
 	CreatedAt              time.Time
 	UpdatedAt              time.Time
+	ChoseComponents        bool
 }
 
 type LoginCode struct {

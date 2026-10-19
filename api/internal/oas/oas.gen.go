@@ -4869,6 +4869,7 @@ func (e StatusNoticeEventType) Valid() bool {
 const (
 	NoticeSkipEmailOff       StatusNoticeSkipReason = "email_off"
 	NoticeSkipNoRecipients   StatusNoticeSkipReason = "no_recipients"
+	NoticeSkipNothingEarlier StatusNoticeSkipReason = "nothing_earlier"
 	NoticeSkipRate           StatusNoticeSkipReason = "rate"
 	NoticeSkipSenderNotReady StatusNoticeSkipReason = "sender_not_ready"
 	NoticeSkipSuspended      StatusNoticeSkipReason = "suspended"
@@ -4881,6 +4882,8 @@ func (e StatusNoticeSkipReason) Valid() bool {
 	case NoticeSkipEmailOff:
 		return true
 	case NoticeSkipNoRecipients:
+		return true
+	case NoticeSkipNothingEarlier:
 		return true
 	case NoticeSkipRate:
 		return true
@@ -9033,7 +9036,7 @@ type ContactRef struct {
 
 // ContactSubscription defines model for ContactSubscription.
 type ContactSubscription struct {
-	// Components On a status list, the components of the page the subscriber chose; absent when they get the notices of every component, including ones added later.
+	// Components On a status list, the components of the page the subscriber chose; absent when they get the notices of every component, including ones added later. Empty when every chosen component was deleted, and they then get only incidents that touch no component.
 	Components         *[]uuid.UUID `json:"components,omitempty"`
 	ConfirmationSentAt *time.Time   `json:"confirmation_sent_at,omitempty"`
 	ConfirmedAt        *time.Time   `json:"confirmed_at,omitempty"`
@@ -15152,7 +15155,8 @@ type StatusNotice struct {
 	// SkipReason `rate`: the page sent 10 notices in the last hour. `suspended`: the workspace may not send
 	// bulk mail now. `email_off`: e-mail subscribers were turned off, or the server sends no
 	// notices. `unpublished`: the page or the incident is not public. `sender_not_ready`: the
-	// channel cannot send. `no_recipients`: no subscriber matched.
+	// channel cannot send. `no_recipients`: no subscriber matched. `nothing_earlier`: a final
+	// notice, and no earlier notice of the incident was sent, so nobody had heard of it.
 	SkipReason *StatusNoticeSkipReason `json:"skip_reason,omitempty"`
 	StartedAt  *time.Time              `json:"started_at,omitempty"`
 
@@ -15210,7 +15214,8 @@ type StatusNoticeReach struct {
 // StatusNoticeSkipReason `rate`: the page sent 10 notices in the last hour. `suspended`: the workspace may not send
 // bulk mail now. `email_off`: e-mail subscribers were turned off, or the server sends no
 // notices. `unpublished`: the page or the incident is not public. `sender_not_ready`: the
-// channel cannot send. `no_recipients`: no subscriber matched.
+// channel cannot send. `no_recipients`: no subscriber matched. `nothing_earlier`: a final
+// notice, and no earlier notice of the incident was sent, so nobody had heard of it.
 type StatusNoticeSkipReason string
 
 // StatusNoticeState `pending` (waiting until `due_at`), `sending`, `sent`, `skipped` (nothing went out, see
@@ -15364,7 +15369,7 @@ type StoredEvent struct {
 
 // Subscription defines model for Subscription.
 type Subscription struct {
-	// Components On a status list, the components of the page the subscriber chose; absent when they get the notices of every component, including ones added later.
+	// Components On a status list, the components of the page the subscriber chose; absent when they get the notices of every component, including ones added later. Empty when every chosen component was deleted, and they then get only incidents that touch no component.
 	Components         *[]uuid.UUID `json:"components,omitempty"`
 	ConfirmationSentAt *time.Time   `json:"confirmation_sent_at,omitempty"`
 	ConfirmedAt        *time.Time   `json:"confirmed_at,omitempty"`
@@ -15440,7 +15445,7 @@ type SubscriptionCreate struct {
 
 // SubscriptionDetail defines model for SubscriptionDetail.
 type SubscriptionDetail struct {
-	// Components On a status list, the components of the page the subscriber chose; absent when they get the notices of every component, including ones added later.
+	// Components On a status list, the components of the page the subscriber chose; absent when they get the notices of every component, including ones added later. Empty when every chosen component was deleted, and they then get only incidents that touch no component.
 	Components         *[]uuid.UUID `json:"components,omitempty"`
 	ConfirmationSentAt *time.Time   `json:"confirmation_sent_at,omitempty"`
 	ConfirmedAt        *time.Time   `json:"confirmed_at,omitempty"`

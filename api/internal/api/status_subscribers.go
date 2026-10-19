@@ -16,8 +16,6 @@ func noStatusEmail() oas.StatusEmailSubscribers {
 	return oas.StatusEmailSubscribers{Warnings: []oas.StatusEmailSubscribersWarnings{}}
 }
 
-// statusEmailBody is the page's e-mail subscriber setting with its list's counts and what may hurt
-// delivery.
 func (s *Server) statusEmailBody(ctx context.Context, q *store.Queries, pg store.StatusPage) (oas.StatusEmailSubscribers, error) {
 	out := noStatusEmail()
 	out.Enabled = pg.EmailEnabled
@@ -78,8 +76,6 @@ func (s *Server) statusEmailBody(ctx context.Context, q *store.Queries, pg store
 	return out, nil
 }
 
-// statusListName is the page's name, or the name with " (status)" when the inbox has a list of
-// that name already.
 func statusListName(ctx context.Context, q *store.Queries, pg store.StatusPage) (string, error) {
 	taken, err := q.MailingListNameTaken(ctx, store.MailingListNameTakenParams{WorkspaceID: pg.WorkspaceID, InboxID: pg.InboxID, Name: pg.Name})
 	if err != nil || !taken {
@@ -92,7 +88,6 @@ func statusListName(ctx context.Context, q *store.Queries, pg store.StatusPage) 
 	return string(name) + statusListSuffix, nil
 }
 
-// setStatusEmail applies the page's e-mail subscriber setting, making its list the first time.
 func (s *Server) setStatusEmail(ctx context.Context, q *store.Queries, pg store.StatusPage, in oas.StatusEmailSubscribersUpdate) (store.StatusPage, error) {
 	var list *store.MailingList
 	if pg.MailingListID != nil {
@@ -163,7 +158,6 @@ func uuidPtrEqual(a, b *uuid.UUID) bool {
 	return *a == *b
 }
 
-// statusListPage is the status page whose subscribers a status list holds.
 func statusListPage(ctx context.Context, q *store.Queries, l store.MailingList) (store.StatusPage, bool, error) {
 	if l.Kind != listKindStatus {
 		return store.StatusPage{}, false, nil
@@ -175,8 +169,8 @@ func statusListPage(ctx context.Context, q *store.Queries, l store.MailingList) 
 	return pg, err == nil, err
 }
 
-// setSubscriptionComponents stores a status subscription's chosen components; all or none of the
-// page's visible components store nothing, which means every component.
+// A real choice sets chose_components, which outlives the rows so that deleting every chosen
+// component never widens it to all.
 func setSubscriptionComponents(ctx context.Context, q *store.Queries, sub store.ListSubscription, visible, chosen []uuid.UUID) error {
 	if err := q.ClearSubscriptionComponents(ctx, store.ClearSubscriptionComponentsParams{WorkspaceID: sub.WorkspaceID, SubscriptionID: sub.ID}); err != nil {
 		return err
@@ -188,7 +182,10 @@ func setSubscriptionComponents(ctx context.Context, q *store.Queries, sub store.
 		}
 	}
 	if len(keep) == 0 || len(keep) == len(visible) {
-		return nil
+		return q.SetSubscriptionChoseComponents(ctx, store.SetSubscriptionChoseComponentsParams{WorkspaceID: sub.WorkspaceID, ID: sub.ID, Chose: false})
+	}
+	if err := q.SetSubscriptionChoseComponents(ctx, store.SetSubscriptionChoseComponentsParams{WorkspaceID: sub.WorkspaceID, ID: sub.ID, Chose: true}); err != nil {
+		return err
 	}
 	for _, id := range keep {
 		if err := q.AddSubscriptionComponent(ctx, store.AddSubscriptionComponentParams{WorkspaceID: sub.WorkspaceID, SubscriptionID: sub.ID, ComponentID: id}); err != nil {
@@ -218,8 +215,6 @@ func visibleComponents(ctx context.Context, q *store.Queries, pg store.StatusPag
 	return slices.DeleteFunc(all, func(c store.StatusComponent) bool { return c.Hidden }), nil
 }
 
-// statusConfirmData names the page, at most 100 characters of it, and the chosen components in a
-// status list's confirmation.
 func (s *Server) statusConfirmData(ctx context.Context, pg store.StatusPage, sub store.ListSubscription) (map[string]string, error) {
 	name := []rune(pg.Name)
 	if len(name) > 100 {

@@ -16,6 +16,7 @@ type statusWords struct {
 	Edited, Support, Site, Window, Affects, Gone string
 	MonitorTitle, MonitorBody, MonitorResolved   string
 	MonitorPaused, MonitorRemoved                string
+	MaintenanceStarted, MaintenanceDone          string
 	Months                                       [12]string
 }
 
@@ -37,6 +38,7 @@ var statusLanguages = map[string]statusWords{
 		MonitorTitle: "%s is not working as expected", MonitorBody: "Our monitoring found a problem with %s. We are looking into it.",
 		MonitorResolved: "%s is working again.",
 		MonitorPaused:   "Monitoring of %s was paused.", MonitorRemoved: "Monitoring of %s was removed.",
+		MaintenanceStarted: "The maintenance has started.", MaintenanceDone: "The maintenance is complete.",
 		Months: [12]string{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"},
 	},
 	"tr": {
@@ -56,6 +58,7 @@ var statusLanguages = map[string]statusWords{
 		MonitorTitle: "%s beklendiği gibi çalışmıyor", MonitorBody: "İzleme sistemimiz %s ile ilgili bir sorun buldu. İnceliyoruz.",
 		MonitorResolved: "%s yeniden çalışıyor.",
 		MonitorPaused:   "%s izlemesi duraklatıldı.", MonitorRemoved: "%s izlemesi kaldırıldı.",
+		MaintenanceStarted: "Bakım başladı.", MaintenanceDone: "Bakım tamamlandı.",
 		Months: [12]string{"Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"},
 	},
 	"de": {
@@ -75,6 +78,7 @@ var statusLanguages = map[string]statusWords{
 		MonitorTitle: "%s funktioniert nicht wie erwartet", MonitorBody: "Unsere Überwachung hat ein Problem mit %s festgestellt. Wir sehen es uns an.",
 		MonitorResolved: "%s funktioniert wieder.",
 		MonitorPaused:   "Die Überwachung von %s wurde pausiert.", MonitorRemoved: "Die Überwachung von %s wurde entfernt.",
+		MaintenanceStarted: "Die Wartung hat begonnen.", MaintenanceDone: "Die Wartung ist abgeschlossen.",
 		Months: [12]string{"Jan.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sep.", "Okt.", "Nov.", "Dez."},
 	},
 }

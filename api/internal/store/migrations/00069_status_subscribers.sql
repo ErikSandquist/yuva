@@ -9,7 +9,6 @@ ALTER TABLE status_pages ADD CONSTRAINT status_pages_mailing_list_id_key UNIQUE 
 ALTER TABLE status_pages ADD CONSTRAINT status_pages_mailing_list_fkey
     FOREIGN KEY (workspace_id, mailing_list_id) REFERENCES mailing_lists (workspace_id, id) ON DELETE SET NULL (mailing_list_id);
 
--- A status subscription without rows gets the notices of every component.
 CREATE TABLE status_subscriber_components (
     workspace_id    uuid NOT NULL REFERENCES workspaces (id) ON DELETE CASCADE,
     subscription_id uuid NOT NULL,

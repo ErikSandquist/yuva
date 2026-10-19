@@ -240,7 +240,7 @@ func (q *Queries) CreateMailingList(ctx context.Context, arg CreateMailingListPa
 const createSubscription = `-- name: CreateSubscription :one
 INSERT INTO list_subscriptions (id, workspace_id, list_id, contact_id, email, state, source, consent_at, confirmed_at, created_at, updated_at)
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $10)
-RETURNING id, workspace_id, list_id, contact_id, email, state, source, consent_at, confirmed_at, confirmation_sent_at, confirmations_sent, unsubscribed_at, unsubscribe_reason, unsubscribe_broadcast_id, created_at, updated_at
+RETURNING id, workspace_id, list_id, contact_id, email, state, source, consent_at, confirmed_at, confirmation_sent_at, confirmations_sent, unsubscribed_at, unsubscribe_reason, unsubscribe_broadcast_id, created_at, updated_at, chose_components
 `
 
 type CreateSubscriptionParams struct {
@@ -287,6 +287,7 @@ func (q *Queries) CreateSubscription(ctx context.Context, arg CreateSubscription
 		&i.UnsubscribeBroadcastID,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.ChoseComponents,
 	)
 	return i, err
 }
@@ -453,7 +454,7 @@ func (q *Queries) GetMailingList(ctx context.Context, arg GetMailingListParams) 
 }
 
 const getSubscription = `-- name: GetSubscription :one
-SELECT id, workspace_id, list_id, contact_id, email, state, source, consent_at, confirmed_at, confirmation_sent_at, confirmations_sent, unsubscribed_at, unsubscribe_reason, unsubscribe_broadcast_id, created_at, updated_at FROM list_subscriptions WHERE workspace_id = $1 AND id = $2
+SELECT id, workspace_id, list_id, contact_id, email, state, source, consent_at, confirmed_at, confirmation_sent_at, confirmations_sent, unsubscribed_at, unsubscribe_reason, unsubscribe_broadcast_id, created_at, updated_at, chose_components FROM list_subscriptions WHERE workspace_id = $1 AND id = $2
 `
 
 type GetSubscriptionParams struct {
@@ -481,6 +482,7 @@ func (q *Queries) GetSubscription(ctx context.Context, arg GetSubscriptionParams
 		&i.UnsubscribeBroadcastID,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.ChoseComponents,
 	)
 	return i, err
 }
@@ -674,7 +676,7 @@ func (q *Queries) ListConsentRecords(ctx context.Context, arg ListConsentRecords
 }
 
 const listContactSubscriptions = `-- name: ListContactSubscriptions :many
-SELECT id, workspace_id, list_id, contact_id, email, state, source, consent_at, confirmed_at, confirmation_sent_at, confirmations_sent, unsubscribed_at, unsubscribe_reason, unsubscribe_broadcast_id, created_at, updated_at FROM list_subscriptions WHERE workspace_id = $1 AND contact_id = $2 ORDER BY created_at DESC, id DESC
+SELECT id, workspace_id, list_id, contact_id, email, state, source, consent_at, confirmed_at, confirmation_sent_at, confirmations_sent, unsubscribed_at, unsubscribe_reason, unsubscribe_broadcast_id, created_at, updated_at, chose_components FROM list_subscriptions WHERE workspace_id = $1 AND contact_id = $2 ORDER BY created_at DESC, id DESC
 `
 
 type ListContactSubscriptionsParams struct {
@@ -708,6 +710,7 @@ func (q *Queries) ListContactSubscriptions(ctx context.Context, arg ListContactS
 			&i.UnsubscribeBroadcastID,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ChoseComponents,
 		); err != nil {
 			return nil, err
 		}
@@ -1032,7 +1035,7 @@ func (q *Queries) ListPublicMailingLists(ctx context.Context, arg ListPublicMail
 }
 
 const listSubscriptions = `-- name: ListSubscriptions :many
-SELECT id, workspace_id, list_id, contact_id, email, state, source, consent_at, confirmed_at, confirmation_sent_at, confirmations_sent, unsubscribed_at, unsubscribe_reason, unsubscribe_broadcast_id, created_at, updated_at FROM list_subscriptions s
+SELECT id, workspace_id, list_id, contact_id, email, state, source, consent_at, confirmed_at, confirmation_sent_at, confirmations_sent, unsubscribed_at, unsubscribe_reason, unsubscribe_broadcast_id, created_at, updated_at, chose_components FROM list_subscriptions s
 WHERE s.workspace_id = $1 AND s.list_id = $2
   AND ($3::text IS NULL OR s.state = $3::text)
   AND ($4::text IS NULL OR strpos(s.email, lower($4::text)) > 0 OR EXISTS (
@@ -1088,6 +1091,7 @@ func (q *Queries) ListSubscriptions(ctx context.Context, arg ListSubscriptionsPa
 			&i.UnsubscribeBroadcastID,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ChoseComponents,
 		); err != nil {
 			return nil, err
 		}
@@ -1131,7 +1135,7 @@ func (q *Queries) ListUnsubscribedEmails(ctx context.Context, arg ListUnsubscrib
 }
 
 const lockContactListSubscriptions = `-- name: LockContactListSubscriptions :many
-SELECT id, workspace_id, list_id, contact_id, email, state, source, consent_at, confirmed_at, confirmation_sent_at, confirmations_sent, unsubscribed_at, unsubscribe_reason, unsubscribe_broadcast_id, created_at, updated_at FROM list_subscriptions
+SELECT id, workspace_id, list_id, contact_id, email, state, source, consent_at, confirmed_at, confirmation_sent_at, confirmations_sent, unsubscribed_at, unsubscribe_reason, unsubscribe_broadcast_id, created_at, updated_at, chose_components FROM list_subscriptions
 WHERE workspace_id = $1 AND list_id = $2 AND contact_id = $3
 ORDER BY created_at, id
 FOR UPDATE
@@ -1169,6 +1173,7 @@ func (q *Queries) LockContactListSubscriptions(ctx context.Context, arg LockCont
 			&i.UnsubscribeBroadcastID,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ChoseComponents,
 		); err != nil {
 			return nil, err
 		}
@@ -1181,7 +1186,7 @@ func (q *Queries) LockContactListSubscriptions(ctx context.Context, arg LockCont
 }
 
 const lockEmailSubscriptions = `-- name: LockEmailSubscriptions :many
-SELECT id, workspace_id, list_id, contact_id, email, state, source, consent_at, confirmed_at, confirmation_sent_at, confirmations_sent, unsubscribed_at, unsubscribe_reason, unsubscribe_broadcast_id, created_at, updated_at FROM list_subscriptions WHERE workspace_id = $1 AND email = $2 ORDER BY created_at, id FOR UPDATE
+SELECT id, workspace_id, list_id, contact_id, email, state, source, consent_at, confirmed_at, confirmation_sent_at, confirmations_sent, unsubscribed_at, unsubscribe_reason, unsubscribe_broadcast_id, created_at, updated_at, chose_components FROM list_subscriptions WHERE workspace_id = $1 AND email = $2 ORDER BY created_at, id FOR UPDATE
 `
 
 type LockEmailSubscriptionsParams struct {
@@ -1215,6 +1220,7 @@ func (q *Queries) LockEmailSubscriptions(ctx context.Context, arg LockEmailSubsc
 			&i.UnsubscribeBroadcastID,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ChoseComponents,
 		); err != nil {
 			return nil, err
 		}
@@ -1258,7 +1264,7 @@ func (q *Queries) LockMailingList(ctx context.Context, arg LockMailingListParams
 }
 
 const lockSubscription = `-- name: LockSubscription :one
-SELECT id, workspace_id, list_id, contact_id, email, state, source, consent_at, confirmed_at, confirmation_sent_at, confirmations_sent, unsubscribed_at, unsubscribe_reason, unsubscribe_broadcast_id, created_at, updated_at FROM list_subscriptions WHERE workspace_id = $1 AND id = $2 FOR UPDATE
+SELECT id, workspace_id, list_id, contact_id, email, state, source, consent_at, confirmed_at, confirmation_sent_at, confirmations_sent, unsubscribed_at, unsubscribe_reason, unsubscribe_broadcast_id, created_at, updated_at, chose_components FROM list_subscriptions WHERE workspace_id = $1 AND id = $2 FOR UPDATE
 `
 
 type LockSubscriptionParams struct {
@@ -1286,12 +1292,13 @@ func (q *Queries) LockSubscription(ctx context.Context, arg LockSubscriptionPara
 		&i.UnsubscribeBroadcastID,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.ChoseComponents,
 	)
 	return i, err
 }
 
 const lockSubscriptionByEmail = `-- name: LockSubscriptionByEmail :one
-SELECT id, workspace_id, list_id, contact_id, email, state, source, consent_at, confirmed_at, confirmation_sent_at, confirmations_sent, unsubscribed_at, unsubscribe_reason, unsubscribe_broadcast_id, created_at, updated_at FROM list_subscriptions WHERE workspace_id = $1 AND list_id = $2 AND email = $3 FOR UPDATE
+SELECT id, workspace_id, list_id, contact_id, email, state, source, consent_at, confirmed_at, confirmation_sent_at, confirmations_sent, unsubscribed_at, unsubscribe_reason, unsubscribe_broadcast_id, created_at, updated_at, chose_components FROM list_subscriptions WHERE workspace_id = $1 AND list_id = $2 AND email = $3 FOR UPDATE
 `
 
 type LockSubscriptionByEmailParams struct {
@@ -1320,6 +1327,7 @@ func (q *Queries) LockSubscriptionByEmail(ctx context.Context, arg LockSubscript
 		&i.UnsubscribeBroadcastID,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.ChoseComponents,
 	)
 	return i, err
 }
@@ -1441,7 +1449,7 @@ UPDATE list_subscriptions SET state = $1, consent_at = $2, confirmed_at = $3,
     unsubscribed_at = $4, unsubscribe_reason = $5,
     unsubscribe_broadcast_id = $6, updated_at = $7
 WHERE workspace_id = $8 AND id = $9
-RETURNING id, workspace_id, list_id, contact_id, email, state, source, consent_at, confirmed_at, confirmation_sent_at, confirmations_sent, unsubscribed_at, unsubscribe_reason, unsubscribe_broadcast_id, created_at, updated_at
+RETURNING id, workspace_id, list_id, contact_id, email, state, source, consent_at, confirmed_at, confirmation_sent_at, confirmations_sent, unsubscribed_at, unsubscribe_reason, unsubscribe_broadcast_id, created_at, updated_at, chose_components
 `
 
 type SaveSubscriptionStateParams struct {
@@ -1486,6 +1494,7 @@ func (q *Queries) SaveSubscriptionState(ctx context.Context, arg SaveSubscriptio
 		&i.UnsubscribeBroadcastID,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.ChoseComponents,
 	)
 	return i, err
 }

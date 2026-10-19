@@ -336,6 +336,9 @@ SELECT EXISTS (SELECT 1 FROM mailing_lists WHERE workspace_id = @workspace_id AN
 -- name: ClearSubscriptionComponents :exec
 DELETE FROM status_subscriber_components WHERE workspace_id = @workspace_id AND subscription_id = @subscription_id;
 
+-- name: SetSubscriptionChoseComponents :exec
+UPDATE list_subscriptions SET chose_components = @chose WHERE workspace_id = @workspace_id AND id = @id;
+
 -- name: AddSubscriptionComponent :exec
 INSERT INTO status_subscriber_components (workspace_id, subscription_id, component_id)
 VALUES (@workspace_id, @subscription_id, @component_id)

@@ -152,6 +152,8 @@ func subscriptionBodies(ctx context.Context, q *store.Queries, ws uuid.UUID, sub
 		out[i] = subscriptionBody(sub, names[sub.ContactID])
 		if c, ok := comps[sub.ID]; ok {
 			out[i].Components = &c
+		} else if sub.ChoseComponents {
+			out[i].Components = &[]uuid.UUID{}
 		}
 	}
 	return out, nil

@@ -695,9 +695,7 @@ func (s *Server) moveIncident(ctx context.Context, q *store.Queries, ev *eventBa
 	return s.moveIncidentWith(ctx, q, ev, pg, inc, state, body, member, key, change, true, notify, now)
 }
 
-// moveIncidentWith moves an incident to state with an update. Closing it puts its components back to
-// operational when restoreAll is set; without it only those an incident or monitor set go back. With
-// notify the update asks for a notice to the page's subscribers.
+// Closing the incident puts its components back to operational when restoreAll is set; without it only those an incident or monitor set go back.
 func (s *Server) moveIncidentWith(ctx context.Context, q *store.Queries, ev *eventBatch, pg store.StatusPage, inc store.StatusIncident,
 	state, body string, member, key *uuid.UUID, change oas.StatusIncidentChange, restoreAll, notify bool, now time.Time) (oas.StatusIncident, error) {
 	held := incidentHolds(inc.PublishedAt != nil, inc.State)
@@ -844,8 +842,9 @@ func (s *Server) RunStatusMaintenance(ctx context.Context, a StatusMaintenanceAr
 			return nil
 		}
 		now := s.now()
+		words := statusWordsFor(pg.Locale)
 		if inc.State == incScheduled && !inc.ScheduledStart.After(now) {
-			if _, err := s.moveIncident(ctx, q, ev, pg, inc, incInProgress, "", nil, nil, oas.StatusChangeStarted, true, now); err != nil {
+			if _, err := s.moveIncident(ctx, q, ev, pg, inc, incInProgress, words.MaintenanceStarted, nil, nil, oas.StatusChangeStarted, inc.Notify, now); err != nil {
 				return err
 			}
 			if inc, err = lockedStatusIncident(ctx, q, pg, a.IncidentID); err != nil {
@@ -853,7 +852,7 @@ func (s *Server) RunStatusMaintenance(ctx context.Context, a StatusMaintenanceAr
 			}
 		}
 		if inc.State == incInProgress && !inc.ScheduledEnd.After(now) {
-			_, err := s.moveIncident(ctx, q, ev, pg, inc, incCompleted, "", nil, nil, oas.StatusChangeResolved, true, now)
+			_, err := s.moveIncident(ctx, q, ev, pg, inc, incCompleted, words.MaintenanceDone, nil, nil, oas.StatusChangeResolved, inc.Notify, now)
 			return err
 		}
 		return nil

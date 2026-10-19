@@ -23,7 +23,6 @@ var (
 	statusSubscribeHoneypot  = "website"
 )
 
-// statusEmailOpen reports whether the page takes e-mail subscribers now.
 func (s *Server) statusEmailOpen(pg store.StatusPage) bool {
 	return !s.status.NoticesOff && pg.Published && pg.EmailEnabled && pg.MailingListID != nil
 }
@@ -35,8 +34,7 @@ type statusSubscribeForm struct {
 	components []store.StatusComponent
 }
 
-// serveStatusSubscribe is the subscribe page of a status page, its POST and the page every POST
-// redirects to. It is never cached and never framed, because the form carries a sealed token.
+// It is never cached and never framed, because the form carries a sealed token.
 func (s *Server) serveStatusSubscribe(w http.ResponseWriter, r *http.Request) {
 	pg, ok := s.publicStatusPage(w, r)
 	if !ok {
@@ -136,11 +134,15 @@ func (s *Server) serveStatusSubscribe(w http.ResponseWriter, r *http.Request) {
 		pr.detail["components"] = named
 	}
 	locale := pg.Locale
+	channel := uuid.Nil()
+	if f.list.ChannelID != nil {
+		channel = *f.list.ChannelID
+	}
 	err = s.inTx(ctx, pg.WorkspaceID, func(q *store.Queries, events *eventBatch) error {
 		if err := s.statusSubscriberRoom(ctx, q, f); err != nil {
 			return err
 		}
-		if err := s.subscribeFromForm(ctx, q, events, pg.ID, []store.MailingList{f.list}, addr, "", &locale, pr); err != nil {
+		if err := s.subscribeFromForm(ctx, q, events, channel, []store.MailingList{f.list}, addr, "", &locale, pr); err != nil {
 			return err
 		}
 		sub, err := q.LockSubscriptionByEmail(ctx, store.LockSubscriptionByEmailParams{WorkspaceID: pg.WorkspaceID, ListID: f.list.ID, Email: addr})
@@ -163,8 +165,6 @@ func (s *Server) serveStatusSubscribe(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// statusSubscriberRoom refuses a new request when the page has YUVA_STATUS_MAX_SUBSCRIBERS
-// subscribed addresses.
 func (s *Server) statusSubscriberRoom(ctx context.Context, q *store.Queries, f statusSubscribeForm) error {
 	if s.status.MaxSubscribers <= 0 {
 		return nil

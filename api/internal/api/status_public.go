@@ -121,8 +121,6 @@ func (s *Server) routeStatus(mux *http.ServeMux) {
 	mux.HandleFunc("GET "+statusPathPrefix+"{slug}/subscribe/sent", s.serveStatusSubscribe)
 }
 
-// publicStatusPage finds the published page of the request's slug, answering a redirect, a rate
-// limit or a 404 itself when there is none to serve.
 func (s *Server) publicStatusPage(w http.ResponseWriter, r *http.Request) (store.StatusPage, bool) {
 	ctx := r.Context()
 	slug := r.PathValue("slug")

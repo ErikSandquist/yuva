@@ -224,8 +224,6 @@ func (SESTenantStatusArgs) InsertOpts() river.InsertOpts {
 	}}}
 }
 
-// StatusNoticeSweepArgs is worked by the api package: it queues status notices that are due and
-// sending ones whose lease ran out.
 type StatusNoticeSweepArgs struct{}
 
 func (StatusNoticeSweepArgs) Kind() string { return "status_notice_sweep" }

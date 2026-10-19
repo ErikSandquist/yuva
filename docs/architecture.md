@@ -1993,11 +1993,14 @@ incident before a customer writes, and the conversations an outage brings are an
     separate kind: people agreed to incident notices, never to newsletters.
   - **Choosing components.** A subscription gets all notices of the page, or only those of chosen
     components: `status_subscriber_components` (`workspace_id`, `subscription_id`, `component_id`,
-    primary key on the last two, cascade on both). No rows means everything, including components added
-    later. The form and the `/m/` page show one checkbox per visible component, all ticked; ticking all
-    stores no rows, ticking none is refused ("unsubscribe instead"). An incident or maintenance reaches
-    a subscriber when it has no choices or the incident touches one of their components; an incident
-    touching no component reaches only those with no choices. Choices are preferences, not consent:
+    primary key on the last two, cascade on both) and `list_subscriptions.chose_components`. A subscription
+    that did not choose gets everything, including components added later. The form and the `/m/` page show
+    one checkbox per visible component, all ticked; ticking all stores no rows and clears the flag, ticking
+    none is refused ("unsubscribe instead"). An incident or maintenance reaches a subscriber when they did
+    not choose or the incident touches one of their components; an incident touching no component reaches
+    those who did not choose. The flag outlives the rows: when every chosen component is deleted the
+    subscriber has the flag and no rows, and gets only incidents that touch no component, never everything
+    (the subscription then lists `components: []`). Choices are preferences, not consent:
     they change without a consent event, and the consent event of the request stores the chosen
     components in `detail`. Reason for choosing per component and not per page only: a page with
     regional or product components mailing everyone about everything is what produces spam
@@ -2035,7 +2038,9 @@ incident before a customer writes, and the conversations an outage brings are an
   - **Notices.** Incident and maintenance updates carry `notify` (API, MCP and panel). A new incident
     defaults to `true`; an update defaults to `true` when it changes the state, the window or is the
     resolution, and to `false` when it only adds text; a maintenance start and completion done by the
-    River job are `true`. Component changes alone, drafts, and published updates with `notify=false`
+    River job follow the incident's stored `notify` and carry a text in the page's locale ("The
+    maintenance has started." / "The maintenance is complete.", also in `tr` and `de`), so pages and notices
+    say something. Component changes alone, drafts, and published updates with `notify=false`
     send nothing. Publishing a draft sends one notice with the current state and the latest text, not
     one per stored update. Monitor-opened published incidents notify like a member's; the budget below
     keeps a flapping monitor from mailing people. A notice is a `status_notices` row (page, incident,
@@ -2075,8 +2080,9 @@ incident before a customer writes, and the conversations an outage brings are an
     quota), but never above these: a workspace suspended from sending (30-day rates) sends none
     (`skipped`, `suspended`), a channel without a sender or a tenant that is `identity_missing` is
     attempted as for confirmations, and `YUVA_STATUS_NOTICES_DAILY` (notice mails per workspace and UTC
-    day, 0 = no limit, unset: 5,000 with `YUVA_SIGNUP=open`, else 0; beyond it deliveries are `skipped`
-    with `limit`). Notices count in `broadcast_sending_days` (sent, bounced, complained), so they stay
+    day, 0 = no limit, unset: 5,000 with `YUVA_SIGNUP=open`, else 0; beyond it deliveries stay `queued`
+    with their next attempt at the start of the next UTC day, where the 6-hour staleness rule still
+    applies: one older than that by then is `skipped` with `stale`). Notices count in `broadcast_sending_days` (sent, bounced, complained), so they stay
     inside the workspace's 30-day complaint and bounce limits, and in the usage counters as
     `status_notices`. Jobs: `status_notice` on its own River queue (2 workers, so a notice never waits
     behind a newsletter), one job per notice, scheduled at `due_at`; a sweep every minute queues pending
@@ -2107,7 +2113,11 @@ incident before a customer writes, and the conversations an outage brings are an
     `due_at`; a notice of an incident is due no earlier than 15 minutes after the previous one of that
     incident was sent, except `final` ones (resolved, completed, maintenance started), which are due
     after 60 seconds and pull a waiting notice forward. A page sends at most 10 notices in any rolling
-    hour; further ones are `skipped` (`rate`) and the panel says so; `final` notices are exempt. With the
+    hour; further ones are `skipped` (`rate`) and the panel says so; `final` notices are exempt from the
+    gap and the rate, but go only to subscribers who got a sent notice of that incident, and a final notice
+    with none sent before it is `skipped` (`nothing_earlier`): nobody heard of the incident, so nobody is
+    told it ended, and a skipped opening notice cannot be bypassed through the closing one (an incident
+    resolved while its first notice still waits sends nothing). With the
     gap this means a subscriber gets at most one mail per quarter of an hour about an incident and ten
     an hour from a page, however often members post.
   - **Panel and API.** Settings of a page: e-mail subscribers on or off and the e-mail channel (the

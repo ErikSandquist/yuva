@@ -574,8 +574,6 @@ func (s *Server) manageView(w http.ResponseWriter, ctx context.Context, t *manag
 	writeListPage(w, status, v)
 }
 
-// statusManageView is /m/ of a status list: only that list, its component choices and a link back to
-// the page.
 func (s *Server) statusManageView(w http.ResponseWriter, ctx context.Context, t *manageTarget, v listPageView, status int, heading string, undo []uuid.UUID) {
 	ln, in := t.page.Name, t.inbox.Name
 	statusPageColor(&v, t.page)
@@ -761,8 +759,7 @@ func (s *Server) serveManagePost(w http.ResponseWriter, r *http.Request) {
 
 var errNoComponents = errors.New("no components chosen")
 
-// saveComponents changes a status subscription's component choices; they are preferences, so no
-// consent event is written.
+// Component choices are preferences, so no consent event is written.
 func (s *Server) saveComponents(ctx context.Context, q *store.Queries, t *manageTarget, chosen []uuid.UUID) error {
 	visible := make([]uuid.UUID, len(t.components))
 	for i, c := range t.components {

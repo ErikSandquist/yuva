@@ -126,9 +126,11 @@ const countStatusNoticeReach = `-- name: CountStatusNoticeReach :one
 SELECT count(*)::bigint FROM list_subscriptions s
 WHERE s.workspace_id = $1 AND s.list_id = $2 AND s.state = 'subscribed'
   AND NOT EXISTS (SELECT 1 FROM email_suppressions x WHERE x.workspace_id = s.workspace_id AND x.email = s.email)
-  AND (NOT EXISTS (SELECT 1 FROM status_subscriber_components c WHERE c.workspace_id = s.workspace_id AND c.subscription_id = s.id)
+  AND (NOT s.chose_components
        OR EXISTS (SELECT 1 FROM status_subscriber_components c
-                  WHERE c.workspace_id = s.workspace_id AND c.subscription_id = s.id AND c.component_id = ANY($3::uuid[])))
+                  WHERE c.workspace_id = s.workspace_id AND c.subscription_id = s.id AND c.component_id = ANY($3::uuid[]))
+       OR (NOT EXISTS (SELECT 1 FROM status_subscriber_components c WHERE c.workspace_id = s.workspace_id AND c.subscription_id = s.id)
+           AND coalesce(cardinality($3::uuid[]), 0) = 0))
 `
 
 type CountStatusNoticeReachParams struct {
@@ -486,6 +488,27 @@ func (q *Queries) GetStatusNotice(ctx context.Context, arg GetStatusNoticeParams
 		&i.UpdatedAt,
 	)
 	return i, err
+}
+
+const hasEarlierSentStatusNotice = `-- name: HasEarlierSentStatusNotice :one
+SELECT EXISTS (
+    SELECT 1 FROM status_notice_deliveries d
+    JOIN status_notices n ON n.workspace_id = d.workspace_id AND n.id = d.notice_id
+    WHERE d.workspace_id = $1 AND n.incident_id = $2 AND d.notice_id <> $3 AND d.sent_at IS NOT NULL
+) AS earlier
+`
+
+type HasEarlierSentStatusNoticeParams struct {
+	WorkspaceID uuid.UUID
+	IncidentID  uuid.UUID
+	NoticeID    uuid.UUID
+}
+
+func (q *Queries) HasEarlierSentStatusNotice(ctx context.Context, arg HasEarlierSentStatusNoticeParams) (bool, error) {
+	row := q.db.QueryRow(ctx, hasEarlierSentStatusNotice, arg.WorkspaceID, arg.IncidentID, arg.NoticeID)
+	var earlier bool
+	err := row.Scan(&earlier)
+	return earlier, err
 }
 
 const insertStatusNoticeDeliveries = `-- name: InsertStatusNoticeDeliveries :execrows
@@ -906,7 +929,6 @@ type PreviousStatusNoticeMessagesRow struct {
 	HeaderMessageID string
 }
 
-// The recipient's earlier notices of the incident, newest first, for In-Reply-To and References.
 func (q *Queries) PreviousStatusNoticeMessages(ctx context.Context, arg PreviousStatusNoticeMessagesParams) ([]PreviousStatusNoticeMessagesRow, error) {
 	rows, err := q.db.Query(ctx, previousStatusNoticeMessages,
 		arg.WorkspaceID,
@@ -1145,12 +1167,19 @@ const statusNoticeRecipients = `-- name: StatusNoticeRecipients :many
 SELECT s.id, s.contact_id, s.email FROM list_subscriptions s
 WHERE s.workspace_id = $1 AND s.list_id = $2 AND s.state = 'subscribed' AND s.id > $3::uuid
   AND NOT EXISTS (SELECT 1 FROM email_suppressions x WHERE x.workspace_id = s.workspace_id AND x.email = s.email)
-  AND (NOT EXISTS (SELECT 1 FROM status_subscriber_components c WHERE c.workspace_id = s.workspace_id AND c.subscription_id = s.id)
+  AND (NOT s.chose_components
        OR EXISTS (SELECT 1 FROM status_subscriber_components c
                   JOIN status_incident_components ic ON ic.workspace_id = c.workspace_id AND ic.component_id = c.component_id
-                  WHERE c.workspace_id = s.workspace_id AND c.subscription_id = s.id AND ic.incident_id = $4))
+                  WHERE c.workspace_id = s.workspace_id AND c.subscription_id = s.id AND ic.incident_id = $4)
+       OR (NOT EXISTS (SELECT 1 FROM status_subscriber_components c WHERE c.workspace_id = s.workspace_id AND c.subscription_id = s.id)
+           AND NOT EXISTS (SELECT 1 FROM status_incident_components ic WHERE ic.workspace_id = s.workspace_id AND ic.incident_id = $4)))
+  AND (NOT $5::bool OR EXISTS (
+        SELECT 1 FROM status_notice_deliveries d
+        JOIN status_notices n ON n.workspace_id = d.workspace_id AND n.id = d.notice_id
+        WHERE d.workspace_id = s.workspace_id AND d.subscription_id = s.id AND n.incident_id = $4
+          AND d.notice_id <> $6 AND d.sent_at IS NOT NULL))
 ORDER BY s.id
-LIMIT $5
+LIMIT $7
 `
 
 type StatusNoticeRecipientsParams struct {
@@ -1158,6 +1187,8 @@ type StatusNoticeRecipientsParams struct {
 	ListID      uuid.UUID
 	After       uuid.UUID
 	IncidentID  uuid.UUID
+	EarlierOnly bool
+	NoticeID    uuid.UUID
 	Lim         int32
 }
 
@@ -1167,12 +1198,15 @@ type StatusNoticeRecipientsRow struct {
 	Email     string
 }
 
+// A subscriber who chose components and has none left gets only incidents that touch no component.
 func (q *Queries) StatusNoticeRecipients(ctx context.Context, arg StatusNoticeRecipientsParams) ([]StatusNoticeRecipientsRow, error) {
 	rows, err := q.db.Query(ctx, statusNoticeRecipients,
 		arg.WorkspaceID,
 		arg.ListID,
 		arg.After,
 		arg.IncidentID,
+		arg.EarlierOnly,
+		arg.NoticeID,
 		arg.Lim,
 	)
 	if err != nil {

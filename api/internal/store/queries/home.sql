@@ -74,7 +74,7 @@ UNION ALL
 SELECT 'list', l.id, l.inbox_id, l.name, '', l.created_at, '{}', '{}', false,
     row_number() OVER (ORDER BY l.created_at DESC, l.id DESC)
 FROM mailing_lists l
-WHERE @with_lists::bool AND l.workspace_id = @workspace_id AND l.archived_at IS NULL
+WHERE @with_lists::bool AND l.workspace_id = @workspace_id AND l.archived_at IS NULL AND l.kind = 'list'
   AND (@all_inboxes::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
       WHERE iv.workspace_id = l.workspace_id AND iv.inbox_id = l.inbox_id AND iv.viewer_id = @viewer_id::uuid))
