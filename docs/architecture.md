@@ -162,6 +162,8 @@ panel (embedded SPA) ─────────► /v1 + WS ──────�
 | `/ingress/email` | edge Worker, MTAs | HMAC signature over the raw message |
 | `/ingress/ses` | SES bounce and complaint notifications via SNS | SNS signature |
 | `/s/{token}`, `/m/{token}`, `/c/{token}`, `/i/{token}` | people who receive list and broadcast mail | a token sealed under the master key; an image token |
+| `/status/{slug}`, `/client/v1/status/{slug}`, a verified status domain | anyone reading a published status page | none |
+| `/ingress/heartbeat/{token}`, `/ingress/status/{token}` | host jobs and monitoring (heartbeats, Alertmanager, Grafana) | a monitor token |
 | `/v1/realtime`, `/client/v1/realtime` | panel, widget, SDKs | as above |
 
 A member session belongs to a person, not to a workspace. Workspace endpoints act on the workspace
@@ -1886,6 +1888,117 @@ in six steps (M15.1–M15.6 in the roadmap). Decisions:
   no record id of any workspace leaves the browser. A load balancer's sticky cookie must skip the
   script and `/client/v1/analytics/`, or the promise of nothing on the device breaks.
 
+### Status pages (M19)
+
+A workspace tells its customers whether its products work: a public status page per product with
+components, incidents and planned maintenance, kept up to date by members, by checks Yuva runs and by
+the product's own servers. Being the support inbox is the point: the widget and the apps show an open
+incident before a customer writes, and the conversations an outage brings are answered together.
+
+- **Pages.** `status_pages` belong to an inbox (one page per inbox at most): name, description, `slug`
+  (unique across the server, `a-z0-9-`, 3–48 characters, reserved words refused), logo (storage), accent
+  colour, site and support links, locale (`en`, `tr`, `de`, …; the page's words follow it), time zone,
+  `history_days` (90), whether uptime is shown, and `published`. An unpublished page answers 404 to
+  everyone but members, who preview it in the panel. Owners and admins manage pages and monitors;
+  agents with access to the inbox open, update and resolve incidents and set component states.
+- **Components.** `status_components` (name, description, optional group from `status_component_groups`,
+  position, `hidden`) have a state: `operational`, `degraded`, `partial_outage`, `major_outage`,
+  `maintenance`. Every change closes the open row of `status_component_states` (component, state,
+  source, started, ended) and opens a new one, in the same transaction as a stored event. The page's
+  overall state is the worst visible component state, `maintenance` only when nothing is worse. Uptime
+  for a day is the share of the day not in `major_outage`, counting `partial_outage` as half and leaving
+  `maintenance` out of the day; a day bar's colour is its worst state. The source is `member`,
+  `api_key`, `monitor` or `incident`.
+- **Incidents and maintenance.** `status_incidents` have a `kind` (`incident`, `maintenance`), title,
+  impact (`none`, `minor`, `major`, `critical`), the components they touch with the state each is set to
+  (`status_incident_components`), and updates (`status_incident_updates`: state, text, author, time).
+  An incident moves `investigating` → `identified` → `monitoring` → `resolved`; maintenance is
+  `scheduled` (with a window) → `in_progress` → `completed`, started and completed on time by a River job
+  unless a member does it first. Text is plain with links and line breaks, at most 5,000 characters, never
+  HTML. A draft (`published_at` null) is seen only in the panel; publishing makes it public and sends
+  notifications. Resolving or completing puts each touched component back to `operational` unless
+  another open incident or a failing monitor holds it. An update that is published cannot be removed,
+  only corrected with a new one or edited with an "edited" mark; an incident can be deleted only as a
+  draft.
+- **The public page.** The server renders it with `html/template` like the list pages, without the
+  panel and without JavaScript, so it loads when the product it describes does not:
+  `<YUVA_PUBLIC_URL>/status/{slug}` (overall state, open incidents and maintenance, components by group
+  with day bars, incidents of the last 14 days), `/status/{slug}/history` (by month),
+  `/status/{slug}/incidents/{id}`, `/status/{slug}/feed.atom`, `/status/{slug}/badge.svg` (overall
+  state, for READMEs) and the JSON `GET /client/v1/status/{slug}` (`Access-Control-Allow-Origin: *`,
+  no credentials). Words come in the page's locale from the server's own catalogue (en, tr, de) and
+  times in the visitor's zone through `<time>` with the page's zone as fallback. One small inline
+  script refreshes the page every 60 seconds; without it the page is complete. Every public answer is
+  cached in the process per page and per language and dropped on the page's next change; it is sent with
+  `Cache-Control: public, max-age=30` so a CDN in front takes an outage's traffic. Rate limit 120
+  requests a minute per address. `frame-ancestors` is `*` on the page so a host may embed it; the badge and
+  JSON have no cookies. When the page names an analytics property of the workspace, the page sends a
+  cookieless page view to it with the analytics script.
+- **Own domain.** A page may name `custom_domain` (`status.example.com`). The owner adds a CNAME to
+  `YUVA_STATUS_CNAME` (unset: the host of `YUVA_PUBLIC_URL`) and a TXT record `_yuva-status.<domain>`
+  with the page's verification value; a River job checks both every 10 minutes until they are seen and
+  every day afterwards, and a domain whose records go away is turned off after 3 days. A request whose
+  `Host` is a verified domain is served that page at `/`. Yuva does not terminate TLS: the operator's
+  proxy issues certificates on demand and asks `GET /status-domains/check?domain=` (200 for a verified
+  domain, 404 otherwise; the Caddy `on_demand_tls` `ask` form). `deploy/` documents Caddy;
+  `YUVA_STATUS_DOMAINS=off` turns the feature off.
+- **Subscribers.** Each page may have e-mail subscribers through a mailing list of its inbox
+  (`status_pages.mailing_list_id`, double opt-in, the list's consent records, `/s/` and `/m/` links and
+  list headers) and choose per incident and per update whether to notify. Who gets which notice
+  (all, or per component), how notices are sent next to broadcasts (they are the person's own request
+  and are not subject to broadcast approval, but use the inbox's sending domain, its suppression list
+  and the per-inbox pace) and the notice design are planned by `yuva-broadcasts` before M19.4. The
+  Atom feed and webhooks need no subscription.
+- **Monitors.** `status_monitors` set a component's state from outside a member's hand. Kinds:
+  - `heartbeat`: the host's job calls `POST` or `GET /ingress/heartbeat/{token}` at least every
+    `interval` plus `grace`; a missed beat fails the monitor, `?fail=1` or `/fail` fails it at once.
+    For servers and cron jobs Yuva cannot reach.
+  - `push`: the host's monitoring sends the state: `POST /ingress/status/{token}` with
+    `{"state":"major_outage","message":"..."}`, or an Alertmanager or Grafana alert webhook body as it
+    is (firing fails, resolved recovers).
+  - `http`: Yuva sends a request (method, headers, body; header values encrypted under the master key)
+    every `interval` (60 seconds at least, `YUVA_STATUS_MIN_INTERVAL` on a hosted server) and expects a
+    status range, optionally a keyword in the first 64 KiB, an answer within `timeout` (at most 30
+    seconds) and, for https, a certificate valid for more than `cert_warn_days`.
+  - `tcp`: a connection to host and port within `timeout`.
+  Outside checks follow the webhook rules for outbound requests (resolve once, refuse loopback, private,
+  link-local, CGNAT and reserved addresses, connect to the resolved address, no proxy; redirects are
+  followed only when the monitor allows it, at most 5, each hop checked again), with
+  `YUVA_WEBHOOK_ALLOW_PRIVATE` lifting the address check on a self-hosted server. A monitor fails after
+  `failure_threshold` failures in a row (default 3) and recovers after `recovery_threshold` successes
+  (default 2); then it sets its component to its failure state (`degraded`, `partial_outage` or
+  `major_outage`) or back, never over a state a member set later than the monitor's last change, and
+  opens a draft incident, a published one, or none (`on_failure`). Checks run on a River queue of
+  their own, at most 20 at a time per process, spread over the interval; results go to
+  `status_checks` (time, ok, duration, status code, error) kept 30 days for the response-time chart.
+  A monitor going down or up notifies the inbox's members like a new conversation does (push, e-mail
+  per their settings). Hosted limits: `YUVA_STATUS_MONITORS` per workspace (unset: 20).
+  Checks run from the server's own place; the page says so nowhere, and a multi-location check is not
+  planned.
+- **Support.** `GET /client/v1/channels/{key}` and the realtime `channel.updated` carry `status` on the
+  inbox: the page URL, the overall state and the open published incidents and running maintenance (id,
+  title, impact, state, last update, URL). The widget and the Swift and Kotlin SDKs show a dismissible
+  line above the conversation list and the composer while one is open. In the panel a conversation can
+  be linked to an incident (`status_incident_conversations`), the incident lists its conversations and
+  their states, and "Reply to linked" sends one reply, written once, to every linked open conversation
+  as the member, then optionally closes them; it is one job per conversation through the normal reply
+  path, so e-mail, chat and app all get it the usual way.
+- **API and access.** `/v1/status-pages`, `/v1/status-pages/{id}/components`, `/groups`,
+  `/incidents`, `/incidents/{id}/updates`, `/incidents/{id}/conversations`, `/monitors`,
+  `/monitors/{id}/checks`; `/v1/status-pages/{id}/preview` renders the public page for members.
+  Scopes `status:read` and `status:manage`; like `analytics:*` they go to keys made after M19 without
+  named scopes, never to existing keys. A key limited to inboxes sees the pages of those inboxes. Stored
+  events and webhook types: `status.component.updated`, `status.incident.created`,
+  `status.incident.updated` (every published update), `status.incident.resolved`,
+  `status.monitor.down`, `status.monitor.up`. MCP tools: `list_status_pages`, `get_status_page`,
+  `set_component_state`, `create_incident`, `post_incident_update`, `resolve_incident`,
+  `list_monitors`; publishing from MCP follows the same draft rule as the panel unless the workspace lets
+  assistants publish incidents.
+- **Lookups before the workspace is known.** A public page finds its page by `status_pages.slug` or a
+  verified `status_pages.custom_domain`, both unique across the server; a heartbeat or push finds its
+  monitor by `status_monitors.token_hash`. Everything after those lookups is scoped by the workspace
+  they returned.
+
 ### Storage
 
 Attachments and raw e-mails in S3-compatible storage (R2, S3, MinIO) or on local disk for a
@@ -1966,6 +2079,10 @@ now; per-channel limits can narrow them later.
     carries neither the key nor the session, asks whether any chat channel allows its origin. A
     contact session token is looked up by its hash in `contact_sessions` before its workspace is
     known. Everything after those lookups is scoped by the workspace they returned.
+  - Status pages (M19): a public page finds its page by `status_pages.slug` or a verified
+    `status_pages.custom_domain`, and a heartbeat or push finds its monitor by
+    `status_monitors.token_hash`, all unique across the server; everything after those lookups is
+    scoped by the workspace they returned.
   - The person-level identity tables `people`, `sessions`, `login_codes`, `passkeys`,
     `webauthn_ceremonies` and `push_subscriptions` (a browser's subscription follows the person
     into every workspace; the send job finds it by its id). A person signs in once and can be a member of several workspaces, so

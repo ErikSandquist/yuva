@@ -310,3 +310,68 @@ answers it and the app shows Answered, then resolves it with Reply and resolve a
 Resolved with no rating asked; the user writes again and it is open in the panel again; an agent sees
 only feedback of inboxes they may see; a member sets In progress and then Done and the app shows each
 in the row and as a line in the thread.
+
+## M19 — Status pages
+
+Status: planned; decisions in `architecture.md` › Status pages (M19). Built in this order, each its own
+issue; each part is done when its Accept holds on a running instance.
+
+### M19.1 — Pages, components and incidents
+
+- Tables, `/v1/status-pages` with components, groups, incidents, maintenance and updates; scopes
+  `status:read`, `status:manage`; stored events and webhook types; MCP tools.
+- The public page rendered by the server: `/status/{slug}`, history, incident pages, Atom feed, badge,
+  `GET /client/v1/status/{slug}`; en, tr, de; cache and rate limit.
+- Panel: a Status section per inbox's page with components, incidents, maintenance, preview and
+  publish.
+
+Accept: an owner makes a page with two components, publishes it and opens `/status/{slug}` signed out;
+an agent opens an incident that sets one component to `major_outage`, posts an update and resolves it,
+and the page, the feed, the badge and the JSON follow each step; a scheduled maintenance starts and
+completes on its own; an agent of another inbox sees neither the page nor its incidents in the panel or
+the API.
+
+### M19.2 — Heartbeats and pushed states
+
+- `heartbeat` and `push` monitors with `/ingress/heartbeat/{token}` and `/ingress/status/{token}`
+  (own JSON, Alertmanager, Grafana); thresholds, draft or published incidents on failure; member
+  notifications; `status.monitor.down` and `.up`.
+
+Accept: a heartbeat monitor whose beats stop sets its component to its failure state and opens a draft
+incident after the grace; beats again bring it back; an Alertmanager firing body fails a push monitor
+and its resolved body recovers it; a member who set a state by hand later than the monitor keeps it.
+
+### M19.3 — Status in the widget, the apps and the inbox
+
+- `status` on the client inbox and `channel.updated`; the line in `<yuva-chat>`, Swift and Kotlin.
+- Linking conversations to an incident, its list of conversations, "Reply to linked".
+
+Accept: while an incident is published the widget and both sample apps show its line and it goes away
+when it is resolved; a member links three conversations (e-mail, chat, app), replies once with "Reply
+to linked" and each contact gets the reply on their own channel.
+
+### M19.4 — E-mail subscribers
+
+- Subscribing from the page with double opt-in into the page's list; notices for incidents and
+  updates as planned by `yuva-broadcasts`; unsubscribe and manage links.
+
+Accept: a simulator address subscribes from the page, confirms, gets a notice for a published incident
+and its resolution and none for a draft or an update sent without notifying, and unsubscribes with one
+click.
+
+### M19.5 — Outside checks
+
+- `http` and `tcp` monitors with the outbound address rules, keyword, certificate expiry, response
+  times in `status_checks` and their chart in the panel; hosted limits.
+
+Accept: an `http` monitor on a URL that starts answering 500 fails after its threshold and recovers;
+a monitor whose URL resolves to a private or metadata address is refused when saved and at check time;
+the panel shows the response times of the last 24 hours.
+
+### M19.6 — Own domains
+
+- `custom_domain` with CNAME and TXT checks, `/status-domains/check` for on-demand TLS, the Caddy
+  example in `deploy/`.
+
+Accept: a page on a verified domain answers at `/` behind Caddy with a certificate issued on demand; an
+unverified or removed domain gets 404 from the check and no certificate.
