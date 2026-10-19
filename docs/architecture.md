@@ -1930,7 +1930,8 @@ incident before a customer writes, and the conversations an outage brings are an
   times in the visitor's zone through `<time>` with the page's zone as fallback. One small inline
   script refreshes the page every 60 seconds; without it the page is complete. Every public answer is
   cached in the process per page and per language and dropped on the page's next change; it is sent with
-  `Cache-Control: public, max-age=30` so a CDN in front takes an outage's traffic. Rate limit 120
+  `Cache-Control: public, max-age=30, stale-if-error=86400` so a CDN in front takes an outage's traffic
+  and keeps serving the last page for a day when this server cannot answer. Rate limit 120
   requests a minute per address. `frame-ancestors` is `*` on the page so a host may embed it; the badge and
   JSON have no cookies. The status URL is `YUVA_STATUS_URL` (an origin such as
   `https://status.example.com`, served by the same server when requests for its host reach it; unset:
@@ -2133,8 +2134,13 @@ incident before a customer writes, and the conversations an outage brings are an
   `status_checks` (time, ok, duration, status code, error) kept 30 days for the response-time chart.
   A monitor going down or up notifies the inbox's members like a new conversation does (push, e-mail
   per their settings). Hosted limits: `YUVA_STATUS_MONITORS` per workspace (unset: 20).
-  Checks run from the server's own place; the page says so nowhere, and a multi-location check is not
-  planned.
+  Checks run from the server's own place and a multi-location check is not planned, so the server
+  tells its own trouble from its customers': each round also checks `YUVA_STATUS_CANARY_URLS` (unset:
+  two well-known public URLs) and, when every canary fails or more than half of the round's outside
+  checks fail (at least 10 of them), the round's failures are dropped, no state changes, the operator
+  gets a log line and the `yuva_status_rounds_dropped_total` metric; heartbeats and pushes are not
+  affected by this, but a heartbeat whose beats stop while the server itself was not taking requests
+  (its own start within the grace) waits one more interval.
 - **Support.** `GET /client/v1/channels/{key}` and the realtime `channel.updated` carry `status` on the
   inbox: the page URL, the overall state and the open published incidents and running maintenance (id,
   title, impact, state, last update, URL). The widget and the Swift and Kotlin SDKs show a dismissible
