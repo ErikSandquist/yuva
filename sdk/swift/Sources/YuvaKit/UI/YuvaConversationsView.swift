@@ -141,6 +141,7 @@ public struct YuvaConversationsView: View {
     public var body: some View {
         NavigationStack(path: $path) {
             content
+                .safeAreaInset(edge: .top, spacing: 0) { YuvaStatusLine(status: model.session?.inbox.status) }
                 .navigationTitle(navigationTitle)
                 #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)

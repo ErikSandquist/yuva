@@ -43,6 +43,97 @@ public struct YuvaBranding: Codable, Sendable, Hashable {
     public let greeting: String?
 }
 
+public enum YuvaStatusImpact: String, Codable, Sendable, Comparable {
+    case none, minor, major, critical
+
+    public init(from decoder: any Decoder) throws {
+        let raw = try decoder.singleValueContainer().decode(String.self)
+        self = Self(rawValue: raw) ?? .none
+    }
+
+    var rank: Int {
+        switch self {
+        case .none: 0
+        case .minor: 1
+        case .major: 2
+        case .critical: 3
+        }
+    }
+
+    public static func < (lhs: Self, rhs: Self) -> Bool { lhs.rank < rhs.rank }
+}
+
+public enum YuvaStatusKind: String, Codable, Sendable {
+    case incident, maintenance
+
+    public init(from decoder: any Decoder) throws {
+        let raw = try decoder.singleValueContainer().decode(String.self)
+        self = Self(rawValue: raw) ?? .incident
+    }
+}
+
+public enum YuvaStatusState: String, Codable, Sendable {
+    case investigating, identified, monitoring, resolved, scheduled, inProgress = "in_progress", completed, unknown
+
+    public init(from decoder: any Decoder) throws {
+        let raw = try decoder.singleValueContainer().decode(String.self)
+        self = Self(rawValue: raw) ?? .unknown
+    }
+}
+
+public struct YuvaStatusIncident: Codable, Sendable, Identifiable, Hashable {
+    public let id: String
+    public let kind: YuvaStatusKind
+    public let title: String
+    public let impact: YuvaStatusImpact
+    public let state: YuvaStatusState
+    public let updatedAt: Date
+    public let url: String
+
+    public init(
+        id: String, kind: YuvaStatusKind = .incident, title: String, impact: YuvaStatusImpact = .minor,
+        state: YuvaStatusState = .investigating, updatedAt: Date, url: String
+    ) {
+        self.id = id
+        self.kind = kind
+        self.title = title
+        self.impact = impact
+        self.state = state
+        self.updatedAt = updatedAt
+        self.url = url
+    }
+}
+
+public struct YuvaInboxStatus: Codable, Sendable, Hashable {
+    public let url: String
+    public let open: [YuvaStatusIncident]
+
+    public init(url: String, open: [YuvaStatusIncident]) {
+        self.url = url
+        self.open = open
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        url = (try? container.decode(String.self, forKey: .url)) ?? ""
+        var decoded: [YuvaStatusIncident] = []
+        if var list = try? container.nestedUnkeyedContainer(forKey: .open) {
+            while !list.isAtEnd {
+                if let incident = try? list.decode(YuvaStatusIncident.self) {
+                    decoded.append(incident)
+                } else {
+                    _ = try? list.decode(Skipped.self)
+                }
+            }
+        }
+        open = decoded
+    }
+
+    private struct Skipped: Decodable {}
+
+    enum CodingKeys: String, CodingKey { case url, open }
+}
+
 public struct YuvaInbox: Codable, Sendable {
     public let id: String
     public let name: String
@@ -53,6 +144,7 @@ public struct YuvaInbox: Codable, Sendable {
     public let openNow: Bool
     public let expectedReplyMinutes: Int?
     public let presence: YuvaPresence?
+    public let status: YuvaInboxStatus?
     private let feedbackCategoryNames: [String]?
     private let askForRatingValue: Bool?
 
@@ -63,7 +155,7 @@ public struct YuvaInbox: Codable, Sendable {
     }
 
     enum CodingKeys: String, CodingKey {
-        case id, name, branding, defaultLocale, timezone, mode, openNow, expectedReplyMinutes, presence
+        case id, name, branding, defaultLocale, timezone, mode, openNow, expectedReplyMinutes, presence, status
         case feedbackCategoryNames = "feedbackCategories"
         case askForRatingValue = "askForRating"
     }

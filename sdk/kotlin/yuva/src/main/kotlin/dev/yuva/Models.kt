@@ -9,6 +9,9 @@ import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonDecoder
+import kotlinx.serialization.json.decodeFromJsonElement
 
 internal object InstantSerializer : KSerializer<Instant> {
     override val descriptor = PrimitiveSerialDescriptor("Instant", PrimitiveKind.STRING)
@@ -103,6 +106,82 @@ data class YuvaPresence(val available: Boolean, val members: List<YuvaMember> = 
 @Serializable
 data class YuvaBranding(val color: String? = null, val logoUrl: String? = null, val greeting: String? = null)
 
+internal open class WireEnumSerializer<T : Enum<T>>(
+    name: String,
+    private val entries: List<T>,
+    private val wire: (T) -> String,
+    private val fallback: T,
+) : KSerializer<T> {
+    override val descriptor = PrimitiveSerialDescriptor(name, PrimitiveKind.STRING)
+    override fun serialize(encoder: Encoder, value: T) = encoder.encodeString(wire(value))
+    override fun deserialize(decoder: Decoder): T {
+        val raw = decoder.decodeString()
+        return entries.firstOrNull { wire(it) == raw } ?: fallback
+    }
+}
+
+@Serializable(YuvaStatusImpactSerializer::class)
+enum class YuvaStatusImpact(internal val wire: String) {
+    NONE("none"),
+    MINOR("minor"),
+    MAJOR("major"),
+    CRITICAL("critical"),
+}
+
+internal object YuvaStatusImpactSerializer :
+    WireEnumSerializer<YuvaStatusImpact>("YuvaStatusImpact", YuvaStatusImpact.entries, { it.wire }, YuvaStatusImpact.NONE)
+
+@Serializable(YuvaStatusKindSerializer::class)
+enum class YuvaStatusKind(internal val wire: String) {
+    INCIDENT("incident"),
+    MAINTENANCE("maintenance"),
+}
+
+internal object YuvaStatusKindSerializer :
+    WireEnumSerializer<YuvaStatusKind>("YuvaStatusKind", YuvaStatusKind.entries, { it.wire }, YuvaStatusKind.INCIDENT)
+
+@Serializable(YuvaStatusStateSerializer::class)
+enum class YuvaStatusState(internal val wire: String) {
+    INVESTIGATING("investigating"),
+    IDENTIFIED("identified"),
+    MONITORING("monitoring"),
+    RESOLVED("resolved"),
+    SCHEDULED("scheduled"),
+    IN_PROGRESS("in_progress"),
+    COMPLETED("completed"),
+    UNKNOWN(""),
+}
+
+internal object YuvaStatusStateSerializer :
+    WireEnumSerializer<YuvaStatusState>("YuvaStatusState", YuvaStatusState.entries, { it.wire }, YuvaStatusState.UNKNOWN)
+
+@Serializable
+data class YuvaStatusIncident(
+    val id: String,
+    val kind: YuvaStatusKind = YuvaStatusKind.INCIDENT,
+    val title: String,
+    val impact: YuvaStatusImpact = YuvaStatusImpact.NONE,
+    val state: YuvaStatusState = YuvaStatusState.UNKNOWN,
+    @Serializable(InstantSerializer::class) val updatedAt: Instant,
+    val url: String = "",
+)
+
+internal object LossyIncidentsSerializer : KSerializer<List<YuvaStatusIncident>> {
+    override val descriptor = PrimitiveSerialDescriptor("YuvaStatusIncidents", PrimitiveKind.STRING)
+    override fun serialize(encoder: Encoder, value: List<YuvaStatusIncident>) = Unit
+    override fun deserialize(decoder: Decoder): List<YuvaStatusIncident> {
+        val input = decoder as JsonDecoder
+        val array = input.decodeJsonElement() as? JsonArray ?: return emptyList()
+        return array.mapNotNull { runCatching { input.json.decodeFromJsonElement<YuvaStatusIncident>(it) }.getOrNull() }
+    }
+}
+
+@Serializable
+data class YuvaInboxStatus(
+    val url: String = "",
+    @Serializable(LossyIncidentsSerializer::class) val open: List<YuvaStatusIncident> = emptyList(),
+)
+
 @Serializable
 data class YuvaInbox(
     val id: String,
@@ -114,6 +193,7 @@ data class YuvaInbox(
     val openNow: Boolean = true,
     val expectedReplyMinutes: Int? = null,
     val presence: YuvaPresence? = null,
+    val status: YuvaInboxStatus? = null,
     @SerialName("feedback_categories") internal val feedbackCategoryNames: List<String> = emptyList(),
     val askForRating: Boolean = false,
 ) {

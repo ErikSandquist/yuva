@@ -617,6 +617,7 @@ fun YuvaThreadView(
                     }
                 }
             }
+            YuvaStatusLine(state.inbox?.status)
             Composer(
                 text = text,
                 uploads = uploads,

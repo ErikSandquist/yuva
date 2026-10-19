@@ -332,72 +332,75 @@ private fun ConversationsList(
             }
         },
     ) { padding ->
-        Box(Modifier.fillMaxSize().padding(padding)) {
-            when {
-                state.loading -> CircularProgressIndicator(Modifier.align(Alignment.Center))
-                state.failed -> Placeholder(
-                    title = stringResource(R.string.yuva_error_generic),
-                    action = stringResource(R.string.yuva_error_retry),
-                    onAction = { scope.launch { state.load() } },
-                )
-                section == YuvaConversationsSection.FEEDBACK && state.feedback.isEmpty() -> Placeholder(
-                    title = stringResource(R.string.yuva_feedback_kind),
-                    icon = YuvaIcons.Lightbulb,
-                    action = stringResource(R.string.yuva_feedback_title),
-                    onAction = { onRoute(Route.FeedbackForm) },
-                )
-                section == YuvaConversationsSection.MESSAGES && state.messages.isEmpty() ||
-                    section == null && state.messages.isEmpty() && !state.hasFeedback -> Placeholder(
-                    title = stringResource(R.string.yuva_conversations_empty),
-                    icon = YuvaIcons.Chat,
-                    hint = stringResource(R.string.yuva_conversations_empty_hint),
-                    action = stringResource(R.string.yuva_conversations_new),
-                    onAction = { onRoute(Route.Thread(null)) },
-                )
-                else -> {
-                    val items = state.items(tab)
-                    LazyColumn(
-                        Modifier.fillMaxSize(),
-                        state = listState,
-                        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 96.dp),
-                        verticalArrangement = Arrangement.spacedBy(4.dp),
-                    ) {
-                        val inbox = state.session?.inbox
-                        if (!showsFeedback && inbox != null) {
-                            item(key = "presence") { PresenceLine(inbox, Modifier.padding(start = 4.dp, bottom = 12.dp)) }
-                        }
-                        if (section == null && state.hasFeedback) {
-                            item(key = "tabs") {
-                                ConnectedToggleGroup(
-                                    options = ConversationsTab.entries,
-                                    selected = tab,
-                                    onSelect = onTab,
-                                    label = {
-                                        stringResource(
-                                            if (it == ConversationsTab.MESSAGES) R.string.yuva_conversations_messages
-                                            else R.string.yuva_feedback_kind,
-                                        )
-                                    },
-                                    tag = { "yuva.conversations.tab." + it.name.lowercase() },
-                                    modifier = Modifier.padding(bottom = 16.dp),
-                                )
+        Column(Modifier.fillMaxSize().padding(padding)) {
+            YuvaStatusLine(state.session?.inbox?.status)
+            Box(Modifier.weight(1f).fillMaxWidth()) {
+                when {
+                    state.loading -> CircularProgressIndicator(Modifier.align(Alignment.Center))
+                    state.failed -> Placeholder(
+                        title = stringResource(R.string.yuva_error_generic),
+                        action = stringResource(R.string.yuva_error_retry),
+                        onAction = { scope.launch { state.load() } },
+                    )
+                    section == YuvaConversationsSection.FEEDBACK && state.feedback.isEmpty() -> Placeholder(
+                        title = stringResource(R.string.yuva_feedback_kind),
+                        icon = YuvaIcons.Lightbulb,
+                        action = stringResource(R.string.yuva_feedback_title),
+                        onAction = { onRoute(Route.FeedbackForm) },
+                    )
+                    section == YuvaConversationsSection.MESSAGES && state.messages.isEmpty() ||
+                        section == null && state.messages.isEmpty() && !state.hasFeedback -> Placeholder(
+                        title = stringResource(R.string.yuva_conversations_empty),
+                        icon = YuvaIcons.Chat,
+                        hint = stringResource(R.string.yuva_conversations_empty_hint),
+                        action = stringResource(R.string.yuva_conversations_new),
+                        onAction = { onRoute(Route.Thread(null)) },
+                    )
+                    else -> {
+                        val items = state.items(tab)
+                        LazyColumn(
+                            Modifier.fillMaxSize(),
+                            state = listState,
+                            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 96.dp),
+                            verticalArrangement = Arrangement.spacedBy(4.dp),
+                        ) {
+                            val inbox = state.session?.inbox
+                            if (!showsFeedback && inbox != null) {
+                                item(key = "presence") { PresenceLine(inbox, Modifier.padding(start = 4.dp, bottom = 12.dp)) }
                             }
-                        }
-                        itemsIndexed(items, key = { _, it -> it.id }) { index, conversation ->
-                            val shape = groupShape(index, items.size)
-                            val tile = Modifier.animateItem(
-                                fadeInSpec = spring(stiffness = Spring.StiffnessMediumLow),
-                                placementSpec = spring(dampingRatio = 0.75f, stiffness = Spring.StiffnessMediumLow),
-                            )
-                            if (conversation.isFeedback) {
-                                FeedbackRow(conversation, shape, tileColor, tile) { onRoute(Route.Thread(conversation.id)) }
-                            } else {
-                                ConversationRow(conversation, state.session?.inbox, shape, tileColor, tile) {
-                                    onRoute(Route.Thread(conversation.id))
+                            if (section == null && state.hasFeedback) {
+                                item(key = "tabs") {
+                                    ConnectedToggleGroup(
+                                        options = ConversationsTab.entries,
+                                        selected = tab,
+                                        onSelect = onTab,
+                                        label = {
+                                            stringResource(
+                                                if (it == ConversationsTab.MESSAGES) R.string.yuva_conversations_messages
+                                                else R.string.yuva_feedback_kind,
+                                            )
+                                        },
+                                        tag = { "yuva.conversations.tab." + it.name.lowercase() },
+                                        modifier = Modifier.padding(bottom = 16.dp),
+                                    )
                                 }
                             }
-                            if (conversation.id == items.lastOrNull()?.id) {
-                                LaunchedEffect(conversation.id, tab) { state.loadMore(tab) }
+                            itemsIndexed(items, key = { _, it -> it.id }) { index, conversation ->
+                                val shape = groupShape(index, items.size)
+                                val tile = Modifier.animateItem(
+                                    fadeInSpec = spring(stiffness = Spring.StiffnessMediumLow),
+                                    placementSpec = spring(dampingRatio = 0.75f, stiffness = Spring.StiffnessMediumLow),
+                                )
+                                if (conversation.isFeedback) {
+                                    FeedbackRow(conversation, shape, tileColor, tile) { onRoute(Route.Thread(conversation.id)) }
+                                } else {
+                                    ConversationRow(conversation, state.session?.inbox, shape, tileColor, tile) {
+                                        onRoute(Route.Thread(conversation.id))
+                                    }
+                                }
+                                if (conversation.id == items.lastOrNull()?.id) {
+                                    LaunchedEffect(conversation.id, tab) { state.loadMore(tab) }
+                                }
                             }
                         }
                     }

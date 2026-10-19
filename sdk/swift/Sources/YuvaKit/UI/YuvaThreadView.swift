@@ -264,7 +264,12 @@ public struct YuvaThreadView: View {
             }
             messages
         }
-        .bottomBar { composer }
+        .bottomBar {
+            VStack(spacing: 0) {
+                YuvaStatusLine(status: model.inbox?.status)
+                composer
+            }
+        }
         .sensoryFeedback(.impact(weight: .light), trigger: sent)
         #if os(iOS)
         .fullScreenCover(item: $viewing) { ImageViewer(client: model.client, attachment: $0) }
