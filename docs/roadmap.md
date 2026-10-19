@@ -390,3 +390,5 @@ the panel shows the response times of the last 24 hours.
 Accept: a page on a verified domain answers at `/` behind Caddy with a certificate issued on demand, and
 on a server behind Cloudflare with the custom hostname active; an unverified or removed domain gets 404
 from the check and is not (or no longer) a custom hostname.
+
+Status: done, issue #100; verified on 2026-10-19 at `9290284`: behind Caddy on demand, and on useyuva.com with a Cloudflare custom hostname and certificate active.
