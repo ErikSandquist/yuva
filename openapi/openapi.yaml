@@ -426,8 +426,10 @@ paths:
       summary: Ask whether a status page domain is verified
       description: |
         For the operator's TLS proxy issuing certificates on demand (Caddy `on_demand_tls` `ask`):
-        `200` when `domain` is a status page's verified own domain, `404` otherwise, also when the
-        server's `YUVA_STATUS_DOMAINS` is not `ask`.
+        `200` when `domain` is the verified own domain of a published status page in a live workspace,
+        `404` otherwise, also when the server's `YUVA_STATUS_DOMAINS` is not `ask`. It is public and
+        reveals only domains that already serve public pages. Up to 120 requests a minute per IP
+        address (`429 rate_limited`).
       tags: [status]
       security: []
       parameters:
@@ -446,6 +448,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/StatusDomainCheck"
         "404":
+          $ref: "#/components/responses/Problem"
+        "429":
           $ref: "#/components/responses/Problem"
   /readyz:
     get:
@@ -24572,7 +24576,10 @@ components:
           $ref: "#/components/schemas/StatusPageSlug"
         url:
           type: string
-          description: The public page, on its verified own domain when it has one, else at the server's status URL.
+          description: |
+            The public page: on its own domain once that is verified (with `YUVA_STATUS_DOMAINS=cloudflare`,
+            once its Cloudflare custom hostname and certificate are both `active`), else at the server's
+            status URL.
         logo_url:
           type: string
         accent_color:
@@ -24612,9 +24619,12 @@ components:
       description: |
         `pending`: the CNAME and TXT records were not seen yet (checked every 10 minutes).
         `failed`: the last check found them but they name another target or value (checked every 10
-        minutes). `verified`: both were seen; the domain serves the page (checked every day).
-        `off`: a verified domain whose records were gone for 3 days; it no longer serves the page and
-        is not checked again until `custom_domain` is set again.
+        minutes); or, no longer checked until `custom_domain` is sent again, another page verified the
+        domain first (`problem` `taken`) or the claim was not verified within 7 days (`problem`
+        `expired`). `verified`: both were seen; the domain serves the page (checked every day). Only
+        a verified domain holds its name: any number of pages may claim a domain while it is pending
+        or failed. `off`: a verified domain whose records were gone for 3 days; it no longer serves
+        the page and is not checked again until `custom_domain` is set again.
       enum: [pending, verified, failed, off]
       x-enum-varnames: [StatusDomainPending, StatusDomainVerified, StatusDomainFailed, StatusDomainOff]
     StatusCustomDomain:
@@ -24646,7 +24656,10 @@ components:
           x-enum-varnames: [StatusCertificatesAsk, StatusCertificatesCloudflare]
         problem:
           type: string
-          description: What the last check that did not verify the domain saw, in English.
+          description: |
+            `taken` or `expired` for a `failed` claim that is no longer checked (see
+            `StatusDomainState`), else what the last check that did not verify the domain saw, in
+            English.
         checked_at:
           type: string
           format: date-time
@@ -24839,12 +24852,13 @@ components:
           maxLength: 253
           description: |
             A hostname such as `status.example.com`, `null` to remove it. It must not be or contain
-            one of the server's own hosts, and is unique across the server (`409 domain_taken`). A new
-            domain starts `pending` with a new verification value and is checked at once; setting the
-            same domain again checks it at once and, when it was `off`, starts it over. At most
-            `YUVA_STATUS_DOMAIN_LIMIT` pages of a workspace have one on a hosted server
-            (`403 status_domain_limit`). Refused with `400` when the server's `YUVA_STATUS_DOMAINS` is
-            `off`.
+            one of the server's own hosts, and must not be another page's verified domain
+            (`409 domain_taken`). A new domain starts `pending` with a new verification value and is
+            checked at once; setting the same domain again checks a verified one at once and starts
+            any other over (same value, 7 more days). At most `YUVA_STATUS_DOMAIN_LIMIT` pages of a
+            workspace have a domain that is not `off` (`403 status_domain_limit`). When the server's
+            `YUVA_STATUS_DOMAINS` is `off`, only `null`, an empty string or the page's current domain
+            are accepted.
           examples: [status.example.com]
     StatusPageRef:
       type: object

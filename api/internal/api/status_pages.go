@@ -68,10 +68,7 @@ type StatusSettings struct {
 	AllowPrivate bool
 	// RootCAs replaces the system roots for https checks; nil uses the system's.
 	RootCAs *x509.CertPool
-	// Domains is YUVA_STATUS_DOMAINS: ask (also when empty), cloudflare or off. CNAME is the target
-	// own domains point at; empty means the public URL's host. DomainLimit caps a workspace's own
-	// domains, 0 meaning no limit. Cloudflare registers verified domains in cloudflare mode.
-	// Resolver looks the records up; nil uses the system's.
+
 	Domains     string
 	CNAME       string
 	DomainLimit int
@@ -96,7 +93,7 @@ func statusUniqueConflict(err error) error {
 		return errStatusPageExists
 	case "status_pages_slug_key", "status_page_slugs_pkey":
 		return errStatusSlugTaken
-	case "status_pages_custom_domain_key":
+	case "status_pages_custom_domain_verified_key":
 		return errStatusDomainTaken
 	}
 	return err
@@ -365,10 +362,14 @@ func (s *Server) UpdateStatusPage(ctx context.Context, req oas.UpdateStatusPageR
 	}
 	b := req.Body
 	var out oas.StatusPage
+	var hosts []string
 	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, ev *eventBatch) error {
 		cur, err := visibleStatusPage(ctx, q, p, req.PageId, true)
 		if err != nil {
 			return err
+		}
+		if cur.CustomDomain != nil {
+			hosts = append(hosts, *cur.CustomDomain)
 		}
 		f := statusPageFields{
 			name: cur.Name, description: cur.Description, slug: cur.Slug, locale: cur.Locale, timezone: cur.Timezone,
@@ -442,6 +443,9 @@ func (s *Server) UpdateStatusPage(ctx context.Context, req oas.UpdateStatusPageR
 			if pg, err = s.setStatusDomain(ctx, q, ev, pg, raw); err != nil {
 				return err
 			}
+			if pg.CustomDomain != nil {
+				hosts = append(hosts, *pg.CustomDomain)
+			}
 		}
 		out, err = s.statusPageOut(ctx, q, pg)
 		return err
@@ -449,6 +453,7 @@ func (s *Server) UpdateStatusPage(ctx context.Context, req oas.UpdateStatusPageR
 	if err != nil {
 		return nil, statusUniqueConflict(err)
 	}
+	s.statusDomainCache.forget(req.PageId, hosts...)
 	s.statusHint(ctx, p.workspaceID, out.InboxId)
 	return oas.UpdateStatusPage200JSONResponse(out), nil
 }
@@ -481,9 +486,7 @@ func (s *Server) DeleteStatusPage(ctx context.Context, req oas.DeleteStatusPageR
 		return nil, err
 	}
 	s.statusCache.forget(pg.ID)
-	if pg.CustomDomain != nil {
-		s.statusDomainCache.forget(*pg.CustomDomain)
-	}
+	s.statusDomainCache.forget(pg.ID)
 	s.statusHint(ctx, p.workspaceID, pg.InboxID)
 	return oas.DeleteStatusPage204Response{}, nil
 }

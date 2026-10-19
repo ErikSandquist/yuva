@@ -541,7 +541,7 @@ INSERT INTO status_pages (id, workspace_id, inbox_id, name, description, slug, l
     locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at)
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,
     $10, $11, $12, $13, $14, $15, $16, $16, $16)
-RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at
+RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at, domain_claimed_at
 `
 
 type CreateStatusPageParams struct {
@@ -617,6 +617,7 @@ func (q *Queries) CreateStatusPage(ctx context.Context, arg CreateStatusPagePara
 		&i.CfSslStatus,
 		&i.CfErrors,
 		&i.CfCheckedAt,
+		&i.DomainClaimedAt,
 	)
 	return i, err
 }
@@ -773,7 +774,7 @@ func (q *Queries) EndStatusComponentState(ctx context.Context, arg EndStatusComp
 }
 
 const findStatusPageByFormerSlug = `-- name: FindStatusPageByFormerSlug :one
-SELECT p.id, p.workspace_id, p.inbox_id, p.name, p.description, p.slug, p.logo_url, p.accent_color, p.site_url, p.support_url, p.locale, p.timezone, p.history_days, p.show_uptime, p.published, p.changed_at, p.created_at, p.updated_at, p.mailing_list_id, p.email_enabled, p.custom_domain, p.domain_token, p.domain_state, p.domain_problem, p.domain_checked_at, p.domain_check_at, p.domain_verified_at, p.domain_missing_since, p.cf_hostname_id, p.cf_status, p.cf_ssl_status, p.cf_errors, p.cf_checked_at FROM status_page_slugs s
+SELECT p.id, p.workspace_id, p.inbox_id, p.name, p.description, p.slug, p.logo_url, p.accent_color, p.site_url, p.support_url, p.locale, p.timezone, p.history_days, p.show_uptime, p.published, p.changed_at, p.created_at, p.updated_at, p.mailing_list_id, p.email_enabled, p.custom_domain, p.domain_token, p.domain_state, p.domain_problem, p.domain_checked_at, p.domain_check_at, p.domain_verified_at, p.domain_missing_since, p.cf_hostname_id, p.cf_status, p.cf_ssl_status, p.cf_errors, p.cf_checked_at, p.domain_claimed_at FROM status_page_slugs s
 JOIN status_pages p ON p.workspace_id = s.workspace_id AND p.id = s.page_id
 WHERE s.slug = $1
 `
@@ -816,12 +817,13 @@ func (q *Queries) FindStatusPageByFormerSlug(ctx context.Context, slug string) (
 		&i.CfSslStatus,
 		&i.CfErrors,
 		&i.CfCheckedAt,
+		&i.DomainClaimedAt,
 	)
 	return i, err
 }
 
 const findStatusPageBySlug = `-- name: FindStatusPageBySlug :one
-SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at FROM status_pages WHERE slug = $1
+SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at, domain_claimed_at FROM status_pages WHERE slug = $1
 `
 
 // The documented exception: a public page is found by its slug before its workspace is known.
@@ -862,6 +864,7 @@ func (q *Queries) FindStatusPageBySlug(ctx context.Context, slug string) (Status
 		&i.CfSslStatus,
 		&i.CfErrors,
 		&i.CfCheckedAt,
+		&i.DomainClaimedAt,
 	)
 	return i, err
 }
@@ -893,7 +896,7 @@ func (q *Queries) FinishStatusReplyTarget(ctx context.Context, arg FinishStatusR
 }
 
 const getInboxStatusPage = `-- name: GetInboxStatusPage :one
-SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at FROM status_pages WHERE workspace_id = $1 AND inbox_id = $2
+SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at, domain_claimed_at FROM status_pages WHERE workspace_id = $1 AND inbox_id = $2
 `
 
 type GetInboxStatusPageParams struct {
@@ -938,6 +941,7 @@ func (q *Queries) GetInboxStatusPage(ctx context.Context, arg GetInboxStatusPage
 		&i.CfSslStatus,
 		&i.CfErrors,
 		&i.CfCheckedAt,
+		&i.DomainClaimedAt,
 	)
 	return i, err
 }
@@ -1061,7 +1065,7 @@ func (q *Queries) GetStatusIncidentReply(ctx context.Context, arg GetStatusIncid
 }
 
 const getStatusPage = `-- name: GetStatusPage :one
-SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at FROM status_pages WHERE workspace_id = $1 AND id = $2
+SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at, domain_claimed_at FROM status_pages WHERE workspace_id = $1 AND id = $2
 `
 
 type GetStatusPageParams struct {
@@ -1106,12 +1110,13 @@ func (q *Queries) GetStatusPage(ctx context.Context, arg GetStatusPageParams) (S
 		&i.CfSslStatus,
 		&i.CfErrors,
 		&i.CfCheckedAt,
+		&i.DomainClaimedAt,
 	)
 	return i, err
 }
 
 const getStatusPageByList = `-- name: GetStatusPageByList :one
-SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at FROM status_pages WHERE workspace_id = $1 AND mailing_list_id = $2
+SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at, domain_claimed_at FROM status_pages WHERE workspace_id = $1 AND mailing_list_id = $2
 `
 
 type GetStatusPageByListParams struct {
@@ -1156,6 +1161,7 @@ func (q *Queries) GetStatusPageByList(ctx context.Context, arg GetStatusPageByLi
 		&i.CfSslStatus,
 		&i.CfErrors,
 		&i.CfCheckedAt,
+		&i.DomainClaimedAt,
 	)
 	return i, err
 }
@@ -1240,7 +1246,7 @@ func (q *Queries) LinkStatusIncidentConversation(ctx context.Context, arg LinkSt
 }
 
 const listConversationIncidents = `-- name: ListConversationIncidents :many
-SELECT i.id, i.workspace_id, i.page_id, i.kind, i.title, i.impact, i.state, i.scheduled_start, i.scheduled_end, i.published_at, i.started_at, i.resolved_at, i.created_by, i.created_at, i.updated_at, i.notify, p.name AS page_name, p.slug AS page_slug, p.custom_domain AS page_domain, p.domain_state AS page_domain_state, l.linked_at FROM status_incident_conversations l
+SELECT i.id, i.workspace_id, i.page_id, i.kind, i.title, i.impact, i.state, i.scheduled_start, i.scheduled_end, i.published_at, i.started_at, i.resolved_at, i.created_by, i.created_at, i.updated_at, i.notify, p.name AS page_name, p.slug AS page_slug, p.custom_domain AS page_domain, p.domain_state AS page_domain_state, p.cf_status AS page_cf_status, p.cf_ssl_status AS page_cf_ssl_status, l.linked_at FROM status_incident_conversations l
 JOIN status_incidents i ON i.workspace_id = l.workspace_id AND i.id = l.incident_id
 JOIN status_pages p ON p.workspace_id = i.workspace_id AND p.id = i.page_id
 WHERE l.workspace_id = $1 AND l.conversation_id = $2
@@ -1263,6 +1269,8 @@ type ListConversationIncidentsRow struct {
 	PageSlug        string
 	PageDomain      *string
 	PageDomainState *string
+	PageCfStatus    *string
+	PageCfSslStatus *string
 	LinkedAt        time.Time
 }
 
@@ -1301,6 +1309,8 @@ func (q *Queries) ListConversationIncidents(ctx context.Context, arg ListConvers
 			&i.PageSlug,
 			&i.PageDomain,
 			&i.PageDomainState,
+			&i.PageCfStatus,
+			&i.PageCfSslStatus,
 			&i.LinkedAt,
 		); err != nil {
 			return nil, err
@@ -1775,7 +1785,7 @@ func (q *Queries) ListStatusIncidentsByIDs(ctx context.Context, arg ListStatusIn
 }
 
 const listStatusPages = `-- name: ListStatusPages :many
-SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at FROM status_pages p
+SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at, domain_claimed_at FROM status_pages p
 WHERE p.workspace_id = $1
   AND ($2::uuid IS NULL OR p.inbox_id = $2::uuid)
   AND ($3::bool OR EXISTS (
@@ -1839,6 +1849,7 @@ func (q *Queries) ListStatusPages(ctx context.Context, arg ListStatusPagesParams
 			&i.CfSslStatus,
 			&i.CfErrors,
 			&i.CfCheckedAt,
+			&i.DomainClaimedAt,
 		); err != nil {
 			return nil, err
 		}
@@ -2086,7 +2097,7 @@ func (q *Queries) LockStatusIncident(ctx context.Context, arg LockStatusIncident
 }
 
 const lockStatusPage = `-- name: LockStatusPage :one
-SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at FROM status_pages WHERE workspace_id = $1 AND id = $2 FOR UPDATE
+SELECT id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at, domain_claimed_at FROM status_pages WHERE workspace_id = $1 AND id = $2 FOR UPDATE
 `
 
 type LockStatusPageParams struct {
@@ -2131,6 +2142,7 @@ func (q *Queries) LockStatusPage(ctx context.Context, arg LockStatusPageParams) 
 		&i.CfSslStatus,
 		&i.CfErrors,
 		&i.CfCheckedAt,
+		&i.DomainClaimedAt,
 	)
 	return i, err
 }
@@ -2269,7 +2281,7 @@ const setStatusPageEmail = `-- name: SetStatusPageEmail :one
 UPDATE status_pages SET mailing_list_id = $1, email_enabled = $2,
     changed_at = greatest(changed_at + interval '1 microsecond', $3::timestamptz), updated_at = $3
 WHERE workspace_id = $4 AND id = $5
-RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at
+RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at, domain_claimed_at
 `
 
 type SetStatusPageEmailParams struct {
@@ -2323,6 +2335,7 @@ func (q *Queries) SetStatusPageEmail(ctx context.Context, arg SetStatusPageEmail
 		&i.CfSslStatus,
 		&i.CfErrors,
 		&i.CfCheckedAt,
+		&i.DomainClaimedAt,
 	)
 	return i, err
 }
@@ -2657,7 +2670,7 @@ UPDATE status_pages SET name = $1, description = $2, slug = $3, logo_url = $4,
     locale = $8, timezone = $9, history_days = $10, show_uptime = $11, published = $12,
     changed_at = greatest(changed_at + interval '1 microsecond', $13::timestamptz), updated_at = $13
 WHERE workspace_id = $14 AND id = $15
-RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at
+RETURNING id, workspace_id, inbox_id, name, description, slug, logo_url, accent_color, site_url, support_url, locale, timezone, history_days, show_uptime, published, changed_at, created_at, updated_at, mailing_list_id, email_enabled, custom_domain, domain_token, domain_state, domain_problem, domain_checked_at, domain_check_at, domain_verified_at, domain_missing_since, cf_hostname_id, cf_status, cf_ssl_status, cf_errors, cf_checked_at, domain_claimed_at
 `
 
 type UpdateStatusPageParams struct {
@@ -2731,6 +2744,7 @@ func (q *Queries) UpdateStatusPage(ctx context.Context, arg UpdateStatusPagePara
 		&i.CfSslStatus,
 		&i.CfErrors,
 		&i.CfCheckedAt,
+		&i.DomainClaimedAt,
 	)
 	return i, err
 }

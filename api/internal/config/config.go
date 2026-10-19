@@ -98,10 +98,7 @@ type Config struct {
 	StatusMinInterval int
 	StatusCanaryURLs  []string
 	StatusCanariesOff bool
-	// StatusDomains is YUVA_STATUS_DOMAINS: ask (default), cloudflare or off. StatusCNAME is the
-	// target own domains point at (YUVA_STATUS_CNAME; the public URL's host when unset).
-	// StatusDomainLimit caps a workspace's own domains (YUVA_STATUS_DOMAIN_LIMIT; 1 with open
-	// signup, else 0 for no limit).
+
 	StatusDomains      string
 	StatusCNAME        string
 	StatusDomainLimit  int
@@ -430,11 +427,11 @@ func (c *Config) loadStatusChecks() error {
 }
 
 func (c *Config) loadStatusDomains(publicHost string) error {
+	c.CloudflareZoneID = env("YUVA_CLOUDFLARE_ZONE_ID", "")
+	c.CloudflareAPIToken = strings.TrimSpace(os.Getenv("YUVA_CLOUDFLARE_API_TOKEN"))
 	switch c.StatusDomains = strings.ToLower(env("YUVA_STATUS_DOMAINS", "ask")); c.StatusDomains {
 	case "ask", "off":
 	case "cloudflare":
-		c.CloudflareZoneID = env("YUVA_CLOUDFLARE_ZONE_ID", "")
-		c.CloudflareAPIToken = strings.TrimSpace(os.Getenv("YUVA_CLOUDFLARE_API_TOKEN"))
 		if c.CloudflareZoneID == "" || c.CloudflareAPIToken == "" {
 			return errors.New("YUVA_STATUS_DOMAINS=cloudflare needs YUVA_CLOUDFLARE_ZONE_ID and YUVA_CLOUDFLARE_API_TOKEN")
 		}

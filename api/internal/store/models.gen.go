@@ -1805,6 +1805,7 @@ type StatusPage struct {
 	CfSslStatus        *string
 	CfErrors           []string
 	CfCheckedAt        *time.Time
+	DomainClaimedAt    *time.Time
 }
 
 type StatusPageSlug struct {

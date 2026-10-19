@@ -14742,14 +14742,19 @@ type StatusCustomDomain struct {
 	MissingSince *time.Time `json:"missing_since,omitempty"`
 	NextCheckAt  *time.Time `json:"next_check_at,omitempty"`
 
-	// Problem What the last check that did not verify the domain saw, in English.
+	// Problem `taken` or `expired` for a `failed` claim that is no longer checked (see
+	// `StatusDomainState`), else what the last check that did not verify the domain saw, in
+	// English.
 	Problem *string `json:"problem,omitempty"`
 
 	// State `pending`: the CNAME and TXT records were not seen yet (checked every 10 minutes).
 	// `failed`: the last check found them but they name another target or value (checked every 10
-	// minutes). `verified`: both were seen; the domain serves the page (checked every day).
-	// `off`: a verified domain whose records were gone for 3 days; it no longer serves the page and
-	// is not checked again until `custom_domain` is set again.
+	// minutes); or, no longer checked until `custom_domain` is sent again, another page verified the
+	// domain first (`problem` `taken`) or the claim was not verified within 7 days (`problem`
+	// `expired`). `verified`: both were seen; the domain serves the page (checked every day). Only
+	// a verified domain holds its name: any number of pages may claim a domain while it is pending
+	// or failed. `off`: a verified domain whose records were gone for 3 days; it no longer serves
+	// the page and is not checked again until `custom_domain` is set again.
 	State StatusDomainState `json:"state"`
 
 	// TxtName Examples: _yuva-status.status.example.com
@@ -14768,9 +14773,12 @@ type StatusDomainCheck struct {
 
 // StatusDomainState `pending`: the CNAME and TXT records were not seen yet (checked every 10 minutes).
 // `failed`: the last check found them but they name another target or value (checked every 10
-// minutes). `verified`: both were seen; the domain serves the page (checked every day).
-// `off`: a verified domain whose records were gone for 3 days; it no longer serves the page and
-// is not checked again until `custom_domain` is set again.
+// minutes); or, no longer checked until `custom_domain` is sent again, another page verified the
+// domain first (`problem` `taken`) or the claim was not verified within 7 days (`problem`
+// `expired`). `verified`: both were seen; the domain serves the page (checked every day). Only
+// a verified domain holds its name: any number of pages may claim a domain while it is pending
+// or failed. `off`: a verified domain whose records were gone for 3 days; it no longer serves
+// the page and is not checked again until `custom_domain` is set again.
 type StatusDomainState string
 
 // StatusEmailSubscribers Whether visitors may subscribe to e-mail notices on `/status/{slug}/subscribe` and notices
@@ -15596,7 +15604,9 @@ type StatusPage struct {
 	Timezone  string    `json:"timezone"`
 	UpdatedAt time.Time `json:"updated_at"`
 
-	// Url The public page, on its verified own domain when it has one, else at the server's status URL.
+	// Url The public page: on its own domain once that is verified (with `YUVA_STATUS_DOMAINS=cloudflare`,
+	// once its Cloudflare custom hostname and certificate are both `active`), else at the server's
+	// status URL.
 	Url string `json:"url"`
 }
 
@@ -15662,12 +15672,13 @@ type StatusPageUpdate struct {
 	AccentColor nullable.Nullable[string] `json:"accent_color,omitempty"`
 
 	// CustomDomain A hostname such as `status.example.com`, `null` to remove it. It must not be or contain
-	// one of the server's own hosts, and is unique across the server (`409 domain_taken`). A new
-	// domain starts `pending` with a new verification value and is checked at once; setting the
-	// same domain again checks it at once and, when it was `off`, starts it over. At most
-	// `YUVA_STATUS_DOMAIN_LIMIT` pages of a workspace have one on a hosted server
-	// (`403 status_domain_limit`). Refused with `400` when the server's `YUVA_STATUS_DOMAINS` is
-	// `off`.
+	// one of the server's own hosts, and must not be another page's verified domain
+	// (`409 domain_taken`). A new domain starts `pending` with a new verification value and is
+	// checked at once; setting the same domain again checks a verified one at once and starts
+	// any other over (same value, 7 more days). At most `YUVA_STATUS_DOMAIN_LIMIT` pages of a
+	// workspace have a domain that is not `off` (`403 status_domain_limit`). When the server's
+	// `YUVA_STATUS_DOMAINS` is `off`, only `null`, an empty string or the page's current domain
+	// are accepted.
 	//
 	//
 	// Examples: status.example.com
@@ -49572,6 +49583,20 @@ func (response CheckStatusDomain404ApplicationProblemPlusJSONResponse) VisitChec
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CheckStatusDomain429ApplicationProblemPlusJSONResponse Problem
+
+func (response CheckStatusDomain429ApplicationProblemPlusJSONResponse) VisitCheckStatusDomainResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
 	_, err := buf.WriteTo(w)
 	return err
 }

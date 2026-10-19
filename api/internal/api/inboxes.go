@@ -351,6 +351,7 @@ func (s *Server) DeleteInbox(ctx context.Context, req oas.DeleteInboxRequestObje
 		return nil, err
 	}
 	var keys []string
+	var page uuid.UUID
 	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, events *eventBatch) error {
 		if _, err := q.LockInbox(ctx, store.LockInboxParams{WorkspaceID: p.workspaceID, ID: req.InboxId}); store.IsNotFound(err) {
 			return errInboxGone
@@ -373,6 +374,7 @@ func (s *Server) DeleteInbox(ctx context.Context, req oas.DeleteInboxRequestObje
 		}
 		if pg, err := q.GetInboxStatusPage(ctx, store.GetInboxStatusPageParams{WorkspaceID: p.workspaceID, InboxID: req.InboxId}); err == nil {
 			releaseCloudflare(events, pg)
+			page = pg.ID
 		} else if !store.IsNotFound(err) {
 			return err
 		}
@@ -385,6 +387,9 @@ func (s *Server) DeleteInbox(ctx context.Context, req oas.DeleteInboxRequestObje
 	})
 	if err != nil {
 		return nil, err
+	}
+	if page != uuid.Nil() {
+		s.statusDomainCache.forget(page)
 	}
 	s.deleteObjects(ctx, keys)
 	return oas.DeleteInbox204Response{}, nil

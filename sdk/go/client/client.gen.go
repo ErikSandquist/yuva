@@ -14788,14 +14788,19 @@ type StatusCustomDomain struct {
 	MissingSince *time.Time `json:"missing_since,omitempty"`
 	NextCheckAt  *time.Time `json:"next_check_at,omitempty"`
 
-	// Problem What the last check that did not verify the domain saw, in English.
+	// Problem `taken` or `expired` for a `failed` claim that is no longer checked (see
+	// `StatusDomainState`), else what the last check that did not verify the domain saw, in
+	// English.
 	Problem *string `json:"problem,omitempty"`
 
 	// State `pending`: the CNAME and TXT records were not seen yet (checked every 10 minutes).
 	// `failed`: the last check found them but they name another target or value (checked every 10
-	// minutes). `verified`: both were seen; the domain serves the page (checked every day).
-	// `off`: a verified domain whose records were gone for 3 days; it no longer serves the page and
-	// is not checked again until `custom_domain` is set again.
+	// minutes); or, no longer checked until `custom_domain` is sent again, another page verified the
+	// domain first (`problem` `taken`) or the claim was not verified within 7 days (`problem`
+	// `expired`). `verified`: both were seen; the domain serves the page (checked every day). Only
+	// a verified domain holds its name: any number of pages may claim a domain while it is pending
+	// or failed. `off`: a verified domain whose records were gone for 3 days; it no longer serves
+	// the page and is not checked again until `custom_domain` is set again.
 	State StatusDomainState `json:"state"`
 
 	// TxtName Examples: _yuva-status.status.example.com
@@ -14814,9 +14819,12 @@ type StatusDomainCheck struct {
 
 // StatusDomainState `pending`: the CNAME and TXT records were not seen yet (checked every 10 minutes).
 // `failed`: the last check found them but they name another target or value (checked every 10
-// minutes). `verified`: both were seen; the domain serves the page (checked every day).
-// `off`: a verified domain whose records were gone for 3 days; it no longer serves the page and
-// is not checked again until `custom_domain` is set again.
+// minutes); or, no longer checked until `custom_domain` is sent again, another page verified the
+// domain first (`problem` `taken`) or the claim was not verified within 7 days (`problem`
+// `expired`). `verified`: both were seen; the domain serves the page (checked every day). Only
+// a verified domain holds its name: any number of pages may claim a domain while it is pending
+// or failed. `off`: a verified domain whose records were gone for 3 days; it no longer serves
+// the page and is not checked again until `custom_domain` is set again.
 type StatusDomainState string
 
 // StatusEmailSubscribers Whether visitors may subscribe to e-mail notices on `/status/{slug}/subscribe` and notices
@@ -15642,7 +15650,9 @@ type StatusPage struct {
 	Timezone  string    `json:"timezone"`
 	UpdatedAt time.Time `json:"updated_at"`
 
-	// Url The public page, on its verified own domain when it has one, else at the server's status URL.
+	// Url The public page: on its own domain once that is verified (with `YUVA_STATUS_DOMAINS=cloudflare`,
+	// once its Cloudflare custom hostname and certificate are both `active`), else at the server's
+	// status URL.
 	Url string `json:"url"`
 }
 
@@ -15708,12 +15718,13 @@ type StatusPageUpdate struct {
 	AccentColor nullable.Nullable[string] `json:"accent_color,omitempty"`
 
 	// CustomDomain A hostname such as `status.example.com`, `null` to remove it. It must not be or contain
-	// one of the server's own hosts, and is unique across the server (`409 domain_taken`). A new
-	// domain starts `pending` with a new verification value and is checked at once; setting the
-	// same domain again checks it at once and, when it was `off`, starts it over. At most
-	// `YUVA_STATUS_DOMAIN_LIMIT` pages of a workspace have one on a hosted server
-	// (`403 status_domain_limit`). Refused with `400` when the server's `YUVA_STATUS_DOMAINS` is
-	// `off`.
+	// one of the server's own hosts, and must not be another page's verified domain
+	// (`409 domain_taken`). A new domain starts `pending` with a new verification value and is
+	// checked at once; setting the same domain again checks a verified one at once and starts
+	// any other over (same value, 7 more days). At most `YUVA_STATUS_DOMAIN_LIMIT` pages of a
+	// workspace have a domain that is not `off` (`403 status_domain_limit`). When the server's
+	// `YUVA_STATUS_DOMAINS` is `off`, only `null`, an empty string or the page's current domain
+	// are accepted.
 	//
 	//
 	// Examples: status.example.com
@@ -24542,8 +24553,10 @@ type ClientInterface interface {
 	// CheckStatusDomain Ask whether a status page domain is verified
 	//
 	// For the operator's TLS proxy issuing certificates on demand (Caddy `on_demand_tls` `ask`):
-	// `200` when `domain` is a status page's verified own domain, `404` otherwise, also when the
-	// server's `YUVA_STATUS_DOMAINS` is not `ask`.
+	// `200` when `domain` is the verified own domain of a published status page in a live workspace,
+	// `404` otherwise, also when the server's `YUVA_STATUS_DOMAINS` is not `ask`. It is public and
+	// reveals only domains that already serve public pages. Up to 120 requests a minute per IP
+	// address (`429 rate_limited`).
 	//
 	// Corresponds with GET /status-domains/check (the `CheckStatusDomain` operationId).
 	CheckStatusDomain(ctx context.Context, params *CheckStatusDomainParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -31897,8 +31910,10 @@ func (c *Client) GetReadyz(ctx context.Context, reqEditors ...RequestEditorFn) (
 // CheckStatusDomain Ask whether a status page domain is verified
 //
 // For the operator's TLS proxy issuing certificates on demand (Caddy `on_demand_tls` `ask`):
-// `200` when `domain` is a status page's verified own domain, `404` otherwise, also when the
-// server's `YUVA_STATUS_DOMAINS` is not `ask`.
+// `200` when `domain` is the verified own domain of a published status page in a live workspace,
+// `404` otherwise, also when the server's `YUVA_STATUS_DOMAINS` is not `ask`. It is public and
+// reveals only domains that already serve public pages. Up to 120 requests a minute per IP
+// address (`429 rate_limited`).
 //
 // Corresponds with GET /status-domains/check (the `CheckStatusDomain` operationId).
 func (c *Client) CheckStatusDomain(ctx context.Context, params *CheckStatusDomainParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -64556,8 +64571,10 @@ type ClientWithResponsesInterface interface {
 	// CheckStatusDomainWithResponse Ask whether a status page domain is verified
 	//
 	// For the operator's TLS proxy issuing certificates on demand (Caddy `on_demand_tls` `ask`):
-	// `200` when `domain` is a status page's verified own domain, `404` otherwise, also when the
-	// server's `YUVA_STATUS_DOMAINS` is not `ask`.
+	// `200` when `domain` is the verified own domain of a published status page in a live workspace,
+	// `404` otherwise, also when the server's `YUVA_STATUS_DOMAINS` is not `ask`. It is public and
+	// reveals only domains that already serve public pages. Up to 120 requests a minute per IP
+	// address (`429 rate_limited`).
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -73682,6 +73699,8 @@ type CheckStatusDomainResponse struct {
 	JSON200 *StatusDomainCheck
 	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
 	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -73692,6 +73711,11 @@ func (r CheckStatusDomainResponse) GetJSON200() *StatusDomainCheck {
 // GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
 func (r CheckStatusDomainResponse) GetApplicationproblemJSON404() *Problem {
 	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r CheckStatusDomainResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
 }
 
 // GetBody returns the raw response body bytes
@@ -95794,8 +95818,10 @@ func (c *ClientWithResponses) GetReadyzWithResponse(ctx context.Context, reqEdit
 // CheckStatusDomainWithResponse Ask whether a status page domain is verified
 //
 // For the operator's TLS proxy issuing certificates on demand (Caddy `on_demand_tls` `ask`):
-// `200` when `domain` is a status page's verified own domain, `404` otherwise, also when the
-// server's `YUVA_STATUS_DOMAINS` is not `ask`.
+// `200` when `domain` is the verified own domain of a published status page in a live workspace,
+// `404` otherwise, also when the server's `YUVA_STATUS_DOMAINS` is not `ask`. It is public and
+// reveals only domains that already serve public pages. Up to 120 requests a minute per IP
+// address (`429 rate_limited`).
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -106808,6 +106834,13 @@ func ParseCheckStatusDomainResponse(rsp *http.Response) (*CheckStatusDomainRespo
 			return nil, err
 		}
 		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
 
 	}
 

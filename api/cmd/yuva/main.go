@@ -546,7 +546,7 @@ func ingestEmail(ctx context.Context, cfg config.Config, log *slog.Logger, args 
 }
 
 func cloudflareClient(cfg config.Config) *cfsaas.Client {
-	if cfg.StatusDomains != "cloudflare" {
+	if cfg.CloudflareZoneID == "" || cfg.CloudflareAPIToken == "" {
 		return nil
 	}
 	return &cfsaas.Client{ZoneID: cfg.CloudflareZoneID, Token: cfg.CloudflareAPIToken, HTTP: &http.Client{Timeout: 30 * time.Second}}

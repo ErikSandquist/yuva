@@ -208,7 +208,7 @@ func (s *Server) ListConversationIncidents(ctx context.Context, req oas.ListConv
 		out.Items = append(out.Items, oas.ConversationIncident{
 			Id: i.ID, Page: oas.StatusPageRef{Id: i.PageID, Name: r.PageName, Slug: r.PageSlug}, Kind: oas.StatusIncidentKind(i.Kind),
 			Title: i.Title, Impact: oas.StatusIncidentImpact(i.Impact), State: oas.StatusIncidentState(i.State),
-			Url: s.statusURLFor(r.PageSlug, r.PageDomain, r.PageDomainState, "/incidents/"+i.ID.String()), PublishedAt: i.PublishedAt, ResolvedAt: i.ResolvedAt, LinkedAt: r.LinkedAt,
+			Url: s.statusURLFor(r.PageSlug, r.PageDomain, r.PageDomainState, r.PageCfStatus, r.PageCfSslStatus, "/incidents/"+i.ID.String()), PublishedAt: i.PublishedAt, ResolvedAt: i.ResolvedAt, LinkedAt: r.LinkedAt,
 		})
 	}
 	return out, nil

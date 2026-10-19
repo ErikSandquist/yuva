@@ -20,6 +20,7 @@ const testStatusCNAME = "pages.yuva.example.net"
 
 type fakeDNS struct {
 	mu    sync.Mutex
+	hook  func()
 	cname map[string]string
 	txt   map[string][]string
 	hosts map[string][]string
@@ -35,6 +36,13 @@ func notFound(name string) error {
 }
 
 func (d *fakeDNS) LookupCNAME(_ context.Context, host string) (string, error) {
+	d.mu.Lock()
+	hook := d.hook
+	d.hook = nil
+	d.mu.Unlock()
+	if hook != nil {
+		hook()
+	}
 	d.mu.Lock()
 	defer d.mu.Unlock()
 	if d.fail {
@@ -154,7 +162,7 @@ func TestStatusDomainValidation(t *testing.T) {
 	}
 
 	other := newStatusTeam(t, h)
-	other.owner.expectProblem(http.StatusConflict, "domain_taken", "PATCH", other.path(""), map[string]any{"custom_domain": name})
+	other.owner.expect(http.StatusOK, "PATCH", other.path(""), map[string]any{"custom_domain": name})
 	other.owner.expectProblem(http.StatusNotFound, "not_found", "PATCH", "/v1/status-pages/"+st.page, map[string]any{"custom_domain": unique("x") + ".example.org"})
 	other.owner.expectProblem(http.StatusNotFound, "not_found", "GET", "/v1/status-pages/"+st.page, nil)
 
@@ -356,5 +364,303 @@ func TestStatusDomainCloudflare(t *testing.T) {
 	st.owner.expect(http.StatusNoContent, "DELETE", st.path(""), nil)
 	if n := len(h.jobs("status_domain_release", st.ws)); n != 2 {
 		t.Fatalf("%d release jobs after deleting the page", n)
+	}
+}
+
+func TestStatusDomainClaims(t *testing.T) {
+	dns := newFakeDNS()
+	h := domainHarness(t, dns, nil)
+	a, b := newStatusTeam(t, h), newStatusTeam(t, h)
+	name := unique("d") + ".example.org"
+	ta := customDomain(t, a.owner.expect(http.StatusOK, "PATCH", a.path(""), map[string]any{"custom_domain": name}))["txt_value"].(string)
+	tb := customDomain(t, b.owner.expect(http.StatusOK, "PATCH", b.path(""), map[string]any{"custom_domain": name}))["txt_value"].(string)
+	dns.set(name, testStatusCNAME, ta, tb)
+	if d := a.check(t, h); d["state"] != "verified" {
+		t.Fatalf("first claim: %v", d)
+	}
+	if d := b.domain(t); d["state"] != "failed" || d["problem"] != "taken" || d["next_check_at"] != nil {
+		t.Fatalf("other claim after the first verified: %v", d)
+	}
+	if d := b.check(t, h); d["state"] != "failed" || d["problem"] != "taken" {
+		t.Fatalf("a taken claim is checked again: %v", d)
+	}
+	b.owner.expectProblem(http.StatusConflict, "domain_taken", "PATCH", b.path(""), map[string]any{"custom_domain": name})
+	third := newStatusTeam(t, h)
+	third.owner.expectProblem(http.StatusConflict, "domain_taken", "PATCH", third.path(""), map[string]any{"custom_domain": name})
+
+	dns.set(name, "")
+	a.check(t, h)
+	h.clock.Advance(72 * time.Hour)
+	if d := a.check(t, h); d["state"] != "off" {
+		t.Fatalf("records gone 3 days: %v", d)
+	}
+	d := customDomain(t, b.owner.expect(http.StatusOK, "PATCH", b.path(""), map[string]any{"custom_domain": name}))
+	if d["state"] != "pending" || d["txt_value"] != tb || d["next_check_at"] == nil || d["problem"] != nil {
+		t.Fatalf("claim sent again after the holder turned off: %v", d)
+	}
+	dns.set(name, testStatusCNAME, tb)
+	if d := b.check(t, h); d["state"] != "verified" {
+		t.Fatalf("second claim: %v", d)
+	}
+	a.owner.expectProblem(http.StatusConflict, "domain_taken", "PATCH", a.path(""), map[string]any{"custom_domain": name})
+
+	late := newStatusTeam(t, h)
+	other := unique("e") + ".example.org"
+	if _, err := h.st.Pool.Exec(context.Background(), `UPDATE status_pages SET custom_domain = $3, domain_token = 'yuva-verify-late',
+		domain_state = 'pending', domain_claimed_at = now(), domain_check_at = now() WHERE workspace_id = $1 AND id = $2`, late.ws, late.page, name); err != nil {
+		t.Fatal(err)
+	}
+	dns.set(name, testStatusCNAME, tb, "yuva-verify-late")
+	if d := late.check(t, h); d["state"] != "failed" || d["problem"] != "taken" || d["next_check_at"] != nil {
+		t.Fatalf("a claim whose records appear after another page verified: %v", d)
+	}
+	if d := b.check(t, h); d["state"] != "verified" {
+		t.Fatalf("holder after a late claim: %v", d)
+	}
+
+	late.owner.expect(http.StatusOK, "PATCH", late.path(""), map[string]any{"custom_domain": other})
+	h.clock.Advance(6 * 24 * time.Hour)
+	if d := late.check(t, h); d["state"] != "pending" {
+		t.Fatalf("6 days: %v", d)
+	}
+	h.clock.Advance(24 * time.Hour)
+	if d := late.check(t, h); d["state"] != "failed" || d["problem"] != "expired" || d["next_check_at"] != nil {
+		t.Fatalf("7 days: %v", d)
+	}
+	if d := customDomain(t, late.owner.expect(http.StatusOK, "PATCH", late.path(""), map[string]any{"custom_domain": other})); d["state"] != "pending" || d["next_check_at"] == nil {
+		t.Fatalf("expired claim sent again: %v", d)
+	}
+	h.clock.Advance(24 * time.Hour)
+	if d := late.check(t, h); d["state"] != "pending" {
+		t.Fatalf("a day after sending again: %v", d)
+	}
+}
+
+func TestStatusDomainCloudflareAfterCommit(t *testing.T) {
+	dns := newFakeDNS()
+	cf := cfsaastest.New(t, "zone1", "token1")
+	h := domainHarness(t, dns, func(s *api.StatusSettings) { s.Domains = "cloudflare"; s.Cloudflare = cf.Client() })
+	ctx := context.Background()
+	verify := func(st statusTeam, name string) string {
+		t.Helper()
+		dns.set(name, testStatusCNAME, customDomain(t, st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"custom_domain": name}))["txt_value"].(string))
+		d := st.check(t, h)
+		if d["state"] != "verified" || !cf.Has(name) {
+			t.Fatalf("verify %s: %v", name, d)
+		}
+		return d["cloudflare"].(map[string]any)["id"].(string)
+	}
+
+	st := newStatusTeam(t, h)
+	name := unique("d") + ".example.org"
+	verify(st, name)
+	h.clock.Advance(24 * time.Hour)
+	dns.hook = func() {
+		st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"custom_domain": nil})
+		jobs := h.jobs("status_domain_release", st.ws)
+		var args api.StatusDomainReleaseArgs
+		if err := json.Unmarshal(jobs[len(jobs)-1].args, &args); err != nil {
+			t.Error(err)
+		}
+		if err := h.srv.ReleaseStatusDomain(ctx, args); err != nil {
+			t.Error(err)
+		}
+	}
+	if err := h.srv.RunStatusDomainCheck(ctx, uuid.MustParse(st.ws), uuid.MustParse(st.page)); err != nil {
+		t.Fatal(err)
+	}
+	if cf.Has(name) {
+		t.Fatal("a domain removed during its check got a custom hostname")
+	}
+
+	st = newStatusTeam(t, h)
+	name = unique("d") + ".example.org"
+	id := verify(st, name)
+	dns.set(name, "")
+	h.clock.Advance(24 * time.Hour)
+	st.check(t, h)
+	h.clock.Advance(72 * time.Hour)
+	if err := cf.Client().Delete(ctx, id); err != nil {
+		t.Fatal(err)
+	}
+	if d := st.check(t, h); d["state"] != "off" || cf.Has(name) {
+		t.Fatalf("a domain turned off got a custom hostname: %v %v", d, cf.Has(name))
+	}
+}
+
+func TestStatusDomainCacheByPage(t *testing.T) {
+	dns := newFakeDNS()
+	h := domainHarness(t, dns, nil)
+	st := newStatusTeam(t, h)
+	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"published": true})
+	name := unique("d") + ".example.org"
+	dns.set(name, testStatusCNAME, customDomain(t, st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"custom_domain": name}))["txt_value"].(string))
+	if code, _, _ := onHost(t, h, name, "/"); code != http.StatusOK {
+		t.Fatalf("pending domain: %d", code)
+	}
+	st.check(t, h)
+	served := func() bool {
+		code, body, _ := onHost(t, h, name, "/")
+		return code == http.StatusOK && strings.Contains(body, `class="banner"`)
+	}
+	if !served() {
+		t.Fatal("verified domain right after its check")
+	}
+	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"slug": unique("st")})
+	if code, _, hdr := onHost(t, h, name, "/history"); code != http.StatusOK {
+		t.Fatalf("after a slug rename: %d %s", code, hdr.Get("Location"))
+	}
+	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"published": false})
+	if served() {
+		t.Fatal("served after unpublishing")
+	}
+	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"published": true})
+	if !served() {
+		t.Fatal("not served after publishing again")
+	}
+	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"custom_domain": nil})
+	if served() {
+		t.Fatal("served after the domain was removed")
+	}
+	for i := range 50 {
+		onHost(t, h, unique("x")+".example.com", "/")
+		onHost(t, h, "not a host "+string(rune('a'+i%26)), "/")
+	}
+}
+
+func TestStatusDomainURLWaitsForCloudflare(t *testing.T) {
+	dns := newFakeDNS()
+	cf := cfsaastest.New(t, "zone1", "token1")
+	h := domainHarness(t, dns, func(s *api.StatusSettings) { s.Domains = "cloudflare"; s.Cloudflare = cf.Client() })
+	st := newStatusTeam(t, h)
+	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"published": true})
+	name := unique("d") + ".example.org"
+	dns.set(name, testStatusCNAME, customDomain(t, st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"custom_domain": name}))["txt_value"].(string))
+	if d := st.check(t, h); d["state"] != "verified" {
+		t.Fatalf("not verified: %v", d)
+	}
+	if u := st.owner.expect(http.StatusOK, "GET", st.path(""), nil).str("url"); strings.Contains(u, name) {
+		t.Fatalf("url %s before the certificate is active", u)
+	}
+	if u := publicStatus(t, h, "/client/v1/status/"+st.slug).str("url"); strings.Contains(u, name) {
+		t.Fatalf("JSON url %s before the certificate is active", u)
+	}
+	cf.Activate(name)
+	h.clock.Advance(10 * time.Minute)
+	st.check(t, h)
+	if u := st.owner.expect(http.StatusOK, "GET", st.path(""), nil).str("url"); u != "http://"+name {
+		t.Fatalf("url %s once the certificate is active", u)
+	}
+}
+
+func TestStatusDomainAsk(t *testing.T) {
+	dns := newFakeDNS()
+	h := domainHarness(t, dns, nil)
+	st := newStatusTeam(t, h)
+	name := unique("d") + ".example.org"
+	dns.set(name, testStatusCNAME, customDomain(t, st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"custom_domain": name}))["txt_value"].(string))
+	st.check(t, h)
+	c := h.client()
+	ask := func(domain string) int { return c.do("GET", "/status-domains/check?domain="+domain, nil).status }
+	if code := ask(name); code != http.StatusNotFound {
+		t.Fatalf("unpublished page: %d", code)
+	}
+	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"published": true})
+	if code := ask(name); code != http.StatusOK {
+		t.Fatalf("published page: %d", code)
+	}
+	for _, bad := range []string{"", "localhost", "192.0.2.1", "a..b.example"} {
+		if code := ask(bad); code != http.StatusNotFound {
+			t.Fatalf("%q: %d", bad, code)
+		}
+	}
+	if _, err := h.st.Pool.Exec(context.Background(), "UPDATE workspaces SET deleted_at = now() WHERE id = $1", st.ws); err != nil {
+		t.Fatal(err)
+	}
+	if code := ask(name); code != http.StatusNotFound {
+		t.Fatalf("deleted workspace: %d", code)
+	}
+	limited := false
+	for range 130 {
+		if code := ask(name); code == http.StatusTooManyRequests {
+			limited = true
+			break
+		}
+	}
+	if !limited {
+		t.Fatal("no rate limit on the check")
+	}
+	if code := h.client().do("GET", "/status-domains/check?domain="+name, nil).status; code != http.StatusNotFound {
+		t.Fatalf("another address: %d", code)
+	}
+}
+
+func TestStatusDomainOffRemoves(t *testing.T) {
+	cf := cfsaastest.New(t, "zone1", "token1")
+	h := domainHarness(t, newFakeDNS(), func(s *api.StatusSettings) { s.Domains = "off"; s.Cloudflare = cf.Client() })
+	ctx := context.Background()
+	st := newStatusTeam(t, h)
+	name := unique("d") + ".example.org"
+	host, err := cf.Client().Create(ctx, name)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := h.st.Pool.Exec(ctx, `UPDATE status_pages SET custom_domain = $3, domain_token = 'yuva-verify-x', domain_state = 'verified',
+		domain_claimed_at = now(), cf_hostname_id = $4 WHERE workspace_id = $1 AND id = $2`, st.ws, st.page, name, host.ID); err != nil {
+		t.Fatal(err)
+	}
+	if r := st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"custom_domain": name, "name": "Renamed"}); r.body["custom_domain"] != nil {
+		t.Fatalf("custom_domain shown with domains off: %s", r.raw)
+	}
+	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"custom_domain": strings.ToUpper(name) + "."})
+	st.owner.expectProblem(http.StatusBadRequest, "validation_failed", "PATCH", st.path(""), map[string]any{"custom_domain": unique("o") + ".example.org"})
+	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"custom_domain": ""})
+	jobs := h.jobs("status_domain_release", st.ws)
+	if len(jobs) != 1 {
+		t.Fatalf("%d release jobs", len(jobs))
+	}
+	var args api.StatusDomainReleaseArgs
+	if err := json.Unmarshal(jobs[0].args, &args); err != nil || args.HostnameID != host.ID {
+		t.Fatalf("release args %s %v", jobs[0].args, err)
+	}
+	if err := h.srv.ReleaseStatusDomain(ctx, args); err != nil {
+		t.Fatal(err)
+	}
+	if cf.Has(name) {
+		t.Fatal("hostname kept after removal with domains off")
+	}
+	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"custom_domain": nil})
+}
+
+func TestStatusDomainLimitConcurrent(t *testing.T) {
+	h := domainHarness(t, newFakeDNS(), func(s *api.StatusSettings) { s.DomainLimit = 1 })
+	st := newStatusTeam(t, h)
+	pages := []string{st.page}
+	for range 5 {
+		inbox := st.owner.expect(http.StatusCreated, "POST", "/v1/inboxes", map[string]any{"name": "More", "slug": unique("in")}).body["inbox"].(map[string]any)["id"].(string)
+		pages = append(pages, st.owner.expect(http.StatusCreated, "POST", "/v1/status-pages", map[string]any{"inbox_id": inbox, "name": "More", "slug": unique("st")}).str("id"))
+	}
+	codes := make([]int, len(pages))
+	var wg sync.WaitGroup
+	for i, pg := range pages {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			codes[i] = st.owner.do("PATCH", "/v1/status-pages/"+pg, map[string]any{"custom_domain": unique("c") + ".example.org"}).status
+		}()
+	}
+	wg.Wait()
+	ok := 0
+	for _, c := range codes {
+		switch c {
+		case http.StatusOK:
+			ok++
+		case http.StatusForbidden:
+		default:
+			t.Fatalf("codes %v", codes)
+		}
+	}
+	if ok != 1 {
+		t.Fatalf("%d pages got a domain with a limit of 1: %v", ok, codes)
 	}
 }

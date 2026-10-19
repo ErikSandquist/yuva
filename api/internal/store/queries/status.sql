@@ -260,7 +260,7 @@ WHERE l.workspace_id = @workspace_id AND l.incident_id = @incident_id AND c.stat
 ORDER BY l.linked_at, c.id;
 
 -- name: ListConversationIncidents :many
-SELECT sqlc.embed(i), p.name AS page_name, p.slug AS page_slug, p.custom_domain AS page_domain, p.domain_state AS page_domain_state, l.linked_at FROM status_incident_conversations l
+SELECT sqlc.embed(i), p.name AS page_name, p.slug AS page_slug, p.custom_domain AS page_domain, p.domain_state AS page_domain_state, p.cf_status AS page_cf_status, p.cf_ssl_status AS page_cf_ssl_status, l.linked_at FROM status_incident_conversations l
 JOIN status_incidents i ON i.workspace_id = l.workspace_id AND i.id = l.incident_id
 JOIN status_pages p ON p.workspace_id = i.workspace_id AND p.id = i.page_id
 WHERE l.workspace_id = @workspace_id AND l.conversation_id = @conversation_id

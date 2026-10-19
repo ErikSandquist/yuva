@@ -6,9 +6,11 @@
 # _yuva-status.status.customer.example the panel shows. Once Yuva has seen both records the
 # domain is verified, and the first visit makes Caddy ask
 #   GET http://127.0.0.1:8080/status-domains/check?domain=status.customer.example
-# Yuva answers 200 for a verified domain and 404 for anything else, so Caddy issues
-# certificates only for verified domains, and stops renewing one when its domain is
-# removed or turned off.
+# on the same Yuva server. It answers 200 only for the verified domain of a published
+# page in a live workspace and 404 for anything else, so Caddy issues certificates only
+# for those, and stops renewing one when its domain is removed or turned off. The
+# endpoint is public (rate-limited per address) and reveals only domains that already
+# serve public pages, so it needs no secret.
 #
 # Port 80 must reach Caddy for the HTTP challenge, and 443 for TLS-ALPN.
 

@@ -87,7 +87,11 @@ func (c *statusCache) forget(page uuid.UUID) {
 type statusHostKey struct{}
 
 // statusOn is the context value of a request that came to the status host or to an own domain.
-type statusOn struct{ domain bool }
+type statusOn struct {
+	domain          bool
+	host            string
+	workspace, page uuid.UUID
+}
 
 // statusHost serves the status pages at /{slug} on YUVA_STATUS_URL's host and nothing else there,
 // and a page at / on its verified own domain and nothing else there.
@@ -116,17 +120,18 @@ func (s *Server) statusHost(next http.Handler) http.Handler {
 			if h, _, err := net.SplitHostPort(host); err == nil {
 				host = h
 			}
-			slug, ok := s.domainPage(r.Context(), strings.TrimSuffix(host, "."))
+			host = strings.TrimSuffix(host, ".")
+			hit, ok := s.domainPage(r.Context(), host)
 			if !ok {
 				next.ServeHTTP(w, r)
 				return
 			}
-			path, ok := statusDomainPath(slug, r.URL.Path)
+			path, ok := statusDomainPath(hit.slug, r.URL.Path)
 			if !ok {
 				writeProblem(w, errNotFound)
 				return
 			}
-			r2 := r.Clone(context.WithValue(r.Context(), statusHostKey{}, statusOn{domain: true}))
+			r2 := r.Clone(context.WithValue(r.Context(), statusHostKey{}, statusOn{domain: true, host: host, workspace: hit.workspace, page: hit.page}))
 			r2.URL.Path = path
 			r2.URL.RawPath = ""
 			next.ServeHTTP(w, r2)
@@ -166,8 +171,13 @@ func (s *Server) publicStatusPage(w http.ResponseWriter, r *http.Request) (store
 		writeProblem(w, err.(*apiError))
 		return store.StatusPage{}, false
 	}
-	pg, err := s.st.FindStatusPageBySlug(ctx, slug)
-	if store.IsNotFound(err) {
+	var pg store.StatusPage
+	var err error
+	moved := false
+	if on, _ := ctx.Value(statusHostKey{}).(statusOn); on.domain {
+		pg, err = s.st.GetStatusPage(ctx, store.GetStatusPageParams{WorkspaceID: on.workspace, ID: on.page})
+		moved = err == nil && (pg.CustomDomain == nil || *pg.CustomDomain != on.host || *pg.DomainState != domainVerified)
+	} else if pg, err = s.st.FindStatusPageBySlug(ctx, slug); store.IsNotFound(err) {
 		pg, err = s.st.FindStatusPageByFormerSlug(ctx, slug)
 		if err == nil && pg.Published {
 			target := s.pageURL(pg, strings.TrimPrefix(r.URL.Path, statusPathPrefix+slug))
@@ -183,7 +193,7 @@ func (s *Server) publicStatusPage(w http.ResponseWriter, r *http.Request) (store
 			return pg, false
 		}
 	}
-	if store.IsNotFound(err) || (err == nil && !pg.Published) {
+	if moved || store.IsNotFound(err) || (err == nil && !pg.Published) {
 		s.statusGone(w)
 		return pg, false
 	}
