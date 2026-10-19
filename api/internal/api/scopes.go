@@ -278,6 +278,10 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"UpdateStatusMonitor":        {oas.StatusManage},
 	"DeleteStatusMonitor":        {oas.StatusManage},
 	"RotateStatusMonitorToken":   {oas.StatusManage},
+	"ListStatusNotices":          {oas.StatusRead},
+	"GetStatusNotice":            {oas.StatusRead},
+	"GetStatusNoticeReach":       {oas.StatusRead},
+	"CancelStatusNotice":         {oas.StatusManage},
 
 	"ListStatusIncidentConversations":    {oas.StatusRead, oas.ConversationsRead},
 	"LinkStatusIncidentConversation":     {oas.StatusManage, oas.ConversationsRead},

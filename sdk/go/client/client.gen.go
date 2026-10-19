@@ -3168,6 +3168,24 @@ func (e Locale) Valid() bool {
 	}
 }
 
+// Defines values for MailingListKind.
+const (
+	MailingListKindList   MailingListKind = "list"
+	MailingListKindStatus MailingListKind = "status"
+)
+
+// Valid indicates whether the value is a known member of the MailingListKind enum.
+func (e MailingListKind) Valid() bool {
+	switch e {
+	case MailingListKindList:
+		return true
+	case MailingListKindStatus:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for MemberPresenceEventType.
 const (
 	MemberPresenceEventTypeMemberPresence MemberPresenceEventType = "member.presence"
@@ -4557,6 +4575,27 @@ func (e StatusComponentStateValue) Valid() bool {
 	}
 }
 
+// Defines values for StatusEmailSubscribersWarnings.
+const (
+	StatusWarningDkimUnaligned         StatusEmailSubscribersWarnings = "dkim_unaligned"
+	StatusWarningNoDeliverabilityCheck StatusEmailSubscribersWarnings = "no_deliverability_check"
+	StatusWarningNoPostalAddress       StatusEmailSubscribersWarnings = "no_postal_address"
+)
+
+// Valid indicates whether the value is a known member of the StatusEmailSubscribersWarnings enum.
+func (e StatusEmailSubscribersWarnings) Valid() bool {
+	switch e {
+	case StatusWarningDkimUnaligned:
+		return true
+	case StatusWarningNoDeliverabilityCheck:
+		return true
+	case StatusWarningNoPostalAddress:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for StatusIncidentChange.
 const (
 	StatusChangeChanged      StatusIncidentChange = "changed"
@@ -4803,6 +4842,78 @@ func (e StatusMonitorState) Valid() bool {
 	case MonitorPending:
 		return true
 	case MonitorUp:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusNoticeEventType.
+const (
+	StatusNoticeUpdated StatusNoticeEventType = "status_notice.updated"
+)
+
+// Valid indicates whether the value is a known member of the StatusNoticeEventType enum.
+func (e StatusNoticeEventType) Valid() bool {
+	switch e {
+	case StatusNoticeUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusNoticeSkipReason.
+const (
+	NoticeSkipEmailOff       StatusNoticeSkipReason = "email_off"
+	NoticeSkipNoRecipients   StatusNoticeSkipReason = "no_recipients"
+	NoticeSkipRate           StatusNoticeSkipReason = "rate"
+	NoticeSkipSenderNotReady StatusNoticeSkipReason = "sender_not_ready"
+	NoticeSkipSuspended      StatusNoticeSkipReason = "suspended"
+	NoticeSkipUnpublished    StatusNoticeSkipReason = "unpublished"
+)
+
+// Valid indicates whether the value is a known member of the StatusNoticeSkipReason enum.
+func (e StatusNoticeSkipReason) Valid() bool {
+	switch e {
+	case NoticeSkipEmailOff:
+		return true
+	case NoticeSkipNoRecipients:
+		return true
+	case NoticeSkipRate:
+		return true
+	case NoticeSkipSenderNotReady:
+		return true
+	case NoticeSkipSuspended:
+		return true
+	case NoticeSkipUnpublished:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusNoticeState.
+const (
+	StatusNoticeCancelled StatusNoticeState = "cancelled"
+	StatusNoticePending   StatusNoticeState = "pending"
+	StatusNoticeSending   StatusNoticeState = "sending"
+	StatusNoticeSent      StatusNoticeState = "sent"
+	StatusNoticeSkipped   StatusNoticeState = "skipped"
+)
+
+// Valid indicates whether the value is a known member of the StatusNoticeState enum.
+func (e StatusNoticeState) Valid() bool {
+	switch e {
+	case StatusNoticeCancelled:
+		return true
+	case StatusNoticePending:
+		return true
+	case StatusNoticeSending:
+		return true
+	case StatusNoticeSent:
+		return true
+	case StatusNoticeSkipped:
 		return true
 	default:
 		return false
@@ -7477,8 +7588,10 @@ type BroadcastAudienceExcluded struct {
 // BroadcastAudienceInput defines model for BroadcastAudienceInput.
 type BroadcastAudienceInput struct {
 	Conditions *[]BroadcastCondition `json:"conditions,omitempty"`
-	ListIds    []uuid.UUID           `json:"list_ids"`
-	Locales    *[]LanguageTag        `json:"locales,omitempty"`
+
+	// ListIds Lists of the broadcast's inbox; a status page's list (`kind` `status`) is refused with `400 validation_failed`.
+	ListIds []uuid.UUID    `json:"list_ids"`
+	Locales *[]LanguageTag `json:"locales,omitempty"`
 }
 
 // BroadcastCampaignVisits defines model for BroadcastCampaignVisits.
@@ -8966,8 +9079,10 @@ type ContactRef struct {
 
 // ContactSubscription defines model for ContactSubscription.
 type ContactSubscription struct {
-	ConfirmationSentAt *time.Time `json:"confirmation_sent_at,omitempty"`
-	ConfirmedAt        *time.Time `json:"confirmed_at,omitempty"`
+	// Components On a status list, the components of the page the subscriber chose; absent when they get the notices of every component, including ones added later.
+	Components         *[]uuid.UUID `json:"components,omitempty"`
+	ConfirmationSentAt *time.Time   `json:"confirmation_sent_at,omitempty"`
+	ConfirmedAt        *time.Time   `json:"confirmed_at,omitempty"`
 
 	// ConsentAt When the person agreed (the confirmation for double opt-in).
 	ConsentAt *time.Time          `json:"consent_at,omitempty"`
@@ -11879,14 +11994,20 @@ type MailingList struct {
 	DoubleOptIn bool      `json:"double_opt_in"`
 	Id          uuid.UUID `json:"id"`
 	InboxId     uuid.UUID `json:"inbox_id"`
-	Name        string    `json:"name"`
+
+	// Kind `list`: a newsletter or announcement list. `status`: the e-mail subscribers of a status page (`status_page_id`).
+	Kind MailingListKind `json:"kind"`
+	Name string          `json:"name"`
 
 	// Public Offered on subscribe forms and the preference page; private lists are filled by the API and members only.
 	Public bool `json:"public"`
 
 	// SenderReady `channel_id` names an e-mail channel with an SMTP account, so the list's mails can go out.
-	SenderReady bool      `json:"sender_ready"`
-	UpdatedAt   time.Time `json:"updated_at"`
+	SenderReady bool `json:"sender_ready"`
+
+	// StatusPageId The status page whose subscribers a `status` list holds.
+	StatusPageId *uuid.UUID `json:"status_page_id,omitempty"`
+	UpdatedAt    time.Time  `json:"updated_at"`
 
 	// Welcome Send a receipt with an unsubscribe link right after someone subscribes.
 	Welcome bool `json:"welcome"`
@@ -11927,6 +12048,9 @@ type MailingListGrowthDay struct {
 	Unsubscribed int64 `json:"unsubscribed"`
 }
 
+// MailingListKind `list`: a newsletter or announcement list. `status`: the e-mail subscribers of a status page (`status_page_id`).
+type MailingListKind string
+
 // MailingListPage defines model for MailingListPage.
 type MailingListPage struct {
 	Items []MailingList `json:"items"`
@@ -11939,7 +12063,10 @@ type MailingListPage struct {
 type MailingListRef struct {
 	Id      uuid.UUID `json:"id"`
 	InboxId uuid.UUID `json:"inbox_id"`
-	Name    string    `json:"name"`
+
+	// Kind `list`: a newsletter or announcement list. `status`: the e-mail subscribers of a status page (`status_page_id`).
+	Kind MailingListKind `json:"kind"`
+	Name string          `json:"name"`
 }
 
 // MailingListUpdate defines model for MailingListUpdate.
@@ -14484,6 +14611,35 @@ type StatusComponentUpdate struct {
 	Position *int32                       `json:"position,omitempty"`
 }
 
+// StatusEmailSubscribers Whether visitors may subscribe to e-mail notices on `/status/{slug}/subscribe` and notices
+// are sent. `list_id` is the page's subscriber list (`kind: status`), made when e-mail
+// subscribers are first turned on and kept when they are turned off; manage its subscribers
+// with the `/v1/lists/{list_id}/subscriptions` endpoints. `warnings` name what may hurt
+// delivery without blocking it: `no_deliverability_check` (the channel's sending domain was
+// never checked or failed SPF, DKIM or DMARC), `no_postal_address` (the inbox names no sender
+// postal address), `dkim_unaligned` (mail is not signed with a key of the From domain).
+type StatusEmailSubscribers struct {
+	// ChannelId The inbox's e-mail channel notices and confirmations go out through.
+	ChannelId *uuid.UUID        `json:"channel_id,omitempty"`
+	Counts    MailingListCounts `json:"counts"`
+	Enabled   bool              `json:"enabled"`
+	ListId    *uuid.UUID        `json:"list_id,omitempty"`
+
+	// SenderReady `channel_id` names a channel that can send.
+	SenderReady *bool                            `json:"sender_ready,omitempty"`
+	Warnings    []StatusEmailSubscribersWarnings `json:"warnings"`
+}
+
+// StatusEmailSubscribersWarnings defines model for StatusEmailSubscribers.Warnings.
+type StatusEmailSubscribersWarnings string
+
+// StatusEmailSubscribersUpdate defines model for StatusEmailSubscribersUpdate.
+type StatusEmailSubscribersUpdate struct {
+	// ChannelId An e-mail channel of the page's inbox that can send (`409 sender_not_ready` otherwise).
+	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
+	Enabled   *bool      `json:"enabled,omitempty"`
+}
+
 // StatusIncident defines model for StatusIncident.
 type StatusIncident struct {
 	Components []StatusIncidentComponent `json:"components"`
@@ -14491,7 +14647,10 @@ type StatusIncident struct {
 	Id         uuid.UUID                 `json:"id"`
 	Impact     StatusIncidentImpact      `json:"impact"`
 	Kind       StatusIncidentKind        `json:"kind"`
-	PageId     uuid.UUID                 `json:"page_id"`
+
+	// Notify For a draft, whether publishing it mails the subscribers unless the publish request says otherwise.
+	Notify *bool     `json:"notify,omitempty"`
+	PageId uuid.UUID `json:"page_id"`
 
 	// PublishedAt Absent for a draft.
 	PublishedAt *time.Time `json:"published_at,omitempty"`
@@ -14638,12 +14797,16 @@ type StatusIncidentCreate struct {
 	Components *[]StatusIncidentComponentInput `json:"components,omitempty"`
 
 	// Impact Default `minor` for an incident, `none` for maintenance.
-	Impact         *StatusIncidentImpact `json:"impact,omitempty"`
-	Kind           *StatusIncidentKind   `json:"kind,omitempty"`
-	Message        string                `json:"message"`
-	Publish        *bool                 `json:"publish,omitempty"`
-	ScheduledEnd   *time.Time            `json:"scheduled_end,omitempty"`
-	ScheduledStart *time.Time            `json:"scheduled_start,omitempty"`
+	Impact  *StatusIncidentImpact `json:"impact,omitempty"`
+	Kind    *StatusIncidentKind   `json:"kind,omitempty"`
+	Message string                `json:"message"`
+
+	// Notify Mail the page's e-mail subscribers about it (default `true`). For a draft it is kept and
+	// applies when the draft is published without naming `notify`.
+	Notify         *bool      `json:"notify,omitempty"`
+	Publish        *bool      `json:"publish,omitempty"`
+	ScheduledEnd   *time.Time `json:"scheduled_end,omitempty"`
+	ScheduledStart *time.Time `json:"scheduled_start,omitempty"`
 
 	// State Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
 	// `scheduled`, `in_progress`, `completed`.
@@ -14695,11 +14858,20 @@ type StatusIncidentList struct {
 // StatusIncidentPatch defines model for StatusIncidentPatch.
 type StatusIncidentPatch struct {
 	// Components Replaces the list.
-	Components     *[]StatusIncidentComponentInput `json:"components,omitempty"`
-	Impact         *StatusIncidentImpact           `json:"impact,omitempty"`
-	ScheduledEnd   *time.Time                      `json:"scheduled_end,omitempty"`
-	ScheduledStart *time.Time                      `json:"scheduled_start,omitempty"`
-	Title          *string                         `json:"title,omitempty"`
+	Components *[]StatusIncidentComponentInput `json:"components,omitempty"`
+	Impact     *StatusIncidentImpact           `json:"impact,omitempty"`
+
+	// Notify Mail the subscribers about a changed maintenance window (default `true` when the window changes; other changes send nothing).
+	Notify         *bool      `json:"notify,omitempty"`
+	ScheduledEnd   *time.Time `json:"scheduled_end,omitempty"`
+	ScheduledStart *time.Time `json:"scheduled_start,omitempty"`
+	Title          *string    `json:"title,omitempty"`
+}
+
+// StatusIncidentPublish defines model for StatusIncidentPublish.
+type StatusIncidentPublish struct {
+	// Notify Mail the subscribers one notice with the current state and the latest update. Default what the draft was created with (`true` unless it said otherwise).
+	Notify *bool `json:"notify,omitempty"`
 }
 
 // StatusIncidentReply defines model for StatusIncidentReply.
@@ -14782,6 +14954,9 @@ type StatusIncidentUpdate struct {
 // StatusIncidentUpdateCreate defines model for StatusIncidentUpdateCreate.
 type StatusIncidentUpdateCreate struct {
 	Body string `json:"body"`
+
+	// Notify Mail the subscribers about it. Default `true` when the update changes the state, `false` when it only adds text.
+	Notify *bool `json:"notify,omitempty"`
 
 	// State Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
 	// `scheduled`, `in_progress`, `completed`.
@@ -15004,12 +15179,105 @@ type StatusMonitorWithToken struct {
 	Url string `json:"url"`
 }
 
+// StatusNotice defines model for StatusNotice.
+type StatusNotice struct {
+	// Counts Per recipient: `queued` waiting to go out, `sent`, `failed` (refused or retried too often),
+	// `bounced`, `complained`, `skipped` (unsubscribed, suppressed, the daily limit or too late
+	// since the notice started), `replied` and `auto_replied`.
+	Counts    StatusNoticeCounts `json:"counts"`
+	CreatedAt time.Time          `json:"created_at"`
+	DueAt     time.Time          `json:"due_at"`
+
+	// Final It reports the resolution or completion of the incident or the start of maintenance, so it skips the 15-minute gap and the hourly limit.
+	Final      bool       `json:"final"`
+	FinishedAt *time.Time `json:"finished_at,omitempty"`
+	Id         uuid.UUID  `json:"id"`
+	IncidentId uuid.UUID  `json:"incident_id"`
+	PageId     uuid.UUID  `json:"page_id"`
+
+	// SkipReason `rate`: the page sent 10 notices in the last hour. `suspended`: the workspace may not send
+	// bulk mail now. `email_off`: e-mail subscribers were turned off, or the server sends no
+	// notices. `unpublished`: the page or the incident is not public. `sender_not_ready`: the
+	// channel cannot send. `no_recipients`: no subscriber matched.
+	SkipReason *StatusNoticeSkipReason `json:"skip_reason,omitempty"`
+	StartedAt  *time.Time              `json:"started_at,omitempty"`
+
+	// State `pending` (waiting until `due_at`), `sending`, `sent`, `skipped` (nothing went out, see
+	// `skip_reason`), `cancelled` (a member stopped it while it waited).
+	State StatusNoticeState `json:"state"`
+
+	// UpdateIds The incident's updates it reports.
+	UpdateIds []uuid.UUID `json:"update_ids"`
+	UpdatedAt time.Time   `json:"updated_at"`
+}
+
+// StatusNoticeCounts Per recipient: `queued` waiting to go out, `sent`, `failed` (refused or retried too often),
+// `bounced`, `complained`, `skipped` (unsubscribed, suppressed, the daily limit or too late
+// since the notice started), `replied` and `auto_replied`.
+type StatusNoticeCounts struct {
+	AutoReplied int64 `json:"auto_replied"`
+	Bounced     int64 `json:"bounced"`
+	Complained  int64 `json:"complained"`
+	Failed      int64 `json:"failed"`
+	Queued      int64 `json:"queued"`
+	Recipients  int64 `json:"recipients"`
+	Replied     int64 `json:"replied"`
+	Sent        int64 `json:"sent"`
+	Skipped     int64 `json:"skipped"`
+}
+
+// StatusNoticeEvent `status_notice.updated`, on `/v1/realtime` only: a notice was queued, changed state or moved
+// its counts (at most every 5 seconds while sending). Not stored, no id, never replayed;
+// reload the notices after a reconnect. Reaches whoever may read the page with `status:read`.
+type StatusNoticeEvent struct {
+	CreatedAt   time.Time             `json:"created_at"`
+	Data        StatusNotice          `json:"data"`
+	InboxId     uuid.UUID             `json:"inbox_id"`
+	Type        StatusNoticeEventType `json:"type"`
+	WorkspaceId uuid.UUID             `json:"workspace_id"`
+}
+
+// StatusNoticeEventType defines model for StatusNoticeEvent.Type.
+type StatusNoticeEventType string
+
+// StatusNoticeList defines model for StatusNoticeList.
+type StatusNoticeList struct {
+	Items []StatusNotice `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// StatusNoticeReach defines model for StatusNoticeReach.
+type StatusNoticeReach struct {
+	Subscribers int64 `json:"subscribers"`
+}
+
+// StatusNoticeSkipReason `rate`: the page sent 10 notices in the last hour. `suspended`: the workspace may not send
+// bulk mail now. `email_off`: e-mail subscribers were turned off, or the server sends no
+// notices. `unpublished`: the page or the incident is not public. `sender_not_ready`: the
+// channel cannot send. `no_recipients`: no subscriber matched.
+type StatusNoticeSkipReason string
+
+// StatusNoticeState `pending` (waiting until `due_at`), `sending`, `sent`, `skipped` (nothing went out, see
+// `skip_reason`), `cancelled` (a member stopped it while it waited).
+type StatusNoticeState string
+
 // StatusPage defines model for StatusPage.
 type StatusPage struct {
 	// AccentColor Examples: #2563eb
 	AccentColor *StatusColor `json:"accent_color,omitempty"`
 	CreatedAt   time.Time    `json:"created_at"`
 	Description string       `json:"description"`
+
+	// EmailSubscribers Whether visitors may subscribe to e-mail notices on `/status/{slug}/subscribe` and notices
+	// are sent. `list_id` is the page's subscriber list (`kind: status`), made when e-mail
+	// subscribers are first turned on and kept when they are turned off; manage its subscribers
+	// with the `/v1/lists/{list_id}/subscriptions` endpoints. `warnings` name what may hurt
+	// delivery without blocking it: `no_deliverability_check` (the channel's sending domain was
+	// never checked or failed SPF, DKIM or DMARC), `no_postal_address` (the inbox names no sender
+	// postal address), `dkim_unaligned` (mail is not signed with a key of the From domain).
+	EmailSubscribers StatusEmailSubscribers `json:"email_subscribers"`
 
 	// HistoryDays Days of day bars and history the page shows.
 	HistoryDays int32     `json:"history_days"`
@@ -15100,9 +15368,10 @@ type StatusPageSlug = string
 
 // StatusPageUpdate defines model for StatusPageUpdate.
 type StatusPageUpdate struct {
-	AccentColor nullable.Nullable[string] `json:"accent_color,omitempty"`
-	Description *string                   `json:"description,omitempty"`
-	HistoryDays *int32                    `json:"history_days,omitempty"`
+	AccentColor      nullable.Nullable[string]     `json:"accent_color,omitempty"`
+	Description      *string                       `json:"description,omitempty"`
+	EmailSubscribers *StatusEmailSubscribersUpdate `json:"email_subscribers,omitempty"`
+	HistoryDays      *int32                        `json:"history_days,omitempty"`
 
 	// Locale A BCP 47 language tag.
 	//
@@ -15141,8 +15410,10 @@ type StoredEvent struct {
 
 // Subscription defines model for Subscription.
 type Subscription struct {
-	ConfirmationSentAt *time.Time `json:"confirmation_sent_at,omitempty"`
-	ConfirmedAt        *time.Time `json:"confirmed_at,omitempty"`
+	// Components On a status list, the components of the page the subscriber chose; absent when they get the notices of every component, including ones added later.
+	Components         *[]uuid.UUID `json:"components,omitempty"`
+	ConfirmationSentAt *time.Time   `json:"confirmation_sent_at,omitempty"`
+	ConfirmedAt        *time.Time   `json:"confirmed_at,omitempty"`
 
 	// ConsentAt When the person agreed (the confirmation for double opt-in).
 	ConsentAt *time.Time          `json:"consent_at,omitempty"`
@@ -15215,8 +15486,10 @@ type SubscriptionCreate struct {
 
 // SubscriptionDetail defines model for SubscriptionDetail.
 type SubscriptionDetail struct {
-	ConfirmationSentAt *time.Time `json:"confirmation_sent_at,omitempty"`
-	ConfirmedAt        *time.Time `json:"confirmed_at,omitempty"`
+	// Components On a status list, the components of the page the subscriber chose; absent when they get the notices of every component, including ones added later.
+	Components         *[]uuid.UUID `json:"components,omitempty"`
+	ConfirmationSentAt *time.Time   `json:"confirmation_sent_at,omitempty"`
+	ConfirmedAt        *time.Time   `json:"confirmed_at,omitempty"`
 
 	// ConsentAt When the person agreed (the confirmation for double opt-in).
 	ConsentAt *time.Time          `json:"consent_at,omitempty"`
@@ -16044,6 +16317,9 @@ type StatusMonitorId = uuid.UUID
 
 // StatusMonitorToken defines model for StatusMonitorToken.
 type StatusMonitorToken = string
+
+// StatusNoticeId defines model for StatusNoticeId.
+type StatusNoticeId = uuid.UUID
 
 // StatusPageId defines model for StatusPageId.
 type StatusPageId = uuid.UUID
@@ -17641,8 +17917,9 @@ type UpdateLabelParams struct {
 
 // ListMailingListsParams defines parameters for ListMailingLists.
 type ListMailingListsParams struct {
-	InboxId  *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
-	Archived *bool      `form:"archived,omitempty" json:"archived,omitempty"`
+	InboxId  *uuid.UUID       `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+	Archived *bool            `form:"archived,omitempty" json:"archived,omitempty"`
+	Kind     *MailingListKind `form:"kind,omitempty" json:"kind,omitempty"`
 
 	// Cursor The `next_cursor` of the previous page.
 	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
@@ -18383,6 +18660,41 @@ type ListStatusMonitorChecksParams struct {
 
 // RotateStatusMonitorTokenParams defines parameters for RotateStatusMonitorToken.
 type RotateStatusMonitorTokenParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetStatusNoticeReachParams defines parameters for GetStatusNoticeReach.
+type GetStatusNoticeReachParams struct {
+	ComponentId *[]uuid.UUID `form:"component_id,omitempty" json:"component_id,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListStatusNoticesParams defines parameters for ListStatusNotices.
+type ListStatusNoticesParams struct {
+	IncidentId *uuid.UUID         `form:"incident_id,omitempty" json:"incident_id,omitempty"`
+	State      *StatusNoticeState `form:"state,omitempty" json:"state,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetStatusNoticeParams defines parameters for GetStatusNotice.
+type GetStatusNoticeParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CancelStatusNoticeParams defines parameters for CancelStatusNotice.
+type CancelStatusNoticeParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -19206,6 +19518,9 @@ type CreateStatusIncidentJSONRequestBody = StatusIncidentCreate
 
 // UpdateStatusIncidentJSONRequestBody defines body for UpdateStatusIncident for application/json ContentType.
 type UpdateStatusIncidentJSONRequestBody = StatusIncidentPatch
+
+// PublishStatusIncidentJSONRequestBody defines body for PublishStatusIncident for application/json ContentType.
+type PublishStatusIncidentJSONRequestBody = StatusIncidentPublish
 
 // ReplyToStatusIncidentConversationsJSONRequestBody defines body for ReplyToStatusIncidentConversations for application/json ContentType.
 type ReplyToStatusIncidentConversationsJSONRequestBody = StatusIncidentReply
@@ -21604,6 +21919,32 @@ func (t *RealtimeMessage) MergeBroadcastProgressEvent(v BroadcastProgressEvent) 
 	return err
 }
 
+// AsStatusNoticeEvent returns the union data inside the RealtimeMessage as a StatusNoticeEvent
+func (t RealtimeMessage) AsStatusNoticeEvent() (StatusNoticeEvent, error) {
+	var body StatusNoticeEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromStatusNoticeEvent overwrites any union data inside the RealtimeMessage as the provided StatusNoticeEvent
+func (t *RealtimeMessage) FromStatusNoticeEvent(v StatusNoticeEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeStatusNoticeEvent performs a merge with any union data inside the RealtimeMessage, using the provided StatusNoticeEvent
+func (t *RealtimeMessage) MergeStatusNoticeEvent(v StatusNoticeEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsListImportEvent returns the union data inside the RealtimeMessage as a ListImportEvent
 func (t RealtimeMessage) AsListImportEvent() (ListImportEvent, error) {
 	var body ListImportEvent
@@ -21904,6 +22245,8 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsStatusMonitorEvent()
 	case "status.monitor.up":
 		return t.AsStatusMonitorEvent()
+	case "status_notice.updated":
+		return t.AsStatusNoticeEvent()
 	case "subscription.created":
 		return t.AsSubscriptionEvent()
 	case "subscription.updated":
@@ -26968,7 +27311,8 @@ type ClientInterface interface {
 	// ListMailingLists List mailing lists
 	//
 	// The lists of the inboxes the caller can see, newest first, with their subscription counts.
-	// Archived lists are left out unless `archived=true`, which lists only them.
+	// Archived lists are left out unless `archived=true`, which lists only them. Only lists of
+	// `kind` (default `list`) are listed; `kind=status` lists the status pages' subscriber lists.
 	//
 	// Scope: `lists:read`.
 	//
@@ -27010,7 +27354,7 @@ type ClientInterface interface {
 	// Deletes the list with its subscriptions and their consent events. Addresses that had
 	// unsubscribed from it are remembered as opted out first, so they cannot be added back by a
 	// member or a key. `409 list_in_use` while a scheduled, preparing, sending or paused
-	// broadcast sends to it.
+	// broadcast sends to it, `409 list_kind` for a status list, which goes with its page.
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -27027,7 +27371,9 @@ type ClientInterface interface {
 	// UpdateMailingListWithBody Update a mailing list
 	//
 	// Changes the given fields. `channel_id: null` leaves the list without a sending channel;
-	// `archived: true` hides it from forms, the preference page and the default list.
+	// `archived: true` hides it from forms, the preference page and the default list. A status
+	// list takes only `name` and `description`; its channel is set on its status page (`409
+	// list_kind` for anything else).
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -27039,7 +27385,9 @@ type ClientInterface interface {
 	// UpdateMailingList Update a mailing list
 	//
 	// Changes the given fields. `channel_id: null` leaves the list without a sending channel;
-	// `archived: true` hides it from forms, the preference page and the default list.
+	// `archived: true` hides it from forms, the preference page and the default list. A status
+	// list takes only `name` and `description`; its channel is set on its status page (`409
+	// list_kind` for anything else).
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -27063,7 +27411,8 @@ type ClientInterface interface {
 	// rest), `status`, `consentDate` (when the person agreed or refused, `YYYY-MM-DD HH:MM:SS`
 	// in Türkiye's time) and `recipientType` (`BIREYSEL`). `since` keeps the subscriptions that
 	// agreed or refused from then on. Pending subscriptions are left out. Check the rows against
-	// your own records before uploading; only commercial lists need registering.
+	// your own records before uploading; only commercial lists need registering. A status list
+	// has no İYS export (`409 list_kind`).
 	//
 	// The rows carry IP addresses and user agents, so agents are refused with `403 forbidden`.
 	// Owners, admins and API keys. Scope: `lists:read`.
@@ -27113,7 +27462,8 @@ type ClientInterface interface {
 	// limit, 100,000 by default, fails). Start it with `/start`.
 	//
 	// One import per workspace validates or imports at a time (`409 import_running`). A file
-	// that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`.
+	// that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`. A status
+	// list takes no imports (`409 list_kind`): its subscribers ask on the status page.
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -27230,6 +27580,11 @@ type ClientInterface interface {
 	// `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
 	// got 3 confirmation mails today.
 	//
+	// A status list (`kind: status`) takes no declared consent: every new subscription is
+	// `pending`, the person gets the confirmation mail and the answer is `202`, whatever
+	// `consent.confirmed` says. An earlier objection (`opted_out`) does not stop it; a
+	// suppressed address still gets `409 suppressed`.
+	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
 	// Takes any type of body and a specified content type.
@@ -27262,6 +27617,11 @@ type ClientInterface interface {
 	// bounced or was reported as spam, `400 validation_failed` without `consent` or
 	// `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
 	// got 3 confirmation mails today.
+	//
+	// A status list (`kind: status`) takes no declared consent: every new subscription is
+	// `pending`, the person gets the confirmation mail and the answer is `202`, whatever
+	// `consent.confirmed` says. An earlier objection (`opted_out`) does not stop it; a
+	// suppressed address still gets `409 suppressed`.
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -28429,7 +28789,8 @@ type ClientInterface interface {
 
 	// DeleteStatusPage Delete a status page
 	//
-	// The page with its groups, components, their history, incidents and updates.
+	// The page with its groups, components, their history, incidents and updates, its notices
+	// and its subscriber list with the subscriptions and their consent events.
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -28449,6 +28810,13 @@ type ClientInterface interface {
 	// takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
 	// redirect to the new one, until the page is deleted.
 	//
+	// `email_subscribers.enabled: true` opens `/status/{slug}/subscribe` and sends notices; it
+	// needs an e-mail channel of the page's inbox that can send, named in `channel_id` or set
+	// before (`409 sender_not_ready`). The first time it makes the page's subscriber list, named
+	// like the page (with ` (status)` added when the inbox has a list of that name). `false`
+	// stops the form and the notices and keeps the subscribers. On a server with
+	// `YUVA_STATUS_NOTICES=off` the form answers `404` and nothing is sent whatever the setting.
+	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
 	// Takes any type of body and a specified content type.
@@ -28461,6 +28829,13 @@ type ClientInterface interface {
 	// Changes the given fields; `null` clears an optional link, logo or colour. `published: false`
 	// takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
 	// redirect to the new one, until the page is deleted.
+	//
+	// `email_subscribers.enabled: true` opens `/status/{slug}/subscribe` and sends notices; it
+	// needs an e-mail channel of the page's inbox that can send, named in `channel_id` or set
+	// before (`409 sender_not_ready`). The first time it makes the page's subscriber list, named
+	// like the page (with ` (status)` added when the inbox has a list of that name). `false`
+	// stops the form and the notices and keeps the subscribers. On a server with
+	// `YUVA_STATUS_NOTICES=off` the form answers `404` and nothing is sent whatever the setting.
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -28634,6 +29009,7 @@ type ClientInterface interface {
 	// `in_progress` when its start has passed. `components` name the components it touches with the
 	// state each gets while it is open (`maintenance` by default for maintenance, `major_outage` for an
 	// incident). Without `publish: true` it is a draft: only members see it and it changes no component.
+	// Published with `notify` (default `true`), it queues a notice to the page's e-mail subscribers.
 	//
 	// An incident created through MCP is always a draft.
 	//
@@ -28651,6 +29027,7 @@ type ClientInterface interface {
 	// `in_progress` when its start has passed. `components` name the components it touches with the
 	// state each gets while it is open (`maintenance` by default for maintenance, `major_outage` for an
 	// incident). Without `publish: true` it is a draft: only members see it and it changes no component.
+	// Published with `notify` (default `true`), it queues a notice to the page's e-mail subscribers.
 	//
 	// An incident created through MCP is always a draft.
 	//
@@ -28681,7 +29058,8 @@ type ClientInterface interface {
 	//
 	// Title, impact, the components it touches and a maintenance window. States change with an update
 	// (`createStatusIncidentUpdate`). A resolved incident or completed maintenance cannot change
-	// (`409 incident_closed`).
+	// (`409 incident_closed`). A changed window of published maintenance queues a notice unless
+	// `notify` is `false`; other changes send none.
 	//
 	// Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -28694,7 +29072,8 @@ type ClientInterface interface {
 	//
 	// Title, impact, the components it touches and a maintenance window. States change with an update
 	// (`createStatusIncidentUpdate`). A resolved incident or completed maintenance cannot change
-	// (`409 incident_closed`).
+	// (`409 incident_closed`). A changed window of published maintenance queues a notice unless
+	// `notify` is `false`; other changes send none.
 	//
 	// Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -28739,15 +29118,33 @@ type ClientInterface interface {
 	// Corresponds with PUT /v1/status-pages/{pageId}/incidents/{incidentId}/conversations/{conversationId} (the `LinkStatusIncidentConversation` operationId).
 	LinkStatusIncidentConversation(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, conversationId ConversationId, params *LinkStatusIncidentConversationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// PublishStatusIncident Publish a draft incident
+	// PublishStatusIncidentWithBody Publish a draft incident
 	//
-	// Shows it on the page and, while it is open, sets the components it touches. Publishing a
-	// published incident changes nothing.
+	// Shows it on the page and, while it is open, sets the components it touches, and queues one
+	// notice to the page's e-mail subscribers with the current state and the latest update unless
+	// `notify` is `false` (see the notices endpoints). Publishing a published incident changes
+	// nothing.
 	//
 	// Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 	//
+	// Takes any type of body and a specified content type.
+	//
 	// Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/publish (the `PublishStatusIncident` operationId).
-	PublishStatusIncident(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	PublishStatusIncidentWithBody(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PublishStatusIncident Publish a draft incident
+	//
+	// Shows it on the page and, while it is open, sets the components it touches, and queues one
+	// notice to the page's e-mail subscribers with the current state and the latest update unless
+	// `notify` is `false` (see the notices endpoints). Publishing a published incident changes
+	// nothing.
+	//
+	// Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/publish (the `PublishStatusIncident` operationId).
+	PublishStatusIncident(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams, body PublishStatusIncidentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetStatusIncidentReply Get what became of a reply to linked conversations
 	//
@@ -28817,7 +29214,9 @@ type ClientInterface interface {
 	// states are `investigating`, `identified`, `monitoring` and `resolved`, maintenance's
 	// `scheduled`, `in_progress` and `completed`; maintenance does not go back to `scheduled`. A resolved
 	// incident or completed maintenance takes no more updates (`409 incident_closed`). Resolving or
-	// completing puts its components back; see the tag.
+	// completing puts its components back; see the tag. On a published incident, `notify` (default
+	// `true` when the state changes, `false` for text only) queues a notice to the page's e-mail
+	// subscribers or joins the one waiting.
 	//
 	// Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -28832,7 +29231,9 @@ type ClientInterface interface {
 	// states are `investigating`, `identified`, `monitoring` and `resolved`, maintenance's
 	// `scheduled`, `in_progress` and `completed`; maintenance does not go back to `scheduled`. A resolved
 	// incident or completed maintenance takes no more updates (`409 incident_closed`). Resolving or
-	// completing puts its components back; see the tag.
+	// completing puts its components back; see the tag. On a published incident, `notify` (default
+	// `true` when the state changes, `false` for text only) queues a notice to the page's e-mail
+	// subscribers or joins the one waiting.
 	//
 	// Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -28985,6 +29386,45 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /v1/status-pages/{pageId}/monitors/{monitorId}/token (the `RotateStatusMonitorToken` operationId).
 	RotateStatusMonitorToken(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *RotateStatusMonitorTokenParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetStatusNoticeReach How many subscribers a notice would reach
+	//
+	// The subscribed addresses a notice about an incident touching `component_id` (repeat it for
+	// several, none for an incident touching no component) would go to now: those who chose no
+	// components and those who chose one of them. Suppressed addresses are left out. The panel
+	// shows it beside "Notify subscribers".
+	//
+	// Scope: `status:read`.
+	//
+	// Corresponds with GET /v1/status-pages/{pageId}/notice-reach (the `GetStatusNoticeReach` operationId).
+	GetStatusNoticeReach(ctx context.Context, pageId StatusPageId, params *GetStatusNoticeReachParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListStatusNotices List a page's notices
+	//
+	// The notices to the page's e-mail subscribers, newest first, with their counts.
+	// `incident_id` and `state` narrow the list.
+	//
+	// Scope: `status:read`.
+	//
+	// Corresponds with GET /v1/status-pages/{pageId}/notices (the `ListStatusNotices` operationId).
+	ListStatusNotices(ctx context.Context, pageId StatusPageId, params *ListStatusNoticesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetStatusNotice A notice
+	//
+	// Scope: `status:read`.
+	//
+	// Corresponds with GET /v1/status-pages/{pageId}/notices/{noticeId} (the `GetStatusNotice` operationId).
+	GetStatusNotice(ctx context.Context, pageId StatusPageId, noticeId StatusNoticeId, params *GetStatusNoticeParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CancelStatusNotice Cancel a waiting notice
+	//
+	// Stops a `pending` notice ("Undo"): it becomes `cancelled` and nobody gets it; the updates it
+	// covered stay on the page. `409 not_pending` once it is sending or done.
+	//
+	// Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+	//
+	// Corresponds with POST /v1/status-pages/{pageId}/notices/{noticeId}/cancel (the `CancelStatusNotice` operationId).
+	CancelStatusNotice(ctx context.Context, pageId StatusPageId, noticeId StatusNoticeId, params *CancelStatusNoticeParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PreviewStatusPage Preview a status page
 	//
@@ -36566,7 +37006,8 @@ func (c *Client) UpdateLabel(ctx context.Context, labelId LabelId, params *Updat
 // ListMailingLists List mailing lists
 //
 // The lists of the inboxes the caller can see, newest first, with their subscription counts.
-// Archived lists are left out unless `archived=true`, which lists only them.
+// Archived lists are left out unless `archived=true`, which lists only them. Only lists of
+// `kind` (default `list`) are listed; `kind=status` lists the status pages' subscriber lists.
 //
 // Scope: `lists:read`.
 //
@@ -36638,7 +37079,7 @@ func (c *Client) CreateMailingList(ctx context.Context, params *CreateMailingLis
 // Deletes the list with its subscriptions and their consent events. Addresses that had
 // unsubscribed from it are remembered as opted out first, so they cannot be added back by a
 // member or a key. `409 list_in_use` while a scheduled, preparing, sending or paused
-// broadcast sends to it.
+// broadcast sends to it, `409 list_kind` for a status list, which goes with its page.
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //
@@ -36675,7 +37116,9 @@ func (c *Client) GetMailingList(ctx context.Context, listId ListId, params *GetM
 // UpdateMailingListWithBody Update a mailing list
 //
 // Changes the given fields. `channel_id: null` leaves the list without a sending channel;
-// `archived: true` hides it from forms, the preference page and the default list.
+// `archived: true` hides it from forms, the preference page and the default list. A status
+// list takes only `name` and `description`; its channel is set on its status page (`409
+// list_kind` for anything else).
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //
@@ -36697,7 +37140,9 @@ func (c *Client) UpdateMailingListWithBody(ctx context.Context, listId ListId, p
 // UpdateMailingList Update a mailing list
 //
 // Changes the given fields. `channel_id: null` leaves the list without a sending channel;
-// `archived: true` hides it from forms, the preference page and the default list.
+// `archived: true` hides it from forms, the preference page and the default list. A status
+// list takes only `name` and `description`; its channel is set on its status page (`409
+// list_kind` for anything else).
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //
@@ -36731,7 +37176,8 @@ func (c *Client) UpdateMailingList(ctx context.Context, listId ListId, params *U
 // rest), `status`, `consentDate` (when the person agreed or refused, `YYYY-MM-DD HH:MM:SS`
 // in Türkiye's time) and `recipientType` (`BIREYSEL`). `since` keeps the subscriptions that
 // agreed or refused from then on. Pending subscriptions are left out. Check the rows against
-// your own records before uploading; only commercial lists need registering.
+// your own records before uploading; only commercial lists need registering. A status list
+// has no İYS export (`409 list_kind`).
 //
 // The rows carry IP addresses and user agents, so agents are refused with `403 forbidden`.
 // Owners, admins and API keys. Scope: `lists:read`.
@@ -36811,7 +37257,8 @@ func (c *Client) ListListImports(ctx context.Context, listId ListId, params *Lis
 // limit, 100,000 by default, fails). Start it with `/start`.
 //
 // One import per workspace validates or imports at a time (`409 import_running`). A file
-// that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`.
+// that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`. A status
+// list takes no imports (`409 list_kind`): its subscribers ask on the status page.
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //
@@ -37008,6 +37455,11 @@ func (c *Client) ListSubscriptions(ctx context.Context, listId ListId, params *L
 // `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
 // got 3 confirmation mails today.
 //
+// A status list (`kind: status`) takes no declared consent: every new subscription is
+// `pending`, the person gets the confirmation mail and the answer is `202`, whatever
+// `consent.confirmed` says. An earlier objection (`opted_out`) does not stop it; a
+// suppressed address still gets `409 suppressed`.
+//
 // Owners, admins and API keys. Scope: `lists:write`.
 //
 // Takes any type of body and a specified content type.
@@ -37050,6 +37502,11 @@ func (c *Client) CreateSubscriptionWithBody(ctx context.Context, listId ListId, 
 // bounced or was reported as spam, `400 validation_failed` without `consent` or
 // `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
 // got 3 confirmation mails today.
+//
+// A status list (`kind: status`) takes no declared consent: every new subscription is
+// `pending`, the person gets the confirmation mail and the answer is `202`, whatever
+// `consent.confirmed` says. An earlier objection (`opted_out`) does not stop it; a
+// suppressed address still gets `409 suppressed`.
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //
@@ -39047,7 +39504,8 @@ func (c *Client) CreateStatusPage(ctx context.Context, params *CreateStatusPageP
 
 // DeleteStatusPage Delete a status page
 //
-// The page with its groups, components, their history, incidents and updates.
+// The page with its groups, components, their history, incidents and updates, its notices
+// and its subscriber list with the subscriptions and their consent events.
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -39087,6 +39545,13 @@ func (c *Client) GetStatusPage(ctx context.Context, pageId StatusPageId, params 
 // takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
 // redirect to the new one, until the page is deleted.
 //
+// `email_subscribers.enabled: true` opens `/status/{slug}/subscribe` and sends notices; it
+// needs an e-mail channel of the page's inbox that can send, named in `channel_id` or set
+// before (`409 sender_not_ready`). The first time it makes the page's subscriber list, named
+// like the page (with ` (status)` added when the inbox has a list of that name). `false`
+// stops the form and the notices and keeps the subscribers. On a server with
+// `YUVA_STATUS_NOTICES=off` the form answers `404` and nothing is sent whatever the setting.
+//
 // Owners, admins and API keys. Scope: `status:manage`.
 //
 // Takes any type of body and a specified content type.
@@ -39109,6 +39574,13 @@ func (c *Client) UpdateStatusPageWithBody(ctx context.Context, pageId StatusPage
 // Changes the given fields; `null` clears an optional link, logo or colour. `published: false`
 // takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
 // redirect to the new one, until the page is deleted.
+//
+// `email_subscribers.enabled: true` opens `/status/{slug}/subscribe` and sends notices; it
+// needs an e-mail channel of the page's inbox that can send, named in `channel_id` or set
+// before (`409 sender_not_ready`). The first time it makes the page's subscriber list, named
+// like the page (with ` (status)` added when the inbox has a list of that name). `false`
+// stops the form and the notices and keeps the subscribers. On a server with
+// `YUVA_STATUS_NOTICES=off` the form answers `404` and nothing is sent whatever the setting.
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -39442,6 +39914,7 @@ func (c *Client) ListStatusIncidents(ctx context.Context, pageId StatusPageId, p
 // `in_progress` when its start has passed. `components` name the components it touches with the
 // state each gets while it is open (`maintenance` by default for maintenance, `major_outage` for an
 // incident). Without `publish: true` it is a draft: only members see it and it changes no component.
+// Published with `notify` (default `true`), it queues a notice to the page's e-mail subscribers.
 //
 // An incident created through MCP is always a draft.
 //
@@ -39469,6 +39942,7 @@ func (c *Client) CreateStatusIncidentWithBody(ctx context.Context, pageId Status
 // `in_progress` when its start has passed. `components` name the components it touches with the
 // state each gets while it is open (`maintenance` by default for maintenance, `major_outage` for an
 // incident). Without `publish: true` it is a draft: only members see it and it changes no component.
+// Published with `notify` (default `true`), it queues a notice to the page's e-mail subscribers.
 //
 // An incident created through MCP is always a draft.
 //
@@ -39529,7 +40003,8 @@ func (c *Client) GetStatusIncident(ctx context.Context, pageId StatusPageId, inc
 //
 // Title, impact, the components it touches and a maintenance window. States change with an update
 // (`createStatusIncidentUpdate`). A resolved incident or completed maintenance cannot change
-// (`409 incident_closed`).
+// (`409 incident_closed`). A changed window of published maintenance queues a notice unless
+// `notify` is `false`; other changes send none.
 //
 // Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 //
@@ -39552,7 +40027,8 @@ func (c *Client) UpdateStatusIncidentWithBody(ctx context.Context, pageId Status
 //
 // Title, impact, the components it touches and a maintenance window. States change with an update
 // (`createStatusIncidentUpdate`). A resolved incident or completed maintenance cannot change
-// (`409 incident_closed`).
+// (`409 incident_closed`). A changed window of published maintenance queues a notice unless
+// `notify` is `false`; other changes send none.
 //
 // Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 //
@@ -39637,16 +40113,44 @@ func (c *Client) LinkStatusIncidentConversation(ctx context.Context, pageId Stat
 	return c.Client.Do(req)
 }
 
-// PublishStatusIncident Publish a draft incident
+// PublishStatusIncidentWithBody Publish a draft incident
 //
-// Shows it on the page and, while it is open, sets the components it touches. Publishing a
-// published incident changes nothing.
+// Shows it on the page and, while it is open, sets the components it touches, and queues one
+// notice to the page's e-mail subscribers with the current state and the latest update unless
+// `notify` is `false` (see the notices endpoints). Publishing a published incident changes
+// nothing.
 //
 // Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 //
+// Takes any type of body and a specified content type.
+//
 // Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/publish (the `PublishStatusIncident` operationId).
-func (c *Client) PublishStatusIncident(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPublishStatusIncidentRequest(c.Server, pageId, incidentId, params)
+func (c *Client) PublishStatusIncidentWithBody(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPublishStatusIncidentRequestWithBody(c.Server, pageId, incidentId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// PublishStatusIncident Publish a draft incident
+//
+// Shows it on the page and, while it is open, sets the components it touches, and queues one
+// notice to the page's e-mail subscribers with the current state and the latest update unless
+// `notify` is `false` (see the notices endpoints). Publishing a published incident changes
+// nothing.
+//
+// Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/publish (the `PublishStatusIncident` operationId).
+func (c *Client) PublishStatusIncident(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams, body PublishStatusIncidentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPublishStatusIncidentRequest(c.Server, pageId, incidentId, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -39755,7 +40259,9 @@ func (c *Client) ReplyToStatusIncidentConversations(ctx context.Context, pageId 
 // states are `investigating`, `identified`, `monitoring` and `resolved`, maintenance's
 // `scheduled`, `in_progress` and `completed`; maintenance does not go back to `scheduled`. A resolved
 // incident or completed maintenance takes no more updates (`409 incident_closed`). Resolving or
-// completing puts its components back; see the tag.
+// completing puts its components back; see the tag. On a published incident, `notify` (default
+// `true` when the state changes, `false` for text only) queues a notice to the page's e-mail
+// subscribers or joins the one waiting.
 //
 // Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 //
@@ -39780,7 +40286,9 @@ func (c *Client) CreateStatusIncidentUpdateWithBody(ctx context.Context, pageId 
 // states are `investigating`, `identified`, `monitoring` and `resolved`, maintenance's
 // `scheduled`, `in_progress` and `completed`; maintenance does not go back to `scheduled`. A resolved
 // incident or completed maintenance takes no more updates (`409 incident_closed`). Resolving or
-// completing puts its components back; see the tag.
+// completing puts its components back; see the tag. On a published incident, `notify` (default
+// `true` when the state changes, `false` for text only) queues a notice to the page's e-mail
+// subscribers or joins the one waiting.
 //
 // Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 //
@@ -40044,6 +40552,85 @@ func (c *Client) ListStatusMonitorChecks(ctx context.Context, pageId StatusPageI
 // Corresponds with POST /v1/status-pages/{pageId}/monitors/{monitorId}/token (the `RotateStatusMonitorToken` operationId).
 func (c *Client) RotateStatusMonitorToken(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *RotateStatusMonitorTokenParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRotateStatusMonitorTokenRequest(c.Server, pageId, monitorId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetStatusNoticeReach How many subscribers a notice would reach
+//
+// The subscribed addresses a notice about an incident touching `component_id` (repeat it for
+// several, none for an incident touching no component) would go to now: those who chose no
+// components and those who chose one of them. Suppressed addresses are left out. The panel
+// shows it beside "Notify subscribers".
+//
+// Scope: `status:read`.
+//
+// Corresponds with GET /v1/status-pages/{pageId}/notice-reach (the `GetStatusNoticeReach` operationId).
+func (c *Client) GetStatusNoticeReach(ctx context.Context, pageId StatusPageId, params *GetStatusNoticeReachParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetStatusNoticeReachRequest(c.Server, pageId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListStatusNotices List a page's notices
+//
+// The notices to the page's e-mail subscribers, newest first, with their counts.
+// `incident_id` and `state` narrow the list.
+//
+// Scope: `status:read`.
+//
+// Corresponds with GET /v1/status-pages/{pageId}/notices (the `ListStatusNotices` operationId).
+func (c *Client) ListStatusNotices(ctx context.Context, pageId StatusPageId, params *ListStatusNoticesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListStatusNoticesRequest(c.Server, pageId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetStatusNotice A notice
+//
+// Scope: `status:read`.
+//
+// Corresponds with GET /v1/status-pages/{pageId}/notices/{noticeId} (the `GetStatusNotice` operationId).
+func (c *Client) GetStatusNotice(ctx context.Context, pageId StatusPageId, noticeId StatusNoticeId, params *GetStatusNoticeParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetStatusNoticeRequest(c.Server, pageId, noticeId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CancelStatusNotice Cancel a waiting notice
+//
+// Stops a `pending` notice ("Undo"): it becomes `cancelled` and nobody gets it; the updates it
+// covered stay on the page. `409 not_pending` once it is sending or done.
+//
+// Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+//
+// Corresponds with POST /v1/status-pages/{pageId}/notices/{noticeId}/cancel (the `CancelStatusNotice` operationId).
+func (c *Client) CancelStatusNotice(ctx context.Context, pageId StatusPageId, noticeId StatusNoticeId, params *CancelStatusNoticeParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCancelStatusNoticeRequest(c.Server, pageId, noticeId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -54147,6 +54734,18 @@ func NewListMailingListsRequest(server string, params *ListMailingListsParams) (
 
 		}
 
+		if params.Kind != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "kind", *params.Kind, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
 		if params.Cursor != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
@@ -59937,8 +60536,19 @@ func NewLinkStatusIncidentConversationRequest(server string, pageId StatusPageId
 	return req, nil
 }
 
-// NewPublishStatusIncidentRequest constructs an http.Request for the PublishStatusIncident method
-func NewPublishStatusIncidentRequest(server string, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams) (*http.Request, error) {
+// NewPublishStatusIncidentRequest calls the generic PublishStatusIncident builder with application/json body
+func NewPublishStatusIncidentRequest(server string, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams, body PublishStatusIncidentJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewPublishStatusIncidentRequestWithBody(server, pageId, incidentId, params, "application/json", bodyReader)
+}
+
+// NewPublishStatusIncidentRequestWithBody constructs an http.Request for the PublishStatusIncident method, with any body, and a specified content type
+func NewPublishStatusIncidentRequestWithBody(server string, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -59970,10 +60580,12 @@ func NewPublishStatusIncidentRequest(server string, pageId StatusPageId, inciden
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	if params != nil {
 
@@ -60764,6 +61376,306 @@ func NewRotateStatusMonitorTokenRequest(server string, pageId StatusPageId, moni
 	}
 
 	operationPath := fmt.Sprintf("/v1/status-pages/%s/monitors/%s/token", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetStatusNoticeReachRequest constructs an http.Request for the GetStatusNoticeReach method
+func NewGetStatusNoticeReachRequest(server string, pageId StatusPageId, params *GetStatusNoticeReachParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/status-pages/%s/notice-reach", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.ComponentId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "component_id", *params.ComponentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "array", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListStatusNoticesRequest constructs an http.Request for the ListStatusNotices method
+func NewListStatusNoticesRequest(server string, pageId StatusPageId, params *ListStatusNoticesParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/status-pages/%s/notices", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.IncidentId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "incident_id", *params.IncidentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.State != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "state", *params.State, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetStatusNoticeRequest constructs an http.Request for the GetStatusNotice method
+func NewGetStatusNoticeRequest(server string, pageId StatusPageId, noticeId StatusNoticeId, params *GetStatusNoticeParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "noticeId", noticeId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/status-pages/%s/notices/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCancelStatusNoticeRequest constructs an http.Request for the CancelStatusNotice method
+func NewCancelStatusNoticeRequest(server string, pageId StatusPageId, noticeId StatusNoticeId, params *CancelStatusNoticeParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "noticeId", noticeId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/status-pages/%s/notices/%s/cancel", pathParam0, pathParam1)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -66366,7 +67278,8 @@ type ClientWithResponsesInterface interface {
 	// ListMailingListsWithResponse List mailing lists
 	//
 	// The lists of the inboxes the caller can see, newest first, with their subscription counts.
-	// Archived lists are left out unless `archived=true`, which lists only them.
+	// Archived lists are left out unless `archived=true`, which lists only them. Only lists of
+	// `kind` (default `list`) are listed; `kind=status` lists the status pages' subscriber lists.
 	//
 	// Scope: `lists:read`.
 	//
@@ -66410,7 +67323,7 @@ type ClientWithResponsesInterface interface {
 	// Deletes the list with its subscriptions and their consent events. Addresses that had
 	// unsubscribed from it are remembered as opted out first, so they cannot be added back by a
 	// member or a key. `409 list_in_use` while a scheduled, preparing, sending or paused
-	// broadcast sends to it.
+	// broadcast sends to it, `409 list_kind` for a status list, which goes with its page.
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -66431,7 +67344,9 @@ type ClientWithResponsesInterface interface {
 	// UpdateMailingListWithBodyWithResponse Update a mailing list
 	//
 	// Changes the given fields. `channel_id: null` leaves the list without a sending channel;
-	// `archived: true` hides it from forms, the preference page and the default list.
+	// `archived: true` hides it from forms, the preference page and the default list. A status
+	// list takes only `name` and `description`; its channel is set on its status page (`409
+	// list_kind` for anything else).
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -66443,7 +67358,9 @@ type ClientWithResponsesInterface interface {
 	// UpdateMailingListWithResponse Update a mailing list
 	//
 	// Changes the given fields. `channel_id: null` leaves the list without a sending channel;
-	// `archived: true` hides it from forms, the preference page and the default list.
+	// `archived: true` hides it from forms, the preference page and the default list. A status
+	// list takes only `name` and `description`; its channel is set on its status page (`409
+	// list_kind` for anything else).
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -66467,7 +67384,8 @@ type ClientWithResponsesInterface interface {
 	// rest), `status`, `consentDate` (when the person agreed or refused, `YYYY-MM-DD HH:MM:SS`
 	// in Türkiye's time) and `recipientType` (`BIREYSEL`). `since` keeps the subscriptions that
 	// agreed or refused from then on. Pending subscriptions are left out. Check the rows against
-	// your own records before uploading; only commercial lists need registering.
+	// your own records before uploading; only commercial lists need registering. A status list
+	// has no İYS export (`409 list_kind`).
 	//
 	// The rows carry IP addresses and user agents, so agents are refused with `403 forbidden`.
 	// Owners, admins and API keys. Scope: `lists:read`.
@@ -66523,7 +67441,8 @@ type ClientWithResponsesInterface interface {
 	// limit, 100,000 by default, fails). Start it with `/start`.
 	//
 	// One import per workspace validates or imports at a time (`409 import_running`). A file
-	// that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`.
+	// that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`. A status
+	// list takes no imports (`409 list_kind`): its subscribers ask on the status page.
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -66650,6 +67569,11 @@ type ClientWithResponsesInterface interface {
 	// `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
 	// got 3 confirmation mails today.
 	//
+	// A status list (`kind: status`) takes no declared consent: every new subscription is
+	// `pending`, the person gets the confirmation mail and the answer is `202`, whatever
+	// `consent.confirmed` says. An earlier objection (`opted_out`) does not stop it; a
+	// suppressed address still gets `409 suppressed`.
+	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
@@ -66682,6 +67606,11 @@ type ClientWithResponsesInterface interface {
 	// bounced or was reported as spam, `400 validation_failed` without `consent` or
 	// `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
 	// got 3 confirmation mails today.
+	//
+	// A status list (`kind: status`) takes no declared consent: every new subscription is
+	// `pending`, the person gets the confirmation mail and the answer is `202`, whatever
+	// `consent.confirmed` says. An earlier objection (`opted_out`) does not stop it; a
+	// suppressed address still gets `409 suppressed`.
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -67935,7 +68864,8 @@ type ClientWithResponsesInterface interface {
 
 	// DeleteStatusPageWithResponse Delete a status page
 	//
-	// The page with its groups, components, their history, incidents and updates.
+	// The page with its groups, components, their history, incidents and updates, its notices
+	// and its subscriber list with the subscriptions and their consent events.
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -67959,6 +68889,13 @@ type ClientWithResponsesInterface interface {
 	// takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
 	// redirect to the new one, until the page is deleted.
 	//
+	// `email_subscribers.enabled: true` opens `/status/{slug}/subscribe` and sends notices; it
+	// needs an e-mail channel of the page's inbox that can send, named in `channel_id` or set
+	// before (`409 sender_not_ready`). The first time it makes the page's subscriber list, named
+	// like the page (with ` (status)` added when the inbox has a list of that name). `false`
+	// stops the form and the notices and keeps the subscribers. On a server with
+	// `YUVA_STATUS_NOTICES=off` the form answers `404` and nothing is sent whatever the setting.
+	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
@@ -67971,6 +68908,13 @@ type ClientWithResponsesInterface interface {
 	// Changes the given fields; `null` clears an optional link, logo or colour. `published: false`
 	// takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
 	// redirect to the new one, until the page is deleted.
+	//
+	// `email_subscribers.enabled: true` opens `/status/{slug}/subscribe` and sends notices; it
+	// needs an e-mail channel of the page's inbox that can send, named in `channel_id` or set
+	// before (`409 sender_not_ready`). The first time it makes the page's subscriber list, named
+	// like the page (with ` (status)` added when the inbox has a list of that name). `false`
+	// stops the form and the notices and keeps the subscribers. On a server with
+	// `YUVA_STATUS_NOTICES=off` the form answers `404` and nothing is sent whatever the setting.
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -68154,6 +69098,7 @@ type ClientWithResponsesInterface interface {
 	// `in_progress` when its start has passed. `components` name the components it touches with the
 	// state each gets while it is open (`maintenance` by default for maintenance, `major_outage` for an
 	// incident). Without `publish: true` it is a draft: only members see it and it changes no component.
+	// Published with `notify` (default `true`), it queues a notice to the page's e-mail subscribers.
 	//
 	// An incident created through MCP is always a draft.
 	//
@@ -68171,6 +69116,7 @@ type ClientWithResponsesInterface interface {
 	// `in_progress` when its start has passed. `components` name the components it touches with the
 	// state each gets while it is open (`maintenance` by default for maintenance, `major_outage` for an
 	// incident). Without `publish: true` it is a draft: only members see it and it changes no component.
+	// Published with `notify` (default `true`), it queues a notice to the page's e-mail subscribers.
 	//
 	// An incident created through MCP is always a draft.
 	//
@@ -68205,7 +69151,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Title, impact, the components it touches and a maintenance window. States change with an update
 	// (`createStatusIncidentUpdate`). A resolved incident or completed maintenance cannot change
-	// (`409 incident_closed`).
+	// (`409 incident_closed`). A changed window of published maintenance queues a notice unless
+	// `notify` is `false`; other changes send none.
 	//
 	// Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -68218,7 +69165,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Title, impact, the components it touches and a maintenance window. States change with an update
 	// (`createStatusIncidentUpdate`). A resolved incident or completed maintenance cannot change
-	// (`409 incident_closed`).
+	// (`409 incident_closed`). A changed window of published maintenance queues a notice unless
+	// `notify` is `false`; other changes send none.
 	//
 	// Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -68269,17 +69217,33 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PUT /v1/status-pages/{pageId}/incidents/{incidentId}/conversations/{conversationId} (the `LinkStatusIncidentConversation` operationId).
 	LinkStatusIncidentConversationWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, conversationId ConversationId, params *LinkStatusIncidentConversationParams, reqEditors ...RequestEditorFn) (*LinkStatusIncidentConversationResponse, error)
 
-	// PublishStatusIncidentWithResponse Publish a draft incident
+	// PublishStatusIncidentWithBodyWithResponse Publish a draft incident
 	//
-	// Shows it on the page and, while it is open, sets the components it touches. Publishing a
-	// published incident changes nothing.
+	// Shows it on the page and, while it is open, sets the components it touches, and queues one
+	// notice to the page's e-mail subscribers with the current state and the latest update unless
+	// `notify` is `false` (see the notices endpoints). Publishing a published incident changes
+	// nothing.
 	//
 	// Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 	//
-	// Returns a wrapper object for the known response body format(s).
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/publish (the `PublishStatusIncident` operationId).
-	PublishStatusIncidentWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams, reqEditors ...RequestEditorFn) (*PublishStatusIncidentResponse, error)
+	PublishStatusIncidentWithBodyWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PublishStatusIncidentResponse, error)
+
+	// PublishStatusIncidentWithResponse Publish a draft incident
+	//
+	// Shows it on the page and, while it is open, sets the components it touches, and queues one
+	// notice to the page's e-mail subscribers with the current state and the latest update unless
+	// `notify` is `false` (see the notices endpoints). Publishing a published incident changes
+	// nothing.
+	//
+	// Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/publish (the `PublishStatusIncident` operationId).
+	PublishStatusIncidentWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams, body PublishStatusIncidentJSONRequestBody, reqEditors ...RequestEditorFn) (*PublishStatusIncidentResponse, error)
 
 	// GetStatusIncidentReplyWithResponse Get what became of a reply to linked conversations
 	//
@@ -68351,7 +69315,9 @@ type ClientWithResponsesInterface interface {
 	// states are `investigating`, `identified`, `monitoring` and `resolved`, maintenance's
 	// `scheduled`, `in_progress` and `completed`; maintenance does not go back to `scheduled`. A resolved
 	// incident or completed maintenance takes no more updates (`409 incident_closed`). Resolving or
-	// completing puts its components back; see the tag.
+	// completing puts its components back; see the tag. On a published incident, `notify` (default
+	// `true` when the state changes, `false` for text only) queues a notice to the page's e-mail
+	// subscribers or joins the one waiting.
 	//
 	// Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -68366,7 +69332,9 @@ type ClientWithResponsesInterface interface {
 	// states are `investigating`, `identified`, `monitoring` and `resolved`, maintenance's
 	// `scheduled`, `in_progress` and `completed`; maintenance does not go back to `scheduled`. A resolved
 	// incident or completed maintenance takes no more updates (`409 incident_closed`). Resolving or
-	// completing puts its components back; see the tag.
+	// completing puts its components back; see the tag. On a published incident, `notify` (default
+	// `true` when the state changes, `false` for text only) queues a notice to the page's e-mail
+	// subscribers or joins the one waiting.
 	//
 	// Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -68529,6 +69497,53 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /v1/status-pages/{pageId}/monitors/{monitorId}/token (the `RotateStatusMonitorToken` operationId).
 	RotateStatusMonitorTokenWithResponse(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *RotateStatusMonitorTokenParams, reqEditors ...RequestEditorFn) (*RotateStatusMonitorTokenResponse, error)
+
+	// GetStatusNoticeReachWithResponse How many subscribers a notice would reach
+	//
+	// The subscribed addresses a notice about an incident touching `component_id` (repeat it for
+	// several, none for an incident touching no component) would go to now: those who chose no
+	// components and those who chose one of them. Suppressed addresses are left out. The panel
+	// shows it beside "Notify subscribers".
+	//
+	// Scope: `status:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/status-pages/{pageId}/notice-reach (the `GetStatusNoticeReach` operationId).
+	GetStatusNoticeReachWithResponse(ctx context.Context, pageId StatusPageId, params *GetStatusNoticeReachParams, reqEditors ...RequestEditorFn) (*GetStatusNoticeReachResponse, error)
+
+	// ListStatusNoticesWithResponse List a page's notices
+	//
+	// The notices to the page's e-mail subscribers, newest first, with their counts.
+	// `incident_id` and `state` narrow the list.
+	//
+	// Scope: `status:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/status-pages/{pageId}/notices (the `ListStatusNotices` operationId).
+	ListStatusNoticesWithResponse(ctx context.Context, pageId StatusPageId, params *ListStatusNoticesParams, reqEditors ...RequestEditorFn) (*ListStatusNoticesResponse, error)
+
+	// GetStatusNoticeWithResponse A notice
+	//
+	// Scope: `status:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/status-pages/{pageId}/notices/{noticeId} (the `GetStatusNotice` operationId).
+	GetStatusNoticeWithResponse(ctx context.Context, pageId StatusPageId, noticeId StatusNoticeId, params *GetStatusNoticeParams, reqEditors ...RequestEditorFn) (*GetStatusNoticeResponse, error)
+
+	// CancelStatusNoticeWithResponse Cancel a waiting notice
+	//
+	// Stops a `pending` notice ("Undo"): it becomes `cancelled` and nobody gets it; the updates it
+	// covered stay on the page. `409 not_pending` once it is sending or done.
+	//
+	// Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/status-pages/{pageId}/notices/{noticeId}/cancel (the `CancelStatusNotice` operationId).
+	CancelStatusNoticeWithResponse(ctx context.Context, pageId StatusPageId, noticeId StatusNoticeId, params *CancelStatusNoticeParams, reqEditors ...RequestEditorFn) (*CancelStatusNoticeResponse, error)
 
 	// PreviewStatusPageWithResponse Preview a status page
 	//
@@ -84034,6 +85049,8 @@ type ExportListConsentResponse struct {
 	ApplicationproblemJSON403 *Problem
 	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
 	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
 	// Headers200 the parsed response headers for an HTTP 200 response
 	Headers200 *ExportListConsentResponse200Headers
 }
@@ -84061,6 +85078,11 @@ func (r ExportListConsentResponse) GetApplicationproblemJSON403() *Problem {
 // GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
 func (r ExportListConsentResponse) GetApplicationproblemJSON404() *Problem {
 	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r ExportListConsentResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
 }
 
 // GetBody returns the raw response body bytes
@@ -84734,6 +85756,8 @@ type CreateSubscriptionResponse struct {
 	JSON200 *Subscription
 	// JSON201 the response for an HTTP 201 `application/json` response
 	JSON201 *Subscription
+	// JSON202 the response for an HTTP 202 `application/json` response
+	JSON202 *Subscription
 	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
 	ApplicationproblemJSON400 *Problem
 	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
@@ -84756,6 +85780,11 @@ func (r CreateSubscriptionResponse) GetJSON200() *Subscription {
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
 func (r CreateSubscriptionResponse) GetJSON201() *Subscription {
 	return r.JSON201
+}
+
+// GetJSON202 returns the response for an HTTP 202 `application/json` response
+func (r CreateSubscriptionResponse) GetJSON202() *Subscription {
+	return r.JSON202
 }
 
 // GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
@@ -91017,6 +92046,275 @@ func (r RotateStatusMonitorTokenResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r RotateStatusMonitorTokenResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetStatusNoticeReachResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StatusNoticeReach
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetStatusNoticeReachResponse) GetJSON200() *StatusNoticeReach {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r GetStatusNoticeReachResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetStatusNoticeReachResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetStatusNoticeReachResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetStatusNoticeReachResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetStatusNoticeReachResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetStatusNoticeReachResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetStatusNoticeReachResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetStatusNoticeReachResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListStatusNoticesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StatusNoticeList
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListStatusNoticesResponse) GetJSON200() *StatusNoticeList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListStatusNoticesResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListStatusNoticesResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListStatusNoticesResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListStatusNoticesResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListStatusNoticesResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListStatusNoticesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListStatusNoticesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListStatusNoticesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetStatusNoticeResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StatusNotice
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetStatusNoticeResponse) GetJSON200() *StatusNotice {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetStatusNoticeResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetStatusNoticeResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetStatusNoticeResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetStatusNoticeResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetStatusNoticeResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetStatusNoticeResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetStatusNoticeResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CancelStatusNoticeResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StatusNotice
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CancelStatusNoticeResponse) GetJSON200() *StatusNotice {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CancelStatusNoticeResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CancelStatusNoticeResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CancelStatusNoticeResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CancelStatusNoticeResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r CancelStatusNoticeResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CancelStatusNoticeResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CancelStatusNoticeResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CancelStatusNoticeResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -98470,7 +99768,8 @@ func (c *ClientWithResponses) UpdateLabelWithResponse(ctx context.Context, label
 // ListMailingListsWithResponse List mailing lists
 //
 // The lists of the inboxes the caller can see, newest first, with their subscription counts.
-// Archived lists are left out unless `archived=true`, which lists only them.
+// Archived lists are left out unless `archived=true`, which lists only them. Only lists of
+// `kind` (default `list`) are listed; `kind=status` lists the status pages' subscriber lists.
 //
 // Scope: `lists:read`.
 //
@@ -98532,7 +99831,7 @@ func (c *ClientWithResponses) CreateMailingListWithResponse(ctx context.Context,
 // Deletes the list with its subscriptions and their consent events. Addresses that had
 // unsubscribed from it are remembered as opted out first, so they cannot be added back by a
 // member or a key. `409 list_in_use` while a scheduled, preparing, sending or paused
-// broadcast sends to it.
+// broadcast sends to it, `409 list_kind` for a status list, which goes with its page.
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //
@@ -98565,7 +99864,9 @@ func (c *ClientWithResponses) GetMailingListWithResponse(ctx context.Context, li
 // UpdateMailingListWithBodyWithResponse Update a mailing list
 //
 // Changes the given fields. `channel_id: null` leaves the list without a sending channel;
-// `archived: true` hides it from forms, the preference page and the default list.
+// `archived: true` hides it from forms, the preference page and the default list. A status
+// list takes only `name` and `description`; its channel is set on its status page (`409
+// list_kind` for anything else).
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //
@@ -98583,7 +99884,9 @@ func (c *ClientWithResponses) UpdateMailingListWithBodyWithResponse(ctx context.
 // UpdateMailingListWithResponse Update a mailing list
 //
 // Changes the given fields. `channel_id: null` leaves the list without a sending channel;
-// `archived: true` hides it from forms, the preference page and the default list.
+// `archived: true` hides it from forms, the preference page and the default list. A status
+// list takes only `name` and `description`; its channel is set on its status page (`409
+// list_kind` for anything else).
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //
@@ -98613,7 +99916,8 @@ func (c *ClientWithResponses) UpdateMailingListWithResponse(ctx context.Context,
 // rest), `status`, `consentDate` (when the person agreed or refused, `YYYY-MM-DD HH:MM:SS`
 // in Türkiye's time) and `recipientType` (`BIREYSEL`). `since` keeps the subscriptions that
 // agreed or refused from then on. Pending subscriptions are left out. Check the rows against
-// your own records before uploading; only commercial lists need registering.
+// your own records before uploading; only commercial lists need registering. A status list
+// has no İYS export (`409 list_kind`).
 //
 // The rows carry IP addresses and user agents, so agents are refused with `403 forbidden`.
 // Owners, admins and API keys. Scope: `lists:read`.
@@ -98687,7 +99991,8 @@ func (c *ClientWithResponses) ListListImportsWithResponse(ctx context.Context, l
 // limit, 100,000 by default, fails). Start it with `/start`.
 //
 // One import per workspace validates or imports at a time (`409 import_running`). A file
-// that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`.
+// that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`. A status
+// list takes no imports (`409 list_kind`): its subscribers ask on the status page.
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //
@@ -98862,6 +100167,11 @@ func (c *ClientWithResponses) ListSubscriptionsWithResponse(ctx context.Context,
 // `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
 // got 3 confirmation mails today.
 //
+// A status list (`kind: status`) takes no declared consent: every new subscription is
+// `pending`, the person gets the confirmation mail and the answer is `202`, whatever
+// `consent.confirmed` says. An earlier objection (`opted_out`) does not stop it; a
+// suppressed address still gets `409 suppressed`.
+//
 // Owners, admins and API keys. Scope: `lists:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
@@ -98900,6 +100210,11 @@ func (c *ClientWithResponses) CreateSubscriptionWithBodyWithResponse(ctx context
 // bounced or was reported as spam, `400 validation_failed` without `consent` or
 // `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
 // got 3 confirmation mails today.
+//
+// A status list (`kind: status`) takes no declared consent: every new subscription is
+// `pending`, the person gets the confirmation mail and the answer is `202`, whatever
+// `consent.confirmed` says. An earlier objection (`opted_out`) does not stop it; a
+// suppressed address still gets `409 suppressed`.
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //
@@ -100651,7 +101966,8 @@ func (c *ClientWithResponses) CreateStatusPageWithResponse(ctx context.Context, 
 
 // DeleteStatusPageWithResponse Delete a status page
 //
-// The page with its groups, components, their history, incidents and updates.
+// The page with its groups, components, their history, incidents and updates, its notices
+// and its subscriber list with the subscriptions and their consent events.
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -100687,6 +102003,13 @@ func (c *ClientWithResponses) GetStatusPageWithResponse(ctx context.Context, pag
 // takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
 // redirect to the new one, until the page is deleted.
 //
+// `email_subscribers.enabled: true` opens `/status/{slug}/subscribe` and sends notices; it
+// needs an e-mail channel of the page's inbox that can send, named in `channel_id` or set
+// before (`409 sender_not_ready`). The first time it makes the page's subscriber list, named
+// like the page (with ` (status)` added when the inbox has a list of that name). `false`
+// stops the form and the notices and keeps the subscribers. On a server with
+// `YUVA_STATUS_NOTICES=off` the form answers `404` and nothing is sent whatever the setting.
+//
 // Owners, admins and API keys. Scope: `status:manage`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
@@ -100705,6 +102028,13 @@ func (c *ClientWithResponses) UpdateStatusPageWithBodyWithResponse(ctx context.C
 // Changes the given fields; `null` clears an optional link, logo or colour. `published: false`
 // takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
 // redirect to the new one, until the page is deleted.
+//
+// `email_subscribers.enabled: true` opens `/status/{slug}/subscribe` and sends notices; it
+// needs an e-mail channel of the page's inbox that can send, named in `channel_id` or set
+// before (`409 sender_not_ready`). The first time it makes the page's subscriber list, named
+// like the page (with ` (status)` added when the inbox has a list of that name). `false`
+// stops the form and the notices and keeps the subscribers. On a server with
+// `YUVA_STATUS_NOTICES=off` the form answers `404` and nothing is sent whatever the setting.
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -100984,6 +102314,7 @@ func (c *ClientWithResponses) ListStatusIncidentsWithResponse(ctx context.Contex
 // `in_progress` when its start has passed. `components` name the components it touches with the
 // state each gets while it is open (`maintenance` by default for maintenance, `major_outage` for an
 // incident). Without `publish: true` it is a draft: only members see it and it changes no component.
+// Published with `notify` (default `true`), it queues a notice to the page's e-mail subscribers.
 //
 // An incident created through MCP is always a draft.
 //
@@ -101007,6 +102338,7 @@ func (c *ClientWithResponses) CreateStatusIncidentWithBodyWithResponse(ctx conte
 // `in_progress` when its start has passed. `components` name the components it touches with the
 // state each gets while it is open (`maintenance` by default for maintenance, `major_outage` for an
 // incident). Without `publish: true` it is a draft: only members see it and it changes no component.
+// Published with `notify` (default `true`), it queues a notice to the page's e-mail subscribers.
 //
 // An incident created through MCP is always a draft.
 //
@@ -101059,7 +102391,8 @@ func (c *ClientWithResponses) GetStatusIncidentWithResponse(ctx context.Context,
 //
 // Title, impact, the components it touches and a maintenance window. States change with an update
 // (`createStatusIncidentUpdate`). A resolved incident or completed maintenance cannot change
-// (`409 incident_closed`).
+// (`409 incident_closed`). A changed window of published maintenance queues a notice unless
+// `notify` is `false`; other changes send none.
 //
 // Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 //
@@ -101078,7 +102411,8 @@ func (c *ClientWithResponses) UpdateStatusIncidentWithBodyWithResponse(ctx conte
 //
 // Title, impact, the components it touches and a maintenance window. States change with an update
 // (`createStatusIncidentUpdate`). A resolved incident or completed maintenance cannot change
-// (`409 incident_closed`).
+// (`409 incident_closed`). A changed window of published maintenance queues a notice unless
+// `notify` is `false`; other changes send none.
 //
 // Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 //
@@ -101153,18 +102487,40 @@ func (c *ClientWithResponses) LinkStatusIncidentConversationWithResponse(ctx con
 	return ParseLinkStatusIncidentConversationResponse(rsp)
 }
 
-// PublishStatusIncidentWithResponse Publish a draft incident
+// PublishStatusIncidentWithBodyWithResponse Publish a draft incident
 //
-// Shows it on the page and, while it is open, sets the components it touches. Publishing a
-// published incident changes nothing.
+// Shows it on the page and, while it is open, sets the components it touches, and queues one
+// notice to the page's e-mail subscribers with the current state and the latest update unless
+// `notify` is `false` (see the notices endpoints). Publishing a published incident changes
+// nothing.
 //
 // Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 //
-// Returns a wrapper object for the known response body format(s).
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/publish (the `PublishStatusIncident` operationId).
-func (c *ClientWithResponses) PublishStatusIncidentWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams, reqEditors ...RequestEditorFn) (*PublishStatusIncidentResponse, error) {
-	rsp, err := c.PublishStatusIncident(ctx, pageId, incidentId, params, reqEditors...)
+func (c *ClientWithResponses) PublishStatusIncidentWithBodyWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PublishStatusIncidentResponse, error) {
+	rsp, err := c.PublishStatusIncidentWithBody(ctx, pageId, incidentId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePublishStatusIncidentResponse(rsp)
+}
+
+// PublishStatusIncidentWithResponse Publish a draft incident
+//
+// Shows it on the page and, while it is open, sets the components it touches, and queues one
+// notice to the page's e-mail subscribers with the current state and the latest update unless
+// `notify` is `false` (see the notices endpoints). Publishing a published incident changes
+// nothing.
+//
+// Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/publish (the `PublishStatusIncident` operationId).
+func (c *ClientWithResponses) PublishStatusIncidentWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams, body PublishStatusIncidentJSONRequestBody, reqEditors ...RequestEditorFn) (*PublishStatusIncidentResponse, error) {
+	rsp, err := c.PublishStatusIncident(ctx, pageId, incidentId, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -101259,7 +102615,9 @@ func (c *ClientWithResponses) ReplyToStatusIncidentConversationsWithResponse(ctx
 // states are `investigating`, `identified`, `monitoring` and `resolved`, maintenance's
 // `scheduled`, `in_progress` and `completed`; maintenance does not go back to `scheduled`. A resolved
 // incident or completed maintenance takes no more updates (`409 incident_closed`). Resolving or
-// completing puts its components back; see the tag.
+// completing puts its components back; see the tag. On a published incident, `notify` (default
+// `true` when the state changes, `false` for text only) queues a notice to the page's e-mail
+// subscribers or joins the one waiting.
 //
 // Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 //
@@ -101280,7 +102638,9 @@ func (c *ClientWithResponses) CreateStatusIncidentUpdateWithBodyWithResponse(ctx
 // states are `investigating`, `identified`, `monitoring` and `resolved`, maintenance's
 // `scheduled`, `in_progress` and `completed`; maintenance does not go back to `scheduled`. A resolved
 // incident or completed maintenance takes no more updates (`409 incident_closed`). Resolving or
-// completing puts its components back; see the tag.
+// completing puts its components back; see the tag. On a published incident, `notify` (default
+// `true` when the state changes, `false` for text only) queues a notice to the page's e-mail
+// subscribers or joins the one waiting.
 //
 // Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
 //
@@ -101514,6 +102874,77 @@ func (c *ClientWithResponses) RotateStatusMonitorTokenWithResponse(ctx context.C
 		return nil, err
 	}
 	return ParseRotateStatusMonitorTokenResponse(rsp)
+}
+
+// GetStatusNoticeReachWithResponse How many subscribers a notice would reach
+//
+// The subscribed addresses a notice about an incident touching `component_id` (repeat it for
+// several, none for an incident touching no component) would go to now: those who chose no
+// components and those who chose one of them. Suppressed addresses are left out. The panel
+// shows it beside "Notify subscribers".
+//
+// Scope: `status:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/status-pages/{pageId}/notice-reach (the `GetStatusNoticeReach` operationId).
+func (c *ClientWithResponses) GetStatusNoticeReachWithResponse(ctx context.Context, pageId StatusPageId, params *GetStatusNoticeReachParams, reqEditors ...RequestEditorFn) (*GetStatusNoticeReachResponse, error) {
+	rsp, err := c.GetStatusNoticeReach(ctx, pageId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetStatusNoticeReachResponse(rsp)
+}
+
+// ListStatusNoticesWithResponse List a page's notices
+//
+// The notices to the page's e-mail subscribers, newest first, with their counts.
+// `incident_id` and `state` narrow the list.
+//
+// Scope: `status:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/status-pages/{pageId}/notices (the `ListStatusNotices` operationId).
+func (c *ClientWithResponses) ListStatusNoticesWithResponse(ctx context.Context, pageId StatusPageId, params *ListStatusNoticesParams, reqEditors ...RequestEditorFn) (*ListStatusNoticesResponse, error) {
+	rsp, err := c.ListStatusNotices(ctx, pageId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListStatusNoticesResponse(rsp)
+}
+
+// GetStatusNoticeWithResponse A notice
+//
+// Scope: `status:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/status-pages/{pageId}/notices/{noticeId} (the `GetStatusNotice` operationId).
+func (c *ClientWithResponses) GetStatusNoticeWithResponse(ctx context.Context, pageId StatusPageId, noticeId StatusNoticeId, params *GetStatusNoticeParams, reqEditors ...RequestEditorFn) (*GetStatusNoticeResponse, error) {
+	rsp, err := c.GetStatusNotice(ctx, pageId, noticeId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetStatusNoticeResponse(rsp)
+}
+
+// CancelStatusNoticeWithResponse Cancel a waiting notice
+//
+// Stops a `pending` notice ("Undo"): it becomes `cancelled` and nobody gets it; the updates it
+// covered stay on the page. `409 not_pending` once it is sending or done.
+//
+// Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/status-pages/{pageId}/notices/{noticeId}/cancel (the `CancelStatusNotice` operationId).
+func (c *ClientWithResponses) CancelStatusNoticeWithResponse(ctx context.Context, pageId StatusPageId, noticeId StatusNoticeId, params *CancelStatusNoticeParams, reqEditors ...RequestEditorFn) (*CancelStatusNoticeResponse, error) {
+	rsp, err := c.CancelStatusNotice(ctx, pageId, noticeId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCancelStatusNoticeResponse(rsp)
 }
 
 // PreviewStatusPageWithResponse Preview a status page
@@ -113975,6 +115406,13 @@ func ParseExportListConsentResponse(rsp *http.Response) (*ExportListConsentRespo
 		}
 		response.ApplicationproblemJSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
 	case rsp.StatusCode == 200:
 		// Content-type (text/csv) unsupported
 
@@ -114532,6 +115970,13 @@ func ParseCreateSubscriptionResponse(rsp *http.Response) (*CreateSubscriptionRes
 			return nil, err
 		}
 		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest Subscription
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
 		var dest Problem
@@ -119427,6 +120872,215 @@ func ParseRotateStatusMonitorTokenResponse(rsp *http.Response) (*RotateStatusMon
 			return nil, err
 		}
 		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetStatusNoticeReachResponse parses an HTTP response from a GetStatusNoticeReachWithResponse call
+func ParseGetStatusNoticeReachResponse(rsp *http.Response) (*GetStatusNoticeReachResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetStatusNoticeReachResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StatusNoticeReach
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListStatusNoticesResponse parses an HTTP response from a ListStatusNoticesWithResponse call
+func ParseListStatusNoticesResponse(rsp *http.Response) (*ListStatusNoticesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListStatusNoticesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StatusNoticeList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetStatusNoticeResponse parses an HTTP response from a GetStatusNoticeWithResponse call
+func ParseGetStatusNoticeResponse(rsp *http.Response) (*GetStatusNoticeResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetStatusNoticeResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StatusNotice
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCancelStatusNoticeResponse parses an HTTP response from a CancelStatusNoticeWithResponse call
+func ParseCancelStatusNoticeResponse(rsp *http.Response) (*CancelStatusNoticeResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CancelStatusNoticeResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StatusNotice
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
 
 	}
 

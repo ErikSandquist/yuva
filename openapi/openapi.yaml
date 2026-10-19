@@ -141,6 +141,16 @@ tags:
       `/m/{token}` also takes the RFC 8058 one-click `POST` (`List-Unsubscribe=One-Click`).
       Pending subscriptions are deleted after 30 days, unsubscribed ones and their consent events
       after 3 years.
+
+      A list has a `kind`: `list` (newsletters and announcements) or `status`, the e-mail
+      subscribers of a status page, made by the page when its e-mail subscribers are turned on. A
+      status list is never public or commercial, always double opt-in and sends no welcome mail;
+      these settings and the list itself cannot be changed or deleted here (`409 list_kind`). It is
+      left out of `GET /v1/lists` unless `kind=status`, of broadcast audiences, subscribe forms, CSV
+      imports and the İYS export, and stays outside the opt-out register: leaving it remembers no
+      objection and an earlier objection does not stop the person from asking for notices again.
+      Its subscriptions may choose components of the page (`components`); its `/m/{token}` page
+      shows only that list.
   - name: designs
     description: |
       E-mail designs for broadcasts, the images they use and the template gallery. A design is an
@@ -288,6 +298,19 @@ tags:
       leaves a component a failing monitor holds in the monitor's state. Monitors going down or up send
       `status.monitor.down` and `status.monitor.up` and notify the inbox's members as a new
       conversation does (push and e-mail, per their settings for new conversations).
+
+      A page may have e-mail subscribers (`email_subscribers`): visitors subscribe on
+      `/status/{slug}/subscribe` with double opt-in, for every component or chosen ones, into the
+      page's list (`kind: status`, see the lists tag). Publishing an incident or maintenance and
+      updates with `notify` queue a notice (`StatusNotice`) through the inbox's e-mail channel. A
+      notice is due 60 seconds after the update that asked for it, and can be cancelled until then;
+      updates with `notify` arriving while it waits join it. A notice of an incident is due at the
+      earliest 15 minutes after the previous one was sent, except a final one (resolved, completed,
+      maintenance started), which is due after 60 seconds and pulls a waiting one forward. A page
+      sends at most 10 notices an hour; others are `skipped` (`rate`), final ones never. A
+      subscriber whose components the incident does not touch gets nothing; an incident touching no
+      component reaches only those who chose none. Notices are not stored as events and send no
+      webhooks; their progress reaches `/v1/realtime` as `status_notice.updated`.
 
       Owners, admins and API keys manage pages, groups, components and monitors; agents with access to the
       page's inbox read them, set component states and write incidents and updates. A key limited to
@@ -4491,7 +4514,8 @@ paths:
       summary: List mailing lists
       description: |
         The lists of the inboxes the caller can see, newest first, with their subscription counts.
-        Archived lists are left out unless `archived=true`, which lists only them.
+        Archived lists are left out unless `archived=true`, which lists only them. Only lists of
+        `kind` (default `list`) are listed; `kind=status` lists the status pages' subscriber lists.
 
         Scope: `lists:read`.
       tags: [lists]
@@ -4506,6 +4530,10 @@ paths:
           in: query
           schema:
             type: boolean
+        - name: kind
+          in: query
+          schema:
+            $ref: "#/components/schemas/MailingListKind"
         - $ref: "#/components/parameters/Cursor"
         - $ref: "#/components/parameters/Limit"
       responses:
@@ -4588,7 +4616,9 @@ paths:
       summary: Update a mailing list
       description: |
         Changes the given fields. `channel_id: null` leaves the list without a sending channel;
-        `archived: true` hides it from forms, the preference page and the default list.
+        `archived: true` hides it from forms, the preference page and the default list. A status
+        list takes only `name` and `description`; its channel is set on its status page (`409
+        list_kind` for anything else).
 
         Owners, admins and API keys. Scope: `lists:write`.
       tags: [lists]
@@ -4625,7 +4655,7 @@ paths:
         Deletes the list with its subscriptions and their consent events. Addresses that had
         unsubscribed from it are remembered as opted out first, so they cannot be added back by a
         member or a key. `409 list_in_use` while a scheduled, preparing, sending or paused
-        broadcast sends to it.
+        broadcast sends to it, `409 list_kind` for a status list, which goes with its page.
 
         Owners, admins and API keys. Scope: `lists:write`.
       tags: [lists]
@@ -4744,6 +4774,11 @@ paths:
         `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
         got 3 confirmation mails today.
 
+        A status list (`kind: status`) takes no declared consent: every new subscription is
+        `pending`, the person gets the confirmation mail and the answer is `202`, whatever
+        `consent.confirmed` says. An earlier objection (`opted_out`) does not stop it; a
+        suppressed address still gets `409 suppressed`.
+
         Owners, admins and API keys. Scope: `lists:write`.
       tags: [lists]
       parameters:
@@ -4765,6 +4800,12 @@ paths:
                 $ref: "#/components/schemas/Subscription"
         "201":
           description: The new subscription.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Subscription"
+        "202":
+          description: The new `pending` subscription of a status list; the confirmation mail is on its way.
           content:
             application/json:
               schema:
@@ -4914,7 +4955,8 @@ paths:
         rest), `status`, `consentDate` (when the person agreed or refused, `YYYY-MM-DD HH:MM:SS`
         in Türkiye's time) and `recipientType` (`BIREYSEL`). `since` keeps the subscriptions that
         agreed or refused from then on. Pending subscriptions are left out. Check the rows against
-        your own records before uploading; only commercial lists need registering.
+        your own records before uploading; only commercial lists need registering. A status list
+        has no İYS export (`409 list_kind`).
 
         The rows carry IP addresses and user agents, so agents are refused with `403 forbidden`.
         Owners, admins and API keys. Scope: `lists:read`.
@@ -4949,6 +4991,8 @@ paths:
         "403":
           $ref: "#/components/responses/Problem"
         "404":
+          $ref: "#/components/responses/Problem"
+        "409":
           $ref: "#/components/responses/Problem"
   /v1/lists/{listId}/imports:
     get:
@@ -5003,7 +5047,8 @@ paths:
         limit, 100,000 by default, fails). Start it with `/start`.
 
         One import per workspace validates or imports at a time (`409 import_running`). A file
-        that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`.
+        that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`. A status
+        list takes no imports (`409 list_kind`): its subscribers ask on the status page.
 
         Owners, admins and API keys. Scope: `lists:write`.
       tags: [lists]
@@ -9483,6 +9528,13 @@ paths:
         takes the page off the web (`404`) at once. Changing `slug` keeps the old one reserved for this page, and its public addresses
         redirect to the new one, until the page is deleted.
 
+        `email_subscribers.enabled: true` opens `/status/{slug}/subscribe` and sends notices; it
+        needs an e-mail channel of the page's inbox that can send, named in `channel_id` or set
+        before (`409 sender_not_ready`). The first time it makes the page's subscriber list, named
+        like the page (with ` (status)` added when the inbox has a list of that name). `false`
+        stops the form and the notices and keeps the subscribers. On a server with
+        `YUVA_STATUS_NOTICES=off` the form answers `404` and nothing is sent whatever the setting.
+
         Owners, admins and API keys. Scope: `status:manage`.
       tags: [status]
       parameters:
@@ -9515,7 +9567,8 @@ paths:
       operationId: deleteStatusPage
       summary: Delete a status page
       description: |
-        The page with its groups, components, their history, incidents and updates.
+        The page with its groups, components, their history, incidents and updates, its notices
+        and its subscriber list with the subscriptions and their consent events.
 
         Owners, admins and API keys. Scope: `status:manage`.
       tags: [status]
@@ -9875,6 +9928,7 @@ paths:
         `in_progress` when its start has passed. `components` name the components it touches with the
         state each gets while it is open (`maintenance` by default for maintenance, `major_outage` for an
         incident). Without `publish: true` it is a draft: only members see it and it changes no component.
+        Published with `notify` (default `true`), it queues a notice to the page's e-mail subscribers.
 
         An incident created through MCP is always a draft.
 
@@ -9935,7 +9989,8 @@ paths:
       description: |
         Title, impact, the components it touches and a maintenance window. States change with an update
         (`createStatusIncidentUpdate`). A resolved incident or completed maintenance cannot change
-        (`409 incident_closed`).
+        (`409 incident_closed`). A changed window of published maintenance queues a notice unless
+        `notify` is `false`; other changes send none.
 
         Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
       tags: [status]
@@ -9994,8 +10049,10 @@ paths:
       operationId: publishStatusIncident
       summary: Publish a draft incident
       description: |
-        Shows it on the page and, while it is open, sets the components it touches. Publishing a
-        published incident changes nothing.
+        Shows it on the page and, while it is open, sets the components it touches, and queues one
+        notice to the page's e-mail subscribers with the current state and the latest update unless
+        `notify` is `false` (see the notices endpoints). Publishing a published incident changes
+        nothing.
 
         Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
       tags: [status]
@@ -10004,6 +10061,12 @@ paths:
         - $ref: "#/components/parameters/WorkspaceHeader"
         - $ref: "#/components/parameters/StatusPageId"
         - $ref: "#/components/parameters/StatusIncidentId"
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatusIncidentPublish"
       responses:
         "200":
           description: The incident.
@@ -10026,7 +10089,9 @@ paths:
         states are `investigating`, `identified`, `monitoring` and `resolved`, maintenance's
         `scheduled`, `in_progress` and `completed`; maintenance does not go back to `scheduled`. A resolved
         incident or completed maintenance takes no more updates (`409 incident_closed`). Resolving or
-        completing puts its components back; see the tag.
+        completing puts its components back; see the tag. On a published incident, `notify` (default
+        `true` when the state changes, `false` for text only) queues a notice to the page's e-mail
+        subscribers or joins the one waiting.
 
         Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
       tags: [status]
@@ -10256,6 +10321,137 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/StatusIncidentReplyReport"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/notices:
+    get:
+      operationId: listStatusNotices
+      summary: List a page's notices
+      description: |
+        The notices to the page's e-mail subscribers, newest first, with their counts.
+        `incident_id` and `state` narrow the list.
+
+        Scope: `status:read`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - name: incident_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: state
+          in: query
+          schema:
+            $ref: "#/components/schemas/StatusNoticeState"
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of notices.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusNoticeList"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/notices/{noticeId}:
+    get:
+      operationId: getStatusNotice
+      summary: A notice
+      description: "Scope: `status:read`."
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusNoticeId"
+      responses:
+        "200":
+          description: The notice.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusNotice"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/notices/{noticeId}/cancel:
+    post:
+      operationId: cancelStatusNotice
+      summary: Cancel a waiting notice
+      description: |
+        Stops a `pending` notice ("Undo"): it becomes `cancelled` and nobody gets it; the updates it
+        covered stay on the page. `409 not_pending` once it is sending or done.
+
+        Agents with access to the page's inbox, owners, admins and API keys. Scope: `status:manage`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusNoticeId"
+      responses:
+        "200":
+          description: The cancelled notice.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusNotice"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/notice-reach:
+    get:
+      operationId: getStatusNoticeReach
+      summary: How many subscribers a notice would reach
+      description: |
+        The subscribed addresses a notice about an incident touching `component_id` (repeat it for
+        several, none for an incident touching no component) would go to now: those who chose no
+        components and those who chose one of them. Suppressed addresses are left out. The panel
+        shows it beside "Notify subscribers".
+
+        Scope: `status:read`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - name: component_id
+          in: query
+          style: form
+          explode: true
+          schema:
+            type: array
+            maxItems: 100
+            items:
+              type: string
+              format: uuid
+      responses:
+        "200":
+          description: The count.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusNoticeReach"
         "400":
           $ref: "#/components/responses/Problem"
         "401":
@@ -13416,6 +13612,13 @@ components:
         format: uuid
     StatusIncidentId:
       name: incidentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    StatusNoticeId:
+      name: noticeId
       in: path
       required: true
       schema:
@@ -18996,6 +19199,7 @@ components:
         - $ref: "#/components/schemas/MigrationProgressEvent"
         - $ref: "#/components/schemas/MigrationForwardingConfirmationEvent"
         - $ref: "#/components/schemas/BroadcastProgressEvent"
+        - $ref: "#/components/schemas/StatusNoticeEvent"
         - $ref: "#/components/schemas/ListImportEvent"
         - $ref: "#/components/schemas/ListImportProgressEvent"
         - $ref: "#/components/schemas/TypingEvent"
@@ -19042,6 +19246,7 @@ components:
           migration.progress: "#/components/schemas/MigrationProgressEvent"
           migration.forwarding_confirmation: "#/components/schemas/MigrationForwardingConfirmationEvent"
           broadcast.progress: "#/components/schemas/BroadcastProgressEvent"
+          status_notice.updated: "#/components/schemas/StatusNoticeEvent"
           list_import.updated: "#/components/schemas/ListImportEvent"
           list_import.progress: "#/components/schemas/ListImportProgressEvent"
           typing: "#/components/schemas/TypingEvent"
@@ -19972,6 +20177,7 @@ components:
       properties:
         list_ids:
           type: array
+          description: Lists of the broadcast's inbox; a status page's list (`kind` `status`) is refused with `400 validation_failed`.
           maxItems: 10
           items:
             type: string
@@ -20769,9 +20975,14 @@ components:
         unsubscribed:
           type: integer
           format: int64
+    MailingListKind:
+      type: string
+      description: "`list`: a newsletter or announcement list. `status`: the e-mail subscribers of a status page (`status_page_id`)."
+      enum: [list, status]
+      x-enum-varnames: [MailingListKindList, MailingListKindStatus]
     MailingList:
       type: object
-      required: [id, inbox_id, name, description, double_opt_in, public, commercial, welcome, sender_ready, counts, created_at, updated_at]
+      required: [id, inbox_id, kind, name, description, double_opt_in, public, commercial, welcome, sender_ready, counts, created_at, updated_at]
       properties:
         id:
           type: string
@@ -20779,6 +20990,12 @@ components:
         inbox_id:
           type: string
           format: uuid
+        kind:
+          $ref: "#/components/schemas/MailingListKind"
+        status_page_id:
+          type: string
+          format: uuid
+          description: The status page whose subscribers a `status` list holds.
         channel_id:
           type: string
           format: uuid
@@ -20816,7 +21033,7 @@ components:
           format: date-time
     MailingListRef:
       type: object
-      required: [id, inbox_id, name]
+      required: [id, inbox_id, name, kind]
       properties:
         id:
           type: string
@@ -20826,6 +21043,8 @@ components:
           format: uuid
         name:
           type: string
+        kind:
+          $ref: "#/components/schemas/MailingListKind"
     MailingListCreate:
       type: object
       required: [inbox_id, name]
@@ -20984,6 +21203,12 @@ components:
           format: date-time
         unsubscribe_reason:
           $ref: "#/components/schemas/UnsubscribeReason"
+        components:
+          type: array
+          description: On a status list, the components of the page the subscriber chose; absent when they get the notices of every component, including ones added later.
+          items:
+            type: string
+            format: uuid
         created_at:
           type: string
           format: date-time
@@ -24234,7 +24459,7 @@ components:
       examples: ["#2563eb"]
     StatusPage:
       type: object
-      required: [id, inbox_id, name, description, slug, url, locale, timezone, history_days, show_uptime, published, state, created_at, updated_at]
+      required: [id, inbox_id, name, description, slug, url, locale, timezone, history_days, show_uptime, published, state, email_subscribers, created_at, updated_at]
       properties:
         id:
           type: string
@@ -24275,12 +24500,56 @@ components:
           type: boolean
         state:
           $ref: "#/components/schemas/StatusComponentStateValue"
+        email_subscribers:
+          $ref: "#/components/schemas/StatusEmailSubscribers"
         created_at:
           type: string
           format: date-time
         updated_at:
           type: string
           format: date-time
+    StatusEmailSubscribers:
+      type: object
+      description: |
+        Whether visitors may subscribe to e-mail notices on `/status/{slug}/subscribe` and notices
+        are sent. `list_id` is the page's subscriber list (`kind: status`), made when e-mail
+        subscribers are first turned on and kept when they are turned off; manage its subscribers
+        with the `/v1/lists/{list_id}/subscriptions` endpoints. `warnings` name what may hurt
+        delivery without blocking it: `no_deliverability_check` (the channel's sending domain was
+        never checked or failed SPF, DKIM or DMARC), `no_postal_address` (the inbox names no sender
+        postal address), `dkim_unaligned` (mail is not signed with a key of the From domain).
+      required: [enabled, counts, warnings]
+      properties:
+        enabled:
+          type: boolean
+        channel_id:
+          type: string
+          format: uuid
+          description: The inbox's e-mail channel notices and confirmations go out through.
+        list_id:
+          type: string
+          format: uuid
+        counts:
+          $ref: "#/components/schemas/MailingListCounts"
+        warnings:
+          type: array
+          items:
+            type: string
+            enum: [no_deliverability_check, no_postal_address, dkim_unaligned]
+            x-enum-varnames: [StatusWarningNoDeliverabilityCheck, StatusWarningNoPostalAddress, StatusWarningDkimUnaligned]
+        sender_ready:
+          type: boolean
+          description: "`channel_id` names a channel that can send."
+    StatusEmailSubscribersUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        enabled:
+          type: boolean
+        channel_id:
+          type: string
+          format: uuid
+          description: An e-mail channel of the page's inbox that can send (`409 sender_not_ready` otherwise).
     StatusPageList:
       type: object
       required: [items]
@@ -24380,6 +24649,8 @@ components:
           type: boolean
         published:
           type: boolean
+        email_subscribers:
+          $ref: "#/components/schemas/StatusEmailSubscribersUpdate"
     StatusPageRef:
       type: object
       required: [id, name, slug]
@@ -24811,6 +25082,9 @@ components:
           type: string
           format: date-time
           description: When it was resolved or completed.
+        notify:
+          type: boolean
+          description: For a draft, whether publishing it mails the subscribers unless the publish request says otherwise.
         created_at:
           type: string
           format: date-time
@@ -24859,6 +25133,146 @@ components:
           format: date-time
         publish:
           type: boolean
+        notify:
+          type: boolean
+          description: |
+            Mail the page's e-mail subscribers about it (default `true`). For a draft it is kept and
+            applies when the draft is published without naming `notify`.
+    StatusNoticeState:
+      type: string
+      description: |
+        `pending` (waiting until `due_at`), `sending`, `sent`, `skipped` (nothing went out, see
+        `skip_reason`), `cancelled` (a member stopped it while it waited).
+      enum: [pending, sending, sent, skipped, cancelled]
+      x-enum-varnames: [StatusNoticePending, StatusNoticeSending, StatusNoticeSent, StatusNoticeSkipped, StatusNoticeCancelled]
+    StatusNoticeSkipReason:
+      type: string
+      description: |
+        `rate`: the page sent 10 notices in the last hour. `suspended`: the workspace may not send
+        bulk mail now. `email_off`: e-mail subscribers were turned off, or the server sends no
+        notices. `unpublished`: the page or the incident is not public. `sender_not_ready`: the
+        channel cannot send. `no_recipients`: no subscriber matched.
+      enum: [rate, suspended, email_off, unpublished, sender_not_ready, no_recipients]
+      x-enum-varnames: [NoticeSkipRate, NoticeSkipSuspended, NoticeSkipEmailOff, NoticeSkipUnpublished, NoticeSkipSenderNotReady, NoticeSkipNoRecipients]
+    StatusNoticeCounts:
+      type: object
+      description: |
+        Per recipient: `queued` waiting to go out, `sent`, `failed` (refused or retried too often),
+        `bounced`, `complained`, `skipped` (unsubscribed, suppressed, the daily limit or too late
+        since the notice started), `replied` and `auto_replied`.
+      required: [recipients, queued, sent, failed, bounced, complained, skipped, replied, auto_replied]
+      properties:
+        recipients:
+          type: integer
+          format: int64
+        queued:
+          type: integer
+          format: int64
+        sent:
+          type: integer
+          format: int64
+        failed:
+          type: integer
+          format: int64
+        bounced:
+          type: integer
+          format: int64
+        complained:
+          type: integer
+          format: int64
+        skipped:
+          type: integer
+          format: int64
+        replied:
+          type: integer
+          format: int64
+        auto_replied:
+          type: integer
+          format: int64
+    StatusNotice:
+      type: object
+      required: [id, page_id, incident_id, state, final, due_at, update_ids, counts, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        page_id:
+          type: string
+          format: uuid
+        incident_id:
+          type: string
+          format: uuid
+        state:
+          $ref: "#/components/schemas/StatusNoticeState"
+        final:
+          type: boolean
+          description: It reports the resolution or completion of the incident or the start of maintenance, so it skips the 15-minute gap and the hourly limit.
+        due_at:
+          type: string
+          format: date-time
+        skip_reason:
+          $ref: "#/components/schemas/StatusNoticeSkipReason"
+        update_ids:
+          type: array
+          description: The incident's updates it reports.
+          items:
+            type: string
+            format: uuid
+        counts:
+          $ref: "#/components/schemas/StatusNoticeCounts"
+        started_at:
+          type: string
+          format: date-time
+        finished_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    StatusNoticeList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/StatusNotice"
+        next_cursor:
+          type: string
+          description: Absent on the last page.
+    StatusNoticeReach:
+      type: object
+      required: [subscribers]
+      properties:
+        subscribers:
+          type: integer
+          format: int64
+    StatusNoticeEvent:
+      type: object
+      description: |
+        `status_notice.updated`, on `/v1/realtime` only: a notice was queued, changed state or moved
+        its counts (at most every 5 seconds while sending). Not stored, no id, never replayed;
+        reload the notices after a reconnect. Reaches whoever may read the page with `status:read`.
+      required: [type, workspace_id, inbox_id, created_at, data]
+      properties:
+        type:
+          type: string
+          enum: [status_notice.updated]
+          x-enum-varnames: [StatusNoticeUpdated]
+        workspace_id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          $ref: "#/components/schemas/StatusNotice"
     StatusIncidentComponentInput:
       type: object
       required: [component_id]
@@ -24890,6 +25304,9 @@ components:
         scheduled_end:
           type: string
           format: date-time
+        notify:
+          type: boolean
+          description: Mail the subscribers about a changed maintenance window (default `true` when the window changes; other changes send nothing).
     StatusIncidentUpdateCreate:
       type: object
       required: [body]
@@ -24900,6 +25317,15 @@ components:
           type: string
           minLength: 1
           maxLength: 5000
+        notify:
+          type: boolean
+          description: Mail the subscribers about it. Default `true` when the update changes the state, `false` when it only adds text.
+    StatusIncidentPublish:
+      type: object
+      properties:
+        notify:
+          type: boolean
+          description: Mail the subscribers one notice with the current state and the latest update. Default what the draft was created with (`true` unless it said otherwise).
     StatusIncidentUpdateEdit:
       type: object
       required: [body]

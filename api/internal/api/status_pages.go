@@ -131,6 +131,7 @@ func (s *Server) statusPageBody(pg store.StatusPage, state string) oas.StatusPag
 		Url: s.statusURL(pg.Slug, ""), LogoUrl: pg.LogoUrl, SiteUrl: pg.SiteUrl, SupportUrl: pg.SupportUrl, Locale: pg.Locale,
 		Timezone: pg.Timezone, HistoryDays: pg.HistoryDays, ShowUptime: pg.ShowUptime, Published: pg.Published,
 		State: oas.StatusComponentStateValue(state), CreatedAt: pg.CreatedAt, UpdatedAt: pg.UpdatedAt,
+		EmailSubscribers: oas.StatusEmailSubscribers{Warnings: []oas.StatusEmailSubscribersWarnings{}},
 	}
 	if pg.AccentColor != nil {
 		c := oas.StatusColor(*pg.AccentColor)

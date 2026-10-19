@@ -3170,6 +3170,24 @@ func (e Locale) Valid() bool {
 	}
 }
 
+// Defines values for MailingListKind.
+const (
+	MailingListKindList   MailingListKind = "list"
+	MailingListKindStatus MailingListKind = "status"
+)
+
+// Valid indicates whether the value is a known member of the MailingListKind enum.
+func (e MailingListKind) Valid() bool {
+	switch e {
+	case MailingListKindList:
+		return true
+	case MailingListKindStatus:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for MemberPresenceEventType.
 const (
 	MemberPresenceEventTypeMemberPresence MemberPresenceEventType = "member.presence"
@@ -4559,6 +4577,27 @@ func (e StatusComponentStateValue) Valid() bool {
 	}
 }
 
+// Defines values for StatusEmailSubscribersWarnings.
+const (
+	StatusWarningDkimUnaligned         StatusEmailSubscribersWarnings = "dkim_unaligned"
+	StatusWarningNoDeliverabilityCheck StatusEmailSubscribersWarnings = "no_deliverability_check"
+	StatusWarningNoPostalAddress       StatusEmailSubscribersWarnings = "no_postal_address"
+)
+
+// Valid indicates whether the value is a known member of the StatusEmailSubscribersWarnings enum.
+func (e StatusEmailSubscribersWarnings) Valid() bool {
+	switch e {
+	case StatusWarningDkimUnaligned:
+		return true
+	case StatusWarningNoDeliverabilityCheck:
+		return true
+	case StatusWarningNoPostalAddress:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for StatusIncidentChange.
 const (
 	StatusChangeChanged      StatusIncidentChange = "changed"
@@ -4805,6 +4844,78 @@ func (e StatusMonitorState) Valid() bool {
 	case MonitorPending:
 		return true
 	case MonitorUp:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusNoticeEventType.
+const (
+	StatusNoticeUpdated StatusNoticeEventType = "status_notice.updated"
+)
+
+// Valid indicates whether the value is a known member of the StatusNoticeEventType enum.
+func (e StatusNoticeEventType) Valid() bool {
+	switch e {
+	case StatusNoticeUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusNoticeSkipReason.
+const (
+	NoticeSkipEmailOff       StatusNoticeSkipReason = "email_off"
+	NoticeSkipNoRecipients   StatusNoticeSkipReason = "no_recipients"
+	NoticeSkipRate           StatusNoticeSkipReason = "rate"
+	NoticeSkipSenderNotReady StatusNoticeSkipReason = "sender_not_ready"
+	NoticeSkipSuspended      StatusNoticeSkipReason = "suspended"
+	NoticeSkipUnpublished    StatusNoticeSkipReason = "unpublished"
+)
+
+// Valid indicates whether the value is a known member of the StatusNoticeSkipReason enum.
+func (e StatusNoticeSkipReason) Valid() bool {
+	switch e {
+	case NoticeSkipEmailOff:
+		return true
+	case NoticeSkipNoRecipients:
+		return true
+	case NoticeSkipRate:
+		return true
+	case NoticeSkipSenderNotReady:
+		return true
+	case NoticeSkipSuspended:
+		return true
+	case NoticeSkipUnpublished:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StatusNoticeState.
+const (
+	StatusNoticeCancelled StatusNoticeState = "cancelled"
+	StatusNoticePending   StatusNoticeState = "pending"
+	StatusNoticeSending   StatusNoticeState = "sending"
+	StatusNoticeSent      StatusNoticeState = "sent"
+	StatusNoticeSkipped   StatusNoticeState = "skipped"
+)
+
+// Valid indicates whether the value is a known member of the StatusNoticeState enum.
+func (e StatusNoticeState) Valid() bool {
+	switch e {
+	case StatusNoticeCancelled:
+		return true
+	case StatusNoticePending:
+		return true
+	case StatusNoticeSending:
+		return true
+	case StatusNoticeSent:
+		return true
+	case StatusNoticeSkipped:
 		return true
 	default:
 		return false
@@ -7431,8 +7542,10 @@ type BroadcastAudienceExcluded struct {
 // BroadcastAudienceInput defines model for BroadcastAudienceInput.
 type BroadcastAudienceInput struct {
 	Conditions *[]BroadcastCondition `json:"conditions,omitempty"`
-	ListIds    []uuid.UUID           `json:"list_ids"`
-	Locales    *[]LanguageTag        `json:"locales,omitempty"`
+
+	// ListIds Lists of the broadcast's inbox; a status page's list (`kind` `status`) is refused with `400 validation_failed`.
+	ListIds []uuid.UUID    `json:"list_ids"`
+	Locales *[]LanguageTag `json:"locales,omitempty"`
 }
 
 // BroadcastCampaignVisits defines model for BroadcastCampaignVisits.
@@ -8920,8 +9033,10 @@ type ContactRef struct {
 
 // ContactSubscription defines model for ContactSubscription.
 type ContactSubscription struct {
-	ConfirmationSentAt *time.Time `json:"confirmation_sent_at,omitempty"`
-	ConfirmedAt        *time.Time `json:"confirmed_at,omitempty"`
+	// Components On a status list, the components of the page the subscriber chose; absent when they get the notices of every component, including ones added later.
+	Components         *[]uuid.UUID `json:"components,omitempty"`
+	ConfirmationSentAt *time.Time   `json:"confirmation_sent_at,omitempty"`
+	ConfirmedAt        *time.Time   `json:"confirmed_at,omitempty"`
 
 	// ConsentAt When the person agreed (the confirmation for double opt-in).
 	ConsentAt *time.Time          `json:"consent_at,omitempty"`
@@ -11833,14 +11948,20 @@ type MailingList struct {
 	DoubleOptIn bool      `json:"double_opt_in"`
 	Id          uuid.UUID `json:"id"`
 	InboxId     uuid.UUID `json:"inbox_id"`
-	Name        string    `json:"name"`
+
+	// Kind `list`: a newsletter or announcement list. `status`: the e-mail subscribers of a status page (`status_page_id`).
+	Kind MailingListKind `json:"kind"`
+	Name string          `json:"name"`
 
 	// Public Offered on subscribe forms and the preference page; private lists are filled by the API and members only.
 	Public bool `json:"public"`
 
 	// SenderReady `channel_id` names an e-mail channel with an SMTP account, so the list's mails can go out.
-	SenderReady bool      `json:"sender_ready"`
-	UpdatedAt   time.Time `json:"updated_at"`
+	SenderReady bool `json:"sender_ready"`
+
+	// StatusPageId The status page whose subscribers a `status` list holds.
+	StatusPageId *uuid.UUID `json:"status_page_id,omitempty"`
+	UpdatedAt    time.Time  `json:"updated_at"`
 
 	// Welcome Send a receipt with an unsubscribe link right after someone subscribes.
 	Welcome bool `json:"welcome"`
@@ -11881,6 +12002,9 @@ type MailingListGrowthDay struct {
 	Unsubscribed int64 `json:"unsubscribed"`
 }
 
+// MailingListKind `list`: a newsletter or announcement list. `status`: the e-mail subscribers of a status page (`status_page_id`).
+type MailingListKind string
+
 // MailingListPage defines model for MailingListPage.
 type MailingListPage struct {
 	Items []MailingList `json:"items"`
@@ -11893,7 +12017,10 @@ type MailingListPage struct {
 type MailingListRef struct {
 	Id      uuid.UUID `json:"id"`
 	InboxId uuid.UUID `json:"inbox_id"`
-	Name    string    `json:"name"`
+
+	// Kind `list`: a newsletter or announcement list. `status`: the e-mail subscribers of a status page (`status_page_id`).
+	Kind MailingListKind `json:"kind"`
+	Name string          `json:"name"`
 }
 
 // MailingListUpdate defines model for MailingListUpdate.
@@ -14438,6 +14565,35 @@ type StatusComponentUpdate struct {
 	Position *int32                       `json:"position,omitempty"`
 }
 
+// StatusEmailSubscribers Whether visitors may subscribe to e-mail notices on `/status/{slug}/subscribe` and notices
+// are sent. `list_id` is the page's subscriber list (`kind: status`), made when e-mail
+// subscribers are first turned on and kept when they are turned off; manage its subscribers
+// with the `/v1/lists/{list_id}/subscriptions` endpoints. `warnings` name what may hurt
+// delivery without blocking it: `no_deliverability_check` (the channel's sending domain was
+// never checked or failed SPF, DKIM or DMARC), `no_postal_address` (the inbox names no sender
+// postal address), `dkim_unaligned` (mail is not signed with a key of the From domain).
+type StatusEmailSubscribers struct {
+	// ChannelId The inbox's e-mail channel notices and confirmations go out through.
+	ChannelId *uuid.UUID        `json:"channel_id,omitempty"`
+	Counts    MailingListCounts `json:"counts"`
+	Enabled   bool              `json:"enabled"`
+	ListId    *uuid.UUID        `json:"list_id,omitempty"`
+
+	// SenderReady `channel_id` names a channel that can send.
+	SenderReady *bool                            `json:"sender_ready,omitempty"`
+	Warnings    []StatusEmailSubscribersWarnings `json:"warnings"`
+}
+
+// StatusEmailSubscribersWarnings defines model for StatusEmailSubscribers.Warnings.
+type StatusEmailSubscribersWarnings string
+
+// StatusEmailSubscribersUpdate defines model for StatusEmailSubscribersUpdate.
+type StatusEmailSubscribersUpdate struct {
+	// ChannelId An e-mail channel of the page's inbox that can send (`409 sender_not_ready` otherwise).
+	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
+	Enabled   *bool      `json:"enabled,omitempty"`
+}
+
 // StatusIncident defines model for StatusIncident.
 type StatusIncident struct {
 	Components []StatusIncidentComponent `json:"components"`
@@ -14445,7 +14601,10 @@ type StatusIncident struct {
 	Id         uuid.UUID                 `json:"id"`
 	Impact     StatusIncidentImpact      `json:"impact"`
 	Kind       StatusIncidentKind        `json:"kind"`
-	PageId     uuid.UUID                 `json:"page_id"`
+
+	// Notify For a draft, whether publishing it mails the subscribers unless the publish request says otherwise.
+	Notify *bool     `json:"notify,omitempty"`
+	PageId uuid.UUID `json:"page_id"`
 
 	// PublishedAt Absent for a draft.
 	PublishedAt *time.Time `json:"published_at,omitempty"`
@@ -14592,12 +14751,16 @@ type StatusIncidentCreate struct {
 	Components *[]StatusIncidentComponentInput `json:"components,omitempty"`
 
 	// Impact Default `minor` for an incident, `none` for maintenance.
-	Impact         *StatusIncidentImpact `json:"impact,omitempty"`
-	Kind           *StatusIncidentKind   `json:"kind,omitempty"`
-	Message        string                `json:"message"`
-	Publish        *bool                 `json:"publish,omitempty"`
-	ScheduledEnd   *time.Time            `json:"scheduled_end,omitempty"`
-	ScheduledStart *time.Time            `json:"scheduled_start,omitempty"`
+	Impact  *StatusIncidentImpact `json:"impact,omitempty"`
+	Kind    *StatusIncidentKind   `json:"kind,omitempty"`
+	Message string                `json:"message"`
+
+	// Notify Mail the page's e-mail subscribers about it (default `true`). For a draft it is kept and
+	// applies when the draft is published without naming `notify`.
+	Notify         *bool      `json:"notify,omitempty"`
+	Publish        *bool      `json:"publish,omitempty"`
+	ScheduledEnd   *time.Time `json:"scheduled_end,omitempty"`
+	ScheduledStart *time.Time `json:"scheduled_start,omitempty"`
 
 	// State Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
 	// `scheduled`, `in_progress`, `completed`.
@@ -14649,11 +14812,20 @@ type StatusIncidentList struct {
 // StatusIncidentPatch defines model for StatusIncidentPatch.
 type StatusIncidentPatch struct {
 	// Components Replaces the list.
-	Components     *[]StatusIncidentComponentInput `json:"components,omitempty"`
-	Impact         *StatusIncidentImpact           `json:"impact,omitempty"`
-	ScheduledEnd   *time.Time                      `json:"scheduled_end,omitempty"`
-	ScheduledStart *time.Time                      `json:"scheduled_start,omitempty"`
-	Title          *string                         `json:"title,omitempty"`
+	Components *[]StatusIncidentComponentInput `json:"components,omitempty"`
+	Impact     *StatusIncidentImpact           `json:"impact,omitempty"`
+
+	// Notify Mail the subscribers about a changed maintenance window (default `true` when the window changes; other changes send nothing).
+	Notify         *bool      `json:"notify,omitempty"`
+	ScheduledEnd   *time.Time `json:"scheduled_end,omitempty"`
+	ScheduledStart *time.Time `json:"scheduled_start,omitempty"`
+	Title          *string    `json:"title,omitempty"`
+}
+
+// StatusIncidentPublish defines model for StatusIncidentPublish.
+type StatusIncidentPublish struct {
+	// Notify Mail the subscribers one notice with the current state and the latest update. Default what the draft was created with (`true` unless it said otherwise).
+	Notify *bool `json:"notify,omitempty"`
 }
 
 // StatusIncidentReply defines model for StatusIncidentReply.
@@ -14736,6 +14908,9 @@ type StatusIncidentUpdate struct {
 // StatusIncidentUpdateCreate defines model for StatusIncidentUpdateCreate.
 type StatusIncidentUpdateCreate struct {
 	Body string `json:"body"`
+
+	// Notify Mail the subscribers about it. Default `true` when the update changes the state, `false` when it only adds text.
+	Notify *bool `json:"notify,omitempty"`
 
 	// State Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
 	// `scheduled`, `in_progress`, `completed`.
@@ -14958,12 +15133,105 @@ type StatusMonitorWithToken struct {
 	Url string `json:"url"`
 }
 
+// StatusNotice defines model for StatusNotice.
+type StatusNotice struct {
+	// Counts Per recipient: `queued` waiting to go out, `sent`, `failed` (refused or retried too often),
+	// `bounced`, `complained`, `skipped` (unsubscribed, suppressed, the daily limit or too late
+	// since the notice started), `replied` and `auto_replied`.
+	Counts    StatusNoticeCounts `json:"counts"`
+	CreatedAt time.Time          `json:"created_at"`
+	DueAt     time.Time          `json:"due_at"`
+
+	// Final It reports the resolution or completion of the incident or the start of maintenance, so it skips the 15-minute gap and the hourly limit.
+	Final      bool       `json:"final"`
+	FinishedAt *time.Time `json:"finished_at,omitempty"`
+	Id         uuid.UUID  `json:"id"`
+	IncidentId uuid.UUID  `json:"incident_id"`
+	PageId     uuid.UUID  `json:"page_id"`
+
+	// SkipReason `rate`: the page sent 10 notices in the last hour. `suspended`: the workspace may not send
+	// bulk mail now. `email_off`: e-mail subscribers were turned off, or the server sends no
+	// notices. `unpublished`: the page or the incident is not public. `sender_not_ready`: the
+	// channel cannot send. `no_recipients`: no subscriber matched.
+	SkipReason *StatusNoticeSkipReason `json:"skip_reason,omitempty"`
+	StartedAt  *time.Time              `json:"started_at,omitempty"`
+
+	// State `pending` (waiting until `due_at`), `sending`, `sent`, `skipped` (nothing went out, see
+	// `skip_reason`), `cancelled` (a member stopped it while it waited).
+	State StatusNoticeState `json:"state"`
+
+	// UpdateIds The incident's updates it reports.
+	UpdateIds []uuid.UUID `json:"update_ids"`
+	UpdatedAt time.Time   `json:"updated_at"`
+}
+
+// StatusNoticeCounts Per recipient: `queued` waiting to go out, `sent`, `failed` (refused or retried too often),
+// `bounced`, `complained`, `skipped` (unsubscribed, suppressed, the daily limit or too late
+// since the notice started), `replied` and `auto_replied`.
+type StatusNoticeCounts struct {
+	AutoReplied int64 `json:"auto_replied"`
+	Bounced     int64 `json:"bounced"`
+	Complained  int64 `json:"complained"`
+	Failed      int64 `json:"failed"`
+	Queued      int64 `json:"queued"`
+	Recipients  int64 `json:"recipients"`
+	Replied     int64 `json:"replied"`
+	Sent        int64 `json:"sent"`
+	Skipped     int64 `json:"skipped"`
+}
+
+// StatusNoticeEvent `status_notice.updated`, on `/v1/realtime` only: a notice was queued, changed state or moved
+// its counts (at most every 5 seconds while sending). Not stored, no id, never replayed;
+// reload the notices after a reconnect. Reaches whoever may read the page with `status:read`.
+type StatusNoticeEvent struct {
+	CreatedAt   time.Time             `json:"created_at"`
+	Data        StatusNotice          `json:"data"`
+	InboxId     uuid.UUID             `json:"inbox_id"`
+	Type        StatusNoticeEventType `json:"type"`
+	WorkspaceId uuid.UUID             `json:"workspace_id"`
+}
+
+// StatusNoticeEventType defines model for StatusNoticeEvent.Type.
+type StatusNoticeEventType string
+
+// StatusNoticeList defines model for StatusNoticeList.
+type StatusNoticeList struct {
+	Items []StatusNotice `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// StatusNoticeReach defines model for StatusNoticeReach.
+type StatusNoticeReach struct {
+	Subscribers int64 `json:"subscribers"`
+}
+
+// StatusNoticeSkipReason `rate`: the page sent 10 notices in the last hour. `suspended`: the workspace may not send
+// bulk mail now. `email_off`: e-mail subscribers were turned off, or the server sends no
+// notices. `unpublished`: the page or the incident is not public. `sender_not_ready`: the
+// channel cannot send. `no_recipients`: no subscriber matched.
+type StatusNoticeSkipReason string
+
+// StatusNoticeState `pending` (waiting until `due_at`), `sending`, `sent`, `skipped` (nothing went out, see
+// `skip_reason`), `cancelled` (a member stopped it while it waited).
+type StatusNoticeState string
+
 // StatusPage defines model for StatusPage.
 type StatusPage struct {
 	// AccentColor Examples: #2563eb
 	AccentColor *StatusColor `json:"accent_color,omitempty"`
 	CreatedAt   time.Time    `json:"created_at"`
 	Description string       `json:"description"`
+
+	// EmailSubscribers Whether visitors may subscribe to e-mail notices on `/status/{slug}/subscribe` and notices
+	// are sent. `list_id` is the page's subscriber list (`kind: status`), made when e-mail
+	// subscribers are first turned on and kept when they are turned off; manage its subscribers
+	// with the `/v1/lists/{list_id}/subscriptions` endpoints. `warnings` name what may hurt
+	// delivery without blocking it: `no_deliverability_check` (the channel's sending domain was
+	// never checked or failed SPF, DKIM or DMARC), `no_postal_address` (the inbox names no sender
+	// postal address), `dkim_unaligned` (mail is not signed with a key of the From domain).
+	EmailSubscribers StatusEmailSubscribers `json:"email_subscribers"`
 
 	// HistoryDays Days of day bars and history the page shows.
 	HistoryDays int32     `json:"history_days"`
@@ -15054,9 +15322,10 @@ type StatusPageSlug = string
 
 // StatusPageUpdate defines model for StatusPageUpdate.
 type StatusPageUpdate struct {
-	AccentColor nullable.Nullable[string] `json:"accent_color,omitempty"`
-	Description *string                   `json:"description,omitempty"`
-	HistoryDays *int32                    `json:"history_days,omitempty"`
+	AccentColor      nullable.Nullable[string]     `json:"accent_color,omitempty"`
+	Description      *string                       `json:"description,omitempty"`
+	EmailSubscribers *StatusEmailSubscribersUpdate `json:"email_subscribers,omitempty"`
+	HistoryDays      *int32                        `json:"history_days,omitempty"`
 
 	// Locale A BCP 47 language tag.
 	//
@@ -15095,8 +15364,10 @@ type StoredEvent struct {
 
 // Subscription defines model for Subscription.
 type Subscription struct {
-	ConfirmationSentAt *time.Time `json:"confirmation_sent_at,omitempty"`
-	ConfirmedAt        *time.Time `json:"confirmed_at,omitempty"`
+	// Components On a status list, the components of the page the subscriber chose; absent when they get the notices of every component, including ones added later.
+	Components         *[]uuid.UUID `json:"components,omitempty"`
+	ConfirmationSentAt *time.Time   `json:"confirmation_sent_at,omitempty"`
+	ConfirmedAt        *time.Time   `json:"confirmed_at,omitempty"`
 
 	// ConsentAt When the person agreed (the confirmation for double opt-in).
 	ConsentAt *time.Time          `json:"consent_at,omitempty"`
@@ -15169,8 +15440,10 @@ type SubscriptionCreate struct {
 
 // SubscriptionDetail defines model for SubscriptionDetail.
 type SubscriptionDetail struct {
-	ConfirmationSentAt *time.Time `json:"confirmation_sent_at,omitempty"`
-	ConfirmedAt        *time.Time `json:"confirmed_at,omitempty"`
+	// Components On a status list, the components of the page the subscriber chose; absent when they get the notices of every component, including ones added later.
+	Components         *[]uuid.UUID `json:"components,omitempty"`
+	ConfirmationSentAt *time.Time   `json:"confirmation_sent_at,omitempty"`
+	ConfirmedAt        *time.Time   `json:"confirmed_at,omitempty"`
 
 	// ConsentAt When the person agreed (the confirmation for double opt-in).
 	ConsentAt *time.Time          `json:"consent_at,omitempty"`
@@ -15998,6 +16271,9 @@ type StatusMonitorId = uuid.UUID
 
 // StatusMonitorToken defines model for StatusMonitorToken.
 type StatusMonitorToken = string
+
+// StatusNoticeId defines model for StatusNoticeId.
+type StatusNoticeId = uuid.UUID
 
 // StatusPageId defines model for StatusPageId.
 type StatusPageId = uuid.UUID
@@ -17572,8 +17848,9 @@ type UpdateLabelParams struct {
 
 // ListMailingListsParams defines parameters for ListMailingLists.
 type ListMailingListsParams struct {
-	InboxId  *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
-	Archived *bool      `form:"archived,omitempty" json:"archived,omitempty"`
+	InboxId  *uuid.UUID       `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+	Archived *bool            `form:"archived,omitempty" json:"archived,omitempty"`
+	Kind     *MailingListKind `form:"kind,omitempty" json:"kind,omitempty"`
 
 	// Cursor The `next_cursor` of the previous page.
 	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
@@ -18314,6 +18591,41 @@ type ListStatusMonitorChecksParams struct {
 
 // RotateStatusMonitorTokenParams defines parameters for RotateStatusMonitorToken.
 type RotateStatusMonitorTokenParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetStatusNoticeReachParams defines parameters for GetStatusNoticeReach.
+type GetStatusNoticeReachParams struct {
+	ComponentId *[]uuid.UUID `form:"component_id,omitempty" json:"component_id,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListStatusNoticesParams defines parameters for ListStatusNotices.
+type ListStatusNoticesParams struct {
+	IncidentId *uuid.UUID         `form:"incident_id,omitempty" json:"incident_id,omitempty"`
+	State      *StatusNoticeState `form:"state,omitempty" json:"state,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetStatusNoticeParams defines parameters for GetStatusNotice.
+type GetStatusNoticeParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CancelStatusNoticeParams defines parameters for CancelStatusNotice.
+type CancelStatusNoticeParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -19128,6 +19440,9 @@ type CreateStatusIncidentJSONRequestBody = StatusIncidentCreate
 
 // UpdateStatusIncidentJSONRequestBody defines body for UpdateStatusIncident for application/json ContentType.
 type UpdateStatusIncidentJSONRequestBody = StatusIncidentPatch
+
+// PublishStatusIncidentJSONRequestBody defines body for PublishStatusIncident for application/json ContentType.
+type PublishStatusIncidentJSONRequestBody = StatusIncidentPublish
 
 // ReplyToStatusIncidentConversationsJSONRequestBody defines body for ReplyToStatusIncidentConversations for application/json ContentType.
 type ReplyToStatusIncidentConversationsJSONRequestBody = StatusIncidentReply
@@ -21526,6 +21841,32 @@ func (t *RealtimeMessage) MergeBroadcastProgressEvent(v BroadcastProgressEvent) 
 	return err
 }
 
+// AsStatusNoticeEvent returns the union data inside the RealtimeMessage as a StatusNoticeEvent
+func (t RealtimeMessage) AsStatusNoticeEvent() (StatusNoticeEvent, error) {
+	var body StatusNoticeEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromStatusNoticeEvent overwrites any union data inside the RealtimeMessage as the provided StatusNoticeEvent
+func (t *RealtimeMessage) FromStatusNoticeEvent(v StatusNoticeEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeStatusNoticeEvent performs a merge with any union data inside the RealtimeMessage, using the provided StatusNoticeEvent
+func (t *RealtimeMessage) MergeStatusNoticeEvent(v StatusNoticeEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsListImportEvent returns the union data inside the RealtimeMessage as a ListImportEvent
 func (t RealtimeMessage) AsListImportEvent() (ListImportEvent, error) {
 	var body ListImportEvent
@@ -21826,6 +22167,8 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsStatusMonitorEvent()
 	case "status.monitor.up":
 		return t.AsStatusMonitorEvent()
+	case "status_notice.updated":
+		return t.AsStatusNoticeEvent()
 	case "subscription.created":
 		return t.AsSubscriptionEvent()
 	case "subscription.updated":
@@ -23503,6 +23846,18 @@ type ServerInterface interface {
 	// RotateStatusMonitorToken Rotate a monitor's token
 	// (POST /v1/status-pages/{pageId}/monitors/{monitorId}/token)
 	RotateStatusMonitorToken(w http.ResponseWriter, r *http.Request, pageId StatusPageId, monitorId StatusMonitorId, params RotateStatusMonitorTokenParams)
+	// GetStatusNoticeReach How many subscribers a notice would reach
+	// (GET /v1/status-pages/{pageId}/notice-reach)
+	GetStatusNoticeReach(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params GetStatusNoticeReachParams)
+	// ListStatusNotices List a page's notices
+	// (GET /v1/status-pages/{pageId}/notices)
+	ListStatusNotices(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params ListStatusNoticesParams)
+	// GetStatusNotice A notice
+	// (GET /v1/status-pages/{pageId}/notices/{noticeId})
+	GetStatusNotice(w http.ResponseWriter, r *http.Request, pageId StatusPageId, noticeId StatusNoticeId, params GetStatusNoticeParams)
+	// CancelStatusNotice Cancel a waiting notice
+	// (POST /v1/status-pages/{pageId}/notices/{noticeId}/cancel)
+	CancelStatusNotice(w http.ResponseWriter, r *http.Request, pageId StatusPageId, noticeId StatusNoticeId, params CancelStatusNoticeParams)
 	// PreviewStatusPage Preview a status page
 	// (GET /v1/status-pages/{pageId}/preview)
 	PreviewStatusPage(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params PreviewStatusPageParams)
@@ -35386,6 +35741,19 @@ func (siw *ServerInterfaceWrapper) ListMailingLists(w http.ResponseWriter, r *ht
 		return
 	}
 
+	// ------------- Optional query parameter "kind" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "kind", r.URL.Query(), &params.Kind, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "kind"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "kind", Err: err})
+		}
+		return
+	}
+
 	// ------------- Optional query parameter "cursor" -------------
 
 	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
@@ -41571,6 +41939,289 @@ func (siw *ServerInterfaceWrapper) RotateStatusMonitorToken(w http.ResponseWrite
 	handler.ServeHTTP(w, r)
 }
 
+// GetStatusNoticeReach operation middleware
+func (siw *ServerInterfaceWrapper) GetStatusNoticeReach(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetStatusNoticeReachParams
+
+	// ------------- Optional query parameter "component_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "component_id", r.URL.Query(), &params.ComponentId, runtime.BindQueryParameterOptions{Type: "array", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "component_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "component_id", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetStatusNoticeReach(w, r, pageId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListStatusNotices operation middleware
+func (siw *ServerInterfaceWrapper) ListStatusNotices(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListStatusNoticesParams
+
+	// ------------- Optional query parameter "incident_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "incident_id", r.URL.Query(), &params.IncidentId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "incident_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "incident_id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "state" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "state", r.URL.Query(), &params.State, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "state"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "state", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListStatusNotices(w, r, pageId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetStatusNotice operation middleware
+func (siw *ServerInterfaceWrapper) GetStatusNotice(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "noticeId" -------------
+	var noticeId StatusNoticeId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "noticeId", r.PathValue("noticeId"), &noticeId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "noticeId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetStatusNoticeParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetStatusNotice(w, r, pageId, noticeId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CancelStatusNotice operation middleware
+func (siw *ServerInterfaceWrapper) CancelStatusNotice(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "noticeId" -------------
+	var noticeId StatusNoticeId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "noticeId", r.PathValue("noticeId"), &noticeId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "noticeId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CancelStatusNoticeParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CancelStatusNotice(w, r, pageId, noticeId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // PreviewStatusPage operation middleware
 func (siw *ServerInterfaceWrapper) PreviewStatusPage(w http.ResponseWriter, r *http.Request) {
 
@@ -42916,6 +43567,10 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents/{incidentId}/conversations/{conversationId}", wrapper.LinkStatusIncidentConversation)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents/{incidentId}/reply", wrapper.ReplyToStatusIncidentConversations)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents/{incidentId}/replies/{replyId}", wrapper.GetStatusIncidentReply)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/notices", wrapper.ListStatusNotices)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/notices/{noticeId}", wrapper.GetStatusNotice)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/notices/{noticeId}/cancel", wrapper.CancelStatusNotice)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/notice-reach", wrapper.GetStatusNoticeReach)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors", wrapper.ListStatusMonitors)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors", wrapper.CreateStatusMonitor)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors/{monitorId}", wrapper.DeleteStatusMonitor)
@@ -62636,6 +63291,20 @@ func (response ExportListConsent404ApplicationProblemPlusJSONResponse) VisitExpo
 	return err
 }
 
+type ExportListConsent409ApplicationProblemPlusJSONResponse Problem
+
+func (response ExportListConsent409ApplicationProblemPlusJSONResponse) VisitExportListConsentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type GetMailingListGrowthRequestObject struct {
 	ListId ListId `json:"listId"`
 	Params GetMailingListGrowthParams
@@ -63456,6 +64125,20 @@ func (response CreateSubscription201JSONResponse) VisitCreateSubscriptionRespons
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateSubscription202JSONResponse Subscription
+
+func (response CreateSubscription202JSONResponse) VisitCreateSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(202)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -69803,6 +70486,7 @@ type PublishStatusIncidentRequestObject struct {
 	PageId     StatusPageId     `json:"pageId"`
 	IncidentId StatusIncidentId `json:"incidentId"`
 	Params     PublishStatusIncidentParams
+	Body       *PublishStatusIncidentJSONRequestBody
 }
 
 type PublishStatusIncidentResponseObject interface {
@@ -70722,6 +71406,318 @@ func (response RotateStatusMonitorToken404ApplicationProblemPlusJSONResponse) Vi
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusNoticeReachRequestObject struct {
+	PageId StatusPageId `json:"pageId"`
+	Params GetStatusNoticeReachParams
+}
+
+type GetStatusNoticeReachResponseObject interface {
+	VisitGetStatusNoticeReachResponse(w http.ResponseWriter) error
+}
+
+type GetStatusNoticeReach200JSONResponse StatusNoticeReach
+
+func (response GetStatusNoticeReach200JSONResponse) VisitGetStatusNoticeReachResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusNoticeReach400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetStatusNoticeReach400ApplicationProblemPlusJSONResponse) VisitGetStatusNoticeReachResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusNoticeReach401ApplicationProblemPlusJSONResponse Problem
+
+func (response GetStatusNoticeReach401ApplicationProblemPlusJSONResponse) VisitGetStatusNoticeReachResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusNoticeReach403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetStatusNoticeReach403ApplicationProblemPlusJSONResponse) VisitGetStatusNoticeReachResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusNoticeReach404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetStatusNoticeReach404ApplicationProblemPlusJSONResponse) VisitGetStatusNoticeReachResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusNoticesRequestObject struct {
+	PageId StatusPageId `json:"pageId"`
+	Params ListStatusNoticesParams
+}
+
+type ListStatusNoticesResponseObject interface {
+	VisitListStatusNoticesResponse(w http.ResponseWriter) error
+}
+
+type ListStatusNotices200JSONResponse StatusNoticeList
+
+func (response ListStatusNotices200JSONResponse) VisitListStatusNoticesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusNotices400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListStatusNotices400ApplicationProblemPlusJSONResponse) VisitListStatusNoticesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusNotices401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusNotices401ApplicationProblemPlusJSONResponse) VisitListStatusNoticesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusNotices403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusNotices403ApplicationProblemPlusJSONResponse) VisitListStatusNoticesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusNotices404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusNotices404ApplicationProblemPlusJSONResponse) VisitListStatusNoticesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusNoticeRequestObject struct {
+	PageId   StatusPageId   `json:"pageId"`
+	NoticeId StatusNoticeId `json:"noticeId"`
+	Params   GetStatusNoticeParams
+}
+
+type GetStatusNoticeResponseObject interface {
+	VisitGetStatusNoticeResponse(w http.ResponseWriter) error
+}
+
+type GetStatusNotice200JSONResponse StatusNotice
+
+func (response GetStatusNotice200JSONResponse) VisitGetStatusNoticeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusNotice401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetStatusNotice401ApplicationProblemPlusJSONResponse) VisitGetStatusNoticeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusNotice403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetStatusNotice403ApplicationProblemPlusJSONResponse) VisitGetStatusNoticeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusNotice404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetStatusNotice404ApplicationProblemPlusJSONResponse) VisitGetStatusNoticeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CancelStatusNoticeRequestObject struct {
+	PageId   StatusPageId   `json:"pageId"`
+	NoticeId StatusNoticeId `json:"noticeId"`
+	Params   CancelStatusNoticeParams
+}
+
+type CancelStatusNoticeResponseObject interface {
+	VisitCancelStatusNoticeResponse(w http.ResponseWriter) error
+}
+
+type CancelStatusNotice200JSONResponse StatusNotice
+
+func (response CancelStatusNotice200JSONResponse) VisitCancelStatusNoticeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CancelStatusNotice401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CancelStatusNotice401ApplicationProblemPlusJSONResponse) VisitCancelStatusNoticeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CancelStatusNotice403ApplicationProblemPlusJSONResponse Problem
+
+func (response CancelStatusNotice403ApplicationProblemPlusJSONResponse) VisitCancelStatusNoticeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CancelStatusNotice404ApplicationProblemPlusJSONResponse Problem
+
+func (response CancelStatusNotice404ApplicationProblemPlusJSONResponse) VisitCancelStatusNoticeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CancelStatusNotice409ApplicationProblemPlusJSONResponse Problem
+
+func (response CancelStatusNotice409ApplicationProblemPlusJSONResponse) VisitCancelStatusNoticeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -72938,6 +73934,18 @@ type StrictServerInterface interface {
 	// RotateStatusMonitorToken Rotate a monitor's token
 	// (POST /v1/status-pages/{pageId}/monitors/{monitorId}/token)
 	RotateStatusMonitorToken(ctx context.Context, request RotateStatusMonitorTokenRequestObject) (RotateStatusMonitorTokenResponseObject, error)
+	// GetStatusNoticeReach How many subscribers a notice would reach
+	// (GET /v1/status-pages/{pageId}/notice-reach)
+	GetStatusNoticeReach(ctx context.Context, request GetStatusNoticeReachRequestObject) (GetStatusNoticeReachResponseObject, error)
+	// ListStatusNotices List a page's notices
+	// (GET /v1/status-pages/{pageId}/notices)
+	ListStatusNotices(ctx context.Context, request ListStatusNoticesRequestObject) (ListStatusNoticesResponseObject, error)
+	// GetStatusNotice A notice
+	// (GET /v1/status-pages/{pageId}/notices/{noticeId})
+	GetStatusNotice(ctx context.Context, request GetStatusNoticeRequestObject) (GetStatusNoticeResponseObject, error)
+	// CancelStatusNotice Cancel a waiting notice
+	// (POST /v1/status-pages/{pageId}/notices/{noticeId}/cancel)
+	CancelStatusNotice(ctx context.Context, request CancelStatusNoticeRequestObject) (CancelStatusNoticeResponseObject, error)
 	// PreviewStatusPage Preview a status page
 	// (GET /v1/status-pages/{pageId}/preview)
 	PreviewStatusPage(ctx context.Context, request PreviewStatusPageRequestObject) (PreviewStatusPageResponseObject, error)
@@ -82345,6 +83353,16 @@ func (sh *strictHandler) PublishStatusIncident(w http.ResponseWriter, r *http.Re
 	request.IncidentId = incidentId
 	request.Params = params
 
+	var body PublishStatusIncidentJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		if !errors.Is(err, io.EOF) {
+			sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+			return
+		}
+	} else {
+		request.Body = &body
+	}
+
 	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
 		return sh.ssi.PublishStatusIncident(ctx, request.(PublishStatusIncidentRequestObject))
 	}
@@ -82701,6 +83719,116 @@ func (sh *strictHandler) RotateStatusMonitorToken(w http.ResponseWriter, r *http
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(RotateStatusMonitorTokenResponseObject); ok {
 		if err := validResponse.VisitRotateStatusMonitorTokenResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetStatusNoticeReach operation middleware
+func (sh *strictHandler) GetStatusNoticeReach(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params GetStatusNoticeReachParams) {
+	var request GetStatusNoticeReachRequestObject
+
+	request.PageId = pageId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetStatusNoticeReach(ctx, request.(GetStatusNoticeReachRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetStatusNoticeReach")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetStatusNoticeReachResponseObject); ok {
+		if err := validResponse.VisitGetStatusNoticeReachResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListStatusNotices operation middleware
+func (sh *strictHandler) ListStatusNotices(w http.ResponseWriter, r *http.Request, pageId StatusPageId, params ListStatusNoticesParams) {
+	var request ListStatusNoticesRequestObject
+
+	request.PageId = pageId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListStatusNotices(ctx, request.(ListStatusNoticesRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListStatusNotices")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListStatusNoticesResponseObject); ok {
+		if err := validResponse.VisitListStatusNoticesResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetStatusNotice operation middleware
+func (sh *strictHandler) GetStatusNotice(w http.ResponseWriter, r *http.Request, pageId StatusPageId, noticeId StatusNoticeId, params GetStatusNoticeParams) {
+	var request GetStatusNoticeRequestObject
+
+	request.PageId = pageId
+	request.NoticeId = noticeId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetStatusNotice(ctx, request.(GetStatusNoticeRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetStatusNotice")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetStatusNoticeResponseObject); ok {
+		if err := validResponse.VisitGetStatusNoticeResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CancelStatusNotice operation middleware
+func (sh *strictHandler) CancelStatusNotice(w http.ResponseWriter, r *http.Request, pageId StatusPageId, noticeId StatusNoticeId, params CancelStatusNoticeParams) {
+	var request CancelStatusNoticeRequestObject
+
+	request.PageId = pageId
+	request.NoticeId = noticeId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CancelStatusNotice(ctx, request.(CancelStatusNoticeRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CancelStatusNotice")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CancelStatusNoticeResponseObject); ok {
+		if err := validResponse.VisitCancelStatusNoticeResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

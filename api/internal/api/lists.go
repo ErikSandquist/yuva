@@ -105,7 +105,7 @@ func (s *Server) mailingListBodies(ctx context.Context, q *store.Queries, ws uui
 	}
 	for i, l := range lists {
 		out[i] = oas.MailingList{
-			Id: l.ID, InboxId: l.InboxID, ChannelId: l.ChannelID, Name: l.Name, Description: l.Description,
+			Id: l.ID, InboxId: l.InboxID, Kind: oas.MailingListKindList, ChannelId: l.ChannelID, Name: l.Name, Description: l.Description,
 			DoubleOptIn: l.DoubleOptIn, Public: l.Public, Commercial: l.Commercial, Welcome: l.Welcome,
 			ArchivedAt: l.ArchivedAt, Counts: byList[l.ID], CreatedAt: l.CreatedAt, UpdatedAt: l.UpdatedAt,
 			SenderReady: l.ChannelID != nil && ready[*l.ChannelID],
@@ -123,7 +123,7 @@ func (s *Server) mailingListBody(ctx context.Context, q *store.Queries, l store.
 }
 
 func listRef(l store.MailingList) oas.MailingListRef {
-	return oas.MailingListRef{Id: l.ID, InboxId: l.InboxID, Name: l.Name}
+	return oas.MailingListRef{Id: l.ID, InboxId: l.InboxID, Name: l.Name, Kind: oas.MailingListKindList}
 }
 
 // listChannel checks that a list may send through the channel: an e-mail channel of its inbox that
