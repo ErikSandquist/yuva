@@ -356,6 +356,8 @@ to linked" and each contact gets the reply on their own channel.
 
 ### M19.4 — E-mail subscribers
 
+Status: done, issue #98; every Accept item verified on 2026-10-19 at `410afaf`; notice content follow-ups in #101.
+
 - `mailing_lists.kind` `status` and its rules (no audiences, imports, public forms, İYS export or
   opt-out register); per-component choices.
 - `/status/{slug}/subscribe` with double opt-in, limits and the sweep of unconfirmed contacts; `/s/` and
