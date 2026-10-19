@@ -1207,7 +1207,9 @@ msgstr "新增回覆帳號"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "為 {address} 新增一條規則,在保留投遞到信箱的同時,也把郵件投遞到下面的地址。"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "新增訂閱者"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "全部"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "所有元件"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "已退回或被舉報為垃圾郵件"
 msgid "Bounced or reported as spam before"
 msgstr "此前已退回或被舉報為垃圾郵件"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "退信:{0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "能為每位訂閱者單獨安排傳送新聞簡報嗎?"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "取消此匯入?"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "已取消"
 
@@ -2563,6 +2577,10 @@ msgstr "選擇「將傳入郵件的副本轉發到」該地址,在收件匣中�
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "選擇「生成應用程式專用密碼」,命名為「Yuva」並建立。"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "選擇管道"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "元件已刪除"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "連線"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "同意記錄匯出"
 
@@ -3916,6 +3936,7 @@ msgstr "電子郵件"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "電子郵件地址"
 
@@ -3946,6 +3967,18 @@ msgstr "透過郵件通知我我關注的討論"
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "僅郵件"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "電子郵件訂閱者"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "電子郵件訂閱者已關閉"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "電子郵件訂閱者已關閉。無法訂閱,也不會傳送通知,但名單會保留。"
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "失敗"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "失敗五次"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "失敗:{0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "來自 Yuva 的郵件"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "郵件會進入接收 {address} 的郵件頻道「{channelName}」。"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "郵件未使用寄件者自有網域的金鑰簽署,而 Gmail 和 Yahoo 要求這麼做。"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "郵件大小"
@@ -6880,6 +6922,10 @@ msgstr "還沒有快捷回覆。請在設定中新增。"
 msgid "No channel"
 msgstr "無頻道"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "尚未選擇可傳送的管道。在選擇之前,沒有人會收到確認信或通知。"
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "還沒有頻道"
@@ -6972,6 +7018,10 @@ msgstr "未提供電子郵件地址"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "沒有可以傳送確認和歡迎郵件的郵件頻道"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "尚無電子郵件訂閱者"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "無主題"
 msgid "No subject yet"
 msgstr "暫無主題"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "沒有符合的訂閱者"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "還沒有訂閱者。把訂閱表單放到你的網站上,或新增已經同意的人。"
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "尚無訂閱者。訪客可在狀態頁面訂閱,你也可以在此新增電子郵件地址。"
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "不對?請選擇你的供應商"
 msgid "Not run"
 msgstr "未執行"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "未傳送"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "未設定"
@@ -7485,6 +7547,10 @@ msgstr "這裡沒有符合你搜尋的內容。"
 msgid "Nothing unread."
 msgstr "沒有未讀內容。"
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "給訂閱者的通知"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "未允許通知。"
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "為某個收件匣設定不同的通知。保持「同上」的項遵循上面的設定。"
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "通知訂閱者"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "只需寫一次的回覆，會以你的名義，透過各對話自己的
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "每個事件一行,最早的在前:誰同意或退訂、何時、如何、來自哪個頁面和 IP 位址,以及他們看到的文字。可保留作為同意憑證(GDPR 第 7 條、KVKK),用於回答詢問你持有什麼資料的人,或自行向 İYS 登記同意。CSV 中的電子表格公式已被處理為無害。"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "每個事件一列,由舊到新:誰同意或退訂、時間、方式、來自哪個頁面和 IP 位址,以及他們看到的文字。可留存作為同意的證明,或用來回覆詢問你持有哪些資料的人。"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "開啟收件匣"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "開啟收件匣設定"
 
@@ -7973,6 +8048,10 @@ msgstr "開啟 Microsoft Entra 管理中心或 Azure 門戶,進入「應用程�
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "開啟下一個或上一個對話"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "開啟頁面設定"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "收件人"
 msgid "Recipients"
 msgstr "收件人"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "收件人:{0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "按地址識別。"
@@ -9661,6 +9745,10 @@ msgstr "已安排"
 msgid "Scheduled by"
 msgstr "安排者"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "排定於 {due}"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "從頁面傳送反饋"
 msgid "Send me a code"
 msgstr "給我發驗證碼"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "透過電子郵件傳送通知"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "立即傳送"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "傳送回覆"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "傳送確認郵件"
 
@@ -9969,6 +10062,7 @@ msgstr "發件人身份"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "傳送中"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "傳送自"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "郵件傳送自"
 
@@ -10056,6 +10151,7 @@ msgstr "已傳送"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "已傳送"
 
@@ -10116,6 +10212,11 @@ msgstr "今日已傳送:{sent} 封,允許 {limit} 封。一天從 UTC 00:00 開�
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "今日已傳送:{sent} 封。沒有每日上限。"
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "已傳送:{0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "已跳過和失敗({count})"
 msgid "Skipped or failed"
 msgstr "已跳過或失敗"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "已跳過:{0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "別名"
@@ -10886,14 +10992,25 @@ msgstr "訂閱"
 msgid "subscribed now"
 msgstr "剛剛訂閱"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "訂閱者"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "已新增訂閱者"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "訂閱者需先透過郵件確認地址,才會收到通知。"
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "已觸及訂閱者:{0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "無法以只讀方式開啟該收件匣。"
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "此收件匣還沒有法定名稱或郵寄地址。按法律要求,每次群發末尾都會附上它們。"
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "收件匣未提供寄件者的郵寄地址。請在收件匣設定中新增。"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "收件匣的 Amazon SES 租戶仍在設定中。群發可以發出,但請在開始前再次檢查。"
@@ -11403,6 +11524,10 @@ msgstr "收件匣的 Amazon SES 租戶仍在設定中。群發可以發出,但�
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "收件匣的 Amazon SES 租戶已不存在。伺服器會重新建立它;在此之前群發無法發出。"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "收件匣中用於傳送確認信和通知的電子郵件管道。"
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "舊信箱不再接收該域名的郵件。"
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "另一個收件匣沒有郵件頻道,因此此郵件對話無法移到那裡。請先為它新增郵件頻道。"
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "此頁面在過去一小時內已傳送 10 則通知"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "訪客現在看到的頁面。不含草稿。"
@@ -11571,6 +11700,10 @@ msgstr "該頁面不在聊天頻道允許的站點上。"
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "頁面尚未發布，只有你的團隊看得到。"
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "頁面或事件未公開"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "金鑰只在建立時顯示一次。輪換即可獲得新的。"
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "發件人的域名沒有授權這封郵件。它可能是偽造的。"
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "傳送管道無法傳送"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "傳送頻道還沒有 SMTP 帳號或發件地址。請在收件匣設定中設定。"
@@ -11684,6 +11821,10 @@ msgstr "傳送頻道還沒有 SMTP 帳號或發件地址。請在收件匣設定
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "傳送域名沒有 DMARC 記錄。"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "傳送網域尚未通過 SPF、DKIM 和 DMARC 檢查。通知可能會被歸入垃圾郵件。"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "訪客在聊天中輸入了 {0},但尚未確認。這條回覆來自該�
 msgid "The workspace may not send broadcasts for now."
 msgstr "工作區暫時不能傳送群發。"
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "工作區目前不可傳送大量郵件"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "工作區已達到今日傳送上限。傳送將在 {local}({utc} UTC)繼續。"
@@ -11870,6 +12015,10 @@ msgstr "他們已經同意"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "他們會收到一封帶連結的郵件,點選後才會訂閱。"
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "他們會收到一封附有連結的郵件,點擊連結後才會收到通知。"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "此收件匣已有狀態頁。"
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "此收件匣還沒有可傳送的郵件頻道。你現在可以建立列表；在列表設定中選擇帶回覆帳號的郵件頻道後才會傳送。"
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "此收件匣沒有可傳送的電子郵件管道。請在收件匣設定中新增 SMTP 帳號。"
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "此收件匣還沒有郵件頻道。請在收件匣設定中新增。"
@@ -12044,6 +12197,7 @@ msgstr "這不是 JSON 物件。"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "這不是有效的電子郵件地址。"
 
@@ -12400,6 +12554,10 @@ msgstr "對現有客戶的服務通知請關閉。無論如何都需要同意;�
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "如果尚未開啟,請為 Google 帳號開啟兩步驗證。"
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "在頁面設定中開啟電子郵件訂閱者,即可讓訪客訂閱通知。"
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "在此裝置上開啟"
@@ -12484,8 +12642,13 @@ msgstr "在工作區的每日上限下,傳送需要 {days} 天。"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "撤銷"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "撤銷待傳送的通知"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "剛剛退訂"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "在他們點選連結之前,會一直等待確認,也不會收到其他郵件。未確認的訂閱會在 30 天后刪除。"
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "在點擊連結之前,他們會維持等待確認的狀態。未確認的地址會在 30 天後刪除。"
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "最近七天的訪客:{series}"
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "你的網站或應用程式的訪客,無 Cookie"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "訪客在頁面上訂閱後,事件或維護有更新時就會收到郵件。"
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

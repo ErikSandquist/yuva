@@ -1207,7 +1207,9 @@ msgstr "Pridať účet pre odpovede"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "Pridajte pravidlo pre {address}, ktoré poštu doručuje aj na nižšie uvedenú adresu a zachováva doručovanie do schránky."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "Pridať odberateľa"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "Všetko"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "Všetky komponenty"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "Nedoručené alebo nahlásené ako spam"
 msgid "Bounced or reported as spam before"
 msgstr "Skôr nedoručené alebo nahlásené ako spam"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "Nedoručené: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "Môžem naplánovať newsletter pre každého odberateľa zvlášť?"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "Zrušiť tento import?"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "Zrušené"
 
@@ -2563,6 +2577,10 @@ msgstr "Zvoľte „Preposielať kópiu prichádzajúcej pošty na“ túto adres
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "Zvoľte „Vygenerovať heslo aplikácie“, pomenujte ho „Yuva“ a vytvorte ho."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "Vyberte kanál"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "Komponent bol odstránený"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "Pripojenia"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "Export súhlasov"
 
@@ -3916,6 +3936,7 @@ msgstr "E-mail"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "E-mailová adresa"
 
@@ -3946,6 +3967,18 @@ msgstr "Posielať mi e-maily o diskusiách, ktoré sledujem"
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "Iba e-mail"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "E-mailoví odberatelia"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "E-mailoví odberatelia sú vypnutí"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "E-mailoví odberatelia sú vypnutí. Nikto sa nemôže prihlásiť na odber a nechodia žiadne upozornenia, zoznam sa však zachová."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "Zlyhalo"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "Zlyhalo päťkrát"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "Zlyhalo: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "Pošta od Yuvy"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "Pošta ide do e-mailového kanála „{channelName}“, ktorý prijíma {address}."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "Pošta nie je podpísaná kľúčom vlastnej domény odosielateľa, čo Gmail a Yahoo očakávajú."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "Veľkosť správy"
@@ -6880,6 +6922,10 @@ msgstr "Zatiaľ žiadne pripravené odpovede. Pridajte ich v nastaveniach."
 msgid "No channel"
 msgstr "Žiadny kanál"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "Nie je vybraný žiadny kanál, ktorý dokáže odosielať. Dovtedy nikto nedostane potvrdenie ani upozornenie."
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "Zatiaľ žiadny kanál"
@@ -6972,6 +7018,10 @@ msgstr "Nebola zadaná e-mailová adresa"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "Žiadny e-mailový kanál, ktorý by mohol odoslať potvrdzovacie a uvítacie správy"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "Zatiaľ žiadni e-mailoví odberatelia"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "Bez predmetu"
 msgid "No subject yet"
 msgstr "Zatiaľ bez predmetu"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "Nezodpovedá žiadny odberateľ"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "Zatiaľ žiadni odberatelia. Umiestnite formulár na odber na svoj web, alebo pridajte ľudí, ktorí už súhlasili."
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "Zatiaľ žiadni odberatelia. Návštevníci sa prihlasujú na stránke stavu, alebo tu môžete pridať adresu."
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "Nesedí to? Vyberte svojho poskytovateľa"
 msgid "Not run"
 msgstr "Nespustené"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "Neodoslané"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "Nenastavené"
@@ -7485,6 +7547,10 @@ msgstr "Vášmu hľadaniu tu nič nezodpovedá."
 msgid "Nothing unread."
 msgstr "Nič neprečítané."
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "Upozornenia odberateľom"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "Oznámenia neboli povolené."
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "Upozorňovať inak pre jednu schránku. Čokoľvek ponechané na „Ako vyššie“ sa riadi nastavením vyššie."
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "Upozorniť odberateľov"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "Jedna odpoveď, napísaná raz, ide vaším menom do každej otvorenej k
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Jeden riadok na udalosť, od najstaršej: kto súhlasil alebo odišiel, kedy, ako, z akej stránky a adresy IP a slová, ktoré videl. Uchovajte ho ako dôkaz súhlasu (GDPR čl. 7, KVKK), aby ste mohli odpovedať osobe, ktorá sa pýta, čo o nej máte, alebo aby ste súhlasy sami zaregistrovali v İYS. Vzorce tabuľkového procesora v CSV sú zneškodnené."
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "Jeden riadok na udalosť, od najstaršej: kto súhlasil alebo odišiel, kedy, ako, z ktorej stránky a IP adresy a aké znenie videl. Uchovajte ho ako doklad o súhlase alebo na odpoveď osobe, ktorá sa pýta, aké údaje o nej máte."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "Otvoriť schránku"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "Otvoriť nastavenia schránky"
 
@@ -7973,6 +8048,10 @@ msgstr "Otvorte Microsoft Entra admin center alebo portál Azure, prejdite na Ap
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "Otvoriť ďalšiu alebo predchádzajúcu konverzáciu"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "Otvoriť nastavenia stránky"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "príjemcovia"
 msgid "Recipients"
 msgstr "Príjemcovia"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "Príjemcovia: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "Rozpoznané podľa adresy."
@@ -9661,6 +9745,10 @@ msgstr "Naplánované"
 msgid "Scheduled by"
 msgstr "Naplánoval(a)"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "Naplánované na {due}"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "Posielať spätnú väzbu zo stránky"
 msgid "Send me a code"
 msgstr "Pošlite mi kód"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "Odosielať upozornenia e-mailom"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "Odoslať hneď"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "Odoslať odpoveď"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Odoslať potvrdenie"
 
@@ -9969,6 +10062,7 @@ msgstr "Identita odosielateľa"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "Odosiela"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "Odosiela z"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "Odosiela svoju poštu z"
 
@@ -10056,6 +10151,7 @@ msgstr "odoslané"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "Odoslané"
 
@@ -10116,6 +10212,11 @@ msgstr "Odoslané dnes: {sent} z povolených {limit}. Deň začína o 00:00 UTC.
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "Odoslané dnes: {sent}. Denný limit nie je."
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "Odoslané: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "Preskočené a zlyhalo ({count})"
 msgid "Skipped or failed"
 msgstr "Preskočené alebo zlyhalo"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "Preskočené: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "Slug"
@@ -10886,14 +10992,25 @@ msgstr "Prihlásený(á) na odber"
 msgid "subscribed now"
 msgstr "prihlásené teraz"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "Odberatelia"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "Odberatelia pridaní"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "Odberatelia pred prvým upozornením potvrdia svoju adresu e-mailom."
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "Oslovení odberatelia: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "Schránku sa nepodarilo otvoriť len na čítanie."
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "Schránka zatiaľ nemá právny názov ani poštovú adresu. Každá hromadná správa nimi končí, ako vyžaduje zákon."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "Schránka neuvádza poštovú adresu odosielateľa. Pridajte ju v nastaveniach schránky."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "Tenant Amazon SES schránky sa stále nastavuje. Hromadná správa môže odísť, ale pred jej spustením to skontrolujte znova."
@@ -11403,6 +11524,10 @@ msgstr "Tenant Amazon SES schránky sa stále nastavuje. Hromadná správa môž
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "Tenant Amazon SES schránky už neexistuje. Server ho vytvorí znova; dovtedy hromadná správa odísť nemôže."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "E-mailový kanál schránky, ktorý odosiela potvrdenia a upozornenia."
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "Stará schránka prestane pre túto doménu prijímať poštu."
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "Druhá schránka nemá e-mailový kanál, takže túto e-mailovú konverzáciu nemožno presunúť tam. Najprv do nej pridajte e-mailový kanál."
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "Stránka už za poslednú hodinu odoslala 10 upozornení"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "Stránka tak, ako ju teraz vidia návštevníci. Koncepty sú vynechané."
@@ -11571,6 +11700,10 @@ msgstr "Stránka nie je na webe, ktorý chatovací kanál povoľuje."
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "Stránka nie je zverejnená. Vidí to iba váš tím."
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "Stránka alebo incident nie je verejný"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "Tajný kľúč sa zobrazí raz, pri vytvorení. Otočte ho, aby ste zís
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "Doména odosielateľa túto správu neautorizovala. Môže byť sfalšovaná."
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "Kanál na odosielanie nemôže odosielať"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "Odosielací kanál zatiaľ nemá účet SMTP ani adresu, z ktorej odosiela. Nastavte to v nastaveniach schránky."
@@ -11684,6 +11821,10 @@ msgstr "Odosielací kanál zatiaľ nemá účet SMTP ani adresu, z ktorej odosie
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "Odosielacia doména nemá záznam DMARC."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "Odosielacia doména zatiaľ neprešla kontrolou SPF, DKIM a DMARC. Upozornenia môžu skončiť v spame."
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "Návštevník v chate napísal {0} a zatiaľ to nepotvrdil. Táto odpove
 msgid "The workspace may not send broadcasts for now."
 msgstr "Pracovný priestor zatiaľ nesmie odosielať hromadné správy."
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "Pracovný priestor teraz nesmie odosielať hromadnú poštu"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "Pracovný priestor dosiahol dnešný limit odosielania. Odosielanie pokračuje {local} ({utc} UTC)."
@@ -11870,6 +12015,10 @@ msgstr "Už súhlasili"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "Dostanú správu s odkazom a odberateľmi sa stanú až po kliknutí naň."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "Dostanú e-mail s odkazom a upozornenia im začnú chodiť až po kliknutí naň."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "Táto schránka už stránku stavu má."
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "Táto schránka zatiaľ nemá e-mailový kanál, ktorý môže odosielať. Zoznam môžete vytvoriť hneď; odosiela, keď je v jeho nastaveniach vybraný e-mailový kanál s účtom pre odpovede."
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "Táto schránka nemá e-mailový kanál, ktorý dokáže odosielať. Pridajte účet SMTP v nastaveniach schránky."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "Táto schránka zatiaľ nemá e-mailový kanál. Pridajte ho v nastaveniach schránky."
@@ -12044,6 +12197,7 @@ msgstr "Toto nie je objekt JSON."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "Toto nie je platná e-mailová adresa."
 
@@ -12400,6 +12554,10 @@ msgstr "Vypnite pre servisné oznámenia existujúcim zákazníkom. Súhlas je p
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "Zapnite dvojfázové overenie pre účet Google, ak ešte nie je zapnuté."
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "Zapnite e-mailových odberateľov v nastaveniach stránky, aby sa návštevníci mohli prihlásiť na upozornenia."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "Zapnúť pre toto zariadenie"
@@ -12484,8 +12642,13 @@ msgstr "Pri dennom limite pracovného priestoru trvá odosielanie {days} dní."
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "Späť"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "Vrátiť späť čakajúce upozornenie"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "odhlásené teraz"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "Kým na odkaz nekliknú, zostanú čakať na potvrdenie a nedostanú žiadnu ďalšiu poštu. Nepotvrdené odbery sa po 30 dňoch odstránia."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "Kým na odkaz nekliknú, čakajú na potvrdenie. Nepotvrdené adresy sa po 30 dňoch odstránia."
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "Návštevníci za posledných sedem dní: {series}"
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "Návštevníci vášho webu alebo aplikácie, bez cookies"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "Návštevníci sa prihlásia na stránke a dostanú e-mail, keď sa zmení incident alebo údržba."
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

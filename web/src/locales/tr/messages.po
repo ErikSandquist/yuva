@@ -1207,7 +1207,9 @@ msgstr "Yanıt hesabı ekle"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "{address} için, posta kutusuna teslimi sürdürürken e-postaları aşağıdaki adrese de teslim eden bir kural ekleyin."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "Abone ekle"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "Tümü"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "Tüm bileşenler"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "Geri döndü ya da spam bildirildi"
 msgid "Bounced or reported as spam before"
 msgstr "Daha önce geri döndü ya da spam olarak bildirildi"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "Geri dönen: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "Her abone için ayrı bülten planlayabilir miyim?"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "Bu içe aktarma iptal edilsin mi?"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "İptal edildi"
 
@@ -2563,6 +2577,10 @@ msgstr "“Gelen postaların bir kopyasını şuraya yönlendir” seçeneğiyle
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "“Uygulama şifresi oluştur”u seçin, adını “Yuva” koyup oluşturun."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "Bir kanal seçin"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "Bileşen silindi"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "Bağlantılar"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "İzin kayıtlarını dışa aktar"
 
@@ -3916,6 +3936,7 @@ msgstr "E-posta"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "E-posta adresi"
 
@@ -3946,6 +3967,18 @@ msgstr "Takip ettiğim tartışmalar hakkında bana e-posta gönder"
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "Yalnızca e-posta"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "E-posta aboneleri"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "E-posta aboneleri kapalı"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "E-posta aboneleri kapalı. Kimse abone olamaz ve bildirim gitmez, ancak liste saklanır."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "Başarısız"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "Beş kez başarısız oldu"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "Başarısız: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "Yuva'nın gönderdiği e-posta"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "E-postalar, {address} adresini alan “{channelName}” e-posta kanalına gider."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "E-postalar gönderenin kendi alan adının anahtarıyla imzalanmıyor; Gmail ve Yahoo bunu bekler."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "E-posta boyutu"
@@ -6880,6 +6922,10 @@ msgstr "Henüz hazır yanıt yok. Ayarlardan ekleyebilirsin."
 msgid "No channel"
 msgstr "Kanal yok"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "Gönderebilen bir kanal seçilmedi. Seçilene kadar kimse onay e-postası ya da bildirim almaz."
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "Henüz kanal yok"
@@ -6972,6 +7018,10 @@ msgstr "E-posta adresi verilmedi"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "Onay ve hoş geldin e-postalarını gönderebilecek bir e-posta kanalı yok"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "Henüz e-posta abonesi yok"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "Konu yok"
 msgid "No subject yet"
 msgstr "Henüz konu yok"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "Eşleşen abone yok"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "Henüz abone yok. Abonelik formunu sitenize koyun ya da zaten izin vermiş kişileri ekleyin."
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "Henüz abone yok. Ziyaretçiler durum sayfasından abone olur; buradan da bir adres ekleyebilirsiniz."
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "Doğru değil mi? Sağlayıcınızı seçin"
 msgid "Not run"
 msgstr "Çalıştırılmadı"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "Gönderilmedi"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "Kurulmadı"
@@ -7485,6 +7547,10 @@ msgstr "Burada aramana uyan bir şey yok."
 msgid "Nothing unread."
 msgstr "Okunmamış bir şey yok."
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "Abonelere bildirimler"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "Bildirimlere izin verilmedi."
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "Bir gelen kutusu için farklı bildirim al. “Yukarıdaki gibi” bırakılanlar yukarıdaki ayarlara uyar."
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "Abonelere bildir"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "Bir kez yazılan tek bir yanıt, {title} olayına bağlı her açık kon
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Her olay için bir satır, en eskisi önce: kim izin verdi ya da ayrıldı, ne zaman, nasıl, hangi sayfadan ve IP adresinden, hangi metni gördü. İzin kanıtı olarak (GDPR md. 7, KVKK) saklayın, hakkında ne tuttuğunuzu soran birine yanıt verin ya da izinleri İYS'ye kendiniz kaydedin. CSV'deki tablo formülleri zararsız hâle getirilir."
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "Her olay için bir satır, en eskiden başlayarak: kim onay verdi ya da ayrıldı, ne zaman, nasıl, hangi sayfadan ve IP adresinden, hangi metni gördü. İzin kanıtı olarak saklayın ya da elinizde ne olduğunu soran bir kişiye yanıt vermek için kullanın."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "Gelen kutusunu aç"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "Gelen kutusu ayarlarını aç"
 
@@ -7973,6 +8048,10 @@ msgstr "Microsoft Entra yönetim merkezini ya da Azure portalını açın, App r
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "Sonraki ya da önceki konuşmayı aç"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "Sayfa ayarlarını aç"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "alıcı"
 msgid "Recipients"
 msgstr "Alıcılar"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "Alıcı: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "Adresten tanındı."
@@ -9661,6 +9745,10 @@ msgstr "Zamanlandı"
 msgid "Scheduled by"
 msgstr "Zamanlayan"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "{due} için planlandı"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "Bir sayfadan geri bildirim gönderin"
 msgid "Send me a code"
 msgstr "Bana kod gönder"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "Bildirimleri e-postayla gönder"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "Şimdi gönder"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "Yanıtı gönder"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Onay e-postasını gönder"
 
@@ -9969,6 +10062,7 @@ msgstr "Gönderen bilgileri"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "Gönderme"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "Gönderen"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "E-postalarını gönderen kanal"
 
@@ -10056,6 +10151,7 @@ msgstr "gönderildi"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "Gönderildi"
 
@@ -10116,6 +10212,11 @@ msgstr "Bugün gönderilen: izin verilen {limit} alıcıdan {sent}. Gün 00:00 U
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "Bugün gönderilen: {sent}. Günlük sınır yok."
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "Gönderilen: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "Atlananlar ve başarısızlar ({count})"
 msgid "Skipped or failed"
 msgstr "Atlanan ya da başarısız"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "Atlanan: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "Kısa ad"
@@ -10886,14 +10992,25 @@ msgstr "Abone oldu"
 msgid "subscribed now"
 msgstr "şu an abone"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "Aboneler"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "Eklenen aboneler"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "Aboneler bildirim almadan önce adreslerini e-postayla onaylar."
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "Ulaşılacak abone: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "Gelen kutusu salt okunur olarak açılamadı."
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "Gelen kutusunun henüz resmi adı ya da posta adresi yok. Yasanın istediği gibi her bülten bunlarla biter."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "Gelen kutusunda gönderen için posta adresi yok. Gelen kutusu ayarlarından ekleyin."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "Gelen kutusunun Amazon SES kiracısı hâlâ kuruluyor. Bülten gönderilebilir, ama başlamadan önce bunu bir kez daha kontrol edin."
@@ -11403,6 +11524,10 @@ msgstr "Gelen kutusunun Amazon SES kiracısı hâlâ kuruluyor. Bülten gönderi
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "Gelen kutusunun Amazon SES kiracısı artık yok. Sunucu onu yeniden oluşturur; o zamana kadar bülten gönderilemez."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "Onay e-postalarını ve bildirimleri gönderen gelen kutusu e-posta kanalı."
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "Eski posta kutusu o alan adına gelen e-postaları artık almaz."
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "Diğer gelen kutusunun e-posta kanalı yok, bu yüzden bu e-posta konuşması oraya taşınamaz. Önce ona bir e-posta kanalı ekleyin."
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "Sayfa son bir saatte zaten 10 bildirim gönderdi"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "Sayfa, ziyaretçilerin şu an gördüğü haliyle. Taslaklar dahil değil."
@@ -11571,6 +11700,10 @@ msgstr "Sayfa, sohbet kanalının izin verdiği bir sitede değil."
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "Sayfa yayında değil. Bunu yalnızca ekibiniz görür."
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "Sayfa ya da olay herkese açık değil"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "Gizli anahtar yalnızca oluşturulurken bir kez gösterilir. Yenisi içi
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "Gönderenin alan adı bu postayı onaylamadı. Sahte olabilir."
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "Gönderim kanalı e-posta gönderemiyor"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "Gönderen kanalın henüz SMTP hesabı ya da gönderen adresi yok. Gelen kutusu ayarlarından kurun."
@@ -11684,6 +11821,10 @@ msgstr "Gönderen kanalın henüz SMTP hesabı ya da gönderen adresi yok. Gelen
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "Gönderen alan adının DMARC kaydı yok."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "Gönderen alan adı henüz SPF, DKIM ve DMARC denetiminden geçmedi. Bildirimler spam klasörüne düşebilir."
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "Ziyaretçi sohbette {0} adresini yazdı ama henüz doğrulamadı. Bu yan
 msgid "The workspace may not send broadcasts for now."
 msgstr "Çalışma alanı şimdilik bülten gönderemez."
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "Çalışma alanı şu an toplu e-posta gönderemez"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "Çalışma alanı bugünkü gönderim sınırına ulaştı. Gönderim {local} tarihinde ({utc} UTC) sürecek."
@@ -11870,6 +12015,10 @@ msgstr "Zaten izin verdiler"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "Bağlantılı bir e-posta alırlar ve ancak bağlantıya tıklayınca abone olurlar."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "Bir bağlantı içeren e-posta alırlar; bildirimleri yalnızca bağlantıya tıkladıktan sonra alırlar."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "Bu gelen kutusunun zaten bir durum sayfası var."
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "Bu gelen kutusunda henüz gönderebilen bir e-posta kanalı yok. Listeyi şimdi oluşturabilirsiniz; ayarlarından yanıt hesabı olan bir e-posta kanalı seçildiğinde göndermeye başlar."
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "Bu gelen kutusunun e-posta gönderebilen bir kanalı yok. Gelen kutusu ayarlarından bir SMTP hesabı ekleyin."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "Bu gelen kutusunda henüz e-posta kanalı yok. Gelen kutusu ayarlarından ekleyin."
@@ -12044,6 +12197,7 @@ msgstr "Bu bir JSON nesnesi değil."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "Bu geçerli bir e-posta adresi değil."
 
@@ -12400,6 +12554,10 @@ msgstr "Mevcut müşterilere hizmet duyuruları için kapatın. İzin her iki du
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "Henüz açık değilse Google hesabında 2 Adımlı Doğrulama'yı açın."
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "Ziyaretçilerin bildirimlere abone olabilmesi için sayfa ayarlarında e-posta abonelerini açın."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "Bu cihazda aç"
@@ -12484,8 +12642,13 @@ msgstr "Çalışma alanının günlük sınırı nedeniyle gönderim {days} gün
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "Geri al"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "Bekleyen bildirimi geri al"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "şu an abonelikten çıkmış"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "Bağlantıya tıklayana kadar onay beklerler ve başka e-posta almazlar. Onaylanmayan abonelikler 30 gün sonra silinir."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "Bağlantıya tıklayana kadar onay bekler. Onaylanmayan adresler 30 gün sonra silinir."
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "Son yedi günün ziyaretçileri: {series}"
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "Web sitenizin ya da uygulamanızın ziyaretçileri, çerezsiz"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "Ziyaretçiler sayfadan abone olur; bir olay ya da bakım değiştiğinde e-posta alırlar."
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

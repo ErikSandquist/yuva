@@ -1207,7 +1207,9 @@ msgstr "הוספת חשבון תשובות"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "הוסף כלל עבור {address} שמוסר את הדואר שלו גם לכתובת שלמטה, תוך שמירה על המסירה לתיבת הדואר."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "הוספת מנוי"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "הכול"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "כל הרכיבים"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "הוחזר או דווח כספאם"
 msgid "Bounced or reported as spam before"
 msgstr "הוחזר או דווח כספאם בעבר"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "חזרו: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "האם אפשר לתזמן ניוזלטר לכל מנוי?"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "לבטל את הייבוא הזה?"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "בוטל"
 
@@ -2563,6 +2577,10 @@ msgstr "בחר „Forward a copy of incoming mail to” עם הכתובת, הש�
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "בחר „Generate app password”, קרא לה „Yuva” וצור אותה."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "בחירת ערוץ"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "הרכיב נמחק"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "חיבורים"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "ייצוא הסכמות"
 
@@ -3916,6 +3936,7 @@ msgstr "אימייל"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "כתובת אימייל"
 
@@ -3946,6 +3967,18 @@ msgstr "שלחו לי אימייל על דיונים שאני עוקב אחרי�
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "אימייל בלבד"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "מנויי דוא״ל"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "מנויי הדוא״ל כבויים"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "מנויי הדוא״ל כבויים. אי אפשר להירשם ולא נשלחות הודעות, אבל הרשימה נשמרת."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "נכשל"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "נכשל חמש פעמים"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "נכשלו: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "דואר מ-Yuva"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "הדואר נכנס לערוץ האימייל „{channelName}”, שמקבל את {address}."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "הדואר אינו חתום במפתח של הדומיין של השולח, כפי ש-Gmail ו-Yahoo מצפים."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "גודל הדואר"
@@ -6880,6 +6922,10 @@ msgstr "עדיין אין תשובות מוכנות. הוסף אותן בהגד�
 msgid "No channel"
 msgstr "ללא ערוץ"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "לא נבחר ערוץ שיכול לשלוח. עד שייבחר, אף אחד לא יקבל אישור או הודעה."
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "עדיין אין ערוץ"
@@ -6972,6 +7018,10 @@ msgstr "לא ניתנה כתובת אימייל"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "אין ערוץ אימייל שיכול לשלוח את אימיילי האישור והברוכים הבאים שלה"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "אין עדיין מנויי דוא״ל"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "ללא נושא"
 msgid "No subject yet"
 msgstr "עדיין אין נושא"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "לא נמצא מנוי תואם"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "עדיין אין מנויים. הצב את טופס ההרשמה באתר שלך, או הוסף אנשים שכבר הסכימו."
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "אין עדיין מנויים. המבקרים נרשמים בדף הסטטוס, ואפשר גם להוסיף כאן כתובת."
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "לא נכון? בחר את הספק שלך"
 msgid "Not run"
 msgstr "לא הורץ"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "לא נשלח"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "לא מוגדר"
@@ -7485,6 +7547,10 @@ msgstr "שום דבר לא מתאים לחיפוש שלך כאן."
 msgid "Nothing unread."
 msgstr "אין דבר שלא נקרא."
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "הודעות למנויים"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "התראות לא אושרו."
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "התרע אחרת עבור תיבת דואר אחת. כל מה שנשאר על „כמו למעלה” פועל לפי ההגדרות שלמעלה."
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "שליחת הודעה למנויים"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "תשובה אחת, שנכתבת פעם אחת, נשלחת לכל שיח�
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "שורה אחת לכל אירוע, הישן ביותר קודם: מי הסכים או עזב, מתי, איך, מאיזה דף וכתובת IP, והמילים שראה. שמור אותו כהוכחת הסכמה (GDPR סעיף 7, KVKK), כדי לענות לאדם ששואל מה יש לך עליו, או כדי לרשום הסכמות ב-İYS בעצמך. נוסחאות גיליון בקובץ ה-CSV מנוטרלות."
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "שורה אחת לכל אירוע, מהישן לחדש: מי הסכים או עזב, מתי, באיזה אופן, מאיזה דף וכתובת IP, והנוסח שהוצג להם. שמרו אותו כהוכחה להסכמה או כדי להשיב למי ששואל איזה מידע נשמר עליו."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "פתיחת תיבת הדואר"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "פתיחת הגדרות תיבת הדואר"
 
@@ -7973,6 +8048,10 @@ msgstr "פתח את Microsoft Entra admin center או את פורטל Azure, ע�
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "פתיחת השיחה הבאה או הקודמת"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "פתיחת הגדרות הדף"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "נמענים"
 msgid "Recipients"
 msgstr "נמענים"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "נמענים: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "מזוהה לפי הכתובת."
@@ -9661,6 +9745,10 @@ msgstr "מתוזמן"
 msgid "Scheduled by"
 msgstr "תוזמן על ידי"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "מתוזמן ל-{due}"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "שלח משוב מדף"
 msgid "Send me a code"
 msgstr "שלח לי קוד"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "שליחת הודעות בדוא״ל"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "שליחה עכשיו"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "שליחת תשובה"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "שליחת האישור"
 
@@ -9969,6 +10062,7 @@ msgstr "זהות השולח"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "שולח"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "שולח מ"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "שולח את הדואר שלו מ"
 
@@ -10056,6 +10151,7 @@ msgstr "נשלח"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "נשלח"
 
@@ -10116,6 +10212,11 @@ msgstr "נשלחו היום: {sent} מתוך {limit} מותרים. היום מת
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "נשלחו היום: {sent}. אין מגבלה יומית."
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "נשלחו: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "דולג ונכשל ({count})"
 msgid "Skipped or failed"
 msgstr "דולג או נכשל"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "דולגו: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "מזהה טקסטואלי"
@@ -10886,14 +10992,25 @@ msgstr "נרשם"
 msgid "subscribed now"
 msgstr "נרשם עכשיו"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "מנויים"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "מנויים נוספו"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "המנויים מאשרים את כתובתם בדוא״ל לפני שהם מקבלים הודעות."
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "מנויים שההודעה הגיעה אליהם: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "לא ניתן היה לפתוח את תיבת הדואר לקריאה ב
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "לתיבת הדואר עדיין אין שם משפטי או כתובת דואר. כל שליחה המונית מסתיימת בהם, כפי שהחוק דורש."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "בתיבת הדואר לא מוגדרת כתובת דואר של השולח. אפשר להוסיף אחת בהגדרות תיבת הדואר."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "דייר Amazon SES של תיבת הדואר עדיין בהגדרה. השליחה ההמונית יכולה לצאת, אבל בדוק זאת שוב לפני שהיא מתחילה."
@@ -11403,6 +11524,10 @@ msgstr "דייר Amazon SES של תיבת הדואר עדיין בהגדרה. ה
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "דייר Amazon SES של תיבת הדואר כבר לא קיים. השרת יוצר אותו מחדש; עד אז השליחה ההמונית לא יכולה לצאת."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "ערוץ הדוא״ל של תיבת הדואר ששולח אישורים והודעות."
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "תיבת הדואר הישנה מפסיקה לקבל דואר של הד�
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "לתיבת הדואר האחרת אין ערוץ אימייל, ולכן אי אפשר להעביר אליה את שיחת האימייל הזאת. הוסף לה קודם ערוץ אימייל."
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "הדף כבר שלח 10 הודעות בשעה האחרונה"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "הדף כפי שמבקרים רואים אותו עכשיו. טיוטות אינן כלולות."
@@ -11571,6 +11700,10 @@ msgstr "הדף אינו באתר שערוץ הצ׳אט מתיר."
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "הדף לא מפורסם. רק הצוות שלכם רואה זאת."
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "הדף או האירוע אינם ציבוריים"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "הסוד מוצג פעם אחת, כשהוא נוצר. החלף אותו 
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "דומיין השולח לא אישר את האימייל הזה. ייתכן שהוא מזויף."
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "ערוץ השליחה אינו יכול לשלוח"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "לערוץ השליחה עדיין אין חשבון SMTP או כתובת לשליחה. הגדר אותם בהגדרות תיבת הדואר."
@@ -11684,6 +11821,10 @@ msgstr "לערוץ השליחה עדיין אין חשבון SMTP או כתוב�
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "לדומיין השליחה אין רשומת DMARC."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "דומיין השליחה טרם עבר בדיקת SPF, DKIM ו-DMARC. הודעות עלולות להגיע לספאם."
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "המבקר הקליד {0} בצ׳אט ועדיין לא אישר אותה
 msgid "The workspace may not send broadcasts for now."
 msgstr "סביבת העבודה אינה רשאית לשלוח שליחות המוניות כרגע."
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "סביבת העבודה אינה רשאית לשלוח כעת דואר בהיקף רחב"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "סביבת העבודה הגיעה למגבלת השליחה של היום. השליחה נמשכת ב-{local} ({utc} UTC)."
@@ -11870,6 +12015,10 @@ msgstr "הם כבר הסכימו"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "הם מקבלים אימייל עם קישור ונרשמים רק אחרי שלחצו עליו."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "הם מקבלים הודעת דוא״ל עם קישור, ומתחילים לקבל הודעות רק לאחר שילחצו עליו."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "לתיבת הדואר הזו כבר יש דף סטטוס."
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "לתיבת הדואר הזאת עדיין אין ערוץ אימייל שיכול לשלוח. אפשר ליצור את הרשימה עכשיו; היא שולחת ברגע שנבחר בהגדרותיה ערוץ אימייל עם חשבון תשובות."
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "לתיבת הדואר הזו אין ערוץ דוא״ל שיכול לשלוח. אפשר להוסיף חשבון SMTP בהגדרות תיבת הדואר."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "לתיבת הדואר הזאת עדיין אין ערוץ אימייל. הוסף אחד בהגדרות תיבת הדואר."
@@ -12044,6 +12197,7 @@ msgstr "זה לא אובייקט JSON."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "זו לא כתובת אימייל תקינה."
 
@@ -12400,6 +12554,10 @@ msgstr "כבה להודעות שירות ללקוחות קיימים. נדרשת
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "הפעל אימות דו-שלבי לחשבון Google, אם הוא עדיין לא מופעל."
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "הפעילו את מנויי הדוא״ל בהגדרות הדף כדי לאפשר למבקרים להירשם להודעות."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "הפעלה במכשיר הזה"
@@ -12484,8 +12642,13 @@ msgstr "במסגרת המגבלה היומית של סביבת העבודה, ה�
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "ביטול"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "ביטול ההודעה הממתינה"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "הסיר את עצמו עכשיו"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "עד שילחצו על הקישור הם נשארים ממתינים לאישור ולא מקבלים שום דואר אחר. הרשמות לא מאושרות נמחקות אחרי 30 יום."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "עד שילחצו על הקישור הם ממתינים לאישור. כתובות שלא אושרו נמחקות לאחר 30 יום."
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "מבקרים בשבעת הימים האחרונים: {series}"
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "מבקרים באתר או באפליקציה שלך, בלי עוגיות"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "מבקרים נרשמים בדף ומקבלים הודעת דוא״ל כשיש שינוי באירוע או בתחזוקה."
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

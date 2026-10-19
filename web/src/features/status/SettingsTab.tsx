@@ -1,13 +1,16 @@
 import { Trans, useLingui } from "@lingui/react/macro"
+import { MailWarningIcon } from "lucide-react"
 import { useState } from "react"
-import { useNavigate } from "react-router"
+import { Link, useNavigate } from "react-router"
 
-import { CopyButton, ErrorLine, toast, useConfirm } from "@/components/common"
+import { CopyButton, ErrorLine, Notice, toast, useConfirm } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { NativeSelect } from "@/components/ui/native-select"
 import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
+import { canSend } from "@/features/broadcasts/ListForm"
+import { useInboxChannels } from "@/features/broadcasts/queries"
 import { validSlug } from "@/features/status/CreatePageDialog"
 import { useDeleteStatusPage, usePatchStatusPage } from "@/features/status/queries"
 import { Card, ChoiceSelect, Field, FormActions, FormCard, Section, ToggleRow } from "@/features/settings/ui"
@@ -236,6 +239,92 @@ function General({ page }: { page: StatusPage }) {
   )
 }
 
+function EmailSubscribers({ page }: { page: StatusPage }) {
+  const { t } = useLingui()
+  const patch = usePatchStatusPage(page.id)
+  const channels = (useInboxChannels(page.inbox_id).data ?? []).filter(canSend)
+  const sub = page.email_subscribers
+  const options: [string, string][] = channels.map((c) => [c.id, c.email ? `${c.name} · ${c.email.address}` : c.name])
+  const channelId = sub.channel_id ?? ""
+  if (channelId && !options.some(([id]) => id === channelId)) options.unshift([channelId, channelId])
+  const warnings: Record<(typeof sub.warnings)[number], string> = {
+    no_deliverability_check: t`The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam.`,
+    no_postal_address: t`The inbox names no postal address for the sender. Add one in the inbox settings.`,
+    dkim_unaligned: t`Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect.`,
+  }
+  return (
+    <Section
+      title={<Trans>E-mail subscribers</Trans>}
+      description={
+        <Trans>Visitors subscribe on the page and get a mail when an incident or maintenance changes.</Trans>
+      }
+    >
+      <Card>
+        <ToggleRow
+          title={<Trans>Send notices by e-mail</Trans>}
+          hint={<Trans>Subscribers confirm their address by mail before they get notices.</Trans>}
+        >
+          <Switch
+            checked={sub.enabled}
+            disabled={patch.isPending}
+            onCheckedChange={(enabled) =>
+              patch.mutate({
+                email_subscribers: {
+                  enabled,
+                  ...(enabled && !sub.channel_id && channels.length === 1 ? { channel_id: channels[0].id } : {}),
+                },
+              })
+            }
+            data-testid="status-setting-subscribers"
+          />
+        </ToggleRow>
+        <Field
+          label={<Trans>Sends its mail from</Trans>}
+          htmlFor="status-channel"
+          hint={
+            channels.length === 0 ? (
+              <Trans>This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings.</Trans>
+            ) : (
+              <Trans>The inbox’s e-mail channel that sends confirmations and notices.</Trans>
+            )
+          }
+        >
+          <ChoiceSelect
+            id="status-channel"
+            value={channelId}
+            onChange={(id) => patch.mutate({ email_subscribers: { channel_id: id } })}
+            options={options}
+            placeholder={t`Choose a channel`}
+            label={t`Sends its mail from`}
+            disabled={patch.isPending || options.length === 0}
+          />
+        </Field>
+        {sub.enabled && !sub.sender_ready && (
+          <Notice tone="warning" icon={MailWarningIcon} data-testid="status-subscribers-no-sender">
+            <p>
+              <Trans>
+                No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice.
+              </Trans>
+            </p>
+            <Link
+              to={`/settings/inboxes/${page.inbox_id}`}
+              className="w-fit text-brand underline-offset-4 hover:underline"
+            >
+              <Trans>Open the inbox settings</Trans>
+            </Link>
+          </Notice>
+        )}
+        {sub.warnings.map((w) => (
+          <Notice key={w} tone="warning" icon={MailWarningIcon} data-testid="status-subscribers-warning">
+            <p>{warnings[w]}</p>
+          </Notice>
+        ))}
+        <ErrorLine error={patch.error} />
+      </Card>
+    </Section>
+  )
+}
+
 function Address({ page }: { page: StatusPage }) {
   return (
     <Section title={<Trans>Public address</Trans>}>
@@ -320,6 +409,7 @@ export function SettingsTab({ page }: { page: StatusPage }) {
     <div className="flex flex-col gap-8" data-testid="status-settings">
       <Address page={page} />
       <General page={page} />
+      <EmailSubscribers page={page} />
       <Danger page={page} />
     </div>
   )

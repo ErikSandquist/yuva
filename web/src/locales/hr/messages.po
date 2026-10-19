@@ -1207,7 +1207,9 @@ msgstr "Dodaj račun za odgovore"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "Dodajte pravilo za {address} koje poštu isporučuje i na donju adresu, zadržavajući isporuku u pretinac."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "Dodaj pretplatnika"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "Sve"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "Sve komponente"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "Vraćeno ili prijavljeno kao neželjena pošta"
 msgid "Bounced or reported as spam before"
 msgstr "Prije vraćeno ili prijavljeno kao neželjena pošta"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "Vraćeno: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "Mogu li zakazati bilten za svakog pretplatnika posebno?"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "Otkazati ovaj uvoz?"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "Otkazano"
 
@@ -2563,6 +2577,10 @@ msgstr "Odaberite „Proslijedi kopiju dolazne pošte na” tu adresu, zadržite
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "Odaberite „Generiraj lozinku aplikacije”, nazovite je „Yuva” i izradite je."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "Odaberi kanal"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "Komponenta je izbrisana"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "Veze"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "Izvoz privola"
 
@@ -3916,6 +3936,7 @@ msgstr "E-pošta"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "E-adresa"
 
@@ -3946,6 +3967,18 @@ msgstr "Šalji mi e-poštu o raspravama koje pratim"
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "Samo e-pošta"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "Pretplatnici e-poštom"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "Pretplatnici e-poštom su isključeni"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "Pretplatnici e-poštom su isključeni. Nitko se ne može pretplatiti i obavijesti se ne šalju, ali popis ostaje sačuvan."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "Neuspjelo"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "Pet puta neuspjelo"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "Neuspjelo: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "Pošta od Yuve"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "Pošta ide u e-poštni kanal „{channelName}” koji prima {address}."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "Pošta nije potpisana ključem vlastite domene pošiljatelja, što Gmail i Yahoo očekuju."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "Veličina poruke"
@@ -6880,6 +6922,10 @@ msgstr "Još nema pripremljenih odgovora. Dodajte ih u postavkama."
 msgid "No channel"
 msgstr "Nema kanala"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "Nije odabran nijedan kanal koji može slati. Dok ga ne bude, nitko neće dobiti potvrdu ni obavijest."
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "Još nema kanala"
@@ -6972,6 +7018,10 @@ msgstr "E-adresa nije navedena"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "Nema e-poštnog kanala koji može slati poruke potvrde i dobrodošlice"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "Još nema pretplatnika e-poštom"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "Bez predmeta"
 msgid "No subject yet"
 msgstr "Još bez predmeta"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "Nijedan pretplatnik ne odgovara pretrazi"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "Još nema pretplatnika. Stavite obrazac za pretplatu na svoje web-mjesto ili dodajte ljude koji su već pristali."
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "Još nema pretplatnika. Posjetitelji se pretplaćuju na stranici statusa, a adresu možete dodati i ovdje."
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "Ne odgovara? Odaberite svog pružatelja"
 msgid "Not run"
 msgstr "Nije pokrenuto"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "Nije poslano"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "Nije postavljeno"
@@ -7485,6 +7547,10 @@ msgstr "Ništa ovdje ne odgovara vašoj pretrazi."
 msgid "Nothing unread."
 msgstr "Ništa nepročitano."
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "Obavijesti pretplatnicima"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "Obavijesti nisu dopuštene."
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "Obavještavajte drugačije za jedan pretinac. Sve što ostane na „Kao gore” slijedi gornje postavke."
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "Obavijesti pretplatnike"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "Jedan odgovor, napisan jednom, ide vašim imenom u svaki otvoreni razgov
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Jedan redak po događaju, od najstarijeg: tko je pristao ili otišao, kada, kako, s koje stranice i IP adrese te riječi koje je vidio. Čuvajte ga kao dokaz privole (GDPR čl. 7, KVKK), da odgovorite osobi koja pita što imate o njoj ili da sami registrirate privole kod İYS-a. Formule proračunskih tablica u CSV-u čine se bezopasnima."
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "Jedan redak po događaju, od najstarijeg: tko je pristao ili otišao, kada, kako, s koje stranice i IP adrese te koji su tekst vidjeli. Čuvajte ga kao dokaz privole ili za odgovor osobi koja pita što o njoj imate."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "Otvori pretinac"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "Otvori postavke pretinca"
 
@@ -7973,6 +8048,10 @@ msgstr "Otvorite Microsoft Entra admin center ili Azure portal, idite na App reg
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "Otvori sljedeći ili prethodni razgovor"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "Otvori postavke stranice"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "primatelji"
 msgid "Recipients"
 msgstr "Primatelji"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "Primatelji: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "Prepoznato po adresi."
@@ -9661,6 +9745,10 @@ msgstr "Zakazano"
 msgid "Scheduled by"
 msgstr "Zakazao/la"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "Zakazano za {due}"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "Šalji povratne informacije sa stranice"
 msgid "Send me a code"
 msgstr "Pošalji mi kôd"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "Šalji obavijesti e-poštom"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "Pošalji sada"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "Pošalji odgovor"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Pošalji potvrdu"
 
@@ -9969,6 +10062,7 @@ msgstr "Identitet pošiljatelja"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "Slanje"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "Šalje s"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "Šalje svoju poštu s"
 
@@ -10056,6 +10151,7 @@ msgstr "poslano"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "Poslano"
 
@@ -10116,6 +10212,11 @@ msgstr "Poslano danas: {sent} od dopuštenih {limit}. Dan počinje u 00:00 UTC."
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "Poslano danas: {sent}. Nema dnevnog ograničenja."
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "Poslano: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "Preskočeno i neuspjelo ({count})"
 msgid "Skipped or failed"
 msgstr "Preskočeno ili neuspjelo"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "Preskočeno: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "Slug"
@@ -10886,14 +10992,25 @@ msgstr "Pretplaćen/a"
 msgid "subscribed now"
 msgstr "pretplaćeno sada"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "Pretplatnici"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "Pretplatnici dodani"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "Pretplatnici potvrđuju adresu e-poštom prije nego počnu primati obavijesti."
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "Obaviješteni pretplatnici: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "Pretinac se nije mogao otvoriti samo za čitanje."
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "Pretinac još nema pravni naziv ni poštansku adresu. Svaka masovna poruka završava njima, kako zakon traži."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "Pretinac ne navodi poštansku adresu pošiljatelja. Dodaj je u postavkama pretinca."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "Amazon SES zakupac pretinca još se postavlja. Masovna poruka može otići, ali to ponovno provjerite prije početka."
@@ -11403,6 +11524,10 @@ msgstr "Amazon SES zakupac pretinca još se postavlja. Masovna poruka može oti�
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "Amazon SES zakupac pretinca više ne postoji. Poslužitelj ga ponovno izrađuje; do tada masovna poruka ne može otići."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "E-mail kanal pretinca koji šalje potvrde i obavijesti."
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "Stari pretinac prestaje primati poštu za tu domenu."
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "Drugi pretinac nema e-poštni kanal pa se ovaj e-poštni razgovor ne može premjestiti tamo. Prvo mu dodajte e-poštni kanal."
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "Stranica je u posljednjih sat vremena već poslala 10 obavijesti"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "Stranica kakvu posjetitelji vide sada. Skice su izostavljene."
@@ -11571,6 +11700,10 @@ msgstr "Stranica nije na web-mjestu koje chat kanal dopušta."
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "Stranica nije objavljena. Ovo vidi samo vaš tim."
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "Stranica ili incident nisu javni"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "Tajna se prikazuje jednom, kad se izradi. Rotirajte je da dobijete novu.
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "Domena pošiljatelja nije ovlastila ovu poruku. Možda je krivotvorena."
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "Kanal za slanje ne može slati"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "Kanal za slanje još nema SMTP račun ni adresu s koje šalje. Postavite to u postavkama pretinca."
@@ -11684,6 +11821,10 @@ msgstr "Kanal za slanje još nema SMTP račun ni adresu s koje šalje. Postavite
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "Domena slanja nema DMARC zapis."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "Domena za slanje još nije prošla provjeru SPF-a, DKIM-a i DMARC-a. Obavijesti bi mogle završiti u spamu."
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "Posjetitelj je u chatu upisao {0} i još to nije potvrdio. Ovaj odgovor 
 msgid "The workspace may not send broadcasts for now."
 msgstr "Radni prostor za sada ne smije slati masovne poruke."
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "Radni prostor trenutačno ne smije slati masovnu poštu"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "Radni prostor dosegnuo je današnje ograničenje slanja. Slanje se nastavlja {local} ({utc} UTC)."
@@ -11870,6 +12015,10 @@ msgstr "Već su pristali"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "Dobivaju poruku s poveznicom i pretplatnici su tek nakon što kliknu na nju."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "Dobivaju poruku s poveznicom i obavijesti primaju tek nakon što je kliknu."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "Ovaj pretinac već ima stranicu statusa."
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "Ovaj pretinac još nema e-poštni kanal koji može slati. Popis možete izraditi sada; šalje kad se u njegovim postavkama odabere e-poštni kanal s računom za odgovore."
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "Ovaj pretinac nema e-mail kanal koji može slati. Dodaj SMTP račun u postavkama pretinca."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "Ovaj pretinac još nema e-poštni kanal. Dodajte ga u postavkama pretinca."
@@ -12044,6 +12197,7 @@ msgstr "Ovo nije JSON objekt."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "Ovo nije valjana e-adresa."
 
@@ -12400,6 +12554,10 @@ msgstr "Isključite za servisne obavijesti postojećim klijentima. Privola je po
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "Uključite dvostupanjsku provjeru za Google račun ako već nije uključena."
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "Uključi pretplatnike e-poštom u postavkama stranice da se posjetitelji mogu pretplatiti na obavijesti."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "Uključi za ovaj uređaj"
@@ -12484,8 +12642,13 @@ msgstr "Uz dnevno ograničenje radnog prostora slanje traje {days} dana."
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "Poništi"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "Poništi obavijest na čekanju"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "odjavljeni sada"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "Dok ne kliknu poveznicu, čekaju potvrdu i ne dobivaju drugu poštu. Nepotvrđene pretplate brišu se nakon 30 dana."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "Dok ne kliknu poveznicu, čekaju potvrdu. Nepotvrđene adrese brišu se nakon 30 dana."
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "Posjetitelji u zadnjih sedam dana: {series}"
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "Posjetitelji vašeg web-mjesta ili aplikacije, bez kolačića"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "Posjetitelji se pretplaćuju na stranici i dobivaju poruku kad se incident ili održavanje promijeni."
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

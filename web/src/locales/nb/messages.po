@@ -1207,7 +1207,9 @@ msgstr "Legg til en svarkonto"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "Legg til en regel for {address} som også leverer e-posten til adressen under, og beholder leveringen til postboksen."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "Legg til en abonnent"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "Alle"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "Alle komponenter"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "Returnert eller rapportert som søppelpost"
 msgid "Bounced or reported as spam before"
 msgstr "Tidligere returnert eller rapportert som søppelpost"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "Returnert: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "Kan jeg planlegge et nyhetsbrev for hver abonnent?"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "Avbryte denne importen?"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "Avbrutt"
 
@@ -2563,6 +2577,10 @@ msgstr "Velg «Videresend en kopi av innkommende e-post til» adressen, behold G
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "Velg «Generer app-passord», gi det navnet «Yuva» og opprett det."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "Velg en kanal"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "Komponent slettet"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "Tilkoblinger"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "Samtykkeeksport"
 
@@ -3916,6 +3936,7 @@ msgstr "E-post"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "E-postadresse"
 
@@ -3946,6 +3967,18 @@ msgstr "Send meg e-post om diskusjonene jeg følger"
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "Bare e-post"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "E-postabonnenter"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "E-postabonnenter er av"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "E-postabonnenter er av. Ingen kan abonnere og ingen varsler sendes, men listen beholdes."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "Mislyktes"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "Mislyktes fem ganger"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "Mislyktes: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "E-post fra Yuva"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "E-post går til e-postkanalen «{channelName}», som mottar {address}."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "E-posten er ikke signert med en nøkkel fra avsenderens eget domene, noe Gmail og Yahoo forventer."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "E-poststørrelse"
@@ -6880,6 +6922,10 @@ msgstr "Ingen ferdige svar ennå. Legg dem til i innstillingene."
 msgid "No channel"
 msgstr "Ingen kanal"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "Ingen kanal som kan sende er valgt. Inntil det er gjort, får ingen bekreftelse eller varsel."
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "Ingen kanal ennå"
@@ -6972,6 +7018,10 @@ msgstr "Ingen e-postadresse oppgitt"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "Ingen e-postkanal som kan sende bekreftelses- og velkomst-e-postene"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "Ingen e-postabonnenter ennå"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "Ingen emne"
 msgid "No subject yet"
 msgstr "Ingen emne ennå"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "Ingen abonnenter samsvarte"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "Ingen abonnenter ennå. Sett påmeldingsskjemaet på nettstedet ditt, eller legg til personer som allerede har sagt ja."
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "Ingen abonnenter ennå. Besøkende abonnerer på statussiden, eller du kan legge til en adresse her."
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "Stemmer det ikke? Velg leverandøren din"
 msgid "Not run"
 msgstr "Ikke kjørt"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "Ikke sendt"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "Ikke satt opp"
@@ -7485,6 +7547,10 @@ msgstr "Ingenting matcher søket ditt her."
 msgid "Nothing unread."
 msgstr "Ingenting ulest."
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "Varsler til abonnenter"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "Varsler ble ikke tillatt."
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "Varsle annerledes for én postboks. Det som står på «Som over» følger innstillingene over."
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "Varsle abonnenter"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "Ett svar, skrevet én gang, går til hver åpen samtale koblet til {titl
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Én rad per hendelse, eldste først: hvem som sa ja eller forlot, når, hvordan, fra hvilken side og IP-adresse, og ordene de så. Behold den som bevis på samtykke (GDPR art. 7, KVKK), for å svare en person som spør hva du har om dem, eller for selv å registrere samtykker hos İYS. Regnearkformler i CSV-en gjøres uskadelige."
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "Én rad per hendelse, eldste først: hvem som samtykket eller meldte seg av, når, hvordan, fra hvilken side og IP-adresse, og ordlyden de så. Ta vare på den som bevis på samtykke eller for å svare en person som spør hva du har lagret."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "Åpne postboksen"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "Åpne postboksens innstillinger"
 
@@ -7973,6 +8048,10 @@ msgstr "Åpne Microsoft Entra admin center eller Azure-portalen, gå til Appregi
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "Åpne neste eller forrige samtale"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "Åpne sideinnstillingene"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "mottakere"
 msgid "Recipients"
 msgstr "Mottakere"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "Mottakere: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "Gjenkjent på adressen."
@@ -9661,6 +9745,10 @@ msgstr "Planlagt"
 msgid "Scheduled by"
 msgstr "Planlagt av"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "Planlagt til {due}"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "Send tilbakemelding fra en side"
 msgid "Send me a code"
 msgstr "Send meg en kode"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "Send varsler på e-post"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "Send nå"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "Send svar"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Send bekreftelsen"
 
@@ -9969,6 +10062,7 @@ msgstr "Avsenderidentitet"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "Sender"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "Sendes fra"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "Sender e-posten sin fra"
 
@@ -10056,6 +10151,7 @@ msgstr "sendt"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "Sendt"
 
@@ -10116,6 +10212,11 @@ msgstr "Sendt i dag: {sent} av {limit} tillatt. Dagen begynner kl. 00:00 UTC."
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "Sendt i dag: {sent}. Det er ingen daglig grense."
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "Sendt: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "Hoppet over og mislyktes ({count})"
 msgid "Skipped or failed"
 msgstr "Hoppet over eller mislyktes"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "Hoppet over: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "Slug"
@@ -10886,14 +10992,25 @@ msgstr "Abonnent"
 msgid "subscribed now"
 msgstr "abonnenter nå"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "Abonnenter"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "Abonnenter lagt til"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "Abonnenter bekrefter adressen sin på e-post før de får varsler."
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "Abonnenter nådd: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "Postboksen kunne ikke åpnes skrivebeskyttet."
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "Postboksen har ennå ikke noe juridisk navn eller noen postadresse. Hver utsendelse slutter med dem, slik loven krever."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "Postboksen oppgir ingen postadresse for avsenderen. Legg til en i postboksens innstillinger."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "Amazon SES-tenanten til postboksen settes fortsatt opp. Utsendelsen kan gå ut, men sjekk dette igjen før den starter."
@@ -11403,6 +11524,10 @@ msgstr "Amazon SES-tenanten til postboksen settes fortsatt opp. Utsendelsen kan 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "Amazon SES-tenanten til postboksen finnes ikke lenger. Serveren oppretter den igjen; inntil da kan ikke utsendelsen gå ut."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "Postboksens e-postkanal som sender bekreftelser og varsler."
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "Den gamle postboksen slutter å motta e-post for det domenet."
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "Den andre postboksen har ingen e-postkanal, så denne e-postsamtalen kan ikke flyttes dit. Legg først til en e-postkanal i den."
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "Siden har allerede sendt 10 varsler den siste timen"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "Siden slik besøkende ser den nå. Utkast er utelatt."
@@ -11571,6 +11700,10 @@ msgstr "Siden er ikke på et nettsted chattekanalen tillater."
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "Siden er ikke publisert. Bare teamet ditt ser dette."
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "Siden eller hendelsen er ikke offentlig"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "Hemmeligheten vises én gang, når den opprettes. Roter den for å få e
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "Domenet til avsenderen godkjente ikke denne e-posten. Den kan være forfalsket."
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "Sendekanalen kan ikke sende"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "Sendekanalen har ennå ingen SMTP-konto eller adresse å sende fra. Sett det opp i postboksens innstillinger."
@@ -11684,6 +11821,10 @@ msgstr "Sendekanalen har ennå ingen SMTP-konto eller adresse å sende fra. Sett
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "Avsenderdomenet har ingen DMARC-post."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "Avsenderdomenet har ikke bestått en kontroll av SPF, DKIM og DMARC ennå. Varsler kan havne i søppelpost."
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "Den besøkende skrev {0} i chatten og har ikke bekreftet den ennå. Dett
 msgid "The workspace may not send broadcasts for now."
 msgstr "Arbeidsområdet kan ikke sende utsendelser for øyeblikket."
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "Arbeidsområdet kan ikke sende masseutsendelser nå"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "Arbeidsområdet nådde dagens sendegrense. Sendingen fortsetter {local} ({utc} UTC)."
@@ -11870,6 +12015,10 @@ msgstr "De har allerede sagt ja"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "De får en e-post med en lenke og er først abonnenter etter at de har klikket på den."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "De får en e-post med en lenke og mottar varsler først etter at de har klikket på den."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "Denne innboksen har allerede en statusside."
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "Denne postboksen har ingen e-postkanal som kan sende ennå. Du kan opprette listen nå; den sender når en e-postkanal med svarkonto er valgt i innstillingene."
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "Denne postboksen har ingen e-postkanal som kan sende. Legg til en SMTP-konto i postboksens innstillinger."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "Denne postboksen har ingen e-postkanal ennå. Legg til en i postboksens innstillinger."
@@ -12044,6 +12197,7 @@ msgstr "Dette er ikke et JSON-objekt."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "Dette er ikke en gyldig e-postadresse."
 
@@ -12400,6 +12554,10 @@ msgstr "Slå av for tjenestemeldinger til eksisterende kunder. Samtykke trengs u
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "Slå på tostegsverifisering for Google-kontoen, hvis den ikke er på ennå."
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "Slå på e-postabonnenter i sideinnstillingene for at besøkende skal kunne abonnere på varsler."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "Slå på for denne enheten"
@@ -12484,8 +12642,13 @@ msgstr "Med arbeidsområdets daglige grense tar sendingen {days} dager."
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "Angre"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "Angre det ventende varselet"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "meldte seg av nå"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "Til de klikker på lenken, blir de stående og vente på bekreftelse og får ingen annen e-post. Ubekreftede abonnementer slettes etter 30 dager."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "Frem til de klikker på lenken venter de på bekreftelse. Ubekreftede adresser slettes etter 30 dager."
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "Besøkende de siste sju dagene: {series}"
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "Besøkende på nettstedet eller appen din, uten informasjonskapsler"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "Besøkende abonnerer på siden og får en e-post når en hendelse eller vedlikehold endres."
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

@@ -1207,7 +1207,9 @@ msgstr "返信用アカウントを追加"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "{address} 宛のメールを、メールボックスへの配信を残したまま下のアドレスにも配信するルールを追加します。"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "購読者を追加"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "すべて"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "すべてのコンポーネント"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "バウンスまたはスパム報告"
 msgid "Bounced or reported as spam before"
 msgstr "以前にバウンスまたはスパム報告"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "バウンス: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "登録者ごとにニュースレターを予約できますか?"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "このインポートをキャンセルしますか?"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "キャンセル済み"
 
@@ -2563,6 +2577,10 @@ msgstr "「受信メールのコピーを次のアドレスに転送する」を
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "「アプリパスワードを生成」を選び、名前を「Yuva」にして作成します。"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "チャンネルを選択"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "コンポーネントを削除しました"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "接続"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "同意のエクスポート"
 
@@ -3916,6 +3936,7 @@ msgstr "メール"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "メールアドレス"
 
@@ -3946,6 +3967,18 @@ msgstr "フォローしているディスカッションについてメールで
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "メールのみ"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "メール購読者"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "メール購読者はオフです"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "メール購読者はオフです。購読はできず、通知も送信されませんが、リストは保持されます。"
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "失敗"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "5 回失敗"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "失敗: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "Yuva からのメール"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "メールは、{address} を受信するメールチャネル「{channelName}」に入ります。"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "メールに送信元ドメイン自身の鍵による署名がありません。Gmail と Yahoo はこの署名を求めています。"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "メールサイズ"
@@ -6880,6 +6922,10 @@ msgstr "定型返信はまだありません。設定で追加してください
 msgid "No channel"
 msgstr "チャネルなし"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "送信可能なチャンネルが選択されていません。選択するまで、確認メールも通知も誰にも届きません。"
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "チャネルはまだありません"
@@ -6972,6 +7018,10 @@ msgstr "メールアドレスが指定されていません"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "確認メールとウェルカムメールを送信できるメールチャネルがありません"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "メール購読者はまだいません"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "件名なし"
 msgid "No subject yet"
 msgstr "件名はまだありません"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "一致する購読者はいません"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "登録者はまだいません。サイトに登録フォームを設置するか、すでに同意した人を追加してください。"
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "購読者はまだいません。訪問者がステータスページで購読するか、ここでアドレスを追加できます。"
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "違いますか?プロバイダーを選んでください"
 msgid "Not run"
 msgstr "未実行"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "未送信"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "未設定"
@@ -7485,6 +7547,10 @@ msgstr "検索に一致するものはありません。"
 msgid "Nothing unread."
 msgstr "未読はありません。"
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "購読者への通知"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "通知は許可されませんでした。"
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "受信トレイごとに通知を変えます。「上記のとおり」のままの項目は、上の設定に従います。"
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "購読者に通知"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "一度書いた返信が、{title} にリンクされた開いている�
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "イベントごとに 1 行、古い順: 誰が同意または退会したか、いつ、どのように、どのページと IP アドレスから、そして表示された文言。同意の証拠(GDPR 第 7 条、KVKK)として保管したり、保有情報を尋ねる人に答えたり、İYS に自分で同意を登録するために使えます。CSV 内のスプレッドシート数式は無害化されます。"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "1イベントにつき1行で、古い順に並びます。同意または退会した人、日時、方法、利用したページと IP アドレス、表示された文言を記録します。同意の証拠として、または保有情報を尋ねられたときの回答用に保管してください。"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "受信トレイを開く"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "受信トレイの設定を開く"
 
@@ -7973,6 +8048,10 @@ msgstr "Microsoft Entra 管理センターまたは Azure portal を開き、ア
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "次または前の会話を開く"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "ページの設定を開く"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "宛先"
 msgid "Recipients"
 msgstr "宛先"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "宛先: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "アドレスで識別されます。"
@@ -9661,6 +9745,10 @@ msgstr "予約済み"
 msgid "Scheduled by"
 msgstr "予約者"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "{due}に送信予定"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "ページからフィードバックを送信"
 msgid "Send me a code"
 msgstr "コードを送信"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "通知をメールで送信"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "今すぐ送信"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "返信を送信"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "確認メールを送信"
 
@@ -9969,6 +10062,7 @@ msgstr "送信者 ID"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "送信中"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "送信元"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "メールの送信元"
 
@@ -10056,6 +10151,7 @@ msgstr "送信済み"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "送信済み"
 
@@ -10116,6 +10212,11 @@ msgstr "本日の送信: 許可 {limit} 通のうち {sent} 通。1 日は UTC 0
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "本日の送信: {sent} 通。1 日の上限はありません。"
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "送信済み: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "スキップと失敗({count})"
 msgid "Skipped or failed"
 msgstr "スキップまたは失敗"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "スキップ: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "スラッグ"
@@ -10886,14 +10992,25 @@ msgstr "登録"
 msgid "subscribed now"
 msgstr "今登録した"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "登録者"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "登録者を追加しました"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "購読者は、通知を受け取る前にメールでアドレスを確認します。"
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "到達した購読者: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "受信トレイを読み取り専用で開けませんでした。"
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "受信トレイには、正式名称も郵送先住所もまだありません。法令の定めにより、すべての一斉配信の末尾にこれらが付きます。"
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "受信トレイに送信者の住所が設定されていません。受信トレイの設定で追加してください。"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "受信トレイの Amazon SES テナントはまだ設定中です。一斉配信は送信できますが、開始前にもう一度確認してください。"
@@ -11403,6 +11524,10 @@ msgstr "受信トレイの Amazon SES テナントはまだ設定中です。一
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "受信トレイの Amazon SES テナントが存在しなくなりました。サーバーが再作成します。それまで一斉配信は送信できません。"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "確認メールと通知を送信する、受信トレイのメールチャンネルです。"
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "旧メールボックスは、そのドメインのメールを受信し
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "もう一方の受信トレイにはメールチャネルがないため、このメール会話は移動できません。先にメールチャネルを追加してください。"
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "このページは過去1時間にすでに10件の通知を送信しています"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "訪問者に今見えているページです。下書きは含まれません。"
@@ -11571,6 +11700,10 @@ msgstr "このページは、チャットチャネルが許可するサイトに
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "ページは公開されていません。チームだけが見られます。"
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "ページまたはインシデントが非公開です"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "シークレットは作成時に一度だけ表示されます。新し
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "送信者のドメインがこのメールを承認していません。偽造されている可能性があります。"
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "送信チャンネルで送信できません"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "送信チャネルには、まだ SMTP アカウントも送信元アドレスもありません。受信トレイの設定で設定してください。"
@@ -11684,6 +11821,10 @@ msgstr "送信チャネルには、まだ SMTP アカウントも送信元アド
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "送信ドメインに DMARC レコードがありません。"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "送信ドメインはまだ SPF、DKIM、DMARC の検証に合格していません。通知が迷惑メールに分類される可能性があります。"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "訪問者はチャットに {0} と入力しましたが、まだ確認�
 msgid "The workspace may not send broadcasts for now."
 msgstr "現在ワークスペースでは一斉配信を送信できません。"
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "現在、ワークスペースは一括メールを送信できません"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "ワークスペースが本日の送信上限に達しました。{local}({utc} UTC)に送信を再開します。"
@@ -11870,6 +12015,10 @@ msgstr "すでに同意済み"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "リンク付きのメールが届き、クリックして初めて登録されます。"
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "リンク付きのメールが届き、リンクをクリックした後で初めて通知を受け取れます。"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "この受信トレイにはすでにステータスページがありま
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "この受信トレイには、送信できるメールチャネルがまだありません。リストは今作成できます。返信用アカウント付きのメールチャネルをリストの設定で選ぶと、送信されます。"
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "この受信トレイには送信可能なメールチャンネルがありません。受信トレイの設定で SMTP アカウントを追加してください。"
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "この受信トレイにはメールチャネルがまだありません。受信トレイの設定で追加してください。"
@@ -12044,6 +12197,7 @@ msgstr "JSON オブジェクトではありません。"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "有効なメールアドレスではありません。"
 
@@ -12400,6 +12554,10 @@ msgstr "既存のお客様へのサービスのお知らせではオフにしま
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "まだオンでなければ、Google アカウントの 2 段階認証プロセスをオンにします。"
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "訪問者が通知を購読できるようにするには、ページの設定でメール購読者をオンにしてください。"
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "このデバイスでオンにする"
@@ -12484,8 +12642,13 @@ msgstr "ワークスペースの 1 日の上限では、送信に {days} 日か�
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "元に戻す"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "待機中の通知を元に戻す"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "今配信停止した"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "リンクをクリックするまで確認待ちのままで、他のメールは届きません。未確認の登録は 30 日後に削除されます。"
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "リンクをクリックするまで、確認待ちの状態のままです。未確認のアドレスは30日後に削除されます。"
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "過去 7 日間の訪問者: {series}"
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "ウェブサイトまたはアプリの訪問者(Cookie なし)"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "訪問者はページで購読すると、インシデントやメンテナンスに変更があったときにメールを受け取ります。"
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

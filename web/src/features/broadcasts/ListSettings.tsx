@@ -246,7 +246,7 @@ export function ListExport({ list }: { list: MailingList }) {
         </div>
         <ExportButtons
           testId="list-export"
-          formats={["csv", "json", "iys"]}
+          formats={list.kind === "status" ? (["csv", "json"] as const) : (["csv", "json", "iys"] as const)}
           run={(format) =>
             saveDownload(
               api.GET("/v1/lists/{listId}/consent-export", {
@@ -260,12 +260,14 @@ export function ListExport({ list }: { list: MailingList }) {
             )
           }
         />
-        <p className="text-small text-muted-foreground">
-          <Trans>
-            The İYS file has one row per subscriber in İYS&apos;s columns, ONAY for subscribed and RET for unsubscribed,
-            for Turkish senders to upload to İYS themselves. Pending subscriptions are left out.
-          </Trans>
-        </p>
+        {list.kind !== "status" && (
+          <p className="text-small text-muted-foreground">
+            <Trans>
+              The İYS file has one row per subscriber in İYS&apos;s columns, ONAY for subscribed and RET for
+              unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out.
+            </Trans>
+          </p>
+        )}
       </Card>
     </Section>
   )

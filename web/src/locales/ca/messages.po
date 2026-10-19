@@ -1207,7 +1207,9 @@ msgstr "Afegeix un compte de respostes"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "Afegeix una regla per a {address} que també lliuri el seu correu a l'adreça de sota, mantenint el lliurament a la bústia."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "Afegeix un subscriptor"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "Tot"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "Tots els components"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "Rebotat o denunciat com a brossa"
 msgid "Bounced or reported as spam before"
 msgstr "Rebotat o denunciat com a brossa abans"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "Rebotats: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "Puc programar un butlletí per a cada subscriptor?"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "Cancel·les aquesta importació?"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "Cancel·lat"
 
@@ -2563,6 +2577,10 @@ msgstr "Tria «Reenvia una còpia del correu entrant a» l'adreça, deixa la cò
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "Tria «Genera una contrasenya d'aplicació», anomena-la «Yuva» i crea-la."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "Tria un canal"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "Component suprimit"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "Connexions"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "Exportació de consentiments"
 
@@ -3916,6 +3936,7 @@ msgstr "Correu"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "Adreça electrònica"
 
@@ -3946,6 +3967,18 @@ msgstr "Envia'm un correu sobre els debats que segueixo"
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "Només correu"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "Subscriptors per correu"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "Els subscriptors per correu estan desactivats"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "Els subscriptors per correu estan desactivats. Ningú no hi pot subscriure's i no se n'envia cap avís, però la llista es conserva."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "Fallit"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "Ha fallat cinc vegades"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "Fallats: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "Correu de Yuva"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "El correu va al canal de correu «{channelName}», que rep {address}."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "El correu no està signat amb una clau del domini propi del remitent, com esperen Gmail i Yahoo."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "Mida del correu"
@@ -6880,6 +6922,10 @@ msgstr "Encara no hi ha respostes predefinides. Afegeix-ne a la configuració."
 msgid "No channel"
 msgstr "Cap canal"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "No hi ha cap canal d'enviament triat. Fins que no n'hi hagi un, ningú rebrà cap confirmació ni cap avís."
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "Encara cap canal"
@@ -6972,6 +7018,10 @@ msgstr "No s'ha indicat cap adreça electrònica"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "Cap canal de correu que pugui enviar els seus correus de confirmació i de benvinguda"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "Encara no hi ha subscriptors per correu"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "Sense assumpte"
 msgid "No subject yet"
 msgstr "Encara sense assumpte"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "Cap subscriptor coincideix"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "Encara no hi ha subscriptors. Posa el formulari de subscripció al teu lloc o afegeix persones que ja hagin acceptat."
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "Encara no hi ha subscriptors. Els visitants es subscriuen a la pàgina d'estat, o bé pots afegir-hi una adreça aquí."
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "No és correcte? Tria el teu proveïdor"
 msgid "Not run"
 msgstr "No executat"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "No enviat"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "Sense configurar"
@@ -7485,6 +7547,10 @@ msgstr "Res no coincideix amb la teva cerca aquí."
 msgid "Nothing unread."
 msgstr "Res sense llegir."
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "Avisos als subscriptors"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "Les notificacions no s'han permès."
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "Notifica de manera diferent per a una safata. Tot el que quedi a «Com a dalt» segueix la configuració de dalt."
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "Avisa els subscriptors"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "Una resposta, escrita una sola vegada, arriba a cada conversa oberta vin
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Una fila per esdeveniment, del més antic al més recent: qui ha acceptat o ha marxat, quan, com, des de quina pàgina i adreça IP, i les paraules que va veure. Conserva-ho com a prova de consentiment (RGPD art. 7, KVKK), per respondre una persona que demana què en tens o per registrar tu mateix els consentiments a İYS. Les fórmules de full de càlcul del CSV es fan inofensives."
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "Una fila per esdeveniment, de més antic a més recent: qui ha acceptat o se n'ha anat, quan, com, des de quina pàgina i adreça IP, i el text que va veure. Conserva-la com a prova del consentiment o per respondre qui et pregunti quines dades en tens."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "Obre la safata"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "Obre la configuració de la safata"
 
@@ -7973,6 +8048,10 @@ msgstr "Obre el centre d'administració de Microsoft Entra o el portal d'Azure, 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "Obre la conversa següent o l'anterior"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "Obre la configuració de la pàgina"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "destinataris"
 msgid "Recipients"
 msgstr "Destinataris"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "Destinataris: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "Reconegut per l'adreça."
@@ -9661,6 +9745,10 @@ msgstr "Programat"
 msgid "Scheduled by"
 msgstr "Programat per"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "Programat per al {due}"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "Envia comentaris des d'una pàgina"
 msgid "Send me a code"
 msgstr "Envia'm un codi"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "Envia avisos per correu"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "Envia ara"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "Envia la resposta"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Envia la confirmació"
 
@@ -9969,6 +10062,7 @@ msgstr "Identitat del remitent"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "Enviant"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "Envia des de"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "Envia el seu correu des de"
 
@@ -10056,6 +10151,7 @@ msgstr "enviat"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "Enviat"
 
@@ -10116,6 +10212,11 @@ msgstr "Enviats avui: {sent} de {limit} permesos. El dia comença a les 00:00 UT
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "Enviats avui: {sent}. No hi ha límit diari."
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "Enviats: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "Omesos i fallits ({count})"
 msgid "Skipped or failed"
 msgstr "Omesos o fallits"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "Omesos: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "Slug"
@@ -10886,14 +10992,25 @@ msgstr "Subscrit"
 msgid "subscribed now"
 msgstr "subscrits ara"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "Subscriptors"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "Subscriptors afegits"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "Els subscriptors confirmen l'adreça per correu abans de rebre avisos."
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "Subscriptors assolits: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "No s'ha pogut obrir la safata en mode de només lectura."
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "La safata encara no té nom legal ni adreça postal. Cada enviament massiu acaba amb ells, tal com demana la llei."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "La safata no indica cap adreça postal del remitent. Afegeix-ne una a la configuració de la safata."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "El tenant d'Amazon SES de la safata encara s'està configurant. L'enviament massiu pot sortir, però torna-ho a comprovar abans que comenci."
@@ -11403,6 +11524,10 @@ msgstr "El tenant d'Amazon SES de la safata encara s'està configurant. L'enviam
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "El tenant d'Amazon SES de la safata ja no existeix. El servidor el torna a crear; fins llavors l'enviament massiu no pot sortir."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "El canal de correu de la safata que envia confirmacions i avisos."
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "L'antiga bústia deixa de rebre correu d'aquest domini."
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "L'altra safata no té cap canal de correu, de manera que aquesta conversa de correu no s'hi pot moure. Afegeix-hi primer un canal de correu."
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "La pàgina ja ha enviat 10 avisos en l'última hora"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "La pàgina tal com la veuen ara els visitants. Els esborranys queden fora."
@@ -11571,6 +11700,10 @@ msgstr "La pàgina no és en un lloc que permet el canal de xat."
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "La pàgina no està publicada. Només ho veu el teu equip."
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "La pàgina o l'incident no és públic"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "El secret es mostra una vegada, quan es fa. Rota'l per obtenir-ne un de 
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "El domini del remitent no ha autoritzat aquest correu. Pot ser falsificat."
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "El canal d'enviament no pot enviar"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "El canal d'enviament encara no té compte SMTP ni adreça des de la qual enviar. Configura-ho a la configuració de la safata."
@@ -11684,6 +11821,10 @@ msgstr "El canal d'enviament encara no té compte SMTP ni adreça des de la qual
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "El domini d'enviament no té cap registre DMARC."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "El domini d'enviament encara no ha superat la comprovació d'SPF, DKIM i DMARC. Els avisos podrien acabar al correu brossa."
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "El visitant ha escrit {0} al xat i encara no l'ha confirmat. Aquesta res
 msgid "The workspace may not send broadcasts for now."
 msgstr "L'espai de treball no pot enviar enviaments massius de moment."
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "L'espai de treball ara no pot enviar correu massiu"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "L'espai de treball ha arribat al límit d'enviament d'avui. L'enviament continua el {local} ({utc} UTC)."
@@ -11870,6 +12015,10 @@ msgstr "Ja han acceptat"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "Reben un correu amb un enllaç i queden subscrits només després de fer-hi clic."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "Reben un correu amb un enllaç i només reben avisos després de fer-hi clic."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "Aquesta safata ja té una pàgina d’estat."
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "Aquesta safata encara no té cap canal de correu que pugui enviar. Pots crear la llista ara; envia quan es triï a la seva configuració un canal de correu amb un compte de respostes."
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "Aquesta safata no té cap canal de correu que pugui enviar. Afegeix un compte SMTP a la configuració de la safata."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "Aquesta safata encara no té cap canal de correu. Afegeix-ne un a la configuració de la safata."
@@ -12044,6 +12197,7 @@ msgstr "Això no és un objecte JSON."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "Aquesta no és una adreça electrònica vàlida."
 
@@ -12400,6 +12554,10 @@ msgstr "Desactiva'l per als avisos de servei a clients existents. El consentimen
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "Activa la verificació en dos passos per al compte de Google, si encara no ho està."
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "Activa els subscriptors per correu a la configuració de la pàgina perquè els visitants es puguin subscriure als avisos."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "Activa per a aquest dispositiu"
@@ -12484,8 +12642,13 @@ msgstr "Amb el límit diari de l'espai de treball, l'enviament triga {days} dies
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "Desfés"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "Desfés l'avís en espera"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "donats de baixa ara"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "Fins que facin clic a l'enllaç esperen confirmació i no reben cap altre correu. Les subscripcions sense confirmar s'eliminen als 30 dies."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "Fins que no facin clic a l'enllaç, queden pendents de confirmació. Les adreces no confirmades se suprimeixen als 30 dies."
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "Visitants en els últims set dies: {series}"
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "Visitants del teu lloc web o aplicació, sense galetes"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "Els visitants es subscriuen a la pàgina i reben un correu quan canvia un incident o un manteniment."
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

@@ -1207,7 +1207,9 @@ msgstr "Lisää vastaustili"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "Lisää osoitteelle {address} sääntö, joka toimittaa sen viestit myös alla olevaan osoitteeseen ja säilyttää toimituksen postilaatikkoon."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "Lisää tilaaja"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "Kaikki"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "Kaikki komponentit"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "Palautui tai ilmoitettu roskapostiksi"
 msgid "Bounced or reported as spam before"
 msgstr "Palautui tai ilmoitettu roskapostiksi aiemmin"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "Palautunut: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "Voinko ajastaa uutiskirjeen jokaiselle tilaajalle erikseen?"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "Peruutetaanko tämä tuonti?"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "Peruutettu"
 
@@ -2563,6 +2577,10 @@ msgstr "Valitse ”Välitä kopio saapuvasta postista” osoitteeseen, säilytä
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "Valitse ”Luo sovellussalasana”, nimeä se ”Yuva” ja luo se."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "Valitse kanava"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "Komponentti poistettu"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "Yhteydet"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "Suostumusten vienti"
 
@@ -3916,6 +3936,7 @@ msgstr "Sähköposti"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "Sähköpostiosoite"
 
@@ -3946,6 +3967,18 @@ msgstr "Lähetä minulle sähköpostia seuraamistani keskusteluista"
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "Vain sähköposti"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "Sähköpostitilaajat"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "Sähköpostitilaajat eivät ole käytössä"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "Sähköpostitilaajat eivät ole käytössä. Kukaan ei voi tilata eikä ilmoituksia lähde, mutta luettelo säilyy."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "Epäonnistui"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "Epäonnistui viisi kertaa"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "Epäonnistui: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "Posti Yuvalta"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "Posti menee sähköpostikanavaan ”{channelName}”, joka vastaanottaa osoitteen {address}."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "Viestiä ei ole allekirjoitettu lähettäjän oman verkkotunnuksen avaimella, jota Gmail ja Yahoo edellyttävät."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "Viestin koko"
@@ -6880,6 +6922,10 @@ msgstr "Ei vielä valmiita vastauksia. Lisää niitä asetuksissa."
 msgid "No channel"
 msgstr "Ei kanavaa"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "Lähettävää kanavaa ei ole valittu. Ennen sitä kukaan ei saa vahvistusta eikä ilmoitusta."
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "Ei vielä kanavaa"
@@ -6972,6 +7018,10 @@ msgstr "Sähköpostiosoitetta ei annettu"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "Ei sähköpostikanavaa, joka voi lähettää vahvistus- ja tervetuloviestit"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "Ei vielä sähköpostitilaajia"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "Ei aihetta"
 msgid "No subject yet"
 msgstr "Ei vielä aihetta"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "Yhtään tilaajaa ei löytynyt"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "Ei vielä tilaajia. Laita tilauslomake sivustollesi tai lisää ihmisiä, jotka ovat jo suostuneet."
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "Ei vielä tilaajia. Kävijät tilaavat tilasivulla, tai voit lisätä osoitteen tässä."
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "Eikö täsmää? Valitse palveluntarjoajasi"
 msgid "Not run"
 msgstr "Ei ajettu"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "Ei lähetetty"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "Ei määritetty"
@@ -7485,6 +7547,10 @@ msgstr "Mikään ei vastaa hakuasi täällä."
 msgid "Nothing unread."
 msgstr "Ei lukemattomia."
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "Ilmoitukset tilaajille"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "Ilmoituksia ei sallittu."
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "Ilmoita eri tavalla yhdestä postilaatikosta. Kaikki, mikä jää kohtaan ”Kuten yllä”, noudattaa yllä olevia asetuksia."
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "Ilmoita tilaajille"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "Yksi vastaus, kirjoitettuna kerran, lähtee jokaiseen kohteeseen {title}
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Yksi rivi per tapahtuma, vanhin ensin: kuka suostui tai lähti, milloin, miten, miltä sivulta ja IP-osoitteesta, ja sanat, jotka he näkivät. Säilytä se suostumuksen todisteena (GDPR art. 7, KVKK), vastataksesi henkilölle, joka kysyy mitä sinulla on hänestä, tai rekisteröidäksesi suostumukset itse İYS:ään. CSV:n taulukkolaskentakaavat tehdään vaarattomiksi."
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "Yksi rivi tapahtumaa kohden, vanhin ensin: kuka antoi suostumuksen tai poistui, milloin, miten, miltä sivulta ja IP-osoitteesta sekä mitkä sanat hän näki. Säilytä se suostumuksen todisteena tai vastataksesi henkilölle, joka kysyy, mitä tietoja hänestä on."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "Avaa postilaatikko"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "Avaa postilaatikon asetukset"
 
@@ -7973,6 +8048,10 @@ msgstr "Avaa Microsoft Entra admin center tai Azure-portaali, siirry kohtaan App
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "Avaa seuraava tai edellinen keskustelu"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "Avaa sivun asetukset"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "vastaanottajat"
 msgid "Recipients"
 msgstr "Vastaanottajat"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "Vastaanottajat: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "Tunnistettu osoitteesta."
@@ -9661,6 +9745,10 @@ msgstr "Ajastettu"
 msgid "Scheduled by"
 msgstr "Ajastaja"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "Ajastettu: {due}"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "Lähetä palautetta sivulta"
 msgid "Send me a code"
 msgstr "Lähetä minulle koodi"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "Lähetä ilmoitukset sähköpostilla"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "Lähetä nyt"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "Lähetä vastaus"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Lähetä vahvistus"
 
@@ -9969,6 +10062,7 @@ msgstr "Lähettäjän identiteetti"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "Lähettää"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "Lähettää osoitteesta"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "Lähettää viestinsä osoitteesta"
 
@@ -10056,6 +10151,7 @@ msgstr "lähetetty"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "Lähetetty"
 
@@ -10116,6 +10212,11 @@ msgstr "Lähetetty tänään: {sent} / {limit} sallitusta. Päivä alkaa klo 00.
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "Lähetetty tänään: {sent}. Päivärajaa ei ole."
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "Lähetetty: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "Ohitettu ja epäonnistunut ({count})"
 msgid "Skipped or failed"
 msgstr "Ohitettu tai epäonnistunut"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "Ohitettu: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "Slug"
@@ -10886,14 +10992,25 @@ msgstr "Tilannut"
 msgid "subscribed now"
 msgstr "tilannut nyt"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "Tilaajat"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "Tilaajat lisätty"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "Tilaajat vahvistavat osoitteensa sähköpostitse ennen kuin he saavat ilmoituksia."
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "Tavoitetut tilaajat: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "Postilaatikkoa ei voitu avata vain luku -tilassa."
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "Postilaatikolla ei vielä ole virallista nimeä tai postiosoitetta. Jokainen joukkolähetys päättyy niihin, kuten laki vaatii."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "Postilaatikossa ei ole lähettäjän postiosoitetta. Lisää se postilaatikon asetuksissa."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "Postilaatikon Amazon SES -tenanttia määritetään vielä. Joukkolähetys voi lähteä, mutta tarkista tämä uudelleen ennen sen alkua."
@@ -11403,6 +11524,10 @@ msgstr "Postilaatikon Amazon SES -tenanttia määritetään vielä. Joukkolähet
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "Postilaatikon Amazon SES -tenanttia ei enää ole. Palvelin luo sen uudelleen; siihen asti joukkolähetys ei voi lähteä."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "Postilaatikon sähköpostikanava, joka lähettää vahvistukset ja ilmoitukset."
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "Vanha postilaatikko lakkaa vastaanottamasta postia kyseiselle verkkotunn
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "Toisella postilaatikolla ei ole sähköpostikanavaa, joten tätä sähköpostikeskustelua ei voi siirtää sinne. Lisää siihen ensin sähköpostikanava."
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "Sivu on jo lähettänyt 10 ilmoitusta viimeisen tunnin aikana"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "Sivu sellaisena kuin vierailijat sen nyt näkevät. Luonnokset jätetään pois."
@@ -11571,6 +11700,10 @@ msgstr "Sivu ei ole sivustolla, jonka chat-kanava sallii."
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "Sivua ei ole julkaistu. Vain tiimisi näkee tämän."
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "Sivu tai häiriö ei ole julkinen"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "Salaisuus näytetään kerran, kun se luodaan. Kierrätä se saadaksesi 
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "Lähettäjän verkkotunnus ei valtuuttanut tätä viestiä. Se voi olla väärennös."
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "Lähettävä kanava ei voi lähettää"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "Lähetyskanavalla ei vielä ole SMTP-tiliä tai osoitetta, josta lähettää. Määritä se postilaatikon asetuksissa."
@@ -11684,6 +11821,10 @@ msgstr "Lähetyskanavalla ei vielä ole SMTP-tiliä tai osoitetta, josta lähett
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "Lähetysverkkotunnuksella ei ole DMARC-tietuetta."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "Lähettävä verkkotunnus ei ole vielä läpäissyt SPF-, DKIM- ja DMARC-tarkistusta. Ilmoitukset voivat päätyä roskapostiin."
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "Kävijä kirjoitti {0} chattiin eikä ole vielä vahvistanut sitä. Täm
 msgid "The workspace may not send broadcasts for now."
 msgstr "Työtila ei saa toistaiseksi lähettää joukkolähetyksiä."
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "Työtila ei saa lähettää massapostia juuri nyt"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "Työtila saavutti tämän päivän lähetysrajan. Lähetys jatkuu {local} ({utc} UTC)."
@@ -11870,6 +12015,10 @@ msgstr "He ovat jo suostuneet"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "He saavat viestin, jossa on linkki, ja ovat tilaajia vasta napsautettuaan sitä."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "He saavat viestin, jossa on linkki, ja saavat ilmoituksia vasta kun napsauttavat sitä."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "Tällä postilaatikolla on jo tilasivu."
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "Tällä postilaatikolla ei vielä ole sähköpostikanavaa, joka voi lähettää. Voit luoda listan nyt; se lähettää, kun sen asetuksissa on valittu sähköpostikanava, jolla on vastaustili."
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "Tällä postilaatikolla ei ole sähköpostikanavaa, joka voisi lähettää. Lisää SMTP-tili postilaatikon asetuksissa."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "Tällä postilaatikolla ei vielä ole sähköpostikanavaa. Lisää sellainen postilaatikon asetuksissa."
@@ -12044,6 +12197,7 @@ msgstr "Tämä ei ole JSON-objekti."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "Tämä ei ole kelvollinen sähköpostiosoite."
 
@@ -12400,6 +12554,10 @@ msgstr "Poista käytöstä palveluiden ilmoituksille nykyisille asiakkaille. Suo
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "Ota Google-tilille kaksivaiheinen vahvistus käyttöön, jos se ei ole vielä päällä."
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "Ota sähköpostitilaajat käyttöön sivun asetuksissa, jotta kävijät voivat tilata ilmoituksia."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "Ota käyttöön tälle laitteelle"
@@ -12484,8 +12642,13 @@ msgstr "Työtilan päivärajalla lähetys kestää {days} päivää."
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "Kumoa"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "Kumoa odottava ilmoitus"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "perui tilauksen nyt"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "Kunnes he napsauttavat linkkiä, he odottavat vahvistusta eivätkä saa muuta postia. Vahvistamattomat tilaukset poistetaan 30 päivän kuluttua."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "Kunnes he napsauttavat linkkiä, he jäävät odottamaan vahvistusta. Vahvistamattomat osoitteet poistetaan 30 päivän kuluttua."
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "Kävijät viimeisen seitsemän päivän aikana: {series}"
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "Verkkosivustosi tai sovelluksesi kävijät, ilman evästeitä"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "Kävijät tilaavat sivulla ja saavat viestin, kun häiriö tai huolto muuttuu."
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

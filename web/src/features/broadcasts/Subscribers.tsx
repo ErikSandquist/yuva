@@ -7,16 +7,20 @@ import { formatDate, formatDateTime, SUBSCRIPTION_STATES, useEnumText } from "@/
 import { Button } from "@/components/ui/button"
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/components/ui/input-group"
 import { Item } from "@/components/ui/item"
+import { STATUS_KEYS } from "@/components/common/ShortcutSheet"
 import { Skeleton } from "@/components/ui/skeleton"
+import { AddStatusSubscriberDialog } from "@/features/status/AddSubscriberDialog"
 import { AddSubscriberDialog } from "@/features/broadcasts/AddSubscriberDialog"
 import { useSubscriptions } from "@/features/broadcasts/queries"
 import { StateTag, SubscriberSheet } from "@/features/broadcasts/SubscriberSheet"
 import { Card, EmptyRow, Rows, Section } from "@/features/settings/ui"
+import { useStatusComponents } from "@/features/status/queries"
+import { useHotkeys } from "@/hooks/use-hotkeys"
 import { useDebounced } from "@/hooks/use-debounced"
 import type { MailingList, Subscription, SubscriptionState } from "@/lib/api"
 import { useSession } from "@/lib/session"
 
-function SubscriberRow({ s, onOpen }: { s: Subscription; onOpen: () => void }) {
+function SubscriberRow({ s, names, onOpen }: { s: Subscription; names?: Map<string, string>; onOpen: () => void }) {
   const { i18n } = useLingui()
   const text = useEnumText()
   return (
@@ -33,6 +37,15 @@ function SubscriberRow({ s, onOpen }: { s: Subscription; onOpen: () => void }) {
               {s.email}
             </span>
             {s.contact.name && <span className="truncate text-small text-faint">{s.contact.name}</span>}
+            {names && (
+              <span className="truncate text-small text-faint" data-testid="subscriber-components">
+                {s.components?.length ? (
+                  s.components.map((c) => names.get(c) ?? "…").join(", ")
+                ) : (
+                  <Trans>All components</Trans>
+                )}
+              </span>
+            )}
           </span>
           <span className="flex flex-wrap items-center gap-x-2 sm:contents">
             <span className="min-w-0">
@@ -63,9 +76,16 @@ export function Subscribers({ list }: { list: MailingList }) {
   const q = useDebounced(query.trim(), 300)
   const [open, setOpen] = useState<string | null>(null)
   const [adding, setAdding] = useState(false)
+  const status = list.kind === "status"
+  const comps = useStatusComponents(list.status_page_id ?? "")
+  const names = status ? new Map((comps.data ?? []).map((c) => [c.id, c.name])) : undefined
   const subs = useSubscriptions(list.id, state, q)
   const items = subs.data?.pages.flatMap((p) => p.items) ?? []
   const filtered = !!state || !!q
+  useHotkeys(
+    { [STATUS_KEYS.addSubscriber]: () => setAdding(true) },
+    status && canManage && !list.archived_at && !adding && !open
+  )
   return (
     <Section
       title={<Trans>Subscribers</Trans>}
@@ -132,6 +152,8 @@ export function Subscribers({ list }: { list: MailingList }) {
           <EmptyRow>
             {filtered ? (
               <Trans>Nobody matches.</Trans>
+            ) : status ? (
+              <Trans>No subscribers yet. Visitors subscribe on the status page, or you can add an address here.</Trans>
             ) : (
               <Trans>No subscribers yet. Put the subscribe form on your site, or add people who already agreed.</Trans>
             )}
@@ -139,7 +161,7 @@ export function Subscribers({ list }: { list: MailingList }) {
         ) : (
           <Rows data-testid="subscribers">
             {items.map((s) => (
-              <SubscriberRow key={s.id} s={s} onOpen={() => setOpen(s.id)} />
+              <SubscriberRow key={s.id} s={s} names={names} onOpen={() => setOpen(s.id)} />
             ))}
           </Rows>
         )}
@@ -161,9 +183,20 @@ export function Subscribers({ list }: { list: MailingList }) {
         listId={list.id}
         subscriptionId={open}
         row={items.find((s) => s.id === open)}
+        names={names}
         onClose={() => setOpen(null)}
       />
-      {adding && (
+      {adding && status && (
+        <AddStatusSubscriberDialog
+          list={list}
+          onClose={() => setAdding(false)}
+          onAdded={(s) => {
+            setAdding(false)
+            setOpen(s.id)
+          }}
+        />
+      )}
+      {adding && !status && (
         <AddSubscriberDialog
           list={list}
           onClose={() => setAdding(false)}

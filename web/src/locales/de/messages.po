@@ -1207,7 +1207,9 @@ msgstr "Antwortkonto hinzufügen"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "Fügen Sie für {address} eine Regel hinzu, die ihre Mail zusätzlich an die Adresse unten zustellt und die Zustellung an das Postfach beibehält."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "Abonnent hinzufügen"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "Alle"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "Alle Komponenten"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "Zurückgewiesen oder als Spam gemeldet"
 msgid "Bounced or reported as spam before"
 msgstr "Zuvor zurückgewiesen oder als Spam gemeldet"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "Zurückgewiesen: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "Kann ich einen Newsletter pro Abonnent planen?"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "Diesen Import abbrechen?"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "Abgebrochen"
 
@@ -2563,6 +2577,10 @@ msgstr "Wählen Sie „Kopie der eingehenden Nachrichten weiterleiten an“ mit 
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "Wählen Sie „App-Passwort generieren“, nennen Sie es „Yuva“ und erstellen Sie es."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "Kanal wählen"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "Komponente gelöscht"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "Verbindungen"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "Einwilligungs-Export"
 
@@ -3916,6 +3936,7 @@ msgstr "E-Mail"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "E-Mail-Adresse"
 
@@ -3946,6 +3967,18 @@ msgstr "Mich per E-Mail über Diskussionen benachrichtigen, denen ich folge"
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "Nur E-Mail"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "E-Mail-Abonnenten"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "E-Mail-Abonnenten sind aus"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "E-Mail-Abonnenten sind aus. Niemand kann sich anmelden und es gehen keine Benachrichtigungen raus, die Liste bleibt aber erhalten."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "Fehlgeschlagen"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "Fünfmal fehlgeschlagen"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "Fehlgeschlagen: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "Mail von Yuva"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "Mail geht in den E-Mail-Kanal „{channelName}“, der {address} empfängt."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "Mails sind nicht mit einem Schlüssel der eigenen Absenderdomain signiert, was Gmail und Yahoo erwarten."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "Mailgröße"
@@ -6880,6 +6922,10 @@ msgstr "Noch keine Textbausteine. Fügen Sie sie in den Einstellungen hinzu."
 msgid "No channel"
 msgstr "Kein Kanal"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "Es ist kein Kanal gewählt, der senden kann. Solange das so ist, bekommt niemand eine Bestätigung oder Benachrichtigung."
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "Noch kein Kanal"
@@ -6972,6 +7018,10 @@ msgstr "Keine E-Mail-Adresse angegeben"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "Kein E-Mail-Kanal, der seine Bestätigungs- und Willkommensmails senden kann"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "Noch keine E-Mail-Abonnenten"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "Kein Betreff"
 msgid "No subject yet"
 msgstr "Noch kein Betreff"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "Kein Abonnent passte"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "Noch keine Abonnenten. Setzen Sie das Anmeldeformular auf Ihre Website oder fügen Sie Personen hinzu, die bereits zugestimmt haben."
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "Noch keine Abonnenten. Besucher melden sich auf der Statusseite an, oder Sie fügen hier eine Adresse hinzu."
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "Nicht richtig? Wählen Sie Ihren Anbieter"
 msgid "Not run"
 msgstr "Nicht ausgeführt"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "Nicht gesendet"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "Nicht eingerichtet"
@@ -7485,6 +7547,10 @@ msgstr "Nichts passt hier zu Ihrer Suche."
 msgid "Nothing unread."
 msgstr "Nichts Ungelesenes."
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "Benachrichtigungen an Abonnenten"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "Benachrichtigungen wurden nicht erlaubt."
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "Für ein Postfach anders benachrichtigen. Was auf „Wie oben“ bleibt, folgt den obigen Einstellungen."
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "Abonnenten benachrichtigen"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "Eine einmal geschriebene Antwort geht in Ihrem Namen an jede offene Unte
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Eine Zeile pro Ereignis, älteste zuerst: wer zugestimmt hat oder gegangen ist, wann, wie, von welcher Seite und IP-Adresse und den Wortlaut, den die Person sah. Bewahren Sie sie als Nachweis der Einwilligung auf (DSGVO Art. 7, KVKK), um eine Person zu beantworten, die fragt, was Sie speichern, oder um Einwilligungen selbst bei İYS zu registrieren. Tabellenformeln in der CSV werden unschädlich gemacht."
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "Eine Zeile pro Ereignis, älteste zuerst: wer zugestimmt hat oder gegangen ist, wann, wie, von welcher Seite und IP-Adresse und welchen Text die Person sah. Bewahren Sie sie als Einwilligungsnachweis auf oder um jemandem zu antworten, der fragt, was Sie gespeichert haben."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "Das Postfach öffnen"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "Die Postfach-Einstellungen öffnen"
 
@@ -7973,6 +8048,10 @@ msgstr "Öffnen Sie das Microsoft Entra Admin Center oder das Azure-Portal, gehe
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "Die nächste oder vorherige Unterhaltung öffnen"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "Seiteneinstellungen öffnen"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "Empfänger"
 msgid "Recipients"
 msgstr "Empfänger"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "Empfänger: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "An der Adresse erkannt."
@@ -9661,6 +9745,10 @@ msgstr "Geplant"
 msgid "Scheduled by"
 msgstr "Geplant von"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "Geplant für {due}"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "Feedback von einer Seite senden"
 msgid "Send me a code"
 msgstr "Code an mich senden"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "Benachrichtigungen per E-Mail senden"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "Jetzt senden"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "Antwort senden"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Bestätigung senden"
 
@@ -9969,6 +10062,7 @@ msgstr "Absenderidentität"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "Senden"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "Sendet von"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "Sendet seine Mail von"
 
@@ -10056,6 +10151,7 @@ msgstr "gesendet"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "Gesendet"
 
@@ -10116,6 +10212,11 @@ msgstr "Heute gesendet: {sent} von {limit} erlaubten. Der Tag beginnt um 00:00 U
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "Heute gesendet: {sent}. Es gibt kein Tageslimit."
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "Gesendet: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "Übersprungen und fehlgeschlagen ({count})"
 msgid "Skipped or failed"
 msgstr "Übersprungen oder fehlgeschlagen"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "Übersprungen: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "Slug"
@@ -10886,14 +10992,25 @@ msgstr "Angemeldet"
 msgid "subscribed now"
 msgstr "jetzt angemeldet"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "Abonnenten"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "Abonnenten hinzugefügt"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "Abonnenten bestätigen ihre Adresse per Mail, bevor sie Benachrichtigungen erhalten."
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "Erreichte Abonnenten: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "Das Postfach konnte nicht schreibgeschützt geöffnet werden."
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "Das Postfach hat noch keinen rechtlichen Namen und keine Postanschrift. Jeder Broadcast endet damit, wie das Gesetz es verlangt."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "Das Postfach nennt keine Postanschrift des Absenders. Tragen Sie eine in den Postfach-Einstellungen ein."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "Der Amazon-SES-Tenant des Postfachs wird noch eingerichtet. Der Broadcast kann raus, aber prüfen Sie das vor dem Start erneut."
@@ -11403,6 +11524,10 @@ msgstr "Der Amazon-SES-Tenant des Postfachs wird noch eingerichtet. Der Broadcas
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "Der Amazon-SES-Tenant des Postfachs existiert nicht mehr. Der Server legt ihn neu an; bis dahin kann der Broadcast nicht raus."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "Der E-Mail-Kanal des Postfachs, der Bestätigungen und Benachrichtigungen sendet."
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "Das alte Postfach empfängt keine Mail mehr für diese Domain."
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "Das andere Postfach hat keinen E-Mail-Kanal, daher kann diese E-Mail-Unterhaltung nicht dorthin verschoben werden. Fügen Sie ihm zuerst einen E-Mail-Kanal hinzu."
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "Die Seite hat in der letzten Stunde schon 10 Benachrichtigungen gesendet"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "Die Seite so, wie Besucher sie jetzt sehen. Entwürfe sind ausgenommen."
@@ -11571,6 +11700,10 @@ msgstr "Die Seite gehört nicht zu einer Website, die der Chat-Kanal erlaubt."
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "Die Seite ist nicht veröffentlicht. Das sieht nur Ihr Team."
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "Die Seite oder der Vorfall ist nicht öffentlich"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "Das Secret wird einmal angezeigt, wenn es erstellt wird. Rotieren Sie es
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "Die Domain des Absenders hat diese Mail nicht autorisiert. Sie könnte gefälscht sein."
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "Der Sendekanal kann nicht senden"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "Der Sendekanal hat noch kein SMTP-Konto und keine Absenderadresse. Richten Sie sie in den Postfach-Einstellungen ein."
@@ -11684,6 +11821,10 @@ msgstr "Der Sendekanal hat noch kein SMTP-Konto und keine Absenderadresse. Richt
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "Die Absenderdomain hat keinen DMARC-Eintrag."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "Die Absenderdomain hat die Prüfung von SPF, DKIM und DMARC noch nicht bestanden. Benachrichtigungen können im Spam landen."
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "Der Besucher hat {0} im Chat eingegeben und noch nicht bestätigt. Diese
 msgid "The workspace may not send broadcasts for now."
 msgstr "Der Workspace darf vorerst keine Broadcasts senden."
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "Der Arbeitsbereich darf gerade keine Massenmails senden"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "Der Workspace hat das heutige Sendelimit erreicht. Das Senden geht am {local} ({utc} UTC) weiter."
@@ -11870,6 +12015,10 @@ msgstr "Sie haben bereits zugestimmt"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "Sie erhalten eine Mail mit einem Link und sind erst nach dem Klick darauf angemeldet."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "Sie bekommen eine Mail mit einem Link und erhalten Benachrichtigungen erst, nachdem sie ihn angeklickt haben."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "Dieses Postfach hat bereits eine Statusseite."
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "Dieses Postfach hat noch keinen E-Mail-Kanal, der senden kann. Sie können die Liste jetzt erstellen; sie sendet, sobald in ihren Einstellungen ein E-Mail-Kanal mit Antwortkonto gewählt ist."
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "Dieses Postfach hat keinen E-Mail-Kanal, der senden kann. Fügen Sie in den Postfach-Einstellungen ein SMTP-Konto hinzu."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "Dieses Postfach hat noch keinen E-Mail-Kanal. Fügen Sie in den Postfach-Einstellungen einen hinzu."
@@ -12044,6 +12197,7 @@ msgstr "Dies ist kein JSON-Objekt."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "Dies ist keine gültige E-Mail-Adresse."
 
@@ -12400,6 +12554,10 @@ msgstr "Schalten Sie es für Service-Mitteilungen an bestehende Kunden aus. Eine
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "Schalten Sie die Bestätigung in zwei Schritten für das Google-Konto ein, falls sie noch nicht an ist."
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "Schalten Sie in den Seiteneinstellungen E-Mail-Abonnenten ein, damit Besucher Benachrichtigungen abonnieren können."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "Für dieses Gerät einschalten"
@@ -12484,8 +12642,13 @@ msgstr "Beim Tageslimit des Workspaces dauert das Senden {days} Tage."
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "Rückgängig"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "Wartende Benachrichtigung zurücknehmen"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "jetzt abgemeldet"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "Bis sie auf den Link klicken, warten sie auf Bestätigung und erhalten keine andere Mail. Unbestätigte Abonnements werden nach 30 Tagen gelöscht."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "Bis sie den Link anklicken, warten sie auf die Bestätigung. Unbestätigte Adressen werden nach 30 Tagen gelöscht."
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "Besucher in den letzten sieben Tagen: {series}"
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "Besucher Ihrer Website oder App, ohne Cookies"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "Besucher abonnieren auf der Seite und bekommen eine Mail, wenn sich ein Vorfall oder eine Wartung ändert."
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

@@ -1207,7 +1207,9 @@ msgstr "Додати обліковий запис для відповідей"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "Додайте правило для {address}, яке також доставляє його пошту на адресу нижче, зберігаючи доставку в скриньку."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "Додати підписника"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "Усі"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "Усі компоненти"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "Повернення або скарга на спам"
 msgid "Bounced or reported as spam before"
 msgstr "Раніше повернення або скарга на спам"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "Повернулося: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "Чи можна запланувати розсилку для кожн�
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "Скасувати цей імпорт?"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "Скасовано"
 
@@ -2563,6 +2577,10 @@ msgstr "Виберіть «Переспрямовувати копію вхід�
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "Виберіть «Створити пароль застосунку», назвіть його «Yuva» і створіть."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "Виберіть канал"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "Компонент видалено"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "Підключення"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "Експорт згод"
 
@@ -3916,6 +3936,7 @@ msgstr "E-mail"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "Адреса електронної пошти"
 
@@ -3946,6 +3967,18 @@ msgstr "Надсилати мені листи про обговорення, н
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "Лише e-mail"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "Підписники на e-mail"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "Підписку на e-mail вимкнено"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "Підписку на e-mail вимкнено. Ніхто не може підписатися, сповіщення не надсилаються, але список зберігається."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "Не вдалося"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "Невдало п'ять разів"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "Помилка: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "Лист від Yuva"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "Пошта потрапляє в поштовий канал «{channelName}», який отримує {address}."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "Листи не підписано ключем власного домену відправника, чого очікують Gmail і Yahoo."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "Розмір листа"
@@ -6880,6 +6922,10 @@ msgstr "Готових відповідей поки немає. Додайте 
 msgid "No channel"
 msgstr "Немає каналу"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "Не вибрано жодного каналу, який може надсилати. Доки його немає, ніхто не отримує ні підтвердження, ні сповіщення."
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "Каналу поки немає"
@@ -6972,6 +7018,10 @@ msgstr "Адресу електронної пошти не вказано"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "Немає поштового каналу, який міг би надсилати листи з підтвердженням і привітанням"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "Підписників на e-mail ще немає"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "Без теми"
 msgid "No subject yet"
 msgstr "Теми поки немає"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "Підписників не знайдено"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "Підписників поки немає. Розмістіть форму підписки на своєму сайті або додайте людей, які вже дали згоду."
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "Підписників ще немає. Відвідувачі підписуються на сторінці статусу, або ви можете додати адресу тут."
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "Не те? Виберіть свого провайдера"
 msgid "Not run"
 msgstr "Не запускалося"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "Не надіслано"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "Не налаштовано"
@@ -7485,6 +7547,10 @@ msgstr "Нічого не відповідає вашому пошуку."
 msgid "Nothing unread."
 msgstr "Немає непрочитаного."
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "Сповіщення підписникам"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "Сповіщення не було дозволено."
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "Сповіщати по-іншому для однієї скриньки. Усе, що залишено на «Як вище», дотримується налаштувань вище."
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "Сповістити підписників"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "Одна відповідь, написана один раз, іде в
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Один рядок на подію, спершу старі: хто дав згоду чи відписався, коли, як, з якої сторінки та IP-адреси і які слова бачив. Зберігайте як доказ згоди (GDPR ст. 7, KVKK), щоб відповісти людині, яка питає, що у вас зберігається, або щоб самим зареєструвати згоди в İYS. Формули електронних таблиць у CSV знешкоджено."
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "Один рядок на подію, від найстаріших: хто погодився чи відписався, коли, як, з якої сторінки та IP-адреси, і який текст бачив. Зберігайте його як доказ згоди або щоб відповісти людині, яка запитує, які дані ви про неї маєте."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "Відкрити скриньку"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "Відкрити налаштування скриньки"
 
@@ -7973,6 +8048,10 @@ msgstr "Відкрийте центр адміністрування Microsoft E
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "Відкрити наступну або попередню розмову"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "Відкрити налаштування сторінки"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "отримувачі"
 msgid "Recipients"
 msgstr "Отримувачі"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "Отримувачі: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "Розпізнається за адресою."
@@ -9661,6 +9745,10 @@ msgstr "Заплановано"
 msgid "Scheduled by"
 msgstr "Запланував(ла)"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "Заплановано на {due}"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "Надіслати відгук зі сторінки"
 msgid "Send me a code"
 msgstr "Надішліть мені код"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "Надсилати сповіщення на e-mail"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "Надіслати зараз"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "Надіслати відповідь"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Надіслати підтвердження"
 
@@ -9969,6 +10062,7 @@ msgstr "Ідентичність відправника"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "Надсилання"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "Надсилає з"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "Надсилає свою пошту з"
 
@@ -10056,6 +10151,7 @@ msgstr "надіслано"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "Надіслано"
 
@@ -10116,6 +10212,11 @@ msgstr "Надіслано сьогодні: {sent} із {limit} дозволе�
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "Надіслано сьогодні: {sent}. Денного ліміту немає."
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "Надіслано: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "Пропущено й з помилкою ({count})"
 msgid "Skipped or failed"
 msgstr "Пропущено або з помилкою"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "Пропущено: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "Слаг"
@@ -10886,14 +10992,25 @@ msgstr "Підписаний(а)"
 msgid "subscribed now"
 msgstr "підписалися зараз"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "Підписники"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "Підписників додано"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "Підписники підтверджують адресу листом, перш ніж отримувати сповіщення."
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "Охоплено підписників: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "Не вдалося відкрити скриньку лише для ч
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "У скриньки поки немає юридичної назви чи поштової адреси. Кожна розсилка закінчується ними, як вимагає закон."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "У скриньці не вказано поштову адресу відправника. Додайте її в налаштуваннях скриньки."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "Орендар Amazon SES для скриньки ще налаштовується. Розсилка може піти, але перевірте це знову до її початку."
@@ -11403,6 +11524,10 @@ msgstr "Орендар Amazon SES для скриньки ще налаштов�
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "Орендаря Amazon SES для скриньки більше немає. Сервер створить його знову; доти розсилка піти не може."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "E-mail-канал скриньки, який надсилає підтвердження та сповіщення."
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "Стара скринька перестає отримувати пош
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "У іншої скриньки немає поштового каналу, тож цю розмову за e-mail не можна туди перемістити. Спершу додайте їй поштовий канал."
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "Сторінка вже надіслала 10 сповіщень за останню годину"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "Сторінка в тому вигляді, в якому її зараз бачать відвідувачі. Чернетки не включено."
@@ -11571,6 +11700,10 @@ msgstr "Сторінка не на сайті, дозволеному чат-к�
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "Сторінку не опубліковано. Це бачить лише ваша команда."
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "Сторінка або інцидент не є публічними"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "Секрет показується один раз, під час ст�
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "Домен відправника не авторизував цей лист. Він може бути підробкою."
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "Канал надсилання не може надсилати"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "У каналу надсилання поки немає облікового запису SMTP чи адреси відправника. Налаштуйте його в налаштуваннях скриньки."
@@ -11684,6 +11821,10 @@ msgstr "У каналу надсилання поки немає обліков�
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "У домену надсилання немає запису DMARC."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "Домен надсилання ще не пройшов перевірку SPF, DKIM і DMARC. Сповіщення можуть потрапити в спам."
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "Відвідувач ввів {0} у чаті й поки не підт�
 msgid "The workspace may not send broadcasts for now."
 msgstr "Робочому простору поки не можна надсилати розсилки."
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "Робочий простір зараз не може надсилати масові розсилки"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "Робочий простір досяг сьогоднішнього ліміту надсилання. Надсилання триватиме {local} ({utc} UTC)."
@@ -11870,6 +12015,10 @@ msgstr "Вони вже дали згоду"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "Вони отримують лист із посиланням і підписуються лише після переходу за ним."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "Вони отримують лист із посиланням і починають отримувати сповіщення лише після переходу за ним."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "У цієї скриньки вже є сторінка статусу."
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "У цій скриньці поки немає поштового каналу, який міг би надсилати. Список можна створити зараз; він почне надсилати, коли в його налаштуваннях буде вибрано поштовий канал з обліковим записом для відповідей."
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "У цій скриньці немає e-mail-каналу, який може надсилати. Додайте обліковий запис SMTP у налаштуваннях скриньки."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "У цій скриньці поки немає поштового каналу. Додайте його в налаштуваннях скриньки."
@@ -12044,6 +12197,7 @@ msgstr "Це не об'єкт JSON."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "Це недійсна адреса електронної пошти."
 
@@ -12400,6 +12554,10 @@ msgstr "Вимкніть для службових оголошень наявн
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "Увімкніть двоетапну перевірку для облікового запису Google, якщо вона ще не ввімкнена."
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "Увімкніть підписників на e-mail у налаштуваннях сторінки, щоб відвідувачі могли підписуватися на сповіщення."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "Увімкнути для цього пристрою"
@@ -12484,8 +12642,13 @@ msgstr "За денного ліміту робочого простору на�
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "Скасувати"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "Скасувати сповіщення в очікуванні"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "відписалися зараз"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "Доки вони не перейдуть за посиланням, вони залишаються в очікуванні підтвердження і не отримують іншої пошти. Непідтверджені підписки видаляються через 30 днів."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "Доки вони не перейдуть за посиланням, вони очікують на підтвердження. Непідтверджені адреси видаляються через 30 днів."
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "Відвідувачі за останні сім днів: {series}"
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "Відвідувачі вашого сайту чи застосунку, без cookie"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "Відвідувачі підписуються на сторінці й отримують лист, коли інцидент або планове обслуговування змінюється."
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

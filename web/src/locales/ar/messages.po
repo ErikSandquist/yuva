@@ -1207,7 +1207,9 @@ msgstr "إضافة حساب رد"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "أضف قاعدة للعنوان {address} تسلّم بريده أيضًا إلى العنوان أدناه مع إبقاء التسليم إلى صندوق البريد."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "إضافة مشترك"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "الكل"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "كل المكوّنات"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "ارتدّ أو أُبلغ عنه كرسالة غير مرغوبة"
 msgid "Bounced or reported as spam before"
 msgstr "ارتدّ أو أُبلغ عنه كرسالة غير مرغوبة سابقًا"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "مرتدة: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "هل يمكنني جدولة نشرة بريدية لكل مشترك؟"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "إلغاء هذا الاستيراد؟"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "أُلغي"
 
@@ -2563,6 +2577,10 @@ msgstr "اختر «إعادة توجيه نسخة من الرسائل الوار
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "اختر «إنشاء كلمة مرور تطبيق» وسمّها «Yuva» ثم أنشئها."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "اختيار قناة"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "حُذف المكوّن"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "الاتصالات"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "تصدير الموافقات"
 
@@ -3916,6 +3936,7 @@ msgstr "البريد الإلكتروني"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "عنوان البريد الإلكتروني"
 
@@ -3946,6 +3967,18 @@ msgstr "راسلني بشأن النقاشات التي أتابعها"
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "البريد الإلكتروني فقط"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "مشتركو البريد الإلكتروني"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "مشتركو البريد الإلكتروني معطّلون"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "مشتركو البريد الإلكتروني معطّلون. لا يمكن لأحد الاشتراك ولا تُرسل أي إشعارات، لكن القائمة تبقى محفوظة."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "فشل"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "فشل خمس مرات"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "فشلت: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "بريد من Yuva"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "يدخل البريد قناة البريد الإلكتروني «{channelName}» التي تستقبل {address}."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "البريد غير موقّع بمفتاح من نطاق المرسل نفسه، وهو ما يتوقعه Gmail وYahoo."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "حجم البريد"
@@ -6880,6 +6922,10 @@ msgstr "لا ردود جاهزة بعد. أضفها من الإعدادات."
 msgid "No channel"
 msgstr "بلا قناة"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "لم تُختر أي قناة قادرة على الإرسال. إلى أن توجد واحدة، لن يصل أحدًا تأكيد أو إشعار."
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "لا قناة بعد"
@@ -6972,6 +7018,10 @@ msgstr "لم يُذكر عنوان بريد إلكتروني"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "لا قناة بريد إلكتروني قادرة على إرسال رسائل التأكيد والترحيب الخاصة بها"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "لا يوجد مشتركون بالبريد الإلكتروني بعد"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "بلا موضوع"
 msgid "No subject yet"
 msgstr "لا موضوع بعد"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "لا يوجد مشترك مطابق"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "لا مشتركين بعد. ضع نموذج الاشتراك في موقعك، أو أضف أشخاصًا وافقوا بالفعل."
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "لا يوجد مشتركون بعد. يشترك الزوار من صفحة الحالة، أو يمكنك إضافة عنوان هنا."
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "غير صحيح؟ اختر مزوّدك"
 msgid "Not run"
 msgstr "لم يُشغَّل"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "لم يُرسل"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "غير مُعدّ"
@@ -7485,6 +7547,10 @@ msgstr "لا شيء يطابق بحثك هنا."
 msgid "Nothing unread."
 msgstr "لا شيء غير مقروء."
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "إشعارات المشتركين"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "لم يُسمح بالإشعارات."
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "أشعِر بشكل مختلف لصندوق وارد واحد. ما يبقى على «كما سبق» يتبع الإعدادات أعلاه."
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "إشعار المشتركين"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "رد واحد يُكتب مرة واحدة يصل إلى كل محادث
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "صف واحد لكل حدث، الأقدم أولًا: من وافق أو غادر، ومتى، وكيف، ومن أي صفحة وعنوان IP، والكلمات التي رآها. احتفظ به كدليل على الموافقة (GDPR المادة 7، KVKK)، أو للرد على شخص يسأل عما تحتفظ به، أو لتسجيل الموافقات في İYS بنفسك. تُعطَّل صيغ الجداول داخل ملف CSV."
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "صف واحد لكل حدث، من الأقدم إلى الأحدث: من وافق أو غادر، ومتى، وكيف، ومن أي صفحة وعنوان IP، والنص الذي رآه. احتفظ به كدليل على الموافقة أو للرد على من يسأل عمّا تحتفظ به عنه."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "فتح صندوق الوارد"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "فتح إعدادات صندوق الوارد"
 
@@ -7973,6 +8048,10 @@ msgstr "افتح Microsoft Entra admin center أو بوابة Azure، وانتق
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "فتح المحادثة التالية أو السابقة"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "فتح إعدادات الصفحة"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "المستلمون"
 msgid "Recipients"
 msgstr "المستلمون"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "المستلمون: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "يُعرف من العنوان."
@@ -9661,6 +9745,10 @@ msgstr "مجدولة"
 msgid "Scheduled by"
 msgstr "جدولها"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "مجدول في {due}"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "أرسل ملاحظات من صفحة"
 msgid "Send me a code"
 msgstr "أرسل لي رمزًا"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "إرسال الإشعارات بالبريد الإلكتروني"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "إرسال الآن"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "أرسل الرد"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "إرسال التأكيد"
 
@@ -9969,6 +10062,7 @@ msgstr "هوية المرسِل"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "جارٍ الإرسال"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "يرسل من"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "يرسل بريده من"
 
@@ -10056,6 +10151,7 @@ msgstr "مُرسل"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "أُرسل"
 
@@ -10116,6 +10212,11 @@ msgstr "أُرسل اليوم: {sent} من {limit} مسموح. يبدأ اليو
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "أُرسل اليوم: {sent}. لا يوجد حد يومي."
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "أُرسل: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "متخطى وفاشل ({count})"
 msgid "Skipped or failed"
 msgstr "متخطى أو فاشل"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "متخطى: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "المعرّف النصي"
@@ -10886,14 +10992,25 @@ msgstr "اشترك"
 msgid "subscribed now"
 msgstr "اشترك للتو"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "المشتركون"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "أُضيف مشتركون"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "يؤكد المشتركون عنوانهم عبر البريد قبل أن تصلهم الإشعارات."
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "المشتركون الذين وصلتهم: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "تعذّر فتح صندوق الوارد للقراءة فقط."
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "ليس لصندوق الوارد اسم قانوني أو عنوان بريدي بعد. تنتهي كل رسالة جماعية بهما، كما يشترط القانون."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "لا يحدد صندوق الوارد عنوانًا بريديًا فعليًا للمرسل. أضف عنوانًا في إعدادات صندوق الوارد."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "لا يزال مستأجر Amazon SES لصندوق الوارد قيد الإعداد. يمكن إرسال الرسالة الجماعية، لكن افحص هذا مجددًا قبل أن تبدأ."
@@ -11403,6 +11524,10 @@ msgstr "لا يزال مستأجر Amazon SES لصندوق الوارد قيد �
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "لم يعد مستأجر Amazon SES لصندوق الوارد موجودًا. ينشئه الخادم مجددًا؛ وإلى ذلك الحين لا يمكن إرسال الرسالة الجماعية."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "قناة البريد الإلكتروني في صندوق الوارد التي ترسل رسائل التأكيد والإشعارات."
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "يتوقف صندوق البريد القديم عن استقبال بر
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "ليس للصندوق الآخر قناة بريد إلكتروني، لذا لا يمكن نقل محادثة البريد هذه إليه. أضف إليه قناة بريد إلكتروني أولًا."
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "أرسلت الصفحة 10 إشعارات خلال الساعة الأخيرة"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "الصفحة كما يراها الزوار الآن. المسودات مستثناة."
@@ -11571,6 +11700,10 @@ msgstr "الصفحة ليست على موقع تسمح به قناة الدرد�
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "الصفحة غير منشورة. لا يرى هذا إلا فريقك."
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "الصفحة أو الحادثة غير عامة"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "يُعرض السر مرة واحدة عند إنشائه. بدّله ل
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "لم يفوّض نطاق المرسِل هذا البريد. قد يكون مزوَّرًا."
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "قناة الإرسال غير قادرة على الإرسال"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "ليس لقناة الإرسال حساب SMTP أو عنوان للإرسال منه بعد. أعدّه في إعدادات صندوق الوارد."
@@ -11684,6 +11821,10 @@ msgstr "ليس لقناة الإرسال حساب SMTP أو عنوان للإر�
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "نطاق الإرسال ليس له سجل DMARC."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "لم يجتز نطاق الإرسال فحص SPF وDKIM وDMARC بعد. قد تصل الإشعارات إلى البريد غير الهام."
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "كتب الزائر {0} في الدردشة ولم يؤكده بعد. ج
 msgid "The workspace may not send broadcasts for now."
 msgstr "لا يجوز لمساحة العمل إرسال رسائل جماعية حاليًا."
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "لا يجوز لمساحة العمل إرسال بريد جماعي الآن"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "بلغت مساحة العمل حد الإرسال لهذا اليوم. يستمر الإرسال في {local} ({utc} UTC)."
@@ -11870,6 +12015,10 @@ msgstr "وافقوا بالفعل"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "يتلقون رسالة برابط ولا يشتركون إلا بعد النقر عليه."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "تصلهم رسالة تحتوي على رابط، ولا يتلقون الإشعارات إلا بعد النقر عليه."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "لهذا الصندوق الوارد صفحة حالة بالفعل."
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "ليس لدى صندوق الوارد هذا قناة بريد إلكتروني قادرة على الإرسال بعد. يمكنك إنشاء القائمة الآن؛ وتُرسل بمجرد اختيار قناة بريد إلكتروني بحساب رد في إعداداتها."
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "لا توجد في صندوق الوارد هذا قناة بريد إلكتروني قادرة على الإرسال. أضف حساب SMTP في إعدادات صندوق الوارد."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "ليس لدى صندوق الوارد هذا قناة بريد إلكتروني بعد. أضف واحدة في إعدادات صندوق الوارد."
@@ -12044,6 +12197,7 @@ msgstr "هذا ليس كائن JSON."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "هذا ليس عنوان بريد إلكتروني صالحًا."
 
@@ -12400,6 +12554,10 @@ msgstr "أوقفه لإعلانات الخدمة للعملاء الحاليين
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "فعّل التحقق بخطوتين لحساب Google، إن لم يكن مفعّلًا بعد."
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "فعّل مشتركي البريد الإلكتروني في إعدادات الصفحة ليتمكن الزوار من الاشتراك في الإشعارات."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "تفعيل لهذا الجهاز"
@@ -12484,8 +12642,13 @@ msgstr "ضمن الحد اليومي لمساحة العمل، يستغرق ال
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "تراجع"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "تراجع عن الإشعار المنتظر"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "ألغى الاشتراك للتو"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "إلى أن ينقروا على الرابط يبقون بانتظار التأكيد ولا يتلقون أي بريد آخر. تُحذف الاشتراكات غير المؤكدة بعد 30 يومًا."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "يبقون بانتظار التأكيد إلى أن ينقروا على الرابط. تُحذف العناوين غير المؤكدة بعد 30 يومًا."
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "الزوار في آخر سبعة أيام: {series}"
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "زوار موقعك أو تطبيقك، بلا ملفات تعريف ارتباط"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "يشترك الزوار في الصفحة وتصلهم رسالة عند تغيّر حالة حادثة أو صيانة."
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

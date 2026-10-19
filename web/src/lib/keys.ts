@@ -103,6 +103,10 @@ export const keys = {
   statusMonitors: (ws: string, id: string) => ["ws", ws, "status", "monitors", id] as const,
   statusChecks: (ws: string, page: string, id: string) => ["ws", ws, "status", "checks", page, id] as const,
   statusIncident: (ws: string, page: string, id: string) => ["ws", ws, "status", "incident", page, id] as const,
+  statusNotices: (ws: string, page: string, incident: string) =>
+    ["ws", ws, "status", "notices", page, incident] as const,
+  statusReach: (ws: string, page: string, components: string[]) =>
+    ["ws", ws, "status", "reach", page, components] as const,
   statusLinked: (ws: string) => ["ws", ws, "status", "linked"] as const,
   statusLinkedList: (ws: string, page: string, id: string) => ["ws", ws, "status", "linked", "list", page, id] as const,
   conversationIncidents: (ws: string, id: string) => ["ws", ws, "status", "linked", "of", id] as const,

@@ -1207,7 +1207,9 @@ msgstr "เพิ่มบัญชีตอบกลับ"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "เพิ่มกฎสำหรับ {address} ให้ส่งอีเมลของที่อยู่นี้ไปยังที่อยู่ด้านล่างด้วย โดยยังส่งเข้ากล่องจดหมายเหมือนเดิม"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "เพิ่มผู้สมัครรับ"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "ทั้งหมด"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "ทุกส่วนประกอบ"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "ตีกลับหรือถูกรายงานว่าเป
 msgid "Bounced or reported as spam before"
 msgstr "เคยตีกลับหรือถูกรายงานว่าเป็นสแปม"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "ตีกลับ: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "ตั้งเวลาจดหมายข่าวแยกตาม
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "ยกเลิกการนำเข้านี้ไหม"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "ยกเลิกแล้ว"
 
@@ -2563,6 +2577,10 @@ msgstr "เลือก “ส่งต่อสำเนาของอีเ�
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "เลือก “สร้างรหัสผ่านแอป” ตั้งชื่อ “Yuva” แล้วสร้าง"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "เลือกช่องทาง"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "ลบส่วนประกอบแล้ว"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "การเชื่อมต่อ"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "ส่งออกความยินยอม"
 
@@ -3916,6 +3936,7 @@ msgstr "อีเมล"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "ที่อยู่อีเมล"
 
@@ -3946,6 +3967,18 @@ msgstr "ส่งอีเมลถึงฉันเกี่ยวกับก
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "อีเมลเท่านั้น"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "ผู้สมัครรับอีเมล"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "ผู้สมัครรับอีเมลปิดอยู่"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "ผู้สมัครรับอีเมลปิดอยู่ ไม่มีใครสมัครรับได้และจะไม่มีการส่งการแจ้งเตือน แต่รายชื่อยังคงอยู่"
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "ล้มเหลว"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "ล้มเหลวห้าครั้ง"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "ล้มเหลว: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "อีเมลจาก Yuva"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "อีเมลเข้าช่องทางอีเมล “{channelName}” ซึ่งรับ {address}"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "อีเมลไม่ได้ลงนามด้วยคีย์ของโดเมนผู้ส่งเอง ซึ่ง Gmail และ Yahoo คาดหวังให้มี"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "ขนาดอีเมล"
@@ -6880,6 +6922,10 @@ msgstr "ยังไม่มีคำตอบสำเร็จรูป เ�
 msgid "No channel"
 msgstr "ไม่มีช่องทาง"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "ยังไม่ได้เลือกช่องทางที่ส่งได้ จนกว่าจะมี จะไม่มีใครได้รับการยืนยันหรือการแจ้งเตือน"
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "ยังไม่มีช่องทาง"
@@ -6972,6 +7018,10 @@ msgstr "ไม่ได้ระบุที่อยู่อีเมล"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "ไม่มีช่องทางอีเมลที่ส่งอีเมลยืนยันและต้อนรับได้"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "ยังไม่มีผู้สมัครรับอีเมล"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "ไม่มีหัวเรื่อง"
 msgid "No subject yet"
 msgstr "ยังไม่มีหัวเรื่อง"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "ไม่พบผู้สมัครรับที่ตรงกัน"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "ยังไม่มีผู้สมัครรับ ใส่แบบฟอร์มสมัครรับบนไซต์ของคุณ หรือเพิ่มคนที่ยินยอมแล้ว"
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "ยังไม่มีผู้สมัครรับ ผู้เยี่ยมชมสมัครรับได้ที่หน้าสถานะ หรือคุณจะเพิ่มที่อยู่อีเมลที่นี่ก็ได้"
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "ไม่ถูกต้องใช่ไหม เลือกผู�
 msgid "Not run"
 msgstr "ยังไม่ได้รัน"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "ไม่ได้ส่ง"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "ยังไม่ได้ตั้งค่า"
@@ -7485,6 +7547,10 @@ msgstr "ไม่มีอะไรตรงกับการค้นหาข
 msgid "Nothing unread."
 msgstr "ไม่มีอะไรที่ยังไม่อ่าน"
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "การแจ้งเตือนถึงผู้สมัครรับ"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "ไม่ได้อนุญาตการแจ้งเตือน
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "แจ้งเตือนต่างออกไปสำหรับกล่องข้อความหนึ่ง สิ่งที่ปล่อยไว้ที่ “เหมือนข้างต้น” จะเป็นไปตามการตั้งค่าด้านบน"
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "แจ้งเตือนผู้สมัครรับ"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "การตอบกลับหนึ่งข้อความที
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "หนึ่งแถวต่อเหตุการณ์ เก่าสุดก่อน: ใครยินยอมหรือออก เมื่อใด อย่างไร จากหน้าและที่อยู่ IP ใด และถ้อยคำที่พวกเขาเห็น เก็บไว้เป็นหลักฐานความยินยอม (GDPR มาตรา 7, KVKK) เพื่อตอบผู้ที่ถามว่าคุณเก็บอะไรไว้ หรือเพื่อลงทะเบียนความยินยอมกับ İYS ด้วยตนเอง สูตรสเปรดชีตใน CSV ถูกทำให้ไม่เป็นอันตรายแล้ว"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "หนึ่งแถวต่อหนึ่งเหตุการณ์ เรียงจากเก่าสุด: ใครยินยอมหรือยกเลิก เมื่อไร อย่างไร จากหน้าและที่อยู่ IP ใด และข้อความที่พวกเขาเห็น เก็บไว้เป็นหลักฐานการยินยอม หรือใช้ตอบผู้ที่ถามว่าคุณเก็บข้อมูลอะไรไว้"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "เปิดกล่องข้อความ"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "เปิดการตั้งค่ากล่องข้อความ"
 
@@ -7973,6 +8048,10 @@ msgstr "เปิด Microsoft Entra admin center หรือพอร์ทั
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "เปิดการสนทนาถัดไปหรือก่อนหน้า"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "เปิดการตั้งค่าหน้า"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "ผู้รับ"
 msgid "Recipients"
 msgstr "ผู้รับ"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "ผู้รับ: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "รู้จักจากที่อยู่"
@@ -9661,6 +9745,10 @@ msgstr "ตั้งเวลาแล้ว"
 msgid "Scheduled by"
 msgstr "ตั้งเวลาโดย"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "กำหนดส่ง {due}"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "ส่งความคิดเห็นจากหน้า"
 msgid "Send me a code"
 msgstr "ส่งรหัสให้ฉัน"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "ส่งการแจ้งเตือนทางอีเมล"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "ส่งตอนนี้"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "ส่งการตอบกลับ"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "ส่งการยืนยัน"
 
@@ -9969,6 +10062,7 @@ msgstr "ตัวตนผู้ส่ง"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "กำลังส่ง"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "ส่งจาก"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "ส่งอีเมลจาก"
 
@@ -10056,6 +10151,7 @@ msgstr "ส่งแล้ว"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "ส่งแล้ว"
 
@@ -10116,6 +10212,11 @@ msgstr "ส่งวันนี้: {sent} จาก {limit} ที่อนุ
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "ส่งวันนี้: {sent} ไม่มีขีดจำกัดต่อวัน"
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "ส่งแล้ว: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "ข้ามและล้มเหลว ({count})"
 msgid "Skipped or failed"
 msgstr "ข้ามหรือล้มเหลว"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "ข้ามไป: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "Slug"
@@ -10886,14 +10992,25 @@ msgstr "สมัครรับแล้ว"
 msgid "subscribed now"
 msgstr "เพิ่งสมัครรับ"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "ผู้สมัครรับ"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "เพิ่มผู้สมัครรับแล้ว"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "ผู้สมัครรับต้องยืนยันที่อยู่อีเมลทางอีเมลก่อนจึงจะได้รับการแจ้งเตือน"
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "ผู้สมัครรับที่ส่งถึง: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "เปิดกล่องจดหมายแบบอ่านอย
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "กล่องข้อความยังไม่มีชื่อตามกฎหมายหรือที่อยู่ไปรษณีย์ ทุกบรอดคาสต์ลงท้ายด้วยข้อมูลนี้ ตามที่กฎหมายกำหนด"
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "กล่องข้อความไม่ได้ระบุที่อยู่ไปรษณีย์ของผู้ส่ง เพิ่มได้ในการตั้งค่ากล่องข้อความ"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "tenant Amazon SES ของกล่องข้อความยังตั้งค่าอยู่ บรอดคาสต์ส่งออกได้ แต่ตรวจสอบอีกครั้งก่อนเริ่ม"
@@ -11403,6 +11524,10 @@ msgstr "tenant Amazon SES ของกล่องข้อความยัง
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "tenant Amazon SES ของกล่องข้อความไม่มีอยู่แล้ว เซิร์ฟเวอร์สร้างใหม่ ระหว่างนั้นบรอดคาสต์ส่งออกไม่ได้"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "ช่องทางอีเมลของกล่องข้อความที่ใช้ส่งการยืนยันและการแจ้งเตือน"
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "กล่องจดหมายเดิมหยุดรับอี
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "กล่องข้อความอีกกล่องไม่มีช่องทางอีเมล การสนทนาทางอีเมลนี้จึงย้ายไปที่นั่นไม่ได้ เพิ่มช่องทางอีเมลให้กล่องนั้นก่อน"
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "หน้านี้ส่งการแจ้งเตือนไปแล้ว 10 ฉบับในชั่วโมงที่ผ่านมา"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "หน้าตามที่ผู้เข้าชมเห็นตอนนี้ ไม่รวมฉบับร่าง"
@@ -11571,6 +11700,10 @@ msgstr "หน้านี้ไม่อยู่บนไซต์ที่ช
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "หน้ายังไม่ได้เผยแพร่ เฉพาะทีมของคุณที่เห็นสิ่งนี้"
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "หน้านี้หรือเหตุการณ์นี้ไม่เป็นสาธารณะ"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "secret แสดงครั้งเดียวเมื่อสร�
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "โดเมนของผู้ส่งไม่ได้อนุญาตอีเมลนี้ อาจเป็นของปลอม"
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "ช่องทางที่ใช้ส่งไม่สามารถส่งได้"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "ช่องทางที่ส่งยังไม่มีบัญชี SMTP หรือที่อยู่ที่ใช้ส่ง ตั้งค่าในการตั้งค่ากล่องข้อความ"
@@ -11684,6 +11821,10 @@ msgstr "ช่องทางที่ส่งยังไม่มีบัญ
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "โดเมนที่ส่งไม่มีระเบียน DMARC"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "โดเมนที่ใช้ส่งยังไม่ผ่านการตรวจสอบ SPF, DKIM และ DMARC การแจ้งเตือนอาจเข้าไปอยู่ในสแปม"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "ผู้เข้าชมพิมพ์ {0} ในแชตและ�
 msgid "The workspace may not send broadcasts for now."
 msgstr "พื้นที่ทำงานส่งบรอดคาสต์ไม่ได้ในขณะนี้"
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "ขณะนี้เวิร์กสเปซไม่ได้รับอนุญาตให้ส่งอีเมลจำนวนมาก"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "พื้นที่ทำงานถึงขีดจำกัดการส่งของวันนี้แล้ว การส่งดำเนินต่อเมื่อ {local} ({utc} UTC)"
@@ -11870,6 +12015,10 @@ msgstr "พวกเขายินยอมแล้ว"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "พวกเขาได้รับอีเมลที่มีลิงก์และสมัครรับหลังคลิกเท่านั้น"
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "พวกเขาจะได้รับอีเมลพร้อมลิงก์ และจะได้รับการแจ้งเตือนหลังจากคลิกลิงก์เท่านั้น"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "กล่องจดหมายนี้มีหน้าสถาน
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "กล่องข้อความนี้ยังไม่มีช่องทางอีเมลที่ส่งได้ คุณสร้างรายชื่อได้ตอนนี้ และจะส่งเมื่อเลือกช่องทางอีเมลที่มีบัญชีตอบกลับในการตั้งค่าของรายชื่อ"
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "กล่องข้อความนี้ไม่มีช่องทางอีเมลที่ส่งได้ เพิ่มบัญชี SMTP ในการตั้งค่ากล่องข้อความ"
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "กล่องข้อความนี้ยังไม่มีช่องทางอีเมล เพิ่มในการตั้งค่ากล่องข้อความ"
@@ -12044,6 +12197,7 @@ msgstr "นี่ไม่ใช่ออบเจกต์ JSON"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "นี่ไม่ใช่ที่อยู่อีเมลที่ถูกต้อง"
 
@@ -12400,6 +12554,10 @@ msgstr "ปิดสำหรับประกาศบริการถึง
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "เปิดการยืนยันแบบ 2 ขั้นตอนสำหรับบัญชี Google หากยังไม่เปิด"
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "เปิดผู้สมัครรับอีเมลในการตั้งค่าหน้า เพื่อให้ผู้เยี่ยมชมสมัครรับการแจ้งเตือนได้"
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "เปิดสำหรับอุปกรณ์นี้"
@@ -12484,8 +12642,13 @@ msgstr "ภายใต้ขีดจำกัดต่อวันของพ
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "เลิกทำ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "เลิกทำการแจ้งเตือนที่รออยู่"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "เพิ่งยกเลิกการสมัครรับ"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "จนกว่าจะคลิกลิงก์ พวกเขายังรอการยืนยันและไม่ได้รับอีเมลอื่น การสมัครรับที่ยังไม่ยืนยันจะถูกลบหลัง 30 วัน"
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "จนกว่าจะคลิกลิงก์ พวกเขาจะอยู่ในสถานะรอการยืนยัน ที่อยู่อีเมลที่ไม่ได้ยืนยันจะถูกลบหลังจาก 30 วัน"
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "ผู้เข้าชมในเจ็ดวันที่ผ่า
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "ผู้เข้าชมเว็บไซต์หรือแอปของคุณ โดยไม่ใช้คุกกี้"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "ผู้เยี่ยมชมสมัครรับที่หน้านี้ และจะได้รับอีเมลเมื่อเหตุการณ์หรือการบำรุงรักษามีการเปลี่ยนแปลง"
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

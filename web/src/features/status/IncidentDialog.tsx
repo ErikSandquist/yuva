@@ -17,7 +17,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { ChoiceSelect, Field } from "@/features/settings/ui"
-import { useIncidentMutations, useStatusComponents } from "@/features/status/queries"
+import { NotifyCheck } from "@/features/status/NotifyCheck"
+import { useIncidentMutations, useStatusComponents, useStatusPage } from "@/features/status/queries"
 import { StateSelect } from "@/features/status/StateSelect"
 import { IMPACTS, INCIDENT_STATES, useStatusText } from "@/features/status/text"
 import type {
@@ -57,6 +58,8 @@ export function IncidentDialog({
   const text = useStatusText()
   const m = useIncidentMutations(pageId)
   const components = useStatusComponents(pageId).data ?? []
+  const page = useStatusPage(pageId).data
+  const [notify, setNotify] = useState(true)
   const maintenance = kind === "maintenance"
   const [title, setTitle] = useState(edit?.title ?? "")
   const [impact, setImpact] = useState<StatusIncidentImpact>(edit?.impact ?? (maintenance ? "none" : "minor"))
@@ -69,6 +72,12 @@ export function IncidentDialog({
   const [touched, setTouched] = useState<Record<string, StatusComponentStateValue>>(
     Object.fromEntries((edit?.components ?? []).map((c) => [c.component_id, c.state]))
   )
+  const windowChanged =
+    !!edit &&
+    maintenance &&
+    (new Date(start).getTime() !== Date.parse(edit.scheduled_start ?? "") ||
+      new Date(end).getTime() !== Date.parse(edit.scheduled_end ?? ""))
+  const askNotify = !!page && (!edit || windowChanged)
   const pending = m.create.isPending || m.patch.isPending
   const windowOk = !maintenance || (!!start && !!end && new Date(end) > new Date(start))
   const ok = !!title.trim() && (!!edit || !!message.trim()) && windowOk
@@ -83,10 +92,21 @@ export function IncidentDialog({
   })
   const save = (publish: boolean) => {
     if (!ok) return
-    if (edit) m.patch.mutate({ id: edit.id, ...body() }, { onSuccess: onDone })
+    if (edit)
+      m.patch.mutate(
+        { id: edit.id, ...body(), ...(windowChanged && page?.email_subscribers.enabled ? { notify } : {}) },
+        { onSuccess: onDone }
+      )
     else
       m.create.mutate(
-        { kind, ...body(), message: message.trim(), publish, ...(maintenance ? {} : { state }) },
+        {
+          kind,
+          ...body(),
+          message: message.trim(),
+          publish,
+          ...(maintenance ? {} : { state }),
+          ...(page?.email_subscribers.enabled ? { notify } : {}),
+        },
         { onSuccess: onDone }
       )
   }
@@ -242,6 +262,15 @@ export function IncidentDialog({
                 data-testid="status-incident-message"
               />
             </Field>
+          )}
+          {askNotify && (
+            <NotifyCheck
+              page={page}
+              components={Object.keys(touched)}
+              checked={notify}
+              onChange={setNotify}
+              testId="status-incident-notify"
+            />
           )}
           <ErrorLine error={m.create.error ?? m.patch.error} />
           <DialogFooter>

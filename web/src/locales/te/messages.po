@@ -1207,7 +1207,9 @@ msgstr "జవాబు ఖాతాను జోడించండి"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "{address} కోసం దాని మెయిల్‌ను దిగువ చిరునామాకు కూడా అందించే నియమాన్ని జోడించండి, మెయిల్‌బాక్స్‌కు డెలివరీని కొనసాగిస్తూ."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "సబ్‌స్క్రైబర్‌ను జోడించండి"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "అన్నీ"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "అన్ని భాగాలు"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "బౌన్స్ అయింది లేదా స్పామ్‌
 msgid "Bounced or reported as spam before"
 msgstr "ఇంతకు ముందు బౌన్స్ అయింది లేదా స్పామ్‌గా నివేదించబడింది"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "బౌన్స్ అయినవి: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "ప్రతి సబ్‌స్క్రైబర్ కోసం న
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "ఈ దిగుమతిని రద్దు చేయాలా?"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "రద్దు చేయబడింది"
 
@@ -2563,6 +2577,10 @@ msgstr "“ఇన్‌కమింగ్ మెయిల్ కాపీని 
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "“యాప్ పాస్‌వర్డ్‌ను రూపొందించండి” ఎంచుకుని, దానికి “Yuva” అని పేరు పెట్టి సృష్టించండి."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "ఛానెల్‌ను ఎంచుకోండి"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "భాగం తొలగించబడింది"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "కనెక్షన్‌లు"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "సమ్మతి ఎగుమతి"
 
@@ -3916,6 +3936,7 @@ msgstr "ఇమెయిల్"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "ఇమెయిల్ చిరునామా"
 
@@ -3946,6 +3967,18 @@ msgstr "నేను అనుసరించే చర్చల గురిం
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "ఇమెయిల్ మాత్రమే"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "ఇమెయిల్ సబ్‌స్క్రైబర్‌లు"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "ఇమెయిల్ సబ్‌స్క్రైబర్‌లు ఆఫ్‌లో ఉన్నారు"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "ఇమెయిల్ సబ్‌స్క్రైబర్‌లు ఆఫ్‌లో ఉన్నారు. ఎవరూ సబ్‌స్క్రైబ్ చేయలేరు, నోటీసులు కూడా వెళ్లవు, కానీ జాబితా అలాగే ఉంటుంది."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "విఫలమైంది"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "ఐదుసార్లు విఫలమైంది"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "విఫలమైనవి: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "Yuva నుండి మెయిల్"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "మెయిల్ {address} ను అందుకునే “{channelName}” ఇమెయిల్ ఛానెల్‌లోకి వెళ్తుంది."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "మెయిల్‌పై పంపినవారి సొంత డొమైన్ కీతో సంతకం లేదు; Gmail, Yahoo దీన్ని ఆశిస్తాయి."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "మెయిల్ పరిమాణం"
@@ -6880,6 +6922,10 @@ msgstr "ఇంకా రెడీమేడ్ జవాబులు లేవు
 msgid "No channel"
 msgstr "ఛానెల్ లేదు"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "పంపగల ఛానెల్ ఏదీ ఎంచుకోలేదు. ఒకటి ఉండే వరకు ఎవరికీ నిర్ధారణ లేదా నోటీసు అందదు."
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "ఇంకా ఛానెల్ లేదు"
@@ -6972,6 +7018,10 @@ msgstr "ఇమెయిల్ చిరునామా ఇవ్వలేదు"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "నిర్ధారణ మరియు స్వాగత మెయిల్‌లను పంపగల ఇమెయిల్ ఛానెల్ లేదు"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "ఇంకా ఇమెయిల్ సబ్‌స్క్రైబర్‌లు లేరు"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "విషయం లేదు"
 msgid "No subject yet"
 msgstr "ఇంకా విషయం లేదు"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "సరిపోలే సబ్‌స్క్రైబర్ లేరు"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "ఇంకా సబ్‌స్క్రైబర్‌లు లేరు. సబ్‌స్క్రైబ్ ఫారమ్‌ను మీ సైట్‌లో ఉంచండి, లేదా ఇప్పటికే అంగీకరించిన వారిని జోడించండి."
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "ఇంకా సబ్‌స్క్రైబర్‌లు లేరు. సందర్శకులు స్టేటస్ పేజీలో సబ్‌స్క్రైబ్ చేస్తారు, లేదా మీరు ఇక్కడ చిరునామాను జోడించవచ్చు."
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "సరైనది కాదా? మీ ప్రొవైడర్‌�
 msgid "Not run"
 msgstr "నడపలేదు"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "పంపబడలేదు"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "సెటప్ చేయలేదు"
@@ -7485,6 +7547,10 @@ msgstr "ఇక్కడ మీ శోధనకు ఏదీ సరిపోల�
 msgid "Nothing unread."
 msgstr "చదవనివి ఏవీ లేవు."
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "సబ్‌స్క్రైబర్‌లకు నోటీసులు"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "నోటిఫికేషన్‌లు అనుమతించబ�
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "ఒక ఇన్‌బాక్స్ కోసం వేరే విధంగా తెలియజేయండి. “పైన ఉన్నట్లే” వద్ద ఉన్నవి పై సెట్టింగ్‌లను అనుసరిస్తాయి."
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "సబ్‌స్క్రైబర్‌లకు తెలియజేయండి"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "ఒకసారి రాసిన ఒక జవాబు {title} కు
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "ఒక్కో ఈవెంట్‌కు ఒక అడ్డు వరుస, పాతది ముందుగా: ఎవరు అంగీకరించారు లేదా వెళ్లిపోయారు, ఎప్పుడు, ఎలా, ఏ పేజీ మరియు IP చిరునామా నుండి, మరియు వారు చూసిన పదాలు. దీన్ని సమ్మతికి రుజువుగా (GDPR Art. 7, KVKK) ఉంచండి, మీ వద్ద ఏముందో అడిగే వ్యక్తికి జవాబివ్వడానికి, లేదా సమ్మతులను İYS లో మీరే నమోదు చేయడానికి. CSV లోని స్ప్రెడ్‌షీట్ ఫార్ములాలు హానిరహితంగా చేయబడతాయి."
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "ప్రతి ఈవెంట్‌కు ఒక వరుస, పాతవి ముందు: ఎవరు అంగీకరించారు లేదా వెళ్లిపోయారు, ఎప్పుడు, ఎలా, ఏ పేజీ మరియు IP చిరునామా నుండి, వారు చూసిన పదాలు. దీన్ని సమ్మతికి రుజువుగా ఉంచండి, లేదా మీ వద్ద ఏమి ఉందని అడిగిన వ్యక్తికి సమాధానం ఇవ్వడానికి ఉపయోగించండి."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "ఇన్‌బాక్స్‌ను తెరవండి"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "ఇన్‌బాక్స్ సెట్టింగ్‌లను తెరవండి"
 
@@ -7973,6 +8048,10 @@ msgstr "Microsoft Entra admin center లేదా Azure portal ను తెర�
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "తదుపరి లేదా మునుపటి సంభాషణను తెరవండి"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "పేజీ సెట్టింగ్‌లను తెరవండి"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "గ్రహీతలు"
 msgid "Recipients"
 msgstr "గ్రహీతలు"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "గ్రహీతలు: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "చిరునామా ద్వారా గుర్తించబడింది."
@@ -9661,6 +9745,10 @@ msgstr "షెడ్యూల్ చేయబడింది"
 msgid "Scheduled by"
 msgstr "షెడ్యూల్ చేసినవారు"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "{due}కి షెడ్యూల్ చేయబడింది"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "పేజీ నుండి అభిప్రాయాన్ని ప
 msgid "Send me a code"
 msgstr "నాకు కోడ్ పంపండి"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "నోటీసులను ఇమెయిల్ ద్వారా పంపండి"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "ఇప్పుడే పంపండి"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "జవాబు పంపండి"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "నిర్ధారణను పంపండి"
 
@@ -9969,6 +10062,7 @@ msgstr "పంపేవారి గుర్తింపు"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "పంపుతోంది"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "దీని నుండి పంపుతుంది"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "దాని మెయిల్‌ను దీని నుండి పంపుతుంది"
 
@@ -10056,6 +10151,7 @@ msgstr "పంపబడింది"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "పంపబడింది"
 
@@ -10116,6 +10212,11 @@ msgstr "ఈ రోజు పంపినవి: అనుమతించిన {
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "ఈ రోజు పంపినవి: {sent}. రోజువారీ పరిమితి లేదు."
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "పంపబడినవి: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "దాటవేయబడినవి మరియు విఫలమై�
 msgid "Skipped or failed"
 msgstr "దాటవేయబడింది లేదా విఫలమైంది"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "దాటవేయబడినవి: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "స్లగ్"
@@ -10886,14 +10992,25 @@ msgstr "సబ్‌స్క్రైబ్ చేశారు"
 msgid "subscribed now"
 msgstr "ఇప్పుడే సబ్‌స్క్రైబ్ చేశారు"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "సబ్‌స్క్రైబర్‌లు"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "సబ్‌స్క్రైబర్‌లు జోడించబడ్డారు"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "సబ్‌స్క్రైబర్‌లు నోటీసులు అందుకునే ముందు మెయిల్ ద్వారా తమ చిరునామాను నిర్ధారించాలి."
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "చేరిన సబ్‌స్క్రైబర్‌లు: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "ఇన్‌బాక్స్‌ను చదవడానికి-మ�
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "ఇన్‌బాక్స్‌కు ఇంకా చట్టబద్ధ పేరు లేదా తపాలా చిరునామా లేదు. చట్టం కోరినట్లు ప్రతి బ్రాడ్‌కాస్ట్ వాటితో ముగుస్తుంది."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "ఇన్‌బాక్స్‌లో పంపినవారి తపాలా చిరునామా లేదు. ఇన్‌బాక్స్ సెట్టింగ్‌లలో ఒకటి జోడించండి."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "ఇన్‌బాక్స్ Amazon SES టెనెంట్ ఇంకా సెటప్ అవుతోంది. బ్రాడ్‌కాస్ట్ వెళ్లవచ్చు, కానీ అది ప్రారంభమయ్యే ముందు దీన్ని మళ్లీ తనిఖీ చేయండి."
@@ -11403,6 +11524,10 @@ msgstr "ఇన్‌బాక్స్ Amazon SES టెనెంట్ ఇం�
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "ఇన్‌బాక్స్ Amazon SES టెనెంట్ ఇకపై లేదు. సర్వర్ దాన్ని మళ్లీ సృష్టిస్తుంది; అప్పటి వరకు బ్రాడ్‌కాస్ట్ వెళ్లలేదు."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "నిర్ధారణలు, నోటీసులు పంపే ఇన్‌బాక్స్ ఇమెయిల్ ఛానెల్."
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "పాత మెయిల్‌బాక్స్ ఆ డొమైన్
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "మరో ఇన్‌బాక్స్‌కు ఇమెయిల్ ఛానెల్ లేదు, కాబట్టి ఈ ఇమెయిల్ సంభాషణ అక్కడికి వెళ్లలేదు. ముందుగా దానికి ఇమెయిల్ ఛానెల్‌ను జోడించండి."
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "పేజీ గత గంటలో ఇప్పటికే 10 నోటీసులు పంపింది"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "సందర్శకులు ఇప్పుడు చూసే పేజీ. డ్రాఫ్ట్‌లు చేర్చబడలేదు."
@@ -11571,6 +11700,10 @@ msgstr "పేజీ చాట్ ఛానెల్ అనుమతించే
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "పేజీ ప్రచురించబడలేదు. దీన్ని మీ బృందం మాత్రమే చూస్తుంది."
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "పేజీ లేదా ఘటన పబ్లిక్ కాదు"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "సీక్రెట్ సృష్టించినప్పుడ�
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "పంపేవారి డొమైన్ ఈ మెయిల్‌ను అధికారం ఇవ్వలేదు. ఇది నకిలీ కావచ్చు."
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "పంపే ఛానెల్ పంపలేకపోతోంది"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "పంపే ఛానెల్‌కు ఇంకా SMTP ఖాతా లేదా పంపడానికి చిరునామా లేదు. ఇన్‌బాక్స్ సెట్టింగ్‌లలో సెటప్ చేయండి."
@@ -11684,6 +11821,10 @@ msgstr "పంపే ఛానెల్‌కు ఇంకా SMTP ఖాతా 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "పంపే డొమైన్‌కు DMARC రికార్డ్ లేదు."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "పంపే డొమైన్ ఇంకా SPF, DKIM, DMARC తనిఖీలో ఉత్తీర్ణత సాధించలేదు. నోటీసులు స్పామ్‌లోకి వెళ్లవచ్చు."
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "సందర్శకుడు చాట్‌లో {0} అని ట�
 msgid "The workspace may not send broadcasts for now."
 msgstr "వర్క్‌స్పేస్ ప్రస్తుతానికి బ్రాడ్‌కాస్ట్‌లను పంపకూడదు."
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "వర్క్‌స్పేస్ ఇప్పుడు బల్క్ మెయిల్ పంపకూడదు"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "వర్క్‌స్పేస్ ఈ రోజు పంపే పరిమితిని చేరుకుంది. పంపడం {local} ({utc} UTC) న కొనసాగుతుంది."
@@ -11870,6 +12015,10 @@ msgstr "వారు ఇప్పటికే అంగీకరించార�
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "వారికి లింక్‌తో మెయిల్ వస్తుంది మరియు వారు దాన్ని క్లిక్ చేసిన తర్వాత మాత్రమే సబ్‌స్క్రైబ్ అవుతారు."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "వారికి లింక్‌తో మెయిల్ వస్తుంది; దాన్ని క్లిక్ చేసిన తర్వాత మాత్రమే నోటీసులు అందుతాయి."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "ఈ ఇన్‌బాక్స్‌కు ఇప్పటికే స
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "ఈ ఇన్‌బాక్స్‌కు ఇంకా పంపగల ఇమెయిల్ ఛానెల్ లేదు. మీరు ఇప్పుడే లిస్ట్‌ను సృష్టించవచ్చు; దాని సెట్టింగ్‌లలో జవాబు ఖాతా ఉన్న ఇమెయిల్ ఛానెల్‌ను ఎంచుకున్నప్పుడు అది పంపుతుంది."
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "ఈ ఇన్‌బాక్స్‌లో పంపగల ఇమెయిల్ ఛానెల్ లేదు. ఇన్‌బాక్స్ సెట్టింగ్‌లలో SMTP ఖాతాను జోడించండి."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "ఈ ఇన్‌బాక్స్‌కు ఇంకా ఇమెయిల్ ఛానెల్ లేదు. ఇన్‌బాక్స్ సెట్టింగ్‌లలో ఒకదాన్ని జోడించండి."
@@ -12044,6 +12197,7 @@ msgstr "ఇది JSON ఆబ్జెక్ట్ కాదు."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "ఇది చెల్లుబాటయ్యే ఇమెయిల్ చిరునామా కాదు."
 
@@ -12400,6 +12554,10 @@ msgstr "ఇప్పటికే ఉన్న కస్టమర్‌లకు 
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "Google ఖాతాకు 2-Step Verification ఇంకా ఆన్‌లో లేకపోతే ఆన్ చేయండి."
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "సందర్శకులు నోటీసులకు సబ్‌స్క్రైబ్ చేసుకోగలిగేలా పేజీ సెట్టింగ్‌లలో ఇమెయిల్ సబ్‌స్క్రైబర్‌లను ఆన్ చేయండి."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "ఈ పరికరానికి ఆన్ చేయండి"
@@ -12484,8 +12642,13 @@ msgstr "వర్క్‌స్పేస్ రోజువారీ పరి�
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "రద్దు చేయండి"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "వేచి ఉన్న నోటీసును రద్దు చేయండి"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "ఇప్పుడే అన్‌సబ్‌స్క్రైబ్ �
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "వారు లింక్‌ను క్లిక్ చేసే వరకు నిర్ధారణ కోసం వేచి ఉంటారు మరియు వేరే మెయిల్ అందుకోరు. నిర్ధారించని సబ్‌స్క్రిప్షన్‌లు 30 రోజుల తర్వాత తొలగించబడతాయి."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "లింక్‌ను క్లిక్ చేసే వరకు వారు నిర్ధారణ కోసం వేచి ఉంటారు. నిర్ధారించని చిరునామాలు 30 రోజుల తర్వాత తొలగించబడతాయి."
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "గత ఏడు రోజుల్లో సందర్శకులు
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "మీ వెబ్‌సైట్ లేదా యాప్ సందర్శకులు, కుకీలు లేకుండా"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "సందర్శకులు పేజీలో సబ్‌స్క్రైబ్ చేస్తారు; ఘటన లేదా నిర్వహణ మారినప్పుడు వారికి మెయిల్ వస్తుంది."
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

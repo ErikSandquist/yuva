@@ -8,6 +8,7 @@ import {
   type StatusIncidentPatch,
   type StatusMonitorCreate,
   type StatusMonitorUpdate,
+  type StatusNotice,
   type StatusPageCreate,
   type StatusPageUpdate,
 } from "@/lib/api"
@@ -106,6 +107,7 @@ export function useStatusGroups(pageId: string) {
 export function useStatusComponents(pageId: string) {
   const { workspaceId: ws } = useSession()
   return useQuery({
+    enabled: !!pageId,
     queryKey: keys.statusComponents(ws, pageId),
     queryFn: () =>
       unwrap(api.GET("/v1/status-pages/{pageId}/components", { params: { path: { pageId } } })).then((r) => r.items),
@@ -253,20 +255,21 @@ export function useIncidentMutations(pageId: string) {
       onSuccess: refresh,
     }),
     publish: useMutation({
-      mutationFn: (id: string) =>
+      mutationFn: (v: { id: string; notify?: boolean }) =>
         unwrap(
           api.POST("/v1/status-pages/{pageId}/incidents/{incidentId}/publish", {
-            params: { path: { ...path, incidentId: id } },
+            params: { path: { ...path, incidentId: v.id } },
+            body: v.notify === undefined ? undefined : { notify: v.notify },
           })
         ),
       onSuccess: refresh,
     }),
     postUpdate: useMutation({
-      mutationFn: (v: { id: string; body: string; state?: StatusIncidentCreate["state"] }) =>
+      mutationFn: (v: { id: string; body: string; state?: StatusIncidentCreate["state"]; notify?: boolean }) =>
         unwrap(
           api.POST("/v1/status-pages/{pageId}/incidents/{incidentId}/updates", {
             params: { path: { ...path, incidentId: v.id } },
-            body: { body: v.body, state: v.state },
+            body: { body: v.body, state: v.state, notify: v.notify },
           })
         ),
       onSuccess: refresh,
@@ -346,4 +349,47 @@ export function useMonitorMutations(pageId: string) {
       onSuccess: refresh,
     }),
   }
+}
+
+export function useNoticeReach(pageId: string, componentIds: string[], enabled: boolean) {
+  const { workspaceId: ws } = useSession()
+  const ids = [...componentIds].sort()
+  return useQuery({
+    queryKey: keys.statusReach(ws, pageId, ids),
+    queryFn: () =>
+      unwrap(
+        api.GET("/v1/status-pages/{pageId}/notice-reach", {
+          params: { path: { pageId }, query: { component_id: ids.length ? ids : undefined } },
+        })
+      ).then((r) => r.subscribers),
+    enabled,
+  })
+}
+
+export function useStatusNotices(pageId: string, incidentId: string, enabled: boolean) {
+  const { workspaceId: ws } = useSession()
+  return useQuery({
+    queryKey: keys.statusNotices(ws, pageId, incidentId),
+    queryFn: () =>
+      unwrap(
+        api.GET("/v1/status-pages/{pageId}/notices", {
+          params: { path: { pageId }, query: { incident_id: incidentId, limit: 100 } },
+        })
+      ).then((r) => r.items),
+    enabled,
+  })
+}
+
+export function useCancelNotice(pageId: string) {
+  const qc = useQueryClient()
+  const { workspaceId: ws } = useSession()
+  return useMutation({
+    mutationFn: (id: string) =>
+      unwrap(
+        api.POST("/v1/status-pages/{pageId}/notices/{noticeId}/cancel", {
+          params: { path: { pageId, noticeId: id } },
+        })
+      ),
+    onSuccess: (n: StatusNotice) => qc.invalidateQueries({ queryKey: keys.statusNotices(ws, pageId, n.incident_id) }),
+  })
 }

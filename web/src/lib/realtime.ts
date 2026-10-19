@@ -91,7 +91,10 @@ export function useRealtime(ws: string, memberId: string) {
         const msg = JSON.parse(e.data as string) as RealtimeMessage
         if (msg.type === "ready") {
           cursor = Math.max(cursor ?? 0, msg.last_event_id)
-          if (attempt > 0) void qc.refetchQueries({ predicate: (q) => q.state.status === "error", type: "active" })
+          if (attempt > 0) {
+            void qc.refetchQueries({ predicate: (q) => q.state.status === "error", type: "active" })
+            void qc.invalidateQueries({ queryKey: [...keys.status(ws), "notices"] })
+          }
           attempt = 0
           setStatus(ws, "live")
           viewingSocket = s
@@ -133,7 +136,10 @@ export function useRealtime(ws: string, memberId: string) {
           applyEvent(qc, ctx, { type: msg.type, data: msg.data })
           return
         }
-        if (msg.type === "status_notice.updated") return
+        if (msg.type === "status_notice.updated") {
+          applyEvent(qc, ctx, { type: msg.type, data: msg.data } as LiveEvent)
+          return
+        }
         cursor = Math.max(cursor ?? 0, msg.id)
         if (msg.type === "message.created" && msg.data.kind === "message" && msg.data.author.type === "contact") {
           stopTyping(msg.data.conversation_id, { type: "contact", contact_id: msg.data.author.contact_id })

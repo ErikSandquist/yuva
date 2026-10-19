@@ -28,7 +28,7 @@ export function ListsHome() {
   )
 }
 
-function Tiles({ list }: { list: MailingList }) {
+export function Tiles({ list }: { list: MailingList }) {
   const { t, i18n } = useLingui()
   const fmt = new Intl.NumberFormat(i18n.locale)
   const tiles: [string, string, string?][] = [

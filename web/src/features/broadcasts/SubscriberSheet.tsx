@@ -92,11 +92,13 @@ export function SubscriberSheet({
   listId,
   subscriptionId,
   row,
+  names,
   onClose,
 }: {
   listId: string
   subscriptionId: string | null
   row?: Subscription
+  names?: Map<string, string>
   onClose: () => void
 }) {
   const { t, i18n } = useLingui()
@@ -182,6 +184,19 @@ export function SubscriberSheet({
               <StateTag state={s.state} />
               <span className="text-caption text-muted-foreground">{text.subscriptionSource[s.source]}</span>
             </div>
+            {names && (
+              <p className="text-body" data-testid="subscriber-sheet-components">
+                <span className="text-muted-foreground">
+                  <Trans>Components</Trans>
+                </span>{" "}
+                ·{" "}
+                {s.components?.length ? (
+                  s.components.map((c) => names.get(c) ?? "…").join(", ")
+                ) : (
+                  <Trans>All components</Trans>
+                )}
+              </p>
+            )}
             {s.state === "unsubscribed" && s.unsubscribe_reason && (
               <p className="text-body text-muted-foreground" data-testid="unsubscribe-reason">
                 <Trans>How they left:</Trans> {text.unsubscribeReason[s.unsubscribe_reason]}

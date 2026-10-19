@@ -1207,7 +1207,9 @@ msgstr "Válaszfiók hozzáadása"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "Adj hozzá szabályt a(z) {address} címhez, amely a leveleit az alábbi címre is kézbesíti, a postafiókba kézbesítést megtartva."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "Feliratkozó hozzáadása"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "Összes"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "Minden összetevő"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "Visszapattant vagy spamnek jelentve"
 msgid "Bounced or reported as spam before"
 msgstr "Korábban visszapattant vagy spamnek jelentve"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "Visszapattant: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "Ütemezhetek hírlevelet minden feliratkozónak külön?"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "Megszakítod ezt az importot?"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "Megszakítva"
 
@@ -2563,6 +2577,10 @@ msgstr "Válaszd a „Bejövő levelek másolatának továbbítása ide” lehet
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "Válaszd az „Alkalmazásjelszó generálása” lehetőséget, nevezd el „Yuva”-nak, és hozd létre."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "Válasszon csatornát"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "Az összetevő törölve"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "Kapcsolatok"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "Hozzájárulások exportja"
 
@@ -3916,6 +3936,7 @@ msgstr "E-mail"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "E-mail-cím"
 
@@ -3946,6 +3967,18 @@ msgstr "E-mailt kérek a követett vitákról"
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "Csak e-mail"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "E-mail-feliratkozók"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "Az e-mail-feliratkozók ki vannak kapcsolva"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "Az e-mail-feliratkozók ki vannak kapcsolva. Senki nem iratkozhat fel, és nem megy ki értesítés, de a lista megmarad."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "Sikertelen"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "Ötször sikertelen"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "Sikertelen: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "Levél a Yuvától"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "A levelek a(z) „{channelName}” e-mail-csatornába kerülnek, amely a(z) {address} címet fogadja."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "A levelet nem a feladó saját tartományának kulcsa írja alá, pedig a Gmail és a Yahoo ezt várja el."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "Levél mérete"
@@ -6880,6 +6922,10 @@ msgstr "Még nincs gyorsválasz. Add hozzá őket a beállításokban."
 msgid "No channel"
 msgstr "Nincs csatorna"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "Nincs kiválasztva küldésre képes csatorna. Amíg nincs ilyen, senki nem kap megerősítést vagy értesítést."
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "Még nincs csatorna"
@@ -6972,6 +7018,10 @@ msgstr "Nincs e-mail-cím megadva"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "Nincs e-mail-csatorna, amely a megerősítő és üdvözlő leveleket el tudná küldeni"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "Még nincsenek e-mail-feliratkozók"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "Nincs tárgy"
 msgid "No subject yet"
 msgstr "Még nincs tárgy"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "Nincs találat a feliratkozók között"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "Még nincsenek feliratkozók. Tedd a feliratkozási űrlapot a webhelyedre, vagy adj hozzá olyan embereket, akik már beleegyeztek."
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "Még nincsenek feliratkozók. A látogatók az állapotoldalon iratkoznak fel, de itt is hozzáadhat egy címet."
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "Nem stimmel? Válaszd ki a szolgáltatódat"
 msgid "Not run"
 msgstr "Nem futott"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "Nem lett elküldve"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "Nincs beállítva"
@@ -7485,6 +7547,10 @@ msgstr "Semmi sem egyezik itt a kereséseddel."
 msgid "Nothing unread."
 msgstr "Nincs olvasatlan."
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "Értesítések a feliratkozóknak"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "Az értesítéseket nem engedélyezték."
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "Értesíts másként egy postafiókról. Ami a „Mint fent” beállításon marad, a fenti beállításokat követi."
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "Feliratkozók értesítése"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "Egyszer megírt válaszod minden, a(z) {title} incidenshez kapcsolt nyit
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Eseményenként egy sor, a legrégebbivel kezdve: ki egyezett bele vagy lépett ki, mikor, hogyan, melyik oldalról és IP-címről, és milyen szavakat látott. Őrizd meg a hozzájárulás bizonyítékaként (GDPR 7. cikk, KVKK), hogy válaszolhass annak, aki megkérdezi, mit tárolsz róla, vagy hogy magad regisztráld a hozzájárulásokat az İYS-nél. A CSV-ben lévő táblázatkezelő-képletek ártalmatlanítva vannak."
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "Eseményenként egy sor, a legrégebbivel kezdve: ki járult hozzá vagy iratkozott le, mikor, hogyan, melyik oldalról és IP-címről, és milyen szöveget látott. Őrizze meg a hozzájárulás igazolására, vagy hogy választ adhasson annak, aki megkérdezi, milyen adatot tárol róla."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "Postafiók megnyitása"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "Postafiók-beállítások megnyitása"
 
@@ -7973,6 +8048,10 @@ msgstr "Nyisd meg a Microsoft Entra admin centert vagy az Azure-portált, lépj 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "Következő vagy előző beszélgetés megnyitása"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "Az oldal beállításainak megnyitása"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "címzettek"
 msgid "Recipients"
 msgstr "Címzettek"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "Címzettek: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "A címről felismerve."
@@ -9661,6 +9745,10 @@ msgstr "Ütemezve"
 msgid "Scheduled by"
 msgstr "Ütemezte"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "Ütemezve: {due}"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "Visszajelzés küldése egy oldalról"
 msgid "Send me a code"
 msgstr "Küldj nekem egy kódot"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "Értesítések küldése e-mailben"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "Küldés most"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "Válasz elküldése"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Megerősítés küldése"
 
@@ -9969,6 +10062,7 @@ msgstr "Feladó identitása"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "Küldés"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "Innen küld:"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "Leveleit innen küldi:"
 
@@ -10056,6 +10151,7 @@ msgstr "elküldve"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "Elküldve"
 
@@ -10116,6 +10212,11 @@ msgstr "Ma elküldve: {sent} / {limit} engedélyezett. A nap 00:00 UTC-kor kezd�
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "Ma elküldve: {sent}. Nincs napi korlát."
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "Elküldve: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "Kihagyva és sikertelen ({count})"
 msgid "Skipped or failed"
 msgstr "Kihagyva vagy sikertelen"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "Kihagyva: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "Slug"
@@ -10886,14 +10992,25 @@ msgstr "Feliratkozott"
 msgid "subscribed now"
 msgstr "most feliratkozott"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "Feliratkozók"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "Feliratkozók hozzáadva"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "A feliratkozók e-mailben megerősítik a címüket, mielőtt értesítéseket kapnának."
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "Elért feliratkozók: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "A postafiókot nem lehetett csak olvashatóként megnyitni."
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "A postafióknak még nincs jogi neve vagy postai címe. Minden tömeges levél ezekkel végződik, ahogy a törvény előírja."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "A postafiókhoz nincs megadva postacím a feladóhoz. Adjon meg egyet a postafiók beállításaiban."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "A postafiók Amazon SES-bérlője még beállítás alatt áll. A tömeges levél kimehet, de az indítás előtt ellenőrizd újra."
@@ -11403,6 +11524,10 @@ msgstr "A postafiók Amazon SES-bérlője még beállítás alatt áll. A tömeg
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "A postafiók Amazon SES-bérlője már nem létezik. A szerver újra létrehozza; addig a tömeges levél nem mehet ki."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "A postafiók e-mail-csatornája, amely a megerősítéseket és az értesítéseket küldi."
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "A régi postafiók többé nem fogad levelet ehhez a domainhez."
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "A másik postafióknak nincs e-mail-csatornája, így ez az e-mail-beszélgetés nem helyezhető át oda. Előbb adj hozzá e-mail-csatornát."
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "Az oldal már 10 értesítést küldött az elmúlt órában"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "Az oldal úgy, ahogy a látogatók most látják. A piszkozatok kimaradnak."
@@ -11571,6 +11700,10 @@ msgstr "Az oldal nem a csevegőcsatorna által engedélyezett webhelyen van."
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "Az oldal nincs közzétéve. Ezt csak a csapatod látja."
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "Az oldal vagy az incidens nem nyilvános"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "A titok egyszer jelenik meg, a létrehozásakor. Forgasd el, hogy újat 
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "A feladó domainje nem hatalmazta fel ezt a levelet. Hamisított lehet."
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "A küldési csatorna nem tud küldeni"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "A küldési csatornának még nincs SMTP-fiókja vagy küldési címe. Állítsd be a postafiók beállításaiban."
@@ -11684,6 +11821,10 @@ msgstr "A küldési csatornának még nincs SMTP-fiókja vagy küldési címe. �
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "A küldési domainnek nincs DMARC-rekordja."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "A küldő tartomány még nem ment át az SPF-, DKIM- és DMARC-ellenőrzésen. Az értesítések spamben köthetnek ki."
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "A látogató ezt írta a csevegésben: {0}, de még nem erősítette meg
 msgid "The workspace may not send broadcasts for now."
 msgstr "A munkaterület egyelőre nem küldhet tömeges leveleket."
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "A munkaterület jelenleg nem küldhet tömeges levelet"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "A munkaterület elérte a mai küldési korlátot. A küldés folytatódik: {local} ({utc} UTC)."
@@ -11870,6 +12015,10 @@ msgstr "Már beleegyeztek"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "Levelet kapnak egy linkkel, és csak a rákattintás után lesznek feliratkozók."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "Kapnak egy levelet egy hivatkozással, és csak a rákattintás után kapnak értesítéseket."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "Ennek a postaládának már van állapotoldala."
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "Ennek a postafióknak még nincs e-mail-csatornája, amely küldeni tudna. A listát most létrehozhatod; akkor küld, ha a beállításaiban kiválasztasz egy válaszfiókkal rendelkező e-mail-csatornát."
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "Ennek a postafiókhoz nincs küldésre képes e-mail-csatorna. Adjon hozzá egy SMTP-fiókot a postafiók beállításaiban."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "Ennek a postafióknak még nincs e-mail-csatornája. Adj hozzá egyet a postafiók beállításaiban."
@@ -12044,6 +12197,7 @@ msgstr "Ez nem JSON-objektum."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "Ez nem érvényes e-mail-cím."
 
@@ -12400,6 +12554,10 @@ msgstr "Kapcsold ki a meglévő ügyfeleknek szóló szolgáltatási közlemény
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "Kapcsold be a kétlépcsős ellenőrzést a Google-fiókhoz, ha még nincs bekapcsolva."
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "Kapcsolja be az e-mail-feliratkozókat az oldal beállításaiban, hogy a látogatók feliratkozhassanak az értesítésekre."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "Bekapcsolás ennél az eszköznél"
@@ -12484,8 +12642,13 @@ msgstr "A munkaterület napi korlátja mellett a küldés {days} napig tart."
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "Visszavonás"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "A várakozó értesítés visszavonása"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "most leiratkozott"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "Amíg nem kattintanak a linkre, megerősítésre várnak, és más levelet nem kapnak. A meg nem erősített feliratkozások 30 nap után törlődnek."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "Amíg nem kattintanak a hivatkozásra, megerősítésre várnak. A meg nem erősített címeket 30 nap után töröljük."
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "Látogatók az elmúlt hét napban: {series}"
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "A webhelyed vagy alkalmazásod látogatói, sütik nélkül"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "A látogatók az oldalon iratkoznak fel, és levelet kapnak, ha egy incidens vagy karbantartás változik."
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

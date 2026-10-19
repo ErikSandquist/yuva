@@ -1207,7 +1207,9 @@ msgstr "Tambah akun balasan"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "Tambahkan aturan untuk {address} yang juga mengirimkan emailnya ke alamat di bawah, sambil tetap mengirim ke kotak surat."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "Tambah pelanggan"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "Semua"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "Semua komponen"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "Terpental atau dilaporkan sebagai spam"
 msgid "Bounced or reported as spam before"
 msgstr "Sebelumnya terpental atau dilaporkan sebagai spam"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "Terpental: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "Bisakah saya menjadwalkan buletin untuk setiap pelanggan?"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "Batalkan impor ini?"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "Dibatalkan"
 
@@ -2563,6 +2577,10 @@ msgstr "Pilih “Teruskan salinan email masuk ke” alamat itu, simpan salinan G
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "Pilih “Buat kata sandi aplikasi”, beri nama “Yuva”, lalu buat."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "Pilih saluran"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "Komponen dihapus"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "Koneksi"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "Ekspor persetujuan"
 
@@ -3916,6 +3936,7 @@ msgstr "Email"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "Alamat email"
 
@@ -3946,6 +3967,18 @@ msgstr "Kirimi saya email tentang diskusi yang saya ikuti"
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "Hanya email"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "Pelanggan email"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "Pelanggan email nonaktif"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "Pelanggan email nonaktif. Tidak ada yang bisa berlangganan dan tidak ada pemberitahuan yang dikirim, tetapi daftarnya tetap disimpan."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "Gagal"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "Gagal lima kali"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "Gagal: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "Email dari Yuva"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "Email masuk ke saluran email “{channelName}”, yang menerima {address}."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "Email tidak ditandatangani dengan kunci dari domain pengirim sendiri, padahal Gmail dan Yahoo mengharapkannya."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "Ukuran email"
@@ -6880,6 +6922,10 @@ msgstr "Belum ada balasan siap pakai. Tambahkan di pengaturan."
 msgid "No channel"
 msgstr "Tanpa saluran"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "Belum ada saluran yang dapat mengirim yang dipilih. Selama belum ada, tidak ada yang menerima konfirmasi maupun pemberitahuan."
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "Belum ada saluran"
@@ -6972,6 +7018,10 @@ msgstr "Alamat email tidak diberikan"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "Tidak ada saluran email yang dapat mengirim email konfirmasi dan sambutannya"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "Belum ada pelanggan email"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "Tanpa subjek"
 msgid "No subject yet"
 msgstr "Belum ada subjek"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "Tidak ada pelanggan yang cocok"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "Belum ada pelanggan. Pasang formulir berlangganan di situs Anda, atau tambahkan orang yang sudah setuju."
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "Belum ada pelanggan. Pengunjung berlangganan di halaman status, atau Anda bisa menambahkan alamat di sini."
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "Salah? Pilih penyedia Anda"
 msgid "Not run"
 msgstr "Belum dijalankan"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "Tidak terkirim"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "Belum disiapkan"
@@ -7485,6 +7547,10 @@ msgstr "Tidak ada yang cocok dengan pencarian Anda di sini."
 msgid "Nothing unread."
 msgstr "Tidak ada yang belum dibaca."
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "Pemberitahuan ke pelanggan"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "Notifikasi tidak diizinkan."
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "Notifikasi berbeda untuk satu kotak masuk. Apa pun yang tetap di “Seperti di atas” mengikuti pengaturan di atas."
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "Beri tahu pelanggan"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "Satu balasan, ditulis sekali, dikirim ke setiap percakapan terbuka yang 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Satu baris per peristiwa, terlama dulu: siapa yang setuju atau keluar, kapan, bagaimana, dari halaman dan alamat IP mana, dan kata-kata yang mereka lihat. Simpan sebagai bukti persetujuan (GDPR Pasal 7, KVKK), untuk menjawab orang yang menanyakan apa yang Anda simpan, atau untuk mendaftarkan persetujuan ke İYS sendiri. Rumus spreadsheet di CSV dibuat tidak berbahaya."
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "Satu baris per peristiwa, dari yang terlama: siapa yang setuju atau berhenti, kapan, bagaimana, dari halaman dan alamat IP mana, serta kata-kata yang mereka lihat. Simpan sebagai bukti persetujuan atau untuk menjawab orang yang bertanya data apa yang Anda simpan."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "Buka kotak masuk"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "Buka pengaturan kotak masuk"
 
@@ -7973,6 +8048,10 @@ msgstr "Buka pusat admin Microsoft Entra atau portal Azure, buka App registratio
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "Buka percakapan berikutnya atau sebelumnya"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "Buka pengaturan halaman"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "penerima"
 msgid "Recipients"
 msgstr "Penerima"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "Penerima: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "Dikenali dari alamatnya."
@@ -9661,6 +9745,10 @@ msgstr "Dijadwalkan"
 msgid "Scheduled by"
 msgstr "Dijadwalkan oleh"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "Dijadwalkan pada {due}"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "Kirim masukan dari halaman"
 msgid "Send me a code"
 msgstr "Kirimi saya kode"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "Kirim pemberitahuan lewat email"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "Kirim sekarang"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "Kirim balasan"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Kirim konfirmasi"
 
@@ -9969,6 +10062,7 @@ msgstr "Identitas pengirim"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "Mengirim"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "Dikirim dari"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "Mengirim emailnya dari"
 
@@ -10056,6 +10151,7 @@ msgstr "terkirim"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "Terkirim"
 
@@ -10116,6 +10212,11 @@ msgstr "Terkirim hari ini: {sent} dari {limit} yang diizinkan. Hari dimulai puku
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "Terkirim hari ini: {sent}. Tidak ada batas harian."
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "Terkirim: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "Dilewati dan gagal ({count})"
 msgid "Skipped or failed"
 msgstr "Dilewati atau gagal"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "Dilewati: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "Slug"
@@ -10886,14 +10992,25 @@ msgstr "Berlangganan"
 msgid "subscribed now"
 msgstr "berlangganan sekarang"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "Pelanggan"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "Pelanggan ditambahkan"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "Pelanggan mengonfirmasi alamatnya lewat email sebelum menerima pemberitahuan."
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "Pelanggan terjangkau: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "Kotak masuk tidak dapat dibuka hanya-baca."
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "Kotak masuk belum punya nama hukum atau alamat pos. Setiap siaran massal diakhiri dengan keduanya, sesuai hukum."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "Kotak masuk belum mencantumkan alamat pos pengirim. Tambahkan di pengaturan kotak masuk."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "Tenant Amazon SES kotak masuk masih disiapkan. Siaran massal dapat dikirim, tetapi periksa lagi sebelum dimulai."
@@ -11403,6 +11524,10 @@ msgstr "Tenant Amazon SES kotak masuk masih disiapkan. Siaran massal dapat dikir
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "Tenant Amazon SES kotak masuk sudah tidak ada. Server membuatnya lagi; sampai saat itu siaran massal tidak dapat dikirim."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "Saluran email kotak masuk yang mengirim konfirmasi dan pemberitahuan."
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "Kotak surat lama berhenti menerima email untuk domain itu."
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "Kotak masuk lain tidak punya saluran email, sehingga percakapan email ini tidak dapat dipindahkan ke sana. Tambahkan saluran email dulu."
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "Halaman sudah mengirim 10 pemberitahuan dalam satu jam terakhir"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "Halaman seperti yang dilihat pengunjung sekarang. Draf tidak disertakan."
@@ -11571,6 +11700,10 @@ msgstr "Halaman tidak berada di situs yang diizinkan saluran obrolan."
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "Halaman belum diterbitkan. Hanya tim Anda yang melihat ini."
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "Halaman atau insiden ini tidak publik"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "Rahasia ditampilkan sekali, saat dibuat. Putar untuk mendapat yang baru.
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "Domain pengirim tidak mengotorisasi email ini. Mungkin dipalsukan."
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "Saluran pengirim tidak dapat mengirim"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "Saluran pengiriman belum punya akun SMTP atau alamat pengirim. Siapkan di pengaturan kotak masuk."
@@ -11684,6 +11821,10 @@ msgstr "Saluran pengiriman belum punya akun SMTP atau alamat pengirim. Siapkan d
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "Domain pengirim tidak punya rekaman DMARC."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "Domain pengirim belum lolos pemeriksaan SPF, DKIM, dan DMARC. Pemberitahuan mungkin masuk ke spam."
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "Pengunjung mengetik {0} di obrolan dan belum mengonfirmasinya. Balasan i
 msgid "The workspace may not send broadcasts for now."
 msgstr "Ruang kerja untuk sementara tidak boleh mengirim siaran massal."
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "Workspace saat ini tidak diizinkan mengirim email massal"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "Ruang kerja mencapai batas kirim hari ini. Pengiriman berlanjut pada {local} ({utc} UTC)."
@@ -11870,6 +12015,10 @@ msgstr "Mereka sudah setuju"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "Mereka mendapat email dengan tautan dan berlangganan hanya setelah mengekliknya."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "Mereka menerima email berisi tautan dan baru menerima pemberitahuan setelah mengekliknya."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "Kotak masuk ini sudah punya halaman status."
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "Kotak masuk ini belum punya saluran email yang dapat mengirim. Anda dapat membuat milis sekarang; ia mengirim setelah saluran email dengan akun balasan dipilih di pengaturannya."
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "Kotak masuk ini tidak punya saluran email yang dapat mengirim. Tambahkan akun SMTP di pengaturan kotak masuk."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "Kotak masuk ini belum punya saluran email. Tambahkan di pengaturan kotak masuk."
@@ -12044,6 +12197,7 @@ msgstr "Ini bukan objek JSON."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "Ini bukan alamat email yang valid."
 
@@ -12400,6 +12554,10 @@ msgstr "Matikan untuk pengumuman layanan kepada pelanggan yang ada. Persetujuan 
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "Aktifkan Verifikasi 2 Langkah untuk akun Google, jika belum aktif."
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "Aktifkan pelanggan email di pengaturan halaman agar pengunjung bisa berlangganan pemberitahuan."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "Aktifkan untuk perangkat ini"
@@ -12484,8 +12642,13 @@ msgstr "Dengan batas harian ruang kerja, pengiriman memakan waktu {days} hari."
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "Urungkan"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "Urungkan pemberitahuan yang menunggu"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "berhenti berlangganan sekarang"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "Sampai mengeklik tautan, mereka tetap menunggu konfirmasi dan tidak mendapat email lain. Langganan yang belum dikonfirmasi dihapus setelah 30 hari."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "Sebelum mengeklik tautan, mereka tetap menunggu konfirmasi. Alamat yang belum dikonfirmasi dihapus setelah 30 hari."
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "Pengunjung dalam tujuh hari terakhir: {series}"
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "Pengunjung situs web atau aplikasi Anda, tanpa cookie"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "Pengunjung berlangganan di halaman dan menerima email saat ada perubahan insiden atau pemeliharaan."
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

@@ -1207,7 +1207,9 @@ msgstr "답장 계정 추가"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "{address}의 메일을 메일함 배달은 유지한 채 아래 주소로도 배달하는 규칙을 추가하세요."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "구독자 추가"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "전체"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "모든 구성 요소"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "반송 또는 스팸 신고됨"
 msgid "Bounced or reported as spam before"
 msgstr "이전에 반송 또는 스팸 신고됨"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "반송됨: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "구독자마다 뉴스레터를 예약할 수 있나요?"
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "이 가져오기를 취소할까요?"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "취소됨"
 
@@ -2563,6 +2577,10 @@ msgstr "\"수신 메일의 사본을 다음 주소로 전달\"을 선택해 그 
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "\"앱 비밀번호 생성\"을 선택하고 이름을 \"Yuva\"로 지어 만드세요."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "채널 선택"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "구성 요소를 삭제했습니다"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "연결"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "동의 내보내기"
 
@@ -3916,6 +3936,7 @@ msgstr "이메일"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "이메일 주소"
 
@@ -3946,6 +3967,18 @@ msgstr "내가 팔로우하는 토론을 이메일로 알려 주세요"
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "이메일만"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "이메일 구독자"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "이메일 구독자 기능이 꺼져 있습니다"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "이메일 구독자 기능이 꺼져 있습니다. 구독할 수도, 알림이 발송되지도 않지만 목록은 유지됩니다."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "실패"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "다섯 번 실패"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "실패: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "Yuva에서 온 메일"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "메일은 {address}을(를) 받는 이메일 채널 \"{channelName}\"로 들어갑니다."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "Gmail과 Yahoo에서 요구하는 발신자 자체 도메인 키로 메일이 서명되지 않았습니다."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "메일 크기"
@@ -6880,6 +6922,10 @@ msgstr "아직 자주 쓰는 답장이 없습니다. 설정에서 추가하세�
 msgid "No channel"
 msgstr "채널 없음"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "발송 가능한 채널이 선택되지 않았습니다. 채널을 선택하기 전에는 누구도 확인 메일이나 알림을 받지 못합니다."
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "아직 채널이 없습니다"
@@ -6972,6 +7018,10 @@ msgstr "이메일 주소가 없습니다"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "확인 메일과 환영 메일을 보낼 수 있는 이메일 채널이 없습니다"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "이메일 구독자가 아직 없습니다"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "제목 없음"
 msgid "No subject yet"
 msgstr "아직 제목 없음"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "일치하는 구독자가 없습니다"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "아직 구독자가 없습니다. 사이트에 구독 양식을 넣거나 이미 동의한 사람을 추가하세요."
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "아직 구독자가 없습니다. 방문자가 상태 페이지에서 구독하거나 여기서 주소를 직접 추가할 수 있습니다."
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "맞지 않나요? 제공업체를 선택하세요"
 msgid "Not run"
 msgstr "실행 안 함"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "발송 안 됨"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "설정 안 됨"
@@ -7485,6 +7547,10 @@ msgstr "검색과 일치하는 항목이 여기에 없습니다."
 msgid "Nothing unread."
 msgstr "읽지 않은 항목이 없습니다."
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "구독자 알림"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "알림이 허용되지 않았습니다."
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "받은 편지함 하나에 대해 알림을 다르게 설정합니다. \"위와 동일\"로 남은 항목은 위 설정을 따릅니다."
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "구독자에게 알리기"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "한 번 작성한 답장이 {title}에 연결된 모든 열린 대화에
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "이벤트마다 한 행, 오래된 순: 누가 동의하거나 탈퇴했는지, 언제, 어떻게, 어느 페이지와 IP 주소에서, 그리고 본 문구. 동의 증거(GDPR 제7조, KVKK)로 보관하거나, 보유 정보를 묻는 사람에게 답하거나, İYS에 직접 동의를 등록하는 데 쓰세요. CSV의 스프레드시트 수식은 무해하게 처리됩니다."
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "이벤트당 한 행이며 오래된 순으로 정렬됩니다. 동의하거나 탈퇴한 사람, 시각, 방법, 페이지와 IP 주소, 그리고 당시 표시된 문구가 담겨 있습니다. 동의 증빙용으로 보관하거나, 어떤 정보를 보유하고 있는지 묻는 사람에게 답변할 때 활용하세요."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "받은 편지함 열기"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "받은 편지함 설정 열기"
 
@@ -7973,6 +8048,10 @@ msgstr "Microsoft Entra 관리 센터 또는 Azure 포털을 열고 앱 등록�
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "다음 또는 이전 대화 열기"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "페이지 설정 열기"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "수신자"
 msgid "Recipients"
 msgstr "수신자"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "수신자: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "주소로 인식됩니다."
@@ -9661,6 +9745,10 @@ msgstr "예약됨"
 msgid "Scheduled by"
 msgstr "예약한 사람"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "{due} 예정"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "페이지에서 의견 보내기"
 msgid "Send me a code"
 msgstr "코드 보내기"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "이메일로 알림 보내기"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "지금 보내기"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "답장 보내기"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "확인 메일 보내기"
 
@@ -9969,6 +10062,7 @@ msgstr "발신자 ID"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "발송 중"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "발송 주소"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "메일 발송 주소"
 
@@ -10056,6 +10151,7 @@ msgstr "발송됨"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "보냄"
 
@@ -10116,6 +10212,11 @@ msgstr "오늘 발송: 허용 {limit}통 중 {sent}통. 하루는 UTC 00:00에 �
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "오늘 발송: {sent}통. 일일 한도가 없습니다."
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "보냄: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "건너뜀 및 실패({count})"
 msgid "Skipped or failed"
 msgstr "건너뜀 또는 실패"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "건너뜀: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "슬러그"
@@ -10886,14 +10992,25 @@ msgstr "구독"
 msgid "subscribed now"
 msgstr "방금 구독함"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "구독자"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "구독자를 추가했습니다"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "구독자는 알림을 받기 전에 메일로 주소를 확인합니다."
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "도달한 구독자: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "받은 편지함을 읽기 전용으로 열 수 없었습니다."
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "받은 편지함에 아직 법적 이름이나 우편 주소가 없습니다. 법에 따라 모든 일괄 발송 끝에 이 정보가 들어갑니다."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "받은 편지함에 발신자의 우편 주소가 지정되어 있지 않습니다. 받은 편지함 설정에서 추가하세요."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "받은 편지함의 Amazon SES 테넌트를 아직 설정하는 중입니다. 일괄 발송은 나갈 수 있지만 시작 전에 다시 확인하세요."
@@ -11403,6 +11524,10 @@ msgstr "받은 편지함의 Amazon SES 테넌트를 아직 설정하는 중입�
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "받은 편지함의 Amazon SES 테넌트가 더 이상 존재하지 않습니다. 서버가 다시 만듭니다. 그때까지 일괄 발송은 나갈 수 없습니다."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "확인 메일과 알림을 보내는 받은 편지함의 이메일 채널입니다."
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "예전 메일함은 그 도메인의 메일을 더 이상 받지 않습�
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "다른 받은 편지함에 이메일 채널이 없어 이 이메일 대화를 그곳으로 옮길 수 없습니다. 먼저 이메일 채널을 추가하세요."
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "이 페이지는 지난 1시간 동안 이미 알림 10건을 발송했습니다"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "방문자가 지금 보는 페이지입니다. 초안은 제외됩니다."
@@ -11571,6 +11700,10 @@ msgstr "이 페이지는 채팅 채널이 허용하는 사이트에 있지 않�
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "페이지가 게시되지 않았습니다. 팀만 볼 수 있습니다."
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "페이지 또는 인시던트가 공개 상태가 아닙니다"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "시크릿은 만들 때 한 번만 표시됩니다. 새로 받으려면 
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "발신자의 도메인이 이 메일을 승인하지 않았습니다. 위조되었을 수 있습니다."
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "발송 채널에서 발송할 수 없습니다"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "발송 채널에 아직 SMTP 계정이나 발송 주소가 없습니다. 받은 편지함 설정에서 설정하세요."
@@ -11684,6 +11821,10 @@ msgstr "발송 채널에 아직 SMTP 계정이나 발송 주소가 없습니다.
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "발송 도메인에 DMARC 레코드가 없습니다."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "발송 도메인이 아직 SPF, DKIM, DMARC 검사를 통과하지 못했습니다. 알림이 스팸으로 분류될 수 있습니다."
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "방문자가 채팅에 {0}을(를) 입력했지만 아직 확인되지 �
 msgid "The workspace may not send broadcasts for now."
 msgstr "워크스페이스가 현재 일괄 발송을 보낼 수 없습니다."
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "현재 워크스페이스에서는 대량 메일을 발송할 수 없습니다"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "워크스페이스가 오늘의 발송 한도에 도달했습니다. {local}({utc} UTC)에 발송을 이어 갑니다."
@@ -11870,6 +12015,10 @@ msgstr "이미 동의함"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "링크가 있는 메일을 받으며 클릭해야 구독됩니다."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "링크가 담긴 메일을 받으며, 링크를 클릭한 후에야 알림을 받게 됩니다."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "이 받은편지함에는 이미 상태 페이지가 있습니다."
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "이 받은 편지함에는 발송할 수 있는 이메일 채널이 아직 없습니다. 리스트는 지금 만들 수 있으며, 답장 계정이 있는 이메일 채널을 리스트 설정에서 선택하면 발송됩니다."
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "이 받은 편지함에는 발송 가능한 이메일 채널이 없습니다. 받은 편지함 설정에서 SMTP 계정을 추가하세요."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "이 받은 편지함에는 아직 이메일 채널이 없습니다. 받은 편지함 설정에서 추가하세요."
@@ -12044,6 +12197,7 @@ msgstr "JSON 객체가 아닙니다."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "올바른 이메일 주소가 아닙니다."
 
@@ -12400,6 +12554,10 @@ msgstr "기존 고객에게 보내는 서비스 공지에는 끄세요. 어느 �
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "아직 켜지 않았다면 Google 계정의 2단계 인증을 켜세요."
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "방문자가 알림을 구독할 수 있도록 페이지 설정에서 이메일 구독자를 켜세요."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "이 기기에서 켜기"
@@ -12484,8 +12642,13 @@ msgstr "워크스페이스의 일일 한도로는 발송에 {days}일이 걸립�
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "실행 취소"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "대기 중인 알림 취소"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "방금 구독 취소함"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "링크를 클릭하기 전까지는 확인 대기 상태로 다른 메일을 받지 않습니다. 확인하지 않은 구독은 30일 후에 삭제됩니다."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "링크를 클릭하기 전까지는 확인 대기 상태로 유지됩니다. 확인되지 않은 주소는 30일 후 삭제됩니다."
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "최근 7일 방문자: {series}"
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "웹사이트나 앱의 방문자(쿠키 없음)"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "방문자가 페이지에서 구독하면 인시던트나 점검 상태가 바뀔 때 메일을 받습니다."
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

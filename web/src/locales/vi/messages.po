@@ -1207,7 +1207,9 @@ msgstr "Thêm tài khoản phản hồi"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "Thêm một quy tắc cho {address} để đồng thời chuyển thư của nó đến địa chỉ bên dưới, vẫn giữ việc chuyển vào hộp thư."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "Thêm người đăng ký"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "Tất cả"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "Tất cả thành phần"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "Bị trả lại hoặc bị báo là thư rác"
 msgid "Bounced or reported as spam before"
 msgstr "Trước đó bị trả lại hoặc bị báo là thư rác"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "Bị trả lại: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "Tôi có thể lên lịch bản tin cho từng người đăng ký khô
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "Hủy lần nhập này?"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "Đã hủy"
 
@@ -2563,6 +2577,10 @@ msgstr "Chọn “Chuyển tiếp một bản sao thư đến” địa chỉ đ
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "Chọn “Tạo mật khẩu ứng dụng”, đặt tên “Yuva” và tạo."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "Chọn một kênh"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "Đã xóa thành phần"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "Kết nối"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "Xuất sự đồng ý"
 
@@ -3916,6 +3936,7 @@ msgstr "Email"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "Địa chỉ email"
 
@@ -3946,6 +3967,18 @@ msgstr "Gửi email cho tôi về các cuộc thảo luận tôi theo dõi"
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "Chỉ email"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "Người đăng ký qua e-mail"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "Người đăng ký qua e-mail đang tắt"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "Người đăng ký qua e-mail đang tắt. Không ai có thể đăng ký và không có thông báo nào được gửi đi, nhưng danh sách vẫn được giữ lại."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "Thất bại"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "Thất bại năm lần"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "Thất bại: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "Thư từ Yuva"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "Thư đi vào kênh email “{channelName}”, kênh nhận {address}."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "Thư chưa được ký bằng khóa của chính tên miền người gửi, điều mà Gmail và Yahoo yêu cầu."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "Kích thước thư"
@@ -6880,6 +6922,10 @@ msgstr "Chưa có phản hồi mẫu. Hãy thêm trong cài đặt."
 msgid "No channel"
 msgstr "Không có kênh"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "Chưa chọn kênh nào có thể gửi. Cho đến khi có, sẽ không ai nhận được thư xác nhận hay thông báo."
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "Chưa có kênh"
@@ -6972,6 +7018,10 @@ msgstr "Chưa cho địa chỉ email"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "Không có kênh email nào có thể gửi thư xác nhận và chào mừng"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "Chưa có người đăng ký qua e-mail"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "Không có chủ đề"
 msgid "No subject yet"
 msgstr "Chưa có chủ đề"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "Không có người đăng ký nào phù hợp"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "Chưa có người đăng ký. Hãy đặt biểu mẫu đăng ký lên trang web của bạn, hoặc thêm những người đã đồng ý."
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "Chưa có người đăng ký. Khách truy cập đăng ký trên trang trạng thái, hoặc bạn có thể thêm địa chỉ tại đây."
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "Không đúng? Hãy chọn nhà cung cấp của bạn"
 msgid "Not run"
 msgstr "Chưa chạy"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "Chưa gửi"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "Chưa thiết lập"
@@ -7485,6 +7547,10 @@ msgstr "Không có gì khớp với tìm kiếm của bạn ở đây."
 msgid "Nothing unread."
 msgstr "Không có gì chưa đọc."
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "Thông báo gửi người đăng ký"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "Thông báo chưa được cho phép."
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "Thông báo khác đi cho một hộp thư. Mọi thứ để ở “Như ở trên” sẽ theo các cài đặt ở trên."
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "Thông báo cho người đăng ký"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "Một câu trả lời, viết một lần, được gửi thay mặt b�
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Mỗi dòng một sự kiện, cũ nhất trước: ai đã đồng ý hoặc rời đi, khi nào, bằng cách nào, từ trang nào và địa chỉ IP nào, cùng nội dung họ đã thấy. Hãy giữ làm bằng chứng đồng ý (GDPR Điều 7, KVKK), để trả lời người hỏi bạn đang giữ gì, hoặc để tự đăng ký sự đồng ý với İYS. Công thức bảng tính trong CSV đã được vô hiệu hóa."
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "Mỗi sự kiện một dòng, cũ nhất trước: ai đã đồng ý hoặc rời đi, khi nào, bằng cách nào, từ trang và địa chỉ IP nào, cùng nội dung họ đã thấy. Hãy lưu lại làm bằng chứng về sự đồng ý hoặc để trả lời người hỏi bạn đang lưu giữ những gì."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "Mở hộp thư"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "Mở cài đặt hộp thư"
 
@@ -7973,6 +8048,10 @@ msgstr "Mở Microsoft Entra admin center hoặc cổng Azure, vào App registra
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "Mở cuộc trò chuyện tiếp theo hoặc trước đó"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "Mở cài đặt trang"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "người nhận"
 msgid "Recipients"
 msgstr "Người nhận"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "Người nhận: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "Được nhận ra theo địa chỉ."
@@ -9661,6 +9745,10 @@ msgstr "Đã lên lịch"
 msgid "Scheduled by"
 msgstr "Lên lịch bởi"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "Hẹn gửi lúc {due}"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "Gửi phản hồi từ một trang"
 msgid "Send me a code"
 msgstr "Gửi mã cho tôi"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "Gửi thông báo qua e-mail"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "Gửi ngay"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "Gửi câu trả lời"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Gửi xác nhận"
 
@@ -9969,6 +10062,7 @@ msgstr "Danh tính người gửi"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "Đang gửi"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "Gửi từ"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "Gửi thư từ"
 
@@ -10056,6 +10151,7 @@ msgstr "đã gửi"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "Đã gửi"
 
@@ -10116,6 +10212,11 @@ msgstr "Đã gửi hôm nay: {sent} trên {limit} được phép. Ngày bắt đ
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "Đã gửi hôm nay: {sent}. Không có giới hạn hằng ngày."
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "Đã gửi: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "Bỏ qua và thất bại ({count})"
 msgid "Skipped or failed"
 msgstr "Bỏ qua hoặc thất bại"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "Đã bỏ qua: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "Slug"
@@ -10886,14 +10992,25 @@ msgstr "Đã đăng ký"
 msgid "subscribed now"
 msgstr "vừa đăng ký"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "Người đăng ký"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "Đã thêm người đăng ký"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "Người đăng ký xác nhận địa chỉ qua thư trước khi nhận thông báo."
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "Người đăng ký đã tiếp cận: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "Không thể mở hộp thư ở chế độ chỉ đọc."
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "Hộp thư chưa có tên pháp lý hoặc địa chỉ bưu điện. Mọi thư hàng loạt kết thúc bằng chúng, theo yêu cầu của pháp luật."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "Hộp thư chưa có địa chỉ bưu chính của người gửi. Hãy thêm trong cài đặt hộp thư."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "Tenant Amazon SES của hộp thư vẫn đang được thiết lập. Thư hàng loạt có thể gửi, nhưng hãy kiểm tra lại trước khi nó bắt đầu."
@@ -11403,6 +11524,10 @@ msgstr "Tenant Amazon SES của hộp thư vẫn đang được thiết lập. T
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "Tenant Amazon SES của hộp thư không còn tồn tại. Máy chủ tạo lại nó; trong lúc đó thư hàng loạt không thể gửi."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "Kênh e-mail của hộp thư dùng để gửi thư xác nhận và thông báo."
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "Hộp thư cũ ngừng nhận thư cho tên miền đó."
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "Hộp thư kia không có kênh email, nên cuộc trò chuyện email này không thể chuyển đến đó. Hãy thêm kênh email cho nó trước."
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "Trang đã gửi 10 thông báo trong giờ qua"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "Trang như khách truy cập đang thấy. Không gồm bản nháp."
@@ -11571,6 +11700,10 @@ msgstr "Trang không nằm trên một trang web mà kênh chat cho phép."
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "Trang chưa được xuất bản. Chỉ nhóm của bạn thấy điều này."
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "Trang hoặc sự cố này không công khai"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "Secret hiện một lần, khi nó được tạo. Hãy xoay vòng để
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "Tên miền của người gửi không ủy quyền cho thư này. Nó có thể là giả mạo."
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "Kênh gửi hiện không thể gửi"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "Kênh gửi chưa có tài khoản SMTP hoặc địa chỉ để gửi. Hãy thiết lập trong cài đặt hộp thư."
@@ -11684,6 +11821,10 @@ msgstr "Kênh gửi chưa có tài khoản SMTP hoặc địa chỉ để gửi.
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "Tên miền gửi chưa có bản ghi DMARC."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "Tên miền gửi chưa vượt qua kiểm tra SPF, DKIM và DMARC. Thông báo có thể rơi vào thư rác."
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "Khách đã gõ {0} trong chat và chưa xác nhận. Phản hồi này 
 msgid "The workspace may not send broadcasts for now."
 msgstr "Không gian làm việc hiện không được gửi thư hàng loạt."
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "Không gian làm việc hiện không được phép gửi thư hàng loạt"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "Không gian làm việc đã đạt giới hạn gửi hôm nay. Việc gửi tiếp tục vào {local} ({utc} UTC)."
@@ -11870,6 +12015,10 @@ msgstr "Họ đã đồng ý rồi"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "Họ nhận một thư có liên kết và chỉ được đăng ký sau khi nhấp vào."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "Họ sẽ nhận được thư kèm liên kết và chỉ nhận thông báo sau khi nhấp vào liên kết đó."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "Hộp thư này đã có trang trạng thái."
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "Hộp thư này chưa có kênh email nào có thể gửi. Bạn có thể tạo danh sách ngay bây giờ; nó gửi khi một kênh email có tài khoản phản hồi được chọn trong cài đặt của nó."
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "Hộp thư này chưa có kênh e-mail nào có thể gửi. Hãy thêm tài khoản SMTP trong cài đặt hộp thư."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "Hộp thư này chưa có kênh email. Hãy thêm một kênh trong cài đặt hộp thư."
@@ -12044,6 +12197,7 @@ msgstr "Đây không phải một đối tượng JSON."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "Đây không phải địa chỉ email hợp lệ."
 
@@ -12400,6 +12554,10 @@ msgstr "Tắt cho thông báo dịch vụ gửi khách hàng hiện có. Dù th�
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "Hãy bật Xác minh 2 bước cho tài khoản Google, nếu chưa bật."
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "Hãy bật người đăng ký qua e-mail trong cài đặt trang để khách truy cập có thể đăng ký nhận thông báo."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "Bật cho thiết bị này"
@@ -12484,8 +12642,13 @@ msgstr "Với giới hạn hằng ngày của không gian làm việc, việc g�
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "Hoàn tác"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "Hoàn tác thông báo đang chờ"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "vừa hủy đăng ký"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "Cho đến khi họ nhấp liên kết, họ vẫn chờ xác nhận và không nhận thư nào khác. Đăng ký chưa xác nhận bị xóa sau 30 ngày."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "Cho đến khi nhấp vào liên kết, họ vẫn ở trạng thái chờ xác nhận. Địa chỉ chưa xác nhận sẽ bị xóa sau 30 ngày."
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "Khách truy cập trong bảy ngày qua: {series}"
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "Khách truy cập trang web hoặc ứng dụng của bạn, không dùng cookie"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "Khách truy cập đăng ký trên trang và nhận thư khi sự cố hoặc bảo trì có thay đổi."
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

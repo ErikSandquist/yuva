@@ -1207,7 +1207,9 @@ msgstr "ଉତ୍ତର ଖାତା ଯୋଡ଼ନ୍ତୁ"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "{address} ପାଇଁ ଏକ ନିୟମ ଯୋଡ଼ନ୍ତୁ ଯାହା ଏହାର ମେଲ୍ ତଳ ଠିକଣାକୁ ମଧ୍ୟ ପହଞ୍ଚାଏ, ମେଲବକ୍ସକୁ ଡେଲିଭରି ଜାରି ରଖି।"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "ଏକ ସବ୍ସ୍କ୍ରାଇବର୍ ଯୋଡ଼ନ୍ତୁ"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "ସବୁ"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "ସମସ୍ତ ଉପାଦାନ"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "ବାଉନ୍ସ ହେଲା କିମ୍ବା ସ୍ପାମ୍ �
 msgid "Bounced or reported as spam before"
 msgstr "ପୂର୍ବରୁ ବାଉନ୍ସ ହେଲା କିମ୍ବା ସ୍ପାମ୍ ଭାବେ ରିପୋର୍ଟ ହେଲା"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "ବାଉନ୍ସ ହେଲା: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "ମୁଁ ପ୍ରତ୍ୟେକ ସବ୍ସ୍କ୍ରାଇବର�
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "ଏହି ଆମଦାନି ବାତିଲ କରିବେ?"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "ବାତିଲ ହେଲା"
 
@@ -2563,6 +2577,10 @@ msgstr "“ଆସୁଥିବା ମେଲ୍ର କପି ଏହାକୁ ଫ�
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "“ଆପ୍ ପାସୱାର୍ଡ ଜେନେରେଟ୍ କରନ୍ତୁ” ବାଛି, ଏହାକୁ “Yuva” ନାମ ଦେଇ ତିଆରି କରନ୍ତୁ।"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "ଏକ ଚ୍ୟାନେଲ ବାଛନ୍ତୁ"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "ଉପାଦାନ ବିଲୋପ ହେଲା"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "ସଂଯୋଗ"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "ସମ୍ମତି ଏକ୍ସପୋର୍ଟ"
 
@@ -3916,6 +3936,7 @@ msgstr "ଇମେଲ୍"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "ଇମେଲ୍ ଠିକଣା"
 
@@ -3946,6 +3967,18 @@ msgstr "ମୁଁ ଅନୁସରଣ କରୁଥିବା ଆଲୋଚନା �
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "କେବଳ ଇମେଲ୍"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "ଇମେଲ୍ ସବ୍ସ୍କ୍ରାଇବର୍"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "ଇମେଲ୍ ସବ୍ସ୍କ୍ରାଇବର୍ ବନ୍ଦ ଅଛି"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "ଇମେଲ୍ ସବ୍ସ୍କ୍ରାଇବର୍ ବନ୍ଦ ଅଛି। କେହି ସବ୍ସ୍କ୍ରାଇବ୍ କରିପାରିବେ ନାହିଁ ଏବଂ କୌଣସି ବିଜ୍ଞପ୍ତି ପଠାଯିବ ନାହିଁ, କିନ୍ତୁ ତାଲିକା ରହିବ।"
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "ବିଫଳ"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "ପାଞ୍ଚ ଥର ବିଫଳ"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "ବିଫଳ: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "Yuva ରୁ ମେଲ୍"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "ମେଲ୍ ଇମେଲ୍ ଚ୍ୟାନେଲ “{channelName}” ରେ ଯାଏ, ଯାହା {address} ପାଏ।"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "ମେଲ୍ ପ୍ରେରକଙ୍କ ନିଜ ଡୋମେନର କୀ ଦ୍ୱାରା ସାଇନ୍ ହୋଇନାହିଁ, ଯାହା Gmail ଏବଂ Yahoo ଆଶା କରନ୍ତି।"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "ମେଲ୍ ଆକାର"
@@ -6880,6 +6922,10 @@ msgstr "ଏପର୍ଯ୍ୟନ୍ତ ପ୍ରସ୍ତୁତ ଉତ୍ତର 
 msgid "No channel"
 msgstr "ଚ୍ୟାନେଲ ନାହିଁ"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "ପଠାଇପାରୁଥିବା କୌଣସି ଚ୍ୟାନେଲ ବଛାଯାଇନାହିଁ। ଗୋଟିଏ ନହେବା ପର୍ଯ୍ୟନ୍ତ କେହି ନିଶ୍ଚିତକରଣ କିମ୍ବା ବିଜ୍ଞପ୍ତି ପାଇବେ ନାହିଁ।"
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "ଏପର୍ଯ୍ୟନ୍ତ ଚ୍ୟାନେଲ ନାହିଁ"
@@ -6972,6 +7018,10 @@ msgstr "ଇମେଲ୍ ଠିକଣା ଦିଆଯାଇନାହିଁ"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "ନିଶ୍ଚିତକରଣ ଓ ସ୍ୱାଗତ ମେଲ୍ ପଠାଇପାରୁଥିବା ଇମେଲ୍ ଚ୍ୟାନେଲ ନାହିଁ"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ଇମେଲ୍ ସବ୍ସ୍କ୍ରାଇବର୍ ନାହାନ୍ତି"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "ବିଷୟ ନାହିଁ"
 msgid "No subject yet"
 msgstr "ଏପର୍ଯ୍ୟନ୍ତ ବିଷୟ ନାହିଁ"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "କୌଣସି ସବ୍ସ୍କ୍ରାଇବର୍ ମେଳ ଖାଇଲେ ନାହିଁ"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "ଏପର୍ଯ୍ୟନ୍ତ ସବ୍ସ୍କ୍ରାଇବର୍ ନାହିଁ। ସବ୍ସ୍କ୍ରାଇବ୍ ଫର୍ମ ଆପଣଙ୍କ ସାଇଟ୍ରେ ରଖନ୍ତୁ, କିମ୍ବା ପୂର୍ବରୁ ରାଜି ହୋଇଥିବା ଲୋକଙ୍କୁ ଯୋଡ଼ନ୍ତୁ।"
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ସବ୍ସ୍କ୍ରାଇବର୍ ନାହାନ୍ତି। ଭିଜିଟରମାନେ ଷ୍ଟାଟସ୍ ପେଜ୍‌ରେ ସବ୍ସ୍କ୍ରାଇବ୍ କରନ୍ତି, କିମ୍ବା ଆପଣ ଏଠାରେ ଏକ ଠିକଣା ଯୋଡ଼ିପାରିବେ।"
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "ଠିକ୍ ନୁହେଁ? ଆପଣଙ୍କ ପ୍ରଦାତା �
 msgid "Not run"
 msgstr "ଚାଲିନାହିଁ"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "ପଠାଯାଇନାହିଁ"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "ସେଟ୍ ହୋଇନାହିଁ"
@@ -7485,6 +7547,10 @@ msgstr "ଏଠାରେ ଆପଣଙ୍କ ସନ୍ଧାନ ସହ କିଛ�
 msgid "Nothing unread."
 msgstr "କିଛି ଅପଠିତ ନାହିଁ।"
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "ସବ୍ସ୍କ୍ରାଇବର୍‌ମାନଙ୍କୁ ବିଜ୍ଞପ୍ତି"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "ବିଜ୍ଞପ୍ତିକୁ ଅନୁମତି ଦିଆଗଲା 
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "ଗୋଟିଏ ଇନବକ୍ସ ପାଇଁ ଅଲଗା ଭାବେ ଜଣାନ୍ତୁ। “ଉପରେ ଥିବା ଭଳି” ରେ ଛାଡ଼ିଥିବା ସବୁ ଉପର ସେଟିଂସ୍ ଅନୁସରଣ କରେ।"
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "ସବ୍ସ୍କ୍ରାଇବର୍‌ମାନଙ୍କୁ ଜଣାନ୍ତୁ"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "ଥରେ ଲେଖାଯାଇଥିବା ଗୋଟିଏ ଉତ୍ତ
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "ଇଭେଣ୍ଟକୁ ଗୋଟିଏ ଧାଡ଼ି, ପୁରୁଣା ପ୍ରଥମେ: କିଏ ରାଜି ହେଲା କିମ୍ବା ଛାଡ଼ିଲା, କେବେ, କିପରି, କେଉଁ ପୃଷ୍ଠା ଓ IP ଠିକଣାରୁ, ଏବଂ ସେମାନେ ଦେଖିଥିବା ଶବ୍ଦ। ଏହାକୁ ସମ୍ମତିର ପ୍ରମାଣ (GDPR Art. 7, KVKK) ଭାବେ ରଖନ୍ତୁ, ଆପଣଙ୍କ ପାଖରେ କ'ଣ ଅଛି ପଚାରୁଥିବା ବ୍ୟକ୍ତିଙ୍କୁ ଉତ୍ତର ଦେବାକୁ, କିମ୍ବା ସମ୍ମତି İYS ରେ ନିଜେ ପଞ୍ଜୀକୃତ କରିବାକୁ। CSV ରେ ସ୍ପ୍ରେଡ୍ସିଟ୍ ସୂତ୍ର ନିରାପଦ କରାଯାଏ।"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "ପ୍ରତ୍ୟେକ ଘଟଣା ପାଇଁ ଗୋଟିଏ a a a a a a a a"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "ଇନବକ୍ସ ଖୋଲନ୍ତୁ"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "ଇନବକ୍ସ ସେଟିଂସ୍ ଖୋଲନ୍ତୁ"
 
@@ -7973,6 +8048,10 @@ msgstr "Microsoft Entra admin center କିମ୍ବା Azure portal ଖୋଲ�
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "ପରବର୍ତ୍ତୀ କିମ୍ବା ପୂର୍ବ କଥାବାର୍ତ୍ତା ଖୋଲନ୍ତୁ"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "ପେଜ୍ ସେଟିଂସ୍ ଖୋଲନ୍ତୁ"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "ପ୍ରାପକ"
 msgid "Recipients"
 msgstr "ପ୍ରାପକ"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "ପ୍ରାପକ: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "ଠିକଣା ଦ୍ୱାରା ଚିହ୍ନଟ।"
@@ -9661,6 +9745,10 @@ msgstr "ସିଡ୍ୟୁଲ୍ ହୋଇଛି"
 msgid "Scheduled by"
 msgstr "ସିଡ୍ୟୁଲ୍ କରିଥିବା ବ୍ୟକ୍ତି"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "{due} ପାଇଁ ନିର୍ଦ୍ଧାରିତ"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "ଏକ ପୃଷ୍ଠାରୁ ମତାମତ ପଠାନ୍ତୁ"
 msgid "Send me a code"
 msgstr "ମୋତେ ଏକ କୋଡ୍ ପଠାନ୍ତୁ"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "ଇମେଲ୍ ଦ୍ୱାରା ବିଜ୍ଞପ୍ତି ପଠାନ୍ତୁ"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "ବର୍ତ୍ତମାନ ପଠାନ୍ତୁ"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "ଉତ୍ତର ପଠାନ୍ତୁ"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "ନିଶ୍ଚିତକରଣ ପଠାନ୍ତୁ"
 
@@ -9969,6 +10062,7 @@ msgstr "ପ୍ରେରକ ପରିଚୟ"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "ପଠାଉଛି"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "ଏଠାରୁ ପଠାଏ"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "ଏହାର ମେଲ୍ ଏଠାରୁ ପଠାଏ"
 
@@ -10056,6 +10151,7 @@ msgstr "ପଠାଗଲା"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "ପଠାଗଲା"
 
@@ -10116,6 +10212,11 @@ msgstr "ଆଜି ପଠାଗଲା: ଅନୁମତିପ୍ରାପ୍ତ {l
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "ଆଜି ପଠାଗଲା: {sent}। ଦୈନିକ ସୀମା ନାହିଁ।"
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "ପଠାଗଲା: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "ଛାଡ଼ାଗଲା ଓ ବିଫଳ ({count})"
 msgid "Skipped or failed"
 msgstr "ଛାଡ଼ାଗଲା କିମ୍ବା ବିଫଳ"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "ଛାଡ଼ାଗଲା: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "ସ୍ଲଗ୍"
@@ -10886,14 +10992,25 @@ msgstr "ସବ୍ସ୍କ୍ରାଇବ୍ ହେଲେ"
 msgid "subscribed now"
 msgstr "ଏବେ ସବ୍ସ୍କ୍ରାଇବ୍ ହେଲେ"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "ସବ୍ସ୍କ୍ରାଇବର୍"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "ସବ୍ସ୍କ୍ରାଇବର୍ ଯୋଡ଼ାଗଲେ"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "ବିଜ୍ଞପ୍ତି ପାଇବା ପୂର୍ବରୁ ସବ୍ସ୍କ୍ରାଇବର୍‌ମାନେ ମେଲ୍ ଦ୍ୱାରା ନିଜ ଠିକଣା ନିଶ୍ଚିତ କରନ୍ତି।"
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "ପହଞ୍ଚିଥିବା ସବ୍ସ୍କ୍ରାଇବର୍: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "ଇନବକ୍ସକୁ କେବଳ-ପଢ଼ିବା ଭାବେ �
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "ଇନବକ୍ସର ଏପର୍ଯ୍ୟନ୍ତ ଆଇନଗତ ନାମ କିମ୍ବା ଡାକ ଠିକଣା ନାହିଁ। ଆଇନ ମାଗୁଥିବା ଭଳି ପ୍ରତ୍ୟେକ ବ୍ରଡକାଷ୍ଟ ସେଗୁଡ଼ିକ ସହ ଶେଷ ହୁଏ।"
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "ଇନବକ୍ସରେ ପ୍ରେରକଙ୍କ ପାଇଁ କୌଣସି ଡାକ ଠିକଣା ଦିଆଯାଇନାହିଁ। ଇନବକ୍ସ ସେଟିଂସ୍‌ରେ ଗୋଟିଏ ଯୋଡ଼ନ୍ତୁ।"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "ଇନବକ୍ସର Amazon SES ଟେନାଣ୍ଟ ଏବେ ବି ସେଟ୍ ହେଉଛି। ବ୍ରଡକାଷ୍ଟ ଯାଇପାରେ, କିନ୍ତୁ ଏହା ଆରମ୍ଭ ହେବା ପୂର୍ବରୁ ଏହା ପୁଣି ଯାଞ୍ଚ କରନ୍ତୁ।"
@@ -11403,6 +11524,10 @@ msgstr "ଇନବକ୍ସର Amazon SES ଟେନାଣ୍ଟ ଏବେ ବି 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "ଇନବକ୍ସର Amazon SES ଟେନାଣ୍ଟ ଆଉ ନାହିଁ। ସର୍ଭର ଏହାକୁ ପୁଣି ତିଆରି କରେ; ସେତେବେଳ ପର୍ଯ୍ୟନ୍ତ ବ୍ରଡକାଷ୍ଟ ଯାଇପାରିବ ନାହିଁ।"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "ଇନବକ୍ସର ଇମେଲ୍ ଚ୍ୟାନେଲ, ଯାହା ନିଶ୍ଚିତକରଣ ଏବଂ ବିଜ୍ଞପ୍ତି ପଠାଏ।"
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "ପୁରୁଣା ମେଲବକ୍ସ ସେହି ଡୋମେନର
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "ଅନ୍ୟ ଇନବକ୍ସରେ ଇମେଲ୍ ଚ୍ୟାନେଲ ନାହିଁ, ତେଣୁ ଏହି ଇମେଲ୍ କଥାବାର୍ତ୍ତା ସେଠାକୁ ଯାଇପାରିବ ନାହିଁ। ପ୍ରଥମେ ଏଥିରେ ଏକ ଇମେଲ୍ ଚ୍ୟାନେଲ ଯୋଡ଼ନ୍ତୁ।"
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "ପେଜ୍ ଗତ ଏକ ଘଣ୍ଟାରେ ଆଗରୁ 10ଟି ବିଜ୍ଞପ୍ତି ପଠାଇସାରିଛି"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "ଦର୍ଶକ ଏବେ ଯେପରି ପୃଷ୍ଠା ଦେଖନ୍ତି। ଡ୍ରାଫ୍ଟ ବାଦ୍।"
@@ -11571,6 +11700,10 @@ msgstr "ପୃଷ୍ଠା ଚ୍ୟାଟ୍ ଚ୍ୟାନେଲ ଅନୁମ
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "ପୃଷ୍ଠା ପ୍ରକାଶିତ ନୁହେଁ। ଏହା କେବଳ ଆପଣଙ୍କ ଦଳ ଦେଖେ।"
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "ପେଜ୍ କିମ୍ବା ଘଟଣା ସର୍ବସାଧାରଣ ନୁହେଁ"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "ସିକ୍ରେଟ୍ ତିଆରି ହେଲାବେଳେ ଥର
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "ପ୍ରେରକର ଡୋମେନ୍ ଏହି ମେଲ୍କୁ ଅଧିକୃତ କଲା ନାହିଁ। ଏହା ନକଲି ହୋଇପାରେ।"
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "ପଠାଇବା ଚ୍ୟାନେଲ ପଠାଇପାରୁନାହିଁ"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "ପଠାଇବା ଚ୍ୟାନେଲର ଏପର୍ଯ୍ୟନ୍ତ SMTP ଖାତା କିମ୍ବା ପଠାଇବାକୁ ଠିକଣା ନାହିଁ। ଏହାକୁ ଇନବକ୍ସ ସେଟିଂସରେ ସେଟ୍ କରନ୍ତୁ।"
@@ -11684,6 +11821,10 @@ msgstr "ପଠାଇବା ଚ୍ୟାନେଲର ଏପର୍ଯ୍ୟନ୍�
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "ପଠାଉଥିବା ଡୋମେନ୍ର DMARC ରେକର୍ଡ ନାହିଁ।"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "ପଠାଇବା ଡୋମେନ ଏପର୍ଯ୍ୟନ୍ତ SPF, DKIM ଏବଂ DMARC ଯାଞ୍ଚରେ ଉତ୍ତୀର୍ଣ୍ଣ ହୋଇନାହିଁ। ବିଜ୍ଞପ୍ତି ସ୍ପାମ୍‌କୁ ଯାଇପାରେ।"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "ପରିଦର୍ଶକ ଚ୍ୟାଟ୍ରେ {0} ଟାଇପ୍ �
 msgid "The workspace may not send broadcasts for now."
 msgstr "ୱାର୍କସ୍ପେସ୍ ବର୍ତ୍ତମାନ ବ୍ରଡକାଷ୍ଟ ପଠାଇପାରିବ ନାହିଁ।"
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "ୱର୍କସ୍ପେସ୍ ଏବେ ବଲ୍କ ମେଲ୍ ପଠାଇପାରିବ ନାହିଁ"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "ୱାର୍କସ୍ପେସ୍ ଆଜିର ପଠାଇବା ସୀମାରେ ପହଞ୍ଚିଲା। ପଠାଇବା {local} ({utc} UTC) ରେ ଜାରି ରହେ।"
@@ -11870,6 +12015,10 @@ msgstr "ସେମାନେ ପୂର୍ବରୁ ରାଜି ହୋଇଛନ୍
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "ସେମାନେ ଲିଙ୍କ୍ ସହ ଏକ ମେଲ୍ ପାଆନ୍ତି ଏବଂ ଏହାକୁ କ୍ଲିକ୍ କଲା ପରେ ହିଁ ସବ୍ସ୍କ୍ରାଇବ୍ ହୁଅନ୍ତି।"
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "ସେମାନଙ୍କୁ ଏକ ଲିଙ୍କ ସହ ମେଲ୍ ମିଳେ ଏବଂ ସେଥିରେ କ୍ଲିକ୍ କଲା ପରେ ହିଁ ବିଜ୍ଞପ୍ତି ପାଆନ୍ତି।"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "ଏହି ଇନବକ୍ସର ପୂର୍ବରୁ ଏକ ସ୍ଥ�
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "ଏହି ଇନବକ୍ସରେ ଏପର୍ଯ୍ୟନ୍ତ ପଠାଇପାରୁଥିବା ଇମେଲ୍ ଚ୍ୟାନେଲ ନାହିଁ। ଆପଣ ତାଲିକା ବର୍ତ୍ତମାନ ତିଆରି କରିପାରିବେ; ଏହାର ସେଟିଂସରେ ଉତ୍ତର ଖାତା ଥିବା ଇମେଲ୍ ଚ୍ୟାନେଲ ବଛାଗଲେ ଏହା ପଠାଏ।"
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "ଏହି ଇନବକ୍ସରେ ପଠାଇପାରୁଥିବା କୌଣସି ଇମେଲ୍ ଚ୍ୟାନେଲ ନାହିଁ। ଇନବକ୍ସ ସେଟିଂସ୍‌ରେ ଏକ SMTP ଆକାଉଣ୍ଟ ଯୋଡ଼ନ୍ତୁ।"
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "ଏହି ଇନବକ୍ସର ଏପର୍ଯ୍ୟନ୍ତ ଇମେଲ୍ ଚ୍ୟାନେଲ ନାହିଁ। ଇନବକ୍ସ ସେଟିଂସରେ ଗୋଟିଏ ଯୋଡ଼ନ୍ତୁ।"
@@ -12044,6 +12197,7 @@ msgstr "ଏହା JSON ଅବଜେକ୍ଟ ନୁହେଁ।"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "ଏହା ବୈଧ ଇମେଲ୍ ଠିକଣା ନୁହେଁ।"
 
@@ -12400,6 +12554,10 @@ msgstr "ଅସ୍ତିତ୍ୱରେ ଥିବା ଗ୍ରାହକଙ୍କ�
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "Google ଖାତା ପାଇଁ 2-Step Verification ଚାଲୁ କରନ୍ତୁ, ଯଦି ଏପର୍ଯ୍ୟନ୍ତ ଚାଲୁ ନାହିଁ।"
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "ଭିଜିଟରମାନେ ବିଜ୍ଞପ୍ତିକୁ ସବ୍ସ୍କ୍ରାଇବ୍ କରିପାରିବା ପାଇଁ ପେଜ୍ ସେଟିଂସ୍‌ରେ ଇମେଲ୍ ସବ୍ସ୍କ୍ରାଇବର୍ ଚାଲୁ କରନ୍ତୁ।"
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "ଏହି ଡିଭାଇସ୍ ପାଇଁ ଚାଲୁ କରନ୍ତୁ"
@@ -12484,8 +12642,13 @@ msgstr "ୱାର୍କସ୍ପେସ୍ର ଦୈନିକ ସୀମା ଅନ
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "ପୂର୍ବବତ୍ କରନ୍ତୁ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "ଅପେକ୍ଷାରତ ବିଜ୍ଞପ୍ତି ପୂର୍ବବତ୍ କରନ୍ତୁ"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "ଏବେ ଅନସବ୍ସ୍କ୍ରାଇବ୍ କଲେ"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "ସେମାନେ ଲିଙ୍କ୍ କ୍ଲିକ୍ ନକରିବା ପର୍ଯ୍ୟନ୍ତ ନିଶ୍ଚିତକରଣ ଅପେକ୍ଷାରେ ରହନ୍ତି ଏବଂ ଅନ୍ୟ ମେଲ୍ ପାଆନ୍ତି ନାହିଁ। ଅନିଶ୍ଚିତ ସବ୍ସ୍କ୍ରିପସନ୍ 30 ଦିନ ପରେ ଡିଲିଟ୍ ହୁଏ।"
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "ଲିଙ୍କ୍ କ୍ଲିକ୍ ନକରିବା ପର୍ଯ୍ୟନ୍ତ ସେମାନେ ନିଶ୍ଚିତକରଣ ପାଇଁ ଅପେକ୍ଷାରେ ରହନ୍ତି। ଅନିଶ୍ଚିତ ଠିକଣାଗୁଡ଼ିକ 30 ଦିନ ପରେ ଲିଭାଯାଏ।"
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "ଗତ ସାତ ଦିନରେ ପରିଦର୍ଶକ: {series}"
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "ଆପଣଙ୍କ ୱେବସାଇଟ୍ କିମ୍ବା ଆପ୍ର ପରିଦର୍ଶକ, କୁକି ବିନା"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "ଭିଜିଟରମାନେ ପେଜ୍‌ରେ ସବ୍ସ୍କ୍ରାଇବ୍ କରନ୍ତି ଏବଂ କୌଣସି ଘଟଣା କିମ୍ବା ରକ୍ଷଣାବେକ୍ଷଣ ବଦଳିଲେ ମେଲ୍ ପାଆନ୍ତି।"
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

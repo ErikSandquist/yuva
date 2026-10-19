@@ -14,11 +14,15 @@ import { Card, ChoiceSelect, Section } from "@/features/settings/ui"
 import { IncidentBadges } from "@/features/status/IncidentsTab"
 import { IncidentDialog } from "@/features/status/IncidentDialog"
 import { LinkedConversations } from "@/features/status/LinkedSection"
+import { NotifyCheck } from "@/features/status/NotifyCheck"
+import { NoticesSection } from "@/features/status/Notices"
 import {
   statusLink,
+  useCancelNotice,
   useIncidentMutations,
   useStatusComponents,
   useStatusIncident,
+  useStatusNotices,
   useStatusPage,
 } from "@/features/status/queries"
 import { isClosed, nextStates, PlainText, StateDot, useStatusText } from "@/features/status/text"
@@ -126,7 +130,13 @@ export function IncidentPane() {
   const [state, setState] = useState<StatusIncidentState | null>(null)
   const [body, setBody] = useState("")
   const box = useRef<HTMLTextAreaElement>(null)
+  const [notifyChoice, setNotifyChoice] = useState<boolean | null>(null)
+  const [publishNotify, setPublishNotify] = useState<boolean | null>(null)
   const i = incident.data
+  const subscribers = !!page?.email_subscribers.enabled
+  const notices = useStatusNotices(pageId, incidentId, subscribers).data ?? []
+  const cancelNotice = useCancelNotice(pageId)
+  const waiting = notices.find((n) => n.state === "pending")
 
   const closing: StatusIncidentState | undefined = i ? (i.kind === "incident" ? "resolved" : "completed") : undefined
   const open = !!i && !isClosed(i)
@@ -157,7 +167,14 @@ export function IncidentPane() {
       ...(open ? { [STATUS_KEYS.update]: () => focusUpdate() } : {}),
       ...(open && closing ? { [STATUS_KEYS.resolve]: () => focusUpdate(closing) } : {}),
       ...(open ? { [STATUS_KEYS.edit]: () => setEditing(true) } : {}),
-      ...(draft ? { [STATUS_KEYS.publish]: () => i && m.publish.mutate(i.id) } : {}),
+      ...(draft
+        ? {
+            [STATUS_KEYS.publish]: () =>
+              i &&
+              m.publish.mutate({ id: i.id, notify: subscribers ? (publishNotify ?? i.notify ?? true) : undefined }),
+          }
+        : {}),
+      ...(waiting ? { [STATUS_KEYS.undoNotice]: () => cancelNotice.mutate(waiting.id) } : {}),
       ...(draft ? { [STATUS_KEYS.remove]: remove } : {}),
     },
     !!i
@@ -180,8 +197,11 @@ export function IncidentPane() {
       </Pane>
     )
   }
+  const notifyOnPublish = publishNotify ?? i.notify ?? true
+  const touchedIds = i.components.map((c) => c.component_id)
   const states = nextStates(i).map((s) => [s, text.incident[s]] as const)
   const current = state && nextStates(i).includes(state) ? state : i.state
+  const notifyUpdate = notifyChoice ?? current !== i.state
   const touched = i.components.map((c) => ({ ...c, name: components.find((x) => x.id === c.component_id)?.name }))
   const updateKey = keyLabel(STATUS_KEYS.update).join("")
   const resolveKey = keyLabel(STATUS_KEYS.resolve).join("")
@@ -207,12 +227,21 @@ export function IncidentPane() {
             <Trans>This is a draft. Only your team sees it, and it changes no component until you publish it.</Trans>
           </p>
         )}
-        <div className="mt-1 flex flex-wrap gap-2">
+        <div className="mt-1 flex flex-wrap items-center gap-2">
+          {draft && page && (
+            <NotifyCheck
+              page={page}
+              components={touchedIds}
+              checked={notifyOnPublish}
+              onChange={setPublishNotify}
+              testId="status-incident-publish-notify"
+            />
+          )}
           {draft && (
             <Button
               size="sm"
               disabled={m.publish.isPending}
-              onClick={() => m.publish.mutate(i.id)}
+              onClick={() => m.publish.mutate({ id: i.id, notify: subscribers ? notifyOnPublish : undefined })}
               title={t`Publish (${publishKey})`}
               data-testid="status-incident-publish-draft"
             >
@@ -291,11 +320,12 @@ export function IncidentPane() {
               e.preventDefault()
               if (!body.trim()) return
               m.postUpdate.mutate(
-                { id: i.id, body: body.trim(), state: current },
+                { id: i.id, body: body.trim(), state: current, ...(subscribers ? { notify: notifyUpdate } : {}) },
                 {
                   onSuccess: () => {
                     setBody("")
                     setState(null)
+                    setNotifyChoice(null)
                   },
                 }
               )
@@ -312,6 +342,15 @@ export function IncidentPane() {
               aria-label={t`Update text`}
               data-testid="status-update-body"
             />
+            {page && (
+              <NotifyCheck
+                page={page}
+                components={touchedIds}
+                checked={notifyUpdate}
+                onChange={setNotifyChoice}
+                testId="status-update-notify"
+              />
+            )}
             <div className="flex flex-wrap items-center gap-3">
               <ErrorLine error={m.postUpdate.error} className="min-w-0 flex-1 text-caption" />
               <Button
@@ -335,6 +374,7 @@ export function IncidentPane() {
         onReply={(id) => setParams({ reply: id }, { replace: true })}
         onDismissReply={() => setParams({}, { replace: true })}
       />
+      <NoticesSection notices={notices} pageId={pageId} />
       <Section title={<Trans>Updates</Trans>}>
         <Card flush>
           <ul data-testid="status-updates">

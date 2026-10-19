@@ -1207,7 +1207,9 @@ msgstr "Προσθήκη λογαριασμού απαντήσεων"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "Προσθέστε έναν κανόνα για το {address} που παραδίδει την αλληλογραφία του και στη διεύθυνση παρακάτω, διατηρώντας την παράδοση στο γραμματοκιβώτιο."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "Προσθήκη συνδρομητή"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "Όλα"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "Όλα τα στοιχεία"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "Επιστράφηκε ή αναφέρθηκε ως ανεπιθύμητ
 msgid "Bounced or reported as spam before"
 msgstr "Επιστράφηκε ή αναφέρθηκε ως ανεπιθύμητο στο παρελθόν"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "Επιστράφηκαν: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "Μπορώ να προγραμματίσω ένα ενημερωτικό
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "Ακύρωση αυτής της εισαγωγής;"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "Ακυρώθηκε"
 
@@ -2563,6 +2577,10 @@ msgstr "Επιλέξτε «Προώθηση αντιγράφου των εισε
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "Επιλέξτε «Δημιουργία κωδικού εφαρμογής», ονομάστε τον «Yuva» και δημιουργήστε τον."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "Επιλέξτε κανάλι"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "Το στοιχείο διαγράφηκε"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "Συνδέσεις"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "Εξαγωγή συναινέσεων"
 
@@ -3916,6 +3936,7 @@ msgstr "E-mail"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "Διεύθυνση e-mail"
 
@@ -3946,6 +3967,18 @@ msgstr "Στείλτε μου e-mail για τις συζητήσεις που �
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "Μόνο e-mail"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "Συνδρομητές e-mail"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "Οι συνδρομητές e-mail είναι απενεργοποιημένοι"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "Οι συνδρομητές e-mail είναι απενεργοποιημένοι. Κανείς δεν μπορεί να εγγραφεί και δεν αποστέλλονται ειδοποιήσεις, αλλά η λίστα διατηρείται."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "Απέτυχε"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "Απέτυχε πέντε φορές"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "Απέτυχαν: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "Αλληλογραφία από το Yuva"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "Η αλληλογραφία μπαίνει στο κανάλι e-mail «{channelName}», που λαμβάνει το {address}."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "Η αλληλογραφία δεν είναι υπογεγραμμένη με κλειδί του δικού τους τομέα του αποστολέα, κάτι που αναμένουν το Gmail και το Yahoo."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "Μέγεθος e-mail"
@@ -6880,6 +6922,10 @@ msgstr "Καμία έτοιμη απάντηση ακόμη. Προσθέστε 
 msgid "No channel"
 msgstr "Χωρίς κανάλι"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "Δεν έχει επιλεγεί κανάλι που μπορεί να στείλει. Μέχρι να υπάρξει, κανείς δεν λαμβάνει επιβεβαίωση ή ειδοποίηση."
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "Κανένα κανάλι ακόμη"
@@ -6972,6 +7018,10 @@ msgstr "Δεν δόθηκε διεύθυνση e-mail"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "Κανένα κανάλι e-mail που να μπορεί να στείλει τα e-mail επιβεβαίωσης και καλωσορίσματος"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "Δεν υπάρχουν ακόμη συνδρομητές e-mail"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "Χωρίς θέμα"
 msgid "No subject yet"
 msgstr "Χωρίς θέμα ακόμη"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "Κανένας συνδρομητής δεν ταιριάζει"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "Κανένας συνδρομητής ακόμη. Βάλτε τη φόρμα εγγραφής στον ιστότοπό σας ή προσθέστε άτομα που έχουν ήδη συναινέσει."
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "Δεν υπάρχουν ακόμη συνδρομητές. Οι επισκέπτες εγγράφονται στη σελίδα κατάστασης ή μπορείτε να προσθέσετε εδώ μια διεύθυνση."
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "Δεν είναι σωστό; Επιλέξτε τον πάροχό σα�
 msgid "Not run"
 msgstr "Δεν εκτελέστηκε"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "Δεν στάλθηκε"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "Δεν έχει ρυθμιστεί"
@@ -7485,6 +7547,10 @@ msgstr "Τίποτα δεν ταιριάζει με την αναζήτησή σ
 msgid "Nothing unread."
 msgstr "Τίποτα αδιάβαστο."
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "Ειδοποιήσεις προς συνδρομητές"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "Οι ειδοποιήσεις δεν επιτράπηκαν."
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "Διαφορετική ειδοποίηση για ένα εισερχόμενο. Ό,τι μένει στο «Όπως παραπάνω» ακολουθεί τις παραπάνω ρυθμίσεις."
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "Ειδοποίηση συνδρομητών"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "Μία απάντηση, γραμμένη μία φορά, πηγαίν�
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "Μία γραμμή ανά συμβάν, τα παλαιότερα πρώτα: ποιος συναίνεσε ή αποχώρησε, πότε, πώς, από ποια σελίδα και διεύθυνση IP, και τα λόγια που είδε. Κρατήστε το ως απόδειξη συναίνεσης (GDPR άρθρο 7, KVKK), για να απαντήσετε σε άτομο που ρωτά τι κρατάτε ή για να καταχωρίσετε μόνοι σας συναινέσεις στο İYS. Οι τύποι υπολογιστικών φύλλων στο CSV εξουδετερώνονται."
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "Μία γραμμή ανά συμβάν, από το παλαιότερο: ποιος συναίνεσε ή αποχώρησε, πότε, με ποιον τρόπο, από ποια σελίδα και διεύθυνση IP, και το κείμενο που είδε. Κρατήστε την ως απόδειξη συναίνεσης ή για να απαντήσετε σε κάποιον που ρωτά τι δεδομένα του διατηρείτε."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "Άνοιγμα των εισερχομένων"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "Άνοιγμα των ρυθμίσεων εισερχομένων"
 
@@ -7973,6 +8048,10 @@ msgstr "Ανοίξτε το κέντρο διαχείρισης Microsoft Entra 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "Άνοιγμα της επόμενης ή προηγούμενης συνομιλίας"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "Άνοιγμα των ρυθμίσεων της σελίδας"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "παραλήπτες"
 msgid "Recipients"
 msgstr "Παραλήπτες"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "Παραλήπτες: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "Αναγνωρίζεται από τη διεύθυνση."
@@ -9661,6 +9745,10 @@ msgstr "Προγραμματισμένη"
 msgid "Scheduled by"
 msgstr "Προγραμματίστηκε από"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "Προγραμματίστηκε για {due}"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "Αποστολή σχολίων από σελίδα"
 msgid "Send me a code"
 msgstr "Στείλτε μου έναν κωδικό"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "Αποστολή ειδοποιήσεων μέσω e-mail"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "Αποστολή τώρα"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "Αποστολή απάντησης"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "Αποστολή της επιβεβαίωσης"
 
@@ -9969,6 +10062,7 @@ msgstr "Ταυτότητα αποστολέα"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "Αποστολή"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "Στέλνει από"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "Στέλνει την αλληλογραφία του από"
 
@@ -10056,6 +10151,7 @@ msgstr "στάλθηκε"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "Στάλθηκε"
 
@@ -10116,6 +10212,11 @@ msgstr "Στάλθηκαν σήμερα: {sent} από {limit} επιτρεπό�
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "Στάλθηκαν σήμερα: {sent}. Δεν υπάρχει ημερήσιο όριο."
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "Στάλθηκαν: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "Παραλείφθηκαν και απέτυχαν ({count})"
 msgid "Skipped or failed"
 msgstr "Παραλείφθηκαν ή απέτυχαν"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "Παραλείφθηκαν: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "Slug"
@@ -10886,14 +10992,25 @@ msgstr "Εγγεγραμμένος/η"
 msgid "subscribed now"
 msgstr "εγγράφηκαν τώρα"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "Συνδρομητές"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "Συνδρομητές που προστέθηκαν"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "Οι συνδρομητές επιβεβαιώνουν τη διεύθυνσή τους μέσω e-mail πριν λάβουν ειδοποιήσεις."
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "Συνδρομητές που ειδοποιήθηκαν: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "Τα εισερχόμενα δεν άνοιξαν μόνο για ανά
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "Τα εισερχόμενα δεν έχουν ακόμη νομική επωνυμία ή ταχυδρομική διεύθυνση. Κάθε μαζική αποστολή τελειώνει με αυτά, όπως απαιτεί ο νόμος."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "Τα εισερχόμενα δεν δηλώνουν ταχυδρομική διεύθυνση για τον αποστολέα. Προσθέστε μία στις ρυθμίσεις εισερχομένων."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "Ο μισθωτής Amazon SES των εισερχομένων ρυθμίζεται ακόμη. Η μαζική αποστολή μπορεί να φύγει, αλλά ελέγξτε το ξανά πριν ξεκινήσει."
@@ -11403,6 +11524,10 @@ msgstr "Ο μισθωτής Amazon SES των εισερχομένων ρυθμ�
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "Ο μισθωτής Amazon SES των εισερχομένων δεν υπάρχει πια. Ο διακομιστής τον δημιουργεί ξανά· μέχρι τότε η μαζική αποστολή δεν μπορεί να φύγει."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "Το κανάλι e-mail των εισερχομένων που στέλνει επιβεβαιώσεις και ειδοποιήσεις."
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "Το παλιό γραμματοκιβώτιο σταματά να λα�
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "Τα άλλα εισερχόμενα δεν έχουν κανάλι e-mail, οπότε αυτή η συνομιλία e-mail δεν μπορεί να μετακινηθεί εκεί. Προσθέστε πρώτα ένα κανάλι e-mail."
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "Η σελίδα έχει ήδη στείλει 10 ειδοποιήσεις την τελευταία ώρα"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "Η σελίδα όπως τη βλέπουν τώρα οι επισκέπτες. Τα πρόχειρα εξαιρούνται."
@@ -11571,6 +11700,10 @@ msgstr "Η σελίδα δεν βρίσκεται σε ιστότοπο που �
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "Η σελίδα δεν είναι δημοσιευμένη. Αυτό το βλέπει μόνο η ομάδα σας."
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "Η σελίδα ή το περιστατικό δεν είναι δημόσιο"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "Το μυστικό εμφανίζεται μία φορά, όταν δ�
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "Ο τομέας του αποστολέα δεν εξουσιοδότησε αυτό το e-mail. Μπορεί να είναι πλαστό."
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "Το κανάλι αποστολής δεν μπορεί να στείλει"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "Το κανάλι αποστολής δεν έχει ακόμη λογαριασμό SMTP ή διεύθυνση αποστολής. Ρυθμίστε το στις ρυθμίσεις εισερχομένων."
@@ -11684,6 +11821,10 @@ msgstr "Το κανάλι αποστολής δεν έχει ακόμη λογα
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "Ο τομέας αποστολής δεν έχει εγγραφή DMARC."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "Ο τομέας αποστολής δεν έχει περάσει ακόμη τον έλεγχο SPF, DKIM και DMARC. Οι ειδοποιήσεις μπορεί να καταλήξουν στα ανεπιθύμητα."
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "Ο επισκέπτης πληκτρολόγησε {0} στη συνομ
 msgid "The workspace may not send broadcasts for now."
 msgstr "Ο χώρος εργασίας δεν επιτρέπεται προς το παρόν να στέλνει μαζικές αποστολές."
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "Ο χώρος εργασίας δεν επιτρέπεται να στείλει μαζική αλληλογραφία αυτή τη στιγμή"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "Ο χώρος εργασίας έφτασε το σημερινό όριο αποστολής. Η αποστολή συνεχίζεται στις {local} ({utc} UTC)."
@@ -11870,6 +12015,10 @@ msgstr "Έχουν ήδη συναινέσει"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "Λαμβάνουν e-mail με σύνδεσμο και εγγράφονται μόνο αφού τον πατήσουν."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "Λαμβάνουν ένα e-mail με σύνδεσμο και παίρνουν ειδοποιήσεις μόνο αφού πατήσουν σε αυτόν."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "Αυτό το εισερχόμενο έχει ήδη σελίδα κατ
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "Αυτά τα εισερχόμενα δεν έχουν ακόμη κανάλι e-mail που να μπορεί να στείλει. Μπορείτε να δημιουργήσετε τη λίστα τώρα· στέλνει μόλις επιλεγεί στις ρυθμίσεις της ένα κανάλι e-mail με λογαριασμό απαντήσεων."
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "Αυτά τα εισερχόμενα δεν έχουν κανάλι e-mail που μπορεί να στείλει. Προσθέστε έναν λογαριασμό SMTP στις ρυθμίσεις εισερχομένων."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "Αυτά τα εισερχόμενα δεν έχουν ακόμη κανάλι e-mail. Προσθέστε ένα στις ρυθμίσεις εισερχομένων."
@@ -12044,6 +12197,7 @@ msgstr "Αυτό δεν είναι αντικείμενο JSON."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "Αυτή δεν είναι έγκυρη διεύθυνση e-mail."
 
@@ -12400,6 +12554,10 @@ msgstr "Απενεργοποιήστε το για ανακοινώσεις υπ
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "Ενεργοποιήστε την επαλήθευση σε 2 βήματα για τον λογαριασμό Google, αν δεν είναι ήδη ενεργή."
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "Ενεργοποιήστε τους συνδρομητές e-mail στις ρυθμίσεις της σελίδας για να μπορούν οι επισκέπτες να εγγράφονται στις ειδοποιήσεις."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "Ενεργοποίηση για αυτή τη συσκευή"
@@ -12484,8 +12642,13 @@ msgstr "Με το ημερήσιο όριο του χώρου εργασίας, 
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "Αναίρεση"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "Αναίρεση της ειδοποίησης που αναμένει"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "διέγραψαν τη συνδρομή τους τώρα"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "Μέχρι να πατήσουν τον σύνδεσμο μένουν σε αναμονή επιβεβαίωσης και δεν λαμβάνουν άλλη αλληλογραφία. Οι μη επιβεβαιωμένες συνδρομές διαγράφονται μετά από 30 ημέρες."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "Μέχρι να πατήσουν τον σύνδεσμο παραμένουν σε αναμονή επιβεβαίωσης. Οι μη επιβεβαιωμένες διευθύνσεις διαγράφονται μετά από 30 ημέρες."
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "Επισκέπτες τις τελευταίες επτά ημέρες: 
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "Επισκέπτες του ιστότοπου ή της εφαρμογής σας, χωρίς cookies"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "Οι επισκέπτες εγγράφονται στη σελίδα και λαμβάνουν e-mail όταν αλλάζει κάποιο περιστατικό ή εργασία συντήρησης."
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

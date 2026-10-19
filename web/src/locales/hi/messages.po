@@ -1207,7 +1207,9 @@ msgstr "जवाब वाला खाता जोड़ें"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "{address} के लिए एक नियम जोड़ें जो उसका मेल नीचे दिए पते पर भी भेजे, और मेलबॉक्स में डिलीवरी भी बनी रहे।"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "सब्सक्राइबर जोड़ें"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "सभी"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "सभी घटक"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "बाउंस हुआ या स्पैम रिपोर्ट �
 msgid "Bounced or reported as spam before"
 msgstr "पहले बाउंस हुआ या स्पैम रिपोर्ट किया गया"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "बाउंस हुए: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "क्या मैं हर सब्सक्राइबर के �
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "यह इम्पोर्ट रद्द करें?"
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "रद्द किया गया"
 
@@ -2563,6 +2577,10 @@ msgstr "“आने वाले मेल की कॉपी इस पते
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "“ऐप पासवर्ड जनरेट करें” चुनें, उसे “Yuva” नाम दें और बनाएँ।"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "चैनल चुनें"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "घटक हटाया गया"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "कनेक्शन"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "सहमति एक्सपोर्ट"
 
@@ -3916,6 +3936,7 @@ msgstr "ई-मेल"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "ई-मेल पता"
 
@@ -3946,6 +3967,18 @@ msgstr "मैं जिन चर्चाओं को फ़ॉलो कर�
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "केवल ई-मेल"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "ईमेल सब्सक्राइबर"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "ईमेल सब्सक्राइबर बंद हैं"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "ईमेल सब्सक्राइबर बंद हैं। कोई सब्सक्राइब नहीं कर सकता और कोई नोटिस नहीं भेजा जाता, लेकिन सूची सुरक्षित रहती है।"
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "विफल"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "पाँच बार विफल"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "विफल: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "Yuva से मेल"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "मेल ई-मेल चैनल “{channelName}” में जाता है, जो {address} प्राप्त करता है।"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "मेल पर भेजने वाले के अपने डोमेन की कुंजी से हस्ताक्षर नहीं हैं, जबकि Gmail और Yahoo इसकी अपेक्षा करते हैं।"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "मेल का आकार"
@@ -6880,6 +6922,10 @@ msgstr "अभी कोई कैन्ड रिप्लाई नहीं�
 msgid "No channel"
 msgstr "कोई चैनल नहीं"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "भेजने में सक्षम कोई चैनल नहीं चुना गया है। जब तक कोई चैनल नहीं होगा, किसी को पुष्टि या नोटिस नहीं मिलेगा।"
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "अभी कोई चैनल नहीं"
@@ -6972,6 +7018,10 @@ msgstr "कोई ई-मेल पता नहीं दिया"
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "कोई ई-मेल चैनल नहीं जो इसके पुष्टि और स्वागत मेल भेज सके"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "अभी कोई ईमेल सब्सक्राइबर नहीं है"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "कोई विषय नहीं"
 msgid "No subject yet"
 msgstr "अभी कोई विषय नहीं"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "कोई सब्सक्राइबर नहीं मिला"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "अभी कोई सब्सक्राइबर नहीं। सब्सक्राइब फ़ॉर्म अपनी साइट पर लगाएँ, या उन लोगों को जोड़ें जो पहले सहमत हो चुके हैं।"
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "अभी कोई सब्सक्राइबर नहीं है। विज़िटर स्टेटस पेज पर सब्सक्राइब करते हैं, या आप यहाँ कोई पता जोड़ सकते हैं।"
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "सही नहीं? अपना प्रदाता चुने�
 msgid "Not run"
 msgstr "चलाया नहीं गया"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "नहीं भेजे गए"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "सेट अप नहीं"
@@ -7485,6 +7547,10 @@ msgstr "आपकी खोज से यहाँ कुछ मेल नही
 msgid "Nothing unread."
 msgstr "कुछ अनपढ़ा नहीं।"
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "सब्सक्राइबर को नोटिस"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "नोटिफ़िकेशन की अनुमति नहीं
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "किसी एक इनबॉक्स के लिए अलग तरह से सूचित करें। जो “ऊपर जैसा” पर रहे वह ऊपर की सेटिंग का पालन करता है।"
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "सब्सक्राइबर को सूचित करें"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "एक बार लिखा गया एक जवाब {title} स�
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "हर इवेंट के लिए एक पंक्ति, पुराना पहले: कौन सहमत हुआ या गया, कब, कैसे, किस पेज और IP पते से, और उन्होंने कौन से शब्द देखे। इसे सहमति के सबूत के रूप में रखें (GDPR Art. 7, KVKK), किसी पूछने वाले को बताने के लिए कि आपके पास क्या है, या खुद İYS में सहमतियाँ दर्ज करने के लिए। CSV में स्प्रेडशीट फ़ॉर्मूले हानिरहित बना दिए जाते हैं।"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "हर घटना की एक पंक्ति, सबसे पुरानी पहले: किसने सहमति दी या छोड़ा, कब, कैसे, किस पेज और IP पते से, और उन्होंने कौन-से शब्द देखे। इसे सहमति के प्रमाण के रूप में रखें या उस व्यक्ति को जवाब देने के लिए, जो पूछे कि आपके पास क्या जानकारी है।"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "इनबॉक्स खोलें"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "इनबॉक्स सेटिंग खोलें"
 
@@ -7973,6 +8048,10 @@ msgstr "Microsoft Entra admin center या Azure portal खोलें, App re
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "अगली या पिछली बातचीत खोलें"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "पेज सेटिंग खोलें"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "प्राप्तकर्ता"
 msgid "Recipients"
 msgstr "प्राप्तकर्ता"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "प्राप्तकर्ता: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "पते से पहचाना गया।"
@@ -9661,6 +9745,10 @@ msgstr "शेड्यूल किया गया"
 msgid "Scheduled by"
 msgstr "शेड्यूल करने वाला"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "{due} के लिए शेड्यूल किया गया"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "किसी पेज से फ़ीडबैक भेजें"
 msgid "Send me a code"
 msgstr "मुझे कोड भेजें"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "नोटिस ईमेल से भेजें"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "अभी भेजें"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "जवाब भेजें"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "पुष्टि भेजें"
 
@@ -9969,6 +10062,7 @@ msgstr "प्रेषक की पहचान"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "भेजा जा रहा है"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "यहाँ से भेजता है"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "अपना मेल यहाँ से भेजता है"
 
@@ -10056,6 +10151,7 @@ msgstr "भेजा गया"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "भेजा गया"
 
@@ -10116,6 +10212,11 @@ msgstr "आज भेजे गए: {limit} में से {sent} की अ�
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "आज भेजे गए: {sent}। कोई दैनिक सीमा नहीं।"
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "भेजा गया: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "छोड़े गए और विफल ({count})"
 msgid "Skipped or failed"
 msgstr "छोड़े गए या विफल"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "छोड़े गए: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "स्लग"
@@ -10886,14 +10992,25 @@ msgstr "सब्सक्राइब किया"
 msgid "subscribed now"
 msgstr "अभी सब्सक्राइब किया"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "सब्सक्राइबर"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "सब्सक्राइबर जोड़े गए"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "नोटिस मिलने से पहले सब्सक्राइबर मेल से अपने पते की पुष्टि करते हैं।"
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "पहुँचे सब्सक्राइबर: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "इनबॉक्स केवल-पढ़ने के रूप म�
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "इनबॉक्स का अभी कोई कानूनी नाम या डाक का पता नहीं है। कानून की माँग के अनुसार हर ब्रॉडकास्ट उनके साथ खत्म होता है।"
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "इनबॉक्स में भेजने वाले का कोई डाक पता नहीं दिया गया है। इनबॉक्स सेटिंग में एक जोड़ें।"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "इनबॉक्स का Amazon SES टेनेंट अभी सेट अप हो रहा है। ब्रॉडकास्ट जा सकता है, लेकिन शुरू होने से पहले इसे फिर जाँचें।"
@@ -11403,6 +11524,10 @@ msgstr "इनबॉक्स का Amazon SES टेनेंट अभी स
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "इनबॉक्स का Amazon SES टेनेंट अब मौजूद नहीं है। सर्वर इसे फिर बनाता है; तब तक ब्रॉडकास्ट नहीं जा सकता।"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "इनबॉक्स का ईमेल चैनल, जो पुष्टि और नोटिस भेजता है।"
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "पुराना मेलबॉक्स उस डोमेन क�
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "दूसरे इनबॉक्स के पास कोई ई-मेल चैनल नहीं है, इसलिए यह ई-मेल बातचीत वहाँ नहीं जा सकती। पहले उसमें एक ई-मेल चैनल जोड़ें।"
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "पेज पिछले एक घंटे में 10 नोटिस भेज चुका है"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "पेज जैसा आगंतुक अभी देखते हैं। ड्राफ़्ट शामिल नहीं हैं।"
@@ -11571,6 +11700,10 @@ msgstr "पेज उस साइट पर नहीं है जिसे �
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "पेज प्रकाशित नहीं है। इसे केवल आपकी टीम देखती है।"
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "पेज या घटना सार्वजनिक नहीं है"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "सीक्रेट बनते समय एक बार दिख�
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "प्रेषक के डोमेन ने इस मेल को अधिकृत नहीं किया। यह जाली हो सकता है।"
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "भेजने वाला चैनल नहीं भेज सकता"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "भेजने वाले चैनल के पास अभी भेजने के लिए SMTP खाता या पता नहीं है। इसे इनबॉक्स सेटिंग में सेट करें।"
@@ -11684,6 +11821,10 @@ msgstr "भेजने वाले चैनल के पास अभी भ
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "भेजने वाले डोमेन का कोई DMARC रिकॉर्ड नहीं है।"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "भेजने वाले डोमेन ने अभी SPF, DKIM और DMARC की जाँच पास नहीं की है। नोटिस स्पैम में जा सकते हैं।"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "विज़िटर ने चैट में {0} टाइप कि
 msgid "The workspace may not send broadcasts for now."
 msgstr "वर्कस्पेस को फ़िलहाल ब्रॉडकास्ट भेजने की अनुमति नहीं है।"
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "वर्कस्पेस अभी बल्क मेल नहीं भेज सकता"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "वर्कस्पेस आज की भेजने की सीमा तक पहुँच गया। भेजना {local} ({utc} UTC) पर जारी रहता है।"
@@ -11870,6 +12015,10 @@ msgstr "वे पहले ही सहमत हो चुके हैं"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "उन्हें लिंक वाला मेल मिलता है और वे क्लिक करने के बाद ही सब्सक्राइब होते हैं।"
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "उन्हें लिंक वाला एक मेल मिलता है और वे उस पर क्लिक करने के बाद ही नोटिस पाते हैं।"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "इस इनबॉक्स का स्टेटस पेज पह�
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "इस इनबॉक्स में अभी कोई ई-मेल चैनल नहीं है जो भेज सके। आप लिस्ट अभी बना सकते हैं; वह तब भेजती है जब उसकी सेटिंग में जवाब वाले खाते वाला ई-मेल चैनल चुना जाता है।"
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "इस इनबॉक्स में भेजने में सक्षम कोई ईमेल चैनल नहीं है। इनबॉक्स सेटिंग में एक SMTP खाता जोड़ें।"
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "इस इनबॉक्स में अभी कोई ई-मेल चैनल नहीं है। इनबॉक्स सेटिंग में एक जोड़ें।"
@@ -12044,6 +12197,7 @@ msgstr "यह JSON ऑब्जेक्ट नहीं है।"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "यह मान्य ई-मेल पता नहीं है।"
 
@@ -12400,6 +12554,10 @@ msgstr "मौजूदा ग्राहकों को सेवा घो�
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "यदि Google खाते के लिए 2-Step Verification अभी चालू नहीं है, तो उसे चालू करें।"
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "विज़िटर को नोटिस के लिए सब्सक्राइब करने देने हेतु पेज सेटिंग में ईमेल सब्सक्राइबर चालू करें।"
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "इस डिवाइस के लिए चालू करें"
@@ -12484,8 +12642,13 @@ msgstr "वर्कस्पेस की दैनिक सीमा के �
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "पूर्ववत करें"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "प्रतीक्षारत नोटिस को पूर्ववत करें"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "अभी अनसब्सक्राइब किया"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "लिंक पर क्लिक करने तक वे पुष्टि की प्रतीक्षा में रहते हैं और कोई और मेल नहीं पाते। अपुष्ट सब्सक्रिप्शन 30 दिन बाद हटा दी जाती हैं।"
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "लिंक पर क्लिक करने तक वे पुष्टि की प्रतीक्षा में रहते हैं। अपुष्ट पते 30 दिन बाद हटा दिए जाते हैं।"
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "पिछले सात दिनों में विज़िट�
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "आपकी वेबसाइट या ऐप के विज़िटर, बिना कुकी के"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "विज़िटर पेज पर सब्सक्राइब करते हैं और किसी घटना या मेंटेनेंस में बदलाव होने पर उन्हें मेल मिलता है।"
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

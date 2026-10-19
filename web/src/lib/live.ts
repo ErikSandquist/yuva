@@ -19,6 +19,7 @@ import type {
   MigrationForwardingConfirmationData,
   MigrationProgress,
   RealtimeMessage,
+  StatusNotice,
 } from "@/lib/api"
 import { keys, type ConversationFilters } from "@/lib/keys"
 
@@ -661,6 +662,18 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
     case "status.monitor.up":
       void qc.invalidateQueries({ queryKey: keys.status(ctx.ws) })
       return
+    case "status_notice.updated": {
+      const n = event.data
+      const key = keys.statusNotices(ctx.ws, n.page_id, n.incident_id)
+      const cur = qc.getQueryData<StatusNotice[]>(key)
+      if (cur?.some((x) => x.id === n.id))
+        qc.setQueryData(
+          key,
+          cur.map((x) => (x.id === n.id ? n : x))
+        )
+      else void qc.invalidateQueries({ queryKey: key })
+      return
+    }
     case "analytics.alert": {
       const data = keys.analyticsData(ctx.ws, event.data.property.id)
       void qc.invalidateQueries({ queryKey: [...data, "alerts"] })

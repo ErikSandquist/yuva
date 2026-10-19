@@ -1207,7 +1207,9 @@ msgstr "பதில் கணக்கைச் சேர்"
 msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
 msgstr "{address}-க்கு, அதன் அஞ்சலைக் கீழ்க்காணும் முகவரிக்கும் வழங்கி, அஞ்சல்பெட்டிக்கான விநியோகத்தையும் தொடரும் விதியைச் சேர்க்கவும்."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Add a subscriber"
 msgstr "சந்தாதாரரைச் சேர்"
 
@@ -1404,6 +1406,11 @@ msgstr "Alertmanager"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "All"
 msgstr "அனைத்தும்"
+
+#: src/features/broadcasts/Subscribers.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
+msgid "All components"
+msgstr "அனைத்துக் கூறுகளும்"
 
 #: src/features/broadcasts/Import.tsx
 msgid "All imports"
@@ -2211,6 +2218,11 @@ msgstr "திரும்பியது அல்லது ஸ்பேம் 
 msgid "Bounced or reported as spam before"
 msgstr "முன்பு திரும்பியது அல்லது ஸ்பேம் எனப் புகாரளிக்கப்பட்டது"
 
+#. placeholder {0}: c.bounced
+#: src/features/status/Notices.tsx
+msgid "Bounced: {0}"
+msgstr "திரும்பியவை: {0}"
+
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -2325,6 +2337,7 @@ msgstr "ஒவ்வொரு சந்தாதாரருக்கும் �
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 #: src/features/setup/NewsletterStep.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/IncidentDialog.tsx
@@ -2380,6 +2393,7 @@ msgstr "இந்த இறக்குமதியை ரத்துசெய�
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/text.ts
+#: src/features/status/Notices.tsx
 msgid "Cancelled"
 msgstr "ரத்துசெய்யப்பட்டது"
 
@@ -2563,6 +2577,10 @@ msgstr "“உள்வரும் அஞ்சலின் நகலை இத
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
 msgstr "“ஆப் கடவுச்சொல்லை உருவாக்கு” என்பதைத் தேர்ந்தெடுத்து, “Yuva” எனப் பெயரிட்டு உருவாக்குங்கள்."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Choose a channel"
+msgstr "சேனலைத் தேர்ந்தெடுக்கவும்"
 
 #: src/features/status/MonitorDialog.tsx
 msgid "Choose a component"
@@ -2797,6 +2815,7 @@ msgid "Component deleted"
 msgstr "கூறு நீக்கப்பட்டது"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/status/IncidentPane.tsx
 #: src/features/status/StatusPagePane.tsx
 msgid "Components"
@@ -2964,6 +2983,7 @@ msgid "Connections"
 msgstr "இணைப்புகள்"
 
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
 msgstr "ஒப்புதல் ஏற்றுமதி"
 
@@ -3916,6 +3936,7 @@ msgstr "மின்னஞ்சல்"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "E-mail address"
 msgstr "மின்னஞ்சல் முகவரி"
 
@@ -3946,6 +3967,18 @@ msgstr "நான் பின்தொடரும் விவாதங்க�
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
 msgstr "மின்னஞ்சல் மட்டும்"
+
+#: src/features/status/SettingsTab.tsx
+msgid "E-mail subscribers"
+msgstr "மின்னஞ்சல் சந்தாதாரர்கள்"
+
+#: src/features/status/Notices.tsx
+msgid "E-mail subscribers are off"
+msgstr "மின்னஞ்சல் சந்தாதாரர்கள் முடக்கப்பட்டுள்ளனர்"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
+msgstr "மின்னஞ்சல் சந்தாதாரர்கள் முடக்கப்பட்டுள்ளனர். யாரும் சந்தா செலுத்த முடியாது, அறிவிப்புகளும் அனுப்பப்படாது, ஆனால் பட்டியல் சேமிக்கப்பட்டிருக்கும்."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "E-mail view"
@@ -4330,6 +4363,11 @@ msgstr "தோல்வி"
 #: src/features/migrations/text.ts
 msgid "Failed five times"
 msgstr "ஐந்து முறை தோல்வி"
+
+#. placeholder {0}: c.failed
+#: src/features/status/Notices.tsx
+msgid "Failed: {0}"
+msgstr "தோல்வியடைந்தவை: {0}"
 
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
@@ -6006,6 +6044,10 @@ msgstr "Yuva-விலிருந்து அஞ்சல்"
 msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 msgstr "அஞ்சல் {address}-ஐப் பெறும் “{channelName}” மின்னஞ்சல் சேனலுக்குச் செல்கிறது."
 
+#: src/features/status/SettingsTab.tsx
+msgid "Mail is not signed with a key of the sender’s own domain, which Gmail and Yahoo expect."
+msgstr "அஞ்சல் அனுப்புநரின் சொந்த டொமைனின் விசையால் கையொப்பமிடப்படவில்லை; Gmail மற்றும் Yahoo இதை எதிர்பார்க்கின்றன."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
 msgstr "அஞ்சல் அளவு"
@@ -6880,6 +6922,10 @@ msgstr "இன்னும் தயார் பதில்கள் இல்
 msgid "No channel"
 msgstr "சேனல் இல்லை"
 
+#: src/features/status/SettingsTab.tsx
+msgid "No channel that can send is chosen. Until there is one, nobody gets a confirmation or a notice."
+msgstr "அனுப்பக்கூடிய சேனல் எதுவும் தேர்ந்தெடுக்கப்படவில்லை. ஒன்று தேர்ந்தெடுக்கும் வரை யாருக்கும் உறுதிப்படுத்தலோ அறிவிப்போ செல்லாது."
+
 #: src/features/broadcasts/Composer.tsx
 msgid "No channel yet"
 msgstr "இன்னும் சேனல் இல்லை"
@@ -6972,6 +7018,10 @@ msgstr "மின்னஞ்சல் முகவரி கொடுக்க�
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "உறுதிப்படுத்தல், வரவேற்பு அஞ்சல்களை அனுப்பக்கூடிய மின்னஞ்சல் சேனல் இல்லை"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "No e-mail subscribers yet"
+msgstr "மின்னஞ்சல் சந்தாதாரர்கள் இன்னும் இல்லை"
 
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "No emoji found."
@@ -7158,9 +7208,17 @@ msgstr "தலைப்பு இல்லை"
 msgid "No subject yet"
 msgstr "இன்னும் தலைப்பு இல்லை"
 
+#: src/features/status/Notices.tsx
+msgid "No subscriber matched"
+msgstr "பொருந்தும் சந்தாதாரர் இல்லை"
+
 #: src/features/broadcasts/Subscribers.tsx
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "இன்னும் சந்தாதாரர்கள் இல்லை. சந்தா படிவத்தை உங்கள் தளத்தில் வையுங்கள், அல்லது ஏற்கெனவே ஒப்புக்கொண்டவர்களைச் சேருங்கள்."
+
+#: src/features/broadcasts/Subscribers.tsx
+msgid "No subscribers yet. Visitors subscribe on the status page, or you can add an address here."
+msgstr "சந்தாதாரர்கள் இன்னும் இல்லை. பார்வையாளர்கள் நிலைப் பக்கத்தில் சந்தா செலுத்தலாம், அல்லது இங்கே ஒரு முகவரியைச் சேர்க்கலாம்."
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "No support address"
@@ -7344,6 +7402,10 @@ msgstr "சரியில்லையா? உங்கள் வழங்கு
 msgid "Not run"
 msgstr "ஓட்டப்படவில்லை"
 
+#: src/features/status/Notices.tsx
+msgid "Not sent"
+msgstr "அனுப்பப்படவில்லை"
+
 #: src/features/setup/email/EmailDoneStep.tsx
 msgid "Not set up"
 msgstr "அமைக்கப்படவில்லை"
@@ -7485,6 +7547,10 @@ msgstr "இங்கே உங்கள் தேடலுடன் எதுவ
 msgid "Nothing unread."
 msgstr "படிக்காதவை இல்லை."
 
+#: src/features/status/Notices.tsx
+msgid "Notices to subscribers"
+msgstr "சந்தாதாரர்களுக்கான அறிவிப்புகள்"
+
 #: src/app/Palette.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
@@ -7503,6 +7569,10 @@ msgstr "அறிவிப்புகள் அனுமதிக்கப்�
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "ஓர் இன்பாக்ஸுக்கு வேறுவிதமாக அறிவி. “மேலே உள்ளபடி” என விடப்பட்டவை மேலே உள்ள அமைப்புகளைப் பின்பற்றும்."
+
+#: src/features/status/NotifyCheck.tsx
+msgid "Notify subscribers"
+msgstr "சந்தாதாரர்களுக்கு அறிவி"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "now"
@@ -7647,6 +7717,10 @@ msgstr "ஒருமுறை எழுதிய ஒரே பதில் {titl
 #: src/features/broadcasts/ListSettings.tsx
 msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent (GDPR Art. 7, KVKK), to answer a person who asks what you hold, or to register consents with İYS yourself. Spreadsheet formulas in the CSV are made harmless."
 msgstr "ஒரு நிகழ்வுக்கு ஒரு வரிசை, பழையது முதலில்: யார் ஒப்புக்கொண்டனர் அல்லது விலகினர், எப்போது, எப்படி, எந்தப் பக்கம் மற்றும் IP முகவரியிலிருந்து, அவர்கள் பார்த்த சொற்கள். இதை ஒப்புதலுக்கான சான்றாக வைத்திருங்கள் (GDPR Art. 7, KVKK), உங்களிடம் என்ன உள்ளது எனக் கேட்பவருக்குப் பதிலளிக்க, அல்லது ஒப்புதல்களை İYS-இல் நீங்களே பதிவு செய்ய. CSV-இல் உள்ள விரிதாள் சூத்திரங்கள் பாதிப்பற்றவையாக்கப்படும்."
+
+#: src/features/status/SubscribersTab.tsx
+msgid "One row per event, oldest first: who agreed or left, when, how, from which page and IP address, and the words they saw. Keep it as proof of consent or to answer a person who asks what you hold."
+msgstr "ஒரு நிகழ்வுக்கு ஒரு வரிசை, பழையது முதலில்: யார் ஒப்புக்கொண்டார் அல்லது விலகினார், எப்போது, எப்படி, எந்தப் பக்கம் மற்றும் IP முகவரியிலிருந்து, அவர்கள் பார்த்த வாசகம். ஒப்புதலுக்கான சான்றாக வைத்திருக்கவும், அல்லது உங்களிடம் என்ன உள்ளது என்று கேட்பவருக்குப் பதிலளிக்கவும் பயன்படுத்தவும்."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "One-click install"
@@ -7963,6 +8037,7 @@ msgstr "இன்பாக்ஸைத் திற"
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/setup/WaitStep.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Open the inbox settings"
 msgstr "இன்பாக்ஸ் அமைப்புகளைத் திற"
 
@@ -7973,6 +8048,10 @@ msgstr "Microsoft Entra admin center அல்லது Azure portal-ஐத் �
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "அடுத்த அல்லது முந்தைய உரையாடலைத் திற"
+
+#: src/features/status/SubscribersTab.tsx
+msgid "Open the page settings"
+msgstr "பக்க அமைப்புகளைத் திற"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
@@ -9007,6 +9086,11 @@ msgstr "பெறுநர்கள்"
 msgid "Recipients"
 msgstr "பெறுநர்கள்"
 
+#. placeholder {0}: c.recipients
+#: src/features/status/Notices.tsx
+msgid "Recipients: {0}"
+msgstr "பெறுநர்கள்: {0}"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Recognised by the address."
 msgstr "முகவரியால் அடையாளம் காணப்பட்டது."
@@ -9661,6 +9745,10 @@ msgstr "திட்டமிடப்பட்டது"
 msgid "Scheduled by"
 msgstr "திட்டமிட்டவர்"
 
+#: src/features/status/Notices.tsx
+msgid "Scheduled for {due}"
+msgstr "{due} அன்று திட்டமிடப்பட்டது"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
@@ -9898,6 +9986,10 @@ msgstr "பக்கத்திலிருந்து கருத்தை �
 msgid "Send me a code"
 msgstr "எனக்குக் குறியீட்டை அனுப்பு"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Send notices by e-mail"
+msgstr "அறிவிப்புகளை மின்னஞ்சலில் அனுப்பு"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Send now"
 msgstr "இப்போது அனுப்பு"
@@ -9919,6 +10011,7 @@ msgid "Send reply"
 msgstr "பதிலை அனுப்பு"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "Send the confirmation"
 msgstr "உறுதிப்படுத்தலை அனுப்பு"
 
@@ -9969,6 +10062,7 @@ msgstr "அனுப்புநர் அடையாளம்"
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 #: src/features/setup/email/EmailTestStep.tsx
+#: src/features/status/Notices.tsx
 msgid "Sending"
 msgstr "அனுப்புகிறது"
 
@@ -10035,6 +10129,7 @@ msgid "Sends from"
 msgstr "இதிலிருந்து அனுப்புகிறது"
 
 #: src/features/broadcasts/ListForm.tsx
+#: src/features/status/SettingsTab.tsx
 msgid "Sends its mail from"
 msgstr "அதன் அஞ்சலை இதிலிருந்து அனுப்புகிறது"
 
@@ -10056,6 +10151,7 @@ msgstr "அனுப்பப்பட்டது"
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/LinkedSection.tsx
+#: src/features/status/Notices.tsx
 msgid "Sent"
 msgstr "அனுப்பப்பட்டது"
 
@@ -10116,6 +10212,11 @@ msgstr "இன்று அனுப்பியவை: அனுமதிக்
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "இன்று அனுப்பியவை: {sent}. தினசரி வரம்பு இல்லை."
+
+#. placeholder {0}: c.sent
+#: src/features/status/Notices.tsx
+msgid "Sent: {0}"
+msgstr "அனுப்பப்பட்டது: {0}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Server"
@@ -10571,6 +10672,11 @@ msgstr "தவிர்க்கப்பட்டவை மற்றும் �
 msgid "Skipped or failed"
 msgstr "தவிர்க்கப்பட்டது அல்லது தோல்வி"
 
+#. placeholder {0}: c.skipped
+#: src/features/status/Notices.tsx
+msgid "Skipped: {0}"
+msgstr "தவிர்க்கப்பட்டது: {0}"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "சுருக்கப்பெயர்"
@@ -10886,14 +10992,25 @@ msgstr "சந்தா செய்தனர்"
 msgid "subscribed now"
 msgstr "இப்போது சந்தா செய்தனர்"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/status/StatusPagePane.tsx
 msgid "Subscribers"
 msgstr "சந்தாதாரர்கள்"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Subscribers added"
 msgstr "சந்தாதாரர்கள் சேர்க்கப்பட்டனர்"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Subscribers confirm their address by mail before they get notices."
+msgstr "அறிவிப்புகளைப் பெறுவதற்கு முன், சந்தாதாரர்கள் தங்கள் முகவரியை அஞ்சல் மூலம் உறுதிப்படுத்துகிறார்கள்."
+
+#. placeholder {0}: reach.data
+#: src/features/status/NotifyCheck.tsx
+msgid "Subscribers reached: {0}"
+msgstr "சென்றடைந்த சந்தாதாரர்கள்: {0}"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -11396,6 +11513,10 @@ msgstr "இன்பாக்ஸைப் படிக்க-மட்டும�
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "இன்பாக்ஸுக்கு இன்னும் சட்டப்பூர்வப் பெயரோ அஞ்சல் முகவரியோ இல்லை. சட்டம் கேட்பதுபோல் ஒவ்வோர் ஒளிபரப்பும் அவற்றுடன் முடியும்."
 
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox names no postal address for the sender. Add one in the inbox settings."
+msgstr "இன்பாக்ஸில் அனுப்புநருக்கான அஞ்சல் முகவரி குறிப்பிடப்படவில்லை. இன்பாக்ஸ் அமைப்புகளில் ஒன்றைச் சேர்க்கவும்."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant is still being set up. The broadcast can go out, but check this again before it starts."
 msgstr "இன்பாக்ஸின் Amazon SES டெனன்ட் இன்னும் அமைக்கப்பட்டு வருகிறது. ஒளிபரப்பு செல்லலாம், ஆனால் தொடங்கும் முன் இதை மீண்டும் சரிபாருங்கள்."
@@ -11403,6 +11524,10 @@ msgstr "இன்பாக்ஸின் Amazon SES டெனன்ட் இ�
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox’s Amazon SES tenant no longer exists. The server creates it again; until then the broadcast cannot go out."
 msgstr "இன்பாக்ஸின் Amazon SES டெனன்ட் இனி இல்லை. சேவையகம் அதை மீண்டும் உருவாக்கும்; அதுவரை ஒளிபரப்பு செல்ல முடியாது."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The inbox’s e-mail channel that sends confirmations and notices."
+msgstr "உறுதிப்படுத்தல்களையும் அறிவிப்புகளையும் அனுப்பும் இன்பாக்ஸின் மின்னஞ்சல் சேனல்."
 
 #: src/components/common/text.ts
 msgid "The incident is already resolved or completed, so it takes no more changes."
@@ -11556,6 +11681,10 @@ msgstr "பழைய அஞ்சல்பெட்டி அந்த டொம
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
 msgstr "மற்ற இன்பாக்ஸுக்கு மின்னஞ்சல் சேனல் இல்லை; எனவே இந்த மின்னஞ்சல் உரையாடல் அங்கே நகர முடியாது. முதலில் அதற்கு மின்னஞ்சல் சேனலைச் சேருங்கள்."
 
+#: src/features/status/Notices.tsx
+msgid "The page already sent 10 notices in the last hour"
+msgstr "கடந்த ஒரு மணிநேரத்தில் இந்தப் பக்கம் ஏற்கெனவே 10 அறிவிப்புகளை அனுப்பிவிட்டது"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "பார்வையாளர்கள் இப்போது பார்க்கும் பக்கம். வரைவுகள் சேர்க்கப்படவில்லை."
@@ -11571,6 +11700,10 @@ msgstr "பக்கம் அரட்டைச் சேனல் அனும
 #: src/features/status/PreviewDialog.tsx
 msgid "The page is not published. Only your team sees this."
 msgstr "பக்கம் வெளியிடப்படவில்லை. இதை உங்கள் குழு மட்டுமே பார்க்கும்."
+
+#: src/features/status/Notices.tsx
+msgid "The page or the incident is not public"
+msgstr "பக்கமோ சம்பவமோ பொதுவில் இல்லை"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "The parts of your product. Set a state by hand, or let an incident do it."
@@ -11677,6 +11810,10 @@ msgstr "ரகசியம் உருவாக்கும்போது ஒ�
 msgid "The sender's domain did not authorize this mail. It may be forged."
 msgstr "அனுப்புநரின் டொமைன் இந்த அஞ்சலை அங்கீகரிக்கவில்லை. இது போலியாக இருக்கலாம்."
 
+#: src/features/status/Notices.tsx
+msgid "The sending channel cannot send"
+msgstr "அனுப்பும் சேனலால் அனுப்ப முடியாது"
+
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "அனுப்பும் சேனலுக்கு இன்னும் SMTP கணக்கோ அனுப்ப முகவரியோ இல்லை. இன்பாக்ஸ் அமைப்புகளில் அமையுங்கள்."
@@ -11684,6 +11821,10 @@ msgstr "அனுப்பும் சேனலுக்கு இன்னு�
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "அனுப்பும் டொமைனுக்கு DMARC பதிவு இல்லை."
+
+#: src/features/status/SettingsTab.tsx
+msgid "The sending domain has not passed a check of SPF, DKIM and DMARC yet. Notices may land in spam."
+msgstr "அனுப்பும் டொமைன் SPF, DKIM, DMARC சரிபார்ப்பில் இன்னும் தேர்ச்சி பெறவில்லை. அறிவிப்புகள் ஸ்பாமில் விழக்கூடும்."
 
 #: src/features/migrations/SourceStep.tsx
 msgid "The server {host} answered."
@@ -11803,6 +11944,10 @@ msgstr "பார்வையாளர் அரட்டையில் {0} எ
 msgid "The workspace may not send broadcasts for now."
 msgstr "பணியிடம் இப்போதைக்கு ஒளிபரப்புகளை அனுப்பக் கூடாது."
 
+#: src/features/status/Notices.tsx
+msgid "The workspace may not send bulk mail now"
+msgstr "பணியிடம் இப்போது மொத்த அஞ்சல் அனுப்ப அனுமதிக்கப்படவில்லை"
+
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "பணியிடம் இன்றைய அனுப்பு வரம்பை எட்டியது. அனுப்புதல் {local} ({utc} UTC) அன்று தொடரும்."
@@ -11870,6 +12015,10 @@ msgstr "அவர்கள் ஏற்கெனவே ஒப்புக்க�
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "They get a mail with a link and are subscribed only after they click it."
 msgstr "அவர்களுக்கு இணைப்புடன் அஞ்சல் கிடைக்கும்; அதைக் கிளிக் செய்த பிறகே சந்தா செய்யப்படுவர்."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "They get a mail with a link and receive notices only after they click it."
+msgstr "அவர்களுக்கு இணைப்புடன் ஒரு அஞ்சல் வரும்; அதைக் கிளிக் செய்த பிறகே அறிவிப்புகளைப் பெறுவார்கள்."
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "They get no more mail from this list, and it is recorded that the team unsubscribed them. Only they can subscribe again, by confirming a mail."
@@ -12009,6 +12158,10 @@ msgstr "இந்த இன்பாக்ஸுக்கு ஏற்கென�
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "இந்த இன்பாக்ஸில் இன்னும் அனுப்பக்கூடிய மின்னஞ்சல் சேனல் இல்லை. இப்போதே பட்டியலை உருவாக்கலாம்; அதன் அமைப்புகளில் பதில் கணக்கு உள்ள மின்னஞ்சல் சேனலைத் தேர்ந்தெடுத்ததும் அது அனுப்பும்."
 
+#: src/features/status/SettingsTab.tsx
+msgid "This inbox has no e-mail channel that can send. Add an SMTP account in the inbox settings."
+msgstr "இந்த இன்பாக்ஸில் அனுப்பக்கூடிய மின்னஞ்சல் சேனல் இல்லை. இன்பாக்ஸ் அமைப்புகளில் SMTP கணக்கைச் சேர்க்கவும்."
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox has no e-mail channel yet. Add one in the inbox settings."
 msgstr "இந்த இன்பாக்ஸுக்கு இன்னும் மின்னஞ்சல் சேனல் இல்லை. இன்பாக்ஸ் அமைப்புகளில் ஒன்றைச் சேருங்கள்."
@@ -12044,6 +12197,7 @@ msgstr "இது JSON பொருள் அல்ல."
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/status/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "இது சரியான மின்னஞ்சல் முகவரி அல்ல."
 
@@ -12400,6 +12554,10 @@ msgstr "ஏற்கெனவே உள்ள வாடிக்கையாள�
 msgid "Turn on 2-Step Verification for the Google account, if it is not on yet."
 msgstr "Google கணக்கில் 2-Step Verification இன்னும் இயக்கப்படவில்லை என்றால் இயக்குங்கள்."
 
+#: src/features/status/SubscribersTab.tsx
+msgid "Turn on e-mail subscribers in the page settings to let visitors subscribe to notices."
+msgstr "பார்வையாளர்கள் அறிவிப்புகளுக்குச் சந்தா செலுத்த, பக்க அமைப்புகளில் மின்னஞ்சல் சந்தாதாரர்களை இயக்கவும்."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Turn on for this device"
 msgstr "இந்தச் சாதனத்துக்கு இயக்கு"
@@ -12484,8 +12642,13 @@ msgstr "பணியிடத்தின் தினசரி வரம்ப�
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
+#: src/features/status/Notices.tsx
 msgid "Undo"
 msgstr "செயல்தவிர்"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Undo the waiting notice"
+msgstr "காத்திருக்கும் அறிவிப்பைச் செயல்தவிர்"
 
 #: src/features/account/AccountPage.tsx
 msgid "Unfollow"
@@ -12610,6 +12773,10 @@ msgstr "இப்போது சந்தாவை விலக்கினர�
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "அவர்கள் இணைப்பைக் கிளிக் செய்யும் வரை உறுதிப்படுத்தலுக்காகக் காத்திருப்பர், வேறு அஞ்சல் பெறமாட்டார்கள். உறுதிப்படுத்தப்படாத சந்தாக்கள் 30 நாட்களுக்குப் பிறகு நீக்கப்படும்."
+
+#: src/features/status/AddSubscriberDialog.tsx
+msgid "Until they click the link they stay waiting for confirmation. Unconfirmed addresses are deleted after 30 days."
+msgstr "இணைப்பைக் கிளிக் செய்யும் வரை அவர்கள் உறுதிப்படுத்தலுக்காகக் காத்திருப்பில் இருப்பார்கள். உறுதிப்படுத்தப்படாத முகவரிகள் 30 நாட்களுக்குப் பிறகு நீக்கப்படும்."
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
@@ -12891,6 +13058,10 @@ msgstr "கடந்த ஏழு நாட்களில் பார்வை
 #: src/features/setup/SetupHub.tsx
 msgid "Visitors of your website or app, without cookies"
 msgstr "உங்கள் இணையதளம் அல்லது ஆப்பின் பார்வையாளர்கள், குக்கீகள் இல்லாமல்"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Visitors subscribe on the page and get a mail when an incident or maintenance changes."
+msgstr "பார்வையாளர்கள் பக்கத்தில் சந்தா செலுத்துவார்கள்; சம்பவம் அல்லது பராமரிப்பில் மாற்றம் ஏற்படும்போது அவர்களுக்கு அஞ்சல் வரும்."
 
 #: src/features/home/PropertyCard.tsx
 msgid "visitors today"

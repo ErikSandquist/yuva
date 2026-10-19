@@ -14,12 +14,13 @@ import { IncidentsTab } from "@/features/status/IncidentsTab"
 import { PreviewDialog } from "@/features/status/PreviewDialog"
 import { statusLink, usePatchStatusPage, useStatusPage } from "@/features/status/queries"
 import { SettingsTab } from "@/features/status/SettingsTab"
+import { SubscribersTab } from "@/features/status/SubscribersTab"
 import { StateDot, useStatusText } from "@/features/status/text"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { useSession } from "@/lib/session"
 import { useInboxes } from "@/lib/workspace"
 
-const TABS = ["incidents", "components", "monitors", "settings"] as const
+const TABS = ["incidents", "components", "monitors", "subscribers", "settings"] as const
 type Tab = (typeof TABS)[number]
 
 export function StatusHome() {
@@ -54,6 +55,7 @@ export function StatusPagePane() {
       [STATUS_KEYS.incidents]: () => setTab("incidents"),
       [STATUS_KEYS.components]: () => setTab("components"),
       [STATUS_KEYS.monitors]: () => setTab("monitors"),
+      [STATUS_KEYS.subscribers]: () => setTab("subscribers"),
       ...(canManage ? { [STATUS_KEYS.settings]: () => setTab("settings") } : {}),
       [STATUS_KEYS.preview]: () => setPreview(true),
       ...(canManage && p ? { [STATUS_KEYS.publishPage]: () => patch.mutate({ published: !p.published }) } : {}),
@@ -81,6 +83,7 @@ export function StatusPagePane() {
     incidents: t`Incidents`,
     components: t`Components`,
     monitors: t`Monitors`,
+    subscribers: t`Subscribers`,
     settings: t`Settings`,
   }
   const previewKey = keyLabel(STATUS_KEYS.preview).join("")
@@ -165,6 +168,7 @@ export function StatusPagePane() {
       {tab === "incidents" && <IncidentsTab page={p} />}
       {tab === "components" && <ComponentsTab page={p} />}
       {tab === "monitors" && <MonitorsTab page={p} />}
+      {tab === "subscribers" && <SubscribersTab page={p} />}
       {tab === "settings" && canManage && <SettingsTab page={p} />}
       {preview && <PreviewDialog page={p} onClose={() => setPreview(false)} />}
     </Pane>
