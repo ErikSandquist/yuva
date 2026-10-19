@@ -86,6 +86,22 @@ func (l *rateLimiter) allow(key string, lim limit, now time.Time) bool {
 
 // allowWait is allow that also says, when refused, how long until the window ends.
 func (l *rateLimiter) allowWait(key string, lim limit, now time.Time) (bool, time.Duration) {
+	v, wait := l.check(key, lim, now)
+	return v == limitAllowed, wait
+}
+
+type limitVerdict int
+
+const (
+	limitAllowed limitVerdict = iota
+	limitRefused
+	limitFull
+)
+
+// check is allowWait that tells a refused window from a full limiter, where a new key found no room
+// and was not counted; a caller that can tell a trusted request from a stranger's lets the first
+// through.
+func (l *rateLimiter) check(key string, lim limit, now time.Time) (limitVerdict, time.Duration) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
 	if now.Sub(l.swept) >= time.Minute || now.Before(l.swept) {
@@ -94,16 +110,16 @@ func (l *rateLimiter) allowWait(key string, lim limit, now time.Time) (bool, tim
 	b := l.buckets[key]
 	if b == nil || now.Sub(b.start) >= lim.window || now.Before(b.start) {
 		if b == nil && len(l.buckets) >= maxBuckets {
-			return false, time.Minute
+			return limitFull, time.Minute
 		}
 		b = &bucket{start: now, window: lim.window}
 		l.buckets[key] = b
 	}
 	if b.n >= lim.n {
-		return false, b.start.Add(b.window).Sub(now)
+		return limitRefused, b.start.Add(b.window).Sub(now)
 	}
 	b.n++
-	return true, 0
+	return limitAllowed, 0
 }
 
 // rateIP is the client address as a rate limit key: IPv6 clients usually hold a whole /64.

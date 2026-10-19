@@ -189,6 +189,10 @@ DELETE FROM status_incident_components WHERE workspace_id = @workspace_id AND in
 INSERT INTO status_incident_components (workspace_id, incident_id, component_id, state)
 VALUES (@workspace_id, @incident_id, @component_id, @state);
 
+-- name: SetStatusIncidentComponentState :exec
+UPDATE status_incident_components SET state = @state
+WHERE workspace_id = @workspace_id AND incident_id = @incident_id AND component_id = @component_id;
+
 -- name: ListStatusIncidentComponents :many
 SELECT * FROM status_incident_components WHERE workspace_id = @workspace_id AND incident_id = ANY(@incident_ids::uuid[])
 ORDER BY incident_id, component_id;

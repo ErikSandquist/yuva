@@ -2129,14 +2129,24 @@ incident before a customer writes, and the conversations an outage brings are an
   link-local, CGNAT and reserved addresses, connect to the resolved address, no proxy; redirects are
   followed only when the monitor allows it, at most 5, each hop checked again), with
   `YUVA_WEBHOOK_ALLOW_PRIVATE` lifting the address check on a self-hosted server. A monitor fails after
-  `failure_threshold` failures in a row (default 3) and recovers after `recovery_threshold` successes
-  (default 2); then it sets its component to its failure state (`degraded`, `partial_outage` or
-  `major_outage`) or back, never over a state a member set later than the monitor's last change, and
-  opens a draft incident, a published one, or none (`on_failure`). Checks run on a River queue of
+  `failure_threshold` failures in a row and recovers after `recovery_threshold` successes (outside
+  checks default to 3 and 2, heartbeat and push monitors to 1 and 1, since the sender already decided);
+  then it sets its component to its failure state (`degraded`, `partial_outage` or
+  `major_outage`) or back, never over a state a member or key set later than the monitor's last change (a later change of the
+  monitor, such as a new failure after a recovery, applies again; the same rule holds when other holders
+  are settled), and opens a draft incident, a published one, or none (`on_failure`). Checks run on a River queue of
   their own, at most 20 at a time per process, spread over the interval; results go to
   `status_checks` (time, ok, duration, status code, error) kept 30 days for the response-time chart.
+  While a monitor is down its incident follows the state it claims (impact and component state, worse or better),
+  and pausing or deleting it resolves that incident with an update saying so and puts the component back
+  unless something else holds it. A heartbeat or push call counts first against a per-address limit
+  (600 a minute per client address, IPv6 per /64; unknown tokens count too) and then against the monitor's
+  own limit (60 a minute), which is created only after the token is found; a full limiter refuses an
+  unknown token but never a known monitor. The overdue-beat sweep is one job at a time and finds the due monitors of all workspaces
+  in one query, then handles each in its workspace; one failing monitor is logged and the others go on.
   A monitor going down or up notifies the inbox's members like a new conversation does (push, e-mail
-  per their settings). Hosted limits: `YUVA_STATUS_MONITORS` per workspace (unset: 20).
+  per their settings), one job per member and channel carrying the transition's state, message and
+  time, so a retry never sends anything twice. Hosted limits: `YUVA_STATUS_MONITORS` per workspace (unset: 20).
   Checks run from the server's own place and a multi-location check is not planned, so the server
   tells its own trouble from its customers': each round also checks `YUVA_STATUS_CANARY_URLS` (unset:
   two well-known public URLs) and, when every canary fails or more than half of the round's outside
@@ -2167,7 +2177,8 @@ incident before a customer writes, and the conversations an outage brings are an
 - **Lookups before the workspace is known.** A public page finds its page by `status_pages.slug`, a
   former slug in `status_page_slugs` or a verified `status_pages.custom_domain`, all unique across the
   server, and a slug's availability is checked against current and former slugs of every workspace; a heartbeat or push finds its
-  monitor by `status_monitors.token_hash`; an SES notification finds a notice delivery by
+  monitor by `status_monitors.token_hash`, and the sweep of overdue heartbeats lists the due monitors of every
+  workspace in one query; an SES notification finds a notice delivery by
   `status_notice_deliveries.header_message_id`, unique across the server. Everything after those lookups is scoped by the workspace
   they returned.
 
@@ -2254,7 +2265,8 @@ now; per-channel limits can narrow them later.
   - Status pages (M19): a public page finds its page by `status_pages.slug`, a former slug in
     `status_page_slugs` or a verified `status_pages.custom_domain` (a slug's availability is checked the
     same way), and a heartbeat or push finds its monitor by
-    `status_monitors.token_hash`, and an SES notification finds a notice delivery by
+    `status_monitors.token_hash` (the sweep of overdue heartbeats lists the due monitors of every workspace
+    in one query), and an SES notification finds a notice delivery by
     `status_notice_deliveries.header_message_id`, all unique across the server; everything after those lookups is
     scoped by the workspace they returned.
   - The person-level identity tables `people`, `sessions`, `login_codes`, `passkeys`,

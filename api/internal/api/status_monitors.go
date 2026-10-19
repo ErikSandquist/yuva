@@ -3,7 +3,9 @@ package api
 import (
 	"context"
 	"encoding/hex"
+	"errors"
 	"fmt"
+	"log/slog"
 	"net/http"
 	"strconv"
 	"time"
@@ -46,7 +48,8 @@ var (
 	errStatusMonitorLimit = problem(http.StatusForbidden, "status_monitor_limit", "this workspace has as many monitors as the server allows (YUVA_STATUS_MONITORS)")
 	errMonitorKind        = problem(http.StatusConflict, "monitor_kind", "this token belongs to a monitor of another kind")
 
-	limitMonitorPerToken = limit{60, time.Minute}
+	limitMonitorPerToken   = limit{60, time.Minute}
+	limitMonitorPerAddress = limit{600, time.Minute}
 )
 
 func (s *Server) monitorLimit() int { return s.status.Monitors }
@@ -343,12 +346,18 @@ func (s *Server) UpdateStatusMonitor(ctx context.Context, req oas.UpdateStatusMo
 		}
 		touched := []uuid.UUID{oldComponent, m.ComponentID}
 		if b.Paused != nil && *b.Paused != m.Paused {
+			held := m
 			pause := store.SetStatusMonitorPausedParams{WorkspaceID: m.WorkspaceID, ID: m.ID, Paused: *b.Paused, State: monitorPending, ChangedAt: now, Now: now}
 			if !*b.Paused && m.Kind == monitorHeartbeat {
 				pause.DueAt = heartbeatDue(now, *m.IntervalSeconds, *m.GraceSeconds)
 			}
 			if m, err = q.SetStatusMonitorPaused(ctx, pause); err != nil {
 				return err
+			}
+			if *b.Paused && held.IncidentID != nil {
+				if _, err := s.resolveMonitorIncident(ctx, q, ev, pg, held, *held.IncidentID, monitorEndPaused, now); err != nil {
+					return err
+				}
 			}
 		}
 		if err := s.settleComponents(ctx, q, ev, pg, touched, nil, statusActor{statusSourceMonitor, &m.ID}, now); err != nil {
@@ -380,7 +389,13 @@ func (s *Server) DeleteStatusMonitor(ctx context.Context, req oas.DeleteStatusMo
 		if _, err := q.DeleteStatusMonitor(ctx, store.DeleteStatusMonitorParams{WorkspaceID: m.WorkspaceID, PageID: pg.ID, ID: m.ID}); err != nil {
 			return err
 		}
-		return s.settleComponents(ctx, q, ev, pg, []uuid.UUID{m.ComponentID}, nil, statusActor{statusSourceMonitor, &m.ID}, s.now())
+		now := s.now()
+		if m.IncidentID != nil {
+			if _, err := s.resolveMonitorIncident(ctx, q, ev, pg, m, *m.IncidentID, monitorEndRemoved, now); err != nil {
+				return err
+			}
+		}
+		return s.settleComponents(ctx, q, ev, pg, []uuid.UUID{m.ComponentID}, nil, statusActor{statusSourceMonitor, &m.ID}, now)
 	})
 	if err != nil {
 		return nil, err
@@ -582,14 +597,19 @@ func (s *Server) applyMonitorResult(ctx context.Context, q *store.Queries, ev *e
 		return m, err
 	}
 	if change == monitorUp && m.IncidentID != nil {
-		if incident, err = s.resolveMonitorIncident(ctx, q, ev, pg, m, *m.IncidentID, now); err != nil {
+		if incident, err = s.resolveMonitorIncident(ctx, q, ev, pg, m, *m.IncidentID, monitorEndRecovered, now); err != nil {
 			return next, err
 		}
 	}
 	if change == "" {
 		return next, nil
 	}
-	if err := s.monitorSettle(ctx, q, ev, pg, m, change != "worse", now); err != nil {
+	if change == "worse" && m.IncidentID != nil {
+		if err := s.matchMonitorIncident(ctx, q, ev, pg, m, claim, now); err != nil {
+			return next, err
+		}
+	}
+	if err := s.settleComponents(ctx, q, ev, pg, []uuid.UUID{m.ComponentID}, nil, statusActor{statusSourceMonitor, &m.ID}, now); err != nil {
 		return next, err
 	}
 	if change == "worse" {
@@ -601,23 +621,12 @@ func (s *Server) applyMonitorResult(ctx context.Context, q *store.Queries, ev *e
 	}
 	inbox := pg.InboxID
 	ev.add(typ, &inbox, nil, oas.StatusMonitorEventData{Monitor: monitorBody(next), Page: statusPageRef(pg), IncidentId: incident})
-	ev.job(StatusMonitorNotifyArgs{WorkspaceID: m.WorkspaceID, MonitorID: m.ID, Down: change == monitorDown}, nil)
-	return next, nil
-}
-
-// monitorSettle puts the monitor's component in the state its holders give it, unless (on a change
-// of the monitor) a member or key set the component's state later than the monitor's previous change.
-func (s *Server) monitorSettle(ctx context.Context, q *store.Queries, ev *eventBatch, pg store.StatusPage, prev store.StatusMonitor, changed bool, now time.Time) error {
-	if changed {
-		open, err := q.OpenStatusComponentStates(ctx, store.OpenStatusComponentStatesParams{WorkspaceID: pg.WorkspaceID, ComponentIds: []uuid.UUID{prev.ComponentID}})
-		if err != nil {
-			return err
-		}
-		if len(open) == 1 && handSource(open[0].Source) && open[0].StartedAt.After(prev.ChangedAt) {
-			return nil
-		}
+	notify := StatusMonitorNotifyArgs{WorkspaceID: m.WorkspaceID, MonitorID: m.ID, Down: change == monitorDown, Message: truncateRunes(msg, maxMonitorMessageRunes), At: now}
+	if notify.Down {
+		notify.State = claim
 	}
-	return s.settleComponents(ctx, q, ev, pg, []uuid.UUID{prev.ComponentID}, nil, statusActor{statusSourceMonitor, &prev.ID}, now)
+	ev.job(notify, nil)
+	return next, nil
 }
 
 func monitorImpact(state string) string {
@@ -671,10 +680,41 @@ func (s *Server) monitorIncident(ctx context.Context, q *store.Queries, ev *even
 	return &inc.ID, nil
 }
 
+const (
+	monitorEndRecovered = iota
+	monitorEndPaused
+	monitorEndRemoved
+)
+
+// matchMonitorIncident gives the incident the monitor opened the impact and component state the
+// monitor claims now, whether worse or better than before.
+func (s *Server) matchMonitorIncident(ctx context.Context, q *store.Queries, ev *eventBatch, pg store.StatusPage, m store.StatusMonitor,
+	state string, now time.Time) error {
+	inc, err := lockedStatusIncident(ctx, q, pg, *m.IncidentID)
+	if err == errStatusIncidentGone || (err == nil && incidentClosed(inc.State)) {
+		return nil
+	}
+	if err != nil {
+		return err
+	}
+	if err := q.SetStatusIncidentComponentState(ctx, store.SetStatusIncidentComponentStateParams{
+		WorkspaceID: pg.WorkspaceID, IncidentID: inc.ID, ComponentID: m.ComponentID, State: state,
+	}); err != nil {
+		return err
+	}
+	arg := incidentUpdateArg(inc, now)
+	arg.Impact = monitorImpact(state)
+	if inc, err = q.UpdateStatusIncident(ctx, arg); err != nil {
+		return err
+	}
+	_, err = s.incidentEvent(ctx, q, ev, pg, inc, oas.StatusChangeChanged, nil)
+	return err
+}
+
 // resolveMonitorIncident resolves the incident the monitor opened unless a member closed it first. It
 // puts back only the components an incident or monitor set, so a member's own state stays.
 func (s *Server) resolveMonitorIncident(ctx context.Context, q *store.Queries, ev *eventBatch, pg store.StatusPage, m store.StatusMonitor,
-	id uuid.UUID, now time.Time) (*uuid.UUID, error) {
+	id uuid.UUID, end int, now time.Time) (*uuid.UUID, error) {
 	inc, err := lockedStatusIncident(ctx, q, pg, id)
 	if err == errStatusIncidentGone {
 		return nil, nil
@@ -686,7 +726,15 @@ func (s *Server) resolveMonitorIncident(ctx context.Context, q *store.Queries, e
 	if c, err := q.GetStatusComponent(ctx, store.GetStatusComponentParams{WorkspaceID: pg.WorkspaceID, PageID: pg.ID, ID: m.ComponentID}); err == nil {
 		name = c.Name
 	}
-	body := fmt.Sprintf(statusWordsFor(pg.Locale).MonitorResolved, name)
+	words := statusWordsFor(pg.Locale)
+	format := words.MonitorResolved
+	switch end {
+	case monitorEndPaused:
+		format = words.MonitorPaused
+	case monitorEndRemoved:
+		format = words.MonitorRemoved
+	}
+	body := fmt.Sprintf(format, name)
 	if _, err := s.moveIncidentWith(ctx, q, ev, pg, inc, incResolved, body, nil, nil, oas.StatusChangeResolved, false, now); err != nil {
 		return nil, err
 	}
@@ -718,27 +766,39 @@ func (s *Server) serveStatusPush(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-// serveMonitorIngress finds the monitor by its token, limits calls per token and takes the result
-// read reports; take false answers with the monitor's state and changes nothing.
+// serveMonitorIngress limits calls per client address, finds the monitor by its token, limits calls
+// per monitor and takes the result read reports; take false answers with the monitor's state and
+// changes nothing. Only an address, never a token the caller made up, takes a place in the limiter
+// before the lookup, and a full limiter refuses an unknown token but never a known monitor.
 func (s *Server) serveMonitorIngress(w http.ResponseWriter, r *http.Request, kind string, read func() (monitorResult, bool, error)) {
 	token := r.PathValue("token")
 	if token == "" || len(token) > 100 {
 		writeProblem(w, errStatusMonitorGone)
 		return
 	}
-	hash := hashSecret(token)
-	if ok, wait := s.limits.allowWait("monitor:"+hex.EncodeToString(hash[:16]), limitMonitorPerToken, s.now()); !ok {
+	now := s.now()
+	addr, wait := s.limits.check("monitor:ip:"+rateIP(s.clientIP(r)), limitMonitorPerAddress, now)
+	if addr == limitRefused {
 		writeProblem(w, rateLimited(wait))
 		return
 	}
+	hash := hashSecret(token)
 	ctx := r.Context()
 	row, err := s.st.FindStatusMonitorByToken(ctx, hash)
 	if store.IsNotFound(err) {
+		if addr == limitFull {
+			writeProblem(w, rateLimited(wait))
+			return
+		}
 		writeProblem(w, errStatusMonitorGone)
 		return
 	}
 	if err != nil {
 		s.writeError(w, r, err)
+		return
+	}
+	if v, wait := s.limits.check("monitor:"+hex.EncodeToString(hash[:16]), limitMonitorPerToken, now); v == limitRefused {
+		writeProblem(w, rateLimited(wait))
 		return
 	}
 	if live, err := s.workspaceLive(ctx, row.WorkspaceID); err != nil || !live {
@@ -792,24 +852,22 @@ func (w *statusChecksCleanupWorker) Work(ctx context.Context, _ *river.Job[jobs.
 	return w.s.CleanStatusChecks(ctx)
 }
 
-// SweepStatusMonitors counts a failure for every heartbeat whose beat is overdue.
+// SweepStatusMonitors counts a failure for every heartbeat whose beat is overdue. A monitor that
+// fails to be checked is logged and the others still are; the errors come back joined.
 func (s *Server) SweepStatusMonitors(ctx context.Context) error {
-	ids, err := s.st.ListWorkspaceIDs(ctx)
+	due, err := s.st.ListDueStatusMonitors(ctx, s.now())
 	if err != nil {
 		return err
 	}
-	for _, ws := range ids {
-		due, err := s.st.ListDueStatusMonitors(ctx, store.ListDueStatusMonitorsParams{WorkspaceID: ws, Now: s.now()})
-		if err != nil {
-			return err
-		}
-		for _, id := range due {
-			if err := s.missedBeat(ctx, ws, id); err != nil && err != errStatusMonitorGone {
-				return err
-			}
+	var errs []error
+	for _, d := range due {
+		if err := s.missedBeat(ctx, d.WorkspaceID, d.ID); err != nil && err != errStatusMonitorGone {
+			s.log.ErrorContext(ctx, "status monitor sweep", slog.String("workspace_id", d.WorkspaceID.String()),
+				slog.String("monitor_id", d.ID.String()), slog.Any("error", err))
+			errs = append(errs, err)
 		}
 	}
-	return nil
+	return errors.Join(errs...)
 }
 
 // missedBeat fails a heartbeat whose beat did not come in time. When this server started after the

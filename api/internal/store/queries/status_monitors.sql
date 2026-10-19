@@ -57,15 +57,20 @@ WHERE workspace_id = @workspace_id AND id = @id;
 DELETE FROM status_monitors WHERE workspace_id = @workspace_id AND page_id = @page_id AND id = @id;
 
 -- name: ListDueStatusMonitors :many
-SELECT id FROM status_monitors
-WHERE workspace_id = @workspace_id AND due_at IS NOT NULL AND NOT paused AND due_at <= @now::timestamptz
+-- The documented exception: the sweep finds the heartbeats whose beat is overdue in every workspace at once.
+SELECT workspace_id, id FROM status_monitors
+WHERE due_at IS NOT NULL AND NOT paused AND due_at <= @now::timestamptz
 ORDER BY due_at
 LIMIT 500;
 
 -- name: FailingStatusMonitors :many
-SELECT id, component_id, down_state::text AS state, changed_at FROM status_monitors
-WHERE workspace_id = @workspace_id AND component_id = ANY(@component_ids::uuid[]) AND state = 'down' AND NOT paused
-ORDER BY changed_at, id;
+-- A monitor is overridden, and holds nothing, once a member or key set its component's state after the monitor's last change.
+SELECT m.id, m.component_id, m.down_state::text AS state, m.changed_at FROM status_monitors m
+WHERE m.workspace_id = @workspace_id AND m.component_id = ANY(@component_ids::uuid[]) AND m.state = 'down' AND NOT m.paused
+  AND NOT EXISTS (
+    SELECT 1 FROM status_component_states s
+    WHERE s.workspace_id = m.workspace_id AND s.component_id = m.component_id AND s.source IN ('member', 'api_key') AND s.started_at > m.changed_at)
+ORDER BY m.changed_at, m.id;
 
 -- name: CreateStatusCheck :exec
 INSERT INTO status_checks (id, workspace_id, monitor_id, at, ok, source, state, message, error)

@@ -221,6 +221,12 @@ type StatusMonitorSweepArgs struct{}
 
 func (StatusMonitorSweepArgs) Kind() string { return "status_monitor_sweep" }
 
+func (StatusMonitorSweepArgs) InsertOpts() river.InsertOpts {
+	return river.InsertOpts{UniqueOpts: river.UniqueOpts{ByArgs: true, ByState: []rivertype.JobState{
+		rivertype.JobStateAvailable, rivertype.JobStatePending, rivertype.JobStateRunning, rivertype.JobStateScheduled, rivertype.JobStateRetryable,
+	}}}
+}
+
 // StatusChecksCleanupArgs is worked by the api package: it deletes monitor checks after 30 days.
 type StatusChecksCleanupArgs struct{}
 

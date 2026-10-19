@@ -134,23 +134,16 @@ func automaticSource(source string) bool {
 	return source == statusSourceIncident || source == statusSourceMonitor
 }
 
-func handSource(source string) bool {
-	return source == statusSourceMember || source == statusSourceAPIKey
-}
-
 // statusHolders lists the failing monitors and the open published incidents that hold the components,
 // monitors first so that a monitor keeps a state it shares with an incident. A monitor does not hold a
 // component whose state a member or key set later than the monitor's last change.
-func statusHolders(ctx context.Context, q *store.Queries, ws uuid.UUID, ids []uuid.UUID, open map[uuid.UUID]store.StatusComponentState) ([]statusHolder, error) {
+func statusHolders(ctx context.Context, q *store.Queries, ws uuid.UUID, ids []uuid.UUID) ([]statusHolder, error) {
 	mons, err := q.FailingStatusMonitors(ctx, store.FailingStatusMonitorsParams{WorkspaceID: ws, ComponentIds: ids})
 	if err != nil {
 		return nil, err
 	}
 	var out []statusHolder
 	for _, m := range mons {
-		if o, ok := open[m.ComponentID]; ok && handSource(o.Source) && o.StartedAt.After(m.ChangedAt) {
-			continue
-		}
 		out = append(out, statusHolder{component: m.ComponentID, state: m.State, source: statusSourceMonitor, id: m.ID})
 	}
 	incs, err := q.ActiveStatusHolders(ctx, store.ActiveStatusHoldersParams{WorkspaceID: ws, ComponentIds: ids, ExceptID: uuid.Nil()})
@@ -183,7 +176,7 @@ func (s *Server) settleComponents(ctx context.Context, q *store.Queries, ev *eve
 	for _, o := range rows {
 		open[o.ComponentID] = o
 	}
-	holders, err := statusHolders(ctx, q, ws, ids, open)
+	holders, err := statusHolders(ctx, q, ws, ids)
 	if err != nil {
 		return err
 	}

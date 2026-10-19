@@ -1367,6 +1367,28 @@ func (q *Queries) SetStatusComponentState(ctx context.Context, arg SetStatusComp
 	return i, err
 }
 
+const setStatusIncidentComponentState = `-- name: SetStatusIncidentComponentState :exec
+UPDATE status_incident_components SET state = $1
+WHERE workspace_id = $2 AND incident_id = $3 AND component_id = $4
+`
+
+type SetStatusIncidentComponentStateParams struct {
+	State       string
+	WorkspaceID uuid.UUID
+	IncidentID  uuid.UUID
+	ComponentID uuid.UUID
+}
+
+func (q *Queries) SetStatusIncidentComponentState(ctx context.Context, arg SetStatusIncidentComponentStateParams) error {
+	_, err := q.db.Exec(ctx, setStatusIncidentComponentState,
+		arg.State,
+		arg.WorkspaceID,
+		arg.IncidentID,
+		arg.ComponentID,
+	)
+	return err
+}
+
 const startStatusComponentState = `-- name: StartStatusComponentState :one
 INSERT INTO status_component_states (id, workspace_id, component_id, state, source, source_id, started_at)
 VALUES ($1, $2, $3, $4, $5, $6, $7)

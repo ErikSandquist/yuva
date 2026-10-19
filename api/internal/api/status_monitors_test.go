@@ -161,7 +161,7 @@ func TestStatusMonitorThresholds(t *testing.T) {
 		"failure_threshold": 2, "recovery_threshold": 2, "on_failure": "none", "failure_state": "degraded"})
 	path := "/ingress/status/" + token
 	steps := []struct {
-		body              map[string]any
+		body               map[string]any
 		monitor, component string
 	}{
 		{map[string]any{"state": "major_outage", "message": "EU down"}, "pending", "operational"},
@@ -309,18 +309,19 @@ func TestStatusMonitorNotifiesLikeNewConversation(t *testing.T) {
 	email := st.owner.expect(http.StatusOK, "GET", "/v1/me", nil).body["person"].(map[string]any)["email"].(string)
 	_, token := st.monitor(t, map[string]any{"kind": "push", "name": "Uptime", "component_id": st.api, "on_failure": "none"})
 	ingress(t, h, http.StatusOK, "POST", "/ingress/status/"+token, map[string]any{"state": "partial_outage", "message": "EU workers lag"})
-	jobs := h.jobs("status_monitor_notify", st.ws)
-	if len(jobs) != 1 {
-		t.Fatalf("%d notify jobs", len(jobs))
+	fanOut := h.jobs("status_monitor_notify", st.ws)
+	if len(fanOut) != 1 {
+		t.Fatalf("%d notify jobs", len(fanOut))
 	}
 	var args api.StatusMonitorNotifyArgs
-	if err := json.Unmarshal(jobs[0].args, &args); err != nil {
+	if err := json.Unmarshal(fanOut[0].args, &args); err != nil {
 		t.Fatal(err)
+	}
+	if !args.Down || args.State != "partial_outage" || args.Message != "EU workers lag" || args.At.IsZero() {
+		t.Fatalf("the job does not carry the transition: %+v", args)
 	}
 	ctx := context.Background()
-	if err := h.srv.NotifyStatusMonitor(ctx, args); err != nil {
-		t.Fatal(err)
-	}
+	memberJobs := func() []riverJob { return h.jobs("status_monitor_notify_member", st.ws) }
 	monitorMails := func() []mail.Message {
 		var out []mail.Message
 		for _, m := range h.mail.to(email) {
@@ -330,17 +331,198 @@ func TestStatusMonitorNotifiesLikeNewConversation(t *testing.T) {
 		}
 		return out
 	}
-	if got := monitorMails(); len(got) != 0 {
-		t.Fatalf("e-mailed without asking: %v", got)
+	if err := h.srv.NotifyStatusMonitor(ctx, args); err != nil {
+		t.Fatal(err)
+	}
+	if n := len(memberJobs()); n != 0 {
+		t.Fatalf("queued %d jobs for members who did not ask", n)
 	}
 	st.owner.expect(http.StatusOK, "PATCH", "/v1/me/notifications", map[string]any{
 		"events": map[string]any{"new_async_conversation": map[string]any{"push": true, "email": true}},
 	})
-	if err := h.srv.NotifyStatusMonitor(ctx, args); err != nil {
+	for range 2 {
+		if err := h.srv.NotifyStatusMonitor(ctx, args); err != nil {
+			t.Fatal(err)
+		}
+	}
+	jobs := memberJobs()
+	if len(jobs) != 1 {
+		t.Fatalf("a repeated fan-out queued %d member jobs", len(jobs))
+	}
+	ingress(t, h, http.StatusOK, "POST", "/ingress/status/"+token, map[string]any{"state": "operational", "message": "recovered"})
+	var member api.StatusMonitorNotifyMemberArgs
+	if err := json.Unmarshal(jobs[0].args, &member); err != nil {
+		t.Fatal(err)
+	}
+	if err := h.srv.NotifyStatusMonitorMember(ctx, member); err != nil {
 		t.Fatal(err)
 	}
 	got := monitorMails()
 	if len(got) != 1 || !strings.Contains(got[0].Subject, "API") || !strings.Contains(got[0].Text, "EU workers lag") || !strings.Contains(got[0].Text, "Partial outage") {
 		t.Fatalf("monitor e-mail %+v", got)
 	}
+	if err := h.srv.NotifyStatusMonitor(ctx, args); err != nil {
+		t.Fatal(err)
+	}
+	if n := len(memberJobs()); n != 1 || len(monitorMails()) != 1 {
+		t.Fatalf("a retried fan-out queued %d member jobs and sent %d mails", n, len(monitorMails()))
+	}
+}
+
+func (st statusTeam) setComponent(t *testing.T, id, state string) {
+	t.Helper()
+	st.owner.expect(http.StatusOK, "POST", st.path("/components/"+id+"/state"), map[string]any{"state": state})
+}
+
+func TestStatusMonitorNeverOverridesLaterMemberState(t *testing.T) {
+	h := newHarness(t)
+	st := newStatusTeam(t, h)
+	_, token := st.monitor(t, map[string]any{"kind": "push", "name": "Uptime", "component_id": st.api, "on_failure": "none"})
+	path := "/ingress/status/" + token
+	push := func(state string) {
+		t.Helper()
+		h.clock.Advance(time.Minute)
+		ingress(t, h, http.StatusOK, "POST", path, map[string]any{"state": state})
+	}
+	push("operational")
+	h.clock.Advance(time.Minute)
+	st.setComponent(t, st.api, "degraded")
+	push("major_outage")
+	if got := st.componentState(t, st.api); got != "major_outage" {
+		t.Fatalf("a new failure after the member's state: %s", got)
+	}
+
+	h.clock.Advance(time.Minute)
+	st.setComponent(t, st.api, "degraded")
+	push("partial_outage")
+	if got := st.componentState(t, st.api); got != "degraded" {
+		t.Fatalf("the monitor changed its claim over a later member state: %s", got)
+	}
+	h.clock.Advance(time.Minute)
+	other := st.owner.expect(http.StatusCreated, "POST", st.path("/incidents"), map[string]any{
+		"title": "Other", "message": "Looking.", "publish": true, "components": []map[string]any{{"component_id": st.api, "state": "major_outage"}},
+	})
+	if got := st.componentState(t, st.api); got != "major_outage" {
+		t.Fatalf("incident %s", got)
+	}
+	h.clock.Advance(time.Minute)
+	st.owner.expect(http.StatusCreated, "POST", st.path("/incidents/"+other.str("id")+"/updates"), map[string]any{"state": "resolved", "body": "Fixed"})
+	if got := st.componentState(t, st.api); got != "operational" {
+		t.Fatalf("an unrelated settle applied the overridden monitor again: %s", got)
+	}
+
+	push("operational")
+	push("major_outage")
+	if got := st.componentState(t, st.api); got != "major_outage" {
+		t.Fatalf("a later transition of the monitor: %s", got)
+	}
+}
+
+func (st statusTeam) hasUpdate(t *testing.T, incident, word string) bool {
+	t.Helper()
+	for _, u := range st.incident(t, incident).body["updates"].([]any) {
+		if strings.Contains(u.(map[string]any)["body"].(string), word) {
+			return true
+		}
+	}
+	return false
+}
+
+func TestStatusMonitorPausedOrDeletedResolvesItsIncident(t *testing.T) {
+	h := newHarness(t)
+	st := newStatusTeam(t, h)
+	id, token := st.monitor(t, map[string]any{"kind": "push", "name": "Uptime", "component_id": st.api, "on_failure": "publish"})
+	path := "/ingress/status/" + token
+	holder := st.owner.expect(http.StatusCreated, "POST", st.path("/incidents"), map[string]any{
+		"title": "Slow", "message": "Looking.", "publish": true, "components": []map[string]any{{"component_id": st.api, "state": "degraded"}},
+	})
+
+	h.clock.Advance(time.Minute)
+	ingress(t, h, http.StatusOK, "POST", path, map[string]any{"state": "major_outage"})
+	incident := st.monitorBody(t, id).str("incident_id")
+	if st.componentState(t, st.api) != "major_outage" || incident == "" {
+		t.Fatal("not down")
+	}
+	h.clock.Advance(time.Minute)
+	st.owner.expect(http.StatusOK, "PATCH", st.path("/monitors/"+id), map[string]any{"paused": true})
+	if got := st.incident(t, incident).str("state"); got != "resolved" || !st.hasUpdate(t, incident, "paused") {
+		t.Fatalf("incident after pausing: %s", st.incident(t, incident).raw)
+	}
+	if got := st.componentState(t, st.api); got != "degraded" {
+		t.Fatalf("the component is held by the other incident, got %s", got)
+	}
+	if m := st.monitorBody(t, id); m.body["incident_id"] != nil || m.str("state") != "pending" {
+		t.Fatalf("paused monitor %s", m.raw)
+	}
+
+	h.clock.Advance(time.Minute)
+	st.owner.expect(http.StatusOK, "PATCH", st.path("/monitors/"+id), map[string]any{"paused": false})
+	h.clock.Advance(time.Minute)
+	ingress(t, h, http.StatusOK, "POST", path, map[string]any{"state": "major_outage"})
+	incident = st.monitorBody(t, id).str("incident_id")
+	if incident == "" || st.componentState(t, st.api) != "major_outage" {
+		t.Fatal("not down again")
+	}
+	h.clock.Advance(time.Minute)
+	st.owner.expect(http.StatusNoContent, "DELETE", st.path("/monitors/"+id), nil)
+	if got := st.incident(t, incident).str("state"); got != "resolved" || !st.hasUpdate(t, incident, "removed") {
+		t.Fatalf("incident after deleting: %s", st.incident(t, incident).raw)
+	}
+	if got := st.componentState(t, st.api); got != "degraded" {
+		t.Fatalf("component after deleting %s", got)
+	}
+	if got := st.incident(t, holder.str("id")).str("state"); got == "resolved" {
+		t.Fatal("resolved an incident the monitor did not open")
+	}
+}
+
+func TestStatusMonitorIncidentFollowsTheClaim(t *testing.T) {
+	h := newHarness(t)
+	st := newStatusTeam(t, h)
+	id, token := st.monitor(t, map[string]any{"kind": "push", "name": "Uptime", "component_id": st.api, "on_failure": "publish"})
+	path := "/ingress/status/" + token
+	check := func(impact, state string) {
+		t.Helper()
+		inc := st.incident(t, st.monitorBody(t, id).str("incident_id"))
+		comps := inc.body["components"].([]any)
+		if inc.str("impact") != impact || len(comps) != 1 || comps[0].(map[string]any)["state"] != state || st.componentState(t, st.api) != state {
+			t.Fatalf("want %s/%s: %s, component %s", impact, state, inc.raw, st.componentState(t, st.api))
+		}
+	}
+	ingress(t, h, http.StatusOK, "POST", path, map[string]any{"state": "major_outage"})
+	check("major", "major_outage")
+	ingress(t, h, http.StatusOK, "POST", path, map[string]any{"state": "degraded"})
+	check("minor", "degraded")
+	ingress(t, h, http.StatusOK, "POST", path, map[string]any{"state": "major_outage"})
+	check("major", "major_outage")
+}
+
+func TestStatusMonitorIngressLimits(t *testing.T) {
+	h := newHarness(t)
+	st := newStatusTeam(t, h)
+	_, token := st.monitor(t, map[string]any{"kind": "heartbeat", "name": "Backup", "component_id": st.api})
+	c := h.client()
+	call := func(want int, method, path string, body any) response {
+		t.Helper()
+		r := c.do(method, path, body)
+		if r.status != want {
+			t.Fatalf("%s %s: %d %s", method, path, r.status, r.raw)
+		}
+		return r
+	}
+
+	for range 600 {
+		call(http.StatusNotFound, "GET", "/ingress/heartbeat/"+unique("guess"), nil)
+	}
+	if r := call(http.StatusTooManyRequests, "GET", "/ingress/heartbeat/"+token, nil); r.header.Get("Retry-After") == "" {
+		t.Fatal("no Retry-After")
+	}
+	call(http.StatusTooManyRequests, "POST", "/ingress/status/guess", map[string]any{"state": "operational"})
+	h.clock.Advance(time.Minute)
+	call(http.StatusOK, "GET", "/ingress/heartbeat/"+token, nil)
+
+	h.clock.Advance(time.Minute)
+	h.srv.FillRateLimiter(h.clock.Now())
+	call(http.StatusTooManyRequests, "GET", "/ingress/heartbeat/guess", nil)
+	call(http.StatusOK, "GET", "/ingress/heartbeat/"+token, nil)
 }

@@ -14,6 +14,7 @@ type statusWords struct {
 	History, NoHistory, Back, Feed, Updated      string
 	Edited, Support, Site, Window, Affects, Gone string
 	MonitorTitle, MonitorBody, MonitorResolved   string
+	MonitorPaused, MonitorRemoved                string
 	Months                                       [12]string
 }
 
@@ -34,7 +35,8 @@ var statusLanguages = map[string]statusWords{
 		Gone:         "There is no status page here.",
 		MonitorTitle: "%s is not working as expected", MonitorBody: "Our monitoring found a problem with %s. We are looking into it.",
 		MonitorResolved: "%s is working again.",
-		Months:          [12]string{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"},
+		MonitorPaused:   "Monitoring of %s was paused.", MonitorRemoved: "Monitoring of %s was removed.",
+		Months: [12]string{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"},
 	},
 	"tr": {
 		Lang: "tr",
@@ -52,7 +54,8 @@ var statusLanguages = map[string]statusWords{
 		Gone:         "Burada bir durum sayfası yok.",
 		MonitorTitle: "%s beklendiği gibi çalışmıyor", MonitorBody: "İzleme sistemimiz %s ile ilgili bir sorun buldu. İnceliyoruz.",
 		MonitorResolved: "%s yeniden çalışıyor.",
-		Months:          [12]string{"Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"},
+		MonitorPaused:   "%s izlemesi duraklatıldı.", MonitorRemoved: "%s izlemesi kaldırıldı.",
+		Months: [12]string{"Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"},
 	},
 	"de": {
 		Lang: "de",
@@ -70,7 +73,8 @@ var statusLanguages = map[string]statusWords{
 		Gone:         "Hier gibt es keine Statusseite.",
 		MonitorTitle: "%s funktioniert nicht wie erwartet", MonitorBody: "Unsere Überwachung hat ein Problem mit %s festgestellt. Wir sehen es uns an.",
 		MonitorResolved: "%s funktioniert wieder.",
-		Months:          [12]string{"Jan.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sep.", "Okt.", "Nov.", "Dez."},
+		MonitorPaused:   "Die Überwachung von %s wurde pausiert.", MonitorRemoved: "Die Überwachung von %s wurde entfernt.",
+		Months: [12]string{"Jan.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sep.", "Okt.", "Nov.", "Dez."},
 	},
 }
 

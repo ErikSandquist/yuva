@@ -189,9 +189,12 @@ func (q *Queries) ExtendStatusMonitorDue(ctx context.Context, arg ExtendStatusMo
 }
 
 const failingStatusMonitors = `-- name: FailingStatusMonitors :many
-SELECT id, component_id, down_state::text AS state, changed_at FROM status_monitors
-WHERE workspace_id = $1 AND component_id = ANY($2::uuid[]) AND state = 'down' AND NOT paused
-ORDER BY changed_at, id
+SELECT m.id, m.component_id, m.down_state::text AS state, m.changed_at FROM status_monitors m
+WHERE m.workspace_id = $1 AND m.component_id = ANY($2::uuid[]) AND m.state = 'down' AND NOT m.paused
+  AND NOT EXISTS (
+    SELECT 1 FROM status_component_states s
+    WHERE s.workspace_id = m.workspace_id AND s.component_id = m.component_id AND s.source IN ('member', 'api_key') AND s.started_at > m.changed_at)
+ORDER BY m.changed_at, m.id
 `
 
 type FailingStatusMonitorsParams struct {
@@ -206,6 +209,7 @@ type FailingStatusMonitorsRow struct {
 	ChangedAt   time.Time
 }
 
+// A monitor is overridden, and holds nothing, once a member or key set its component's state after the monitor's last change.
 func (q *Queries) FailingStatusMonitors(ctx context.Context, arg FailingStatusMonitorsParams) ([]FailingStatusMonitorsRow, error) {
 	rows, err := q.db.Query(ctx, failingStatusMonitors, arg.WorkspaceID, arg.ComponentIds)
 	if err != nil {
@@ -339,30 +343,31 @@ func (q *Queries) GetStatusMonitorByID(ctx context.Context, arg GetStatusMonitor
 }
 
 const listDueStatusMonitors = `-- name: ListDueStatusMonitors :many
-SELECT id FROM status_monitors
-WHERE workspace_id = $1 AND due_at IS NOT NULL AND NOT paused AND due_at <= $2::timestamptz
+SELECT workspace_id, id FROM status_monitors
+WHERE due_at IS NOT NULL AND NOT paused AND due_at <= $1::timestamptz
 ORDER BY due_at
 LIMIT 500
 `
 
-type ListDueStatusMonitorsParams struct {
+type ListDueStatusMonitorsRow struct {
 	WorkspaceID uuid.UUID
-	Now         time.Time
+	ID          uuid.UUID
 }
 
-func (q *Queries) ListDueStatusMonitors(ctx context.Context, arg ListDueStatusMonitorsParams) ([]uuid.UUID, error) {
-	rows, err := q.db.Query(ctx, listDueStatusMonitors, arg.WorkspaceID, arg.Now)
+// The documented exception: the sweep finds the heartbeats whose beat is overdue in every workspace at once.
+func (q *Queries) ListDueStatusMonitors(ctx context.Context, now time.Time) ([]ListDueStatusMonitorsRow, error) {
+	rows, err := q.db.Query(ctx, listDueStatusMonitors, now)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []uuid.UUID
+	var items []ListDueStatusMonitorsRow
 	for rows.Next() {
-		var id uuid.UUID
-		if err := rows.Scan(&id); err != nil {
+		var i ListDueStatusMonitorsRow
+		if err := rows.Scan(&i.WorkspaceID, &i.ID); err != nil {
 			return nil, err
 		}
-		items = append(items, id)
+		items = append(items, i)
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err
