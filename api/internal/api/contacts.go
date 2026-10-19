@@ -30,7 +30,18 @@ type contactInput struct {
 	blocked     bool
 }
 
-func (s *Server) contactBodies(ctx context.Context, q *store.Queries, workspaceID uuid.UUID, rows []contactRow) ([]oas.Contact, error) {
+type contactInboxScope struct {
+	all    bool
+	viewer uuid.UUID
+}
+
+var allInboxScope = contactInboxScope{all: true}
+
+func scopeOf(p principal) contactInboxScope {
+	return contactInboxScope{all: p.seesAllInboxes(), viewer: p.viewerID()}
+}
+
+func (s *Server) contactBodies(ctx context.Context, q *store.Queries, workspaceID uuid.UUID, scope contactInboxScope, rows []contactRow) ([]oas.Contact, error) {
 	ids := make([]uuid.UUID, len(rows))
 	for i, r := range rows {
 		ids[i] = r.ID
@@ -60,6 +71,16 @@ func (s *Server) contactBodies(ctx context.Context, q *store.Queries, workspaceI
 		}
 		byUndeliverable[x.ContactID] = append(byUndeliverable[x.ContactID], u)
 	}
+	inboxes, err := q.ListContactInboxes(ctx, store.ListContactInboxesParams{
+		WorkspaceID: workspaceID, ContactIds: ids, AllInboxes: scope.all, ViewerID: scope.viewer,
+	})
+	if err != nil {
+		return nil, err
+	}
+	byInbox := map[uuid.UUID][]oas.ContactInbox{}
+	for _, x := range inboxes {
+		byInbox[x.ContactID] = append(byInbox[x.ContactID], oas.ContactInbox{Id: x.InboxID, Name: x.Name})
+	}
 	byExternal := map[uuid.UUID][]oas.ExternalId{}
 	for _, x := range externals {
 		byExternal[x.ContactID] = append(byExternal[x.ContactID], oas.ExternalId{InboxId: x.InboxID, ExternalId: x.ExternalID})
@@ -74,6 +95,10 @@ func (s *Server) contactBodies(ctx context.Context, q *store.Queries, workspaceI
 		if c.Undeliverable == nil {
 			c.Undeliverable = []oas.UndeliverableEmail{}
 		}
+		c.Inboxes = byInbox[r.ID]
+		if c.Inboxes == nil {
+			c.Inboxes = []oas.ContactInbox{}
+		}
 		if c.Emails == nil {
 			c.Emails = []oas.Email{}
 		}
@@ -86,12 +111,28 @@ func (s *Server) contactBodies(ctx context.Context, q *store.Queries, workspaceI
 	return out, nil
 }
 
-func (s *Server) contactBody(ctx context.Context, q *store.Queries, workspaceID uuid.UUID, r contactRow) (oas.Contact, error) {
-	out, err := s.contactBodies(ctx, q, workspaceID, []contactRow{r})
+func (s *Server) contactBody(ctx context.Context, q *store.Queries, workspaceID uuid.UUID, scope contactInboxScope, r contactRow) (oas.Contact, error) {
+	out, err := s.contactBodies(ctx, q, workspaceID, scope, []contactRow{r})
 	if err != nil {
 		return oas.Contact{}, err
 	}
 	return out[0], nil
+}
+
+// contactBodyAndEvent adds the full contact.updated event and returns the body the caller may see.
+func (s *Server) contactBodyAndEvent(ctx context.Context, q *store.Queries, p principal, events *eventBatch, r contactRow) (oas.Contact, error) {
+	full, err := s.contactBody(ctx, q, p.workspaceID, allInboxScope, r)
+	if err != nil {
+		return oas.Contact{}, err
+	}
+	events.add(realtime.ContactUpdated, nil, nil, full)
+	allowed, err := agentInboxes(ctx, q, p)
+	if err != nil || allowed == nil {
+		return full, err
+	}
+	mine := full
+	mine.Inboxes = slices.DeleteFunc(slices.Clone(full.Inboxes), func(x oas.ContactInbox) bool { return !allowed[x.Id] })
+	return mine, nil
 }
 
 func contactEmails(in []oas.Email) ([]string, error) {
@@ -276,13 +317,18 @@ func (s *Server) ListContacts(ctx context.Context, req oas.ListContactsRequestOb
 	if prm.Sort != nil && !prm.Sort.Valid() {
 		return nil, errValidation("sort must be created or last_seen")
 	}
+	if prm.InboxId != nil {
+		if _, err := visibleInbox(ctx, s.st.Queries, p, *prm.InboxId); err != nil {
+			return nil, err
+		}
+	}
 	var viewer *uuid.UUID
 	if !p.seesAllInboxes() {
 		id := p.viewerID()
 		viewer = &id
 	}
 	arg := store.ListContactsParams{
-		WorkspaceID: p.workspaceID, ViewerID: viewer, Q: q, Kind: (*string)(prm.Kind), HasOpen: prm.HasOpen,
+		WorkspaceID: p.workspaceID, ViewerID: viewer, Q: q, Kind: (*string)(prm.Kind), HasOpen: prm.HasOpen, InboxID: prm.InboxId,
 		CursorAt: at, CursorID: id, Lim: lim + 1,
 	}
 	var (
@@ -315,7 +361,7 @@ func (s *Server) ListContacts(ctx context.Context, req oas.ListContactsRequestOb
 		c := encodeCursor(pos[lim-1], rows[lim-1].ID)
 		next = &c
 	}
-	items, err := s.contactBodies(ctx, s.st.Queries, p.workspaceID, rows)
+	items, err := s.contactBodies(ctx, s.st.Queries, p.workspaceID, scopeOf(p), rows)
 	if err != nil {
 		return nil, err
 	}
@@ -431,7 +477,7 @@ func (s *Server) CreateContact(ctx context.Context, req oas.CreateContactRequest
 		if err := writeContactKeys(ctx, q, p.workspaceID, r.ID, in, true, true); err != nil {
 			return err
 		}
-		out, err = s.contactBody(ctx, q, p.workspaceID, contactRow(r))
+		out, err = s.contactBody(ctx, q, p.workspaceID, scopeOf(p), contactRow(r))
 		return err
 	})
 	if err != nil {
@@ -452,7 +498,7 @@ func (s *Server) GetContact(ctx context.Context, req oas.GetContactRequestObject
 	if err := visibleContact(ctx, s.st.Queries, p, r.ID); err != nil {
 		return nil, err
 	}
-	out, err := s.contactBody(ctx, s.st.Queries, p.workspaceID, r)
+	out, err := s.contactBody(ctx, s.st.Queries, p.workspaceID, scopeOf(p), r)
 	if err != nil {
 		return nil, err
 	}
@@ -481,7 +527,7 @@ func (s *Server) LookupContact(ctx context.Context, req oas.LookupContactRequest
 	if err != nil {
 		return nil, err
 	}
-	out, err := s.contactBody(ctx, s.st.Queries, p.workspaceID, r)
+	out, err := s.contactBody(ctx, s.st.Queries, p.workspaceID, scopeOf(p), r)
 	if err != nil {
 		return nil, err
 	}
@@ -557,10 +603,9 @@ func (s *Server) UpdateContact(ctx context.Context, req oas.UpdateContactRequest
 		if err := writeContactKeys(ctx, q, p.workspaceID, cur.ID, in, b.Emails != nil, b.ExternalIds != nil); err != nil {
 			return err
 		}
-		if out, err = s.contactBody(ctx, q, p.workspaceID, contactRow(r)); err != nil {
+		if out, err = s.contactBodyAndEvent(ctx, q, p, events, contactRow(r)); err != nil {
 			return err
 		}
-		events.add(realtime.ContactUpdated, nil, nil, out)
 		return nil
 	})
 	if err != nil {
@@ -730,10 +775,9 @@ func (s *Server) MergeContact(ctx context.Context, req oas.MergeContactRequestOb
 		if _, err := q.DeleteContact(ctx, store.DeleteContactParams{WorkspaceID: p.workspaceID, ID: from}); err != nil {
 			return err
 		}
-		if out, err = s.contactBody(ctx, q, p.workspaceID, contactRow(r)); err != nil {
+		if out, err = s.contactBodyAndEvent(ctx, q, p, events, contactRow(r)); err != nil {
 			return err
 		}
-		events.add(realtime.ContactUpdated, nil, nil, out)
 		snap := &deletedContact{Contact: oas.WebhookDeletedContact{Id: from, ExternalIds: []oas.ExternalId{}, MergedIntoId: &to}, Inboxes: inboxes}
 		for _, x := range externals {
 			snap.Contact.ExternalIds = append(snap.Contact.ExternalIds, oas.ExternalId{InboxId: x.InboxID, ExternalId: x.ExternalID})

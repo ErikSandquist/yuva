@@ -347,7 +347,7 @@ func (s *Server) identifyContact(ctx context.Context, q *store.Queries, events *
 	if err := q.RefreshContactSearch(ctx, store.RefreshContactSearchParams{WorkspaceID: ws, ID: id}); err != nil {
 		return contactRow{}, err
 	}
-	body, err := s.contactBody(ctx, q, ws, contactRow(r))
+	body, err := s.contactBody(ctx, q, ws, allInboxScope, contactRow(r))
 	if err != nil {
 		return contactRow{}, err
 	}
@@ -514,7 +514,7 @@ func (s *Server) SetClientContactEmail(ctx context.Context, req oas.SetClientCon
 		if out, err = clientContactBody(ctx, q, contactRow(r), cp.identified); err != nil {
 			return err
 		}
-		body, err := s.contactBody(ctx, q, cp.workspaceID, contactRow(r))
+		body, err := s.contactBody(ctx, q, cp.workspaceID, allInboxScope, contactRow(r))
 		if err != nil {
 			return err
 		}

@@ -66,7 +66,11 @@ func (s *Server) ListEvents(ctx context.Context, req oas.ListEventsRequestObject
 			if !ok {
 				continue
 			}
-			b, err := json.Marshal(e)
+			v, ok := f.view(e)
+			if !ok {
+				continue
+			}
+			b, err := json.Marshal(v)
 			if err != nil {
 				return nil, err
 			}

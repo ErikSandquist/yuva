@@ -589,7 +589,7 @@ func (s *Server) webhookContact(ctx context.Context, q *store.Queries, workspace
 	if err != nil {
 		return nil, err
 	}
-	c, err := s.contactBody(ctx, q, workspaceID, r)
+	c, err := s.contactBody(ctx, q, workspaceID, allInboxScope, r)
 	if err != nil {
 		return nil, err
 	}

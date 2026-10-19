@@ -157,3 +157,55 @@ func TestContactNotes(t *testing.T) {
 	tm.owner.expect(http.StatusCreated, "POST", "/v1/contacts/"+secret+"/notes", map[string]any{"body": "hush"})
 	tm.agent.expectProblem(http.StatusNotFound, "not_found", "GET", "/v1/contacts/"+secret+"/notes", nil)
 }
+
+func TestContactInboxes(t *testing.T) {
+	h := newHarness(t)
+	tm := newTeam(t, h)
+	other := newTeam(t, h)
+	key := tm.apiKey(h)
+	hidden := tm.owner.expect(http.StatusCreated, "POST", "/v1/inboxes", map[string]any{"name": "Private", "slug": "private"}).body["inbox"].(map[string]any)["id"].(string)
+	tm.owner.expect(http.StatusNoContent, "PUT", "/v1/inboxes/"+tm.inbox+"/members/"+tm.agentID, nil)
+
+	both := tm.owner.expect(http.StatusCreated, "POST", "/v1/contacts", map[string]any{
+		"name": "Both", "external_ids": []map[string]any{{"inbox_id": hidden, "external_id": "u-1"}},
+	}).str("id")
+	key.expect(http.StatusCreated, "POST", "/v1/conversations", map[string]any{"inbox_id": tm.inbox, "contact_id": both})
+	onlyHidden := tm.owner.expect(http.StatusCreated, "POST", "/v1/contacts", map[string]any{"name": "Hidden"}).str("id")
+	spam := key.expect(http.StatusCreated, "POST", "/v1/conversations", map[string]any{"inbox_id": hidden, "contact_id": onlyHidden}).str("id")
+	tm.owner.expect(http.StatusOK, "PATCH", "/v1/conversations/"+spam, map[string]any{"spam": true})
+
+	inboxIDs := func(c map[string]any) []string {
+		var out []string
+		for _, x := range c["inboxes"].([]any) {
+			out = append(out, x.(map[string]any)["id"].(string))
+		}
+		return out
+	}
+	if ids := inboxIDs(tm.owner.expect(http.StatusOK, "GET", "/v1/contacts/"+both, nil).body); len(ids) != 2 {
+		t.Fatalf("owner inboxes %v", ids)
+	}
+	if ids := inboxIDs(tm.agent.expect(http.StatusOK, "GET", "/v1/contacts/"+both, nil).body); len(ids) != 1 || ids[0] != tm.inbox {
+		t.Fatalf("agent inboxes %v", ids)
+	}
+	for _, it := range tm.agent.expect(http.StatusOK, "GET", "/v1/contacts", nil).body["items"].([]any) {
+		c := it.(map[string]any)
+		if c["id"] == both {
+			if ids := inboxIDs(c); len(ids) != 1 || ids[0] != tm.inbox {
+				t.Fatalf("agent list inboxes %v", ids)
+			}
+		}
+	}
+
+	if ids := contactIDs(tm.owner.expect(http.StatusOK, "GET", "/v1/contacts?inbox_id="+hidden, nil)); len(ids) != 2 {
+		t.Fatalf("hidden inbox filter %v", ids)
+	}
+	if ids := contactIDs(tm.owner.expect(http.StatusOK, "GET", "/v1/contacts?sort=last_seen&inbox_id="+tm.inbox, nil)); len(ids) != 1 || ids[0] != both {
+		t.Fatalf("inbox filter by activity %v", ids)
+	}
+	if ids := contactIDs(tm.agent.expect(http.StatusOK, "GET", "/v1/contacts?inbox_id="+tm.inbox, nil)); len(ids) != 1 || ids[0] != both {
+		t.Fatalf("agent inbox filter %v", ids)
+	}
+	tm.agent.expectProblem(http.StatusNotFound, "not_found", "GET", "/v1/contacts?inbox_id="+hidden, nil)
+	other.owner.expectProblem(http.StatusNotFound, "not_found", "GET", "/v1/contacts?inbox_id="+tm.inbox, nil)
+	tm.owner.expectProblem(http.StatusBadRequest, "validation_failed", "GET", "/v1/contacts?inbox_id=nope", nil)
+}

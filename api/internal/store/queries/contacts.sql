@@ -53,6 +53,9 @@ WHERE c.workspace_id = @workspace_id
         AND (sqlc.narg(viewer_id)::uuid IS NULL OR EXISTS (
             SELECT 1 FROM inbox_viewers iv
             WHERE iv.workspace_id = cv.workspace_id AND iv.inbox_id = cv.inbox_id AND iv.viewer_id = sqlc.narg(viewer_id)::uuid))))
+  AND (sqlc.narg(inbox_id)::uuid IS NULL
+       OR EXISTS (SELECT 1 FROM conversations cv WHERE cv.workspace_id = c.workspace_id AND cv.contact_id = c.id AND cv.inbox_id = sqlc.narg(inbox_id)::uuid)
+       OR EXISTS (SELECT 1 FROM contact_external_ids x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id AND x.inbox_id = sqlc.narg(inbox_id)::uuid))
   AND (sqlc.narg(cursor_at)::timestamptz IS NULL
        OR (c.created_at, c.id) < (sqlc.narg(cursor_at)::timestamptz, sqlc.narg(cursor_id)::uuid))
 ORDER BY c.created_at DESC, c.id DESC
@@ -83,10 +86,28 @@ WHERE c.workspace_id = @workspace_id
         AND (sqlc.narg(viewer_id)::uuid IS NULL OR EXISTS (
             SELECT 1 FROM inbox_viewers iv
             WHERE iv.workspace_id = cv.workspace_id AND iv.inbox_id = cv.inbox_id AND iv.viewer_id = sqlc.narg(viewer_id)::uuid))))
+  AND (sqlc.narg(inbox_id)::uuid IS NULL
+       OR EXISTS (SELECT 1 FROM conversations cv WHERE cv.workspace_id = c.workspace_id AND cv.contact_id = c.id AND cv.inbox_id = sqlc.narg(inbox_id)::uuid)
+       OR EXISTS (SELECT 1 FROM contact_external_ids x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id AND x.inbox_id = sqlc.narg(inbox_id)::uuid))
   AND (sqlc.narg(cursor_at)::timestamptz IS NULL
        OR (coalesce(c.last_active_at, c.created_at), c.id) < (sqlc.narg(cursor_at)::timestamptz, sqlc.narg(cursor_id)::uuid))
 ORDER BY coalesce(c.last_active_at, c.created_at) DESC, c.id DESC
 LIMIT @lim;
+
+-- name: ListContactInboxes :many
+SELECT t.contact_id, i.id AS inbox_id, i.name
+FROM (
+    SELECT cv.contact_id, cv.inbox_id FROM conversations cv
+    WHERE cv.workspace_id = @workspace_id AND cv.contact_id = ANY(@contact_ids::uuid[])
+    UNION
+    SELECT x.contact_id, x.inbox_id FROM contact_external_ids x
+    WHERE x.workspace_id = @workspace_id AND x.contact_id = ANY(@contact_ids::uuid[])
+) t
+JOIN inboxes i ON i.workspace_id = @workspace_id AND i.id = t.inbox_id
+WHERE (@all_inboxes::bool OR EXISTS (
+    SELECT 1 FROM inbox_viewers iv
+    WHERE iv.workspace_id = i.workspace_id AND iv.inbox_id = i.id AND iv.viewer_id = @viewer_id::uuid))
+ORDER BY t.contact_id, i.name, i.id;
 
 -- name: ListContactActivity :many
 SELECT c.id, c.last_active_at, count(cv.id) AS conversations,

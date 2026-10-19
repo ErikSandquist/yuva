@@ -486,6 +486,60 @@ func (q *Queries) ListContactExternalIDs(ctx context.Context, arg ListContactExt
 	return items, nil
 }
 
+const listContactInboxes = `-- name: ListContactInboxes :many
+SELECT t.contact_id, i.id AS inbox_id, i.name
+FROM (
+    SELECT cv.contact_id, cv.inbox_id FROM conversations cv
+    WHERE cv.workspace_id = $1 AND cv.contact_id = ANY($2::uuid[])
+    UNION
+    SELECT x.contact_id, x.inbox_id FROM contact_external_ids x
+    WHERE x.workspace_id = $1 AND x.contact_id = ANY($2::uuid[])
+) t
+JOIN inboxes i ON i.workspace_id = $1 AND i.id = t.inbox_id
+WHERE ($3::bool OR EXISTS (
+    SELECT 1 FROM inbox_viewers iv
+    WHERE iv.workspace_id = i.workspace_id AND iv.inbox_id = i.id AND iv.viewer_id = $4::uuid))
+ORDER BY t.contact_id, i.name, i.id
+`
+
+type ListContactInboxesParams struct {
+	WorkspaceID uuid.UUID
+	ContactIds  []uuid.UUID
+	AllInboxes  bool
+	ViewerID    uuid.UUID
+}
+
+type ListContactInboxesRow struct {
+	ContactID uuid.UUID
+	InboxID   uuid.UUID
+	Name      string
+}
+
+func (q *Queries) ListContactInboxes(ctx context.Context, arg ListContactInboxesParams) ([]ListContactInboxesRow, error) {
+	rows, err := q.db.Query(ctx, listContactInboxes,
+		arg.WorkspaceID,
+		arg.ContactIds,
+		arg.AllInboxes,
+		arg.ViewerID,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListContactInboxesRow
+	for rows.Next() {
+		var i ListContactInboxesRow
+		if err := rows.Scan(&i.ContactID, &i.InboxID, &i.Name); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listContactStorageKeys = `-- name: ListContactStorageKeys :many
 SELECT a.storage_key FROM attachments a
 JOIN conversations c ON c.workspace_id = a.workspace_id AND c.id = a.conversation_id
@@ -584,10 +638,13 @@ WHERE c.workspace_id = $1
         AND ($2::uuid IS NULL OR EXISTS (
             SELECT 1 FROM inbox_viewers iv
             WHERE iv.workspace_id = cv.workspace_id AND iv.inbox_id = cv.inbox_id AND iv.viewer_id = $2::uuid))))
-  AND ($6::timestamptz IS NULL
-       OR (c.created_at, c.id) < ($6::timestamptz, $7::uuid))
+  AND ($6::uuid IS NULL
+       OR EXISTS (SELECT 1 FROM conversations cv WHERE cv.workspace_id = c.workspace_id AND cv.contact_id = c.id AND cv.inbox_id = $6::uuid)
+       OR EXISTS (SELECT 1 FROM contact_external_ids x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id AND x.inbox_id = $6::uuid))
+  AND ($7::timestamptz IS NULL
+       OR (c.created_at, c.id) < ($7::timestamptz, $8::uuid))
 ORDER BY c.created_at DESC, c.id DESC
-LIMIT $8
+LIMIT $9
 `
 
 type ListContactsParams struct {
@@ -596,6 +653,7 @@ type ListContactsParams struct {
 	Q           *string
 	Kind        *string
 	HasOpen     *bool
+	InboxID     *uuid.UUID
 	CursorAt    *time.Time
 	CursorID    *uuid.UUID
 	Lim         int32
@@ -620,6 +678,7 @@ func (q *Queries) ListContacts(ctx context.Context, arg ListContactsParams) ([]L
 		arg.Q,
 		arg.Kind,
 		arg.HasOpen,
+		arg.InboxID,
 		arg.CursorAt,
 		arg.CursorID,
 		arg.Lim,
@@ -677,10 +736,13 @@ WHERE c.workspace_id = $1
         AND ($2::uuid IS NULL OR EXISTS (
             SELECT 1 FROM inbox_viewers iv
             WHERE iv.workspace_id = cv.workspace_id AND iv.inbox_id = cv.inbox_id AND iv.viewer_id = $2::uuid))))
-  AND ($6::timestamptz IS NULL
-       OR (coalesce(c.last_active_at, c.created_at), c.id) < ($6::timestamptz, $7::uuid))
+  AND ($6::uuid IS NULL
+       OR EXISTS (SELECT 1 FROM conversations cv WHERE cv.workspace_id = c.workspace_id AND cv.contact_id = c.id AND cv.inbox_id = $6::uuid)
+       OR EXISTS (SELECT 1 FROM contact_external_ids x WHERE x.workspace_id = c.workspace_id AND x.contact_id = c.id AND x.inbox_id = $6::uuid))
+  AND ($7::timestamptz IS NULL
+       OR (coalesce(c.last_active_at, c.created_at), c.id) < ($7::timestamptz, $8::uuid))
 ORDER BY coalesce(c.last_active_at, c.created_at) DESC, c.id DESC
-LIMIT $8
+LIMIT $9
 `
 
 type ListContactsByActivityParams struct {
@@ -689,6 +751,7 @@ type ListContactsByActivityParams struct {
 	Q           *string
 	Kind        *string
 	HasOpen     *bool
+	InboxID     *uuid.UUID
 	CursorAt    *time.Time
 	CursorID    *uuid.UUID
 	Lim         int32
@@ -714,6 +777,7 @@ func (q *Queries) ListContactsByActivity(ctx context.Context, arg ListContactsBy
 		arg.Q,
 		arg.Kind,
 		arg.HasOpen,
+		arg.InboxID,
 		arg.CursorAt,
 		arg.CursorID,
 		arg.Lim,

@@ -8206,6 +8206,11 @@ type Contact struct {
 	ExternalIds []ExternalId `json:"external_ids"`
 	Id          uuid.UUID    `json:"id"`
 
+	// Inboxes The inboxes (products) where the contact has a conversation or an external id, limited
+	// to those the caller can see, sorted by name. Webhook payloads list all of them; realtime
+	// and event-feed payloads are cut to the inboxes the receiving member can see.
+	Inboxes []ContactInbox `json:"inboxes"`
+
 	// Locale The language from the contact's identity token; absent when not known.
 	//
 	// Examples: en, tr
@@ -8252,6 +8257,12 @@ type ContactDeletedEvent struct {
 
 // ContactDeletedEventType defines model for ContactDeletedEvent.Type.
 type ContactDeletedEventType string
+
+// ContactInbox defines model for ContactInbox.
+type ContactInbox struct {
+	Id   uuid.UUID `json:"id"`
+	Name string    `json:"name"`
+}
 
 // ContactMerge defines model for ContactMerge.
 type ContactMerge struct {
@@ -15184,7 +15195,11 @@ type ListContactsParams struct {
 	Kind *ListContactsParamsKind `form:"kind,omitempty" json:"kind,omitempty"`
 
 	// HasOpen Only contacts with (`true`) or without (`false`) an open conversation the caller can see; spam does not count.
-	HasOpen *bool                   `form:"has_open,omitempty" json:"has_open,omitempty"`
+	HasOpen *bool `form:"has_open,omitempty" json:"has_open,omitempty"`
+
+	// InboxId Only contacts with a conversation (any status, spam included) or an external id in this
+	// inbox. An inbox that does not exist, or that the caller cannot access, answers `404`.
+	InboxId *uuid.UUID              `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
 	Sort    *ListContactsParamsSort `form:"sort,omitempty" json:"sort,omitempty"`
 
 	// Cursor The `next_cursor` of the previous page.
@@ -43591,6 +43606,18 @@ func NewListContactsRequest(server string, params *ListContactsParams) (*http.Re
 
 		}
 
+		if params.InboxId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "inbox_id", *params.InboxId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
 		if params.Sort != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
@@ -69693,6 +69720,8 @@ type ListContactsResponse struct {
 	ApplicationproblemJSON401 *Problem
 	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
 	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -69713,6 +69742,11 @@ func (r ListContactsResponse) GetApplicationproblemJSON401() *Problem {
 // GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
 func (r ListContactsResponse) GetApplicationproblemJSON403() *Problem {
 	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListContactsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
 }
 
 // GetBody returns the raw response body bytes
@@ -97203,6 +97237,13 @@ func ParseListContactsResponse(rsp *http.Response) (*ListContactsResponse, error
 			return nil, err
 		}
 		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
 
 	}
 

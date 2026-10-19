@@ -2127,6 +2127,14 @@ paths:
           description: Only contacts with (`true`) or without (`false`) an open conversation the caller can see; spam does not count.
           schema:
             type: boolean
+        - name: inbox_id
+          in: query
+          description: |
+            Only contacts with a conversation (any status, spam included) or an external id in this
+            inbox. An inbox that does not exist, or that the caller cannot access, answers `404`.
+          schema:
+            type: string
+            format: uuid
         - name: sort
           in: query
           schema:
@@ -2147,6 +2155,8 @@ paths:
         "401":
           $ref: "#/components/responses/Problem"
         "403":
+          $ref: "#/components/responses/Problem"
+        "404":
           $ref: "#/components/responses/Problem"
     post:
       operationId: createContact
@@ -13503,13 +13513,21 @@ components:
           format: date-time
     Contact:
       type: object
-      required: [id, name, emails, external_ids, attributes, blocked, undeliverable, created_at, updated_at]
+      required: [id, name, emails, external_ids, inboxes, attributes, blocked, undeliverable, created_at, updated_at]
       properties:
         id:
           type: string
           format: uuid
         name:
           type: string
+        inboxes:
+          type: array
+          description: |
+            The inboxes (products) where the contact has a conversation or an external id, limited
+            to those the caller can see, sorted by name. Webhook payloads list all of them; realtime
+            and event-feed payloads are cut to the inboxes the receiving member can see.
+          items:
+            $ref: "#/components/schemas/ContactInbox"
         emails:
           type: array
           items:
@@ -13539,6 +13557,15 @@ components:
         updated_at:
           type: string
           format: date-time
+    ContactInbox:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
     ContactActivity:
       type: object
       description: |

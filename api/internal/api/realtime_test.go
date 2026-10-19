@@ -187,6 +187,30 @@ func (tm team) say(c *client, conv, body string) {
 	c.expect(http.StatusCreated, "POST", "/v1/conversations/"+conv+"/messages", map[string]any{"kind": "message", "direction": "out", "body": body})
 }
 
+func contactEventInboxes(t *testing.T, ms []wsMessage) []string {
+	t.Helper()
+	for _, m := range ms {
+		if m.Type != "contact.updated" {
+			continue
+		}
+		var c struct {
+			Inboxes []struct {
+				ID string `json:"id"`
+			} `json:"inboxes"`
+		}
+		if err := json.Unmarshal(m.Data, &c); err != nil {
+			t.Fatal(err)
+		}
+		var ids []string
+		for _, x := range c.Inboxes {
+			ids = append(ids, x.ID)
+		}
+		return ids
+	}
+	t.Fatal("no contact.updated")
+	return nil
+}
+
 func TestRealtimeAccessFiltering(t *testing.T) {
 	h := newHarness(t)
 	tm := newTeam(t, h)
@@ -224,6 +248,9 @@ func TestRealtimeAccessFiltering(t *testing.T) {
 		if !slices.Equal(types, want) {
 			t.Fatalf("%s events %v, want %v", name, types, want)
 		}
+		if n := len(contactEventInboxes(t, got)); n != 2 {
+			t.Fatalf("%s contact.updated lists %d inboxes, want 2", name, n)
+		}
 	}
 	got := agent.until(messageIn(convA))
 	var types []string
@@ -232,6 +259,9 @@ func TestRealtimeAccessFiltering(t *testing.T) {
 	}
 	if want := []string{"conversation.created@" + tm.inbox, "contact.updated@", "message.created@" + tm.inbox}; !slices.Equal(types, want) {
 		t.Fatalf("agent events %v, want %v", types, want)
+	}
+	if ids := contactEventInboxes(t, got); len(ids) != 1 || ids[0] != tm.inbox {
+		t.Fatalf("agent contact.updated lists inboxes %v, want only %s", ids, tm.inbox)
 	}
 
 	tm.owner.expect(http.StatusNoContent, "DELETE", "/v1/inboxes/"+tm.inbox+"/members/"+tm.agentID, nil)
@@ -408,5 +438,33 @@ func TestRealtimeSlowConsumerIsDisconnected(t *testing.T) {
 			t.Fatalf("closed with %v, want 1013 slow_consumer", err)
 		}
 		return
+	}
+}
+
+func TestContactInboxesReachOnlyWhoMaySee(t *testing.T) {
+	h := newHarness(t)
+	tm := newTeam(t, h)
+	inboxB := tm.owner.expect(http.StatusCreated, "POST", "/v1/inboxes", map[string]any{"name": "Billing", "slug": "billing"}).body["inbox"].(map[string]any)["id"].(string)
+	tm.owner.expect(http.StatusNoContent, "PUT", "/v1/inboxes/"+tm.inbox+"/members/"+tm.agentID, nil)
+	tm.owner.expect(http.StatusCreated, "POST", "/v1/conversations", map[string]any{"inbox_id": inboxB, "contact_id": tm.contact, "subject": "Invoice"})
+	tm.conversation(tm.owner)
+
+	owner := tm.owner.dial("")
+	owner.ready()
+	r := tm.agent.expect(http.StatusOK, "PATCH", "/v1/contacts/"+tm.contact, map[string]any{"name": "Renamed"})
+	if n := len(r.body["inboxes"].([]any)); n != 1 {
+		t.Fatalf("the agent's response lists %d inboxes, want 1", n)
+	}
+	if ids := contactEventInboxes(t, []wsMessage{owner.nextOf("contact.updated")}); len(ids) != 2 {
+		t.Fatalf("the event for the owner lists %v, want both inboxes", ids)
+	}
+}
+
+func TestClientContactHasNoInboxes(t *testing.T) {
+	h := newHarness(t)
+	ct := newChatTeam(t, h, "live", true)
+	cs := ct.session(h, map[string]any{})
+	if _, leaked := cs.body["contact"].(map[string]any)["inboxes"]; leaked || strings.Contains(string(cs.client.expect(http.StatusOK, "GET", "/client/v1/session", nil).raw), "inboxes") {
+		t.Fatal("the session lists inboxes of the contact")
 	}
 }

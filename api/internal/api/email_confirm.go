@@ -181,7 +181,7 @@ func (s *Server) confirmEmail(ctx context.Context, q *store.Queries, events *eve
 	if err := q.RefreshContactSearch(ctx, store.RefreshContactSearchParams{WorkspaceID: ws, ID: ct.ID}); err != nil {
 		return false, err
 	}
-	body, err := s.contactBody(ctx, q, ws, contactRow(r))
+	body, err := s.contactBody(ctx, q, ws, allInboxScope, contactRow(r))
 	if err != nil {
 		return false, err
 	}

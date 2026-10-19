@@ -214,7 +214,7 @@ func (s *Server) CreateClientFeedback(ctx context.Context, req oas.CreateClientF
 			if confirm, err = s.confirmTypedEmail(ctx, q, cp, *addr); err != nil {
 				return err
 			}
-			body, err := s.contactBody(ctx, q, cp.workspaceID, contactRow(r))
+			body, err := s.contactBody(ctx, q, cp.workspaceID, allInboxScope, contactRow(r))
 			if err != nil {
 				return err
 			}
@@ -319,7 +319,7 @@ func (s *Server) CreateFeedback(ctx context.Context, req oas.CreateFeedbackReque
 		if err != nil {
 			return err
 		}
-		if out.Contact, err = s.contactBody(ctx, q, p.workspaceID, contact); err != nil {
+		if out.Contact, err = s.contactBody(ctx, q, p.workspaceID, scopeOf(p), contact); err != nil {
 			return err
 		}
 		if in.clientID != nil {
@@ -463,7 +463,7 @@ func (s *Server) feedbackContact(ctx context.Context, q *store.Queries, events *
 	if err := q.RefreshContactSearch(ctx, store.RefreshContactSearchParams{WorkspaceID: ws, ID: id}); err != nil {
 		return contactRow{}, err
 	}
-	body, err := s.contactBody(ctx, q, ws, contactRow(row))
+	body, err := s.contactBody(ctx, q, ws, allInboxScope, contactRow(row))
 	if err != nil {
 		return contactRow{}, err
 	}

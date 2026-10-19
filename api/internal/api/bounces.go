@@ -66,7 +66,7 @@ func (s *Server) recordBounce(ctx context.Context, ws uuid.UUID, messageID *uuid
 			if err != nil {
 				return err
 			}
-			body, err := s.contactBody(ctx, q, ws, row)
+			body, err := s.contactBody(ctx, q, ws, allInboxScope, row)
 			if err != nil {
 				return err
 			}

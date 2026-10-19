@@ -158,7 +158,11 @@ func (s *Server) stream(conn *websocket.Conn, r *http.Request, p principal, resu
 		if err != nil || !ok {
 			return err
 		}
-		return send(e)
+		v, ok := f.view(e)
+		if !ok {
+			return nil
+		}
+		return send(v)
 	}
 
 	last, err := s.st.LastEventID(ctx, p.workspaceID)
@@ -369,6 +373,37 @@ func (f *eventFilter) allows(ctx context.Context, q *store.Queries, e realtime.E
 		delete(f.inboxes, *e.InboxID)
 	}
 	return ok, nil
+}
+
+func (f *eventFilter) view(e realtime.Event) (realtime.Event, bool) {
+	if e.Type != realtime.ContactUpdated || f.p.seesAllInboxes() {
+		return e, true
+	}
+	var c map[string]json.RawMessage
+	if json.Unmarshal(e.Data, &c) != nil {
+		return e, false
+	}
+	var raw []json.RawMessage
+	var all []struct {
+		ID uuid.UUID `json:"id"`
+	}
+	if json.Unmarshal(c["inboxes"], &raw) != nil || json.Unmarshal(c["inboxes"], &all) != nil {
+		return e, false
+	}
+	kept := make([]json.RawMessage, 0, len(raw))
+	for i, x := range all {
+		if f.inboxes[x.ID] {
+			kept = append(kept, raw[i])
+		}
+	}
+	var err error
+	if c["inboxes"], err = json.Marshal(kept); err != nil {
+		return e, false
+	}
+	if e.Data, err = json.Marshal(c); err != nil {
+		return e, false
+	}
+	return e, true
 }
 
 type realtimeClientFrame struct {

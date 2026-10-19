@@ -105,7 +105,7 @@ func (s *Server) contactChanged(ctx context.Context, q *store.Queries, events *e
 	if err != nil {
 		return err
 	}
-	body, err := s.contactBody(ctx, q, ws, row)
+	body, err := s.contactBody(ctx, q, ws, allInboxScope, row)
 	if err != nil {
 		return err
 	}
