@@ -4505,14 +4505,34 @@ func (e SmtpTls) Valid() bool {
 	}
 }
 
+// Defines values for StatusCheckRange.
+const (
+	StatusCheckRange24h StatusCheckRange = "24h"
+	StatusCheckRange7d  StatusCheckRange = "7d"
+)
+
+// Valid indicates whether the value is a known member of the StatusCheckRange enum.
+func (e StatusCheckRange) Valid() bool {
+	switch e {
+	case StatusCheckRange24h:
+		return true
+	case StatusCheckRange7d:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for StatusCheckSource.
 const (
 	StatusCheckAlertmanager StatusCheckSource = "alertmanager"
 	StatusCheckBeat         StatusCheckSource = "beat"
 	StatusCheckFail         StatusCheckSource = "fail"
 	StatusCheckGrafana      StatusCheckSource = "grafana"
+	StatusCheckHttp         StatusCheckSource = "http"
 	StatusCheckMissed       StatusCheckSource = "missed"
 	StatusCheckPush         StatusCheckSource = "push"
+	StatusCheckTcp          StatusCheckSource = "tcp"
 )
 
 // Valid indicates whether the value is a known member of the StatusCheckSource enum.
@@ -4526,9 +4546,13 @@ func (e StatusCheckSource) Valid() bool {
 		return true
 	case StatusCheckGrafana:
 		return true
+	case StatusCheckHttp:
+		return true
 	case StatusCheckMissed:
 		return true
 	case StatusCheckPush:
+		return true
+	case StatusCheckTcp:
 		return true
 	default:
 		return false
@@ -4790,10 +4814,45 @@ func (e StatusMonitorFailureState) Valid() bool {
 	}
 }
 
+// Defines values for StatusMonitorHTTPMethod.
+const (
+	StatusHTTPDelete  StatusMonitorHTTPMethod = "DELETE"
+	StatusHTTPGet     StatusMonitorHTTPMethod = "GET"
+	StatusHTTPHead    StatusMonitorHTTPMethod = "HEAD"
+	StatusHTTPOptions StatusMonitorHTTPMethod = "OPTIONS"
+	StatusHTTPPatch   StatusMonitorHTTPMethod = "PATCH"
+	StatusHTTPPost    StatusMonitorHTTPMethod = "POST"
+	StatusHTTPPut     StatusMonitorHTTPMethod = "PUT"
+)
+
+// Valid indicates whether the value is a known member of the StatusMonitorHTTPMethod enum.
+func (e StatusMonitorHTTPMethod) Valid() bool {
+	switch e {
+	case StatusHTTPDelete:
+		return true
+	case StatusHTTPGet:
+		return true
+	case StatusHTTPHead:
+		return true
+	case StatusHTTPOptions:
+		return true
+	case StatusHTTPPatch:
+		return true
+	case StatusHTTPPost:
+		return true
+	case StatusHTTPPut:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for StatusMonitorKind.
 const (
 	StatusMonitorHeartbeat StatusMonitorKind = "heartbeat"
+	StatusMonitorHttp      StatusMonitorKind = "http"
 	StatusMonitorPush      StatusMonitorKind = "push"
+	StatusMonitorTcp       StatusMonitorKind = "tcp"
 )
 
 // Valid indicates whether the value is a known member of the StatusMonitorKind enum.
@@ -4801,7 +4860,11 @@ func (e StatusMonitorKind) Valid() bool {
 	switch e {
 	case StatusMonitorHeartbeat:
 		return true
+	case StatusMonitorHttp:
+		return true
 	case StatusMonitorPush:
+		return true
+	case StatusMonitorTcp:
 		return true
 	default:
 		return false
@@ -14426,7 +14489,7 @@ type Stats struct {
 type StatusCheck struct {
 	At time.Time `json:"at"`
 
-	// DurationMs For outside checks, which come later.
+	// DurationMs `http` and `tcp`: milliseconds until the answer's headers or the connection.
 	DurationMs *int32 `json:"duration_ms,omitempty"`
 
 	// Error Why it failed, when the server knows.
@@ -14436,14 +14499,23 @@ type StatusCheck struct {
 	Ok      bool      `json:"ok"`
 
 	// Source `beat` and `fail` (heartbeat calls), `missed` (no beat in time), `push`, `alertmanager` and
-	// `grafana` (pushed states).
+	// `grafana` (pushed states), `http` and `tcp` (outside checks).
 	Source StatusCheckSource `json:"source"`
 
 	// State The state a failure named.
 	State *StatusComponentStateValue `json:"state,omitempty"`
 
-	// StatusCode For outside checks, which come later.
+	// StatusCode `http`: the final answer's status.
 	StatusCode *int32 `json:"status_code,omitempty"`
+}
+
+// StatusCheckBucket defines model for StatusCheckBucket.
+type StatusCheckBucket struct {
+	Checks   int32     `json:"checks"`
+	Failures int32     `json:"failures"`
+	P50Ms    *int32    `json:"p50_ms,omitempty"`
+	P95Ms    *int32    `json:"p95_ms,omitempty"`
+	Start    time.Time `json:"start"`
 }
 
 // StatusCheckList defines model for StatusCheckList.
@@ -14452,9 +14524,28 @@ type StatusCheckList struct {
 	NextCursor *string       `json:"next_cursor,omitempty"`
 }
 
+// StatusCheckRange defines model for StatusCheckRange.
+type StatusCheckRange string
+
 // StatusCheckSource `beat` and `fail` (heartbeat calls), `missed` (no beat in time), `push`, `alertmanager` and
-// `grafana` (pushed states).
+// `grafana` (pushed states), `http` and `tcp` (outside checks).
 type StatusCheckSource string
+
+// StatusCheckSummary defines model for StatusCheckSummary.
+type StatusCheckSummary struct {
+	BucketSeconds int32               `json:"bucket_seconds"`
+	Buckets       []StatusCheckBucket `json:"buckets"`
+	Checks        int32               `json:"checks"`
+	Failures      int32               `json:"failures"`
+	From          time.Time           `json:"from"`
+	P50Ms         *int32              `json:"p50_ms,omitempty"`
+	P95Ms         *int32              `json:"p95_ms,omitempty"`
+	Range         StatusCheckRange    `json:"range"`
+	To            time.Time           `json:"to"`
+
+	// Uptime Percent of checks that succeeded, absent without checks.
+	Uptime *float64 `json:"uptime,omitempty"`
+}
 
 // StatusColor Examples: #2563eb
 type StatusColor = string
@@ -14935,6 +15026,9 @@ type StatusIngressResult struct {
 
 // StatusMonitor defines model for StatusMonitor.
 type StatusMonitor struct {
+	// CertExpiresAt `http` on https: when the certificate the last check saw expires.
+	CertExpiresAt *time.Time `json:"cert_expires_at,omitempty"`
+
 	// ComponentId The component whose state the monitor sets.
 	ComponentId          uuid.UUID `json:"component_id"`
 	ConsecutiveFailures  int32     `json:"consecutive_failures"`
@@ -14949,16 +15043,20 @@ type StatusMonitor struct {
 	FailureThreshold int32 `json:"failure_threshold"`
 
 	// Grace `heartbeat`: seconds a beat may be late.
-	Grace *int32    `json:"grace,omitempty"`
-	Id    uuid.UUID `json:"id"`
+	Grace *int32 `json:"grace,omitempty"`
+
+	// Http What an `http` monitor sends and expects. Header values are never returned.
+	Http *StatusMonitorHTTP `json:"http,omitempty"`
+	Id   uuid.UUID          `json:"id"`
 
 	// IncidentId The open incident this monitor opened.
 	IncidentId *uuid.UUID `json:"incident_id,omitempty"`
 
-	// Interval `heartbeat`: seconds between beats.
+	// Interval `heartbeat`: seconds between beats. `http` and `tcp`: seconds between checks.
 	Interval *int32 `json:"interval,omitempty"`
 
 	// Kind `heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state.
+	// `http`: the server sends a request. `tcp`: the server opens a connection.
 	Kind StatusMonitorKind `json:"kind"`
 
 	// LastMessage The message of the last pushed state, or of the last failure.
@@ -14970,6 +15068,9 @@ type StatusMonitor struct {
 
 	// NextBeatDue `heartbeat`, not paused and not failed: when a missing beat becomes a failure.
 	NextBeatDue *time.Time `json:"next_beat_due,omitempty"`
+
+	// NextCheckAt `http` and `tcp`, not paused: when the next check is due.
+	NextCheckAt *time.Time `json:"next_check_at,omitempty"`
 
 	// OnFailure What failing opens: `none`, a `draft` incident members publish, or a published incident (`publish`).
 	OnFailure StatusMonitorOnFailure `json:"on_failure"`
@@ -14983,7 +15084,11 @@ type StatusMonitor struct {
 	State StatusMonitorState `json:"state"`
 
 	// StateSince The monitor's last change between `up` and `down` (its creation or resumption before that).
-	StateSince time.Time `json:"state_since"`
+	StateSince time.Time         `json:"state_since"`
+	Tcp        *StatusMonitorTCP `json:"tcp,omitempty"`
+
+	// Timeout `http` and `tcp`: seconds the check waits for an answer.
+	Timeout *int32 `json:"timeout,omitempty"`
 
 	// TokenPrefix The first characters of the token, to tell tokens apart.
 	TokenPrefix *string   `json:"token_prefix,omitempty"`
@@ -14997,16 +15102,19 @@ type StatusMonitorCreate struct {
 	// FailureState Default `major_outage`.
 	FailureState *StatusMonitorFailureState `json:"failure_state,omitempty"`
 
-	// FailureThreshold Default 1.
+	// FailureThreshold Default 1, or 3 for `http` and `tcp`.
 	FailureThreshold *int32 `json:"failure_threshold,omitempty"`
 
 	// Grace `heartbeat` only: seconds a beat may be late, up to a day; default 60.
-	Grace *int32 `json:"grace,omitempty"`
+	Grace *int32                  `json:"grace,omitempty"`
+	Http  *StatusMonitorHTTPInput `json:"http,omitempty"`
 
-	// Interval `heartbeat` only: seconds between beats, 30 seconds to 30 days; default 300.
+	// Interval `heartbeat`: seconds between beats, 30 seconds to 30 days; default 300. `http` and `tcp`:
+	// seconds between checks, 60 (or `YUVA_STATUS_MIN_INTERVAL`) to 86400; default that minimum.
 	Interval *int32 `json:"interval,omitempty"`
 
 	// Kind `heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state.
+	// `http`: the server sends a request. `tcp`: the server opens a connection.
 	Kind StatusMonitorKind `json:"kind"`
 	Name string            `json:"name"`
 
@@ -15014,8 +15122,12 @@ type StatusMonitorCreate struct {
 	OnFailure *StatusMonitorOnFailure `json:"on_failure,omitempty"`
 	Paused    *bool                   `json:"paused,omitempty"`
 
-	// RecoveryThreshold Default 1.
-	RecoveryThreshold *int32 `json:"recovery_threshold,omitempty"`
+	// RecoveryThreshold Default 1, or 2 for `http` and `tcp`.
+	RecoveryThreshold *int32            `json:"recovery_threshold,omitempty"`
+	Tcp               *StatusMonitorTCP `json:"tcp,omitempty"`
+
+	// Timeout `http` and `tcp` only: seconds to wait for an answer, at most 30; default 10.
+	Timeout *int32 `json:"timeout,omitempty"`
 }
 
 // StatusMonitorEvent `status.monitor.down`, `status.monitor.up`: a monitor failed or recovered. Delivered to callers
@@ -15043,7 +15155,83 @@ type StatusMonitorEventData struct {
 // StatusMonitorFailureState defines model for StatusMonitorFailureState.
 type StatusMonitorFailureState string
 
+// StatusMonitorHTTP What an `http` monitor sends and expects. Header values are never returned.
+type StatusMonitorHTTP struct {
+	Body *string `json:"body,omitempty"`
+
+	// CertWarnDays For https, a certificate expiring within this many days fails the check; 0 checks only that it is valid.
+	CertWarnDays      int32 `json:"cert_warn_days"`
+	ExpectedStatusMax int32 `json:"expected_status_max"`
+	ExpectedStatusMin int32 `json:"expected_status_min"`
+	FollowRedirects   bool  `json:"follow_redirects"`
+
+	// HeaderNames The names of the headers sent; their values are kept encrypted and never shown.
+	HeaderNames []string `json:"header_names"`
+
+	// Keyword Text the first 64 KiB of the answer must contain, case-sensitive.
+	Keyword *string                 `json:"keyword,omitempty"`
+	Method  StatusMonitorHTTPMethod `json:"method"`
+	Url     string                  `json:"url"`
+}
+
+// StatusMonitorHTTPInput defines model for StatusMonitorHTTPInput.
+type StatusMonitorHTTPInput struct {
+	Body *string `json:"body,omitempty"`
+
+	// CertWarnDays Default 14.
+	CertWarnDays *int32 `json:"cert_warn_days,omitempty"`
+
+	// ExpectedStatusMax Default 299.
+	ExpectedStatusMax *int32 `json:"expected_status_max,omitempty"`
+
+	// ExpectedStatusMin Default 200.
+	ExpectedStatusMin *int32 `json:"expected_status_min,omitempty"`
+
+	// FollowRedirects Default false; a 3xx answer is then judged against the expected range.
+	FollowRedirects *bool `json:"follow_redirects,omitempty"`
+
+	// Headers Not `Host`, `Content-Length`, `Transfer-Encoding` or `Connection`.
+	Headers *[]StatusMonitorHeader `json:"headers,omitempty"`
+
+	// Keyword Empty for none.
+	Keyword *string `json:"keyword,omitempty"`
+
+	// Method Default `GET`.
+	Method *StatusMonitorHTTPMethod `json:"method,omitempty"`
+
+	// Url An http or https URL without credentials.
+	Url string `json:"url"`
+}
+
+// StatusMonitorHTTPMethod defines model for StatusMonitorHTTPMethod.
+type StatusMonitorHTTPMethod string
+
+// StatusMonitorHTTPUpdate defines model for StatusMonitorHTTPUpdate.
+type StatusMonitorHTTPUpdate struct {
+	// Body Empty for none.
+	Body              *string                `json:"body,omitempty"`
+	CertWarnDays      *int32                 `json:"cert_warn_days,omitempty"`
+	ExpectedStatusMax *int32                 `json:"expected_status_max,omitempty"`
+	ExpectedStatusMin *int32                 `json:"expected_status_min,omitempty"`
+	FollowRedirects   *bool                  `json:"follow_redirects,omitempty"`
+	Headers           *[]StatusMonitorHeader `json:"headers,omitempty"`
+
+	// Keyword Empty for none.
+	Keyword *string                  `json:"keyword,omitempty"`
+	Method  *StatusMonitorHTTPMethod `json:"method,omitempty"`
+	Url     *string                  `json:"url,omitempty"`
+}
+
+// StatusMonitorHeader defines model for StatusMonitorHeader.
+type StatusMonitorHeader struct {
+	Name string `json:"name"`
+
+	// Value Required on create. On update, leaving it out keeps the value stored for this name.
+	Value *string `json:"value,omitempty"`
+}
+
 // StatusMonitorKind `heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state.
+// `http`: the server sends a request. `tcp`: the server opens a connection.
 type StatusMonitorKind string
 
 // StatusMonitorList defines model for StatusMonitorList.
@@ -15057,12 +15245,20 @@ type StatusMonitorOnFailure string
 // StatusMonitorState `pending` until the first result decides, then `up` or `down`.
 type StatusMonitorState string
 
+// StatusMonitorTCP defines model for StatusMonitorTCP.
+type StatusMonitorTCP struct {
+	// Host A host name or an IP address.
+	Host string `json:"host"`
+	Port int32  `json:"port"`
+}
+
 // StatusMonitorUpdate defines model for StatusMonitorUpdate.
 type StatusMonitorUpdate struct {
 	ComponentId      *uuid.UUID                 `json:"component_id,omitempty"`
 	FailureState     *StatusMonitorFailureState `json:"failure_state,omitempty"`
 	FailureThreshold *int32                     `json:"failure_threshold,omitempty"`
 	Grace            *int32                     `json:"grace,omitempty"`
+	Http             *StatusMonitorHTTPUpdate   `json:"http,omitempty"`
 	Interval         *int32                     `json:"interval,omitempty"`
 	Name             *string                    `json:"name,omitempty"`
 
@@ -15070,10 +15266,15 @@ type StatusMonitorUpdate struct {
 	OnFailure         *StatusMonitorOnFailure `json:"on_failure,omitempty"`
 	Paused            *bool                   `json:"paused,omitempty"`
 	RecoveryThreshold *int32                  `json:"recovery_threshold,omitempty"`
+	Tcp               *StatusMonitorTCP       `json:"tcp,omitempty"`
+	Timeout           *int32                  `json:"timeout,omitempty"`
 }
 
 // StatusMonitorWithToken defines model for StatusMonitorWithToken.
 type StatusMonitorWithToken struct {
+	// CertExpiresAt `http` on https: when the certificate the last check saw expires.
+	CertExpiresAt *time.Time `json:"cert_expires_at,omitempty"`
+
 	// ComponentId The component whose state the monitor sets.
 	ComponentId          uuid.UUID `json:"component_id"`
 	ConsecutiveFailures  int32     `json:"consecutive_failures"`
@@ -15088,16 +15289,20 @@ type StatusMonitorWithToken struct {
 	FailureThreshold int32 `json:"failure_threshold"`
 
 	// Grace `heartbeat`: seconds a beat may be late.
-	Grace *int32    `json:"grace,omitempty"`
-	Id    uuid.UUID `json:"id"`
+	Grace *int32 `json:"grace,omitempty"`
+
+	// Http What an `http` monitor sends and expects. Header values are never returned.
+	Http *StatusMonitorHTTP `json:"http,omitempty"`
+	Id   uuid.UUID          `json:"id"`
 
 	// IncidentId The open incident this monitor opened.
 	IncidentId *uuid.UUID `json:"incident_id,omitempty"`
 
-	// Interval `heartbeat`: seconds between beats.
+	// Interval `heartbeat`: seconds between beats. `http` and `tcp`: seconds between checks.
 	Interval *int32 `json:"interval,omitempty"`
 
 	// Kind `heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state.
+	// `http`: the server sends a request. `tcp`: the server opens a connection.
 	Kind StatusMonitorKind `json:"kind"`
 
 	// LastMessage The message of the last pushed state, or of the last failure.
@@ -15109,6 +15314,9 @@ type StatusMonitorWithToken struct {
 
 	// NextBeatDue `heartbeat`, not paused and not failed: when a missing beat becomes a failure.
 	NextBeatDue *time.Time `json:"next_beat_due,omitempty"`
+
+	// NextCheckAt `http` and `tcp`, not paused: when the next check is due.
+	NextCheckAt *time.Time `json:"next_check_at,omitempty"`
 
 	// OnFailure What failing opens: `none`, a `draft` incident members publish, or a published incident (`publish`).
 	OnFailure StatusMonitorOnFailure `json:"on_failure"`
@@ -15122,18 +15330,22 @@ type StatusMonitorWithToken struct {
 	State StatusMonitorState `json:"state"`
 
 	// StateSince The monitor's last change between `up` and `down` (its creation or resumption before that).
-	StateSince time.Time `json:"state_since"`
+	StateSince time.Time         `json:"state_since"`
+	Tcp        *StatusMonitorTCP `json:"tcp,omitempty"`
 
-	// Token Shown only now; only its hash is kept.
-	Token string `json:"token"`
+	// Timeout `http` and `tcp`: seconds the check waits for an answer.
+	Timeout *int32 `json:"timeout,omitempty"`
+
+	// Token `heartbeat` and `push`: shown only now; only its hash is kept.
+	Token *string `json:"token,omitempty"`
 
 	// TokenPrefix The first characters of the token, to tell tokens apart.
 	TokenPrefix *string   `json:"token_prefix,omitempty"`
 	UpdatedAt   time.Time `json:"updated_at"`
 
-	// Url Where the host calls: `<public URL>/ingress/heartbeat/{token}` (add `/fail` for a failed
-	// run) or `<public URL>/ingress/status/{token}`.
-	Url string `json:"url"`
+	// Url `heartbeat` and `push`: where the host calls, `<public URL>/ingress/heartbeat/{token}` (add
+	// `/fail` for a failed run) or `<public URL>/ingress/status/{token}`.
+	Url *string `json:"url,omitempty"`
 }
 
 // StatusNotice defines model for StatusNotice.
@@ -18589,6 +18801,14 @@ type ListStatusMonitorChecksParams struct {
 
 	// Limit Page size, 1 to 100; 25 by default.
 	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetStatusMonitorCheckSummaryParams defines parameters for GetStatusMonitorCheckSummary.
+type GetStatusMonitorCheckSummaryParams struct {
+	Range *StatusCheckRange `form:"range,omitempty" json:"range,omitempty"`
 
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
@@ -23848,6 +24068,9 @@ type ServerInterface interface {
 	// ListStatusMonitorChecks List a monitor's checks
 	// (GET /v1/status-pages/{pageId}/monitors/{monitorId}/checks)
 	ListStatusMonitorChecks(w http.ResponseWriter, r *http.Request, pageId StatusPageId, monitorId StatusMonitorId, params ListStatusMonitorChecksParams)
+	// GetStatusMonitorCheckSummary A monitor's response times and uptime
+	// (GET /v1/status-pages/{pageId}/monitors/{monitorId}/checks/summary)
+	GetStatusMonitorCheckSummary(w http.ResponseWriter, r *http.Request, pageId StatusPageId, monitorId StatusMonitorId, params GetStatusMonitorCheckSummaryParams)
 	// RotateStatusMonitorToken Rotate a monitor's token
 	// (POST /v1/status-pages/{pageId}/monitors/{monitorId}/token)
 	RotateStatusMonitorToken(w http.ResponseWriter, r *http.Request, pageId StatusPageId, monitorId StatusMonitorId, params RotateStatusMonitorTokenParams)
@@ -41885,6 +42108,78 @@ func (siw *ServerInterfaceWrapper) ListStatusMonitorChecks(w http.ResponseWriter
 	handler.ServeHTTP(w, r)
 }
 
+// GetStatusMonitorCheckSummary operation middleware
+func (siw *ServerInterfaceWrapper) GetStatusMonitorCheckSummary(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "monitorId" -------------
+	var monitorId StatusMonitorId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "monitorId", r.PathValue("monitorId"), &monitorId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "monitorId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetStatusMonitorCheckSummaryParams
+
+	// ------------- Optional query parameter "range" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "range", r.URL.Query(), &params.Range, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "range"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "range", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetStatusMonitorCheckSummary(w, r, pageId, monitorId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // RotateStatusMonitorToken operation middleware
 func (siw *ServerInterfaceWrapper) RotateStatusMonitorToken(w http.ResponseWriter, r *http.Request) {
 
@@ -43583,6 +43878,7 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors/{monitorId}", wrapper.UpdateStatusMonitor)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors/{monitorId}/token", wrapper.RotateStatusMonitorToken)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors/{monitorId}/checks", wrapper.ListStatusMonitorChecks)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors/{monitorId}/checks/summary", wrapper.GetStatusMonitorCheckSummary)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/client/v1/session", wrapper.DeleteClientSession)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/session", wrapper.GetClientSession)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/session", wrapper.CreateClientSession)
@@ -71347,6 +71643,88 @@ func (response ListStatusMonitorChecks404ApplicationProblemPlusJSONResponse) Vis
 	return err
 }
 
+type GetStatusMonitorCheckSummaryRequestObject struct {
+	PageId    StatusPageId    `json:"pageId"`
+	MonitorId StatusMonitorId `json:"monitorId"`
+	Params    GetStatusMonitorCheckSummaryParams
+}
+
+type GetStatusMonitorCheckSummaryResponseObject interface {
+	VisitGetStatusMonitorCheckSummaryResponse(w http.ResponseWriter) error
+}
+
+type GetStatusMonitorCheckSummary200JSONResponse StatusCheckSummary
+
+func (response GetStatusMonitorCheckSummary200JSONResponse) VisitGetStatusMonitorCheckSummaryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusMonitorCheckSummary400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetStatusMonitorCheckSummary400ApplicationProblemPlusJSONResponse) VisitGetStatusMonitorCheckSummaryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusMonitorCheckSummary401ApplicationProblemPlusJSONResponse Problem
+
+func (response GetStatusMonitorCheckSummary401ApplicationProblemPlusJSONResponse) VisitGetStatusMonitorCheckSummaryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusMonitorCheckSummary403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetStatusMonitorCheckSummary403ApplicationProblemPlusJSONResponse) VisitGetStatusMonitorCheckSummaryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetStatusMonitorCheckSummary404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetStatusMonitorCheckSummary404ApplicationProblemPlusJSONResponse) VisitGetStatusMonitorCheckSummaryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type RotateStatusMonitorTokenRequestObject struct {
 	PageId    StatusPageId    `json:"pageId"`
 	MonitorId StatusMonitorId `json:"monitorId"`
@@ -71411,6 +71789,20 @@ func (response RotateStatusMonitorToken404ApplicationProblemPlusJSONResponse) Vi
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RotateStatusMonitorToken409ApplicationProblemPlusJSONResponse Problem
+
+func (response RotateStatusMonitorToken409ApplicationProblemPlusJSONResponse) VisitRotateStatusMonitorTokenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -73936,6 +74328,9 @@ type StrictServerInterface interface {
 	// ListStatusMonitorChecks List a monitor's checks
 	// (GET /v1/status-pages/{pageId}/monitors/{monitorId}/checks)
 	ListStatusMonitorChecks(ctx context.Context, request ListStatusMonitorChecksRequestObject) (ListStatusMonitorChecksResponseObject, error)
+	// GetStatusMonitorCheckSummary A monitor's response times and uptime
+	// (GET /v1/status-pages/{pageId}/monitors/{monitorId}/checks/summary)
+	GetStatusMonitorCheckSummary(ctx context.Context, request GetStatusMonitorCheckSummaryRequestObject) (GetStatusMonitorCheckSummaryResponseObject, error)
 	// RotateStatusMonitorToken Rotate a monitor's token
 	// (POST /v1/status-pages/{pageId}/monitors/{monitorId}/token)
 	RotateStatusMonitorToken(ctx context.Context, request RotateStatusMonitorTokenRequestObject) (RotateStatusMonitorTokenResponseObject, error)
@@ -83696,6 +84091,34 @@ func (sh *strictHandler) ListStatusMonitorChecks(w http.ResponseWriter, r *http.
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(ListStatusMonitorChecksResponseObject); ok {
 		if err := validResponse.VisitListStatusMonitorChecksResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetStatusMonitorCheckSummary operation middleware
+func (sh *strictHandler) GetStatusMonitorCheckSummary(w http.ResponseWriter, r *http.Request, pageId StatusPageId, monitorId StatusMonitorId, params GetStatusMonitorCheckSummaryParams) {
+	var request GetStatusMonitorCheckSummaryRequestObject
+
+	request.PageId = pageId
+	request.MonitorId = monitorId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetStatusMonitorCheckSummary(ctx, request.(GetStatusMonitorCheckSummaryRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetStatusMonitorCheckSummary")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetStatusMonitorCheckSummaryResponseObject); ok {
+		if err := validResponse.VisitGetStatusMonitorCheckSummaryResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

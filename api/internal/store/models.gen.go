@@ -1573,6 +1573,8 @@ type StatusCheck struct {
 	Error       *string
 	DurationMs  *int32
 	StatusCode  *int32
+	RoundID     *uuid.UUID
+	Pending     bool
 }
 
 type StatusComponent struct {
@@ -1710,6 +1712,19 @@ type StatusMonitor struct {
 	ChangedAt            time.Time
 	CreatedAt            time.Time
 	UpdatedAt            time.Time
+	Target               *string
+	TimeoutSeconds       *int32
+	HttpMethod           *string
+	HttpHeaderNames      []string
+	HttpHeaders          []byte
+	HttpBody             *string
+	StatusMin            *int32
+	StatusMax            *int32
+	Keyword              *string
+	FollowRedirects      bool
+	CertWarnDays         *int32
+	CertExpiresAt        *time.Time
+	CheckAt              *time.Time
 }
 
 type StatusNotice struct {

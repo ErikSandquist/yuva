@@ -43,6 +43,9 @@ var (
 	SESTenants = promauto.NewGaugeVec(prometheus.GaugeOpts{
 		Name: "yuva_ses_tenants", Help: "Amazon SES tenants the server manages, by sending status.",
 	}, []string{"sending_status"})
+	StatusRoundsDropped = promauto.NewCounterVec(prometheus.CounterOpts{
+		Name: "yuva_status_rounds_dropped_total", Help: "Rounds of status checks whose failures were dropped as the server's own trouble, by reason: canaries, majority.",
+	}, []string{"reason"})
 	SESAPIErrors = promauto.NewCounterVec(prometheus.CounterOpts{
 		Name: "yuva_ses_api_errors_total", Help: "Refused or failed Amazon SES and STS calls, by operation and error code.",
 	}, []string{"operation", "code"})

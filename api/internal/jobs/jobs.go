@@ -50,6 +50,13 @@ const (
 // newsletter on the broadcast queue.
 const StatusNoticeQueue = "status_notice"
 
+// StatusCheckQueue holds the http and tcp checks of status monitors and the judging of their rounds,
+// at most StatusCheckWorkers at a time per process.
+const (
+	StatusCheckQueue   = "status_checks"
+	StatusCheckWorkers = 20
+)
+
 // BroadcastQueue holds the broadcast sending jobs, so a large send never delays replies,
 // notifications or webhooks on the default queue.
 const BroadcastQueue = "broadcast"
@@ -79,7 +86,8 @@ func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorker
 	if broadcastWorkers < 1 {
 		broadcastWorkers = 2
 	}
-	queues := map[string]river.QueueConfig{river.QueueDefault: {MaxWorkers: 10}, BroadcastQueue: {MaxWorkers: broadcastWorkers}, StatusNoticeQueue: {MaxWorkers: 2}}
+	queues := map[string]river.QueueConfig{river.QueueDefault: {MaxWorkers: 10}, BroadcastQueue: {MaxWorkers: broadcastWorkers}, StatusNoticeQueue: {MaxWorkers: 2},
+		StatusCheckQueue: {MaxWorkers: StatusCheckWorkers}}
 	if migrationWorkers > 0 {
 		queues[MigrationQueue] = river.QueueConfig{MaxWorkers: migrationWorkers}
 	}
@@ -228,7 +236,8 @@ type StatusNoticeSweepArgs struct{}
 
 func (StatusNoticeSweepArgs) Kind() string { return "status_notice_sweep" }
 
-// StatusMonitorSweepArgs is worked by the api package: it fails heartbeats whose beat is overdue.
+// StatusMonitorSweepArgs is worked by the api package: it fails heartbeats whose beat is overdue and
+// queues the http and tcp checks that are due.
 type StatusMonitorSweepArgs struct{}
 
 func (StatusMonitorSweepArgs) Kind() string { return "status_monitor_sweep" }

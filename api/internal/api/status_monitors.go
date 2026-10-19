@@ -67,6 +67,7 @@ func monitorBody(m store.StatusMonitor) oas.StatusMonitor {
 		st := oas.StatusComponentStateValue(*m.DownState)
 		out.DownState = &st
 	}
+	outsideBody(m, &out)
 	return out
 }
 
@@ -84,14 +85,19 @@ func newMonitorToken() (token, prefix string) {
 
 func (s *Server) monitorWithToken(m store.StatusMonitor, token string) oas.StatusMonitorWithToken {
 	b := monitorBody(m)
-	return oas.StatusMonitorWithToken{
+	out := oas.StatusMonitorWithToken{
 		Id: b.Id, PageId: b.PageId, ComponentId: b.ComponentId, Kind: b.Kind, Name: b.Name, State: b.State, StateSince: b.StateSince,
 		DownState: b.DownState, Paused: b.Paused, FailureState: b.FailureState, OnFailure: b.OnFailure, FailureThreshold: b.FailureThreshold,
 		RecoveryThreshold: b.RecoveryThreshold, Interval: b.Interval, Grace: b.Grace, TokenPrefix: b.TokenPrefix,
 		ConsecutiveFailures: b.ConsecutiveFailures, ConsecutiveSuccesses: b.ConsecutiveSuccesses, LastResultAt: b.LastResultAt,
 		LastMessage: b.LastMessage, NextBeatDue: b.NextBeatDue, IncidentId: b.IncidentId, CreatedAt: b.CreatedAt, UpdatedAt: b.UpdatedAt,
-		Token: token, Url: s.monitorURL(m.Kind, token),
+		Timeout: b.Timeout, Http: b.Http, Tcp: b.Tcp, NextCheckAt: b.NextCheckAt, CertExpiresAt: b.CertExpiresAt,
 	}
+	if token != "" {
+		u := s.monitorURL(m.Kind, token)
+		out.Token, out.Url = &token, &u
+	}
+	return out
 }
 
 func visibleStatusMonitor(ctx context.Context, q *store.Queries, pg store.StatusPage, id uuid.UUID) (store.StatusMonitor, error) {
@@ -165,8 +171,8 @@ func (s *Server) CreateStatusMonitor(ctx context.Context, req oas.CreateStatusMo
 	}
 	b := req.Body
 	kind := string(b.Kind)
-	if kind != monitorHeartbeat && kind != monitorPush {
-		return nil, errValidation("kind must be heartbeat or push")
+	if kind != monitorHeartbeat && kind != monitorPush && !outsideKind(kind) {
+		return nil, errValidation("kind must be heartbeat, push, http or tcp")
 	}
 	name, err := trimmed(b.Name, 1, 100, "name")
 	if err != nil {
@@ -184,16 +190,30 @@ func (s *Server) CreateStatusMonitor(ctx context.Context, req oas.CreateStatusMo
 			return nil, errValidation("on_failure must be none, draft or publish")
 		}
 	}
-	failN, err := monitorThreshold(b.FailureThreshold, 1, "failure_threshold")
+	defFail, defRecover := int32(1), int32(1)
+	if outsideKind(kind) {
+		defFail, defRecover = defaultOutsideFailures, defaultOutsideRecovery
+	}
+	failN, err := monitorThreshold(b.FailureThreshold, defFail, "failure_threshold")
 	if err != nil {
 		return nil, err
 	}
-	recoverN, err := monitorThreshold(b.RecoveryThreshold, 1, "recovery_threshold")
+	recoverN, err := monitorThreshold(b.RecoveryThreshold, defRecover, "recovery_threshold")
 	if err != nil {
 		return nil, err
 	}
-	var interval, grace *int32
-	if kind == monitorHeartbeat {
+	var (
+		interval, grace *int32
+		spec            outsideSpec
+	)
+	if outsideKind(kind) {
+		if spec, err = s.newOutsideSpec(ctx, *b); err != nil {
+			return nil, err
+		}
+		interval = &spec.interval
+	} else if b.Http != nil || b.Tcp != nil || b.Timeout != nil {
+		return nil, errValidation("only http and tcp monitors have http, tcp and timeout")
+	} else if kind == monitorHeartbeat {
 		iv, gr := int32(defaultMonitorInterval), int32(defaultMonitorGrace)
 		if b.Interval != nil {
 			iv = *b.Interval
@@ -209,7 +229,15 @@ func (s *Server) CreateStatusMonitor(ctx context.Context, req oas.CreateStatusMo
 		return nil, errValidation("only a heartbeat monitor has interval and grace")
 	}
 	paused := b.Paused != nil && *b.Paused
-	token, prefix := newMonitorToken()
+	var (
+		token, prefix string
+		hash          []byte
+		prefixPtr     *string
+	)
+	if !outsideKind(kind) {
+		token, prefix = newMonitorToken()
+		hash, prefixPtr = hashSecret(token), &prefix
+	}
 	var out oas.StatusMonitorWithToken
 	err = s.inTx(ctx, p.workspaceID, func(q *store.Queries, _ *eventBatch) error {
 		pg, err := visibleStatusPage(ctx, q, p, req.PageId, true)
@@ -233,11 +261,22 @@ func (s *Server) CreateStatusMonitor(ctx context.Context, req oas.CreateStatusMo
 		if kind == monitorHeartbeat && !paused {
 			due = heartbeatDue(now, *interval, *grace)
 		}
-		m, err := q.CreateStatusMonitor(ctx, store.CreateStatusMonitorParams{
-			ID: newID(), WorkspaceID: p.workspaceID, PageID: pg.ID, ComponentID: b.ComponentId, Kind: kind, Name: name,
-			TokenHash: hashSecret(token), TokenPrefix: &prefix, IntervalSeconds: interval, GraceSeconds: grace, FailureState: failState,
+		id := newID()
+		arg := store.CreateStatusMonitorParams{
+			ID: id, WorkspaceID: p.workspaceID, PageID: pg.ID, ComponentID: b.ComponentId, Kind: kind, Name: name,
+			TokenHash: hash, TokenPrefix: prefixPtr, IntervalSeconds: interval, GraceSeconds: grace, FailureState: failState,
 			FailureThreshold: failN, RecoveryThreshold: recoverN, OnFailure: onFailure, Paused: paused, DueAt: due, Now: now,
-		})
+			HttpHeaderNames: []string{},
+		}
+		if outsideKind(kind) {
+			arg.Target, arg.TimeoutSeconds, arg.HttpMethod, arg.HttpBody = &spec.target, &spec.timeout, spec.method, spec.body
+			arg.HttpHeaderNames, arg.HttpHeaders = spec.headerNames(), s.sealHeaders(p.workspaceID, id, spec.headers)
+			arg.StatusMin, arg.StatusMax, arg.Keyword, arg.FollowRedirects, arg.CertWarnDays = spec.statusMin, spec.statusMax, spec.keyword, spec.follow, spec.certWarn
+			if !paused {
+				arg.CheckAt = &now
+			}
+		}
+		m, err := q.CreateStatusMonitor(ctx, arg)
 		if err != nil {
 			return err
 		}
@@ -294,6 +333,31 @@ func (s *Server) UpdateStatusMonitor(ctx context.Context, req oas.UpdateStatusMo
 			WorkspaceID: m.WorkspaceID, ID: m.ID, Name: m.Name, ComponentID: m.ComponentID, FailureState: m.FailureState,
 			FailureThreshold: m.FailureThreshold, RecoveryThreshold: m.RecoveryThreshold, OnFailure: m.OnFailure,
 			IntervalSeconds: m.IntervalSeconds, GraceSeconds: m.GraceSeconds, DueAt: m.DueAt, DueExtended: m.DueExtended, Now: now,
+			Target: m.Target, TimeoutSeconds: m.TimeoutSeconds, HttpMethod: m.HttpMethod, HttpHeaderNames: m.HttpHeaderNames,
+			HttpHeaders: m.HttpHeaders, HttpBody: m.HttpBody, StatusMin: m.StatusMin, StatusMax: m.StatusMax, Keyword: m.Keyword,
+			FollowRedirects: m.FollowRedirects, CertWarnDays: m.CertWarnDays, CertExpiresAt: m.CertExpiresAt, CheckAt: m.CheckAt,
+		}
+		if arg.HttpHeaderNames == nil {
+			arg.HttpHeaderNames = []string{}
+		}
+		if outsideKind(m.Kind) {
+			spec, moved, err := s.updateOutsideSpec(ctx, m, *b)
+			if err != nil {
+				return err
+			}
+			arg.Target, arg.TimeoutSeconds, arg.IntervalSeconds, arg.HttpMethod, arg.HttpBody = &spec.target, &spec.timeout, &spec.interval, spec.method, spec.body
+			arg.StatusMin, arg.StatusMax, arg.Keyword, arg.FollowRedirects, arg.CertWarnDays = spec.statusMin, spec.statusMax, spec.keyword, spec.follow, spec.certWarn
+			if m.Kind == monitorHTTP {
+				arg.HttpHeaderNames, arg.HttpHeaders = spec.headerNames(), s.sealHeaders(m.WorkspaceID, m.ID, spec.headers)
+			}
+			if moved {
+				arg.CertExpiresAt = nil
+				if !m.Paused {
+					arg.CheckAt = &now
+				}
+			}
+		} else if b.Http != nil || b.Tcp != nil || b.Timeout != nil {
+			return errValidation("only http and tcp monitors have http, tcp and timeout")
 		}
 		if b.Name != nil {
 			if arg.Name, err = trimmed(*b.Name, 1, 100, "name"); err != nil {
@@ -322,7 +386,7 @@ func (s *Server) UpdateStatusMonitor(ctx context.Context, req oas.UpdateStatusMo
 		if arg.RecoveryThreshold, err = monitorThreshold(b.RecoveryThreshold, m.RecoveryThreshold, "recovery_threshold"); err != nil {
 			return err
 		}
-		if b.Interval != nil || b.Grace != nil {
+		if (b.Interval != nil || b.Grace != nil) && !outsideKind(m.Kind) {
 			if m.Kind != monitorHeartbeat {
 				return errValidation("only a heartbeat monitor has interval and grace")
 			}
@@ -351,8 +415,16 @@ func (s *Server) UpdateStatusMonitor(ctx context.Context, req oas.UpdateStatusMo
 			if !*b.Paused && m.Kind == monitorHeartbeat {
 				pause.DueAt = heartbeatDue(now, *m.IntervalSeconds, *m.GraceSeconds)
 			}
+			if !*b.Paused && outsideKind(m.Kind) {
+				pause.CheckAt = &now
+			}
 			if m, err = q.SetStatusMonitorPaused(ctx, pause); err != nil {
 				return err
+			}
+			if *b.Paused {
+				if err := q.DeletePendingStatusChecks(ctx, store.DeletePendingStatusChecksParams{WorkspaceID: m.WorkspaceID, MonitorID: m.ID}); err != nil {
+					return err
+				}
 			}
 			if *b.Paused && held.IncidentID != nil {
 				if _, err := s.resolveMonitorIncident(ctx, q, ev, pg, held, *held.IncidentID, monitorEndPaused, now); err != nil {
@@ -419,6 +491,9 @@ func (s *Server) RotateStatusMonitorToken(ctx context.Context, req oas.RotateSta
 		if err != nil {
 			return err
 		}
+		if outsideKind(m.Kind) {
+			return errNoMonitorToken
+		}
 		if m, err = q.SetStatusMonitorToken(ctx, store.SetStatusMonitorTokenParams{
 			WorkspaceID: m.WorkspaceID, ID: m.ID, TokenHash: hashSecret(token), TokenPrefix: &prefix, Now: s.now(),
 		}); err != nil {
@@ -482,6 +557,8 @@ type monitorResult struct {
 	state   string
 	message string
 	errText string
+	// check is the pending check an outside check recorded, which counts now.
+	check *uuid.UUID
 }
 
 func messagePtr(v string) *string {
@@ -503,6 +580,9 @@ func (s *Server) takeMonitorResult(ctx context.Context, ws, id uuid.UUID, r moni
 		}
 		if m.Paused {
 			out = m
+			if r.check != nil {
+				return q.DeleteStatusCheck(ctx, store.DeleteStatusCheckParams{WorkspaceID: ws, ID: *r.check})
+			}
 			return nil
 		}
 		out, err = s.applyMonitorResult(ctx, q, ev, pg, m, r, s.now())
@@ -542,7 +622,12 @@ func (s *Server) applyMonitorResult(ctx context.Context, q *store.Queries, ev *e
 	if !r.ok {
 		check.State = &claim
 	}
-	if err := q.CreateStatusCheck(ctx, check); err != nil {
+	if r.check != nil {
+		n, err := q.FinishStatusCheck(ctx, store.FinishStatusCheckParams{WorkspaceID: m.WorkspaceID, ID: *r.check, State: check.State})
+		if err != nil || n == 0 {
+			return m, err
+		}
+	} else if err := q.CreateStatusCheck(ctx, check); err != nil {
 		return m, err
 	}
 	fails, succ := m.ConsecutiveFailures, m.ConsecutiveSuccesses
@@ -843,7 +928,7 @@ type statusMonitorSweepWorker struct {
 }
 
 func (w *statusMonitorSweepWorker) Work(ctx context.Context, _ *river.Job[jobs.StatusMonitorSweepArgs]) error {
-	return w.s.SweepStatusMonitors(ctx)
+	return errors.Join(w.s.SweepStatusMonitors(ctx), w.s.ScheduleStatusChecks(ctx))
 }
 
 type statusChecksCleanupWorker struct {
@@ -898,16 +983,17 @@ func (s *Server) missedBeat(ctx context.Context, ws, id uuid.UUID) error {
 	})
 }
 
-// CleanStatusChecks deletes checks older than 30 days.
+// CleanStatusChecks deletes checks older than 30 days, and pending ones whose round was never judged.
 func (s *Server) CleanStatusChecks(ctx context.Context) error {
 	ids, err := s.st.ListWorkspaceIDs(ctx)
 	if err != nil {
 		return err
 	}
-	before := s.now().Add(-statusChecksKept)
+	now := s.now()
+	before, stale := now.Add(-statusChecksKept), now.Add(-staleCheckAge)
 	for _, ws := range ids {
 		for {
-			n, err := s.st.DeleteOldStatusChecks(ctx, store.DeleteOldStatusChecksParams{WorkspaceID: ws, Before: before})
+			n, err := s.st.DeleteOldStatusChecks(ctx, store.DeleteOldStatusChecksParams{WorkspaceID: ws, Before: before, StaleBefore: stale})
 			if err != nil {
 				return err
 			}

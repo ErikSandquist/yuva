@@ -91,6 +91,11 @@ type Config struct {
 	// no limit. StatusMaxSubscribers caps subscribed addresses per page (YUVA_STATUS_MAX_SUBSCRIBERS).
 	StatusNoticesDaily   int64
 	StatusMaxSubscribers int
+	// StatusMinInterval is the shortest interval of http and tcp monitors in seconds
+	// (YUVA_STATUS_MIN_INTERVAL; 60, or 300 with open signup). StatusCanaryURLs are checked every
+	// round to tell the server's own trouble (YUVA_STATUS_CANARY_URLS; nil for the built-in two).
+	StatusMinInterval int
+	StatusCanaryURLs  []string
 
 	// MigrationSources are the sources teams may move from (YUVA_MIGRATION_SOURCES); nil for every
 	// source the server has.
@@ -369,6 +374,9 @@ func Load(version string) (Config, error) {
 	if err := c.loadStatusNotices(); err != nil {
 		return c, err
 	}
+	if err := c.loadStatusChecks(); err != nil {
+		return c, err
+	}
 	if err := c.loadAnalytics(); err != nil {
 		return c, err
 	}
@@ -379,6 +387,27 @@ func Load(version string) (Config, error) {
 		return c, errors.New("YUVA_SMTP_FROM is required when YUVA_SMTP_HOST is set")
 	}
 	return c, nil
+}
+
+func (c *Config) loadStatusChecks() error {
+	def := "60"
+	if c.SignupOpen {
+		def = "300"
+	}
+	var err error
+	if c.StatusMinInterval, err = strconv.Atoi(env("YUVA_STATUS_MIN_INTERVAL", def)); err != nil || c.StatusMinInterval < 60 || c.StatusMinInterval > 86400 {
+		return errors.New("YUVA_STATUS_MIN_INTERVAL must be 60 to 86400 seconds")
+	}
+	for _, item := range strings.Split(env("YUVA_STATUS_CANARY_URLS", ""), ",") {
+		if item = strings.TrimSpace(item); item == "" {
+			continue
+		}
+		if u, err := url.Parse(item); err != nil || (u.Scheme != "http" && u.Scheme != "https") || u.Host == "" {
+			return fmt.Errorf("YUVA_STATUS_CANARY_URLS must be comma-separated http or https URLs, got %q", item)
+		}
+		c.StatusCanaryURLs = append(c.StatusCanaryURLs, item)
+	}
+	return nil
 }
 
 func (c *Config) loadStatusNotices() error {

@@ -2148,9 +2148,11 @@ incident before a customer writes, and the conversations an outage brings are an
     `{"state":"major_outage","message":"..."}`, or an Alertmanager or Grafana alert webhook body as it
     is (firing fails, resolved recovers).
   - `http`: Yuva sends a request (method, headers, body; header values encrypted under the master key)
-    every `interval` (60 seconds at least, `YUVA_STATUS_MIN_INTERVAL` on a hosted server) and expects a
-    status range, optionally a keyword in the first 64 KiB, an answer within `timeout` (at most 30
-    seconds) and, for https, a certificate valid for more than `cert_warn_days`.
+    every `interval` (60 seconds at least, `YUVA_STATUS_MIN_INTERVAL` on a hosted server; unset: 60, or
+    300 with `YUVA_SIGNUP=open`) and expects a status range, optionally a keyword in the first 64 KiB, an
+    answer within `timeout` (at most 30 seconds) and, for https, a certificate valid for more than
+    `cert_warn_days` (default 14; a certificate expiring sooner fails the check, it does not degrade).
+    Header names are returned, values never; a redirect to another host drops the monitor's headers.
   - `tcp`: a connection to host and port within `timeout`.
   Outside checks follow the webhook rules for outbound requests (resolve once, refuse loopback, private,
   link-local, CGNAT and reserved addresses, connect to the resolved address, no proxy; redirects are
@@ -2178,9 +2180,14 @@ incident before a customer writes, and the conversations an outage brings are an
   `YUVA_STATUS_MAX_SUBSCRIBERS` (see Subscribers).
   Checks run from the server's own place and a multi-location check is not planned, so the server
   tells its own trouble from its customers': each round also checks `YUVA_STATUS_CANARY_URLS` (unset:
-  two well-known public URLs) and, when every canary fails or more than half of the round's outside
+  `https://www.google.com/generate_204` and `https://www.cloudflare.com/cdn-cgi/trace`; any answer
+  counts) and, when every canary fails or more than half of the round's outside
   checks fail (at least 10 of them), the round's failures are dropped, no state changes, the operator
-  gets a log line and the `yuva_status_rounds_dropped_total` metric; heartbeats and pushes are not
+  gets a log line and the `yuva_status_rounds_dropped_total` metric (`reason` `canaries` or
+  `majority`). A round is one sweep: it claims the checks due in the next 30 seconds, keeps their
+  results pending in `status_checks` and judges them together after the last can have finished; a
+  round's successes always count. The sweep, the claim and the judging read across workspaces (the
+  documented exception, like the overdue-beat sweep) and act on each monitor in its workspace; heartbeats and pushes are not
   affected by this, but a heartbeat whose beats stop while the server itself was not taking requests
   (its own start within the grace) waits one more interval.
 - **Support.** `GET /client/v1/channels/{key}`, the client session and the realtime `inbox.updated` carry `status` on the

@@ -274,6 +274,8 @@ func (s *Server) AddWorkers(workers *river.Workers) {
 	river.AddWorker(workers, &statusMaintenanceWorker{s: s})
 	river.AddWorker(workers, &statusMonitorSweepWorker{s: s})
 	river.AddWorker(workers, &statusChecksCleanupWorker{s: s})
+	river.AddWorker(workers, &statusCheckWorker{s: s})
+	river.AddWorker(workers, &statusRoundWorker{s: s})
 	river.AddWorker(workers, &statusMonitorNotifyWorker{s: s})
 	river.AddWorker(workers, &statusMonitorNotifyMemberWorker{s: s})
 	river.AddWorker(workers, &statusReplyWorker{s: s})

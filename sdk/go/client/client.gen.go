@@ -4503,14 +4503,34 @@ func (e SmtpTls) Valid() bool {
 	}
 }
 
+// Defines values for StatusCheckRange.
+const (
+	StatusCheckRange24h StatusCheckRange = "24h"
+	StatusCheckRange7d  StatusCheckRange = "7d"
+)
+
+// Valid indicates whether the value is a known member of the StatusCheckRange enum.
+func (e StatusCheckRange) Valid() bool {
+	switch e {
+	case StatusCheckRange24h:
+		return true
+	case StatusCheckRange7d:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for StatusCheckSource.
 const (
 	StatusCheckAlertmanager StatusCheckSource = "alertmanager"
 	StatusCheckBeat         StatusCheckSource = "beat"
 	StatusCheckFail         StatusCheckSource = "fail"
 	StatusCheckGrafana      StatusCheckSource = "grafana"
+	StatusCheckHttp         StatusCheckSource = "http"
 	StatusCheckMissed       StatusCheckSource = "missed"
 	StatusCheckPush         StatusCheckSource = "push"
+	StatusCheckTcp          StatusCheckSource = "tcp"
 )
 
 // Valid indicates whether the value is a known member of the StatusCheckSource enum.
@@ -4524,9 +4544,13 @@ func (e StatusCheckSource) Valid() bool {
 		return true
 	case StatusCheckGrafana:
 		return true
+	case StatusCheckHttp:
+		return true
 	case StatusCheckMissed:
 		return true
 	case StatusCheckPush:
+		return true
+	case StatusCheckTcp:
 		return true
 	default:
 		return false
@@ -4788,10 +4812,45 @@ func (e StatusMonitorFailureState) Valid() bool {
 	}
 }
 
+// Defines values for StatusMonitorHTTPMethod.
+const (
+	StatusHTTPDelete  StatusMonitorHTTPMethod = "DELETE"
+	StatusHTTPGet     StatusMonitorHTTPMethod = "GET"
+	StatusHTTPHead    StatusMonitorHTTPMethod = "HEAD"
+	StatusHTTPOptions StatusMonitorHTTPMethod = "OPTIONS"
+	StatusHTTPPatch   StatusMonitorHTTPMethod = "PATCH"
+	StatusHTTPPost    StatusMonitorHTTPMethod = "POST"
+	StatusHTTPPut     StatusMonitorHTTPMethod = "PUT"
+)
+
+// Valid indicates whether the value is a known member of the StatusMonitorHTTPMethod enum.
+func (e StatusMonitorHTTPMethod) Valid() bool {
+	switch e {
+	case StatusHTTPDelete:
+		return true
+	case StatusHTTPGet:
+		return true
+	case StatusHTTPHead:
+		return true
+	case StatusHTTPOptions:
+		return true
+	case StatusHTTPPatch:
+		return true
+	case StatusHTTPPost:
+		return true
+	case StatusHTTPPut:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for StatusMonitorKind.
 const (
 	StatusMonitorHeartbeat StatusMonitorKind = "heartbeat"
+	StatusMonitorHttp      StatusMonitorKind = "http"
 	StatusMonitorPush      StatusMonitorKind = "push"
+	StatusMonitorTcp       StatusMonitorKind = "tcp"
 )
 
 // Valid indicates whether the value is a known member of the StatusMonitorKind enum.
@@ -4799,7 +4858,11 @@ func (e StatusMonitorKind) Valid() bool {
 	switch e {
 	case StatusMonitorHeartbeat:
 		return true
+	case StatusMonitorHttp:
+		return true
 	case StatusMonitorPush:
+		return true
+	case StatusMonitorTcp:
 		return true
 	default:
 		return false
@@ -14472,7 +14535,7 @@ type Stats struct {
 type StatusCheck struct {
 	At time.Time `json:"at"`
 
-	// DurationMs For outside checks, which come later.
+	// DurationMs `http` and `tcp`: milliseconds until the answer's headers or the connection.
 	DurationMs *int32 `json:"duration_ms,omitempty"`
 
 	// Error Why it failed, when the server knows.
@@ -14482,14 +14545,23 @@ type StatusCheck struct {
 	Ok      bool      `json:"ok"`
 
 	// Source `beat` and `fail` (heartbeat calls), `missed` (no beat in time), `push`, `alertmanager` and
-	// `grafana` (pushed states).
+	// `grafana` (pushed states), `http` and `tcp` (outside checks).
 	Source StatusCheckSource `json:"source"`
 
 	// State The state a failure named.
 	State *StatusComponentStateValue `json:"state,omitempty"`
 
-	// StatusCode For outside checks, which come later.
+	// StatusCode `http`: the final answer's status.
 	StatusCode *int32 `json:"status_code,omitempty"`
+}
+
+// StatusCheckBucket defines model for StatusCheckBucket.
+type StatusCheckBucket struct {
+	Checks   int32     `json:"checks"`
+	Failures int32     `json:"failures"`
+	P50Ms    *int32    `json:"p50_ms,omitempty"`
+	P95Ms    *int32    `json:"p95_ms,omitempty"`
+	Start    time.Time `json:"start"`
 }
 
 // StatusCheckList defines model for StatusCheckList.
@@ -14498,9 +14570,28 @@ type StatusCheckList struct {
 	NextCursor *string       `json:"next_cursor,omitempty"`
 }
 
+// StatusCheckRange defines model for StatusCheckRange.
+type StatusCheckRange string
+
 // StatusCheckSource `beat` and `fail` (heartbeat calls), `missed` (no beat in time), `push`, `alertmanager` and
-// `grafana` (pushed states).
+// `grafana` (pushed states), `http` and `tcp` (outside checks).
 type StatusCheckSource string
+
+// StatusCheckSummary defines model for StatusCheckSummary.
+type StatusCheckSummary struct {
+	BucketSeconds int32               `json:"bucket_seconds"`
+	Buckets       []StatusCheckBucket `json:"buckets"`
+	Checks        int32               `json:"checks"`
+	Failures      int32               `json:"failures"`
+	From          time.Time           `json:"from"`
+	P50Ms         *int32              `json:"p50_ms,omitempty"`
+	P95Ms         *int32              `json:"p95_ms,omitempty"`
+	Range         StatusCheckRange    `json:"range"`
+	To            time.Time           `json:"to"`
+
+	// Uptime Percent of checks that succeeded, absent without checks.
+	Uptime *float64 `json:"uptime,omitempty"`
+}
 
 // StatusColor Examples: #2563eb
 type StatusColor = string
@@ -14981,6 +15072,9 @@ type StatusIngressResult struct {
 
 // StatusMonitor defines model for StatusMonitor.
 type StatusMonitor struct {
+	// CertExpiresAt `http` on https: when the certificate the last check saw expires.
+	CertExpiresAt *time.Time `json:"cert_expires_at,omitempty"`
+
 	// ComponentId The component whose state the monitor sets.
 	ComponentId          uuid.UUID `json:"component_id"`
 	ConsecutiveFailures  int32     `json:"consecutive_failures"`
@@ -14995,16 +15089,20 @@ type StatusMonitor struct {
 	FailureThreshold int32 `json:"failure_threshold"`
 
 	// Grace `heartbeat`: seconds a beat may be late.
-	Grace *int32    `json:"grace,omitempty"`
-	Id    uuid.UUID `json:"id"`
+	Grace *int32 `json:"grace,omitempty"`
+
+	// Http What an `http` monitor sends and expects. Header values are never returned.
+	Http *StatusMonitorHTTP `json:"http,omitempty"`
+	Id   uuid.UUID          `json:"id"`
 
 	// IncidentId The open incident this monitor opened.
 	IncidentId *uuid.UUID `json:"incident_id,omitempty"`
 
-	// Interval `heartbeat`: seconds between beats.
+	// Interval `heartbeat`: seconds between beats. `http` and `tcp`: seconds between checks.
 	Interval *int32 `json:"interval,omitempty"`
 
 	// Kind `heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state.
+	// `http`: the server sends a request. `tcp`: the server opens a connection.
 	Kind StatusMonitorKind `json:"kind"`
 
 	// LastMessage The message of the last pushed state, or of the last failure.
@@ -15016,6 +15114,9 @@ type StatusMonitor struct {
 
 	// NextBeatDue `heartbeat`, not paused and not failed: when a missing beat becomes a failure.
 	NextBeatDue *time.Time `json:"next_beat_due,omitempty"`
+
+	// NextCheckAt `http` and `tcp`, not paused: when the next check is due.
+	NextCheckAt *time.Time `json:"next_check_at,omitempty"`
 
 	// OnFailure What failing opens: `none`, a `draft` incident members publish, or a published incident (`publish`).
 	OnFailure StatusMonitorOnFailure `json:"on_failure"`
@@ -15029,7 +15130,11 @@ type StatusMonitor struct {
 	State StatusMonitorState `json:"state"`
 
 	// StateSince The monitor's last change between `up` and `down` (its creation or resumption before that).
-	StateSince time.Time `json:"state_since"`
+	StateSince time.Time         `json:"state_since"`
+	Tcp        *StatusMonitorTCP `json:"tcp,omitempty"`
+
+	// Timeout `http` and `tcp`: seconds the check waits for an answer.
+	Timeout *int32 `json:"timeout,omitempty"`
 
 	// TokenPrefix The first characters of the token, to tell tokens apart.
 	TokenPrefix *string   `json:"token_prefix,omitempty"`
@@ -15043,16 +15148,19 @@ type StatusMonitorCreate struct {
 	// FailureState Default `major_outage`.
 	FailureState *StatusMonitorFailureState `json:"failure_state,omitempty"`
 
-	// FailureThreshold Default 1.
+	// FailureThreshold Default 1, or 3 for `http` and `tcp`.
 	FailureThreshold *int32 `json:"failure_threshold,omitempty"`
 
 	// Grace `heartbeat` only: seconds a beat may be late, up to a day; default 60.
-	Grace *int32 `json:"grace,omitempty"`
+	Grace *int32                  `json:"grace,omitempty"`
+	Http  *StatusMonitorHTTPInput `json:"http,omitempty"`
 
-	// Interval `heartbeat` only: seconds between beats, 30 seconds to 30 days; default 300.
+	// Interval `heartbeat`: seconds between beats, 30 seconds to 30 days; default 300. `http` and `tcp`:
+	// seconds between checks, 60 (or `YUVA_STATUS_MIN_INTERVAL`) to 86400; default that minimum.
 	Interval *int32 `json:"interval,omitempty"`
 
 	// Kind `heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state.
+	// `http`: the server sends a request. `tcp`: the server opens a connection.
 	Kind StatusMonitorKind `json:"kind"`
 	Name string            `json:"name"`
 
@@ -15060,8 +15168,12 @@ type StatusMonitorCreate struct {
 	OnFailure *StatusMonitorOnFailure `json:"on_failure,omitempty"`
 	Paused    *bool                   `json:"paused,omitempty"`
 
-	// RecoveryThreshold Default 1.
-	RecoveryThreshold *int32 `json:"recovery_threshold,omitempty"`
+	// RecoveryThreshold Default 1, or 2 for `http` and `tcp`.
+	RecoveryThreshold *int32            `json:"recovery_threshold,omitempty"`
+	Tcp               *StatusMonitorTCP `json:"tcp,omitempty"`
+
+	// Timeout `http` and `tcp` only: seconds to wait for an answer, at most 30; default 10.
+	Timeout *int32 `json:"timeout,omitempty"`
 }
 
 // StatusMonitorEvent `status.monitor.down`, `status.monitor.up`: a monitor failed or recovered. Delivered to callers
@@ -15089,7 +15201,83 @@ type StatusMonitorEventData struct {
 // StatusMonitorFailureState defines model for StatusMonitorFailureState.
 type StatusMonitorFailureState string
 
+// StatusMonitorHTTP What an `http` monitor sends and expects. Header values are never returned.
+type StatusMonitorHTTP struct {
+	Body *string `json:"body,omitempty"`
+
+	// CertWarnDays For https, a certificate expiring within this many days fails the check; 0 checks only that it is valid.
+	CertWarnDays      int32 `json:"cert_warn_days"`
+	ExpectedStatusMax int32 `json:"expected_status_max"`
+	ExpectedStatusMin int32 `json:"expected_status_min"`
+	FollowRedirects   bool  `json:"follow_redirects"`
+
+	// HeaderNames The names of the headers sent; their values are kept encrypted and never shown.
+	HeaderNames []string `json:"header_names"`
+
+	// Keyword Text the first 64 KiB of the answer must contain, case-sensitive.
+	Keyword *string                 `json:"keyword,omitempty"`
+	Method  StatusMonitorHTTPMethod `json:"method"`
+	Url     string                  `json:"url"`
+}
+
+// StatusMonitorHTTPInput defines model for StatusMonitorHTTPInput.
+type StatusMonitorHTTPInput struct {
+	Body *string `json:"body,omitempty"`
+
+	// CertWarnDays Default 14.
+	CertWarnDays *int32 `json:"cert_warn_days,omitempty"`
+
+	// ExpectedStatusMax Default 299.
+	ExpectedStatusMax *int32 `json:"expected_status_max,omitempty"`
+
+	// ExpectedStatusMin Default 200.
+	ExpectedStatusMin *int32 `json:"expected_status_min,omitempty"`
+
+	// FollowRedirects Default false; a 3xx answer is then judged against the expected range.
+	FollowRedirects *bool `json:"follow_redirects,omitempty"`
+
+	// Headers Not `Host`, `Content-Length`, `Transfer-Encoding` or `Connection`.
+	Headers *[]StatusMonitorHeader `json:"headers,omitempty"`
+
+	// Keyword Empty for none.
+	Keyword *string `json:"keyword,omitempty"`
+
+	// Method Default `GET`.
+	Method *StatusMonitorHTTPMethod `json:"method,omitempty"`
+
+	// Url An http or https URL without credentials.
+	Url string `json:"url"`
+}
+
+// StatusMonitorHTTPMethod defines model for StatusMonitorHTTPMethod.
+type StatusMonitorHTTPMethod string
+
+// StatusMonitorHTTPUpdate defines model for StatusMonitorHTTPUpdate.
+type StatusMonitorHTTPUpdate struct {
+	// Body Empty for none.
+	Body              *string                `json:"body,omitempty"`
+	CertWarnDays      *int32                 `json:"cert_warn_days,omitempty"`
+	ExpectedStatusMax *int32                 `json:"expected_status_max,omitempty"`
+	ExpectedStatusMin *int32                 `json:"expected_status_min,omitempty"`
+	FollowRedirects   *bool                  `json:"follow_redirects,omitempty"`
+	Headers           *[]StatusMonitorHeader `json:"headers,omitempty"`
+
+	// Keyword Empty for none.
+	Keyword *string                  `json:"keyword,omitempty"`
+	Method  *StatusMonitorHTTPMethod `json:"method,omitempty"`
+	Url     *string                  `json:"url,omitempty"`
+}
+
+// StatusMonitorHeader defines model for StatusMonitorHeader.
+type StatusMonitorHeader struct {
+	Name string `json:"name"`
+
+	// Value Required on create. On update, leaving it out keeps the value stored for this name.
+	Value *string `json:"value,omitempty"`
+}
+
 // StatusMonitorKind `heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state.
+// `http`: the server sends a request. `tcp`: the server opens a connection.
 type StatusMonitorKind string
 
 // StatusMonitorList defines model for StatusMonitorList.
@@ -15103,12 +15291,20 @@ type StatusMonitorOnFailure string
 // StatusMonitorState `pending` until the first result decides, then `up` or `down`.
 type StatusMonitorState string
 
+// StatusMonitorTCP defines model for StatusMonitorTCP.
+type StatusMonitorTCP struct {
+	// Host A host name or an IP address.
+	Host string `json:"host"`
+	Port int32  `json:"port"`
+}
+
 // StatusMonitorUpdate defines model for StatusMonitorUpdate.
 type StatusMonitorUpdate struct {
 	ComponentId      *uuid.UUID                 `json:"component_id,omitempty"`
 	FailureState     *StatusMonitorFailureState `json:"failure_state,omitempty"`
 	FailureThreshold *int32                     `json:"failure_threshold,omitempty"`
 	Grace            *int32                     `json:"grace,omitempty"`
+	Http             *StatusMonitorHTTPUpdate   `json:"http,omitempty"`
 	Interval         *int32                     `json:"interval,omitempty"`
 	Name             *string                    `json:"name,omitempty"`
 
@@ -15116,10 +15312,15 @@ type StatusMonitorUpdate struct {
 	OnFailure         *StatusMonitorOnFailure `json:"on_failure,omitempty"`
 	Paused            *bool                   `json:"paused,omitempty"`
 	RecoveryThreshold *int32                  `json:"recovery_threshold,omitempty"`
+	Tcp               *StatusMonitorTCP       `json:"tcp,omitempty"`
+	Timeout           *int32                  `json:"timeout,omitempty"`
 }
 
 // StatusMonitorWithToken defines model for StatusMonitorWithToken.
 type StatusMonitorWithToken struct {
+	// CertExpiresAt `http` on https: when the certificate the last check saw expires.
+	CertExpiresAt *time.Time `json:"cert_expires_at,omitempty"`
+
 	// ComponentId The component whose state the monitor sets.
 	ComponentId          uuid.UUID `json:"component_id"`
 	ConsecutiveFailures  int32     `json:"consecutive_failures"`
@@ -15134,16 +15335,20 @@ type StatusMonitorWithToken struct {
 	FailureThreshold int32 `json:"failure_threshold"`
 
 	// Grace `heartbeat`: seconds a beat may be late.
-	Grace *int32    `json:"grace,omitempty"`
-	Id    uuid.UUID `json:"id"`
+	Grace *int32 `json:"grace,omitempty"`
+
+	// Http What an `http` monitor sends and expects. Header values are never returned.
+	Http *StatusMonitorHTTP `json:"http,omitempty"`
+	Id   uuid.UUID          `json:"id"`
 
 	// IncidentId The open incident this monitor opened.
 	IncidentId *uuid.UUID `json:"incident_id,omitempty"`
 
-	// Interval `heartbeat`: seconds between beats.
+	// Interval `heartbeat`: seconds between beats. `http` and `tcp`: seconds between checks.
 	Interval *int32 `json:"interval,omitempty"`
 
 	// Kind `heartbeat`: the host calls Yuva on a schedule. `push`: the host's monitoring sends its state.
+	// `http`: the server sends a request. `tcp`: the server opens a connection.
 	Kind StatusMonitorKind `json:"kind"`
 
 	// LastMessage The message of the last pushed state, or of the last failure.
@@ -15155,6 +15360,9 @@ type StatusMonitorWithToken struct {
 
 	// NextBeatDue `heartbeat`, not paused and not failed: when a missing beat becomes a failure.
 	NextBeatDue *time.Time `json:"next_beat_due,omitempty"`
+
+	// NextCheckAt `http` and `tcp`, not paused: when the next check is due.
+	NextCheckAt *time.Time `json:"next_check_at,omitempty"`
 
 	// OnFailure What failing opens: `none`, a `draft` incident members publish, or a published incident (`publish`).
 	OnFailure StatusMonitorOnFailure `json:"on_failure"`
@@ -15168,18 +15376,22 @@ type StatusMonitorWithToken struct {
 	State StatusMonitorState `json:"state"`
 
 	// StateSince The monitor's last change between `up` and `down` (its creation or resumption before that).
-	StateSince time.Time `json:"state_since"`
+	StateSince time.Time         `json:"state_since"`
+	Tcp        *StatusMonitorTCP `json:"tcp,omitempty"`
 
-	// Token Shown only now; only its hash is kept.
-	Token string `json:"token"`
+	// Timeout `http` and `tcp`: seconds the check waits for an answer.
+	Timeout *int32 `json:"timeout,omitempty"`
+
+	// Token `heartbeat` and `push`: shown only now; only its hash is kept.
+	Token *string `json:"token,omitempty"`
 
 	// TokenPrefix The first characters of the token, to tell tokens apart.
 	TokenPrefix *string   `json:"token_prefix,omitempty"`
 	UpdatedAt   time.Time `json:"updated_at"`
 
-	// Url Where the host calls: `<public URL>/ingress/heartbeat/{token}` (add `/fail` for a failed
-	// run) or `<public URL>/ingress/status/{token}`.
-	Url string `json:"url"`
+	// Url `heartbeat` and `push`: where the host calls, `<public URL>/ingress/heartbeat/{token}` (add
+	// `/fail` for a failed run) or `<public URL>/ingress/status/{token}`.
+	Url *string `json:"url,omitempty"`
 }
 
 // StatusNotice defines model for StatusNotice.
@@ -18658,6 +18870,14 @@ type ListStatusMonitorChecksParams struct {
 
 	// Limit Page size, 1 to 100; 25 by default.
 	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetStatusMonitorCheckSummaryParams defines parameters for GetStatusMonitorCheckSummary.
+type GetStatusMonitorCheckSummaryParams struct {
+	Range *StatusCheckRange `form:"range,omitempty" json:"range,omitempty"`
 
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
@@ -29287,14 +29507,30 @@ type ClientInterface interface {
 	//   `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
 	// - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
 	//   `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+	// - `http`: the server sends a request (`http`) every `interval` seconds and expects an answer
+	//   within `timeout` seconds with a status in the expected range, the keyword in the first
+	//   64 KiB when one is set, and for https a certificate valid for more than `cert_warn_days`
+	//   days (a certificate expiring sooner fails the check).
+	// - `tcp`: the server connects to `tcp.host` and `tcp.port` every `interval` seconds within
+	//   `timeout` seconds.
+	//
+	// `http` and `tcp` never reach loopback, private, link-local, CGNAT or reserved addresses (the
+	// address the host resolves to is checked when the monitor is saved and on every check;
+	// a self-hosted server with `YUVA_WEBHOOK_ALLOW_PRIVATE` lifts this except for link-local and
+	// cloud metadata addresses): such a target answers `400 validation`. Redirects are followed only
+	// with `follow_redirects`, at most 5, each hop checked again. `interval` is at least 60 seconds,
+	// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round whose canaries all fail, or in
+	// which more than half of the checks (at least 10) fail, is the server's own trouble: its
+	// failures are dropped and change nothing.
 	//
 	// The monitor fails after `failure_threshold` failures in a row and recovers after
-	// `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+	// `recovery_threshold` successes in a row (1 and 1 by default for `heartbeat` and `push`, 3 and 2
+	// for `http` and `tcp`). Failing sets the component to
 	// `failure_state`, never over a state a member set later than the monitor's last change, and
 	// opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
-	// it opened and puts the component back. The answer carries `token` and `url` once; only a
-	// hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
-	// unset, `403 status_monitor_limit`).
+	// it opened and puts the component back. For `heartbeat` and `push` the answer carries `token`
+	// and `url` once; only a hash of the token is kept. A workspace has at most
+	// `YUVA_STATUS_MONITORS` monitors (20 when unset, `403 status_monitor_limit`).
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -29312,14 +29548,30 @@ type ClientInterface interface {
 	//   `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
 	// - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
 	//   `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+	// - `http`: the server sends a request (`http`) every `interval` seconds and expects an answer
+	//   within `timeout` seconds with a status in the expected range, the keyword in the first
+	//   64 KiB when one is set, and for https a certificate valid for more than `cert_warn_days`
+	//   days (a certificate expiring sooner fails the check).
+	// - `tcp`: the server connects to `tcp.host` and `tcp.port` every `interval` seconds within
+	//   `timeout` seconds.
+	//
+	// `http` and `tcp` never reach loopback, private, link-local, CGNAT or reserved addresses (the
+	// address the host resolves to is checked when the monitor is saved and on every check;
+	// a self-hosted server with `YUVA_WEBHOOK_ALLOW_PRIVATE` lifts this except for link-local and
+	// cloud metadata addresses): such a target answers `400 validation`. Redirects are followed only
+	// with `follow_redirects`, at most 5, each hop checked again. `interval` is at least 60 seconds,
+	// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round whose canaries all fail, or in
+	// which more than half of the checks (at least 10) fail, is the server's own trouble: its
+	// failures are dropped and change nothing.
 	//
 	// The monitor fails after `failure_threshold` failures in a row and recovers after
-	// `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+	// `recovery_threshold` successes in a row (1 and 1 by default for `heartbeat` and `push`, 3 and 2
+	// for `http` and `tcp`). Failing sets the component to
 	// `failure_state`, never over a state a member set later than the monitor's last change, and
 	// opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
-	// it opened and puts the component back. The answer carries `token` and `url` once; only a
-	// hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
-	// unset, `403 status_monitor_limit`).
+	// it opened and puts the component back. For `heartbeat` and `push` the answer carries `token`
+	// and `url` once; only a hash of the token is kept. A workspace has at most
+	// `YUVA_STATUS_MONITORS` monitors (20 when unset, `403 status_monitor_limit`).
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -29330,8 +29582,8 @@ type ClientInterface interface {
 
 	// DeleteStatusMonitor Delete a monitor
 	//
-	// With its checks. A component it set goes back to `operational` unless something else holds
-	// it; an incident it opened stays.
+	// With its checks. An open incident it opened is resolved with an update saying so, and a
+	// component it set goes back to `operational` unless something else holds it.
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -29350,7 +29602,9 @@ type ClientInterface interface {
 	// Changes the given fields. Pausing stops results from counting and lets go of the component
 	// (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
 	// starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
-	// later. A new `interval` or `grace` moves the next beat's due time.
+	// later. A new `interval` or `grace` moves the next beat's due time. For `http` and `tcp`, the
+	// given fields of `http` or `tcp` replace the stored ones; a header given without `value` keeps
+	// its stored value, and `headers` replaces the whole list. A target is checked again as on create.
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -29364,7 +29618,9 @@ type ClientInterface interface {
 	// Changes the given fields. Pausing stops results from counting and lets go of the component
 	// (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
 	// starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
-	// later. A new `interval` or `grace` moves the next beat's due time.
+	// later. A new `interval` or `grace` moves the next beat's due time. For `http` and `tcp`, the
+	// given fields of `http` or `tcp` replace the stored ones; a header given without `value` keeps
+	// its stored value, and `headers` replaces the whole list. A target is checked again as on create.
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -29375,17 +29631,30 @@ type ClientInterface interface {
 
 	// ListStatusMonitorChecks List a monitor's checks
 	//
-	// Every beat, missed beat and pushed state, newest first, kept 30 days. Results that arrive
-	// while the monitor is paused are not kept.
+	// Every beat, missed beat, pushed state and outside check, newest first, kept 30 days. Results
+	// that arrive while the monitor is paused, and failures of a dropped round, are not kept.
 	//
 	// Scope: `status:read`.
 	//
 	// Corresponds with GET /v1/status-pages/{pageId}/monitors/{monitorId}/checks (the `ListStatusMonitorChecks` operationId).
 	ListStatusMonitorChecks(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *ListStatusMonitorChecksParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetStatusMonitorCheckSummary A monitor's response times and uptime
+	//
+	// The checks of the last 24 hours in 15-minute buckets (`range=24h`, the default) or of the
+	// last 7 days in hourly buckets (`range=7d`), oldest first, every bucket present. Uptime is the
+	// share of checks that succeeded; response times are the 50th and 95th percentile of the
+	// successful checks that measured one (`http` and `tcp`), absent when there are none.
+	//
+	// Scope: `status:read`.
+	//
+	// Corresponds with GET /v1/status-pages/{pageId}/monitors/{monitorId}/checks/summary (the `GetStatusMonitorCheckSummary` operationId).
+	GetStatusMonitorCheckSummary(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *GetStatusMonitorCheckSummaryParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// RotateStatusMonitorToken Rotate a monitor's token
 	//
 	// Makes a new token and drops the old one at once: calls with the old token answer `404`.
+	// `http` and `tcp` monitors have no token (`409 monitor_kind`).
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -40382,14 +40651,30 @@ func (c *Client) ListStatusMonitors(ctx context.Context, pageId StatusPageId, pa
 //     `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
 //   - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
 //     `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+//   - `http`: the server sends a request (`http`) every `interval` seconds and expects an answer
+//     within `timeout` seconds with a status in the expected range, the keyword in the first
+//     64 KiB when one is set, and for https a certificate valid for more than `cert_warn_days`
+//     days (a certificate expiring sooner fails the check).
+//   - `tcp`: the server connects to `tcp.host` and `tcp.port` every `interval` seconds within
+//     `timeout` seconds.
+//
+// `http` and `tcp` never reach loopback, private, link-local, CGNAT or reserved addresses (the
+// address the host resolves to is checked when the monitor is saved and on every check;
+// a self-hosted server with `YUVA_WEBHOOK_ALLOW_PRIVATE` lifts this except for link-local and
+// cloud metadata addresses): such a target answers `400 validation`. Redirects are followed only
+// with `follow_redirects`, at most 5, each hop checked again. `interval` is at least 60 seconds,
+// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round whose canaries all fail, or in
+// which more than half of the checks (at least 10) fail, is the server's own trouble: its
+// failures are dropped and change nothing.
 //
 // The monitor fails after `failure_threshold` failures in a row and recovers after
-// `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+// `recovery_threshold` successes in a row (1 and 1 by default for `heartbeat` and `push`, 3 and 2
+// for `http` and `tcp`). Failing sets the component to
 // `failure_state`, never over a state a member set later than the monitor's last change, and
 // opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
-// it opened and puts the component back. The answer carries `token` and `url` once; only a
-// hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
-// unset, `403 status_monitor_limit`).
+// it opened and puts the component back. For `heartbeat` and `push` the answer carries `token`
+// and `url` once; only a hash of the token is kept. A workspace has at most
+// `YUVA_STATUS_MONITORS` monitors (20 when unset, `403 status_monitor_limit`).
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -40417,14 +40702,30 @@ func (c *Client) CreateStatusMonitorWithBody(ctx context.Context, pageId StatusP
 //     `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
 //   - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
 //     `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+//   - `http`: the server sends a request (`http`) every `interval` seconds and expects an answer
+//     within `timeout` seconds with a status in the expected range, the keyword in the first
+//     64 KiB when one is set, and for https a certificate valid for more than `cert_warn_days`
+//     days (a certificate expiring sooner fails the check).
+//   - `tcp`: the server connects to `tcp.host` and `tcp.port` every `interval` seconds within
+//     `timeout` seconds.
+//
+// `http` and `tcp` never reach loopback, private, link-local, CGNAT or reserved addresses (the
+// address the host resolves to is checked when the monitor is saved and on every check;
+// a self-hosted server with `YUVA_WEBHOOK_ALLOW_PRIVATE` lifts this except for link-local and
+// cloud metadata addresses): such a target answers `400 validation`. Redirects are followed only
+// with `follow_redirects`, at most 5, each hop checked again. `interval` is at least 60 seconds,
+// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round whose canaries all fail, or in
+// which more than half of the checks (at least 10) fail, is the server's own trouble: its
+// failures are dropped and change nothing.
 //
 // The monitor fails after `failure_threshold` failures in a row and recovers after
-// `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+// `recovery_threshold` successes in a row (1 and 1 by default for `heartbeat` and `push`, 3 and 2
+// for `http` and `tcp`). Failing sets the component to
 // `failure_state`, never over a state a member set later than the monitor's last change, and
 // opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
-// it opened and puts the component back. The answer carries `token` and `url` once; only a
-// hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
-// unset, `403 status_monitor_limit`).
+// it opened and puts the component back. For `heartbeat` and `push` the answer carries `token`
+// and `url` once; only a hash of the token is kept. A workspace has at most
+// `YUVA_STATUS_MONITORS` monitors (20 when unset, `403 status_monitor_limit`).
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -40445,8 +40746,8 @@ func (c *Client) CreateStatusMonitor(ctx context.Context, pageId StatusPageId, p
 
 // DeleteStatusMonitor Delete a monitor
 //
-// With its checks. A component it set goes back to `operational` unless something else holds
-// it; an incident it opened stays.
+// With its checks. An open incident it opened is resolved with an update saying so, and a
+// component it set goes back to `operational` unless something else holds it.
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -40485,7 +40786,9 @@ func (c *Client) GetStatusMonitor(ctx context.Context, pageId StatusPageId, moni
 // Changes the given fields. Pausing stops results from counting and lets go of the component
 // (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
 // starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
-// later. A new `interval` or `grace` moves the next beat's due time.
+// later. A new `interval` or `grace` moves the next beat's due time. For `http` and `tcp`, the
+// given fields of `http` or `tcp` replace the stored ones; a header given without `value` keeps
+// its stored value, and `headers` replaces the whole list. A target is checked again as on create.
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -40509,7 +40812,9 @@ func (c *Client) UpdateStatusMonitorWithBody(ctx context.Context, pageId StatusP
 // Changes the given fields. Pausing stops results from counting and lets go of the component
 // (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
 // starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
-// later. A new `interval` or `grace` moves the next beat's due time.
+// later. A new `interval` or `grace` moves the next beat's due time. For `http` and `tcp`, the
+// given fields of `http` or `tcp` replace the stored ones; a header given without `value` keeps
+// its stored value, and `headers` replaces the whole list. A target is checked again as on create.
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -40530,8 +40835,8 @@ func (c *Client) UpdateStatusMonitor(ctx context.Context, pageId StatusPageId, m
 
 // ListStatusMonitorChecks List a monitor's checks
 //
-// Every beat, missed beat and pushed state, newest first, kept 30 days. Results that arrive
-// while the monitor is paused are not kept.
+// Every beat, missed beat, pushed state and outside check, newest first, kept 30 days. Results
+// that arrive while the monitor is paused, and failures of a dropped round, are not kept.
 //
 // Scope: `status:read`.
 //
@@ -40548,9 +40853,32 @@ func (c *Client) ListStatusMonitorChecks(ctx context.Context, pageId StatusPageI
 	return c.Client.Do(req)
 }
 
+// GetStatusMonitorCheckSummary A monitor's response times and uptime
+//
+// The checks of the last 24 hours in 15-minute buckets (`range=24h`, the default) or of the
+// last 7 days in hourly buckets (`range=7d`), oldest first, every bucket present. Uptime is the
+// share of checks that succeeded; response times are the 50th and 95th percentile of the
+// successful checks that measured one (`http` and `tcp`), absent when there are none.
+//
+// Scope: `status:read`.
+//
+// Corresponds with GET /v1/status-pages/{pageId}/monitors/{monitorId}/checks/summary (the `GetStatusMonitorCheckSummary` operationId).
+func (c *Client) GetStatusMonitorCheckSummary(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *GetStatusMonitorCheckSummaryParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetStatusMonitorCheckSummaryRequest(c.Server, pageId, monitorId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // RotateStatusMonitorToken Rotate a monitor's token
 //
 // Makes a new token and drops the old one at once: calls with the old token answer `404`.
+// `http` and `tcp` monitors have no token (`409 monitor_kind`).
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -61357,6 +61685,89 @@ func NewListStatusMonitorChecksRequest(server string, pageId StatusPageId, monit
 	return req, nil
 }
 
+// NewGetStatusMonitorCheckSummaryRequest constructs an http.Request for the GetStatusMonitorCheckSummary method
+func NewGetStatusMonitorCheckSummaryRequest(server string, pageId StatusPageId, monitorId StatusMonitorId, params *GetStatusMonitorCheckSummaryParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "monitorId", monitorId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/status-pages/%s/monitors/%s/checks/summary", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewRotateStatusMonitorTokenRequest constructs an http.Request for the RotateStatusMonitorToken method
 func NewRotateStatusMonitorTokenRequest(server string, pageId StatusPageId, monitorId StatusMonitorId, params *RotateStatusMonitorTokenParams) (*http.Request, error) {
 	var err error
@@ -69390,14 +69801,30 @@ type ClientWithResponsesInterface interface {
 	//   `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
 	// - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
 	//   `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+	// - `http`: the server sends a request (`http`) every `interval` seconds and expects an answer
+	//   within `timeout` seconds with a status in the expected range, the keyword in the first
+	//   64 KiB when one is set, and for https a certificate valid for more than `cert_warn_days`
+	//   days (a certificate expiring sooner fails the check).
+	// - `tcp`: the server connects to `tcp.host` and `tcp.port` every `interval` seconds within
+	//   `timeout` seconds.
+	//
+	// `http` and `tcp` never reach loopback, private, link-local, CGNAT or reserved addresses (the
+	// address the host resolves to is checked when the monitor is saved and on every check;
+	// a self-hosted server with `YUVA_WEBHOOK_ALLOW_PRIVATE` lifts this except for link-local and
+	// cloud metadata addresses): such a target answers `400 validation`. Redirects are followed only
+	// with `follow_redirects`, at most 5, each hop checked again. `interval` is at least 60 seconds,
+	// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round whose canaries all fail, or in
+	// which more than half of the checks (at least 10) fail, is the server's own trouble: its
+	// failures are dropped and change nothing.
 	//
 	// The monitor fails after `failure_threshold` failures in a row and recovers after
-	// `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+	// `recovery_threshold` successes in a row (1 and 1 by default for `heartbeat` and `push`, 3 and 2
+	// for `http` and `tcp`). Failing sets the component to
 	// `failure_state`, never over a state a member set later than the monitor's last change, and
 	// opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
-	// it opened and puts the component back. The answer carries `token` and `url` once; only a
-	// hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
-	// unset, `403 status_monitor_limit`).
+	// it opened and puts the component back. For `heartbeat` and `push` the answer carries `token`
+	// and `url` once; only a hash of the token is kept. A workspace has at most
+	// `YUVA_STATUS_MONITORS` monitors (20 when unset, `403 status_monitor_limit`).
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -69415,14 +69842,30 @@ type ClientWithResponsesInterface interface {
 	//   `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
 	// - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
 	//   `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+	// - `http`: the server sends a request (`http`) every `interval` seconds and expects an answer
+	//   within `timeout` seconds with a status in the expected range, the keyword in the first
+	//   64 KiB when one is set, and for https a certificate valid for more than `cert_warn_days`
+	//   days (a certificate expiring sooner fails the check).
+	// - `tcp`: the server connects to `tcp.host` and `tcp.port` every `interval` seconds within
+	//   `timeout` seconds.
+	//
+	// `http` and `tcp` never reach loopback, private, link-local, CGNAT or reserved addresses (the
+	// address the host resolves to is checked when the monitor is saved and on every check;
+	// a self-hosted server with `YUVA_WEBHOOK_ALLOW_PRIVATE` lifts this except for link-local and
+	// cloud metadata addresses): such a target answers `400 validation`. Redirects are followed only
+	// with `follow_redirects`, at most 5, each hop checked again. `interval` is at least 60 seconds,
+	// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round whose canaries all fail, or in
+	// which more than half of the checks (at least 10) fail, is the server's own trouble: its
+	// failures are dropped and change nothing.
 	//
 	// The monitor fails after `failure_threshold` failures in a row and recovers after
-	// `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+	// `recovery_threshold` successes in a row (1 and 1 by default for `heartbeat` and `push`, 3 and 2
+	// for `http` and `tcp`). Failing sets the component to
 	// `failure_state`, never over a state a member set later than the monitor's last change, and
 	// opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
-	// it opened and puts the component back. The answer carries `token` and `url` once; only a
-	// hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
-	// unset, `403 status_monitor_limit`).
+	// it opened and puts the component back. For `heartbeat` and `push` the answer carries `token`
+	// and `url` once; only a hash of the token is kept. A workspace has at most
+	// `YUVA_STATUS_MONITORS` monitors (20 when unset, `403 status_monitor_limit`).
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -69433,8 +69876,8 @@ type ClientWithResponsesInterface interface {
 
 	// DeleteStatusMonitorWithResponse Delete a monitor
 	//
-	// With its checks. A component it set goes back to `operational` unless something else holds
-	// it; an incident it opened stays.
+	// With its checks. An open incident it opened is resolved with an update saying so, and a
+	// component it set goes back to `operational` unless something else holds it.
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -69457,7 +69900,9 @@ type ClientWithResponsesInterface interface {
 	// Changes the given fields. Pausing stops results from counting and lets go of the component
 	// (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
 	// starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
-	// later. A new `interval` or `grace` moves the next beat's due time.
+	// later. A new `interval` or `grace` moves the next beat's due time. For `http` and `tcp`, the
+	// given fields of `http` or `tcp` replace the stored ones; a header given without `value` keeps
+	// its stored value, and `headers` replaces the whole list. A target is checked again as on create.
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -69471,7 +69916,9 @@ type ClientWithResponsesInterface interface {
 	// Changes the given fields. Pausing stops results from counting and lets go of the component
 	// (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
 	// starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
-	// later. A new `interval` or `grace` moves the next beat's due time.
+	// later. A new `interval` or `grace` moves the next beat's due time. For `http` and `tcp`, the
+	// given fields of `http` or `tcp` replace the stored ones; a header given without `value` keeps
+	// its stored value, and `headers` replaces the whole list. A target is checked again as on create.
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -69482,8 +69929,8 @@ type ClientWithResponsesInterface interface {
 
 	// ListStatusMonitorChecksWithResponse List a monitor's checks
 	//
-	// Every beat, missed beat and pushed state, newest first, kept 30 days. Results that arrive
-	// while the monitor is paused are not kept.
+	// Every beat, missed beat, pushed state and outside check, newest first, kept 30 days. Results
+	// that arrive while the monitor is paused, and failures of a dropped round, are not kept.
 	//
 	// Scope: `status:read`.
 	//
@@ -69492,9 +69939,24 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /v1/status-pages/{pageId}/monitors/{monitorId}/checks (the `ListStatusMonitorChecks` operationId).
 	ListStatusMonitorChecksWithResponse(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *ListStatusMonitorChecksParams, reqEditors ...RequestEditorFn) (*ListStatusMonitorChecksResponse, error)
 
+	// GetStatusMonitorCheckSummaryWithResponse A monitor's response times and uptime
+	//
+	// The checks of the last 24 hours in 15-minute buckets (`range=24h`, the default) or of the
+	// last 7 days in hourly buckets (`range=7d`), oldest first, every bucket present. Uptime is the
+	// share of checks that succeeded; response times are the 50th and 95th percentile of the
+	// successful checks that measured one (`http` and `tcp`), absent when there are none.
+	//
+	// Scope: `status:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/status-pages/{pageId}/monitors/{monitorId}/checks/summary (the `GetStatusMonitorCheckSummary` operationId).
+	GetStatusMonitorCheckSummaryWithResponse(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *GetStatusMonitorCheckSummaryParams, reqEditors ...RequestEditorFn) (*GetStatusMonitorCheckSummaryResponse, error)
+
 	// RotateStatusMonitorTokenWithResponse Rotate a monitor's token
 	//
 	// Makes a new token and drops the old one at once: calls with the old token answer `404`.
+	// `http` and `tcp` monitors have no token (`409 monitor_kind`).
 	//
 	// Owners, admins and API keys. Scope: `status:manage`.
 	//
@@ -91995,6 +92457,75 @@ func (r ListStatusMonitorChecksResponse) ContentType() string {
 	return ""
 }
 
+type GetStatusMonitorCheckSummaryResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StatusCheckSummary
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetStatusMonitorCheckSummaryResponse) GetJSON200() *StatusCheckSummary {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r GetStatusMonitorCheckSummaryResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetStatusMonitorCheckSummaryResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetStatusMonitorCheckSummaryResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetStatusMonitorCheckSummaryResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetStatusMonitorCheckSummaryResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetStatusMonitorCheckSummaryResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetStatusMonitorCheckSummaryResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetStatusMonitorCheckSummaryResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type RotateStatusMonitorTokenResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -92006,6 +92537,8 @@ type RotateStatusMonitorTokenResponse struct {
 	ApplicationproblemJSON403 *Problem
 	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
 	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -92026,6 +92559,11 @@ func (r RotateStatusMonitorTokenResponse) GetApplicationproblemJSON403() *Proble
 // GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
 func (r RotateStatusMonitorTokenResponse) GetApplicationproblemJSON404() *Problem {
 	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r RotateStatusMonitorTokenResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
 }
 
 // GetBody returns the raw response body bytes
@@ -102720,14 +103258,30 @@ func (c *ClientWithResponses) ListStatusMonitorsWithResponse(ctx context.Context
 //     `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
 //   - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
 //     `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+//   - `http`: the server sends a request (`http`) every `interval` seconds and expects an answer
+//     within `timeout` seconds with a status in the expected range, the keyword in the first
+//     64 KiB when one is set, and for https a certificate valid for more than `cert_warn_days`
+//     days (a certificate expiring sooner fails the check).
+//   - `tcp`: the server connects to `tcp.host` and `tcp.port` every `interval` seconds within
+//     `timeout` seconds.
+//
+// `http` and `tcp` never reach loopback, private, link-local, CGNAT or reserved addresses (the
+// address the host resolves to is checked when the monitor is saved and on every check;
+// a self-hosted server with `YUVA_WEBHOOK_ALLOW_PRIVATE` lifts this except for link-local and
+// cloud metadata addresses): such a target answers `400 validation`. Redirects are followed only
+// with `follow_redirects`, at most 5, each hop checked again. `interval` is at least 60 seconds,
+// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round whose canaries all fail, or in
+// which more than half of the checks (at least 10) fail, is the server's own trouble: its
+// failures are dropped and change nothing.
 //
 // The monitor fails after `failure_threshold` failures in a row and recovers after
-// `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+// `recovery_threshold` successes in a row (1 and 1 by default for `heartbeat` and `push`, 3 and 2
+// for `http` and `tcp`). Failing sets the component to
 // `failure_state`, never over a state a member set later than the monitor's last change, and
 // opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
-// it opened and puts the component back. The answer carries `token` and `url` once; only a
-// hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
-// unset, `403 status_monitor_limit`).
+// it opened and puts the component back. For `heartbeat` and `push` the answer carries `token`
+// and `url` once; only a hash of the token is kept. A workspace has at most
+// `YUVA_STATUS_MONITORS` monitors (20 when unset, `403 status_monitor_limit`).
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -102751,14 +103305,30 @@ func (c *ClientWithResponses) CreateStatusMonitorWithBodyWithResponse(ctx contex
 //     `?fail=1` or `/ingress/heartbeat/{token}/fail` reports one at once.
 //   - `push`: the host's monitoring posts its state to `/ingress/status/{token}`, as
 //     `{"state","message"}` or as an Alertmanager or Grafana alert webhook body.
+//   - `http`: the server sends a request (`http`) every `interval` seconds and expects an answer
+//     within `timeout` seconds with a status in the expected range, the keyword in the first
+//     64 KiB when one is set, and for https a certificate valid for more than `cert_warn_days`
+//     days (a certificate expiring sooner fails the check).
+//   - `tcp`: the server connects to `tcp.host` and `tcp.port` every `interval` seconds within
+//     `timeout` seconds.
+//
+// `http` and `tcp` never reach loopback, private, link-local, CGNAT or reserved addresses (the
+// address the host resolves to is checked when the monitor is saved and on every check;
+// a self-hosted server with `YUVA_WEBHOOK_ALLOW_PRIVATE` lifts this except for link-local and
+// cloud metadata addresses): such a target answers `400 validation`. Redirects are followed only
+// with `follow_redirects`, at most 5, each hop checked again. `interval` is at least 60 seconds,
+// or `YUVA_STATUS_MIN_INTERVAL` when the server sets more. A round whose canaries all fail, or in
+// which more than half of the checks (at least 10) fail, is the server's own trouble: its
+// failures are dropped and change nothing.
 //
 // The monitor fails after `failure_threshold` failures in a row and recovers after
-// `recovery_threshold` successes in a row (both 1 by default). Failing sets the component to
+// `recovery_threshold` successes in a row (1 and 1 by default for `heartbeat` and `push`, 3 and 2
+// for `http` and `tcp`). Failing sets the component to
 // `failure_state`, never over a state a member set later than the monitor's last change, and
 // opens a draft incident, a published one or none (`on_failure`); recovering resolves the incident
-// it opened and puts the component back. The answer carries `token` and `url` once; only a
-// hash of the token is kept. A workspace has at most `YUVA_STATUS_MONITORS` monitors (20 when
-// unset, `403 status_monitor_limit`).
+// it opened and puts the component back. For `heartbeat` and `push` the answer carries `token`
+// and `url` once; only a hash of the token is kept. A workspace has at most
+// `YUVA_STATUS_MONITORS` monitors (20 when unset, `403 status_monitor_limit`).
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -102775,8 +103345,8 @@ func (c *ClientWithResponses) CreateStatusMonitorWithResponse(ctx context.Contex
 
 // DeleteStatusMonitorWithResponse Delete a monitor
 //
-// With its checks. A component it set goes back to `operational` unless something else holds
-// it; an incident it opened stays.
+// With its checks. An open incident it opened is resolved with an update saying so, and a
+// component it set goes back to `operational` unless something else holds it.
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -102811,7 +103381,9 @@ func (c *ClientWithResponses) GetStatusMonitorWithResponse(ctx context.Context, 
 // Changes the given fields. Pausing stops results from counting and lets go of the component
 // (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
 // starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
-// later. A new `interval` or `grace` moves the next beat's due time.
+// later. A new `interval` or `grace` moves the next beat's due time. For `http` and `tcp`, the
+// given fields of `http` or `tcp` replace the stored ones; a header given without `value` keeps
+// its stored value, and `headers` replaces the whole list. A target is checked again as on create.
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -102831,7 +103403,9 @@ func (c *ClientWithResponses) UpdateStatusMonitorWithBodyWithResponse(ctx contex
 // Changes the given fields. Pausing stops results from counting and lets go of the component
 // (it goes back to `operational` when the monitor set it and nothing else holds it); resuming
 // starts again from `pending`, and a heartbeat's next beat is due `interval` plus `grace` seconds
-// later. A new `interval` or `grace` moves the next beat's due time.
+// later. A new `interval` or `grace` moves the next beat's due time. For `http` and `tcp`, the
+// given fields of `http` or `tcp` replace the stored ones; a header given without `value` keeps
+// its stored value, and `headers` replaces the whole list. A target is checked again as on create.
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -102848,8 +103422,8 @@ func (c *ClientWithResponses) UpdateStatusMonitorWithResponse(ctx context.Contex
 
 // ListStatusMonitorChecksWithResponse List a monitor's checks
 //
-// Every beat, missed beat and pushed state, newest first, kept 30 days. Results that arrive
-// while the monitor is paused are not kept.
+// Every beat, missed beat, pushed state and outside check, newest first, kept 30 days. Results
+// that arrive while the monitor is paused, and failures of a dropped round, are not kept.
 //
 // Scope: `status:read`.
 //
@@ -102864,9 +103438,30 @@ func (c *ClientWithResponses) ListStatusMonitorChecksWithResponse(ctx context.Co
 	return ParseListStatusMonitorChecksResponse(rsp)
 }
 
+// GetStatusMonitorCheckSummaryWithResponse A monitor's response times and uptime
+//
+// The checks of the last 24 hours in 15-minute buckets (`range=24h`, the default) or of the
+// last 7 days in hourly buckets (`range=7d`), oldest first, every bucket present. Uptime is the
+// share of checks that succeeded; response times are the 50th and 95th percentile of the
+// successful checks that measured one (`http` and `tcp`), absent when there are none.
+//
+// Scope: `status:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/status-pages/{pageId}/monitors/{monitorId}/checks/summary (the `GetStatusMonitorCheckSummary` operationId).
+func (c *ClientWithResponses) GetStatusMonitorCheckSummaryWithResponse(ctx context.Context, pageId StatusPageId, monitorId StatusMonitorId, params *GetStatusMonitorCheckSummaryParams, reqEditors ...RequestEditorFn) (*GetStatusMonitorCheckSummaryResponse, error) {
+	rsp, err := c.GetStatusMonitorCheckSummary(ctx, pageId, monitorId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetStatusMonitorCheckSummaryResponse(rsp)
+}
+
 // RotateStatusMonitorTokenWithResponse Rotate a monitor's token
 //
 // Makes a new token and drops the old one at once: calls with the old token answer `404`.
+// `http` and `tcp` monitors have no token (`409 monitor_kind`).
 //
 // Owners, admins and API keys. Scope: `status:manage`.
 //
@@ -120836,6 +121431,60 @@ func ParseListStatusMonitorChecksResponse(rsp *http.Response) (*ListStatusMonito
 	return response, nil
 }
 
+// ParseGetStatusMonitorCheckSummaryResponse parses an HTTP response from a GetStatusMonitorCheckSummaryWithResponse call
+func ParseGetStatusMonitorCheckSummaryResponse(rsp *http.Response) (*GetStatusMonitorCheckSummaryResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetStatusMonitorCheckSummaryResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StatusCheckSummary
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseRotateStatusMonitorTokenResponse parses an HTTP response from a RotateStatusMonitorTokenWithResponse call
 func ParseRotateStatusMonitorTokenResponse(rsp *http.Response) (*RotateStatusMonitorTokenResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -120877,6 +121526,13 @@ func ParseRotateStatusMonitorTokenResponse(rsp *http.Response) (*RotateStatusMon
 			return nil, err
 		}
 		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
 
 	}
 

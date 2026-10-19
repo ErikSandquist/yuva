@@ -102,21 +102,79 @@ func CheckURL(raw string, allowPrivate bool) (*url.URL, error) {
 	if err != nil || (u.Scheme != "http" && u.Scheme != "https") || u.Hostname() == "" || u.User != nil || u.Fragment != "" {
 		return nil, errors.New("url must be an http or https URL with a host and no credentials")
 	}
-	host := strings.ToLower(strings.TrimSuffix(u.Hostname(), "."))
-	ip, ipErr := netip.ParseAddr(host)
-	if ipErr == nil && NeverAllowed(ip) {
-		return nil, ErrRefusedAddress
-	}
-	if allowPrivate {
-		return u, nil
-	}
-	if host == "localhost" || strings.HasSuffix(host, ".localhost") {
-		return nil, ErrRefusedAddress
-	}
-	if ipErr == nil && Blocked(ip) {
-		return nil, ErrRefusedAddress
+	if err := CheckHost(u.Hostname(), allowPrivate); err != nil {
+		return nil, err
 	}
 	return u, nil
+}
+
+// CheckHost refuses a literal address or `localhost` that Blocked refuses (unless allowPrivate),
+// and a literal address NeverAllowed refuses.
+func CheckHost(host string, allowPrivate bool) error {
+	host = strings.ToLower(strings.TrimSuffix(host, "."))
+	ip, ipErr := netip.ParseAddr(host)
+	if ipErr == nil && NeverAllowed(ip) {
+		return ErrRefusedAddress
+	}
+	if allowPrivate {
+		return nil
+	}
+	if host == "localhost" || strings.HasSuffix(host, ".localhost") {
+		return ErrRefusedAddress
+	}
+	if ipErr == nil && Blocked(ip) {
+		return ErrRefusedAddress
+	}
+	return nil
+}
+
+// Resolve resolves host once and refuses it when any address is blocked (unless allowPrivate) or
+// never allowed.
+func Resolve(ctx context.Context, r Resolver, host string, allowPrivate bool) ([]netip.Addr, error) {
+	if r == nil {
+		r = net.DefaultResolver
+	}
+	var ips []netip.Addr
+	if ip, err := netip.ParseAddr(host); err == nil {
+		ips = []netip.Addr{ip}
+	} else if ips, err = r.LookupNetIP(ctx, "ip", host); err != nil {
+		return nil, err
+	}
+	if len(ips) == 0 {
+		return nil, fmt.Errorf("%s has no address", host)
+	}
+	for _, ip := range ips {
+		if NeverAllowed(ip) || (!allowPrivate && Blocked(ip)) {
+			return nil, fmt.Errorf("%w %s for %s", ErrRefusedAddress, ip.Unmap(), host)
+		}
+	}
+	return ips, nil
+}
+
+// Dial connects to the address Resolve allows for addr's host, and to no other.
+func Dial(ctx context.Context, r Resolver, allowPrivate bool, timeout time.Duration, network, addr string) (net.Conn, error) {
+	host, port, err := net.SplitHostPort(addr)
+	if err != nil {
+		return nil, err
+	}
+	p, err := strconv.ParseUint(port, 10, 16)
+	if err != nil {
+		return nil, err
+	}
+	ips, err := Resolve(ctx, r, host, allowPrivate)
+	if err != nil {
+		return nil, err
+	}
+	d := net.Dialer{Timeout: timeout}
+	var last error
+	for _, ip := range ips {
+		conn, err := d.DialContext(ctx, network, netip.AddrPortFrom(ip.Unmap(), uint16(p)).String())
+		if err == nil {
+			return conn, nil
+		}
+		last = err
+	}
+	return nil, last
 }
 
 type Resolver interface {
@@ -156,38 +214,7 @@ func NewClient(allowPrivate bool, r Resolver) *Client {
 func (c *Client) Do(req *http.Request) (*http.Response, error) { return c.http.Do(req) }
 
 func (c *Client) dial(ctx context.Context, network, addr string) (net.Conn, error) {
-	host, port, err := net.SplitHostPort(addr)
-	if err != nil {
-		return nil, err
-	}
-	p, err := strconv.ParseUint(port, 10, 16)
-	if err != nil {
-		return nil, err
-	}
-	var ips []netip.Addr
-	if ip, err := netip.ParseAddr(host); err == nil {
-		ips = []netip.Addr{ip}
-	} else if ips, err = c.Resolver.LookupNetIP(ctx, "ip", host); err != nil {
-		return nil, err
-	}
-	if len(ips) == 0 {
-		return nil, fmt.Errorf("%s has no address", host)
-	}
-	for _, ip := range ips {
-		if NeverAllowed(ip) || (!c.AllowPrivate && Blocked(ip)) {
-			return nil, fmt.Errorf("%w %s for %s", ErrRefusedAddress, ip.Unmap(), host)
-		}
-	}
-	d := net.Dialer{Timeout: Timeout}
-	var last error
-	for _, ip := range ips {
-		conn, err := d.DialContext(ctx, network, netip.AddrPortFrom(ip.Unmap(), uint16(p)).String())
-		if err == nil {
-			return conn, nil
-		}
-		last = err
-	}
-	return nil, last
+	return Dial(ctx, c.Resolver, c.AllowPrivate, Timeout, network, addr)
 }
 
 type Request struct {

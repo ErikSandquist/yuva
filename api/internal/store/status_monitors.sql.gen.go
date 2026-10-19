@@ -12,6 +12,60 @@ import (
 	"uuid"
 )
 
+const anyDueStatusChecks = `-- name: AnyDueStatusChecks :one
+SELECT EXISTS (SELECT 1 FROM status_monitors WHERE check_at IS NOT NULL AND NOT paused AND check_at < $1::timestamptz)::boolean
+`
+
+// The documented exception: the sweep looks for due outside checks in every workspace at once.
+func (q *Queries) AnyDueStatusChecks(ctx context.Context, until time.Time) (bool, error) {
+	row := q.db.QueryRow(ctx, anyDueStatusChecks, until)
+	var column_1 bool
+	err := row.Scan(&column_1)
+	return column_1, err
+}
+
+const claimDueStatusChecks = `-- name: ClaimDueStatusChecks :many
+UPDATE status_monitors m SET check_at = to_timestamp(
+    (floor((date_part('epoch', $1::timestamptz) - d.phase) / m.interval_seconds) + 1) * m.interval_seconds + d.phase)
+FROM (
+    SELECT c.workspace_id, c.id, c.check_at AS due, mod(abs(hashtext(c.id::text)::bigint), c.interval_seconds) AS phase
+    FROM status_monitors c
+    WHERE c.check_at IS NOT NULL AND NOT c.paused AND c.check_at < $1::timestamptz
+    ORDER BY c.check_at
+    LIMIT 2000
+    FOR UPDATE SKIP LOCKED) d
+WHERE m.workspace_id = d.workspace_id AND m.id = d.id
+RETURNING m.workspace_id, m.id, d.due::timestamptz AS due
+`
+
+type ClaimDueStatusChecksRow struct {
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+	Due         time.Time
+}
+
+// The documented exception: the sweep claims the outside checks due before until in every workspace
+// at once and moves each to its next slot, interval apart at an offset its id spreads over the interval.
+func (q *Queries) ClaimDueStatusChecks(ctx context.Context, until time.Time) ([]ClaimDueStatusChecksRow, error) {
+	rows, err := q.db.Query(ctx, claimDueStatusChecks, until)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ClaimDueStatusChecksRow
+	for rows.Next() {
+		var i ClaimDueStatusChecksRow
+		if err := rows.Scan(&i.WorkspaceID, &i.ID, &i.Due); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const countStatusMonitors = `-- name: CountStatusMonitors :one
 SELECT count(*)::bigint FROM status_monitors WHERE workspace_id = $1
 `
@@ -21,6 +75,40 @@ func (q *Queries) CountStatusMonitors(ctx context.Context, workspaceID uuid.UUID
 	var column_1 int64
 	err := row.Scan(&column_1)
 	return column_1, err
+}
+
+const createPendingStatusCheck = `-- name: CreatePendingStatusCheck :exec
+INSERT INTO status_checks (id, workspace_id, monitor_id, at, ok, source, error, duration_ms, status_code, round_id, pending)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, true)
+`
+
+type CreatePendingStatusCheckParams struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	MonitorID   uuid.UUID
+	At          time.Time
+	Ok          bool
+	Source      string
+	Error       *string
+	DurationMs  *int32
+	StatusCode  *int32
+	RoundID     *uuid.UUID
+}
+
+func (q *Queries) CreatePendingStatusCheck(ctx context.Context, arg CreatePendingStatusCheckParams) error {
+	_, err := q.db.Exec(ctx, createPendingStatusCheck,
+		arg.ID,
+		arg.WorkspaceID,
+		arg.MonitorID,
+		arg.At,
+		arg.Ok,
+		arg.Source,
+		arg.Error,
+		arg.DurationMs,
+		arg.StatusCode,
+		arg.RoundID,
+	)
+	return err
 }
 
 const createStatusCheck = `-- name: CreateStatusCheck :exec
@@ -57,10 +145,15 @@ func (q *Queries) CreateStatusCheck(ctx context.Context, arg CreateStatusCheckPa
 
 const createStatusMonitor = `-- name: CreateStatusMonitor :one
 INSERT INTO status_monitors (id, workspace_id, page_id, component_id, kind, name, token_hash, token_prefix, interval_seconds, grace_seconds,
-    failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, due_at, changed_at, created_at, updated_at)
+    failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, due_at, target, timeout_seconds, http_method,
+    http_header_names, http_headers, http_body, status_min, status_max, keyword, follow_redirects, cert_warn_days, check_at,
+    changed_at, created_at, updated_at)
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
-    $11, $12, $13, $14, $15, 'pending', $16, $17, $17, $17)
-RETURNING id, workspace_id, page_id, component_id, kind, name, token_hash, token_prefix, interval_seconds, grace_seconds, failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, down_state, consecutive_failures, consecutive_successes, last_result_at, last_message, due_at, due_extended, incident_id, changed_at, created_at, updated_at
+    $11, $12, $13, $14, $15, 'pending', $16, $17,
+    $18, $19, $20::text[], $21, $22,
+    $23, $24, $25, $26, $27, $28,
+    $29, $29, $29)
+RETURNING id, workspace_id, page_id, component_id, kind, name, token_hash, token_prefix, interval_seconds, grace_seconds, failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, down_state, consecutive_failures, consecutive_successes, last_result_at, last_message, due_at, due_extended, incident_id, changed_at, created_at, updated_at, target, timeout_seconds, http_method, http_header_names, http_headers, http_body, status_min, status_max, keyword, follow_redirects, cert_warn_days, cert_expires_at, check_at
 `
 
 type CreateStatusMonitorParams struct {
@@ -80,6 +173,18 @@ type CreateStatusMonitorParams struct {
 	OnFailure         string
 	Paused            bool
 	DueAt             *time.Time
+	Target            *string
+	TimeoutSeconds    *int32
+	HttpMethod        *string
+	HttpHeaderNames   []string
+	HttpHeaders       []byte
+	HttpBody          *string
+	StatusMin         *int32
+	StatusMax         *int32
+	Keyword           *string
+	FollowRedirects   bool
+	CertWarnDays      *int32
+	CheckAt           *time.Time
 	Now               time.Time
 }
 
@@ -101,6 +206,18 @@ func (q *Queries) CreateStatusMonitor(ctx context.Context, arg CreateStatusMonit
 		arg.OnFailure,
 		arg.Paused,
 		arg.DueAt,
+		arg.Target,
+		arg.TimeoutSeconds,
+		arg.HttpMethod,
+		arg.HttpHeaderNames,
+		arg.HttpHeaders,
+		arg.HttpBody,
+		arg.StatusMin,
+		arg.StatusMax,
+		arg.Keyword,
+		arg.FollowRedirects,
+		arg.CertWarnDays,
+		arg.CheckAt,
 		arg.Now,
 	)
 	var i StatusMonitor
@@ -132,26 +249,69 @@ func (q *Queries) CreateStatusMonitor(ctx context.Context, arg CreateStatusMonit
 		&i.ChangedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Target,
+		&i.TimeoutSeconds,
+		&i.HttpMethod,
+		&i.HttpHeaderNames,
+		&i.HttpHeaders,
+		&i.HttpBody,
+		&i.StatusMin,
+		&i.StatusMax,
+		&i.Keyword,
+		&i.FollowRedirects,
+		&i.CertWarnDays,
+		&i.CertExpiresAt,
+		&i.CheckAt,
 	)
 	return i, err
 }
 
 const deleteOldStatusChecks = `-- name: DeleteOldStatusChecks :execrows
 DELETE FROM status_checks WHERE id IN (
-    SELECT c.id FROM status_checks c WHERE c.workspace_id = $1 AND c.at < $2 LIMIT 10000)
+    SELECT c.id FROM status_checks c
+    WHERE c.workspace_id = $1 AND (c.at < $2 OR (c.pending AND c.at < $3::timestamptz)) LIMIT 10000)
 `
 
 type DeleteOldStatusChecksParams struct {
 	WorkspaceID uuid.UUID
 	Before      time.Time
+	StaleBefore time.Time
 }
 
 func (q *Queries) DeleteOldStatusChecks(ctx context.Context, arg DeleteOldStatusChecksParams) (int64, error) {
-	result, err := q.db.Exec(ctx, deleteOldStatusChecks, arg.WorkspaceID, arg.Before)
+	result, err := q.db.Exec(ctx, deleteOldStatusChecks, arg.WorkspaceID, arg.Before, arg.StaleBefore)
 	if err != nil {
 		return 0, err
 	}
 	return result.RowsAffected(), nil
+}
+
+const deletePendingStatusChecks = `-- name: DeletePendingStatusChecks :exec
+DELETE FROM status_checks WHERE workspace_id = $1 AND monitor_id = $2 AND pending
+`
+
+type DeletePendingStatusChecksParams struct {
+	WorkspaceID uuid.UUID
+	MonitorID   uuid.UUID
+}
+
+func (q *Queries) DeletePendingStatusChecks(ctx context.Context, arg DeletePendingStatusChecksParams) error {
+	_, err := q.db.Exec(ctx, deletePendingStatusChecks, arg.WorkspaceID, arg.MonitorID)
+	return err
+}
+
+const deleteStatusCheck = `-- name: DeleteStatusCheck :exec
+DELETE FROM status_checks WHERE workspace_id = $1 AND id = $2
+`
+
+type DeleteStatusCheckParams struct {
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) DeleteStatusCheck(ctx context.Context, arg DeleteStatusCheckParams) error {
+	_, err := q.db.Exec(ctx, deleteStatusCheck, arg.WorkspaceID, arg.ID)
+	return err
 }
 
 const deleteStatusMonitor = `-- name: DeleteStatusMonitor :execrows
@@ -253,8 +413,27 @@ func (q *Queries) FindStatusMonitorByToken(ctx context.Context, tokenHash []byte
 	return i, err
 }
 
+const finishStatusCheck = `-- name: FinishStatusCheck :execrows
+UPDATE status_checks SET pending = false, state = $1
+WHERE workspace_id = $2 AND id = $3 AND pending
+`
+
+type FinishStatusCheckParams struct {
+	State       *string
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) FinishStatusCheck(ctx context.Context, arg FinishStatusCheckParams) (int64, error) {
+	result, err := q.db.Exec(ctx, finishStatusCheck, arg.State, arg.WorkspaceID, arg.ID)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
 const getStatusMonitor = `-- name: GetStatusMonitor :one
-SELECT id, workspace_id, page_id, component_id, kind, name, token_hash, token_prefix, interval_seconds, grace_seconds, failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, down_state, consecutive_failures, consecutive_successes, last_result_at, last_message, due_at, due_extended, incident_id, changed_at, created_at, updated_at FROM status_monitors WHERE workspace_id = $1 AND page_id = $2 AND id = $3
+SELECT id, workspace_id, page_id, component_id, kind, name, token_hash, token_prefix, interval_seconds, grace_seconds, failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, down_state, consecutive_failures, consecutive_successes, last_result_at, last_message, due_at, due_extended, incident_id, changed_at, created_at, updated_at, target, timeout_seconds, http_method, http_header_names, http_headers, http_body, status_min, status_max, keyword, follow_redirects, cert_warn_days, cert_expires_at, check_at FROM status_monitors WHERE workspace_id = $1 AND page_id = $2 AND id = $3
 `
 
 type GetStatusMonitorParams struct {
@@ -294,12 +473,25 @@ func (q *Queries) GetStatusMonitor(ctx context.Context, arg GetStatusMonitorPara
 		&i.ChangedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Target,
+		&i.TimeoutSeconds,
+		&i.HttpMethod,
+		&i.HttpHeaderNames,
+		&i.HttpHeaders,
+		&i.HttpBody,
+		&i.StatusMin,
+		&i.StatusMax,
+		&i.Keyword,
+		&i.FollowRedirects,
+		&i.CertWarnDays,
+		&i.CertExpiresAt,
+		&i.CheckAt,
 	)
 	return i, err
 }
 
 const getStatusMonitorByID = `-- name: GetStatusMonitorByID :one
-SELECT id, workspace_id, page_id, component_id, kind, name, token_hash, token_prefix, interval_seconds, grace_seconds, failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, down_state, consecutive_failures, consecutive_successes, last_result_at, last_message, due_at, due_extended, incident_id, changed_at, created_at, updated_at FROM status_monitors WHERE workspace_id = $1 AND id = $2
+SELECT id, workspace_id, page_id, component_id, kind, name, token_hash, token_prefix, interval_seconds, grace_seconds, failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, down_state, consecutive_failures, consecutive_successes, last_result_at, last_message, due_at, due_extended, incident_id, changed_at, created_at, updated_at, target, timeout_seconds, http_method, http_header_names, http_headers, http_body, status_min, status_max, keyword, follow_redirects, cert_warn_days, cert_expires_at, check_at FROM status_monitors WHERE workspace_id = $1 AND id = $2
 `
 
 type GetStatusMonitorByIDParams struct {
@@ -338,6 +530,19 @@ func (q *Queries) GetStatusMonitorByID(ctx context.Context, arg GetStatusMonitor
 		&i.ChangedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Target,
+		&i.TimeoutSeconds,
+		&i.HttpMethod,
+		&i.HttpHeaderNames,
+		&i.HttpHeaders,
+		&i.HttpBody,
+		&i.StatusMin,
+		&i.StatusMax,
+		&i.Keyword,
+		&i.FollowRedirects,
+		&i.CertWarnDays,
+		&i.CertExpiresAt,
+		&i.CheckAt,
 	)
 	return i, err
 }
@@ -375,9 +580,50 @@ func (q *Queries) ListDueStatusMonitors(ctx context.Context, now time.Time) ([]L
 	return items, nil
 }
 
+const listRoundStatusChecks = `-- name: ListRoundStatusChecks :many
+SELECT workspace_id, id, monitor_id, ok, source, error FROM status_checks WHERE round_id = $1 AND pending ORDER BY at, id
+`
+
+type ListRoundStatusChecksRow struct {
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+	MonitorID   uuid.UUID
+	Ok          bool
+	Source      string
+	Error       *string
+}
+
+// The documented exception: a round is judged over the checks of every workspace it ran.
+func (q *Queries) ListRoundStatusChecks(ctx context.Context, roundID *uuid.UUID) ([]ListRoundStatusChecksRow, error) {
+	rows, err := q.db.Query(ctx, listRoundStatusChecks, roundID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListRoundStatusChecksRow
+	for rows.Next() {
+		var i ListRoundStatusChecksRow
+		if err := rows.Scan(
+			&i.WorkspaceID,
+			&i.ID,
+			&i.MonitorID,
+			&i.Ok,
+			&i.Source,
+			&i.Error,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listStatusChecks = `-- name: ListStatusChecks :many
-SELECT id, workspace_id, monitor_id, at, ok, source, state, message, error, duration_ms, status_code FROM status_checks
-WHERE workspace_id = $1 AND monitor_id = $2
+SELECT id, workspace_id, monitor_id, at, ok, source, state, message, error, duration_ms, status_code, round_id, pending FROM status_checks
+WHERE workspace_id = $1 AND monitor_id = $2 AND NOT pending
   AND ($3::timestamptz IS NULL
        OR (at, id) < ($3::timestamptz, $4::uuid))
 ORDER BY at DESC, id DESC
@@ -419,6 +665,8 @@ func (q *Queries) ListStatusChecks(ctx context.Context, arg ListStatusChecksPara
 			&i.Error,
 			&i.DurationMs,
 			&i.StatusCode,
+			&i.RoundID,
+			&i.Pending,
 		); err != nil {
 			return nil, err
 		}
@@ -431,7 +679,7 @@ func (q *Queries) ListStatusChecks(ctx context.Context, arg ListStatusChecksPara
 }
 
 const listStatusMonitors = `-- name: ListStatusMonitors :many
-SELECT id, workspace_id, page_id, component_id, kind, name, token_hash, token_prefix, interval_seconds, grace_seconds, failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, down_state, consecutive_failures, consecutive_successes, last_result_at, last_message, due_at, due_extended, incident_id, changed_at, created_at, updated_at FROM status_monitors WHERE workspace_id = $1 AND page_id = $2 ORDER BY created_at, id
+SELECT id, workspace_id, page_id, component_id, kind, name, token_hash, token_prefix, interval_seconds, grace_seconds, failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, down_state, consecutive_failures, consecutive_successes, last_result_at, last_message, due_at, due_extended, incident_id, changed_at, created_at, updated_at, target, timeout_seconds, http_method, http_header_names, http_headers, http_body, status_min, status_max, keyword, follow_redirects, cert_warn_days, cert_expires_at, check_at FROM status_monitors WHERE workspace_id = $1 AND page_id = $2 ORDER BY created_at, id
 `
 
 type ListStatusMonitorsParams struct {
@@ -476,6 +724,19 @@ func (q *Queries) ListStatusMonitors(ctx context.Context, arg ListStatusMonitors
 			&i.ChangedAt,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.Target,
+			&i.TimeoutSeconds,
+			&i.HttpMethod,
+			&i.HttpHeaderNames,
+			&i.HttpHeaders,
+			&i.HttpBody,
+			&i.StatusMin,
+			&i.StatusMax,
+			&i.Keyword,
+			&i.FollowRedirects,
+			&i.CertWarnDays,
+			&i.CertExpiresAt,
+			&i.CheckAt,
 		); err != nil {
 			return nil, err
 		}
@@ -488,7 +749,7 @@ func (q *Queries) ListStatusMonitors(ctx context.Context, arg ListStatusMonitors
 }
 
 const lockStatusMonitor = `-- name: LockStatusMonitor :one
-SELECT id, workspace_id, page_id, component_id, kind, name, token_hash, token_prefix, interval_seconds, grace_seconds, failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, down_state, consecutive_failures, consecutive_successes, last_result_at, last_message, due_at, due_extended, incident_id, changed_at, created_at, updated_at FROM status_monitors WHERE workspace_id = $1 AND id = $2 FOR UPDATE
+SELECT id, workspace_id, page_id, component_id, kind, name, token_hash, token_prefix, interval_seconds, grace_seconds, failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, down_state, consecutive_failures, consecutive_successes, last_result_at, last_message, due_at, due_extended, incident_id, changed_at, created_at, updated_at, target, timeout_seconds, http_method, http_header_names, http_headers, http_body, status_min, status_max, keyword, follow_redirects, cert_warn_days, cert_expires_at, check_at FROM status_monitors WHERE workspace_id = $1 AND id = $2 FOR UPDATE
 `
 
 type LockStatusMonitorParams struct {
@@ -527,15 +788,45 @@ func (q *Queries) LockStatusMonitor(ctx context.Context, arg LockStatusMonitorPa
 		&i.ChangedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Target,
+		&i.TimeoutSeconds,
+		&i.HttpMethod,
+		&i.HttpHeaderNames,
+		&i.HttpHeaders,
+		&i.HttpBody,
+		&i.StatusMin,
+		&i.StatusMax,
+		&i.Keyword,
+		&i.FollowRedirects,
+		&i.CertWarnDays,
+		&i.CertExpiresAt,
+		&i.CheckAt,
 	)
 	return i, err
 }
 
+const setStatusMonitorCert = `-- name: SetStatusMonitorCert :exec
+UPDATE status_monitors SET cert_expires_at = $1
+WHERE workspace_id = $2 AND id = $3
+`
+
+type SetStatusMonitorCertParams struct {
+	CertExpiresAt *time.Time
+	WorkspaceID   uuid.UUID
+	ID            uuid.UUID
+}
+
+func (q *Queries) SetStatusMonitorCert(ctx context.Context, arg SetStatusMonitorCertParams) error {
+	_, err := q.db.Exec(ctx, setStatusMonitorCert, arg.CertExpiresAt, arg.WorkspaceID, arg.ID)
+	return err
+}
+
 const setStatusMonitorPaused = `-- name: SetStatusMonitorPaused :one
 UPDATE status_monitors SET paused = $1, state = $2, down_state = $3, consecutive_failures = 0,
-    consecutive_successes = 0, due_at = $4, due_extended = false, incident_id = NULL, changed_at = $5, updated_at = $6
-WHERE workspace_id = $7 AND id = $8
-RETURNING id, workspace_id, page_id, component_id, kind, name, token_hash, token_prefix, interval_seconds, grace_seconds, failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, down_state, consecutive_failures, consecutive_successes, last_result_at, last_message, due_at, due_extended, incident_id, changed_at, created_at, updated_at
+    consecutive_successes = 0, due_at = $4, due_extended = false, check_at = $5, incident_id = NULL,
+    changed_at = $6, updated_at = $7
+WHERE workspace_id = $8 AND id = $9
+RETURNING id, workspace_id, page_id, component_id, kind, name, token_hash, token_prefix, interval_seconds, grace_seconds, failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, down_state, consecutive_failures, consecutive_successes, last_result_at, last_message, due_at, due_extended, incident_id, changed_at, created_at, updated_at, target, timeout_seconds, http_method, http_header_names, http_headers, http_body, status_min, status_max, keyword, follow_redirects, cert_warn_days, cert_expires_at, check_at
 `
 
 type SetStatusMonitorPausedParams struct {
@@ -543,6 +834,7 @@ type SetStatusMonitorPausedParams struct {
 	State       string
 	DownState   *string
 	DueAt       *time.Time
+	CheckAt     *time.Time
 	ChangedAt   time.Time
 	Now         time.Time
 	WorkspaceID uuid.UUID
@@ -555,6 +847,7 @@ func (q *Queries) SetStatusMonitorPaused(ctx context.Context, arg SetStatusMonit
 		arg.State,
 		arg.DownState,
 		arg.DueAt,
+		arg.CheckAt,
 		arg.ChangedAt,
 		arg.Now,
 		arg.WorkspaceID,
@@ -589,6 +882,19 @@ func (q *Queries) SetStatusMonitorPaused(ctx context.Context, arg SetStatusMonit
 		&i.ChangedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Target,
+		&i.TimeoutSeconds,
+		&i.HttpMethod,
+		&i.HttpHeaderNames,
+		&i.HttpHeaders,
+		&i.HttpBody,
+		&i.StatusMin,
+		&i.StatusMax,
+		&i.Keyword,
+		&i.FollowRedirects,
+		&i.CertWarnDays,
+		&i.CertExpiresAt,
+		&i.CheckAt,
 	)
 	return i, err
 }
@@ -598,7 +904,7 @@ UPDATE status_monitors SET state = $1, down_state = $2, consecutive_failures = $
     consecutive_successes = $4, last_result_at = $5::timestamptz, last_message = $6,
     due_at = $7, due_extended = $8, incident_id = $9, changed_at = $10, updated_at = $5
 WHERE workspace_id = $11 AND id = $12
-RETURNING id, workspace_id, page_id, component_id, kind, name, token_hash, token_prefix, interval_seconds, grace_seconds, failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, down_state, consecutive_failures, consecutive_successes, last_result_at, last_message, due_at, due_extended, incident_id, changed_at, created_at, updated_at
+RETURNING id, workspace_id, page_id, component_id, kind, name, token_hash, token_prefix, interval_seconds, grace_seconds, failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, down_state, consecutive_failures, consecutive_successes, last_result_at, last_message, due_at, due_extended, incident_id, changed_at, created_at, updated_at, target, timeout_seconds, http_method, http_header_names, http_headers, http_body, status_min, status_max, keyword, follow_redirects, cert_warn_days, cert_expires_at, check_at
 `
 
 type SetStatusMonitorResultParams struct {
@@ -660,6 +966,19 @@ func (q *Queries) SetStatusMonitorResult(ctx context.Context, arg SetStatusMonit
 		&i.ChangedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Target,
+		&i.TimeoutSeconds,
+		&i.HttpMethod,
+		&i.HttpHeaderNames,
+		&i.HttpHeaders,
+		&i.HttpBody,
+		&i.StatusMin,
+		&i.StatusMax,
+		&i.Keyword,
+		&i.FollowRedirects,
+		&i.CertWarnDays,
+		&i.CertExpiresAt,
+		&i.CheckAt,
 	)
 	return i, err
 }
@@ -667,7 +986,7 @@ func (q *Queries) SetStatusMonitorResult(ctx context.Context, arg SetStatusMonit
 const setStatusMonitorToken = `-- name: SetStatusMonitorToken :one
 UPDATE status_monitors SET token_hash = $1, token_prefix = $2, updated_at = $3
 WHERE workspace_id = $4 AND id = $5
-RETURNING id, workspace_id, page_id, component_id, kind, name, token_hash, token_prefix, interval_seconds, grace_seconds, failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, down_state, consecutive_failures, consecutive_successes, last_result_at, last_message, due_at, due_extended, incident_id, changed_at, created_at, updated_at
+RETURNING id, workspace_id, page_id, component_id, kind, name, token_hash, token_prefix, interval_seconds, grace_seconds, failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, down_state, consecutive_failures, consecutive_successes, last_result_at, last_message, due_at, due_extended, incident_id, changed_at, created_at, updated_at, target, timeout_seconds, http_method, http_header_names, http_headers, http_body, status_min, status_max, keyword, follow_redirects, cert_warn_days, cert_expires_at, check_at
 `
 
 type SetStatusMonitorTokenParams struct {
@@ -715,6 +1034,118 @@ func (q *Queries) SetStatusMonitorToken(ctx context.Context, arg SetStatusMonito
 		&i.ChangedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Target,
+		&i.TimeoutSeconds,
+		&i.HttpMethod,
+		&i.HttpHeaderNames,
+		&i.HttpHeaders,
+		&i.HttpBody,
+		&i.StatusMin,
+		&i.StatusMax,
+		&i.Keyword,
+		&i.FollowRedirects,
+		&i.CertWarnDays,
+		&i.CertExpiresAt,
+		&i.CheckAt,
+	)
+	return i, err
+}
+
+const statusCheckBuckets = `-- name: StatusCheckBuckets :many
+SELECT to_timestamp(floor(date_part('epoch', at) / $1::int) * $1::int)::timestamptz AS start,
+    count(*)::int AS checks, count(*) FILTER (WHERE NOT ok)::int AS failures,
+    coalesce((percentile_cont(0.5) WITHIN GROUP (ORDER BY duration_ms) FILTER (WHERE ok AND duration_ms IS NOT NULL))::int, -1)::int AS p50,
+    coalesce((percentile_cont(0.95) WITHIN GROUP (ORDER BY duration_ms) FILTER (WHERE ok AND duration_ms IS NOT NULL))::int, -1)::int AS p95
+FROM status_checks
+WHERE workspace_id = $2 AND monitor_id = $3 AND NOT pending AND at >= $4::timestamptz AND at < $5::timestamptz
+GROUP BY 1
+ORDER BY 1
+`
+
+type StatusCheckBucketsParams struct {
+	BucketSeconds int32
+	WorkspaceID   uuid.UUID
+	MonitorID     uuid.UUID
+	Since         time.Time
+	Until         time.Time
+}
+
+type StatusCheckBucketsRow struct {
+	Start    time.Time
+	Checks   int32
+	Failures int32
+	P50      int32
+	P95      int32
+}
+
+// A bucket starts at a multiple of bucket_seconds since the epoch; p50 and p95 are -1 without a measured success.
+func (q *Queries) StatusCheckBuckets(ctx context.Context, arg StatusCheckBucketsParams) ([]StatusCheckBucketsRow, error) {
+	rows, err := q.db.Query(ctx, statusCheckBuckets,
+		arg.BucketSeconds,
+		arg.WorkspaceID,
+		arg.MonitorID,
+		arg.Since,
+		arg.Until,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []StatusCheckBucketsRow
+	for rows.Next() {
+		var i StatusCheckBucketsRow
+		if err := rows.Scan(
+			&i.Start,
+			&i.Checks,
+			&i.Failures,
+			&i.P50,
+			&i.P95,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const statusCheckTotals = `-- name: StatusCheckTotals :one
+SELECT count(*)::int AS checks, count(*) FILTER (WHERE NOT ok)::int AS failures,
+    coalesce((percentile_cont(0.5) WITHIN GROUP (ORDER BY duration_ms) FILTER (WHERE ok AND duration_ms IS NOT NULL))::int, -1)::int AS p50,
+    coalesce((percentile_cont(0.95) WITHIN GROUP (ORDER BY duration_ms) FILTER (WHERE ok AND duration_ms IS NOT NULL))::int, -1)::int AS p95
+FROM status_checks
+WHERE workspace_id = $1 AND monitor_id = $2 AND NOT pending AND at >= $3::timestamptz AND at < $4::timestamptz
+`
+
+type StatusCheckTotalsParams struct {
+	WorkspaceID uuid.UUID
+	MonitorID   uuid.UUID
+	Since       time.Time
+	Until       time.Time
+}
+
+type StatusCheckTotalsRow struct {
+	Checks   int32
+	Failures int32
+	P50      int32
+	P95      int32
+}
+
+func (q *Queries) StatusCheckTotals(ctx context.Context, arg StatusCheckTotalsParams) (StatusCheckTotalsRow, error) {
+	row := q.db.QueryRow(ctx, statusCheckTotals,
+		arg.WorkspaceID,
+		arg.MonitorID,
+		arg.Since,
+		arg.Until,
+	)
+	var i StatusCheckTotalsRow
+	err := row.Scan(
+		&i.Checks,
+		&i.Failures,
+		&i.P50,
+		&i.P95,
 	)
 	return i, err
 }
@@ -722,9 +1153,13 @@ func (q *Queries) SetStatusMonitorToken(ctx context.Context, arg SetStatusMonito
 const updateStatusMonitorSettings = `-- name: UpdateStatusMonitorSettings :one
 UPDATE status_monitors SET name = $1, component_id = $2, failure_state = $3, failure_threshold = $4,
     recovery_threshold = $5, on_failure = $6, interval_seconds = $7,
-    grace_seconds = $8, due_at = $9, due_extended = $10, updated_at = $11
-WHERE workspace_id = $12 AND id = $13
-RETURNING id, workspace_id, page_id, component_id, kind, name, token_hash, token_prefix, interval_seconds, grace_seconds, failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, down_state, consecutive_failures, consecutive_successes, last_result_at, last_message, due_at, due_extended, incident_id, changed_at, created_at, updated_at
+    grace_seconds = $8, due_at = $9, due_extended = $10, target = $11,
+    timeout_seconds = $12, http_method = $13, http_header_names = $14::text[],
+    http_headers = $15, http_body = $16, status_min = $17, status_max = $18,
+    keyword = $19, follow_redirects = $20, cert_warn_days = $21,
+    cert_expires_at = $22, check_at = $23, updated_at = $24
+WHERE workspace_id = $25 AND id = $26
+RETURNING id, workspace_id, page_id, component_id, kind, name, token_hash, token_prefix, interval_seconds, grace_seconds, failure_state, failure_threshold, recovery_threshold, on_failure, paused, state, down_state, consecutive_failures, consecutive_successes, last_result_at, last_message, due_at, due_extended, incident_id, changed_at, created_at, updated_at, target, timeout_seconds, http_method, http_header_names, http_headers, http_body, status_min, status_max, keyword, follow_redirects, cert_warn_days, cert_expires_at, check_at
 `
 
 type UpdateStatusMonitorSettingsParams struct {
@@ -738,6 +1173,19 @@ type UpdateStatusMonitorSettingsParams struct {
 	GraceSeconds      *int32
 	DueAt             *time.Time
 	DueExtended       bool
+	Target            *string
+	TimeoutSeconds    *int32
+	HttpMethod        *string
+	HttpHeaderNames   []string
+	HttpHeaders       []byte
+	HttpBody          *string
+	StatusMin         *int32
+	StatusMax         *int32
+	Keyword           *string
+	FollowRedirects   bool
+	CertWarnDays      *int32
+	CertExpiresAt     *time.Time
+	CheckAt           *time.Time
 	Now               time.Time
 	WorkspaceID       uuid.UUID
 	ID                uuid.UUID
@@ -755,6 +1203,19 @@ func (q *Queries) UpdateStatusMonitorSettings(ctx context.Context, arg UpdateSta
 		arg.GraceSeconds,
 		arg.DueAt,
 		arg.DueExtended,
+		arg.Target,
+		arg.TimeoutSeconds,
+		arg.HttpMethod,
+		arg.HttpHeaderNames,
+		arg.HttpHeaders,
+		arg.HttpBody,
+		arg.StatusMin,
+		arg.StatusMax,
+		arg.Keyword,
+		arg.FollowRedirects,
+		arg.CertWarnDays,
+		arg.CertExpiresAt,
+		arg.CheckAt,
 		arg.Now,
 		arg.WorkspaceID,
 		arg.ID,
@@ -788,6 +1249,19 @@ func (q *Queries) UpdateStatusMonitorSettings(ctx context.Context, arg UpdateSta
 		&i.ChangedAt,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Target,
+		&i.TimeoutSeconds,
+		&i.HttpMethod,
+		&i.HttpHeaderNames,
+		&i.HttpHeaders,
+		&i.HttpBody,
+		&i.StatusMin,
+		&i.StatusMax,
+		&i.Keyword,
+		&i.FollowRedirects,
+		&i.CertWarnDays,
+		&i.CertExpiresAt,
+		&i.CheckAt,
 	)
 	return i, err
 }

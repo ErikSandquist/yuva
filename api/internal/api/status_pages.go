@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"crypto/x509"
 	"net/http"
 	"net/url"
 	"regexp"
@@ -56,6 +57,15 @@ type StatusSettings struct {
 	NoticesOff     bool
 	NoticesDaily   int64
 	MaxSubscribers int
+	// MinInterval is the shortest interval of http and tcp monitors in seconds, at least 60.
+	MinInterval int
+	// CanaryURLs are checked every round; nil checks the built-in two.
+	CanaryURLs []string
+	// AllowPrivate lets http and tcp monitors reach private and loopback addresses (a self-hosted
+	// server with YUVA_WEBHOOK_ALLOW_PRIVATE); link-local and metadata addresses stay refused.
+	AllowPrivate bool
+	// RootCAs replaces the system roots for https checks; nil uses the system's.
+	RootCAs *x509.CertPool
 }
 
 func (s *Server) statusBase() string {
