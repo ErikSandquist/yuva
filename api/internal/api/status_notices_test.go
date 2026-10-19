@@ -291,3 +291,79 @@ func TestStatusNoticeRateAndFeedback(t *testing.T) {
 	}
 	t.Fatal("the eleventh notice in an hour went out")
 }
+
+func noticeMail(t *testing.T, bs *broadcastSender, addr string, i int) *email.Message {
+	t.Helper()
+	env, err := email.Parse(rawOf(t, bs, addr, i))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return env
+}
+
+func TestStatusNoticeResolutionShowsCurrentComponents(t *testing.T) {
+	h, bs := newBroadcastHarness(t, nil)
+	nt := newNoticeTeam(t, h, bs)
+	nt.subscriber(t, "ada@example.org")
+	inc := nt.incident(t, map[string]any{"title": "API down", "message": "Requests fail.", "publish": true,
+		"components": []map[string]any{{"component_id": nt.api, "state": "degraded"}}})
+	h.clock.Advance(61 * time.Second)
+	nt.runNotices(t)
+	nt.update(t, inc, map[string]any{"body": "Hidden remark.", "notify": false})
+	nt.update(t, inc, map[string]any{"body": "Fixed.", "state": "resolved"})
+	h.clock.Advance(61 * time.Second)
+	nt.runNotices(t)
+
+	opening := noticeMail(t, bs, "ada@example.org", 0)
+	if !strings.Contains(opening.Text, "API: Degraded performance") || !strings.Contains(opening.HTML, "Degraded performance") {
+		t.Fatalf("opening notice: %s", opening.Text)
+	}
+	final := noticeMail(t, bs, "ada@example.org", 1)
+	for name, body := range map[string]string{"text": final.Text, "html": final.HTML} {
+		if !strings.Contains(body, "Fixed.") || !strings.Contains(body, "Operational") || strings.Contains(body, "Degraded") || strings.Contains(body, "Hidden remark.") {
+			t.Fatalf("resolution %s part: %s", name, body)
+		}
+	}
+}
+
+func TestStatusNoticeCoversOnlyNotifiedUpdates(t *testing.T) {
+	h, bs := newBroadcastHarness(t, nil)
+	nt := newNoticeTeam(t, h, bs)
+	nt.subscriber(t, "ada@example.org")
+
+	draft := nt.incident(t, map[string]any{"title": "Draft", "message": "Public text."})
+	nt.update(t, draft, map[string]any{"body": "Draft remark.", "notify": false})
+	nt.owner.expect(http.StatusOK, "POST", nt.path("/incidents/"+draft+"/publish"), nil)
+	ns := nt.notices(t, draft)
+	if len(ns) != 1 || len(ns[0]["update_ids"].([]any)) != 1 {
+		t.Fatalf("publish notice: %v", ns)
+	}
+	h.clock.Advance(61 * time.Second)
+	nt.runNotices(t)
+	env := noticeMail(t, bs, "ada@example.org", 0)
+	for name, body := range map[string]string{"text": env.Text, "html": env.HTML} {
+		if !strings.Contains(body, "Public text.") || strings.Contains(body, "Draft remark.") {
+			t.Fatalf("publish %s part: %s", name, body)
+		}
+	}
+
+	start := h.clock.Now().Add(48 * time.Hour)
+	window := func(shift time.Duration) map[string]any {
+		return map[string]any{"scheduled_start": start.Add(shift).Format(time.RFC3339), "scheduled_end": start.Add(shift + time.Hour).Format(time.RFC3339)}
+	}
+	body := window(0)
+	body["kind"], body["title"], body["message"], body["publish"] = "maintenance", "Upgrade", "Planned.", true
+	maint := nt.incident(t, body)
+	h.clock.Advance(61 * time.Second)
+	nt.runNotices(t)
+	nt.update(t, maint, map[string]any{"body": "Maintenance remark.", "notify": false})
+	nt.owner.expect(http.StatusOK, "PATCH", nt.path("/incidents/"+maint), window(time.Hour))
+	h.clock.Advance(16 * time.Minute)
+	nt.runNotices(t)
+	moved := noticeMail(t, bs, "ada@example.org", 2)
+	for name, body := range map[string]string{"text": moved.Text, "html": moved.HTML} {
+		if !strings.Contains(body, "Planned.") || strings.Contains(body, "Maintenance remark.") {
+			t.Fatalf("window change %s part: %s", name, body)
+		}
+	}
+}

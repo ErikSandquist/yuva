@@ -1683,6 +1683,7 @@ type StatusIncidentUpdate struct {
 	CreatedAt      time.Time
 	EditedAt       *time.Time
 	NoticeID       *uuid.UUID
+	Notify         bool
 }
 
 type StatusMonitor struct {

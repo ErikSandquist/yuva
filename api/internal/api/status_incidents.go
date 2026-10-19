@@ -459,7 +459,7 @@ func (s *Server) CreateStatusIncident(ctx context.Context, req oas.CreateStatusI
 		}
 		member, key := statusAuthor(p)
 		up, err := q.CreateStatusIncidentUpdate(ctx, store.CreateStatusIncidentUpdateParams{
-			ID: newID(), WorkspaceID: p.workspaceID, IncidentID: inc.ID, State: state, Body: message, AuthorMemberID: member, AuthorKeyID: key, Now: now,
+			ID: newID(), WorkspaceID: p.workspaceID, IncidentID: inc.ID, State: state, Body: message, AuthorMemberID: member, AuthorKeyID: key, Notify: true, Now: now,
 		})
 		if err != nil {
 			return err
@@ -674,8 +674,8 @@ func (s *Server) PublishStatusIncident(ctx context.Context, req oas.PublishStatu
 				return err
 			}
 			var latest *uuid.UUID
-			if len(ups) > 0 {
-				latest = &ups[0].ID
+			if i := slices.IndexFunc(ups, func(u store.StatusIncidentUpdate) bool { return u.Notify }); i >= 0 {
+				latest = &ups[i].ID
 			}
 			if err := s.queueNotice(ctx, q, ev, pg, inc, latest); err != nil {
 				return err
@@ -713,7 +713,7 @@ func (s *Server) moveIncidentWith(ctx context.Context, q *store.Queries, ev *eve
 		return oas.StatusIncident{}, err
 	}
 	up, err := q.CreateStatusIncidentUpdate(ctx, store.CreateStatusIncidentUpdateParams{
-		ID: newID(), WorkspaceID: inc.WorkspaceID, IncidentID: inc.ID, State: state, Body: body, AuthorMemberID: member, AuthorKeyID: key, Now: now,
+		ID: newID(), WorkspaceID: inc.WorkspaceID, IncidentID: inc.ID, State: state, Body: body, AuthorMemberID: member, AuthorKeyID: key, Notify: notify, Now: now,
 	})
 	if err != nil {
 		return oas.StatusIncident{}, err

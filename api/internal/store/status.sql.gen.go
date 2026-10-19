@@ -493,9 +493,9 @@ func (q *Queries) CreateStatusIncidentReply(ctx context.Context, arg CreateStatu
 }
 
 const createStatusIncidentUpdate = `-- name: CreateStatusIncidentUpdate :one
-INSERT INTO status_incident_updates (id, workspace_id, incident_id, state, body, author_member_id, author_key_id, created_at)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-RETURNING id, workspace_id, incident_id, state, body, author_member_id, author_key_id, created_at, edited_at, notice_id
+INSERT INTO status_incident_updates (id, workspace_id, incident_id, state, body, author_member_id, author_key_id, notify, created_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+RETURNING id, workspace_id, incident_id, state, body, author_member_id, author_key_id, created_at, edited_at, notice_id, notify
 `
 
 type CreateStatusIncidentUpdateParams struct {
@@ -506,6 +506,7 @@ type CreateStatusIncidentUpdateParams struct {
 	Body           string
 	AuthorMemberID *uuid.UUID
 	AuthorKeyID    *uuid.UUID
+	Notify         bool
 	Now            time.Time
 }
 
@@ -518,6 +519,7 @@ func (q *Queries) CreateStatusIncidentUpdate(ctx context.Context, arg CreateStat
 		arg.Body,
 		arg.AuthorMemberID,
 		arg.AuthorKeyID,
+		arg.Notify,
 		arg.Now,
 	)
 	var i StatusIncidentUpdate
@@ -532,6 +534,7 @@ func (q *Queries) CreateStatusIncidentUpdate(ctx context.Context, arg CreateStat
 		&i.CreatedAt,
 		&i.EditedAt,
 		&i.NoticeID,
+		&i.Notify,
 	)
 	return i, err
 }
@@ -722,7 +725,7 @@ func (q *Queries) DeleteUnconfirmedContacts(ctx context.Context, arg DeleteUncon
 const editStatusIncidentUpdate = `-- name: EditStatusIncidentUpdate :one
 UPDATE status_incident_updates SET body = $1, edited_at = $2
 WHERE workspace_id = $3 AND incident_id = $4 AND id = $5
-RETURNING id, workspace_id, incident_id, state, body, author_member_id, author_key_id, created_at, edited_at, notice_id
+RETURNING id, workspace_id, incident_id, state, body, author_member_id, author_key_id, created_at, edited_at, notice_id, notify
 `
 
 type EditStatusIncidentUpdateParams struct {
@@ -753,6 +756,7 @@ func (q *Queries) EditStatusIncidentUpdate(ctx context.Context, arg EditStatusIn
 		&i.CreatedAt,
 		&i.EditedAt,
 		&i.NoticeID,
+		&i.Notify,
 	)
 	return i, err
 }
@@ -1632,7 +1636,7 @@ func (q *Queries) ListStatusIncidentConversations(ctx context.Context, arg ListS
 }
 
 const listStatusIncidentUpdates = `-- name: ListStatusIncidentUpdates :many
-SELECT id, workspace_id, incident_id, state, body, author_member_id, author_key_id, created_at, edited_at, notice_id FROM status_incident_updates WHERE workspace_id = $1 AND incident_id = ANY($2::uuid[])
+SELECT id, workspace_id, incident_id, state, body, author_member_id, author_key_id, created_at, edited_at, notice_id, notify FROM status_incident_updates WHERE workspace_id = $1 AND incident_id = ANY($2::uuid[])
 ORDER BY created_at DESC, id DESC
 `
 
@@ -1661,6 +1665,7 @@ func (q *Queries) ListStatusIncidentUpdates(ctx context.Context, arg ListStatusI
 			&i.CreatedAt,
 			&i.EditedAt,
 			&i.NoticeID,
+			&i.Notify,
 		); err != nil {
 			return nil, err
 		}

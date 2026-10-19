@@ -341,6 +341,7 @@ type noticeSend struct {
 	loc     *time.Location
 	comps   []store.StatusIncidentComponent
 	names   map[uuid.UUID]string
+	current map[uuid.UUID]string
 	updates []store.StatusIncidentUpdate
 
 	cfg                             email.SMTPConfig
@@ -520,7 +521,7 @@ func (s *Server) finishNotice(ctx context.Context, n store.StatusNotice, state, 
 func (s *Server) loadNoticeSend(ctx context.Context, n store.StatusNotice) (*noticeSend, error) {
 	q := s.st.Queries
 	ws := n.WorkspaceID
-	ns := &noticeSend{n: n, names: map[uuid.UUID]string{}, data: map[string]map[string]any{}}
+	ns := &noticeSend{n: n, names: map[uuid.UUID]string{}, current: map[uuid.UUID]string{}, data: map[string]map[string]any{}}
 	var err error
 	if ns.pg, err = q.GetStatusPage(ctx, store.GetStatusPageParams{WorkspaceID: ws, ID: n.PageID}); err != nil {
 		return nil, err
@@ -550,6 +551,7 @@ func (s *Server) loadNoticeSend(ctx context.Context, n store.StatusNotice) (*not
 	for _, c := range all {
 		if !c.Hidden {
 			ns.names[c.ID] = c.Name
+			ns.current[c.ID] = c.State
 		}
 	}
 	if ns.updates, err = q.ListStatusNoticeUpdates(ctx, store.ListStatusNoticeUpdatesParams{WorkspaceID: ws, NoticeID: &n.ID}); err != nil {
@@ -560,8 +562,8 @@ func (s *Server) loadNoticeSend(ctx context.Context, n store.StatusNotice) (*not
 		if err != nil {
 			return nil, err
 		}
-		if len(all) > 0 {
-			ns.updates = all[:1]
+		if i := slices.IndexFunc(all, func(u store.StatusIncidentUpdate) bool { return u.Notify }); i >= 0 {
+			ns.updates = all[i : i+1]
 		}
 	}
 	cfg, from, ok, err := s.broadcastAccount(ns.ch)
@@ -880,7 +882,11 @@ func (s *Server) noticeData(ns *noticeSend, locale string) map[string]any {
 	var comps []map[string]string
 	for _, c := range ns.comps {
 		if name, ok := ns.names[c.ComponentID]; ok {
-			comps = append(comps, map[string]string{"Name": name, "State": w.States[c.State]})
+			state := c.State
+			if incidentClosed(inc.State) {
+				state = ns.current[c.ComponentID]
+			}
+			comps = append(comps, map[string]string{"Name": name, "State": w.States[state]})
 		}
 	}
 	d["Components"] = comps

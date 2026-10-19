@@ -607,7 +607,7 @@ func (q *Queries) ListStatusNoticeUpdateIDs(ctx context.Context, arg ListStatusN
 }
 
 const listStatusNoticeUpdates = `-- name: ListStatusNoticeUpdates :many
-SELECT id, workspace_id, incident_id, state, body, author_member_id, author_key_id, created_at, edited_at, notice_id FROM status_incident_updates
+SELECT id, workspace_id, incident_id, state, body, author_member_id, author_key_id, created_at, edited_at, notice_id, notify FROM status_incident_updates
 WHERE workspace_id = $1 AND notice_id = $2
 ORDER BY created_at DESC, id DESC
 `
@@ -637,6 +637,7 @@ func (q *Queries) ListStatusNoticeUpdates(ctx context.Context, arg ListStatusNot
 			&i.CreatedAt,
 			&i.EditedAt,
 			&i.NoticeID,
+			&i.Notify,
 		); err != nil {
 			return nil, err
 		}

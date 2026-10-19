@@ -754,7 +754,7 @@ func (s *Server) monitorIncident(ctx context.Context, q *store.Queries, ev *even
 		return nil, err
 	}
 	up, err := q.CreateStatusIncidentUpdate(ctx, store.CreateStatusIncidentUpdateParams{
-		ID: newID(), WorkspaceID: pg.WorkspaceID, IncidentID: inc.ID, State: incInvestigating, Body: fmt.Sprintf(words.MonitorBody, c.Name), Now: now,
+		ID: newID(), WorkspaceID: pg.WorkspaceID, IncidentID: inc.ID, State: incInvestigating, Body: fmt.Sprintf(words.MonitorBody, c.Name), Notify: true, Now: now,
 	})
 	if err != nil {
 		return nil, err

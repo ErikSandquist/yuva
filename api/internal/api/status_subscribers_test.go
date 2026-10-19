@@ -220,7 +220,7 @@ func TestStatusSubscribePage(t *testing.T) {
 		t.Fatalf("requested event %v", requested)
 	}
 	mails := h.runListMail(st.ws)
-	if len(mails) != 1 || !strings.Contains(mails[0].Text, "Only about: API") {
+	if len(mails) != 1 || !strings.Contains(mails[0].Text, "Only about: API.") || !strings.Contains(mails[0].HTML, "Only about: API.") {
 		t.Fatalf("confirmation: %d", len(mails))
 	}
 	confirm := linkIn(t, mails[0], "s")

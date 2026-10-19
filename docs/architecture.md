@@ -2084,7 +2084,8 @@ incident before a customer writes, and the conversations an outage brings are an
     one per stored update. Monitor-opened published incidents notify like a member's; the budget below
     keeps a flapping monitor from mailing people. A notice is a `status_notices` row (page, incident,
     `due_at`, `state` `pending|sending|sent|skipped|cancelled`, `final`, `skip_reason`, counts) covering
-    the updates whose `status_incident_updates.notice_id` points at it, and one `status_notice_deliveries`
+    the updates whose `status_incident_updates.notice_id` points at it (only updates with `notify` true are
+    attached; publishing a draft attaches the latest of them, and a notice with none shows the latest one), and one `status_notice_deliveries`
     row per recipient (notice, subscription, address, `email_token` and unique `header_message_id` like
     broadcast deliveries, `previous_message_id`, `state` `queued|sent|failed|bounced|complained|skipped`,
     skip reason, attempts, next attempt, times, error). Deliveries and addresses go after 90 days; the
@@ -2098,7 +2099,7 @@ incident before a customer writes, and the conversations an outage brings are an
     and each notice also sets `In-Reply-To` to the recipient's previous notice of the incident and
     `References` to the chain. Body, first line: the state in words (`Investigating`, `Identified`,
     `Monitoring`, `Resolved`, `Scheduled`, `In progress`, `Completed`, never colour alone), then impact,
-    the affected components with their states, the updates since the last notice newest first with
+    the affected components with their states (a final notice shows their states now), the updates since the last notice newest first with
     times in the page's zone and its name, the incident's text (plain text; the HTML part escapes it and
     links only `http` and `https` URLs, marks "edited"), a link to
     `/status/{slug}/incidents/{id}` (on the verified custom domain when there is one), the footer: why

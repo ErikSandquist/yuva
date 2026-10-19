@@ -206,8 +206,8 @@ WHERE ic.workspace_id = @workspace_id AND ic.component_id = ANY(@component_ids::
   AND i.id <> @except_id;
 
 -- name: CreateStatusIncidentUpdate :one
-INSERT INTO status_incident_updates (id, workspace_id, incident_id, state, body, author_member_id, author_key_id, created_at)
-VALUES (@id, @workspace_id, @incident_id, @state, @body, sqlc.narg(author_member_id), sqlc.narg(author_key_id), @now)
+INSERT INTO status_incident_updates (id, workspace_id, incident_id, state, body, author_member_id, author_key_id, notify, created_at)
+VALUES (@id, @workspace_id, @incident_id, @state, @body, sqlc.narg(author_member_id), sqlc.narg(author_key_id), @notify, @now)
 RETURNING *;
 
 -- name: EditStatusIncidentUpdate :one
