@@ -108,6 +108,18 @@ type resolveIncidentIn struct {
 	Body       string    `json:"body" jsonschema:"plain text that customers read"`
 }
 
+type linkConversationIn struct {
+	PageID         uuid.UUID `json:"page_id"`
+	IncidentID     uuid.UUID `json:"incident_id"`
+	ConversationID uuid.UUID `json:"conversation_id" jsonschema:"a conversation from search_conversations or get_conversation"`
+}
+
+type mcpIncidentLink struct {
+	IncidentID     uuid.UUID `json:"incident_id"`
+	ConversationID uuid.UUID `json:"conversation_id"`
+	Linked         bool      `json:"linked"`
+}
+
 type mcpStatusMonitor struct {
 	ID          uuid.UUID  `json:"id"`
 	ComponentID uuid.UUID  `json:"component_id" jsonschema:"the component whose state it sets"`
@@ -231,6 +243,16 @@ var mcpStatusTools = []mcpTool{
 		additive, map[string][]any{"state": incidentStatesEnum}, mcpTool{ops: []string{"CreateStatusIncidentUpdate"}},
 		func(ctx context.Context, c *mcpCall, in incidentUpdateIn) (mcpIncident, error) {
 			return c.statusIncidentUpdate(ctx, in.PageID, in.IncidentID, in.Body, optString[oas.StatusIncidentState](in.State))
+		}),
+	defineTool("link_conversation_to_incident", "Link a conversation to an incident",
+		"Links a conversation to an incident or maintenance of a status page, so the team sees it with the incident and a member's \"Reply to linked\" reaches it. Linking twice changes nothing. Maps to PUT /v1/status-pages/{id}/incidents/{id}/conversations/{id}.",
+		idempotent, nil, mcpTool{ops: []string{"LinkStatusIncidentConversation"}},
+		func(ctx context.Context, c *mcpCall, in linkConversationIn) (mcpIncidentLink, error) {
+			if _, err := c.s.LinkStatusIncidentConversation(ctx, oas.LinkStatusIncidentConversationRequestObject{PageId: in.PageID, IncidentId: in.IncidentID,
+				ConversationId: in.ConversationID}); err != nil {
+				return mcpIncidentLink{}, err
+			}
+			return mcpIncidentLink{IncidentID: in.IncidentID, ConversationID: in.ConversationID, Linked: true}, nil
 		}),
 	defineTool("resolve_incident", "Resolve an incident",
 		"Resolves an incident, or completes maintenance, with a closing update; its components go back to operational unless another open incident holds them. Maps to POST /v1/status-pages/{id}/incidents/{id}/updates.",

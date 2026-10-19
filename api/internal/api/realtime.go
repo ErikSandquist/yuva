@@ -295,7 +295,7 @@ func (f *eventFilter) allows(ctx context.Context, q *store.Queries, e realtime.E
 		return f.p.seesAllInboxes(), nil
 	}
 	switch e.Type {
-	case realtime.PresenceHint, realtime.ChannelUpdated:
+	case realtime.PresenceHint, realtime.ChannelUpdated, realtime.StatusHint:
 		return false, nil
 	case realtime.MemberPresence:
 		return !f.p.isKey(), nil

@@ -291,6 +291,9 @@ func (s *Server) CreateStatusPage(ctx context.Context, req oas.CreateStatusPageR
 	if err != nil {
 		return nil, statusUniqueConflict(err)
 	}
+	if pg.Published {
+		s.statusHint(ctx, p.workspaceID, pg.InboxID)
+	}
 	return oas.CreateStatusPage201JSONResponse(s.statusPageBody(pg, stOperational)), nil
 }
 
@@ -398,6 +401,7 @@ func (s *Server) UpdateStatusPage(ctx context.Context, req oas.UpdateStatusPageR
 	if err != nil {
 		return nil, statusUniqueConflict(err)
 	}
+	s.statusHint(ctx, p.workspaceID, out.InboxId)
 	return oas.UpdateStatusPage200JSONResponse(out), nil
 }
 
@@ -414,6 +418,7 @@ func (s *Server) DeleteStatusPage(ctx context.Context, req oas.DeleteStatusPageR
 		return nil, err
 	}
 	s.statusCache.forget(pg.ID)
+	s.statusHint(ctx, p.workspaceID, pg.InboxID)
 	return oas.DeleteStatusPage204Response{}, nil
 }
 
@@ -796,11 +801,13 @@ func (s *Server) DeleteStatusComponent(ctx context.Context, req oas.DeleteStatus
 	if err := requireManagerOrKey(p); err != nil {
 		return nil, err
 	}
+	var inbox uuid.UUID
 	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, _ *eventBatch) error {
 		pg, err := visibleStatusPage(ctx, q, p, req.PageId, true)
 		if err != nil {
 			return err
 		}
+		inbox = pg.InboxID
 		n, err := q.DeleteStatusComponent(ctx, store.DeleteStatusComponentParams{WorkspaceID: p.workspaceID, PageID: pg.ID, ID: req.ComponentId})
 		if err != nil {
 			return err
@@ -813,6 +820,7 @@ func (s *Server) DeleteStatusComponent(ctx context.Context, req oas.DeleteStatus
 	if err != nil {
 		return nil, err
 	}
+	s.statusHint(ctx, p.workspaceID, inbox)
 	return oas.DeleteStatusComponent204Response{}, nil
 }
 

@@ -520,5 +520,8 @@ func (f *clientFilter) transform(ctx context.Context, e realtime.Event) ([]any, 
 	case realtime.PresenceHint:
 		return f.presenceFrames(ctx)
 	}
+	if clientStatusEvent(e.Type) && e.InboxID != nil && *e.InboxID == f.cp.inboxID {
+		return f.inboxFrames(ctx)
+	}
 	return nil, nil
 }

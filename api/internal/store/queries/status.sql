@@ -218,3 +218,57 @@ RETURNING *;
 -- name: ListStatusIncidentUpdates :many
 SELECT * FROM status_incident_updates WHERE workspace_id = @workspace_id AND incident_id = ANY(@incident_ids::uuid[])
 ORDER BY created_at DESC, id DESC;
+
+-- name: ClientStatusIncidents :many
+SELECT i.id, i.kind, i.title, i.impact, i.state,
+    coalesce((SELECT max(u.created_at) FROM status_incident_updates u
+              WHERE u.workspace_id = i.workspace_id AND u.incident_id = i.id), i.published_at)::timestamptz AS last_update_at
+FROM status_incidents i
+WHERE i.workspace_id = @workspace_id AND i.page_id = @page_id AND i.published_at IS NOT NULL
+  AND i.state IN ('investigating', 'identified', 'monitoring', 'in_progress')
+ORDER BY i.published_at DESC, i.id DESC
+LIMIT 20;
+
+-- name: LinkStatusIncidentConversation :exec
+INSERT INTO status_incident_conversations (workspace_id, incident_id, conversation_id, linked_by_member_id, linked_by_api_key_id, linked_at)
+VALUES (@workspace_id, @incident_id, @conversation_id, sqlc.narg(linked_by_member_id), sqlc.narg(linked_by_api_key_id), @now)
+ON CONFLICT DO NOTHING;
+
+-- name: UnlinkStatusIncidentConversation :exec
+DELETE FROM status_incident_conversations
+WHERE workspace_id = @workspace_id AND incident_id = @incident_id AND conversation_id = @conversation_id;
+
+-- name: ListStatusIncidentConversations :many
+SELECT sqlc.embed(c), l.linked_at FROM status_incident_conversations l
+JOIN conversations c ON c.workspace_id = l.workspace_id AND c.id = l.conversation_id
+WHERE l.workspace_id = @workspace_id AND l.incident_id = @incident_id
+  AND (@all_inboxes::bool OR EXISTS (
+      SELECT 1 FROM inbox_viewers iv
+      WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = @viewer_id))
+  AND (sqlc.narg(cursor_at)::timestamptz IS NULL
+       OR (l.linked_at, l.conversation_id) < (sqlc.narg(cursor_at)::timestamptz, sqlc.narg(cursor_id)::uuid))
+ORDER BY l.linked_at DESC, l.conversation_id DESC
+LIMIT @lim;
+
+-- name: ListStatusReplyTargets :many
+SELECT c.id FROM status_incident_conversations l
+JOIN conversations c ON c.workspace_id = l.workspace_id AND c.id = l.conversation_id
+WHERE l.workspace_id = @workspace_id AND l.incident_id = @incident_id AND c.status <> 'closed' AND NOT c.spam
+  AND (@all_inboxes::bool OR EXISTS (
+      SELECT 1 FROM inbox_viewers iv
+      WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = @viewer_id))
+ORDER BY l.linked_at, c.id;
+
+-- name: ListConversationIncidents :many
+SELECT sqlc.embed(i), p.name AS page_name, p.slug AS page_slug, l.linked_at FROM status_incident_conversations l
+JOIN status_incidents i ON i.workspace_id = l.workspace_id AND i.id = l.incident_id
+JOIN status_pages p ON p.workspace_id = i.workspace_id AND p.id = i.page_id
+WHERE l.workspace_id = @workspace_id AND l.conversation_id = @conversation_id
+  AND (@all_inboxes::bool OR EXISTS (
+      SELECT 1 FROM inbox_viewers iv
+      WHERE iv.workspace_id = p.workspace_id AND iv.inbox_id = p.inbox_id AND iv.viewer_id = @viewer_id))
+ORDER BY l.linked_at DESC, i.id DESC;
+
+-- name: StatusIncidentConversationLinked :one
+SELECT EXISTS (SELECT 1 FROM status_incident_conversations
+    WHERE workspace_id = @workspace_id AND incident_id = @incident_id AND conversation_id = @conversation_id)::bool;

@@ -449,7 +449,10 @@ func (s *Server) clientInbox(ctx context.Context, q *store.Queries, in store.Inb
 		out.ExpectedReplyMinutes = in.ExpectedReplyMinutes
 	}
 	var err error
-	out.Presence, err = s.presence(ctx, q, in)
+	if out.Presence, err = s.presence(ctx, q, in); err != nil {
+		return out, err
+	}
+	out.Status, err = s.clientStatus(ctx, q, in.ID, in.WorkspaceID)
 	return out, err
 }
 

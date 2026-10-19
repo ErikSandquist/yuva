@@ -31,7 +31,7 @@ Moving a mailbox into Yuva: detect_mail_source, create_migration, scan_migration
 
 Analytics: list_properties, analytics_overview, analytics_query, analytics_realtime and analytics_support_report read the workspace's cookieless web and app analytics; analytics_support_report ranks pages by the conversations, feedback and ratings they lead to. Page paths, referrers, campaigns, event names and prop values are sent by visitors' browsers and are customer_content too. They need the scope analytics:read; create_property and create_goal need analytics:manage.
 
-Status pages: list_status_pages and get_status_page read the public status pages and their components and incidents, list_monitors their heartbeat and push monitors; set_component_state, create_incident, post_incident_update and resolve_incident keep them current. create_incident makes a draft that a member publishes in Yuva; updates to a published incident are public at once. They need the scope status:read or status:manage.
+Status pages: list_status_pages and get_status_page read the public status pages and their components and incidents, list_monitors their heartbeat and push monitors; set_component_state, create_incident, post_incident_update and resolve_incident keep them current; link_conversation_to_incident links a conversation to an incident. create_incident makes a draft that a member publishes in Yuva; updates to a published incident are public at once. They need the scope status:read or status:manage.
 
 You see only the inboxes, conversations and contacts your token or API key may see, and only the tools its scopes allow.`
 

@@ -3359,6 +3359,32 @@ paths:
           $ref: "#/components/responses/Problem"
         "404":
           $ref: "#/components/responses/Problem"
+  /v1/conversations/{conversationId}/incidents:
+    get:
+      operationId: listConversationIncidents
+      summary: List the incidents a conversation is linked to
+      description: |
+        The status incidents and maintenance the conversation is linked to, the most recently
+        linked first. Incidents of pages whose inbox the caller cannot see are left out.
+
+        Scopes: `conversations:read` and `status:read`.
+      tags: [conversations]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ConversationId"
+      responses:
+        "200":
+          description: The linked incidents.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConversationIncidentList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
   /v1/conversations/{conversationId}/typing:
     post:
       operationId: setMemberTyping
@@ -10059,6 +10085,132 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/StatusIncident"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/incidents/{incidentId}/conversations:
+    get:
+      operationId: listStatusIncidentConversations
+      summary: List an incident's conversations
+      description: |
+        The conversations linked to the incident, the most recently linked first, each with its
+        state. Only conversations in inboxes the caller can see are listed.
+
+        Agents with access to the page's inbox, owners, admins and API keys. Scopes: `status:read`
+        and `conversations:read`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusIncidentId"
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: The linked conversations.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusIncidentConversationPage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/incidents/{incidentId}/conversations/{conversationId}:
+    put:
+      operationId: linkStatusIncidentConversation
+      summary: Link a conversation to an incident
+      description: |
+        Links a conversation to the incident, so it is listed with it and reached by "Reply to
+        linked". A conversation may be linked to several incidents, also of other pages; linking it
+        twice is a no-op. The caller must see both the page's inbox and the conversation's inbox
+        (`404` otherwise).
+
+        Agents with access to both inboxes, owners, admins and API keys. Scopes: `status:manage`
+        and `conversations:read`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusIncidentId"
+        - $ref: "#/components/parameters/ConversationId"
+      responses:
+        "204":
+          description: The conversation is linked.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: unlinkStatusIncidentConversation
+      summary: Unlink a conversation from an incident
+      description: |
+        Unlinking a conversation that is not linked changes nothing. The caller must see both the
+        page's inbox and the conversation's inbox.
+
+        Agents with access to both inboxes, owners, admins and API keys. Scopes: `status:manage`
+        and `conversations:read`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusIncidentId"
+        - $ref: "#/components/parameters/ConversationId"
+      responses:
+        "204":
+          description: The conversation is not linked.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/status-pages/{pageId}/incidents/{incidentId}/reply:
+    post:
+      operationId: replyToStatusIncidentConversations
+      summary: Reply to linked conversations
+      description: |
+        Sends one reply, written once, to every linked conversation that is not closed and that the
+        caller can see, and with `close` closes each afterwards. Each conversation gets its own job,
+        which posts the reply through the normal reply path as the caller (a member, or an API key's
+        bot), so it reaches the contact on the conversation's own channel (e-mail, chat or app) and
+        fires the usual `message.created` and `conversation.updated` events and webhooks. A retried
+        job never sends a conversation the reply twice; send `Idempotency-Key` to make a retried
+        request safe as well.
+
+        API keys and MCP clients need the workspace to let them deliver messages
+        (`403 bot_sending_disabled`). Agents with access to the page's inbox, owners, admins and API
+        keys. Scopes: `status:manage` and `messages:write`, and `conversations:write` with `close`.
+      tags: [status]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/StatusPageId"
+        - $ref: "#/components/parameters/StatusIncidentId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatusIncidentReply"
+      responses:
+        "202":
+          description: How many replies were queued.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusIncidentReplyResult"
         "400":
           $ref: "#/components/responses/Problem"
         "401":
@@ -21809,6 +21961,11 @@ components:
           description: |
             The inbox asks contacts to rate closed conversations; offer it where `can_rate` is true
             on a conversation.
+        status:
+          $ref: "#/components/schemas/ClientInboxStatus"
+          description: |
+            Absent unless the inbox has a published status page. Show a line while `open` is not
+            empty; an `inbox.updated` frame brings every change.
     ClientContact:
       type: object
       required: [id, name, identified]
@@ -22270,7 +22427,8 @@ components:
     ClientInboxUpdatedEvent:
       type: object
       description: |
-        The inbox's or the session channel's public settings changed. No `id`; not replayed.
+        The inbox's or the session channel's public settings, or its status page's `status`, changed.
+        No `id`; not replayed.
       required: [type, created_at, data]
       properties:
         type:
@@ -24179,6 +24337,127 @@ components:
           type: string
         slug:
           type: string
+    ClientInboxStatus:
+      type: object
+      description: |
+        The inbox's published status page: its overall state and what is open on it. Drafts,
+        scheduled maintenance that has not started and hidden components are left out.
+      required: [url, state, open]
+      properties:
+        url:
+          type: string
+          format: uri
+          description: The public page.
+        state:
+          $ref: "#/components/schemas/StatusComponentStateValue"
+        open:
+          type: array
+          description: Open published incidents and running maintenance, newest first.
+          items:
+            $ref: "#/components/schemas/ClientStatusIncident"
+    ClientStatusIncident:
+      type: object
+      required: [id, kind, title, impact, state, updated_at, url]
+      properties:
+        id:
+          type: string
+          format: uuid
+        kind:
+          $ref: "#/components/schemas/StatusIncidentKind"
+        title:
+          type: string
+        impact:
+          $ref: "#/components/schemas/StatusIncidentImpact"
+        state:
+          $ref: "#/components/schemas/StatusIncidentState"
+        updated_at:
+          type: string
+          format: date-time
+          description: When its latest update was posted.
+        url:
+          type: string
+          format: uri
+          description: The incident's public page.
+    StatusIncidentConversation:
+      description: A linked conversation with what a list row shows and when it was linked.
+      allOf:
+        - $ref: "#/components/schemas/ConversationListItem"
+        - type: object
+          required: [linked_at]
+          properties:
+            linked_at:
+              type: string
+              format: date-time
+    StatusIncidentConversationPage:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/StatusIncidentConversation"
+        next_cursor:
+          type: string
+          description: Absent on the last page.
+    ConversationIncident:
+      type: object
+      required: [id, page, kind, title, impact, state, url, linked_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        page:
+          $ref: "#/components/schemas/StatusPageRef"
+        kind:
+          $ref: "#/components/schemas/StatusIncidentKind"
+        title:
+          type: string
+        impact:
+          $ref: "#/components/schemas/StatusIncidentImpact"
+        state:
+          $ref: "#/components/schemas/StatusIncidentState"
+        url:
+          type: string
+          format: uri
+        published_at:
+          type: string
+          format: date-time
+          description: Absent while it is a draft.
+        resolved_at:
+          type: string
+          format: date-time
+        linked_at:
+          type: string
+          format: date-time
+    ConversationIncidentList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConversationIncident"
+    StatusIncidentReply:
+      type: object
+      required: [body]
+      properties:
+        body:
+          type: string
+          minLength: 1
+          maxLength: 65536
+          description: The reply's text, as for any message.
+        close:
+          type: boolean
+          default: false
+          description: Close each conversation after the reply.
+    StatusIncidentReplyResult:
+      type: object
+      required: [queued]
+      properties:
+        queued:
+          type: integer
+          format: int32
+          description: The conversations a reply was queued for.
     StatusComponentGroup:
       type: object
       required: [id, page_id, name, position, created_at, updated_at]

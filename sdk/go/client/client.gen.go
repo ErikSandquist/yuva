@@ -8344,10 +8344,28 @@ type ClientInbox struct {
 
 	// Presence Who can answer now, in a `live` inbox.
 	Presence *ClientPresence `json:"presence,omitempty"`
-	Timezone string          `json:"timezone"`
+
+	// Status Absent unless the inbox has a published status page. Show a line while `open` is not
+	// empty; an `inbox.updated` frame brings every change.
+	Status   *ClientInboxStatus `json:"status,omitempty"`
+	Timezone string             `json:"timezone"`
 }
 
-// ClientInboxUpdatedEvent The inbox's or the session channel's public settings changed. No `id`; not replayed.
+// ClientInboxStatus The inbox's published status page: its overall state and what is open on it. Drafts,
+// scheduled maintenance that has not started and hidden components are left out.
+type ClientInboxStatus struct {
+	// Open Open published incidents and running maintenance, newest first.
+	Open []ClientStatusIncident `json:"open"`
+
+	// State Worst to best: `major_outage`, `partial_outage`, `degraded`, `maintenance`, `operational`.
+	State StatusComponentStateValue `json:"state"`
+
+	// Url The public page.
+	Url string `json:"url"`
+}
+
+// ClientInboxUpdatedEvent The inbox's or the session channel's public settings, or its status page's `status`, changed.
+// No `id`; not replayed.
 type ClientInboxUpdatedEvent struct {
 	CreatedAt time.Time `json:"created_at"`
 
@@ -8571,6 +8589,24 @@ type ClientSessionInfo struct {
 
 	// VisitorId Anonymous sessions only. Keep it to resume this visitor later.
 	VisitorId *string `json:"visitor_id,omitempty"`
+}
+
+// ClientStatusIncident defines model for ClientStatusIncident.
+type ClientStatusIncident struct {
+	Id     uuid.UUID            `json:"id"`
+	Impact StatusIncidentImpact `json:"impact"`
+	Kind   StatusIncidentKind   `json:"kind"`
+
+	// State Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
+	// `scheduled`, `in_progress`, `completed`.
+	State StatusIncidentState `json:"state"`
+	Title string              `json:"title"`
+
+	// UpdatedAt When its latest update was posted.
+	UpdatedAt time.Time `json:"updated_at"`
+
+	// Url The incident's public page.
+	Url string `json:"url"`
 }
 
 // ClientSubscription defines model for ClientSubscription.
@@ -9167,6 +9203,30 @@ type ConversationImport struct {
 
 	// Source Absent once the migration was deleted.
 	Source *MigrationSource `json:"source,omitempty"`
+}
+
+// ConversationIncident defines model for ConversationIncident.
+type ConversationIncident struct {
+	Id       uuid.UUID            `json:"id"`
+	Impact   StatusIncidentImpact `json:"impact"`
+	Kind     StatusIncidentKind   `json:"kind"`
+	LinkedAt time.Time            `json:"linked_at"`
+	Page     StatusPageRef        `json:"page"`
+
+	// PublishedAt Absent while it is a draft.
+	PublishedAt *time.Time `json:"published_at,omitempty"`
+	ResolvedAt  *time.Time `json:"resolved_at,omitempty"`
+
+	// State Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
+	// `scheduled`, `in_progress`, `completed`.
+	State StatusIncidentState `json:"state"`
+	Title string              `json:"title"`
+	Url   string              `json:"url"`
+}
+
+// ConversationIncidentList defines model for ConversationIncidentList.
+type ConversationIncidentList struct {
+	Items []ConversationIncident `json:"items"`
 }
 
 // ConversationKind `feedback` conversations carry `feedback` metadata; everything else is `conversation`.
@@ -14453,6 +14513,102 @@ type StatusIncidentComponentInput struct {
 	State *StatusComponentStateValue `json:"state,omitempty"`
 }
 
+// StatusIncidentConversation A linked conversation with what a list row shows and when it was linked.
+type StatusIncidentConversation struct {
+	// AssigneeId The assigned member; absent when unassigned.
+	AssigneeId *uuid.UUID `json:"assignee_id,omitempty"`
+
+	// BroadcastId Set when a reply to this broadcast opened the conversation (the recipient's own reply,
+	// or someone else answering a forwarded copy); absent otherwise or when the broadcast was
+	// deleted.
+	BroadcastId *uuid.UUID `json:"broadcast_id,omitempty"`
+
+	// ChannelId The channel it started on; absent when unknown or removed.
+	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
+
+	// ChannelKind Read-only: the kind of the channel it started on, kept when that channel is removed or
+	// the conversation moves to another inbox. Absent when it started without a channel.
+	ChannelKind *ChannelKind `json:"channel_kind,omitempty"`
+
+	// ClosedAt When it was last closed; absent when it never was.
+	ClosedAt *time.Time `json:"closed_at,omitempty"`
+
+	// Contact The conversation's contact, enough for a list row.
+	Contact   ConversationContact `json:"contact"`
+	ContactId uuid.UUID           `json:"contact_id"`
+	CreatedAt time.Time           `json:"created_at"`
+
+	// Feedback `feedback` conversations only: category and what the app sent with it.
+	Feedback *Feedback `json:"feedback,omitempty"`
+	Id       uuid.UUID `json:"id"`
+
+	// Imported Set on history moved into Yuva from another mailbox: such conversations keep their
+	// original times, were never unread and wrote no events, notifications or webhooks when
+	// they were imported. Absent otherwise.
+	Imported *ConversationImport `json:"imported,omitempty"`
+	InboxId  uuid.UUID           `json:"inbox_id"`
+
+	// Kind `feedback` conversations carry `feedback` metadata; everything else is `conversation`.
+	Kind ConversationKind `json:"kind"`
+
+	// Labels Label ids.
+	Labels []uuid.UUID `json:"labels"`
+
+	// LastActivityAt The last message or note, or the creation time.
+	LastActivityAt time.Time `json:"last_activity_at"`
+
+	// LastMessage The last `message` of a conversation, for a list row.
+	LastMessage *MessagePreview `json:"last_message,omitempty"`
+
+	// LastMessageAt The last `message` to or from the contact.
+	LastMessageAt *time.Time `json:"last_message_at,omitempty"`
+
+	// LastReadByContactAt The contact has read every message created at or before this time, in the widget or
+	// an app (`POST /client/v1/conversations/{id}/read`). Absent until the contact has read
+	// anything, and in conversations the contact only reaches by e-mail. A `contact.read`
+	// event tells when it moves.
+	LastReadByContactAt *time.Time `json:"last_read_by_contact_at,omitempty"`
+	LinkedAt            time.Time  `json:"linked_at"`
+
+	// Page The documentation page it was sent from (page feedback, questions asked on a page before discussions); absent otherwise.
+	Page *SourcePage `json:"page,omitempty"`
+
+	// PinnedAt When the calling member pinned it; absent when they did not, and for API keys.
+	PinnedAt *time.Time `json:"pinned_at,omitempty"`
+	Priority Priority   `json:"priority"`
+
+	// Rating The contact's latest rating. A conversation can be rated once each time it is closed, so
+	// this may belong to an earlier close (compare `rated_at` with `closed_at`). The thread also
+	// has it as a `rated` event message whose body is the comment.
+	Rating *ConversationRating `json:"rating,omitempty"`
+
+	// RelatedConversationId Set when this conversation was opened for a sender who answered in the e-mail thread of
+	// another contact's conversation (a forward, a CC'd colleague): the conversation whose
+	// thread the mail named. That mail never joins the other conversation and replies here go
+	// only to this conversation's contact. Absent otherwise or when that conversation is gone.
+	RelatedConversationId *uuid.UUID `json:"related_conversation_id,omitempty"`
+	SnoozeUntil           *time.Time `json:"snooze_until,omitempty"`
+
+	// Spam Flagged as spam, e.g. because the first e-mail failed DMARC. Spam is left out of lists
+	// and counts unless asked for, and gets no automatic reply.
+	Spam    bool               `json:"spam"`
+	Status  ConversationStatus `json:"status"`
+	Subject string             `json:"subject"`
+
+	// Unread A message or note from someone other than the calling member is newer than the
+	// member's read cursor, or the member marked it unread. Always `false` for API keys.
+	Unread    bool      `json:"unread"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+// StatusIncidentConversationPage defines model for StatusIncidentConversationPage.
+type StatusIncidentConversationPage struct {
+	Items []StatusIncidentConversation `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
 // StatusIncidentCreate defines model for StatusIncidentCreate.
 type StatusIncidentCreate struct {
 	Components *[]StatusIncidentComponentInput `json:"components,omitempty"`
@@ -14520,6 +14676,21 @@ type StatusIncidentPatch struct {
 	ScheduledEnd   *time.Time                      `json:"scheduled_end,omitempty"`
 	ScheduledStart *time.Time                      `json:"scheduled_start,omitempty"`
 	Title          *string                         `json:"title,omitempty"`
+}
+
+// StatusIncidentReply defines model for StatusIncidentReply.
+type StatusIncidentReply struct {
+	// Body The reply's text, as for any message.
+	Body string `json:"body"`
+
+	// Close Close each conversation after the reply.
+	Close *bool `json:"close,omitempty"`
+}
+
+// StatusIncidentReplyResult defines model for StatusIncidentReplyResult.
+type StatusIncidentReplyResult struct {
+	// Queued The conversations a reply was queued for.
+	Queued int32 `json:"queued"`
 }
 
 // StatusIncidentState Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
@@ -16835,6 +17006,12 @@ type CreateDiscussionFromConversationParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListConversationIncidentsParams defines parameters for ListConversationIncidents.
+type ListConversationIncidentsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // ListMessagesParams defines parameters for ListMessages.
 type ListMessagesParams struct {
 	Order *ListMessagesParamsOrder `form:"order,omitempty" json:"order,omitempty"`
@@ -18021,8 +18198,41 @@ type UpdateStatusIncidentParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListStatusIncidentConversationsParams defines parameters for ListStatusIncidentConversations.
+type ListStatusIncidentConversationsParams struct {
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UnlinkStatusIncidentConversationParams defines parameters for UnlinkStatusIncidentConversation.
+type UnlinkStatusIncidentConversationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// LinkStatusIncidentConversationParams defines parameters for LinkStatusIncidentConversation.
+type LinkStatusIncidentConversationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // PublishStatusIncidentParams defines parameters for PublishStatusIncident.
 type PublishStatusIncidentParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ReplyToStatusIncidentConversationsParams defines parameters for ReplyToStatusIncidentConversations.
+type ReplyToStatusIncidentConversationsParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 
@@ -18915,6 +19125,9 @@ type CreateStatusIncidentJSONRequestBody = StatusIncidentCreate
 
 // UpdateStatusIncidentJSONRequestBody defines body for UpdateStatusIncident for application/json ContentType.
 type UpdateStatusIncidentJSONRequestBody = StatusIncidentPatch
+
+// ReplyToStatusIncidentConversationsJSONRequestBody defines body for ReplyToStatusIncidentConversations for application/json ContentType.
+type ReplyToStatusIncidentConversationsJSONRequestBody = StatusIncidentReply
 
 // CreateStatusIncidentUpdateJSONRequestBody defines body for CreateStatusIncidentUpdate for application/json ContentType.
 type CreateStatusIncidentUpdateJSONRequestBody = StatusIncidentUpdateCreate
@@ -25553,6 +25766,16 @@ type ClientInterface interface {
 	// Corresponds with POST /v1/conversations/{conversationId}/discussion (the `CreateDiscussionFromConversation` operationId).
 	CreateDiscussionFromConversation(ctx context.Context, conversationId ConversationId, params *CreateDiscussionFromConversationParams, body CreateDiscussionFromConversationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListConversationIncidents List the incidents a conversation is linked to
+	//
+	// The status incidents and maintenance the conversation is linked to, the most recently
+	// linked first. Incidents of pages whose inbox the caller cannot see are left out.
+	//
+	// Scopes: `conversations:read` and `status:read`.
+	//
+	// Corresponds with GET /v1/conversations/{conversationId}/incidents (the `ListConversationIncidents` operationId).
+	ListConversationIncidents(ctx context.Context, conversationId ConversationId, params *ListConversationIncidentsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListMessages List a conversation's messages
 	//
 	// Messages, notes and events, oldest first by default. With `order=desc` the newest come
@@ -28399,6 +28622,41 @@ type ClientInterface interface {
 	// Corresponds with PATCH /v1/status-pages/{pageId}/incidents/{incidentId} (the `UpdateStatusIncident` operationId).
 	UpdateStatusIncident(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *UpdateStatusIncidentParams, body UpdateStatusIncidentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListStatusIncidentConversations List an incident's conversations
+	//
+	// The conversations linked to the incident, the most recently linked first, each with its
+	// state. Only conversations in inboxes the caller can see are listed.
+	//
+	// Agents with access to the page's inbox, owners, admins and API keys. Scopes: `status:read`
+	// and `conversations:read`.
+	//
+	// Corresponds with GET /v1/status-pages/{pageId}/incidents/{incidentId}/conversations (the `ListStatusIncidentConversations` operationId).
+	ListStatusIncidentConversations(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *ListStatusIncidentConversationsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UnlinkStatusIncidentConversation Unlink a conversation from an incident
+	//
+	// Unlinking a conversation that is not linked changes nothing. The caller must see both the
+	// page's inbox and the conversation's inbox.
+	//
+	// Agents with access to both inboxes, owners, admins and API keys. Scopes: `status:manage`
+	// and `conversations:read`.
+	//
+	// Corresponds with DELETE /v1/status-pages/{pageId}/incidents/{incidentId}/conversations/{conversationId} (the `UnlinkStatusIncidentConversation` operationId).
+	UnlinkStatusIncidentConversation(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, conversationId ConversationId, params *UnlinkStatusIncidentConversationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// LinkStatusIncidentConversation Link a conversation to an incident
+	//
+	// Links a conversation to the incident, so it is listed with it and reached by "Reply to
+	// linked". A conversation may be linked to several incidents, also of other pages; linking it
+	// twice is a no-op. The caller must see both the page's inbox and the conversation's inbox
+	// (`404` otherwise).
+	//
+	// Agents with access to both inboxes, owners, admins and API keys. Scopes: `status:manage`
+	// and `conversations:read`.
+	//
+	// Corresponds with PUT /v1/status-pages/{pageId}/incidents/{incidentId}/conversations/{conversationId} (the `LinkStatusIncidentConversation` operationId).
+	LinkStatusIncidentConversation(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, conversationId ConversationId, params *LinkStatusIncidentConversationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// PublishStatusIncident Publish a draft incident
 	//
 	// Shows it on the page and, while it is open, sets the components it touches. Publishing a
@@ -28408,6 +28666,44 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/publish (the `PublishStatusIncident` operationId).
 	PublishStatusIncident(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ReplyToStatusIncidentConversationsWithBody Reply to linked conversations
+	//
+	// Sends one reply, written once, to every linked conversation that is not closed and that the
+	// caller can see, and with `close` closes each afterwards. Each conversation gets its own job,
+	// which posts the reply through the normal reply path as the caller (a member, or an API key's
+	// bot), so it reaches the contact on the conversation's own channel (e-mail, chat or app) and
+	// fires the usual `message.created` and `conversation.updated` events and webhooks. A retried
+	// job never sends a conversation the reply twice; send `Idempotency-Key` to make a retried
+	// request safe as well.
+	//
+	// API keys and MCP clients need the workspace to let them deliver messages
+	// (`403 bot_sending_disabled`). Agents with access to the page's inbox, owners, admins and API
+	// keys. Scopes: `status:manage` and `messages:write`, and `conversations:write` with `close`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/reply (the `ReplyToStatusIncidentConversations` operationId).
+	ReplyToStatusIncidentConversationsWithBody(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *ReplyToStatusIncidentConversationsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ReplyToStatusIncidentConversations Reply to linked conversations
+	//
+	// Sends one reply, written once, to every linked conversation that is not closed and that the
+	// caller can see, and with `close` closes each afterwards. Each conversation gets its own job,
+	// which posts the reply through the normal reply path as the caller (a member, or an API key's
+	// bot), so it reaches the contact on the conversation's own channel (e-mail, chat or app) and
+	// fires the usual `message.created` and `conversation.updated` events and webhooks. A retried
+	// job never sends a conversation the reply twice; send `Idempotency-Key` to make a retried
+	// request safe as well.
+	//
+	// API keys and MCP clients need the workspace to let them deliver messages
+	// (`403 bot_sending_disabled`). Agents with access to the page's inbox, owners, admins and API
+	// keys. Scopes: `status:manage` and `messages:write`, and `conversations:write` with `close`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/reply (the `ReplyToStatusIncidentConversations` operationId).
+	ReplyToStatusIncidentConversations(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *ReplyToStatusIncidentConversationsParams, body ReplyToStatusIncidentConversationsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateStatusIncidentUpdateWithBody Post an update
 	//
@@ -34193,6 +34489,26 @@ func (c *Client) CreateDiscussionFromConversation(ctx context.Context, conversat
 	return c.Client.Do(req)
 }
 
+// ListConversationIncidents List the incidents a conversation is linked to
+//
+// The status incidents and maintenance the conversation is linked to, the most recently
+// linked first. Incidents of pages whose inbox the caller cannot see are left out.
+//
+// Scopes: `conversations:read` and `status:read`.
+//
+// Corresponds with GET /v1/conversations/{conversationId}/incidents (the `ListConversationIncidents` operationId).
+func (c *Client) ListConversationIncidents(ctx context.Context, conversationId ConversationId, params *ListConversationIncidentsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListConversationIncidentsRequest(c.Server, conversationId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // ListMessages List a conversation's messages
 //
 // Messages, notes and events, oldest first by default. With `order=desc` the newest come
@@ -39149,6 +39465,71 @@ func (c *Client) UpdateStatusIncident(ctx context.Context, pageId StatusPageId, 
 	return c.Client.Do(req)
 }
 
+// ListStatusIncidentConversations List an incident's conversations
+//
+// The conversations linked to the incident, the most recently linked first, each with its
+// state. Only conversations in inboxes the caller can see are listed.
+//
+// Agents with access to the page's inbox, owners, admins and API keys. Scopes: `status:read`
+// and `conversations:read`.
+//
+// Corresponds with GET /v1/status-pages/{pageId}/incidents/{incidentId}/conversations (the `ListStatusIncidentConversations` operationId).
+func (c *Client) ListStatusIncidentConversations(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *ListStatusIncidentConversationsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListStatusIncidentConversationsRequest(c.Server, pageId, incidentId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UnlinkStatusIncidentConversation Unlink a conversation from an incident
+//
+// Unlinking a conversation that is not linked changes nothing. The caller must see both the
+// page's inbox and the conversation's inbox.
+//
+// Agents with access to both inboxes, owners, admins and API keys. Scopes: `status:manage`
+// and `conversations:read`.
+//
+// Corresponds with DELETE /v1/status-pages/{pageId}/incidents/{incidentId}/conversations/{conversationId} (the `UnlinkStatusIncidentConversation` operationId).
+func (c *Client) UnlinkStatusIncidentConversation(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, conversationId ConversationId, params *UnlinkStatusIncidentConversationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUnlinkStatusIncidentConversationRequest(c.Server, pageId, incidentId, conversationId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// LinkStatusIncidentConversation Link a conversation to an incident
+//
+// Links a conversation to the incident, so it is listed with it and reached by "Reply to
+// linked". A conversation may be linked to several incidents, also of other pages; linking it
+// twice is a no-op. The caller must see both the page's inbox and the conversation's inbox
+// (`404` otherwise).
+//
+// Agents with access to both inboxes, owners, admins and API keys. Scopes: `status:manage`
+// and `conversations:read`.
+//
+// Corresponds with PUT /v1/status-pages/{pageId}/incidents/{incidentId}/conversations/{conversationId} (the `LinkStatusIncidentConversation` operationId).
+func (c *Client) LinkStatusIncidentConversation(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, conversationId ConversationId, params *LinkStatusIncidentConversationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewLinkStatusIncidentConversationRequest(c.Server, pageId, incidentId, conversationId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // PublishStatusIncident Publish a draft incident
 //
 // Shows it on the page and, while it is open, sets the components it touches. Publishing a
@@ -39159,6 +39540,64 @@ func (c *Client) UpdateStatusIncident(ctx context.Context, pageId StatusPageId, 
 // Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/publish (the `PublishStatusIncident` operationId).
 func (c *Client) PublishStatusIncident(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewPublishStatusIncidentRequest(c.Server, pageId, incidentId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ReplyToStatusIncidentConversationsWithBody Reply to linked conversations
+//
+// Sends one reply, written once, to every linked conversation that is not closed and that the
+// caller can see, and with `close` closes each afterwards. Each conversation gets its own job,
+// which posts the reply through the normal reply path as the caller (a member, or an API key's
+// bot), so it reaches the contact on the conversation's own channel (e-mail, chat or app) and
+// fires the usual `message.created` and `conversation.updated` events and webhooks. A retried
+// job never sends a conversation the reply twice; send `Idempotency-Key` to make a retried
+// request safe as well.
+//
+// API keys and MCP clients need the workspace to let them deliver messages
+// (`403 bot_sending_disabled`). Agents with access to the page's inbox, owners, admins and API
+// keys. Scopes: `status:manage` and `messages:write`, and `conversations:write` with `close`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/reply (the `ReplyToStatusIncidentConversations` operationId).
+func (c *Client) ReplyToStatusIncidentConversationsWithBody(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *ReplyToStatusIncidentConversationsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewReplyToStatusIncidentConversationsRequestWithBody(c.Server, pageId, incidentId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ReplyToStatusIncidentConversations Reply to linked conversations
+//
+// Sends one reply, written once, to every linked conversation that is not closed and that the
+// caller can see, and with `close` closes each afterwards. Each conversation gets its own job,
+// which posts the reply through the normal reply path as the caller (a member, or an API key's
+// bot), so it reaches the contact on the conversation's own channel (e-mail, chat or app) and
+// fires the usual `message.created` and `conversation.updated` events and webhooks. A retried
+// job never sends a conversation the reply twice; send `Idempotency-Key` to make a retried
+// request safe as well.
+//
+// API keys and MCP clients need the workspace to let them deliver messages
+// (`403 bot_sending_disabled`). Agents with access to the page's inbox, owners, admins and API
+// keys. Scopes: `status:manage` and `messages:write`, and `conversations:write` with `close`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/reply (the `ReplyToStatusIncidentConversations` operationId).
+func (c *Client) ReplyToStatusIncidentConversations(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *ReplyToStatusIncidentConversationsParams, body ReplyToStatusIncidentConversationsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewReplyToStatusIncidentConversationsRequest(c.Server, pageId, incidentId, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -49270,6 +49709,55 @@ func NewCreateDiscussionFromConversationRequestWithBody(server string, conversat
 	return req, nil
 }
 
+// NewListConversationIncidentsRequest constructs an http.Request for the ListConversationIncidents method
+func NewListConversationIncidentsRequest(server string, conversationId ConversationId, params *ListConversationIncidentsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "conversationId", conversationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/conversations/%s/incidents", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewListMessagesRequest constructs an http.Request for the ListMessages method
 func NewListMessagesRequest(server string, conversationId ConversationId, params *ListMessagesParams) (*http.Request, error) {
 	var err error
@@ -59087,6 +59575,227 @@ func NewUpdateStatusIncidentRequestWithBody(server string, pageId StatusPageId, 
 	return req, nil
 }
 
+// NewListStatusIncidentConversationsRequest constructs an http.Request for the ListStatusIncidentConversations method
+func NewListStatusIncidentConversationsRequest(server string, pageId StatusPageId, incidentId StatusIncidentId, params *ListStatusIncidentConversationsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "incidentId", incidentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/status-pages/%s/incidents/%s/conversations", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUnlinkStatusIncidentConversationRequest constructs an http.Request for the UnlinkStatusIncidentConversation method
+func NewUnlinkStatusIncidentConversationRequest(server string, pageId StatusPageId, incidentId StatusIncidentId, conversationId ConversationId, params *UnlinkStatusIncidentConversationParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "incidentId", incidentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithOptions("simple", false, "conversationId", conversationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/status-pages/%s/incidents/%s/conversations/%s", pathParam0, pathParam1, pathParam2)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewLinkStatusIncidentConversationRequest constructs an http.Request for the LinkStatusIncidentConversation method
+func NewLinkStatusIncidentConversationRequest(server string, pageId StatusPageId, incidentId StatusIncidentId, conversationId ConversationId, params *LinkStatusIncidentConversationParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "incidentId", incidentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithOptions("simple", false, "conversationId", conversationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/status-pages/%s/incidents/%s/conversations/%s", pathParam0, pathParam1, pathParam2)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewPublishStatusIncidentRequest constructs an http.Request for the PublishStatusIncident method
 func NewPublishStatusIncidentRequest(server string, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams) (*http.Request, error) {
 	var err error
@@ -59124,6 +59833,86 @@ func NewPublishStatusIncidentRequest(server string, pageId StatusPageId, inciden
 	if err != nil {
 		return nil, err
 	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewReplyToStatusIncidentConversationsRequest calls the generic ReplyToStatusIncidentConversations builder with application/json body
+func NewReplyToStatusIncidentConversationsRequest(server string, pageId StatusPageId, incidentId StatusIncidentId, params *ReplyToStatusIncidentConversationsParams, body ReplyToStatusIncidentConversationsJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewReplyToStatusIncidentConversationsRequestWithBody(server, pageId, incidentId, params, "application/json", bodyReader)
+}
+
+// NewReplyToStatusIncidentConversationsRequestWithBody constructs an http.Request for the ReplyToStatusIncidentConversations method, with any body, and a specified content type
+func NewReplyToStatusIncidentConversationsRequestWithBody(server string, pageId StatusPageId, incidentId StatusIncidentId, params *ReplyToStatusIncidentConversationsParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageId", pageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "incidentId", incidentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/status-pages/%s/incidents/%s/reply", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	if params != nil {
 
@@ -64129,6 +64918,18 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /v1/conversations/{conversationId}/discussion (the `CreateDiscussionFromConversation` operationId).
 	CreateDiscussionFromConversationWithResponse(ctx context.Context, conversationId ConversationId, params *CreateDiscussionFromConversationParams, body CreateDiscussionFromConversationJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateDiscussionFromConversationResponse, error)
 
+	// ListConversationIncidentsWithResponse List the incidents a conversation is linked to
+	//
+	// The status incidents and maintenance the conversation is linked to, the most recently
+	// linked first. Incidents of pages whose inbox the caller cannot see are left out.
+	//
+	// Scopes: `conversations:read` and `status:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/conversations/{conversationId}/incidents (the `ListConversationIncidents` operationId).
+	ListConversationIncidentsWithResponse(ctx context.Context, conversationId ConversationId, params *ListConversationIncidentsParams, reqEditors ...RequestEditorFn) (*ListConversationIncidentsResponse, error)
+
 	// ListMessagesWithResponse List a conversation's messages
 	//
 	// Messages, notes and events, oldest first by default. With `order=desc` the newest come
@@ -67183,6 +67984,47 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /v1/status-pages/{pageId}/incidents/{incidentId} (the `UpdateStatusIncident` operationId).
 	UpdateStatusIncidentWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *UpdateStatusIncidentParams, body UpdateStatusIncidentJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateStatusIncidentResponse, error)
 
+	// ListStatusIncidentConversationsWithResponse List an incident's conversations
+	//
+	// The conversations linked to the incident, the most recently linked first, each with its
+	// state. Only conversations in inboxes the caller can see are listed.
+	//
+	// Agents with access to the page's inbox, owners, admins and API keys. Scopes: `status:read`
+	// and `conversations:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/status-pages/{pageId}/incidents/{incidentId}/conversations (the `ListStatusIncidentConversations` operationId).
+	ListStatusIncidentConversationsWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *ListStatusIncidentConversationsParams, reqEditors ...RequestEditorFn) (*ListStatusIncidentConversationsResponse, error)
+
+	// UnlinkStatusIncidentConversationWithResponse Unlink a conversation from an incident
+	//
+	// Unlinking a conversation that is not linked changes nothing. The caller must see both the
+	// page's inbox and the conversation's inbox.
+	//
+	// Agents with access to both inboxes, owners, admins and API keys. Scopes: `status:manage`
+	// and `conversations:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/status-pages/{pageId}/incidents/{incidentId}/conversations/{conversationId} (the `UnlinkStatusIncidentConversation` operationId).
+	UnlinkStatusIncidentConversationWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, conversationId ConversationId, params *UnlinkStatusIncidentConversationParams, reqEditors ...RequestEditorFn) (*UnlinkStatusIncidentConversationResponse, error)
+
+	// LinkStatusIncidentConversationWithResponse Link a conversation to an incident
+	//
+	// Links a conversation to the incident, so it is listed with it and reached by "Reply to
+	// linked". A conversation may be linked to several incidents, also of other pages; linking it
+	// twice is a no-op. The caller must see both the page's inbox and the conversation's inbox
+	// (`404` otherwise).
+	//
+	// Agents with access to both inboxes, owners, admins and API keys. Scopes: `status:manage`
+	// and `conversations:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /v1/status-pages/{pageId}/incidents/{incidentId}/conversations/{conversationId} (the `LinkStatusIncidentConversation` operationId).
+	LinkStatusIncidentConversationWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, conversationId ConversationId, params *LinkStatusIncidentConversationParams, reqEditors ...RequestEditorFn) (*LinkStatusIncidentConversationResponse, error)
+
 	// PublishStatusIncidentWithResponse Publish a draft incident
 	//
 	// Shows it on the page and, while it is open, sets the components it touches. Publishing a
@@ -67194,6 +68036,44 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/publish (the `PublishStatusIncident` operationId).
 	PublishStatusIncidentWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *PublishStatusIncidentParams, reqEditors ...RequestEditorFn) (*PublishStatusIncidentResponse, error)
+
+	// ReplyToStatusIncidentConversationsWithBodyWithResponse Reply to linked conversations
+	//
+	// Sends one reply, written once, to every linked conversation that is not closed and that the
+	// caller can see, and with `close` closes each afterwards. Each conversation gets its own job,
+	// which posts the reply through the normal reply path as the caller (a member, or an API key's
+	// bot), so it reaches the contact on the conversation's own channel (e-mail, chat or app) and
+	// fires the usual `message.created` and `conversation.updated` events and webhooks. A retried
+	// job never sends a conversation the reply twice; send `Idempotency-Key` to make a retried
+	// request safe as well.
+	//
+	// API keys and MCP clients need the workspace to let them deliver messages
+	// (`403 bot_sending_disabled`). Agents with access to the page's inbox, owners, admins and API
+	// keys. Scopes: `status:manage` and `messages:write`, and `conversations:write` with `close`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/reply (the `ReplyToStatusIncidentConversations` operationId).
+	ReplyToStatusIncidentConversationsWithBodyWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *ReplyToStatusIncidentConversationsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplyToStatusIncidentConversationsResponse, error)
+
+	// ReplyToStatusIncidentConversationsWithResponse Reply to linked conversations
+	//
+	// Sends one reply, written once, to every linked conversation that is not closed and that the
+	// caller can see, and with `close` closes each afterwards. Each conversation gets its own job,
+	// which posts the reply through the normal reply path as the caller (a member, or an API key's
+	// bot), so it reaches the contact on the conversation's own channel (e-mail, chat or app) and
+	// fires the usual `message.created` and `conversation.updated` events and webhooks. A retried
+	// job never sends a conversation the reply twice; send `Idempotency-Key` to make a retried
+	// request safe as well.
+	//
+	// API keys and MCP clients need the workspace to let them deliver messages
+	// (`403 bot_sending_disabled`). Agents with access to the page's inbox, owners, admins and API
+	// keys. Scopes: `status:manage` and `messages:write`, and `conversations:write` with `close`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/reply (the `ReplyToStatusIncidentConversations` operationId).
+	ReplyToStatusIncidentConversationsWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *ReplyToStatusIncidentConversationsParams, body ReplyToStatusIncidentConversationsJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplyToStatusIncidentConversationsResponse, error)
 
 	// CreateStatusIncidentUpdateWithBodyWithResponse Post an update
 	//
@@ -78217,6 +79097,68 @@ func (r CreateDiscussionFromConversationResponse) ContentType() string {
 	return ""
 }
 
+type ListConversationIncidentsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ConversationIncidentList
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListConversationIncidentsResponse) GetJSON200() *ConversationIncidentList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListConversationIncidentsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListConversationIncidentsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListConversationIncidentsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListConversationIncidentsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListConversationIncidentsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListConversationIncidentsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListConversationIncidentsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ListMessagesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -88832,6 +89774,185 @@ func (r UpdateStatusIncidentResponse) ContentType() string {
 	return ""
 }
 
+type ListStatusIncidentConversationsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StatusIncidentConversationPage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListStatusIncidentConversationsResponse) GetJSON200() *StatusIncidentConversationPage {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListStatusIncidentConversationsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListStatusIncidentConversationsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListStatusIncidentConversationsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListStatusIncidentConversationsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListStatusIncidentConversationsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListStatusIncidentConversationsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListStatusIncidentConversationsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListStatusIncidentConversationsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UnlinkStatusIncidentConversationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UnlinkStatusIncidentConversationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UnlinkStatusIncidentConversationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UnlinkStatusIncidentConversationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r UnlinkStatusIncidentConversationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UnlinkStatusIncidentConversationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UnlinkStatusIncidentConversationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UnlinkStatusIncidentConversationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type LinkStatusIncidentConversationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r LinkStatusIncidentConversationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r LinkStatusIncidentConversationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r LinkStatusIncidentConversationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r LinkStatusIncidentConversationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r LinkStatusIncidentConversationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r LinkStatusIncidentConversationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r LinkStatusIncidentConversationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type PublishStatusIncidentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -88888,6 +90009,75 @@ func (r PublishStatusIncidentResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r PublishStatusIncidentResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ReplyToStatusIncidentConversationsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON202 the response for an HTTP 202 `application/json` response
+	JSON202 *StatusIncidentReplyResult
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON202 returns the response for an HTTP 202 `application/json` response
+func (r ReplyToStatusIncidentConversationsResponse) GetJSON202() *StatusIncidentReplyResult {
+	return r.JSON202
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ReplyToStatusIncidentConversationsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ReplyToStatusIncidentConversationsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ReplyToStatusIncidentConversationsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ReplyToStatusIncidentConversationsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ReplyToStatusIncidentConversationsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ReplyToStatusIncidentConversationsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ReplyToStatusIncidentConversationsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ReplyToStatusIncidentConversationsResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -95219,6 +96409,24 @@ func (c *ClientWithResponses) CreateDiscussionFromConversationWithResponse(ctx c
 	return ParseCreateDiscussionFromConversationResponse(rsp)
 }
 
+// ListConversationIncidentsWithResponse List the incidents a conversation is linked to
+//
+// The status incidents and maintenance the conversation is linked to, the most recently
+// linked first. Incidents of pages whose inbox the caller cannot see are left out.
+//
+// Scopes: `conversations:read` and `status:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/conversations/{conversationId}/incidents (the `ListConversationIncidents` operationId).
+func (c *ClientWithResponses) ListConversationIncidentsWithResponse(ctx context.Context, conversationId ConversationId, params *ListConversationIncidentsParams, reqEditors ...RequestEditorFn) (*ListConversationIncidentsResponse, error) {
+	rsp, err := c.ListConversationIncidents(ctx, conversationId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListConversationIncidentsResponse(rsp)
+}
+
 // ListMessagesWithResponse List a conversation's messages
 //
 // Messages, notes and events, oldest first by default. With `order=desc` the newest come
@@ -99539,6 +100747,65 @@ func (c *ClientWithResponses) UpdateStatusIncidentWithResponse(ctx context.Conte
 	return ParseUpdateStatusIncidentResponse(rsp)
 }
 
+// ListStatusIncidentConversationsWithResponse List an incident's conversations
+//
+// The conversations linked to the incident, the most recently linked first, each with its
+// state. Only conversations in inboxes the caller can see are listed.
+//
+// Agents with access to the page's inbox, owners, admins and API keys. Scopes: `status:read`
+// and `conversations:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/status-pages/{pageId}/incidents/{incidentId}/conversations (the `ListStatusIncidentConversations` operationId).
+func (c *ClientWithResponses) ListStatusIncidentConversationsWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *ListStatusIncidentConversationsParams, reqEditors ...RequestEditorFn) (*ListStatusIncidentConversationsResponse, error) {
+	rsp, err := c.ListStatusIncidentConversations(ctx, pageId, incidentId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListStatusIncidentConversationsResponse(rsp)
+}
+
+// UnlinkStatusIncidentConversationWithResponse Unlink a conversation from an incident
+//
+// Unlinking a conversation that is not linked changes nothing. The caller must see both the
+// page's inbox and the conversation's inbox.
+//
+// Agents with access to both inboxes, owners, admins and API keys. Scopes: `status:manage`
+// and `conversations:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/status-pages/{pageId}/incidents/{incidentId}/conversations/{conversationId} (the `UnlinkStatusIncidentConversation` operationId).
+func (c *ClientWithResponses) UnlinkStatusIncidentConversationWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, conversationId ConversationId, params *UnlinkStatusIncidentConversationParams, reqEditors ...RequestEditorFn) (*UnlinkStatusIncidentConversationResponse, error) {
+	rsp, err := c.UnlinkStatusIncidentConversation(ctx, pageId, incidentId, conversationId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUnlinkStatusIncidentConversationResponse(rsp)
+}
+
+// LinkStatusIncidentConversationWithResponse Link a conversation to an incident
+//
+// Links a conversation to the incident, so it is listed with it and reached by "Reply to
+// linked". A conversation may be linked to several incidents, also of other pages; linking it
+// twice is a no-op. The caller must see both the page's inbox and the conversation's inbox
+// (`404` otherwise).
+//
+// Agents with access to both inboxes, owners, admins and API keys. Scopes: `status:manage`
+// and `conversations:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /v1/status-pages/{pageId}/incidents/{incidentId}/conversations/{conversationId} (the `LinkStatusIncidentConversation` operationId).
+func (c *ClientWithResponses) LinkStatusIncidentConversationWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, conversationId ConversationId, params *LinkStatusIncidentConversationParams, reqEditors ...RequestEditorFn) (*LinkStatusIncidentConversationResponse, error) {
+	rsp, err := c.LinkStatusIncidentConversation(ctx, pageId, incidentId, conversationId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseLinkStatusIncidentConversationResponse(rsp)
+}
+
 // PublishStatusIncidentWithResponse Publish a draft incident
 //
 // Shows it on the page and, while it is open, sets the components it touches. Publishing a
@@ -99555,6 +100822,56 @@ func (c *ClientWithResponses) PublishStatusIncidentWithResponse(ctx context.Cont
 		return nil, err
 	}
 	return ParsePublishStatusIncidentResponse(rsp)
+}
+
+// ReplyToStatusIncidentConversationsWithBodyWithResponse Reply to linked conversations
+//
+// Sends one reply, written once, to every linked conversation that is not closed and that the
+// caller can see, and with `close` closes each afterwards. Each conversation gets its own job,
+// which posts the reply through the normal reply path as the caller (a member, or an API key's
+// bot), so it reaches the contact on the conversation's own channel (e-mail, chat or app) and
+// fires the usual `message.created` and `conversation.updated` events and webhooks. A retried
+// job never sends a conversation the reply twice; send `Idempotency-Key` to make a retried
+// request safe as well.
+//
+// API keys and MCP clients need the workspace to let them deliver messages
+// (`403 bot_sending_disabled`). Agents with access to the page's inbox, owners, admins and API
+// keys. Scopes: `status:manage` and `messages:write`, and `conversations:write` with `close`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/reply (the `ReplyToStatusIncidentConversations` operationId).
+func (c *ClientWithResponses) ReplyToStatusIncidentConversationsWithBodyWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *ReplyToStatusIncidentConversationsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplyToStatusIncidentConversationsResponse, error) {
+	rsp, err := c.ReplyToStatusIncidentConversationsWithBody(ctx, pageId, incidentId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseReplyToStatusIncidentConversationsResponse(rsp)
+}
+
+// ReplyToStatusIncidentConversationsWithResponse Reply to linked conversations
+//
+// Sends one reply, written once, to every linked conversation that is not closed and that the
+// caller can see, and with `close` closes each afterwards. Each conversation gets its own job,
+// which posts the reply through the normal reply path as the caller (a member, or an API key's
+// bot), so it reaches the contact on the conversation's own channel (e-mail, chat or app) and
+// fires the usual `message.created` and `conversation.updated` events and webhooks. A retried
+// job never sends a conversation the reply twice; send `Idempotency-Key` to make a retried
+// request safe as well.
+//
+// API keys and MCP clients need the workspace to let them deliver messages
+// (`403 bot_sending_disabled`). Agents with access to the page's inbox, owners, admins and API
+// keys. Scopes: `status:manage` and `messages:write`, and `conversations:write` with `close`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/status-pages/{pageId}/incidents/{incidentId}/reply (the `ReplyToStatusIncidentConversations` operationId).
+func (c *ClientWithResponses) ReplyToStatusIncidentConversationsWithResponse(ctx context.Context, pageId StatusPageId, incidentId StatusIncidentId, params *ReplyToStatusIncidentConversationsParams, body ReplyToStatusIncidentConversationsJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplyToStatusIncidentConversationsResponse, error) {
+	rsp, err := c.ReplyToStatusIncidentConversations(ctx, pageId, incidentId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseReplyToStatusIncidentConversationsResponse(rsp)
 }
 
 // CreateStatusIncidentUpdateWithBodyWithResponse Post an update
@@ -108586,6 +109903,53 @@ func ParseCreateDiscussionFromConversationResponse(rsp *http.Response) (*CreateD
 	return response, nil
 }
 
+// ParseListConversationIncidentsResponse parses an HTTP response from a ListConversationIncidentsWithResponse call
+func ParseListConversationIncidentsResponse(rsp *http.Response) (*ListConversationIncidentsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListConversationIncidentsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ConversationIncidentList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseListMessagesResponse parses an HTTP response from a ListMessagesWithResponse call
 func ParseListMessagesResponse(rsp *http.Response) (*ListMessagesResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -116927,6 +118291,146 @@ func ParseUpdateStatusIncidentResponse(rsp *http.Response) (*UpdateStatusInciden
 	return response, nil
 }
 
+// ParseListStatusIncidentConversationsResponse parses an HTTP response from a ListStatusIncidentConversationsWithResponse call
+func ParseListStatusIncidentConversationsResponse(rsp *http.Response) (*ListStatusIncidentConversationsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListStatusIncidentConversationsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StatusIncidentConversationPage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUnlinkStatusIncidentConversationResponse parses an HTTP response from a UnlinkStatusIncidentConversationWithResponse call
+func ParseUnlinkStatusIncidentConversationResponse(rsp *http.Response) (*UnlinkStatusIncidentConversationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UnlinkStatusIncidentConversationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseLinkStatusIncidentConversationResponse parses an HTTP response from a LinkStatusIncidentConversationWithResponse call
+func ParseLinkStatusIncidentConversationResponse(rsp *http.Response) (*LinkStatusIncidentConversationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &LinkStatusIncidentConversationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParsePublishStatusIncidentResponse parses an HTTP response from a PublishStatusIncidentWithResponse call
 func ParsePublishStatusIncidentResponse(rsp *http.Response) (*PublishStatusIncidentResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -116947,6 +118451,60 @@ func ParsePublishStatusIncidentResponse(rsp *http.Response) (*PublishStatusIncid
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseReplyToStatusIncidentConversationsResponse parses an HTTP response from a ReplyToStatusIncidentConversationsWithResponse call
+func ParseReplyToStatusIncidentConversationsResponse(rsp *http.Response) (*ReplyToStatusIncidentConversationsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ReplyToStatusIncidentConversationsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest StatusIncidentReplyResult
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
 		var dest Problem

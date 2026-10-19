@@ -110,6 +110,58 @@ func (q *Queries) ClearStatusIncidentComponents(ctx context.Context, arg ClearSt
 	return err
 }
 
+const clientStatusIncidents = `-- name: ClientStatusIncidents :many
+SELECT i.id, i.kind, i.title, i.impact, i.state,
+    coalesce((SELECT max(u.created_at) FROM status_incident_updates u
+              WHERE u.workspace_id = i.workspace_id AND u.incident_id = i.id), i.published_at)::timestamptz AS last_update_at
+FROM status_incidents i
+WHERE i.workspace_id = $1 AND i.page_id = $2 AND i.published_at IS NOT NULL
+  AND i.state IN ('investigating', 'identified', 'monitoring', 'in_progress')
+ORDER BY i.published_at DESC, i.id DESC
+LIMIT 20
+`
+
+type ClientStatusIncidentsParams struct {
+	WorkspaceID uuid.UUID
+	PageID      uuid.UUID
+}
+
+type ClientStatusIncidentsRow struct {
+	ID           uuid.UUID
+	Kind         string
+	Title        string
+	Impact       string
+	State        string
+	LastUpdateAt time.Time
+}
+
+func (q *Queries) ClientStatusIncidents(ctx context.Context, arg ClientStatusIncidentsParams) ([]ClientStatusIncidentsRow, error) {
+	rows, err := q.db.Query(ctx, clientStatusIncidents, arg.WorkspaceID, arg.PageID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ClientStatusIncidentsRow
+	for rows.Next() {
+		var i ClientStatusIncidentsRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Kind,
+			&i.Title,
+			&i.Impact,
+			&i.State,
+			&i.LastUpdateAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const countStatusComponents = `-- name: CountStatusComponents :one
 SELECT count(*)::bigint FROM status_components WHERE workspace_id = $1 AND page_id = $2
 `
@@ -754,6 +806,102 @@ func (q *Queries) HandOverStatusComponentState(ctx context.Context, arg HandOver
 	return err
 }
 
+const linkStatusIncidentConversation = `-- name: LinkStatusIncidentConversation :exec
+INSERT INTO status_incident_conversations (workspace_id, incident_id, conversation_id, linked_by_member_id, linked_by_api_key_id, linked_at)
+VALUES ($1, $2, $3, $4, $5, $6)
+ON CONFLICT DO NOTHING
+`
+
+type LinkStatusIncidentConversationParams struct {
+	WorkspaceID      uuid.UUID
+	IncidentID       uuid.UUID
+	ConversationID   uuid.UUID
+	LinkedByMemberID *uuid.UUID
+	LinkedByApiKeyID *uuid.UUID
+	Now              time.Time
+}
+
+func (q *Queries) LinkStatusIncidentConversation(ctx context.Context, arg LinkStatusIncidentConversationParams) error {
+	_, err := q.db.Exec(ctx, linkStatusIncidentConversation,
+		arg.WorkspaceID,
+		arg.IncidentID,
+		arg.ConversationID,
+		arg.LinkedByMemberID,
+		arg.LinkedByApiKeyID,
+		arg.Now,
+	)
+	return err
+}
+
+const listConversationIncidents = `-- name: ListConversationIncidents :many
+SELECT i.id, i.workspace_id, i.page_id, i.kind, i.title, i.impact, i.state, i.scheduled_start, i.scheduled_end, i.published_at, i.started_at, i.resolved_at, i.created_by, i.created_at, i.updated_at, p.name AS page_name, p.slug AS page_slug, l.linked_at FROM status_incident_conversations l
+JOIN status_incidents i ON i.workspace_id = l.workspace_id AND i.id = l.incident_id
+JOIN status_pages p ON p.workspace_id = i.workspace_id AND p.id = i.page_id
+WHERE l.workspace_id = $1 AND l.conversation_id = $2
+  AND ($3::bool OR EXISTS (
+      SELECT 1 FROM inbox_viewers iv
+      WHERE iv.workspace_id = p.workspace_id AND iv.inbox_id = p.inbox_id AND iv.viewer_id = $4))
+ORDER BY l.linked_at DESC, i.id DESC
+`
+
+type ListConversationIncidentsParams struct {
+	WorkspaceID    uuid.UUID
+	ConversationID uuid.UUID
+	AllInboxes     bool
+	ViewerID       uuid.UUID
+}
+
+type ListConversationIncidentsRow struct {
+	StatusIncident StatusIncident
+	PageName       string
+	PageSlug       string
+	LinkedAt       time.Time
+}
+
+func (q *Queries) ListConversationIncidents(ctx context.Context, arg ListConversationIncidentsParams) ([]ListConversationIncidentsRow, error) {
+	rows, err := q.db.Query(ctx, listConversationIncidents,
+		arg.WorkspaceID,
+		arg.ConversationID,
+		arg.AllInboxes,
+		arg.ViewerID,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListConversationIncidentsRow
+	for rows.Next() {
+		var i ListConversationIncidentsRow
+		if err := rows.Scan(
+			&i.StatusIncident.ID,
+			&i.StatusIncident.WorkspaceID,
+			&i.StatusIncident.PageID,
+			&i.StatusIncident.Kind,
+			&i.StatusIncident.Title,
+			&i.StatusIncident.Impact,
+			&i.StatusIncident.State,
+			&i.StatusIncident.ScheduledStart,
+			&i.StatusIncident.ScheduledEnd,
+			&i.StatusIncident.PublishedAt,
+			&i.StatusIncident.StartedAt,
+			&i.StatusIncident.ResolvedAt,
+			&i.StatusIncident.CreatedBy,
+			&i.StatusIncident.CreatedAt,
+			&i.StatusIncident.UpdatedAt,
+			&i.PageName,
+			&i.PageSlug,
+			&i.LinkedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listPublicStatusIncidents = `-- name: ListPublicStatusIncidents :many
 SELECT id, workspace_id, page_id, kind, title, impact, state, scheduled_start, scheduled_end, published_at, started_at, resolved_at, created_by, created_at, updated_at FROM status_incidents
 WHERE workspace_id = $1 AND page_id = $2 AND published_at IS NOT NULL
@@ -957,6 +1105,99 @@ func (q *Queries) ListStatusIncidentComponents(ctx context.Context, arg ListStat
 			&i.IncidentID,
 			&i.ComponentID,
 			&i.State,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listStatusIncidentConversations = `-- name: ListStatusIncidentConversations :many
+SELECT c.id, c.workspace_id, c.inbox_id, c.contact_id, c.channel_id, c.subject, c.status, c.snooze_until, c.priority, c.assignee_id, c.last_message_at, c.last_activity_at, c.created_at, c.updated_at, c.spam, c.email_token, c.related_conversation_id, c.continuity_through, c.continuity_sent_at, c.kind, c.feedback, c.email_address, c.closed_at, c.rating, c.rating_comment, c.rated_at, c.rating_requested_at, c.last_read_by_contact_at, c.page_url, c.page_title, c.channel_kind, c.broadcast_id, c.migration_id, c.imported_at, c.feedback_progress, l.linked_at FROM status_incident_conversations l
+JOIN conversations c ON c.workspace_id = l.workspace_id AND c.id = l.conversation_id
+WHERE l.workspace_id = $1 AND l.incident_id = $2
+  AND ($3::bool OR EXISTS (
+      SELECT 1 FROM inbox_viewers iv
+      WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = $4))
+  AND ($5::timestamptz IS NULL
+       OR (l.linked_at, l.conversation_id) < ($5::timestamptz, $6::uuid))
+ORDER BY l.linked_at DESC, l.conversation_id DESC
+LIMIT $7
+`
+
+type ListStatusIncidentConversationsParams struct {
+	WorkspaceID uuid.UUID
+	IncidentID  uuid.UUID
+	AllInboxes  bool
+	ViewerID    uuid.UUID
+	CursorAt    *time.Time
+	CursorID    *uuid.UUID
+	Lim         int32
+}
+
+type ListStatusIncidentConversationsRow struct {
+	Conversation Conversation
+	LinkedAt     time.Time
+}
+
+func (q *Queries) ListStatusIncidentConversations(ctx context.Context, arg ListStatusIncidentConversationsParams) ([]ListStatusIncidentConversationsRow, error) {
+	rows, err := q.db.Query(ctx, listStatusIncidentConversations,
+		arg.WorkspaceID,
+		arg.IncidentID,
+		arg.AllInboxes,
+		arg.ViewerID,
+		arg.CursorAt,
+		arg.CursorID,
+		arg.Lim,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListStatusIncidentConversationsRow
+	for rows.Next() {
+		var i ListStatusIncidentConversationsRow
+		if err := rows.Scan(
+			&i.Conversation.ID,
+			&i.Conversation.WorkspaceID,
+			&i.Conversation.InboxID,
+			&i.Conversation.ContactID,
+			&i.Conversation.ChannelID,
+			&i.Conversation.Subject,
+			&i.Conversation.Status,
+			&i.Conversation.SnoozeUntil,
+			&i.Conversation.Priority,
+			&i.Conversation.AssigneeID,
+			&i.Conversation.LastMessageAt,
+			&i.Conversation.LastActivityAt,
+			&i.Conversation.CreatedAt,
+			&i.Conversation.UpdatedAt,
+			&i.Conversation.Spam,
+			&i.Conversation.EmailToken,
+			&i.Conversation.RelatedConversationID,
+			&i.Conversation.ContinuityThrough,
+			&i.Conversation.ContinuitySentAt,
+			&i.Conversation.Kind,
+			&i.Conversation.Feedback,
+			&i.Conversation.EmailAddress,
+			&i.Conversation.ClosedAt,
+			&i.Conversation.Rating,
+			&i.Conversation.RatingComment,
+			&i.Conversation.RatedAt,
+			&i.Conversation.RatingRequestedAt,
+			&i.Conversation.LastReadByContactAt,
+			&i.Conversation.PageUrl,
+			&i.Conversation.PageTitle,
+			&i.Conversation.ChannelKind,
+			&i.Conversation.BroadcastID,
+			&i.Conversation.MigrationID,
+			&i.Conversation.ImportedAt,
+			&i.Conversation.FeedbackProgress,
+			&i.LinkedAt,
 		); err != nil {
 			return nil, err
 		}
@@ -1172,6 +1413,48 @@ func (q *Queries) ListStatusPages(ctx context.Context, arg ListStatusPagesParams
 			return nil, err
 		}
 		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listStatusReplyTargets = `-- name: ListStatusReplyTargets :many
+SELECT c.id FROM status_incident_conversations l
+JOIN conversations c ON c.workspace_id = l.workspace_id AND c.id = l.conversation_id
+WHERE l.workspace_id = $1 AND l.incident_id = $2 AND c.status <> 'closed' AND NOT c.spam
+  AND ($3::bool OR EXISTS (
+      SELECT 1 FROM inbox_viewers iv
+      WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = $4))
+ORDER BY l.linked_at, c.id
+`
+
+type ListStatusReplyTargetsParams struct {
+	WorkspaceID uuid.UUID
+	IncidentID  uuid.UUID
+	AllInboxes  bool
+	ViewerID    uuid.UUID
+}
+
+func (q *Queries) ListStatusReplyTargets(ctx context.Context, arg ListStatusReplyTargetsParams) ([]uuid.UUID, error) {
+	rows, err := q.db.Query(ctx, listStatusReplyTargets,
+		arg.WorkspaceID,
+		arg.IncidentID,
+		arg.AllInboxes,
+		arg.ViewerID,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []uuid.UUID
+	for rows.Next() {
+		var id uuid.UUID
+		if err := rows.Scan(&id); err != nil {
+			return nil, err
+		}
+		items = append(items, id)
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err
@@ -1471,6 +1754,24 @@ func (q *Queries) StatusComponentSpans(ctx context.Context, arg StatusComponentS
 	return items, nil
 }
 
+const statusIncidentConversationLinked = `-- name: StatusIncidentConversationLinked :one
+SELECT EXISTS (SELECT 1 FROM status_incident_conversations
+    WHERE workspace_id = $1 AND incident_id = $2 AND conversation_id = $3)::bool
+`
+
+type StatusIncidentConversationLinkedParams struct {
+	WorkspaceID    uuid.UUID
+	IncidentID     uuid.UUID
+	ConversationID uuid.UUID
+}
+
+func (q *Queries) StatusIncidentConversationLinked(ctx context.Context, arg StatusIncidentConversationLinkedParams) (bool, error) {
+	row := q.db.QueryRow(ctx, statusIncidentConversationLinked, arg.WorkspaceID, arg.IncidentID, arg.ConversationID)
+	var column_1 bool
+	err := row.Scan(&column_1)
+	return column_1, err
+}
+
 const statusSlugTaken = `-- name: StatusSlugTaken :one
 SELECT (EXISTS (SELECT 1 FROM status_pages p WHERE p.slug = $1 AND p.id <> $2)
     OR EXISTS (SELECT 1 FROM status_page_slugs f WHERE f.slug = $1 AND f.page_id <> $2))::bool
@@ -1502,6 +1803,22 @@ type TouchStatusPageParams struct {
 
 func (q *Queries) TouchStatusPage(ctx context.Context, arg TouchStatusPageParams) error {
 	_, err := q.db.Exec(ctx, touchStatusPage, arg.Now, arg.WorkspaceID, arg.ID)
+	return err
+}
+
+const unlinkStatusIncidentConversation = `-- name: UnlinkStatusIncidentConversation :exec
+DELETE FROM status_incident_conversations
+WHERE workspace_id = $1 AND incident_id = $2 AND conversation_id = $3
+`
+
+type UnlinkStatusIncidentConversationParams struct {
+	WorkspaceID    uuid.UUID
+	IncidentID     uuid.UUID
+	ConversationID uuid.UUID
+}
+
+func (q *Queries) UnlinkStatusIncidentConversation(ctx context.Context, arg UnlinkStatusIncidentConversationParams) error {
+	_, err := q.db.Exec(ctx, unlinkStatusIncidentConversation, arg.WorkspaceID, arg.IncidentID, arg.ConversationID)
 	return err
 }
 

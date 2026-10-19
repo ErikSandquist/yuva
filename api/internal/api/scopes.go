@@ -278,6 +278,12 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"UpdateStatusMonitor":        {oas.StatusManage},
 	"DeleteStatusMonitor":        {oas.StatusManage},
 	"RotateStatusMonitorToken":   {oas.StatusManage},
+
+	"ListStatusIncidentConversations":    {oas.StatusRead, oas.ConversationsRead},
+	"LinkStatusIncidentConversation":     {oas.StatusManage, oas.ConversationsRead},
+	"UnlinkStatusIncidentConversation":   {oas.StatusManage, oas.ConversationsRead},
+	"ReplyToStatusIncidentConversations": {oas.StatusManage, oas.MessagesWrite},
+	"ListConversationIncidents":          {oas.ConversationsRead, oas.StatusRead},
 }
 
 func errInsufficientScope(scope oas.ApiKeyScope) *apiError {

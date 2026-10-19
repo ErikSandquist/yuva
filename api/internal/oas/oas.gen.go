@@ -8298,10 +8298,28 @@ type ClientInbox struct {
 
 	// Presence Who can answer now, in a `live` inbox.
 	Presence *ClientPresence `json:"presence,omitempty"`
-	Timezone string          `json:"timezone"`
+
+	// Status Absent unless the inbox has a published status page. Show a line while `open` is not
+	// empty; an `inbox.updated` frame brings every change.
+	Status   *ClientInboxStatus `json:"status,omitempty"`
+	Timezone string             `json:"timezone"`
 }
 
-// ClientInboxUpdatedEvent The inbox's or the session channel's public settings changed. No `id`; not replayed.
+// ClientInboxStatus The inbox's published status page: its overall state and what is open on it. Drafts,
+// scheduled maintenance that has not started and hidden components are left out.
+type ClientInboxStatus struct {
+	// Open Open published incidents and running maintenance, newest first.
+	Open []ClientStatusIncident `json:"open"`
+
+	// State Worst to best: `major_outage`, `partial_outage`, `degraded`, `maintenance`, `operational`.
+	State StatusComponentStateValue `json:"state"`
+
+	// Url The public page.
+	Url string `json:"url"`
+}
+
+// ClientInboxUpdatedEvent The inbox's or the session channel's public settings, or its status page's `status`, changed.
+// No `id`; not replayed.
 type ClientInboxUpdatedEvent struct {
 	CreatedAt time.Time `json:"created_at"`
 
@@ -8525,6 +8543,24 @@ type ClientSessionInfo struct {
 
 	// VisitorId Anonymous sessions only. Keep it to resume this visitor later.
 	VisitorId *string `json:"visitor_id,omitempty"`
+}
+
+// ClientStatusIncident defines model for ClientStatusIncident.
+type ClientStatusIncident struct {
+	Id     uuid.UUID            `json:"id"`
+	Impact StatusIncidentImpact `json:"impact"`
+	Kind   StatusIncidentKind   `json:"kind"`
+
+	// State Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
+	// `scheduled`, `in_progress`, `completed`.
+	State StatusIncidentState `json:"state"`
+	Title string              `json:"title"`
+
+	// UpdatedAt When its latest update was posted.
+	UpdatedAt time.Time `json:"updated_at"`
+
+	// Url The incident's public page.
+	Url string `json:"url"`
 }
 
 // ClientSubscription defines model for ClientSubscription.
@@ -9121,6 +9157,30 @@ type ConversationImport struct {
 
 	// Source Absent once the migration was deleted.
 	Source *MigrationSource `json:"source,omitempty"`
+}
+
+// ConversationIncident defines model for ConversationIncident.
+type ConversationIncident struct {
+	Id       uuid.UUID            `json:"id"`
+	Impact   StatusIncidentImpact `json:"impact"`
+	Kind     StatusIncidentKind   `json:"kind"`
+	LinkedAt time.Time            `json:"linked_at"`
+	Page     StatusPageRef        `json:"page"`
+
+	// PublishedAt Absent while it is a draft.
+	PublishedAt *time.Time `json:"published_at,omitempty"`
+	ResolvedAt  *time.Time `json:"resolved_at,omitempty"`
+
+	// State Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
+	// `scheduled`, `in_progress`, `completed`.
+	State StatusIncidentState `json:"state"`
+	Title string              `json:"title"`
+	Url   string              `json:"url"`
+}
+
+// ConversationIncidentList defines model for ConversationIncidentList.
+type ConversationIncidentList struct {
+	Items []ConversationIncident `json:"items"`
 }
 
 // ConversationKind `feedback` conversations carry `feedback` metadata; everything else is `conversation`.
@@ -14407,6 +14467,102 @@ type StatusIncidentComponentInput struct {
 	State *StatusComponentStateValue `json:"state,omitempty"`
 }
 
+// StatusIncidentConversation A linked conversation with what a list row shows and when it was linked.
+type StatusIncidentConversation struct {
+	// AssigneeId The assigned member; absent when unassigned.
+	AssigneeId *uuid.UUID `json:"assignee_id,omitempty"`
+
+	// BroadcastId Set when a reply to this broadcast opened the conversation (the recipient's own reply,
+	// or someone else answering a forwarded copy); absent otherwise or when the broadcast was
+	// deleted.
+	BroadcastId *uuid.UUID `json:"broadcast_id,omitempty"`
+
+	// ChannelId The channel it started on; absent when unknown or removed.
+	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
+
+	// ChannelKind Read-only: the kind of the channel it started on, kept when that channel is removed or
+	// the conversation moves to another inbox. Absent when it started without a channel.
+	ChannelKind *ChannelKind `json:"channel_kind,omitempty"`
+
+	// ClosedAt When it was last closed; absent when it never was.
+	ClosedAt *time.Time `json:"closed_at,omitempty"`
+
+	// Contact The conversation's contact, enough for a list row.
+	Contact   ConversationContact `json:"contact"`
+	ContactId uuid.UUID           `json:"contact_id"`
+	CreatedAt time.Time           `json:"created_at"`
+
+	// Feedback `feedback` conversations only: category and what the app sent with it.
+	Feedback *Feedback `json:"feedback,omitempty"`
+	Id       uuid.UUID `json:"id"`
+
+	// Imported Set on history moved into Yuva from another mailbox: such conversations keep their
+	// original times, were never unread and wrote no events, notifications or webhooks when
+	// they were imported. Absent otherwise.
+	Imported *ConversationImport `json:"imported,omitempty"`
+	InboxId  uuid.UUID           `json:"inbox_id"`
+
+	// Kind `feedback` conversations carry `feedback` metadata; everything else is `conversation`.
+	Kind ConversationKind `json:"kind"`
+
+	// Labels Label ids.
+	Labels []uuid.UUID `json:"labels"`
+
+	// LastActivityAt The last message or note, or the creation time.
+	LastActivityAt time.Time `json:"last_activity_at"`
+
+	// LastMessage The last `message` of a conversation, for a list row.
+	LastMessage *MessagePreview `json:"last_message,omitempty"`
+
+	// LastMessageAt The last `message` to or from the contact.
+	LastMessageAt *time.Time `json:"last_message_at,omitempty"`
+
+	// LastReadByContactAt The contact has read every message created at or before this time, in the widget or
+	// an app (`POST /client/v1/conversations/{id}/read`). Absent until the contact has read
+	// anything, and in conversations the contact only reaches by e-mail. A `contact.read`
+	// event tells when it moves.
+	LastReadByContactAt *time.Time `json:"last_read_by_contact_at,omitempty"`
+	LinkedAt            time.Time  `json:"linked_at"`
+
+	// Page The documentation page it was sent from (page feedback, questions asked on a page before discussions); absent otherwise.
+	Page *SourcePage `json:"page,omitempty"`
+
+	// PinnedAt When the calling member pinned it; absent when they did not, and for API keys.
+	PinnedAt *time.Time `json:"pinned_at,omitempty"`
+	Priority Priority   `json:"priority"`
+
+	// Rating The contact's latest rating. A conversation can be rated once each time it is closed, so
+	// this may belong to an earlier close (compare `rated_at` with `closed_at`). The thread also
+	// has it as a `rated` event message whose body is the comment.
+	Rating *ConversationRating `json:"rating,omitempty"`
+
+	// RelatedConversationId Set when this conversation was opened for a sender who answered in the e-mail thread of
+	// another contact's conversation (a forward, a CC'd colleague): the conversation whose
+	// thread the mail named. That mail never joins the other conversation and replies here go
+	// only to this conversation's contact. Absent otherwise or when that conversation is gone.
+	RelatedConversationId *uuid.UUID `json:"related_conversation_id,omitempty"`
+	SnoozeUntil           *time.Time `json:"snooze_until,omitempty"`
+
+	// Spam Flagged as spam, e.g. because the first e-mail failed DMARC. Spam is left out of lists
+	// and counts unless asked for, and gets no automatic reply.
+	Spam    bool               `json:"spam"`
+	Status  ConversationStatus `json:"status"`
+	Subject string             `json:"subject"`
+
+	// Unread A message or note from someone other than the calling member is newer than the
+	// member's read cursor, or the member marked it unread. Always `false` for API keys.
+	Unread    bool      `json:"unread"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+// StatusIncidentConversationPage defines model for StatusIncidentConversationPage.
+type StatusIncidentConversationPage struct {
+	Items []StatusIncidentConversation `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
 // StatusIncidentCreate defines model for StatusIncidentCreate.
 type StatusIncidentCreate struct {
 	Components *[]StatusIncidentComponentInput `json:"components,omitempty"`
@@ -14474,6 +14630,21 @@ type StatusIncidentPatch struct {
 	ScheduledEnd   *time.Time                      `json:"scheduled_end,omitempty"`
 	ScheduledStart *time.Time                      `json:"scheduled_start,omitempty"`
 	Title          *string                         `json:"title,omitempty"`
+}
+
+// StatusIncidentReply defines model for StatusIncidentReply.
+type StatusIncidentReply struct {
+	// Body The reply's text, as for any message.
+	Body string `json:"body"`
+
+	// Close Close each conversation after the reply.
+	Close *bool `json:"close,omitempty"`
+}
+
+// StatusIncidentReplyResult defines model for StatusIncidentReplyResult.
+type StatusIncidentReplyResult struct {
+	// Queued The conversations a reply was queued for.
+	Queued int32 `json:"queued"`
 }
 
 // StatusIncidentState Incidents: `investigating`, `identified`, `monitoring`, `resolved`. Maintenance:
@@ -16766,6 +16937,12 @@ type CreateDiscussionFromConversationParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListConversationIncidentsParams defines parameters for ListConversationIncidents.
+type ListConversationIncidentsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // ListMessagesParams defines parameters for ListMessages.
 type ListMessagesParams struct {
 	Order *ListMessagesParamsOrder `form:"order,omitempty" json:"order,omitempty"`
@@ -17952,8 +18129,41 @@ type UpdateStatusIncidentParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListStatusIncidentConversationsParams defines parameters for ListStatusIncidentConversations.
+type ListStatusIncidentConversationsParams struct {
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UnlinkStatusIncidentConversationParams defines parameters for UnlinkStatusIncidentConversation.
+type UnlinkStatusIncidentConversationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// LinkStatusIncidentConversationParams defines parameters for LinkStatusIncidentConversation.
+type LinkStatusIncidentConversationParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // PublishStatusIncidentParams defines parameters for PublishStatusIncident.
 type PublishStatusIncidentParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ReplyToStatusIncidentConversationsParams defines parameters for ReplyToStatusIncidentConversations.
+type ReplyToStatusIncidentConversationsParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 
@@ -18837,6 +19047,9 @@ type CreateStatusIncidentJSONRequestBody = StatusIncidentCreate
 
 // UpdateStatusIncidentJSONRequestBody defines body for UpdateStatusIncident for application/json ContentType.
 type UpdateStatusIncidentJSONRequestBody = StatusIncidentPatch
+
+// ReplyToStatusIncidentConversationsJSONRequestBody defines body for ReplyToStatusIncidentConversations for application/json ContentType.
+type ReplyToStatusIncidentConversationsJSONRequestBody = StatusIncidentReply
 
 // CreateStatusIncidentUpdateJSONRequestBody defines body for CreateStatusIncidentUpdate for application/json ContentType.
 type CreateStatusIncidentUpdateJSONRequestBody = StatusIncidentUpdateCreate
@@ -22684,6 +22897,9 @@ type ServerInterface interface {
 	// CreateDiscussionFromConversation Turn a private conversation into a public thread
 	// (POST /v1/conversations/{conversationId}/discussion)
 	CreateDiscussionFromConversation(w http.ResponseWriter, r *http.Request, conversationId ConversationId, params CreateDiscussionFromConversationParams)
+	// ListConversationIncidents List the incidents a conversation is linked to
+	// (GET /v1/conversations/{conversationId}/incidents)
+	ListConversationIncidents(w http.ResponseWriter, r *http.Request, conversationId ConversationId, params ListConversationIncidentsParams)
 	// ListMessages List a conversation's messages
 	// (GET /v1/conversations/{conversationId}/messages)
 	ListMessages(w http.ResponseWriter, r *http.Request, conversationId ConversationId, params ListMessagesParams)
@@ -23161,9 +23377,21 @@ type ServerInterface interface {
 	// UpdateStatusIncident Change an incident
 	// (PATCH /v1/status-pages/{pageId}/incidents/{incidentId})
 	UpdateStatusIncident(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, params UpdateStatusIncidentParams)
+	// ListStatusIncidentConversations List an incident's conversations
+	// (GET /v1/status-pages/{pageId}/incidents/{incidentId}/conversations)
+	ListStatusIncidentConversations(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, params ListStatusIncidentConversationsParams)
+	// UnlinkStatusIncidentConversation Unlink a conversation from an incident
+	// (DELETE /v1/status-pages/{pageId}/incidents/{incidentId}/conversations/{conversationId})
+	UnlinkStatusIncidentConversation(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, conversationId ConversationId, params UnlinkStatusIncidentConversationParams)
+	// LinkStatusIncidentConversation Link a conversation to an incident
+	// (PUT /v1/status-pages/{pageId}/incidents/{incidentId}/conversations/{conversationId})
+	LinkStatusIncidentConversation(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, conversationId ConversationId, params LinkStatusIncidentConversationParams)
 	// PublishStatusIncident Publish a draft incident
 	// (POST /v1/status-pages/{pageId}/incidents/{incidentId}/publish)
 	PublishStatusIncident(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, params PublishStatusIncidentParams)
+	// ReplyToStatusIncidentConversations Reply to linked conversations
+	// (POST /v1/status-pages/{pageId}/incidents/{incidentId}/reply)
+	ReplyToStatusIncidentConversations(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, params ReplyToStatusIncidentConversationsParams)
 	// CreateStatusIncidentUpdate Post an update
 	// (POST /v1/status-pages/{pageId}/incidents/{incidentId}/updates)
 	CreateStatusIncidentUpdate(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, params CreateStatusIncidentUpdateParams)
@@ -31056,6 +31284,56 @@ func (siw *ServerInterfaceWrapper) CreateDiscussionFromConversation(w http.Respo
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.CreateDiscussionFromConversation(w, r, conversationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListConversationIncidents operation middleware
+func (siw *ServerInterfaceWrapper) ListConversationIncidents(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "conversationId" -------------
+	var conversationId ConversationId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "conversationId", r.PathValue("conversationId"), &conversationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "conversationId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListConversationIncidentsParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListConversationIncidents(w, r, conversationId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -40152,6 +40430,227 @@ func (siw *ServerInterfaceWrapper) UpdateStatusIncident(w http.ResponseWriter, r
 	handler.ServeHTTP(w, r)
 }
 
+// ListStatusIncidentConversations operation middleware
+func (siw *ServerInterfaceWrapper) ListStatusIncidentConversations(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "incidentId" -------------
+	var incidentId StatusIncidentId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "incidentId", r.PathValue("incidentId"), &incidentId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "incidentId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListStatusIncidentConversationsParams
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListStatusIncidentConversations(w, r, pageId, incidentId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UnlinkStatusIncidentConversation operation middleware
+func (siw *ServerInterfaceWrapper) UnlinkStatusIncidentConversation(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "incidentId" -------------
+	var incidentId StatusIncidentId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "incidentId", r.PathValue("incidentId"), &incidentId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "incidentId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "conversationId" -------------
+	var conversationId ConversationId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "conversationId", r.PathValue("conversationId"), &conversationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "conversationId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UnlinkStatusIncidentConversationParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UnlinkStatusIncidentConversation(w, r, pageId, incidentId, conversationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// LinkStatusIncidentConversation operation middleware
+func (siw *ServerInterfaceWrapper) LinkStatusIncidentConversation(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "incidentId" -------------
+	var incidentId StatusIncidentId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "incidentId", r.PathValue("incidentId"), &incidentId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "incidentId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "conversationId" -------------
+	var conversationId ConversationId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "conversationId", r.PathValue("conversationId"), &conversationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "conversationId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params LinkStatusIncidentConversationParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.LinkStatusIncidentConversation(w, r, pageId, incidentId, conversationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // PublishStatusIncident operation middleware
 func (siw *ServerInterfaceWrapper) PublishStatusIncident(w http.ResponseWriter, r *http.Request) {
 
@@ -40221,6 +40720,84 @@ func (siw *ServerInterfaceWrapper) PublishStatusIncident(w http.ResponseWriter, 
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.PublishStatusIncident(w, r, pageId, incidentId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReplyToStatusIncidentConversations operation middleware
+func (siw *ServerInterfaceWrapper) ReplyToStatusIncidentConversations(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "pageId" -------------
+	var pageId StatusPageId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageId", r.PathValue("pageId"), &pageId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "incidentId" -------------
+	var incidentId StatusIncidentId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "incidentId", r.PathValue("incidentId"), &incidentId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "incidentId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReplyToStatusIncidentConversationsParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReplyToStatusIncidentConversations(w, r, pageId, incidentId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -41961,6 +42538,7 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/conversations/{conversationId}/unread", wrapper.MarkConversationUnread)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/conversations/{conversationId}/pin", wrapper.UnpinConversation)
 	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/v1/conversations/{conversationId}/pin", wrapper.PinConversation)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/conversations/{conversationId}/incidents", wrapper.ListConversationIncidents)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/conversations/{conversationId}/typing", wrapper.SetMemberTyping)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/drafts", wrapper.ListDrafts)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/attachments/{attachmentId}", wrapper.DownloadAttachment)
@@ -42155,6 +42733,10 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents/{incidentId}/publish", wrapper.PublishStatusIncident)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents/{incidentId}/updates", wrapper.CreateStatusIncidentUpdate)
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents/{incidentId}/updates/{updateId}", wrapper.EditStatusIncidentUpdate)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents/{incidentId}/conversations", wrapper.ListStatusIncidentConversations)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents/{incidentId}/conversations/{conversationId}", wrapper.UnlinkStatusIncidentConversation)
+	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents/{incidentId}/conversations/{conversationId}", wrapper.LinkStatusIncidentConversation)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/incidents/{incidentId}/reply", wrapper.ReplyToStatusIncidentConversations)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors", wrapper.ListStatusMonitors)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors", wrapper.CreateStatusMonitor)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/status-pages/{pageId}/monitors/{monitorId}", wrapper.DeleteStatusMonitor)
@@ -56304,6 +56886,73 @@ func (response CreateDiscussionFromConversation409ApplicationProblemPlusJSONResp
 	return err
 }
 
+type ListConversationIncidentsRequestObject struct {
+	ConversationId ConversationId `json:"conversationId"`
+	Params         ListConversationIncidentsParams
+}
+
+type ListConversationIncidentsResponseObject interface {
+	VisitListConversationIncidentsResponse(w http.ResponseWriter) error
+}
+
+type ListConversationIncidents200JSONResponse ConversationIncidentList
+
+func (response ListConversationIncidents200JSONResponse) VisitListConversationIncidentsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListConversationIncidents401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListConversationIncidents401ApplicationProblemPlusJSONResponse) VisitListConversationIncidentsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListConversationIncidents403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListConversationIncidents403ApplicationProblemPlusJSONResponse) VisitListConversationIncidentsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListConversationIncidents404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListConversationIncidents404ApplicationProblemPlusJSONResponse) VisitListConversationIncidentsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type ListMessagesRequestObject struct {
 	ConversationId ConversationId `json:"conversationId"`
 	Params         ListMessagesParams
@@ -68749,6 +69398,214 @@ func (response UpdateStatusIncident409ApplicationProblemPlusJSONResponse) VisitU
 	return err
 }
 
+type ListStatusIncidentConversationsRequestObject struct {
+	PageId     StatusPageId     `json:"pageId"`
+	IncidentId StatusIncidentId `json:"incidentId"`
+	Params     ListStatusIncidentConversationsParams
+}
+
+type ListStatusIncidentConversationsResponseObject interface {
+	VisitListStatusIncidentConversationsResponse(w http.ResponseWriter) error
+}
+
+type ListStatusIncidentConversations200JSONResponse StatusIncidentConversationPage
+
+func (response ListStatusIncidentConversations200JSONResponse) VisitListStatusIncidentConversationsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusIncidentConversations400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListStatusIncidentConversations400ApplicationProblemPlusJSONResponse) VisitListStatusIncidentConversationsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusIncidentConversations401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusIncidentConversations401ApplicationProblemPlusJSONResponse) VisitListStatusIncidentConversationsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusIncidentConversations403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusIncidentConversations403ApplicationProblemPlusJSONResponse) VisitListStatusIncidentConversationsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListStatusIncidentConversations404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListStatusIncidentConversations404ApplicationProblemPlusJSONResponse) VisitListStatusIncidentConversationsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnlinkStatusIncidentConversationRequestObject struct {
+	PageId         StatusPageId     `json:"pageId"`
+	IncidentId     StatusIncidentId `json:"incidentId"`
+	ConversationId ConversationId   `json:"conversationId"`
+	Params         UnlinkStatusIncidentConversationParams
+}
+
+type UnlinkStatusIncidentConversationResponseObject interface {
+	VisitUnlinkStatusIncidentConversationResponse(w http.ResponseWriter) error
+}
+
+type UnlinkStatusIncidentConversation204Response struct {
+}
+
+func (response UnlinkStatusIncidentConversation204Response) VisitUnlinkStatusIncidentConversationResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type UnlinkStatusIncidentConversation401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UnlinkStatusIncidentConversation401ApplicationProblemPlusJSONResponse) VisitUnlinkStatusIncidentConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnlinkStatusIncidentConversation403ApplicationProblemPlusJSONResponse Problem
+
+func (response UnlinkStatusIncidentConversation403ApplicationProblemPlusJSONResponse) VisitUnlinkStatusIncidentConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnlinkStatusIncidentConversation404ApplicationProblemPlusJSONResponse Problem
+
+func (response UnlinkStatusIncidentConversation404ApplicationProblemPlusJSONResponse) VisitUnlinkStatusIncidentConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type LinkStatusIncidentConversationRequestObject struct {
+	PageId         StatusPageId     `json:"pageId"`
+	IncidentId     StatusIncidentId `json:"incidentId"`
+	ConversationId ConversationId   `json:"conversationId"`
+	Params         LinkStatusIncidentConversationParams
+}
+
+type LinkStatusIncidentConversationResponseObject interface {
+	VisitLinkStatusIncidentConversationResponse(w http.ResponseWriter) error
+}
+
+type LinkStatusIncidentConversation204Response struct {
+}
+
+func (response LinkStatusIncidentConversation204Response) VisitLinkStatusIncidentConversationResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type LinkStatusIncidentConversation401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response LinkStatusIncidentConversation401ApplicationProblemPlusJSONResponse) VisitLinkStatusIncidentConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type LinkStatusIncidentConversation403ApplicationProblemPlusJSONResponse Problem
+
+func (response LinkStatusIncidentConversation403ApplicationProblemPlusJSONResponse) VisitLinkStatusIncidentConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type LinkStatusIncidentConversation404ApplicationProblemPlusJSONResponse Problem
+
+func (response LinkStatusIncidentConversation404ApplicationProblemPlusJSONResponse) VisitLinkStatusIncidentConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type PublishStatusIncidentRequestObject struct {
 	PageId     StatusPageId     `json:"pageId"`
 	IncidentId StatusIncidentId `json:"incidentId"`
@@ -68806,6 +69663,89 @@ func (response PublishStatusIncident403ApplicationProblemPlusJSONResponse) Visit
 type PublishStatusIncident404ApplicationProblemPlusJSONResponse Problem
 
 func (response PublishStatusIncident404ApplicationProblemPlusJSONResponse) VisitPublishStatusIncidentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ReplyToStatusIncidentConversationsRequestObject struct {
+	PageId     StatusPageId     `json:"pageId"`
+	IncidentId StatusIncidentId `json:"incidentId"`
+	Params     ReplyToStatusIncidentConversationsParams
+	Body       *ReplyToStatusIncidentConversationsJSONRequestBody
+}
+
+type ReplyToStatusIncidentConversationsResponseObject interface {
+	VisitReplyToStatusIncidentConversationsResponse(w http.ResponseWriter) error
+}
+
+type ReplyToStatusIncidentConversations202JSONResponse StatusIncidentReplyResult
+
+func (response ReplyToStatusIncidentConversations202JSONResponse) VisitReplyToStatusIncidentConversationsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(202)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ReplyToStatusIncidentConversations400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ReplyToStatusIncidentConversations400ApplicationProblemPlusJSONResponse) VisitReplyToStatusIncidentConversationsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ReplyToStatusIncidentConversations401ApplicationProblemPlusJSONResponse Problem
+
+func (response ReplyToStatusIncidentConversations401ApplicationProblemPlusJSONResponse) VisitReplyToStatusIncidentConversationsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ReplyToStatusIncidentConversations403ApplicationProblemPlusJSONResponse Problem
+
+func (response ReplyToStatusIncidentConversations403ApplicationProblemPlusJSONResponse) VisitReplyToStatusIncidentConversationsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ReplyToStatusIncidentConversations404ApplicationProblemPlusJSONResponse Problem
+
+func (response ReplyToStatusIncidentConversations404ApplicationProblemPlusJSONResponse) VisitReplyToStatusIncidentConversationsResponse(w http.ResponseWriter) error {
 
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(response); err != nil {
@@ -71197,6 +72137,9 @@ type StrictServerInterface interface {
 	// CreateDiscussionFromConversation Turn a private conversation into a public thread
 	// (POST /v1/conversations/{conversationId}/discussion)
 	CreateDiscussionFromConversation(ctx context.Context, request CreateDiscussionFromConversationRequestObject) (CreateDiscussionFromConversationResponseObject, error)
+	// ListConversationIncidents List the incidents a conversation is linked to
+	// (GET /v1/conversations/{conversationId}/incidents)
+	ListConversationIncidents(ctx context.Context, request ListConversationIncidentsRequestObject) (ListConversationIncidentsResponseObject, error)
 	// ListMessages List a conversation's messages
 	// (GET /v1/conversations/{conversationId}/messages)
 	ListMessages(ctx context.Context, request ListMessagesRequestObject) (ListMessagesResponseObject, error)
@@ -71674,9 +72617,21 @@ type StrictServerInterface interface {
 	// UpdateStatusIncident Change an incident
 	// (PATCH /v1/status-pages/{pageId}/incidents/{incidentId})
 	UpdateStatusIncident(ctx context.Context, request UpdateStatusIncidentRequestObject) (UpdateStatusIncidentResponseObject, error)
+	// ListStatusIncidentConversations List an incident's conversations
+	// (GET /v1/status-pages/{pageId}/incidents/{incidentId}/conversations)
+	ListStatusIncidentConversations(ctx context.Context, request ListStatusIncidentConversationsRequestObject) (ListStatusIncidentConversationsResponseObject, error)
+	// UnlinkStatusIncidentConversation Unlink a conversation from an incident
+	// (DELETE /v1/status-pages/{pageId}/incidents/{incidentId}/conversations/{conversationId})
+	UnlinkStatusIncidentConversation(ctx context.Context, request UnlinkStatusIncidentConversationRequestObject) (UnlinkStatusIncidentConversationResponseObject, error)
+	// LinkStatusIncidentConversation Link a conversation to an incident
+	// (PUT /v1/status-pages/{pageId}/incidents/{incidentId}/conversations/{conversationId})
+	LinkStatusIncidentConversation(ctx context.Context, request LinkStatusIncidentConversationRequestObject) (LinkStatusIncidentConversationResponseObject, error)
 	// PublishStatusIncident Publish a draft incident
 	// (POST /v1/status-pages/{pageId}/incidents/{incidentId}/publish)
 	PublishStatusIncident(ctx context.Context, request PublishStatusIncidentRequestObject) (PublishStatusIncidentResponseObject, error)
+	// ReplyToStatusIncidentConversations Reply to linked conversations
+	// (POST /v1/status-pages/{pageId}/incidents/{incidentId}/reply)
+	ReplyToStatusIncidentConversations(ctx context.Context, request ReplyToStatusIncidentConversationsRequestObject) (ReplyToStatusIncidentConversationsResponseObject, error)
 	// CreateStatusIncidentUpdate Post an update
 	// (POST /v1/status-pages/{pageId}/incidents/{incidentId}/updates)
 	CreateStatusIncidentUpdate(ctx context.Context, request CreateStatusIncidentUpdateRequestObject) (CreateStatusIncidentUpdateResponseObject, error)
@@ -76328,6 +77283,33 @@ func (sh *strictHandler) CreateDiscussionFromConversation(w http.ResponseWriter,
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(CreateDiscussionFromConversationResponseObject); ok {
 		if err := validResponse.VisitCreateDiscussionFromConversationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListConversationIncidents operation middleware
+func (sh *strictHandler) ListConversationIncidents(w http.ResponseWriter, r *http.Request, conversationId ConversationId, params ListConversationIncidentsParams) {
+	var request ListConversationIncidentsRequestObject
+
+	request.ConversationId = conversationId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListConversationIncidents(ctx, request.(ListConversationIncidentsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListConversationIncidents")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListConversationIncidentsResponseObject); ok {
+		if err := validResponse.VisitListConversationIncidentsResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
@@ -80990,6 +81972,92 @@ func (sh *strictHandler) UpdateStatusIncident(w http.ResponseWriter, r *http.Req
 	}
 }
 
+// ListStatusIncidentConversations operation middleware
+func (sh *strictHandler) ListStatusIncidentConversations(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, params ListStatusIncidentConversationsParams) {
+	var request ListStatusIncidentConversationsRequestObject
+
+	request.PageId = pageId
+	request.IncidentId = incidentId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListStatusIncidentConversations(ctx, request.(ListStatusIncidentConversationsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListStatusIncidentConversations")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListStatusIncidentConversationsResponseObject); ok {
+		if err := validResponse.VisitListStatusIncidentConversationsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UnlinkStatusIncidentConversation operation middleware
+func (sh *strictHandler) UnlinkStatusIncidentConversation(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, conversationId ConversationId, params UnlinkStatusIncidentConversationParams) {
+	var request UnlinkStatusIncidentConversationRequestObject
+
+	request.PageId = pageId
+	request.IncidentId = incidentId
+	request.ConversationId = conversationId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UnlinkStatusIncidentConversation(ctx, request.(UnlinkStatusIncidentConversationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UnlinkStatusIncidentConversation")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UnlinkStatusIncidentConversationResponseObject); ok {
+		if err := validResponse.VisitUnlinkStatusIncidentConversationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// LinkStatusIncidentConversation operation middleware
+func (sh *strictHandler) LinkStatusIncidentConversation(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, conversationId ConversationId, params LinkStatusIncidentConversationParams) {
+	var request LinkStatusIncidentConversationRequestObject
+
+	request.PageId = pageId
+	request.IncidentId = incidentId
+	request.ConversationId = conversationId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.LinkStatusIncidentConversation(ctx, request.(LinkStatusIncidentConversationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "LinkStatusIncidentConversation")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(LinkStatusIncidentConversationResponseObject); ok {
+		if err := validResponse.VisitLinkStatusIncidentConversationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
 // PublishStatusIncident operation middleware
 func (sh *strictHandler) PublishStatusIncident(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, params PublishStatusIncidentParams) {
 	var request PublishStatusIncidentRequestObject
@@ -81011,6 +82079,41 @@ func (sh *strictHandler) PublishStatusIncident(w http.ResponseWriter, r *http.Re
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(PublishStatusIncidentResponseObject); ok {
 		if err := validResponse.VisitPublishStatusIncidentResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ReplyToStatusIncidentConversations operation middleware
+func (sh *strictHandler) ReplyToStatusIncidentConversations(w http.ResponseWriter, r *http.Request, pageId StatusPageId, incidentId StatusIncidentId, params ReplyToStatusIncidentConversationsParams) {
+	var request ReplyToStatusIncidentConversationsRequestObject
+
+	request.PageId = pageId
+	request.IncidentId = incidentId
+	request.Params = params
+
+	var body ReplyToStatusIncidentConversationsJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ReplyToStatusIncidentConversations(ctx, request.(ReplyToStatusIncidentConversationsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ReplyToStatusIncidentConversations")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ReplyToStatusIncidentConversationsResponseObject); ok {
+		if err := validResponse.VisitReplyToStatusIncidentConversationsResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

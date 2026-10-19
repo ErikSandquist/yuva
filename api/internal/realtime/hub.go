@@ -47,6 +47,7 @@ const (
 	ContactPresence     = "contact.presence"
 	Viewing             = "viewing"
 	ChannelUpdated      = "channel.updated"
+	StatusHint          = "status.hint"
 )
 
 type Event struct {

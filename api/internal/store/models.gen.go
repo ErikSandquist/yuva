@@ -1633,6 +1633,15 @@ type StatusIncidentComponent struct {
 	State       string
 }
 
+type StatusIncidentConversation struct {
+	WorkspaceID      uuid.UUID
+	IncidentID       uuid.UUID
+	ConversationID   uuid.UUID
+	LinkedByMemberID *uuid.UUID
+	LinkedByApiKeyID *uuid.UUID
+	LinkedAt         time.Time
+}
+
 type StatusIncidentUpdate struct {
 	ID             uuid.UUID
 	WorkspaceID    uuid.UUID
